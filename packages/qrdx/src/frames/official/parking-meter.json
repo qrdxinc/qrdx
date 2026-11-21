@@ -4,17 +4,8 @@
   "description": "A parking meter: the code in its window, the label under it, a pole below.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "upi",
-    "paypal",
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "parking",
-    "meter",
-    "pay"
-  ],
+  "contentTypes": ["upi", "paypal", "url"],
+  "tags": ["playful", "parking", "meter", "pay"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -42,10 +33,7 @@
         "width": 220,
         "height": 500,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -74,10 +62,7 @@
         "height": 80,
         "radius": 24,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -98,10 +83,7 @@
         "height": 1100,
         "radius": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       }

@@ -5,14587 +5,9473 @@ import type { OfficialFrameIndexEntry } from "../official-types";
 /** Every official frame without its spec: for pickers and search. */
 export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
   {
-    "id": "wifi-card",
-    "name": "Wi-Fi card",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "hospitality",
-      "cafe",
-      "hotel"
-    ],
-    "hash": "002a5781",
-    "ratio": 0.747
-  },
-  {
-    "id": "table-tent",
-    "name": "Table tent topper",
-    "collection": "food-drink",
-    "tags": [
-      "menu",
-      "restaurant",
-      "cafe",
-      "table"
-    ],
-    "hash": "79ee561d",
-    "ratio": 0.674
-  },
-  {
-    "id": "order-at-table",
-    "name": "Order at table",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "ordering",
-      "table"
-    ],
-    "hash": "bf3d79cf",
-    "ratio": 0.738
-  },
-  {
-    "id": "review-us",
-    "name": "Review us",
-    "collection": "business",
-    "tags": [
-      "reviews",
-      "feedback",
-      "restaurant",
-      "retail"
-    ],
-    "hash": "8a821343",
-    "ratio": 0.721
-  },
-  {
-    "id": "scan-to-pay",
-    "name": "Scan to pay",
-    "collection": "business",
-    "tags": [
-      "payments",
-      "checkout",
-      "retail"
-    ],
-    "hash": "3cac1f74",
-    "ratio": 0.705
-  },
-  {
-    "id": "event-ticket",
-    "name": "Event ticket",
-    "collection": "events",
-    "tags": [
-      "events",
-      "tickets",
-      "concert"
-    ],
-    "hash": "1ffc6011",
-    "ratio": 0.689
-  },
-  {
-    "id": "rsvp-card",
-    "name": "RSVP card",
-    "collection": "events",
-    "tags": [
-      "events",
-      "wedding",
-      "party",
-      "invitation"
-    ],
-    "hash": "7e9a12a1",
-    "ratio": 0.75
-  },
-  {
-    "id": "save-contact",
-    "name": "Save my contact",
-    "collection": "business",
-    "tags": [
-      "business card",
-      "contact",
-      "networking"
-    ],
-    "hash": "c5751aec",
-    "ratio": 0.765
-  },
-  {
-    "id": "follow-us",
-    "name": "Follow us",
-    "collection": "business",
-    "tags": [
-      "social",
-      "followers",
-      "marketing"
-    ],
-    "hash": "7e7fdbc7",
-    "ratio": 0.705
-  },
-  {
-    "id": "get-the-app",
-    "name": "Get the app",
-    "collection": "business",
-    "tags": [
-      "app",
-      "download",
-      "mobile"
-    ],
-    "hash": "1eebd998",
-    "ratio": 0.633
-  },
-  {
-    "id": "feedback-bubble",
-    "name": "Feedback bubble",
-    "collection": "business",
-    "tags": [
-      "feedback",
-      "survey",
-      "customer service"
-    ],
-    "hash": "590a02d1",
-    "ratio": 0.721
-  },
-  {
-    "id": "product-info",
-    "name": "Product info",
-    "collection": "shopping",
-    "tags": [
-      "packaging",
-      "instructions",
-      "manual",
-      "retail"
-    ],
-    "hash": "b68b2afc",
-    "ratio": 0.721
-  },
-  {
-    "id": "register-product",
-    "name": "Register product",
-    "collection": "shopping",
-    "tags": [
-      "warranty",
-      "registration",
-      "packaging"
-    ],
-    "hash": "1adffb8a",
-    "ratio": 0.721
-  },
-  {
-    "id": "donate",
-    "name": "Donate",
-    "collection": "business",
-    "tags": [
-      "charity",
-      "donations",
-      "nonprofit"
-    ],
-    "hash": "c0f3bf47",
-    "ratio": 0.689
-  },
-  {
-    "id": "check-in",
-    "name": "Check in",
-    "collection": "events",
-    "tags": [
-      "check-in",
-      "reception",
-      "events",
-      "visitors"
-    ],
-    "hash": "b712ef8a",
-    "ratio": 0.729
-  },
-  {
-    "id": "audio-guide",
-    "name": "Audio guide",
-    "collection": "places",
-    "tags": [
-      "museum",
-      "tour",
-      "audio",
-      "gallery"
-    ],
-    "hash": "da878bab",
-    "ratio": 0.796
-  },
-  {
-    "id": "sign-rider",
-    "name": "Sign rider",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "signage"
-    ],
-    "hash": "1c567df1",
-    "ratio": 1.935
-  },
-  {
-    "id": "book-now",
-    "name": "Book now",
-    "collection": "business",
-    "tags": [
-      "booking",
-      "appointments",
-      "salon",
-      "clinic"
-    ],
-    "hash": "fe51b7ee",
-    "ratio": 0.705
-  },
-  {
-    "id": "shop-window",
-    "name": "Shop window",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "window",
-      "sticker"
-    ],
-    "hash": "a2e954ad",
-    "ratio": 1.742
-  },
-  {
-    "id": "attendance",
-    "name": "Attendance",
-    "collection": "events",
-    "tags": [
-      "attendance",
-      "school",
-      "workplace",
-      "events"
-    ],
-    "hash": "260d41a4",
-    "ratio": 0.705
-  },
-  {
-    "id": "winter",
-    "name": "Winter",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "seasonal",
-      "winter",
-      "snow"
-    ],
-    "hash": "39692f7e",
-    "ratio": 0.785
-  },
-  {
-    "id": "halloween",
-    "name": "Halloween",
-    "collection": "holidays",
-    "occasion": "halloween",
-    "tags": [
-      "seasonal",
-      "halloween",
-      "october"
-    ],
-    "hash": "eafff649",
-    "ratio": 0.721
-  },
-  {
-    "id": "christmas",
-    "name": "Christmas",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "seasonal",
-      "christmas",
-      "holidays"
-    ],
-    "hash": "227812d9",
-    "ratio": 0.705
-  },
-  {
-    "id": "new-year",
-    "name": "New Year",
-    "collection": "holidays",
-    "occasion": "new-year",
-    "tags": [
-      "seasonal",
-      "new year",
-      "celebration"
-    ],
-    "hash": "0bfd111d",
-    "ratio": 0.721
-  },
-  {
-    "id": "scan-me-tile",
-    "name": "Scan me tile",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action"
-    ],
-    "hash": "7a88bd4b",
-    "ratio": 0.873
-  },
-  {
-    "id": "scan-me-card",
-    "name": "Scan me card",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "minimal"
-    ],
-    "hash": "366345b6",
-    "ratio": 0.77
-  },
-  {
-    "id": "learn-more-card",
-    "name": "Learn more card",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "information"
-    ],
-    "hash": "8f72a4ec",
-    "ratio": 0.713
-  },
-  {
-    "id": "scan-me-band",
-    "name": "Label band",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "minimal"
-    ],
-    "hash": "819bacf1",
-    "ratio": 0.81
-  },
-  {
-    "id": "scan-me-band-top",
-    "name": "Top band",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action"
-    ],
-    "hash": "f70b33b4",
-    "ratio": 0.701
-  },
-  {
-    "id": "tap-or-scan-band",
-    "name": "Tap or scan band",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "nfc"
-    ],
-    "hash": "974a44d0",
-    "ratio": 0.701
-  },
-  {
-    "id": "scan-button",
-    "name": "Button",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "button"
-    ],
-    "hash": "975f200b",
-    "ratio": 0.747
-  },
-  {
-    "id": "scan-button-tinted",
-    "name": "Tinted button",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "button"
-    ],
-    "hash": "c3868a9f",
-    "ratio": 0.705
-  },
-  {
-    "id": "hanging-tab",
-    "name": "Hanging tab",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "tab"
-    ],
-    "hash": "73a502f5",
-    "ratio": 0.844
-  },
-  {
-    "id": "hanging-tab-two-lines",
-    "name": "Tab with note",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "tab"
-    ],
-    "hash": "994dee7f",
-    "ratio": 0.805
-  },
-  {
-    "id": "folder-tab",
-    "name": "Folder tab",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "tab"
-    ],
-    "hash": "1fcff48c",
-    "ratio": 0.795
-  },
-  {
-    "id": "folder-tab-arrow",
-    "name": "Folder tab with arrow",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "tab"
-    ],
-    "hash": "703ffbc9",
-    "ratio": 0.879
-  },
-  {
-    "id": "ribbon-banner",
-    "name": "Ribbon banner",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "ribbon"
-    ],
-    "hash": "b50e08a5",
-    "ratio": 0.911
-  },
-  {
-    "id": "ribbon-banner-solid",
-    "name": "Solid ribbon",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "ribbon"
-    ],
-    "hash": "0db55aef",
-    "ratio": 0.8
-  },
-  {
-    "id": "ribbon-sparkle",
-    "name": "Ribbon with sparkle",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "ribbon",
-      "launch"
-    ],
-    "hash": "110a06d5",
-    "ratio": 0.8
-  },
-  {
-    "id": "speech-bubble-over",
-    "name": "Bubble over code",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "speech bubble"
-    ],
-    "hash": "9b514cc0",
-    "ratio": 0.78
-  },
-  {
-    "id": "speech-bubble-round",
-    "name": "Round bubble",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "speech bubble"
-    ],
-    "hash": "64cbcaf2",
-    "ratio": 0.743
-  },
-  {
-    "id": "bubble-tail-left",
-    "name": "Bubble, tail left",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "speech bubble"
-    ],
-    "hash": "3d330812",
-    "ratio": 0.775
-  },
-  {
-    "id": "bubble-tail-right",
-    "name": "Bubble, tail right",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "speech bubble"
-    ],
-    "hash": "48f8f539",
-    "ratio": 0.681
-  },
-  {
-    "id": "bubble-outline",
-    "name": "Outline bubble",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "speech bubble",
-      "light"
-    ],
-    "hash": "daa743ef",
-    "ratio": 0.681
-  },
-  {
-    "id": "chat-pair",
-    "name": "Chat pair",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "chat",
-      "messaging"
-    ],
-    "hash": "3b7c3904",
-    "ratio": 0.709
-  },
-  {
-    "id": "ticket-stub",
-    "name": "Ticket stub",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "ticket"
-    ],
-    "hash": "e8441806",
-    "ratio": 0.738
-  },
-  {
-    "id": "ticket-light",
-    "name": "Light ticket",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "ticket",
-      "light"
-    ],
-    "hash": "d4a116d6",
-    "ratio": 0.775
-  },
-  {
-    "id": "ticket-wide",
-    "name": "Wide ticket",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "ticket"
-    ],
-    "hash": "f370d98c",
-    "ratio": 1.923
-  },
-  {
-    "id": "postage-stamp",
-    "name": "Postage stamp",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "stamp"
-    ],
-    "hash": "b374a1de",
-    "ratio": 0.767
-  },
-  {
-    "id": "postage-stamp-light",
-    "name": "Light stamp",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "stamp",
-      "light"
-    ],
-    "hash": "d609469e",
-    "ratio": 0.767
-  },
-  {
-    "id": "round-badge",
-    "name": "Round badge",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "badge",
-      "round"
-    ],
-    "hash": "a569eed0",
-    "ratio": 1
-  },
-  {
-    "id": "round-badge-light",
-    "name": "Light round badge",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "badge",
-      "round",
-      "light"
-    ],
-    "hash": "ae6cc5a5",
-    "ratio": 1
-  },
-  {
-    "id": "rosette-badge",
-    "name": "Rosette",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "badge",
-      "seal"
-    ],
-    "hash": "4de96987",
-    "ratio": 1
-  },
-  {
-    "id": "scalloped-badge",
-    "name": "Scalloped badge",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "badge",
-      "seal"
-    ],
-    "hash": "a46be6ce",
-    "ratio": 1
-  },
-  {
-    "id": "phone-screen",
-    "name": "Phone screen",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "phone",
-      "mockup"
-    ],
-    "hash": "404f4f01",
-    "ratio": 0.68
-  },
-  {
-    "id": "phone-outline",
-    "name": "Phone outline",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "phone",
-      "mockup",
-      "light"
-    ],
-    "hash": "1b4065ec",
-    "ratio": 0.68
-  },
-  {
-    "id": "phone-button",
-    "name": "Phone with button",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "phone",
-      "mockup",
-      "button"
-    ],
-    "hash": "a0331898",
-    "ratio": 0.68
-  },
-  {
-    "id": "arrow-tag",
-    "name": "Arrow tag",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "arrow"
-    ],
-    "hash": "0140899b",
-    "ratio": 0.705
-  },
-  {
-    "id": "curl-arrow",
-    "name": "Curled arrow",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "arrow"
-    ],
-    "hash": "a1c98a05",
-    "ratio": 0.785
-  },
-  {
-    "id": "curl-arrow-tinted",
-    "name": "Curled arrow, tinted",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "arrow"
-    ],
-    "hash": "47225b6b",
-    "ratio": 0.785
-  },
-  {
-    "id": "viewfinder",
-    "name": "Viewfinder",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "minimal",
-      "viewfinder"
-    ],
-    "hash": "d77a32f4",
-    "ratio": 0.886
-  },
-  {
-    "id": "viewfinder-note",
-    "name": "Viewfinder with note",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "minimal",
-      "viewfinder"
-    ],
-    "hash": "b682a1a8",
-    "ratio": 0.814
-  },
-  {
-    "id": "side-rules",
-    "name": "Side rules",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "minimal"
-    ],
-    "hash": "41693e99",
-    "ratio": 0.827
-  },
-  {
-    "id": "side-rules-border",
-    "name": "Bordered rules",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "minimal",
-      "website"
-    ],
-    "hash": "35a6cf60",
-    "ratio": 0.713
-  },
-  {
-    "id": "underline-bold",
-    "name": "Bold underline",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "minimal"
-    ],
-    "hash": "95cdf036",
-    "ratio": 0.756
-  },
-  {
-    "id": "underline-left",
-    "name": "Left underline",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "minimal"
-    ],
-    "hash": "25e689e7",
-    "ratio": 0.8
-  },
-  {
-    "id": "double-border",
-    "name": "Double border",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "elegant"
-    ],
-    "hash": "e6c5b4a8",
-    "ratio": 0.763
-  },
-  {
-    "id": "polaroid-photo",
-    "name": "Instant photo",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "photo"
-    ],
-    "hash": "80b35ae8",
-    "ratio": 0.82
-  },
-  {
-    "id": "polaroid-caption",
-    "name": "Photo caption",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "photo"
-    ],
-    "hash": "5c48f762",
-    "ratio": 0.82
-  },
-  {
-    "id": "sticker-outline",
-    "name": "Sticker",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "sticker"
-    ],
-    "hash": "6bad1b75",
-    "ratio": 0.754
-  },
-  {
-    "id": "sticker-peel",
-    "name": "Peeling sticker",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "sticker"
-    ],
-    "hash": "d99076d9",
-    "ratio": 0.754
-  },
-  {
-    "id": "sticker-grey",
-    "name": "Grey sticker",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "sticker"
-    ],
-    "hash": "8c980ef6",
-    "ratio": 0.754
-  },
-  {
-    "id": "hang-tag",
-    "name": "Hang tag",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "tag"
-    ],
-    "hash": "8778eff0",
-    "ratio": 0.66
-  },
-  {
-    "id": "hang-tag-light",
-    "name": "Light hang tag",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "tag",
-      "light"
-    ],
-    "hash": "b223e170",
-    "ratio": 0.66
-  },
-  {
-    "id": "side-bar",
-    "name": "Side bar",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "editorial"
-    ],
-    "hash": "f1cd741d",
-    "ratio": 0.802
-  },
-  {
-    "id": "side-bar-arrow",
-    "name": "Side bar with arrow",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "editorial"
-    ],
-    "hash": "05e45399",
-    "ratio": 0.802
-  },
-  {
-    "id": "two-bands",
-    "name": "Two bands",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "bands"
-    ],
-    "hash": "7327ea9c",
-    "ratio": 0.729
-  },
-  {
-    "id": "stitched-card",
-    "name": "Stitched card",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "stitched"
-    ],
-    "hash": "12a7848c",
-    "ratio": 0.752
-  },
-  {
-    "id": "stitched-light",
-    "name": "Light stitched card",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "stitched",
-      "light"
-    ],
-    "hash": "42fb5b3b",
-    "ratio": 0.709
-  },
-  {
-    "id": "geo-corners",
-    "name": "Geometric corners",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "modern"
-    ],
-    "hash": "5df1c0fa",
-    "ratio": 0.721
-  },
-  {
-    "id": "circle-badge-top",
-    "name": "Badge on top",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "badge"
-    ],
-    "hash": "692849da",
-    "ratio": 0.678
-  },
-  {
-    "id": "browser-window",
-    "name": "Browser window",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "website",
-      "link"
-    ],
-    "hash": "bab5d3a0",
-    "ratio": 0.738
-  },
-  {
-    "id": "landscape-panel",
-    "name": "Wide panel",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "landscape",
-      "wide"
-    ],
-    "hash": "ad8ee535",
-    "ratio": 1.923
-  },
-  {
-    "id": "landscape-light",
-    "name": "Wide light panel",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "landscape",
-      "wide",
-      "light"
-    ],
-    "hash": "3448e6c6",
-    "ratio": 1.923
-  },
-  {
-    "id": "neon-tube",
-    "name": "Neon tube",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "dark",
-      "neon"
-    ],
-    "hash": "0cba61ba",
-    "ratio": 0.785
-  },
-  {
-    "id": "half-circle",
-    "name": "Half circle",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "modern"
-    ],
-    "hash": "03a8666d",
-    "ratio": 0.689
-  },
-  {
-    "id": "wave-band",
-    "name": "Wave band",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "modern"
-    ],
-    "hash": "daacd5cc",
-    "ratio": 0.701
-  },
-  {
-    "id": "scan-to-watch",
-    "name": "Watch video",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "video"
-    ],
-    "hash": "bd28fa92",
-    "ratio": 0.713
-  },
-  {
-    "id": "scan-to-listen",
-    "name": "Listen",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "audio",
-      "podcast"
-    ],
-    "hash": "79f8b8cb",
-    "ratio": 0.701
-  },
-  {
-    "id": "scan-for-directions",
-    "name": "Directions",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "directions",
-      "map"
-    ],
-    "hash": "ffd5ee23",
-    "ratio": 0.705
-  },
-  {
-    "id": "scan-to-call",
-    "name": "Call us",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "phone",
-      "contact"
-    ],
-    "hash": "2e5e750a",
-    "ratio": 0.795
-  },
-  {
-    "id": "scan-to-email",
-    "name": "Email us",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "email",
-      "contact"
-    ],
-    "hash": "f9e273e5",
-    "ratio": 0.767
-  },
-  {
-    "id": "scan-to-share",
-    "name": "Share",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "share"
-    ],
-    "hash": "fc7741c9",
-    "ratio": 0.681
-  },
-  {
-    "id": "scan-to-subscribe",
-    "name": "Subscribe",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "newsletter",
-      "updates"
-    ],
-    "hash": "7f640666",
-    "ratio": 0.678
-  },
-  {
-    "id": "scan-for-schedule",
-    "name": "Opening hours",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "hours",
-      "schedule"
-    ],
-    "hash": "7d93c8cb",
-    "ratio": 0.701
-  },
-  {
-    "id": "scan-to-sign-up",
-    "name": "Sign up",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "sign up",
-      "registration"
-    ],
-    "hash": "e3950f99",
-    "ratio": 0.705
-  },
-  {
-    "id": "scan-to-download-file",
-    "name": "Download file",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "download",
-      "file"
-    ],
-    "hash": "8eea46e7",
-    "ratio": 0.713
-  },
-  {
-    "id": "scan-for-link",
-    "name": "Link",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "link"
-    ],
-    "hash": "7978f043",
-    "ratio": 0.709
-  },
-  {
-    "id": "scan-to-vote",
-    "name": "Vote",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "vote",
-      "poll"
-    ],
-    "hash": "a45b661d",
-    "ratio": 0.681
-  },
-  {
-    "id": "christmas-holly",
-    "name": "Holly card",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "holly"
-    ],
-    "hash": "cd023c7e",
-    "ratio": 0.701
-  },
-  {
-    "id": "christmas-tree",
-    "name": "Christmas tree",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "tree"
-    ],
-    "hash": "7c69b9f2",
-    "ratio": 0.713
-  },
-  {
-    "id": "christmas-bauble",
-    "name": "Bauble arch",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "bauble"
-    ],
-    "hash": "32cf4d24",
-    "ratio": 0.702
-  },
-  {
-    "id": "christmas-star-seal",
-    "name": "Star of the season",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "star"
-    ],
-    "hash": "40c4a2bf",
-    "ratio": 1
-  },
-  {
-    "id": "christmas-wreath",
-    "name": "Wreath badge",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "wreath",
-      "menu"
-    ],
-    "hash": "5b493363",
-    "ratio": 0.678
-  },
-  {
-    "id": "christmas-bells",
-    "name": "Christmas bells",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "bells"
-    ],
-    "hash": "a33a2cb0",
-    "ratio": 0.8
-  },
-  {
-    "id": "christmas-gift-box",
-    "name": "Gift box",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "gift"
-    ],
-    "hash": "50a6ad24",
-    "ratio": 0.703
-  },
-  {
-    "id": "christmas-candle",
-    "name": "Candlelight",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "candle",
-      "church"
-    ],
-    "hash": "facd13f8",
-    "ratio": 0.721
-  },
-  {
-    "id": "christmas-snow-tab",
-    "name": "Snowy tab",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "snow"
-    ],
-    "hash": "8663509b",
-    "ratio": 0.805
-  },
-  {
-    "id": "christmas-market-ticket",
-    "name": "Market ticket",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "market"
-    ],
-    "hash": "eb7d9fc6",
-    "ratio": 0.681
-  },
-  {
-    "id": "christmas-postcard",
-    "name": "Christmas post",
-    "collection": "holidays",
-    "occasion": "christmas",
-    "tags": [
-      "christmas",
-      "holidays",
-      "december",
-      "card",
-      "post"
-    ],
-    "hash": "612ed03b",
-    "ratio": 0.767
-  },
-  {
-    "id": "new-year-firework",
-    "name": "Fireworks",
-    "collection": "holidays",
-    "occasion": "new-year",
-    "tags": [
-      "new year",
-      "celebration",
-      "party",
-      "fireworks"
-    ],
-    "hash": "e2a15191",
-    "ratio": 0.713
-  },
-  {
-    "id": "new-year-toast",
-    "name": "Midnight toast",
-    "collection": "holidays",
-    "occasion": "new-year",
-    "tags": [
-      "new year",
-      "celebration",
-      "party",
-      "toast"
-    ],
-    "hash": "1e3bc4d1",
-    "ratio": 0.702
-  },
-  {
-    "id": "new-year-skyline",
-    "name": "City countdown",
-    "collection": "holidays",
-    "occasion": "new-year",
-    "tags": [
-      "new year",
-      "celebration",
-      "party",
-      "city",
-      "countdown"
-    ],
-    "hash": "4b71e097",
-    "ratio": 0.689
-  },
-  {
-    "id": "new-year-seal",
-    "name": "New Year seal",
-    "collection": "holidays",
-    "occasion": "new-year",
-    "tags": [
-      "new year",
-      "celebration",
-      "party",
-      "badge"
-    ],
-    "hash": "d347fa91",
-    "ratio": 1
-  },
-  {
-    "id": "new-year-calendar",
-    "name": "First page",
-    "collection": "holidays",
-    "occasion": "new-year",
-    "tags": [
-      "new year",
-      "celebration",
-      "party",
-      "calendar"
-    ],
-    "hash": "af60b667",
-    "ratio": 0.697
-  },
-  {
-    "id": "new-year-countdown",
-    "name": "Countdown",
-    "collection": "holidays",
-    "occasion": "new-year",
-    "tags": [
-      "new year",
-      "celebration",
-      "party",
-      "countdown",
-      "rsvp"
-    ],
-    "hash": "b9362aca",
-    "ratio": 0.729
-  },
-  {
-    "id": "new-year-sparkle",
-    "name": "Sparkle sticker",
-    "collection": "holidays",
-    "occasion": "new-year",
-    "tags": [
-      "new year",
-      "celebration",
-      "party",
-      "sparkle"
-    ],
-    "hash": "83de91e3",
-    "ratio": 0.754
-  },
-  {
-    "id": "lunar-lantern",
-    "name": "Red lantern",
-    "collection": "holidays",
-    "occasion": "lunar-new-year",
-    "tags": [
-      "lunar new year",
-      "chinese new year",
-      "spring festival",
-      "lantern"
-    ],
-    "hash": "5e834ca3",
-    "ratio": 0.701
-  },
-  {
-    "id": "lunar-coin",
-    "name": "Lucky coin",
-    "collection": "holidays",
-    "occasion": "lunar-new-year",
-    "tags": [
+    id: "wifi-card",
+    name: "Wi-Fi card",
+    collection: "places",
+    tags: ["wifi", "hospitality", "cafe", "hotel"],
+    hash: "002a5781",
+    ratio: 0.747,
+  },
+  {
+    id: "table-tent",
+    name: "Table tent topper",
+    collection: "food-drink",
+    tags: ["menu", "restaurant", "cafe", "table"],
+    hash: "79ee561d",
+    ratio: 0.674,
+  },
+  {
+    id: "order-at-table",
+    name: "Order at table",
+    collection: "food-drink",
+    tags: ["restaurant", "ordering", "table"],
+    hash: "bf3d79cf",
+    ratio: 0.738,
+  },
+  {
+    id: "review-us",
+    name: "Review us",
+    collection: "business",
+    tags: ["reviews", "feedback", "restaurant", "retail"],
+    hash: "8a821343",
+    ratio: 0.721,
+  },
+  {
+    id: "scan-to-pay",
+    name: "Scan to pay",
+    collection: "business",
+    tags: ["payments", "checkout", "retail"],
+    hash: "3cac1f74",
+    ratio: 0.705,
+  },
+  {
+    id: "event-ticket",
+    name: "Event ticket",
+    collection: "events",
+    tags: ["events", "tickets", "concert"],
+    hash: "1ffc6011",
+    ratio: 0.689,
+  },
+  {
+    id: "rsvp-card",
+    name: "RSVP card",
+    collection: "events",
+    tags: ["events", "wedding", "party", "invitation"],
+    hash: "7e9a12a1",
+    ratio: 0.75,
+  },
+  {
+    id: "save-contact",
+    name: "Save my contact",
+    collection: "business",
+    tags: ["business card", "contact", "networking"],
+    hash: "c5751aec",
+    ratio: 0.765,
+  },
+  {
+    id: "follow-us",
+    name: "Follow us",
+    collection: "business",
+    tags: ["social", "followers", "marketing"],
+    hash: "7e7fdbc7",
+    ratio: 0.705,
+  },
+  {
+    id: "get-the-app",
+    name: "Get the app",
+    collection: "business",
+    tags: ["app", "download", "mobile"],
+    hash: "1eebd998",
+    ratio: 0.633,
+  },
+  {
+    id: "feedback-bubble",
+    name: "Feedback bubble",
+    collection: "business",
+    tags: ["feedback", "survey", "customer service"],
+    hash: "590a02d1",
+    ratio: 0.721,
+  },
+  {
+    id: "product-info",
+    name: "Product info",
+    collection: "shopping",
+    tags: ["packaging", "instructions", "manual", "retail"],
+    hash: "b68b2afc",
+    ratio: 0.721,
+  },
+  {
+    id: "register-product",
+    name: "Register product",
+    collection: "shopping",
+    tags: ["warranty", "registration", "packaging"],
+    hash: "1adffb8a",
+    ratio: 0.721,
+  },
+  {
+    id: "donate",
+    name: "Donate",
+    collection: "business",
+    tags: ["charity", "donations", "nonprofit"],
+    hash: "c0f3bf47",
+    ratio: 0.689,
+  },
+  {
+    id: "check-in",
+    name: "Check in",
+    collection: "events",
+    tags: ["check-in", "reception", "events", "visitors"],
+    hash: "b712ef8a",
+    ratio: 0.729,
+  },
+  {
+    id: "audio-guide",
+    name: "Audio guide",
+    collection: "places",
+    tags: ["museum", "tour", "audio", "gallery"],
+    hash: "da878bab",
+    ratio: 0.796,
+  },
+  {
+    id: "sign-rider",
+    name: "Sign rider",
+    collection: "real-estate",
+    tags: ["real estate", "property", "signage"],
+    hash: "1c567df1",
+    ratio: 1.935,
+  },
+  {
+    id: "book-now",
+    name: "Book now",
+    collection: "business",
+    tags: ["booking", "appointments", "salon", "clinic"],
+    hash: "fe51b7ee",
+    ratio: 0.705,
+  },
+  {
+    id: "shop-window",
+    name: "Shop window",
+    collection: "shopping",
+    tags: ["retail", "shop", "window", "sticker"],
+    hash: "a2e954ad",
+    ratio: 1.742,
+  },
+  {
+    id: "attendance",
+    name: "Attendance",
+    collection: "events",
+    tags: ["attendance", "school", "workplace", "events"],
+    hash: "260d41a4",
+    ratio: 0.705,
+  },
+  {
+    id: "winter",
+    name: "Winter",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["seasonal", "winter", "snow"],
+    hash: "39692f7e",
+    ratio: 0.785,
+  },
+  {
+    id: "halloween",
+    name: "Halloween",
+    collection: "holidays",
+    occasion: "halloween",
+    tags: ["seasonal", "halloween", "october"],
+    hash: "eafff649",
+    ratio: 0.721,
+  },
+  {
+    id: "christmas",
+    name: "Christmas",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["seasonal", "christmas", "holidays"],
+    hash: "227812d9",
+    ratio: 0.705,
+  },
+  {
+    id: "new-year",
+    name: "New Year",
+    collection: "holidays",
+    occasion: "new-year",
+    tags: ["seasonal", "new year", "celebration"],
+    hash: "0bfd111d",
+    ratio: 0.721,
+  },
+  {
+    id: "scan-me-tile",
+    name: "Scan me tile",
+    collection: "call-to-action",
+    tags: ["call to action"],
+    hash: "7a88bd4b",
+    ratio: 0.873,
+  },
+  {
+    id: "scan-me-card",
+    name: "Scan me card",
+    collection: "call-to-action",
+    tags: ["call to action", "minimal"],
+    hash: "366345b6",
+    ratio: 0.77,
+  },
+  {
+    id: "learn-more-card",
+    name: "Learn more card",
+    collection: "call-to-action",
+    tags: ["call to action", "information"],
+    hash: "8f72a4ec",
+    ratio: 0.713,
+  },
+  {
+    id: "scan-me-band",
+    name: "Label band",
+    collection: "call-to-action",
+    tags: ["call to action", "minimal"],
+    hash: "819bacf1",
+    ratio: 0.81,
+  },
+  {
+    id: "scan-me-band-top",
+    name: "Top band",
+    collection: "call-to-action",
+    tags: ["call to action"],
+    hash: "f70b33b4",
+    ratio: 0.701,
+  },
+  {
+    id: "tap-or-scan-band",
+    name: "Tap or scan band",
+    collection: "call-to-action",
+    tags: ["call to action", "nfc"],
+    hash: "974a44d0",
+    ratio: 0.701,
+  },
+  {
+    id: "scan-button",
+    name: "Button",
+    collection: "call-to-action",
+    tags: ["call to action", "button"],
+    hash: "975f200b",
+    ratio: 0.747,
+  },
+  {
+    id: "scan-button-tinted",
+    name: "Tinted button",
+    collection: "call-to-action",
+    tags: ["call to action", "button"],
+    hash: "c3868a9f",
+    ratio: 0.705,
+  },
+  {
+    id: "hanging-tab",
+    name: "Hanging tab",
+    collection: "call-to-action",
+    tags: ["call to action", "tab"],
+    hash: "73a502f5",
+    ratio: 0.844,
+  },
+  {
+    id: "hanging-tab-two-lines",
+    name: "Tab with note",
+    collection: "call-to-action",
+    tags: ["call to action", "tab"],
+    hash: "994dee7f",
+    ratio: 0.805,
+  },
+  {
+    id: "folder-tab",
+    name: "Folder tab",
+    collection: "call-to-action",
+    tags: ["call to action", "tab"],
+    hash: "1fcff48c",
+    ratio: 0.795,
+  },
+  {
+    id: "folder-tab-arrow",
+    name: "Folder tab with arrow",
+    collection: "call-to-action",
+    tags: ["call to action", "tab"],
+    hash: "703ffbc9",
+    ratio: 0.879,
+  },
+  {
+    id: "ribbon-banner",
+    name: "Ribbon banner",
+    collection: "call-to-action",
+    tags: ["call to action", "ribbon"],
+    hash: "b50e08a5",
+    ratio: 0.911,
+  },
+  {
+    id: "ribbon-banner-solid",
+    name: "Solid ribbon",
+    collection: "call-to-action",
+    tags: ["call to action", "ribbon"],
+    hash: "0db55aef",
+    ratio: 0.8,
+  },
+  {
+    id: "ribbon-sparkle",
+    name: "Ribbon with sparkle",
+    collection: "call-to-action",
+    tags: ["call to action", "ribbon", "launch"],
+    hash: "110a06d5",
+    ratio: 0.8,
+  },
+  {
+    id: "speech-bubble-over",
+    name: "Bubble over code",
+    collection: "call-to-action",
+    tags: ["call to action", "speech bubble"],
+    hash: "9b514cc0",
+    ratio: 0.78,
+  },
+  {
+    id: "speech-bubble-round",
+    name: "Round bubble",
+    collection: "call-to-action",
+    tags: ["call to action", "speech bubble"],
+    hash: "64cbcaf2",
+    ratio: 0.743,
+  },
+  {
+    id: "bubble-tail-left",
+    name: "Bubble, tail left",
+    collection: "call-to-action",
+    tags: ["call to action", "speech bubble"],
+    hash: "3d330812",
+    ratio: 0.775,
+  },
+  {
+    id: "bubble-tail-right",
+    name: "Bubble, tail right",
+    collection: "call-to-action",
+    tags: ["call to action", "speech bubble"],
+    hash: "48f8f539",
+    ratio: 0.681,
+  },
+  {
+    id: "bubble-outline",
+    name: "Outline bubble",
+    collection: "call-to-action",
+    tags: ["call to action", "speech bubble", "light"],
+    hash: "daa743ef",
+    ratio: 0.681,
+  },
+  {
+    id: "chat-pair",
+    name: "Chat pair",
+    collection: "call-to-action",
+    tags: ["call to action", "chat", "messaging"],
+    hash: "3b7c3904",
+    ratio: 0.709,
+  },
+  {
+    id: "ticket-stub",
+    name: "Ticket stub",
+    collection: "call-to-action",
+    tags: ["call to action", "ticket"],
+    hash: "e8441806",
+    ratio: 0.738,
+  },
+  {
+    id: "ticket-light",
+    name: "Light ticket",
+    collection: "call-to-action",
+    tags: ["call to action", "ticket", "light"],
+    hash: "d4a116d6",
+    ratio: 0.775,
+  },
+  {
+    id: "ticket-wide",
+    name: "Wide ticket",
+    collection: "call-to-action",
+    tags: ["call to action", "ticket"],
+    hash: "f370d98c",
+    ratio: 1.923,
+  },
+  {
+    id: "postage-stamp",
+    name: "Postage stamp",
+    collection: "call-to-action",
+    tags: ["call to action", "stamp"],
+    hash: "b374a1de",
+    ratio: 0.767,
+  },
+  {
+    id: "postage-stamp-light",
+    name: "Light stamp",
+    collection: "call-to-action",
+    tags: ["call to action", "stamp", "light"],
+    hash: "d609469e",
+    ratio: 0.767,
+  },
+  {
+    id: "round-badge",
+    name: "Round badge",
+    collection: "call-to-action",
+    tags: ["call to action", "badge", "round"],
+    hash: "a569eed0",
+    ratio: 1,
+  },
+  {
+    id: "round-badge-light",
+    name: "Light round badge",
+    collection: "call-to-action",
+    tags: ["call to action", "badge", "round", "light"],
+    hash: "ae6cc5a5",
+    ratio: 1,
+  },
+  {
+    id: "rosette-badge",
+    name: "Rosette",
+    collection: "call-to-action",
+    tags: ["call to action", "badge", "seal"],
+    hash: "4de96987",
+    ratio: 1,
+  },
+  {
+    id: "scalloped-badge",
+    name: "Scalloped badge",
+    collection: "call-to-action",
+    tags: ["call to action", "badge", "seal"],
+    hash: "a46be6ce",
+    ratio: 1,
+  },
+  {
+    id: "phone-screen",
+    name: "Phone screen",
+    collection: "call-to-action",
+    tags: ["call to action", "phone", "mockup"],
+    hash: "404f4f01",
+    ratio: 0.68,
+  },
+  {
+    id: "phone-outline",
+    name: "Phone outline",
+    collection: "call-to-action",
+    tags: ["call to action", "phone", "mockup", "light"],
+    hash: "1b4065ec",
+    ratio: 0.68,
+  },
+  {
+    id: "phone-button",
+    name: "Phone with button",
+    collection: "call-to-action",
+    tags: ["call to action", "phone", "mockup", "button"],
+    hash: "a0331898",
+    ratio: 0.68,
+  },
+  {
+    id: "arrow-tag",
+    name: "Arrow tag",
+    collection: "call-to-action",
+    tags: ["call to action", "arrow"],
+    hash: "0140899b",
+    ratio: 0.705,
+  },
+  {
+    id: "curl-arrow",
+    name: "Curled arrow",
+    collection: "call-to-action",
+    tags: ["call to action", "arrow"],
+    hash: "a1c98a05",
+    ratio: 0.785,
+  },
+  {
+    id: "curl-arrow-tinted",
+    name: "Curled arrow, tinted",
+    collection: "call-to-action",
+    tags: ["call to action", "arrow"],
+    hash: "47225b6b",
+    ratio: 0.785,
+  },
+  {
+    id: "viewfinder",
+    name: "Viewfinder",
+    collection: "call-to-action",
+    tags: ["call to action", "minimal", "viewfinder"],
+    hash: "d77a32f4",
+    ratio: 0.886,
+  },
+  {
+    id: "viewfinder-note",
+    name: "Viewfinder with note",
+    collection: "call-to-action",
+    tags: ["call to action", "minimal", "viewfinder"],
+    hash: "b682a1a8",
+    ratio: 0.814,
+  },
+  {
+    id: "side-rules",
+    name: "Side rules",
+    collection: "call-to-action",
+    tags: ["call to action", "minimal"],
+    hash: "41693e99",
+    ratio: 0.827,
+  },
+  {
+    id: "side-rules-border",
+    name: "Bordered rules",
+    collection: "call-to-action",
+    tags: ["call to action", "minimal", "website"],
+    hash: "35a6cf60",
+    ratio: 0.713,
+  },
+  {
+    id: "underline-bold",
+    name: "Bold underline",
+    collection: "call-to-action",
+    tags: ["call to action", "minimal"],
+    hash: "95cdf036",
+    ratio: 0.756,
+  },
+  {
+    id: "underline-left",
+    name: "Left underline",
+    collection: "call-to-action",
+    tags: ["call to action", "minimal"],
+    hash: "25e689e7",
+    ratio: 0.8,
+  },
+  {
+    id: "double-border",
+    name: "Double border",
+    collection: "call-to-action",
+    tags: ["call to action", "elegant"],
+    hash: "e6c5b4a8",
+    ratio: 0.763,
+  },
+  {
+    id: "polaroid-photo",
+    name: "Instant photo",
+    collection: "call-to-action",
+    tags: ["call to action", "photo"],
+    hash: "80b35ae8",
+    ratio: 0.82,
+  },
+  {
+    id: "polaroid-caption",
+    name: "Photo caption",
+    collection: "call-to-action",
+    tags: ["call to action", "photo"],
+    hash: "5c48f762",
+    ratio: 0.82,
+  },
+  {
+    id: "sticker-outline",
+    name: "Sticker",
+    collection: "call-to-action",
+    tags: ["call to action", "sticker"],
+    hash: "6bad1b75",
+    ratio: 0.754,
+  },
+  {
+    id: "sticker-peel",
+    name: "Peeling sticker",
+    collection: "call-to-action",
+    tags: ["call to action", "sticker"],
+    hash: "d99076d9",
+    ratio: 0.754,
+  },
+  {
+    id: "sticker-grey",
+    name: "Grey sticker",
+    collection: "call-to-action",
+    tags: ["call to action", "sticker"],
+    hash: "8c980ef6",
+    ratio: 0.754,
+  },
+  {
+    id: "hang-tag",
+    name: "Hang tag",
+    collection: "call-to-action",
+    tags: ["call to action", "tag"],
+    hash: "8778eff0",
+    ratio: 0.66,
+  },
+  {
+    id: "hang-tag-light",
+    name: "Light hang tag",
+    collection: "call-to-action",
+    tags: ["call to action", "tag", "light"],
+    hash: "b223e170",
+    ratio: 0.66,
+  },
+  {
+    id: "side-bar",
+    name: "Side bar",
+    collection: "call-to-action",
+    tags: ["call to action", "editorial"],
+    hash: "f1cd741d",
+    ratio: 0.802,
+  },
+  {
+    id: "side-bar-arrow",
+    name: "Side bar with arrow",
+    collection: "call-to-action",
+    tags: ["call to action", "editorial"],
+    hash: "05e45399",
+    ratio: 0.802,
+  },
+  {
+    id: "two-bands",
+    name: "Two bands",
+    collection: "call-to-action",
+    tags: ["call to action", "bands"],
+    hash: "7327ea9c",
+    ratio: 0.729,
+  },
+  {
+    id: "stitched-card",
+    name: "Stitched card",
+    collection: "call-to-action",
+    tags: ["call to action", "stitched"],
+    hash: "12a7848c",
+    ratio: 0.752,
+  },
+  {
+    id: "stitched-light",
+    name: "Light stitched card",
+    collection: "call-to-action",
+    tags: ["call to action", "stitched", "light"],
+    hash: "42fb5b3b",
+    ratio: 0.709,
+  },
+  {
+    id: "geo-corners",
+    name: "Geometric corners",
+    collection: "call-to-action",
+    tags: ["call to action", "modern"],
+    hash: "5df1c0fa",
+    ratio: 0.721,
+  },
+  {
+    id: "circle-badge-top",
+    name: "Badge on top",
+    collection: "call-to-action",
+    tags: ["call to action", "badge"],
+    hash: "692849da",
+    ratio: 0.678,
+  },
+  {
+    id: "browser-window",
+    name: "Browser window",
+    collection: "call-to-action",
+    tags: ["call to action", "website", "link"],
+    hash: "bab5d3a0",
+    ratio: 0.738,
+  },
+  {
+    id: "landscape-panel",
+    name: "Wide panel",
+    collection: "call-to-action",
+    tags: ["call to action", "landscape", "wide"],
+    hash: "ad8ee535",
+    ratio: 1.923,
+  },
+  {
+    id: "landscape-light",
+    name: "Wide light panel",
+    collection: "call-to-action",
+    tags: ["call to action", "landscape", "wide", "light"],
+    hash: "3448e6c6",
+    ratio: 1.923,
+  },
+  {
+    id: "neon-tube",
+    name: "Neon tube",
+    collection: "call-to-action",
+    tags: ["call to action", "dark", "neon"],
+    hash: "0cba61ba",
+    ratio: 0.785,
+  },
+  {
+    id: "half-circle",
+    name: "Half circle",
+    collection: "call-to-action",
+    tags: ["call to action", "modern"],
+    hash: "03a8666d",
+    ratio: 0.689,
+  },
+  {
+    id: "wave-band",
+    name: "Wave band",
+    collection: "call-to-action",
+    tags: ["call to action", "modern"],
+    hash: "daacd5cc",
+    ratio: 0.701,
+  },
+  {
+    id: "scan-to-watch",
+    name: "Watch video",
+    collection: "call-to-action",
+    tags: ["call to action", "video"],
+    hash: "bd28fa92",
+    ratio: 0.713,
+  },
+  {
+    id: "scan-to-listen",
+    name: "Listen",
+    collection: "call-to-action",
+    tags: ["call to action", "audio", "podcast"],
+    hash: "79f8b8cb",
+    ratio: 0.701,
+  },
+  {
+    id: "scan-for-directions",
+    name: "Directions",
+    collection: "call-to-action",
+    tags: ["call to action", "directions", "map"],
+    hash: "ffd5ee23",
+    ratio: 0.705,
+  },
+  {
+    id: "scan-to-call",
+    name: "Call us",
+    collection: "call-to-action",
+    tags: ["call to action", "phone", "contact"],
+    hash: "2e5e750a",
+    ratio: 0.795,
+  },
+  {
+    id: "scan-to-email",
+    name: "Email us",
+    collection: "call-to-action",
+    tags: ["call to action", "email", "contact"],
+    hash: "f9e273e5",
+    ratio: 0.767,
+  },
+  {
+    id: "scan-to-share",
+    name: "Share",
+    collection: "call-to-action",
+    tags: ["call to action", "share"],
+    hash: "fc7741c9",
+    ratio: 0.681,
+  },
+  {
+    id: "scan-to-subscribe",
+    name: "Subscribe",
+    collection: "call-to-action",
+    tags: ["call to action", "newsletter", "updates"],
+    hash: "7f640666",
+    ratio: 0.678,
+  },
+  {
+    id: "scan-for-schedule",
+    name: "Opening hours",
+    collection: "call-to-action",
+    tags: ["call to action", "hours", "schedule"],
+    hash: "7d93c8cb",
+    ratio: 0.701,
+  },
+  {
+    id: "scan-to-sign-up",
+    name: "Sign up",
+    collection: "call-to-action",
+    tags: ["call to action", "sign up", "registration"],
+    hash: "e3950f99",
+    ratio: 0.705,
+  },
+  {
+    id: "scan-to-download-file",
+    name: "Download file",
+    collection: "call-to-action",
+    tags: ["call to action", "download", "file"],
+    hash: "8eea46e7",
+    ratio: 0.713,
+  },
+  {
+    id: "scan-for-link",
+    name: "Link",
+    collection: "call-to-action",
+    tags: ["call to action", "link"],
+    hash: "7978f043",
+    ratio: 0.709,
+  },
+  {
+    id: "scan-to-vote",
+    name: "Vote",
+    collection: "call-to-action",
+    tags: ["call to action", "vote", "poll"],
+    hash: "a45b661d",
+    ratio: 0.681,
+  },
+  {
+    id: "christmas-holly",
+    name: "Holly card",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "holly"],
+    hash: "cd023c7e",
+    ratio: 0.701,
+  },
+  {
+    id: "christmas-tree",
+    name: "Christmas tree",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "tree"],
+    hash: "7c69b9f2",
+    ratio: 0.713,
+  },
+  {
+    id: "christmas-bauble",
+    name: "Bauble arch",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "bauble"],
+    hash: "32cf4d24",
+    ratio: 0.702,
+  },
+  {
+    id: "christmas-star-seal",
+    name: "Star of the season",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "star"],
+    hash: "40c4a2bf",
+    ratio: 1,
+  },
+  {
+    id: "christmas-wreath",
+    name: "Wreath badge",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "wreath", "menu"],
+    hash: "5b493363",
+    ratio: 0.678,
+  },
+  {
+    id: "christmas-bells",
+    name: "Christmas bells",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "bells"],
+    hash: "a33a2cb0",
+    ratio: 0.8,
+  },
+  {
+    id: "christmas-gift-box",
+    name: "Gift box",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "gift"],
+    hash: "50a6ad24",
+    ratio: 0.703,
+  },
+  {
+    id: "christmas-candle",
+    name: "Candlelight",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "candle", "church"],
+    hash: "facd13f8",
+    ratio: 0.721,
+  },
+  {
+    id: "christmas-snow-tab",
+    name: "Snowy tab",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "snow"],
+    hash: "8663509b",
+    ratio: 0.805,
+  },
+  {
+    id: "christmas-market-ticket",
+    name: "Market ticket",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "market"],
+    hash: "eb7d9fc6",
+    ratio: 0.681,
+  },
+  {
+    id: "christmas-postcard",
+    name: "Christmas post",
+    collection: "holidays",
+    occasion: "christmas",
+    tags: ["christmas", "holidays", "december", "card", "post"],
+    hash: "612ed03b",
+    ratio: 0.767,
+  },
+  {
+    id: "new-year-firework",
+    name: "Fireworks",
+    collection: "holidays",
+    occasion: "new-year",
+    tags: ["new year", "celebration", "party", "fireworks"],
+    hash: "e2a15191",
+    ratio: 0.713,
+  },
+  {
+    id: "new-year-toast",
+    name: "Midnight toast",
+    collection: "holidays",
+    occasion: "new-year",
+    tags: ["new year", "celebration", "party", "toast"],
+    hash: "1e3bc4d1",
+    ratio: 0.702,
+  },
+  {
+    id: "new-year-skyline",
+    name: "City countdown",
+    collection: "holidays",
+    occasion: "new-year",
+    tags: ["new year", "celebration", "party", "city", "countdown"],
+    hash: "4b71e097",
+    ratio: 0.689,
+  },
+  {
+    id: "new-year-seal",
+    name: "New Year seal",
+    collection: "holidays",
+    occasion: "new-year",
+    tags: ["new year", "celebration", "party", "badge"],
+    hash: "d347fa91",
+    ratio: 1,
+  },
+  {
+    id: "new-year-calendar",
+    name: "First page",
+    collection: "holidays",
+    occasion: "new-year",
+    tags: ["new year", "celebration", "party", "calendar"],
+    hash: "af60b667",
+    ratio: 0.697,
+  },
+  {
+    id: "new-year-countdown",
+    name: "Countdown",
+    collection: "holidays",
+    occasion: "new-year",
+    tags: ["new year", "celebration", "party", "countdown", "rsvp"],
+    hash: "b9362aca",
+    ratio: 0.729,
+  },
+  {
+    id: "new-year-sparkle",
+    name: "Sparkle sticker",
+    collection: "holidays",
+    occasion: "new-year",
+    tags: ["new year", "celebration", "party", "sparkle"],
+    hash: "83de91e3",
+    ratio: 0.754,
+  },
+  {
+    id: "lunar-lantern",
+    name: "Red lantern",
+    collection: "holidays",
+    occasion: "lunar-new-year",
+    tags: ["lunar new year", "chinese new year", "spring festival", "lantern"],
+    hash: "5e834ca3",
+    ratio: 0.701,
+  },
+  {
+    id: "lunar-coin",
+    name: "Lucky coin",
+    collection: "holidays",
+    occasion: "lunar-new-year",
+    tags: [
       "lunar new year",
       "chinese new year",
       "spring festival",
       "coin",
-      "luck"
+      "luck",
     ],
-    "hash": "08b8af4f",
-    "ratio": 1
+    hash: "08b8af4f",
+    ratio: 1,
   },
   {
-    "id": "lunar-knot",
-    "name": "Lucky knot",
-    "collection": "holidays",
-    "occasion": "lunar-new-year",
-    "tags": [
+    id: "lunar-knot",
+    name: "Lucky knot",
+    collection: "holidays",
+    occasion: "lunar-new-year",
+    tags: [
       "lunar new year",
       "chinese new year",
       "spring festival",
       "knot",
-      "luck"
+      "luck",
     ],
-    "hash": "828e145a",
-    "ratio": 0.713
+    hash: "828e145a",
+    ratio: 0.713,
   },
   {
-    "id": "lunar-blossom",
-    "name": "Plum blossom",
-    "collection": "holidays",
-    "occasion": "lunar-new-year",
-    "tags": [
-      "lunar new year",
-      "chinese new year",
-      "spring festival",
-      "blossom"
-    ],
-    "hash": "2a99878e",
-    "ratio": 0.702
+    id: "lunar-blossom",
+    name: "Plum blossom",
+    collection: "holidays",
+    occasion: "lunar-new-year",
+    tags: ["lunar new year", "chinese new year", "spring festival", "blossom"],
+    hash: "2a99878e",
+    ratio: 0.702,
   },
   {
-    "id": "lunar-red-envelope",
-    "name": "Red envelope",
-    "collection": "holidays",
-    "occasion": "lunar-new-year",
-    "tags": [
+    id: "lunar-red-envelope",
+    name: "Red envelope",
+    collection: "holidays",
+    occasion: "lunar-new-year",
+    tags: [
       "lunar new year",
       "chinese new year",
       "spring festival",
       "red envelope",
-      "gift"
-    ],
-    "hash": "cf36895f",
-    "ratio": 0.702
-  },
-  {
-    "id": "lunar-banner",
-    "name": "Festival banner",
-    "collection": "holidays",
-    "occasion": "lunar-new-year",
-    "tags": [
-      "lunar new year",
-      "chinese new year",
-      "spring festival",
-      "menu"
-    ],
-    "hash": "eb2ad090",
-    "ratio": 0.729
-  },
-  {
-    "id": "diwali-diya",
-    "name": "Diya",
-    "collection": "holidays",
-    "occasion": "diwali",
-    "tags": [
-      "diwali",
-      "deepavali",
-      "festival of lights",
-      "diya",
-      "lamp"
-    ],
-    "hash": "b921b82a",
-    "ratio": 0.713
-  },
-  {
-    "id": "diwali-rangoli",
-    "name": "Rangoli seal",
-    "collection": "holidays",
-    "occasion": "diwali",
-    "tags": [
-      "diwali",
-      "deepavali",
-      "festival of lights",
-      "rangoli"
-    ],
-    "hash": "1575e2d6",
-    "ratio": 1
-  },
-  {
-    "id": "diwali-marigold",
-    "name": "Marigold arch",
-    "collection": "holidays",
-    "occasion": "diwali",
-    "tags": [
-      "diwali",
-      "deepavali",
-      "festival of lights",
-      "marigold",
-      "flowers"
-    ],
-    "hash": "f796cb01",
-    "ratio": 0.702
-  },
-  {
-    "id": "diwali-lotus",
-    "name": "Lotus border",
-    "collection": "holidays",
-    "occasion": "diwali",
-    "tags": [
-      "diwali",
-      "deepavali",
-      "festival of lights",
-      "lotus"
-    ],
-    "hash": "5ef74532",
-    "ratio": 0.721
-  },
-  {
-    "id": "diwali-toran",
-    "name": "Toran",
-    "collection": "holidays",
-    "occasion": "diwali",
-    "tags": [
-      "diwali",
-      "deepavali",
-      "festival of lights",
-      "toran",
-      "decoration"
-    ],
-    "hash": "2b1da984",
-    "ratio": 0.742
-  },
-  {
-    "id": "diwali-lantern",
-    "name": "Sky lantern",
-    "collection": "holidays",
-    "occasion": "diwali",
-    "tags": [
-      "diwali",
-      "deepavali",
-      "festival of lights",
-      "lantern",
-      "sale"
-    ],
-    "hash": "0a051fc3",
-    "ratio": 0.701
-  },
-  {
-    "id": "diwali-rangoli-card",
-    "name": "Rangoli card",
-    "collection": "holidays",
-    "occasion": "diwali",
-    "tags": [
-      "diwali",
-      "deepavali",
-      "festival of lights",
-      "rangoli"
-    ],
-    "hash": "ff984b4e",
-    "ratio": 0.678
-  },
-  {
-    "id": "holi-splash",
-    "name": "Color splash",
-    "collection": "holidays",
-    "occasion": "holi",
-    "tags": [
-      "holi",
-      "festival of colors",
-      "spring",
-      "colors"
-    ],
-    "hash": "df76f3d9",
-    "ratio": 0.705
-  },
-  {
-    "id": "holi-corners",
-    "name": "Holi corners",
-    "collection": "holidays",
-    "occasion": "holi",
-    "tags": [
-      "holi",
-      "festival of colors",
-      "spring",
-      "colors"
-    ],
-    "hash": "9456d8c2",
-    "ratio": 0.721
-  },
-  {
-    "id": "holi-sticker",
-    "name": "Holi sticker",
-    "collection": "holidays",
-    "occasion": "holi",
-    "tags": [
-      "holi",
-      "festival of colors",
-      "spring",
-      "colors"
-    ],
-    "hash": "524872ef",
-    "ratio": 0.754
-  },
-  {
-    "id": "holi-bands",
-    "name": "Holi bands",
-    "collection": "holidays",
-    "occasion": "holi",
-    "tags": [
-      "holi",
-      "festival of colors",
-      "spring",
-      "party"
-    ],
-    "hash": "afe13cca",
-    "ratio": 0.729
-  },
-  {
-    "id": "holi-bunting",
-    "name": "Holi bunting",
-    "collection": "holidays",
-    "occasion": "holi",
-    "tags": [
-      "holi",
-      "festival of colors",
-      "spring",
-      "decoration"
-    ],
-    "hash": "08979357",
-    "ratio": 0.742
-  },
-  {
-    "id": "ramadan-lantern",
-    "name": "Ramadan lantern",
-    "collection": "holidays",
-    "occasion": "ramadan",
-    "tags": [
-      "ramadan",
-      "iftar",
-      "ramadan kareem",
-      "lantern"
-    ],
-    "hash": "dbc43531",
-    "ratio": 0.702
-  },
-  {
-    "id": "ramadan-crescent",
-    "name": "Crescent and star",
-    "collection": "holidays",
-    "occasion": "ramadan",
-    "tags": [
-      "ramadan",
-      "iftar",
-      "ramadan kareem",
-      "crescent"
-    ],
-    "hash": "14a92aea",
-    "ratio": 0.713
-  },
-  {
-    "id": "ramadan-seal",
-    "name": "Ramadan seal",
-    "collection": "holidays",
-    "occasion": "ramadan",
-    "tags": [
-      "ramadan",
-      "iftar",
-      "ramadan kareem",
-      "badge"
-    ],
-    "hash": "90bb8376",
-    "ratio": 1
-  },
-  {
-    "id": "ramadan-iftar-menu",
-    "name": "Iftar menu",
-    "collection": "holidays",
-    "occasion": "ramadan",
-    "tags": [
-      "ramadan",
-      "iftar",
-      "ramadan kareem",
-      "menu",
-      "restaurant"
-    ],
-    "hash": "a77e7857",
-    "ratio": 0.701
-  },
-  {
-    "id": "ramadan-hanging",
-    "name": "Hanging sign",
-    "collection": "holidays",
-    "occasion": "ramadan",
-    "tags": [
-      "ramadan",
-      "iftar",
-      "ramadan kareem",
-      "sign"
-    ],
-    "hash": "5e537687",
-    "ratio": 0.725
-  },
-  {
-    "id": "eid-fitr-arch",
-    "name": "Eid arch",
-    "collection": "holidays",
-    "occasion": "eid-al-fitr",
-    "tags": [
-      "eid al-fitr",
-      "eid",
-      "eid mubarak",
-      "crescent"
-    ],
-    "hash": "b9c89b59",
-    "ratio": 0.702
-  },
-  {
-    "id": "eid-fitr-lantern",
-    "name": "Eid lantern",
-    "collection": "holidays",
-    "occasion": "eid-al-fitr",
-    "tags": [
-      "eid al-fitr",
-      "eid",
-      "eid mubarak",
-      "lantern"
-    ],
-    "hash": "07c2f4bf",
-    "ratio": 0.701
-  },
-  {
-    "id": "eid-fitr-seal",
-    "name": "Eid seal",
-    "collection": "holidays",
-    "occasion": "eid-al-fitr",
-    "tags": [
-      "eid al-fitr",
-      "eid",
-      "eid mubarak",
-      "badge"
-    ],
-    "hash": "7ba54163",
-    "ratio": 1
-  },
-  {
-    "id": "eid-fitr-border",
-    "name": "Eid border",
-    "collection": "holidays",
-    "occasion": "eid-al-fitr",
-    "tags": [
-      "eid al-fitr",
-      "eid",
-      "eid mubarak",
-      "elegant"
-    ],
-    "hash": "fc4dc281",
-    "ratio": 0.721
-  },
-  {
-    "id": "eid-fitr-gift",
-    "name": "Eid gift",
-    "collection": "holidays",
-    "occasion": "eid-al-fitr",
-    "tags": [
-      "eid al-fitr",
-      "eid",
-      "eid mubarak",
-      "gift"
-    ],
-    "hash": "045e8d3e",
-    "ratio": 0.703
-  },
-  {
-    "id": "eid-adha-night",
-    "name": "Night crescent",
-    "collection": "holidays",
-    "occasion": "eid-al-adha",
-    "tags": [
-      "eid al-adha",
-      "eid",
-      "eid mubarak",
-      "crescent"
-    ],
-    "hash": "622d43c3",
-    "ratio": 0.713
-  },
-  {
-    "id": "eid-adha-seal",
-    "name": "Eid al-Adha seal",
-    "collection": "holidays",
-    "occasion": "eid-al-adha",
-    "tags": [
-      "eid al-adha",
-      "eid",
-      "eid mubarak",
-      "badge"
-    ],
-    "hash": "66734500",
-    "ratio": 1
-  },
-  {
-    "id": "eid-adha-lantern",
-    "name": "Lantern tab",
-    "collection": "holidays",
-    "occasion": "eid-al-adha",
-    "tags": [
-      "eid al-adha",
-      "eid",
-      "eid mubarak",
-      "tab"
-    ],
-    "hash": "8ac7a51d",
-    "ratio": 0.805
-  },
-  {
-    "id": "eid-adha-envelope",
-    "name": "Eid envelope",
-    "collection": "holidays",
-    "occasion": "eid-al-adha",
-    "tags": [
-      "eid al-adha",
-      "eid",
-      "eid mubarak",
-      "card"
-    ],
-    "hash": "f70acb0f",
-    "ratio": 0.702
-  },
-  {
-    "id": "hanukkah-menorah",
-    "name": "Menorah",
-    "collection": "holidays",
-    "occasion": "hanukkah",
-    "tags": [
-      "hanukkah",
-      "chanukah",
-      "festival of lights",
-      "menorah"
-    ],
-    "hash": "dab8e0f8",
-    "ratio": 0.701
-  },
-  {
-    "id": "hanukkah-star",
-    "name": "Star of David",
-    "collection": "holidays",
-    "occasion": "hanukkah",
-    "tags": [
-      "hanukkah",
-      "chanukah",
-      "festival of lights",
-      "star"
-    ],
-    "hash": "c09dfb35",
-    "ratio": 1
-  },
-  {
-    "id": "hanukkah-candles",
-    "name": "Hanukkah lights",
-    "collection": "holidays",
-    "occasion": "hanukkah",
-    "tags": [
-      "hanukkah",
-      "chanukah",
-      "festival of lights",
-      "candles"
-    ],
-    "hash": "1132edf5",
-    "ratio": 0.713
-  },
-  {
-    "id": "hanukkah-border",
-    "name": "Hanukkah border",
-    "collection": "holidays",
-    "occasion": "hanukkah",
-    "tags": [
-      "hanukkah",
-      "chanukah",
-      "festival of lights",
-      "elegant"
-    ],
-    "hash": "79c16912",
-    "ratio": 0.721
-  },
-  {
-    "id": "hanukkah-gift",
-    "name": "Hanukkah gift",
-    "collection": "holidays",
-    "occasion": "hanukkah",
-    "tags": [
-      "hanukkah",
-      "chanukah",
-      "festival of lights",
-      "gift"
-    ],
-    "hash": "80a93d6d",
-    "ratio": 0.703
-  },
-  {
-    "id": "passover-cup",
-    "name": "Kiddush cup",
-    "collection": "holidays",
-    "occasion": "passover",
-    "tags": [
-      "passover",
-      "pesach",
-      "seder"
-    ],
-    "hash": "2ed70fe6",
-    "ratio": 0.713
-  },
-  {
-    "id": "passover-matzah",
-    "name": "Matzah",
-    "collection": "holidays",
-    "occasion": "passover",
-    "tags": [
-      "passover",
-      "pesach",
-      "seder",
-      "matzah"
-    ],
-    "hash": "e8a19eb7",
-    "ratio": 0.701
-  },
-  {
-    "id": "passover-border",
-    "name": "Seder border",
-    "collection": "holidays",
-    "occasion": "passover",
-    "tags": [
-      "passover",
-      "pesach",
-      "seder",
-      "elegant"
-    ],
-    "hash": "16af53c3",
-    "ratio": 0.721
-  },
-  {
-    "id": "passover-arch",
-    "name": "Passover arch",
-    "collection": "holidays",
-    "occasion": "passover",
-    "tags": [
-      "passover",
-      "pesach",
-      "seder",
-      "spring"
-    ],
-    "hash": "4f0e532d",
-    "ratio": 0.702
-  },
-  {
-    "id": "easter-egg",
-    "name": "Easter egg",
-    "collection": "holidays",
-    "occasion": "easter",
-    "tags": [
-      "easter",
-      "spring",
-      "egg"
-    ],
-    "hash": "a0ecbd1c",
-    "ratio": 0.702
-  },
-  {
-    "id": "easter-tulip",
-    "name": "Easter tulip",
-    "collection": "holidays",
-    "occasion": "easter",
-    "tags": [
-      "easter",
-      "spring",
-      "egg hunt",
-      "flowers"
-    ],
-    "hash": "8eb37e6d",
-    "ratio": 0.701
-  },
-  {
-    "id": "easter-corners",
-    "name": "Easter corners",
-    "collection": "holidays",
-    "occasion": "easter",
-    "tags": [
-      "easter",
-      "spring",
-      "modern"
-    ],
-    "hash": "33a5d0c3",
-    "ratio": 0.721
-  },
-  {
-    "id": "easter-butterfly",
-    "name": "Easter butterfly",
-    "collection": "holidays",
-    "occasion": "easter",
-    "tags": [
-      "easter",
-      "spring",
-      "butterfly"
-    ],
-    "hash": "1695442a",
-    "ratio": 0.754
-  },
-  {
-    "id": "easter-bunting",
-    "name": "Easter bunting",
-    "collection": "holidays",
-    "occasion": "easter",
-    "tags": [
-      "easter",
-      "spring",
-      "menu"
-    ],
-    "hash": "ebfd685a",
-    "ratio": 0.742
-  },
-  {
-    "id": "easter-egg-hunt",
-    "name": "Egg hunt ticket",
-    "collection": "holidays",
-    "occasion": "easter",
-    "tags": [
-      "easter",
-      "spring",
-      "egg hunt"
-    ],
-    "hash": "0d85b022",
-    "ratio": 0.681
-  },
-  {
-    "id": "halloween-bat",
-    "name": "Bat card",
-    "collection": "holidays",
-    "occasion": "halloween",
-    "tags": [
-      "halloween",
-      "october",
-      "spooky",
-      "bat"
-    ],
-    "hash": "a572d58b",
-    "ratio": 0.713
-  },
-  {
-    "id": "halloween-pumpkin",
-    "name": "Pumpkin band",
-    "collection": "holidays",
-    "occasion": "halloween",
-    "tags": [
-      "halloween",
-      "october",
-      "spooky",
-      "pumpkin"
-    ],
-    "hash": "c2fd302d",
-    "ratio": 0.701
-  },
-  {
-    "id": "halloween-web",
-    "name": "Spider web",
-    "collection": "holidays",
-    "occasion": "halloween",
-    "tags": [
-      "halloween",
-      "october",
-      "spooky",
-      "spider web"
-    ],
-    "hash": "ae9fa65b",
-    "ratio": 0.713
-  },
-  {
-    "id": "halloween-hat",
-    "name": "Witch's hat",
-    "collection": "holidays",
-    "occasion": "halloween",
-    "tags": [
-      "halloween",
-      "october",
-      "spooky",
-      "party"
-    ],
-    "hash": "2244e2eb",
-    "ratio": 0.681
-  },
-  {
-    "id": "halloween-moon",
-    "name": "Halloween moon",
-    "collection": "holidays",
-    "occasion": "halloween",
-    "tags": [
-      "halloween",
-      "october",
-      "spooky",
-      "moon"
-    ],
-    "hash": "49c007ee",
-    "ratio": 0.681
-  },
-  {
-    "id": "halloween-candle",
-    "name": "Candlelit",
-    "collection": "holidays",
-    "occasion": "halloween",
-    "tags": [
-      "halloween",
-      "october",
-      "spooky",
-      "candle"
-    ],
-    "hash": "0cd13a6b",
-    "ratio": 0.702
-  },
-  {
-    "id": "halloween-seal",
-    "name": "Spooky seal",
-    "collection": "holidays",
-    "occasion": "halloween",
-    "tags": [
-      "halloween",
-      "october",
-      "spooky",
-      "badge"
-    ],
-    "hash": "9fcc76c6",
-    "ratio": 1
-  },
-  {
-    "id": "thanksgiving-leaf",
-    "name": "Maple leaf",
-    "collection": "holidays",
-    "occasion": "thanksgiving",
-    "tags": [
-      "thanksgiving",
-      "harvest",
-      "november",
-      "leaves"
-    ],
-    "hash": "c0d9dcb1",
-    "ratio": 0.701
-  },
-  {
-    "id": "thanksgiving-wheat",
-    "name": "Harvest wheat",
-    "collection": "holidays",
-    "occasion": "thanksgiving",
-    "tags": [
-      "thanksgiving",
-      "harvest",
-      "november",
-      "menu"
-    ],
-    "hash": "c847b66a",
-    "ratio": 0.721
-  },
-  {
-    "id": "thanksgiving-acorn",
-    "name": "Acorn arch",
-    "collection": "holidays",
-    "occasion": "thanksgiving",
-    "tags": [
-      "thanksgiving",
-      "harvest",
-      "november",
-      "acorn"
-    ],
-    "hash": "de7a999b",
-    "ratio": 0.702
-  },
-  {
-    "id": "thanksgiving-pumpkin",
-    "name": "Harvest pumpkin",
-    "collection": "holidays",
-    "occasion": "thanksgiving",
-    "tags": [
-      "thanksgiving",
-      "harvest",
-      "november",
-      "pumpkin"
-    ],
-    "hash": "709e8acc",
-    "ratio": 0.713
-  },
-  {
-    "id": "thanksgiving-table",
-    "name": "Table card",
-    "collection": "holidays",
-    "occasion": "thanksgiving",
-    "tags": [
-      "thanksgiving",
-      "harvest",
-      "november",
-      "dinner",
-      "menu"
-    ],
-    "hash": "e256ade3",
-    "ratio": 0.678
-  },
-  {
-    "id": "valentine-heart",
-    "name": "Heart card",
-    "collection": "holidays",
-    "occasion": "valentines-day",
-    "tags": [
-      "valentine's day",
-      "love",
-      "february",
-      "heart"
-    ],
-    "hash": "5b9a25d3",
-    "ratio": 0.713
-  },
-  {
-    "id": "valentine-arrow",
-    "name": "Cupid's arrow",
-    "collection": "holidays",
-    "occasion": "valentines-day",
-    "tags": [
-      "valentine's day",
-      "love",
-      "february",
-      "heart"
-    ],
-    "hash": "6bfa862b",
-    "ratio": 0.702
-  },
-  {
-    "id": "valentine-hearts",
-    "name": "Two hearts",
-    "collection": "holidays",
-    "occasion": "valentines-day",
-    "tags": [
-      "valentine's day",
-      "love",
-      "february",
-      "hearts"
-    ],
-    "hash": "50a1fe74",
-    "ratio": 0.754
-  },
-  {
-    "id": "valentine-letter",
-    "name": "Love letter",
-    "collection": "holidays",
-    "occasion": "valentines-day",
-    "tags": [
-      "valentine's day",
-      "love",
-      "february",
-      "letter"
-    ],
-    "hash": "e06ece2f",
-    "ratio": 0.702
-  },
-  {
-    "id": "valentine-dinner",
-    "name": "Valentine's dinner",
-    "collection": "holidays",
-    "occasion": "valentines-day",
-    "tags": [
-      "valentine's day",
-      "love",
-      "february",
-      "dinner",
-      "restaurant"
-    ],
-    "hash": "0f8474bf",
-    "ratio": 0.721
-  },
-  {
-    "id": "valentine-bands",
-    "name": "Love bands",
-    "collection": "holidays",
-    "occasion": "valentines-day",
-    "tags": [
-      "valentine's day",
-      "love",
-      "february",
-      "bands"
-    ],
-    "hash": "0d23f2c9",
-    "ratio": 0.729
-  },
-  {
-    "id": "st-patricks-shamrock",
-    "name": "Shamrock",
-    "collection": "holidays",
-    "occasion": "st-patricks-day",
-    "tags": [
-      "st patrick's day",
-      "march",
-      "irish",
-      "shamrock"
-    ],
-    "hash": "b4f2f9b7",
-    "ratio": 0.713
-  },
-  {
-    "id": "st-patricks-clover",
-    "name": "Lucky clover",
-    "collection": "holidays",
-    "occasion": "st-patricks-day",
-    "tags": [
-      "st patrick's day",
-      "march",
-      "irish",
-      "clover"
-    ],
-    "hash": "3790edbc",
-    "ratio": 1
-  },
-  {
-    "id": "st-patricks-horseshoe",
-    "name": "Horseshoe ticket",
-    "collection": "holidays",
-    "occasion": "st-patricks-day",
-    "tags": [
-      "st patrick's day",
-      "march",
-      "irish",
-      "party"
-    ],
-    "hash": "577d9735",
-    "ratio": 0.681
-  },
-  {
-    "id": "st-patricks-pub",
-    "name": "Pub night",
-    "collection": "holidays",
-    "occasion": "st-patricks-day",
-    "tags": [
-      "st patrick's day",
-      "march",
-      "irish",
-      "pub",
-      "bar"
-    ],
-    "hash": "2e7adea1",
-    "ratio": 0.701
-  },
-  {
-    "id": "mothers-day-tulip",
-    "name": "Tulip arch",
-    "collection": "holidays",
-    "occasion": "mothers-day",
-    "tags": [
-      "mother's day",
-      "mom",
-      "may",
-      "flowers"
-    ],
-    "hash": "a3b7b0b7",
-    "ratio": 0.702
-  },
-  {
-    "id": "mothers-day-daisy",
-    "name": "Daisy card",
-    "collection": "holidays",
-    "occasion": "mothers-day",
-    "tags": [
-      "mother's day",
-      "mom",
-      "may",
-      "flowers",
-      "gift"
-    ],
-    "hash": "ca0b6427",
-    "ratio": 0.705
-  },
-  {
-    "id": "mothers-day-photo",
-    "name": "Mom's photo",
-    "collection": "holidays",
-    "occasion": "mothers-day",
-    "tags": [
-      "mother's day",
-      "mom",
-      "may",
-      "photo"
-    ],
-    "hash": "0d16077f",
-    "ratio": 0.82
-  },
-  {
-    "id": "mothers-day-brunch",
-    "name": "Mother's Day brunch",
-    "collection": "holidays",
-    "occasion": "mothers-day",
-    "tags": [
-      "mother's day",
-      "mom",
-      "may",
-      "brunch",
-      "restaurant"
-    ],
-    "hash": "1f012ef5",
-    "ratio": 0.721
-  },
-  {
-    "id": "fathers-day-tie",
-    "name": "Necktie",
-    "collection": "holidays",
-    "occasion": "fathers-day",
-    "tags": [
-      "father's day",
-      "dad",
-      "june",
-      "tie"
-    ],
-    "hash": "9c950e7c",
-    "ratio": 0.713
-  },
-  {
-    "id": "fathers-day-bow-tie",
-    "name": "Bow tie",
-    "collection": "holidays",
-    "occasion": "fathers-day",
-    "tags": [
-      "father's day",
-      "dad",
-      "june",
-      "gift"
-    ],
-    "hash": "13a3726f",
-    "ratio": 0.701
-  },
-  {
-    "id": "fathers-day-trophy",
-    "name": "Best dad",
-    "collection": "holidays",
-    "occasion": "fathers-day",
-    "tags": [
-      "father's day",
-      "dad",
-      "june",
-      "trophy"
-    ],
-    "hash": "920fda49",
-    "ratio": 0.806
-  },
-  {
-    "id": "fathers-day-photo",
-    "name": "Dad's photo",
-    "collection": "holidays",
-    "occasion": "fathers-day",
-    "tags": [
-      "father's day",
-      "dad",
-      "june",
-      "photo"
-    ],
-    "hash": "8e0a5923",
-    "ratio": 0.82
-  },
-  {
-    "id": "independence-us",
-    "name": "Fourth of July",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "usa",
-      "july 4"
-    ],
-    "hash": "d7701f15",
-    "ratio": 0.705
-  },
-  {
-    "id": "independence-us-fireworks",
-    "name": "Fourth of July fireworks",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "usa",
-      "fireworks"
-    ],
-    "hash": "d27d063c",
-    "ratio": 0.713
-  },
-  {
-    "id": "independence-india",
-    "name": "Indian Independence Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "india",
-      "august 15"
-    ],
-    "hash": "db7abebc",
-    "ratio": 0.705
-  },
-  {
-    "id": "independence-canada",
-    "name": "Canada Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "canada",
-      "july 1"
-    ],
-    "hash": "d632e86d",
-    "ratio": 0.705
-  },
-  {
-    "id": "independence-mexico",
-    "name": "Mexican Independence Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "mexico",
-      "september 16"
-    ],
-    "hash": "e83a569d",
-    "ratio": 0.705
-  },
-  {
-    "id": "independence-france",
-    "name": "Bastille Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "france",
-      "july 14"
-    ],
-    "hash": "c5c8ab94",
-    "ratio": 0.705
-  },
-  {
-    "id": "independence-brazil",
-    "name": "Brazilian Independence Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "brazil",
-      "september 7"
-    ],
-    "hash": "f8dbb472",
-    "ratio": 0.705
-  },
-  {
-    "id": "independence-fireworks",
-    "name": "Independence fireworks",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "fireworks"
-    ],
-    "hash": "2ca9b6b7",
-    "ratio": 1
-  },
-  {
-    "id": "black-friday-burst",
-    "name": "Black Friday burst",
-    "collection": "holidays",
-    "occasion": "black-friday",
-    "tags": [
-      "black friday",
-      "sale",
-      "deals",
-      "burst"
-    ],
-    "hash": "eaa5df98",
-    "ratio": 0.691
-  },
-  {
-    "id": "black-friday-bolt",
-    "name": "Flash deal",
-    "collection": "holidays",
-    "occasion": "black-friday",
-    "tags": [
-      "black friday",
-      "sale",
-      "deals",
-      "flash sale"
-    ],
-    "hash": "46969528",
-    "ratio": 0.713
-  },
-  {
-    "id": "black-friday-tab",
-    "name": "Sale tab",
-    "collection": "holidays",
-    "occasion": "black-friday",
-    "tags": [
-      "black friday",
-      "sale",
-      "deals",
-      "percent"
-    ],
-    "hash": "9e85bc1e",
-    "ratio": 0.795
-  },
-  {
-    "id": "black-friday-tag",
-    "name": "Sale tag",
-    "collection": "holidays",
-    "occasion": "black-friday",
-    "tags": [
-      "black friday",
-      "sale",
-      "deals",
-      "price tag"
-    ],
-    "hash": "eda85666",
-    "ratio": 0.66
-  },
-  {
-    "id": "black-friday-bands",
-    "name": "Sale bands",
-    "collection": "holidays",
-    "occasion": "black-friday",
-    "tags": [
-      "black friday",
-      "sale",
-      "deals",
-      "bands"
-    ],
-    "hash": "d2a20cae",
-    "ratio": 0.729
-  },
-  {
-    "id": "cyber-monday-browser",
-    "name": "Cyber Monday browser",
-    "collection": "holidays",
-    "occasion": "cyber-monday",
-    "tags": [
-      "cyber monday",
-      "sale",
-      "online",
-      "online shop"
-    ],
-    "hash": "b90d4bed",
-    "ratio": 0.738
-  },
-  {
-    "id": "cyber-monday-neon",
-    "name": "Cyber Monday neon",
-    "collection": "holidays",
-    "occasion": "cyber-monday",
-    "tags": [
-      "cyber monday",
-      "sale",
-      "online",
-      "neon"
-    ],
-    "hash": "10ad85d1",
-    "ratio": 0.705
-  },
-  {
-    "id": "cyber-monday-wide",
-    "name": "Cyber Monday wide",
-    "collection": "holidays",
-    "occasion": "cyber-monday",
-    "tags": [
-      "cyber monday",
-      "sale",
-      "online",
-      "landscape"
-    ],
-    "hash": "d6528f69",
-    "ratio": 1.923
-  },
-  {
-    "id": "cyber-monday-ticket",
-    "name": "Deal ticket",
-    "collection": "holidays",
-    "occasion": "cyber-monday",
-    "tags": [
-      "cyber monday",
-      "sale",
-      "online",
-      "coupon"
-    ],
-    "hash": "f43149df",
-    "ratio": 0.681
-  },
-  {
-    "id": "school-pencil",
-    "name": "Pencil card",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "september",
-      "pencil"
-    ],
-    "hash": "88f19e57",
-    "ratio": 0.713
-  },
-  {
-    "id": "school-ruler",
-    "name": "Ruler band",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "september",
-      "timetable"
-    ],
-    "hash": "6eea6a39",
-    "ratio": 0.701
-  },
-  {
-    "id": "school-book",
-    "name": "Open book",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "september",
-      "book"
-    ],
-    "hash": "02c33276",
-    "ratio": 0.702
-  },
-  {
-    "id": "school-notebook",
-    "name": "Notebook",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "september",
-      "notebook"
-    ],
-    "hash": "47b89ff7",
-    "ratio": 0.709
-  },
-  {
-    "id": "school-calendar",
-    "name": "School calendar",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "september",
-      "calendar"
-    ],
-    "hash": "8510ead8",
-    "ratio": 0.697
-  },
-  {
-    "id": "school-palette",
-    "name": "Art class",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "september",
-      "art"
-    ],
-    "hash": "5ce18e63",
-    "ratio": 0.754
-  },
-  {
-    "id": "summer-sun-scene",
-    "name": "Summer hills",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "beach"
-    ],
-    "hash": "b015e787",
-    "ratio": 0.681
-  },
-  {
-    "id": "summer-waves",
-    "name": "Summer waves",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "beach",
-      "waves",
-      "hours"
-    ],
-    "hash": "b61ef8f5",
-    "ratio": 0.701
-  },
-  {
-    "id": "summer-parasol",
-    "name": "Beach umbrella",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "beach"
-    ],
-    "hash": "20e6c924",
-    "ratio": 0.701
-  },
-  {
-    "id": "summer-ice-pop",
-    "name": "Ice pop",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "beach",
-      "ice cream"
-    ],
-    "hash": "6254d0e2",
-    "ratio": 0.754
-  },
-  {
-    "id": "summer-palm",
-    "name": "Palm arch",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "beach",
-      "palm",
-      "sale"
-    ],
-    "hash": "dcbbd9d1",
-    "ratio": 0.702
-  },
-  {
-    "id": "summer-shell",
-    "name": "Seashell",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "beach",
-      "sea"
-    ],
-    "hash": "01ebc123",
-    "ratio": 0.721
-  },
-  {
-    "id": "winter-crystal",
-    "name": "Snow crystal",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "winter",
-      "snow",
-      "cold",
-      "snowflake"
-    ],
-    "hash": "c1eda342",
-    "ratio": 0.713
-  },
-  {
-    "id": "winter-peaks",
-    "name": "Snowy peaks",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "winter",
-      "snow",
-      "cold",
-      "mountains",
-      "ski"
-    ],
-    "hash": "3ea7099f",
-    "ratio": 0.681
-  },
-  {
-    "id": "winter-mitten",
-    "name": "Mitten",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "winter",
-      "snow",
-      "cold",
-      "mitten"
-    ],
-    "hash": "35ea4427",
-    "ratio": 0.701
-  },
-  {
-    "id": "winter-cocoa",
-    "name": "Hot drinks",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "winter",
-      "snow",
-      "cold",
-      "hot drinks",
-      "cafe"
-    ],
-    "hash": "020f8b63",
-    "ratio": 0.765
-  },
-  {
-    "id": "winter-snow-seal",
-    "name": "Winter seal",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "winter",
-      "snow",
-      "cold",
-      "badge"
-    ],
-    "hash": "6fb48569",
-    "ratio": 1
-  },
-  {
-    "id": "spring-blossom",
-    "name": "Blossom branch",
-    "collection": "seasons",
-    "occasion": "spring",
-    "tags": [
-      "spring",
-      "flowers",
-      "blossom"
-    ],
-    "hash": "8ebe559e",
-    "ratio": 0.701
-  },
-  {
-    "id": "spring-tulip",
-    "name": "Spring tulip",
-    "collection": "seasons",
-    "occasion": "spring",
-    "tags": [
-      "spring",
-      "flowers",
-      "tulip",
-      "sale"
-    ],
-    "hash": "7dbb3d00",
-    "ratio": 0.702
-  },
-  {
-    "id": "spring-butterfly",
-    "name": "Butterfly",
-    "collection": "seasons",
-    "occasion": "spring",
-    "tags": [
-      "spring",
-      "flowers",
-      "butterfly"
-    ],
-    "hash": "c6ef5f4f",
-    "ratio": 0.705
-  },
-  {
-    "id": "spring-sprout",
-    "name": "Sprout",
-    "collection": "seasons",
-    "occasion": "spring",
-    "tags": [
-      "spring",
-      "flowers",
-      "garden"
-    ],
-    "hash": "1b549916",
-    "ratio": 0.709
-  },
-  {
-    "id": "spring-daisy",
-    "name": "Daisy seal",
-    "collection": "seasons",
-    "occasion": "spring",
-    "tags": [
-      "spring",
-      "flowers",
-      "daisy"
-    ],
-    "hash": "bc0ef947",
-    "ratio": 1
-  },
-  {
-    "id": "autumn-maple",
-    "name": "Falling leaf",
-    "collection": "seasons",
-    "occasion": "autumn",
-    "tags": [
-      "autumn",
-      "fall",
-      "leaves",
-      "maple"
-    ],
-    "hash": "c50ff6ea",
-    "ratio": 0.713
-  },
-  {
-    "id": "autumn-oak",
-    "name": "Oak leaf",
-    "collection": "seasons",
-    "occasion": "autumn",
-    "tags": [
-      "autumn",
-      "fall",
-      "leaves",
-      "oak",
-      "hours"
-    ],
-    "hash": "ff744bd5",
-    "ratio": 0.701
-  },
-  {
-    "id": "autumn-acorn",
-    "name": "Acorn sticker",
-    "collection": "seasons",
-    "occasion": "autumn",
-    "tags": [
-      "autumn",
-      "fall",
-      "leaves",
-      "acorn"
-    ],
-    "hash": "330ccac2",
-    "ratio": 0.754
-  },
-  {
-    "id": "autumn-hills",
-    "name": "Autumn hills",
-    "collection": "seasons",
-    "occasion": "autumn",
-    "tags": [
-      "autumn",
-      "fall",
-      "leaves",
-      "hills"
-    ],
-    "hash": "9f4a6052",
-    "ratio": 0.681
-  },
-  {
-    "id": "autumn-wheat",
-    "name": "Harvest",
-    "collection": "seasons",
-    "occasion": "autumn",
-    "tags": [
-      "autumn",
-      "fall",
-      "leaves",
-      "harvest",
-      "menu"
-    ],
-    "hash": "20184d64",
-    "ratio": 0.721
-  },
-  {
-    "id": "menu-cutlery",
-    "name": "Menu card",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "menu"
-    ],
-    "hash": "244a58da",
-    "ratio": 0.701
-  },
-  {
-    "id": "menu-cloche",
-    "name": "Serving dome",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "menu",
-      "fine dining"
-    ],
-    "hash": "e59aaa02",
-    "ratio": 0.721
-  },
-  {
-    "id": "menu-chef",
-    "name": "Chef's specials",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "specials"
-    ],
-    "hash": "68cf429a",
-    "ratio": 0.767
-  },
-  {
-    "id": "menu-chalkboard",
-    "name": "Menu board",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "menu"
-    ],
-    "hash": "6f79fff9",
-    "ratio": 0.846
-  },
-  {
-    "id": "menu-arch",
-    "name": "Bistro arch",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "menu",
-      "bistro"
-    ],
-    "hash": "417de589",
-    "ratio": 0.702
-  },
-  {
-    "id": "menu-noodles",
-    "name": "Noodle bar",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "asian",
-      "ordering"
-    ],
-    "hash": "2405e1ed",
-    "ratio": 0.678
-  },
-  {
-    "id": "menu-pizza",
-    "name": "Pizza sticker",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "pizza",
-      "ordering"
-    ],
-    "hash": "b9163b44",
-    "ratio": 0.754
-  },
-  {
-    "id": "order-here-tab",
-    "name": "Order here",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "ordering"
-    ],
-    "hash": "000fdd9a",
-    "ratio": 0.795
-  },
-  {
-    "id": "order-pickup",
-    "name": "Pickup order",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "takeaway",
-      "pickup"
-    ],
-    "hash": "e50c31be",
-    "ratio": 0.714
-  },
-  {
-    "id": "pay-at-table",
-    "name": "Pay at table",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "payments",
-      "table"
-    ],
-    "hash": "ff6024ec",
-    "ratio": 0.705
-  },
-  {
-    "id": "food-truck",
-    "name": "Food truck",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "food truck",
-      "street food"
-    ],
-    "hash": "138ef4a4",
-    "ratio": 0.725
-  },
-  {
-    "id": "rate-your-meal",
-    "name": "Rate your meal",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "reviews"
-    ],
-    "hash": "bf4510a0",
-    "ratio": 0.681
-  },
-  {
-    "id": "allergen-info",
-    "name": "Allergen info",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "allergens",
-      "nutrition"
-    ],
-    "hash": "3964049f",
-    "ratio": 0.713
-  },
-  {
-    "id": "table-number",
-    "name": "Table number",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "table",
-      "ordering"
-    ],
-    "hash": "31ea845e",
-    "ratio": 0.729
-  },
-  {
-    "id": "bakery-cake",
-    "name": "Bakery",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bakery",
-      "cake"
-    ],
-    "hash": "8127a2d6",
-    "ratio": 0.702
-  },
-  {
-    "id": "ice-cream-shop",
-    "name": "Ice cream shop",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "ice cream",
-      "dessert"
-    ],
-    "hash": "4572f8b5",
-    "ratio": 0.725
-  },
-  {
-    "id": "cafe-cup",
-    "name": "Takeaway cup",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cafe",
-      "coffee"
-    ],
-    "hash": "32956def",
-    "ratio": 0.765
-  },
-  {
-    "id": "cafe-bean",
-    "name": "Coffee bean",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cafe",
-      "coffee"
-    ],
-    "hash": "2600b39c",
-    "ratio": 0.678
-  },
-  {
-    "id": "cafe-steam",
-    "name": "Hot coffee",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cafe",
-      "coffee"
-    ],
-    "hash": "65e06c71",
-    "ratio": 0.701
-  },
-  {
-    "id": "cafe-loyalty",
-    "name": "Coffee loyalty",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cafe",
-      "loyalty"
-    ],
-    "hash": "77f175ff",
-    "ratio": 0.681
-  },
-  {
-    "id": "cafe-menu-board",
-    "name": "Cafe board",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cafe",
-      "menu"
-    ],
-    "hash": "afd52d10",
-    "ratio": 0.846
-  },
-  {
-    "id": "cafe-wifi",
-    "name": "Cafe Wi-Fi",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cafe",
-      "wifi"
-    ],
-    "hash": "cee51047",
-    "ratio": 0.705
-  },
-  {
-    "id": "bar-cocktail",
-    "name": "Cocktail neon",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bar",
-      "cocktails"
-    ],
-    "hash": "f0b49695",
-    "ratio": 0.705
-  },
-  {
-    "id": "bar-wine",
-    "name": "Wine list",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bar",
-      "wine"
-    ],
-    "hash": "92075dd3",
-    "ratio": 0.721
-  },
-  {
-    "id": "bar-beer",
-    "name": "Beer tap",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bar",
-      "beer"
-    ],
-    "hash": "c02ebc44",
-    "ratio": 0.713
-  },
-  {
-    "id": "bar-happy-hour",
-    "name": "Happy hour",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bar",
-      "happy hour"
-    ],
-    "hash": "2558dac0",
-    "ratio": 0.691
-  },
-  {
-    "id": "bar-bottle",
-    "name": "Bottle label",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bar",
-      "drinks",
-      "label"
-    ],
-    "hash": "7ee38886",
-    "ratio": 1.429
-  },
-  {
-    "id": "bar-tab",
-    "name": "Open a tab",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bar",
-      "payments"
-    ],
-    "hash": "f1d0c23c",
-    "ratio": 0.805
-  },
-  {
-    "id": "restaurant-booking",
-    "name": "Book a table",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "booking",
-      "reservations"
-    ],
-    "hash": "a325e988",
-    "ratio": 0.697
-  },
-  {
-    "id": "restaurant-delivery",
-    "name": "Delivery",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "delivery",
-      "ordering"
-    ],
-    "hash": "b95ba8b1",
-    "ratio": 1.923
-  },
-  {
-    "id": "shop-bag",
-    "name": "Shopping bag",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "shopping"
-    ],
-    "hash": "d08ca977",
-    "ratio": 0.714
-  },
-  {
-    "id": "shop-awning",
-    "name": "Shop front",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "store front"
-    ],
-    "hash": "9413f39f",
-    "ratio": 0.725
-  },
-  {
-    "id": "shop-sale-burst",
-    "name": "Sale burst",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "sale"
-    ],
-    "hash": "6a181c6b",
-    "ratio": 0.691
-  },
-  {
-    "id": "shop-sale-tag",
-    "name": "Price tag",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "price"
-    ],
-    "hash": "4843f4af",
-    "ratio": 0.66
-  },
-  {
-    "id": "shop-percent",
-    "name": "Percent off",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "sale",
-      "discount"
-    ],
-    "hash": "fb625e51",
-    "ratio": 0.713
-  },
-  {
-    "id": "shop-coupon",
-    "name": "Coupon",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "coupon",
-      "discount"
-    ],
-    "hash": "28524a44",
-    "ratio": 0.75
-  },
-  {
-    "id": "shop-new-arrivals",
-    "name": "New arrivals",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "new"
-    ],
-    "hash": "b40e912b",
-    "ratio": 0.8
-  },
-  {
-    "id": "shop-cart",
-    "name": "Shop online",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "online shop"
-    ],
-    "hash": "009b1f31",
-    "ratio": 1.923
-  },
-  {
-    "id": "shop-fashion",
-    "name": "Fashion tag",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "fashion",
-      "clothing"
-    ],
-    "hash": "78e1a4c8",
-    "ratio": 0.66
-  },
-  {
-    "id": "shop-hanger",
-    "name": "Clothing",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "fashion",
-      "clothing"
-    ],
-    "hash": "218c1239",
-    "ratio": 0.678
-  },
-  {
-    "id": "shop-tshirt",
-    "name": "Merch",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "merch",
-      "clothing"
-    ],
-    "hash": "7ce5b9d0",
-    "ratio": 0.754
-  },
-  {
-    "id": "shop-jewelry",
-    "name": "Jewelry",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "jewelry",
-      "luxury"
-    ],
-    "hash": "88291ea4",
-    "ratio": 0.721
-  },
-  {
-    "id": "shop-gift-card",
-    "name": "Gift card",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "gift card",
-      "gift"
-    ],
-    "hash": "a1cf825f",
-    "ratio": 0.703
-  },
-  {
-    "id": "shop-loyalty",
-    "name": "Loyalty card",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "loyalty",
-      "rewards"
-    ],
-    "hash": "13cd85f8",
-    "ratio": 1.923
-  },
-  {
-    "id": "shop-price-check",
-    "name": "Price check",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "price"
-    ],
-    "hash": "b54a450f",
-    "ratio": 0.886
-  },
-  {
-    "id": "shop-window-sticker",
-    "name": "Window sticker",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "window",
-      "sticker"
-    ],
-    "hash": "9e708d74",
-    "ratio": 1
-  },
-  {
-    "id": "pack-instructions",
-    "name": "Instructions",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "instructions"
-    ],
-    "hash": "a9590723",
-    "ratio": 0.701
-  },
-  {
-    "id": "pack-recycle",
-    "name": "Recycle me",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "recycling"
-    ],
-    "hash": "1363fa0f",
-    "ratio": 0.709
-  },
-  {
-    "id": "pack-eco",
-    "name": "Eco info",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "sustainability"
-    ],
-    "hash": "f6c77e4f",
-    "ratio": 0.713
-  },
-  {
-    "id": "pack-parcel",
-    "name": "Parcel",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "shipping"
-    ],
-    "hash": "5ddc7675",
-    "ratio": 0.767
-  },
-  {
-    "id": "pack-label",
-    "name": "Product label",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "ingredients"
-    ],
-    "hash": "bd798ac2",
-    "ratio": 1.429
-  },
-  {
-    "id": "pack-reorder",
-    "name": "Reorder",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "reorder"
-    ],
-    "hash": "1e5e0cc1",
-    "ratio": 0.795
-  },
-  {
-    "id": "pack-authentic",
-    "name": "Authentic",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "authenticity"
-    ],
-    "hash": "54038555",
-    "ratio": 1
-  },
-  {
-    "id": "pack-warranty",
-    "name": "Warranty",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "warranty"
-    ],
-    "hash": "70ad6750",
-    "ratio": 0.678
-  },
-  {
-    "id": "pack-unboxing",
-    "name": "Unboxing",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "thank you"
-    ],
-    "hash": "55c7687b",
-    "ratio": 0.703
-  },
-  {
-    "id": "pack-care",
-    "name": "Care guide",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "care"
-    ],
-    "hash": "ceeeaf23",
-    "ratio": 0.66
-  },
-  {
-    "id": "pack-video-guide",
-    "name": "Video guide",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "packaging",
-      "video"
-    ],
-    "hash": "4cfa7c08",
-    "ratio": 0.68
-  },
-  {
-    "id": "event-concert",
-    "name": "Concert ticket",
-    "collection": "events",
-    "tags": [
-      "events",
-      "concert",
-      "music",
-      "tickets"
-    ],
-    "hash": "2cc28ef9",
-    "ratio": 1.923
-  },
-  {
-    "id": "event-cinema",
-    "name": "Film night",
-    "collection": "events",
-    "tags": [
-      "events",
-      "cinema",
-      "film"
-    ],
-    "hash": "efa4e1a0",
-    "ratio": 0.857
-  },
-  {
-    "id": "event-comedy",
-    "name": "Comedy night",
-    "collection": "events",
-    "tags": [
-      "events",
-      "comedy",
-      "tickets"
-    ],
-    "hash": "aa12d8b6",
-    "ratio": 0.681
-  },
-  {
-    "id": "event-theatre",
-    "name": "Theatre",
-    "collection": "events",
-    "tags": [
-      "events",
-      "theatre",
-      "program"
-    ],
-    "hash": "3367b4a2",
-    "ratio": 0.721
-  },
-  {
-    "id": "event-festival",
-    "name": "Festival",
-    "collection": "events",
-    "tags": [
-      "events",
-      "festival",
-      "lineup"
-    ],
-    "hash": "38679cc3",
-    "ratio": 0.742
-  },
-  {
-    "id": "event-party",
-    "name": "Party",
-    "collection": "events",
-    "tags": [
-      "events",
-      "party",
-      "rsvp"
-    ],
-    "hash": "3c4b987c",
-    "ratio": 0.701
-  },
-  {
-    "id": "event-birthday",
-    "name": "Birthday",
-    "collection": "events",
-    "tags": [
-      "events",
-      "birthday",
-      "party"
-    ],
-    "hash": "f01ba3ba",
-    "ratio": 0.702
-  },
-  {
-    "id": "event-save-the-date",
-    "name": "Save the date",
-    "collection": "events",
-    "tags": [
-      "events",
-      "save the date"
-    ],
-    "hash": "833ec6de",
-    "ratio": 0.697
-  },
-  {
-    "id": "event-badge",
-    "name": "Name badge",
-    "collection": "events",
-    "tags": [
-      "events",
-      "conference",
-      "badge",
-      "networking"
-    ],
-    "hash": "31e606c3",
-    "ratio": 0.695
-  },
-  {
-    "id": "event-agenda",
-    "name": "Agenda",
-    "collection": "events",
-    "tags": [
-      "events",
-      "conference",
-      "agenda"
-    ],
-    "hash": "91391940",
-    "ratio": 0.701
-  },
-  {
-    "id": "event-check-in",
-    "name": "Event check-in",
-    "collection": "events",
-    "tags": [
-      "events",
-      "check-in"
-    ],
-    "hash": "d4228a8d",
-    "ratio": 0.814
-  },
-  {
-    "id": "event-wristband",
-    "name": "Admission",
-    "collection": "events",
-    "tags": [
-      "events",
-      "tickets",
-      "admission"
-    ],
-    "hash": "8527febe",
-    "ratio": 1.923
-  },
-  {
-    "id": "event-raffle",
-    "name": "Raffle ticket",
-    "collection": "events",
-    "tags": [
-      "events",
-      "raffle",
-      "giveaway"
-    ],
-    "hash": "20477d95",
-    "ratio": 0.681
-  },
-  {
-    "id": "event-announcement",
-    "name": "Announcements",
-    "collection": "events",
-    "tags": [
-      "events",
-      "updates"
-    ],
-    "hash": "8a415d60",
-    "ratio": 0.681
-  },
-  {
-    "id": "event-photos",
-    "name": "Event photos",
-    "collection": "events",
-    "tags": [
-      "events",
-      "photos"
-    ],
-    "hash": "3f13927b",
-    "ratio": 0.82
-  },
-  {
-    "id": "event-livestream",
-    "name": "Livestream",
-    "collection": "events",
-    "tags": [
-      "events",
-      "livestream",
-      "video"
-    ],
-    "hash": "35d22b36",
-    "ratio": 0.68
-  },
-  {
-    "id": "event-sports",
-    "name": "Match day",
-    "collection": "events",
-    "tags": [
-      "events",
-      "sports",
-      "match"
-    ],
-    "hash": "df595ed3",
-    "ratio": 0.806
-  },
-  {
-    "id": "event-race",
-    "name": "Race results",
-    "collection": "events",
-    "tags": [
-      "events",
-      "race",
-      "results"
-    ],
-    "hash": "c044d20c",
-    "ratio": 0.713
-  },
-  {
-    "id": "event-exhibit",
-    "name": "Exhibition",
-    "collection": "events",
-    "tags": [
-      "events",
-      "exhibition",
-      "gallery"
-    ],
-    "hash": "541a8612",
-    "ratio": 0.802
-  },
-  {
-    "id": "wedding-rings",
-    "name": "Wedding rings",
-    "collection": "events",
-    "tags": [
-      "wedding",
-      "events",
-      "rsvp"
-    ],
-    "hash": "46c7f2fc",
-    "ratio": 0.702
-  },
-  {
-    "id": "wedding-invitation",
-    "name": "Invitation",
-    "collection": "events",
-    "tags": [
-      "wedding",
-      "events",
-      "invitation",
-      "rsvp"
-    ],
-    "hash": "3da30705",
-    "ratio": 0.721
-  },
-  {
-    "id": "wedding-toast",
-    "name": "Toast",
-    "collection": "events",
-    "tags": [
-      "wedding",
-      "events",
-      "reception",
-      "menu"
-    ],
-    "hash": "0020b2f5",
-    "ratio": 0.721
-  },
-  {
-    "id": "wedding-photos",
-    "name": "Wedding photos",
-    "collection": "events",
-    "tags": [
-      "wedding",
-      "events",
-      "photos"
-    ],
-    "hash": "935d00de",
-    "ratio": 0.82
-  },
-  {
-    "id": "wedding-registry",
-    "name": "Gift registry",
-    "collection": "events",
-    "tags": [
-      "wedding",
-      "events",
-      "registry",
-      "gift"
-    ],
-    "hash": "52cd7a77",
-    "ratio": 0.703
-  },
-  {
-    "id": "wedding-welcome",
-    "name": "Welcome sign",
-    "collection": "events",
-    "tags": [
-      "wedding",
-      "events",
-      "welcome sign"
-    ],
-    "hash": "1e8ba60e",
-    "ratio": 0.702
-  },
-  {
-    "id": "wedding-seating",
-    "name": "Seating chart",
-    "collection": "events",
-    "tags": [
-      "wedding",
-      "events",
-      "seating"
-    ],
-    "hash": "1f465151",
-    "ratio": 0.701
-  },
-  {
-    "id": "wedding-letter",
-    "name": "Wedding letter",
-    "collection": "events",
-    "tags": [
-      "wedding",
-      "events",
-      "invitation"
-    ],
-    "hash": "2b4fd920",
-    "ratio": 0.702
-  },
-  {
-    "id": "wedding-seal",
-    "name": "Wedding seal",
-    "collection": "events",
-    "tags": [
-      "wedding",
-      "events",
-      "save the date"
-    ],
-    "hash": "aad9ba9e",
-    "ratio": 1
-  },
-  {
-    "id": "wifi-tile",
-    "name": "Wi-Fi tile",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "minimal"
-    ],
-    "hash": "e1eb02cc",
-    "ratio": 0.873
-  },
-  {
-    "id": "wifi-tab",
-    "name": "Wi-Fi tab",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "tab"
-    ],
-    "hash": "73b38dd5",
-    "ratio": 0.805
-  },
-  {
-    "id": "wifi-seal",
-    "name": "Wi-Fi badge",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "badge"
-    ],
-    "hash": "2de84836",
-    "ratio": 1
-  },
-  {
-    "id": "wifi-sticker",
-    "name": "Wi-Fi sticker",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "sticker"
-    ],
-    "hash": "eb09618c",
-    "ratio": 0.754
-  },
-  {
-    "id": "wifi-wide",
-    "name": "Wi-Fi wide card",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "landscape",
-      "guest"
-    ],
-    "hash": "3596c7a3",
-    "ratio": 1.923
-  },
-  {
-    "id": "wifi-bubble",
-    "name": "Wi-Fi bubble",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "speech bubble"
-    ],
-    "hash": "567d9f74",
-    "ratio": 0.743
-  },
-  {
-    "id": "wifi-circle-top",
-    "name": "Wi-Fi badge card",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "guest"
-    ],
-    "hash": "b3b3abfa",
-    "ratio": 0.678
-  },
-  {
-    "id": "wifi-corners",
-    "name": "Wi-Fi viewfinder",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "minimal"
-    ],
-    "hash": "0fe90686",
-    "ratio": 0.814
-  },
-  {
-    "id": "hotel-room-service",
-    "name": "Room service",
-    "collection": "places",
-    "tags": [
-      "hotel",
-      "hospitality",
-      "room service"
-    ],
-    "hash": "4d6a38e4",
-    "ratio": 0.633
-  },
-  {
-    "id": "hotel-hanger-light",
-    "name": "Light door hanger",
-    "collection": "places",
-    "tags": [
-      "hotel",
-      "hospitality",
-      "guest info"
-    ],
-    "hash": "4a8dedbd",
-    "ratio": 0.633
-  },
-  {
-    "id": "hotel-key",
-    "name": "Room key",
-    "collection": "places",
-    "tags": [
-      "hotel",
-      "hospitality",
-      "key card",
-      "guest info"
-    ],
-    "hash": "bed7c00b",
-    "ratio": 1.923
-  },
-  {
-    "id": "hotel-bed",
-    "name": "Guest guide",
-    "collection": "places",
-    "tags": [
-      "hotel",
-      "hospitality",
-      "guest info"
-    ],
-    "hash": "a413cbb5",
-    "ratio": 0.701
-  },
-  {
-    "id": "hotel-concierge",
-    "name": "Concierge",
-    "collection": "places",
-    "tags": [
-      "hotel",
-      "hospitality",
-      "concierge",
-      "chat"
-    ],
-    "hash": "fb3ed6ee",
-    "ratio": 0.709
-  },
-  {
-    "id": "hotel-check-out",
-    "name": "Express check-out",
-    "collection": "places",
-    "tags": [
-      "hotel",
-      "hospitality",
-      "check-out"
-    ],
-    "hash": "afb8bb8e",
-    "ratio": 0.705
-  },
-  {
-    "id": "hotel-breakfast",
-    "name": "Breakfast",
-    "collection": "places",
-    "tags": [
-      "hotel",
-      "hospitality",
-      "breakfast"
-    ],
-    "hash": "e98606fb",
-    "ratio": 0.721
-  },
-  {
-    "id": "travel-boarding-pass",
-    "name": "Boarding pass",
-    "collection": "places",
-    "tags": [
-      "travel",
-      "flights"
-    ],
-    "hash": "96be934d",
-    "ratio": 1.613
-  },
-  {
-    "id": "travel-compass",
-    "name": "Explore",
-    "collection": "places",
-    "tags": [
-      "travel",
-      "map",
-      "tourism"
-    ],
-    "hash": "458ced9c",
-    "ratio": 0.678
-  },
-  {
-    "id": "travel-tour",
-    "name": "Audio tour",
-    "collection": "places",
-    "tags": [
-      "travel",
-      "tour",
-      "audio"
-    ],
-    "hash": "87ce080b",
-    "ratio": 0.713
-  },
-  {
-    "id": "travel-trail",
-    "name": "Trail map",
-    "collection": "places",
-    "tags": [
-      "travel",
-      "hiking",
-      "map"
-    ],
-    "hash": "0cfc1304",
-    "ratio": 0.681
-  },
-  {
-    "id": "travel-excursions",
-    "name": "Excursions",
-    "collection": "places",
-    "tags": [
-      "travel",
-      "tours",
-      "booking"
-    ],
-    "hash": "d61b08aa",
-    "ratio": 0.702
-  },
-  {
-    "id": "travel-city-guide",
-    "name": "City guide",
-    "collection": "places",
-    "tags": [
-      "travel",
-      "city guide"
-    ],
-    "hash": "9d0af7e8",
-    "ratio": 0.689
-  },
-  {
-    "id": "travel-luggage",
-    "name": "Luggage tag",
-    "collection": "places",
-    "tags": [
-      "travel",
-      "luggage",
-      "lost and found"
-    ],
-    "hash": "0214511e",
-    "ratio": 0.66
-  },
-  {
-    "id": "travel-directions",
-    "name": "Find us",
-    "collection": "places",
-    "tags": [
-      "travel",
-      "directions"
-    ],
-    "hash": "a1c09f4c",
-    "ratio": 0.701
-  },
-  {
-    "id": "property-for-sale",
-    "name": "For sale sign",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "for sale",
-      "signage"
-    ],
-    "hash": "d73258af",
-    "ratio": 0.725
-  },
-  {
-    "id": "property-house",
-    "name": "House",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "listing"
-    ],
-    "hash": "d70250f7",
-    "ratio": 0.714
-  },
-  {
-    "id": "property-house-light",
-    "name": "Light house",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "viewing"
-    ],
-    "hash": "a59b9585",
-    "ratio": 0.714
-  },
-  {
-    "id": "property-open-house",
-    "name": "Open house",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "open house"
-    ],
-    "hash": "1f1f13ce",
-    "ratio": 0.713
-  },
-  {
-    "id": "property-floor-plan",
-    "name": "Floor plans",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "floor plans",
-      "apartments"
-    ],
-    "hash": "247f16a1",
-    "ratio": 0.701
-  },
-  {
-    "id": "property-virtual-tour",
-    "name": "Virtual tour",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "virtual tour",
-      "video"
-    ],
-    "hash": "a50ab242",
-    "ratio": 1.923
-  },
-  {
-    "id": "property-rent",
-    "name": "For rent",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "rental"
-    ],
-    "hash": "80a32a19",
-    "ratio": 0.729
-  },
-  {
-    "id": "property-key",
-    "name": "Keys",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "move-in"
-    ],
-    "hash": "a6b8b9f5",
-    "ratio": 0.678
-  },
-  {
-    "id": "health-check-in",
-    "name": "Clinic check-in",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "check-in"
-    ],
-    "hash": "d9555dc1",
-    "ratio": 0.701
-  },
-  {
-    "id": "health-portal",
-    "name": "Patient portal",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "patient portal"
-    ],
-    "hash": "c5c21df7",
-    "ratio": 0.713
-  },
-  {
-    "id": "health-medication",
-    "name": "Medication info",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "pharmacy",
-      "medication"
-    ],
-    "hash": "789e31f5",
-    "ratio": 0.66
-  },
-  {
-    "id": "health-pharmacy",
-    "name": "Pharmacy",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "pharmacy"
-    ],
-    "hash": "bb7ecded",
-    "ratio": 0.678
-  },
-  {
-    "id": "health-dental",
-    "name": "Dental",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "dental",
-      "booking"
-    ],
-    "hash": "9528b626",
-    "ratio": 0.705
-  },
-  {
-    "id": "health-appointment",
-    "name": "Appointment",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "booking"
-    ],
-    "hash": "63f43554",
-    "ratio": 0.697
-  },
-  {
-    "id": "health-waiting-room",
-    "name": "Waiting room",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "queue"
-    ],
-    "hash": "74d448c6",
-    "ratio": 0.814
-  },
-  {
-    "id": "health-pet",
-    "name": "Vet clinic",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "vet",
-      "pets"
-    ],
-    "hash": "d49b33d2",
-    "ratio": 0.754
-  },
-  {
-    "id": "fitness-schedule",
-    "name": "Class schedule",
-    "collection": "sports-fitness",
-    "tags": [
-      "fitness",
-      "gym",
-      "classes"
-    ],
-    "hash": "51de09a4",
-    "ratio": 0.701
-  },
-  {
-    "id": "fitness-kettlebell",
-    "name": "Kettlebell",
-    "collection": "sports-fitness",
-    "tags": [
-      "fitness",
-      "gym",
-      "workout"
-    ],
-    "hash": "55ccc321",
-    "ratio": 0.713
-  },
-  {
-    "id": "fitness-timer",
-    "name": "Workout timer",
-    "collection": "sports-fitness",
-    "tags": [
-      "fitness",
-      "gym",
-      "tracking"
-    ],
-    "hash": "7b8d7176",
-    "ratio": 0.678
-  },
-  {
-    "id": "fitness-challenge",
-    "name": "Challenge",
-    "collection": "sports-fitness",
-    "tags": [
-      "fitness",
-      "gym",
-      "challenge"
-    ],
-    "hash": "a3bd4c66",
-    "ratio": 0.806
-  },
-  {
-    "id": "fitness-yoga",
-    "name": "Yoga studio",
-    "collection": "sports-fitness",
-    "tags": [
-      "fitness",
-      "gym",
-      "yoga",
-      "booking"
-    ],
-    "hash": "7a7c7dc4",
-    "ratio": 0.702
-  },
-  {
-    "id": "fitness-trial",
-    "name": "Free trial",
-    "collection": "sports-fitness",
-    "tags": [
-      "fitness",
-      "gym",
-      "trial",
-      "offer"
-    ],
-    "hash": "ad73bec3",
-    "ratio": 0.691
-  },
-  {
-    "id": "fitness-equipment",
-    "name": "Equipment guide",
-    "collection": "sports-fitness",
-    "tags": [
-      "fitness",
-      "gym",
-      "equipment",
-      "video"
-    ],
-    "hash": "45ea7b43",
-    "ratio": 0.795
-  },
-  {
-    "id": "edu-course",
-    "name": "Course info",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "course"
-    ],
-    "hash": "ba341eaa",
-    "ratio": 0.701
-  },
-  {
-    "id": "edu-library",
-    "name": "Library",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "library"
-    ],
-    "hash": "aa0bf791",
-    "ratio": 0.702
-  },
-  {
-    "id": "edu-assignment",
-    "name": "Assignment",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "homework"
-    ],
-    "hash": "f32405c1",
-    "ratio": 0.709
-  },
-  {
-    "id": "edu-lab",
-    "name": "Lab safety",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "science",
-      "safety"
-    ],
-    "hash": "4c4c4597",
-    "ratio": 0.713
-  },
-  {
-    "id": "edu-idea",
-    "name": "Learn more",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "learning"
-    ],
-    "hash": "e3f27b3d",
-    "ratio": 0.678
-  },
-  {
-    "id": "edu-attendance",
-    "name": "Class attendance",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "attendance"
-    ],
-    "hash": "da4c5cdf",
-    "ratio": 0.814
-  },
-  {
-    "id": "edu-exam",
-    "name": "Exam timer",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "exams"
-    ],
-    "hash": "80ba5f3f",
-    "ratio": 0.681
-  },
-  {
-    "id": "edu-graduation",
-    "name": "Graduation",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "graduation"
-    ],
-    "hash": "52733d0e",
-    "ratio": 1
-  },
-  {
-    "id": "edu-open-day",
-    "name": "Open day",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "open day",
-      "registration"
-    ],
-    "hash": "6bc7e083",
-    "ratio": 0.742
-  },
-  {
-    "id": "review-star",
-    "name": "Star review",
-    "collection": "business",
-    "tags": [
-      "reviews",
-      "feedback",
-      "rating"
-    ],
-    "hash": "59c144f7",
-    "ratio": 0.678
-  },
-  {
-    "id": "review-quote",
-    "name": "Quote review",
-    "collection": "business",
-    "tags": [
-      "reviews",
-      "feedback",
-      "testimonial"
-    ],
-    "hash": "d621f732",
-    "ratio": 0.713
-  },
-  {
-    "id": "review-thumb",
-    "name": "Thumbs up",
-    "collection": "business",
-    "tags": [
-      "reviews",
-      "feedback",
-      "rating"
-    ],
-    "hash": "0bc05081",
-    "ratio": 0.754
-  },
-  {
-    "id": "review-laurel",
-    "name": "Top rated",
-    "collection": "business",
-    "tags": [
-      "reviews",
-      "feedback",
-      "rating"
-    ],
-    "hash": "5b1797c7",
-    "ratio": 0.681
-  },
-  {
-    "id": "review-bubble",
-    "name": "Review bubble",
-    "collection": "business",
-    "tags": [
-      "reviews",
-      "feedback",
-      "rating"
-    ],
-    "hash": "a0e46448",
-    "ratio": 0.681
-  },
-  {
-    "id": "review-ribbon",
-    "name": "Review ribbon",
-    "collection": "business",
-    "tags": [
-      "reviews",
-      "feedback",
-      "rating"
-    ],
-    "hash": "d4a92259",
-    "ratio": 0.8
-  },
-  {
-    "id": "feedback-survey",
-    "name": "Survey",
-    "collection": "business",
-    "tags": [
-      "reviews",
-      "feedback",
-      "survey"
-    ],
-    "hash": "3d2eb382",
-    "ratio": 0.709
-  },
-  {
-    "id": "pay-card",
-    "name": "Card payment",
-    "collection": "business",
-    "tags": [
-      "payments",
-      "checkout"
-    ],
-    "hash": "198d6aa6",
-    "ratio": 0.701
-  },
-  {
-    "id": "pay-wallet",
-    "name": "Wallet",
-    "collection": "business",
-    "tags": [
-      "payments",
-      "checkout",
-      "landscape"
-    ],
-    "hash": "023d72be",
-    "ratio": 1.923
-  },
-  {
-    "id": "pay-tap",
-    "name": "Tap to pay",
-    "collection": "business",
-    "tags": [
-      "payments",
-      "contactless"
-    ],
-    "hash": "2a192e71",
-    "ratio": 0.879
-  },
-  {
-    "id": "pay-tips",
-    "name": "Tips welcome",
-    "collection": "business",
-    "tags": [
-      "payments",
-      "tips"
-    ],
-    "hash": "a0bd1f45",
-    "ratio": 0.765
-  },
-  {
-    "id": "pay-receipt",
-    "name": "Digital receipt",
-    "collection": "business",
-    "tags": [
-      "payments",
-      "receipt"
-    ],
-    "hash": "e298332d",
-    "ratio": 0.697
-  },
-  {
-    "id": "pay-invoice",
-    "name": "Pay invoice",
-    "collection": "business",
-    "tags": [
-      "payments",
-      "invoice"
-    ],
-    "hash": "827dfebf",
-    "ratio": 0.721
-  },
-  {
-    "id": "pay-donate-heart",
-    "name": "Donation card",
-    "collection": "business",
-    "tags": [
-      "payments",
-      "charity",
-      "donations"
-    ],
-    "hash": "c297eb42",
-    "ratio": 0.713
-  },
-  {
-    "id": "pay-coins",
-    "name": "Pay here",
-    "collection": "business",
-    "tags": [
-      "payments",
-      "checkout"
-    ],
-    "hash": "d6a053a3",
-    "ratio": 0.814
-  },
-  {
-    "id": "social-hashtag",
-    "name": "Hashtag",
-    "collection": "business",
-    "tags": [
-      "social",
-      "followers",
-      "hashtag"
-    ],
-    "hash": "3ab8aa4c",
-    "ratio": 0.713
-  },
-  {
-    "id": "social-camera",
-    "name": "Photo feed",
-    "collection": "business",
-    "tags": [
-      "social",
-      "followers",
-      "photos"
-    ],
-    "hash": "1643d916",
-    "ratio": 0.82
-  },
-  {
-    "id": "social-video",
-    "name": "Video channel",
-    "collection": "business",
-    "tags": [
-      "social",
-      "followers",
-      "video"
-    ],
-    "hash": "aec8ee4a",
-    "ratio": 0.68
-  },
-  {
-    "id": "social-music",
-    "name": "Playlist",
-    "collection": "business",
-    "tags": [
-      "social",
-      "followers",
-      "music",
-      "playlist"
-    ],
-    "hash": "e61168fa",
-    "ratio": 0.701
-  },
-  {
-    "id": "social-newsletter",
-    "name": "Newsletter",
-    "collection": "business",
-    "tags": [
-      "social",
-      "followers",
-      "newsletter",
-      "email"
-    ],
-    "hash": "fede5ddf",
-    "ratio": 0.702
-  },
-  {
-    "id": "social-links",
-    "name": "All our links",
-    "collection": "business",
-    "tags": [
-      "social",
-      "followers",
-      "link in bio"
-    ],
-    "hash": "d43fe8a4",
-    "ratio": 0.738
-  },
-  {
-    "id": "social-follow-bubble",
-    "name": "Follow bubble",
-    "collection": "business",
-    "tags": [
-      "social",
-      "followers",
-      "speech bubble"
-    ],
-    "hash": "41fb109d",
-    "ratio": 0.743
-  },
-  {
-    "id": "social-like",
-    "name": "Like us",
-    "collection": "business",
-    "tags": [
-      "social",
-      "followers",
-      "badge"
-    ],
-    "hash": "b5bfec8b",
-    "ratio": 1
-  },
-  {
-    "id": "app-phone",
-    "name": "App phone",
-    "collection": "business",
-    "tags": [
-      "app",
-      "download",
-      "mobile",
-      "phone"
-    ],
-    "hash": "1153a895",
-    "ratio": 0.68
-  },
-  {
-    "id": "app-phone-dark",
-    "name": "Dark app phone",
-    "collection": "business",
-    "tags": [
-      "app",
-      "download",
-      "mobile",
-      "phone"
-    ],
-    "hash": "5201a2f6",
-    "ratio": 0.68
-  },
-  {
-    "id": "app-download",
-    "name": "Download",
-    "collection": "business",
-    "tags": [
-      "app",
-      "download",
-      "mobile"
-    ],
-    "hash": "1b64bdce",
-    "ratio": 0.701
-  },
-  {
-    "id": "app-install",
-    "name": "Install",
-    "collection": "business",
-    "tags": [
-      "app",
-      "download",
-      "mobile",
-      "landscape"
-    ],
-    "hash": "08cdbf19",
-    "ratio": 1.923
-  },
-  {
-    "id": "app-arrow",
-    "name": "App arrow",
-    "collection": "business",
-    "tags": [
-      "app",
-      "download",
-      "mobile",
-      "arrow"
-    ],
-    "hash": "0c97b898",
-    "ratio": 0.705
-  },
-  {
-    "id": "bizcard-light",
-    "name": "Business card",
-    "collection": "business",
-    "tags": [
-      "business card",
-      "contact",
-      "networking",
-      "vcard"
-    ],
-    "hash": "515dfdca",
-    "ratio": 1.887
-  },
-  {
-    "id": "bizcard-dark",
-    "name": "Dark business card",
-    "collection": "business",
-    "tags": [
-      "business card",
-      "contact",
-      "networking",
-      "vcard",
-      "dark"
-    ],
-    "hash": "5192481b",
-    "ratio": 1.887
-  },
-  {
-    "id": "bizcard-edge",
-    "name": "Edge business card",
-    "collection": "business",
-    "tags": [
-      "business card",
-      "contact",
-      "networking",
-      "vcard"
-    ],
-    "hash": "f9de0e4c",
-    "ratio": 1.887
-  },
-  {
-    "id": "bizcard-hello",
-    "name": "Hello card",
-    "collection": "business",
-    "tags": [
-      "business card",
-      "contact",
-      "networking",
-      "vcard"
-    ],
-    "hash": "7b54e718",
-    "ratio": 1.887
-  },
-  {
-    "id": "bizcard-portrait",
-    "name": "Portrait card",
-    "collection": "business",
-    "tags": [
-      "business card",
-      "contact",
-      "networking",
-      "vcard"
-    ],
-    "hash": "909280ba",
-    "ratio": 0.705
-  },
-  {
-    "id": "bizcard-badge",
-    "name": "Contact badge",
-    "collection": "business",
-    "tags": [
-      "business card",
-      "contact",
-      "networking",
-      "conference"
-    ],
-    "hash": "e018beeb",
-    "ratio": 0.695
-  },
-  {
-    "id": "biz-booking",
-    "name": "Book online",
-    "collection": "business",
-    "tags": [
-      "business",
-      "booking"
-    ],
-    "hash": "8c9118d4",
-    "ratio": 1.923
-  },
-  {
-    "id": "biz-hiring",
-    "name": "We're hiring",
-    "collection": "business",
-    "tags": [
-      "business",
-      "jobs",
-      "hiring"
-    ],
-    "hash": "f2905f8b",
-    "ratio": 0.691
-  },
-  {
-    "id": "biz-salon",
-    "name": "Salon",
-    "collection": "business",
-    "tags": [
-      "business",
-      "salon",
-      "booking"
-    ],
-    "hash": "9792faaf",
-    "ratio": 0.702
-  },
-  {
-    "id": "biz-repair",
-    "name": "Repair shop",
-    "collection": "business",
-    "tags": [
-      "business",
-      "repair",
-      "service"
-    ],
-    "hash": "5a6d94f3",
-    "ratio": 0.713
-  },
-  {
-    "id": "biz-support",
-    "name": "Support",
-    "collection": "business",
-    "tags": [
-      "business",
-      "support",
-      "help"
-    ],
-    "hash": "8644ded6",
-    "ratio": 0.709
-  },
-  {
-    "id": "biz-launch",
-    "name": "Launch",
-    "collection": "business",
-    "tags": [
-      "business",
-      "launch",
-      "announcement"
-    ],
-    "hash": "f53f56ca",
-    "ratio": 0.8
-  },
-  {
-    "id": "get-started-rocket",
-    "name": "Get started",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "start",
-      "onboarding"
-    ],
-    "hash": "c97c1502",
-    "ratio": 0.713
-  },
-  {
-    "id": "questions-cloud",
-    "name": "Questions cloud",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "help",
-      "faq"
-    ],
-    "hash": "bb8e4cac",
-    "ratio": 0.843
-  },
-  {
-    "id": "save-for-later",
-    "name": "Save for later",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "bookmark"
-    ],
-    "hash": "77b5685a",
-    "ratio": 0.701
-  },
-  {
-    "id": "report-a-problem",
-    "name": "Report a problem",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "report",
-      "issue"
-    ],
-    "hash": "2a525bfd",
-    "ratio": 0.698
-  },
-  {
-    "id": "see-the-map",
-    "name": "See the map",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "map",
-      "directions"
-    ],
-    "hash": "8f07170d",
-    "ratio": 1.923
-  },
-  {
-    "id": "try-the-demo",
-    "name": "Try the demo",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "demo"
-    ],
-    "hash": "5333c87b",
-    "ratio": 0.802
-  },
-  {
-    "id": "scan-here-arrow",
-    "name": "Big arrow",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "arrow"
-    ],
-    "hash": "2d9c5dc3",
-    "ratio": 1.923
-  },
-  {
-    "id": "start-here-arrow",
-    "name": "Big arrow, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "arrow"
-    ],
-    "hash": "8c701eaf",
-    "ratio": 1.923
-  },
-  {
-    "id": "scan-me-cloud",
-    "name": "Cloud",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "cloud"
-    ],
-    "hash": "dc026d3e",
-    "ratio": 0.843
-  },
-  {
-    "id": "scan-me-stack",
-    "name": "Stacked cards",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "cards"
-    ],
-    "hash": "008f4738",
-    "ratio": 0.766
-  },
-  {
-    "id": "see-more-stack",
-    "name": "Stacked cards, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "cards"
-    ],
-    "hash": "36e1bc76",
-    "ratio": 0.838
-  },
-  {
-    "id": "scan-me-folded",
-    "name": "Folded corner",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "corner"
-    ],
-    "hash": "00f93d9d",
-    "ratio": 0.747
-  },
-  {
-    "id": "read-the-story",
-    "name": "Read the story",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "article",
-      "reading"
-    ],
-    "hash": "9fd1c9f4",
-    "ratio": 0.701
-  },
-  {
-    "id": "scan-for-translations",
-    "name": "Translations",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "language",
-      "translation"
-    ],
-    "hash": "d35a2ee3",
-    "ratio": 0.701
-  },
-  {
-    "id": "read-the-faq",
-    "name": "FAQ",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "faq",
-      "help"
-    ],
-    "hash": "d24bff35",
-    "ratio": 0.678
-  },
-  {
-    "id": "large-print",
-    "name": "Large print",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "accessibility",
-      "large print"
-    ],
-    "hash": "03f2425e",
-    "ratio": 0.713
-  },
-  {
-    "id": "safety-information",
-    "name": "Safety information",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "safety"
-    ],
-    "hash": "9f7fb79b",
-    "ratio": 0.795
-  },
-  {
-    "id": "join-the-waitlist",
-    "name": "Waitlist",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "waitlist",
-      "queue"
-    ],
-    "hash": "0abc2cd8",
-    "ratio": 0.705
-  },
-  {
-    "id": "scan-to-unlock",
-    "name": "Unlock",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "members",
-      "exclusive"
-    ],
-    "hash": "0ea99829",
-    "ratio": 0.701
-  },
-  {
-    "id": "take-a-closer-look",
-    "name": "Closer look",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "details",
-      "museum"
-    ],
-    "hash": "ff981f95",
-    "ratio": 0.678
-  },
-  {
-    "id": "add-to-calendar",
-    "name": "Add to calendar",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "calendar",
-      "date"
-    ],
-    "hash": "68d355c7",
-    "ratio": 0.705
-  },
-  {
-    "id": "scan-me-banner",
-    "name": "Banner",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "banner"
-    ],
-    "hash": "105b3a08",
-    "ratio": 1.754
-  },
-  {
-    "id": "scan-here-post",
-    "name": "Post sign",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "sign"
-    ],
-    "hash": "cc366289",
-    "ratio": 0.639
-  },
-  {
-    "id": "how-it-works",
-    "name": "How it works",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "video",
-      "how-to"
-    ],
-    "hash": "28944331",
-    "ratio": 1
-  },
-  {
-    "id": "see-the-full-list",
-    "name": "Full list",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "list",
-      "details"
-    ],
-    "hash": "2b314b00",
-    "ratio": 0.721
-  },
-  {
-    "id": "scan-for-the-answer",
-    "name": "Trivia",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "quiz",
-      "trivia"
-    ],
-    "hash": "d5523f66",
-    "ratio": 0.743
-  },
-  {
-    "id": "continued-online",
-    "name": "Continued online",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "article",
-      "continued"
-    ],
-    "hash": "b97f47be",
-    "ratio": 0.756
-  },
-  {
-    "id": "read-the-transcript",
-    "name": "Transcript",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "accessibility",
-      "transcript"
-    ],
-    "hash": "f86e60f4",
-    "ratio": 0.8
-  },
-  {
-    "id": "scan-for-the-checklist",
-    "name": "Checklist",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "checklist"
-    ],
-    "hash": "4325b1d7",
-    "ratio": 0.698
-  },
-  {
-    "id": "scan-for-the-latest",
-    "name": "What's new board",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "news",
-      "updates"
-    ],
-    "hash": "13d3f02c",
-    "ratio": 0.821
-  },
-  {
-    "id": "burger-order",
-    "name": "Burger order",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "burger",
-      "kiosk"
-    ],
-    "hash": "bb8816aa",
-    "ratio": 0.713
-  },
-  {
-    "id": "sushi-menu",
-    "name": "Sushi menu",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "sushi",
-      "japanese"
-    ],
-    "hash": "0b4d91ee",
-    "ratio": 0.721
-  },
-  {
-    "id": "donut-shop",
-    "name": "Donut shop",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "donuts",
-      "bakery"
-    ],
-    "hash": "323f116d",
-    "ratio": 0.678
-  },
-  {
-    "id": "cupcake-order",
-    "name": "Cupcake order",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cupcakes",
-      "bakery"
-    ],
-    "hash": "3d3e8e5b",
-    "ratio": 0.705
-  },
-  {
-    "id": "tea-menu",
-    "name": "Tea menu",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "tea",
-      "cafe"
-    ],
-    "hash": "85300440",
-    "ratio": 0.702
-  },
-  {
-    "id": "bakery-board",
-    "name": "Bakery board",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bakery",
-      "bread"
-    ],
-    "hash": "ea08cda2",
-    "ratio": 0.821
-  },
-  {
-    "id": "winery-tasting",
-    "name": "Winery tasting",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "winery",
-      "wine",
-      "tasting"
-    ],
-    "hash": "9e621e04",
-    "ratio": 0.678
-  },
-  {
-    "id": "fish-market",
-    "name": "Fish market",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "seafood",
-      "market"
-    ],
-    "hash": "94d3d6f0",
-    "ratio": 0.701
-  },
-  {
-    "id": "bubble-tea",
-    "name": "Bubble tea",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bubble tea",
-      "boba"
-    ],
-    "hash": "845c5832",
-    "ratio": 0.754
-  },
-  {
-    "id": "dumpling-house",
-    "name": "Dumpling house",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "dumplings",
-      "asian"
-    ],
-    "hash": "15ddd9a6",
-    "ratio": 1.923
-  },
-  {
-    "id": "farm-stand",
-    "name": "Farm stand",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "farm",
-      "produce",
-      "honesty box"
-    ],
-    "hash": "05b09c9d",
-    "ratio": 0.639
-  },
-  {
-    "id": "pick-your-own",
-    "name": "Pick your own",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "orchard",
-      "farm"
-    ],
-    "hash": "4086eb53",
-    "ratio": 1.754
-  },
-  {
-    "id": "cookie-box",
-    "name": "Cookie box",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cookies",
-      "bakery"
-    ],
-    "hash": "5c7a1ced",
-    "ratio": 1.429
-  },
-  {
-    "id": "cheese-pairing",
-    "name": "Cheese pairing",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cheese",
-      "deli"
-    ],
-    "hash": "444d80c7",
-    "ratio": 1.429
-  },
-  {
-    "id": "brunch-menu",
-    "name": "Brunch menu",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "brunch",
-      "breakfast"
-    ],
-    "hash": "6e573197",
-    "ratio": 0.701
-  },
-  {
-    "id": "takeout-order",
-    "name": "Takeout",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "takeout",
-      "pickup"
-    ],
-    "hash": "cde18678",
-    "ratio": 0.795
-  },
-  {
-    "id": "nutrition-facts",
-    "name": "Nutrition facts",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "nutrition",
-      "calories"
-    ],
-    "hash": "341b41bd",
-    "ratio": 0.713
-  },
-  {
-    "id": "recipe-card",
-    "name": "Recipe card",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "recipe",
-      "cooking"
-    ],
-    "hash": "c6880245",
-    "ratio": 0.698
-  },
-  {
-    "id": "catering-order",
-    "name": "Catering",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "catering",
-      "events"
-    ],
-    "hash": "3fdb2c0d",
-    "ratio": 1.923
-  },
-  {
-    "id": "restaurant-gift-card",
-    "name": "Restaurant gift card",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "gift card"
-    ],
-    "hash": "998e9c9f",
-    "ratio": 1.923
-  },
-  {
-    "id": "food-truck-location",
-    "name": "Food truck spot",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "food truck",
-      "location"
-    ],
-    "hash": "6b1f10d7",
-    "ratio": 0.713
-  },
-  {
-    "id": "plant-based-menu",
-    "name": "Plant-based menu",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "vegan",
-      "vegetarian"
-    ],
-    "hash": "e86452df",
-    "ratio": 1
-  },
-  {
-    "id": "kids-menu",
-    "name": "Kids' menu",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "kids",
-      "family"
-    ],
-    "hash": "e4e850f9",
-    "ratio": 0.701
-  },
-  {
-    "id": "wine-pairings",
-    "name": "Wine pairings",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "wine",
-      "pairing"
-    ],
-    "hash": "b417830c",
-    "ratio": 0.8
-  },
-  {
-    "id": "trace-your-coffee",
-    "name": "Coffee origin",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "coffee",
-      "origin"
-    ],
-    "hash": "a547035d",
-    "ratio": 0.767
-  },
-  {
-    "id": "brewery-tour",
-    "name": "Brewery tour",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "brewery",
-      "beer",
-      "tour"
-    ],
-    "hash": "1e690b98",
-    "ratio": 0.681
-  },
-  {
-    "id": "call-a-server",
-    "name": "Call a server",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "service",
-      "table"
-    ],
-    "hash": "478df04d",
-    "ratio": 0.709
-  },
-  {
-    "id": "split-the-bill",
-    "name": "Split the bill",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bill",
-      "payment"
-    ],
-    "hash": "2eeccd37",
-    "ratio": 1.923
-  },
-  {
-    "id": "wine-staff-pick",
-    "name": "Wine shelf talker",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "wine shop",
-      "shelf"
-    ],
-    "hash": "67529e97",
-    "ratio": 0.789
-  },
-  {
-    "id": "cooking-class",
-    "name": "Cooking class",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "cooking class"
-    ],
-    "hash": "7a3acde0",
-    "ratio": 0.681
-  },
-  {
-    "id": "farmers-market",
-    "name": "Farmers market",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "market",
-      "farm"
-    ],
-    "hash": "954ef587",
-    "ratio": 0.713
-  },
-  {
-    "id": "grill-menu",
-    "name": "Grill menu",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "grill",
-      "barbecue"
-    ],
-    "hash": "843bdecb",
-    "ratio": 0.795
-  },
-  {
-    "id": "water-refill",
-    "name": "Water refill",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "water",
-      "refill"
-    ],
-    "hash": "a4a6aaab",
-    "ratio": 0.639
-  },
-  {
-    "id": "late-night-menu",
-    "name": "Late-night menu",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "late night"
-    ],
-    "hash": "ec1f9af9",
-    "ratio": 0.705
-  },
-  {
-    "id": "pay-it-forward",
-    "name": "Pay it forward",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "pay it forward",
-      "giving"
-    ],
-    "hash": "0e82f3a6",
-    "ratio": 0.705
-  },
-  {
-    "id": "pre-order-bread",
-    "name": "Bread pre-order",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "bakery",
-      "pre-order"
-    ],
-    "hash": "4cd98ce6",
-    "ratio": 0.701
-  },
-  {
-    "id": "return-your-cup",
-    "name": "Return your cup",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "reusable",
-      "cups"
-    ],
-    "hash": "8d39a9cc",
-    "ratio": 0.709
-  },
-  {
-    "id": "tea-time",
-    "name": "Afternoon tea",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "afternoon tea",
-      "tea"
-    ],
-    "hash": "89108a52",
-    "ratio": 0.721
-  },
-  {
-    "id": "juice-bar",
-    "name": "Juice bar",
-    "collection": "food-drink",
-    "tags": [
-      "restaurant",
-      "food",
-      "juice",
-      "smoothie"
-    ],
-    "hash": "64b730a1",
-    "ratio": 0.702
-  },
-  {
-    "id": "shoe-size-check",
-    "name": "Shoe size check",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "shoes",
-      "sizes"
-    ],
-    "hash": "391ccc74",
-    "ratio": 0.789
-  },
-  {
-    "id": "eyewear-try-on",
-    "name": "Eyewear try-on",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "eyewear",
-      "sunglasses"
-    ],
-    "hash": "ef5ce8ac",
-    "ratio": 0.701
-  },
-  {
-    "id": "watch-repair",
-    "name": "Watch repair",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "watches",
-      "repair"
-    ],
-    "hash": "ac80e31c",
-    "ratio": 0.721
-  },
-  {
-    "id": "plant-care",
-    "name": "Plant care",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "plants",
-      "garden center"
-    ],
-    "hash": "ba20f41a",
-    "ratio": 0.754
-  },
-  {
-    "id": "sofa-fabric",
-    "name": "Sofa fabric",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "furniture",
-      "sofa"
-    ],
-    "hash": "e1ae27a0",
-    "ratio": 0.701
-  },
-  {
-    "id": "dress-fitting",
-    "name": "Dress fitting",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "boutique",
-      "bridal"
-    ],
-    "hash": "c365ee2b",
-    "ratio": 0.702
-  },
-  {
-    "id": "scent-finder",
-    "name": "Scent finder",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "perfume",
-      "fragrance"
-    ],
-    "hash": "c9ca53cf",
-    "ratio": 0.678
-  },
-  {
-    "id": "get-it-delivered",
-    "name": "Get it delivered",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "delivery"
-    ],
-    "hash": "7e3224dd",
-    "ratio": 1.923
-  },
-  {
-    "id": "alterations",
-    "name": "Alterations",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "tailor",
-      "alterations"
-    ],
-    "hash": "469aefa8",
-    "ratio": 0.8
-  },
-  {
-    "id": "game-night",
-    "name": "Game night",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "games",
-      "game store"
-    ],
-    "hash": "fa751af2",
-    "ratio": 0.681
-  },
-  {
-    "id": "send-flowers",
-    "name": "Send flowers",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "florist",
-      "flowers"
-    ],
-    "hash": "5599571b",
-    "ratio": 0.767
-  },
-  {
-    "id": "weekly-deals",
-    "name": "Weekly deals",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "grocery",
-      "deals"
-    ],
-    "hash": "bfaf26b5",
-    "ratio": 0.701
-  },
-  {
-    "id": "toy-finder",
-    "name": "Toy finder",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "toys",
-      "kids"
-    ],
-    "hash": "8029e4b1",
-    "ratio": 0.754
-  },
-  {
-    "id": "start-a-return",
-    "name": "Start a return",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "returns"
-    ],
-    "hash": "a22fd3d0",
-    "ratio": 0.795
-  },
-  {
-    "id": "size-guide",
-    "name": "Size guide",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "sizes",
-      "fashion"
-    ],
-    "hash": "a6f7b58b",
-    "ratio": 0.713
-  },
-  {
-    "id": "diy-how-to",
-    "name": "DIY how-to",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "hardware",
-      "diy"
-    ],
-    "hash": "4cef1f28",
-    "ratio": 0.68
-  },
-  {
-    "id": "compare-specs",
-    "name": "Compare specs",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "electronics",
-      "shelf"
-    ],
-    "hash": "8f5ab873",
-    "ratio": 0.789
-  },
-  {
-    "id": "read-a-sample",
-    "name": "Read a sample",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "bookshop",
-      "books"
-    ],
-    "hash": "4a78846e",
-    "ratio": 0.705
-  },
-  {
-    "id": "ring-size",
-    "name": "Ring size",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "jewelry",
-      "rings"
-    ],
-    "hash": "c25c1815",
-    "ratio": 1
-  },
-  {
-    "id": "click-and-collect",
-    "name": "Click and collect",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "click and collect",
-      "pickup"
-    ],
-    "hash": "ed02f6c0",
-    "ratio": 1.923
-  },
-  {
-    "id": "grand-opening",
-    "name": "Grand opening",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "opening",
-      "new store"
-    ],
-    "hash": "13917ff8",
-    "ratio": 1.754
-  },
-  {
-    "id": "read-the-reviews",
-    "name": "Product reviews",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "reviews"
-    ],
-    "hash": "0e764297",
-    "ratio": 0.72
-  },
-  {
-    "id": "trade-it-in",
-    "name": "Trade-in",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "trade-in",
-      "secondhand"
-    ],
-    "hash": "b1fd807f",
-    "ratio": 1.923
-  },
-  {
-    "id": "gift-message",
-    "name": "Gift message",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
       "gift",
-      "gift wrap"
     ],
-    "hash": "08e41b16",
-    "ratio": 0.701
-  },
-  {
-    "id": "restock-alert",
-    "name": "Restock alert",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "stock",
-      "shelf"
-    ],
-    "hash": "824ad58f",
-    "ratio": 0.789
-  },
-  {
-    "id": "meet-the-maker",
-    "name": "Meet the maker",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "handmade",
-      "crafts"
-    ],
-    "hash": "d1f8ffdb",
-    "ratio": 0.767
-  },
-  {
-    "id": "rent-this-item",
-    "name": "Rent it",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "rental",
-      "hire"
-    ],
-    "hash": "29ec311f",
-    "ratio": 0.681
-  },
-  {
-    "id": "ask-a-stylist",
-    "name": "Ask a stylist",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "styling",
-      "fashion"
-    ],
-    "hash": "09714f45",
-    "ratio": 0.709
-  },
-  {
-    "id": "assembly-guide",
-    "name": "Assembly guide",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "assembly",
-      "instructions"
-    ],
-    "hash": "20b0e312",
-    "ratio": 0.701
-  },
-  {
-    "id": "last-chance",
-    "name": "Last chance",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "sale",
-      "clearance"
-    ],
-    "hash": "39384c1c",
-    "ratio": 0.754
-  },
-  {
-    "id": "gift-ideas",
-    "name": "Gift ideas",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "gifts"
-    ],
-    "hash": "4cc575e3",
-    "ratio": 0.743
-  },
-  {
-    "id": "find-it-in-store",
-    "name": "Find it in store",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "store map",
-      "aisle"
-    ],
-    "hash": "37c858bd",
-    "ratio": 0.639
-  },
-  {
-    "id": "bulk-orders",
-    "name": "Bulk orders",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "bulk",
-      "wholesale"
-    ],
-    "hash": "6c131e35",
-    "ratio": 0.705
-  },
-  {
-    "id": "add-engraving",
-    "name": "Engraving",
-    "collection": "shopping",
-    "tags": [
-      "retail",
-      "shop",
-      "engraving",
-      "personalized"
-    ],
-    "hash": "8ed79d41",
-    "ratio": 0.701
-  },
-  {
-    "id": "eye-exam",
-    "name": "Eye exam",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "optician",
-      "eye care"
-    ],
-    "hash": "53e4ffae",
-    "ratio": 0.702
-  },
-  {
-    "id": "your-prescription",
-    "name": "Your prescription",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "optician",
-      "glasses"
-    ],
-    "hash": "82e54a18",
-    "ratio": 0.701
-  },
-  {
-    "id": "book-a-vaccine",
-    "name": "Vaccines",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "vaccine",
-      "pharmacy"
-    ],
-    "hash": "9867cde5",
-    "ratio": 0.678
-  },
-  {
-    "id": "first-aid-guide",
-    "name": "First aid",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "first aid",
-      "safety"
-    ],
-    "hash": "ce641ac7",
-    "ratio": 0.639
-  },
-  {
-    "id": "check-symptoms",
-    "name": "Check symptoms",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "symptoms",
-      "triage"
-    ],
-    "hash": "4991cd6f",
-    "ratio": 0.713
-  },
-  {
-    "id": "find-a-doctor",
-    "name": "Find a doctor",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "doctor"
-    ],
-    "hash": "7efb3086",
-    "ratio": 1.923
-  },
-  {
-    "id": "intake-forms",
-    "name": "Intake forms",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "forms",
-      "patients"
-    ],
-    "hash": "2b5ecd06",
-    "ratio": 0.698
-  },
-  {
-    "id": "test-results",
-    "name": "Test results",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "results",
-      "lab"
-    ],
-    "hash": "31039618",
-    "ratio": 0.701
-  },
-  {
-    "id": "talk-to-someone",
-    "name": "Talk to someone",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "mental health",
-      "support"
-    ],
-    "hash": "641e82cc",
-    "ratio": 0.709
-  },
-  {
-    "id": "hand-washing",
-    "name": "Hand washing",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "hygiene"
-    ],
-    "hash": "6c12502b",
-    "ratio": 0.802
-  },
-  {
-    "id": "meal-plan",
-    "name": "Meal plan",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "nutrition",
-      "dietitian"
-    ],
-    "hash": "526f4afc",
-    "ratio": 0.721
-  },
-  {
-    "id": "refill-reminder",
-    "name": "Refill reminder",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "pharmacy",
-      "reminder"
-    ],
-    "hash": "339cde8d",
-    "ratio": 0.795
-  },
-  {
-    "id": "visitor-map",
-    "name": "Visitor map",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "hospital",
-      "wayfinding"
-    ],
-    "hash": "f38d4d40",
-    "ratio": 0.713
-  },
-  {
-    "id": "visiting-hours",
-    "name": "Visiting hours",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "hospital",
-      "visitors"
-    ],
-    "hash": "84c8c00d",
-    "ratio": 0.767
-  },
-  {
-    "id": "physio-exercises",
-    "name": "Physio exercises",
-    "collection": "health-learning",
-    "tags": [
-      "healthcare",
-      "clinic",
-      "physiotherapy",
-      "exercises"
-    ],
-    "hash": "d87d7800",
-    "ratio": 0.705
-  },
-  {
-    "id": "school-supply-list",
-    "name": "Supply list",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "supplies"
-    ],
-    "hash": "949915d2",
-    "ratio": 0.713
-  },
-  {
-    "id": "science-fair",
-    "name": "Science fair",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "science"
-    ],
-    "hash": "7e4174cc",
-    "ratio": 0.681
-  },
-  {
-    "id": "math-practice",
-    "name": "Math practice",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "math",
-      "homework"
-    ],
-    "hash": "2842311a",
-    "ratio": 0.709
-  },
-  {
-    "id": "watch-the-experiment",
-    "name": "Experiment video",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "science",
-      "video"
-    ],
-    "hash": "677fc84f",
-    "ratio": 0.68
-  },
-  {
-    "id": "online-class",
-    "name": "Online class",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "online learning",
-      "class"
-    ],
-    "hash": "4cb319a8",
-    "ratio": 1.923
-  },
-  {
-    "id": "chess-lessons",
-    "name": "Chess lessons",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "chess",
-      "club"
-    ],
-    "hash": "4169d6c1",
-    "ratio": 0.681
-  },
-  {
-    "id": "hear-it-spoken",
-    "name": "Language practice",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "languages",
-      "pronunciation"
-    ],
-    "hash": "5fede656",
-    "ratio": 0.743
-  },
-  {
-    "id": "read-the-ebook",
-    "name": "Ebook",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "library",
-      "ebook"
-    ],
-    "hash": "c5db9f1c",
-    "ratio": 0.701
-  },
-  {
-    "id": "homework-help",
-    "name": "Homework help",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "homework",
-      "tutoring"
-    ],
-    "hash": "9ebf479b",
-    "ratio": 0.681
-  },
-  {
-    "id": "parent-meeting",
-    "name": "Parent meeting",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "parents"
-    ],
-    "hash": "2e223dd9",
-    "ratio": 0.705
-  },
-  {
-    "id": "permission-form",
-    "name": "Permission form",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "forms"
-    ],
-    "hash": "a95e52e8",
-    "ratio": 0.698
-  },
-  {
-    "id": "student-portal",
-    "name": "Student portal",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "students",
-      "portal"
-    ],
-    "hash": "61d5a529",
-    "ratio": 0.713
-  },
-  {
-    "id": "music-lessons",
-    "name": "Music lessons",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "music",
-      "lessons"
-    ],
-    "hash": "ec43bcbc",
-    "ratio": 0.702
-  },
-  {
-    "id": "art-class",
-    "name": "Art lessons",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "art",
-      "class"
-    ],
-    "hash": "c0bbc17c",
-    "ratio": 0.8
-  },
-  {
-    "id": "reading-challenge",
-    "name": "Reading challenge",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "reading",
-      "library"
-    ],
-    "hash": "331c0fd4",
-    "ratio": 1
-  },
-  {
-    "id": "library-card",
-    "name": "Library card",
-    "collection": "health-learning",
-    "tags": [
-      "education",
-      "school",
-      "library"
-    ],
-    "hash": "88701243",
-    "ratio": 0.701
-  },
-  {
-    "id": "portfolio-card",
-    "name": "Portfolio card",
-    "collection": "business",
-    "tags": [
-      "business",
-      "portfolio",
-      "freelance"
-    ],
-    "hash": "fcb99374",
-    "ratio": 1.887
-  },
-  {
-    "id": "annual-report",
-    "name": "Annual report",
-    "collection": "business",
-    "tags": [
-      "business",
-      "report",
-      "investors"
-    ],
-    "hash": "35fd012b",
-    "ratio": 0.701
-  },
-  {
-    "id": "privacy-notice",
-    "name": "Privacy notice",
-    "collection": "business",
-    "tags": [
-      "business",
-      "privacy",
-      "data"
-    ],
-    "hash": "711fefe2",
-    "ratio": 0.721
-  },
-  {
-    "id": "meet-the-team",
-    "name": "Meet the team",
-    "collection": "business",
-    "tags": [
-      "business",
-      "team",
-      "about"
-    ],
-    "hash": "61fe8790",
-    "ratio": 1.923
-  },
-  {
-    "id": "sign-the-agreement",
-    "name": "Sign the agreement",
-    "collection": "business",
-    "tags": [
-      "business",
-      "contract",
-      "e-signature"
-    ],
-    "hash": "ffa5231c",
-    "ratio": 0.698
-  },
-  {
-    "id": "get-a-quote",
-    "name": "Get a quote",
-    "collection": "business",
-    "tags": [
-      "business",
-      "quote",
-      "estimate"
-    ],
-    "hash": "d8361e10",
-    "ratio": 0.701
-  },
-  {
-    "id": "visitor-sign-in",
-    "name": "Visitor sign-in",
-    "collection": "business",
-    "tags": [
-      "business",
-      "reception",
-      "visitors"
-    ],
-    "hash": "ba1fbc45",
-    "ratio": 0.795
-  },
-  {
-    "id": "book-this-room",
-    "name": "Meeting room",
-    "collection": "business",
-    "tags": [
-      "business",
-      "meeting room",
-      "office"
-    ],
-    "hash": "12b1c59c",
-    "ratio": 0.713
-  },
-  {
-    "id": "join-the-webinar",
-    "name": "Webinar",
-    "collection": "business",
-    "tags": [
-      "business",
-      "webinar",
-      "online"
-    ],
-    "hash": "38a1cee4",
-    "ratio": 0.705
-  },
-  {
-    "id": "see-our-pitch",
-    "name": "Pitch deck",
-    "collection": "business",
-    "tags": [
-      "business",
-      "startup",
-      "investors"
-    ],
-    "hash": "9ef6d429",
-    "ratio": 1.923
-  },
-  {
-    "id": "delivery-instructions",
-    "name": "Delivery instructions",
-    "collection": "business",
-    "tags": [
-      "business",
-      "delivery",
-      "drivers"
-    ],
-    "hash": "f34cd5bf",
-    "ratio": 0.795
-  },
-  {
-    "id": "book-a-consultation",
-    "name": "Consultation",
-    "collection": "business",
-    "tags": [
-      "business",
-      "consultation"
-    ],
-    "hash": "a4ec1a74",
-    "ratio": 0.72
-  },
-  {
-    "id": "upload-receipts",
-    "name": "Upload receipts",
-    "collection": "business",
-    "tags": [
-      "business",
-      "accounting",
-      "expenses"
-    ],
-    "hash": "e5e6134f",
-    "ratio": 0.701
-  },
-  {
-    "id": "make-a-claim",
-    "name": "Insurance claim",
-    "collection": "business",
-    "tags": [
-      "business",
-      "insurance",
-      "claims"
-    ],
-    "hash": "e0b28696",
-    "ratio": 0.713
-  },
-  {
-    "id": "open-an-account",
-    "name": "Open an account",
-    "collection": "business",
-    "tags": [
-      "business",
-      "bank",
-      "account"
-    ],
-    "hash": "d9668920",
-    "ratio": 0.678
-  },
-  {
-    "id": "start-saving",
-    "name": "Start saving",
-    "collection": "business",
-    "tags": [
-      "business",
-      "savings",
-      "bank"
-    ],
-    "hash": "d659aa76",
-    "ratio": 0.702
-  },
-  {
-    "id": "coworking-pass",
-    "name": "Coworking pass",
-    "collection": "business",
-    "tags": [
-      "business",
-      "coworking",
-      "desk"
-    ],
-    "hash": "64bd136b",
-    "ratio": 0.681
-  },
-  {
-    "id": "lost-and-found",
-    "name": "Lost and found",
-    "collection": "business",
-    "tags": [
-      "business",
-      "lost and found"
-    ],
-    "hash": "dd2d5925",
-    "ratio": 0.681
-  },
-  {
-    "id": "book-a-cleaning",
-    "name": "Cleaning service",
-    "collection": "business",
-    "tags": [
-      "business",
-      "cleaning"
-    ],
-    "hash": "305e661e",
-    "ratio": 0.705
-  },
-  {
-    "id": "request-maintenance",
-    "name": "Maintenance request",
-    "collection": "business",
-    "tags": [
-      "business",
-      "facilities",
-      "maintenance"
-    ],
-    "hash": "608d2e34",
-    "ratio": 0.713
-  },
-  {
-    "id": "get-the-brochure",
-    "name": "Brochure",
-    "collection": "business",
-    "tags": [
-      "business",
-      "brochure",
-      "trade show"
-    ],
-    "hash": "bfbcf83a",
-    "ratio": 0.72
-  },
-  {
-    "id": "price-list",
-    "name": "Price list",
-    "collection": "business",
-    "tags": [
-      "business",
-      "prices",
-      "services"
-    ],
-    "hash": "a559be4a",
-    "ratio": 0.701
-  },
-  {
-    "id": "clock-in",
-    "name": "Clock in",
-    "collection": "business",
-    "tags": [
-      "business",
-      "staff",
-      "time tracking"
-    ],
-    "hash": "c8e33f97",
-    "ratio": 0.802
-  },
-  {
-    "id": "press-kit",
-    "name": "Press kit",
-    "collection": "business",
-    "tags": [
-      "business",
-      "press",
-      "media"
-    ],
-    "hash": "1f90005c",
-    "ratio": 0.8
-  },
-  {
-    "id": "podcast",
-    "name": "Podcast",
-    "collection": "business",
-    "tags": [
-      "business",
-      "podcast",
-      "audio"
-    ],
-    "hash": "62f1349c",
-    "ratio": 0.68
-  },
-  {
-    "id": "wholesale",
-    "name": "Wholesale",
-    "collection": "business",
-    "tags": [
-      "business",
-      "wholesale",
-      "trade"
-    ],
-    "hash": "0896af87",
-    "ratio": 1.923
-  },
-  {
-    "id": "book-a-call",
-    "name": "Book a call",
-    "collection": "business",
-    "tags": [
-      "business",
-      "call",
-      "meeting"
-    ],
-    "hash": "8cc43a67",
-    "ratio": 0.705
-  },
-  {
-    "id": "find-our-office",
-    "name": "Find our office",
-    "collection": "business",
-    "tags": [
-      "business",
-      "office",
-      "directions"
-    ],
-    "hash": "d5634b3d",
-    "ratio": 0.713
-  },
-  {
-    "id": "staff-handbook",
-    "name": "Staff handbook",
-    "collection": "business",
-    "tags": [
-      "business",
-      "staff",
-      "onboarding"
-    ],
-    "hash": "ca72be4a",
-    "ratio": 0.721
-  },
-  {
-    "id": "site-induction",
-    "name": "Site induction",
-    "collection": "business",
-    "tags": [
-      "business",
-      "safety",
-      "construction"
-    ],
-    "hash": "decdc6cc",
-    "ratio": 0.698
-  },
-  {
-    "id": "staff-rota",
-    "name": "Staff rota",
-    "collection": "business",
-    "tags": [
-      "business",
-      "staff",
-      "schedule"
-    ],
-    "hash": "459c4fae",
-    "ratio": 0.802
-  },
-  {
-    "id": "vote-for-us",
-    "name": "Vote for us",
-    "collection": "business",
-    "tags": [
-      "business",
-      "awards"
-    ],
-    "hash": "fcaad749",
-    "ratio": 1
-  },
-  {
-    "id": "impact-report",
-    "name": "Impact report",
-    "collection": "business",
-    "tags": [
-      "business",
-      "sustainability",
-      "report"
-    ],
-    "hash": "2e73be70",
-    "ratio": 0.701
-  },
-  {
-    "id": "restroom-feedback",
-    "name": "Restroom feedback",
-    "collection": "business",
-    "tags": [
-      "business",
-      "facilities",
-      "feedback"
-    ],
-    "hash": "a330f7a4",
-    "ratio": 0.743
-  },
-  {
-    "id": "yard-sign-for-sale",
-    "name": "Yard sign, for sale",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "for sale",
-      "yard sign"
-    ],
-    "hash": "ad408f51",
-    "ratio": 0.761
-  },
-  {
-    "id": "yard-sign-sold",
-    "name": "Yard sign, sold",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "sold",
-      "yard sign"
-    ],
-    "hash": "399b5f2b",
-    "ratio": 0.761
-  },
-  {
-    "id": "yard-sign-viewing",
-    "name": "Yard sign, viewings",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "viewing",
-      "yard sign"
-    ],
-    "hash": "57b459ab",
-    "ratio": 0.761
-  },
-  {
-    "id": "yard-sign-coming-soon",
-    "name": "Yard sign, coming soon",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "coming soon",
-      "yard sign"
-    ],
-    "hash": "9e222374",
-    "ratio": 0.761
-  },
-  {
-    "id": "choose-your-plan",
-    "name": "New homes",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "new build",
-      "floor plan"
-    ],
-    "hash": "0b4a1e83",
-    "ratio": 0.701
-  },
-  {
-    "id": "arrival-guide",
-    "name": "Arrival guide",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "vacation rental",
-      "check-in"
-    ],
-    "hash": "e49326f2",
-    "ratio": 0.702
-  },
-  {
-    "id": "house-rules",
-    "name": "House rules",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "vacation rental",
-      "rules"
-    ],
-    "hash": "cf60f1e9",
-    "ratio": 0.698
-  },
-  {
-    "id": "mortgage-calculator",
-    "name": "Mortgage calculator",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "mortgage"
-    ],
-    "hash": "a6cba2ce",
-    "ratio": 0.678
-  },
-  {
-    "id": "home-valuation",
-    "name": "Home valuation",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "valuation",
-      "selling"
-    ],
-    "hash": "38000b66",
-    "ratio": 0.754
-  },
-  {
-    "id": "talk-to-the-agent",
-    "name": "Talk to the agent",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "agent",
-      "contact"
-    ],
-    "hash": "3bf701b4",
-    "ratio": 0.709
-  },
-  {
-    "id": "resident-portal",
-    "name": "Resident portal",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "apartments",
-      "residents"
-    ],
-    "hash": "1d6903ad",
-    "ratio": 0.795
-  },
-  {
-    "id": "pay-your-rent",
-    "name": "Pay your rent",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "rent",
-      "tenants"
-    ],
-    "hash": "02947833",
-    "ratio": 0.705
-  },
-  {
-    "id": "report-a-repair",
-    "name": "Report a repair",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "repairs",
-      "tenants"
-    ],
-    "hash": "fc191601",
-    "ratio": 0.701
-  },
-  {
-    "id": "parcel-room",
-    "name": "Parcel room",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "parcels",
-      "building"
-    ],
-    "hash": "469f49a4",
-    "ratio": 0.795
-  },
-  {
-    "id": "site-hoarding",
-    "name": "Site hoarding",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "construction",
-      "development"
-    ],
-    "hash": "4ebbeb1f",
-    "ratio": 1.754
-  },
-  {
-    "id": "renovation-quote",
-    "name": "Renovation quote",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "renovation",
-      "decorating"
-    ],
-    "hash": "391cab59",
-    "ratio": 0.713
-  },
-  {
-    "id": "handyman",
-    "name": "Handyman",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "handyman",
-      "repairs"
-    ],
-    "hash": "31bfea8e",
-    "ratio": 0.709
-  },
-  {
-    "id": "storage-units",
-    "name": "Storage units",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "storage"
-    ],
-    "hash": "2420e7a5",
-    "ratio": 1.923
-  },
-  {
-    "id": "register-interest",
-    "name": "Register interest",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "new build",
-      "launch"
-    ],
-    "hash": "3202129f",
-    "ratio": 1.923
-  },
-  {
-    "id": "garden-design",
-    "name": "Garden design",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "garden",
-      "landscaping"
-    ],
-    "hash": "d01a7357",
-    "ratio": 0.702
-  },
-  {
-    "id": "bathroom-showroom",
-    "name": "Bathroom showroom",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "bathroom",
-      "showroom"
-    ],
-    "hash": "34519b53",
-    "ratio": 0.701
-  },
-  {
-    "id": "window-quote",
-    "name": "Window quote",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "windows",
-      "doors"
-    ],
-    "hash": "7aeb63c5",
-    "ratio": 0.721
-  },
-  {
-    "id": "furnished-rental",
-    "name": "Furnished rental",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "furnished",
-      "rental"
-    ],
-    "hash": "150fc99b",
-    "ratio": 0.802
-  },
-  {
-    "id": "neighborhood-guide",
-    "name": "Neighborhood guide",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "neighborhood",
-      "area guide"
-    ],
-    "hash": "a3eff4fd",
-    "ratio": 0.72
-  },
-  {
-    "id": "moving-checklist",
-    "name": "Moving checklist",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "moving",
-      "checklist"
-    ],
-    "hash": "19b40764",
-    "ratio": 0.705
-  },
-  {
-    "id": "open-house-sign-in",
-    "name": "Open house sign-in",
-    "collection": "real-estate",
-    "tags": [
-      "real estate",
-      "property",
-      "open house",
-      "visitors"
-    ],
-    "hash": "5e7e5070",
-    "ratio": 0.72
-  },
-  {
-    "id": "team-jersey",
-    "name": "Team jersey",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "team",
-      "club"
-    ],
-    "hash": "9ed4b86a",
-    "ratio": 1.006
-  },
-  {
-    "id": "team-kit",
-    "name": "Team kit",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "team",
-      "kit"
-    ],
-    "hash": "5b7771b4",
-    "ratio": 1.006
-  },
-  {
-    "id": "book-a-court",
-    "name": "Basketball court",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "basketball",
-      "court"
-    ],
-    "hash": "3e3f3b10",
-    "ratio": 0.713
-  },
-  {
-    "id": "tennis-court",
-    "name": "Tennis court",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "tennis",
-      "court"
-    ],
-    "hash": "668a53f2",
-    "ratio": 0.678
-  },
-  {
-    "id": "tee-time",
-    "name": "Tee time",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "golf"
-    ],
-    "hash": "a4a8185f",
-    "ratio": 1.923
-  },
-  {
-    "id": "bike-service",
-    "name": "Bike service",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "cycling",
-      "bike shop"
-    ],
-    "hash": "7ce62460",
-    "ratio": 0.701
-  },
-  {
-    "id": "rent-a-bike",
-    "name": "Rent a bike",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "bike rental",
-      "cycling"
-    ],
-    "hash": "1589a3df",
-    "ratio": 0.639
-  },
-  {
-    "id": "coach-sign-up",
-    "name": "Coach sign-up",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "coaching",
-      "volunteers"
-    ],
-    "hash": "397f1cc1",
-    "ratio": 0.705
-  },
-  {
-    "id": "boxing-class",
-    "name": "Boxing class",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "boxing",
-      "class"
-    ],
-    "hash": "0bea34e1",
-    "ratio": 0.754
-  },
-  {
-    "id": "season-schedule",
-    "name": "Season schedule",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "baseball",
-      "schedule"
-    ],
-    "hash": "86e5bec0",
-    "ratio": 0.806
-  },
-  {
-    "id": "cricket-club",
-    "name": "Cricket club",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "cricket",
-      "club"
-    ],
-    "hash": "0ba509ff",
-    "ratio": 1.754
-  },
-  {
-    "id": "table-tennis",
-    "name": "Table tennis",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "table tennis"
-    ],
-    "hash": "bec196a1",
-    "ratio": 0.701
-  },
-  {
-    "id": "skate-park-rules",
-    "name": "Skate park",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "skate park",
-      "rules"
-    ],
-    "hash": "cc65693c",
-    "ratio": 0.639
-  },
-  {
-    "id": "badminton-session",
-    "name": "Badminton",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "badminton"
-    ],
-    "hash": "d2707cfa",
-    "ratio": 0.72
-  },
-  {
-    "id": "archery-lesson",
-    "name": "Archery lesson",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "archery"
-    ],
-    "hash": "3cbb1e81",
-    "ratio": 0.802
-  },
-  {
-    "id": "pool-timetable",
-    "name": "Pool timetable",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "swimming",
-      "pool"
-    ],
-    "hash": "bb0ebd7a",
-    "ratio": 0.701
-  },
-  {
-    "id": "run-club",
-    "name": "Run club",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "running",
-      "club"
-    ],
-    "hash": "3a1a9070",
-    "ratio": 0.701
-  },
-  {
-    "id": "race-photos",
-    "name": "Race photos",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "race",
-      "photos"
-    ],
-    "hash": "6b526b9a",
-    "ratio": 0.68
-  },
-  {
-    "id": "race-entry",
-    "name": "Race entry",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "race",
-      "running"
-    ],
-    "hash": "59caac0c",
-    "ratio": 0.681
-  },
-  {
-    "id": "membership-card",
-    "name": "Membership card",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "gym",
-      "membership"
-    ],
-    "hash": "429e8abe",
-    "ratio": 0.705
-  },
-  {
-    "id": "personal-trainer",
-    "name": "Personal trainer",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "personal training",
-      "gym"
-    ],
-    "hash": "f191c66c",
-    "ratio": 1.923
-  },
-  {
-    "id": "sports-camp",
-    "name": "Sports camp",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "camp",
-      "kids"
-    ],
-    "hash": "24d35368",
-    "ratio": 0.8
-  },
-  {
-    "id": "live-scores",
-    "name": "Live scores",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "scores",
-      "soccer"
-    ],
-    "hash": "c6df8671",
-    "ratio": 0.68
-  },
-  {
-    "id": "fan-club",
-    "name": "Fan club",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "supporters",
-      "soccer"
-    ],
-    "hash": "edd7c528",
-    "ratio": 1.754
-  },
-  {
-    "id": "golf-scorecard",
-    "name": "Golf scorecard",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "golf",
-      "scorecard"
-    ],
-    "hash": "dec29906",
-    "ratio": 0.698
-  },
-  {
-    "id": "fitness-test",
-    "name": "Fitness test",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "assessment"
-    ],
-    "hash": "dcf80d2a",
-    "ratio": 0.678
-  },
-  {
-    "id": "club-fees",
-    "name": "Club fees",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "club",
-      "fees"
-    ],
-    "hash": "673c39f9",
-    "ratio": 1.923
-  },
-  {
-    "id": "join-a-league",
-    "name": "Join a league",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "league",
-      "teams"
-    ],
-    "hash": "4df4166b",
-    "ratio": 0.678
-  },
-  {
-    "id": "swim-lessons",
-    "name": "Swim lessons",
-    "collection": "sports-fitness",
-    "tags": [
-      "sports",
-      "fitness",
-      "swimming",
-      "lessons"
-    ],
-    "hash": "63244770",
-    "ratio": 0.702
-  },
-  {
-    "id": "barber-booking",
-    "name": "Barber",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "barber",
-      "haircut"
-    ],
-    "hash": "58b328fd",
-    "ratio": 0.702
-  },
-  {
-    "id": "walk-in-queue",
-    "name": "Walk-in queue",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "barber",
-      "queue"
-    ],
-    "hash": "23666fbc",
-    "ratio": 0.705
-  },
-  {
-    "id": "makeup-artist",
-    "name": "Makeup artist",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "makeup"
-    ],
-    "hash": "934e164b",
-    "ratio": 0.678
-  },
-  {
-    "id": "shade-finder",
-    "name": "Shade finder",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "makeup",
-      "lipstick"
-    ],
-    "hash": "97472b5c",
-    "ratio": 0.701
-  },
-  {
-    "id": "nail-studio",
-    "name": "Nail studio",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "nails",
-      "manicure"
-    ],
-    "hash": "19086c62",
-    "ratio": 0.702
-  },
-  {
-    "id": "virtual-try-on",
-    "name": "Virtual try-on",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "makeup",
-      "try-on"
-    ],
-    "hash": "e4b12fbb",
-    "ratio": 0.68
-  },
-  {
-    "id": "hot-shave",
-    "name": "Hot shave",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "barber",
-      "shave"
-    ],
-    "hash": "220b1c79",
-    "ratio": 0.721
-  },
-  {
-    "id": "skincare-routine",
-    "name": "Skincare routine",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "skincare"
-    ],
-    "hash": "60fd0559",
-    "ratio": 0.701
-  },
-  {
-    "id": "book-a-massage",
-    "name": "Massage",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "spa",
-      "massage"
-    ],
-    "hash": "7063a951",
-    "ratio": 0.713
-  },
-  {
-    "id": "spa-menu",
-    "name": "Spa menu",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "spa",
-      "treatments"
-    ],
-    "hash": "d609a539",
-    "ratio": 0.721
-  },
-  {
-    "id": "wellness-retreat",
-    "name": "Wellness retreat",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "retreat"
-    ],
-    "hash": "f28db838",
-    "ratio": 1.923
-  },
-  {
-    "id": "spa-gift",
-    "name": "Spa gift",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "gift voucher",
-      "spa"
-    ],
-    "hash": "19966444",
-    "ratio": 0.767
-  },
-  {
-    "id": "aftercare-guide",
-    "name": "Aftercare guide",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "aftercare"
-    ],
-    "hash": "bac090d8",
-    "ratio": 0.795
-  },
-  {
-    "id": "consultation-form",
-    "name": "Consultation form",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "consultation",
-      "forms"
-    ],
-    "hash": "d97d45b8",
-    "ratio": 0.698
-  },
-  {
-    "id": "bridal-beauty",
-    "name": "Bridal beauty",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "bridal",
-      "wedding"
-    ],
-    "hash": "7c3b8982",
-    "ratio": 0.713
-  },
-  {
-    "id": "book-a-facial",
-    "name": "Facial",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "facial",
-      "skin"
-    ],
-    "hash": "80f6eabd",
-    "ratio": 0.705
-  },
-  {
-    "id": "salon-prices",
-    "name": "Salon prices",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "salon",
-      "prices"
-    ],
-    "hash": "3cb9f5e6",
-    "ratio": 0.713
-  },
-  {
-    "id": "style-gallery",
-    "name": "Style gallery",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "salon",
-      "styles"
-    ],
-    "hash": "016c0d88",
-    "ratio": 0.72
-  },
-  {
-    "id": "lash-bar",
-    "name": "Lash bar",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "lashes",
-      "brows"
-    ],
-    "hash": "6d63d3ae",
-    "ratio": 0.705
-  },
-  {
-    "id": "beauty-rewards",
-    "name": "Beauty rewards",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "loyalty",
-      "rewards"
-    ],
-    "hash": "3b23432c",
-    "ratio": 0.754
-  },
-  {
-    "id": "whats-inside",
-    "name": "Ingredients",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "skincare",
-      "ingredients"
-    ],
-    "hash": "b1f21577",
-    "ratio": 1.429
-  },
-  {
-    "id": "how-to-apply",
-    "name": "How to apply",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "makeup",
-      "tutorial"
-    ],
-    "hash": "e98f064a",
-    "ratio": 0.68
-  },
-  {
-    "id": "bath-ritual",
-    "name": "Bath ritual",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "bath",
-      "self-care"
-    ],
-    "hash": "418703fd",
-    "ratio": 0.702
-  },
-  {
-    "id": "rebook-visit",
-    "name": "Rebook",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "salon",
-      "booking"
-    ],
-    "hash": "3120d06b",
-    "ratio": 0.713
-  },
-  {
-    "id": "kids-haircuts",
-    "name": "Kids' haircuts",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "haircut",
-      "kids"
-    ],
-    "hash": "664ef55b",
-    "ratio": 0.713
-  },
-  {
-    "id": "clean-beauty",
-    "name": "Clean beauty",
-    "collection": "beauty-wellness",
-    "tags": [
-      "beauty",
-      "wellness",
-      "ingredients",
-      "clean beauty"
-    ],
-    "hash": "d22bb6f5",
-    "ratio": 0.678
-  },
-  {
-    "id": "pay-for-parking",
-    "name": "Pay for parking",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "payment"
-    ],
-    "hash": "e003c391",
-    "ratio": 0.639
-  },
-  {
-    "id": "parking-permit",
-    "name": "Parking permit",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "permit"
-    ],
-    "hash": "995d2a81",
-    "ratio": 0.713
-  },
-  {
-    "id": "validate-parking",
-    "name": "Parking validation",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "validation"
-    ],
-    "hash": "42ac873e",
-    "ratio": 1.923
-  },
-  {
-    "id": "start-charging",
-    "name": "EV charger",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "ev",
-      "charging"
-    ],
-    "hash": "0725ecd1",
-    "ratio": 0.843
-  },
-  {
-    "id": "charging-prices",
-    "name": "Charging prices",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "ev",
-      "charging"
-    ],
-    "hash": "01de1435",
-    "ratio": 0.843
-  },
-  {
-    "id": "find-a-charger",
-    "name": "Find a charger",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "ev",
-      "charging map"
-    ],
-    "hash": "99ecd8d1",
-    "ratio": 0.701
-  },
-  {
-    "id": "choose-your-wash",
-    "name": "Car wash",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "car wash"
-    ],
-    "hash": "b78f6e02",
-    "ratio": 0.821
-  },
-  {
-    "id": "wash-club",
-    "name": "Wash club",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "car wash",
-      "membership"
-    ],
-    "hash": "92bb5c8a",
-    "ratio": 0.754
-  },
-  {
-    "id": "car-details",
-    "name": "Car details",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "dealership",
-      "used cars"
-    ],
-    "hash": "7a47659b",
-    "ratio": 0.701
-  },
-  {
-    "id": "test-drive",
-    "name": "Test drive",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "dealership",
-      "test drive"
-    ],
-    "hash": "9fb37a95",
-    "ratio": 0.678
-  },
-  {
-    "id": "car-service",
-    "name": "Car service",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "garage",
-      "service"
-    ],
-    "hash": "964c607e",
-    "ratio": 0.795
-  },
-  {
-    "id": "tire-change",
-    "name": "Tire change",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "tires",
-      "garage"
-    ],
-    "hash": "9568923f",
-    "ratio": 0.713
-  },
-  {
-    "id": "pay-at-the-pump",
-    "name": "Pay at the pump",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "fuel",
-      "gas station"
-    ],
-    "hash": "e5203928",
-    "ratio": 0.705
-  },
-  {
-    "id": "return-your-rental",
-    "name": "Rental return",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "car rental"
-    ],
-    "hash": "20ff4ffd",
-    "ratio": 0.701
-  },
-  {
-    "id": "rental-car-guide",
-    "name": "Rental car guide",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "car rental",
-      "guide"
-    ],
-    "hash": "2b93db19",
-    "ratio": 0.721
-  },
-  {
-    "id": "vehicle-history",
-    "name": "Vehicle history",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "used cars",
-      "history"
-    ],
-    "hash": "f168570d",
-    "ratio": 0.802
-  },
-  {
-    "id": "roadside-help",
-    "name": "Roadside help",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "roadside",
-      "breakdown"
-    ],
-    "hash": "3589c50c",
-    "ratio": 0.705
-  },
-  {
-    "id": "rate-your-ride",
-    "name": "Rate your ride",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "taxi",
-      "rides"
-    ],
-    "hash": "1a007a2f",
-    "ratio": 1
-  },
-  {
-    "id": "carpool",
-    "name": "Carpool",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "carpool",
-      "commute"
-    ],
-    "hash": "291b75dc",
-    "ratio": 0.681
-  },
-  {
-    "id": "driving-lessons",
-    "name": "Driving lessons",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "driving school"
-    ],
-    "hash": "6044b9e6",
-    "ratio": 0.701
-  },
-  {
-    "id": "battery-check",
-    "name": "Car batteries",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "car parts",
-      "battery"
-    ],
-    "hash": "9a20ce16",
-    "ratio": 0.789
-  },
-  {
-    "id": "car-detailing",
-    "name": "Car detailing",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "detailing",
-      "valet"
-    ],
-    "hash": "d42a8bc4",
-    "ratio": 0.705
-  },
-  {
-    "id": "dashboard-lights",
-    "name": "Dashboard lights",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "manual",
-      "warning lights"
-    ],
-    "hash": "b7115403",
-    "ratio": 0.802
-  },
-  {
-    "id": "unlock-this-car",
-    "name": "Car sharing",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "car sharing"
-    ],
-    "hash": "0f3061f5",
-    "ratio": 1.923
-  },
-  {
-    "id": "damage-report",
-    "name": "Damage report",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "fleet",
-      "inspection"
-    ],
-    "hash": "2c774acb",
-    "ratio": 0.698
-  },
-  {
-    "id": "car-for-sale",
-    "name": "Car for sale",
-    "collection": "automotive",
-    "tags": [
-      "cars",
-      "parking",
-      "for sale",
-      "used cars"
-    ],
-    "hash": "81db244e",
-    "ratio": 0.713
-  },
-  {
-    "id": "donation-jar",
-    "name": "Donation jar",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "donate",
-      "fundraising"
-    ],
-    "hash": "dd7a1355",
-    "ratio": 0.75
-  },
-  {
-    "id": "giving-jar",
-    "name": "Giving jar",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "donate",
-      "fundraising"
-    ],
-    "hash": "9a40c227",
-    "ratio": 0.75
-  },
-  {
-    "id": "volunteer",
-    "name": "Volunteer",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "volunteering"
-    ],
-    "hash": "fc07b6b9",
-    "ratio": 0.713
-  },
-  {
-    "id": "sign-the-petition",
-    "name": "Petition",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "petition",
-      "campaign"
-    ],
-    "hash": "3b89f14e",
-    "ratio": 0.698
-  },
-  {
-    "id": "learn-the-signs",
-    "name": "Awareness",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "awareness",
-      "health"
-    ],
-    "hash": "25e6b8f3",
-    "ratio": 0.701
-  },
-  {
-    "id": "sponsor-my-run",
-    "name": "Sponsor my run",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "sponsorship",
-      "charity run"
-    ],
-    "hash": "54bb250a",
-    "ratio": 0.8
-  },
-  {
-    "id": "donate-food",
-    "name": "Donate food",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "food bank",
-      "donations"
-    ],
-    "hash": "d09ecd1e",
-    "ratio": 0.713
-  },
-  {
-    "id": "food-support",
-    "name": "Food support",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "food bank",
-      "support"
-    ],
-    "hash": "fef00ad5",
-    "ratio": 0.705
-  },
-  {
-    "id": "give-blood",
-    "name": "Give blood",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "blood drive"
-    ],
-    "hash": "051012e9",
-    "ratio": 0.678
-  },
-  {
-    "id": "polling-place",
-    "name": "Polling place",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "voting",
-      "election"
-    ],
-    "hash": "3a53d860",
-    "ratio": 0.639
-  },
-  {
-    "id": "register-to-vote",
-    "name": "Register to vote",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "voting",
-      "election"
-    ],
-    "hash": "15006c63",
-    "ratio": 0.713
-  },
-  {
-    "id": "town-hall",
-    "name": "Town hall",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "meeting"
-    ],
-    "hash": "292b3dce",
-    "ratio": 1.754
-  },
-  {
-    "id": "community-notices",
-    "name": "Community notices",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "notices"
-    ],
-    "hash": "ec3ca44e",
-    "ratio": 0.701
-  },
-  {
-    "id": "adopt-me",
-    "name": "Adopt me",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "adoption",
-      "animal shelter"
-    ],
-    "hash": "eb064b2e",
-    "ratio": 0.792
-  },
-  {
-    "id": "lost-pet-tag",
-    "name": "Lost pet tag",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "pets",
-      "pet id"
-    ],
-    "hash": "c92f98e0",
-    "ratio": 0.792
-  },
-  {
-    "id": "sponsor-a-pet",
-    "name": "Sponsor a pet",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "animal shelter",
-      "sponsorship"
-    ],
-    "hash": "cad0c8fb",
-    "ratio": 0.705
-  },
-  {
-    "id": "plant-a-tree",
-    "name": "Plant a tree",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "trees",
-      "environment"
-    ],
-    "hash": "aef7d52a",
-    "ratio": 0.701
-  },
-  {
-    "id": "join-the-cleanup",
-    "name": "Cleanup day",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "cleanup",
-      "environment"
-    ],
-    "hash": "8aa84056",
-    "ratio": 0.701
-  },
-  {
-    "id": "report-a-street-issue",
-    "name": "Street issue",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "council",
-      "report"
-    ],
-    "hash": "e92e6991",
-    "ratio": 0.701
-  },
-  {
-    "id": "donate-coats",
-    "name": "Coat drive",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "clothing drive",
-      "donations"
-    ],
-    "hash": "4461cd22",
-    "ratio": 0.713
-  },
-  {
-    "id": "service-times",
-    "name": "Service times",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "faith"
-    ],
-    "hash": "02d6393c",
-    "ratio": 0.721
-  },
-  {
-    "id": "charity-shop",
-    "name": "Charity shop",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "charity shop",
-      "secondhand"
-    ],
-    "hash": "67587c77",
-    "ratio": 0.713
-  },
-  {
-    "id": "bake-sale",
-    "name": "Bake sale",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "bake sale",
-      "fundraising"
-    ],
-    "hash": "108494a7",
-    "ratio": 1.754
-  },
-  {
-    "id": "scholarships",
-    "name": "Scholarships",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "scholarships",
-      "education"
-    ],
-    "hash": "9cd0a3ca",
-    "ratio": 0.705
-  },
-  {
-    "id": "youth-club",
-    "name": "Youth club",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "youth",
-      "club"
-    ],
-    "hash": "e77ad92b",
-    "ratio": 0.72
-  },
-  {
-    "id": "chess-club",
-    "name": "Chess club",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "chess",
-      "club"
-    ],
-    "hash": "c17125e6",
-    "ratio": 0.702
-  },
-  {
-    "id": "garden-plot",
-    "name": "Community garden",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "community garden"
-    ],
-    "hash": "7bafc0b9",
-    "ratio": 0.713
-  },
-  {
-    "id": "become-a-member",
-    "name": "Become a member",
-    "collection": "nonprofit",
-    "tags": [
-      "nonprofit",
-      "community",
-      "membership",
-      "support"
-    ],
-    "hash": "3a414633",
-    "ratio": 1.923
-  },
-  {
-    "id": "pongal-pot",
-    "name": "Pongal pot",
-    "collection": "holidays",
-    "occasion": "pongal",
-    "tags": [
-      "pongal",
-      "harvest festival",
-      "tamil nadu",
-      "january",
-      "pot"
-    ],
-    "hash": "a6bffbbe",
-    "ratio": 0.713
-  },
-  {
-    "id": "pongal-sun",
-    "name": "Pongal sun seal",
-    "collection": "holidays",
-    "occasion": "pongal",
-    "tags": [
-      "pongal",
-      "harvest festival",
-      "tamil nadu",
-      "january",
-      "sun"
-    ],
-    "hash": "10acbd3c",
-    "ratio": 1
-  },
-  {
-    "id": "pongal-offers",
-    "name": "Pongal offers",
-    "collection": "holidays",
-    "occasion": "pongal",
-    "tags": [
-      "pongal",
-      "harvest festival",
-      "tamil nadu",
-      "january",
-      "sale"
-    ],
-    "hash": "894f434f",
-    "ratio": 0.729
-  },
-  {
-    "id": "lohri-bonfire",
-    "name": "Lohri bonfire",
-    "collection": "holidays",
-    "occasion": "lohri",
-    "tags": [
-      "lohri",
-      "punjab",
-      "january",
-      "bonfire"
-    ],
-    "hash": "32083b1a",
-    "ratio": 0.713
-  },
-  {
-    "id": "lohri-dhol",
-    "name": "Lohri dhol",
-    "collection": "holidays",
-    "occasion": "lohri",
-    "tags": [
-      "lohri",
-      "punjab",
-      "january",
-      "dhol",
-      "party"
-    ],
-    "hash": "2bb5e859",
-    "ratio": 0.701
-  },
-  {
-    "id": "sankranti-kite",
-    "name": "Sankranti kite",
-    "collection": "holidays",
-    "occasion": "makar-sankranti",
-    "tags": [
-      "makar sankranti",
-      "uttarayan",
-      "kites",
-      "january",
-      "kite"
-    ],
-    "hash": "d71821d8",
-    "ratio": 0.701
-  },
-  {
-    "id": "sankranti-sky",
-    "name": "Kites in the sky",
-    "collection": "holidays",
-    "occasion": "makar-sankranti",
-    "tags": [
+    hash: "cf36895f",
+    ratio: 0.702,
+  },
+  {
+    id: "lunar-banner",
+    name: "Festival banner",
+    collection: "holidays",
+    occasion: "lunar-new-year",
+    tags: ["lunar new year", "chinese new year", "spring festival", "menu"],
+    hash: "eb2ad090",
+    ratio: 0.729,
+  },
+  {
+    id: "diwali-diya",
+    name: "Diya",
+    collection: "holidays",
+    occasion: "diwali",
+    tags: ["diwali", "deepavali", "festival of lights", "diya", "lamp"],
+    hash: "b921b82a",
+    ratio: 0.713,
+  },
+  {
+    id: "diwali-rangoli",
+    name: "Rangoli seal",
+    collection: "holidays",
+    occasion: "diwali",
+    tags: ["diwali", "deepavali", "festival of lights", "rangoli"],
+    hash: "1575e2d6",
+    ratio: 1,
+  },
+  {
+    id: "diwali-marigold",
+    name: "Marigold arch",
+    collection: "holidays",
+    occasion: "diwali",
+    tags: ["diwali", "deepavali", "festival of lights", "marigold", "flowers"],
+    hash: "f796cb01",
+    ratio: 0.702,
+  },
+  {
+    id: "diwali-lotus",
+    name: "Lotus border",
+    collection: "holidays",
+    occasion: "diwali",
+    tags: ["diwali", "deepavali", "festival of lights", "lotus"],
+    hash: "5ef74532",
+    ratio: 0.721,
+  },
+  {
+    id: "diwali-toran",
+    name: "Toran",
+    collection: "holidays",
+    occasion: "diwali",
+    tags: ["diwali", "deepavali", "festival of lights", "toran", "decoration"],
+    hash: "2b1da984",
+    ratio: 0.742,
+  },
+  {
+    id: "diwali-lantern",
+    name: "Sky lantern",
+    collection: "holidays",
+    occasion: "diwali",
+    tags: ["diwali", "deepavali", "festival of lights", "lantern", "sale"],
+    hash: "0a051fc3",
+    ratio: 0.701,
+  },
+  {
+    id: "diwali-rangoli-card",
+    name: "Rangoli card",
+    collection: "holidays",
+    occasion: "diwali",
+    tags: ["diwali", "deepavali", "festival of lights", "rangoli"],
+    hash: "ff984b4e",
+    ratio: 0.678,
+  },
+  {
+    id: "holi-splash",
+    name: "Color splash",
+    collection: "holidays",
+    occasion: "holi",
+    tags: ["holi", "festival of colors", "spring", "colors"],
+    hash: "df76f3d9",
+    ratio: 0.705,
+  },
+  {
+    id: "holi-corners",
+    name: "Holi corners",
+    collection: "holidays",
+    occasion: "holi",
+    tags: ["holi", "festival of colors", "spring", "colors"],
+    hash: "9456d8c2",
+    ratio: 0.721,
+  },
+  {
+    id: "holi-sticker",
+    name: "Holi sticker",
+    collection: "holidays",
+    occasion: "holi",
+    tags: ["holi", "festival of colors", "spring", "colors"],
+    hash: "524872ef",
+    ratio: 0.754,
+  },
+  {
+    id: "holi-bands",
+    name: "Holi bands",
+    collection: "holidays",
+    occasion: "holi",
+    tags: ["holi", "festival of colors", "spring", "party"],
+    hash: "afe13cca",
+    ratio: 0.729,
+  },
+  {
+    id: "holi-bunting",
+    name: "Holi bunting",
+    collection: "holidays",
+    occasion: "holi",
+    tags: ["holi", "festival of colors", "spring", "decoration"],
+    hash: "08979357",
+    ratio: 0.742,
+  },
+  {
+    id: "ramadan-lantern",
+    name: "Ramadan lantern",
+    collection: "holidays",
+    occasion: "ramadan",
+    tags: ["ramadan", "iftar", "ramadan kareem", "lantern"],
+    hash: "dbc43531",
+    ratio: 0.702,
+  },
+  {
+    id: "ramadan-crescent",
+    name: "Crescent and star",
+    collection: "holidays",
+    occasion: "ramadan",
+    tags: ["ramadan", "iftar", "ramadan kareem", "crescent"],
+    hash: "14a92aea",
+    ratio: 0.713,
+  },
+  {
+    id: "ramadan-seal",
+    name: "Ramadan seal",
+    collection: "holidays",
+    occasion: "ramadan",
+    tags: ["ramadan", "iftar", "ramadan kareem", "badge"],
+    hash: "90bb8376",
+    ratio: 1,
+  },
+  {
+    id: "ramadan-iftar-menu",
+    name: "Iftar menu",
+    collection: "holidays",
+    occasion: "ramadan",
+    tags: ["ramadan", "iftar", "ramadan kareem", "menu", "restaurant"],
+    hash: "a77e7857",
+    ratio: 0.701,
+  },
+  {
+    id: "ramadan-hanging",
+    name: "Hanging sign",
+    collection: "holidays",
+    occasion: "ramadan",
+    tags: ["ramadan", "iftar", "ramadan kareem", "sign"],
+    hash: "5e537687",
+    ratio: 0.725,
+  },
+  {
+    id: "eid-fitr-arch",
+    name: "Eid arch",
+    collection: "holidays",
+    occasion: "eid-al-fitr",
+    tags: ["eid al-fitr", "eid", "eid mubarak", "crescent"],
+    hash: "b9c89b59",
+    ratio: 0.702,
+  },
+  {
+    id: "eid-fitr-lantern",
+    name: "Eid lantern",
+    collection: "holidays",
+    occasion: "eid-al-fitr",
+    tags: ["eid al-fitr", "eid", "eid mubarak", "lantern"],
+    hash: "07c2f4bf",
+    ratio: 0.701,
+  },
+  {
+    id: "eid-fitr-seal",
+    name: "Eid seal",
+    collection: "holidays",
+    occasion: "eid-al-fitr",
+    tags: ["eid al-fitr", "eid", "eid mubarak", "badge"],
+    hash: "7ba54163",
+    ratio: 1,
+  },
+  {
+    id: "eid-fitr-border",
+    name: "Eid border",
+    collection: "holidays",
+    occasion: "eid-al-fitr",
+    tags: ["eid al-fitr", "eid", "eid mubarak", "elegant"],
+    hash: "fc4dc281",
+    ratio: 0.721,
+  },
+  {
+    id: "eid-fitr-gift",
+    name: "Eid gift",
+    collection: "holidays",
+    occasion: "eid-al-fitr",
+    tags: ["eid al-fitr", "eid", "eid mubarak", "gift"],
+    hash: "045e8d3e",
+    ratio: 0.703,
+  },
+  {
+    id: "eid-adha-night",
+    name: "Night crescent",
+    collection: "holidays",
+    occasion: "eid-al-adha",
+    tags: ["eid al-adha", "eid", "eid mubarak", "crescent"],
+    hash: "622d43c3",
+    ratio: 0.713,
+  },
+  {
+    id: "eid-adha-seal",
+    name: "Eid al-Adha seal",
+    collection: "holidays",
+    occasion: "eid-al-adha",
+    tags: ["eid al-adha", "eid", "eid mubarak", "badge"],
+    hash: "66734500",
+    ratio: 1,
+  },
+  {
+    id: "eid-adha-lantern",
+    name: "Lantern tab",
+    collection: "holidays",
+    occasion: "eid-al-adha",
+    tags: ["eid al-adha", "eid", "eid mubarak", "tab"],
+    hash: "8ac7a51d",
+    ratio: 0.805,
+  },
+  {
+    id: "eid-adha-envelope",
+    name: "Eid envelope",
+    collection: "holidays",
+    occasion: "eid-al-adha",
+    tags: ["eid al-adha", "eid", "eid mubarak", "card"],
+    hash: "f70acb0f",
+    ratio: 0.702,
+  },
+  {
+    id: "hanukkah-menorah",
+    name: "Menorah",
+    collection: "holidays",
+    occasion: "hanukkah",
+    tags: ["hanukkah", "chanukah", "festival of lights", "menorah"],
+    hash: "dab8e0f8",
+    ratio: 0.701,
+  },
+  {
+    id: "hanukkah-star",
+    name: "Star of David",
+    collection: "holidays",
+    occasion: "hanukkah",
+    tags: ["hanukkah", "chanukah", "festival of lights", "star"],
+    hash: "c09dfb35",
+    ratio: 1,
+  },
+  {
+    id: "hanukkah-candles",
+    name: "Hanukkah lights",
+    collection: "holidays",
+    occasion: "hanukkah",
+    tags: ["hanukkah", "chanukah", "festival of lights", "candles"],
+    hash: "1132edf5",
+    ratio: 0.713,
+  },
+  {
+    id: "hanukkah-border",
+    name: "Hanukkah border",
+    collection: "holidays",
+    occasion: "hanukkah",
+    tags: ["hanukkah", "chanukah", "festival of lights", "elegant"],
+    hash: "79c16912",
+    ratio: 0.721,
+  },
+  {
+    id: "hanukkah-gift",
+    name: "Hanukkah gift",
+    collection: "holidays",
+    occasion: "hanukkah",
+    tags: ["hanukkah", "chanukah", "festival of lights", "gift"],
+    hash: "80a93d6d",
+    ratio: 0.703,
+  },
+  {
+    id: "passover-cup",
+    name: "Kiddush cup",
+    collection: "holidays",
+    occasion: "passover",
+    tags: ["passover", "pesach", "seder"],
+    hash: "2ed70fe6",
+    ratio: 0.713,
+  },
+  {
+    id: "passover-matzah",
+    name: "Matzah",
+    collection: "holidays",
+    occasion: "passover",
+    tags: ["passover", "pesach", "seder", "matzah"],
+    hash: "e8a19eb7",
+    ratio: 0.701,
+  },
+  {
+    id: "passover-border",
+    name: "Seder border",
+    collection: "holidays",
+    occasion: "passover",
+    tags: ["passover", "pesach", "seder", "elegant"],
+    hash: "16af53c3",
+    ratio: 0.721,
+  },
+  {
+    id: "passover-arch",
+    name: "Passover arch",
+    collection: "holidays",
+    occasion: "passover",
+    tags: ["passover", "pesach", "seder", "spring"],
+    hash: "4f0e532d",
+    ratio: 0.702,
+  },
+  {
+    id: "easter-egg",
+    name: "Easter egg",
+    collection: "holidays",
+    occasion: "easter",
+    tags: ["easter", "spring", "egg"],
+    hash: "a0ecbd1c",
+    ratio: 0.702,
+  },
+  {
+    id: "easter-tulip",
+    name: "Easter tulip",
+    collection: "holidays",
+    occasion: "easter",
+    tags: ["easter", "spring", "egg hunt", "flowers"],
+    hash: "8eb37e6d",
+    ratio: 0.701,
+  },
+  {
+    id: "easter-corners",
+    name: "Easter corners",
+    collection: "holidays",
+    occasion: "easter",
+    tags: ["easter", "spring", "modern"],
+    hash: "33a5d0c3",
+    ratio: 0.721,
+  },
+  {
+    id: "easter-butterfly",
+    name: "Easter butterfly",
+    collection: "holidays",
+    occasion: "easter",
+    tags: ["easter", "spring", "butterfly"],
+    hash: "1695442a",
+    ratio: 0.754,
+  },
+  {
+    id: "easter-bunting",
+    name: "Easter bunting",
+    collection: "holidays",
+    occasion: "easter",
+    tags: ["easter", "spring", "menu"],
+    hash: "ebfd685a",
+    ratio: 0.742,
+  },
+  {
+    id: "easter-egg-hunt",
+    name: "Egg hunt ticket",
+    collection: "holidays",
+    occasion: "easter",
+    tags: ["easter", "spring", "egg hunt"],
+    hash: "0d85b022",
+    ratio: 0.681,
+  },
+  {
+    id: "halloween-bat",
+    name: "Bat card",
+    collection: "holidays",
+    occasion: "halloween",
+    tags: ["halloween", "october", "spooky", "bat"],
+    hash: "a572d58b",
+    ratio: 0.713,
+  },
+  {
+    id: "halloween-pumpkin",
+    name: "Pumpkin band",
+    collection: "holidays",
+    occasion: "halloween",
+    tags: ["halloween", "october", "spooky", "pumpkin"],
+    hash: "c2fd302d",
+    ratio: 0.701,
+  },
+  {
+    id: "halloween-web",
+    name: "Spider web",
+    collection: "holidays",
+    occasion: "halloween",
+    tags: ["halloween", "october", "spooky", "spider web"],
+    hash: "ae9fa65b",
+    ratio: 0.713,
+  },
+  {
+    id: "halloween-hat",
+    name: "Witch's hat",
+    collection: "holidays",
+    occasion: "halloween",
+    tags: ["halloween", "october", "spooky", "party"],
+    hash: "2244e2eb",
+    ratio: 0.681,
+  },
+  {
+    id: "halloween-moon",
+    name: "Halloween moon",
+    collection: "holidays",
+    occasion: "halloween",
+    tags: ["halloween", "october", "spooky", "moon"],
+    hash: "49c007ee",
+    ratio: 0.681,
+  },
+  {
+    id: "halloween-candle",
+    name: "Candlelit",
+    collection: "holidays",
+    occasion: "halloween",
+    tags: ["halloween", "october", "spooky", "candle"],
+    hash: "0cd13a6b",
+    ratio: 0.702,
+  },
+  {
+    id: "halloween-seal",
+    name: "Spooky seal",
+    collection: "holidays",
+    occasion: "halloween",
+    tags: ["halloween", "october", "spooky", "badge"],
+    hash: "9fcc76c6",
+    ratio: 1,
+  },
+  {
+    id: "thanksgiving-leaf",
+    name: "Maple leaf",
+    collection: "holidays",
+    occasion: "thanksgiving",
+    tags: ["thanksgiving", "harvest", "november", "leaves"],
+    hash: "c0d9dcb1",
+    ratio: 0.701,
+  },
+  {
+    id: "thanksgiving-wheat",
+    name: "Harvest wheat",
+    collection: "holidays",
+    occasion: "thanksgiving",
+    tags: ["thanksgiving", "harvest", "november", "menu"],
+    hash: "c847b66a",
+    ratio: 0.721,
+  },
+  {
+    id: "thanksgiving-acorn",
+    name: "Acorn arch",
+    collection: "holidays",
+    occasion: "thanksgiving",
+    tags: ["thanksgiving", "harvest", "november", "acorn"],
+    hash: "de7a999b",
+    ratio: 0.702,
+  },
+  {
+    id: "thanksgiving-pumpkin",
+    name: "Harvest pumpkin",
+    collection: "holidays",
+    occasion: "thanksgiving",
+    tags: ["thanksgiving", "harvest", "november", "pumpkin"],
+    hash: "709e8acc",
+    ratio: 0.713,
+  },
+  {
+    id: "thanksgiving-table",
+    name: "Table card",
+    collection: "holidays",
+    occasion: "thanksgiving",
+    tags: ["thanksgiving", "harvest", "november", "dinner", "menu"],
+    hash: "e256ade3",
+    ratio: 0.678,
+  },
+  {
+    id: "valentine-heart",
+    name: "Heart card",
+    collection: "holidays",
+    occasion: "valentines-day",
+    tags: ["valentine's day", "love", "february", "heart"],
+    hash: "5b9a25d3",
+    ratio: 0.713,
+  },
+  {
+    id: "valentine-arrow",
+    name: "Cupid's arrow",
+    collection: "holidays",
+    occasion: "valentines-day",
+    tags: ["valentine's day", "love", "february", "heart"],
+    hash: "6bfa862b",
+    ratio: 0.702,
+  },
+  {
+    id: "valentine-hearts",
+    name: "Two hearts",
+    collection: "holidays",
+    occasion: "valentines-day",
+    tags: ["valentine's day", "love", "february", "hearts"],
+    hash: "50a1fe74",
+    ratio: 0.754,
+  },
+  {
+    id: "valentine-letter",
+    name: "Love letter",
+    collection: "holidays",
+    occasion: "valentines-day",
+    tags: ["valentine's day", "love", "february", "letter"],
+    hash: "e06ece2f",
+    ratio: 0.702,
+  },
+  {
+    id: "valentine-dinner",
+    name: "Valentine's dinner",
+    collection: "holidays",
+    occasion: "valentines-day",
+    tags: ["valentine's day", "love", "february", "dinner", "restaurant"],
+    hash: "0f8474bf",
+    ratio: 0.721,
+  },
+  {
+    id: "valentine-bands",
+    name: "Love bands",
+    collection: "holidays",
+    occasion: "valentines-day",
+    tags: ["valentine's day", "love", "february", "bands"],
+    hash: "0d23f2c9",
+    ratio: 0.729,
+  },
+  {
+    id: "st-patricks-shamrock",
+    name: "Shamrock",
+    collection: "holidays",
+    occasion: "st-patricks-day",
+    tags: ["st patrick's day", "march", "irish", "shamrock"],
+    hash: "b4f2f9b7",
+    ratio: 0.713,
+  },
+  {
+    id: "st-patricks-clover",
+    name: "Lucky clover",
+    collection: "holidays",
+    occasion: "st-patricks-day",
+    tags: ["st patrick's day", "march", "irish", "clover"],
+    hash: "3790edbc",
+    ratio: 1,
+  },
+  {
+    id: "st-patricks-horseshoe",
+    name: "Horseshoe ticket",
+    collection: "holidays",
+    occasion: "st-patricks-day",
+    tags: ["st patrick's day", "march", "irish", "party"],
+    hash: "577d9735",
+    ratio: 0.681,
+  },
+  {
+    id: "st-patricks-pub",
+    name: "Pub night",
+    collection: "holidays",
+    occasion: "st-patricks-day",
+    tags: ["st patrick's day", "march", "irish", "pub", "bar"],
+    hash: "2e7adea1",
+    ratio: 0.701,
+  },
+  {
+    id: "mothers-day-tulip",
+    name: "Tulip arch",
+    collection: "holidays",
+    occasion: "mothers-day",
+    tags: ["mother's day", "mom", "may", "flowers"],
+    hash: "a3b7b0b7",
+    ratio: 0.702,
+  },
+  {
+    id: "mothers-day-daisy",
+    name: "Daisy card",
+    collection: "holidays",
+    occasion: "mothers-day",
+    tags: ["mother's day", "mom", "may", "flowers", "gift"],
+    hash: "ca0b6427",
+    ratio: 0.705,
+  },
+  {
+    id: "mothers-day-photo",
+    name: "Mom's photo",
+    collection: "holidays",
+    occasion: "mothers-day",
+    tags: ["mother's day", "mom", "may", "photo"],
+    hash: "0d16077f",
+    ratio: 0.82,
+  },
+  {
+    id: "mothers-day-brunch",
+    name: "Mother's Day brunch",
+    collection: "holidays",
+    occasion: "mothers-day",
+    tags: ["mother's day", "mom", "may", "brunch", "restaurant"],
+    hash: "1f012ef5",
+    ratio: 0.721,
+  },
+  {
+    id: "fathers-day-tie",
+    name: "Necktie",
+    collection: "holidays",
+    occasion: "fathers-day",
+    tags: ["father's day", "dad", "june", "tie"],
+    hash: "9c950e7c",
+    ratio: 0.713,
+  },
+  {
+    id: "fathers-day-bow-tie",
+    name: "Bow tie",
+    collection: "holidays",
+    occasion: "fathers-day",
+    tags: ["father's day", "dad", "june", "gift"],
+    hash: "13a3726f",
+    ratio: 0.701,
+  },
+  {
+    id: "fathers-day-trophy",
+    name: "Best dad",
+    collection: "holidays",
+    occasion: "fathers-day",
+    tags: ["father's day", "dad", "june", "trophy"],
+    hash: "920fda49",
+    ratio: 0.806,
+  },
+  {
+    id: "fathers-day-photo",
+    name: "Dad's photo",
+    collection: "holidays",
+    occasion: "fathers-day",
+    tags: ["father's day", "dad", "june", "photo"],
+    hash: "8e0a5923",
+    ratio: 0.82,
+  },
+  {
+    id: "independence-us",
+    name: "Fourth of July",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "usa", "july 4"],
+    hash: "d7701f15",
+    ratio: 0.705,
+  },
+  {
+    id: "independence-us-fireworks",
+    name: "Fourth of July fireworks",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "usa", "fireworks"],
+    hash: "d27d063c",
+    ratio: 0.713,
+  },
+  {
+    id: "independence-india",
+    name: "Indian Independence Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "india", "august 15"],
+    hash: "db7abebc",
+    ratio: 0.705,
+  },
+  {
+    id: "independence-canada",
+    name: "Canada Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "canada", "july 1"],
+    hash: "d632e86d",
+    ratio: 0.705,
+  },
+  {
+    id: "independence-mexico",
+    name: "Mexican Independence Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "mexico", "september 16"],
+    hash: "e83a569d",
+    ratio: 0.705,
+  },
+  {
+    id: "independence-france",
+    name: "Bastille Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "france", "july 14"],
+    hash: "c5c8ab94",
+    ratio: 0.705,
+  },
+  {
+    id: "independence-brazil",
+    name: "Brazilian Independence Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "brazil", "september 7"],
+    hash: "f8dbb472",
+    ratio: 0.705,
+  },
+  {
+    id: "independence-fireworks",
+    name: "Independence fireworks",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "fireworks"],
+    hash: "2ca9b6b7",
+    ratio: 1,
+  },
+  {
+    id: "black-friday-burst",
+    name: "Black Friday burst",
+    collection: "holidays",
+    occasion: "black-friday",
+    tags: ["black friday", "sale", "deals", "burst"],
+    hash: "eaa5df98",
+    ratio: 0.691,
+  },
+  {
+    id: "black-friday-bolt",
+    name: "Flash deal",
+    collection: "holidays",
+    occasion: "black-friday",
+    tags: ["black friday", "sale", "deals", "flash sale"],
+    hash: "46969528",
+    ratio: 0.713,
+  },
+  {
+    id: "black-friday-tab",
+    name: "Sale tab",
+    collection: "holidays",
+    occasion: "black-friday",
+    tags: ["black friday", "sale", "deals", "percent"],
+    hash: "9e85bc1e",
+    ratio: 0.795,
+  },
+  {
+    id: "black-friday-tag",
+    name: "Sale tag",
+    collection: "holidays",
+    occasion: "black-friday",
+    tags: ["black friday", "sale", "deals", "price tag"],
+    hash: "eda85666",
+    ratio: 0.66,
+  },
+  {
+    id: "black-friday-bands",
+    name: "Sale bands",
+    collection: "holidays",
+    occasion: "black-friday",
+    tags: ["black friday", "sale", "deals", "bands"],
+    hash: "d2a20cae",
+    ratio: 0.729,
+  },
+  {
+    id: "cyber-monday-browser",
+    name: "Cyber Monday browser",
+    collection: "holidays",
+    occasion: "cyber-monday",
+    tags: ["cyber monday", "sale", "online", "online shop"],
+    hash: "b90d4bed",
+    ratio: 0.738,
+  },
+  {
+    id: "cyber-monday-neon",
+    name: "Cyber Monday neon",
+    collection: "holidays",
+    occasion: "cyber-monday",
+    tags: ["cyber monday", "sale", "online", "neon"],
+    hash: "10ad85d1",
+    ratio: 0.705,
+  },
+  {
+    id: "cyber-monday-wide",
+    name: "Cyber Monday wide",
+    collection: "holidays",
+    occasion: "cyber-monday",
+    tags: ["cyber monday", "sale", "online", "landscape"],
+    hash: "d6528f69",
+    ratio: 1.923,
+  },
+  {
+    id: "cyber-monday-ticket",
+    name: "Deal ticket",
+    collection: "holidays",
+    occasion: "cyber-monday",
+    tags: ["cyber monday", "sale", "online", "coupon"],
+    hash: "f43149df",
+    ratio: 0.681,
+  },
+  {
+    id: "school-pencil",
+    name: "Pencil card",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "september", "pencil"],
+    hash: "88f19e57",
+    ratio: 0.713,
+  },
+  {
+    id: "school-ruler",
+    name: "Ruler band",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "september", "timetable"],
+    hash: "6eea6a39",
+    ratio: 0.701,
+  },
+  {
+    id: "school-book",
+    name: "Open book",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "september", "book"],
+    hash: "02c33276",
+    ratio: 0.702,
+  },
+  {
+    id: "school-notebook",
+    name: "Notebook",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "september", "notebook"],
+    hash: "47b89ff7",
+    ratio: 0.709,
+  },
+  {
+    id: "school-calendar",
+    name: "School calendar",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "september", "calendar"],
+    hash: "8510ead8",
+    ratio: 0.697,
+  },
+  {
+    id: "school-palette",
+    name: "Art class",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "september", "art"],
+    hash: "5ce18e63",
+    ratio: 0.754,
+  },
+  {
+    id: "summer-sun-scene",
+    name: "Summer hills",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "beach"],
+    hash: "b015e787",
+    ratio: 0.681,
+  },
+  {
+    id: "summer-waves",
+    name: "Summer waves",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "beach", "waves", "hours"],
+    hash: "b61ef8f5",
+    ratio: 0.701,
+  },
+  {
+    id: "summer-parasol",
+    name: "Beach umbrella",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "beach"],
+    hash: "20e6c924",
+    ratio: 0.701,
+  },
+  {
+    id: "summer-ice-pop",
+    name: "Ice pop",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "beach", "ice cream"],
+    hash: "6254d0e2",
+    ratio: 0.754,
+  },
+  {
+    id: "summer-palm",
+    name: "Palm arch",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "beach", "palm", "sale"],
+    hash: "dcbbd9d1",
+    ratio: 0.702,
+  },
+  {
+    id: "summer-shell",
+    name: "Seashell",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "beach", "sea"],
+    hash: "01ebc123",
+    ratio: 0.721,
+  },
+  {
+    id: "winter-crystal",
+    name: "Snow crystal",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["winter", "snow", "cold", "snowflake"],
+    hash: "c1eda342",
+    ratio: 0.713,
+  },
+  {
+    id: "winter-peaks",
+    name: "Snowy peaks",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["winter", "snow", "cold", "mountains", "ski"],
+    hash: "3ea7099f",
+    ratio: 0.681,
+  },
+  {
+    id: "winter-mitten",
+    name: "Mitten",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["winter", "snow", "cold", "mitten"],
+    hash: "35ea4427",
+    ratio: 0.701,
+  },
+  {
+    id: "winter-cocoa",
+    name: "Hot drinks",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["winter", "snow", "cold", "hot drinks", "cafe"],
+    hash: "020f8b63",
+    ratio: 0.765,
+  },
+  {
+    id: "winter-snow-seal",
+    name: "Winter seal",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["winter", "snow", "cold", "badge"],
+    hash: "6fb48569",
+    ratio: 1,
+  },
+  {
+    id: "spring-blossom",
+    name: "Blossom branch",
+    collection: "seasons",
+    occasion: "spring",
+    tags: ["spring", "flowers", "blossom"],
+    hash: "8ebe559e",
+    ratio: 0.701,
+  },
+  {
+    id: "spring-tulip",
+    name: "Spring tulip",
+    collection: "seasons",
+    occasion: "spring",
+    tags: ["spring", "flowers", "tulip", "sale"],
+    hash: "7dbb3d00",
+    ratio: 0.702,
+  },
+  {
+    id: "spring-butterfly",
+    name: "Butterfly",
+    collection: "seasons",
+    occasion: "spring",
+    tags: ["spring", "flowers", "butterfly"],
+    hash: "c6ef5f4f",
+    ratio: 0.705,
+  },
+  {
+    id: "spring-sprout",
+    name: "Sprout",
+    collection: "seasons",
+    occasion: "spring",
+    tags: ["spring", "flowers", "garden"],
+    hash: "1b549916",
+    ratio: 0.709,
+  },
+  {
+    id: "spring-daisy",
+    name: "Daisy seal",
+    collection: "seasons",
+    occasion: "spring",
+    tags: ["spring", "flowers", "daisy"],
+    hash: "bc0ef947",
+    ratio: 1,
+  },
+  {
+    id: "autumn-maple",
+    name: "Falling leaf",
+    collection: "seasons",
+    occasion: "autumn",
+    tags: ["autumn", "fall", "leaves", "maple"],
+    hash: "c50ff6ea",
+    ratio: 0.713,
+  },
+  {
+    id: "autumn-oak",
+    name: "Oak leaf",
+    collection: "seasons",
+    occasion: "autumn",
+    tags: ["autumn", "fall", "leaves", "oak", "hours"],
+    hash: "ff744bd5",
+    ratio: 0.701,
+  },
+  {
+    id: "autumn-acorn",
+    name: "Acorn sticker",
+    collection: "seasons",
+    occasion: "autumn",
+    tags: ["autumn", "fall", "leaves", "acorn"],
+    hash: "330ccac2",
+    ratio: 0.754,
+  },
+  {
+    id: "autumn-hills",
+    name: "Autumn hills",
+    collection: "seasons",
+    occasion: "autumn",
+    tags: ["autumn", "fall", "leaves", "hills"],
+    hash: "9f4a6052",
+    ratio: 0.681,
+  },
+  {
+    id: "autumn-wheat",
+    name: "Harvest",
+    collection: "seasons",
+    occasion: "autumn",
+    tags: ["autumn", "fall", "leaves", "harvest", "menu"],
+    hash: "20184d64",
+    ratio: 0.721,
+  },
+  {
+    id: "menu-cutlery",
+    name: "Menu card",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "menu"],
+    hash: "244a58da",
+    ratio: 0.701,
+  },
+  {
+    id: "menu-cloche",
+    name: "Serving dome",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "menu", "fine dining"],
+    hash: "e59aaa02",
+    ratio: 0.721,
+  },
+  {
+    id: "menu-chef",
+    name: "Chef's specials",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "specials"],
+    hash: "68cf429a",
+    ratio: 0.767,
+  },
+  {
+    id: "menu-chalkboard",
+    name: "Menu board",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "menu"],
+    hash: "6f79fff9",
+    ratio: 0.846,
+  },
+  {
+    id: "menu-arch",
+    name: "Bistro arch",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "menu", "bistro"],
+    hash: "417de589",
+    ratio: 0.702,
+  },
+  {
+    id: "menu-noodles",
+    name: "Noodle bar",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "asian", "ordering"],
+    hash: "2405e1ed",
+    ratio: 0.678,
+  },
+  {
+    id: "menu-pizza",
+    name: "Pizza sticker",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "pizza", "ordering"],
+    hash: "b9163b44",
+    ratio: 0.754,
+  },
+  {
+    id: "order-here-tab",
+    name: "Order here",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "ordering"],
+    hash: "000fdd9a",
+    ratio: 0.795,
+  },
+  {
+    id: "order-pickup",
+    name: "Pickup order",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "takeaway", "pickup"],
+    hash: "e50c31be",
+    ratio: 0.714,
+  },
+  {
+    id: "pay-at-table",
+    name: "Pay at table",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "payments", "table"],
+    hash: "ff6024ec",
+    ratio: 0.705,
+  },
+  {
+    id: "food-truck",
+    name: "Food truck",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "food truck", "street food"],
+    hash: "138ef4a4",
+    ratio: 0.725,
+  },
+  {
+    id: "rate-your-meal",
+    name: "Rate your meal",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "reviews"],
+    hash: "bf4510a0",
+    ratio: 0.681,
+  },
+  {
+    id: "allergen-info",
+    name: "Allergen info",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "allergens", "nutrition"],
+    hash: "3964049f",
+    ratio: 0.713,
+  },
+  {
+    id: "table-number",
+    name: "Table number",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "table", "ordering"],
+    hash: "31ea845e",
+    ratio: 0.729,
+  },
+  {
+    id: "bakery-cake",
+    name: "Bakery",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bakery", "cake"],
+    hash: "8127a2d6",
+    ratio: 0.702,
+  },
+  {
+    id: "ice-cream-shop",
+    name: "Ice cream shop",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "ice cream", "dessert"],
+    hash: "4572f8b5",
+    ratio: 0.725,
+  },
+  {
+    id: "cafe-cup",
+    name: "Takeaway cup",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cafe", "coffee"],
+    hash: "32956def",
+    ratio: 0.765,
+  },
+  {
+    id: "cafe-bean",
+    name: "Coffee bean",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cafe", "coffee"],
+    hash: "2600b39c",
+    ratio: 0.678,
+  },
+  {
+    id: "cafe-steam",
+    name: "Hot coffee",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cafe", "coffee"],
+    hash: "65e06c71",
+    ratio: 0.701,
+  },
+  {
+    id: "cafe-loyalty",
+    name: "Coffee loyalty",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cafe", "loyalty"],
+    hash: "77f175ff",
+    ratio: 0.681,
+  },
+  {
+    id: "cafe-menu-board",
+    name: "Cafe board",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cafe", "menu"],
+    hash: "afd52d10",
+    ratio: 0.846,
+  },
+  {
+    id: "cafe-wifi",
+    name: "Cafe Wi-Fi",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cafe", "wifi"],
+    hash: "cee51047",
+    ratio: 0.705,
+  },
+  {
+    id: "bar-cocktail",
+    name: "Cocktail neon",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bar", "cocktails"],
+    hash: "f0b49695",
+    ratio: 0.705,
+  },
+  {
+    id: "bar-wine",
+    name: "Wine list",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bar", "wine"],
+    hash: "92075dd3",
+    ratio: 0.721,
+  },
+  {
+    id: "bar-beer",
+    name: "Beer tap",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bar", "beer"],
+    hash: "c02ebc44",
+    ratio: 0.713,
+  },
+  {
+    id: "bar-happy-hour",
+    name: "Happy hour",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bar", "happy hour"],
+    hash: "2558dac0",
+    ratio: 0.691,
+  },
+  {
+    id: "bar-bottle",
+    name: "Bottle label",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bar", "drinks", "label"],
+    hash: "7ee38886",
+    ratio: 1.429,
+  },
+  {
+    id: "bar-tab",
+    name: "Open a tab",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bar", "payments"],
+    hash: "f1d0c23c",
+    ratio: 0.805,
+  },
+  {
+    id: "restaurant-booking",
+    name: "Book a table",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "booking", "reservations"],
+    hash: "a325e988",
+    ratio: 0.697,
+  },
+  {
+    id: "restaurant-delivery",
+    name: "Delivery",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "delivery", "ordering"],
+    hash: "b95ba8b1",
+    ratio: 1.923,
+  },
+  {
+    id: "shop-bag",
+    name: "Shopping bag",
+    collection: "shopping",
+    tags: ["retail", "shop", "shopping"],
+    hash: "d08ca977",
+    ratio: 0.714,
+  },
+  {
+    id: "shop-awning",
+    name: "Shop front",
+    collection: "shopping",
+    tags: ["retail", "shop", "store front"],
+    hash: "9413f39f",
+    ratio: 0.725,
+  },
+  {
+    id: "shop-sale-burst",
+    name: "Sale burst",
+    collection: "shopping",
+    tags: ["retail", "shop", "sale"],
+    hash: "6a181c6b",
+    ratio: 0.691,
+  },
+  {
+    id: "shop-sale-tag",
+    name: "Price tag",
+    collection: "shopping",
+    tags: ["retail", "shop", "price"],
+    hash: "4843f4af",
+    ratio: 0.66,
+  },
+  {
+    id: "shop-percent",
+    name: "Percent off",
+    collection: "shopping",
+    tags: ["retail", "shop", "sale", "discount"],
+    hash: "fb625e51",
+    ratio: 0.713,
+  },
+  {
+    id: "shop-coupon",
+    name: "Coupon",
+    collection: "shopping",
+    tags: ["retail", "shop", "coupon", "discount"],
+    hash: "28524a44",
+    ratio: 0.75,
+  },
+  {
+    id: "shop-new-arrivals",
+    name: "New arrivals",
+    collection: "shopping",
+    tags: ["retail", "shop", "new"],
+    hash: "b40e912b",
+    ratio: 0.8,
+  },
+  {
+    id: "shop-cart",
+    name: "Shop online",
+    collection: "shopping",
+    tags: ["retail", "shop", "online shop"],
+    hash: "009b1f31",
+    ratio: 1.923,
+  },
+  {
+    id: "shop-fashion",
+    name: "Fashion tag",
+    collection: "shopping",
+    tags: ["retail", "shop", "fashion", "clothing"],
+    hash: "78e1a4c8",
+    ratio: 0.66,
+  },
+  {
+    id: "shop-hanger",
+    name: "Clothing",
+    collection: "shopping",
+    tags: ["retail", "shop", "fashion", "clothing"],
+    hash: "218c1239",
+    ratio: 0.678,
+  },
+  {
+    id: "shop-tshirt",
+    name: "Merch",
+    collection: "shopping",
+    tags: ["retail", "shop", "merch", "clothing"],
+    hash: "7ce5b9d0",
+    ratio: 0.754,
+  },
+  {
+    id: "shop-jewelry",
+    name: "Jewelry",
+    collection: "shopping",
+    tags: ["retail", "shop", "jewelry", "luxury"],
+    hash: "88291ea4",
+    ratio: 0.721,
+  },
+  {
+    id: "shop-gift-card",
+    name: "Gift card",
+    collection: "shopping",
+    tags: ["retail", "shop", "gift card", "gift"],
+    hash: "a1cf825f",
+    ratio: 0.703,
+  },
+  {
+    id: "shop-loyalty",
+    name: "Loyalty card",
+    collection: "shopping",
+    tags: ["retail", "shop", "loyalty", "rewards"],
+    hash: "13cd85f8",
+    ratio: 1.923,
+  },
+  {
+    id: "shop-price-check",
+    name: "Price check",
+    collection: "shopping",
+    tags: ["retail", "shop", "price"],
+    hash: "b54a450f",
+    ratio: 0.886,
+  },
+  {
+    id: "shop-window-sticker",
+    name: "Window sticker",
+    collection: "shopping",
+    tags: ["retail", "shop", "window", "sticker"],
+    hash: "9e708d74",
+    ratio: 1,
+  },
+  {
+    id: "pack-instructions",
+    name: "Instructions",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "instructions"],
+    hash: "a9590723",
+    ratio: 0.701,
+  },
+  {
+    id: "pack-recycle",
+    name: "Recycle me",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "recycling"],
+    hash: "1363fa0f",
+    ratio: 0.709,
+  },
+  {
+    id: "pack-eco",
+    name: "Eco info",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "sustainability"],
+    hash: "f6c77e4f",
+    ratio: 0.713,
+  },
+  {
+    id: "pack-parcel",
+    name: "Parcel",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "shipping"],
+    hash: "5ddc7675",
+    ratio: 0.767,
+  },
+  {
+    id: "pack-label",
+    name: "Product label",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "ingredients"],
+    hash: "bd798ac2",
+    ratio: 1.429,
+  },
+  {
+    id: "pack-reorder",
+    name: "Reorder",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "reorder"],
+    hash: "1e5e0cc1",
+    ratio: 0.795,
+  },
+  {
+    id: "pack-authentic",
+    name: "Authentic",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "authenticity"],
+    hash: "54038555",
+    ratio: 1,
+  },
+  {
+    id: "pack-warranty",
+    name: "Warranty",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "warranty"],
+    hash: "70ad6750",
+    ratio: 0.678,
+  },
+  {
+    id: "pack-unboxing",
+    name: "Unboxing",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "thank you"],
+    hash: "55c7687b",
+    ratio: 0.703,
+  },
+  {
+    id: "pack-care",
+    name: "Care guide",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "care"],
+    hash: "ceeeaf23",
+    ratio: 0.66,
+  },
+  {
+    id: "pack-video-guide",
+    name: "Video guide",
+    collection: "shopping",
+    tags: ["retail", "shop", "packaging", "video"],
+    hash: "4cfa7c08",
+    ratio: 0.68,
+  },
+  {
+    id: "event-concert",
+    name: "Concert ticket",
+    collection: "events",
+    tags: ["events", "concert", "music", "tickets"],
+    hash: "2cc28ef9",
+    ratio: 1.923,
+  },
+  {
+    id: "event-cinema",
+    name: "Film night",
+    collection: "events",
+    tags: ["events", "cinema", "film"],
+    hash: "efa4e1a0",
+    ratio: 0.857,
+  },
+  {
+    id: "event-comedy",
+    name: "Comedy night",
+    collection: "events",
+    tags: ["events", "comedy", "tickets"],
+    hash: "aa12d8b6",
+    ratio: 0.681,
+  },
+  {
+    id: "event-theatre",
+    name: "Theatre",
+    collection: "events",
+    tags: ["events", "theatre", "program"],
+    hash: "3367b4a2",
+    ratio: 0.721,
+  },
+  {
+    id: "event-festival",
+    name: "Festival",
+    collection: "events",
+    tags: ["events", "festival", "lineup"],
+    hash: "38679cc3",
+    ratio: 0.742,
+  },
+  {
+    id: "event-party",
+    name: "Party",
+    collection: "events",
+    tags: ["events", "party", "rsvp"],
+    hash: "3c4b987c",
+    ratio: 0.701,
+  },
+  {
+    id: "event-birthday",
+    name: "Birthday",
+    collection: "events",
+    tags: ["events", "birthday", "party"],
+    hash: "f01ba3ba",
+    ratio: 0.702,
+  },
+  {
+    id: "event-save-the-date",
+    name: "Save the date",
+    collection: "events",
+    tags: ["events", "save the date"],
+    hash: "833ec6de",
+    ratio: 0.697,
+  },
+  {
+    id: "event-badge",
+    name: "Name badge",
+    collection: "events",
+    tags: ["events", "conference", "badge", "networking"],
+    hash: "31e606c3",
+    ratio: 0.695,
+  },
+  {
+    id: "event-agenda",
+    name: "Agenda",
+    collection: "events",
+    tags: ["events", "conference", "agenda"],
+    hash: "91391940",
+    ratio: 0.701,
+  },
+  {
+    id: "event-check-in",
+    name: "Event check-in",
+    collection: "events",
+    tags: ["events", "check-in"],
+    hash: "d4228a8d",
+    ratio: 0.814,
+  },
+  {
+    id: "event-wristband",
+    name: "Admission",
+    collection: "events",
+    tags: ["events", "tickets", "admission"],
+    hash: "8527febe",
+    ratio: 1.923,
+  },
+  {
+    id: "event-raffle",
+    name: "Raffle ticket",
+    collection: "events",
+    tags: ["events", "raffle", "giveaway"],
+    hash: "20477d95",
+    ratio: 0.681,
+  },
+  {
+    id: "event-announcement",
+    name: "Announcements",
+    collection: "events",
+    tags: ["events", "updates"],
+    hash: "8a415d60",
+    ratio: 0.681,
+  },
+  {
+    id: "event-photos",
+    name: "Event photos",
+    collection: "events",
+    tags: ["events", "photos"],
+    hash: "3f13927b",
+    ratio: 0.82,
+  },
+  {
+    id: "event-livestream",
+    name: "Livestream",
+    collection: "events",
+    tags: ["events", "livestream", "video"],
+    hash: "35d22b36",
+    ratio: 0.68,
+  },
+  {
+    id: "event-sports",
+    name: "Match day",
+    collection: "events",
+    tags: ["events", "sports", "match"],
+    hash: "df595ed3",
+    ratio: 0.806,
+  },
+  {
+    id: "event-race",
+    name: "Race results",
+    collection: "events",
+    tags: ["events", "race", "results"],
+    hash: "c044d20c",
+    ratio: 0.713,
+  },
+  {
+    id: "event-exhibit",
+    name: "Exhibition",
+    collection: "events",
+    tags: ["events", "exhibition", "gallery"],
+    hash: "541a8612",
+    ratio: 0.802,
+  },
+  {
+    id: "wedding-rings",
+    name: "Wedding rings",
+    collection: "events",
+    tags: ["wedding", "events", "rsvp"],
+    hash: "46c7f2fc",
+    ratio: 0.702,
+  },
+  {
+    id: "wedding-invitation",
+    name: "Invitation",
+    collection: "events",
+    tags: ["wedding", "events", "invitation", "rsvp"],
+    hash: "3da30705",
+    ratio: 0.721,
+  },
+  {
+    id: "wedding-toast",
+    name: "Toast",
+    collection: "events",
+    tags: ["wedding", "events", "reception", "menu"],
+    hash: "0020b2f5",
+    ratio: 0.721,
+  },
+  {
+    id: "wedding-photos",
+    name: "Wedding photos",
+    collection: "events",
+    tags: ["wedding", "events", "photos"],
+    hash: "935d00de",
+    ratio: 0.82,
+  },
+  {
+    id: "wedding-registry",
+    name: "Gift registry",
+    collection: "events",
+    tags: ["wedding", "events", "registry", "gift"],
+    hash: "52cd7a77",
+    ratio: 0.703,
+  },
+  {
+    id: "wedding-welcome",
+    name: "Welcome sign",
+    collection: "events",
+    tags: ["wedding", "events", "welcome sign"],
+    hash: "1e8ba60e",
+    ratio: 0.702,
+  },
+  {
+    id: "wedding-seating",
+    name: "Seating chart",
+    collection: "events",
+    tags: ["wedding", "events", "seating"],
+    hash: "1f465151",
+    ratio: 0.701,
+  },
+  {
+    id: "wedding-letter",
+    name: "Wedding letter",
+    collection: "events",
+    tags: ["wedding", "events", "invitation"],
+    hash: "2b4fd920",
+    ratio: 0.702,
+  },
+  {
+    id: "wedding-seal",
+    name: "Wedding seal",
+    collection: "events",
+    tags: ["wedding", "events", "save the date"],
+    hash: "aad9ba9e",
+    ratio: 1,
+  },
+  {
+    id: "wifi-tile",
+    name: "Wi-Fi tile",
+    collection: "places",
+    tags: ["wifi", "minimal"],
+    hash: "e1eb02cc",
+    ratio: 0.873,
+  },
+  {
+    id: "wifi-tab",
+    name: "Wi-Fi tab",
+    collection: "places",
+    tags: ["wifi", "tab"],
+    hash: "73b38dd5",
+    ratio: 0.805,
+  },
+  {
+    id: "wifi-seal",
+    name: "Wi-Fi badge",
+    collection: "places",
+    tags: ["wifi", "badge"],
+    hash: "2de84836",
+    ratio: 1,
+  },
+  {
+    id: "wifi-sticker",
+    name: "Wi-Fi sticker",
+    collection: "places",
+    tags: ["wifi", "sticker"],
+    hash: "eb09618c",
+    ratio: 0.754,
+  },
+  {
+    id: "wifi-wide",
+    name: "Wi-Fi wide card",
+    collection: "places",
+    tags: ["wifi", "landscape", "guest"],
+    hash: "3596c7a3",
+    ratio: 1.923,
+  },
+  {
+    id: "wifi-bubble",
+    name: "Wi-Fi bubble",
+    collection: "places",
+    tags: ["wifi", "speech bubble"],
+    hash: "567d9f74",
+    ratio: 0.743,
+  },
+  {
+    id: "wifi-circle-top",
+    name: "Wi-Fi badge card",
+    collection: "places",
+    tags: ["wifi", "guest"],
+    hash: "b3b3abfa",
+    ratio: 0.678,
+  },
+  {
+    id: "wifi-corners",
+    name: "Wi-Fi viewfinder",
+    collection: "places",
+    tags: ["wifi", "minimal"],
+    hash: "0fe90686",
+    ratio: 0.814,
+  },
+  {
+    id: "hotel-room-service",
+    name: "Room service",
+    collection: "places",
+    tags: ["hotel", "hospitality", "room service"],
+    hash: "4d6a38e4",
+    ratio: 0.633,
+  },
+  {
+    id: "hotel-hanger-light",
+    name: "Light door hanger",
+    collection: "places",
+    tags: ["hotel", "hospitality", "guest info"],
+    hash: "4a8dedbd",
+    ratio: 0.633,
+  },
+  {
+    id: "hotel-key",
+    name: "Room key",
+    collection: "places",
+    tags: ["hotel", "hospitality", "key card", "guest info"],
+    hash: "bed7c00b",
+    ratio: 1.923,
+  },
+  {
+    id: "hotel-bed",
+    name: "Guest guide",
+    collection: "places",
+    tags: ["hotel", "hospitality", "guest info"],
+    hash: "a413cbb5",
+    ratio: 0.701,
+  },
+  {
+    id: "hotel-concierge",
+    name: "Concierge",
+    collection: "places",
+    tags: ["hotel", "hospitality", "concierge", "chat"],
+    hash: "fb3ed6ee",
+    ratio: 0.709,
+  },
+  {
+    id: "hotel-check-out",
+    name: "Express check-out",
+    collection: "places",
+    tags: ["hotel", "hospitality", "check-out"],
+    hash: "afb8bb8e",
+    ratio: 0.705,
+  },
+  {
+    id: "hotel-breakfast",
+    name: "Breakfast",
+    collection: "places",
+    tags: ["hotel", "hospitality", "breakfast"],
+    hash: "e98606fb",
+    ratio: 0.721,
+  },
+  {
+    id: "travel-boarding-pass",
+    name: "Boarding pass",
+    collection: "places",
+    tags: ["travel", "flights"],
+    hash: "96be934d",
+    ratio: 1.613,
+  },
+  {
+    id: "travel-compass",
+    name: "Explore",
+    collection: "places",
+    tags: ["travel", "map", "tourism"],
+    hash: "458ced9c",
+    ratio: 0.678,
+  },
+  {
+    id: "travel-tour",
+    name: "Audio tour",
+    collection: "places",
+    tags: ["travel", "tour", "audio"],
+    hash: "87ce080b",
+    ratio: 0.713,
+  },
+  {
+    id: "travel-trail",
+    name: "Trail map",
+    collection: "places",
+    tags: ["travel", "hiking", "map"],
+    hash: "0cfc1304",
+    ratio: 0.681,
+  },
+  {
+    id: "travel-excursions",
+    name: "Excursions",
+    collection: "places",
+    tags: ["travel", "tours", "booking"],
+    hash: "d61b08aa",
+    ratio: 0.702,
+  },
+  {
+    id: "travel-city-guide",
+    name: "City guide",
+    collection: "places",
+    tags: ["travel", "city guide"],
+    hash: "9d0af7e8",
+    ratio: 0.689,
+  },
+  {
+    id: "travel-luggage",
+    name: "Luggage tag",
+    collection: "places",
+    tags: ["travel", "luggage", "lost and found"],
+    hash: "0214511e",
+    ratio: 0.66,
+  },
+  {
+    id: "travel-directions",
+    name: "Find us",
+    collection: "places",
+    tags: ["travel", "directions"],
+    hash: "a1c09f4c",
+    ratio: 0.701,
+  },
+  {
+    id: "property-for-sale",
+    name: "For sale sign",
+    collection: "real-estate",
+    tags: ["real estate", "property", "for sale", "signage"],
+    hash: "d73258af",
+    ratio: 0.725,
+  },
+  {
+    id: "property-house",
+    name: "House",
+    collection: "real-estate",
+    tags: ["real estate", "property", "listing"],
+    hash: "d70250f7",
+    ratio: 0.714,
+  },
+  {
+    id: "property-house-light",
+    name: "Light house",
+    collection: "real-estate",
+    tags: ["real estate", "property", "viewing"],
+    hash: "a59b9585",
+    ratio: 0.714,
+  },
+  {
+    id: "property-open-house",
+    name: "Open house",
+    collection: "real-estate",
+    tags: ["real estate", "property", "open house"],
+    hash: "1f1f13ce",
+    ratio: 0.713,
+  },
+  {
+    id: "property-floor-plan",
+    name: "Floor plans",
+    collection: "real-estate",
+    tags: ["real estate", "property", "floor plans", "apartments"],
+    hash: "247f16a1",
+    ratio: 0.701,
+  },
+  {
+    id: "property-virtual-tour",
+    name: "Virtual tour",
+    collection: "real-estate",
+    tags: ["real estate", "property", "virtual tour", "video"],
+    hash: "a50ab242",
+    ratio: 1.923,
+  },
+  {
+    id: "property-rent",
+    name: "For rent",
+    collection: "real-estate",
+    tags: ["real estate", "property", "rental"],
+    hash: "80a32a19",
+    ratio: 0.729,
+  },
+  {
+    id: "property-key",
+    name: "Keys",
+    collection: "real-estate",
+    tags: ["real estate", "property", "move-in"],
+    hash: "a6b8b9f5",
+    ratio: 0.678,
+  },
+  {
+    id: "health-check-in",
+    name: "Clinic check-in",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "check-in"],
+    hash: "d9555dc1",
+    ratio: 0.701,
+  },
+  {
+    id: "health-portal",
+    name: "Patient portal",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "patient portal"],
+    hash: "c5c21df7",
+    ratio: 0.713,
+  },
+  {
+    id: "health-medication",
+    name: "Medication info",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "pharmacy", "medication"],
+    hash: "789e31f5",
+    ratio: 0.66,
+  },
+  {
+    id: "health-pharmacy",
+    name: "Pharmacy",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "pharmacy"],
+    hash: "bb7ecded",
+    ratio: 0.678,
+  },
+  {
+    id: "health-dental",
+    name: "Dental",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "dental", "booking"],
+    hash: "9528b626",
+    ratio: 0.705,
+  },
+  {
+    id: "health-appointment",
+    name: "Appointment",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "booking"],
+    hash: "63f43554",
+    ratio: 0.697,
+  },
+  {
+    id: "health-waiting-room",
+    name: "Waiting room",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "queue"],
+    hash: "74d448c6",
+    ratio: 0.814,
+  },
+  {
+    id: "health-pet",
+    name: "Vet clinic",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "vet", "pets"],
+    hash: "d49b33d2",
+    ratio: 0.754,
+  },
+  {
+    id: "fitness-schedule",
+    name: "Class schedule",
+    collection: "sports-fitness",
+    tags: ["fitness", "gym", "classes"],
+    hash: "51de09a4",
+    ratio: 0.701,
+  },
+  {
+    id: "fitness-kettlebell",
+    name: "Kettlebell",
+    collection: "sports-fitness",
+    tags: ["fitness", "gym", "workout"],
+    hash: "55ccc321",
+    ratio: 0.713,
+  },
+  {
+    id: "fitness-timer",
+    name: "Workout timer",
+    collection: "sports-fitness",
+    tags: ["fitness", "gym", "tracking"],
+    hash: "7b8d7176",
+    ratio: 0.678,
+  },
+  {
+    id: "fitness-challenge",
+    name: "Challenge",
+    collection: "sports-fitness",
+    tags: ["fitness", "gym", "challenge"],
+    hash: "a3bd4c66",
+    ratio: 0.806,
+  },
+  {
+    id: "fitness-yoga",
+    name: "Yoga studio",
+    collection: "sports-fitness",
+    tags: ["fitness", "gym", "yoga", "booking"],
+    hash: "7a7c7dc4",
+    ratio: 0.702,
+  },
+  {
+    id: "fitness-trial",
+    name: "Free trial",
+    collection: "sports-fitness",
+    tags: ["fitness", "gym", "trial", "offer"],
+    hash: "ad73bec3",
+    ratio: 0.691,
+  },
+  {
+    id: "fitness-equipment",
+    name: "Equipment guide",
+    collection: "sports-fitness",
+    tags: ["fitness", "gym", "equipment", "video"],
+    hash: "45ea7b43",
+    ratio: 0.795,
+  },
+  {
+    id: "edu-course",
+    name: "Course info",
+    collection: "health-learning",
+    tags: ["education", "school", "course"],
+    hash: "ba341eaa",
+    ratio: 0.701,
+  },
+  {
+    id: "edu-library",
+    name: "Library",
+    collection: "health-learning",
+    tags: ["education", "school", "library"],
+    hash: "aa0bf791",
+    ratio: 0.702,
+  },
+  {
+    id: "edu-assignment",
+    name: "Assignment",
+    collection: "health-learning",
+    tags: ["education", "school", "homework"],
+    hash: "f32405c1",
+    ratio: 0.709,
+  },
+  {
+    id: "edu-lab",
+    name: "Lab safety",
+    collection: "health-learning",
+    tags: ["education", "school", "science", "safety"],
+    hash: "4c4c4597",
+    ratio: 0.713,
+  },
+  {
+    id: "edu-idea",
+    name: "Learn more",
+    collection: "health-learning",
+    tags: ["education", "school", "learning"],
+    hash: "e3f27b3d",
+    ratio: 0.678,
+  },
+  {
+    id: "edu-attendance",
+    name: "Class attendance",
+    collection: "health-learning",
+    tags: ["education", "school", "attendance"],
+    hash: "da4c5cdf",
+    ratio: 0.814,
+  },
+  {
+    id: "edu-exam",
+    name: "Exam timer",
+    collection: "health-learning",
+    tags: ["education", "school", "exams"],
+    hash: "80ba5f3f",
+    ratio: 0.681,
+  },
+  {
+    id: "edu-graduation",
+    name: "Graduation",
+    collection: "health-learning",
+    tags: ["education", "school", "graduation"],
+    hash: "52733d0e",
+    ratio: 1,
+  },
+  {
+    id: "edu-open-day",
+    name: "Open day",
+    collection: "health-learning",
+    tags: ["education", "school", "open day", "registration"],
+    hash: "6bc7e083",
+    ratio: 0.742,
+  },
+  {
+    id: "review-star",
+    name: "Star review",
+    collection: "business",
+    tags: ["reviews", "feedback", "rating"],
+    hash: "59c144f7",
+    ratio: 0.678,
+  },
+  {
+    id: "review-quote",
+    name: "Quote review",
+    collection: "business",
+    tags: ["reviews", "feedback", "testimonial"],
+    hash: "d621f732",
+    ratio: 0.713,
+  },
+  {
+    id: "review-thumb",
+    name: "Thumbs up",
+    collection: "business",
+    tags: ["reviews", "feedback", "rating"],
+    hash: "0bc05081",
+    ratio: 0.754,
+  },
+  {
+    id: "review-laurel",
+    name: "Top rated",
+    collection: "business",
+    tags: ["reviews", "feedback", "rating"],
+    hash: "5b1797c7",
+    ratio: 0.681,
+  },
+  {
+    id: "review-bubble",
+    name: "Review bubble",
+    collection: "business",
+    tags: ["reviews", "feedback", "rating"],
+    hash: "a0e46448",
+    ratio: 0.681,
+  },
+  {
+    id: "review-ribbon",
+    name: "Review ribbon",
+    collection: "business",
+    tags: ["reviews", "feedback", "rating"],
+    hash: "d4a92259",
+    ratio: 0.8,
+  },
+  {
+    id: "feedback-survey",
+    name: "Survey",
+    collection: "business",
+    tags: ["reviews", "feedback", "survey"],
+    hash: "3d2eb382",
+    ratio: 0.709,
+  },
+  {
+    id: "pay-card",
+    name: "Card payment",
+    collection: "business",
+    tags: ["payments", "checkout"],
+    hash: "198d6aa6",
+    ratio: 0.701,
+  },
+  {
+    id: "pay-wallet",
+    name: "Wallet",
+    collection: "business",
+    tags: ["payments", "checkout", "landscape"],
+    hash: "023d72be",
+    ratio: 1.923,
+  },
+  {
+    id: "pay-tap",
+    name: "Tap to pay",
+    collection: "business",
+    tags: ["payments", "contactless"],
+    hash: "2a192e71",
+    ratio: 0.879,
+  },
+  {
+    id: "pay-tips",
+    name: "Tips welcome",
+    collection: "business",
+    tags: ["payments", "tips"],
+    hash: "a0bd1f45",
+    ratio: 0.765,
+  },
+  {
+    id: "pay-receipt",
+    name: "Digital receipt",
+    collection: "business",
+    tags: ["payments", "receipt"],
+    hash: "e298332d",
+    ratio: 0.697,
+  },
+  {
+    id: "pay-invoice",
+    name: "Pay invoice",
+    collection: "business",
+    tags: ["payments", "invoice"],
+    hash: "827dfebf",
+    ratio: 0.721,
+  },
+  {
+    id: "pay-donate-heart",
+    name: "Donation card",
+    collection: "business",
+    tags: ["payments", "charity", "donations"],
+    hash: "c297eb42",
+    ratio: 0.713,
+  },
+  {
+    id: "pay-coins",
+    name: "Pay here",
+    collection: "business",
+    tags: ["payments", "checkout"],
+    hash: "d6a053a3",
+    ratio: 0.814,
+  },
+  {
+    id: "social-hashtag",
+    name: "Hashtag",
+    collection: "business",
+    tags: ["social", "followers", "hashtag"],
+    hash: "3ab8aa4c",
+    ratio: 0.713,
+  },
+  {
+    id: "social-camera",
+    name: "Photo feed",
+    collection: "business",
+    tags: ["social", "followers", "photos"],
+    hash: "1643d916",
+    ratio: 0.82,
+  },
+  {
+    id: "social-video",
+    name: "Video channel",
+    collection: "business",
+    tags: ["social", "followers", "video"],
+    hash: "aec8ee4a",
+    ratio: 0.68,
+  },
+  {
+    id: "social-music",
+    name: "Playlist",
+    collection: "business",
+    tags: ["social", "followers", "music", "playlist"],
+    hash: "e61168fa",
+    ratio: 0.701,
+  },
+  {
+    id: "social-newsletter",
+    name: "Newsletter",
+    collection: "business",
+    tags: ["social", "followers", "newsletter", "email"],
+    hash: "fede5ddf",
+    ratio: 0.702,
+  },
+  {
+    id: "social-links",
+    name: "All our links",
+    collection: "business",
+    tags: ["social", "followers", "link in bio"],
+    hash: "d43fe8a4",
+    ratio: 0.738,
+  },
+  {
+    id: "social-follow-bubble",
+    name: "Follow bubble",
+    collection: "business",
+    tags: ["social", "followers", "speech bubble"],
+    hash: "41fb109d",
+    ratio: 0.743,
+  },
+  {
+    id: "social-like",
+    name: "Like us",
+    collection: "business",
+    tags: ["social", "followers", "badge"],
+    hash: "b5bfec8b",
+    ratio: 1,
+  },
+  {
+    id: "app-phone",
+    name: "App phone",
+    collection: "business",
+    tags: ["app", "download", "mobile", "phone"],
+    hash: "1153a895",
+    ratio: 0.68,
+  },
+  {
+    id: "app-phone-dark",
+    name: "Dark app phone",
+    collection: "business",
+    tags: ["app", "download", "mobile", "phone"],
+    hash: "5201a2f6",
+    ratio: 0.68,
+  },
+  {
+    id: "app-download",
+    name: "Download",
+    collection: "business",
+    tags: ["app", "download", "mobile"],
+    hash: "1b64bdce",
+    ratio: 0.701,
+  },
+  {
+    id: "app-install",
+    name: "Install",
+    collection: "business",
+    tags: ["app", "download", "mobile", "landscape"],
+    hash: "08cdbf19",
+    ratio: 1.923,
+  },
+  {
+    id: "app-arrow",
+    name: "App arrow",
+    collection: "business",
+    tags: ["app", "download", "mobile", "arrow"],
+    hash: "0c97b898",
+    ratio: 0.705,
+  },
+  {
+    id: "bizcard-light",
+    name: "Business card",
+    collection: "business",
+    tags: ["business card", "contact", "networking", "vcard"],
+    hash: "515dfdca",
+    ratio: 1.887,
+  },
+  {
+    id: "bizcard-dark",
+    name: "Dark business card",
+    collection: "business",
+    tags: ["business card", "contact", "networking", "vcard", "dark"],
+    hash: "5192481b",
+    ratio: 1.887,
+  },
+  {
+    id: "bizcard-edge",
+    name: "Edge business card",
+    collection: "business",
+    tags: ["business card", "contact", "networking", "vcard"],
+    hash: "f9de0e4c",
+    ratio: 1.887,
+  },
+  {
+    id: "bizcard-hello",
+    name: "Hello card",
+    collection: "business",
+    tags: ["business card", "contact", "networking", "vcard"],
+    hash: "7b54e718",
+    ratio: 1.887,
+  },
+  {
+    id: "bizcard-portrait",
+    name: "Portrait card",
+    collection: "business",
+    tags: ["business card", "contact", "networking", "vcard"],
+    hash: "909280ba",
+    ratio: 0.705,
+  },
+  {
+    id: "bizcard-badge",
+    name: "Contact badge",
+    collection: "business",
+    tags: ["business card", "contact", "networking", "conference"],
+    hash: "e018beeb",
+    ratio: 0.695,
+  },
+  {
+    id: "biz-booking",
+    name: "Book online",
+    collection: "business",
+    tags: ["business", "booking"],
+    hash: "8c9118d4",
+    ratio: 1.923,
+  },
+  {
+    id: "biz-hiring",
+    name: "We're hiring",
+    collection: "business",
+    tags: ["business", "jobs", "hiring"],
+    hash: "f2905f8b",
+    ratio: 0.691,
+  },
+  {
+    id: "biz-salon",
+    name: "Salon",
+    collection: "business",
+    tags: ["business", "salon", "booking"],
+    hash: "9792faaf",
+    ratio: 0.702,
+  },
+  {
+    id: "biz-repair",
+    name: "Repair shop",
+    collection: "business",
+    tags: ["business", "repair", "service"],
+    hash: "5a6d94f3",
+    ratio: 0.713,
+  },
+  {
+    id: "biz-support",
+    name: "Support",
+    collection: "business",
+    tags: ["business", "support", "help"],
+    hash: "8644ded6",
+    ratio: 0.709,
+  },
+  {
+    id: "biz-launch",
+    name: "Launch",
+    collection: "business",
+    tags: ["business", "launch", "announcement"],
+    hash: "f53f56ca",
+    ratio: 0.8,
+  },
+  {
+    id: "get-started-rocket",
+    name: "Get started",
+    collection: "call-to-action",
+    tags: ["call to action", "start", "onboarding"],
+    hash: "c97c1502",
+    ratio: 0.713,
+  },
+  {
+    id: "questions-cloud",
+    name: "Questions cloud",
+    collection: "call-to-action",
+    tags: ["call to action", "help", "faq"],
+    hash: "bb8e4cac",
+    ratio: 0.843,
+  },
+  {
+    id: "save-for-later",
+    name: "Save for later",
+    collection: "call-to-action",
+    tags: ["call to action", "bookmark"],
+    hash: "77b5685a",
+    ratio: 0.701,
+  },
+  {
+    id: "report-a-problem",
+    name: "Report a problem",
+    collection: "call-to-action",
+    tags: ["call to action", "report", "issue"],
+    hash: "2a525bfd",
+    ratio: 0.698,
+  },
+  {
+    id: "see-the-map",
+    name: "See the map",
+    collection: "call-to-action",
+    tags: ["call to action", "map", "directions"],
+    hash: "8f07170d",
+    ratio: 1.923,
+  },
+  {
+    id: "try-the-demo",
+    name: "Try the demo",
+    collection: "call-to-action",
+    tags: ["call to action", "demo"],
+    hash: "5333c87b",
+    ratio: 0.802,
+  },
+  {
+    id: "scan-here-arrow",
+    name: "Big arrow",
+    collection: "call-to-action",
+    tags: ["call to action", "arrow"],
+    hash: "2d9c5dc3",
+    ratio: 1.923,
+  },
+  {
+    id: "start-here-arrow",
+    name: "Big arrow, light",
+    collection: "call-to-action",
+    tags: ["call to action", "arrow"],
+    hash: "8c701eaf",
+    ratio: 1.923,
+  },
+  {
+    id: "scan-me-cloud",
+    name: "Cloud",
+    collection: "call-to-action",
+    tags: ["call to action", "cloud"],
+    hash: "dc026d3e",
+    ratio: 0.843,
+  },
+  {
+    id: "scan-me-stack",
+    name: "Stacked cards",
+    collection: "call-to-action",
+    tags: ["call to action", "cards"],
+    hash: "008f4738",
+    ratio: 0.766,
+  },
+  {
+    id: "see-more-stack",
+    name: "Stacked cards, light",
+    collection: "call-to-action",
+    tags: ["call to action", "cards"],
+    hash: "36e1bc76",
+    ratio: 0.838,
+  },
+  {
+    id: "scan-me-folded",
+    name: "Folded corner",
+    collection: "call-to-action",
+    tags: ["call to action", "corner"],
+    hash: "00f93d9d",
+    ratio: 0.747,
+  },
+  {
+    id: "read-the-story",
+    name: "Read the story",
+    collection: "call-to-action",
+    tags: ["call to action", "article", "reading"],
+    hash: "9fd1c9f4",
+    ratio: 0.701,
+  },
+  {
+    id: "scan-for-translations",
+    name: "Translations",
+    collection: "call-to-action",
+    tags: ["call to action", "language", "translation"],
+    hash: "d35a2ee3",
+    ratio: 0.701,
+  },
+  {
+    id: "read-the-faq",
+    name: "FAQ",
+    collection: "call-to-action",
+    tags: ["call to action", "faq", "help"],
+    hash: "d24bff35",
+    ratio: 0.678,
+  },
+  {
+    id: "large-print",
+    name: "Large print",
+    collection: "call-to-action",
+    tags: ["call to action", "accessibility", "large print"],
+    hash: "03f2425e",
+    ratio: 0.713,
+  },
+  {
+    id: "safety-information",
+    name: "Safety information",
+    collection: "call-to-action",
+    tags: ["call to action", "safety"],
+    hash: "9f7fb79b",
+    ratio: 0.795,
+  },
+  {
+    id: "join-the-waitlist",
+    name: "Waitlist",
+    collection: "call-to-action",
+    tags: ["call to action", "waitlist", "queue"],
+    hash: "0abc2cd8",
+    ratio: 0.705,
+  },
+  {
+    id: "scan-to-unlock",
+    name: "Unlock",
+    collection: "call-to-action",
+    tags: ["call to action", "members", "exclusive"],
+    hash: "0ea99829",
+    ratio: 0.701,
+  },
+  {
+    id: "take-a-closer-look",
+    name: "Closer look",
+    collection: "call-to-action",
+    tags: ["call to action", "details", "museum"],
+    hash: "ff981f95",
+    ratio: 0.678,
+  },
+  {
+    id: "add-to-calendar",
+    name: "Add to calendar",
+    collection: "call-to-action",
+    tags: ["call to action", "calendar", "date"],
+    hash: "68d355c7",
+    ratio: 0.705,
+  },
+  {
+    id: "scan-me-banner",
+    name: "Banner",
+    collection: "call-to-action",
+    tags: ["call to action", "banner"],
+    hash: "105b3a08",
+    ratio: 1.754,
+  },
+  {
+    id: "scan-here-post",
+    name: "Post sign",
+    collection: "call-to-action",
+    tags: ["call to action", "sign"],
+    hash: "cc366289",
+    ratio: 0.639,
+  },
+  {
+    id: "how-it-works",
+    name: "How it works",
+    collection: "call-to-action",
+    tags: ["call to action", "video", "how-to"],
+    hash: "28944331",
+    ratio: 1,
+  },
+  {
+    id: "see-the-full-list",
+    name: "Full list",
+    collection: "call-to-action",
+    tags: ["call to action", "list", "details"],
+    hash: "2b314b00",
+    ratio: 0.721,
+  },
+  {
+    id: "scan-for-the-answer",
+    name: "Trivia",
+    collection: "call-to-action",
+    tags: ["call to action", "quiz", "trivia"],
+    hash: "d5523f66",
+    ratio: 0.743,
+  },
+  {
+    id: "continued-online",
+    name: "Continued online",
+    collection: "call-to-action",
+    tags: ["call to action", "article", "continued"],
+    hash: "b97f47be",
+    ratio: 0.756,
+  },
+  {
+    id: "read-the-transcript",
+    name: "Transcript",
+    collection: "call-to-action",
+    tags: ["call to action", "accessibility", "transcript"],
+    hash: "f86e60f4",
+    ratio: 0.8,
+  },
+  {
+    id: "scan-for-the-checklist",
+    name: "Checklist",
+    collection: "call-to-action",
+    tags: ["call to action", "checklist"],
+    hash: "4325b1d7",
+    ratio: 0.698,
+  },
+  {
+    id: "scan-for-the-latest",
+    name: "What's new board",
+    collection: "call-to-action",
+    tags: ["call to action", "news", "updates"],
+    hash: "13d3f02c",
+    ratio: 0.821,
+  },
+  {
+    id: "burger-order",
+    name: "Burger order",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "burger", "kiosk"],
+    hash: "bb8816aa",
+    ratio: 0.713,
+  },
+  {
+    id: "sushi-menu",
+    name: "Sushi menu",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "sushi", "japanese"],
+    hash: "0b4d91ee",
+    ratio: 0.721,
+  },
+  {
+    id: "donut-shop",
+    name: "Donut shop",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "donuts", "bakery"],
+    hash: "323f116d",
+    ratio: 0.678,
+  },
+  {
+    id: "cupcake-order",
+    name: "Cupcake order",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cupcakes", "bakery"],
+    hash: "3d3e8e5b",
+    ratio: 0.705,
+  },
+  {
+    id: "tea-menu",
+    name: "Tea menu",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "tea", "cafe"],
+    hash: "85300440",
+    ratio: 0.702,
+  },
+  {
+    id: "bakery-board",
+    name: "Bakery board",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bakery", "bread"],
+    hash: "ea08cda2",
+    ratio: 0.821,
+  },
+  {
+    id: "winery-tasting",
+    name: "Winery tasting",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "winery", "wine", "tasting"],
+    hash: "9e621e04",
+    ratio: 0.678,
+  },
+  {
+    id: "fish-market",
+    name: "Fish market",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "seafood", "market"],
+    hash: "94d3d6f0",
+    ratio: 0.701,
+  },
+  {
+    id: "bubble-tea",
+    name: "Bubble tea",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bubble tea", "boba"],
+    hash: "845c5832",
+    ratio: 0.754,
+  },
+  {
+    id: "dumpling-house",
+    name: "Dumpling house",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "dumplings", "asian"],
+    hash: "15ddd9a6",
+    ratio: 1.923,
+  },
+  {
+    id: "farm-stand",
+    name: "Farm stand",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "farm", "produce", "honesty box"],
+    hash: "05b09c9d",
+    ratio: 0.639,
+  },
+  {
+    id: "pick-your-own",
+    name: "Pick your own",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "orchard", "farm"],
+    hash: "4086eb53",
+    ratio: 1.754,
+  },
+  {
+    id: "cookie-box",
+    name: "Cookie box",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cookies", "bakery"],
+    hash: "5c7a1ced",
+    ratio: 1.429,
+  },
+  {
+    id: "cheese-pairing",
+    name: "Cheese pairing",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cheese", "deli"],
+    hash: "444d80c7",
+    ratio: 1.429,
+  },
+  {
+    id: "brunch-menu",
+    name: "Brunch menu",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "brunch", "breakfast"],
+    hash: "6e573197",
+    ratio: 0.701,
+  },
+  {
+    id: "takeout-order",
+    name: "Takeout",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "takeout", "pickup"],
+    hash: "cde18678",
+    ratio: 0.795,
+  },
+  {
+    id: "nutrition-facts",
+    name: "Nutrition facts",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "nutrition", "calories"],
+    hash: "341b41bd",
+    ratio: 0.713,
+  },
+  {
+    id: "recipe-card",
+    name: "Recipe card",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "recipe", "cooking"],
+    hash: "c6880245",
+    ratio: 0.698,
+  },
+  {
+    id: "catering-order",
+    name: "Catering",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "catering", "events"],
+    hash: "3fdb2c0d",
+    ratio: 1.923,
+  },
+  {
+    id: "restaurant-gift-card",
+    name: "Restaurant gift card",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "gift card"],
+    hash: "998e9c9f",
+    ratio: 1.923,
+  },
+  {
+    id: "food-truck-location",
+    name: "Food truck spot",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "food truck", "location"],
+    hash: "6b1f10d7",
+    ratio: 0.713,
+  },
+  {
+    id: "plant-based-menu",
+    name: "Plant-based menu",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "vegan", "vegetarian"],
+    hash: "e86452df",
+    ratio: 1,
+  },
+  {
+    id: "kids-menu",
+    name: "Kids' menu",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "kids", "family"],
+    hash: "e4e850f9",
+    ratio: 0.701,
+  },
+  {
+    id: "wine-pairings",
+    name: "Wine pairings",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "wine", "pairing"],
+    hash: "b417830c",
+    ratio: 0.8,
+  },
+  {
+    id: "trace-your-coffee",
+    name: "Coffee origin",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "coffee", "origin"],
+    hash: "a547035d",
+    ratio: 0.767,
+  },
+  {
+    id: "brewery-tour",
+    name: "Brewery tour",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "brewery", "beer", "tour"],
+    hash: "1e690b98",
+    ratio: 0.681,
+  },
+  {
+    id: "call-a-server",
+    name: "Call a server",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "service", "table"],
+    hash: "478df04d",
+    ratio: 0.709,
+  },
+  {
+    id: "split-the-bill",
+    name: "Split the bill",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bill", "payment"],
+    hash: "2eeccd37",
+    ratio: 1.923,
+  },
+  {
+    id: "wine-staff-pick",
+    name: "Wine shelf talker",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "wine shop", "shelf"],
+    hash: "67529e97",
+    ratio: 0.789,
+  },
+  {
+    id: "cooking-class",
+    name: "Cooking class",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "cooking class"],
+    hash: "7a3acde0",
+    ratio: 0.681,
+  },
+  {
+    id: "farmers-market",
+    name: "Farmers market",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "market", "farm"],
+    hash: "954ef587",
+    ratio: 0.713,
+  },
+  {
+    id: "grill-menu",
+    name: "Grill menu",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "grill", "barbecue"],
+    hash: "843bdecb",
+    ratio: 0.795,
+  },
+  {
+    id: "water-refill",
+    name: "Water refill",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "water", "refill"],
+    hash: "a4a6aaab",
+    ratio: 0.639,
+  },
+  {
+    id: "late-night-menu",
+    name: "Late-night menu",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "late night"],
+    hash: "ec1f9af9",
+    ratio: 0.705,
+  },
+  {
+    id: "pay-it-forward",
+    name: "Pay it forward",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "pay it forward", "giving"],
+    hash: "0e82f3a6",
+    ratio: 0.705,
+  },
+  {
+    id: "pre-order-bread",
+    name: "Bread pre-order",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "bakery", "pre-order"],
+    hash: "4cd98ce6",
+    ratio: 0.701,
+  },
+  {
+    id: "return-your-cup",
+    name: "Return your cup",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "reusable", "cups"],
+    hash: "8d39a9cc",
+    ratio: 0.709,
+  },
+  {
+    id: "tea-time",
+    name: "Afternoon tea",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "afternoon tea", "tea"],
+    hash: "89108a52",
+    ratio: 0.721,
+  },
+  {
+    id: "juice-bar",
+    name: "Juice bar",
+    collection: "food-drink",
+    tags: ["restaurant", "food", "juice", "smoothie"],
+    hash: "64b730a1",
+    ratio: 0.702,
+  },
+  {
+    id: "shoe-size-check",
+    name: "Shoe size check",
+    collection: "shopping",
+    tags: ["retail", "shop", "shoes", "sizes"],
+    hash: "391ccc74",
+    ratio: 0.789,
+  },
+  {
+    id: "eyewear-try-on",
+    name: "Eyewear try-on",
+    collection: "shopping",
+    tags: ["retail", "shop", "eyewear", "sunglasses"],
+    hash: "ef5ce8ac",
+    ratio: 0.701,
+  },
+  {
+    id: "watch-repair",
+    name: "Watch repair",
+    collection: "shopping",
+    tags: ["retail", "shop", "watches", "repair"],
+    hash: "ac80e31c",
+    ratio: 0.721,
+  },
+  {
+    id: "plant-care",
+    name: "Plant care",
+    collection: "shopping",
+    tags: ["retail", "shop", "plants", "garden center"],
+    hash: "ba20f41a",
+    ratio: 0.754,
+  },
+  {
+    id: "sofa-fabric",
+    name: "Sofa fabric",
+    collection: "shopping",
+    tags: ["retail", "shop", "furniture", "sofa"],
+    hash: "e1ae27a0",
+    ratio: 0.701,
+  },
+  {
+    id: "dress-fitting",
+    name: "Dress fitting",
+    collection: "shopping",
+    tags: ["retail", "shop", "boutique", "bridal"],
+    hash: "c365ee2b",
+    ratio: 0.702,
+  },
+  {
+    id: "scent-finder",
+    name: "Scent finder",
+    collection: "shopping",
+    tags: ["retail", "shop", "perfume", "fragrance"],
+    hash: "c9ca53cf",
+    ratio: 0.678,
+  },
+  {
+    id: "get-it-delivered",
+    name: "Get it delivered",
+    collection: "shopping",
+    tags: ["retail", "shop", "delivery"],
+    hash: "7e3224dd",
+    ratio: 1.923,
+  },
+  {
+    id: "alterations",
+    name: "Alterations",
+    collection: "shopping",
+    tags: ["retail", "shop", "tailor", "alterations"],
+    hash: "469aefa8",
+    ratio: 0.8,
+  },
+  {
+    id: "game-night",
+    name: "Game night",
+    collection: "shopping",
+    tags: ["retail", "shop", "games", "game store"],
+    hash: "fa751af2",
+    ratio: 0.681,
+  },
+  {
+    id: "send-flowers",
+    name: "Send flowers",
+    collection: "shopping",
+    tags: ["retail", "shop", "florist", "flowers"],
+    hash: "5599571b",
+    ratio: 0.767,
+  },
+  {
+    id: "weekly-deals",
+    name: "Weekly deals",
+    collection: "shopping",
+    tags: ["retail", "shop", "grocery", "deals"],
+    hash: "bfaf26b5",
+    ratio: 0.701,
+  },
+  {
+    id: "toy-finder",
+    name: "Toy finder",
+    collection: "shopping",
+    tags: ["retail", "shop", "toys", "kids"],
+    hash: "8029e4b1",
+    ratio: 0.754,
+  },
+  {
+    id: "start-a-return",
+    name: "Start a return",
+    collection: "shopping",
+    tags: ["retail", "shop", "returns"],
+    hash: "a22fd3d0",
+    ratio: 0.795,
+  },
+  {
+    id: "size-guide",
+    name: "Size guide",
+    collection: "shopping",
+    tags: ["retail", "shop", "sizes", "fashion"],
+    hash: "a6f7b58b",
+    ratio: 0.713,
+  },
+  {
+    id: "diy-how-to",
+    name: "DIY how-to",
+    collection: "shopping",
+    tags: ["retail", "shop", "hardware", "diy"],
+    hash: "4cef1f28",
+    ratio: 0.68,
+  },
+  {
+    id: "compare-specs",
+    name: "Compare specs",
+    collection: "shopping",
+    tags: ["retail", "shop", "electronics", "shelf"],
+    hash: "8f5ab873",
+    ratio: 0.789,
+  },
+  {
+    id: "read-a-sample",
+    name: "Read a sample",
+    collection: "shopping",
+    tags: ["retail", "shop", "bookshop", "books"],
+    hash: "4a78846e",
+    ratio: 0.705,
+  },
+  {
+    id: "ring-size",
+    name: "Ring size",
+    collection: "shopping",
+    tags: ["retail", "shop", "jewelry", "rings"],
+    hash: "c25c1815",
+    ratio: 1,
+  },
+  {
+    id: "click-and-collect",
+    name: "Click and collect",
+    collection: "shopping",
+    tags: ["retail", "shop", "click and collect", "pickup"],
+    hash: "ed02f6c0",
+    ratio: 1.923,
+  },
+  {
+    id: "grand-opening",
+    name: "Grand opening",
+    collection: "shopping",
+    tags: ["retail", "shop", "opening", "new store"],
+    hash: "13917ff8",
+    ratio: 1.754,
+  },
+  {
+    id: "read-the-reviews",
+    name: "Product reviews",
+    collection: "shopping",
+    tags: ["retail", "shop", "reviews"],
+    hash: "0e764297",
+    ratio: 0.72,
+  },
+  {
+    id: "trade-it-in",
+    name: "Trade-in",
+    collection: "shopping",
+    tags: ["retail", "shop", "trade-in", "secondhand"],
+    hash: "b1fd807f",
+    ratio: 1.923,
+  },
+  {
+    id: "gift-message",
+    name: "Gift message",
+    collection: "shopping",
+    tags: ["retail", "shop", "gift", "gift wrap"],
+    hash: "08e41b16",
+    ratio: 0.701,
+  },
+  {
+    id: "restock-alert",
+    name: "Restock alert",
+    collection: "shopping",
+    tags: ["retail", "shop", "stock", "shelf"],
+    hash: "824ad58f",
+    ratio: 0.789,
+  },
+  {
+    id: "meet-the-maker",
+    name: "Meet the maker",
+    collection: "shopping",
+    tags: ["retail", "shop", "handmade", "crafts"],
+    hash: "d1f8ffdb",
+    ratio: 0.767,
+  },
+  {
+    id: "rent-this-item",
+    name: "Rent it",
+    collection: "shopping",
+    tags: ["retail", "shop", "rental", "hire"],
+    hash: "29ec311f",
+    ratio: 0.681,
+  },
+  {
+    id: "ask-a-stylist",
+    name: "Ask a stylist",
+    collection: "shopping",
+    tags: ["retail", "shop", "styling", "fashion"],
+    hash: "09714f45",
+    ratio: 0.709,
+  },
+  {
+    id: "assembly-guide",
+    name: "Assembly guide",
+    collection: "shopping",
+    tags: ["retail", "shop", "assembly", "instructions"],
+    hash: "20b0e312",
+    ratio: 0.701,
+  },
+  {
+    id: "last-chance",
+    name: "Last chance",
+    collection: "shopping",
+    tags: ["retail", "shop", "sale", "clearance"],
+    hash: "39384c1c",
+    ratio: 0.754,
+  },
+  {
+    id: "gift-ideas",
+    name: "Gift ideas",
+    collection: "shopping",
+    tags: ["retail", "shop", "gifts"],
+    hash: "4cc575e3",
+    ratio: 0.743,
+  },
+  {
+    id: "find-it-in-store",
+    name: "Find it in store",
+    collection: "shopping",
+    tags: ["retail", "shop", "store map", "aisle"],
+    hash: "37c858bd",
+    ratio: 0.639,
+  },
+  {
+    id: "bulk-orders",
+    name: "Bulk orders",
+    collection: "shopping",
+    tags: ["retail", "shop", "bulk", "wholesale"],
+    hash: "6c131e35",
+    ratio: 0.705,
+  },
+  {
+    id: "add-engraving",
+    name: "Engraving",
+    collection: "shopping",
+    tags: ["retail", "shop", "engraving", "personalized"],
+    hash: "8ed79d41",
+    ratio: 0.701,
+  },
+  {
+    id: "eye-exam",
+    name: "Eye exam",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "optician", "eye care"],
+    hash: "53e4ffae",
+    ratio: 0.702,
+  },
+  {
+    id: "your-prescription",
+    name: "Your prescription",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "optician", "glasses"],
+    hash: "82e54a18",
+    ratio: 0.701,
+  },
+  {
+    id: "book-a-vaccine",
+    name: "Vaccines",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "vaccine", "pharmacy"],
+    hash: "9867cde5",
+    ratio: 0.678,
+  },
+  {
+    id: "first-aid-guide",
+    name: "First aid",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "first aid", "safety"],
+    hash: "ce641ac7",
+    ratio: 0.639,
+  },
+  {
+    id: "check-symptoms",
+    name: "Check symptoms",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "symptoms", "triage"],
+    hash: "4991cd6f",
+    ratio: 0.713,
+  },
+  {
+    id: "find-a-doctor",
+    name: "Find a doctor",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "doctor"],
+    hash: "7efb3086",
+    ratio: 1.923,
+  },
+  {
+    id: "intake-forms",
+    name: "Intake forms",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "forms", "patients"],
+    hash: "2b5ecd06",
+    ratio: 0.698,
+  },
+  {
+    id: "test-results",
+    name: "Test results",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "results", "lab"],
+    hash: "31039618",
+    ratio: 0.701,
+  },
+  {
+    id: "talk-to-someone",
+    name: "Talk to someone",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "mental health", "support"],
+    hash: "641e82cc",
+    ratio: 0.709,
+  },
+  {
+    id: "hand-washing",
+    name: "Hand washing",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "hygiene"],
+    hash: "6c12502b",
+    ratio: 0.802,
+  },
+  {
+    id: "meal-plan",
+    name: "Meal plan",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "nutrition", "dietitian"],
+    hash: "526f4afc",
+    ratio: 0.721,
+  },
+  {
+    id: "refill-reminder",
+    name: "Refill reminder",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "pharmacy", "reminder"],
+    hash: "339cde8d",
+    ratio: 0.795,
+  },
+  {
+    id: "visitor-map",
+    name: "Visitor map",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "hospital", "wayfinding"],
+    hash: "f38d4d40",
+    ratio: 0.713,
+  },
+  {
+    id: "visiting-hours",
+    name: "Visiting hours",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "hospital", "visitors"],
+    hash: "84c8c00d",
+    ratio: 0.767,
+  },
+  {
+    id: "physio-exercises",
+    name: "Physio exercises",
+    collection: "health-learning",
+    tags: ["healthcare", "clinic", "physiotherapy", "exercises"],
+    hash: "d87d7800",
+    ratio: 0.705,
+  },
+  {
+    id: "school-supply-list",
+    name: "Supply list",
+    collection: "health-learning",
+    tags: ["education", "school", "supplies"],
+    hash: "949915d2",
+    ratio: 0.713,
+  },
+  {
+    id: "science-fair",
+    name: "Science fair",
+    collection: "health-learning",
+    tags: ["education", "school", "science"],
+    hash: "7e4174cc",
+    ratio: 0.681,
+  },
+  {
+    id: "math-practice",
+    name: "Math practice",
+    collection: "health-learning",
+    tags: ["education", "school", "math", "homework"],
+    hash: "2842311a",
+    ratio: 0.709,
+  },
+  {
+    id: "watch-the-experiment",
+    name: "Experiment video",
+    collection: "health-learning",
+    tags: ["education", "school", "science", "video"],
+    hash: "677fc84f",
+    ratio: 0.68,
+  },
+  {
+    id: "online-class",
+    name: "Online class",
+    collection: "health-learning",
+    tags: ["education", "school", "online learning", "class"],
+    hash: "4cb319a8",
+    ratio: 1.923,
+  },
+  {
+    id: "chess-lessons",
+    name: "Chess lessons",
+    collection: "health-learning",
+    tags: ["education", "school", "chess", "club"],
+    hash: "4169d6c1",
+    ratio: 0.681,
+  },
+  {
+    id: "hear-it-spoken",
+    name: "Language practice",
+    collection: "health-learning",
+    tags: ["education", "school", "languages", "pronunciation"],
+    hash: "5fede656",
+    ratio: 0.743,
+  },
+  {
+    id: "read-the-ebook",
+    name: "Ebook",
+    collection: "health-learning",
+    tags: ["education", "school", "library", "ebook"],
+    hash: "c5db9f1c",
+    ratio: 0.701,
+  },
+  {
+    id: "homework-help",
+    name: "Homework help",
+    collection: "health-learning",
+    tags: ["education", "school", "homework", "tutoring"],
+    hash: "9ebf479b",
+    ratio: 0.681,
+  },
+  {
+    id: "parent-meeting",
+    name: "Parent meeting",
+    collection: "health-learning",
+    tags: ["education", "school", "parents"],
+    hash: "2e223dd9",
+    ratio: 0.705,
+  },
+  {
+    id: "permission-form",
+    name: "Permission form",
+    collection: "health-learning",
+    tags: ["education", "school", "forms"],
+    hash: "a95e52e8",
+    ratio: 0.698,
+  },
+  {
+    id: "student-portal",
+    name: "Student portal",
+    collection: "health-learning",
+    tags: ["education", "school", "students", "portal"],
+    hash: "61d5a529",
+    ratio: 0.713,
+  },
+  {
+    id: "music-lessons",
+    name: "Music lessons",
+    collection: "health-learning",
+    tags: ["education", "school", "music", "lessons"],
+    hash: "ec43bcbc",
+    ratio: 0.702,
+  },
+  {
+    id: "art-class",
+    name: "Art lessons",
+    collection: "health-learning",
+    tags: ["education", "school", "art", "class"],
+    hash: "c0bbc17c",
+    ratio: 0.8,
+  },
+  {
+    id: "reading-challenge",
+    name: "Reading challenge",
+    collection: "health-learning",
+    tags: ["education", "school", "reading", "library"],
+    hash: "331c0fd4",
+    ratio: 1,
+  },
+  {
+    id: "library-card",
+    name: "Library card",
+    collection: "health-learning",
+    tags: ["education", "school", "library"],
+    hash: "88701243",
+    ratio: 0.701,
+  },
+  {
+    id: "portfolio-card",
+    name: "Portfolio card",
+    collection: "business",
+    tags: ["business", "portfolio", "freelance"],
+    hash: "fcb99374",
+    ratio: 1.887,
+  },
+  {
+    id: "annual-report",
+    name: "Annual report",
+    collection: "business",
+    tags: ["business", "report", "investors"],
+    hash: "35fd012b",
+    ratio: 0.701,
+  },
+  {
+    id: "privacy-notice",
+    name: "Privacy notice",
+    collection: "business",
+    tags: ["business", "privacy", "data"],
+    hash: "711fefe2",
+    ratio: 0.721,
+  },
+  {
+    id: "meet-the-team",
+    name: "Meet the team",
+    collection: "business",
+    tags: ["business", "team", "about"],
+    hash: "61fe8790",
+    ratio: 1.923,
+  },
+  {
+    id: "sign-the-agreement",
+    name: "Sign the agreement",
+    collection: "business",
+    tags: ["business", "contract", "e-signature"],
+    hash: "ffa5231c",
+    ratio: 0.698,
+  },
+  {
+    id: "get-a-quote",
+    name: "Get a quote",
+    collection: "business",
+    tags: ["business", "quote", "estimate"],
+    hash: "d8361e10",
+    ratio: 0.701,
+  },
+  {
+    id: "visitor-sign-in",
+    name: "Visitor sign-in",
+    collection: "business",
+    tags: ["business", "reception", "visitors"],
+    hash: "ba1fbc45",
+    ratio: 0.795,
+  },
+  {
+    id: "book-this-room",
+    name: "Meeting room",
+    collection: "business",
+    tags: ["business", "meeting room", "office"],
+    hash: "12b1c59c",
+    ratio: 0.713,
+  },
+  {
+    id: "join-the-webinar",
+    name: "Webinar",
+    collection: "business",
+    tags: ["business", "webinar", "online"],
+    hash: "38a1cee4",
+    ratio: 0.705,
+  },
+  {
+    id: "see-our-pitch",
+    name: "Pitch deck",
+    collection: "business",
+    tags: ["business", "startup", "investors"],
+    hash: "9ef6d429",
+    ratio: 1.923,
+  },
+  {
+    id: "delivery-instructions",
+    name: "Delivery instructions",
+    collection: "business",
+    tags: ["business", "delivery", "drivers"],
+    hash: "f34cd5bf",
+    ratio: 0.795,
+  },
+  {
+    id: "book-a-consultation",
+    name: "Consultation",
+    collection: "business",
+    tags: ["business", "consultation"],
+    hash: "a4ec1a74",
+    ratio: 0.72,
+  },
+  {
+    id: "upload-receipts",
+    name: "Upload receipts",
+    collection: "business",
+    tags: ["business", "accounting", "expenses"],
+    hash: "e5e6134f",
+    ratio: 0.701,
+  },
+  {
+    id: "make-a-claim",
+    name: "Insurance claim",
+    collection: "business",
+    tags: ["business", "insurance", "claims"],
+    hash: "e0b28696",
+    ratio: 0.713,
+  },
+  {
+    id: "open-an-account",
+    name: "Open an account",
+    collection: "business",
+    tags: ["business", "bank", "account"],
+    hash: "d9668920",
+    ratio: 0.678,
+  },
+  {
+    id: "start-saving",
+    name: "Start saving",
+    collection: "business",
+    tags: ["business", "savings", "bank"],
+    hash: "d659aa76",
+    ratio: 0.702,
+  },
+  {
+    id: "coworking-pass",
+    name: "Coworking pass",
+    collection: "business",
+    tags: ["business", "coworking", "desk"],
+    hash: "64bd136b",
+    ratio: 0.681,
+  },
+  {
+    id: "lost-and-found",
+    name: "Lost and found",
+    collection: "business",
+    tags: ["business", "lost and found"],
+    hash: "dd2d5925",
+    ratio: 0.681,
+  },
+  {
+    id: "book-a-cleaning",
+    name: "Cleaning service",
+    collection: "business",
+    tags: ["business", "cleaning"],
+    hash: "305e661e",
+    ratio: 0.705,
+  },
+  {
+    id: "request-maintenance",
+    name: "Maintenance request",
+    collection: "business",
+    tags: ["business", "facilities", "maintenance"],
+    hash: "608d2e34",
+    ratio: 0.713,
+  },
+  {
+    id: "get-the-brochure",
+    name: "Brochure",
+    collection: "business",
+    tags: ["business", "brochure", "trade show"],
+    hash: "bfbcf83a",
+    ratio: 0.72,
+  },
+  {
+    id: "price-list",
+    name: "Price list",
+    collection: "business",
+    tags: ["business", "prices", "services"],
+    hash: "a559be4a",
+    ratio: 0.701,
+  },
+  {
+    id: "clock-in",
+    name: "Clock in",
+    collection: "business",
+    tags: ["business", "staff", "time tracking"],
+    hash: "c8e33f97",
+    ratio: 0.802,
+  },
+  {
+    id: "press-kit",
+    name: "Press kit",
+    collection: "business",
+    tags: ["business", "press", "media"],
+    hash: "1f90005c",
+    ratio: 0.8,
+  },
+  {
+    id: "podcast",
+    name: "Podcast",
+    collection: "business",
+    tags: ["business", "podcast", "audio"],
+    hash: "62f1349c",
+    ratio: 0.68,
+  },
+  {
+    id: "wholesale",
+    name: "Wholesale",
+    collection: "business",
+    tags: ["business", "wholesale", "trade"],
+    hash: "0896af87",
+    ratio: 1.923,
+  },
+  {
+    id: "book-a-call",
+    name: "Book a call",
+    collection: "business",
+    tags: ["business", "call", "meeting"],
+    hash: "8cc43a67",
+    ratio: 0.705,
+  },
+  {
+    id: "find-our-office",
+    name: "Find our office",
+    collection: "business",
+    tags: ["business", "office", "directions"],
+    hash: "d5634b3d",
+    ratio: 0.713,
+  },
+  {
+    id: "staff-handbook",
+    name: "Staff handbook",
+    collection: "business",
+    tags: ["business", "staff", "onboarding"],
+    hash: "ca72be4a",
+    ratio: 0.721,
+  },
+  {
+    id: "site-induction",
+    name: "Site induction",
+    collection: "business",
+    tags: ["business", "safety", "construction"],
+    hash: "decdc6cc",
+    ratio: 0.698,
+  },
+  {
+    id: "staff-rota",
+    name: "Staff rota",
+    collection: "business",
+    tags: ["business", "staff", "schedule"],
+    hash: "459c4fae",
+    ratio: 0.802,
+  },
+  {
+    id: "vote-for-us",
+    name: "Vote for us",
+    collection: "business",
+    tags: ["business", "awards"],
+    hash: "fcaad749",
+    ratio: 1,
+  },
+  {
+    id: "impact-report",
+    name: "Impact report",
+    collection: "business",
+    tags: ["business", "sustainability", "report"],
+    hash: "2e73be70",
+    ratio: 0.701,
+  },
+  {
+    id: "restroom-feedback",
+    name: "Restroom feedback",
+    collection: "business",
+    tags: ["business", "facilities", "feedback"],
+    hash: "a330f7a4",
+    ratio: 0.743,
+  },
+  {
+    id: "yard-sign-for-sale",
+    name: "Yard sign, for sale",
+    collection: "real-estate",
+    tags: ["real estate", "property", "for sale", "yard sign"],
+    hash: "ad408f51",
+    ratio: 0.761,
+  },
+  {
+    id: "yard-sign-sold",
+    name: "Yard sign, sold",
+    collection: "real-estate",
+    tags: ["real estate", "property", "sold", "yard sign"],
+    hash: "399b5f2b",
+    ratio: 0.761,
+  },
+  {
+    id: "yard-sign-viewing",
+    name: "Yard sign, viewings",
+    collection: "real-estate",
+    tags: ["real estate", "property", "viewing", "yard sign"],
+    hash: "57b459ab",
+    ratio: 0.761,
+  },
+  {
+    id: "yard-sign-coming-soon",
+    name: "Yard sign, coming soon",
+    collection: "real-estate",
+    tags: ["real estate", "property", "coming soon", "yard sign"],
+    hash: "9e222374",
+    ratio: 0.761,
+  },
+  {
+    id: "choose-your-plan",
+    name: "New homes",
+    collection: "real-estate",
+    tags: ["real estate", "property", "new build", "floor plan"],
+    hash: "0b4a1e83",
+    ratio: 0.701,
+  },
+  {
+    id: "arrival-guide",
+    name: "Arrival guide",
+    collection: "real-estate",
+    tags: ["real estate", "property", "vacation rental", "check-in"],
+    hash: "e49326f2",
+    ratio: 0.702,
+  },
+  {
+    id: "house-rules",
+    name: "House rules",
+    collection: "real-estate",
+    tags: ["real estate", "property", "vacation rental", "rules"],
+    hash: "cf60f1e9",
+    ratio: 0.698,
+  },
+  {
+    id: "mortgage-calculator",
+    name: "Mortgage calculator",
+    collection: "real-estate",
+    tags: ["real estate", "property", "mortgage"],
+    hash: "a6cba2ce",
+    ratio: 0.678,
+  },
+  {
+    id: "home-valuation",
+    name: "Home valuation",
+    collection: "real-estate",
+    tags: ["real estate", "property", "valuation", "selling"],
+    hash: "38000b66",
+    ratio: 0.754,
+  },
+  {
+    id: "talk-to-the-agent",
+    name: "Talk to the agent",
+    collection: "real-estate",
+    tags: ["real estate", "property", "agent", "contact"],
+    hash: "3bf701b4",
+    ratio: 0.709,
+  },
+  {
+    id: "resident-portal",
+    name: "Resident portal",
+    collection: "real-estate",
+    tags: ["real estate", "property", "apartments", "residents"],
+    hash: "1d6903ad",
+    ratio: 0.795,
+  },
+  {
+    id: "pay-your-rent",
+    name: "Pay your rent",
+    collection: "real-estate",
+    tags: ["real estate", "property", "rent", "tenants"],
+    hash: "02947833",
+    ratio: 0.705,
+  },
+  {
+    id: "report-a-repair",
+    name: "Report a repair",
+    collection: "real-estate",
+    tags: ["real estate", "property", "repairs", "tenants"],
+    hash: "fc191601",
+    ratio: 0.701,
+  },
+  {
+    id: "parcel-room",
+    name: "Parcel room",
+    collection: "real-estate",
+    tags: ["real estate", "property", "parcels", "building"],
+    hash: "469f49a4",
+    ratio: 0.795,
+  },
+  {
+    id: "site-hoarding",
+    name: "Site hoarding",
+    collection: "real-estate",
+    tags: ["real estate", "property", "construction", "development"],
+    hash: "4ebbeb1f",
+    ratio: 1.754,
+  },
+  {
+    id: "renovation-quote",
+    name: "Renovation quote",
+    collection: "real-estate",
+    tags: ["real estate", "property", "renovation", "decorating"],
+    hash: "391cab59",
+    ratio: 0.713,
+  },
+  {
+    id: "handyman",
+    name: "Handyman",
+    collection: "real-estate",
+    tags: ["real estate", "property", "handyman", "repairs"],
+    hash: "31bfea8e",
+    ratio: 0.709,
+  },
+  {
+    id: "storage-units",
+    name: "Storage units",
+    collection: "real-estate",
+    tags: ["real estate", "property", "storage"],
+    hash: "2420e7a5",
+    ratio: 1.923,
+  },
+  {
+    id: "register-interest",
+    name: "Register interest",
+    collection: "real-estate",
+    tags: ["real estate", "property", "new build", "launch"],
+    hash: "3202129f",
+    ratio: 1.923,
+  },
+  {
+    id: "garden-design",
+    name: "Garden design",
+    collection: "real-estate",
+    tags: ["real estate", "property", "garden", "landscaping"],
+    hash: "d01a7357",
+    ratio: 0.702,
+  },
+  {
+    id: "bathroom-showroom",
+    name: "Bathroom showroom",
+    collection: "real-estate",
+    tags: ["real estate", "property", "bathroom", "showroom"],
+    hash: "34519b53",
+    ratio: 0.701,
+  },
+  {
+    id: "window-quote",
+    name: "Window quote",
+    collection: "real-estate",
+    tags: ["real estate", "property", "windows", "doors"],
+    hash: "7aeb63c5",
+    ratio: 0.721,
+  },
+  {
+    id: "furnished-rental",
+    name: "Furnished rental",
+    collection: "real-estate",
+    tags: ["real estate", "property", "furnished", "rental"],
+    hash: "150fc99b",
+    ratio: 0.802,
+  },
+  {
+    id: "neighborhood-guide",
+    name: "Neighborhood guide",
+    collection: "real-estate",
+    tags: ["real estate", "property", "neighborhood", "area guide"],
+    hash: "a3eff4fd",
+    ratio: 0.72,
+  },
+  {
+    id: "moving-checklist",
+    name: "Moving checklist",
+    collection: "real-estate",
+    tags: ["real estate", "property", "moving", "checklist"],
+    hash: "19b40764",
+    ratio: 0.705,
+  },
+  {
+    id: "open-house-sign-in",
+    name: "Open house sign-in",
+    collection: "real-estate",
+    tags: ["real estate", "property", "open house", "visitors"],
+    hash: "5e7e5070",
+    ratio: 0.72,
+  },
+  {
+    id: "team-jersey",
+    name: "Team jersey",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "team", "club"],
+    hash: "9ed4b86a",
+    ratio: 1.006,
+  },
+  {
+    id: "team-kit",
+    name: "Team kit",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "team", "kit"],
+    hash: "5b7771b4",
+    ratio: 1.006,
+  },
+  {
+    id: "book-a-court",
+    name: "Basketball court",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "basketball", "court"],
+    hash: "3e3f3b10",
+    ratio: 0.713,
+  },
+  {
+    id: "tennis-court",
+    name: "Tennis court",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "tennis", "court"],
+    hash: "668a53f2",
+    ratio: 0.678,
+  },
+  {
+    id: "tee-time",
+    name: "Tee time",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "golf"],
+    hash: "a4a8185f",
+    ratio: 1.923,
+  },
+  {
+    id: "bike-service",
+    name: "Bike service",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "cycling", "bike shop"],
+    hash: "7ce62460",
+    ratio: 0.701,
+  },
+  {
+    id: "rent-a-bike",
+    name: "Rent a bike",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "bike rental", "cycling"],
+    hash: "1589a3df",
+    ratio: 0.639,
+  },
+  {
+    id: "coach-sign-up",
+    name: "Coach sign-up",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "coaching", "volunteers"],
+    hash: "397f1cc1",
+    ratio: 0.705,
+  },
+  {
+    id: "boxing-class",
+    name: "Boxing class",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "boxing", "class"],
+    hash: "0bea34e1",
+    ratio: 0.754,
+  },
+  {
+    id: "season-schedule",
+    name: "Season schedule",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "baseball", "schedule"],
+    hash: "86e5bec0",
+    ratio: 0.806,
+  },
+  {
+    id: "cricket-club",
+    name: "Cricket club",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "cricket", "club"],
+    hash: "0ba509ff",
+    ratio: 1.754,
+  },
+  {
+    id: "table-tennis",
+    name: "Table tennis",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "table tennis"],
+    hash: "bec196a1",
+    ratio: 0.701,
+  },
+  {
+    id: "skate-park-rules",
+    name: "Skate park",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "skate park", "rules"],
+    hash: "cc65693c",
+    ratio: 0.639,
+  },
+  {
+    id: "badminton-session",
+    name: "Badminton",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "badminton"],
+    hash: "d2707cfa",
+    ratio: 0.72,
+  },
+  {
+    id: "archery-lesson",
+    name: "Archery lesson",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "archery"],
+    hash: "3cbb1e81",
+    ratio: 0.802,
+  },
+  {
+    id: "pool-timetable",
+    name: "Pool timetable",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "swimming", "pool"],
+    hash: "bb0ebd7a",
+    ratio: 0.701,
+  },
+  {
+    id: "run-club",
+    name: "Run club",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "running", "club"],
+    hash: "3a1a9070",
+    ratio: 0.701,
+  },
+  {
+    id: "race-photos",
+    name: "Race photos",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "race", "photos"],
+    hash: "6b526b9a",
+    ratio: 0.68,
+  },
+  {
+    id: "race-entry",
+    name: "Race entry",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "race", "running"],
+    hash: "59caac0c",
+    ratio: 0.681,
+  },
+  {
+    id: "membership-card",
+    name: "Membership card",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "gym", "membership"],
+    hash: "429e8abe",
+    ratio: 0.705,
+  },
+  {
+    id: "personal-trainer",
+    name: "Personal trainer",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "personal training", "gym"],
+    hash: "f191c66c",
+    ratio: 1.923,
+  },
+  {
+    id: "sports-camp",
+    name: "Sports camp",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "camp", "kids"],
+    hash: "24d35368",
+    ratio: 0.8,
+  },
+  {
+    id: "live-scores",
+    name: "Live scores",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "scores", "soccer"],
+    hash: "c6df8671",
+    ratio: 0.68,
+  },
+  {
+    id: "fan-club",
+    name: "Fan club",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "supporters", "soccer"],
+    hash: "edd7c528",
+    ratio: 1.754,
+  },
+  {
+    id: "golf-scorecard",
+    name: "Golf scorecard",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "golf", "scorecard"],
+    hash: "dec29906",
+    ratio: 0.698,
+  },
+  {
+    id: "fitness-test",
+    name: "Fitness test",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "assessment"],
+    hash: "dcf80d2a",
+    ratio: 0.678,
+  },
+  {
+    id: "club-fees",
+    name: "Club fees",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "club", "fees"],
+    hash: "673c39f9",
+    ratio: 1.923,
+  },
+  {
+    id: "join-a-league",
+    name: "Join a league",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "league", "teams"],
+    hash: "4df4166b",
+    ratio: 0.678,
+  },
+  {
+    id: "swim-lessons",
+    name: "Swim lessons",
+    collection: "sports-fitness",
+    tags: ["sports", "fitness", "swimming", "lessons"],
+    hash: "63244770",
+    ratio: 0.702,
+  },
+  {
+    id: "barber-booking",
+    name: "Barber",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "barber", "haircut"],
+    hash: "58b328fd",
+    ratio: 0.702,
+  },
+  {
+    id: "walk-in-queue",
+    name: "Walk-in queue",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "barber", "queue"],
+    hash: "23666fbc",
+    ratio: 0.705,
+  },
+  {
+    id: "makeup-artist",
+    name: "Makeup artist",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "makeup"],
+    hash: "934e164b",
+    ratio: 0.678,
+  },
+  {
+    id: "shade-finder",
+    name: "Shade finder",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "makeup", "lipstick"],
+    hash: "97472b5c",
+    ratio: 0.701,
+  },
+  {
+    id: "nail-studio",
+    name: "Nail studio",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "nails", "manicure"],
+    hash: "19086c62",
+    ratio: 0.702,
+  },
+  {
+    id: "virtual-try-on",
+    name: "Virtual try-on",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "makeup", "try-on"],
+    hash: "e4b12fbb",
+    ratio: 0.68,
+  },
+  {
+    id: "hot-shave",
+    name: "Hot shave",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "barber", "shave"],
+    hash: "220b1c79",
+    ratio: 0.721,
+  },
+  {
+    id: "skincare-routine",
+    name: "Skincare routine",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "skincare"],
+    hash: "60fd0559",
+    ratio: 0.701,
+  },
+  {
+    id: "book-a-massage",
+    name: "Massage",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "spa", "massage"],
+    hash: "7063a951",
+    ratio: 0.713,
+  },
+  {
+    id: "spa-menu",
+    name: "Spa menu",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "spa", "treatments"],
+    hash: "d609a539",
+    ratio: 0.721,
+  },
+  {
+    id: "wellness-retreat",
+    name: "Wellness retreat",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "retreat"],
+    hash: "f28db838",
+    ratio: 1.923,
+  },
+  {
+    id: "spa-gift",
+    name: "Spa gift",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "gift voucher", "spa"],
+    hash: "19966444",
+    ratio: 0.767,
+  },
+  {
+    id: "aftercare-guide",
+    name: "Aftercare guide",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "aftercare"],
+    hash: "bac090d8",
+    ratio: 0.795,
+  },
+  {
+    id: "consultation-form",
+    name: "Consultation form",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "consultation", "forms"],
+    hash: "d97d45b8",
+    ratio: 0.698,
+  },
+  {
+    id: "bridal-beauty",
+    name: "Bridal beauty",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "bridal", "wedding"],
+    hash: "7c3b8982",
+    ratio: 0.713,
+  },
+  {
+    id: "book-a-facial",
+    name: "Facial",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "facial", "skin"],
+    hash: "80f6eabd",
+    ratio: 0.705,
+  },
+  {
+    id: "salon-prices",
+    name: "Salon prices",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "salon", "prices"],
+    hash: "3cb9f5e6",
+    ratio: 0.713,
+  },
+  {
+    id: "style-gallery",
+    name: "Style gallery",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "salon", "styles"],
+    hash: "016c0d88",
+    ratio: 0.72,
+  },
+  {
+    id: "lash-bar",
+    name: "Lash bar",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "lashes", "brows"],
+    hash: "6d63d3ae",
+    ratio: 0.705,
+  },
+  {
+    id: "beauty-rewards",
+    name: "Beauty rewards",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "loyalty", "rewards"],
+    hash: "3b23432c",
+    ratio: 0.754,
+  },
+  {
+    id: "whats-inside",
+    name: "Ingredients",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "skincare", "ingredients"],
+    hash: "b1f21577",
+    ratio: 1.429,
+  },
+  {
+    id: "how-to-apply",
+    name: "How to apply",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "makeup", "tutorial"],
+    hash: "e98f064a",
+    ratio: 0.68,
+  },
+  {
+    id: "bath-ritual",
+    name: "Bath ritual",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "bath", "self-care"],
+    hash: "418703fd",
+    ratio: 0.702,
+  },
+  {
+    id: "rebook-visit",
+    name: "Rebook",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "salon", "booking"],
+    hash: "3120d06b",
+    ratio: 0.713,
+  },
+  {
+    id: "kids-haircuts",
+    name: "Kids' haircuts",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "haircut", "kids"],
+    hash: "664ef55b",
+    ratio: 0.713,
+  },
+  {
+    id: "clean-beauty",
+    name: "Clean beauty",
+    collection: "beauty-wellness",
+    tags: ["beauty", "wellness", "ingredients", "clean beauty"],
+    hash: "d22bb6f5",
+    ratio: 0.678,
+  },
+  {
+    id: "pay-for-parking",
+    name: "Pay for parking",
+    collection: "automotive",
+    tags: ["cars", "parking", "payment"],
+    hash: "e003c391",
+    ratio: 0.639,
+  },
+  {
+    id: "parking-permit",
+    name: "Parking permit",
+    collection: "automotive",
+    tags: ["cars", "parking", "permit"],
+    hash: "995d2a81",
+    ratio: 0.713,
+  },
+  {
+    id: "validate-parking",
+    name: "Parking validation",
+    collection: "automotive",
+    tags: ["cars", "parking", "validation"],
+    hash: "42ac873e",
+    ratio: 1.923,
+  },
+  {
+    id: "start-charging",
+    name: "EV charger",
+    collection: "automotive",
+    tags: ["cars", "parking", "ev", "charging"],
+    hash: "0725ecd1",
+    ratio: 0.843,
+  },
+  {
+    id: "charging-prices",
+    name: "Charging prices",
+    collection: "automotive",
+    tags: ["cars", "parking", "ev", "charging"],
+    hash: "01de1435",
+    ratio: 0.843,
+  },
+  {
+    id: "find-a-charger",
+    name: "Find a charger",
+    collection: "automotive",
+    tags: ["cars", "parking", "ev", "charging map"],
+    hash: "99ecd8d1",
+    ratio: 0.701,
+  },
+  {
+    id: "choose-your-wash",
+    name: "Car wash",
+    collection: "automotive",
+    tags: ["cars", "parking", "car wash"],
+    hash: "b78f6e02",
+    ratio: 0.821,
+  },
+  {
+    id: "wash-club",
+    name: "Wash club",
+    collection: "automotive",
+    tags: ["cars", "parking", "car wash", "membership"],
+    hash: "92bb5c8a",
+    ratio: 0.754,
+  },
+  {
+    id: "car-details",
+    name: "Car details",
+    collection: "automotive",
+    tags: ["cars", "parking", "dealership", "used cars"],
+    hash: "7a47659b",
+    ratio: 0.701,
+  },
+  {
+    id: "test-drive",
+    name: "Test drive",
+    collection: "automotive",
+    tags: ["cars", "parking", "dealership", "test drive"],
+    hash: "9fb37a95",
+    ratio: 0.678,
+  },
+  {
+    id: "car-service",
+    name: "Car service",
+    collection: "automotive",
+    tags: ["cars", "parking", "garage", "service"],
+    hash: "964c607e",
+    ratio: 0.795,
+  },
+  {
+    id: "tire-change",
+    name: "Tire change",
+    collection: "automotive",
+    tags: ["cars", "parking", "tires", "garage"],
+    hash: "9568923f",
+    ratio: 0.713,
+  },
+  {
+    id: "pay-at-the-pump",
+    name: "Pay at the pump",
+    collection: "automotive",
+    tags: ["cars", "parking", "fuel", "gas station"],
+    hash: "e5203928",
+    ratio: 0.705,
+  },
+  {
+    id: "return-your-rental",
+    name: "Rental return",
+    collection: "automotive",
+    tags: ["cars", "parking", "car rental"],
+    hash: "20ff4ffd",
+    ratio: 0.701,
+  },
+  {
+    id: "rental-car-guide",
+    name: "Rental car guide",
+    collection: "automotive",
+    tags: ["cars", "parking", "car rental", "guide"],
+    hash: "2b93db19",
+    ratio: 0.721,
+  },
+  {
+    id: "vehicle-history",
+    name: "Vehicle history",
+    collection: "automotive",
+    tags: ["cars", "parking", "used cars", "history"],
+    hash: "f168570d",
+    ratio: 0.802,
+  },
+  {
+    id: "roadside-help",
+    name: "Roadside help",
+    collection: "automotive",
+    tags: ["cars", "parking", "roadside", "breakdown"],
+    hash: "3589c50c",
+    ratio: 0.705,
+  },
+  {
+    id: "rate-your-ride",
+    name: "Rate your ride",
+    collection: "automotive",
+    tags: ["cars", "parking", "taxi", "rides"],
+    hash: "1a007a2f",
+    ratio: 1,
+  },
+  {
+    id: "carpool",
+    name: "Carpool",
+    collection: "automotive",
+    tags: ["cars", "parking", "carpool", "commute"],
+    hash: "291b75dc",
+    ratio: 0.681,
+  },
+  {
+    id: "driving-lessons",
+    name: "Driving lessons",
+    collection: "automotive",
+    tags: ["cars", "parking", "driving school"],
+    hash: "6044b9e6",
+    ratio: 0.701,
+  },
+  {
+    id: "battery-check",
+    name: "Car batteries",
+    collection: "automotive",
+    tags: ["cars", "parking", "car parts", "battery"],
+    hash: "9a20ce16",
+    ratio: 0.789,
+  },
+  {
+    id: "car-detailing",
+    name: "Car detailing",
+    collection: "automotive",
+    tags: ["cars", "parking", "detailing", "valet"],
+    hash: "d42a8bc4",
+    ratio: 0.705,
+  },
+  {
+    id: "dashboard-lights",
+    name: "Dashboard lights",
+    collection: "automotive",
+    tags: ["cars", "parking", "manual", "warning lights"],
+    hash: "b7115403",
+    ratio: 0.802,
+  },
+  {
+    id: "unlock-this-car",
+    name: "Car sharing",
+    collection: "automotive",
+    tags: ["cars", "parking", "car sharing"],
+    hash: "0f3061f5",
+    ratio: 1.923,
+  },
+  {
+    id: "damage-report",
+    name: "Damage report",
+    collection: "automotive",
+    tags: ["cars", "parking", "fleet", "inspection"],
+    hash: "2c774acb",
+    ratio: 0.698,
+  },
+  {
+    id: "car-for-sale",
+    name: "Car for sale",
+    collection: "automotive",
+    tags: ["cars", "parking", "for sale", "used cars"],
+    hash: "81db244e",
+    ratio: 0.713,
+  },
+  {
+    id: "donation-jar",
+    name: "Donation jar",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "donate", "fundraising"],
+    hash: "dd7a1355",
+    ratio: 0.75,
+  },
+  {
+    id: "giving-jar",
+    name: "Giving jar",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "donate", "fundraising"],
+    hash: "9a40c227",
+    ratio: 0.75,
+  },
+  {
+    id: "volunteer",
+    name: "Volunteer",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "volunteering"],
+    hash: "fc07b6b9",
+    ratio: 0.713,
+  },
+  {
+    id: "sign-the-petition",
+    name: "Petition",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "petition", "campaign"],
+    hash: "3b89f14e",
+    ratio: 0.698,
+  },
+  {
+    id: "learn-the-signs",
+    name: "Awareness",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "awareness", "health"],
+    hash: "25e6b8f3",
+    ratio: 0.701,
+  },
+  {
+    id: "sponsor-my-run",
+    name: "Sponsor my run",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "sponsorship", "charity run"],
+    hash: "54bb250a",
+    ratio: 0.8,
+  },
+  {
+    id: "donate-food",
+    name: "Donate food",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "food bank", "donations"],
+    hash: "d09ecd1e",
+    ratio: 0.713,
+  },
+  {
+    id: "food-support",
+    name: "Food support",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "food bank", "support"],
+    hash: "fef00ad5",
+    ratio: 0.705,
+  },
+  {
+    id: "give-blood",
+    name: "Give blood",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "blood drive"],
+    hash: "051012e9",
+    ratio: 0.678,
+  },
+  {
+    id: "polling-place",
+    name: "Polling place",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "voting", "election"],
+    hash: "3a53d860",
+    ratio: 0.639,
+  },
+  {
+    id: "register-to-vote",
+    name: "Register to vote",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "voting", "election"],
+    hash: "15006c63",
+    ratio: 0.713,
+  },
+  {
+    id: "town-hall",
+    name: "Town hall",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "meeting"],
+    hash: "292b3dce",
+    ratio: 1.754,
+  },
+  {
+    id: "community-notices",
+    name: "Community notices",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "notices"],
+    hash: "ec3ca44e",
+    ratio: 0.701,
+  },
+  {
+    id: "adopt-me",
+    name: "Adopt me",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "adoption", "animal shelter"],
+    hash: "eb064b2e",
+    ratio: 0.792,
+  },
+  {
+    id: "lost-pet-tag",
+    name: "Lost pet tag",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "pets", "pet id"],
+    hash: "c92f98e0",
+    ratio: 0.792,
+  },
+  {
+    id: "sponsor-a-pet",
+    name: "Sponsor a pet",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "animal shelter", "sponsorship"],
+    hash: "cad0c8fb",
+    ratio: 0.705,
+  },
+  {
+    id: "plant-a-tree",
+    name: "Plant a tree",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "trees", "environment"],
+    hash: "aef7d52a",
+    ratio: 0.701,
+  },
+  {
+    id: "join-the-cleanup",
+    name: "Cleanup day",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "cleanup", "environment"],
+    hash: "8aa84056",
+    ratio: 0.701,
+  },
+  {
+    id: "report-a-street-issue",
+    name: "Street issue",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "council", "report"],
+    hash: "e92e6991",
+    ratio: 0.701,
+  },
+  {
+    id: "donate-coats",
+    name: "Coat drive",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "clothing drive", "donations"],
+    hash: "4461cd22",
+    ratio: 0.713,
+  },
+  {
+    id: "service-times",
+    name: "Service times",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "faith"],
+    hash: "02d6393c",
+    ratio: 0.721,
+  },
+  {
+    id: "charity-shop",
+    name: "Charity shop",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "charity shop", "secondhand"],
+    hash: "67587c77",
+    ratio: 0.713,
+  },
+  {
+    id: "bake-sale",
+    name: "Bake sale",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "bake sale", "fundraising"],
+    hash: "108494a7",
+    ratio: 1.754,
+  },
+  {
+    id: "scholarships",
+    name: "Scholarships",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "scholarships", "education"],
+    hash: "9cd0a3ca",
+    ratio: 0.705,
+  },
+  {
+    id: "youth-club",
+    name: "Youth club",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "youth", "club"],
+    hash: "e77ad92b",
+    ratio: 0.72,
+  },
+  {
+    id: "chess-club",
+    name: "Chess club",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "chess", "club"],
+    hash: "c17125e6",
+    ratio: 0.702,
+  },
+  {
+    id: "garden-plot",
+    name: "Community garden",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "community garden"],
+    hash: "7bafc0b9",
+    ratio: 0.713,
+  },
+  {
+    id: "become-a-member",
+    name: "Become a member",
+    collection: "nonprofit",
+    tags: ["nonprofit", "community", "membership", "support"],
+    hash: "3a414633",
+    ratio: 1.923,
+  },
+  {
+    id: "pongal-pot",
+    name: "Pongal pot",
+    collection: "holidays",
+    occasion: "pongal",
+    tags: ["pongal", "harvest festival", "tamil nadu", "january", "pot"],
+    hash: "a6bffbbe",
+    ratio: 0.713,
+  },
+  {
+    id: "pongal-sun",
+    name: "Pongal sun seal",
+    collection: "holidays",
+    occasion: "pongal",
+    tags: ["pongal", "harvest festival", "tamil nadu", "january", "sun"],
+    hash: "10acbd3c",
+    ratio: 1,
+  },
+  {
+    id: "pongal-offers",
+    name: "Pongal offers",
+    collection: "holidays",
+    occasion: "pongal",
+    tags: ["pongal", "harvest festival", "tamil nadu", "january", "sale"],
+    hash: "894f434f",
+    ratio: 0.729,
+  },
+  {
+    id: "lohri-bonfire",
+    name: "Lohri bonfire",
+    collection: "holidays",
+    occasion: "lohri",
+    tags: ["lohri", "punjab", "january", "bonfire"],
+    hash: "32083b1a",
+    ratio: 0.713,
+  },
+  {
+    id: "lohri-dhol",
+    name: "Lohri dhol",
+    collection: "holidays",
+    occasion: "lohri",
+    tags: ["lohri", "punjab", "january", "dhol", "party"],
+    hash: "2bb5e859",
+    ratio: 0.701,
+  },
+  {
+    id: "sankranti-kite",
+    name: "Sankranti kite",
+    collection: "holidays",
+    occasion: "makar-sankranti",
+    tags: ["makar sankranti", "uttarayan", "kites", "january", "kite"],
+    hash: "d71821d8",
+    ratio: 0.701,
+  },
+  {
+    id: "sankranti-sky",
+    name: "Kites in the sky",
+    collection: "holidays",
+    occasion: "makar-sankranti",
+    tags: ["makar sankranti", "uttarayan", "kites", "january", "kite", "sky"],
+    hash: "fbbb8061",
+    ratio: 0.681,
+  },
+  {
+    id: "sankranti-sticker",
+    name: "Kite sticker",
+    collection: "holidays",
+    occasion: "makar-sankranti",
+    tags: [
       "makar sankranti",
       "uttarayan",
       "kites",
       "january",
       "kite",
-      "sky"
+      "sticker",
     ],
-    "hash": "fbbb8061",
-    "ratio": 0.681
+    hash: "108f2b45",
+    ratio: 0.754,
   },
   {
-    "id": "sankranti-sticker",
-    "name": "Kite sticker",
-    "collection": "holidays",
-    "occasion": "makar-sankranti",
-    "tags": [
-      "makar sankranti",
-      "uttarayan",
-      "kites",
-      "january",
-      "kite",
-      "sticker"
-    ],
-    "hash": "108f2b45",
-    "ratio": 0.754
-  },
-  {
-    "id": "vaisakhi-wheat",
-    "name": "Vaisakhi wheat",
-    "collection": "holidays",
-    "occasion": "vaisakhi",
-    "tags": [
+    id: "vaisakhi-wheat",
+    name: "Vaisakhi wheat",
+    collection: "holidays",
+    occasion: "vaisakhi",
+    tags: [
       "vaisakhi",
       "baisakhi",
       "harvest festival",
       "april",
       "wheat",
-      "harvest"
+      "harvest",
     ],
-    "hash": "c9a3a682",
-    "ratio": 0.702
+    hash: "c9a3a682",
+    ratio: 0.702,
   },
   {
-    "id": "vaisakhi-dhol",
-    "name": "Baisakhi dhol",
-    "collection": "holidays",
-    "occasion": "vaisakhi",
-    "tags": [
-      "vaisakhi",
-      "baisakhi",
-      "harvest festival",
-      "april",
-      "dhol",
-      "fair"
-    ],
-    "hash": "261910e3",
-    "ratio": 0.713
+    id: "vaisakhi-dhol",
+    name: "Baisakhi dhol",
+    collection: "holidays",
+    occasion: "vaisakhi",
+    tags: ["vaisakhi", "baisakhi", "harvest festival", "april", "dhol", "fair"],
+    hash: "261910e3",
+    ratio: 0.713,
   },
   {
-    "id": "vaisakhi-bands",
-    "name": "Vaisakhi bands",
-    "collection": "holidays",
-    "occasion": "vaisakhi",
-    "tags": [
-      "vaisakhi",
-      "baisakhi",
-      "harvest festival",
-      "april"
-    ],
-    "hash": "a04eb790",
-    "ratio": 0.729
+    id: "vaisakhi-bands",
+    name: "Vaisakhi bands",
+    collection: "holidays",
+    occasion: "vaisakhi",
+    tags: ["vaisakhi", "baisakhi", "harvest festival", "april"],
+    hash: "a04eb790",
+    ratio: 0.729,
   },
   {
-    "id": "onam-pookalam",
-    "name": "Pookalam seal",
-    "collection": "holidays",
-    "occasion": "onam",
-    "tags": [
-      "onam",
-      "kerala",
-      "harvest festival",
-      "pookalam",
-      "flowers"
-    ],
-    "hash": "95c00267",
-    "ratio": 1
+    id: "onam-pookalam",
+    name: "Pookalam seal",
+    collection: "holidays",
+    occasion: "onam",
+    tags: ["onam", "kerala", "harvest festival", "pookalam", "flowers"],
+    hash: "95c00267",
+    ratio: 1,
   },
   {
-    "id": "onam-boat-race",
-    "name": "Snake boat race",
-    "collection": "holidays",
-    "occasion": "onam",
-    "tags": [
-      "onam",
-      "kerala",
-      "harvest festival",
-      "boat race"
-    ],
-    "hash": "cf4fc811",
-    "ratio": 1.923
+    id: "onam-boat-race",
+    name: "Snake boat race",
+    collection: "holidays",
+    occasion: "onam",
+    tags: ["onam", "kerala", "harvest festival", "boat race"],
+    hash: "cf4fc811",
+    ratio: 1.923,
   },
   {
-    "id": "onam-sadya",
-    "name": "Onam sadya",
-    "collection": "holidays",
-    "occasion": "onam",
-    "tags": [
-      "onam",
-      "kerala",
-      "harvest festival",
-      "sadya",
-      "menu"
-    ],
-    "hash": "e510b1f2",
-    "ratio": 0.701
+    id: "onam-sadya",
+    name: "Onam sadya",
+    collection: "holidays",
+    occasion: "onam",
+    tags: ["onam", "kerala", "harvest festival", "sadya", "menu"],
+    hash: "e510b1f2",
+    ratio: 0.701,
   },
   {
-    "id": "onam-kasavu",
-    "name": "Kasavu border",
-    "collection": "holidays",
-    "occasion": "onam",
-    "tags": [
-      "onam",
-      "kerala",
-      "harvest festival",
-      "kasavu"
-    ],
-    "hash": "78d43cec",
-    "ratio": 0.721
+    id: "onam-kasavu",
+    name: "Kasavu border",
+    collection: "holidays",
+    occasion: "onam",
+    tags: ["onam", "kerala", "harvest festival", "kasavu"],
+    hash: "78d43cec",
+    ratio: 0.721,
   },
   {
-    "id": "navratri-dandiya",
-    "name": "Dandiya sticks",
-    "collection": "holidays",
-    "occasion": "navratri",
-    "tags": [
+    id: "navratri-dandiya",
+    name: "Dandiya sticks",
+    collection: "holidays",
+    occasion: "navratri",
+    tags: [
       "navratri",
       "dussehra",
       "durga puja",
       "festival",
       "dandiya",
-      "garba"
-    ],
-    "hash": "7803f194",
-    "ratio": 0.713
-  },
-  {
-    "id": "navratri-garba-pass",
-    "name": "Garba pass",
-    "collection": "holidays",
-    "occasion": "navratri",
-    "tags": [
-      "navratri",
-      "dussehra",
-      "durga puja",
-      "festival",
       "garba",
-      "ticket"
     ],
-    "hash": "e8544994",
-    "ratio": 0.681
+    hash: "7803f194",
+    ratio: 0.713,
   },
   {
-    "id": "navratri-lamp",
-    "name": "Navratri lamp",
-    "collection": "holidays",
-    "occasion": "navratri",
-    "tags": [
-      "navratri",
-      "dussehra",
-      "durga puja",
-      "festival",
-      "diya",
-      "lamp"
-    ],
-    "hash": "e7c51d1f",
-    "ratio": 0.702
+    id: "navratri-garba-pass",
+    name: "Garba pass",
+    collection: "holidays",
+    occasion: "navratri",
+    tags: ["navratri", "dussehra", "durga puja", "festival", "garba", "ticket"],
+    hash: "e8544994",
+    ratio: 0.681,
   },
   {
-    "id": "durga-puja-lotus",
-    "name": "Durga Puja lotus",
-    "collection": "holidays",
-    "occasion": "navratri",
-    "tags": [
-      "navratri",
-      "dussehra",
-      "durga puja",
-      "festival",
-      "lotus"
-    ],
-    "hash": "d3fd75c9",
-    "ratio": 0.701
+    id: "navratri-lamp",
+    name: "Navratri lamp",
+    collection: "holidays",
+    occasion: "navratri",
+    tags: ["navratri", "dussehra", "durga puja", "festival", "diya", "lamp"],
+    hash: "e7c51d1f",
+    ratio: 0.702,
   },
   {
-    "id": "dussehra-seal",
-    "name": "Dussehra seal",
-    "collection": "holidays",
-    "occasion": "navratri",
-    "tags": [
-      "navratri",
-      "dussehra",
-      "durga puja",
-      "festival",
-      "marigold"
-    ],
-    "hash": "fcca31e1",
-    "ratio": 1
+    id: "durga-puja-lotus",
+    name: "Durga Puja lotus",
+    collection: "holidays",
+    occasion: "navratri",
+    tags: ["navratri", "dussehra", "durga puja", "festival", "lotus"],
+    hash: "d3fd75c9",
+    ratio: 0.701,
   },
   {
-    "id": "ganesh-modak",
-    "name": "Modak",
-    "collection": "holidays",
-    "occasion": "ganesh-chaturthi",
-    "tags": [
-      "ganesh chaturthi",
-      "ganeshotsav",
-      "festival",
-      "modak",
-      "sweets"
-    ],
-    "hash": "9050ae81",
-    "ratio": 0.713
+    id: "dussehra-seal",
+    name: "Dussehra seal",
+    collection: "holidays",
+    occasion: "navratri",
+    tags: ["navratri", "dussehra", "durga puja", "festival", "marigold"],
+    hash: "fcca31e1",
+    ratio: 1,
   },
   {
-    "id": "ganesh-marigold",
-    "name": "Ganeshotsav marigold",
-    "collection": "holidays",
-    "occasion": "ganesh-chaturthi",
-    "tags": [
-      "ganesh chaturthi",
-      "ganeshotsav",
-      "festival",
-      "marigold"
-    ],
-    "hash": "e476517b",
-    "ratio": 0.702
+    id: "ganesh-modak",
+    name: "Modak",
+    collection: "holidays",
+    occasion: "ganesh-chaturthi",
+    tags: ["ganesh chaturthi", "ganeshotsav", "festival", "modak", "sweets"],
+    hash: "9050ae81",
+    ratio: 0.713,
   },
   {
-    "id": "ganesh-pandal",
-    "name": "Pandal sign",
-    "collection": "holidays",
-    "occasion": "ganesh-chaturthi",
-    "tags": [
-      "ganesh chaturthi",
-      "ganeshotsav",
-      "festival",
-      "pandal"
-    ],
-    "hash": "7d2fb5ec",
-    "ratio": 0.725
+    id: "ganesh-marigold",
+    name: "Ganeshotsav marigold",
+    collection: "holidays",
+    occasion: "ganesh-chaturthi",
+    tags: ["ganesh chaturthi", "ganeshotsav", "festival", "marigold"],
+    hash: "e476517b",
+    ratio: 0.702,
   },
   {
-    "id": "rakhi-thread",
-    "name": "Rakhi",
-    "collection": "holidays",
-    "occasion": "raksha-bandhan",
-    "tags": [
-      "raksha bandhan",
-      "rakhi",
-      "siblings"
-    ],
-    "hash": "4640157a",
-    "ratio": 0.701
+    id: "ganesh-pandal",
+    name: "Pandal sign",
+    collection: "holidays",
+    occasion: "ganesh-chaturthi",
+    tags: ["ganesh chaturthi", "ganeshotsav", "festival", "pandal"],
+    hash: "7d2fb5ec",
+    ratio: 0.725,
   },
   {
-    "id": "rakhi-envelope",
-    "name": "Rakhi envelope",
-    "collection": "holidays",
-    "occasion": "raksha-bandhan",
-    "tags": [
-      "raksha bandhan",
-      "rakhi",
-      "siblings",
-      "gift"
-    ],
-    "hash": "aba789a0",
-    "ratio": 0.702
+    id: "rakhi-thread",
+    name: "Rakhi",
+    collection: "holidays",
+    occasion: "raksha-bandhan",
+    tags: ["raksha bandhan", "rakhi", "siblings"],
+    hash: "4640157a",
+    ratio: 0.701,
   },
   {
-    "id": "rakhi-gift-tag",
-    "name": "Rakhi gift tag",
-    "collection": "holidays",
-    "occasion": "raksha-bandhan",
-    "tags": [
-      "raksha bandhan",
-      "rakhi",
-      "siblings",
-      "gift"
-    ],
-    "hash": "49e8429b",
-    "ratio": 0.66
+    id: "rakhi-envelope",
+    name: "Rakhi envelope",
+    collection: "holidays",
+    occasion: "raksha-bandhan",
+    tags: ["raksha bandhan", "rakhi", "siblings", "gift"],
+    hash: "aba789a0",
+    ratio: 0.702,
   },
   {
-    "id": "janmashtami-flute",
-    "name": "Krishna's flute",
-    "collection": "holidays",
-    "occasion": "janmashtami",
-    "tags": [
-      "janmashtami",
-      "krishna",
-      "festival",
-      "flute"
-    ],
-    "hash": "d1876195",
-    "ratio": 0.713
+    id: "rakhi-gift-tag",
+    name: "Rakhi gift tag",
+    collection: "holidays",
+    occasion: "raksha-bandhan",
+    tags: ["raksha bandhan", "rakhi", "siblings", "gift"],
+    hash: "49e8429b",
+    ratio: 0.66,
   },
   {
-    "id": "janmashtami-feather",
-    "name": "Peacock feather arch",
-    "collection": "holidays",
-    "occasion": "janmashtami",
-    "tags": [
-      "janmashtami",
-      "krishna",
-      "festival",
-      "peacock feather"
-    ],
-    "hash": "d9eff27d",
-    "ratio": 0.702
+    id: "janmashtami-flute",
+    name: "Krishna's flute",
+    collection: "holidays",
+    occasion: "janmashtami",
+    tags: ["janmashtami", "krishna", "festival", "flute"],
+    hash: "d1876195",
+    ratio: 0.713,
   },
   {
-    "id": "gudi-padwa",
-    "name": "Gudi",
-    "collection": "holidays",
-    "occasion": "ugadi",
-    "tags": [
-      "ugadi",
-      "gudi padwa",
-      "new year",
-      "spring",
-      "gudi"
-    ],
-    "hash": "76a53a53",
-    "ratio": 0.713
+    id: "janmashtami-feather",
+    name: "Peacock feather arch",
+    collection: "holidays",
+    occasion: "janmashtami",
+    tags: ["janmashtami", "krishna", "festival", "peacock feather"],
+    hash: "d9eff27d",
+    ratio: 0.702,
   },
   {
-    "id": "ugadi-leaves",
-    "name": "Ugadi mango leaves",
-    "collection": "holidays",
-    "occasion": "ugadi",
-    "tags": [
-      "ugadi",
-      "gudi padwa",
-      "new year",
-      "spring",
-      "mango leaves"
-    ],
-    "hash": "63ff9b82",
-    "ratio": 0.702
+    id: "gudi-padwa",
+    name: "Gudi",
+    collection: "holidays",
+    occasion: "ugadi",
+    tags: ["ugadi", "gudi padwa", "new year", "spring", "gudi"],
+    hash: "76a53a53",
+    ratio: 0.713,
   },
   {
-    "id": "republic-day-india",
-    "name": "Republic Day seal",
-    "collection": "holidays",
-    "occasion": "republic-day-india",
-    "tags": [
-      "republic day",
-      "india",
-      "january 26",
-      "national day"
-    ],
-    "hash": "0e973d85",
-    "ratio": 1
+    id: "ugadi-leaves",
+    name: "Ugadi mango leaves",
+    collection: "holidays",
+    occasion: "ugadi",
+    tags: ["ugadi", "gudi padwa", "new year", "spring", "mango leaves"],
+    hash: "63ff9b82",
+    ratio: 0.702,
   },
   {
-    "id": "republic-day-india-bands",
-    "name": "Republic Day bands",
-    "collection": "holidays",
-    "occasion": "republic-day-india",
-    "tags": [
-      "republic day",
-      "india",
-      "january 26",
-      "national day",
-      "parade"
-    ],
-    "hash": "824c501b",
-    "ratio": 0.729
+    id: "republic-day-india",
+    name: "Republic Day seal",
+    collection: "holidays",
+    occasion: "republic-day-india",
+    tags: ["republic day", "india", "january 26", "national day"],
+    hash: "0e973d85",
+    ratio: 1,
   },
   {
-    "id": "pohela-boishakh",
-    "name": "Noboborsho sun",
-    "collection": "holidays",
-    "occasion": "pohela-boishakh",
-    "tags": [
+    id: "republic-day-india-bands",
+    name: "Republic Day bands",
+    collection: "holidays",
+    occasion: "republic-day-india",
+    tags: ["republic day", "india", "january 26", "national day", "parade"],
+    hash: "824c501b",
+    ratio: 0.729,
+  },
+  {
+    id: "pohela-boishakh",
+    name: "Noboborsho sun",
+    collection: "holidays",
+    occasion: "pohela-boishakh",
+    tags: [
       "pohela boishakh",
       "bengali new year",
       "april 14",
       "new year",
-      "sun"
+      "sun",
     ],
-    "hash": "34b9c792",
-    "ratio": 0.701
+    hash: "34b9c792",
+    ratio: 0.701,
   },
   {
-    "id": "pohela-boishakh-mela",
-    "name": "Boishakhi mela",
-    "collection": "holidays",
-    "occasion": "pohela-boishakh",
-    "tags": [
+    id: "pohela-boishakh-mela",
+    name: "Boishakhi mela",
+    collection: "holidays",
+    occasion: "pohela-boishakh",
+    tags: [
       "pohela boishakh",
       "bengali new year",
       "april 14",
       "fair",
-      "decoration"
+      "decoration",
     ],
-    "hash": "014664f7",
-    "ratio": 0.742
+    hash: "014664f7",
+    ratio: 0.742,
   },
   {
-    "id": "independence-bangladesh",
-    "name": "Bangladesh Independence Day",
-    "collection": "holidays",
-    "occasion": "bangladesh-independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "bangladesh",
-      "march 26"
-    ],
-    "hash": "d377ff44",
-    "ratio": 0.689
+    id: "independence-bangladesh",
+    name: "Bangladesh Independence Day",
+    collection: "holidays",
+    occasion: "bangladesh-independence-day",
+    tags: ["independence day", "national day", "bangladesh", "march 26"],
+    hash: "d377ff44",
+    ratio: 0.689,
   },
   {
-    "id": "avurudu-pot",
-    "name": "Avurudu milk pot",
-    "collection": "holidays",
-    "occasion": "sinhala-tamil-new-year",
-    "tags": [
+    id: "avurudu-pot",
+    name: "Avurudu milk pot",
+    collection: "holidays",
+    occasion: "sinhala-tamil-new-year",
+    tags: [
       "sinhala and tamil new year",
       "avurudu",
       "puthandu",
       "april",
-      "milk rice"
+      "milk rice",
     ],
-    "hash": "5e2b8c80",
-    "ratio": 0.713
+    hash: "5e2b8c80",
+    ratio: 0.713,
   },
   {
-    "id": "puthandu-sun",
-    "name": "Puthandu sun",
-    "collection": "holidays",
-    "occasion": "sinhala-tamil-new-year",
-    "tags": [
+    id: "puthandu-sun",
+    name: "Puthandu sun",
+    collection: "holidays",
+    occasion: "sinhala-tamil-new-year",
+    tags: [
       "sinhala and tamil new year",
       "avurudu",
       "puthandu",
       "april",
-      "tamil new year"
+      "tamil new year",
     ],
-    "hash": "2cd707b3",
-    "ratio": 0.678
+    hash: "2cd707b3",
+    ratio: 0.678,
   },
   {
-    "id": "independence-pakistan",
-    "name": "Pakistan Independence Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "pakistan",
-      "august 14"
-    ],
-    "hash": "f1337292",
-    "ratio": 0.678
+    id: "independence-pakistan",
+    name: "Pakistan Independence Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "pakistan", "august 14"],
+    hash: "f1337292",
+    ratio: 0.678,
   },
   {
-    "id": "independence-indonesia",
-    "name": "Indonesian Independence Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "indonesia",
-      "august 17"
-    ],
-    "hash": "a7cdcf72",
-    "ratio": 0.705
+    id: "independence-indonesia",
+    name: "Indonesian Independence Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "indonesia", "august 17"],
+    hash: "a7cdcf72",
+    ratio: 0.705,
   },
   {
-    "id": "national-day-singapore",
-    "name": "Singapore National Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
+    id: "national-day-singapore",
+    name: "Singapore National Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: [
       "independence day",
       "national day",
       "singapore",
       "august 9",
-      "fireworks"
+      "fireworks",
     ],
-    "hash": "1d18e581",
-    "ratio": 0.701
+    hash: "1d18e581",
+    ratio: 0.701,
   },
   {
-    "id": "independence-ukraine",
-    "name": "Ukrainian Independence Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "ukraine",
-      "august 24"
-    ],
-    "hash": "744a8241",
-    "ratio": 0.705
+    id: "independence-ukraine",
+    name: "Ukrainian Independence Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "ukraine", "august 24"],
+    hash: "744a8241",
+    ratio: 0.705,
   },
   {
-    "id": "independence-argentina",
-    "name": "Argentine Independence Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "argentina",
-      "july 9"
-    ],
-    "hash": "41d52aaf",
-    "ratio": 0.705
+    id: "independence-argentina",
+    name: "Argentine Independence Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "argentina", "july 9"],
+    hash: "41d52aaf",
+    ratio: 0.705,
   },
   {
-    "id": "independence-colombia",
-    "name": "Colombian Independence Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "colombia",
-      "july 20"
-    ],
-    "hash": "adbc2c8b",
-    "ratio": 0.705
+    id: "independence-colombia",
+    name: "Colombian Independence Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "colombia", "july 20"],
+    hash: "adbc2c8b",
+    ratio: 0.705,
   },
   {
-    "id": "independence-peru",
-    "name": "Peruvian Independence Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "peru",
-      "july 28"
-    ],
-    "hash": "3912056d",
-    "ratio": 0.705
+    id: "independence-peru",
+    name: "Peruvian Independence Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "peru", "july 28"],
+    hash: "3912056d",
+    ratio: 0.705,
   },
   {
-    "id": "national-day-belgium",
-    "name": "Belgian National Day",
-    "collection": "holidays",
-    "occasion": "independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "belgium",
-      "july 21"
-    ],
-    "hash": "e748ae6e",
-    "ratio": 0.705
+    id: "national-day-belgium",
+    name: "Belgian National Day",
+    collection: "holidays",
+    occasion: "independence-day",
+    tags: ["independence day", "national day", "belgium", "july 21"],
+    hash: "e748ae6e",
+    ratio: 0.705,
   },
   {
-    "id": "songkran-bowl",
-    "name": "Songkran bowl",
-    "collection": "holidays",
-    "occasion": "songkran",
-    "tags": [
-      "songkran",
-      "thai new year",
-      "water festival",
-      "april",
-      "water"
-    ],
-    "hash": "b1da8282",
-    "ratio": 0.713
+    id: "songkran-bowl",
+    name: "Songkran bowl",
+    collection: "holidays",
+    occasion: "songkran",
+    tags: ["songkran", "thai new year", "water festival", "april", "water"],
+    hash: "b1da8282",
+    ratio: 0.713,
   },
   {
-    "id": "songkran-drop",
-    "name": "Songkran sticker",
-    "collection": "holidays",
-    "occasion": "songkran",
-    "tags": [
+    id: "songkran-drop",
+    name: "Songkran sticker",
+    collection: "holidays",
+    occasion: "songkran",
+    tags: [
       "songkran",
       "thai new year",
       "water festival",
       "april",
       "water",
-      "sticker"
+      "sticker",
     ],
-    "hash": "5db9ba37",
-    "ratio": 0.754
+    hash: "5db9ba37",
+    ratio: 0.754,
   },
   {
-    "id": "songkran-waves",
-    "name": "Songkran waves",
-    "collection": "holidays",
-    "occasion": "songkran",
-    "tags": [
+    id: "songkran-waves",
+    name: "Songkran waves",
+    collection: "holidays",
+    occasion: "songkran",
+    tags: [
       "songkran",
       "thai new year",
       "water festival",
       "april",
       "water",
-      "map"
+      "map",
     ],
-    "hash": "ddcb3f7f",
-    "ratio": 0.701
+    hash: "ddcb3f7f",
+    ratio: 0.701,
   },
   {
-    "id": "songkran-bands",
-    "name": "Thai New Year bands",
-    "collection": "holidays",
-    "occasion": "songkran",
-    "tags": [
-      "songkran",
-      "thai new year",
-      "water festival",
-      "april",
-      "hours"
-    ],
-    "hash": "5040f38c",
-    "ratio": 0.729
+    id: "songkran-bands",
+    name: "Thai New Year bands",
+    collection: "holidays",
+    occasion: "songkran",
+    tags: ["songkran", "thai new year", "water festival", "april", "hours"],
+    hash: "5040f38c",
+    ratio: 0.729,
   },
   {
-    "id": "loy-krathong-float",
-    "name": "Krathong",
-    "collection": "holidays",
-    "occasion": "loy-krathong",
-    "tags": [
+    id: "loy-krathong-float",
+    name: "Krathong",
+    collection: "holidays",
+    occasion: "loy-krathong",
+    tags: [
       "loy krathong",
       "thailand",
       "festival of lights",
       "november",
       "krathong",
-      "river"
+      "river",
     ],
-    "hash": "0755d303",
-    "ratio": 0.713
+    hash: "0755d303",
+    ratio: 0.713,
   },
   {
-    "id": "loy-krathong-moon",
-    "name": "Full moon river",
-    "collection": "holidays",
-    "occasion": "loy-krathong",
-    "tags": [
+    id: "loy-krathong-moon",
+    name: "Full moon river",
+    collection: "holidays",
+    occasion: "loy-krathong",
+    tags: [
       "loy krathong",
       "thailand",
       "festival of lights",
       "november",
-      "moon"
+      "moon",
     ],
-    "hash": "b9508b11",
-    "ratio": 0.681
+    hash: "b9508b11",
+    ratio: 0.681,
   },
   {
-    "id": "loy-krathong-program",
-    "name": "Loy Krathong program",
-    "collection": "holidays",
-    "occasion": "loy-krathong",
-    "tags": [
+    id: "loy-krathong-program",
+    name: "Loy Krathong program",
+    collection: "holidays",
+    occasion: "loy-krathong",
+    tags: [
       "loy krathong",
       "thailand",
       "festival of lights",
       "november",
-      "program"
+      "program",
     ],
-    "hash": "ed904fbf",
-    "ratio": 0.721
+    hash: "ed904fbf",
+    ratio: 0.721,
   },
   {
-    "id": "vesak-lantern",
-    "name": "Vesak lantern",
-    "collection": "holidays",
-    "occasion": "vesak",
-    "tags": [
-      "vesak",
-      "wesak",
-      "buddha day",
-      "may",
-      "lantern"
-    ],
-    "hash": "32e39c80",
-    "ratio": 0.701
+    id: "vesak-lantern",
+    name: "Vesak lantern",
+    collection: "holidays",
+    occasion: "vesak",
+    tags: ["vesak", "wesak", "buddha day", "may", "lantern"],
+    hash: "32e39c80",
+    ratio: 0.701,
   },
   {
-    "id": "vesak-lotus",
-    "name": "Vesak lotus arch",
-    "collection": "holidays",
-    "occasion": "vesak",
-    "tags": [
-      "vesak",
-      "wesak",
-      "buddha day",
-      "may",
-      "lotus"
-    ],
-    "hash": "b6779223",
-    "ratio": 0.702
+    id: "vesak-lotus",
+    name: "Vesak lotus arch",
+    collection: "holidays",
+    occasion: "vesak",
+    tags: ["vesak", "wesak", "buddha day", "may", "lotus"],
+    hash: "b6779223",
+    ratio: 0.702,
   },
   {
-    "id": "vesak-seal",
-    "name": "Wesak seal",
-    "collection": "holidays",
-    "occasion": "vesak",
-    "tags": [
-      "vesak",
-      "wesak",
-      "buddha day",
-      "may",
-      "lotus"
-    ],
-    "hash": "78415c72",
-    "ratio": 1
+    id: "vesak-seal",
+    name: "Wesak seal",
+    collection: "holidays",
+    occasion: "vesak",
+    tags: ["vesak", "wesak", "buddha day", "may", "lotus"],
+    hash: "78415c72",
+    ratio: 1,
   },
   {
-    "id": "vesak-candle",
-    "name": "Vesak candle",
-    "collection": "holidays",
-    "occasion": "vesak",
-    "tags": [
-      "vesak",
-      "wesak",
-      "buddha day",
-      "may",
-      "candle",
-      "temple"
-    ],
-    "hash": "9828a994",
-    "ratio": 0.721
+    id: "vesak-candle",
+    name: "Vesak candle",
+    collection: "holidays",
+    occasion: "vesak",
+    tags: ["vesak", "wesak", "buddha day", "may", "candle", "temple"],
+    hash: "9828a994",
+    ratio: 0.721,
   },
   {
-    "id": "hari-raya-ketupat",
-    "name": "Ketupat",
-    "collection": "holidays",
-    "occasion": "eid-al-fitr",
-    "tags": [
-      "eid al-fitr",
-      "eid",
-      "hari raya",
-      "ketupat",
-      "aidilfitri"
-    ],
-    "hash": "218cc91a",
-    "ratio": 0.713
+    id: "hari-raya-ketupat",
+    name: "Ketupat",
+    collection: "holidays",
+    occasion: "eid-al-fitr",
+    tags: ["eid al-fitr", "eid", "hari raya", "ketupat", "aidilfitri"],
+    hash: "218cc91a",
+    ratio: 0.713,
   },
   {
-    "id": "hari-raya-open-house",
-    "name": "Hari Raya open house",
-    "collection": "holidays",
-    "occasion": "eid-al-fitr",
-    "tags": [
-      "eid al-fitr",
-      "eid",
-      "hari raya",
-      "open house"
-    ],
-    "hash": "c3e798a5",
-    "ratio": 0.701
+    id: "hari-raya-open-house",
+    name: "Hari Raya open house",
+    collection: "holidays",
+    occasion: "eid-al-fitr",
+    tags: ["eid al-fitr", "eid", "hari raya", "open house"],
+    hash: "c3e798a5",
+    ratio: 0.701,
   },
   {
-    "id": "hari-raya-pelita",
-    "name": "Pelita arch",
-    "collection": "holidays",
-    "occasion": "eid-al-fitr",
-    "tags": [
-      "eid al-fitr",
-      "eid",
-      "hari raya",
-      "pelita",
-      "lamp"
-    ],
-    "hash": "d968b498",
-    "ratio": 0.702
+    id: "hari-raya-pelita",
+    name: "Pelita arch",
+    collection: "holidays",
+    occasion: "eid-al-fitr",
+    tags: ["eid al-fitr", "eid", "hari raya", "pelita", "lamp"],
+    hash: "d968b498",
+    ratio: 0.702,
   },
   {
-    "id": "hari-raya-haji",
-    "name": "Hari Raya Haji",
-    "collection": "holidays",
-    "occasion": "eid-al-adha",
-    "tags": [
-      "eid al-adha",
-      "eid",
-      "aidiladha"
-    ],
-    "hash": "3491f227",
-    "ratio": 0.721
+    id: "hari-raya-haji",
+    name: "Hari Raya Haji",
+    collection: "holidays",
+    occasion: "eid-al-adha",
+    tags: ["eid al-adha", "eid", "aidiladha"],
+    hash: "3491f227",
+    ratio: 0.721,
   },
   {
-    "id": "tabaski",
-    "name": "Tabaski",
-    "collection": "holidays",
-    "occasion": "eid-al-adha",
-    "tags": [
-      "eid al-adha",
-      "eid",
-      "tabaski",
-      "west africa"
-    ],
-    "hash": "5d8f7490",
-    "ratio": 0.701
+    id: "tabaski",
+    name: "Tabaski",
+    collection: "holidays",
+    occasion: "eid-al-adha",
+    tags: ["eid al-adha", "eid", "tabaski", "west africa"],
+    hash: "5d8f7490",
+    ratio: 0.701,
   },
   {
-    "id": "tet-banh-chung",
-    "name": "Banh chung",
-    "collection": "holidays",
-    "occasion": "lunar-new-year",
-    "tags": [
-      "lunar new year",
-      "tet",
-      "vietnam"
-    ],
-    "hash": "8fa13ce4",
-    "ratio": 0.713
+    id: "tet-banh-chung",
+    name: "Banh chung",
+    collection: "holidays",
+    occasion: "lunar-new-year",
+    tags: ["lunar new year", "tet", "vietnam"],
+    hash: "8fa13ce4",
+    ratio: 0.713,
   },
   {
-    "id": "tet-apricot",
-    "name": "Apricot blossom",
-    "collection": "holidays",
-    "occasion": "lunar-new-year",
-    "tags": [
-      "lunar new year",
-      "tet",
-      "vietnam",
-      "blossom"
-    ],
-    "hash": "5361b261",
-    "ratio": 0.701
+    id: "tet-apricot",
+    name: "Apricot blossom",
+    collection: "holidays",
+    occasion: "lunar-new-year",
+    tags: ["lunar new year", "tet", "vietnam", "blossom"],
+    hash: "5361b261",
+    ratio: 0.701,
   },
   {
-    "id": "seollal-knot",
-    "name": "Seollal knot",
-    "collection": "holidays",
-    "occasion": "lunar-new-year",
-    "tags": [
-      "lunar new year",
-      "seollal",
-      "korea"
-    ],
-    "hash": "f1ba4f82",
-    "ratio": 0.721
+    id: "seollal-knot",
+    name: "Seollal knot",
+    collection: "holidays",
+    occasion: "lunar-new-year",
+    tags: ["lunar new year", "seollal", "korea"],
+    hash: "f1ba4f82",
+    ratio: 0.721,
   },
   {
-    "id": "mid-autumn-mooncake",
-    "name": "Mooncake",
-    "collection": "holidays",
-    "occasion": "mid-autumn",
-    "tags": [
-      "mid-autumn festival",
-      "moon festival",
-      "mooncakes",
-      "mooncake"
-    ],
-    "hash": "6429349e",
-    "ratio": 0.713
+    id: "mid-autumn-mooncake",
+    name: "Mooncake",
+    collection: "holidays",
+    occasion: "mid-autumn",
+    tags: ["mid-autumn festival", "moon festival", "mooncakes", "mooncake"],
+    hash: "6429349e",
+    ratio: 0.713,
   },
   {
-    "id": "mid-autumn-rabbit",
-    "name": "Moon rabbit",
-    "collection": "holidays",
-    "occasion": "mid-autumn",
-    "tags": [
+    id: "mid-autumn-rabbit",
+    name: "Moon rabbit",
+    collection: "holidays",
+    occasion: "mid-autumn",
+    tags: [
       "mid-autumn festival",
       "moon festival",
       "mooncakes",
       "rabbit",
-      "moon"
+      "moon",
     ],
-    "hash": "44d87950",
-    "ratio": 0.702
+    hash: "44d87950",
+    ratio: 0.702,
   },
   {
-    "id": "mid-autumn-lantern-walk",
-    "name": "Lantern walk",
-    "collection": "holidays",
-    "occasion": "mid-autumn",
-    "tags": [
-      "mid-autumn festival",
-      "moon festival",
-      "mooncakes",
-      "lantern"
-    ],
-    "hash": "5bec74f2",
-    "ratio": 0.681
+    id: "mid-autumn-lantern-walk",
+    name: "Lantern walk",
+    collection: "holidays",
+    occasion: "mid-autumn",
+    tags: ["mid-autumn festival", "moon festival", "mooncakes", "lantern"],
+    hash: "5bec74f2",
+    ratio: 0.681,
   },
   {
-    "id": "mid-autumn-seal",
-    "name": "Moon seal",
-    "collection": "holidays",
-    "occasion": "mid-autumn",
-    "tags": [
-      "mid-autumn festival",
-      "moon festival",
-      "mooncakes",
-      "moon"
-    ],
-    "hash": "19516bba",
-    "ratio": 1
+    id: "mid-autumn-seal",
+    name: "Moon seal",
+    collection: "holidays",
+    occasion: "mid-autumn",
+    tags: ["mid-autumn festival", "moon festival", "mooncakes", "moon"],
+    hash: "19516bba",
+    ratio: 1,
   },
   {
-    "id": "mid-autumn-gift",
-    "name": "Mooncake gift box",
-    "collection": "holidays",
-    "occasion": "mid-autumn",
-    "tags": [
+    id: "mid-autumn-gift",
+    name: "Mooncake gift box",
+    collection: "holidays",
+    occasion: "mid-autumn",
+    tags: [
       "mid-autumn festival",
       "moon festival",
       "mooncakes",
       "gift",
-      "mooncake"
+      "mooncake",
     ],
-    "hash": "57ea9760",
-    "ratio": 0.703
+    hash: "57ea9760",
+    ratio: 0.703,
   },
   {
-    "id": "chuseok-songpyeon",
-    "name": "Songpyeon",
-    "collection": "holidays",
-    "occasion": "chuseok",
-    "tags": [
-      "chuseok",
-      "korean thanksgiving",
-      "harvest festival",
-      "songpyeon"
-    ],
-    "hash": "0f515c34",
-    "ratio": 0.701
+    id: "chuseok-songpyeon",
+    name: "Songpyeon",
+    collection: "holidays",
+    occasion: "chuseok",
+    tags: ["chuseok", "korean thanksgiving", "harvest festival", "songpyeon"],
+    hash: "0f515c34",
+    ratio: 0.701,
   },
   {
-    "id": "chuseok-moon",
-    "name": "Harvest moon hills",
-    "collection": "holidays",
-    "occasion": "chuseok",
-    "tags": [
+    id: "chuseok-moon",
+    name: "Harvest moon hills",
+    collection: "holidays",
+    occasion: "chuseok",
+    tags: [
       "chuseok",
       "korean thanksgiving",
       "harvest festival",
       "moon",
-      "hours"
+      "hours",
     ],
-    "hash": "8e8bc796",
-    "ratio": 0.681
+    hash: "8e8bc796",
+    ratio: 0.681,
   },
   {
-    "id": "chuseok-gift-tag",
-    "name": "Chuseok gift tag",
-    "collection": "holidays",
-    "occasion": "chuseok",
-    "tags": [
-      "chuseok",
-      "korean thanksgiving",
-      "harvest festival",
-      "gift"
-    ],
-    "hash": "eb57f295",
-    "ratio": 0.66
+    id: "chuseok-gift-tag",
+    name: "Chuseok gift tag",
+    collection: "holidays",
+    occasion: "chuseok",
+    tags: ["chuseok", "korean thanksgiving", "harvest festival", "gift"],
+    hash: "eb57f295",
+    ratio: 0.66,
   },
   {
-    "id": "dragon-boat-race",
-    "name": "Dragon boat race",
-    "collection": "holidays",
-    "occasion": "dragon-boat-festival",
-    "tags": [
-      "dragon boat festival",
-      "duanwu",
-      "boat race"
-    ],
-    "hash": "119278cc",
-    "ratio": 1.923
+    id: "dragon-boat-race",
+    name: "Dragon boat race",
+    collection: "holidays",
+    occasion: "dragon-boat-festival",
+    tags: ["dragon boat festival", "duanwu", "boat race"],
+    hash: "119278cc",
+    ratio: 1.923,
   },
   {
-    "id": "dragon-boat-zongzi",
-    "name": "Zongzi",
-    "collection": "holidays",
-    "occasion": "dragon-boat-festival",
-    "tags": [
-      "dragon boat festival",
-      "duanwu",
-      "boat race",
-      "zongzi",
-      "menu"
-    ],
-    "hash": "6d479c05",
-    "ratio": 0.713
+    id: "dragon-boat-zongzi",
+    name: "Zongzi",
+    collection: "holidays",
+    occasion: "dragon-boat-festival",
+    tags: ["dragon boat festival", "duanwu", "boat race", "zongzi", "menu"],
+    hash: "6d479c05",
+    ratio: 0.713,
   },
   {
-    "id": "dragon-boat-ticket",
-    "name": "Race day ticket",
-    "collection": "holidays",
-    "occasion": "dragon-boat-festival",
-    "tags": [
-      "dragon boat festival",
-      "duanwu",
-      "boat race",
-      "ticket"
-    ],
-    "hash": "9c80be1e",
-    "ratio": 1.923
+    id: "dragon-boat-ticket",
+    name: "Race day ticket",
+    collection: "holidays",
+    occasion: "dragon-boat-festival",
+    tags: ["dragon boat festival", "duanwu", "boat race", "ticket"],
+    hash: "9c80be1e",
+    ratio: 1.923,
   },
   {
-    "id": "lantern-festival-riddles",
-    "name": "Lantern riddles",
-    "collection": "holidays",
-    "occasion": "lantern-festival",
-    "tags": [
-      "lantern festival",
-      "yuanxiao",
-      "lanterns",
-      "riddles",
-      "lantern"
-    ],
-    "hash": "eb8a1957",
-    "ratio": 0.702
+    id: "lantern-festival-riddles",
+    name: "Lantern riddles",
+    collection: "holidays",
+    occasion: "lantern-festival",
+    tags: ["lantern festival", "yuanxiao", "lanterns", "riddles", "lantern"],
+    hash: "eb8a1957",
+    ratio: 0.702,
   },
   {
-    "id": "lantern-festival-tangyuan",
-    "name": "Tangyuan bowl",
-    "collection": "holidays",
-    "occasion": "lantern-festival",
-    "tags": [
-      "lantern festival",
-      "yuanxiao",
-      "lanterns",
-      "tangyuan",
-      "menu"
-    ],
-    "hash": "73ccf969",
-    "ratio": 0.721
+    id: "lantern-festival-tangyuan",
+    name: "Tangyuan bowl",
+    collection: "holidays",
+    occasion: "lantern-festival",
+    tags: ["lantern festival", "yuanxiao", "lanterns", "tangyuan", "menu"],
+    hash: "73ccf969",
+    ratio: 0.721,
   },
   {
-    "id": "tanabata-wishes",
-    "name": "Tanabata wishes",
-    "collection": "holidays",
-    "occasion": "tanabata",
-    "tags": [
-      "tanabata",
-      "star festival",
-      "japan",
-      "july 7",
-      "wishes",
-      "bamboo"
-    ],
-    "hash": "47ba9b02",
-    "ratio": 0.701
+    id: "tanabata-wishes",
+    name: "Tanabata wishes",
+    collection: "holidays",
+    occasion: "tanabata",
+    tags: ["tanabata", "star festival", "japan", "july 7", "wishes", "bamboo"],
+    hash: "47ba9b02",
+    ratio: 0.701,
   },
   {
-    "id": "tanabata-stars",
-    "name": "Star festival seal",
-    "collection": "holidays",
-    "occasion": "tanabata",
-    "tags": [
-      "tanabata",
-      "star festival",
-      "japan",
-      "july 7",
-      "stars"
-    ],
-    "hash": "2fed4a6a",
-    "ratio": 1
+    id: "tanabata-stars",
+    name: "Star festival seal",
+    collection: "holidays",
+    occasion: "tanabata",
+    tags: ["tanabata", "star festival", "japan", "july 7", "stars"],
+    hash: "2fed4a6a",
+    ratio: 1,
   },
   {
-    "id": "obon-lantern",
-    "name": "Bon lantern",
-    "collection": "holidays",
-    "occasion": "obon",
-    "tags": [
-      "obon",
-      "bon festival",
-      "japan",
-      "lantern",
-      "bon odori"
-    ],
-    "hash": "fbd33f81",
-    "ratio": 0.713
+    id: "obon-lantern",
+    name: "Bon lantern",
+    collection: "holidays",
+    occasion: "obon",
+    tags: ["obon", "bon festival", "japan", "lantern", "bon odori"],
+    hash: "fbd33f81",
+    ratio: 0.713,
   },
   {
-    "id": "obon-sign",
-    "name": "Bon festival sign",
-    "collection": "holidays",
-    "occasion": "obon",
-    "tags": [
-      "obon",
-      "bon festival",
-      "japan",
-      "hours"
-    ],
-    "hash": "5202ef96",
-    "ratio": 0.725
+    id: "obon-sign",
+    name: "Bon festival sign",
+    collection: "holidays",
+    occasion: "obon",
+    tags: ["obon", "bon festival", "japan", "hours"],
+    hash: "5202ef96",
+    ratio: 0.725,
   },
   {
-    "id": "childrens-day-carp",
-    "name": "Carp streamers",
-    "collection": "holidays",
-    "occasion": "childrens-day",
-    "tags": [
-      "children's day",
-      "kodomo no hi",
-      "may 5",
-      "koinobori",
-      "kids"
-    ],
-    "hash": "14fe8d1e",
-    "ratio": 0.701
+    id: "childrens-day-carp",
+    name: "Carp streamers",
+    collection: "holidays",
+    occasion: "childrens-day",
+    tags: ["children's day", "kodomo no hi", "may 5", "koinobori", "kids"],
+    hash: "14fe8d1e",
+    ratio: 0.701,
   },
   {
-    "id": "childrens-day-sticker",
-    "name": "Carp streamer sticker",
-    "collection": "holidays",
-    "occasion": "childrens-day",
-    "tags": [
-      "children's day",
-      "kodomo no hi",
-      "may 5",
-      "kids",
-      "sticker"
-    ],
-    "hash": "79ca1642",
-    "ratio": 0.754
+    id: "childrens-day-sticker",
+    name: "Carp streamer sticker",
+    collection: "holidays",
+    occasion: "childrens-day",
+    tags: ["children's day", "kodomo no hi", "may 5", "kids", "sticker"],
+    hash: "79ca1642",
+    ratio: 0.754,
   },
   {
-    "id": "shogatsu-kadomatsu",
-    "name": "Kadomatsu",
-    "collection": "holidays",
-    "occasion": "new-year",
-    "tags": [
-      "new year",
-      "celebration",
-      "japan",
-      "shogatsu"
-    ],
-    "hash": "6faf6c38",
-    "ratio": 0.713
+    id: "shogatsu-kadomatsu",
+    name: "Kadomatsu",
+    collection: "holidays",
+    occasion: "new-year",
+    tags: ["new year", "celebration", "japan", "shogatsu"],
+    hash: "6faf6c38",
+    ratio: 0.713,
   },
   {
-    "id": "nowruz-sabzeh",
-    "name": "Sabzeh",
-    "collection": "holidays",
-    "occasion": "nowruz",
-    "tags": [
-      "nowruz",
-      "persian new year",
-      "spring",
-      "sabzeh",
-      "haft-sin"
-    ],
-    "hash": "ae71c936",
-    "ratio": 0.713
+    id: "nowruz-sabzeh",
+    name: "Sabzeh",
+    collection: "holidays",
+    occasion: "nowruz",
+    tags: ["nowruz", "persian new year", "spring", "sabzeh", "haft-sin"],
+    hash: "ae71c936",
+    ratio: 0.713,
   },
   {
-    "id": "nowruz-goldfish",
-    "name": "Nowruz goldfish",
-    "collection": "holidays",
-    "occasion": "nowruz",
-    "tags": [
-      "nowruz",
-      "persian new year",
-      "spring",
-      "goldfish",
-      "haft-sin"
-    ],
-    "hash": "01a26389",
-    "ratio": 0.702
+    id: "nowruz-goldfish",
+    name: "Nowruz goldfish",
+    collection: "holidays",
+    occasion: "nowruz",
+    tags: ["nowruz", "persian new year", "spring", "goldfish", "haft-sin"],
+    hash: "01a26389",
+    ratio: 0.702,
   },
   {
-    "id": "nowruz-party",
-    "name": "Nowruz party ticket",
-    "collection": "holidays",
-    "occasion": "nowruz",
-    "tags": [
-      "nowruz",
-      "persian new year",
-      "spring",
-      "party",
-      "ticket"
-    ],
-    "hash": "c6ae182c",
-    "ratio": 0.681
+    id: "nowruz-party",
+    name: "Nowruz party ticket",
+    collection: "holidays",
+    occasion: "nowruz",
+    tags: ["nowruz", "persian new year", "spring", "party", "ticket"],
+    hash: "c6ae182c",
+    ratio: 0.681,
   },
   {
-    "id": "nowruz-seal",
-    "name": "Nowruz seal",
-    "collection": "holidays",
-    "occasion": "nowruz",
-    "tags": [
-      "nowruz",
-      "persian new year",
-      "spring",
-      "goldfish"
-    ],
-    "hash": "3fcf9bd9",
-    "ratio": 1
+    id: "nowruz-seal",
+    name: "Nowruz seal",
+    collection: "holidays",
+    occasion: "nowruz",
+    tags: ["nowruz", "persian new year", "spring", "goldfish"],
+    hash: "3fcf9bd9",
+    ratio: 1,
   },
   {
-    "id": "yalda-pomegranate",
-    "name": "Yalda pomegranate",
-    "collection": "holidays",
-    "occasion": "yalda",
-    "tags": [
-      "yalda night",
-      "shab-e yalda",
-      "winter solstice",
-      "pomegranate"
-    ],
-    "hash": "804d5423",
-    "ratio": 0.713
+    id: "yalda-pomegranate",
+    name: "Yalda pomegranate",
+    collection: "holidays",
+    occasion: "yalda",
+    tags: ["yalda night", "shab-e yalda", "winter solstice", "pomegranate"],
+    hash: "804d5423",
+    ratio: 0.713,
   },
   {
-    "id": "yalda-watermelon",
-    "name": "Yalda watermelon",
-    "collection": "holidays",
-    "occasion": "yalda",
-    "tags": [
-      "yalda night",
-      "shab-e yalda",
-      "winter solstice",
-      "watermelon"
-    ],
-    "hash": "f90d299b",
-    "ratio": 0.702
+    id: "yalda-watermelon",
+    name: "Yalda watermelon",
+    collection: "holidays",
+    occasion: "yalda",
+    tags: ["yalda night", "shab-e yalda", "winter solstice", "watermelon"],
+    hash: "f90d299b",
+    ratio: 0.702,
   },
   {
-    "id": "yalda-poem",
-    "name": "Hafez reading",
-    "collection": "holidays",
-    "occasion": "yalda",
-    "tags": [
-      "yalda night",
-      "shab-e yalda",
-      "winter solstice",
-      "poetry",
-      "hafez"
-    ],
-    "hash": "9f54500b",
-    "ratio": 0.721
+    id: "yalda-poem",
+    name: "Hafez reading",
+    collection: "holidays",
+    occasion: "yalda",
+    tags: ["yalda night", "shab-e yalda", "winter solstice", "poetry", "hafez"],
+    hash: "9f54500b",
+    ratio: 0.721,
   },
   {
-    "id": "hijri-new-year",
-    "name": "Hijri New Year",
-    "collection": "holidays",
-    "occasion": "islamic-new-year",
-    "tags": [
-      "islamic new year",
-      "hijri new year",
-      "muharram",
-      "crescent"
-    ],
-    "hash": "c9eed78d",
-    "ratio": 0.721
+    id: "hijri-new-year",
+    name: "Hijri New Year",
+    collection: "holidays",
+    occasion: "islamic-new-year",
+    tags: ["islamic new year", "hijri new year", "muharram", "crescent"],
+    hash: "c9eed78d",
+    ratio: 0.721,
   },
   {
-    "id": "hijri-new-year-stamp",
-    "name": "Hijri New Year stamp",
-    "collection": "holidays",
-    "occasion": "islamic-new-year",
-    "tags": [
-      "islamic new year",
-      "hijri new year",
-      "muharram",
-      "crescent"
-    ],
-    "hash": "bd192625",
-    "ratio": 0.767
+    id: "hijri-new-year-stamp",
+    name: "Hijri New Year stamp",
+    collection: "holidays",
+    occasion: "islamic-new-year",
+    tags: ["islamic new year", "hijri new year", "muharram", "crescent"],
+    hash: "bd192625",
+    ratio: 0.767,
   },
   {
-    "id": "ramadan-dates",
-    "name": "Iftar dates",
-    "collection": "holidays",
-    "occasion": "ramadan",
-    "tags": [
-      "ramadan",
-      "iftar",
-      "dates",
-      "menu"
-    ],
-    "hash": "9183cd5d",
-    "ratio": 0.713
+    id: "ramadan-dates",
+    name: "Iftar dates",
+    collection: "holidays",
+    occasion: "ramadan",
+    tags: ["ramadan", "iftar", "dates", "menu"],
+    hash: "9183cd5d",
+    ratio: 0.713,
   },
   {
-    "id": "ramadan-suhoor",
-    "name": "Suhoor tab",
-    "collection": "holidays",
-    "occasion": "ramadan",
-    "tags": [
-      "ramadan",
-      "iftar",
-      "suhoor"
-    ],
-    "hash": "2b361ed7",
-    "ratio": 0.795
+    id: "ramadan-suhoor",
+    name: "Suhoor tab",
+    collection: "holidays",
+    occasion: "ramadan",
+    tags: ["ramadan", "iftar", "suhoor"],
+    hash: "2b361ed7",
+    ratio: 0.795,
   },
   {
-    "id": "rosh-hashanah-apple",
-    "name": "Sweet new year",
-    "collection": "holidays",
-    "occasion": "rosh-hashanah",
-    "tags": [
-      "rosh hashanah",
-      "jewish new year",
-      "shanah tovah",
-      "apple"
-    ],
-    "hash": "b45e62cc",
-    "ratio": 0.713
+    id: "rosh-hashanah-apple",
+    name: "Sweet new year",
+    collection: "holidays",
+    occasion: "rosh-hashanah",
+    tags: ["rosh hashanah", "jewish new year", "shanah tovah", "apple"],
+    hash: "b45e62cc",
+    ratio: 0.713,
   },
   {
-    "id": "rosh-hashanah-honey",
-    "name": "Honey jar arch",
-    "collection": "holidays",
-    "occasion": "rosh-hashanah",
-    "tags": [
-      "rosh hashanah",
-      "jewish new year",
-      "shanah tovah",
-      "honey"
-    ],
-    "hash": "02dc83ae",
-    "ratio": 0.702
+    id: "rosh-hashanah-honey",
+    name: "Honey jar arch",
+    collection: "holidays",
+    occasion: "rosh-hashanah",
+    tags: ["rosh hashanah", "jewish new year", "shanah tovah", "honey"],
+    hash: "02dc83ae",
+    ratio: 0.702,
   },
   {
-    "id": "rosh-hashanah-shofar",
-    "name": "Shofar",
-    "collection": "holidays",
-    "occasion": "rosh-hashanah",
-    "tags": [
+    id: "rosh-hashanah-shofar",
+    name: "Shofar",
+    collection: "holidays",
+    occasion: "rosh-hashanah",
+    tags: [
       "rosh hashanah",
       "jewish new year",
       "shanah tovah",
       "shofar",
-      "services"
+      "services",
     ],
-    "hash": "1ae86c75",
-    "ratio": 0.721
+    hash: "1ae86c75",
+    ratio: 0.721,
   },
   {
-    "id": "purim-mask",
-    "name": "Purim mask",
-    "collection": "holidays",
-    "occasion": "purim",
-    "tags": [
-      "purim",
-      "jewish holiday",
-      "costumes",
-      "mask",
-      "costume"
-    ],
-    "hash": "3d755264",
-    "ratio": 0.701
+    id: "purim-mask",
+    name: "Purim mask",
+    collection: "holidays",
+    occasion: "purim",
+    tags: ["purim", "jewish holiday", "costumes", "mask", "costume"],
+    hash: "3d755264",
+    ratio: 0.701,
   },
   {
-    "id": "purim-pastry",
-    "name": "Hamantaschen",
-    "collection": "holidays",
-    "occasion": "purim",
-    "tags": [
-      "purim",
-      "jewish holiday",
-      "costumes",
-      "pastry"
-    ],
-    "hash": "7cec7c25",
-    "ratio": 0.702
+    id: "purim-pastry",
+    name: "Hamantaschen",
+    collection: "holidays",
+    occasion: "purim",
+    tags: ["purim", "jewish holiday", "costumes", "pastry"],
+    hash: "7cec7c25",
+    ratio: 0.702,
   },
   {
-    "id": "enkutatash-daisy",
-    "name": "Adey Abeba",
-    "collection": "holidays",
-    "occasion": "enkutatash",
-    "tags": [
+    id: "enkutatash-daisy",
+    name: "Adey Abeba",
+    collection: "holidays",
+    occasion: "enkutatash",
+    tags: [
       "enkutatash",
       "ethiopian new year",
       "september",
       "adey abeba",
-      "flowers"
+      "flowers",
     ],
-    "hash": "79aa26ba",
-    "ratio": 0.713
+    hash: "79aa26ba",
+    ratio: 0.713,
   },
   {
-    "id": "enkutatash-seal",
-    "name": "Ethiopian New Year seal",
-    "collection": "holidays",
-    "occasion": "enkutatash",
-    "tags": [
-      "enkutatash",
-      "ethiopian new year",
-      "september",
-      "flowers"
-    ],
-    "hash": "6b0f7c61",
-    "ratio": 1
+    id: "enkutatash-seal",
+    name: "Ethiopian New Year seal",
+    collection: "holidays",
+    occasion: "enkutatash",
+    tags: ["enkutatash", "ethiopian new year", "september", "flowers"],
+    hash: "6b0f7c61",
+    ratio: 1,
   },
   {
-    "id": "kwanzaa-kinara",
-    "name": "Kinara",
-    "collection": "holidays",
-    "occasion": "kwanzaa",
-    "tags": [
-      "kwanzaa",
-      "december",
-      "celebration",
-      "kinara",
-      "candles"
-    ],
-    "hash": "c7c5a4cf",
-    "ratio": 0.713
+    id: "kwanzaa-kinara",
+    name: "Kinara",
+    collection: "holidays",
+    occasion: "kwanzaa",
+    tags: ["kwanzaa", "december", "celebration", "kinara", "candles"],
+    hash: "c7c5a4cf",
+    ratio: 0.713,
   },
   {
-    "id": "kwanzaa-harvest",
-    "name": "First fruits",
-    "collection": "holidays",
-    "occasion": "kwanzaa",
-    "tags": [
-      "kwanzaa",
-      "december",
-      "celebration",
-      "harvest",
-      "program"
-    ],
-    "hash": "e134d5ac",
-    "ratio": 0.702
+    id: "kwanzaa-harvest",
+    name: "First fruits",
+    collection: "holidays",
+    occasion: "kwanzaa",
+    tags: ["kwanzaa", "december", "celebration", "harvest", "program"],
+    hash: "e134d5ac",
+    ratio: 0.702,
   },
   {
-    "id": "kwanzaa-bands",
-    "name": "Kwanzaa colors",
-    "collection": "holidays",
-    "occasion": "kwanzaa",
-    "tags": [
-      "kwanzaa",
-      "december",
-      "celebration",
-      "colors"
-    ],
-    "hash": "425b0b0b",
-    "ratio": 0.705
+    id: "kwanzaa-bands",
+    name: "Kwanzaa colors",
+    collection: "holidays",
+    occasion: "kwanzaa",
+    tags: ["kwanzaa", "december", "celebration", "colors"],
+    hash: "425b0b0b",
+    ratio: 0.705,
   },
   {
-    "id": "juneteenth-star",
-    "name": "Juneteenth star",
-    "collection": "holidays",
-    "occasion": "juneteenth",
-    "tags": [
-      "juneteenth",
-      "june 19",
-      "freedom",
-      "star"
-    ],
-    "hash": "e806a724",
-    "ratio": 0.713
+    id: "juneteenth-star",
+    name: "Juneteenth star",
+    collection: "holidays",
+    occasion: "juneteenth",
+    tags: ["juneteenth", "june 19", "freedom", "star"],
+    hash: "e806a724",
+    ratio: 0.713,
   },
   {
-    "id": "juneteenth-seal",
-    "name": "Juneteenth seal",
-    "collection": "holidays",
-    "occasion": "juneteenth",
-    "tags": [
-      "juneteenth",
-      "june 19",
-      "freedom",
-      "events"
-    ],
-    "hash": "514f2119",
-    "ratio": 1
+    id: "juneteenth-seal",
+    name: "Juneteenth seal",
+    collection: "holidays",
+    occasion: "juneteenth",
+    tags: ["juneteenth", "june 19", "freedom", "events"],
+    hash: "514f2119",
+    ratio: 1,
   },
   {
-    "id": "africa-day",
-    "name": "Africa Day",
-    "collection": "holidays",
-    "occasion": "africa-day",
-    "tags": [
-      "africa day",
-      "may 25",
-      "africa"
-    ],
-    "hash": "0e2bf568",
-    "ratio": 0.701
+    id: "africa-day",
+    name: "Africa Day",
+    collection: "holidays",
+    occasion: "africa-day",
+    tags: ["africa day", "may 25", "africa"],
+    hash: "0e2bf568",
+    ratio: 0.701,
   },
   {
-    "id": "sham-el-nessim",
-    "name": "Sham el-Nessim egg",
-    "collection": "holidays",
-    "occasion": "sham-el-nessim",
-    "tags": [
-      "sham el-nessim",
-      "egypt",
-      "spring",
-      "egg",
-      "picnic"
-    ],
-    "hash": "3cc7b778",
-    "ratio": 0.713
+    id: "sham-el-nessim",
+    name: "Sham el-Nessim egg",
+    collection: "holidays",
+    occasion: "sham-el-nessim",
+    tags: ["sham el-nessim", "egypt", "spring", "egg", "picnic"],
+    hash: "3cc7b778",
+    ratio: 0.713,
   },
   {
-    "id": "independence-ghana",
-    "name": "Ghana Independence Day",
-    "collection": "holidays",
-    "occasion": "ghana-independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "ghana",
-      "march 6"
-    ],
-    "hash": "d61afd22",
-    "ratio": 0.705
+    id: "independence-ghana",
+    name: "Ghana Independence Day",
+    collection: "holidays",
+    occasion: "ghana-independence-day",
+    tags: ["independence day", "national day", "ghana", "march 6"],
+    hash: "d61afd22",
+    ratio: 0.705,
   },
   {
-    "id": "independence-nigeria",
-    "name": "Nigeria Independence Day",
-    "collection": "holidays",
-    "occasion": "nigeria-independence-day",
-    "tags": [
-      "independence day",
-      "national day",
-      "nigeria",
-      "october 1"
-    ],
-    "hash": "fd969839",
-    "ratio": 0.705
+    id: "independence-nigeria",
+    name: "Nigeria Independence Day",
+    collection: "holidays",
+    occasion: "nigeria-independence-day",
+    tags: ["independence day", "national day", "nigeria", "october 1"],
+    hash: "fd969839",
+    ratio: 0.705,
   },
   {
-    "id": "jamhuri-day",
-    "name": "Jamhuri Day",
-    "collection": "holidays",
-    "occasion": "jamhuri-day",
-    "tags": [
-      "jamhuri day",
-      "kenya",
-      "december 12",
-      "national day"
-    ],
-    "hash": "c79ce96c",
-    "ratio": 0.705
+    id: "jamhuri-day",
+    name: "Jamhuri Day",
+    collection: "holidays",
+    occasion: "jamhuri-day",
+    tags: ["jamhuri day", "kenya", "december 12", "national day"],
+    hash: "c79ce96c",
+    ratio: 0.705,
   },
   {
-    "id": "freedom-day-south-africa",
-    "name": "Freedom Day",
-    "collection": "holidays",
-    "occasion": "freedom-day-south-africa",
-    "tags": [
-      "freedom day",
-      "south africa",
-      "april 27",
-      "national day",
-      "dove"
-    ],
-    "hash": "b5efce85",
-    "ratio": 0.701
+    id: "freedom-day-south-africa",
+    name: "Freedom Day",
+    collection: "holidays",
+    occasion: "freedom-day-south-africa",
+    tags: ["freedom day", "south africa", "april 27", "national day", "dove"],
+    hash: "b5efce85",
+    ratio: 0.701,
   },
   {
-    "id": "muertos-marigold",
-    "name": "Cempasúchil",
-    "collection": "holidays",
-    "occasion": "day-of-the-dead",
-    "tags": [
+    id: "muertos-marigold",
+    name: "Cempasúchil",
+    collection: "holidays",
+    occasion: "day-of-the-dead",
+    tags: [
       "day of the dead",
       "dia de muertos",
       "mexico",
       "november",
-      "marigold"
+      "marigold",
     ],
-    "hash": "549fc67f",
-    "ratio": 0.713
+    hash: "549fc67f",
+    ratio: 0.713,
   },
   {
-    "id": "muertos-papel-picado",
-    "name": "Papel picado",
-    "collection": "holidays",
-    "occasion": "day-of-the-dead",
-    "tags": [
+    id: "muertos-papel-picado",
+    name: "Papel picado",
+    collection: "holidays",
+    occasion: "day-of-the-dead",
+    tags: [
       "day of the dead",
       "dia de muertos",
       "mexico",
       "november",
-      "papel picado"
+      "papel picado",
     ],
-    "hash": "30aa31a2",
-    "ratio": 0.701
+    hash: "30aa31a2",
+    ratio: 0.701,
   },
   {
-    "id": "muertos-pan",
-    "name": "Pan de muerto",
-    "collection": "holidays",
-    "occasion": "day-of-the-dead",
-    "tags": [
+    id: "muertos-pan",
+    name: "Pan de muerto",
+    collection: "holidays",
+    occasion: "day-of-the-dead",
+    tags: [
       "day of the dead",
       "dia de muertos",
       "mexico",
       "november",
       "bread",
-      "bakery"
+      "bakery",
     ],
-    "hash": "b0605b7d",
-    "ratio": 0.702
+    hash: "b0605b7d",
+    ratio: 0.702,
   },
   {
-    "id": "muertos-ofrenda",
-    "name": "Ofrenda candle",
-    "collection": "holidays",
-    "occasion": "day-of-the-dead",
-    "tags": [
+    id: "muertos-ofrenda",
+    name: "Ofrenda candle",
+    collection: "holidays",
+    occasion: "day-of-the-dead",
+    tags: [
       "day of the dead",
       "dia de muertos",
       "mexico",
       "november",
       "ofrenda",
-      "candle"
+      "candle",
     ],
-    "hash": "32a706a3",
-    "ratio": 0.721
+    hash: "32a706a3",
+    ratio: 0.721,
   },
   {
-    "id": "muertos-seal",
-    "name": "Día de Muertos seal",
-    "collection": "holidays",
-    "occasion": "day-of-the-dead",
-    "tags": [
+    id: "muertos-seal",
+    name: "Día de Muertos seal",
+    collection: "holidays",
+    occasion: "day-of-the-dead",
+    tags: [
       "day of the dead",
       "dia de muertos",
       "mexico",
       "november",
-      "marigold"
+      "marigold",
     ],
-    "hash": "96d746c6",
-    "ratio": 1
+    hash: "96d746c6",
+    ratio: 1,
   },
   {
-    "id": "carnival-mask",
-    "name": "Carnival mask",
-    "collection": "holidays",
-    "occasion": "carnival",
-    "tags": [
-      "carnival",
-      "mardi gras",
-      "parade",
-      "mask"
-    ],
-    "hash": "f16b6db4",
-    "ratio": 0.713
+    id: "carnival-mask",
+    name: "Carnival mask",
+    collection: "holidays",
+    occasion: "carnival",
+    tags: ["carnival", "mardi gras", "parade", "mask"],
+    hash: "f16b6db4",
+    ratio: 0.713,
   },
   {
-    "id": "carnival-plume",
-    "name": "Carnival plumes",
-    "collection": "holidays",
-    "occasion": "carnival",
-    "tags": [
-      "carnival",
-      "mardi gras",
-      "parade",
-      "feathers",
-      "samba"
-    ],
-    "hash": "b8db7954",
-    "ratio": 0.702
+    id: "carnival-plume",
+    name: "Carnival plumes",
+    collection: "holidays",
+    occasion: "carnival",
+    tags: ["carnival", "mardi gras", "parade", "feathers", "samba"],
+    hash: "b8db7954",
+    ratio: 0.702,
   },
   {
-    "id": "mardi-gras-seal",
-    "name": "Mardi Gras seal",
-    "collection": "holidays",
-    "occasion": "carnival",
-    "tags": [
-      "carnival",
-      "mardi gras",
-      "parade"
-    ],
-    "hash": "c928ca6b",
-    "ratio": 1
+    id: "mardi-gras-seal",
+    name: "Mardi Gras seal",
+    collection: "holidays",
+    occasion: "carnival",
+    tags: ["carnival", "mardi gras", "parade"],
+    hash: "c928ca6b",
+    ratio: 1,
   },
   {
-    "id": "carnival-pass",
-    "name": "Carnival pass",
-    "collection": "holidays",
-    "occasion": "carnival",
-    "tags": [
-      "carnival",
-      "mardi gras",
-      "parade",
-      "ticket"
-    ],
-    "hash": "770e6383",
-    "ratio": 0.681
+    id: "carnival-pass",
+    name: "Carnival pass",
+    collection: "holidays",
+    occasion: "carnival",
+    tags: ["carnival", "mardi gras", "parade", "ticket"],
+    hash: "770e6383",
+    ratio: 0.681,
   },
   {
-    "id": "reyes-rosca",
-    "name": "Rosca de reyes",
-    "collection": "holidays",
-    "occasion": "three-kings-day",
-    "tags": [
+    id: "reyes-rosca",
+    name: "Rosca de reyes",
+    collection: "holidays",
+    occasion: "three-kings-day",
+    tags: [
       "three kings day",
       "dia de reyes",
       "epiphany",
       "january 6",
       "rosca",
-      "bakery"
+      "bakery",
     ],
-    "hash": "2eb5f791",
-    "ratio": 0.713
+    hash: "2eb5f791",
+    ratio: 0.713,
   },
   {
-    "id": "reyes-crown",
-    "name": "Three kings crown",
-    "collection": "holidays",
-    "occasion": "three-kings-day",
-    "tags": [
+    id: "reyes-crown",
+    name: "Three kings crown",
+    collection: "holidays",
+    occasion: "three-kings-day",
+    tags: [
       "three kings day",
       "dia de reyes",
       "epiphany",
       "january 6",
       "crown",
-      "bakery"
+      "bakery",
     ],
-    "hash": "ecb66258",
-    "ratio": 0.702
+    hash: "ecb66258",
+    ratio: 0.702,
   },
   {
-    "id": "posadas-pinata",
-    "name": "Posada piñata",
-    "collection": "holidays",
-    "occasion": "las-posadas",
-    "tags": [
-      "las posadas",
-      "mexico",
-      "december",
-      "pinata"
-    ],
-    "hash": "07f61697",
-    "ratio": 0.701
+    id: "posadas-pinata",
+    name: "Posada piñata",
+    collection: "holidays",
+    occasion: "las-posadas",
+    tags: ["las posadas", "mexico", "december", "pinata"],
+    hash: "07f61697",
+    ratio: 0.701,
   },
   {
-    "id": "posadas-candle",
-    "name": "Posada candle",
-    "collection": "holidays",
-    "occasion": "las-posadas",
-    "tags": [
-      "las posadas",
-      "mexico",
-      "december",
-      "candle",
-      "procession"
-    ],
-    "hash": "28cf21d7",
-    "ratio": 0.702
+    id: "posadas-candle",
+    name: "Posada candle",
+    collection: "holidays",
+    occasion: "las-posadas",
+    tags: ["las posadas", "mexico", "december", "candle", "procession"],
+    hash: "28cf21d7",
+    ratio: 0.702,
   },
   {
-    "id": "festa-junina-flags",
-    "name": "Bandeirinhas",
-    "collection": "holidays",
-    "occasion": "festa-junina",
-    "tags": [
-      "festa junina",
-      "brazil",
-      "june",
-      "flags",
-      "decoration"
-    ],
-    "hash": "820b3aa9",
-    "ratio": 0.742
+    id: "festa-junina-flags",
+    name: "Bandeirinhas",
+    collection: "holidays",
+    occasion: "festa-junina",
+    tags: ["festa junina", "brazil", "june", "flags", "decoration"],
+    hash: "820b3aa9",
+    ratio: 0.742,
   },
   {
-    "id": "festa-junina-bonfire",
-    "name": "Festa Junina bonfire",
-    "collection": "holidays",
-    "occasion": "festa-junina",
-    "tags": [
-      "festa junina",
-      "brazil",
-      "june",
-      "bonfire"
-    ],
-    "hash": "be93024a",
-    "ratio": 0.713
+    id: "festa-junina-bonfire",
+    name: "Festa Junina bonfire",
+    collection: "holidays",
+    occasion: "festa-junina",
+    tags: ["festa junina", "brazil", "june", "bonfire"],
+    hash: "be93024a",
+    ratio: 0.713,
   },
   {
-    "id": "festa-junina-corn",
-    "name": "Festa Junina corn",
-    "collection": "holidays",
-    "occasion": "festa-junina",
-    "tags": [
-      "festa junina",
-      "brazil",
-      "june",
-      "corn",
-      "menu"
-    ],
-    "hash": "ff86786b",
-    "ratio": 0.702
+    id: "festa-junina-corn",
+    name: "Festa Junina corn",
+    collection: "holidays",
+    occasion: "festa-junina",
+    tags: ["festa junina", "brazil", "june", "corn", "menu"],
+    hash: "ff86786b",
+    ratio: 0.702,
   },
   {
-    "id": "inti-raymi-sun",
-    "name": "Inti Raymi sun",
-    "collection": "holidays",
-    "occasion": "inti-raymi",
-    "tags": [
-      "inti raymi",
-      "peru",
-      "festival of the sun",
-      "june 24",
-      "sun"
-    ],
-    "hash": "f67879a2",
-    "ratio": 1
+    id: "inti-raymi-sun",
+    name: "Inti Raymi sun",
+    collection: "holidays",
+    occasion: "inti-raymi",
+    tags: ["inti raymi", "peru", "festival of the sun", "june 24", "sun"],
+    hash: "f67879a2",
+    ratio: 1,
   },
   {
-    "id": "fiestas-patrias-chile",
-    "name": "Fiestas Patrias star",
-    "collection": "holidays",
-    "occasion": "fiestas-patrias-chile",
-    "tags": [
-      "fiestas patrias",
-      "chile",
-      "september 18",
-      "national day"
-    ],
-    "hash": "c9731e07",
-    "ratio": 0.713
+    id: "fiestas-patrias-chile",
+    name: "Fiestas Patrias star",
+    collection: "holidays",
+    occasion: "fiestas-patrias-chile",
+    tags: ["fiestas patrias", "chile", "september 18", "national day"],
+    hash: "c9731e07",
+    ratio: 0.713,
   },
   {
-    "id": "orthodox-easter-pysanka",
-    "name": "Painted egg",
-    "collection": "holidays",
-    "occasion": "orthodox-easter",
-    "tags": [
-      "orthodox easter",
-      "pascha",
-      "easter",
-      "egg",
-      "greece"
-    ],
-    "hash": "9948fca8",
-    "ratio": 0.713
+    id: "orthodox-easter-pysanka",
+    name: "Painted egg",
+    collection: "holidays",
+    occasion: "orthodox-easter",
+    tags: ["orthodox easter", "pascha", "easter", "egg", "greece"],
+    hash: "9948fca8",
+    ratio: 0.713,
   },
   {
-    "id": "orthodox-easter-arch",
-    "name": "Pascha egg arch",
-    "collection": "holidays",
-    "occasion": "orthodox-easter",
-    "tags": [
-      "orthodox easter",
-      "pascha",
-      "easter",
-      "egg",
-      "romania"
-    ],
-    "hash": "1394d579",
-    "ratio": 0.702
+    id: "orthodox-easter-arch",
+    name: "Pascha egg arch",
+    collection: "holidays",
+    occasion: "orthodox-easter",
+    tags: ["orthodox easter", "pascha", "easter", "egg", "romania"],
+    hash: "1394d579",
+    ratio: 0.702,
   },
   {
-    "id": "orthodox-easter-seal",
-    "name": "Pascha seal",
-    "collection": "holidays",
-    "occasion": "orthodox-easter",
-    "tags": [
-      "orthodox easter",
-      "pascha",
-      "easter",
-      "egg",
-      "service"
-    ],
-    "hash": "b5a1a523",
-    "ratio": 1
+    id: "orthodox-easter-seal",
+    name: "Pascha seal",
+    collection: "holidays",
+    occasion: "orthodox-easter",
+    tags: ["orthodox easter", "pascha", "easter", "egg", "service"],
+    hash: "b5a1a523",
+    ratio: 1,
   },
   {
-    "id": "orthodox-christmas-star",
-    "name": "First star",
-    "collection": "holidays",
-    "occasion": "orthodox-christmas",
-    "tags": [
-      "orthodox christmas",
-      "january 7",
-      "christmas",
-      "star"
-    ],
-    "hash": "4c0a4012",
-    "ratio": 0.713
+    id: "orthodox-christmas-star",
+    name: "First star",
+    collection: "holidays",
+    occasion: "orthodox-christmas",
+    tags: ["orthodox christmas", "january 7", "christmas", "star"],
+    hash: "4c0a4012",
+    ratio: 0.713,
   },
   {
-    "id": "orthodox-christmas-candle",
-    "name": "Christmas Eve candle",
-    "collection": "holidays",
-    "occasion": "orthodox-christmas",
-    "tags": [
-      "orthodox christmas",
-      "january 7",
-      "christmas",
-      "candle",
-      "service"
-    ],
-    "hash": "84fe5c9c",
-    "ratio": 0.702
+    id: "orthodox-christmas-candle",
+    name: "Christmas Eve candle",
+    collection: "holidays",
+    occasion: "orthodox-christmas",
+    tags: ["orthodox christmas", "january 7", "christmas", "candle", "service"],
+    hash: "84fe5c9c",
+    ratio: 0.702,
   },
   {
-    "id": "maslenitsa-pancakes",
-    "name": "Blini stack",
-    "collection": "holidays",
-    "occasion": "maslenitsa",
-    "tags": [
-      "maslenitsa",
-      "pancake week",
-      "spring",
-      "blini",
-      "menu"
-    ],
-    "hash": "6aaa18db",
-    "ratio": 0.713
+    id: "maslenitsa-pancakes",
+    name: "Blini stack",
+    collection: "holidays",
+    occasion: "maslenitsa",
+    tags: ["maslenitsa", "pancake week", "spring", "blini", "menu"],
+    hash: "6aaa18db",
+    ratio: 0.713,
   },
   {
-    "id": "maslenitsa-sun",
-    "name": "Maslenitsa sun",
-    "collection": "holidays",
-    "occasion": "maslenitsa",
-    "tags": [
-      "maslenitsa",
-      "pancake week",
-      "spring",
-      "sun"
-    ],
-    "hash": "d8a949ec",
-    "ratio": 1
+    id: "maslenitsa-sun",
+    name: "Maslenitsa sun",
+    collection: "holidays",
+    occasion: "maslenitsa",
+    tags: ["maslenitsa", "pancake week", "spring", "sun"],
+    hash: "d8a949ec",
+    ratio: 1,
   },
   {
-    "id": "pancake-day",
-    "name": "Pancake Day",
-    "collection": "holidays",
-    "occasion": "pancake-day",
-    "tags": [
-      "pancake day",
-      "shrove tuesday",
-      "pancakes",
-      "menu"
-    ],
-    "hash": "ab5b5817",
-    "ratio": 0.701
+    id: "pancake-day",
+    name: "Pancake Day",
+    collection: "holidays",
+    occasion: "pancake-day",
+    tags: ["pancake day", "shrove tuesday", "pancakes", "menu"],
+    hash: "ab5b5817",
+    ratio: 0.701,
   },
   {
-    "id": "german-unity-day",
-    "name": "German Unity Day",
-    "collection": "holidays",
-    "occasion": "german-unity-day",
-    "tags": [
-      "german unity day",
-      "germany",
-      "october 3",
-      "national day"
-    ],
-    "hash": "be834b72",
-    "ratio": 0.705
+    id: "german-unity-day",
+    name: "German Unity Day",
+    collection: "holidays",
+    occasion: "german-unity-day",
+    tags: ["german unity day", "germany", "october 3", "national day"],
+    hash: "be834b72",
+    ratio: 0.705,
   },
   {
-    "id": "independence-poland",
-    "name": "Polish Independence Day",
-    "collection": "holidays",
-    "occasion": "poland-independence-day",
-    "tags": [
-      "independence day",
-      "poland",
-      "november 11",
-      "national day"
-    ],
-    "hash": "57caffdd",
-    "ratio": 0.705
+    id: "independence-poland",
+    name: "Polish Independence Day",
+    collection: "holidays",
+    occasion: "poland-independence-day",
+    tags: ["independence day", "poland", "november 11", "national day"],
+    hash: "57caffdd",
+    ratio: 0.705,
   },
   {
-    "id": "festa-della-repubblica",
-    "name": "Festa della Repubblica",
-    "collection": "holidays",
-    "occasion": "festa-della-repubblica",
-    "tags": [
-      "festa della repubblica",
-      "italy",
-      "june 2",
-      "national day"
-    ],
-    "hash": "df9c9344",
-    "ratio": 0.705
+    id: "festa-della-repubblica",
+    name: "Festa della Repubblica",
+    collection: "holidays",
+    occasion: "festa-della-repubblica",
+    tags: ["festa della repubblica", "italy", "june 2", "national day"],
+    hash: "df9c9344",
+    ratio: 0.705,
   },
   {
-    "id": "kings-day-crown",
-    "name": "Koningsdag crown",
-    "collection": "holidays",
-    "occasion": "kings-day",
-    "tags": [
+    id: "kings-day-crown",
+    name: "Koningsdag crown",
+    collection: "holidays",
+    occasion: "kings-day",
+    tags: [
       "king's day",
       "koningsdag",
       "netherlands",
       "april 27",
       "crown",
-      "orange"
+      "orange",
     ],
-    "hash": "3300111c",
-    "ratio": 0.713
+    hash: "3300111c",
+    ratio: 0.713,
   },
   {
-    "id": "womens-day-mimosa",
-    "name": "Mimosa sprig",
-    "collection": "holidays",
-    "occasion": "womens-day",
-    "tags": [
-      "international women's day",
-      "march 8",
-      "mimosa",
-      "flowers"
-    ],
-    "hash": "97b0b16f",
-    "ratio": 0.713
+    id: "womens-day-mimosa",
+    name: "Mimosa sprig",
+    collection: "holidays",
+    occasion: "womens-day",
+    tags: ["international women's day", "march 8", "mimosa", "flowers"],
+    hash: "97b0b16f",
+    ratio: 0.713,
   },
   {
-    "id": "womens-day-seal",
-    "name": "Women's Day seal",
-    "collection": "holidays",
-    "occasion": "womens-day",
-    "tags": [
-      "international women's day",
-      "march 8",
-      "flowers"
-    ],
-    "hash": "b48542d1",
-    "ratio": 1
+    id: "womens-day-seal",
+    name: "Women's Day seal",
+    collection: "holidays",
+    occasion: "womens-day",
+    tags: ["international women's day", "march 8", "flowers"],
+    hash: "b48542d1",
+    ratio: 1,
   },
   {
-    "id": "earth-day-globe",
-    "name": "Earth Day globe",
-    "collection": "holidays",
-    "occasion": "earth-day",
-    "tags": [
-      "earth day",
-      "environment",
-      "april 22",
-      "globe"
-    ],
-    "hash": "712eeb5d",
-    "ratio": 0.713
+    id: "earth-day-globe",
+    name: "Earth Day globe",
+    collection: "holidays",
+    occasion: "earth-day",
+    tags: ["earth day", "environment", "april 22", "globe"],
+    hash: "712eeb5d",
+    ratio: 0.713,
   },
   {
-    "id": "earth-day-pledge",
-    "name": "Green pledge",
-    "collection": "holidays",
-    "occasion": "earth-day",
-    "tags": [
-      "earth day",
-      "environment",
-      "april 22",
-      "pledge",
-      "sustainability"
-    ],
-    "hash": "c66768c0",
-    "ratio": 0.702
+    id: "earth-day-pledge",
+    name: "Green pledge",
+    collection: "holidays",
+    occasion: "earth-day",
+    tags: ["earth day", "environment", "april 22", "pledge", "sustainability"],
+    hash: "c66768c0",
+    ratio: 0.702,
   },
   {
-    "id": "earth-day-recycle",
-    "name": "Recycling tips",
-    "collection": "holidays",
-    "occasion": "earth-day",
-    "tags": [
-      "earth day",
-      "environment",
-      "april 22",
-      "recycling"
-    ],
-    "hash": "023b0dd7",
-    "ratio": 0.701
+    id: "earth-day-recycle",
+    name: "Recycling tips",
+    collection: "holidays",
+    occasion: "earth-day",
+    tags: ["earth day", "environment", "april 22", "recycling"],
+    hash: "023b0dd7",
+    ratio: 0.701,
   },
   {
-    "id": "environment-day",
-    "name": "Environment Day sticker",
-    "collection": "holidays",
-    "occasion": "environment-day",
-    "tags": [
-      "world environment day",
-      "environment",
-      "june 5",
-      "leaf",
-      "sticker"
-    ],
-    "hash": "c87c459f",
-    "ratio": 0.754
+    id: "environment-day",
+    name: "Environment Day sticker",
+    collection: "holidays",
+    occasion: "environment-day",
+    tags: ["world environment day", "environment", "june 5", "leaf", "sticker"],
+    hash: "c87c459f",
+    ratio: 0.754,
   },
   {
-    "id": "water-day-drop",
-    "name": "Water drop",
-    "collection": "holidays",
-    "occasion": "world-water-day",
-    "tags": [
-      "world water day",
-      "water",
-      "march 22"
-    ],
-    "hash": "0bdda523",
-    "ratio": 0.713
+    id: "water-day-drop",
+    name: "Water drop",
+    collection: "holidays",
+    occasion: "world-water-day",
+    tags: ["world water day", "water", "march 22"],
+    hash: "0bdda523",
+    ratio: 0.713,
   },
   {
-    "id": "ocean-day-waves",
-    "name": "Ocean waves",
-    "collection": "holidays",
-    "occasion": "world-ocean-day",
-    "tags": [
-      "world ocean day",
-      "ocean",
-      "june 8",
-      "waves"
-    ],
-    "hash": "1aeb10da",
-    "ratio": 0.701
+    id: "ocean-day-waves",
+    name: "Ocean waves",
+    collection: "holidays",
+    occasion: "world-ocean-day",
+    tags: ["world ocean day", "ocean", "june 8", "waves"],
+    hash: "1aeb10da",
+    ratio: 0.701,
   },
   {
-    "id": "book-day-arch",
-    "name": "Book Day arch",
-    "collection": "holidays",
-    "occasion": "world-book-day",
-    "tags": [
-      "world book day",
-      "reading",
-      "april 23",
-      "books"
-    ],
-    "hash": "b6aa1a39",
-    "ratio": 0.702
+    id: "book-day-arch",
+    name: "Book Day arch",
+    collection: "holidays",
+    occasion: "world-book-day",
+    tags: ["world book day", "reading", "april 23", "books"],
+    hash: "b6aa1a39",
+    ratio: 0.702,
   },
   {
-    "id": "book-day-list",
-    "name": "Reading list",
-    "collection": "holidays",
-    "occasion": "world-book-day",
-    "tags": [
-      "world book day",
-      "reading",
-      "april 23",
-      "books",
-      "reading list"
-    ],
-    "hash": "63a78f10",
-    "ratio": 0.701
+    id: "book-day-list",
+    name: "Reading list",
+    collection: "holidays",
+    occasion: "world-book-day",
+    tags: ["world book day", "reading", "april 23", "books", "reading list"],
+    hash: "63a78f10",
+    ratio: 0.701,
   },
   {
-    "id": "yoga-day-lotus",
-    "name": "Yoga Day lotus",
-    "collection": "holidays",
-    "occasion": "yoga-day",
-    "tags": [
-      "international day of yoga",
-      "yoga",
-      "june 21",
-      "lotus"
-    ],
-    "hash": "cdf00d1f",
-    "ratio": 0.713
+    id: "yoga-day-lotus",
+    name: "Yoga Day lotus",
+    collection: "holidays",
+    occasion: "yoga-day",
+    tags: ["international day of yoga", "yoga", "june 21", "lotus"],
+    hash: "cdf00d1f",
+    ratio: 0.713,
   },
   {
-    "id": "peace-day-dove",
-    "name": "Peace dove",
-    "collection": "holidays",
-    "occasion": "peace-day",
-    "tags": [
-      "international day of peace",
-      "peace",
-      "september 21",
-      "dove"
-    ],
-    "hash": "7341c97b",
-    "ratio": 0.702
+    id: "peace-day-dove",
+    name: "Peace dove",
+    collection: "holidays",
+    occasion: "peace-day",
+    tags: ["international day of peace", "peace", "september 21", "dove"],
+    hash: "7341c97b",
+    ratio: 0.702,
   },
   {
-    "id": "pride-flag",
-    "name": "Pride flag",
-    "collection": "holidays",
-    "occasion": "pride",
-    "tags": [
-      "pride",
-      "pride month",
-      "lgbtq",
-      "june",
-      "rainbow",
-      "flag"
-    ],
-    "hash": "3dcf6d8e",
-    "ratio": 0.705
+    id: "pride-flag",
+    name: "Pride flag",
+    collection: "holidays",
+    occasion: "pride",
+    tags: ["pride", "pride month", "lgbtq", "june", "rainbow", "flag"],
+    hash: "3dcf6d8e",
+    ratio: 0.705,
   },
   {
-    "id": "pride-rainbow",
-    "name": "Pride rainbow",
-    "collection": "holidays",
-    "occasion": "pride",
-    "tags": [
-      "pride",
-      "pride month",
-      "lgbtq",
-      "june",
-      "rainbow"
-    ],
-    "hash": "24092ab9",
-    "ratio": 0.713
+    id: "pride-rainbow",
+    name: "Pride rainbow",
+    collection: "holidays",
+    occasion: "pride",
+    tags: ["pride", "pride month", "lgbtq", "june", "rainbow"],
+    hash: "24092ab9",
+    ratio: 0.713,
   },
   {
-    "id": "pride-heart",
-    "name": "Pride heart sticker",
-    "collection": "holidays",
-    "occasion": "pride",
-    "tags": [
-      "pride",
-      "pride month",
-      "lgbtq",
-      "june",
-      "heart",
-      "ally"
-    ],
-    "hash": "98538450",
-    "ratio": 0.754
+    id: "pride-heart",
+    name: "Pride heart sticker",
+    collection: "holidays",
+    occasion: "pride",
+    tags: ["pride", "pride month", "lgbtq", "june", "heart", "ally"],
+    hash: "98538450",
+    ratio: 0.754,
   },
   {
-    "id": "pink-ribbon",
-    "name": "Pink ribbon",
-    "collection": "holidays",
-    "occasion": "breast-cancer-awareness",
-    "tags": [
+    id: "pink-ribbon",
+    name: "Pink ribbon",
+    collection: "holidays",
+    occasion: "breast-cancer-awareness",
+    tags: [
       "breast cancer awareness",
       "pink ribbon",
       "october",
       "ribbon",
-      "awareness"
+      "awareness",
     ],
-    "hash": "9374da0c",
-    "ratio": 0.713
+    hash: "9374da0c",
+    ratio: 0.713,
   },
   {
-    "id": "pink-ribbon-seal",
-    "name": "Pink ribbon seal",
-    "collection": "holidays",
-    "occasion": "breast-cancer-awareness",
-    "tags": [
+    id: "pink-ribbon-seal",
+    name: "Pink ribbon seal",
+    collection: "holidays",
+    occasion: "breast-cancer-awareness",
+    tags: [
       "breast cancer awareness",
       "pink ribbon",
       "october",
       "ribbon",
-      "awareness"
+      "awareness",
     ],
-    "hash": "e750e430",
-    "ratio": 1
+    hash: "e750e430",
+    ratio: 1,
   },
   {
-    "id": "red-ribbon",
-    "name": "Red ribbon",
-    "collection": "holidays",
-    "occasion": "world-aids-day",
-    "tags": [
-      "world aids day",
-      "red ribbon",
-      "december 1",
-      "ribbon",
-      "awareness"
-    ],
-    "hash": "40d48151",
-    "ratio": 0.702
+    id: "red-ribbon",
+    name: "Red ribbon",
+    collection: "holidays",
+    occasion: "world-aids-day",
+    tags: ["world aids day", "red ribbon", "december 1", "ribbon", "awareness"],
+    hash: "40d48151",
+    ratio: 0.702,
   },
   {
-    "id": "green-ribbon",
-    "name": "Green ribbon",
-    "collection": "holidays",
-    "occasion": "mental-health-day",
-    "tags": [
+    id: "green-ribbon",
+    name: "Green ribbon",
+    collection: "holidays",
+    occasion: "mental-health-day",
+    tags: [
       "world mental health day",
       "mental health",
       "october 10",
       "ribbon",
-      "support"
+      "support",
     ],
-    "hash": "7f5fab0d",
-    "ratio": 0.721
+    hash: "7f5fab0d",
+    ratio: 0.721,
   },
   {
-    "id": "blood-donor-drop",
-    "name": "Blood Donor Day drop",
-    "collection": "holidays",
-    "occasion": "blood-donor-day",
-    "tags": [
+    id: "blood-donor-drop",
+    name: "Blood Donor Day drop",
+    collection: "holidays",
+    occasion: "blood-donor-day",
+    tags: [
       "world blood donor day",
       "blood donation",
       "june 14",
       "blood",
-      "donation"
+      "donation",
     ],
-    "hash": "b82c7ff1",
-    "ratio": 0.713
+    hash: "b82c7ff1",
+    ratio: 0.713,
   },
   {
-    "id": "blood-donor-sticker",
-    "name": "Blood donor sticker",
-    "collection": "holidays",
-    "occasion": "blood-donor-day",
-    "tags": [
+    id: "blood-donor-sticker",
+    name: "Blood donor sticker",
+    collection: "holidays",
+    occasion: "blood-donor-day",
+    tags: [
       "world blood donor day",
       "blood donation",
       "june 14",
       "blood",
-      "sticker"
-    ],
-    "hash": "99a5fab5",
-    "ratio": 0.754
-  },
-  {
-    "id": "teachers-day-apple",
-    "name": "Teachers' Day card",
-    "collection": "holidays",
-    "occasion": "teachers-day",
-    "tags": [
-      "world teachers' day",
-      "teachers",
-      "october 5",
-      "apple",
-      "school"
-    ],
-    "hash": "c95aea34",
-    "ratio": 0.713
-  },
-  {
-    "id": "teachers-day-note",
-    "name": "Thank you, teacher",
-    "collection": "holidays",
-    "occasion": "teachers-day",
-    "tags": [
-      "world teachers' day",
-      "teachers",
-      "october 5",
-      "thank you"
-    ],
-    "hash": "3f82bc63",
-    "ratio": 0.705
-  },
-  {
-    "id": "kindness-day",
-    "name": "Kindness heart",
-    "collection": "holidays",
-    "occasion": "kindness-day",
-    "tags": [
-      "world kindness day",
-      "kindness",
-      "november 13",
-      "heart"
-    ],
-    "hash": "f39b792d",
-    "ratio": 0.705
-  },
-  {
-    "id": "food-day-wheat",
-    "name": "Food Day wheat",
-    "collection": "holidays",
-    "occasion": "world-food-day",
-    "tags": [
-      "world food day",
-      "food",
-      "october 16",
-      "wheat"
-    ],
-    "hash": "65eeb628",
-    "ratio": 0.701
-  },
-  {
-    "id": "monsoon-umbrella",
-    "name": "Monsoon umbrella",
-    "collection": "seasons",
-    "occasion": "monsoon",
-    "tags": [
-      "monsoon",
-      "rainy season",
-      "rain",
-      "umbrella"
-    ],
-    "hash": "73e6a675",
-    "ratio": 0.713
-  },
-  {
-    "id": "monsoon-cloud",
-    "name": "Rain cloud",
-    "collection": "seasons",
-    "occasion": "monsoon",
-    "tags": [
-      "monsoon",
-      "rainy season",
-      "rain",
-      "cloud",
-      "sale"
-    ],
-    "hash": "ec01397f",
-    "ratio": 0.701
-  },
-  {
-    "id": "monsoon-paper-boat",
-    "name": "Paper boat",
-    "collection": "seasons",
-    "occasion": "monsoon",
-    "tags": [
-      "monsoon",
-      "rainy season",
-      "rain",
-      "paper boat"
-    ],
-    "hash": "5a21a28a",
-    "ratio": 0.702
-  },
-  {
-    "id": "monsoon-boots",
-    "name": "Rain boots sticker",
-    "collection": "seasons",
-    "occasion": "monsoon",
-    "tags": [
-      "monsoon",
-      "rainy season",
-      "rain",
-      "boots",
-      "sticker"
-    ],
-    "hash": "69cd6826",
-    "ratio": 0.754
-  },
-  {
-    "id": "monsoon-chai",
-    "name": "Monsoon chai",
-    "collection": "seasons",
-    "occasion": "monsoon",
-    "tags": [
-      "monsoon",
-      "rainy season",
-      "rain",
-      "chai",
-      "cafe"
-    ],
-    "hash": "99a85d03",
-    "ratio": 0.765
-  },
-  {
-    "id": "harvest-basket",
-    "name": "Harvest basket",
-    "collection": "seasons",
-    "occasion": "harvest",
-    "tags": [
-      "harvest",
-      "farm",
-      "autumn",
-      "farm shop"
-    ],
-    "hash": "541a2a66",
-    "ratio": 0.713
-  },
-  {
-    "id": "harvest-hay",
-    "name": "Hay bale",
-    "collection": "seasons",
-    "occasion": "harvest",
-    "tags": [
-      "harvest",
-      "farm",
-      "autumn",
-      "pick your own"
-    ],
-    "hash": "65f41c4c",
-    "ratio": 1.923
-  },
-  {
-    "id": "harvest-corn",
-    "name": "Harvest corn",
-    "collection": "seasons",
-    "occasion": "harvest",
-    "tags": [
-      "harvest",
-      "farm",
-      "autumn",
-      "corn",
-      "festival"
-    ],
-    "hash": "f4d18a37",
-    "ratio": 0.701
-  },
-  {
-    "id": "harvest-market",
-    "name": "Harvest market stall",
-    "collection": "seasons",
-    "occasion": "harvest",
-    "tags": [
-      "harvest",
-      "farm",
-      "autumn",
-      "market"
-    ],
-    "hash": "4d9be3be",
-    "ratio": 0.725
-  },
-  {
-    "id": "hanami-sakura",
-    "name": "Sakura",
-    "collection": "seasons",
-    "occasion": "cherry-blossom",
-    "tags": [
-      "cherry blossom",
-      "hanami",
-      "sakura",
-      "spring",
-      "map"
-    ],
-    "hash": "74d2b5a0",
-    "ratio": 0.713
-  },
-  {
-    "id": "hanami-arch",
-    "name": "Blossom season arch",
-    "collection": "seasons",
-    "occasion": "cherry-blossom",
-    "tags": [
-      "cherry blossom",
-      "hanami",
-      "sakura",
-      "spring"
-    ],
-    "hash": "7a5c33e0",
-    "ratio": 0.702
-  },
-  {
-    "id": "hanami-picnic",
-    "name": "Hanami picnic",
-    "collection": "seasons",
-    "occasion": "cherry-blossom",
-    "tags": [
-      "cherry blossom",
-      "hanami",
-      "sakura",
-      "spring",
-      "picnic",
-      "rsvp"
-    ],
-    "hash": "6aa401d0",
-    "ratio": 0.681
-  },
-  {
-    "id": "summer-sunglasses",
-    "name": "Sunglasses",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "sunglasses",
-      "hours"
-    ],
-    "hash": "1cb0fd9e",
-    "ratio": 0.701
-  },
-  {
-    "id": "summer-watermelon",
-    "name": "Watermelon sticker",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "watermelon",
-      "sticker"
-    ],
-    "hash": "f1a74d67",
-    "ratio": 0.754
-  },
-  {
-    "id": "summer-camp",
-    "name": "Summer camp",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "camp",
-      "kids"
-    ],
-    "hash": "1046d1a1",
-    "ratio": 0.681
-  },
-  {
-    "id": "summer-reading",
-    "name": "Summer reading",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "books",
-      "library"
-    ],
-    "hash": "8c8da560",
-    "ratio": 0.713
-  },
-  {
-    "id": "summer-pool",
-    "name": "Pool rules",
-    "collection": "seasons",
-    "occasion": "summer",
-    "tags": [
-      "summer",
-      "sun",
-      "pool",
-      "rules",
-      "safety"
-    ],
-    "hash": "d81e6c00",
-    "ratio": 0.678
-  },
-  {
-    "id": "winter-snowman",
-    "name": "Snowman",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "winter",
-      "snow",
-      "snowman",
-      "closures"
-    ],
-    "hash": "866ebac4",
-    "ratio": 0.713
-  },
-  {
-    "id": "winter-skating",
-    "name": "Skating rink",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "winter",
-      "snow",
-      "skating",
-      "rink"
-    ],
-    "hash": "cc48d1cd",
-    "ratio": 0.702
-  },
-  {
-    "id": "winter-lift-pass",
-    "name": "Lift pass",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "winter",
-      "snow",
-      "ski",
-      "ticket"
-    ],
-    "hash": "352dc215",
-    "ratio": 0.681
-  },
-  {
-    "id": "winter-sale",
-    "name": "Winter sale bands",
-    "collection": "seasons",
-    "occasion": "winter",
-    "tags": [
-      "winter",
-      "snow",
-      "sale"
-    ],
-    "hash": "67e78cc8",
-    "ratio": 0.729
-  },
-  {
-    "id": "spring-watering-can",
-    "name": "Watering can",
-    "collection": "seasons",
-    "occasion": "spring",
-    "tags": [
-      "spring",
-      "garden",
-      "planting"
-    ],
-    "hash": "28a2fea3",
-    "ratio": 0.701
-  },
-  {
-    "id": "spring-cleaning",
-    "name": "Spring cleaning",
-    "collection": "seasons",
-    "occasion": "spring",
-    "tags": [
-      "spring",
-      "garden",
-      "cleaning"
-    ],
-    "hash": "0360112d",
-    "ratio": 0.705
-  },
-  {
-    "id": "spring-showers",
-    "name": "Spring showers",
-    "collection": "seasons",
-    "occasion": "spring",
-    "tags": [
-      "spring",
-      "garden",
-      "rain",
-      "boots"
-    ],
-    "hash": "1b2a3e20",
-    "ratio": 0.702
-  },
-  {
-    "id": "autumn-apple-picking",
-    "name": "Orchard picking",
-    "collection": "seasons",
-    "occasion": "autumn",
-    "tags": [
-      "autumn",
-      "fall",
-      "apples",
-      "orchard"
-    ],
-    "hash": "fa4a9bf7",
-    "ratio": 0.713
-  },
-  {
-    "id": "autumn-mushroom",
-    "name": "Forest walk",
-    "collection": "seasons",
-    "occasion": "autumn",
-    "tags": [
-      "autumn",
-      "fall",
-      "mushroom",
-      "walk"
-    ],
-    "hash": "545a5c18",
-    "ratio": 0.702
-  },
-  {
-    "id": "autumn-pumpkin-patch",
-    "name": "Pumpkin patch",
-    "collection": "seasons",
-    "occasion": "autumn",
-    "tags": [
-      "autumn",
-      "fall",
-      "pumpkins",
-      "farm"
-    ],
-    "hash": "ba8a7ee1",
-    "ratio": 1.923
-  },
-  {
-    "id": "school-backpack",
-    "name": "Backpack",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "backpack"
-    ],
-    "hash": "f59f98b9",
-    "ratio": 0.713
-  },
-  {
-    "id": "school-bus-routes",
-    "name": "School bus",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "bus",
-      "routes"
-    ],
-    "hash": "c8ef4e8d",
-    "ratio": 1.923
-  },
-  {
-    "id": "school-welcome-apple",
-    "name": "Welcome back arch",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "apple",
-      "welcome"
-    ],
-    "hash": "1f1f0684",
-    "ratio": 0.702
-  },
-  {
-    "id": "school-lunch-menu",
-    "name": "School lunch menu",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "lunch",
-      "menu"
-    ],
-    "hash": "811b5c6f",
-    "ratio": 0.767
-  },
-  {
-    "id": "school-uniform",
-    "name": "Uniform shop",
-    "collection": "seasons",
-    "occasion": "back-to-school",
-    "tags": [
-      "back to school",
-      "school",
-      "uniform"
-    ],
-    "hash": "b56d2478",
-    "ratio": 0.701
-  },
-  {
-    "id": "event-grad-seal",
-    "name": "Graduation seal",
-    "collection": "events",
-    "tags": [
-      "graduation",
-      "events",
-      "photos"
-    ],
-    "hash": "c9ecd9b5",
-    "ratio": 1
-  },
-  {
-    "id": "event-grad-diploma",
-    "name": "Diploma ribbon",
-    "collection": "events",
-    "tags": [
-      "graduation",
-      "events",
-      "ceremony"
-    ],
-    "hash": "119155f4",
-    "ratio": 0.8
-  },
-  {
-    "id": "event-grad-party",
-    "name": "Grad party",
-    "collection": "events",
-    "tags": [
-      "graduation",
-      "events",
-      "party",
-      "rsvp"
-    ],
-    "hash": "a4248d8a",
-    "ratio": 0.705
-  },
-  {
-    "id": "event-grad-stream",
-    "name": "Graduation stream",
-    "collection": "events",
-    "tags": [
-      "graduation",
-      "events",
-      "livestream"
-    ],
-    "hash": "95d0c01f",
-    "ratio": 1.923
-  },
-  {
-    "id": "event-keynote",
-    "name": "Keynote speaker",
-    "collection": "events",
-    "tags": [
-      "conference",
-      "events",
-      "speaker"
-    ],
-    "hash": "518729ff",
-    "ratio": 0.713
-  },
-  {
-    "id": "event-speaker-qa",
-    "name": "Speaker Q&A",
-    "collection": "events",
-    "tags": [
-      "conference",
-      "events",
-      "questions"
-    ],
-    "hash": "c675a4b1",
-    "ratio": 0.709
-  },
-  {
-    "id": "event-session-feedback",
-    "name": "Session feedback",
-    "collection": "events",
-    "tags": [
-      "conference",
-      "events",
-      "feedback"
-    ],
-    "hash": "5249408a",
-    "ratio": 0.705
-  },
-  {
-    "id": "event-slides",
-    "name": "Slides download",
-    "collection": "events",
-    "tags": [
-      "conference",
-      "events",
-      "slides",
-      "download"
-    ],
-    "hash": "37693358",
-    "ratio": 0.785
-  },
-  {
-    "id": "event-booth",
-    "name": "Exhibitor booth",
-    "collection": "events",
-    "tags": [
-      "conference",
-      "events",
-      "trade show",
-      "booth"
-    ],
-    "hash": "b4ae861e",
-    "ratio": 0.795
-  },
-  {
-    "id": "event-workshop",
-    "name": "Workshop handout",
-    "collection": "events",
-    "tags": [
-      "conference",
-      "events",
-      "workshop",
-      "class"
-    ],
-    "hash": "28e69bd9",
-    "ratio": 0.709
-  },
-  {
-    "id": "event-hackathon",
-    "name": "Hackathon",
-    "collection": "events",
-    "tags": [
-      "conference",
-      "events",
-      "hackathon",
-      "tech"
-    ],
-    "hash": "365b9b21",
-    "ratio": 0.705
-  },
-  {
-    "id": "event-meetup",
-    "name": "Meetup bubble",
-    "collection": "events",
-    "tags": [
-      "conference",
-      "events",
-      "meetup",
-      "networking"
-    ],
-    "hash": "20c74782",
-    "ratio": 0.743
-  },
-  {
-    "id": "event-setlist",
-    "name": "Setlist",
-    "collection": "events",
-    "tags": [
-      "music",
-      "events",
-      "concert",
-      "setlist"
-    ],
-    "hash": "53fde809",
-    "ratio": 0.702
-  },
-  {
-    "id": "event-tour-merch",
-    "name": "Tour merch",
-    "collection": "events",
-    "tags": [
-      "music",
-      "events",
-      "concert",
-      "merch"
-    ],
-    "hash": "44500992",
-    "ratio": 0.66
-  },
-  {
-    "id": "event-open-mic",
-    "name": "Open mic",
-    "collection": "events",
-    "tags": [
-      "music",
-      "events",
-      "open mic",
-      "sign up"
-    ],
-    "hash": "8b297bbb",
-    "ratio": 0.678
-  },
-  {
-    "id": "event-film-festival",
-    "name": "Film festival pass",
-    "collection": "events",
-    "tags": [
-      "festival",
-      "events",
-      "film",
-      "cinema"
-    ],
-    "hash": "ae72b88e",
-    "ratio": 0.681
-  },
-  {
-    "id": "event-short-films",
-    "name": "Short films",
-    "collection": "events",
-    "tags": [
-      "festival",
-      "events",
-      "film",
-      "schedule"
-    ],
-    "hash": "50a06ac1",
-    "ratio": 0.701
-  },
-  {
-    "id": "event-book-fair",
-    "name": "Book fair",
-    "collection": "events",
-    "tags": [
-      "festival",
-      "events",
-      "books",
-      "authors"
-    ],
-    "hash": "f8689c77",
-    "ratio": 0.8
-  },
-  {
-    "id": "event-craft-fair",
-    "name": "Craft fair",
-    "collection": "events",
-    "tags": [
-      "festival",
-      "events",
-      "crafts",
-      "market"
-    ],
-    "hash": "1ffade32",
-    "ratio": 0.767
-  },
-  {
-    "id": "event-night-market",
-    "name": "Night market",
-    "collection": "events",
-    "tags": [
-      "festival",
-      "events",
-      "market",
-      "food"
-    ],
-    "hash": "9a3ada45",
-    "ratio": 0.701
-  },
-  {
-    "id": "event-food-festival",
-    "name": "Food festival",
-    "collection": "events",
-    "tags": [
-      "festival",
-      "events",
-      "food",
-      "map"
-    ],
-    "hash": "33a848d0",
-    "ratio": 0.725
-  },
-  {
-    "id": "event-cupcake",
-    "name": "Cupcake sticker",
-    "collection": "events",
-    "tags": [
-      "birthday",
-      "party",
-      "events",
-      "cupcake"
-    ],
-    "hash": "92467b16",
-    "ratio": 0.754
-  },
-  {
-    "id": "event-party-hat",
-    "name": "Party hat",
-    "collection": "events",
-    "tags": [
-      "birthday",
-      "party",
-      "events",
-      "rsvp"
-    ],
-    "hash": "7aafbafe",
-    "ratio": 0.713
-  },
-  {
-    "id": "event-guest-book",
-    "name": "Guest book",
-    "collection": "events",
-    "tags": [
-      "birthday",
-      "party",
-      "events",
-      "guest book",
-      "messages"
-    ],
-    "hash": "beaa6f95",
-    "ratio": 0.721
-  },
-  {
-    "id": "event-milestone",
-    "name": "Milestone birthday",
-    "collection": "events",
-    "tags": [
-      "birthday",
-      "party",
-      "events",
-      "milestone"
-    ],
-    "hash": "f601b081",
-    "ratio": 1
-  },
-  {
-    "id": "event-baby-shower",
-    "name": "Baby shower",
-    "collection": "events",
-    "tags": [
-      "baby shower",
-      "baby",
-      "events",
-      "rsvp"
-    ],
-    "hash": "72c61f90",
-    "ratio": 0.702
-  },
-  {
-    "id": "event-baby-gifts",
-    "name": "Baby gift list",
-    "collection": "events",
-    "tags": [
-      "baby shower",
-      "baby",
-      "events",
-      "registry",
-      "gifts"
-    ],
-    "hash": "4b64c39e",
-    "ratio": 0.701
-  },
-  {
-    "id": "event-birth-announcement",
-    "name": "Birth announcement",
-    "collection": "events",
-    "tags": [
-      "baby shower",
-      "baby",
-      "events",
-      "announcement",
-      "newborn"
-    ],
-    "hash": "da4b221b",
-    "ratio": 0.702
-  },
-  {
-    "id": "event-quince",
-    "name": "Quinceañera tiara",
-    "collection": "events",
-    "tags": [
-      "quinceanera",
-      "party",
-      "events",
-      "mis xv",
-      "rsvp"
-    ],
-    "hash": "f8b2ba57",
-    "ratio": 0.702
-  },
-  {
-    "id": "event-match-lineup",
-    "name": "Match lineup",
-    "collection": "events",
-    "tags": [
-      "sports",
-      "match day",
-      "events",
-      "soccer",
-      "lineup"
-    ],
-    "hash": "1b3e809b",
-    "ratio": 0.806
-  },
-  {
-    "id": "event-season-ticket",
-    "name": "Season ticket",
-    "collection": "events",
-    "tags": [
-      "sports",
-      "match day",
-      "events",
-      "tickets",
-      "fixtures"
-    ],
-    "hash": "9a7f8b70",
-    "ratio": 0.681
-  },
-  {
-    "id": "event-tournament",
-    "name": "Tournament draw",
-    "collection": "events",
-    "tags": [
-      "sports",
-      "match day",
-      "events",
-      "tournament",
-      "brackets"
-    ],
-    "hash": "13f2e975",
-    "ratio": 0.795
-  },
-  {
-    "id": "event-fun-run",
-    "name": "Fun run route",
-    "collection": "events",
-    "tags": [
-      "charity run",
-      "running",
-      "events",
-      "route",
-      "map"
-    ],
-    "hash": "f2830f1f",
-    "ratio": 0.701
-  },
-  {
-    "id": "event-runner-tracker",
-    "name": "Runner tracker",
-    "collection": "events",
-    "tags": [
-      "charity run",
-      "running",
-      "events",
-      "tracking"
-    ],
-    "hash": "b10b9ceb",
-    "ratio": 0.68
-  },
-  {
-    "id": "event-trivia",
-    "name": "Trivia night",
-    "collection": "events",
-    "tags": [
-      "games",
-      "events",
-      "trivia",
-      "quiz"
-    ],
-    "hash": "9a0cab49",
-    "ratio": 0.681
-  },
-  {
-    "id": "event-game-night",
-    "name": "Game night ticket",
-    "collection": "events",
-    "tags": [
-      "games",
-      "events",
-      "board games"
-    ],
-    "hash": "6c5afbfc",
-    "ratio": 1.923
-  },
-  {
-    "id": "event-gala",
-    "name": "Gala auction",
-    "collection": "events",
-    "tags": [
-      "gala",
-      "events",
-      "auction",
-      "dinner"
-    ],
-    "hash": "e2ebdbc8",
-    "ratio": 0.721
-  },
-  {
-    "id": "event-awards",
-    "name": "Awards night",
-    "collection": "events",
-    "tags": [
-      "gala",
-      "events",
-      "awards",
-      "winners"
-    ],
-    "hash": "2f716de0",
-    "ratio": 0.681
-  },
-  {
-    "id": "event-prom",
-    "name": "Prom night",
-    "collection": "events",
-    "tags": [
-      "gala",
-      "events",
-      "prom",
-      "dance"
-    ],
-    "hash": "25d45c04",
-    "ratio": 0.705
-  },
-  {
-    "id": "event-talent-show",
-    "name": "Talent show vote",
-    "collection": "events",
-    "tags": [
-      "gala",
-      "events",
-      "talent show",
-      "vote"
-    ],
-    "hash": "176b5a92",
-    "ratio": 0.691
-  },
-  {
-    "id": "event-retirement",
-    "name": "Retirement send-off",
-    "collection": "events",
-    "tags": [
-      "celebration",
-      "events",
-      "retirement"
-    ],
-    "hash": "20bbb119",
-    "ratio": 0.713
-  },
-  {
-    "id": "event-anniversary",
-    "name": "Anniversary",
-    "collection": "events",
-    "tags": [
-      "celebration",
-      "events",
-      "anniversary",
-      "photos"
-    ],
-    "hash": "55d514a6",
-    "ratio": 1
-  },
-  {
-    "id": "event-engagement",
-    "name": "Engagement party",
-    "collection": "events",
-    "tags": [
-      "celebration",
-      "events",
-      "engagement",
-      "rsvp"
-    ],
-    "hash": "cced717f",
-    "ratio": 0.701
-  },
-  {
-    "id": "event-reunion",
-    "name": "Reunion weekend",
-    "collection": "events",
-    "tags": [
-      "celebration",
-      "events",
-      "reunion",
-      "schedule"
-    ],
-    "hash": "44f59920",
-    "ratio": 0.756
-  },
-  {
-    "id": "event-memorial",
-    "name": "In memory",
-    "collection": "events",
-    "tags": [
-      "celebration",
-      "events",
-      "memorial",
-      "memories"
-    ],
-    "hash": "dd082cd6",
-    "ratio": 0.721
-  },
-  {
-    "id": "museum-exhibit-label",
-    "name": "Exhibit label",
-    "collection": "places",
-    "tags": [
-      "museum",
-      "culture",
-      "exhibit"
-    ],
-    "hash": "077f2179",
-    "ratio": 0.802
-  },
-  {
-    "id": "museum-gallery-map",
-    "name": "Gallery map",
-    "collection": "places",
-    "tags": [
-      "museum",
-      "culture",
-      "gallery",
-      "map"
-    ],
-    "hash": "6bec0789",
-    "ratio": 0.701
-  },
-  {
-    "id": "museum-ticket",
-    "name": "Museum ticket",
-    "collection": "places",
-    "tags": [
-      "museum",
-      "culture",
-      "tickets"
-    ],
-    "hash": "baabac47",
-    "ratio": 0.681
-  },
-  {
-    "id": "museum-artist-note",
-    "name": "Artist note",
-    "collection": "places",
-    "tags": [
-      "museum",
-      "culture",
-      "gallery",
-      "art"
-    ],
-    "hash": "24753399",
-    "ratio": 0.721
-  },
-  {
-    "id": "historic-marker",
-    "name": "Historic marker",
-    "collection": "places",
-    "tags": [
-      "museum",
-      "culture",
-      "history",
-      "heritage"
-    ],
-    "hash": "4e240aa8",
-    "ratio": 1
-  },
-  {
-    "id": "library-catalog",
-    "name": "Library catalog",
-    "collection": "places",
-    "tags": [
-      "library",
-      "books",
-      "catalog"
-    ],
-    "hash": "5c8bfe54",
-    "ratio": 0.738
-  },
-  {
-    "id": "library-ebooks",
-    "name": "Library e-books",
-    "collection": "places",
-    "tags": [
-      "library",
-      "books",
-      "e-books"
-    ],
-    "hash": "3d4b57e4",
-    "ratio": 0.68
-  },
-  {
-    "id": "library-hours",
-    "name": "Library hours",
-    "collection": "places",
-    "tags": [
-      "library",
-      "books",
-      "opening hours"
-    ],
-    "hash": "29b56521",
-    "ratio": 0.725
-  },
-  {
-    "id": "transit-bus-arrivals",
-    "name": "Bus arrivals",
-    "collection": "places",
-    "tags": [
-      "transit",
-      "travel",
-      "bus",
-      "timetable"
-    ],
-    "hash": "8f72ff70",
-    "ratio": 0.701
-  },
-  {
-    "id": "transit-train-timetable",
-    "name": "Train timetable",
-    "collection": "places",
-    "tags": [
-      "transit",
-      "travel",
-      "train",
-      "timetable"
-    ],
-    "hash": "61d27a5b",
-    "ratio": 0.795
-  },
-  {
-    "id": "transit-next-trains",
-    "name": "Next trains",
-    "collection": "places",
-    "tags": [
-      "transit",
-      "travel",
-      "train",
-      "platform"
-    ],
-    "hash": "9b471853",
-    "ratio": 0.729
-  },
-  {
-    "id": "transit-ferry",
-    "name": "Ferry sailings",
-    "collection": "places",
-    "tags": [
-      "transit",
-      "travel",
-      "ferry",
-      "timetable"
-    ],
-    "hash": "6fbc0a2d",
-    "ratio": 0.701
-  },
-  {
-    "id": "transit-bike-share",
-    "name": "Bike share",
-    "collection": "places",
-    "tags": [
-      "transit",
-      "travel",
-      "bike",
-      "rental"
-    ],
-    "hash": "010b4636",
-    "ratio": 0.678
-  },
-  {
-    "id": "transit-report",
-    "name": "Report a transit issue",
-    "collection": "places",
-    "tags": [
-      "transit",
-      "travel",
-      "report",
-      "feedback"
-    ],
-    "hash": "81356527",
-    "ratio": 0.681
-  },
-  {
-    "id": "transit-fare",
-    "name": "Transit fare",
-    "collection": "places",
-    "tags": [
-      "transit",
-      "travel",
-      "tickets",
-      "fare"
-    ],
-    "hash": "ae322a59",
-    "ratio": 1.923
-  },
-  {
-    "id": "parking-find-car",
-    "name": "Find my car",
-    "collection": "automotive",
-    "tags": [
-      "parking",
-      "car park"
-    ],
-    "hash": "7622920c",
-    "ratio": 0.705
-  },
-  {
-    "id": "park-map",
-    "name": "Park map",
-    "collection": "places",
-    "tags": [
-      "park",
-      "outdoors",
-      "map"
-    ],
-    "hash": "d0ee0171",
-    "ratio": 0.681
-  },
-  {
-    "id": "park-dog-rules",
-    "name": "Dog park rules",
-    "collection": "places",
-    "tags": [
-      "park",
-      "outdoors",
-      "dogs",
-      "rules"
-    ],
-    "hash": "e33cd9fd",
-    "ratio": 0.678
-  },
-  {
-    "id": "park-playground",
-    "name": "Playground",
-    "collection": "places",
-    "tags": [
-      "park",
-      "outdoors",
-      "playground",
-      "kids"
-    ],
-    "hash": "2ddb6b9e",
-    "ratio": 0.702
-  },
-  {
-    "id": "park-report",
-    "name": "Park issue report",
-    "collection": "places",
-    "tags": [
-      "park",
-      "outdoors",
-      "report",
-      "feedback"
-    ],
-    "hash": "d53efa10",
-    "ratio": 0.709
-  },
-  {
-    "id": "park-bench-walks",
-    "name": "Park bench walks",
-    "collection": "places",
-    "tags": [
-      "park",
-      "outdoors",
-      "walks"
-    ],
-    "hash": "3c37f04f",
-    "ratio": 0.709
-  },
-  {
-    "id": "garden-plant-label",
-    "name": "Plant label",
-    "collection": "places",
-    "tags": [
-      "park",
-      "outdoors",
-      "botanical garden",
-      "plants"
-    ],
-    "hash": "819ba594",
-    "ratio": 0.795
-  },
-  {
-    "id": "beach-conditions",
-    "name": "Beach conditions",
-    "collection": "places",
-    "tags": [
-      "beach",
-      "outdoors",
-      "safety",
-      "weather"
-    ],
-    "hash": "5908f674",
-    "ratio": 0.701
-  },
-  {
-    "id": "beach-lifeguard",
-    "name": "Lifeguard station",
-    "collection": "places",
-    "tags": [
-      "beach",
-      "outdoors",
-      "lifeguard",
-      "safety"
-    ],
-    "hash": "d52e8e72",
-    "ratio": 0.806
-  },
-  {
-    "id": "beach-info-sticker",
-    "name": "Beach info sticker",
-    "collection": "places",
-    "tags": [
-      "beach",
-      "outdoors",
-      "information"
-    ],
-    "hash": "ed76641d",
-    "ratio": 0.754
-  },
-  {
-    "id": "camp-check-in",
-    "name": "Campsite check-in",
-    "collection": "places",
-    "tags": [
-      "campsite",
-      "outdoors",
-      "check in",
-      "camping"
-    ],
-    "hash": "f74ac9fd",
-    "ratio": 0.713
-  },
-  {
-    "id": "camp-map",
-    "name": "Campground map",
-    "collection": "places",
-    "tags": [
-      "campsite",
-      "outdoors",
-      "map",
-      "camping"
-    ],
-    "hash": "b8b365d0",
-    "ratio": 1.923
-  },
-  {
-    "id": "camp-fire-rules",
-    "name": "Campfire rules",
-    "collection": "places",
-    "tags": [
-      "campsite",
-      "outdoors",
-      "safety",
-      "camping"
-    ],
-    "hash": "f5e9bd32",
-    "ratio": 0.713
-  },
-  {
-    "id": "cowork-desk",
-    "name": "Desk booking",
-    "collection": "places",
-    "tags": [
-      "coworking",
-      "office",
-      "booking",
-      "desk"
-    ],
-    "hash": "e570ea0e",
-    "ratio": 1.923
-  },
-  {
-    "id": "cowork-meeting-room",
-    "name": "Meeting room booking",
-    "collection": "places",
-    "tags": [
-      "coworking",
-      "office",
-      "booking",
-      "meeting room"
-    ],
-    "hash": "8f8c1344",
-    "ratio": 0.802
-  },
-  {
-    "id": "hostel-check-in",
-    "name": "Hostel check-in",
-    "collection": "places",
-    "tags": [
-      "hostel",
-      "hospitality",
-      "check in"
-    ],
-    "hash": "a8d558e9",
-    "ratio": 0.701
-  },
-  {
-    "id": "hostel-house-rules",
-    "name": "Hostel house rules",
-    "collection": "places",
-    "tags": [
-      "hostel",
-      "hospitality",
-      "rules"
-    ],
-    "hash": "db0429ce",
-    "ratio": 0.709
-  },
-  {
-    "id": "hostel-local-tips",
-    "name": "Local tips",
-    "collection": "places",
-    "tags": [
-      "hostel",
-      "hospitality",
-      "recommendations"
-    ],
-    "hash": "3648c3cd",
-    "ratio": 0.743
-  },
-  {
-    "id": "visitor-info",
-    "name": "Visitor information",
-    "collection": "places",
-    "tags": [
-      "visitor center",
-      "tourism",
-      "information"
-    ],
-    "hash": "640ef322",
-    "ratio": 0.805
-  },
-  {
-    "id": "visitor-wildlife",
-    "name": "Wildlife guide",
-    "collection": "places",
-    "tags": [
-      "visitor center",
-      "tourism",
-      "wildlife",
-      "nature"
-    ],
-    "hash": "f4ec0a4a",
-    "ratio": 0.702
-  },
-  {
-    "id": "visitor-town-map",
-    "name": "Town map",
-    "collection": "places",
-    "tags": [
-      "visitor center",
-      "tourism",
-      "map"
-    ],
-    "hash": "b200c5a9",
-    "ratio": 0.705
-  },
-  {
-    "id": "marina-welcome",
-    "name": "Marina welcome",
-    "collection": "places",
-    "tags": [
-      "visitor center",
-      "tourism",
-      "marina",
-      "boats"
-    ],
-    "hash": "972a3e4d",
-    "ratio": 1
-  },
-  {
-    "id": "zoo-animal-facts",
-    "name": "Zoo animal facts",
-    "collection": "places",
-    "tags": [
-      "zoo",
-      "aquarium",
-      "animals"
-    ],
-    "hash": "03d6d9c6",
-    "ratio": 0.802
-  },
-  {
-    "id": "aquarium-feeding",
-    "name": "Aquarium feeding times",
-    "collection": "places",
-    "tags": [
-      "zoo",
-      "aquarium",
-      "animals"
-    ],
-    "hash": "49e892b8",
-    "ratio": 0.701
-  },
-  {
-    "id": "wifi-cafe-cup",
-    "name": "Cafe Wi-Fi cup",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "cafe"
-    ],
-    "hash": "0ca893a4",
-    "ratio": 0.765
-  },
-  {
-    "id": "wifi-reception",
-    "name": "Reception Wi-Fi",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "office",
-      "guests"
-    ],
-    "hash": "690546be",
-    "ratio": 0.721
-  },
-  {
-    "id": "wifi-rental",
-    "name": "Holiday rental Wi-Fi",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "rental",
-      "guests"
-    ],
-    "hash": "57294bd0",
-    "ratio": 0.714
-  },
-  {
-    "id": "wifi-waiting-room",
-    "name": "Waiting room Wi-Fi",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "waiting room"
-    ],
-    "hash": "56684f14",
-    "ratio": 0.705
-  },
-  {
-    "id": "wifi-library",
-    "name": "Library Wi-Fi",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "library"
-    ],
-    "hash": "6db6a06a",
-    "ratio": 0.767
-  },
-  {
-    "id": "wifi-venue",
-    "name": "Venue Wi-Fi",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "events",
-      "venue"
-    ],
-    "hash": "95e5e1c2",
-    "ratio": 0.705
-  },
-  {
-    "id": "wifi-hostel-board",
-    "name": "Hostel Wi-Fi board",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "hostel"
-    ],
-    "hash": "23a7ee0c",
-    "ratio": 0.767
-  },
-  {
-    "id": "wifi-cowork",
-    "name": "Coworking Wi-Fi",
-    "collection": "places",
-    "tags": [
-      "wifi",
-      "coworking"
-    ],
-    "hash": "1d36f915",
-    "ratio": 0.689
-  },
-  {
-    "id": "hexagon-scan",
-    "name": "Hexagon",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "hexagon",
-      "shape"
-    ],
-    "hash": "aac9e942",
-    "ratio": 0.866
-  },
-  {
-    "id": "hexagon-light",
-    "name": "Hexagon, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "hexagon",
-      "shape"
-    ],
-    "hash": "288438b1",
-    "ratio": 0.866
-  },
-  {
-    "id": "octagon-sign",
-    "name": "Octagon",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "octagon",
-      "sign",
-      "shape"
-    ],
-    "hash": "81a349b2",
-    "ratio": 1
-  },
-  {
-    "id": "octagon-light",
-    "name": "Octagon, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "octagon",
-      "sign",
-      "shape"
-    ],
-    "hash": "d72f4fd9",
-    "ratio": 1
-  },
-  {
-    "id": "heart-scan",
-    "name": "Heart",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "heart",
-      "love",
-      "shape"
-    ],
-    "hash": "46aebc6e",
-    "ratio": 1.111
-  },
-  {
-    "id": "heart-light",
-    "name": "Heart, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "heart",
-      "love",
-      "shape"
-    ],
-    "hash": "fd199634",
-    "ratio": 1.111
-  },
-  {
-    "id": "scroll-story",
-    "name": "Scroll",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "scroll",
-      "parchment",
-      "story"
-    ],
-    "hash": "a82427a4",
-    "ratio": 0.763
-  },
-  {
-    "id": "flag-team",
-    "name": "Team flag",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "flag",
-      "team",
-      "sports"
-    ],
-    "hash": "c325c996",
-    "ratio": 1.429
-  },
-  {
-    "id": "flag-light",
-    "name": "Team flag, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "flag",
-      "team",
-      "sports"
-    ],
-    "hash": "ff9b42fd",
-    "ratio": 1.429
-  },
-  {
-    "id": "polka-dot-border",
-    "name": "Polka dot border",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "pattern",
-      "dots",
-      "border"
-    ],
-    "hash": "910b84ac",
-    "ratio": 0.749
-  },
-  {
-    "id": "swirl-border",
-    "name": "Swirl border",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "pattern",
-      "swirl",
-      "waves",
-      "border"
-    ],
-    "hash": "4dcc42d5",
-    "ratio": 0.749
-  },
-  {
-    "id": "sketch-border",
-    "name": "Sketched border",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "pattern",
-      "sketch",
-      "hand-drawn",
-      "border"
-    ],
-    "hash": "adf1ec20",
-    "ratio": 0.773
-  },
-  {
-    "id": "raised-card",
-    "name": "Raised card",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "3d",
-      "raised",
-      "shadow",
-      "border"
-    ],
-    "hash": "53e8ad75",
-    "ratio": 0.823
-  },
-  {
-    "id": "raised-card-thin",
-    "name": "Raised card, thin",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "3d",
-      "raised",
-      "shadow",
-      "border"
-    ],
-    "hash": "6e885fbf",
-    "ratio": 0.823
-  },
-  {
-    "id": "corner-tab",
-    "name": "Corner tab",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "tab",
-      "corner",
-      "label"
-    ],
-    "hash": "ca34499b",
-    "ratio": 0.848
-  },
-  {
-    "id": "corner-tab-light",
-    "name": "Corner tab, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "tab",
-      "corner",
-      "label"
-    ],
-    "hash": "4390e3f4",
-    "ratio": 0.848
-  },
-  {
-    "id": "text-frame",
-    "name": "Text frame",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "text",
-      "bold",
-      "minimal"
-    ],
-    "hash": "1d5a3c95",
-    "ratio": 0.739
-  },
-  {
-    "id": "badge-bottom",
-    "name": "Bottom badge",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "badge",
-      "pill",
-      "label"
-    ],
-    "hash": "fe5b640a",
-    "ratio": 0.818
-  },
-  {
-    "id": "badge-bottom-light",
-    "name": "Bottom badge, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "badge",
-      "pill",
-      "label"
-    ],
-    "hash": "e75eda96",
-    "ratio": 0.818
-  },
-  {
-    "id": "ribbon-top",
-    "name": "Top ribbon",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "ribbon",
-      "banner",
-      "top"
-    ],
-    "hash": "121fc07f",
-    "ratio": 0.8
-  },
-  {
-    "id": "ribbon-top-light",
-    "name": "Top ribbon, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "ribbon",
-      "banner",
-      "top"
-    ],
-    "hash": "7ae36c6b",
-    "ratio": 0.8
-  },
-  {
-    "id": "border-thin",
-    "name": "Thin border",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "border",
-      "outline",
-      "thin"
-    ],
-    "hash": "3ccbe139",
-    "ratio": 0.811
-  },
-  {
-    "id": "border-medium",
-    "name": "Medium border",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "border",
-      "outline"
-    ],
-    "hash": "079e8c96",
-    "ratio": 0.818
-  },
-  {
-    "id": "border-thick",
-    "name": "Thick border",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "border",
-      "outline",
-      "thick"
-    ],
-    "hash": "c31daabc",
-    "ratio": 0.83
-  },
-  {
-    "id": "circle-viewfinder",
-    "name": "Round viewfinder",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "viewfinder",
-      "circle",
-      "round"
-    ],
-    "hash": "eb2ab393",
-    "ratio": 0.885
-  },
-  {
-    "id": "sketch-circle",
-    "name": "Sketched circle",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "sketch",
-      "circle",
-      "hand-drawn"
-    ],
-    "hash": "1946e122",
-    "ratio": 0.885
-  },
-  {
-    "id": "starburst",
-    "name": "Starburst",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "burst",
-      "star",
-      "pattern"
-    ],
-    "hash": "0c28fbfa",
-    "ratio": 1
-  },
-  {
-    "id": "starburst-light",
-    "name": "Starburst, light",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "burst",
-      "star",
-      "pattern",
-      "prize"
-    ],
-    "hash": "842b85e7",
-    "ratio": 1
-  },
-  {
-    "id": "spin-rays",
-    "name": "Spin",
-    "collection": "call-to-action",
-    "tags": [
-      "call to action",
-      "spin",
-      "rays",
-      "pattern"
-    ],
-    "hash": "bd0f67d4",
-    "ratio": 1
-  },
-  {
-    "id": "tablet-screen",
-    "name": "Tablet",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "tablet",
-      "screen",
-      "device"
-    ],
-    "hash": "d10df52f",
-    "ratio": 0.869
-  },
-  {
-    "id": "laptop-screen",
-    "name": "Laptop",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "laptop",
-      "screen",
-      "device"
-    ],
-    "hash": "61bd11b3",
-    "ratio": 1.081
-  },
-  {
-    "id": "monitor-screen",
-    "name": "Monitor",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "monitor",
-      "screen",
-      "desktop"
-    ],
-    "hash": "02902c88",
-    "ratio": 0.868
-  },
-  {
-    "id": "mug-refill",
-    "name": "Mug",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "mug",
-      "coffee",
-      "cafe"
-    ],
-    "hash": "f08dfe49",
-    "ratio": 0.851
-  },
-  {
-    "id": "mug-light",
-    "name": "Mug, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "mug",
-      "coffee",
-      "cafe"
-    ],
-    "hash": "c049ca6d",
-    "ratio": 0.851
-  },
-  {
-    "id": "delivery-box-track",
-    "name": "Delivery box",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "box",
-      "parcel",
-      "delivery",
-      "shipping"
-    ],
-    "hash": "833a8396",
-    "ratio": 0.758
-  },
-  {
-    "id": "delivery-box-light",
-    "name": "Delivery box, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "box",
-      "parcel",
-      "delivery",
-      "shipping"
-    ],
-    "hash": "83d44af4",
-    "ratio": 0.758
-  },
-  {
-    "id": "gallery-frame",
-    "name": "Gallery frame",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "picture",
-      "frame",
-      "art",
-      "gallery"
-    ],
-    "hash": "2fd72f73",
-    "ratio": 0.828
-  },
-  {
-    "id": "billboard-campaign",
-    "name": "Billboard",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "billboard",
-      "sign",
-      "outdoor"
-    ],
-    "hash": "ba2d4e00",
-    "ratio": 1.333
-  },
-  {
-    "id": "billboard-light",
-    "name": "Billboard, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "billboard",
-      "sign",
-      "outdoor"
-    ],
-    "hash": "9ec4f515",
-    "ratio": 1.333
-  },
-  {
-    "id": "open-book",
-    "name": "Open book spread",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "book",
-      "reading",
-      "library"
-    ],
-    "hash": "5fcc668b",
-    "ratio": 1.449
-  },
-  {
-    "id": "bottle-label",
-    "name": "Bottle with a label",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "bottle",
-      "label",
-      "drink"
-    ],
-    "hash": "21503732",
-    "ratio": 0.664
-  },
-  {
-    "id": "bottle-light",
-    "name": "Bottle label, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "bottle",
-      "label",
-      "drink"
-    ],
-    "hash": "a18ed3d6",
-    "ratio": 0.664
-  },
-  {
-    "id": "map-pin",
-    "name": "Map pin",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "map",
-      "pin",
-      "location",
-      "directions"
-    ],
-    "hash": "3790acd6",
-    "ratio": 0.85
-  },
-  {
-    "id": "map-pin-light",
-    "name": "Map pin, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "map",
-      "pin",
-      "location",
-      "directions"
-    ],
-    "hash": "98062d41",
-    "ratio": 0.85
-  },
-  {
-    "id": "bookmark-strip",
-    "name": "Bookmark",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "bookmark",
-      "book",
-      "reading"
-    ],
-    "hash": "237098ed",
-    "ratio": 0.677
-  },
-  {
-    "id": "bookmark-light",
-    "name": "Bookmark, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "bookmark",
-      "book",
-      "reading"
-    ],
-    "hash": "1ee534d8",
-    "ratio": 0.677
-  },
-  {
-    "id": "clapperboard-scene",
-    "name": "Clapperboard",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "film",
-      "clapperboard",
-      "video",
-      "cinema"
-    ],
-    "hash": "3f8de146",
-    "ratio": 0.723
-  },
-  {
-    "id": "clapperboard-light",
-    "name": "Clapperboard, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "film",
-      "clapperboard",
-      "video",
-      "cinema"
-    ],
-    "hash": "2dd70d07",
-    "ratio": 0.723
-  },
-  {
-    "id": "spiral-notebook",
-    "name": "Spiral notebook",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "notebook",
-      "notes",
-      "school",
-      "paper"
-    ],
-    "hash": "c67af07c",
-    "ratio": 0.787
-  },
-  {
-    "id": "roll-up-banner",
-    "name": "Roll-up banner",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "banner",
-      "stand",
-      "event",
-      "expo"
-    ],
-    "hash": "f7925586",
-    "ratio": 0.705
-  },
-  {
-    "id": "roll-up-banner-light",
-    "name": "Roll-up banner, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "banner",
-      "stand",
-      "event",
-      "expo"
-    ],
-    "hash": "d11b04af",
-    "ratio": 0.705
-  },
-  {
-    "id": "globe-stand",
-    "name": "Globe",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "globe",
-      "world",
-      "travel"
-    ],
-    "hash": "789d2ff9",
-    "ratio": 0.816
-  },
-  {
-    "id": "video-player",
-    "name": "Video player",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "video",
-      "player",
-      "watch"
-    ],
-    "hash": "4b33e2d7",
-    "ratio": 0.843
-  },
-  {
-    "id": "music-player",
-    "name": "Music player",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "music",
-      "player",
-      "listen",
-      "playlist"
-    ],
-    "hash": "ead68eef",
-    "ratio": 0.71
-  },
-  {
-    "id": "music-player-light",
-    "name": "Music player, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "music",
-      "player",
-      "listen",
-      "playlist"
-    ],
-    "hash": "ce48f56e",
-    "ratio": 0.71
-  },
-  {
-    "id": "round-tag",
-    "name": "Round tag",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "tag",
-      "round",
-      "label"
-    ],
-    "hash": "ffeb82f4",
-    "ratio": 0.947
-  },
-  {
-    "id": "round-tag-light",
-    "name": "Round tag, light",
-    "collection": "objects",
-    "tags": [
-      "object",
-      "tag",
-      "round",
-      "label"
-    ],
-    "hash": "89a7f801",
-    "ratio": 0.947
-  },
-  {
-    "id": "tv-set",
-    "name": "TV set",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "tv",
-      "television",
-      "retro",
-      "screen"
-    ],
-    "hash": "8f8a4aaf",
-    "ratio": 0.85
-  },
-  {
-    "id": "vinyl-sleeve",
-    "name": "Record sleeve",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "vinyl",
-      "record",
-      "music"
-    ],
-    "hash": "b7292236",
-    "ratio": 1.256
-  },
-  {
-    "id": "vinyl-sleeve-light",
-    "name": "Record sleeve, light",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "vinyl",
-      "record",
-      "music"
-    ],
-    "hash": "f1c29a10",
-    "ratio": 1.256
-  },
-  {
-    "id": "cassette-tape",
-    "name": "Cassette",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "cassette",
-      "tape",
-      "music",
-      "retro"
-    ],
-    "hash": "abc45ec5",
-    "ratio": 1.333
-  },
-  {
-    "id": "pizza-box",
-    "name": "Pizza box",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "pizza",
-      "box",
-      "food",
-      "delivery"
-    ],
-    "hash": "c13bc2bd",
-    "ratio": 0.754
-  },
-  {
-    "id": "fish-tank",
-    "name": "Fish tank",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "fish",
-      "tank",
-      "aquarium",
-      "water"
-    ],
-    "hash": "78116816",
-    "ratio": 0.966
-  },
-  {
-    "id": "gumball-machine",
-    "name": "Gumball machine",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "gumball",
-      "candy",
-      "machine",
-      "sweet"
-    ],
-    "hash": "239a589b",
-    "ratio": 0.75
-  },
-  {
-    "id": "camera-viewfinder",
-    "name": "Camera viewfinder",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "camera",
-      "viewfinder",
-      "video",
-      "record"
-    ],
-    "hash": "31465e65",
-    "ratio": 0.852
-  },
-  {
-    "id": "comic-panel",
-    "name": "Comic panel",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "comic",
-      "burst",
-      "panel",
-      "fun"
-    ],
-    "hash": "69129ecc",
-    "ratio": 0.815
-  },
-  {
-    "id": "jigsaw-piece",
-    "name": "Jigsaw piece",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "jigsaw",
-      "puzzle",
-      "piece"
-    ],
-    "hash": "c22988da",
-    "ratio": 0.964
-  },
-  {
-    "id": "jigsaw-piece-light",
-    "name": "Jigsaw piece, light",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "jigsaw",
-      "puzzle",
-      "piece"
-    ],
-    "hash": "d12c1d1a",
-    "ratio": 0.964
-  },
-  {
-    "id": "passport-stamp",
-    "name": "Passport stamp",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "passport",
-      "stamp",
-      "travel",
-      "entry"
-    ],
-    "hash": "4e12d96d",
-    "ratio": 0.824
-  },
-  {
-    "id": "treasure-map",
-    "name": "Treasure map",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "treasure",
-      "map",
-      "adventure"
-    ],
-    "hash": "691870b3",
-    "ratio": 0.889
-  },
-  {
-    "id": "hot-air-balloon",
-    "name": "Hot-air balloon",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "balloon",
-      "sky",
-      "travel"
-    ],
-    "hash": "5f2a7403",
-    "ratio": 0.8
-  },
-  {
-    "id": "robot-chest",
-    "name": "Robot",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "robot",
-      "screen",
-      "tech"
-    ],
-    "hash": "10917935",
-    "ratio": 0.83
-  },
-  {
-    "id": "monster-mouth",
-    "name": "Monster mouth",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "monster",
-      "mouth",
-      "teeth",
-      "fun"
-    ],
-    "hash": "a5d67cb6",
-    "ratio": 0.85
-  },
-  {
-    "id": "crystal-ball",
-    "name": "Crystal ball",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "crystal",
-      "ball",
-      "magic",
-      "fortune"
-    ],
-    "hash": "8c0d08cf",
-    "ratio": 0.86
-  },
-  {
-    "id": "cat-with-card",
-    "name": "Cat with a card",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "cat",
-      "pet",
-      "card",
-      "fun"
-    ],
-    "hash": "11118706",
-    "ratio": 0.75
-  },
-  {
-    "id": "cat-with-card-light",
-    "name": "Cat with a card, light",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "cat",
-      "pet",
-      "card",
-      "fun"
-    ],
-    "hash": "b16d6377",
-    "ratio": 0.75
-  },
-  {
-    "id": "museum-plaque",
-    "name": "Museum plaque",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "museum",
-      "plaque",
-      "exhibit",
-      "gallery"
-    ],
-    "hash": "5faa17e6",
-    "ratio": 0.87
-  },
-  {
-    "id": "museum-plaque-light",
-    "name": "Museum plaque, light",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "museum",
-      "plaque",
-      "exhibit",
-      "gallery"
-    ],
-    "hash": "3b75af9d",
-    "ratio": 0.87
-  },
-  {
-    "id": "stage-curtains",
-    "name": "Stage curtains",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "stage",
-      "theatre",
-      "curtains",
-      "show"
-    ],
-    "hash": "8d4eee76",
-    "ratio": 1
-  },
-  {
-    "id": "microwave-door",
-    "name": "Microwave",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "microwave",
-      "kitchen",
-      "appliance"
-    ],
-    "hash": "9d10cbc1",
-    "ratio": 1.173
-  },
-  {
-    "id": "washing-machine",
-    "name": "Washing machine",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "washing",
-      "laundry",
-      "appliance"
-    ],
-    "hash": "939dc12f",
-    "ratio": 0.82
-  },
-  {
-    "id": "magnifying-glass",
-    "name": "Magnifying glass",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "magnifier",
-      "lens",
-      "search",
-      "detail"
-    ],
-    "hash": "781b66cd",
-    "ratio": 1
-  },
-  {
-    "id": "porthole",
-    "name": "Porthole",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "porthole",
-      "ship",
-      "sea",
-      "boat"
-    ],
-    "hash": "2f5ab583",
-    "ratio": 0.867
-  },
-  {
-    "id": "toaster-toast",
-    "name": "Toaster",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "toaster",
-      "toast",
-      "breakfast",
-      "kitchen"
-    ],
-    "hash": "0abfe79e",
-    "ratio": 0.75
-  },
-  {
-    "id": "vending-machine",
-    "name": "Vending machine",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "vending",
-      "machine",
-      "snack"
-    ],
-    "hash": "6a0351b9",
-    "ratio": 0.889
-  },
-  {
-    "id": "floppy-disk",
-    "name": "Floppy disk",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "floppy",
-      "disk",
-      "retro",
-      "save"
-    ],
-    "hash": "67c82393",
-    "ratio": 0.93
-  },
-  {
-    "id": "retro-radio",
-    "name": "Radio",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "radio",
-      "retro",
-      "music",
-      "podcast"
-    ],
-    "hash": "5f3de059",
-    "ratio": 1.333
-  },
-  {
-    "id": "popcorn-bucket",
-    "name": "Popcorn bucket",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "popcorn",
-      "cinema",
-      "movie",
-      "snack"
-    ],
-    "hash": "f8cc9082",
-    "ratio": 0.75
-  },
-  {
-    "id": "milk-carton",
-    "name": "Milk carton",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "milk",
-      "carton",
-      "dairy",
-      "grocery"
-    ],
-    "hash": "07784a15",
-    "ratio": 0.7
-  },
-  {
-    "id": "soda-can",
-    "name": "Drinks can",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "can",
-      "drink",
-      "soda",
-      "refresh"
-    ],
-    "hash": "06346adc",
-    "ratio": 0.65
-  },
-  {
-    "id": "mailbox-flag",
-    "name": "Mailbox",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "mailbox",
-      "post",
-      "mail",
-      "newsletter"
-    ],
-    "hash": "4e7359c4",
-    "ratio": 0.85
-  },
-  {
-    "id": "mailbox-light",
-    "name": "Mailbox, light",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "mailbox",
-      "post",
-      "mail",
-      "newsletter"
-    ],
-    "hash": "7fe95773",
-    "ratio": 0.85
-  },
-  {
-    "id": "parking-meter",
-    "name": "Parking meter",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "parking",
-      "meter",
-      "pay"
-    ],
-    "hash": "262017d2",
-    "ratio": 0.65
-  },
-  {
-    "id": "train-window",
-    "name": "Train carriage",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "train",
-      "rail",
-      "travel",
-      "window"
-    ],
-    "hash": "c30f2468",
-    "ratio": 1.25
-  },
-  {
-    "id": "snow-globe",
-    "name": "Snow globe",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "snow",
-      "globe",
-      "winter",
-      "gift"
-    ],
-    "hash": "0919ac35",
-    "ratio": 0.851
-  },
-  {
-    "id": "sailboat-sail",
-    "name": "Sailboat",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "sailboat",
-      "boat",
-      "sea",
-      "travel"
-    ],
-    "hash": "f4364c57",
-    "ratio": 0.85
-  },
-  {
-    "id": "matchbox-drawer",
-    "name": "Matchbox",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "matchbox",
-      "matches",
-      "fire"
-    ],
-    "hash": "9950f13e",
-    "ratio": 1.333
-  },
-  {
-    "id": "cinema-marquee",
-    "name": "Cinema marquee",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "cinema",
-      "marquee",
-      "lights",
-      "movie"
-    ],
-    "hash": "24bc8332",
-    "ratio": 0.833
-  },
-  {
-    "id": "video-tape",
-    "name": "Video tape",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "video",
-      "tape",
-      "retro",
-      "watch"
-    ],
-    "hash": "dea5486d",
-    "ratio": 1.333
-  },
-  {
-    "id": "flying-saucer",
-    "name": "Flying saucer",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "ufo",
-      "saucer",
-      "space",
-      "alien"
-    ],
-    "hash": "1818c669",
-    "ratio": 0.976
-  },
-  {
-    "id": "lighthouse-tower",
-    "name": "Lighthouse",
-    "collection": "playful",
-    "tags": [
-      "playful",
-      "lighthouse",
-      "sea",
-      "guide",
-      "coast"
-    ],
-    "hash": "dbd2a772",
-    "ratio": 0.765
-  }
+      "sticker",
+    ],
+    hash: "99a5fab5",
+    ratio: 0.754,
+  },
+  {
+    id: "teachers-day-apple",
+    name: "Teachers' Day card",
+    collection: "holidays",
+    occasion: "teachers-day",
+    tags: ["world teachers' day", "teachers", "october 5", "apple", "school"],
+    hash: "c95aea34",
+    ratio: 0.713,
+  },
+  {
+    id: "teachers-day-note",
+    name: "Thank you, teacher",
+    collection: "holidays",
+    occasion: "teachers-day",
+    tags: ["world teachers' day", "teachers", "october 5", "thank you"],
+    hash: "3f82bc63",
+    ratio: 0.705,
+  },
+  {
+    id: "kindness-day",
+    name: "Kindness heart",
+    collection: "holidays",
+    occasion: "kindness-day",
+    tags: ["world kindness day", "kindness", "november 13", "heart"],
+    hash: "f39b792d",
+    ratio: 0.705,
+  },
+  {
+    id: "food-day-wheat",
+    name: "Food Day wheat",
+    collection: "holidays",
+    occasion: "world-food-day",
+    tags: ["world food day", "food", "october 16", "wheat"],
+    hash: "65eeb628",
+    ratio: 0.701,
+  },
+  {
+    id: "monsoon-umbrella",
+    name: "Monsoon umbrella",
+    collection: "seasons",
+    occasion: "monsoon",
+    tags: ["monsoon", "rainy season", "rain", "umbrella"],
+    hash: "73e6a675",
+    ratio: 0.713,
+  },
+  {
+    id: "monsoon-cloud",
+    name: "Rain cloud",
+    collection: "seasons",
+    occasion: "monsoon",
+    tags: ["monsoon", "rainy season", "rain", "cloud", "sale"],
+    hash: "ec01397f",
+    ratio: 0.701,
+  },
+  {
+    id: "monsoon-paper-boat",
+    name: "Paper boat",
+    collection: "seasons",
+    occasion: "monsoon",
+    tags: ["monsoon", "rainy season", "rain", "paper boat"],
+    hash: "5a21a28a",
+    ratio: 0.702,
+  },
+  {
+    id: "monsoon-boots",
+    name: "Rain boots sticker",
+    collection: "seasons",
+    occasion: "monsoon",
+    tags: ["monsoon", "rainy season", "rain", "boots", "sticker"],
+    hash: "69cd6826",
+    ratio: 0.754,
+  },
+  {
+    id: "monsoon-chai",
+    name: "Monsoon chai",
+    collection: "seasons",
+    occasion: "monsoon",
+    tags: ["monsoon", "rainy season", "rain", "chai", "cafe"],
+    hash: "99a85d03",
+    ratio: 0.765,
+  },
+  {
+    id: "harvest-basket",
+    name: "Harvest basket",
+    collection: "seasons",
+    occasion: "harvest",
+    tags: ["harvest", "farm", "autumn", "farm shop"],
+    hash: "541a2a66",
+    ratio: 0.713,
+  },
+  {
+    id: "harvest-hay",
+    name: "Hay bale",
+    collection: "seasons",
+    occasion: "harvest",
+    tags: ["harvest", "farm", "autumn", "pick your own"],
+    hash: "65f41c4c",
+    ratio: 1.923,
+  },
+  {
+    id: "harvest-corn",
+    name: "Harvest corn",
+    collection: "seasons",
+    occasion: "harvest",
+    tags: ["harvest", "farm", "autumn", "corn", "festival"],
+    hash: "f4d18a37",
+    ratio: 0.701,
+  },
+  {
+    id: "harvest-market",
+    name: "Harvest market stall",
+    collection: "seasons",
+    occasion: "harvest",
+    tags: ["harvest", "farm", "autumn", "market"],
+    hash: "4d9be3be",
+    ratio: 0.725,
+  },
+  {
+    id: "hanami-sakura",
+    name: "Sakura",
+    collection: "seasons",
+    occasion: "cherry-blossom",
+    tags: ["cherry blossom", "hanami", "sakura", "spring", "map"],
+    hash: "74d2b5a0",
+    ratio: 0.713,
+  },
+  {
+    id: "hanami-arch",
+    name: "Blossom season arch",
+    collection: "seasons",
+    occasion: "cherry-blossom",
+    tags: ["cherry blossom", "hanami", "sakura", "spring"],
+    hash: "7a5c33e0",
+    ratio: 0.702,
+  },
+  {
+    id: "hanami-picnic",
+    name: "Hanami picnic",
+    collection: "seasons",
+    occasion: "cherry-blossom",
+    tags: ["cherry blossom", "hanami", "sakura", "spring", "picnic", "rsvp"],
+    hash: "6aa401d0",
+    ratio: 0.681,
+  },
+  {
+    id: "summer-sunglasses",
+    name: "Sunglasses",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "sunglasses", "hours"],
+    hash: "1cb0fd9e",
+    ratio: 0.701,
+  },
+  {
+    id: "summer-watermelon",
+    name: "Watermelon sticker",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "watermelon", "sticker"],
+    hash: "f1a74d67",
+    ratio: 0.754,
+  },
+  {
+    id: "summer-camp",
+    name: "Summer camp",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "camp", "kids"],
+    hash: "1046d1a1",
+    ratio: 0.681,
+  },
+  {
+    id: "summer-reading",
+    name: "Summer reading",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "books", "library"],
+    hash: "8c8da560",
+    ratio: 0.713,
+  },
+  {
+    id: "summer-pool",
+    name: "Pool rules",
+    collection: "seasons",
+    occasion: "summer",
+    tags: ["summer", "sun", "pool", "rules", "safety"],
+    hash: "d81e6c00",
+    ratio: 0.678,
+  },
+  {
+    id: "winter-snowman",
+    name: "Snowman",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["winter", "snow", "snowman", "closures"],
+    hash: "866ebac4",
+    ratio: 0.713,
+  },
+  {
+    id: "winter-skating",
+    name: "Skating rink",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["winter", "snow", "skating", "rink"],
+    hash: "cc48d1cd",
+    ratio: 0.702,
+  },
+  {
+    id: "winter-lift-pass",
+    name: "Lift pass",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["winter", "snow", "ski", "ticket"],
+    hash: "352dc215",
+    ratio: 0.681,
+  },
+  {
+    id: "winter-sale",
+    name: "Winter sale bands",
+    collection: "seasons",
+    occasion: "winter",
+    tags: ["winter", "snow", "sale"],
+    hash: "67e78cc8",
+    ratio: 0.729,
+  },
+  {
+    id: "spring-watering-can",
+    name: "Watering can",
+    collection: "seasons",
+    occasion: "spring",
+    tags: ["spring", "garden", "planting"],
+    hash: "28a2fea3",
+    ratio: 0.701,
+  },
+  {
+    id: "spring-cleaning",
+    name: "Spring cleaning",
+    collection: "seasons",
+    occasion: "spring",
+    tags: ["spring", "garden", "cleaning"],
+    hash: "0360112d",
+    ratio: 0.705,
+  },
+  {
+    id: "spring-showers",
+    name: "Spring showers",
+    collection: "seasons",
+    occasion: "spring",
+    tags: ["spring", "garden", "rain", "boots"],
+    hash: "1b2a3e20",
+    ratio: 0.702,
+  },
+  {
+    id: "autumn-apple-picking",
+    name: "Orchard picking",
+    collection: "seasons",
+    occasion: "autumn",
+    tags: ["autumn", "fall", "apples", "orchard"],
+    hash: "fa4a9bf7",
+    ratio: 0.713,
+  },
+  {
+    id: "autumn-mushroom",
+    name: "Forest walk",
+    collection: "seasons",
+    occasion: "autumn",
+    tags: ["autumn", "fall", "mushroom", "walk"],
+    hash: "545a5c18",
+    ratio: 0.702,
+  },
+  {
+    id: "autumn-pumpkin-patch",
+    name: "Pumpkin patch",
+    collection: "seasons",
+    occasion: "autumn",
+    tags: ["autumn", "fall", "pumpkins", "farm"],
+    hash: "ba8a7ee1",
+    ratio: 1.923,
+  },
+  {
+    id: "school-backpack",
+    name: "Backpack",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "backpack"],
+    hash: "f59f98b9",
+    ratio: 0.713,
+  },
+  {
+    id: "school-bus-routes",
+    name: "School bus",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "bus", "routes"],
+    hash: "c8ef4e8d",
+    ratio: 1.923,
+  },
+  {
+    id: "school-welcome-apple",
+    name: "Welcome back arch",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "apple", "welcome"],
+    hash: "1f1f0684",
+    ratio: 0.702,
+  },
+  {
+    id: "school-lunch-menu",
+    name: "School lunch menu",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "lunch", "menu"],
+    hash: "811b5c6f",
+    ratio: 0.767,
+  },
+  {
+    id: "school-uniform",
+    name: "Uniform shop",
+    collection: "seasons",
+    occasion: "back-to-school",
+    tags: ["back to school", "school", "uniform"],
+    hash: "b56d2478",
+    ratio: 0.701,
+  },
+  {
+    id: "event-grad-seal",
+    name: "Graduation seal",
+    collection: "events",
+    tags: ["graduation", "events", "photos"],
+    hash: "c9ecd9b5",
+    ratio: 1,
+  },
+  {
+    id: "event-grad-diploma",
+    name: "Diploma ribbon",
+    collection: "events",
+    tags: ["graduation", "events", "ceremony"],
+    hash: "119155f4",
+    ratio: 0.8,
+  },
+  {
+    id: "event-grad-party",
+    name: "Grad party",
+    collection: "events",
+    tags: ["graduation", "events", "party", "rsvp"],
+    hash: "a4248d8a",
+    ratio: 0.705,
+  },
+  {
+    id: "event-grad-stream",
+    name: "Graduation stream",
+    collection: "events",
+    tags: ["graduation", "events", "livestream"],
+    hash: "95d0c01f",
+    ratio: 1.923,
+  },
+  {
+    id: "event-keynote",
+    name: "Keynote speaker",
+    collection: "events",
+    tags: ["conference", "events", "speaker"],
+    hash: "518729ff",
+    ratio: 0.713,
+  },
+  {
+    id: "event-speaker-qa",
+    name: "Speaker Q&A",
+    collection: "events",
+    tags: ["conference", "events", "questions"],
+    hash: "c675a4b1",
+    ratio: 0.709,
+  },
+  {
+    id: "event-session-feedback",
+    name: "Session feedback",
+    collection: "events",
+    tags: ["conference", "events", "feedback"],
+    hash: "5249408a",
+    ratio: 0.705,
+  },
+  {
+    id: "event-slides",
+    name: "Slides download",
+    collection: "events",
+    tags: ["conference", "events", "slides", "download"],
+    hash: "37693358",
+    ratio: 0.785,
+  },
+  {
+    id: "event-booth",
+    name: "Exhibitor booth",
+    collection: "events",
+    tags: ["conference", "events", "trade show", "booth"],
+    hash: "b4ae861e",
+    ratio: 0.795,
+  },
+  {
+    id: "event-workshop",
+    name: "Workshop handout",
+    collection: "events",
+    tags: ["conference", "events", "workshop", "class"],
+    hash: "28e69bd9",
+    ratio: 0.709,
+  },
+  {
+    id: "event-hackathon",
+    name: "Hackathon",
+    collection: "events",
+    tags: ["conference", "events", "hackathon", "tech"],
+    hash: "365b9b21",
+    ratio: 0.705,
+  },
+  {
+    id: "event-meetup",
+    name: "Meetup bubble",
+    collection: "events",
+    tags: ["conference", "events", "meetup", "networking"],
+    hash: "20c74782",
+    ratio: 0.743,
+  },
+  {
+    id: "event-setlist",
+    name: "Setlist",
+    collection: "events",
+    tags: ["music", "events", "concert", "setlist"],
+    hash: "53fde809",
+    ratio: 0.702,
+  },
+  {
+    id: "event-tour-merch",
+    name: "Tour merch",
+    collection: "events",
+    tags: ["music", "events", "concert", "merch"],
+    hash: "44500992",
+    ratio: 0.66,
+  },
+  {
+    id: "event-open-mic",
+    name: "Open mic",
+    collection: "events",
+    tags: ["music", "events", "open mic", "sign up"],
+    hash: "8b297bbb",
+    ratio: 0.678,
+  },
+  {
+    id: "event-film-festival",
+    name: "Film festival pass",
+    collection: "events",
+    tags: ["festival", "events", "film", "cinema"],
+    hash: "ae72b88e",
+    ratio: 0.681,
+  },
+  {
+    id: "event-short-films",
+    name: "Short films",
+    collection: "events",
+    tags: ["festival", "events", "film", "schedule"],
+    hash: "50a06ac1",
+    ratio: 0.701,
+  },
+  {
+    id: "event-book-fair",
+    name: "Book fair",
+    collection: "events",
+    tags: ["festival", "events", "books", "authors"],
+    hash: "f8689c77",
+    ratio: 0.8,
+  },
+  {
+    id: "event-craft-fair",
+    name: "Craft fair",
+    collection: "events",
+    tags: ["festival", "events", "crafts", "market"],
+    hash: "1ffade32",
+    ratio: 0.767,
+  },
+  {
+    id: "event-night-market",
+    name: "Night market",
+    collection: "events",
+    tags: ["festival", "events", "market", "food"],
+    hash: "9a3ada45",
+    ratio: 0.701,
+  },
+  {
+    id: "event-food-festival",
+    name: "Food festival",
+    collection: "events",
+    tags: ["festival", "events", "food", "map"],
+    hash: "33a848d0",
+    ratio: 0.725,
+  },
+  {
+    id: "event-cupcake",
+    name: "Cupcake sticker",
+    collection: "events",
+    tags: ["birthday", "party", "events", "cupcake"],
+    hash: "92467b16",
+    ratio: 0.754,
+  },
+  {
+    id: "event-party-hat",
+    name: "Party hat",
+    collection: "events",
+    tags: ["birthday", "party", "events", "rsvp"],
+    hash: "7aafbafe",
+    ratio: 0.713,
+  },
+  {
+    id: "event-guest-book",
+    name: "Guest book",
+    collection: "events",
+    tags: ["birthday", "party", "events", "guest book", "messages"],
+    hash: "beaa6f95",
+    ratio: 0.721,
+  },
+  {
+    id: "event-milestone",
+    name: "Milestone birthday",
+    collection: "events",
+    tags: ["birthday", "party", "events", "milestone"],
+    hash: "f601b081",
+    ratio: 1,
+  },
+  {
+    id: "event-baby-shower",
+    name: "Baby shower",
+    collection: "events",
+    tags: ["baby shower", "baby", "events", "rsvp"],
+    hash: "72c61f90",
+    ratio: 0.702,
+  },
+  {
+    id: "event-baby-gifts",
+    name: "Baby gift list",
+    collection: "events",
+    tags: ["baby shower", "baby", "events", "registry", "gifts"],
+    hash: "4b64c39e",
+    ratio: 0.701,
+  },
+  {
+    id: "event-birth-announcement",
+    name: "Birth announcement",
+    collection: "events",
+    tags: ["baby shower", "baby", "events", "announcement", "newborn"],
+    hash: "da4b221b",
+    ratio: 0.702,
+  },
+  {
+    id: "event-quince",
+    name: "Quinceañera tiara",
+    collection: "events",
+    tags: ["quinceanera", "party", "events", "mis xv", "rsvp"],
+    hash: "f8b2ba57",
+    ratio: 0.702,
+  },
+  {
+    id: "event-match-lineup",
+    name: "Match lineup",
+    collection: "events",
+    tags: ["sports", "match day", "events", "soccer", "lineup"],
+    hash: "1b3e809b",
+    ratio: 0.806,
+  },
+  {
+    id: "event-season-ticket",
+    name: "Season ticket",
+    collection: "events",
+    tags: ["sports", "match day", "events", "tickets", "fixtures"],
+    hash: "9a7f8b70",
+    ratio: 0.681,
+  },
+  {
+    id: "event-tournament",
+    name: "Tournament draw",
+    collection: "events",
+    tags: ["sports", "match day", "events", "tournament", "brackets"],
+    hash: "13f2e975",
+    ratio: 0.795,
+  },
+  {
+    id: "event-fun-run",
+    name: "Fun run route",
+    collection: "events",
+    tags: ["charity run", "running", "events", "route", "map"],
+    hash: "f2830f1f",
+    ratio: 0.701,
+  },
+  {
+    id: "event-runner-tracker",
+    name: "Runner tracker",
+    collection: "events",
+    tags: ["charity run", "running", "events", "tracking"],
+    hash: "b10b9ceb",
+    ratio: 0.68,
+  },
+  {
+    id: "event-trivia",
+    name: "Trivia night",
+    collection: "events",
+    tags: ["games", "events", "trivia", "quiz"],
+    hash: "9a0cab49",
+    ratio: 0.681,
+  },
+  {
+    id: "event-game-night",
+    name: "Game night ticket",
+    collection: "events",
+    tags: ["games", "events", "board games"],
+    hash: "6c5afbfc",
+    ratio: 1.923,
+  },
+  {
+    id: "event-gala",
+    name: "Gala auction",
+    collection: "events",
+    tags: ["gala", "events", "auction", "dinner"],
+    hash: "e2ebdbc8",
+    ratio: 0.721,
+  },
+  {
+    id: "event-awards",
+    name: "Awards night",
+    collection: "events",
+    tags: ["gala", "events", "awards", "winners"],
+    hash: "2f716de0",
+    ratio: 0.681,
+  },
+  {
+    id: "event-prom",
+    name: "Prom night",
+    collection: "events",
+    tags: ["gala", "events", "prom", "dance"],
+    hash: "25d45c04",
+    ratio: 0.705,
+  },
+  {
+    id: "event-talent-show",
+    name: "Talent show vote",
+    collection: "events",
+    tags: ["gala", "events", "talent show", "vote"],
+    hash: "176b5a92",
+    ratio: 0.691,
+  },
+  {
+    id: "event-retirement",
+    name: "Retirement send-off",
+    collection: "events",
+    tags: ["celebration", "events", "retirement"],
+    hash: "20bbb119",
+    ratio: 0.713,
+  },
+  {
+    id: "event-anniversary",
+    name: "Anniversary",
+    collection: "events",
+    tags: ["celebration", "events", "anniversary", "photos"],
+    hash: "55d514a6",
+    ratio: 1,
+  },
+  {
+    id: "event-engagement",
+    name: "Engagement party",
+    collection: "events",
+    tags: ["celebration", "events", "engagement", "rsvp"],
+    hash: "cced717f",
+    ratio: 0.701,
+  },
+  {
+    id: "event-reunion",
+    name: "Reunion weekend",
+    collection: "events",
+    tags: ["celebration", "events", "reunion", "schedule"],
+    hash: "44f59920",
+    ratio: 0.756,
+  },
+  {
+    id: "event-memorial",
+    name: "In memory",
+    collection: "events",
+    tags: ["celebration", "events", "memorial", "memories"],
+    hash: "dd082cd6",
+    ratio: 0.721,
+  },
+  {
+    id: "museum-exhibit-label",
+    name: "Exhibit label",
+    collection: "places",
+    tags: ["museum", "culture", "exhibit"],
+    hash: "077f2179",
+    ratio: 0.802,
+  },
+  {
+    id: "museum-gallery-map",
+    name: "Gallery map",
+    collection: "places",
+    tags: ["museum", "culture", "gallery", "map"],
+    hash: "6bec0789",
+    ratio: 0.701,
+  },
+  {
+    id: "museum-ticket",
+    name: "Museum ticket",
+    collection: "places",
+    tags: ["museum", "culture", "tickets"],
+    hash: "baabac47",
+    ratio: 0.681,
+  },
+  {
+    id: "museum-artist-note",
+    name: "Artist note",
+    collection: "places",
+    tags: ["museum", "culture", "gallery", "art"],
+    hash: "24753399",
+    ratio: 0.721,
+  },
+  {
+    id: "historic-marker",
+    name: "Historic marker",
+    collection: "places",
+    tags: ["museum", "culture", "history", "heritage"],
+    hash: "4e240aa8",
+    ratio: 1,
+  },
+  {
+    id: "library-catalog",
+    name: "Library catalog",
+    collection: "places",
+    tags: ["library", "books", "catalog"],
+    hash: "5c8bfe54",
+    ratio: 0.738,
+  },
+  {
+    id: "library-ebooks",
+    name: "Library e-books",
+    collection: "places",
+    tags: ["library", "books", "e-books"],
+    hash: "3d4b57e4",
+    ratio: 0.68,
+  },
+  {
+    id: "library-hours",
+    name: "Library hours",
+    collection: "places",
+    tags: ["library", "books", "opening hours"],
+    hash: "29b56521",
+    ratio: 0.725,
+  },
+  {
+    id: "transit-bus-arrivals",
+    name: "Bus arrivals",
+    collection: "places",
+    tags: ["transit", "travel", "bus", "timetable"],
+    hash: "8f72ff70",
+    ratio: 0.701,
+  },
+  {
+    id: "transit-train-timetable",
+    name: "Train timetable",
+    collection: "places",
+    tags: ["transit", "travel", "train", "timetable"],
+    hash: "61d27a5b",
+    ratio: 0.795,
+  },
+  {
+    id: "transit-next-trains",
+    name: "Next trains",
+    collection: "places",
+    tags: ["transit", "travel", "train", "platform"],
+    hash: "9b471853",
+    ratio: 0.729,
+  },
+  {
+    id: "transit-ferry",
+    name: "Ferry sailings",
+    collection: "places",
+    tags: ["transit", "travel", "ferry", "timetable"],
+    hash: "6fbc0a2d",
+    ratio: 0.701,
+  },
+  {
+    id: "transit-bike-share",
+    name: "Bike share",
+    collection: "places",
+    tags: ["transit", "travel", "bike", "rental"],
+    hash: "010b4636",
+    ratio: 0.678,
+  },
+  {
+    id: "transit-report",
+    name: "Report a transit issue",
+    collection: "places",
+    tags: ["transit", "travel", "report", "feedback"],
+    hash: "81356527",
+    ratio: 0.681,
+  },
+  {
+    id: "transit-fare",
+    name: "Transit fare",
+    collection: "places",
+    tags: ["transit", "travel", "tickets", "fare"],
+    hash: "ae322a59",
+    ratio: 1.923,
+  },
+  {
+    id: "parking-find-car",
+    name: "Find my car",
+    collection: "automotive",
+    tags: ["parking", "car park"],
+    hash: "7622920c",
+    ratio: 0.705,
+  },
+  {
+    id: "park-map",
+    name: "Park map",
+    collection: "places",
+    tags: ["park", "outdoors", "map"],
+    hash: "d0ee0171",
+    ratio: 0.681,
+  },
+  {
+    id: "park-dog-rules",
+    name: "Dog park rules",
+    collection: "places",
+    tags: ["park", "outdoors", "dogs", "rules"],
+    hash: "e33cd9fd",
+    ratio: 0.678,
+  },
+  {
+    id: "park-playground",
+    name: "Playground",
+    collection: "places",
+    tags: ["park", "outdoors", "playground", "kids"],
+    hash: "2ddb6b9e",
+    ratio: 0.702,
+  },
+  {
+    id: "park-report",
+    name: "Park issue report",
+    collection: "places",
+    tags: ["park", "outdoors", "report", "feedback"],
+    hash: "d53efa10",
+    ratio: 0.709,
+  },
+  {
+    id: "park-bench-walks",
+    name: "Park bench walks",
+    collection: "places",
+    tags: ["park", "outdoors", "walks"],
+    hash: "3c37f04f",
+    ratio: 0.709,
+  },
+  {
+    id: "garden-plant-label",
+    name: "Plant label",
+    collection: "places",
+    tags: ["park", "outdoors", "botanical garden", "plants"],
+    hash: "819ba594",
+    ratio: 0.795,
+  },
+  {
+    id: "beach-conditions",
+    name: "Beach conditions",
+    collection: "places",
+    tags: ["beach", "outdoors", "safety", "weather"],
+    hash: "5908f674",
+    ratio: 0.701,
+  },
+  {
+    id: "beach-lifeguard",
+    name: "Lifeguard station",
+    collection: "places",
+    tags: ["beach", "outdoors", "lifeguard", "safety"],
+    hash: "d52e8e72",
+    ratio: 0.806,
+  },
+  {
+    id: "beach-info-sticker",
+    name: "Beach info sticker",
+    collection: "places",
+    tags: ["beach", "outdoors", "information"],
+    hash: "ed76641d",
+    ratio: 0.754,
+  },
+  {
+    id: "camp-check-in",
+    name: "Campsite check-in",
+    collection: "places",
+    tags: ["campsite", "outdoors", "check in", "camping"],
+    hash: "f74ac9fd",
+    ratio: 0.713,
+  },
+  {
+    id: "camp-map",
+    name: "Campground map",
+    collection: "places",
+    tags: ["campsite", "outdoors", "map", "camping"],
+    hash: "b8b365d0",
+    ratio: 1.923,
+  },
+  {
+    id: "camp-fire-rules",
+    name: "Campfire rules",
+    collection: "places",
+    tags: ["campsite", "outdoors", "safety", "camping"],
+    hash: "f5e9bd32",
+    ratio: 0.713,
+  },
+  {
+    id: "cowork-desk",
+    name: "Desk booking",
+    collection: "places",
+    tags: ["coworking", "office", "booking", "desk"],
+    hash: "e570ea0e",
+    ratio: 1.923,
+  },
+  {
+    id: "cowork-meeting-room",
+    name: "Meeting room booking",
+    collection: "places",
+    tags: ["coworking", "office", "booking", "meeting room"],
+    hash: "8f8c1344",
+    ratio: 0.802,
+  },
+  {
+    id: "hostel-check-in",
+    name: "Hostel check-in",
+    collection: "places",
+    tags: ["hostel", "hospitality", "check in"],
+    hash: "a8d558e9",
+    ratio: 0.701,
+  },
+  {
+    id: "hostel-house-rules",
+    name: "Hostel house rules",
+    collection: "places",
+    tags: ["hostel", "hospitality", "rules"],
+    hash: "db0429ce",
+    ratio: 0.709,
+  },
+  {
+    id: "hostel-local-tips",
+    name: "Local tips",
+    collection: "places",
+    tags: ["hostel", "hospitality", "recommendations"],
+    hash: "3648c3cd",
+    ratio: 0.743,
+  },
+  {
+    id: "visitor-info",
+    name: "Visitor information",
+    collection: "places",
+    tags: ["visitor center", "tourism", "information"],
+    hash: "640ef322",
+    ratio: 0.805,
+  },
+  {
+    id: "visitor-wildlife",
+    name: "Wildlife guide",
+    collection: "places",
+    tags: ["visitor center", "tourism", "wildlife", "nature"],
+    hash: "f4ec0a4a",
+    ratio: 0.702,
+  },
+  {
+    id: "visitor-town-map",
+    name: "Town map",
+    collection: "places",
+    tags: ["visitor center", "tourism", "map"],
+    hash: "b200c5a9",
+    ratio: 0.705,
+  },
+  {
+    id: "marina-welcome",
+    name: "Marina welcome",
+    collection: "places",
+    tags: ["visitor center", "tourism", "marina", "boats"],
+    hash: "972a3e4d",
+    ratio: 1,
+  },
+  {
+    id: "zoo-animal-facts",
+    name: "Zoo animal facts",
+    collection: "places",
+    tags: ["zoo", "aquarium", "animals"],
+    hash: "03d6d9c6",
+    ratio: 0.802,
+  },
+  {
+    id: "aquarium-feeding",
+    name: "Aquarium feeding times",
+    collection: "places",
+    tags: ["zoo", "aquarium", "animals"],
+    hash: "49e892b8",
+    ratio: 0.701,
+  },
+  {
+    id: "wifi-cafe-cup",
+    name: "Cafe Wi-Fi cup",
+    collection: "places",
+    tags: ["wifi", "cafe"],
+    hash: "0ca893a4",
+    ratio: 0.765,
+  },
+  {
+    id: "wifi-reception",
+    name: "Reception Wi-Fi",
+    collection: "places",
+    tags: ["wifi", "office", "guests"],
+    hash: "690546be",
+    ratio: 0.721,
+  },
+  {
+    id: "wifi-rental",
+    name: "Holiday rental Wi-Fi",
+    collection: "places",
+    tags: ["wifi", "rental", "guests"],
+    hash: "57294bd0",
+    ratio: 0.714,
+  },
+  {
+    id: "wifi-waiting-room",
+    name: "Waiting room Wi-Fi",
+    collection: "places",
+    tags: ["wifi", "waiting room"],
+    hash: "56684f14",
+    ratio: 0.705,
+  },
+  {
+    id: "wifi-library",
+    name: "Library Wi-Fi",
+    collection: "places",
+    tags: ["wifi", "library"],
+    hash: "6db6a06a",
+    ratio: 0.767,
+  },
+  {
+    id: "wifi-venue",
+    name: "Venue Wi-Fi",
+    collection: "places",
+    tags: ["wifi", "events", "venue"],
+    hash: "95e5e1c2",
+    ratio: 0.705,
+  },
+  {
+    id: "wifi-hostel-board",
+    name: "Hostel Wi-Fi board",
+    collection: "places",
+    tags: ["wifi", "hostel"],
+    hash: "23a7ee0c",
+    ratio: 0.767,
+  },
+  {
+    id: "wifi-cowork",
+    name: "Coworking Wi-Fi",
+    collection: "places",
+    tags: ["wifi", "coworking"],
+    hash: "1d36f915",
+    ratio: 0.689,
+  },
+  {
+    id: "hexagon-scan",
+    name: "Hexagon",
+    collection: "call-to-action",
+    tags: ["call to action", "hexagon", "shape"],
+    hash: "aac9e942",
+    ratio: 0.866,
+  },
+  {
+    id: "hexagon-light",
+    name: "Hexagon, light",
+    collection: "call-to-action",
+    tags: ["call to action", "hexagon", "shape"],
+    hash: "288438b1",
+    ratio: 0.866,
+  },
+  {
+    id: "octagon-sign",
+    name: "Octagon",
+    collection: "call-to-action",
+    tags: ["call to action", "octagon", "sign", "shape"],
+    hash: "81a349b2",
+    ratio: 1,
+  },
+  {
+    id: "octagon-light",
+    name: "Octagon, light",
+    collection: "call-to-action",
+    tags: ["call to action", "octagon", "sign", "shape"],
+    hash: "d72f4fd9",
+    ratio: 1,
+  },
+  {
+    id: "heart-scan",
+    name: "Heart",
+    collection: "call-to-action",
+    tags: ["call to action", "heart", "love", "shape"],
+    hash: "46aebc6e",
+    ratio: 1.111,
+  },
+  {
+    id: "heart-light",
+    name: "Heart, light",
+    collection: "call-to-action",
+    tags: ["call to action", "heart", "love", "shape"],
+    hash: "fd199634",
+    ratio: 1.111,
+  },
+  {
+    id: "scroll-story",
+    name: "Scroll",
+    collection: "call-to-action",
+    tags: ["call to action", "scroll", "parchment", "story"],
+    hash: "a82427a4",
+    ratio: 0.763,
+  },
+  {
+    id: "flag-team",
+    name: "Team flag",
+    collection: "call-to-action",
+    tags: ["call to action", "flag", "team", "sports"],
+    hash: "c325c996",
+    ratio: 1.429,
+  },
+  {
+    id: "flag-light",
+    name: "Team flag, light",
+    collection: "call-to-action",
+    tags: ["call to action", "flag", "team", "sports"],
+    hash: "ff9b42fd",
+    ratio: 1.429,
+  },
+  {
+    id: "polka-dot-border",
+    name: "Polka dot border",
+    collection: "call-to-action",
+    tags: ["call to action", "pattern", "dots", "border"],
+    hash: "910b84ac",
+    ratio: 0.749,
+  },
+  {
+    id: "swirl-border",
+    name: "Swirl border",
+    collection: "call-to-action",
+    tags: ["call to action", "pattern", "swirl", "waves", "border"],
+    hash: "4dcc42d5",
+    ratio: 0.749,
+  },
+  {
+    id: "sketch-border",
+    name: "Sketched border",
+    collection: "call-to-action",
+    tags: ["call to action", "pattern", "sketch", "hand-drawn", "border"],
+    hash: "adf1ec20",
+    ratio: 0.773,
+  },
+  {
+    id: "raised-card",
+    name: "Raised card",
+    collection: "call-to-action",
+    tags: ["call to action", "3d", "raised", "shadow", "border"],
+    hash: "53e8ad75",
+    ratio: 0.823,
+  },
+  {
+    id: "raised-card-thin",
+    name: "Raised card, thin",
+    collection: "call-to-action",
+    tags: ["call to action", "3d", "raised", "shadow", "border"],
+    hash: "6e885fbf",
+    ratio: 0.823,
+  },
+  {
+    id: "corner-tab",
+    name: "Corner tab",
+    collection: "call-to-action",
+    tags: ["call to action", "tab", "corner", "label"],
+    hash: "ca34499b",
+    ratio: 0.848,
+  },
+  {
+    id: "corner-tab-light",
+    name: "Corner tab, light",
+    collection: "call-to-action",
+    tags: ["call to action", "tab", "corner", "label"],
+    hash: "4390e3f4",
+    ratio: 0.848,
+  },
+  {
+    id: "text-frame",
+    name: "Text frame",
+    collection: "call-to-action",
+    tags: ["call to action", "text", "bold", "minimal"],
+    hash: "1d5a3c95",
+    ratio: 0.739,
+  },
+  {
+    id: "badge-bottom",
+    name: "Bottom badge",
+    collection: "call-to-action",
+    tags: ["call to action", "badge", "pill", "label"],
+    hash: "fe5b640a",
+    ratio: 0.818,
+  },
+  {
+    id: "badge-bottom-light",
+    name: "Bottom badge, light",
+    collection: "call-to-action",
+    tags: ["call to action", "badge", "pill", "label"],
+    hash: "e75eda96",
+    ratio: 0.818,
+  },
+  {
+    id: "ribbon-top",
+    name: "Top ribbon",
+    collection: "call-to-action",
+    tags: ["call to action", "ribbon", "banner", "top"],
+    hash: "121fc07f",
+    ratio: 0.8,
+  },
+  {
+    id: "ribbon-top-light",
+    name: "Top ribbon, light",
+    collection: "call-to-action",
+    tags: ["call to action", "ribbon", "banner", "top"],
+    hash: "7ae36c6b",
+    ratio: 0.8,
+  },
+  {
+    id: "border-thin",
+    name: "Thin border",
+    collection: "call-to-action",
+    tags: ["call to action", "border", "outline", "thin"],
+    hash: "3ccbe139",
+    ratio: 0.811,
+  },
+  {
+    id: "border-medium",
+    name: "Medium border",
+    collection: "call-to-action",
+    tags: ["call to action", "border", "outline"],
+    hash: "079e8c96",
+    ratio: 0.818,
+  },
+  {
+    id: "border-thick",
+    name: "Thick border",
+    collection: "call-to-action",
+    tags: ["call to action", "border", "outline", "thick"],
+    hash: "c31daabc",
+    ratio: 0.83,
+  },
+  {
+    id: "circle-viewfinder",
+    name: "Round viewfinder",
+    collection: "call-to-action",
+    tags: ["call to action", "viewfinder", "circle", "round"],
+    hash: "eb2ab393",
+    ratio: 0.885,
+  },
+  {
+    id: "sketch-circle",
+    name: "Sketched circle",
+    collection: "call-to-action",
+    tags: ["call to action", "sketch", "circle", "hand-drawn"],
+    hash: "1946e122",
+    ratio: 0.885,
+  },
+  {
+    id: "starburst",
+    name: "Starburst",
+    collection: "call-to-action",
+    tags: ["call to action", "burst", "star", "pattern"],
+    hash: "0c28fbfa",
+    ratio: 1,
+  },
+  {
+    id: "starburst-light",
+    name: "Starburst, light",
+    collection: "call-to-action",
+    tags: ["call to action", "burst", "star", "pattern", "prize"],
+    hash: "842b85e7",
+    ratio: 1,
+  },
+  {
+    id: "spin-rays",
+    name: "Spin",
+    collection: "call-to-action",
+    tags: ["call to action", "spin", "rays", "pattern"],
+    hash: "bd0f67d4",
+    ratio: 1,
+  },
+  {
+    id: "tablet-screen",
+    name: "Tablet",
+    collection: "objects",
+    tags: ["object", "tablet", "screen", "device"],
+    hash: "d10df52f",
+    ratio: 0.869,
+  },
+  {
+    id: "laptop-screen",
+    name: "Laptop",
+    collection: "objects",
+    tags: ["object", "laptop", "screen", "device"],
+    hash: "61bd11b3",
+    ratio: 1.081,
+  },
+  {
+    id: "monitor-screen",
+    name: "Monitor",
+    collection: "objects",
+    tags: ["object", "monitor", "screen", "desktop"],
+    hash: "02902c88",
+    ratio: 0.868,
+  },
+  {
+    id: "mug-refill",
+    name: "Mug",
+    collection: "objects",
+    tags: ["object", "mug", "coffee", "cafe"],
+    hash: "f08dfe49",
+    ratio: 0.851,
+  },
+  {
+    id: "mug-light",
+    name: "Mug, light",
+    collection: "objects",
+    tags: ["object", "mug", "coffee", "cafe"],
+    hash: "c049ca6d",
+    ratio: 0.851,
+  },
+  {
+    id: "delivery-box-track",
+    name: "Delivery box",
+    collection: "objects",
+    tags: ["object", "box", "parcel", "delivery", "shipping"],
+    hash: "833a8396",
+    ratio: 0.758,
+  },
+  {
+    id: "delivery-box-light",
+    name: "Delivery box, light",
+    collection: "objects",
+    tags: ["object", "box", "parcel", "delivery", "shipping"],
+    hash: "83d44af4",
+    ratio: 0.758,
+  },
+  {
+    id: "gallery-frame",
+    name: "Gallery frame",
+    collection: "objects",
+    tags: ["object", "picture", "frame", "art", "gallery"],
+    hash: "2fd72f73",
+    ratio: 0.828,
+  },
+  {
+    id: "billboard-campaign",
+    name: "Billboard",
+    collection: "objects",
+    tags: ["object", "billboard", "sign", "outdoor"],
+    hash: "ba2d4e00",
+    ratio: 1.333,
+  },
+  {
+    id: "billboard-light",
+    name: "Billboard, light",
+    collection: "objects",
+    tags: ["object", "billboard", "sign", "outdoor"],
+    hash: "9ec4f515",
+    ratio: 1.333,
+  },
+  {
+    id: "open-book",
+    name: "Open book spread",
+    collection: "objects",
+    tags: ["object", "book", "reading", "library"],
+    hash: "5fcc668b",
+    ratio: 1.449,
+  },
+  {
+    id: "bottle-label",
+    name: "Bottle with a label",
+    collection: "objects",
+    tags: ["object", "bottle", "label", "drink"],
+    hash: "21503732",
+    ratio: 0.664,
+  },
+  {
+    id: "bottle-light",
+    name: "Bottle label, light",
+    collection: "objects",
+    tags: ["object", "bottle", "label", "drink"],
+    hash: "a18ed3d6",
+    ratio: 0.664,
+  },
+  {
+    id: "map-pin",
+    name: "Map pin",
+    collection: "objects",
+    tags: ["object", "map", "pin", "location", "directions"],
+    hash: "3790acd6",
+    ratio: 0.85,
+  },
+  {
+    id: "map-pin-light",
+    name: "Map pin, light",
+    collection: "objects",
+    tags: ["object", "map", "pin", "location", "directions"],
+    hash: "98062d41",
+    ratio: 0.85,
+  },
+  {
+    id: "bookmark-strip",
+    name: "Bookmark",
+    collection: "objects",
+    tags: ["object", "bookmark", "book", "reading"],
+    hash: "237098ed",
+    ratio: 0.677,
+  },
+  {
+    id: "bookmark-light",
+    name: "Bookmark, light",
+    collection: "objects",
+    tags: ["object", "bookmark", "book", "reading"],
+    hash: "1ee534d8",
+    ratio: 0.677,
+  },
+  {
+    id: "clapperboard-scene",
+    name: "Clapperboard",
+    collection: "objects",
+    tags: ["object", "film", "clapperboard", "video", "cinema"],
+    hash: "3f8de146",
+    ratio: 0.723,
+  },
+  {
+    id: "clapperboard-light",
+    name: "Clapperboard, light",
+    collection: "objects",
+    tags: ["object", "film", "clapperboard", "video", "cinema"],
+    hash: "2dd70d07",
+    ratio: 0.723,
+  },
+  {
+    id: "spiral-notebook",
+    name: "Spiral notebook",
+    collection: "objects",
+    tags: ["object", "notebook", "notes", "school", "paper"],
+    hash: "c67af07c",
+    ratio: 0.787,
+  },
+  {
+    id: "roll-up-banner",
+    name: "Roll-up banner",
+    collection: "objects",
+    tags: ["object", "banner", "stand", "event", "expo"],
+    hash: "f7925586",
+    ratio: 0.705,
+  },
+  {
+    id: "roll-up-banner-light",
+    name: "Roll-up banner, light",
+    collection: "objects",
+    tags: ["object", "banner", "stand", "event", "expo"],
+    hash: "d11b04af",
+    ratio: 0.705,
+  },
+  {
+    id: "globe-stand",
+    name: "Globe",
+    collection: "objects",
+    tags: ["object", "globe", "world", "travel"],
+    hash: "789d2ff9",
+    ratio: 0.816,
+  },
+  {
+    id: "video-player",
+    name: "Video player",
+    collection: "objects",
+    tags: ["object", "video", "player", "watch"],
+    hash: "4b33e2d7",
+    ratio: 0.843,
+  },
+  {
+    id: "music-player",
+    name: "Music player",
+    collection: "objects",
+    tags: ["object", "music", "player", "listen", "playlist"],
+    hash: "ead68eef",
+    ratio: 0.71,
+  },
+  {
+    id: "music-player-light",
+    name: "Music player, light",
+    collection: "objects",
+    tags: ["object", "music", "player", "listen", "playlist"],
+    hash: "ce48f56e",
+    ratio: 0.71,
+  },
+  {
+    id: "round-tag",
+    name: "Round tag",
+    collection: "objects",
+    tags: ["object", "tag", "round", "label"],
+    hash: "ffeb82f4",
+    ratio: 0.947,
+  },
+  {
+    id: "round-tag-light",
+    name: "Round tag, light",
+    collection: "objects",
+    tags: ["object", "tag", "round", "label"],
+    hash: "89a7f801",
+    ratio: 0.947,
+  },
+  {
+    id: "tv-set",
+    name: "TV set",
+    collection: "playful",
+    tags: ["playful", "tv", "television", "retro", "screen"],
+    hash: "8f8a4aaf",
+    ratio: 0.85,
+  },
+  {
+    id: "vinyl-sleeve",
+    name: "Record sleeve",
+    collection: "playful",
+    tags: ["playful", "vinyl", "record", "music"],
+    hash: "b7292236",
+    ratio: 1.256,
+  },
+  {
+    id: "vinyl-sleeve-light",
+    name: "Record sleeve, light",
+    collection: "playful",
+    tags: ["playful", "vinyl", "record", "music"],
+    hash: "f1c29a10",
+    ratio: 1.256,
+  },
+  {
+    id: "cassette-tape",
+    name: "Cassette",
+    collection: "playful",
+    tags: ["playful", "cassette", "tape", "music", "retro"],
+    hash: "abc45ec5",
+    ratio: 1.333,
+  },
+  {
+    id: "pizza-box",
+    name: "Pizza box",
+    collection: "playful",
+    tags: ["playful", "pizza", "box", "food", "delivery"],
+    hash: "c13bc2bd",
+    ratio: 0.754,
+  },
+  {
+    id: "fish-tank",
+    name: "Fish tank",
+    collection: "playful",
+    tags: ["playful", "fish", "tank", "aquarium", "water"],
+    hash: "78116816",
+    ratio: 0.966,
+  },
+  {
+    id: "gumball-machine",
+    name: "Gumball machine",
+    collection: "playful",
+    tags: ["playful", "gumball", "candy", "machine", "sweet"],
+    hash: "239a589b",
+    ratio: 0.75,
+  },
+  {
+    id: "camera-viewfinder",
+    name: "Camera viewfinder",
+    collection: "playful",
+    tags: ["playful", "camera", "viewfinder", "video", "record"],
+    hash: "31465e65",
+    ratio: 0.852,
+  },
+  {
+    id: "comic-panel",
+    name: "Comic panel",
+    collection: "playful",
+    tags: ["playful", "comic", "burst", "panel", "fun"],
+    hash: "69129ecc",
+    ratio: 0.815,
+  },
+  {
+    id: "jigsaw-piece",
+    name: "Jigsaw piece",
+    collection: "playful",
+    tags: ["playful", "jigsaw", "puzzle", "piece"],
+    hash: "c22988da",
+    ratio: 0.964,
+  },
+  {
+    id: "jigsaw-piece-light",
+    name: "Jigsaw piece, light",
+    collection: "playful",
+    tags: ["playful", "jigsaw", "puzzle", "piece"],
+    hash: "d12c1d1a",
+    ratio: 0.964,
+  },
+  {
+    id: "passport-stamp",
+    name: "Passport stamp",
+    collection: "playful",
+    tags: ["playful", "passport", "stamp", "travel", "entry"],
+    hash: "4e12d96d",
+    ratio: 0.824,
+  },
+  {
+    id: "treasure-map",
+    name: "Treasure map",
+    collection: "playful",
+    tags: ["playful", "treasure", "map", "adventure"],
+    hash: "691870b3",
+    ratio: 0.889,
+  },
+  {
+    id: "hot-air-balloon",
+    name: "Hot-air balloon",
+    collection: "playful",
+    tags: ["playful", "balloon", "sky", "travel"],
+    hash: "5f2a7403",
+    ratio: 0.8,
+  },
+  {
+    id: "robot-chest",
+    name: "Robot",
+    collection: "playful",
+    tags: ["playful", "robot", "screen", "tech"],
+    hash: "10917935",
+    ratio: 0.83,
+  },
+  {
+    id: "monster-mouth",
+    name: "Monster mouth",
+    collection: "playful",
+    tags: ["playful", "monster", "mouth", "teeth", "fun"],
+    hash: "a5d67cb6",
+    ratio: 0.85,
+  },
+  {
+    id: "crystal-ball",
+    name: "Crystal ball",
+    collection: "playful",
+    tags: ["playful", "crystal", "ball", "magic", "fortune"],
+    hash: "8c0d08cf",
+    ratio: 0.86,
+  },
+  {
+    id: "cat-with-card",
+    name: "Cat with a card",
+    collection: "playful",
+    tags: ["playful", "cat", "pet", "card", "fun"],
+    hash: "11118706",
+    ratio: 0.75,
+  },
+  {
+    id: "cat-with-card-light",
+    name: "Cat with a card, light",
+    collection: "playful",
+    tags: ["playful", "cat", "pet", "card", "fun"],
+    hash: "b16d6377",
+    ratio: 0.75,
+  },
+  {
+    id: "museum-plaque",
+    name: "Museum plaque",
+    collection: "playful",
+    tags: ["playful", "museum", "plaque", "exhibit", "gallery"],
+    hash: "5faa17e6",
+    ratio: 0.87,
+  },
+  {
+    id: "museum-plaque-light",
+    name: "Museum plaque, light",
+    collection: "playful",
+    tags: ["playful", "museum", "plaque", "exhibit", "gallery"],
+    hash: "3b75af9d",
+    ratio: 0.87,
+  },
+  {
+    id: "stage-curtains",
+    name: "Stage curtains",
+    collection: "playful",
+    tags: ["playful", "stage", "theatre", "curtains", "show"],
+    hash: "8d4eee76",
+    ratio: 1,
+  },
+  {
+    id: "microwave-door",
+    name: "Microwave",
+    collection: "playful",
+    tags: ["playful", "microwave", "kitchen", "appliance"],
+    hash: "9d10cbc1",
+    ratio: 1.173,
+  },
+  {
+    id: "washing-machine",
+    name: "Washing machine",
+    collection: "playful",
+    tags: ["playful", "washing", "laundry", "appliance"],
+    hash: "939dc12f",
+    ratio: 0.82,
+  },
+  {
+    id: "magnifying-glass",
+    name: "Magnifying glass",
+    collection: "playful",
+    tags: ["playful", "magnifier", "lens", "search", "detail"],
+    hash: "781b66cd",
+    ratio: 1,
+  },
+  {
+    id: "porthole",
+    name: "Porthole",
+    collection: "playful",
+    tags: ["playful", "porthole", "ship", "sea", "boat"],
+    hash: "2f5ab583",
+    ratio: 0.867,
+  },
+  {
+    id: "toaster-toast",
+    name: "Toaster",
+    collection: "playful",
+    tags: ["playful", "toaster", "toast", "breakfast", "kitchen"],
+    hash: "0abfe79e",
+    ratio: 0.75,
+  },
+  {
+    id: "vending-machine",
+    name: "Vending machine",
+    collection: "playful",
+    tags: ["playful", "vending", "machine", "snack"],
+    hash: "6a0351b9",
+    ratio: 0.889,
+  },
+  {
+    id: "floppy-disk",
+    name: "Floppy disk",
+    collection: "playful",
+    tags: ["playful", "floppy", "disk", "retro", "save"],
+    hash: "67c82393",
+    ratio: 0.93,
+  },
+  {
+    id: "retro-radio",
+    name: "Radio",
+    collection: "playful",
+    tags: ["playful", "radio", "retro", "music", "podcast"],
+    hash: "5f3de059",
+    ratio: 1.333,
+  },
+  {
+    id: "popcorn-bucket",
+    name: "Popcorn bucket",
+    collection: "playful",
+    tags: ["playful", "popcorn", "cinema", "movie", "snack"],
+    hash: "f8cc9082",
+    ratio: 0.75,
+  },
+  {
+    id: "milk-carton",
+    name: "Milk carton",
+    collection: "playful",
+    tags: ["playful", "milk", "carton", "dairy", "grocery"],
+    hash: "07784a15",
+    ratio: 0.7,
+  },
+  {
+    id: "soda-can",
+    name: "Drinks can",
+    collection: "playful",
+    tags: ["playful", "can", "drink", "soda", "refresh"],
+    hash: "06346adc",
+    ratio: 0.65,
+  },
+  {
+    id: "mailbox-flag",
+    name: "Mailbox",
+    collection: "playful",
+    tags: ["playful", "mailbox", "post", "mail", "newsletter"],
+    hash: "4e7359c4",
+    ratio: 0.85,
+  },
+  {
+    id: "mailbox-light",
+    name: "Mailbox, light",
+    collection: "playful",
+    tags: ["playful", "mailbox", "post", "mail", "newsletter"],
+    hash: "7fe95773",
+    ratio: 0.85,
+  },
+  {
+    id: "parking-meter",
+    name: "Parking meter",
+    collection: "playful",
+    tags: ["playful", "parking", "meter", "pay"],
+    hash: "262017d2",
+    ratio: 0.65,
+  },
+  {
+    id: "train-window",
+    name: "Train carriage",
+    collection: "playful",
+    tags: ["playful", "train", "rail", "travel", "window"],
+    hash: "c30f2468",
+    ratio: 1.25,
+  },
+  {
+    id: "snow-globe",
+    name: "Snow globe",
+    collection: "playful",
+    tags: ["playful", "snow", "globe", "winter", "gift"],
+    hash: "0919ac35",
+    ratio: 0.851,
+  },
+  {
+    id: "sailboat-sail",
+    name: "Sailboat",
+    collection: "playful",
+    tags: ["playful", "sailboat", "boat", "sea", "travel"],
+    hash: "f4364c57",
+    ratio: 0.85,
+  },
+  {
+    id: "matchbox-drawer",
+    name: "Matchbox",
+    collection: "playful",
+    tags: ["playful", "matchbox", "matches", "fire"],
+    hash: "9950f13e",
+    ratio: 1.333,
+  },
+  {
+    id: "cinema-marquee",
+    name: "Cinema marquee",
+    collection: "playful",
+    tags: ["playful", "cinema", "marquee", "lights", "movie"],
+    hash: "24bc8332",
+    ratio: 0.833,
+  },
+  {
+    id: "video-tape",
+    name: "Video tape",
+    collection: "playful",
+    tags: ["playful", "video", "tape", "retro", "watch"],
+    hash: "dea5486d",
+    ratio: 1.333,
+  },
+  {
+    id: "flying-saucer",
+    name: "Flying saucer",
+    collection: "playful",
+    tags: ["playful", "ufo", "saucer", "space", "alien"],
+    hash: "1818c669",
+    ratio: 0.976,
+  },
+  {
+    id: "lighthouse-tower",
+    name: "Lighthouse",
+    collection: "playful",
+    tags: ["playful", "lighthouse", "sea", "guide", "coast"],
+    hash: "dbd2a772",
+    ratio: 0.765,
+  },
 ];

@@ -1241,7 +1241,14 @@ export function globeStand(o) {
   }
   // The post runs from under the sphere down into the foot
   shapes.push(
-    shape.rect(cx - 90, cy + R - 40, 180, h - 60 - (cy + R - 40), shade(0.3), 20)
+    shape.rect(
+      cx - 90,
+      cy + R - 40,
+      180,
+      h - 60 - (cy + R - 40),
+      shade(0.3),
+      20
+    )
   );
   shapes.push(shape.rect(cx - 520, h - 120, 1040, 120, F, 60));
   const labels = [cta(o, [cx - 460, h - 115, 920, 110], F)];

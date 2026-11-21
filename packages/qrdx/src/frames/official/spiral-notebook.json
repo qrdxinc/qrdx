@@ -4,16 +4,8 @@
   "description": "A spiral notebook with rings along the top and a ruled page.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "notebook",
-    "notes",
-    "school",
-    "paper"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "notebook", "notes", "school", "paper"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -52,10 +44,7 @@
         "height": 1622,
         "radius": 16,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.94
         }
       },
@@ -67,10 +56,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -82,10 +68,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -97,10 +80,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -112,10 +92,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -127,10 +104,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -142,10 +116,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -157,10 +128,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -172,10 +140,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -187,10 +152,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -202,10 +164,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -217,10 +176,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -232,10 +188,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -247,10 +200,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -262,10 +212,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },
@@ -277,10 +224,7 @@
         "height": 6,
         "radius": 3,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.78
         }
       },

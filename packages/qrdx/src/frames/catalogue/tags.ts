@@ -1283,5 +1283,5 @@ export const OFFICIAL_FRAME_TAGS: readonly string[] = [
   "youth",
   "yuanxiao",
   "zongzi",
-  "zoo"
+  "zoo",
 ];

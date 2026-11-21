@@ -5,7 +5,9 @@
  * Official frames by the round that added them (YYYY-MM), so an app can
  * mark the latest ones as new for a while. The first catalogue has none.
  */
-export const OFFICIAL_FRAME_BATCHES: Readonly<Record<string, readonly string[]>> = {
+export const OFFICIAL_FRAME_BATCHES: Readonly<
+  Record<string, readonly string[]>
+> = {
   "2026-11": [
     "hexagon-scan",
     "hexagon-light",
@@ -107,6 +109,6 @@ export const OFFICIAL_FRAME_BATCHES: Readonly<Record<string, readonly string[]>>
     "cinema-marquee",
     "video-tape",
     "flying-saucer",
-    "lighthouse-tower"
-  ]
+    "lighthouse-tower",
+  ],
 };

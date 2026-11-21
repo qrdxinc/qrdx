@@ -5,12 +5,7 @@
   "category": "use-case",
   "collection": "call-to-action",
   "contentTypes": [],
-  "tags": [
-    "call to action",
-    "flag",
-    "team",
-    "sports"
-  ],
+  "tags": ["call to action", "flag", "team", "sports"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -39,10 +34,7 @@
         "height": 1340,
         "radius": 12,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -52,10 +44,7 @@
         "cy": 60,
         "r": 56,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -71,10 +60,7 @@
         "r": 30,
         "hole": 14,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -85,10 +71,7 @@
         "r": 30,
         "hole": 14,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       }

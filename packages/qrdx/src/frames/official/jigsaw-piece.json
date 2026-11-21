@@ -4,15 +4,8 @@
   "description": "A jigsaw piece with knobs out on the top and right and sockets in on the left and bottom.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "jigsaw",
-    "puzzle",
-    "piece"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "jigsaw", "puzzle", "piece"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
