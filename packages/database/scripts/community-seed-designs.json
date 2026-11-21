@@ -4839,66 +4839,6 @@
       }
     },
     {
-      "id": "sketchbook",
-      "slug": "sketchbook",
-      "name": "Sketchbook",
-      "description": "Pebble tiles in a graphite grey with hand-drawn doodle eyes and rounded centres, on warm paper. Loose and friendly, for art classes, zines and studio doors.",
-      "tags": ["playful", "monochrome", "soft"],
-      "payload": {
-        "style": {
-          "bgColor": "#F7F3EA",
-          "fgColor": "#2E2E2E",
-          "eyeColor": "#1F1F1F",
-          "dotColor": "#2E2E2E",
-          "bodyPattern": "pebble",
-          "cornerEyePattern": "doodle",
-          "cornerEyeDotPattern": "rounded",
-          "level": "Q",
-          "margin": 4
-        }
-      }
-    },
-    {
-      "id": "crayon-box",
-      "slug": "crayon-box",
-      "name": "Crayon box",
-      "description": "Round dots in a deep crayon red with doodle eyes and cushion centres, on a pale cream. Cheerful and handmade, for nurseries, toy shops and kids' menus.",
-      "tags": ["playful", "warm", "colorful"],
-      "payload": {
-        "style": {
-          "bgColor": "#FFF6E8",
-          "fgColor": "#8F1D1D",
-          "eyeColor": "#6E1414",
-          "dotColor": "#8F1D1D",
-          "bodyPattern": "circle",
-          "cornerEyePattern": "doodle",
-          "cornerEyeDotPattern": "cushion",
-          "level": "Q",
-          "margin": 4
-        }
-      }
-    },
-    {
-      "id": "margin-notes",
-      "slug": "margin-notes",
-      "name": "Margin notes",
-      "description": "Square modules in an ink blue with doodle eyes and rounded centres, on lined-paper white. Studious and plain, for tutors, notebooks and reading lists.",
-      "tags": ["minimal", "cool", "flat"],
-      "payload": {
-        "style": {
-          "bgColor": "#F6F8FC",
-          "fgColor": "#1C2F6B",
-          "eyeColor": "#142352",
-          "dotColor": "#1C2F6B",
-          "bodyPattern": "square",
-          "cornerEyePattern": "doodle",
-          "cornerEyeDotPattern": "rounded",
-          "level": "Q",
-          "margin": 4
-        }
-      }
-    },
-    {
       "id": "terrazzo",
       "slug": "terrazzo",
       "name": "Terrazzo",
@@ -5001,7 +4941,7 @@
     {
       "id": "first-aid",
       "slug": "first-aid",
-      "name": "First aid",
+      "name": "Sick bay",
       "description": "Square modules in a deep red with plus eyes and rounded centres, on a clean white. Plain and direct, for clinics, safety posters and first-aid kits.",
       "tags": ["bold", "high-contrast", "flat"],
       "payload": {
@@ -5161,7 +5101,7 @@
     {
       "id": "noodle-bar",
       "slug": "noodle-bar",
-      "name": "Noodle bar",
+      "name": "Broth",
       "description": "Round dots in a deep soy brown with bowl eyes and squircle centres, on a warm rice white. Homely, for noodle shops, ramen menus and takeaway bags.",
       "tags": ["warm", "playful", "flat"],
       "payload": {
