@@ -4,16 +4,7 @@ Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/
 
 ## 0.0.59
 
-### Five new looks
-
-- `eyeShapes` gives each corner eye its own frame and center shape; `eyeGradient: "code"` lays the eyes' gradient over the whole code; `bgRadius` rounds the background, with `backdrop` as the color outside its corners; `halo` draws a rim around every dot and eye; `shadow` draws a see-through copy of the dark shapes under them. A halo is drawn only on an opaque, light background, in a rim no lighter than it, so it never costs a read.
-- A mounted React `QRCode` redraws as soon as one of them changes, as it does for every other prop.
-
-### Frame library: shapes, everyday objects and playful scenes
-
-- **101 more official frames**, 1,114 in all. 29 join `call-to-action`: hexagons, octagons, hearts, a scroll, swallowtail flags, pattern borders, raised cards, corner tabs, a text frame, bottom badges, top ribbons, plain borders in three weights, a circle viewfinder, a sketched circle, starbursts and spinning rays. Each decodes at phone distances, scores Great and reads with zbar, like every official frame.
-- **Two new collections:** `objects` ("Everyday objects", 28 frames: tablets, laptops, monitors, mugs, parcels, bottles, billboards, open books, map pins, a globe and more) and `playful` ("Playful & surprising", 44 frames: a TV set, a record sleeve, a fish tank, a robot, a cat holding the code, a snow globe, a flying saucer and more). `OfficialFrameCollection` and `OFFICIAL_FRAME_COLLECTIONS` include them, so code with a case or a `Record` for every collection needs the new ids.
-- The generator now also writes `src/frames/catalogue/batches.ts`, the official frame ids by the round that added them, so the app can mark the latest ones as new. It isn't exported.
+- **The looks redraw in React.** A mounted `QRCode` now redraws when `eyeShapes`, `eyeGradient`, `bgRadius`, `backdrop`, `halo` or `shadow` changes. In 0.0.58 its layout was kept until another prop changed, so turning one of these on showed nothing.
 
 ## 0.0.58
 
@@ -24,6 +15,16 @@ Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/
 - **A frame on its own.** `createFrameTree(options)` draws a frame's artwork and labels around the empty slot a code of `size` pixels would fill, or around an element you pass as `slot`, for showing a frame without a code. React's `QRFrameSVG` (from `qrdx`) is the same as a component, and renders in React Server Components.
 - The standalone `<qrdx-code>` file loads `jsqr` on demand, as well as `jspdf`: a page without a bundler maps it in its import map to export a GIF of a design with more than 256 colors.
 - `@qrdx/cli` 0.0.15 writes ICO and GIF too: `-o qr.ico` or `--format ico`, and `-o qr.gif` or `--format gif`.
+
+### Five new looks
+
+- `eyeShapes` gives each corner eye its own frame and center shape; `eyeGradient: "code"` lays the eyes' gradient over the whole code; `bgRadius` rounds the background, with `backdrop` as the color outside its corners; `halo` draws a rim around every dot and eye; `shadow` draws a see-through copy of the dark shapes under them. A halo is drawn only on an opaque, light background, in a rim no lighter than it, so it never costs a read.
+
+### Frame library: shapes, everyday objects and playful scenes
+
+- **101 more official frames**, 1,114 in all. 29 join `call-to-action`: hexagons, octagons, hearts, a scroll, swallowtail flags, pattern borders, raised cards, corner tabs, a text frame, bottom badges, top ribbons, plain borders in three weights, a circle viewfinder, a sketched circle, starbursts and spinning rays. Each decodes at phone distances, scores Great and reads with zbar, like every official frame.
+- **Two new collections:** `objects` ("Everyday objects", 28 frames: tablets, laptops, monitors, mugs, parcels, bottles, billboards, open books, map pins, a globe and more) and `playful` ("Playful & surprising", 44 frames: a TV set, a record sleeve, a fish tank, a robot, a cat holding the code, a snow globe, a flying saucer and more). `OfficialFrameCollection` and `OFFICIAL_FRAME_COLLECTIONS` include them, so code with a case or a `Record` for every collection needs the new ids.
+- The generator now also writes `src/frames/catalogue/batches.ts`, the official frame ids by the round that added them, so the app can mark the latest ones as new. It isn't exported.
 
 ## 0.0.57
 
