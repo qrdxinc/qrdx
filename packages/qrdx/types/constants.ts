@@ -55,10 +55,6 @@ export const CORNER_EYE_DOT_PATTERNS = [
   "extra-rounded",
   "leaf-reverse",
   "drop-reverse",
-  // Added after 0.0.57
-  "cushion",
-  "bevel",
-  "notch",
 ] as const;
 
 /**
@@ -96,17 +92,6 @@ export const CORNER_EYE_PATTERNS = [
   "shield",
   "petal",
   "leaf-reverse",
-  // Added after 0.0.57
-  "pebble",
-  "porthole",
-  "doodle",
-  "notch",
-  "plus",
-  "stamp",
-  "bud",
-  "tag",
-  "bowl",
-  "crest",
 ] as const;
 
 /**
@@ -143,16 +128,6 @@ export const BODY_PATTERN = [
   "random-dots",
   "mosaic",
   "octagon",
-  // Added after 0.0.57 (drawn by src/body-patterns.tsx)
-  "x",
-  "flower",
-  "pebble",
-  "bubble",
-  "petal",
-  "squircle",
-  "drop",
-  "beads",
-  "chain",
 ] as const;
 
 // ── Frames (frame.ts) ──────────────────────────────────────────────────────
