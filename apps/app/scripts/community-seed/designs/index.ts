@@ -28,7 +28,6 @@ import { ICON_DESIGNS } from "./icons";
 import { LUXURY_DESIGNS } from "./luxury";
 import { MONO_DESIGNS } from "./mono";
 import { NEON_DESIGNS } from "./neon";
-import { NEW_SHAPE_DESIGNS } from "./new-shapes";
 import { PASTEL_DESIGNS } from "./pastel";
 import { PLAYFUL_DESIGNS } from "./playful";
 import { RETRO_DESIGNS } from "./retro";
@@ -52,7 +51,6 @@ export const OFFICIAL_DESIGNS: readonly SeedDesign[] = [
   ...USE_DESIGNS,
   ...CATALOGUE_DESIGNS,
   ...ICON_DESIGNS,
-  ...NEW_SHAPE_DESIGNS,
 ];
 
 /** A design as community-seed-designs.json stores it. */

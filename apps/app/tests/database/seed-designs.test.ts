@@ -52,7 +52,7 @@ import { writeDesignSheets } from "../support/seed-design-sheets";
 import { seededDesigns, shownStyle } from "../support/seed-designs";
 
 /** How many designs the seed publishes; raise it when adding designs. */
-const DESIGN_COUNT = 218;
+const DESIGN_COUNT = 203;
 /** Fewest designs each body, eye and centre must appear in. */
 const MIN_USES = 3;
 /**
