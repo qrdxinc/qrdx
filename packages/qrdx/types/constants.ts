@@ -139,7 +139,6 @@ export const BODY_PATTERN = [
   "mosaic",
   "octagon",
   // Added after 0.0.57 (drawn by src/body-patterns.tsx)
-  "flower",
   "pebble",
 ] as const;
 
@@ -153,6 +152,7 @@ export const BODY_PATTERN = [
  */
 export const WITHDRAWN_BODY_PATTERNS = {
   x: "plus",
+  flower: "circle",
   beads: "circle",
   bubble: "circle",
   chain: "circle",

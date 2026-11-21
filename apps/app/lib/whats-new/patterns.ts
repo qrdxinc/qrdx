@@ -4,7 +4,7 @@ import type { NewBatch } from "./index";
 
 export const NEW_BODY_PATTERNS: NewBatch[] = [
   {
-    ids: ["flower", "pebble"],
+    ids: ["pebble"],
     until: "2026-12-31",
   },
 ];

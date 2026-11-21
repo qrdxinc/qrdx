@@ -505,7 +505,7 @@ export const STYLE_FAMILIES: readonly StyleFamily[] = [
   {
     id: "playful",
     word: "Pop",
-    bodies: ["heart", "plus", "random-dots", "flower"],
+    bodies: ["heart", "plus", "random-dots"],
     eyes: ["extra-rounded", "petal", "squircle", "stamp", "doodle"],
     playful: true,
   },

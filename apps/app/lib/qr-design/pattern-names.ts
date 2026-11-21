@@ -35,7 +35,6 @@ export const BODY_PATTERNS: { id: BodyPattern; name: string }[] = [
   { id: "pacman", name: "Pacman" },
   { id: "circle-mixed", name: "Mixed" },
   { id: "pebble", name: "Pebble" },
-  { id: "flower", name: "Flower" },
 ];
 
 // Every offered eye frame (curly was retired: it doesn't scan reliably;

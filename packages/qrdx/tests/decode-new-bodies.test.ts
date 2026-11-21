@@ -17,7 +17,7 @@ import {
   unflagged,
 } from "./support/new-shapes";
 
-const NEW_BODIES = newValues(BODY_PATTERN, "flower");
+const NEW_BODIES = newValues(BODY_PATTERN, "pebble");
 const REFERENCES: BodyPattern[] = ["circle", "square", "rounded"];
 
 const pairings = CORNER_EYE_PATTERNS.flatMap((eye) =>
@@ -37,7 +37,7 @@ const PARTNERS = [
 ];
 
 test("the new bodies are the ones added after 0.0.57", () => {
-  expect(NEW_BODIES).toEqual(["flower", "pebble"]);
+  expect(NEW_BODIES).toEqual(["pebble"]);
 });
 
 describe.each(NEW_BODIES)("%s body", (body) => {

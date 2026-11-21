@@ -42,7 +42,6 @@ export const BODY_SHAPES = [
   "random-dots",
   "mosaic",
   "octagon",
-  "flower",
   "pebble",
 ] as const;
 

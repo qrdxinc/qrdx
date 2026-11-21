@@ -128,7 +128,6 @@ const BODIES: Record<BodyPattern, Base> = {
   heart: { label: "Heart", category: "Playful", popularity: null },
   pacman: { label: "Pacman", category: "Playful", popularity: null },
   "circle-mixed": { label: "Mixed", category: "Playful", popularity: null },
-  flower: { label: "Flower", category: "Playful", popularity: null },
   pebble: { label: "Pebble", category: "Rounded", popularity: null },
 };
 

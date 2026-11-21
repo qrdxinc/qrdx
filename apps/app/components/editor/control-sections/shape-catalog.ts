@@ -51,7 +51,6 @@ export const BODY_CATEGORY: Partial<Record<BodyPattern, ShapeCategory>> = {
   pacman: "playful",
   "circle-mixed": "playful",
   pebble: "rounded",
-  flower: "playful",
 };
 
 export const EYE_FEATURED: CornerEyePattern[] = [

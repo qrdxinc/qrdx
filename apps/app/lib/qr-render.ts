@@ -89,7 +89,6 @@ const BODY_DESCRIPTIONS: Partial<Record<BodyPattern, string>> = {
   "random-dots": "Dots in varied sizes (the same every time)",
   mosaic: "Slightly turned square tiles (the same every time)",
   octagon: "Octagons",
-  flower: "Four-petal flowers",
   pebble: "Soft square tiles, each with its own corners (the same every time)",
 };
 

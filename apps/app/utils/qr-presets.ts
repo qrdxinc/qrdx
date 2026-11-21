@@ -1087,7 +1087,7 @@ const looks: Record<string, ThemePreset> = {
       fgColor: "#8C1D4B",
       eyeColor: "#5B0F33",
       dotColor: "#5B0F33",
-      bodyPattern: "flower",
+      bodyPattern: "circle",
       cornerEyePattern: "bud",
       cornerEyeDotPattern: "rounded",
       level: "Q",

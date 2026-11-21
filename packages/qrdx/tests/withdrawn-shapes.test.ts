@@ -39,6 +39,7 @@ const cases = [
 test("lists the shapes withdrawn before release", () => {
   expect(WITHDRAWN_BODY_PATTERNS).toEqual({
     x: "plus",
+    flower: "circle",
     beads: "circle",
     bubble: "circle",
     chain: "circle",

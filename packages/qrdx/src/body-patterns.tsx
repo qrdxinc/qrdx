@@ -40,7 +40,6 @@ export const SHAPED_BODY_PATTERNS = [
   "mosaic",
   "octagon",
   // Added after 0.0.57
-  "flower",
   "pebble",
 ] as const satisfies readonly BodyPattern[];
 
@@ -78,7 +77,6 @@ export const MODULE_SCALE_FLOOR: Partial<Record<BodyPattern, number>> = {
   "random-dots": 0.85,
   mosaic: 0.8,
   octagon: 0.8,
-  flower: 0.75,
 };
 
 /**
@@ -263,18 +261,6 @@ function moduleShape(
       return polygonPath(
         regularPolygon(cx, cy, (unit * 0.48) / Math.cos(Math.PI / 8), 8, 22.5)
       );
-    case "flower": {
-      // Four overlapping round petals around a round heart
-      const d = unit * 0.2;
-      const petal = unit * 0.3;
-      return (
-        circlePath(cx - d, cy - d, petal) +
-        circlePath(cx + d, cy - d, petal) +
-        circlePath(cx + d, cy + d, petal) +
-        circlePath(cx - d, cy + d, petal) +
-        circlePath(cx, cy, unit * 0.3)
-      );
-    }
     case "pebble": {
       // Each tile its own size and corners, so no two look alike
       const h = (unit * (0.94 + 0.06 * hash2(x, y, 3))) / 2;
