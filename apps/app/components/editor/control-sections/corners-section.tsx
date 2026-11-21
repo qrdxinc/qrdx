@@ -51,6 +51,14 @@ export function useBgRadiusLimit(style: QRStyle) {
   );
 }
 
+/** The radius shown (percent, capped to what the code allows) and its cap. */
+function useCornerRadius(style: QRStyle) {
+  const limit = useBgRadiusLimit(style);
+  const maxPercent = Math.floor(limit * 100 + 1e-6);
+  const shown = Math.min(percent(style.bgRadius ?? 0), maxPercent);
+  return { maxPercent, shown };
+}
+
 /**
  * Rounded corners on the background (bgRadius), with the color that shows
  * outside them (backdrop, see-through by default).
@@ -61,20 +69,37 @@ export function CornersSection({
   expanded,
 }: CornersSectionProps) {
   const t = useTranslations("editor.controlSections.cornersSection");
-  const limit = useBgRadiusLimit(style);
-  const maxPercent = Math.floor(limit * 100 + 1e-6);
-  const shown = Math.min(percent(style.bgRadius ?? 0), maxPercent);
-  const rounded = shown > 0;
-  const fixed = maxPercent <= 0;
+  const { shown } = useCornerRadius(style);
 
   return (
     <ControlSection
       badge={<NewLookTag id="corners" />}
       expanded={expanded}
       section="corners"
-      summary={rounded ? `${shown}%` : t("square")}
+      summary={shown > 0 ? `${shown}%` : t("square")}
       title={t("roundedCorners")}
     >
+      <CornersControl onChange={onChange} style={style} />
+    </ControlSection>
+  );
+}
+
+/**
+ * The corner radius slider and Color around it: the Rounded corners
+ * section, and the preview's background toolbar.
+ */
+export function CornersControl({
+  style,
+  onChange,
+}: Omit<CornersSectionProps, "expanded">) {
+  const t = useTranslations("editor.controlSections.cornersSection");
+  const backdropId = React.useId();
+  const { maxPercent, shown } = useCornerRadius(style);
+  const rounded = shown > 0;
+  const fixed = maxPercent <= 0;
+
+  return (
+    <>
       <div className="space-y-2.5">
         <div className="flex items-center justify-between text-sm">
           <span className="text-muted-foreground">{t("cornerRadius")}</span>
@@ -108,12 +133,12 @@ export function CornersSection({
       {rounded && (
         <>
           <div className="flex items-center justify-between gap-3">
-            <Label className="text-sm" htmlFor="corners-backdrop">
+            <Label className="text-sm" htmlFor={backdropId}>
               {t("colorAroundIt")}
             </Label>
             <Switch
               checked={style.backdrop !== undefined}
-              id="corners-backdrop"
+              id={backdropId}
               onCheckedChange={(on) =>
                 onChange({
                   bgRadius: style.bgRadius,
@@ -142,6 +167,6 @@ export function CornersSection({
           )}
         </>
       )}
-    </ControlSection>
+    </>
   );
 }

@@ -139,9 +139,14 @@ export function DotPatternControl() {
 
 /**
  * Eyes: matching outer + centre pairs as one choice (what most people want),
- * with the two shapes on their own behind "Customize outer and center".
+ * with the two shapes on their own behind "Customize outer and center"
+ * (open from the start with `customOpen`, as in the preview's eye menu).
  */
-export function EyeControls() {
+export function EyeControls({
+  customOpen = false,
+}: {
+  customOpen?: boolean;
+} = {}) {
   const t = useTranslations("editor.controlSections.patternControls");
   const { style, setStyle } = useStyleSetter();
   const outer = (style.cornerEyePattern || "square") as CornerEyePattern;
@@ -149,7 +154,7 @@ export function EyeControls() {
   const preset = EYE_PRESETS.find(
     (item) => item.outer === outer && item.centre === centre,
   );
-  const [custom, setCustom] = useState(false);
+  const [custom, setCustom] = useState(customOpen);
   const customId = useId();
 
   return (

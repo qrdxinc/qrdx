@@ -14335,14 +14335,6 @@
     "source": "84853fb7f0ef",
     "status": "machine"
   },
-  "editor.partInline.items.outerShape": {
-    "source": "f215b634a3aa",
-    "status": "machine"
-  },
-  "editor.partInline.items.centerShape": {
-    "source": "5aefcf3ebc59",
-    "status": "machine"
-  },
   "editor.partInline.items.eyeColor": {
     "source": "2816702f68ad",
     "status": "machine"
@@ -14383,16 +14375,8 @@
     "source": "3e314dafdf7c",
     "status": "machine"
   },
-  "editor.partInline.items.padding": {
-    "source": "ee0d7af0bffd",
-    "status": "machine"
-  },
   "editor.partInline.items.frameStyle": {
     "source": "84b161a43043",
-    "status": "machine"
-  },
-  "editor.partInline.items.frameColor": {
-    "source": "2d7228cc6b77",
     "status": "machine"
   },
   "editor.partInline.items.whichEyes": {
@@ -14413,10 +14397,6 @@
   },
   "editor.partInline.items.thisEyesCenterColor": {
     "source": "b18eff2ab4f2",
-    "status": "machine"
-  },
-  "editor.partInline.items.shapesChangeAllThreeEyes": {
-    "source": "2ec9e6c3e0e7",
     "status": "machine"
   },
   "editor.partInline.items.sameAsTheOthers": {
@@ -14505,10 +14485,6 @@
   },
   "editor.partInline.codeShape.names.heart": {
     "source": "770af9d18037",
-    "status": "machine"
-  },
-  "editor.partInline.codeShape.aCircleOrHeartTakes": {
-    "source": "ac2030d88592",
     "status": "machine"
   },
   "editor.partInline.errorCorrection.theLogoRaisesItToLevel": {

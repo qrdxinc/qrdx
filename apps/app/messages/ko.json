@@ -4770,8 +4770,6 @@
         }
       },
       "items": {
-        "outerShape": "바깥 모양",
-        "centerShape": "중앙 모양",
         "eyeColor": "눈 색상",
         "centerColor": "중앙 색상",
         "pattern": "패턴",
@@ -4782,15 +4780,12 @@
         "logoSize": "로고 크기",
         "hideLogo": "로고 숨기기",
         "backgroundColor": "배경 색상",
-        "padding": "여백",
         "frameStyle": "프레임 스타일",
-        "frameColor": "프레임 색상",
         "whichEyes": "적용할 눈 선택",
         "allEyes": "모든 눈",
         "thisEye": "이 눈만",
         "thisEyesColor": "이 눈의 색상",
         "thisEyesCenterColor": "이 눈의 중앙 색상",
-        "shapesChangeAllThreeEyes": "모양은 세 눈 모두에 적용돼요.",
         "sameAsTheOthers": "다른 눈과 동일",
         "eyesWithTheirOwnColor": "고유한 색상이 있는 눈은 그 색상을 유지해요. 하나만 바꾸려면 '이 눈만'을 선택하세요.",
         "logoShapeAndPlate": "로고 모양 및 배경판",
@@ -4820,8 +4815,7 @@
           "square": "사각형",
           "circle": "원형",
           "heart": "하트"
-        },
-        "aCircleOrHeartTakes": "원형이나 하트 모양은 프레임을 대체해요."
+        }
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "로고 때문에 지금은 레벨 {level}(으)로 높아져요."

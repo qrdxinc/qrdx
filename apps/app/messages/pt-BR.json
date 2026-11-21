@@ -4770,8 +4770,6 @@
         }
       },
       "items": {
-        "outerShape": "Forma externa",
-        "centerShape": "Forma central",
         "eyeColor": "Cor do olho",
         "centerColor": "Cor do centro",
         "pattern": "Padrão",
@@ -4782,15 +4780,12 @@
         "logoSize": "Tamanho do logo",
         "hideLogo": "Ocultar logo",
         "backgroundColor": "Cor do fundo",
-        "padding": "Margem interna",
         "frameStyle": "Estilo da moldura",
-        "frameColor": "Cor da moldura",
         "whichEyes": "Quais olhos",
         "allEyes": "Todos os olhos",
         "thisEye": "Este olho",
         "thisEyesColor": "Cor deste olho",
         "thisEyesCenterColor": "Cor do centro deste olho",
-        "shapesChangeAllThreeEyes": "Os formatos mudam os três olhos.",
         "sameAsTheOthers": "Igual aos outros",
         "eyesWithTheirOwnColor": "Olhos com cor própria mantêm a cor. Escolha Este olho para mudar um deles.",
         "logoShapeAndPlate": "Formato e base do logo",
@@ -4820,8 +4815,7 @@
           "square": "Quadrado",
           "circle": "Círculo",
           "heart": "Coração"
-        },
-        "aCircleOrHeartTakes": "Um círculo ou coração substitui a moldura."
+        }
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "Por enquanto, o logo eleva para o nível {level}."

@@ -323,17 +323,44 @@ export function FrameStylePicker({
 }
 
 export function FrameControls() {
+  const { style } = useEditableStyle();
+  const shapes = useShapedCodes();
+  // Inside a collapsed section the picker waits (nothing is on screen)
+  const section = useContext(SectionContext);
+  const active = section ? section.isExpanded : true;
+
+  return (
+    <div className="space-y-4">
+      <FrameStylePicker active={active} shapes={shapes} />
+
+      {shapes.panel}
+
+      <FrameFields
+        shaped={frameShapeOf(style) !== null || shapes.current !== null}
+      />
+    </div>
+  );
+}
+
+/**
+ * Everything the Frame section shows under the picker: the frame's labels,
+ * colors, icons and text size (its spec), a template's notes, Publish frame
+ * for a custom one, or, with no frame, label ideas that add one. The Frame
+ * section, and the preview's frame toolbar.
+ */
+export function FrameFields({
+  shaped: given,
+}: {
+  /** A shaped code is on (or being uploaded): no label field then */
+  shaped?: boolean;
+}) {
   const t = useTranslations("editor.controlSections.frameControls");
   const { style, setStyle } = useEditableStyle();
   const { checkValidSession } = useSessionGuard();
-  const shapes = useShapedCodes();
   const frame: AnyQRFrame = style.frame ?? { style: "none" };
   const custom = frame.style === "custom" ? frame : null;
   // Every frame is edited through its spec: its own, or its style's
   const spec = frameSpecOf(frame);
-  // Inside a collapsed section the picker waits (nothing is on screen)
-  const section = useContext(SectionContext);
-  const active = section ? section.isExpanded : true;
   const [publishOpen, setPublishOpen] = useState(false);
   // The dialog loads on first open, then stays mounted (for its exit)
   const [publishUsed, setPublishUsed] = useState(false);
@@ -342,15 +369,11 @@ export function FrameControls() {
   // uploaded, comes from FrameStylePicker)
   const setFrame = (next: AnyQRFrame) =>
     setStyle({ ...withoutShape(style), frame: next });
-  const shaped = frameShapeOf(style) !== null || shapes.current !== null;
+  const shaped = given ?? frameShapeOf(style) !== null;
   const template = templateOf(style);
 
   return (
-    <div className="space-y-4">
-      <FrameStylePicker active={active} shapes={shapes} />
-
-      {shapes.panel}
-
+    <>
       {spec ? (
         <>
           <FrameSpecFields frame={frame} onChange={setFrame} spec={spec} />
@@ -399,7 +422,7 @@ export function FrameControls() {
           open={publishOpen}
         />
       )}
-    </div>
+    </>
   );
 }
 

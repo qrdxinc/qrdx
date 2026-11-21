@@ -59,7 +59,7 @@ export function moveAlongToolbar(event: KeyboardEvent<HTMLDivElement>) {
 }
 
 export const menuButton =
-  "hover:bg-accent focus-visible:ring-ring/50 aria-expanded:bg-accent aria-pressed:bg-accent inline-flex h-7 items-center gap-1.5 rounded-full px-2 text-xs font-medium outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50";
+  "hover:bg-accent focus-visible:ring-ring/50 aria-expanded:bg-accent aria-pressed:bg-accent relative inline-flex h-7 items-center gap-1.5 rounded-full px-2 text-xs font-medium outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50";
 
 // w-max: an absolute box near the container's edge would otherwise shrink
 // to fit, and placing it by its width would then move it again

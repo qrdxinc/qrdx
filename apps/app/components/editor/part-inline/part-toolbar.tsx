@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@repo/design-system/lib/utils";
 import { Setting4, Shuffle } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import {
@@ -9,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import type { DesignSection } from "@/lib/playground-links";
 import {
   Divider,
   inlineMenuSelector,
@@ -20,7 +22,8 @@ import {
 } from "../frame-inline/inline-toolbar";
 import { placeMenu } from "../frame-inline/menu-placement";
 import type { Box } from "../frame-inline/preview-labels";
-import type { PartItem } from "./part-controls";
+import type { PartItem, PartMenuItem } from "./part-controls";
+import { ItemMarks, useItemLabel } from "./part-marks";
 import { type PartId, toolbarAnchor } from "./part-targets";
 
 /** Room between a part and the outline drawn around it while it's edited. */
@@ -42,18 +45,56 @@ export interface PartToolbarProps {
   /** The preview container's size, to keep the toolbar inside it */
   bounds: { width: number; height: number };
   onRandom: () => void;
-  onMoreOptions: () => void;
-  /** Enter */
-  onCommit: () => void;
+  /** Opens the Design tab at `section` (the last menu's), or the part's own */
+  onMoreOptions: (section?: DesignSection) => void;
+  /** Enter or Escape: the edit closes, focus goes back to the part */
+  onClose: () => void;
   /** Focus left the editor (Tab past the toolbar) */
   onLeave: () => void;
-  onCancel: () => void;
+}
+
+/** Keeps a toolbar inside the preview: rows wrap past this width. */
+const EDGE = 8;
+
+/** A menu button's label, its New tag and its "won't scan here" dot. */
+function MenuItem({
+  item,
+  open,
+  onOpenChange,
+  side,
+}: {
+  item: PartMenuItem;
+  open: boolean;
+  onOpenChange: (menu: string | null) => void;
+  side: "top" | "bottom";
+}) {
+  const label = useItemLabel(item);
+  return (
+    <MenuPopover
+      className={item.className}
+      kind="part"
+      label={label}
+      menu={item.id}
+      onOpenChange={onOpenChange}
+      open={open}
+      side={side}
+      trigger={
+        <>
+          {item.trigger}
+          <ItemMarks item={item} placement="corner" />
+        </>
+      }
+    >
+      {item.content}
+    </MenuPopover>
+  );
 }
 
 /**
  * The toolbar of one part of the code (eyes, dots, logo, background or
  * frame), floating beside it with an outline around the part. Every menu
- * opens away from the code, so the change stays in view.
+ * opens away from the code, so the change stays in view. A toolbar wider
+ * than the preview wraps onto a second row.
  */
 export function PartToolbar({
   part,
@@ -66,13 +107,23 @@ export function PartToolbar({
   bounds,
   onRandom,
   onMoreOptions,
-  onCommit,
+  onClose,
   onLeave,
-  onCancel,
 }: PartToolbarProps) {
   const t = useTranslations("editor.partInline");
   const toolbarRef = useRef<HTMLDivElement>(null);
   const [menu, setMenu] = useState<string | null>(null);
+  // The menu opened last: More options opens its Design section
+  const lastMenu = useRef<string | null>(null);
+  const openMenu = (next: string | null) => {
+    if (next) lastMenu.current = next;
+    setMenu(next);
+  };
+  const lastSection = () =>
+    items.find(
+      (item): item is PartMenuItem =>
+        item.kind === "menu" && item.id === lastMenu.current,
+    )?.section;
   const [size, setSize] = useState({ width: 0, height: 0 });
 
   // Focus the first button once the toolbar shows (it is hidden, and so
@@ -129,13 +180,13 @@ export function PartToolbar({
     if (event.key === "Escape") {
       event.preventDefault();
       event.stopPropagation();
-      onCancel();
+      onClose();
       return;
     }
-    // Enter on a button presses it; anywhere else it keeps the edit
+    // Enter on a button presses it; anywhere else it closes the edit
     if (event.key === "Enter" && !target.closest("button, input")) {
       event.preventDefault();
-      onCommit();
+      onClose();
     }
   };
 
@@ -174,7 +225,11 @@ export function PartToolbar({
       <div
         aria-label={t(`parts.${part}.options`)}
         aria-orientation="horizontal"
-        className={toolbarClass}
+        className={cn(
+          toolbarClass,
+          // One row is a pill; two rows keep the same corners
+          "flex-wrap justify-center rounded-[18px]",
+        )}
         data-part-toolbar={part}
         onKeyDown={moveAlongToolbar}
         ref={toolbarRef}
@@ -182,24 +237,19 @@ export function PartToolbar({
         style={{
           left: placed.left,
           top: placed.top,
+          maxWidth: Math.max(0, bounds.width - 2 * EDGE),
           visibility: size.width ? "visible" : "hidden",
         }}
       >
         {items.map((item) =>
           item.kind === "menu" ? (
-            <MenuPopover
-              className={item.className}
+            <MenuItem
+              item={item}
               key={item.id}
-              kind="part"
-              label={item.label}
-              menu={item.id}
-              onOpenChange={setMenu}
+              onOpenChange={openMenu}
               open={menu === item.id}
               side={side}
-              trigger={item.trigger}
-            >
-              {item.content}
-            </MenuPopover>
+            />
           ) : item.kind === "segment" ? (
             // biome-ignore lint/a11y/useSemanticElements: a two-way switch of toggle buttons
             <div
@@ -241,7 +291,10 @@ export function PartToolbar({
 
         <Divider />
 
-        <ToolbarButton label={t(`parts.${part}.more`)} onClick={onMoreOptions}>
+        <ToolbarButton
+          label={t(`parts.${part}.more`)}
+          onClick={() => onMoreOptions(lastSection())}
+        >
           <Setting4 aria-hidden className="size-4" />
         </ToolbarButton>
       </div>

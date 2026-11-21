@@ -4770,8 +4770,6 @@
         }
       },
       "items": {
-        "outerShape": "Forma esterna",
-        "centerShape": "Forma centrale",
         "eyeColor": "Colore occhi",
         "centerColor": "Colore centro",
         "pattern": "Motivo",
@@ -4782,15 +4780,12 @@
         "logoSize": "Dimensione logo",
         "hideLogo": "Nascondi logo",
         "backgroundColor": "Colore sfondo",
-        "padding": "Margine",
         "frameStyle": "Stile cornice",
-        "frameColor": "Colore cornice",
         "whichEyes": "Quali occhi",
         "allEyes": "Tutti gli occhi",
         "thisEye": "Questo occhio",
         "thisEyesColor": "Colore di questo occhio",
         "thisEyesCenterColor": "Colore del centro di questo occhio",
-        "shapesChangeAllThreeEyes": "Le forme cambiano tutti e tre gli occhi.",
         "sameAsTheOthers": "Come gli altri",
         "eyesWithTheirOwnColor": "Gli occhi con un colore proprio lo mantengono. Scegli Questo occhio per cambiarne uno.",
         "logoShapeAndPlate": "Forma e base del logo",
@@ -4820,8 +4815,7 @@
           "square": "Quadrato",
           "circle": "Cerchio",
           "heart": "Cuore"
-        },
-        "aCircleOrHeartTakes": "Un cerchio o un cuore prende il posto della cornice."
+        }
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "Per ora il logo lo porta al livello {level}."

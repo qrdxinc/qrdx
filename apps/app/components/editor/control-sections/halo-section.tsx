@@ -6,6 +6,7 @@ import { Switch } from "@repo/design-system/components/ui/switch";
 import { useTranslations } from "next-intl";
 import { getSolidColor, type HaloRisk, resolveHalo } from "qrdx";
 import { HALO_COLOR_DEFAULT, HALO_WIDTH_MAX, HALO_WIDTH_MIN } from "qrdx/types";
+import { useId } from "react";
 import ControlSection from "@/components/editor/control-section";
 import { GradientPicker } from "@/components/editor/gradient-picker";
 import type { QRStyle } from "@/types/theme";
@@ -31,6 +32,20 @@ interface HaloSectionProps {
 }
 
 /**
+ * The collapsed section's summary: "Won't scan here" while a halo is on
+ * where the engine can't draw it, its width while it's drawn, else `off`.
+ */
+export function haloSummary(
+  style: QRStyle,
+  copy: { off: string; wontScanHere: string },
+): string {
+  if (style.halo === undefined) return copy.off;
+  if (haloRisk(style)) return copy.wontScanHere;
+  const halo = resolveHalo(style.halo);
+  return halo ? `${percent(halo.width)}%` : copy.off;
+}
+
+/**
  * A halo: a light rim around every dot and eye (qrdx `halo`). Its width is
  * a share of a dot, between HALO_WIDTH_MIN and HALO_WIDTH_MAX. The engine
  * draws it only on an opaque background, in a rim at least as light as
@@ -41,6 +56,34 @@ interface HaloSectionProps {
 export function HaloSection({ style, onChange, expanded }: HaloSectionProps) {
   const t = useTranslations("editor.controlSections.haloSection");
   const tiles = useTranslations("editor.controlSections.optionTiles");
+
+  return (
+    <ControlSection
+      badge={<NewLookTag id="halo" />}
+      expanded={expanded}
+      section="halo"
+      summary={haloSummary(style, {
+        off: t("off"),
+        wontScanHere: tiles("wontScanHere"),
+      })}
+      title={t("halo")}
+    >
+      <HaloControl onChange={onChange} style={style} />
+    </ControlSection>
+  );
+}
+
+/**
+ * The halo's switch, why it isn't drawn here, its width and color: the
+ * Halo section, and the preview's dots toolbar.
+ */
+export function HaloControl({
+  style,
+  onChange,
+}: Omit<HaloSectionProps, "expanded">) {
+  const t = useTranslations("editor.controlSections.haloSection");
+  const tiles = useTranslations("editor.controlSections.optionTiles");
+  const switchId = useId();
   const on = style.halo !== undefined;
   // Why the engine wouldn't draw it here (with one switched on)
   const risk = haloRisk(style);
@@ -49,27 +92,15 @@ export function HaloSection({ style, onChange, expanded }: HaloSectionProps) {
   const reason = risk && REASON_COPY[risk.reason];
 
   return (
-    <ControlSection
-      badge={<NewLookTag id="halo" />}
-      expanded={expanded}
-      section="halo"
-      summary={
-        on && risk
-          ? tiles("wontScanHere")
-          : halo
-            ? `${percent(halo.width)}%`
-            : t("off")
-      }
-      title={t("halo")}
-    >
+    <>
       <div className="flex items-center justify-between gap-3">
-        <Label className="text-sm" htmlFor="halo-on">
+        <Label className="text-sm" htmlFor={switchId}>
           {t("showAHalo")}
         </Label>
         {/* Off is always one click away; on only where it can be drawn */}
         <Switch
           {...haloSwitch(style)}
-          id="halo-on"
+          id={switchId}
           onCheckedChange={(next) =>
             onChange(next ? haloToTurnOn(style) : undefined)
           }
@@ -122,6 +153,6 @@ export function HaloSection({ style, onChange, expanded }: HaloSectionProps) {
           />
         </>
       )}
-    </ControlSection>
+    </>
   );
 }

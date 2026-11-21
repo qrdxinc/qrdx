@@ -106,11 +106,27 @@ export function useLogoUpload(onLogo: (dataUrl: string) => void) {
   };
 }
 
+/** What useLogoUpload gives: the file input, and a way to open it. */
+export type LogoUpload = ReturnType<typeof useLogoUpload>;
+
 interface LogoControlsProps {
   style: Partial<ThemeStyles>;
   onStyleChange: (styles: Partial<ThemeStyles>) => void;
   /** Open the section (e.g. when jumping here from the old Settings tab) */
   expanded?: boolean;
+}
+
+/** The logo's name in the collapsed Logo header. */
+function logoNameOf(style: Partial<ThemeStyles>) {
+  const iconName = logoIconName(style.customLogo);
+  const brandName = brandLogoName(style.customLogo);
+  return iconName
+    ? `${iconName} icon`
+    : brandName
+      ? `${brandName} logo`
+      : style.customLogo
+        ? "Your logo"
+        : "QRdx logo";
 }
 
 export function LogoControls({
@@ -122,16 +138,44 @@ export function LogoControls({
   const upload = useLogoUpload((logo) =>
     onStyleChange({ ...style, customLogo: logo, showLogo: true }),
   );
+  const logoName = logoNameOf(style);
+
+  return (
+    <ControlSection
+      expanded={expanded}
+      hint="logo"
+      id="section-logo"
+      summary={(style.showLogo ?? false) ? logoName : t("off")}
+      title={t("logo")}
+    >
+      {upload.input}
+      <LogoSourceControls
+        onStyleChange={onStyleChange}
+        style={style}
+        upload={upload}
+      />
+    </ControlSection>
+  );
+}
+
+/**
+ * Everything the Logo section holds: the switch, quick icons, brand logos,
+ * and the logo shown with Upload, Replace and Remove. The Logo section, the
+ * preview's logo toolbar, and its background toolbar while no logo shows.
+ * `upload` comes from the caller, which renders its input where it outlives
+ * a menu.
+ */
+export function LogoSourceControls({
+  style,
+  onStyleChange,
+  upload,
+}: Omit<LogoControlsProps, "expanded"> & { upload: LogoUpload }) {
+  const t = useTranslations("editor.controlSections.logoControls");
+  const switchId = React.useId();
   const showLogo = style.showLogo ?? false;
   const iconName = logoIconName(style.customLogo);
   const brandName = brandLogoName(style.customLogo);
-  const logoName = iconName
-    ? `${iconName} icon`
-    : brandName
-      ? `${brandName} logo`
-      : style.customLogo
-        ? "Your logo"
-        : "QRdx logo";
+  const logoName = logoNameOf(style);
   const brandButtonLabel =
     brandName && showLogo
       ? brandName
@@ -164,17 +208,10 @@ export function LogoControls({
   };
 
   return (
-    <ControlSection
-      expanded={expanded}
-      hint="logo"
-      id="section-logo"
-      summary={showLogo ? logoName : t("off")}
-      title={t("logo")}
-    >
-      {upload.input}
+    <>
       <div className="flex items-center justify-between gap-3">
         <div className="space-y-0.5">
-          <Label className="cursor-pointer text-sm" htmlFor="show-logo">
+          <Label className="cursor-pointer text-sm" htmlFor={switchId}>
             {t("logoInTheCenter")}
           </Label>
           <p className="text-muted-foreground text-xs">
@@ -183,7 +220,7 @@ export function LogoControls({
         </div>
         <Switch
           checked={showLogo}
-          id="show-logo"
+          id={switchId}
           onCheckedChange={(value) =>
             onStyleChange({ ...style, showLogo: value })
           }
@@ -279,6 +316,6 @@ export function LogoControls({
           </div>
         </div>
       )}
-    </ControlSection>
+    </>
   );
 }

@@ -12,6 +12,22 @@ import { HaloSection } from "./halo-section";
 import { LogoOptionsSection } from "./logo-options-section";
 import { ShadowSection } from "./shadow-section";
 
+/**
+ * `styles` with `change` merged in. Cleared options leave the style, so it
+ * saves and links as before. The Design tab's sections and the preview's
+ * part toolbars (part-inline/) merge every change this way.
+ */
+export function withStyleChange(
+  styles: QRStyle,
+  change: Partial<QRStyle>,
+): QRStyle {
+  const next: QRStyle = { ...styles, ...change };
+  for (const key of Object.keys(change) as (keyof QRStyle)[]) {
+    if (next[key] === undefined) delete next[key];
+  }
+  return next;
+}
+
 interface CustomizationSectionsProps {
   styles: QRStyle;
   onChange: (styles: QRStyle) => void;
@@ -35,14 +51,8 @@ export function CustomizationSections({
     () => ({ ...defaultThemeState.styles, ...styles }),
     [styles],
   );
-  const update = (change: Partial<QRStyle>) => {
-    const next: QRStyle = { ...styles, ...change };
-    // Cleared options leave the style, so it saves and links as before
-    for (const key of Object.keys(change) as (keyof QRStyle)[]) {
-      if (next[key] === undefined) delete next[key];
-    }
-    onChange(next);
-  };
+  const update = (change: Partial<QRStyle>) =>
+    onChange(withStyleChange(styles, change));
 
   return (
     <>

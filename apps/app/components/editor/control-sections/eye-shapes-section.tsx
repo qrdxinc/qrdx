@@ -40,6 +40,75 @@ interface EyeShapesSectionProps {
 }
 
 /**
+ * One eye's frame and centre pickers (the Eye shapes section, and the
+ * preview's eye toolbar on This eye). A pick is judged for that eye alone.
+ */
+export function EyeShapeControls({
+  style,
+  position,
+  onChange,
+}: {
+  /** The style with defaults filled in */
+  style: QRStyle;
+  position: EyePosition;
+  onChange: (eyeShapes: QRStyle["eyeShapes"]) => void;
+}) {
+  const t = useTranslations("editor.controlSections.eyeShapesSection");
+  const current = eyeShapeAt(style, position);
+  return (
+    <>
+      <ShapePicker
+        blockedOf={(id) => eyeShapeBlocked(style, position, "outer", id)}
+        category={(id) => EYE_CATEGORY[id] ?? "decorative"}
+        featured={EYE_FEATURED}
+        label={t("frame")}
+        noun={t("frameShapes")}
+        onChange={(id) =>
+          onChange(withEyeShape(style.eyeShapes, position, "outer", id))
+        }
+        options={eyePatterns}
+        preview={(id) => (
+          <span className={fill}>
+            <EyePatterns pattern={id} />
+          </span>
+        )}
+        riskOf={(id) => eyeShapeRisk(style, position, "outer", id)}
+        value={current.outer}
+      />
+      <ShapePicker
+        blockedOf={(id) => eyeShapeBlocked(style, position, "inner", id)}
+        category={(id) => EYE_DOT_CATEGORY[id] ?? "decorative"}
+        featured={EYE_DOT_FEATURED}
+        label={t("center")}
+        noun={t("centerShapes")}
+        onChange={(id) =>
+          onChange(withEyeShape(style.eyeShapes, position, "inner", id))
+        }
+        options={eyeDotPatterns}
+        preview={(id) => (
+          <span className={fill}>
+            <EyeDotPatterns pattern={id} />
+          </span>
+        )}
+        riskOf={(id) => eyeShapeRisk(style, position, "inner", id)}
+        value={current.inner}
+      />
+    </>
+  );
+}
+
+/** Takes every eye back to the Eyes shapes. */
+export function SameEyeShapesButton({ onClick }: { onClick: () => void }) {
+  const t = useTranslations("editor.controlSections.eyeShapesSection");
+  return (
+    <Button onClick={onClick} size="sm" type="button" variant="outline">
+      <RefreshLeftSquare />
+      {t("useTheSameShapesFor")}
+    </Button>
+  );
+}
+
+/**
  * Per-eye shapes: each corner eye's frame and centre can differ from the
  * Eyes shapes. One eye at a time (a row of three), with the same pickers
  * the Eyes section uses; a pick is judged for that eye alone, so a shape
@@ -53,7 +122,6 @@ export function EyeShapesSection({
   const t = useTranslations("editor.controlSections.eyeShapesSection");
   const [position, setPosition] = React.useState<EyePosition>("topLeft");
   const custom = hasEyeShapes(style);
-  const current = eyeShapeAt(style, position);
 
   return (
     <ControlSection
@@ -105,53 +173,8 @@ export function EyeShapesSection({
           </button>
         ))}
       </div>
-      <ShapePicker
-        blockedOf={(id) => eyeShapeBlocked(style, position, "outer", id)}
-        category={(id) => EYE_CATEGORY[id] ?? "decorative"}
-        featured={EYE_FEATURED}
-        label={t("frame")}
-        noun={t("frameShapes")}
-        onChange={(id) =>
-          onChange(withEyeShape(style.eyeShapes, position, "outer", id))
-        }
-        options={eyePatterns}
-        preview={(id) => (
-          <span className={fill}>
-            <EyePatterns pattern={id} />
-          </span>
-        )}
-        riskOf={(id) => eyeShapeRisk(style, position, "outer", id)}
-        value={current.outer}
-      />
-      <ShapePicker
-        blockedOf={(id) => eyeShapeBlocked(style, position, "inner", id)}
-        category={(id) => EYE_DOT_CATEGORY[id] ?? "decorative"}
-        featured={EYE_DOT_FEATURED}
-        label={t("center")}
-        noun={t("centerShapes")}
-        onChange={(id) =>
-          onChange(withEyeShape(style.eyeShapes, position, "inner", id))
-        }
-        options={eyeDotPatterns}
-        preview={(id) => (
-          <span className={fill}>
-            <EyeDotPatterns pattern={id} />
-          </span>
-        )}
-        riskOf={(id) => eyeShapeRisk(style, position, "inner", id)}
-        value={current.inner}
-      />
-      {custom && (
-        <Button
-          onClick={() => onChange(undefined)}
-          size="sm"
-          type="button"
-          variant="outline"
-        >
-          <RefreshLeftSquare />
-          {t("useTheSameShapesFor")}
-        </Button>
-      )}
+      <EyeShapeControls onChange={onChange} position={position} style={style} />
+      {custom && <SameEyeShapesButton onClick={() => onChange(undefined)} />}
     </ControlSection>
   );
 }

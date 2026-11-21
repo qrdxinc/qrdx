@@ -17,8 +17,15 @@ import {
 // Handles the preview shows while a part is edited: drag the logo to move
 // it, its corner to resize it (arrow keys too), and the code's edge to
 // change the quiet zone. They belong to the open edit (data-part-inline), so
-// using them never ends it, and every change is a draft like the toolbar's.
-// Pointer events, so touch works the same as a mouse.
+// using them never ends it. A drag tells `gesture` when it starts and ends,
+// so the overlay records the whole drag as one undo step. Pointer events,
+// so touch works the same as a mouse.
+
+/** Where a drag starts and ends (the overlay makes the drag one undo step). */
+export interface DragGesture {
+  start: () => void;
+  end: () => void;
+}
 
 const handle =
   "bg-background border-foreground/60 pointer-events-auto absolute border shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-current/70 touch-none";
@@ -27,6 +34,7 @@ const handle =
 function useDrag<T>(
   onStart: () => T,
   onMove: (start: T, delta: { dx: number; dy: number }) => void,
+  gesture?: DragGesture,
 ) {
   const drag = useRef<{ id: number; x: number; y: number; start: T } | null>(
     null,
@@ -43,6 +51,7 @@ function useDrag<T>(
         y: event.clientY,
         start: onStart(),
       };
+      gesture?.start();
     },
     onPointerMove: (event: PointerEvent<HTMLElement>) => {
       const current = drag.current;
@@ -56,9 +65,12 @@ function useDrag<T>(
       if (drag.current?.id !== event.pointerId) return;
       drag.current = null;
       event.currentTarget.releasePointerCapture(event.pointerId);
+      gesture?.end();
     },
     onPointerCancel: () => {
+      if (!drag.current) return;
       drag.current = null;
+      gesture?.end();
     },
   };
 }
@@ -75,6 +87,7 @@ export function LogoHandles({
   size,
   maxSize,
   color,
+  gesture,
   onOptions,
   onHide,
   onCancel,
@@ -91,9 +104,10 @@ export function LogoHandles({
   maxSize: number;
   /** The outline and handle color (contrasts with the code under it) */
   color: string;
+  gesture?: DragGesture;
   onOptions: (change: Partial<LogoOptions>) => void;
   onHide: () => void;
-  /** Escape: the edit is put back */
+  /** Escape: the edit closes */
   onCancel: () => void;
 }) {
   const t = useTranslations("editor.partInline.handles");
@@ -102,10 +116,12 @@ export function LogoHandles({
   const move = useDrag(
     () => ({ logo, symbol }),
     (start, delta) => onOptions(movedLogo(delta, start)),
+    gesture,
   );
   const resize = useDrag(
     () => ({ logo, code }),
     (start, delta) => onOptions({ size: resizedLogo(delta, start, maxSize) }),
+    gesture,
   );
 
   const onMoveKey = (event: KeyboardEvent<HTMLElement>) => {
@@ -202,6 +218,7 @@ export function PaddingHandle({
   modulePx,
   margin,
   max,
+  gesture,
   onMargin,
   onCancel,
 }: {
@@ -211,8 +228,9 @@ export function PaddingHandle({
   modulePx: number;
   margin: number;
   max: number;
+  gesture?: DragGesture;
   onMargin: (margin: number) => void;
-  /** Escape: the edit is put back */
+  /** Escape: the edit closes */
   onCancel: () => void;
 }) {
   const t = useTranslations("editor.partInline.handles");
@@ -221,6 +239,7 @@ export function PaddingHandle({
     (start, delta) =>
       // The handle is on the right edge: dragging left is inward
       onMargin(marginFromDrag(start.margin, -delta.dx, start.modulePx, max)),
+    gesture,
   );
   const width = 8;
   const height = 32;

@@ -15,19 +15,21 @@ export type FocusColorId =
   | "halo.color"
   | "shadow.color";
 
-interface ColorRefEntry {
-  ref: HTMLElement | null;
-}
-
 interface ColorControlFocusState {
-  colorRefs: Map<FocusColorId, ColorRefEntry>;
+  /**
+   * The controls showing each color, oldest first: the Design tab's, then a
+   * copy in the preview's part toolbars while one is open. Focusing goes
+   * to the oldest.
+   */
+  colorRefs: Map<FocusColorId, (HTMLElement | null)[]>;
   highlightTarget: FocusColorId | null;
   /**
    * Programmatically focus the color control identified by `name`.
    */
   focusColor: (name: FocusColorId) => void;
   registerColor: (name: FocusColorId, ref: HTMLElement | null) => void;
-  unregisterColor: (name: FocusColorId) => void;
+  /** Forgets the control `ref` (another one showing the color stays). */
+  unregisterColor: (name: FocusColorId, ref: HTMLElement | null) => void;
 }
 
 export const useColorControlFocusStore = create<ColorControlFocusState>(
@@ -38,26 +40,29 @@ export const useColorControlFocusStore = create<ColorControlFocusState>(
     registerColor: (name, ref) =>
       set((state) => {
         const map = new Map(state.colorRefs);
-        map.set(name, { ref });
+        map.set(name, [...(map.get(name) ?? []), ref]);
         return { colorRefs: map };
       }),
 
-    unregisterColor: (name) =>
+    unregisterColor: (name, ref) =>
       set((state) => {
         const map = new Map(state.colorRefs);
-        map.delete(name);
+        const left = (map.get(name) ?? []).filter((other) => other !== ref);
+        if (left.length > 0) map.set(name, left);
+        else map.delete(name);
         return { colorRefs: map };
       }),
 
     focusColor: (name) => {
       const { colorRefs } = get();
-      const entry = colorRefs.get(name);
-      if (!entry) return;
+      const refs = colorRefs.get(name);
+      if (!refs) return;
+      const ref = refs[0] ?? null;
 
       // Scroll & highlight after a brief delay to ensure expansion has occurred.
       setTimeout(() => {
-        if (entry.ref?.scrollIntoView) {
-          entry.ref.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (ref?.scrollIntoView) {
+          ref.scrollIntoView({ behavior: "smooth", block: "center" });
         }
         set({ highlightTarget: name });
         setTimeout(() => set({ highlightTarget: null }), 3000);
