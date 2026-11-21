@@ -1,18 +1,19 @@
 // Sharp renders (no camera blur), as a downloaded PNG or SVG shows on a
-// screen: the SVG drawn by resvg, the rasterizer getQRAsPNG uses in Node.
+// screen: the SVG drawn by resvg, the rasterizer getQRAsPNG uses in Node, in
+// a short-lived child (sharp-reads.mjs: resvg keeps its memory until exit).
 // Each render, and each camera-model frame (qr.ts), is decoded with jsQR
 // and with ZXing (zxing-wasm, the reader the app's scanner is built on).
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
-import { Resvg } from "@resvg/resvg-js";
+import { fileURLToPath } from "node:url";
 import { prepareZXingModule, readBarcodes } from "zxing-wasm/reader";
 import { DEFAULT_MARGIN } from "../../src/constants";
 import { getLayoutMargin } from "../../src/qr-shape";
 import { resolveErrorLevel } from "../../src/utils";
 import type { QRProps } from "../../types";
+import { childReads } from "./child-reads";
 import { renderSvg, symbolSize } from "./qr";
 import {
-  createImage,
   decodeQR,
   type RasterImage,
   rasterizeSvg,
@@ -32,6 +33,11 @@ prepareZXingModule({
   fireImmediately: true,
 });
 
+/** The child that draws sharp renders with resvg and reads them. */
+const SHARP_READS = fileURLToPath(
+  new URL("./sharp-reads.mjs", import.meta.url)
+);
+
 /** ZXing's reading of the QR code in `image`, or null. */
 export async function decodeZXing(image: RasterImage): Promise<string | null> {
   const results = await readBarcodes(image, { formats: ["QRCode"] });
@@ -45,30 +51,6 @@ function modulesAcross(props: QRProps): number {
     symbol +
     2 * getLayoutMargin(symbol, props.margin ?? DEFAULT_MARGIN, props.shape)
   );
-}
-
-/**
- * `props` drawn by resvg at `modulePx` per module, on a white page with a
- * 4-module border (the layout capture() uses).
- */
-export function sharpRender(props: QRProps, modulePx: number): RasterImage {
-  const width = modulesAcross(props) * modulePx;
-  const rendered = new Resvg(renderSvg(props), {
-    fitTo: { mode: "width", value: width },
-    background: "#ffffff",
-  }).render();
-  const pad = 4 * modulePx;
-  const page = createImage(rendered.width + 2 * pad, rendered.height + 2 * pad);
-  for (let y = 0; y < rendered.height; y++) {
-    page.data.set(
-      rendered.pixels.subarray(
-        y * rendered.width * 4,
-        (y + 1) * rendered.width * 4
-      ),
-      ((y + pad) * page.width + pad) * 4
-    );
-  }
-  return page;
 }
 
 /** The camera model's frame of `props`: what capture() decodes. */
@@ -97,21 +79,36 @@ export async function missedRenders(
   values: readonly string[],
   sizes: RenderSizes
 ): Promise<string[]> {
+  // Sharp renders: drawn by resvg and read in one short-lived child process
+  const jobs = values.flatMap((value) => {
+    const props = { ...style, value } as QRProps;
+    const svg = renderSvg(props);
+    const modules = modulesAcross(props);
+    return sizes.sharp.map((modulePx) => ({
+      svg,
+      width: modules * modulePx,
+      pad: 4 * modulePx,
+      value,
+    }));
+  });
+  const reads = childReads<{ jsqr: boolean; zxing: boolean }[]>(SHARP_READS, {
+    jobs,
+  });
   const missed: string[] = [];
   for (const [index, value] of values.entries()) {
+    for (const [at, modulePx] of sizes.sharp.entries()) {
+      const read = reads[index * sizes.sharp.length + at];
+      if (!read?.jsqr) missed.push(`sharp ${modulePx}px jsQR v${index}`);
+      if (!read?.zxing) missed.push(`sharp ${modulePx}px ZXing v${index}`);
+    }
     const props = { ...style, value } as QRProps;
-    for (const kind of ["sharp", "camera"] as const) {
-      for (const modulePx of sizes[kind]) {
-        const image =
-          kind === "sharp"
-            ? sharpRender(props, modulePx)
-            : cameraRender(props, modulePx);
-        if (decodeQR(image) !== value) {
-          missed.push(`${kind} ${modulePx}px jsQR v${index}`);
-        }
-        if ((await decodeZXing(image)) !== value) {
-          missed.push(`${kind} ${modulePx}px ZXing v${index}`);
-        }
+    for (const modulePx of sizes.camera) {
+      const image = cameraRender(props, modulePx);
+      if (decodeQR(image) !== value) {
+        missed.push(`camera ${modulePx}px jsQR v${index}`);
+      }
+      if ((await decodeZXing(image)) !== value) {
+        missed.push(`camera ${modulePx}px ZXing v${index}`);
       }
     }
   }
