@@ -10,7 +10,6 @@
 // and 9 px per module wherever it reads without one. Just outside the edges
 // (customize-options.test.ts) the engine draws the code without a halo.
 // Nothing here may be loosened: a case that stops reading is a rule change.
-import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { getQRData } from "../src/helpers";
@@ -23,6 +22,7 @@ import {
   HALO_WIDTH_MIN,
 } from "../types/constants";
 import { BODY_PATTERN } from "../types/image-pattern";
+import { childReads } from "./support/child-reads";
 import { renderSvg, symbolSize } from "./support/qr";
 
 const VALUE = "https://qrdx.dev/q/Ab3dE9x?utm=campaign";
@@ -106,16 +106,11 @@ function reads(codes: { props: QRProps; page: string }[]): Set<string>[] {
     const svg = renderSvg(props);
     return SIZES.map((modulePx) => ({ svg, page, modulePx }));
   });
-  const result = JSON.parse(
-    execFileSync(process.execPath, [READER], {
-      input: JSON.stringify({
-        value: VALUE,
-        modules: symbolSize(VALUE, "M") + 8,
-        jobs,
-      }),
-      maxBuffer: 16 * 1024 * 1024,
-    }).toString()
-  ) as [boolean, boolean][];
+  const result = childReads<[boolean, boolean][]>(READER, {
+    value: VALUE,
+    modules: symbolSize(VALUE, "M") + 8,
+    jobs,
+  });
   return codes.map((_, code) => {
     const read = new Set<string>();
     SIZES.forEach((modulePx, size) => {

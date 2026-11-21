@@ -22,6 +22,8 @@ import { resolveQRCodeProps, toSVGString } from "../src/core";
 import { getOfficialFrame } from "../src/frames/official";
 import * as source from "../src/vue";
 import type { QRSVGOptions } from "../types";
+import { domSnapshot } from "./support/dom-snapshot";
+import { lookToggles } from "./support/look-steps";
 import { type ParityCase, parityCases } from "./support/parity-cases";
 import { decodeQR, rasterizeSvg } from "./support/raster";
 
@@ -36,6 +38,8 @@ const LOGO = `data:image/svg+xml,${encodeURIComponent(
 // every frame style, built-in and official frame specs, shapes, art,
 // templates (built-in and custom), markers and root attributes.
 const CASES = parityCases();
+/** For a test that checks every case in one go: 30 s is short on a loaded runner. */
+const MATRIX_TIMEOUT = 120_000;
 
 // A path, not `new URL(…, import.meta.url)`, which Vite rewrites to an
 // http:// asset URL under the jsdom environment
@@ -143,60 +147,68 @@ for (const [label, entry] of ENTRIES) {
   describe.skipIf(!entry)(`qrdx/vue (${label})`, () => {
     const api = entry as VueEntry;
 
-    test("renders the core's markup on the server, byte for byte or as the same DOM", async () => {
-      let identical = 0;
-      for (const c of CASES) {
-        const html = await renderVue(
-          createSSRApp({ render: () => h(componentFor(api, c), c.props) })
-        );
-        const markup = expected(c);
-        identical += html === markup ? 1 : 0;
-        expect(html, c.name).toBe(inVueSpelling(markup));
-        expect(asDOM(html), c.name).toBe(asDOM(markup));
-      }
-      // Only a value with a quote, a label with one and the OG logo's <img>
-      expect(identical).toBeGreaterThanOrEqual(CASES.length - 3);
-    });
+    // One test for the whole set, as its last check counts the cases that
+    // come out byte for byte. Rendering every case on Vue's server renderer
+    // took up to 13 s in the full engine suite on a loaded machine (21 Nov
+    // 2026), so it gets MATRIX_TIMEOUT rather than the default 30 s.
+    test(
+      "renders the core's markup on the server, byte for byte or as the same DOM",
+      async () => {
+        let identical = 0;
+        for (const c of CASES) {
+          const html = await renderVue(
+            createSSRApp({ render: () => h(componentFor(api, c), c.props) })
+          );
+          const markup = expected(c);
+          identical += html === markup ? 1 : 0;
+          expect(html, c.name).toBe(inVueSpelling(markup));
+          expect(asDOM(html), c.name).toBe(asDOM(markup));
+        }
+        // Only a value with a quote, a label with one and the OG logo's <img>
+        expect(identical).toBeGreaterThanOrEqual(CASES.length - 3);
+      },
+      MATRIX_TIMEOUT
+    );
 
-    test("renders the same DOM in the browser", () => {
-      for (const c of CASES) {
+    // One test per case, as the Preact and Solid suites do: the whole set in
+    // one test ran past its 30 s timeout on a loaded CI runner (#752)
+    test.each(CASES.map((c) => [c.name, c] as const))(
+      "renders the same DOM in the browser: %s",
+      (_name, c) => {
         const container = mount();
         const app = createApp({
           render: () => h(componentFor(api, c), c.props),
         });
         app.mount(container);
-        expect(asDOM(container.innerHTML), c.name).toBe(asDOM(expected(c)));
+        expect(asDOM(container.innerHTML)).toBe(asDOM(expected(c)));
         expect(container.firstElementChild?.namespaceURI).toBe(
           "http://www.w3.org/2000/svg"
         );
         app.unmount();
       }
-    });
+    );
 
-    test("hydrates server markup without a mismatch", async () => {
-      for (const c of CASES) {
-        // isOGContext draws an HTML <img> for OG image renderers. An HTML
-        // parser moves an <img> out of an <svg>, so that markup can't
-        // hydrate as written in any framework.
-        if (c.props.isOGContext) {
-          continue;
-        }
-        const root = () => h(componentFor(api, c), c.props);
-        const html = await renderVue(createSSRApp({ render: root }));
-        const container = mount();
-        container.innerHTML = html;
-        const svg = container.firstElementChild;
-        let app: ReturnType<typeof createSSRApp> | undefined;
-        const warnings = await vueWarnings(() => {
-          app = createSSRApp({ render: root });
-          app.mount(container);
-        });
-        expect(warnings, c.name).toEqual([]);
-        // The server's elements are kept, not drawn again
-        expect(container.firstElementChild, c.name).toBe(svg);
-        app?.unmount();
-        container.remove();
-      }
+    // isOGContext draws an HTML <img> for OG image renderers. An HTML parser
+    // moves an <img> out of an <svg>, so that markup can't hydrate as
+    // written in any framework.
+    test.each(
+      CASES.filter((c) => !c.props.isOGContext).map((c) => [c.name, c] as const)
+    )("hydrates server markup without a mismatch: %s", async (_name, c) => {
+      const root = () => h(componentFor(api, c), c.props);
+      const html = await renderVue(createSSRApp({ render: root }));
+      const container = mount();
+      container.innerHTML = html;
+      const svg = container.firstElementChild;
+      let app: ReturnType<typeof createSSRApp> | undefined;
+      const warnings = await vueWarnings(() => {
+        app = createSSRApp({ render: root });
+        app.mount(container);
+      });
+      expect(warnings).toEqual([]);
+      // The server's elements are kept, not drawn again
+      expect(container.firstElementChild).toBe(svg);
+      app?.unmount();
+      container.remove();
     });
 
     test("follows prop and attribute changes, and cleans up on unmount", async () => {
@@ -259,6 +271,34 @@ for (const [label, entry] of ENTRIES) {
       app.unmount();
       expect(container.childNodes).toHaveLength(0);
     });
+
+    // Each look turned on and off in a mounted QRCode (support/look-steps.ts)
+    test.each(lookToggles().map((toggle) => [toggle.name, toggle] as const))(
+      "QRCode follows a look turned on and off: %s",
+      async (_name, { before, after }) => {
+        const props = ref(before);
+        const container = mount();
+        const app = createApp({ render: () => h(api.QRCode, props.value) });
+        app.mount(container);
+        // Attributes in any order: Vue patches an element in place
+        const snapshot = (markup: string) => {
+          const holder = document.createElement("div");
+          holder.innerHTML = markup;
+          return domSnapshot(holder, { anyOrder: true });
+        };
+        const drawn = (code: typeof before) =>
+          snapshot(toSVGString(resolveQRCodeProps(code)));
+        expect(snapshot(container.innerHTML)).toBe(drawn(before));
+        expect(drawn(after)).not.toBe(drawn(before));
+        props.value = after;
+        await nextTick();
+        expect(snapshot(container.innerHTML)).toBe(drawn(after));
+        props.value = before;
+        await nextTick();
+        expect(snapshot(container.innerHTML)).toBe(drawn(before));
+        app.unmount();
+      }
+    );
 
     test("reads boolean props the way Vue templates write them", async () => {
       const logo = { value: VALUE, logo: LOGO, level: "L" as const };
