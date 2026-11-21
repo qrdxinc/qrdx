@@ -224,10 +224,10 @@ describe("the API style", () => {
     }
     const parsed = parseApiStyle({ bgColor: "none", halo: {} });
     if (!parsed.ok) throw new Error("not parsed");
-    expect(
-      getHaloRisk({ halo: parsed.style.halo, bgColor: parsed.style.bgColor })
-        ?.reason,
-    ).toBe("see-through");
+    expect(parsed.style.bgColor).toBe("none");
+    expect(getHaloRisk({ halo: {}, bgColor: "none" })?.reason).toBe(
+      "see-through",
+    );
   });
 
   it("refuses logo addresses and art with the reason, never fetching anything", () => {
