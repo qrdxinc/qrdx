@@ -2,6 +2,14 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## Unreleased
+
+### Frame library: shapes, everyday objects and playful scenes
+
+- **112 more official frames**, 1,125 in all. 30 join `call-to-action`: hexagons, octagons, hearts, a scroll, pennants, pattern borders, raised cards, corner tabs, a text frame, bottom badges, top ribbons, plain borders in three weights, a circle viewfinder, starbursts and spinning rays. Each decodes at phone distances, scores Great and reads with zbar, like every official frame.
+- **Two new collections:** `objects` ("Everyday objects", 33 frames: tablets, laptops, monitors, smartwatches, mugs, parcels, bottles, billboards, open books, map pins and more) and `playful` ("Playful & surprising", 49 frames: a rocket window, a TV set, an arcade cabinet, a fish tank, a robot, a cat holding the code, a snow globe, a flying saucer and more). `OfficialFrameCollection` and `OFFICIAL_FRAME_COLLECTIONS` include them, so code with a case or a `Record` for every collection needs the new ids.
+- The generator now also writes `src/frames/catalogue/batches.ts`, the official frame ids by the round that added them, so the app can mark the latest ones as new. It isn't exported.
+
 ## 0.0.58
 
 - **GIF export.** `"gif"` is a new `DownloadFormat`, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write a GIF, for older tools and email builders that only take it. No browser encodes GIF from a canvas (`toBlob("image/gif")` returns a PNG), so the engine writes the file itself, the same way in every browser.
