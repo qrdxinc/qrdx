@@ -37,7 +37,7 @@
 
 **Design and download, free and without an account**
 
-- Start from one of 123 built-in themes, or build a look from 32 body patterns, 27 corner-eye shapes and 24 eye centers. Pick one of 1,032 frames, from 19 call-to-action frames to holiday, seasonal and industry designs, and edit its text right in the preview.
+- Start from one of 123 built-in themes, or build a look from 25 body patterns, 25 corner-eye shapes and 22 eye centers. Pick one of 1,032 frames, from 19 call-to-action frames to holiday, seasonal and industry designs, and edit its text right in the preview.
 - Or give the code itself a shape: a circle of dots, a heart, or a silhouette traced in your browser from a PNG, JPEG or SVG you upload.
 - Color the background, dots and eyes with a solid color, a linear, radial or angular gradient, a see-through color or a photo.
 - Use the Art tab to blend a logo or photo into the dots (Logo QR and Image QR). They're vector art, so they export to every format. When you're signed in, AI art is there too.
