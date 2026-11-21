@@ -8687,7 +8687,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Octagon",
     collection: "call-to-action",
     tags: ["call to action", "octagon", "sign", "shape"],
-    hash: "81a349b2",
+    hash: "756062c8",
     ratio: 1,
   },
   {
@@ -8695,7 +8695,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Octagon, light",
     collection: "call-to-action",
     tags: ["call to action", "octagon", "sign", "shape"],
-    hash: "d72f4fd9",
+    hash: "5aca7add",
     ratio: 1,
   },
   {
@@ -8767,7 +8767,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Raised card",
     collection: "call-to-action",
     tags: ["call to action", "3d", "raised", "shadow", "border"],
-    hash: "53e8ad75",
+    hash: "274e931b",
     ratio: 0.823,
   },
   {
@@ -8775,7 +8775,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Raised card, thin",
     collection: "call-to-action",
     tags: ["call to action", "3d", "raised", "shadow", "border"],
-    hash: "6e885fbf",
+    hash: "22a993e9",
     ratio: 0.823,
   },
   {
@@ -8839,24 +8839,24 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Thin border",
     collection: "call-to-action",
     tags: ["call to action", "border", "outline", "thin"],
-    hash: "deaf7cd0",
-    ratio: 0.811,
+    hash: "a0955423",
+    ratio: 0.883,
   },
   {
     id: "border-medium",
     name: "Medium border",
     collection: "call-to-action",
     tags: ["call to action", "border", "outline"],
-    hash: "55cf0a08",
-    ratio: 0.818,
+    hash: "05b0ccbc",
+    ratio: 0.888,
   },
   {
     id: "border-thick",
     name: "Thick border",
     collection: "call-to-action",
     tags: ["call to action", "border", "outline", "thick"],
-    hash: "6965c5d4",
-    ratio: 0.83,
+    hash: "d3b9c6b0",
+    ratio: 0.896,
   },
   {
     id: "circle-viewfinder",
@@ -8903,7 +8903,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Tablet",
     collection: "objects",
     tags: ["object", "tablet", "screen", "device"],
-    hash: "b493e2ff",
+    hash: "e2461e5f",
     ratio: 0.869,
   },
   {
@@ -8959,7 +8959,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Gallery frame",
     collection: "objects",
     tags: ["object", "picture", "frame", "art", "gallery"],
-    hash: "2fd72f73",
+    hash: "c1e2ed71",
     ratio: 0.828,
   },
   {
@@ -8967,7 +8967,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Billboard",
     collection: "objects",
     tags: ["object", "billboard", "sign", "outdoor"],
-    hash: "ba2d4e00",
+    hash: "f95f7dad",
     ratio: 1.333,
   },
   {
@@ -8975,7 +8975,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Billboard, light",
     collection: "objects",
     tags: ["object", "billboard", "sign", "outdoor"],
-    hash: "9ec4f515",
+    hash: "d1f3f6ee",
     ratio: 1.333,
   },
   {
@@ -8983,7 +8983,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Open book spread",
     collection: "objects",
     tags: ["object", "book", "reading", "library"],
-    hash: "5fcc668b",
+    hash: "ca466176",
     ratio: 1.449,
   },
   {
@@ -9151,7 +9151,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Cassette",
     collection: "playful",
     tags: ["playful", "cassette", "tape", "music", "retro"],
-    hash: "abc45ec5",
+    hash: "e298c9d1",
     ratio: 1.333,
   },
   {
@@ -9167,7 +9167,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Fish tank",
     collection: "playful",
     tags: ["playful", "fish", "tank", "aquarium", "water"],
-    hash: "cc525300",
+    hash: "e6905fcf",
     ratio: 0.966,
   },
   {
@@ -9223,7 +9223,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Treasure map",
     collection: "playful",
     tags: ["playful", "treasure", "map", "adventure"],
-    hash: "691870b3",
+    hash: "d9934f66",
     ratio: 0.889,
   },
   {
@@ -9263,7 +9263,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Cat with a card",
     collection: "playful",
     tags: ["playful", "cat", "pet", "card", "fun"],
-    hash: "11118706",
+    hash: "50a4d216",
     ratio: 0.75,
   },
   {
@@ -9271,7 +9271,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Cat with a card, light",
     collection: "playful",
     tags: ["playful", "cat", "pet", "card", "fun"],
-    hash: "b16d6377",
+    hash: "5ac924ef",
     ratio: 0.75,
   },
   {
@@ -9279,7 +9279,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Museum plaque",
     collection: "playful",
     tags: ["playful", "museum", "plaque", "exhibit", "gallery"],
-    hash: "a8da749d",
+    hash: "f2530e0e",
     ratio: 0.87,
   },
   {
@@ -9287,7 +9287,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Museum plaque, light",
     collection: "playful",
     tags: ["playful", "museum", "plaque", "exhibit", "gallery"],
-    hash: "c871c7fb",
+    hash: "1b053dcb",
     ratio: 0.87,
   },
   {
@@ -9319,7 +9319,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Magnifying glass",
     collection: "playful",
     tags: ["playful", "magnifier", "lens", "search", "detail"],
-    hash: "781b66cd",
+    hash: "67c8dc5a",
     ratio: 1,
   },
   {
@@ -9367,7 +9367,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Popcorn bucket",
     collection: "playful",
     tags: ["playful", "popcorn", "cinema", "movie", "snack"],
-    hash: "f8cc9082",
+    hash: "e97a2c9f",
     ratio: 0.75,
   },
   {
@@ -9375,7 +9375,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Milk carton",
     collection: "playful",
     tags: ["playful", "milk", "carton", "dairy", "grocery"],
-    hash: "99074cc2",
+    hash: "dafb6f39",
     ratio: 0.7,
   },
   {

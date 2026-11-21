@@ -73,6 +73,24 @@
           "mix": ["frame", "background"],
           "amount": 0.9
         }
+      },
+      {
+        "type": "rect",
+        "x": 529.5,
+        "y": 1519.5,
+        "width": 900,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 599.5,
+        "y": 130,
+        "width": 760,
+        "height": 120,
+        "radius": 60,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -81,12 +99,12 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan here",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 479.5,
+          "x": 597.5,
           "y": 1519.5,
-          "width": 1000,
-          "height": 180
+          "width": 764,
+          "height": 170
         }
       },
       {
@@ -94,12 +112,12 @@
         "id": "note",
         "slot": "secondary",
         "text": "No app needed",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 579.5,
-          "y": 120,
-          "width": 800,
-          "height": 150
+          "x": 647.5,
+          "y": 130,
+          "width": 664,
+          "height": 120
         },
         "weight": "regular"
       }

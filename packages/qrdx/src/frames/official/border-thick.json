@@ -12,11 +12,11 @@
     "version": 1,
     "artboard": {
       "width": 1460,
-      "height": 1760
+      "height": 1630
     },
     "qr": {
       "x": 230,
-      "y": 350,
+      "y": 220,
       "size": 1000,
       "padding": 80,
       "radius": 24
@@ -31,33 +31,24 @@
         "x": 0,
         "y": 0,
         "width": 1460,
-        "height": 1760,
+        "height": 1630,
         "radius": 50,
         "fill": "frame",
         "hole": {
           "x": 100,
           "y": 100,
           "width": 1260,
-          "height": 1560,
+          "height": 1430,
           "radius": 25
         }
       },
       {
         "type": "rect",
         "x": 160,
-        "y": 1460,
+        "y": 1330,
         "width": 1140,
         "height": 170,
         "radius": 85,
-        "fill": "frame"
-      },
-      {
-        "type": "rect",
-        "x": 180,
-        "y": 150,
-        "width": 1100,
-        "height": 100,
-        "radius": 50,
         "fill": "frame"
       }
     ],
@@ -70,24 +61,10 @@
         "color": "text",
         "box": {
           "x": 228,
-          "y": 1460,
+          "y": 1330,
           "width": 1004,
           "height": 170
         }
-      },
-      {
-        "type": "text",
-        "id": "note",
-        "slot": "secondary",
-        "text": "No app needed",
-        "color": "text",
-        "box": {
-          "x": 220,
-          "y": 150,
-          "width": 1020,
-          "height": 100
-        },
-        "weight": "regular"
       }
     ]
   }

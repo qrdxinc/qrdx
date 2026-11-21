@@ -12,11 +12,11 @@
     "version": 1,
     "artboard": {
       "width": 1288,
-      "height": 1588
+      "height": 1458
     },
     "qr": {
       "x": 144,
-      "y": 264,
+      "y": 134,
       "size": 1000,
       "padding": 80,
       "radius": 24
@@ -31,33 +31,24 @@
         "x": 0,
         "y": 0,
         "width": 1288,
-        "height": 1588,
+        "height": 1458,
         "radius": 8,
         "fill": "frame",
         "hole": {
           "x": 14,
           "y": 14,
           "width": 1260,
-          "height": 1560,
+          "height": 1430,
           "radius": 3.5
         }
       },
       {
         "type": "rect",
         "x": 74,
-        "y": 1374,
+        "y": 1244,
         "width": 1140,
         "height": 170,
         "radius": 85,
-        "fill": "frame"
-      },
-      {
-        "type": "rect",
-        "x": 94,
-        "y": 64,
-        "width": 1100,
-        "height": 100,
-        "radius": 50,
         "fill": "frame"
       }
     ],
@@ -70,24 +61,10 @@
         "color": "text",
         "box": {
           "x": 142,
-          "y": 1374,
+          "y": 1244,
           "width": 1004,
           "height": 170
         }
-      },
-      {
-        "type": "text",
-        "id": "note",
-        "slot": "secondary",
-        "text": "Point your camera here",
-        "color": "text",
-        "box": {
-          "x": 134,
-          "y": 64,
-          "width": 1020,
-          "height": 100
-        },
-        "weight": "regular"
       }
     ]
   }

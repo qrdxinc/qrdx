@@ -177,6 +177,15 @@
         "type": "path",
         "d": "M1380 220L1402 220L1380 299.2L1358 220Z",
         "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 360,
+        "y": 1400,
+        "width": 1040,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -185,11 +194,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to find it",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 360,
+          "x": 428,
           "y": 1400,
-          "width": 1040,
+          "width": 904,
           "height": 170
         }
       }

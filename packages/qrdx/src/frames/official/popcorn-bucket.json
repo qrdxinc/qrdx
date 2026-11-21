@@ -275,6 +275,15 @@
         "height": 1380,
         "radius": 20,
         "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 240,
+        "y": 1650,
+        "width": 1020,
+        "height": 160,
+        "radius": 80,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -283,11 +292,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan for showtimes",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 240,
+          "x": 304,
           "y": 1650,
-          "width": 1020,
+          "width": 892,
           "height": 160
         }
       }

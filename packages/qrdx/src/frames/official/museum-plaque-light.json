@@ -137,11 +137,20 @@
       },
       {
         "type": "rect",
-        "x": 120,
-        "y": 1390,
-        "width": 1160,
-        "height": 170,
-        "radius": 85,
+        "x": 130,
+        "y": 1375,
+        "width": 1140,
+        "height": 140,
+        "radius": 70,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 150,
+        "y": 100,
+        "width": 1100,
+        "height": 90,
+        "radius": 45,
         "fill": "frame"
       }
     ],
@@ -153,11 +162,25 @@
         "text": "Scan the audio guide",
         "color": "text",
         "box": {
-          "x": 188,
-          "y": 1390,
-          "width": 1024,
-          "height": 170
+          "x": 186,
+          "y": 1375,
+          "width": 1028,
+          "height": 140
         }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "About this work",
+        "color": "text",
+        "box": {
+          "x": 186,
+          "y": 100,
+          "width": 1028,
+          "height": 90
+        },
+        "weight": "regular"
       }
     ]
   }

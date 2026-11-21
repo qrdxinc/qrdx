@@ -249,9 +249,9 @@
       },
       {
         "type": "rect",
-        "x": 300,
+        "x": 380,
         "y": 1320,
-        "width": 1100,
+        "width": 940,
         "height": 150,
         "radius": 75,
         "fill": "frame"
@@ -265,9 +265,9 @@
         "text": "Scan to dive in",
         "color": "text",
         "box": {
-          "x": 360,
+          "x": 440,
           "y": 1320,
-          "width": 980,
+          "width": 820,
           "height": 150
         }
       }
