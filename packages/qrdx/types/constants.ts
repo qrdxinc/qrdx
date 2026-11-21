@@ -259,14 +259,18 @@ export const BG_RADIUS_MAX = 0.5;
 export const BG_RADIUS_QUIET_RATIO = 2;
 
 /**
- * A halo is a light rim around every dark module and eye (`halo`), for a
- * code placed on a picture or a dark page; its width is in modules.
- * It is a look, not a quiet zone: decoders still need `margin`.
+ * A halo is a light rim around every dark module and eye (`halo`); its
+ * width is in modules. It is a look, not a quiet zone: decoders still need
+ * `margin`. It is drawn only on an opaque background, in a rim at least as
+ * light as HALO_LIGHT_MIN and no lighter than the background (looks.ts
+ * getHaloRisk). The default rim is a light grey, so it shows on white.
  */
 export const HALO_WIDTH_MIN = 0.1;
 export const HALO_WIDTH_MAX = 0.5;
 export const HALO_WIDTH_DEFAULT = 0.25;
-export const HALO_COLOR_DEFAULT = "#ffffff";
+export const HALO_COLOR_DEFAULT = "#e5e7eb";
+/** The darkest rim (and so background) a halo is drawn with. */
+export const HALO_LIGHT_MIN = "#d1d5db";
 
 /**
  * A shadow is a see-through copy of the dark modules and eyes drawn under

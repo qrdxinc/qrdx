@@ -1430,7 +1430,7 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
   // under themselves. Art modes draw their own body, so only the eyes (and
   // a shaped code's decoration) get them there. Neither carries a part
   // marker: a click lands on the shape above it.
-  const resolvedHalo = resolveHalo(halo, { bodyPattern, bgColor });
+  const resolvedHalo = resolveHalo(halo, { bgColor });
   const resolvedShadow = resolveShadow(shadow);
   const darkShapes = (eyeFillRule: "evenodd" | "nonzero") => (
     <>
