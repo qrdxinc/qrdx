@@ -899,6 +899,138 @@
     "status": "machine",
     "context": "contentTypes.list.monero.description"
   },
+  "ca7e3d788516": {
+    "source": "MeCard",
+    "text": "MeCard",
+    "status": "machine",
+    "context": "contentTypes.list.mecard.label"
+  },
+  "2b3ec917f669": {
+    "source": "Share a contact in a smaller code than a vCard",
+    "text": "vCardより小さいコードで連絡先を共有します",
+    "status": "machine",
+    "context": "contentTypes.list.mecard.description"
+  },
+  "839a66ffef0c": {
+    "source": "Swiss QR-bill",
+    "text": "Swiss QR-bill",
+    "status": "machine",
+    "context": "contentTypes.list.swiss-qr-bill.label"
+  },
+  "5acf23932a9e": {
+    "source": "Make the payment code of a Swiss QR-bill",
+    "text": "スイスQR-billの支払いコードを作成します",
+    "status": "machine",
+    "context": "contentTypes.list.swiss-qr-bill.description"
+  },
+  "f05f7394225e": {
+    "source": "QR Platba",
+    "text": "QR Platba",
+    "status": "machine",
+    "context": "contentTypes.list.czech-spd.label"
+  },
+  "96af451632f6": {
+    "source": "Get paid by bank transfer in Czechia",
+    "text": "チェコで銀行振込による支払いを受け取ります",
+    "status": "machine",
+    "context": "contentTypes.list.czech-spd.description"
+  },
+  "1e73623015d3": {
+    "source": "Swish",
+    "text": "Swish",
+    "status": "machine",
+    "context": "contentTypes.list.swish.label"
+  },
+  "6d33f419943b": {
+    "source": "Get paid with Swish in Sweden",
+    "text": "スウェーデンでSwishの支払いを受け取ります",
+    "status": "machine",
+    "context": "contentTypes.list.swish.description"
+  },
+  "1bb63743f5df": {
+    "source": "KHQR",
+    "text": "KHQR",
+    "status": "machine",
+    "context": "contentTypes.list.khqr.label"
+  },
+  "110ded7f4f22": {
+    "source": "Get paid to a Bakong account in Cambodia",
+    "text": "カンボジアのBakongアカウントで支払いを受け取ります",
+    "status": "machine",
+    "context": "contentTypes.list.khqr.description"
+  },
+  "41e68f2cdb38": {
+    "source": "Lightning",
+    "text": "Lightning",
+    "status": "machine",
+    "context": "contentTypes.list.lightning.label"
+  },
+  "b053883a1717": {
+    "source": "Get paid in bitcoin over Lightning",
+    "text": "Lightning経由でビットコインを受け取ります",
+    "status": "machine",
+    "context": "contentTypes.list.lightning.description"
+  },
+  "631ff8768671": {
+    "source": "XRP",
+    "text": "XRP",
+    "status": "machine",
+    "context": "contentTypes.list.xrp.label"
+  },
+  "67b5cf5e6a50": {
+    "source": "Receive XRP to your wallet",
+    "text": "XRPをウォレットで受け取ります",
+    "status": "machine",
+    "context": "contentTypes.list.xrp.description"
+  },
+  "27df28946736": {
+    "source": "Cardano",
+    "text": "Cardano",
+    "status": "machine",
+    "context": "contentTypes.list.cardano.label"
+  },
+  "958894402906": {
+    "source": "Receive ADA to your wallet",
+    "text": "ADAをウォレットで受け取ります",
+    "status": "machine",
+    "context": "contentTypes.list.cardano.description"
+  },
+  "ffafee3c0575": {
+    "source": "Tron",
+    "text": "Tron",
+    "status": "machine",
+    "context": "contentTypes.list.tron.label"
+  },
+  "6b6329dbda8d": {
+    "source": "Share your Tron address for TRX or USDT",
+    "text": "TRXやUSDT用のTronアドレスを共有します",
+    "status": "machine",
+    "context": "contentTypes.list.tron.description"
+  },
+  "1a4219fe5e60": {
+    "source": "TON",
+    "text": "TON",
+    "status": "machine",
+    "context": "contentTypes.list.ton.label"
+  },
+  "3d455c78ae36": {
+    "source": "Receive TON or USDT on TON",
+    "text": "TONやTON上のUSDTを受け取ります",
+    "status": "machine",
+    "context": "contentTypes.list.ton.description"
+  },
+  "9651c62eb76d": {
+    "source": "Stellar",
+    "text": "Stellar",
+    "status": "machine",
+    "context": "contentTypes.list.stellar.label"
+  },
+  "001774bb1ca3": {
+    "source": "Receive XLM or USDC on Stellar",
+    "text": "XLMやStellar上のUSDCを受け取ります",
+    "status": "machine",
+    "context": "contentTypes.list.stellar.description"
+  },
   "76327dec9ae3": {
     "source": "Popular",
     "text": "人気",
@@ -1169,9 +1301,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "コードをPNG、WebP、SVGでダウンロードします。",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "コードをPNG、SVG、WebP、GIF、BMP、ICO形式でダウンロードします。",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -1673,9 +1805,9 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.summary"
   },
-  "0135740ce7f9": {
-    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
-    "text": "Wi-Fi QRコードを作成すれば、ゲストは1回のスキャンでネットワークに接続できます。WPA/WPA2、WEP、オープンネットワーク、非公開SSID、正しいエスケープに対応。無料です。",
+  "88a28035b215": {
+    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WPA3, WEP and open networks, hidden SSIDs, correct escaping. Free.",
+    "text": "Wi-Fi QRコードを作成すれば、ゲストは1回のスキャンでネットワークに接続できます。WPA/WPA2、WPA3、WEP、オープンネットワーク、ステルスSSID、正しいエスケープに対応。無料。",
     "status": "machine",
     "context": "qrTypes.types.wifi.metaDescription"
   },
@@ -1697,9 +1829,9 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.steps.0"
   },
-  "31d04d55ac35": {
-    "source": "Choose the security type: WPA/WPA2 for almost every modern router, WEP for very old ones, or No password for open networks.",
-    "text": "セキュリティの種類を選びます。最近のほとんどのルーターはWPA/WPA2、非常に古いルーターはWEP、オープンネットワークはパスワードなしを選んでください。",
+  "7769a5a4517e": {
+    "source": "Choose the security type: WPA/WPA2 for almost every modern router (including ones in WPA2/WPA3 mode), WPA3 only for networks that refuse WPA2, WEP for very old ones, or No password for open networks.",
+    "text": "セキュリティの種類を選びます。最近のほとんどのルーター(WPA2/WPA3モードのものを含む)にはWPA/WPA2、WPA2を拒否するネットワークにはWPA3のみ、非常に古いものにはWEP、オープンネットワークには「パスワードなし」を選んでください。",
     "status": "machine",
     "context": "qrTypes.types.wifi.steps.1"
   },
@@ -1739,6 +1871,18 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.payload.notes.3"
   },
+  "3f864e1191d8": {
+    "source": "T:SAE marks a network that accepts only WPA3, as the Wi-Fi Alliance's WPA3 specification writes it. Android's Wi-Fi settings scanner reads it from Android 10; Apple doesn't document it for the iPhone Camera, so a network that also accepts WPA2 is better written as T:WPA.",
+    "text": "T:SAEは、Wi-Fi AllianceのWPA3仕様の表記どおり、WPA3のみを受け付けるネットワークを示します。AndroidのWi-Fi設定のスキャナーはAndroid 10から読み取れます。AppleはiPhoneのカメラでの対応を公開していないため、WPA2も受け付けるネットワークはT:WPAと記述するほうが確実です。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.payload.notes.4"
+  },
+  "ce5bbff335e8": {
+    "source": "T:WPA2-EAP marks a WPA2/WPA3-Enterprise network, with ZXing's E: (EAP method), PH2: (phase 2), A: (anonymous identity) and I: (identity) fields. Scanner apps built on ZXing read them; phone camera apps don't join enterprise networks from a code.",
+    "text": "T:WPA2-EAPは、ZXingのE:(EAP方式)、PH2:(フェーズ2)、A:(匿名ID)、I:(ID)の各フィールドを使った、WPA2/WPA3-Enterpriseネットワークを示します。ZXingベースのスキャナーアプリは読み取れますが、スマートフォンのカメラアプリはコードからエンタープライズネットワークに接続しません。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.payload.notes.5"
+  },
   "1674145adaf8": {
     "source": "Is it safe to put my Wi-Fi password in a QR code?",
     "text": "Wi-Fiのパスワードを QRコードに入れても安全ですか?",
@@ -1757,9 +1901,9 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.question"
   },
-  "bc95db81d2cd": {
-    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. Enterprise networks that need a username or certificate (WPA2-Enterprise) aren't supported by this format.",
-    "text": "ネットワーク名が大文字・小文字も含めて完全に一致しているか、セキュリティの種類が正しいか、電波の届く範囲にいるかを確認してください。ユーザー名や証明書が必要な企業向けネットワーク(WPA2-Enterprise)は、この形式ではサポートされていません。",
+  "feaacd0db501": {
+    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. For enterprise networks that need a username (WPA2/WPA3-Enterprise), QRdx can write the sign-in details, but phone camera apps don't join from them: Android's Wi-Fi scanner reads only personal and open networks, and iPhones set up enterprise Wi-Fi with a configuration profile. Networks that need a certificate can't be put in a code at all.",
+    "text": "ネットワーク名が完全に一致しているか(大文字と小文字は区別されます)、セキュリティの種類が正しいか、電波の届く範囲内にいるかを確認してください。ユーザー名が必要なエンタープライズネットワーク(WPA2/WPA3-Enterprise)の場合、QRdxはサインイン情報を書き込めますが、スマートフォンのカメラアプリはそのコードから接続しません。AndroidのWi-Fiスキャナーはパーソナルとオープンのネットワークのみ読み取り、iPhoneは構成プロファイルでエンタープライズWi-Fiを設定します。証明書が必要なネットワークは、コードに含めることができません。",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.answer"
   },
@@ -2165,9 +2309,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "PNG、WebP、SVGのいずれかをダウンロードするか、フルエディタでコードをデザインします。",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "PNG、SVG、WebP、GIF、BMP、ICOでダウンロードするか、フルエディタでコードをデザインできます。",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -3725,9 +3869,9 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.title"
   },
-  "da2ccbd9fdc4": {
-    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",
-    "text": "これはオンチェーンの支払いリクエストで、ウォレットはBitcoinブロックチェーン上のあなたのアドレスに支払います。Lightning専用のウォレットでは支払えず、このジェネレーターはURIにlightning=のインボイスを追加しません。Lightningで支払いを受ける場合は、代わりにウォレットのインボイスまたはLightningアドレスを共有してください。",
+  "d665e6e266e7": {
+    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments make a Lightning code from your wallet's invoice, LNURL or Lightning Address instead.",
+    "text": "これはオンチェーンのリクエストで、ウォレットはBitcoinブロックチェーン上のあなたのアドレスに支払います。Lightning専用のウォレットでは支払えず、このジェネレーターはURIにlightning=インボイスを追加しません。Lightningで受け取る場合は、ウォレットのインボイス、LNURL、またはLightning AddressからLightningコードを作成してください。",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.paragraphs.0"
   },
@@ -3737,27 +3881,27 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.paragraphs.1"
   },
-  "80cfbcc768ef": {
-    "source": "Share an EIP-681 Ethereum payment request.",
-    "text": "EIP-681形式のEthereum支払いリクエストを共有します。",
+  "01b290b322d0": {
+    "source": "Request ETH, USDC or USDT on Ethereum and other EVM networks.",
+    "text": "Ethereumやその他のEVMネットワークで、ETH、USDC、USDTをリクエストできます。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.summary"
   },
-  "7f57cac75ab7": {
-    "source": "Make an Ethereum QR code in the EIP-681 ethereum: format with an optional ETH amount (in wei) and gas limit. Free PNG and SVG, no signup.",
-    "text": "EIP-681のethereum:形式で、ETHの金額（wei単位）やガスリミットを任意で指定できるEthereum QRコードを作成します。PNGとSVGで無料、登録は不要です。",
+  "3b28ba3d3302": {
+    "source": "Make an Ethereum QR code in the EIP-681 format for ETH, USDC or USDT on Ethereum, Base, Polygon, Arbitrum and three more EVM networks. Free.",
+    "text": "Ethereum、Base、Polygon、Arbitrumほか3つのEVMネットワークでのETH、USDC、USDT向けに、EIP-681形式のEthereum QRコードを作成できます。無料。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.metaDescription"
   },
-  "e6df241fc5d0": {
-    "source": "An Ethereum QR code holds your wallet address in the EIP-681 ethereum: format, optionally with an amount of ETH and a gas limit. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
-    "text": "Ethereum QRコードには、EIP-681のethereum:形式でウォレットアドレスが含まれ、ETHの金額やガスリミットも任意で指定できます。対応するウォレットでスキャンすると、これらの値が入力された状態で、あなたのアドレスへの送金画面が開きます。",
+  "de75bfd458c1": {
+    "source": "An Ethereum QR code holds a payment request in the EIP-681 ethereum: format: your wallet address, the network and, if you like, an amount. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
+    "text": "Ethereum QRコードには、EIP-681のethereum:形式で支払いリクエストが含まれます。ウォレットアドレス、ネットワーク、必要に応じて金額です。対応ウォレットでスキャンすると、これらの値が入力された状態で、あなたのアドレスへの送金画面が開きます。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.intro.0"
   },
-  "4cd43eafd110": {
-    "source": "Ethereum addresses are 42-character hexadecimal strings that are easy to mistype, which makes a QR code the safest way to share one at events, on invoices or on donation pages. The code contains only your public address; private keys and recovery phrases must never go into a QR code.",
-    "text": "Ethereumのアドレスは42文字の16進数で、入力ミスをしやすいため、イベントや請求書、寄付ページで共有するにはQRコードが最も安全な方法です。コードに含まれるのは公開アドレスだけです。秘密鍵やリカバリーフレーズは、決してQRコードに入れないでください。",
+  "239eb953556c": {
+    "source": "Pick Ethereum or another EVM network (BNB Smart Chain, Polygon, Arbitrum One, OP Mainnet, Base or Avalanche C-Chain) and ask for the network's own coin, or for USDT or USDC where Tether and Circle list the contract themselves. Addresses are 42-character hexadecimal strings that are easy to mistype, so a code is safer than copying one by hand. It contains only your public address; private keys and recovery phrases must never go into a QR code.",
+    "text": "Ethereumまたは他のEVMネットワーク(BNB Smart Chain、Polygon、Arbitrum One、OP Mainnet、Base、Avalanche C-Chain)を選び、そのネットワーク固有のコイン、またはTetherとCircleが自らコントラクトを公開している場合はUSDTかUSDCをリクエストします。アドレスは42文字の16進数文字列で入力ミスしやすいため、手で書き写すよりコードのほうが安全です。含まれるのは公開アドレスのみです。秘密鍵やリカバリーフレーズは、決してQRコードに入れないでください。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.intro.1"
   },
@@ -3767,23 +3911,41 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.0"
   },
-  "4f1b1c80f3e8": {
-    "source": "Optionally enter an amount in ETH and a gas limit.",
-    "text": "必要に応じて、ETHの金額とガスリミットを入力します。",
+  "d0f2f478d75b": {
+    "source": "Pick the network, then the network's own coin, USDC or USDT.",
+    "text": "ネットワークを選び、続けてそのネットワーク固有のコイン、USDC、USDTから選びます。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.1"
   },
-  "c54d35521f5a": {
-    "source": "Scan the preview with your wallet and check the address and amount.",
-    "text": "プレビューをウォレットでスキャンし、アドレスと金額を確認します。",
+  "d2404df4ac55": {
+    "source": "Optionally enter an amount, and a gas limit for a coin payment.",
+    "text": "必要に応じて金額を入力します。コインでの支払いにはガスリミットも指定できます。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.2"
   },
-  "155c506bf183": {
-    "source": "EIP-681 amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the ETH amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
-    "text": "EIP-681の金額（value）は最小単位のweiで表します。1 ETHは10^18 weiです。このページでは、入力されたETHの金額に指数e18を付けて変換するため、0.05 ETHはvalue=0.05e18と書かれます。",
+  "c26a548900d7": {
+    "source": "Scan the preview with your wallet, check the address, network and amount, and download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "プレビューをウォレットでスキャンし、アドレス、ネットワーク、金額を確認してから、コードをPNG、SVG、WebP、GIF、BMP、ICO形式でダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.3"
+  },
+  "05e6e058eee6": {
+    "source": "Coin amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
+    "text": "コインの金額(value)は最小単位のweiで表します。1 ETHは10^18 weiです。このページでは、入力した金額に指数e18を付けて変換するため、0.05 ETHはvalue=0.05e18と書かれます。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.0"
+  },
+  "3faef68d6dd6": {
+    "source": "Other networks are named with @chainId: BNB Smart Chain 56, Polygon 137, Arbitrum One 42161, OP Mainnet 10, Base 8453 and Avalanche C-Chain 43114. On Ethereum itself (chain 1) no @1 is added.",
+    "text": "他のネットワークは@chainIdで指定します。BNB Smart Chainは56、Polygonは137、Arbitrum Oneは42161、OP Mainnetは10、Baseは8453、Avalanche C-Chainは43114です。Ethereum本体(チェーン1)には@1を付けません。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.1"
+  },
+  "ce817f8fbb90": {
+    "source": "A USDC or USDT request is a transfer on the token's contract, with the amount in base units (6 decimals). 1.5 USDC on Base is ethereum:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913@8453/transfer?address=<recipient>&uint256=1500000.",
+    "text": "USDCまたはUSDTのリクエストは、トークンのコントラクトに対する転送で、金額は基本単位(小数点以下6桁)で指定します。Base上の1.5 USDCは、ethereum:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913@8453/transfer?address=<recipient>&uint256=1500000 となります。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.2"
   },
   "e090a66eb3e0": {
     "source": "gas is a synonym for gasLimit, a suggested limit the payer can edit. A plain ETH transfer uses 21000.",
@@ -3791,39 +3953,33 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.1"
   },
-  "6134aa693235": {
-    "source": "EIP-681 can name a network with @chainId (for example @137), but this generator doesn't add one, so wallets use their current network.",
-    "text": "EIP-681では@chainId（例：@137）でネットワークを指定できますが、このジェネレーターは指定を追加しないため、ウォレットは現在のネットワークを使用します。",
-    "status": "machine",
-    "context": "qrTypes.types.ethereum.payload.notes.2"
-  },
   "4a68f3f75c81": {
     "source": "Wallet support for EIP-681 parameters varies; test with the wallet your payers use.",
     "text": "EIP-681のパラメーターへの対応状況はウォレットによって異なります。支払う方が使うウォレットでテストしてください。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.3"
   },
-  "644fd366eca2": {
-    "source": "Can I request USDC or another token?",
-    "text": "USDCなどのトークンをリクエストできますか。",
+  "b00a3b7e1e38": {
+    "source": "Can I request USDC or USDT?",
+    "text": "USDCやUSDTもリクエストできますか?",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.0.question"
   },
-  "2047498516c6": {
-    "source": "This generator creates native ETH transfers. Token requests need the token contract and a transfer function call in the URI, which this form doesn't build.",
-    "text": "このジェネレーターで作成できるのは、ネイティブETHの送金です。トークンのリクエストには、URIにトークンのコントラクトとtransfer関数の呼び出しが必要ですが、このフォームでは作成できません。",
+  "c0ff9d9c88f0": {
+    "source": "Yes, on the networks where Tether and Circle list the contract themselves: USDT on Ethereum and Avalanche, USDC on Ethereum, Polygon, Arbitrum, OP Mainnet, Base and Avalanche. QRdx refuses a token contract pasted as the recipient.",
+    "text": "はい。TetherとCircleが自らコントラクトを公開しているネットワークで可能です。USDTはEthereumとAvalanche、USDCはEthereum、Polygon、Arbitrum、OP Mainnet、Base、Avalancheに対応しています。受取先として貼り付けられたトークンのコントラクトは、QRdxが受け付けません。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.0.answer"
   },
-  "a921a84b6c82": {
-    "source": "Does it work on other EVM networks?",
-    "text": "他のEVMネットワークでも使えますか。",
+  "eab753923b7d": {
+    "source": "Does every wallet read the network and token?",
+    "text": "すべてのウォレットがネットワークとトークンを読み取りますか?",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.1.question"
   },
-  "302941b105ef": {
-    "source": "The address format is the same on networks like Polygon or Arbitrum, but no chain ID is added, so the payer must pick the right network in their wallet.",
-    "text": "PolygonやArbitrumなどのネットワークでもアドレス形式は同じですが、チェーンIDは追加されないため、支払う側がウォレットで正しいネットワークを選ぶ必要があります。",
+  "d8b487263aac": {
+    "source": "No. MetaMask Mobile reads @chainId and /transfer, but some wallets fill in only the recipient and drop the token and amount. Print the token, network and amount next to the code so the payer can check them.",
+    "text": "いいえ。MetaMask Mobileは@chainIdと/transferを読み取りますが、一部のウォレットは受取先だけを入力し、トークンと金額を無視します。支払う方が確認できるよう、トークン、ネットワーク、金額をコードの横に印刷してください。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.1.answer"
   },
@@ -3839,11 +3995,17 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.2.answer"
   },
-  "d434b3350c1d": {
-    "source": "Address checks and ENS names",
-    "text": "アドレスの確認とENS名",
+  "3195635e1572": {
+    "source": "Networks, address checks and ENS names",
+    "text": "ネットワーク、アドレスの確認、ENS名",
     "status": "machine",
     "context": "qrTypes.types.ethereum.details.title"
+  },
+  "121d5568b110": {
+    "source": "The network's own coin is ETH on Ethereum, Arbitrum One, OP Mainnet and Base, BNB on BNB Smart Chain, POL on Polygon and AVAX on Avalanche C-Chain. The same 0x address works on all of them, so pick the network your payer will send on.",
+    "text": "ネットワーク固有のコインは、Ethereum、Arbitrum One、OP Mainnet、BaseではETH、BNB Smart ChainではBNB、PolygonではPOL、Avalanche C-ChainではAVAXです。同じ0xアドレスがすべてで使えるため、支払う方が送金に使うネットワークを選んでください。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.details.paragraphs.0"
   },
   "65464924c87e": {
     "source": "The generator checks that the address is 0x followed by 40 hexadecimal characters. It doesn't check the mixed-case EIP-55 checksum; wallets check that when they scan, so paste the address exactly as your wallet shows it rather than typing it.",
@@ -6371,21 +6533,21 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoincash.details.paragraphs.2"
   },
-  "51f7bdf5aaa1": {
-    "source": "Receive SOL with a Solana Pay request.",
-    "text": "Solana Payリクエストで、SOLを受け取れます。",
+  "37801c6d08b2": {
+    "source": "Receive SOL, USDC or USDT with a Solana Pay request.",
+    "text": "Solana Payのリクエストで、SOL、USDC、USDTを受け取れます。",
     "status": "machine",
     "context": "qrTypes.types.solana.summary"
   },
-  "a3b47984a6df": {
-    "source": "Create a Solana Pay QR code for SOL payments to your wallet, with an optional amount, label and message. Solana Pay transfer request format. Free.",
-    "text": "ウォレットへのSOL支払い用に、Solana PayのQRコードを作成できます。金額、ラベル、メッセージは任意です。Solana Payの送金リクエスト形式に対応しています。無料です。",
+  "7ecf8931fc04": {
+    "source": "Create a Solana Pay QR code for SOL, USDC or USDT to your wallet, with an optional amount, label and message, in the transfer request format. Free.",
+    "text": "SOL、USDC、USDTをウォレットで受け取るSolana Pay QRコードを作成できます。金額、ラベル、メッセージは任意で、転送リクエスト形式に対応しています。無料です。",
     "status": "machine",
     "context": "qrTypes.types.solana.metaDescription"
   },
-  "df85b6d18511": {
-    "source": "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount in SOL, a label and a message. Wallets that support Solana Pay fill in the payment.",
-    "text": "SolanaのQRコードには、Solana Payの送金リクエストが入ります。ウォレットアドレスと、必要に応じてSOL建ての金額、ラベル、メッセージを指定できます。Solana Pay対応のウォレットが支払い内容を自動で入力します。",
+  "7b3ba6402374": {
+    "source": "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount, a label and a message. It can ask for SOL, or for USDC or USDT with the mints Circle and Tether list. Wallets that support Solana Pay fill in the payment.",
+    "text": "SolanaのQRコードには、Solana Payの転送リクエストが入ります。内容は、ウォレットアドレスと、必要に応じて金額、ラベル、メッセージです。SOLのほか、CircleとTetherが公開しているミントを使ってUSDCやUSDTも指定できます。Solana Payに対応したウォレットが支払い内容を自動で入力します。",
     "status": "machine",
     "context": "qrTypes.types.solana.intro.0"
   },
@@ -6401,9 +6563,9 @@
     "status": "machine",
     "context": "qrTypes.types.solana.steps.0"
   },
-  "cdcf66a5f861": {
-    "source": "Optionally add an amount in SOL, a label and a message.",
-    "text": "必要に応じて、SOL建ての金額、ラベル、メッセージを追加します。",
+  "501c3c8bebde": {
+    "source": "Pick SOL, USDC or USDT, and optionally add an amount, a label and a message.",
+    "text": "SOL、USDC、USDTのいずれかを選び、必要に応じて金額、ラベル、メッセージを追加します。",
     "status": "machine",
     "context": "qrTypes.types.solana.steps.1"
   },
@@ -6413,15 +6575,15 @@
     "status": "machine",
     "context": "qrTypes.types.solana.steps.2"
   },
-  "74b80bb969ce": {
-    "source": "Amounts are in SOL with up to 9 decimals.",
-    "text": "金額はSOL単位で、小数点以下9桁まで指定できます。",
+  "73cea79e72c3": {
+    "source": "Amounts are in SOL with up to 9 decimals, or in USDC or USDT with up to 6.",
+    "text": "金額は、SOLなら小数点以下9桁まで、USDCまたはUSDTなら6桁まで指定できます。",
     "status": "machine",
     "context": "qrTypes.types.solana.payload.notes.0"
   },
-  "c260bf4dabce": {
-    "source": "This code requests SOL. Token payments (USDC and others) need the token's mint address, which this generator doesn't add.",
-    "text": "このコードはSOLを請求するものです。トークン（USDCなど）での支払いにはトークンのミントアドレスが必要ですが、このジェネレーターでは追加できません。",
+  "326844660a7d": {
+    "source": "spl-token names the token's mint, as Circle and Tether list them: USDC is EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v and USDT is Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB. Without spl-token the code requests SOL.",
+    "text": "spl-tokenはトークンのミントを示し、CircleとTetherが公開しているものを使います。USDCはEPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v、USDTはEs9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYBです。spl-tokenがない場合、コードはSOLを請求します。",
     "status": "machine",
     "context": "qrTypes.types.solana.payload.notes.1"
   },
@@ -6437,15 +6599,21 @@
     "status": "machine",
     "context": "qrTypes.types.solana.faqs.0.answer"
   },
+  "4debcf9ae317": {
+    "source": "Yes. Pick one and the code adds Solana Pay's spl-token with the mint Circle or Tether lists, and the amount is in that token.",
+    "text": "はい。どちらかを選ぶと、CircleまたはTetherが公開しているミントを使ってSolana Payのspl-tokenが追加され、金額もそのトークンで指定されます。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.faqs.1.answer"
+  },
   "43fcb61a7db3": {
     "source": "What this Solana Pay code includes",
     "text": "このSolana Payコードに含まれる内容",
     "status": "machine",
     "context": "qrTypes.types.solana.details.title"
   },
-  "36ed60b12391": {
-    "source": "It's a Solana Pay transfer request: the recipient, an amount in SOL, a label and a message. Solana Pay also defines spl-token for token payments and reference for matching a payment to an order; this generator adds neither, so use your point-of-sale tool when you need them.",
-    "text": "これはSolana Payの送金リクエストで、受取人、SOL建ての金額、ラベル、メッセージが含まれます。Solana Payには、トークン決済用のspl-tokenや、支払いと注文を照合するためのreferenceも定義されていますが、このジェネレーターはどちらも追加しません。必要な場合は、POSツールをご利用ください。",
+  "f843af8bf207": {
+    "source": "It's a Solana Pay transfer request: the recipient, an amount, spl-token for USDC or USDT, a label and a message. Solana Pay also defines reference for matching a payment to an order; this generator doesn't add it, so use your point-of-sale tool when you need it.",
+    "text": "Solana Payの転送リクエストで、受取人、金額、USDCまたはUSDT用のspl-token、ラベル、メッセージが含まれます。Solana Payには、支払いを注文と照合するためのreferenceも定義されていますが、このジェネレーターでは追加されません。必要な場合はPOSツールをお使いください。",
     "status": "machine",
     "context": "qrTypes.types.solana.details.paragraphs.0"
   },
@@ -6532,6 +6700,1140 @@
     "text": "Moneroでは単独の支払いIDは非推奨のため、ジェネレーターは支払いIDを追加しません。顧客ごと、またはコードごとにサブアドレスを使うか、取引所やお店から提供された統合アドレスを使用してください。",
     "status": "machine",
     "context": "qrTypes.types.monero.details.paragraphs.1"
+  },
+  "74da95f9087d": {
+    "source": "Share a contact in a smaller code than a vCard.",
+    "text": "vCardより小さなコードで連絡先を共有できます。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.summary"
+  },
+  "c068fb639814": {
+    "source": "Make a MeCard QR code: name, phone, email, website, address, birthday and a note in the compact MECARD format, so the code stays small. Free.",
+    "text": "MeCard QRコードを作成できます。名前、電話番号、メールアドレス、ウェブサイト、住所、誕生日、メモをコンパクトなMECARD形式にまとめるので、コードが小さく収まります。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.metaDescription"
+  },
+  "733c50d5353e": {
+    "source": "A MeCard QR code holds a contact in one short line of text: your name, phone number, email, website, address, birthday and a note. Phones that read it offer to save the contact, the same way a vCard code works.",
+    "text": "MeCard QRコードには、連絡先が短い1行のテキストとして入ります。内容は、名前、電話番号、メールアドレス、ウェブサイト、住所、誕生日、メモです。読み取ったスマートフォンには連絡先の保存が提案され、vCardコードと同じように使えます。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.intro.0"
+  },
+  "1353d8961ab7": {
+    "source": "The format comes from NTT Docomo and needs fewer characters than a vCard for the same details, so the code has fewer, larger modules and scans from further away. Android phones read it; Apple doesn't document MeCard for the iPhone Camera, so test with an iPhone, or use a vCard when the contact has to reach everyone.",
+    "text": "この形式はNTTドコモが考案したもので、同じ内容でもvCardより文字数が少なくて済みます。そのため、モジュールの数が少なく大きくなり、より離れた距離からでもスキャンできます。Androidスマートフォンで読み取れますが、AppleはiPhoneのカメラでのMeCard対応を公表していないため、iPhoneで必ずテストしてください。全員に確実に届けたい場合は、vCardをお使いください。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.intro.1"
+  },
+  "18f1662e2e47": {
+    "source": "Enter your first name, and your last name if you want it saved.",
+    "text": "名を入力します。保存したい場合は姓も入力してください。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.0"
+  },
+  "4fdb157369b9": {
+    "source": "Add the details people need: a phone number, an email, a website or an address.",
+    "text": "電話番号、メールアドレス、ウェブサイト、住所など、相手に必要な情報を追加します。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.1"
+  },
+  "864e378fd3e7": {
+    "source": "Scan the preview with an Android phone and an iPhone to see that both offer to save it.",
+    "text": "プレビューをAndroidスマートフォンとiPhoneの両方でスキャンし、どちらでも保存が提案されることを確認します。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.2"
+  },
+  "5d92cacd009c": {
+    "source": "Download the code for a badge, a card or a flyer.",
+    "text": "コードをダウンロードして、名札、名刺、チラシに使います。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.3"
+  },
+  "53000439462d": {
+    "source": "Each field is NAME:value and ends with a semicolon; the record ends with two.",
+    "text": "各フィールドは「NAME:値」の形式で、末尾にセミコロンが付きます。レコード全体の末尾にはセミコロンが2つ付きます。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.0"
+  },
+  "337f9be94f36": {
+    "source": "The name is written last name, a comma, then first name.",
+    "text": "名前は、姓、カンマ、名の順で書かれます。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.1"
+  },
+  "b3802f5adca6": {
+    "source": "The characters \\ ; : and , inside a value are escaped with a backslash, as the format asks, so a web address is written https\\://.",
+    "text": "値の中の \\ ; : , の文字は、形式の指定に従ってバックスラッシュでエスケープされます。そのため、ウェブアドレスは https\\:// のように書かれます。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.2"
+  },
+  "686f4250ca0a": {
+    "source": "The birthday is 8 digits: year, month and day. SOUND holds how the name is read (kana for a Japanese name) and NICKNAME a familiar name.",
+    "text": "誕生日は年、月、日の8桁です。SOUNDには名前の読み方(日本語の名前の場合はかな)、NICKNAMEには通称が入ります。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.3"
+  },
+  "815e1036f054": {
+    "source": "MeCard or vCard?",
+    "text": "MeCardとvCardの違いは?",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.0.question"
+  },
+  "758a7ac0dd8a": {
+    "source": "A vCard can hold more (a company, a job title, several numbers) and is the format every phone documents. A MeCard holds the basics in fewer characters, so the code is smaller. Use MeCard when the code has to be small and most people scanning it use Android.",
+    "text": "vCardは、会社名、役職、複数の電話番号など、より多くの情報を保持でき、すべてのスマートフォンが仕様を公開している形式です。MeCardは基本情報を少ない文字数で保持するため、コードが小さくなります。コードを小さくする必要があり、スキャンする人の多くがAndroidを使っている場合は、MeCardをお使いください。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.0.answer"
+  },
+  "a4a03a7ff7c8": {
+    "source": "Does the iPhone camera read MeCard codes?",
+    "text": "iPhoneのカメラはMeCardコードを読み取れますか?",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.1.question"
+  },
+  "f6cef4383fb2": {
+    "source": "Apple doesn't document which contact formats the Camera app reads. Scan the preview with an iPhone before you print, and switch to a vCard if it shows the text instead of offering to save the contact.",
+    "text": "Appleは、カメラアプリがどの連絡先形式を読み取れるかを公表していません。印刷する前にiPhoneでプレビューをスキャンし、連絡先の保存が提案されずテキストが表示される場合は、vCardに切り替えてください。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.1.answer"
+  },
+  "aeb4fc782e6a": {
+    "source": "Is my contact sent to QRdx?",
+    "text": "連絡先はQRdxに送信されますか?",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.2.question"
+  },
+  "b2511e90548f": {
+    "source": "No. The code is made in your browser, and the details you type are remembered only in this browser.",
+    "text": "いいえ。コードはお使いのブラウザー上で作成され、入力した内容はこのブラウザーにのみ記憶されます。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.2.answer"
+  },
+  "153bf335ad30": {
+    "source": "Make the payment code of a Swiss QR-bill, with the Swiss cross.",
+    "text": "スイス・クロス付きで、スイスQR請求書の支払い用コードを作成します。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.summary"
+  },
+  "1f1eab6e904d": {
+    "source": "Create the Swiss QR Code of a QR-bill: IBAN or QR-IBAN, address, amount in CHF or EUR, QR or RF reference with check digits, and the Swiss cross. Free.",
+    "text": "QR請求書のスイスQRコードを作成します。IBANまたはQR-IBAN、住所、CHFまたはEURの金額、チェックディジット付きのQR参照番号またはRF参照番号、スイス・クロスに対応。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.metaDescription"
+  },
+  "34cf31c3f1e5": {
+    "source": "A Swiss QR-bill carries its payment details in a QR code with a Swiss cross in the middle: your IBAN or QR-IBAN, your name and address, the amount and the reference. The person paying scans it with the QR scanner in their Swiss or Liechtenstein banking app, checks the payment and confirms it.",
+    "text": "スイスQR請求書は、中央にスイス・クロスのあるQRコードに支払い情報を収めています。IBANまたはQR-IBAN、お名前と住所、金額、参照番号が含まれます。支払う方は、スイスまたはリヒテンシュタインのバンキングアプリのQRスキャナーでスキャンし、支払い内容を確認して承認します。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.intro.0"
+  },
+  "849857bd573d": {
+    "source": "QRdx writes the code to SIX's Swiss Implementation Guidelines for the QR-bill: the Swiss Payments Code version 0200, a structured address, and a QR reference or RF creditor reference with its check digits checked. It draws the code at error correction level M with the 7 mm Swiss cross on top, as the guidelines ask. This is the code for the payment part; the receipt and the rest of the printed bill are up to your invoicing.",
+    "text": "QRdxは、SIXが定めるQR請求書のSwiss Implementation Guidelinesに沿ってコードを作成します。Swiss Payments Codeバージョン0200、構造化住所、チェックディジットを検証したQR参照番号またはRF債権者参照番号を使用します。ガイドラインどおり、誤り訂正レベルMでコードを描画し、その上に7 mmのスイス・クロスを重ねます。これは支払い部分用のコードです。受領証や印刷される請求書のそのほかの部分は、お使いの請求書発行の仕組みで用意してください。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.intro.1"
+  },
+  "4792a0e29f5f": {
+    "source": "Enter your IBAN or QR-IBAN and your name and address as they appear on the account.",
+    "text": "IBANまたはQR-IBANと、口座に登録されているとおりのお名前と住所を入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.0"
+  },
+  "bfba558a8abe": {
+    "source": "Choose francs or euros and, if you like, an amount.",
+    "text": "フランまたはユーロを選び、必要に応じて金額を入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.1"
+  },
+  "634adfef4d30": {
+    "source": "With a QR-IBAN, add the 27-digit QR reference from your invoicing; with an IBAN, an RF creditor reference or none.",
+    "text": "QR-IBANの場合は、請求書発行で使っている27桁のQR参照番号を追加します。IBANの場合は、RF債権者参照番号を追加するか、参照番号なしにします。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.2"
+  },
+  "7b9a3d41bb4d": {
+    "source": "Scan the preview with your banking app, then print the code at least 46 × 46 mm, black on white.",
+    "text": "プレビューをバンキングアプリでスキャンして確認し、コードを白地に黒で、46 × 46 mm以上のサイズで印刷します。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.3"
+  },
+  "6ee013d0eb49": {
+    "source": "Every line up to EPD is written, empty ones included, and nothing follows the last line. QRdx joins the lines with line feeds, which the guidelines allow.",
+    "text": "EPDまでのすべての行が、空の行も含めて書き込まれ、最後の行のあとには何も続きません。QRdxは、ガイドラインで認められている改行コードで各行をつなぎます。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.0"
+  },
+  "e426d8cc5b0e": {
+    "source": "A QR-IBAN (institution ID 30000 to 31999) always takes a 27-digit QR reference, checked with its modulo 10 recursive check digit, and francs only. An IBAN takes an RF creditor reference (ISO 11649) or no reference.",
+    "text": "QR-IBAN(金融機関ID 30000～31999)には、必ず27桁のQR参照番号が必要です。参照番号はモジュロ10の再帰チェックディジットで検証され、通貨はフランのみです。IBANの場合は、RF債権者参照番号(ISO 11649)を使うか、参照番号なしにします。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.1"
+  },
+  "a058beb73635": {
+    "source": "Amounts are written with two decimals, from 0.01 to 999,999,999.99. Leave the amount empty and the payer enters it.",
+    "text": "金額は小数点以下2桁で、0.01から999,999,999.99まで書き込めます。金額を空にしておくと、支払う方が入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.2"
+  },
+  "e3d1ee53275c": {
+    "source": "Text uses the Latin character set the guidelines list. Curly quotes and dashes are written as plain ones; anything else outside the set is refused.",
+    "text": "テキストには、ガイドラインに記載されたラテン文字セットを使用します。丸引用符やダッシュは通常の記号に置き換えて書き込まれ、そのほかのセット外の文字は受け付けられません。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.3"
+  },
+  "177e8add3f84": {
+    "source": "The code holds at most 997 bytes and is drawn at error correction M with the Swiss cross at 7/46 of its width.",
+    "text": "コードに収められるのは最大997バイトで、誤り訂正レベルMで描画され、スイス・クロスは幅の7/46の大きさです。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.4"
+  },
+  "9f8771ebb923": {
+    "source": "Which apps read a Swiss QR-bill code?",
+    "text": "スイスQR請求書のコードを読み取れるのはどのアプリですか。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.0.question"
+  },
+  "de270230a496": {
+    "source": "Swiss and Liechtenstein banking apps and e-banking scan it with their QR scanner, depending on the bank. A phone's camera app only shows the text, because the code holds payment data, not a link.",
+    "text": "スイスやリヒテンシュタインのバンキングアプリやe-バンキングが、銀行によって異なりますが、QRスキャナーでスキャンできます。このコードにはリンクではなく支払いデータが入っているため、スマートフォンのカメラアプリではテキストが表示されるだけです。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.0.answer"
+  },
+  "090ac73796d7": {
+    "source": "QR-IBAN or IBAN?",
+    "text": "QR-IBANとIBANの違いは?",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.1.question"
+  },
+  "b8eef59d170e": {
+    "source": "A QR-IBAN comes with a QR reference that your bank uses to match payments to invoices automatically. A normal IBAN works with an RF creditor reference or none. Your bank tells you which one your account has.",
+    "text": "QR-IBANにはQR参照番号が付き、銀行はそれを使って入金と請求書を自動的に照合します。通常のIBANは、RF債権者参照番号を付けるか、参照番号なしで使えます。どちらの口座かは、銀行にご確認ください。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.1.answer"
+  },
+  "5332d85cbf83": {
+    "source": "Can I change the colours?",
+    "text": "色は変更できますか。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.2.question"
+  },
+  "e30f831039d9": {
+    "source": "The guidelines describe the Swiss QR Code in black and white with the Swiss cross, at 46 × 46 mm. Keep it that way on bills you send, so every banking app reads it.",
+    "text": "ガイドラインでは、スイスQRコードは白黒で、スイス・クロス付き、46 × 46 mmと定められています。送付する請求書ではこの仕様を守ると、どのバンキングアプリでも読み取れます。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.2.answer"
+  },
+  "e63d6ab6b797": {
+    "source": "No. The code is made in your browser, and the playground never puts payment details in a link.",
+    "text": "いいえ。コードはお使いのブラウザー内で作成され、Playgroundが支払い情報をリンクに含めることはありません。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.3.answer"
+  },
+  "04f537f7cada": {
+    "source": "Fill in a Czech bank transfer with account, amount and symbols.",
+    "text": "口座、金額、シンボルを入力済みのチェコの銀行振込を作成します。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.summary"
+  },
+  "67270dcd5b9c": {
+    "source": "Create a QR Platba code for Czech bank transfers: IBAN or account number, amount in CZK, message and variable symbol, to ČBA standard no. 26. Free.",
+    "text": "チェコの銀行振込用のQR Platbaコードを作成できます。IBANまたは口座番号、CZK建ての金額、メッセージ、変動シンボルを設定でき、ČBA標準第26号に準拠しています。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.metaDescription"
+  },
+  "1168dc6a7abf": {
+    "source": "A QR Platba code fills in a Czech bank transfer for the person paying: your account, the amount in koruna, a message and the variable symbol. They scan it with the QR scanner in their banking app, check the payment and confirm it, so nobody retypes an account number from an invoice.",
+    "text": "QR Platbaコードは、支払う人のためにチェコの銀行振込を入力済みにします。あなたの口座、コルナ建ての金額、メッセージ、変動シンボルが含まれます。支払う人は銀行アプリのQRスキャナーでスキャンし、内容を確認して支払いを確定するだけなので、請求書の口座番号を打ち直す必要はありません。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.intro.0"
+  },
+  "e32a2de65dd5": {
+    "source": "The format is the Short Payment Descriptor from the Czech Banking Association's standard no. 26 (ČBA, version 1.2), and most banks on the Czech market offer QR Platba in their apps. A phone's camera app only shows the text. Slovakia uses a different format, PAY by square, which QRdx doesn't make.",
+    "text": "形式はチェコ銀行協会の標準第26号(ČBA、バージョン1.2)にあるShort Payment Descriptorで、チェコ市場の多くの銀行がアプリでQR Platbaに対応しています。スマートフォンのカメラアプリでは、テキストが表示されるだけです。スロバキアではPAY by squareという別の形式が使われており、QRdxでは作成できません。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.intro.1"
+  },
+  "7adce7aa5e2f": {
+    "source": "Enter your Czech IBAN, or a domestic account number like 19-2000145399/0800, which QRdx checks and turns into the IBAN.",
+    "text": "チェコのIBAN、または19-2000145399/0800のような国内口座番号を入力します。QRdxが内容を確認し、IBANに変換します。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.0"
+  },
+  "62b00cfba921": {
+    "source": "Optionally add an amount in CZK, a message and a variable symbol such as an invoice number.",
+    "text": "必要に応じて、CZK建ての金額、メッセージ、請求書番号などの変動シンボルを追加します。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.1"
+  },
+  "5aa4f3055ac0": {
+    "source": "Add a due date, a specific or constant symbol, or ask for an instant payment, if you need them.",
+    "text": "必要であれば、支払期日、特定シンボルまたは定数シンボルを追加するか、即時払いを指定します。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.2"
+  },
+  "30de678c0315": {
+    "source": "Use error correction level M for print, as the standard asks, and scan the preview with a Czech banking app.",
+    "text": "印刷する場合は、標準の指定どおり誤り訂正レベルMを使い、プレビューをチェコの銀行アプリでスキャンして確認します。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.3"
+  },
+  "86457e663210": {
+    "source": "Each field is KEY:value and the fields are separated by *. Only the account is required, and QRdx leaves empty fields out.",
+    "text": "各フィールドはKEY:value形式で、フィールド同士は*で区切ります。必須なのは口座だけで、QRdxは空のフィールドを省きます。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.0"
+  },
+  "7c5f0c4fff83": {
+    "source": "Amounts are in CZK with two decimals, up to 9,999,999.99. Messages are up to 60 characters and names up to 35.",
+    "text": "金額はCZK建てで小数点以下2桁、最大9,999,999.99です。メッセージは60文字まで、名前は35文字までです。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.1"
+  },
+  "87e817fd0933": {
+    "source": "Variable, specific and constant symbols are up to 10 digits each, and leading zeros are kept.",
+    "text": "変動シンボル、特定シンボル、定数シンボルはそれぞれ10桁までで、先頭のゼロはそのまま保持されます。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.2"
+  },
+  "ac5a31c026d2": {
+    "source": "Text is written in upper case without diacritics, the way the standard's reference generator does by default, so the code stays compact (QR alphanumeric mode) and every bank reads it. A * inside a value is written %2A.",
+    "text": "テキストは、標準のリファレンスジェネレーターが既定で行うのと同じく、ダイアクリティカルマークなしの大文字で書き込まれます。これによりコードは小さく収まり(QR英数字モード)、どの銀行でも読み取れます。値の中の*は%2Aと書き込まれます。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.3"
+  },
+  "34faf78083ed": {
+    "source": "PT:IP asks for an instant payment, for banks that support it.",
+    "text": "PT:IPは、対応している銀行に即時払いを依頼します。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.4"
+  },
+  "f4104434d1b5": {
+    "source": "Which apps read QR Platba codes?",
+    "text": "QR Platbaコードを読み取れるアプリは?",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.0.question"
+  },
+  "801efb824e7d": {
+    "source": "The QR scanners in Czech banking apps; most banks on the Czech market offer QR Platba. A phone's camera app only shows the text, because the code holds payment details, not a link.",
+    "text": "チェコの銀行アプリのQRスキャナーです。チェコ市場の多くの銀行がQR Platbaに対応しています。コードにはリンクではなく支払い情報が入っているため、スマートフォンのカメラアプリではテキストが表示されるだけです。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.0.answer"
+  },
+  "12c45093ab80": {
+    "source": "Why is my message in capital letters?",
+    "text": "メッセージが大文字になるのはなぜですか?",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.1.question"
+  },
+  "184d39bb4cb4": {
+    "source": "QRdx writes text in upper case without diacritics, as the standard's reference generator does by default. The code stays smaller and every bank reads it.",
+    "text": "QRdxは、標準のリファレンスジェネレーターが既定で行うのと同じく、ダイアクリティカルマークなしの大文字でテキストを書き込みます。コードが小さくなり、どの銀行でも読み取れます。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.1.answer"
+  },
+  "26bfeee86716": {
+    "source": "Does it work for payments in Slovakia?",
+    "text": "スロバキアでの支払いにも使えますか?",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.2.question"
+  },
+  "eca91d85ebcb": {
+    "source": "No. Slovak banks use a different format, PAY by square, which QRdx doesn't make.",
+    "text": "いいえ。スロバキアの銀行はPAY by squareという別の形式を使っており、QRdxでは作成できません。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.2.answer"
+  },
+  "b7eace1568cc": {
+    "source": "Account numbers and check digits",
+    "text": "口座番号とチェックディジット",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.details.title"
+  },
+  "768f1f0bfce5": {
+    "source": "A domestic account number has an optional prefix, the number and the four-digit bank code, as in 19-2000145399/0800. QRdx checks the prefix and the number with their mod 11 check, turns them into the IBAN and checks its check digits, so a mistyped account is caught before you print.",
+    "text": "国内口座番号は、任意のプレフィックス、番号、4桁の銀行コードで構成されます(例:19-2000145399/0800)。QRdxはプレフィックスと番号をmod 11のチェックで確認し、IBANに変換してそのチェックディジットも確認します。そのため、入力ミスは印刷前に見つかります。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.details.paragraphs.0"
+  },
+  "93350b6001ad": {
+    "source": "A Czech IBAN is checked with its check digits and written as typed. Add the BIC only if your bank asks for it; it follows the IBAN after a +.",
+    "text": "チェコのIBANはチェックディジットで確認され、入力したとおりに書き込まれます。BICは銀行から求められた場合のみ追加してください。IBANの後ろに+を付けて続けます。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.details.paragraphs.1"
+  },
+  "d6555839f9a3": {
+    "source": "Get paid with Swish to a mobile or business number.",
+    "text": "携帯電話番号または法人番号でSwishの支払いを受け取れます。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.summary"
+  },
+  "6b030cfbfdfc": {
+    "source": "Make a Swish QR code for a Swedish mobile or 123 business number, with an optional amount and message you can lock or let the payer change. Free.",
+    "text": "スウェーデンの携帯電話番号または123で始まる法人番号向けに、Swish QRコードを作成できます。金額とメッセージは任意で、固定にすることも、支払う人が変更できるようにすることもできます。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.metaDescription"
+  },
+  "87dd608c89f4": {
+    "source": "A Swish QR code opens a payment in the Swish app with your number filled in, and an amount and a message if you add them. It's a link, so a phone's camera opens the Swish app, and the scanner inside Swish reads it too.",
+    "text": "Swish QRコードをスキャンすると、Swishアプリで支払い画面が開き、あなたの番号が入力されます。金額とメッセージを追加した場合は、それらも入力されます。コードはリンクなので、スマートフォンのカメラでSwishアプリが開き、Swish内のスキャナーでも読み取れます。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.intro.0"
+  },
+  "e961c83b431f": {
+    "source": "QRdx writes the link in the format Swish's developer documentation describes. It takes a Swedish mobile number or a 10-digit business number starting with 123. An amount or message in the code is locked unless you let the payer change it.",
+    "text": "QRdxは、Swishの開発者向けドキュメントに記載された形式でリンクを作成します。使えるのは、スウェーデンの携帯電話番号、または123で始まる10桁の法人番号です。コードに含めた金額やメッセージは、支払う人による変更を許可しない限り固定されます。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.intro.1"
+  },
+  "fe2edd77ce8a": {
+    "source": "Enter your Swish number: a Swedish mobile like 070 123 45 67, or your 123 business number.",
+    "text": "Swish番号を入力します。070 123 45 67のようなスウェーデンの携帯電話番号か、123で始まる法人番号を入力してください。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.0"
+  },
+  "dacaaddc6a13": {
+    "source": "Optionally add an amount from 1 to 150,000 kronor and a message of up to 50 characters.",
+    "text": "必要に応じて、1〜150,000クローナの金額と、50文字までのメッセージを追加します。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.1"
+  },
+  "f3928869b867": {
+    "source": "Choose whether the payer may change the amount or the message.",
+    "text": "支払う人が金額やメッセージを変更できるかどうかを選びます。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.2"
+  },
+  "20333012e8f8": {
+    "source": "Scan the preview with your phone's camera to check that Swish opens with the right details, then download the code.",
+    "text": "スマートフォンのカメラでプレビューをスキャンし、Swishが正しい内容で開くことを確認してから、コードをダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.3"
+  },
+  "3260e32e2ca2": {
+    "source": "The format is from Swish's developer documentation, \"Create QR code from specification\".",
+    "text": "この形式は、Swishの開発者向けドキュメント「Create QR code from specification」に基づいています。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.0"
+  },
+  "b2414775db2c": {
+    "source": "A mobile number is written 46 and 9 digits, so 070 123 45 67 becomes 46701234567. Business numbers are 10 digits starting with 123.",
+    "text": "携帯電話番号は「46」に9桁の数字を続けて表すため、070 123 45 67は46701234567になります。法人番号は123で始まる10桁です。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.1"
+  },
+  "24225545374a": {
+    "source": "Amounts are in kronor, 1 to 150,000 with up to 2 decimals, the range Swish's own generator takes. Messages are up to 50 characters and percent-encoded.",
+    "text": "金額の単位はクローナで、1〜150,000の範囲で小数点以下は2桁までです。これはSwish公式のジェネレーターと同じ範囲です。メッセージは50文字までで、パーセントエンコードされます。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.2"
+  },
+  "eb86d73bf3c6": {
+    "source": "edit lists what the payer may change: amt, msg or both. An amount or message that isn't listed is locked.",
+    "text": "editには、支払う人が変更できる項目をamt、msg、またはその両方で指定します。指定されていない金額やメッセージは固定されます。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.3"
+  },
+  "5c193517445d": {
+    "source": "Does the phone camera open Swish?",
+    "text": "スマートフォンのカメラでSwishは開きますか？",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.0.question"
+  },
+  "a40cf9ad6e26": {
+    "source": "Yes. The code is a link on app.swish.nu, the Swish app's verified link domain on iOS and Android, so the camera opens the app. The scanner in the Swish app reads it too.",
+    "text": "はい。このコードはapp.swish.nu上のリンクで、これはSwishアプリがiOSとAndroidで認証済みのリンク用ドメインのため、カメラでアプリが開きます。Swishアプリ内のスキャナーでも読み取れます。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.0.answer"
+  },
+  "aea453af4eb0": {
+    "source": "Can I put the Swish symbol in the middle?",
+    "text": "中央にSwishのシンボルを入れられますか？",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.1.question"
+  },
+  "3f957de5e295": {
+    "source": "Swish's guidelines ask for the code in black and white with the Swish symbol in the centre on a white circle, 25% of the code's width. QRdx doesn't add the symbol; if you want it, take it from Swish's marketing toolbox and add it as the code's logo.",
+    "text": "Swishのガイドラインでは、コードを白黒にし、中央の白い円の上にコード幅の25%のSwishシンボルを置くよう求めています。QRdxはシンボルを追加しません。必要な場合は、Swishのマーケティングツールボックスから入手し、コードのロゴとして追加してください。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.1.answer"
+  },
+  "c0ed43219f62": {
+    "source": "Is my Swish number sent to QRdx?",
+    "text": "私のSwish番号はQRdxに送信されますか？",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.2.question"
+  },
+  "8c438c696747": {
+    "source": "Get paid in riel or dollars from Cambodian banking apps.",
+    "text": "カンボジアの銀行アプリから、リエルまたはドルで支払いを受け取れます。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.summary"
+  },
+  "ac6fd425d68d": {
+    "source": "Make a KHQR code for a Bakong account in riel or US dollars, with an optional amount, expiry day and bill number. National Bank of Cambodia format. Free.",
+    "text": "Bakongアカウント用のKHQRコードを、リエルまたは米ドルで作成できます。金額、有効期限日、請求書番号も任意で設定できます。カンボジア国立銀行の形式に対応。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.metaDescription"
+  },
+  "c47aafa38496": {
+    "source": "A KHQR code lets people in Cambodia pay you from their banking app. It holds your Bakong account ID, your name and city, and the currency, riel or US dollars. KHQR is the National Bank of Cambodia's payment code on Bakong, and Cambodian banking apps that accept KHQR scan it.",
+    "text": "KHQRコードを使うと、カンボジアの人々が銀行アプリからあなたに支払えます。コードには、Bakongのアカウント ID、お名前と市区町村、通貨（リエルまたは米ドル）が含まれます。KHQRはカンボジア国立銀行がBakong上で提供する決済コードで、KHQRに対応するカンボジアの銀行アプリでスキャンできます。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.intro.0"
+  },
+  "81b6d43bf052": {
+    "source": "Leave the amount empty for a static code anyone can pay any amount, which you can print once and keep. With an amount it becomes a dynamic KHQR, which Bakong requires to carry a creation time and an expiry, so QRdx asks for an expiry day and the code stops working after it.",
+    "text": "金額を空欄にすると静的コードになり、誰でも好きな金額を支払えます。一度印刷すれば使い続けられます。金額を入れると動的KHQRになり、Bakongの仕様で作成時刻と有効期限を含める必要があるため、QRdxでは有効期限日を入力していただき、その日を過ぎるとコードは使えなくなります。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.intro.1"
+  },
+  "2f8b8dcf5338": {
+    "source": "Copy your Bakong account ID (name@bank) from your bank app or the Bakong app and paste it in.",
+    "text": "銀行アプリまたはBakongアプリからBakongのアカウント ID（name@bank）をコピーして貼り付けます。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.0"
+  },
+  "ba77d851da3d": {
+    "source": "Enter the name payers should see and your city, and pick KHR or USD.",
+    "text": "支払う人に表示する名前と市区町村を入力し、KHRかUSDを選びます。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.1"
+  },
+  "9d9888545383": {
+    "source": "Optionally add an amount with an expiry day, a bill number or a mobile number.",
+    "text": "必要に応じて、有効期限日付きの金額、請求書番号、携帯電話番号を追加します。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.2"
+  },
+  "4f3fb576a9e7": {
+    "source": "Scan the preview with a banking app that accepts KHQR, then download the code.",
+    "text": "KHQRに対応した銀行アプリでプレビューをスキャンしてから、コードをダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.3"
+  },
+  "eb8197bea8ba": {
+    "source": "Tag 29 holds the person's own Bakong account ID, up to 32 characters. The merchant category is 5999 and the country KH.",
+    "text": "タグ29には、本人のBakongアカウント IDが最大32文字で入ります。加盟店カテゴリは5999、国はKHです。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.0"
+  },
+  "c016f225850d": {
+    "source": "Currency 116 is riel and 840 is US dollars. Riel amounts are whole numbers; dollar amounts have up to 2 decimals.",
+    "text": "通貨コード116はリエル、840は米ドルです。リエルの金額は整数、ドルの金額は小数点以下2桁までです。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.1"
+  },
+  "c77d936e0d4c": {
+    "source": "Names are up to 25 characters and cities up to 15; the city is Phnom Penh unless you change it. Tag 62 holds the bill number and mobile number.",
+    "text": "名前は25文字まで、市区町村は15文字までです。市区町村は変更しない限りPhnom Penhになります。タグ62には請求書番号と携帯電話番号が入ります。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.2"
+  },
+  "30171e1e70a9": {
+    "source": "A code with an amount carries its creation time and expiry in tag 99. The checksum is CRC16-CCITT over the whole payload, as in every EMV payment code.",
+    "text": "金額付きのコードでは、作成時刻と有効期限がタグ99に入ります。チェックサムは、すべてのEMV決済コードと同様に、ペイロード全体に対するCRC16-CCITTです。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.3"
+  },
+  "c10213c45468": {
+    "source": "Why does a code with an amount expire?",
+    "text": "金額付きのコードに有効期限があるのはなぜですか？",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.0.question"
+  },
+  "cb919fae6326": {
+    "source": "Bakong requires a KHQR with an amount to carry a creation time and an expiry, so the code stops working after the day you pick. For a sign you print once, leave the amount empty.",
+    "text": "Bakongでは、金額付きのKHQRに作成時刻と有効期限を含めることが必須です。そのため、選んだ日を過ぎるとコードは使えなくなります。一度印刷して使い続ける看板には、金額を空欄にしてください。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.0.answer"
+  },
+  "f949e134455b": {
+    "source": "Where do I find my Bakong account ID?",
+    "text": "Bakongのアカウント IDはどこで確認できますか？",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.1.question"
+  },
+  "9881bb779353": {
+    "source": "In your bank app or the Bakong app; it looks like name@bank. QRdx can't check that an ID exists, so copy it rather than typing it, and scan the preview with a banking app before you print.",
+    "text": "銀行アプリまたはBakongアプリで確認できます。name@bankのような形式です。QRdxではIDが実在するかを確認できないため、入力せずにコピーし、印刷する前に銀行アプリでプレビューをスキャンしてください。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.1.answer"
+  },
+  "c7ca4fc0c63a": {
+    "source": "Is my account sent to QRdx?",
+    "text": "アカウント情報はQRdxに送信されますか？",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.2.question"
+  },
+  "2c1402d1fc89": {
+    "source": "Share a Lightning invoice, LNURL or Lightning Address.",
+    "text": "Lightningインボイス、LNURL、Lightning Addressを共有できます。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.summary"
+  },
+  "67d71c0b24eb": {
+    "source": "Make a Lightning QR code from a BOLT 11 invoice, an LNURL or a Lightning Address. Invoices are checked; an address becomes its LNURL-pay code. Free.",
+    "text": "BOLT 11インボイス、LNURL、Lightning AddressからLightning QRコードを作成できます。インボイスは検証され、アドレスはLNURL-payのコードになります。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.metaDescription"
+  },
+  "b89cd1654e54": {
+    "source": "A Lightning QR code lets a Bitcoin Lightning wallet pay you. Paste one of three things: a BOLT 11 invoice from your wallet (lnbc…), an LNURL (lnurl1…), or a Lightning Address such as name@domain.com.",
+    "text": "Lightning QRコードを使うと、BitcoinのLightningウォレットから支払いを受け取れます。ウォレットのBOLT 11インボイス(lnbc…)、LNURL(lnurl1…)、name@domain.comのようなLightning Addressのいずれかを貼り付けてください。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.intro.0"
+  },
+  "665b6bd1db36": {
+    "source": "An invoice can be paid once and expires, after an hour by BOLT 11's default, so a printed invoice code goes stale. For a sign, a sticker or anything else you print, use an LNURL or a Lightning Address: QRdx turns an address into its LNURL-pay, which wallets that support LNURL-pay scan.",
+    "text": "インボイスは1回しか支払えず、BOLT 11のデフォルトでは1時間で期限が切れるため、印刷したインボイスのコードはすぐに使えなくなります。看板やステッカーなど印刷するものには、LNURLかLightning Addressを使ってください。QRdxはアドレスをLNURL-payに変換するので、LNURL-payに対応したウォレットでスキャンできます。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.intro.1"
+  },
+  "77b6de5bcc8d": {
+    "source": "Copy an invoice, an LNURL or your Lightning Address from your wallet and paste it in.",
+    "text": "ウォレットからインボイス、LNURL、またはLightning Addressをコピーして貼り付けます。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.0"
+  },
+  "99738c1f186e": {
+    "source": "QRdx checks an invoice's or LNURL's checksum; only mainnet invoices (lnbc…) are accepted.",
+    "text": "QRdxはインボイスまたはLNURLのチェックサムを検証します。使用できるのはメインネットのインボイス(lnbc…)のみです。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.1"
+  },
+  "4d7c70004d55": {
+    "source": "Scan the preview with the wallet that will pay to check it.",
+    "text": "支払いに使うウォレットでプレビューをスキャンして確認します。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.2"
+  },
+  "af0f158f8d39": {
+    "source": "Download the code, and print a Lightning Address as text beside it.",
+    "text": "コードをダウンロードします。Lightning Addressを使う場合は、その横にテキストでも印刷してください。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.3"
+  },
+  "373462ea7e0b": {
+    "source": "An invoice is written lightning:<INVOICE> with the invoice in upper case, as BOLT 11 asks for QR codes. Its Bech32 checksum and prefix are checked, and only mainnet (lnbc) invoices are accepted.",
+    "text": "インボイスは lightning:<INVOICE> の形式で書き込まれ、BOLT 11がQRコードに求めているとおり、インボイス部分は大文字になります。Bech32のチェックサムとプレフィックスが検証され、メインネット(lnbc)のインボイスのみ使用できます。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.0"
+  },
+  "2949c548ac93": {
+    "source": "A Lightning Address is turned into its LNURL-pay (LUD-16 and LUD-01): https://domain/.well-known/lnurlp/name, Bech32-encoded. The example is satoshi@bitcoin.org.",
+    "text": "Lightning Addressは、LNURL-pay(LUD-16とLUD-01)であるhttps://domain/.well-known/lnurlp/nameをBech32でエンコードしたものに変換されます。例としてsatoshi@bitcoin.orgを使用しています。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.1"
+  },
+  "7f916613b6c6": {
+    "source": "The code holds the bare upper case LNURL, which LNURL-pay wallets scan (LUD-06). No spec defines a QR form for name@domain itself.",
+    "text": "コードには大文字のLNURLだけが含まれ、LNURL-payウォレットがこれをスキャンします(LUD-06)。name@domain自体のQR形式を定めた仕様はありません。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.2"
+  },
+  "cecaa53fd26a": {
+    "source": "Invoices are 200 to 600 characters or more, so an invoice code is dense; print it larger.",
+    "text": "インボイスは200〜600文字以上になるため、インボイスのコードは密度が高くなります。大きめに印刷してください。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.3"
+  },
+  "99358e5563bc": {
+    "source": "Can I print an invoice code?",
+    "text": "インボイスのコードは印刷できますか?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.0.question"
+  },
+  "97da46ebe9a0": {
+    "source": "Not for long. An invoice can be paid once and expires, after an hour by BOLT 11's default. Use an LNURL or a Lightning Address for anything printed.",
+    "text": "長くは使えません。インボイスは1回しか支払えず、BOLT 11のデフォルトでは1時間で期限が切れます。印刷物にはLNURLかLightning Addressを使ってください。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.0.answer"
+  },
+  "8d306b6fe7d4": {
+    "source": "Why doesn't the code hold my Lightning Address?",
+    "text": "コードにLightning Addressが入らないのはなぜですか?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.1.question"
+  },
+  "6840dcacef1d": {
+    "source": "No spec defines a QR form for name@domain, so QRdx writes the address's LNURL-pay, which LNURL-pay wallets scan. Print the address as text beside the code for people who'd rather type it.",
+    "text": "name@domainのQR形式を定めた仕様がないため、QRdxはアドレスのLNURL-payを書き込みます。LNURL-payウォレットがこれをスキャンします。手入力したい方のために、コードの横にアドレスをテキストで印刷してください。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.1.answer"
+  },
+  "020f1df312e2": {
+    "source": "Is my invoice sent to QRdx?",
+    "text": "インボイスはQRdxに送信されますか?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.2.question"
+  },
+  "9a2536823508": {
+    "source": "No. The code is made in your browser, and QRdx doesn't contact your Lightning Address's server to make it.",
+    "text": "いいえ。コードはお使いのブラウザで作成され、作成時にQRdxがLightning Addressのサーバーへ接続することもありません。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.2.answer"
+  },
+  "9e2e53faff95": {
+    "source": "Share an XRP Ledger address, with a destination tag if you need one.",
+    "text": "XRP Ledgerのアドレスを共有できます。必要な場合はデスティネーションタグも付けられます。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.summary"
+  },
+  "7af9f7d47d3c": {
+    "source": "Make an XRP QR code with your XRP Ledger address, checked with its checksum. Add a destination tag and the code holds an X-address that keeps both. Free.",
+    "text": "XRP LedgerアドレスからXRPのQRコードを作成できます。アドレスはチェックサムで検証されます。デスティネーションタグを追加すると、両方を保持するXアドレスが入ります。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.metaDescription"
+  },
+  "d72b63a5ad07": {
+    "source": "An XRP QR code holds your XRP Ledger address, so the payer's wallet reads it instead of someone typing it. The XRP Ledger has no finished payment URI standard, so the code holds the plain classic address (r…), which XRPL wallets read.",
+    "text": "XRPのQRコードにはXRP Ledgerのアドレスが入っており、支払う人のウォレットが読み取るので、手入力は不要です。XRP Ledgerには確定した支払いURIの標準がないため、コードにはXRPLウォレットが読み取れる通常のクラシックアドレス(r…)がそのまま入ります。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.intro.0"
+  },
+  "4f85c6d1c602": {
+    "source": "With a destination tag, QRdx writes the X-address instead (XLS-5, final), which packs the address and the tag together under one checksum. A wallet that doesn't understand an X-address refuses it rather than sending without the tag. Print the classic address and the tag as text too, since some exchanges ask for them separately.",
+    "text": "デスティネーションタグを付けると、QRdxは代わりにXアドレス(XLS-5、final)を書き込みます。Xアドレスは、アドレスとタグを1つのチェックサムにまとめたものです。Xアドレスに対応していないウォレットは、タグなしで送金するのではなく、読み取りを拒否します。取引所によってはアドレスとタグを別々に求められるため、クラシックアドレスとタグもテキストで印刷してください。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.intro.1"
+  },
+  "c11baa66a136": {
+    "source": "Paste your classic XRP Ledger address (r…) from your wallet or exchange.",
+    "text": "ウォレットまたは取引所からクラシックXRP Ledgerアドレス(r…)を貼り付けます。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.0"
+  },
+  "3025dd9f38d1": {
+    "source": "If you were given a destination tag, enter it in its own field.",
+    "text": "デスティネーションタグを受け取っている場合は、専用の欄に入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.1"
+  },
+  "0c7a8a070054": {
+    "source": "Download the code, and print the address and tag as text beside it.",
+    "text": "コードをダウンロードし、横にアドレスとタグをテキストで印刷します。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.3"
+  },
+  "8b35bf5a17d7": {
+    "source": "The classic address is checked with its Base58 checksum (a double SHA-256).",
+    "text": "クラシックアドレスは、Base58チェックサム(二重のSHA-256)で検証されます。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.0"
+  },
+  "aa15e1fe974a": {
+    "source": "With a destination tag the code holds the X-address (XLS-5): rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf with tag 276 is XVLhHMPHU98es4dbozjVtdWzVrDjtVoKj3MnFGMXEFMnvJV.",
+    "text": "デスティネーションタグがある場合、コードにはXアドレス(XLS-5)が入ります。rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpfにタグ276を付けると、XVLhHMPHU98es4dbozjVtdWzVrDjtVoKj3MnFGMXEFMnvJVになります。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.1"
+  },
+  "f9fe297c6cef": {
+    "source": "Tag 0 and no tag are different, so enter 0 only if you were given 0.",
+    "text": "タグ0とタグなしは別物です。0を受け取っている場合にのみ0を入力してください。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.2"
+  },
+  "1e43d3dd2ccf": {
+    "source": "There's no amount: no amount format works across XRP wallets.",
+    "text": "金額は含まれません。XRPウォレット全体で使える金額の形式がないためです。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.3"
+  },
+  "b40aeaf4eb33": {
+    "source": "Can I request an amount?",
+    "text": "金額を指定できますか?",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.0.question"
+  },
+  "badc2c555609": {
+    "source": "No. No amount format works across XRP wallets, so the payer enters the amount.",
+    "text": "できません。XRPウォレット全体で使える金額の形式がないため、支払う人が金額を入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.0.answer"
+  },
+  "885113776864": {
+    "source": "When do I need a destination tag?",
+    "text": "デスティネーションタグはいつ必要ですか?",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.1.question"
+  },
+  "48cb32049a4b": {
+    "source": "When your exchange or service gives you one. Copy it exactly: tag 0 and no tag are different.",
+    "text": "取引所やサービスからタグを受け取っているときです。そのとおりにコピーしてください。タグ0とタグなしは別物です。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.1.answer"
+  },
+  "ff1d090c6e22": {
+    "source": "Is my address sent to QRdx?",
+    "text": "アドレスはQRdxに送信されますか?",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.2.question"
+  },
+  "deac18fb7b7a": {
+    "source": "Request ADA with a CIP-13 Cardano payment link.",
+    "text": "CIP-13のCardano支払いリンクでADAを請求できます。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.summary"
+  },
+  "8472618ab7fd": {
+    "source": "Make a Cardano QR code in the CIP-13 web+cardano: format with your addr1 address and an optional amount in ADA. Address checked with its checksum. Free.",
+    "text": "addr1アドレスと任意のADA金額から、CIP-13のweb+cardano:形式でCardanoのQRコードを作成できます。アドレスはチェックサムで検証されます。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.metaDescription"
+  },
+  "3f20ad9d36d6": {
+    "source": "A Cardano QR code holds your payment address and, if you like, an amount in ADA, in the web+cardano: format from CIP-13. Wallets that implement CIP-13 payment URIs fill in the payment when they scan it.",
+    "text": "CardanoのQRコードには、支払い先アドレスと、必要に応じてADAの金額が、CIP-13のweb+cardano:形式で入ります。CIP-13の支払いURIに対応したウォレットは、スキャンすると支払い内容を自動で入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.intro.0"
+  },
+  "a35655958b18": {
+    "source": "CIP-13's status is proposed, and it lists Yoroi and Begin as wallets implementing payment URIs. Other wallets may only read a plain address, so scan the preview with the wallets your payers use before you print.",
+    "text": "CIP-13のステータスはproposedで、支払いURIに対応するウォレットとしてYoroiとBeginが挙げられています。それ以外のウォレットは通常のアドレスしか読み取れない場合があるため、印刷する前に、支払う人が使うウォレットでプレビューをスキャンしてください。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.intro.1"
+  },
+  "8d04344477dd": {
+    "source": "Paste a mainnet payment address (addr1…) from your wallet.",
+    "text": "ウォレットからメインネットの支払いアドレス(addr1…)を貼り付けます。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.0"
+  },
+  "29403c48bdc1": {
+    "source": "Optionally enter an amount in ADA, with up to 6 decimals.",
+    "text": "必要に応じてADAの金額を入力します。小数は6桁までです。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.1"
+  },
+  "0a19a1f4064e": {
+    "source": "Scan the preview with the wallets your payers use.",
+    "text": "支払う人が使うウォレットでプレビューをスキャンします。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.2"
+  },
+  "10a20be51b8a": {
+    "source": "Defined by CIP-13. The amount is decimal ADA with up to 6 decimals.",
+    "text": "CIP-13で定義されています。金額は小数表記のADAで、小数は6桁までです。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.0"
+  },
+  "6e27720303a4": {
+    "source": "CIP-13 defines only the amount, so there's no label or message.",
+    "text": "CIP-13で定義されているのは金額だけなので、ラベルやメッセージはありません。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.1"
+  },
+  "899005da8290": {
+    "source": "QRdx takes mainnet Shelley payment addresses (addr1…) and checks their Bech32 checksum. Stake addresses and testnet addresses are refused, and older Byron addresses aren't accepted.",
+    "text": "QRdxはメインネットのShelley支払いアドレス(addr1…)を受け付け、Bech32チェックサムで検証します。ステークアドレスとテストネットのアドレスは拒否され、古いByronアドレスも受け付けません。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.2"
+  },
+  "61421398a492": {
+    "source": "Which wallets read it?",
+    "text": "どのウォレットで読み取れますか?",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.0.question"
+  },
+  "d6ee36d68c1f": {
+    "source": "CIP-13 lists Yoroi and Begin as implementing payment URIs. Other wallets may read only plain addresses, so test with your payers' wallets.",
+    "text": "CIP-13では、支払いURIに対応するウォレットとしてYoroiとBeginが挙げられています。それ以外のウォレットは通常のアドレスしか読み取れない場合があるため、支払う人のウォレットでテストしてください。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.0.answer"
+  },
+  "475fb46585a1": {
+    "source": "Why is my address refused?",
+    "text": "アドレスが拒否されるのはなぜですか?",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.1.question"
+  },
+  "962c2a8064ea": {
+    "source": "QRdx takes mainnet Shelley payment addresses starting with addr1. A stake address, a testnet address or an older Byron address isn't accepted.",
+    "text": "QRdxが受け付けるのは、addr1で始まるメインネットのShelley支払いアドレスです。ステークアドレス、テストネットのアドレス、古いByronアドレスは受け付けません。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.1.answer"
+  },
+  "7cfadbe6a7a3": {
+    "source": "Share a Tron address for TRX or USDT (TRC-20).",
+    "text": "TRXまたはUSDT（TRC-20）用のTronアドレスを共有できます。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.summary"
+  },
+  "fae1c6bfb4f5": {
+    "source": "Make a Tron QR code with your T… address for TRX or USDT on TRC-20, checked with its Base58Check checksum. Print the coin and network beside it. Free.",
+    "text": "TRXまたはTRC-20のUSDT用に、T…で始まるアドレスからTron QRコードを作成できます。アドレスはBase58Checkチェックサムで確認されます。コインとネットワークをコードの横に印刷してください。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.metaDescription"
+  },
+  "91c7de63b71d": {
+    "source": "A Tron QR code holds your Tron address, the T… address your wallet shows on its own receive screen. No static payment URI is documented for Tron wallets: the documented transfer deep link needs the payer's own address and a callback, so it can't be printed.",
+    "text": "Tron QRコードには、ウォレットの受け取り画面に表示されるT…で始まるTronアドレスが入ります。Tronウォレットには、静的な支払いURIが公開されていません。公開されている送金用ディープリンクには送金者自身のアドレスとコールバックが必要なため、印刷することはできません。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.intro.0"
+  },
+  "acb202e6262f": {
+    "source": "TRX, TRC-10 tokens and TRC-20 tokens such as USDT all use the same address, so the code can't say which coin or network you expect. Print it next to the code: \"USDT (TRC-20, Tron network)\" or \"TRX\".",
+    "text": "TRX、TRC-10トークン、USDTなどのTRC-20トークンはすべて同じアドレスを使うため、コードだけでは、どのコインやネットワークを想定しているかを示せません。コードの横に「USDT（TRC-20、Tronネットワーク）」や「TRX」のように印刷してください。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.intro.1"
+  },
+  "196085cd88ec": {
+    "source": "Copy the address from your wallet's receive screen and paste it in.",
+    "text": "ウォレットの受け取り画面からアドレスをコピーして、貼り付けます。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.0"
+  },
+  "a3db84ddbd5f": {
+    "source": "QRdx checks its checksum, and refuses Tether's USDT contract address if it's pasted by mistake.",
+    "text": "QRdxがチェックサムを確認します。TetherのUSDTコントラクトアドレスを誤って貼り付けた場合は受け付けません。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.1"
+  },
+  "2b3b4bc0d981": {
+    "source": "Download the code and print the coin and network beside it.",
+    "text": "コードをダウンロードし、コインとネットワークを横に印刷します。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.3"
+  },
+  "89948a6b276f": {
+    "source": "The address is checked with its Base58Check checksum and its 0x41 prefix byte.",
+    "text": "アドレスは、Base58Checkチェックサムと0x41のプレフィックスバイトで確認されます。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.0"
+  },
+  "0f5cd7670a47": {
+    "source": "Tether's USDT contract (TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t) is refused as a recipient: it's the token's contract, not a wallet.",
+    "text": "TetherのUSDTコントラクト（TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t）は、受取人として受け付けません。これはトークンのコントラクトであり、ウォレットではないためです。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.1"
+  },
+  "2371d64a8f81": {
+    "source": "There's no amount: no static request format is documented for Tron wallets.",
+    "text": "金額は含まれません。Tronウォレットには、静的なリクエスト形式が公開されていないためです。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.2"
+  },
+  "c8ff8a9709d8": {
+    "source": "Can I ask for USDT?",
+    "text": "USDTを指定できますか？",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.0.question"
+  },
+  "752d8e7dd646": {
+    "source": "The same address receives TRX and TRC-20 USDT, and the code can't say which. Print \"USDT (TRC-20, Tron network)\" next to it so payers send on the right network.",
+    "text": "同じアドレスでTRXもTRC-20のUSDTも受け取れるため、コードだけではどちらかを示せません。送金者が正しいネットワークで送れるよう、横に「USDT（TRC-20、Tronネットワーク）」と印刷してください。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.0.answer"
+  },
+  "21ff3a8d2f73": {
+    "source": "Can I add an amount?",
+    "text": "金額を追加できますか？",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.1.question"
+  },
+  "bc7ed8c3d426": {
+    "source": "No. Tron wallets document no static request format with an amount, so the payer enters it.",
+    "text": "できません。Tronウォレットには金額を含む静的なリクエスト形式が公開されていないため、送金者が金額を入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.1.answer"
+  },
+  "1ed2997d6e49": {
+    "source": "Request TON or USDT with a ton://transfer link.",
+    "text": "ton://transferリンクでTONまたはUSDTを請求できます。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.summary"
+  },
+  "18453f5eef0f": {
+    "source": "Make a TON QR code with a ton://transfer link: your address, an amount in TON or USDT and a comment. Address checked with its CRC-16 checksum. Free.",
+    "text": "ton://transferリンクでTON QRコードを作成できます。アドレス、TONまたはUSDTの金額、コメントを入れられます。アドレスはCRC-16チェックサムで確認されます。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.metaDescription"
+  },
+  "cd9104ba5b6e": {
+    "source": "A TON QR code holds a ton://transfer link from TON's deep link docs: your address and, if you like, an amount and a comment. It can ask for TON or for USDT, Tether's own jetton on TON.",
+    "text": "TON QRコードには、TONのディープリンクドキュメントにあるton://transferリンクが入ります。アドレスに加え、必要に応じて金額とコメントを含められます。TON、またはTON上のTether公式jettonであるUSDTを請求できます。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.intro.0"
+  },
+  "23f4a1d0fbda": {
+    "source": "TON's docs note that the ton:// link works across TON wallets, but whether a wallet honours the USDT jetton parameter is up to the wallet. Scan a USDT code with the wallets your payers use before you print it.",
+    "text": "TONのドキュメントによると、ton://リンクはTONの各ウォレットで使えますが、USDTのjettonパラメータに対応するかどうかはウォレット次第です。USDTのコードは、印刷する前に送金者が使うウォレットでスキャンして確認してください。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.intro.1"
+  },
+  "0adc1f6b84ae": {
+    "source": "Paste the address your wallet shows (UQ… or EQ…).",
+    "text": "ウォレットに表示されるアドレス（UQ…またはEQ…）を貼り付けます。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.0"
+  },
+  "31efb3d9cae4": {
+    "source": "Pick TON or USDT and, if you like, an amount.",
+    "text": "TONかUSDTを選び、必要に応じて金額を入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.1"
+  },
+  "3a88fa85c549": {
+    "source": "Optionally add a comment, such as an order number.",
+    "text": "必要に応じて、注文番号などのコメントを追加します。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.2"
+  },
+  "c7a81ad47a41": {
+    "source": "Scan the preview with a TON wallet to check it, then download the code.",
+    "text": "プレビューをTONウォレットでスキャンして確認し、コードをダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.3"
+  },
+  "470e2147ed23": {
+    "source": "Amounts are typed in TON (up to 9 decimals) or USDT (up to 6) and written in base units: amount=5000000 in the example is 0.005 TON.",
+    "text": "金額はTON（小数点以下9桁まで）またはUSDT（6桁まで）で入力し、基本単位で書き込まれます。例のamount=5000000は0.005 TONです。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.0"
+  },
+  "7d1c71573759": {
+    "source": "For USDT the link adds jetton= with Tether's USDT on TON, and the amount is in millionths: ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=5000&text=hello is 0.005 USDT.",
+    "text": "USDTの場合、リンクにはTON上のTether USDTを示すjetton=が追加され、金額は100万分の1単位になります。ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=5000&text=hello は0.005 USDTです。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.1"
+  },
+  "3059f661e1ed": {
+    "source": "The address must be a user-friendly mainnet address, UQ… (non-bounceable, recommended for wallets) or EQ…, and is checked with its CRC-16. Raw 0:… addresses have no checksum, so QRdx asks for the form your wallet shows.",
+    "text": "アドレスは、ユーザーフレンドリー形式のメインネットアドレスで、UQ…（ノンバウンス型でウォレットに推奨）またはEQ…である必要があり、CRC-16で確認されます。0:…で始まるRawアドレスにはチェックサムがないため、QRdxではウォレットに表示される形式を入力していただきます。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.2"
+  },
+  "fbb13bfe8c28": {
+    "source": "text is the transfer's comment, percent-encoded.",
+    "text": "textは送金のコメントで、パーセントエンコードされます。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.3"
+  },
+  "0d5e0f89b214": {
+    "source": "Do all TON wallets pay USDT from the code?",
+    "text": "すべてのTONウォレットでコードからUSDTを支払えますか？",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.0.question"
+  },
+  "9963235976b8": {
+    "source": "TON's docs leave the jetton parameter to each wallet, so test a USDT code with the wallets your payers use. A code for TON works across TON wallets.",
+    "text": "TONのドキュメントでは、jettonパラメータの扱いは各ウォレットに任されています。USDTのコードは、送金者が使うウォレットでテストしてください。TON用のコードはTONの各ウォレットで使えます。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.0.answer"
+  },
+  "50d64d793123": {
+    "source": "UQ or EQ address?",
+    "text": "UQとEQのどちらですか？",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.1.question"
+  },
+  "50967eb308c7": {
+    "source": "Both work. UQ… is the non-bounceable form, which is recommended for wallets; EQ… is the bounceable one. Paste the one your wallet shows.",
+    "text": "どちらも使えます。UQ…はウォレットに推奨されるノンバウンス型で、EQ…はバウンス型です。ウォレットに表示されているものを貼り付けてください。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.1.answer"
+  },
+  "8f7296730753": {
+    "source": "Request XLM or USDC with a SEP-0007 Stellar link.",
+    "text": "SEP-0007のStellarリンクでXLMまたはUSDCを請求できます。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.summary"
+  },
+  "a0c8bd2a6b27": {
+    "source": "Make a Stellar QR code in the SEP-0007 web+stellar:pay format for XLM or Circle's USDC, with an optional amount and a text memo for exchanges. Free.",
+    "text": "XLMまたはCircleのUSDC向けに、SEP-0007のweb+stellar:pay形式でStellar QRコードを作成できます。金額や、取引所向けのテキストメモも任意で指定できます。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.metaDescription"
+  },
+  "72dc868dc688": {
+    "source": "A Stellar QR code holds a SEP-0007 payment request: your account and, if you like, an amount, the asset and a memo. It can ask for XLM or for USDC from the issuer Circle lists.",
+    "text": "Stellar QRコードには、SEP-0007の支払いリクエストが含まれます。アカウントに加えて、必要に応じて金額、アセット、メモを指定できます。XLMのほか、Circleが公開している発行元のUSDCも請求できます。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.intro.0"
+  },
+  "68320de87231": {
+    "source": "Exchanges often need a memo to match a deposit to your account, so the code can carry one. Wallet support for SEP-7 varies, so scan the preview with the wallets your payers use before you print.",
+    "text": "取引所では、入金とお客様のアカウントを照合するためにメモが必要になることが多いため、コードにメモを含めることができます。SEP-7への対応状況はウォレットによって異なります。印刷する前に、支払う方が使うウォレットでプレビューをスキャンしてご確認ください。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.intro.1"
+  },
+  "903a63c78ec1": {
+    "source": "Paste your Stellar address (G…).",
+    "text": "Stellarアドレス（G…）を貼り付けます。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.0"
+  },
+  "6c063e9c2b5b": {
+    "source": "Pick XLM or USDC and, if you like, an amount.",
+    "text": "XLMかUSDCを選び、必要に応じて金額を入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.1"
+  },
+  "79717628bbe3": {
+    "source": "Add a text memo if your exchange or service gave you one.",
+    "text": "取引所やサービスからメモを指定されている場合は、テキストメモを追加します。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.2"
+  },
+  "0c90e0315096": {
+    "source": "Scan the preview with a Stellar wallet to check it, then download the code.",
+    "text": "Stellarウォレットでプレビューをスキャンして確認し、コードをダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.3"
+  },
+  "fd1585fbd449": {
+    "source": "Defined by SEP-0007, which is active. Amounts have up to 7 decimals.",
+    "text": "有効な規格であるSEP-0007で定義されています。金額は小数点以下7桁まで指定できます。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.0"
+  },
+  "300904ea50bd": {
+    "source": "For USDC the link names asset_code=USDC and the issuer Circle lists. The receiving account needs a USDC trustline to receive it.",
+    "text": "USDCの場合、リンクにはasset_code=USDCと、Circleが公開している発行元が指定されます。受け取るアカウントにはUSDCのトラストラインが必要です。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.1"
+  },
+  "785baf528367": {
+    "source": "Memos are text (MEMO_TEXT) of up to 28 bytes, percent-encoded.",
+    "text": "メモは28バイトまでのテキスト（MEMO_TEXT）で、パーセントエンコードされます。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.2"
+  },
+  "b3dcb7c3ae00": {
+    "source": "The address is checked as a StrKey: Base32 with a CRC-16 checksum.",
+    "text": "アドレスはStrKeyとして検証されます。CRC-16チェックサム付きのBase32形式です。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.3"
+  },
+  "a05966b114fd": {
+    "source": "Can I receive USDC?",
+    "text": "USDCを受け取れますか？",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.0.question"
+  },
+  "326020a817c9": {
+    "source": "Yes, if your account has a USDC trustline for Circle's issuer. Without one the account can't receive USDC, so add the trustline in your wallet first.",
+    "text": "はい、アカウントにCircleの発行元のUSDCトラストラインがあれば受け取れます。トラストラインがないとUSDCを受け取れないため、先にウォレットでトラストラインを追加してください。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.0.answer"
+  },
+  "f9438f4a8553": {
+    "source": "Do I need a memo?",
+    "text": "メモは必要ですか？",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.1.question"
+  },
+  "2e2dd93a7195": {
+    "source": "Add one when your exchange or service gives you one, exactly as given. Text memos are up to 28 bytes.",
+    "text": "取引所やサービスからメモを指定された場合は、指定どおりに追加してください。テキストメモは28バイトまでです。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.1.answer"
+  },
+  "056ecc71a8ff": {
+    "source": "Wallet support for SEP-7 varies. Test with the wallets your payers use.",
+    "text": "SEP-7への対応状況はウォレットによって異なります。支払う方が使うウォレットでテストしてください。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.2.answer"
   },
   "1d393b0081b6": {
     "source": "PDF",
@@ -21503,6 +22805,24 @@
     "status": "machine",
     "context": "pageCodes.on-tickets-4.label"
   },
+  "3d33dc0484e1": {
+    "source": "Name badge",
+    "text": "名札",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-1.label"
+  },
+  "7e2d81cbed8a": {
+    "source": "Sticker",
+    "text": "ステッカー",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-3.label"
+  },
+  "9dce86898f29": {
+    "source": "Flyer",
+    "text": "チラシ",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-4.label"
+  },
   "0432f20a0f65": {
     "source": "Table menu",
     "text": "テーブルメニュー",
@@ -30029,6 +31349,18 @@
     "status": "machine",
     "context": "mcp.tools.10.description"
   },
+  "e22e80134ee4": {
+    "source": "Contact card (MeCard)",
+    "text": "連絡先カード（MeCard）",
+    "status": "machine",
+    "context": "mcp.tools.14.title"
+  },
+  "5ec08b9f5893": {
+    "source": "A MeCard contact: the same basics as a vCard in fewer characters, so the code is smaller.",
+    "text": "MeCard形式の連絡先です。vCardと同じ基本情報をより少ない文字数で収めるため、コードが小さくなります。",
+    "status": "machine",
+    "context": "mcp.tools.14.description"
+  },
   "61964d1b5f82": {
     "source": "A mailto: link with optional cc, bcc, subject and body.",
     "text": "mailto: リンクです。cc、bcc、件名、本文は任意で指定できます。",
@@ -30059,17 +31391,17 @@
     "status": "machine",
     "context": "mcp.tools.13.description"
   },
-  "7b20ff0c7661": {
-    "source": "Bank payment",
-    "text": "銀行振込決済",
+  "7048f38b33f1": {
+    "source": "Payment",
+    "text": "支払い",
     "status": "machine",
-    "context": "mcp.tools.14.title"
+    "context": "mcp.tools.18.title"
   },
-  "d56984fa2345": {
-    "source": "A Pix, SEPA transfer, PayNow, PromptPay or VietQR payment code, checked like the playground's forms.",
-    "text": "Pix、SEPA送金、PayNow、PromptPay、VietQRの決済コードです。Playgroundのフォームと同じ基準で検証されます。",
+  "e9eb33d195b5": {
+    "source": "A Pix, SEPA, Swiss QR-bill, QR Platba, Swish, PayNow, PromptPay, VietQR or KHQR payment code, or a Lightning, XRP, Cardano, Tron, TON or Stellar request, checked like the playground's forms.",
+    "text": "Pix、SEPA、Swiss QR-bill、QR Platba、Swish、PayNow、PromptPay、VietQR、KHQRの支払いコード、またはLightning、XRP、Cardano、Tron、TON、Stellarの支払いリクエストです。Playgroundのフォームと同様に検証されます。",
     "status": "machine",
-    "context": "mcp.tools.14.description"
+    "context": "mcp.tools.18.description"
   },
   "f963ece25fc7": {
     "source": "Can Claude make a QR code?",
@@ -30850,5 +32182,173 @@
     "text": "QRdxは、プロンプト、参照画像、生成された画像を保存せず、クレジットの消費数だけを記録します。プロンプト、QRコード画像、参照画像は、アートワークを作成するためにVercel AI Gateway経由でOpenAIのGPT Image 2に送信され、結果はそのままブラウザに返されます。残したい画像はダウンロードしてください。",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "コードをPNG、WebP、SVGでダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "0135740ce7f9": {
+    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
+    "text": "Wi-Fi QRコードを作成すれば、ゲストは1回のスキャンでネットワークに接続できます。WPA/WPA2、WEP、オープンネットワーク、非公開SSID、正しいエスケープに対応。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.metaDescription"
+  },
+  "31d04d55ac35": {
+    "source": "Choose the security type: WPA/WPA2 for almost every modern router, WEP for very old ones, or No password for open networks.",
+    "text": "セキュリティの種類を選びます。最近のほとんどのルーターはWPA/WPA2、非常に古いルーターはWEP、オープンネットワークはパスワードなしを選んでください。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.steps.1"
+  },
+  "bc95db81d2cd": {
+    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. Enterprise networks that need a username or certificate (WPA2-Enterprise) aren't supported by this format.",
+    "text": "ネットワーク名が大文字・小文字も含めて完全に一致しているか、セキュリティの種類が正しいか、電波の届く範囲にいるかを確認してください。ユーザー名や証明書が必要な企業向けネットワーク(WPA2-Enterprise)は、この形式ではサポートされていません。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.faqs.1.answer"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "PNG、WebP、SVGのいずれかをダウンロードするか、フルエディタでコードをデザインします。",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
+  },
+  "da2ccbd9fdc4": {
+    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",
+    "text": "これはオンチェーンの支払いリクエストで、ウォレットはBitcoinブロックチェーン上のあなたのアドレスに支払います。Lightning専用のウォレットでは支払えず、このジェネレーターはURIにlightning=のインボイスを追加しません。Lightningで支払いを受ける場合は、代わりにウォレットのインボイスまたはLightningアドレスを共有してください。",
+    "status": "machine",
+    "context": "qrTypes.types.bitcoin.details.paragraphs.0"
+  },
+  "80cfbcc768ef": {
+    "source": "Share an EIP-681 Ethereum payment request.",
+    "text": "EIP-681形式のEthereum支払いリクエストを共有します。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.summary"
+  },
+  "7f57cac75ab7": {
+    "source": "Make an Ethereum QR code in the EIP-681 ethereum: format with an optional ETH amount (in wei) and gas limit. Free PNG and SVG, no signup.",
+    "text": "EIP-681のethereum:形式で、ETHの金額（wei単位）やガスリミットを任意で指定できるEthereum QRコードを作成します。PNGとSVGで無料、登録は不要です。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.metaDescription"
+  },
+  "e6df241fc5d0": {
+    "source": "An Ethereum QR code holds your wallet address in the EIP-681 ethereum: format, optionally with an amount of ETH and a gas limit. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
+    "text": "Ethereum QRコードには、EIP-681のethereum:形式でウォレットアドレスが含まれ、ETHの金額やガスリミットも任意で指定できます。対応するウォレットでスキャンすると、これらの値が入力された状態で、あなたのアドレスへの送金画面が開きます。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.intro.0"
+  },
+  "4cd43eafd110": {
+    "source": "Ethereum addresses are 42-character hexadecimal strings that are easy to mistype, which makes a QR code the safest way to share one at events, on invoices or on donation pages. The code contains only your public address; private keys and recovery phrases must never go into a QR code.",
+    "text": "Ethereumのアドレスは42文字の16進数で、入力ミスをしやすいため、イベントや請求書、寄付ページで共有するにはQRコードが最も安全な方法です。コードに含まれるのは公開アドレスだけです。秘密鍵やリカバリーフレーズは、決してQRコードに入れないでください。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.intro.1"
+  },
+  "4f1b1c80f3e8": {
+    "source": "Optionally enter an amount in ETH and a gas limit.",
+    "text": "必要に応じて、ETHの金額とガスリミットを入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.1"
+  },
+  "c54d35521f5a": {
+    "source": "Scan the preview with your wallet and check the address and amount.",
+    "text": "プレビューをウォレットでスキャンし、アドレスと金額を確認します。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.2"
+  },
+  "155c506bf183": {
+    "source": "EIP-681 amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the ETH amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
+    "text": "EIP-681の金額（value）は最小単位のweiで表します。1 ETHは10^18 weiです。このページでは、入力されたETHの金額に指数e18を付けて変換するため、0.05 ETHはvalue=0.05e18と書かれます。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.0"
+  },
+  "6134aa693235": {
+    "source": "EIP-681 can name a network with @chainId (for example @137), but this generator doesn't add one, so wallets use their current network.",
+    "text": "EIP-681では@chainId（例：@137）でネットワークを指定できますが、このジェネレーターは指定を追加しないため、ウォレットは現在のネットワークを使用します。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.2"
+  },
+  "644fd366eca2": {
+    "source": "Can I request USDC or another token?",
+    "text": "USDCなどのトークンをリクエストできますか。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.0.question"
+  },
+  "2047498516c6": {
+    "source": "This generator creates native ETH transfers. Token requests need the token contract and a transfer function call in the URI, which this form doesn't build.",
+    "text": "このジェネレーターで作成できるのは、ネイティブETHの送金です。トークンのリクエストには、URIにトークンのコントラクトとtransfer関数の呼び出しが必要ですが、このフォームでは作成できません。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.0.answer"
+  },
+  "a921a84b6c82": {
+    "source": "Does it work on other EVM networks?",
+    "text": "他のEVMネットワークでも使えますか。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.1.question"
+  },
+  "302941b105ef": {
+    "source": "The address format is the same on networks like Polygon or Arbitrum, but no chain ID is added, so the payer must pick the right network in their wallet.",
+    "text": "PolygonやArbitrumなどのネットワークでもアドレス形式は同じですが、チェーンIDは追加されないため、支払う側がウォレットで正しいネットワークを選ぶ必要があります。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.1.answer"
+  },
+  "d434b3350c1d": {
+    "source": "Address checks and ENS names",
+    "text": "アドレスの確認とENS名",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.details.title"
+  },
+  "51f7bdf5aaa1": {
+    "source": "Receive SOL with a Solana Pay request.",
+    "text": "Solana Payリクエストで、SOLを受け取れます。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.summary"
+  },
+  "a3b47984a6df": {
+    "source": "Create a Solana Pay QR code for SOL payments to your wallet, with an optional amount, label and message. Solana Pay transfer request format. Free.",
+    "text": "ウォレットへのSOL支払い用に、Solana PayのQRコードを作成できます。金額、ラベル、メッセージは任意です。Solana Payの送金リクエスト形式に対応しています。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.metaDescription"
+  },
+  "df85b6d18511": {
+    "source": "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount in SOL, a label and a message. Wallets that support Solana Pay fill in the payment.",
+    "text": "SolanaのQRコードには、Solana Payの送金リクエストが入ります。ウォレットアドレスと、必要に応じてSOL建ての金額、ラベル、メッセージを指定できます。Solana Pay対応のウォレットが支払い内容を自動で入力します。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.intro.0"
+  },
+  "cdcf66a5f861": {
+    "source": "Optionally add an amount in SOL, a label and a message.",
+    "text": "必要に応じて、SOL建ての金額、ラベル、メッセージを追加します。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.steps.1"
+  },
+  "74b80bb969ce": {
+    "source": "Amounts are in SOL with up to 9 decimals.",
+    "text": "金額はSOL単位で、小数点以下9桁まで指定できます。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.payload.notes.0"
+  },
+  "c260bf4dabce": {
+    "source": "This code requests SOL. Token payments (USDC and others) need the token's mint address, which this generator doesn't add.",
+    "text": "このコードはSOLを請求するものです。トークン（USDCなど）での支払いにはトークンのミントアドレスが必要ですが、このジェネレーターでは追加できません。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.payload.notes.1"
+  },
+  "36ed60b12391": {
+    "source": "It's a Solana Pay transfer request: the recipient, an amount in SOL, a label and a message. Solana Pay also defines spl-token for token payments and reference for matching a payment to an order; this generator adds neither, so use your point-of-sale tool when you need them.",
+    "text": "これはSolana Payの送金リクエストで、受取人、SOL建ての金額、ラベル、メッセージが含まれます。Solana Payには、トークン決済用のspl-tokenや、支払いと注文を照合するためのreferenceも定義されていますが、このジェネレーターはどちらも追加しません。必要な場合は、POSツールをご利用ください。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.details.paragraphs.0"
+  },
+  "7b20ff0c7661": {
+    "source": "Bank payment",
+    "text": "銀行振込決済",
+    "status": "machine",
+    "context": "mcp.tools.14.title"
+  },
+  "d56984fa2345": {
+    "source": "A Pix, SEPA transfer, PayNow, PromptPay or VietQR payment code, checked like the playground's forms.",
+    "text": "Pix、SEPA送金、PayNow、PromptPay、VietQRの決済コードです。Playgroundのフォームと同じ基準で検証されます。",
+    "status": "machine",
+    "context": "mcp.tools.14.description"
   }
 }

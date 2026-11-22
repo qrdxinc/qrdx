@@ -4711,6 +4711,38 @@
     "source": "beec98199619",
     "status": "machine"
   },
+  "scanner.result.eapMethod": {
+    "source": "6c03373c5dd9",
+    "status": "machine"
+  },
+  "scanner.result.phase2": {
+    "source": "c33607debdcd",
+    "status": "machine"
+  },
+  "scanner.result.identity": {
+    "source": "999f23fcd7be",
+    "status": "machine"
+  },
+  "scanner.result.anonymousIdentity": {
+    "source": "25415b74af37",
+    "status": "machine"
+  },
+  "scanner.result.wifiEnterpriseNote": {
+    "source": "29d3d1d1801d",
+    "status": "machine"
+  },
+  "scanner.result.nameReading": {
+    "source": "40500f8ce61b",
+    "status": "machine"
+  },
+  "scanner.result.nickname": {
+    "source": "d720f61c8c5e",
+    "status": "machine"
+  },
+  "scanner.result.birthday": {
+    "source": "c6138abfa6a7",
+    "status": "machine"
+  },
   "scanner.link.verdicts.verified.title": {
     "source": "9010d77cafdc",
     "status": "machine"
@@ -13057,6 +13089,126 @@
   },
   "editor.contentForms.schemaForm.fields.kb8wbld": {
     "source": "28591dd9143e",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1ihvu1w": {
+    "source": "a165e7cbe7d7",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k107okzg": {
+    "source": "3482a5abb525",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k3f1d3v": {
+    "source": "50ae048951c1",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1m9wa4r": {
+    "source": "35bfcc53bc1d",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1gan4ny": {
+    "source": "c666591df053",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kizdlpy": {
+    "source": "136f23b9dd90",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1hnr6y6": {
+    "source": "c16322ce4420",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1s9unt2": {
+    "source": "0a4387d25c62",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1dv155x": {
+    "source": "390f25134ba0",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.koxj1se": {
+    "source": "1e73b1647343",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1diicx": {
+    "source": "701d021d08c5",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kz738b2": {
+    "source": "6890c837e9a8",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kbrhg3m": {
+    "source": "ea48cb05ca4e",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k5o3zh2": {
+    "source": "3ac1a9ec4fa7",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1l7ijaj": {
+    "source": "a79ba7a62e4d",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kc8arbq": {
+    "source": "2b14921147ea",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.ka2ky21": {
+    "source": "49e96d7cdf58",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1f2g13o": {
+    "source": "6e5a9430c9c3",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k102e5rl": {
+    "source": "9d0127f7e9ed",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k8meeow": {
+    "source": "ed1d48a155a6",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1w7u936": {
+    "source": "de3c0a18da72",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kr5b1c8": {
+    "source": "d332b74fa0c1",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k10454gw": {
+    "source": "05883094e55d",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kqf2y5": {
+    "source": "3ad168b7e4c3",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1y2cgyv": {
+    "source": "a40b7df483aa",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kvo4p11": {
+    "source": "fe23a92bb49a",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kadtdez": {
+    "source": "b725ed47f9ca",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kevfff9": {
+    "source": "3ce85e2d8512",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k10zo68r": {
+    "source": "38f0400279a1",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1jhz948": {
+    "source": "8f914e9add09",
     "status": "machine"
   },
   "editor.contentTypeModal.current": {

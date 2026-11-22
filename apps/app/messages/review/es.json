@@ -4711,6 +4711,38 @@
     "source": "beec98199619",
     "status": "machine"
   },
+  "scanner.result.eapMethod": {
+    "source": "6c03373c5dd9",
+    "status": "machine"
+  },
+  "scanner.result.phase2": {
+    "source": "c33607debdcd",
+    "status": "machine"
+  },
+  "scanner.result.identity": {
+    "source": "999f23fcd7be",
+    "status": "machine"
+  },
+  "scanner.result.anonymousIdentity": {
+    "source": "25415b74af37",
+    "status": "machine"
+  },
+  "scanner.result.wifiEnterpriseNote": {
+    "source": "29d3d1d1801d",
+    "status": "machine"
+  },
+  "scanner.result.nameReading": {
+    "source": "40500f8ce61b",
+    "status": "machine"
+  },
+  "scanner.result.nickname": {
+    "source": "d720f61c8c5e",
+    "status": "machine"
+  },
+  "scanner.result.birthday": {
+    "source": "c6138abfa6a7",
+    "status": "machine"
+  },
   "scanner.link.verdicts.verified.title": {
     "source": "9010d77cafdc",
     "status": "machine"
@@ -12119,6 +12151,22 @@
     "source": "ea9bf4640ade",
     "status": "machine"
   },
+  "editor.contentForms.ethereumForm.network": {
+    "source": "1744b96470b5",
+    "status": "machine"
+  },
+  "editor.contentForms.ethereumForm.coin": {
+    "source": "0241ccff2d40",
+    "status": "machine"
+  },
+  "editor.contentForms.ethereumForm.amountIn": {
+    "source": "d89f2d8bd4e9",
+    "status": "machine"
+  },
+  "editor.contentForms.ethereumForm.tokenNote": {
+    "source": "bf87dc1d62e2",
+    "status": "machine"
+  },
   "editor.contentForms.etsyForm.etsyShopUrl": {
     "source": "06f9af9a962c",
     "status": "machine"
@@ -12561,6 +12609,50 @@
   },
   "editor.contentForms.wifiForm.networkPassword": {
     "source": "62116477742b",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.wpa3Only": {
+    "source": "44cde8770aa8",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.enterprise": {
+    "source": "1889173b3bda",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.wpaHint": {
+    "source": "d7af77e6cc67",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.wpa3Hint": {
+    "source": "025aaa183d7d",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.eapMethod": {
+    "source": "6c03373c5dd9",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.phase2": {
+    "source": "6e4a7af83c73",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.identity": {
+    "source": "ac19db3944d5",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.identityPlaceholder": {
+    "source": "2d4a46f36888",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.anonymousIdentity": {
+    "source": "25415b74af37",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.anonymousIdentityHint": {
+    "source": "5add74fc7448",
+    "status": "machine"
+  },
+  "editor.contentForms.wifiForm.enterpriseNote": {
+    "source": "e3ab7ae8b2ec",
     "status": "machine"
   },
   "editor.contentForms.youtubeForm.videoUrl": {
@@ -13057,6 +13149,458 @@
   },
   "editor.contentForms.schemaForm.fields.kb8wbld": {
     "source": "28591dd9143e",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k16fb7ko": {
+    "source": "702ef921ed1d",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.ks90y1x": {
+    "source": "db74c940d447",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.ke5j6io": {
+    "source": "7b4888049459",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1ao7o6p": {
+    "source": "02281b3b5dd5",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k3clleu": {
+    "source": "40500f8ce61b",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1yfbac9": {
+    "source": "59be71333c96",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k18da13l": {
+    "source": "8283f3d5911a",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1qv15nx": {
+    "source": "d720f61c8c5e",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kkb2lhr": {
+    "source": "63dceb8800b2",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kinbfc7": {
+    "source": "969ccbd3cf63",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kdc7alm": {
+    "source": "b5a229ac8bec",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1hmz0i4": {
+    "source": "c6138abfa6a7",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kv2y2ur": {
+    "source": "56ef8f20955f",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1a6n5b3": {
+    "source": "5848e796ede4",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k5mau71": {
+    "source": "d8da2c49df39",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1ihvu1w": {
+    "source": "a165e7cbe7d7",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k107okzg": {
+    "source": "3482a5abb525",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k3f1d3v": {
+    "source": "50ae048951c1",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1m9wa4r": {
+    "source": "35bfcc53bc1d",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1gan4ny": {
+    "source": "c666591df053",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kizdlpy": {
+    "source": "136f23b9dd90",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1hnr6y6": {
+    "source": "c16322ce4420",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1s9unt2": {
+    "source": "0a4387d25c62",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1dv155x": {
+    "source": "390f25134ba0",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.koxj1se": {
+    "source": "1e73b1647343",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1diicx": {
+    "source": "701d021d08c5",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kz738b2": {
+    "source": "6890c837e9a8",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kbrhg3m": {
+    "source": "ea48cb05ca4e",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k5o3zh2": {
+    "source": "3ac1a9ec4fa7",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1l7ijaj": {
+    "source": "a79ba7a62e4d",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kc8arbq": {
+    "source": "2b14921147ea",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.ka2ky21": {
+    "source": "49e96d7cdf58",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1f2g13o": {
+    "source": "6e5a9430c9c3",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k102e5rl": {
+    "source": "9d0127f7e9ed",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k8meeow": {
+    "source": "ed1d48a155a6",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1w7u936": {
+    "source": "de3c0a18da72",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kr5b1c8": {
+    "source": "d332b74fa0c1",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k10454gw": {
+    "source": "05883094e55d",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kqf2y5": {
+    "source": "3ad168b7e4c3",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1y2cgyv": {
+    "source": "a40b7df483aa",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kvo4p11": {
+    "source": "fe23a92bb49a",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kadtdez": {
+    "source": "b725ed47f9ca",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kevfff9": {
+    "source": "3ce85e2d8512",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k10zo68r": {
+    "source": "38f0400279a1",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1jhz948": {
+    "source": "8f914e9add09",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.koab5fi": {
+    "source": "f6e58db8e76f",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.koyp43g": {
+    "source": "7e1b0d5641f2",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k54gevs": {
+    "source": "f36f11b3314d",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k109gnf4": {
+    "source": "087272b637a9",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k16107h4": {
+    "source": "08fc9293a89c",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kjr1kbb": {
+    "source": "a273f640ab94",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kucgz20": {
+    "source": "3d85274572d4",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kiwvtgm": {
+    "source": "cd6f759de6ef",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.ki5d8as": {
+    "source": "82f28ce0bae7",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k7jh77n": {
+    "source": "4284dd77c093",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1od044r": {
+    "source": "e1cb6d30fa3f",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kbd0nuz": {
+    "source": "6db8a5eda13d",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kkv1r1z": {
+    "source": "5093ecb82a6c",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1le6gub": {
+    "source": "094904ffa333",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1ermw0y": {
+    "source": "92beb13037f3",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kyv3nyq": {
+    "source": "737210ff73f7",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1p8qe6s": {
+    "source": "b662a77ccb5b",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k4ny0gk": {
+    "source": "d7ba8d3d9218",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k10sapjz": {
+    "source": "ba1f8af78ea0",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1nj948x": {
+    "source": "349dfd5da2d9",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k16omqgs": {
+    "source": "b16231932971",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k17ree7g": {
+    "source": "58a83c06260c",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k72rk1f": {
+    "source": "29f7d148f0aa",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.ktpir7j": {
+    "source": "20ce83c4c9de",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1rz6m5c": {
+    "source": "6b0323b04d82",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k11lnaam": {
+    "source": "8e05827300f0",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.klnqvo7": {
+    "source": "0a289e82e06e",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1m0ef55": {
+    "source": "df2534f0d186",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.komzmn1": {
+    "source": "3ab2c73e2866",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1bobqzk": {
+    "source": "295b9e27490e",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k14jsk1x": {
+    "source": "fdf955faa1c4",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kyiwam6": {
+    "source": "02db331f622b",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.ksrz5px": {
+    "source": "181caf539b40",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k7mxwll": {
+    "source": "a1bf6607a7f4",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kmdqdjf": {
+    "source": "62f63f4374fd",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1haken6": {
+    "source": "cc8c4ae6aaa8",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k12cypgk": {
+    "source": "47ba05ff63e2",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1ma8gi5": {
+    "source": "79866f19b68c",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kdmo02": {
+    "source": "11aef4bd6f6e",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.ky66olb": {
+    "source": "8c6f0729fd77",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kuerbbj": {
+    "source": "3560d55bb3f9",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kmvt4bw": {
+    "source": "0241ccff2d40",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k8om0m6": {
+    "source": "1a4219fe5e60",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1wj7gnm": {
+    "source": "aff3026f148a",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k169e4n2": {
+    "source": "44f5e3fbec57",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1wzd5z4": {
+    "source": "1771c55d41b9",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k108qnnf": {
+    "source": "80d298c9f240",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kp1ztdg": {
+    "source": "4e3c27636ee9",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1qno677": {
+    "source": "6497d63f7490",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k1vqxk3": {
+    "source": "64cecb8a6ef3",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k153mv8r": {
+    "source": "5e57d7fa4667",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kqv3bio": {
+    "source": "bffb1e74ff89",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.kaa7wzl": {
+    "source": "29296c07a5ba",
+    "status": "machine"
+  },
+  "editor.contentForms.schemaForm.fields.k5p19bw": {
+    "source": "d83c68c18956",
+    "status": "machine"
+  },
+  "editor.contentForms.contactForms.meCardNote": {
+    "source": "f7be96f0aec8",
+    "status": "machine"
+  },
+  "editor.contentForms.swissQrBill.designApplied": {
+    "source": "09a20dd760b4",
+    "status": "machine"
+  },
+  "editor.contentForms.swissQrBill.designChanged": {
+    "source": "0b6b04b2b7e4",
+    "status": "machine"
+  },
+  "editor.contentForms.swissQrBill.putBack": {
+    "source": "aadf9df0b8f9",
+    "status": "machine"
+  },
+  "editor.contentForms.swissQrBill.note": {
+    "source": "87ea517ab27f",
+    "status": "machine"
+  },
+  "editor.contentForms.paymentStandards.czechSpdNote": {
+    "source": "d95cdf2d3482",
+    "status": "machine"
+  },
+  "editor.contentForms.paymentStandards.swishNote": {
+    "source": "da8d4cbb1cab",
+    "status": "machine"
+  },
+  "editor.contentForms.paymentStandards.khqrNote": {
+    "source": "48b08a1dc20f",
+    "status": "machine"
+  },
+  "editor.contentForms.moreCrypto.lightningNote": {
+    "source": "a959412cf431",
+    "status": "machine"
+  },
+  "editor.contentForms.moreCrypto.xrpNote": {
+    "source": "d8d68abacbea",
+    "status": "machine"
+  },
+  "editor.contentForms.moreCrypto.cardanoNote": {
+    "source": "7b308d15e660",
+    "status": "machine"
+  },
+  "editor.contentForms.moreCrypto.tronNote": {
+    "source": "176f7306466d",
+    "status": "machine"
+  },
+  "editor.contentForms.moreCrypto.tonNote": {
+    "source": "77189950814f",
+    "status": "machine"
+  },
+  "editor.contentForms.moreCrypto.stellarNote": {
+    "source": "a01f66d9a9f4",
     "status": "machine"
   },
   "editor.contentTypeModal.current": {
