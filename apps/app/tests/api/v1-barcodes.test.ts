@@ -269,6 +269,20 @@ describe("GET /v1/barcode", () => {
     expect(await eps.text()).toMatch(/^%!PS-Adobe-3\.0 EPSF-3\.0/);
   });
 
+  it("draws ISBNs with their add-on as every file type", async () => {
+    const data = encodeURIComponent("1-56581-231-X 52499");
+    const svg = await getImage(`format=isbn&data=${data}`);
+    expect(svg.status).toBe(200);
+    expect(await svg.text()).toMatch(/^<svg /);
+    for (const type of ["png", "pdf", "eps"]) {
+      const file = await getImage(`format=ISBN-13&data=${data}&type=${type}`);
+      expect(file.status, type).toBe(200);
+      expect(file.headers.get("content-disposition"), type).toContain(
+        `isbn-978-1-56581-231-4-52499.${type}`,
+      );
+    }
+  });
+
   it("takes the format as people write it", async () => {
     for (const format of ["EAN-13", "ean_13", "Ean13"]) {
       expect(
@@ -317,6 +331,15 @@ describe("GET /v1/barcode", () => {
     ["code93", "qrdx", /Code 93 here has no lowercase letters/],
     ["code93", "QRDX#1", /Not allowed: #/],
     ["datamatrix", "x".repeat(1001), /at most 1000 characters/],
+    ["isbn", "978-1-873671-00-9 52250", undefined],
+    ["isbn", "1-56581-231-X", undefined],
+    ["isbn", "9781873671008", /check digit should be 9, not 8/],
+    ["isbn", "978-1-873671-00-9 123", /add-on has 2 or 5 digits/],
+    ["issn", "0317-8471 00 05", undefined],
+    ["issn", "0317-8472", /check digit should be 1, not 2/],
+    ["issn", "0317-8471 00 05 1", /with a space between each/],
+    ["ismn", "M-2306-7118-7", undefined],
+    ["ismn", "9781873671009", /are ISBNs/],
   ])("%s %j", async (format, data, error) => {
     const response = await getImage(
       `format=${format}&data=${encodeURIComponent(data)}`,

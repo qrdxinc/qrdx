@@ -125,6 +125,9 @@ Write colors without the `#`, or encode it as `%23`.
 | `ean8` | EAN-8 | 7 digits or 8 |
 | `upca` | UPC-A | 11 digits or 12 |
 | `upce` | UPC-E | 6 to 8 digits, or a 12-digit UPC-A that can be shortened |
+| `isbn` | ISBN | An ISBN-13 (12 digits and the check digit is added) or a whole ISBN-10, converted to 978; hyphens optional. Then, after a space, an optional 2- or 5-digit add-on: `978-1-873671-00-9 52250` |
+| `issn` | ISSN | The ISSN (`0317-8471`, or 7 digits and the check digit is added) or its 13-digit 977 number, then the 2-digit sequence variant (00 when left out) and an optional 2- or 5-digit add-on, with spaces between: `0317-8471 00 05` |
+| `ismn` | ISMN | 13 digits starting 979-0 (12 and the check digit is added) or the old form starting with M, then an optional 2- or 5-digit add-on after a space |
 | `itf14` | ITF-14 | 13 digits or 14 |
 | `gs1-128` | GS1-128 | Application Identifiers in brackets with their values; GTIN and SSCC check digits added or checked; up to 48 characters of data |
 | `code128` | Code 128 | Up to 80 printable ASCII characters |
@@ -135,7 +138,9 @@ Write colors without the `#`, or encode it as `%23`.
 | `pdf417` | PDF417 | Any text up to 1,000 characters |
 | `aztec` | Aztec | Any text up to 1,000 characters |
 
-Retail numbers (EAN, UPC, ITF-14, GS1-128's GTIN) are licensed to companies by GS1. The API draws any valid number; it doesn't issue or register them.
+Retail numbers (EAN, UPC, ITF-14, GS1-128's GTIN) are licensed to companies by GS1, and ISBNs, ISSNs and ISMNs come from each country's ISBN, ISSN and ISMN agencies. The API draws any valid number; it doesn't issue or register them.
+
+ISBN, ISSN and ISMN barcodes are EAN-13s starting 978 or 979, 977 and 979-0, with the number printed above the bars: the ISBN hyphenated by the International ISBN Agency's ranges. The add-on is drawn 9 modules right of the main bars.
 
 ## Sizes
 
@@ -220,7 +225,7 @@ The value breaks the format's rules. The message says exactly what, with a check
 
 ### `400` with `"param": "format"`
 
-`format` is missing or not one of the twelve ids in [Formats](#formats). The message lists them.
+`format` is missing or not one of the {facts.barcodeFormats} ids in [Formats](#formats). The message lists them.
 
 ### The raster image is refused or cut
 

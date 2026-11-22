@@ -2,7 +2,17 @@
 // darker" and "add a frame" start from what is on screen. QRdx's server uses
 // the content to score designs; the model only sees the content type and the
 // style, never the content's values (a Wi-Fi password, a phone number).
-import { colorConfigSchema, frameSchema } from "qrdx/types";
+import {
+  anyFrameSchema,
+  colorConfigSchema,
+  eyeColorsSchema,
+  eyeGradientSpanSchema,
+  eyeShapesSchema,
+  haloSchema,
+  logoOptionsSchema,
+  qrShapeSchema,
+  shadowSchema,
+} from "qrdx/types";
 import { z } from "zod";
 import { withoutImageFills } from "@/lib/paint/image-fills";
 import {
@@ -10,7 +20,15 @@ import {
   contentTypeLabel,
   validateDesignContent,
 } from "@/lib/qr-design/content";
-import { type DesignStyle, fromThemeStyles } from "@/lib/qr-design/style";
+import {
+  OFFICIAL_FRAME_SOURCES,
+  officialFrameId,
+} from "@/lib/qr-design/official-frames";
+import {
+  type DesignStyle,
+  fromThemeStyles,
+  type StyleSources,
+} from "@/lib/qr-design/style";
 import type { ContentType, QRContentConfig } from "@/types/qr-content";
 import type { ThemeStyles } from "@/types/theme";
 
@@ -19,6 +37,10 @@ export const MAX_CONTEXT_LOGO_LENGTH = 200_000;
 
 /** Payload limit of a QR code, with room for escaping. */
 const MAX_VALUE_LENGTH = 4096;
+
+/** An option the chat can do without: a value it can't read is dropped. */
+const lenient = <T extends z.ZodType>(schema: T) =>
+  schema.optional().catch(undefined);
 
 const styleSchema = z
   .looseObject({
@@ -32,11 +54,26 @@ const styleSchema = z
     level: z.string().max(2).optional(),
     margin: z.number().min(0).max(64).optional(),
     templateId: z.string().max(64).optional(),
-    frame: frameSchema.optional(),
+    // A built-in frame, or a custom one (an official frame, or the user's own)
+    frame: lenient(anyFrameSchema),
     showLogo: z.boolean().optional(),
+    // The looks (lib/qr-design/style.ts LOOK_KEYS)
+    eyeColors: lenient(eyeColorsSchema),
+    eyeShapes: lenient(eyeShapesSchema),
+    eyeGradient: lenient(eyeGradientSpanSchema),
+    moduleScale: lenient(z.number()),
+    shape: lenient(qrShapeSchema),
+    bgRadius: lenient(z.number()),
+    backdrop: lenient(z.string().max(64)),
+    halo: lenient(haloSchema),
+    shadow: lenient(shadowSchema),
+    logoOptions: lenient(logoOptionsSchema),
+    autoLevel: lenient(z.boolean()),
   })
   .transform(
-    // Only what a design is built from: no art images or other extras.
+    // Only what a design is built from: no art images or other extras, and
+    // never a silhouette (traced from an upload; the client leaves it out),
+    // only whether the code has one.
     ({
       bgColor,
       fgColor,
@@ -50,6 +87,17 @@ const styleSchema = z
       templateId,
       frame,
       showLogo,
+      eyeColors,
+      eyeShapes,
+      eyeGradient,
+      moduleScale,
+      shape,
+      bgRadius,
+      backdrop,
+      halo,
+      shadow,
+      logoOptions,
+      autoLevel,
     }) =>
       withoutImageFills({
         // Pictures never reach the model: an image fill counts as its
@@ -66,6 +114,17 @@ const styleSchema = z
         templateId,
         frame,
         showLogo,
+        eyeColors,
+        eyeShapes,
+        eyeGradient,
+        moduleScale,
+        shape,
+        bgRadius,
+        backdrop,
+        halo,
+        shadow,
+        logoOptions,
+        autoLevel,
       } as ThemeStyles),
   );
 
@@ -80,6 +139,8 @@ export const editorContextSchema = z.object({
   customLogo: z.string().max(MAX_CONTEXT_LOGO_LENGTH).optional(),
   /** Logo QR / Image QR art is on (AI designs replace it) */
   hasArt: z.boolean().default(false),
+  /** The code is drawn in a silhouette of the user's own (AI designs replace it) */
+  hasSilhouette: z.boolean().default(false),
 });
 
 export type EditorContextInput = z.input<typeof editorContextSchema>;
@@ -102,6 +163,9 @@ export interface EditorBase {
   hasLogo: boolean;
   customLogo?: string;
   hasArt: boolean;
+  hasSilhouette: boolean;
+  /** Where the style's official frame or own frame ("keep") is drawn from */
+  sources: StyleSources;
 }
 
 export function editorBase(context: EditorContext | undefined): EditorBase {
@@ -115,6 +179,8 @@ export function editorBase(context: EditorContext | undefined): EditorBase {
       rawStyle: {},
       hasLogo: false,
       hasArt: false,
+      hasSilhouette: false,
+      sources: OFFICIAL_FRAME_SOURCES,
     };
   }
   const content = context.content
@@ -125,16 +191,28 @@ export function editorBase(context: EditorContext | undefined): EditorBase {
     : null;
   const value = context.value.trim();
   const hasLogo = Boolean(context.style.showLogo);
+  const frame = context.style.frame;
+  // A custom frame that isn't an official one is the user's own: "keep"
+  const ownFrame =
+    frame?.style === "custom" && !officialFrameId(frame.spec)
+      ? frame
+      : undefined;
   return {
     contentType: context.contentType,
     content: content?.ok ? content.content : null,
     value: value || SAMPLE_VALUE,
     valueIsSample: !value,
-    style: fromThemeStyles(context.style, { showLogo: hasLogo }),
+    style: fromThemeStyles(
+      context.style,
+      { showLogo: hasLogo },
+      { officialFrameId, keepOwn: true },
+    ),
     rawStyle: context.style,
     hasLogo,
     ...(context.customLogo ? { customLogo: context.customLogo } : {}),
     hasArt: context.hasArt,
+    hasSilhouette: context.hasSilhouette,
+    sources: { ...OFFICIAL_FRAME_SOURCES, ...(ownFrame ? { ownFrame } : {}) },
   };
 }
 
@@ -147,6 +225,14 @@ export function describeEditorForModel(base: EditorBase): string {
     "# The code in the user's editor now",
     content,
     `Logo shown: ${base.hasLogo ? "yes" : "no"}.${base.hasArt ? " Logo QR / Image QR art is on; a new design replaces it." : ""}`,
+    base.hasSilhouette
+      ? "The code is drawn in a shape the user traced from a picture; a new design replaces it with a square, circle or heart code."
+      : "",
+    base.style.frame.style === "keep"
+      ? "The frame is one of the user's own (frame style keep): designs keep it unless the user asks for another frame."
+      : "",
     `Style: ${JSON.stringify(base.style)}`,
-  ].join("\n");
+  ]
+    .filter(Boolean)
+    .join("\n");
 }

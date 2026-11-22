@@ -66,10 +66,14 @@ import {
 } from "@/lib/barcode/files";
 import {
   BARCODE_FORMATS,
+  type BarcodeFormat,
   type BarcodeFormatId,
+  type BarcodeIssueCode,
   DEFAULT_BARCODE_FORMAT,
   getBarcodeFormat,
   isBarcodeFormatId,
+  publicationEan13,
+  splitBarcodeValue,
   validateBarcodeInput,
 } from "@/lib/barcode/formats";
 import { canvasToBlob, saveFile, svgToCanvas } from "@/lib/barcode/raster";
@@ -119,6 +123,21 @@ export interface BarcodeGeneratorProps {
 const SCAN_CHECK_DELAY_MS = 400;
 const LINEAR = BARCODE_FORMATS.filter((format) => format.kind === "linear");
 const MATRIX = BARCODE_FORMATS.filter((format) => format.kind === "2d");
+/** Problems with the add-on or the sequence variant, shown on their fields */
+const ADD_ON_ISSUES = new Set<BarcodeIssueCode>(["addOnDigits", "addOnLength"]);
+const VARIANT_ISSUES = new Set<BarcodeIssueCode>([
+  "issnVariant",
+  "issnEanVariant",
+]);
+
+/** The add-on and variant fields `format` has, for validateBarcodeInput. */
+const partsFor = (
+  format: BarcodeFormat,
+  addOn: string,
+  variant: string,
+): { addOn: string; variant: string } | undefined =>
+  format.addOn || format.variant ? { addOn, variant } : undefined;
+
 /** Linear formats that print text rather than a number under the bars */
 const TEXT_FORMATS = new Set<BarcodeFormatId>([
   "code128",
@@ -247,12 +266,15 @@ function ScanStatus({
   result,
   label,
   value,
+  addOn,
 }: {
   checking: boolean;
   result: ScanCheckResult | "unavailable" | null;
   label: string;
   /** What was drawn; readers report some formats differently (UPC-E expanded) */
   value: string;
+  /** An ISBN, ISSN or ISMN add-on, which the reader may not report */
+  addOn?: string;
 }) {
   const t = useTranslations("barcodeTool.scan");
   if (checking || !result) {
@@ -287,6 +309,12 @@ function ScanStatus({
               <span className="break-all font-mono">{chunks}</span>
             ),
           })}
+          {/* The reader here skips EAN add-ons: say so rather than imply it read one. */}
+          {addOn && result.decoded === value ? (
+            <span className="mt-0.5 block text-muted-foreground">
+              {t("addOnNotChecked", { addOn })}
+            </span>
+          ) : null}
         </span>
       </p>
     );
@@ -336,10 +364,16 @@ export function useBarcodeGenerator({
       ...initial?.style,
     },
   }).current;
+  // ISBN, ISSN and ISMN keep the add-on and variant in fields of their own.
+  const startParts = useRef(
+    splitBarcodeValue(start.format, start.value),
+  ).current;
   const [renderer, setRenderer] = useState<RenderModule | null>(null);
   const [loadError, setLoadError] = useState(false);
   const [formatId, setFormatId] = useState<BarcodeFormatId>(start.format);
-  const [input, setInput] = useState<string>(start.value);
+  const [input, setInput] = useState<string>(startParts.main);
+  const [addOn, setAddOn] = useState(startParts.addOn);
+  const [variant, setVariant] = useState(startParts.variant);
   const [foreground, setForeground] = useState(start.style.foreground);
   const [background, setBackground] = useState(start.style.background);
   const [showText, setShowText] = useState(start.style.showText);
@@ -374,9 +408,22 @@ export function useBarcodeGenerator({
   }, []);
 
   const checked = useMemo(
-    () => validateBarcodeInput(formatId, input),
-    [formatId, input],
+    () =>
+      validateBarcodeInput(
+        formatId,
+        input,
+        partsFor(getBarcodeFormat(formatId), addOn, variant),
+      ),
+    [formatId, input, addOn, variant],
   );
+  /** Everything typed, as one string (the API's form) */
+  const typed = [
+    input,
+    format.variant ? variant : "",
+    format.addOn ? addOn : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
   const colorWarnings = useMemo(
     () => barcodeColorWarnings(foreground, background),
     [foreground, background],
@@ -422,7 +469,7 @@ export function useBarcodeGenerator({
   useTrackBarcodeGenerated({
     source,
     symbology: formatId,
-    value: input,
+    value: typed,
     rendered: Boolean(rendered),
     initial: { symbology: start.format, value: start.value },
   });
@@ -464,8 +511,15 @@ export function useBarcodeGenerator({
     setFormatId(next);
     // Keep what was typed when it's valid for the new format; an untouched
     // example becomes the new format's example.
-    if (input === format.example || !validateBarcodeInput(next, input).ok) {
-      setInput(nextFormat.example);
+    if (
+      typed === format.example ||
+      !validateBarcodeInput(next, input, partsFor(nextFormat, addOn, variant))
+        .ok
+    ) {
+      const example = splitBarcodeValue(next, nextFormat.example);
+      setInput(example.main);
+      setAddOn(example.addOn);
+      setVariant(example.variant);
     }
     setQuietZone(nextFormat.quietZone.default);
     if (nextFormat.barHeightMm) setBarHeightMm(nextFormat.barHeightMm);
@@ -474,7 +528,9 @@ export function useBarcodeGenerator({
   /** Back to where it started (the modal's "Create another"). */
   const reset = () => {
     setFormatId(start.format);
-    setInput(start.value);
+    setInput(startParts.main);
+    setAddOn(startParts.addOn);
+    setVariant(startParts.variant);
     setForeground(start.style.foreground);
     setBackground(start.style.background);
     setShowText(start.style.showText);
@@ -587,6 +643,10 @@ export function useBarcodeGenerator({
     linear,
     input,
     setInput,
+    addOn,
+    setAddOn,
+    variant,
+    setVariant,
     changeFormat,
     foreground,
     setForeground,
@@ -620,7 +680,7 @@ export function useBarcodeGenerator({
     /** Anything differs from where it started */
     changed:
       formatId !== start.format ||
-      input !== start.value ||
+      typed !== start.value ||
       !sameStyle(style, start.style),
     reset,
   };
@@ -641,6 +701,11 @@ export function BarcodeContentFields({
   const tc = useContentText();
   const issueText = useBarcodeIssueText();
   const { inputId, format, formatId, linear, input, checked, error } = state;
+  // A problem with the add-on or variant marks that field, not the number.
+  const partIssue =
+    !checked.ok &&
+    (ADD_ON_ISSUES.has(checked.issue.code) ||
+      VARIANT_ISSUES.has(checked.issue.code));
   return (
     <>
       <div className="flex flex-col gap-1.5">
@@ -688,7 +753,7 @@ export function BarcodeContentFields({
           <Input
             id={inputId}
             aria-describedby={`${inputId}-help`}
-            aria-invalid={!checked.ok}
+            aria-invalid={!checked.ok && !partIssue}
             autoComplete="off"
             autoFocus={autoFocus}
             className="font-mono"
@@ -726,7 +791,78 @@ export function BarcodeContentFields({
           </p>
         </div>
       </div>
+
+      {(format.variant || format.addOn) && (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {format.variant && (
+            <PartField
+              hint={tc(format.variant.hint)}
+              id={`${inputId}-variant`}
+              invalid={!checked.ok && VARIANT_ISSUES.has(checked.issue.code)}
+              label={t("variant")}
+              maxLength={2}
+              placeholder="00"
+              value={state.variant}
+              onChange={state.setVariant}
+            />
+          )}
+          {format.addOn && (
+            <PartField
+              hint={tc(format.addOn.hint)}
+              id={`${inputId}-addon`}
+              invalid={!checked.ok && ADD_ON_ISSUES.has(checked.issue.code)}
+              label={t("addOn")}
+              maxLength={5}
+              value={state.addOn}
+              onChange={state.setAddOn}
+            />
+          )}
+        </div>
+      )}
     </>
+  );
+}
+
+/** A short digits field beside the number: an add-on or a sequence variant. */
+function PartField({
+  id,
+  label,
+  hint,
+  value,
+  onChange,
+  invalid,
+  maxLength,
+  placeholder,
+}: {
+  id: string;
+  label: string;
+  hint: string;
+  value: string;
+  onChange: (value: string) => void;
+  invalid: boolean;
+  maxLength: number;
+  placeholder?: string;
+}) {
+  return (
+    <div className="flex min-w-0 flex-col gap-1.5">
+      <Label htmlFor={id}>{label}</Label>
+      <Input
+        id={id}
+        aria-describedby={`${id}-help`}
+        aria-invalid={invalid}
+        autoComplete="off"
+        className="font-mono"
+        inputMode="numeric"
+        maxLength={maxLength}
+        placeholder={placeholder}
+        spellCheck={false}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      />
+      <p id={`${id}-help`} className="text-xs text-muted-foreground">
+        {hint}
+      </p>
+    </div>
   );
 }
 
@@ -898,12 +1034,15 @@ export function BarcodePreview({
     ((units * 25.4) / 72).toLocaleString("en-US", {
       maximumFractionDigits: digits,
     });
+  const drawnValue = state.value ?? "";
   const scanStatus = rendered && (
     <ScanStatus
+      addOn={splitBarcodeValue(formatId, drawnValue).addOn || undefined}
       checking={state.checking}
       label={format.label}
       result={state.scan}
-      value={state.value ?? ""}
+      // ISBN, ISSN and ISMN read back as the EAN-13 they're drawn as.
+      value={publicationEan13(formatId, drawnValue) ?? drawnValue}
     />
   );
 

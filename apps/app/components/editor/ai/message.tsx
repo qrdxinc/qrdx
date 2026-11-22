@@ -12,6 +12,7 @@ import {
   ApplyDesignCard,
   AskUserCard,
   DesignSteps,
+  FrameSearchStep,
   SaveTemplateCard,
   ScoreCheckStep,
 } from "./agent-parts";
@@ -159,6 +160,10 @@ function AssistantMessage({
 
           if (type === "tool-check_scan_score") {
             return <ScoreCheckStep key={key} part={part} />;
+          }
+
+          if (type === "tool-find_frames") {
+            return <FrameSearchStep key={key} part={part} />;
           }
 
           if (type === "tool-ask_user") {

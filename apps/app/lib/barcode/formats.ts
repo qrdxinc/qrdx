@@ -4,11 +4,21 @@
 // this module without loading bwip-js (lib/barcode/render.ts does that).
 
 import { CANONICAL_ORIGIN } from "@repo/config";
+import {
+  hyphenateIsbn,
+  hyphenateIsmn,
+  isbn10CheckDigit,
+  issnCheckDigit,
+} from "./publication";
+
 export type BarcodeFormatId =
   | "ean13"
   | "ean8"
   | "upca"
   | "upce"
+  | "isbn"
+  | "issn"
+  | "ismn"
   | "code128"
   | "code39"
   | "code93"
@@ -41,6 +51,16 @@ export interface BarcodeFormat {
   maxLength: number;
   /** BarcodeDetector format names a reader reports for this symbology */
   detectorFormats: readonly string[];
+  /**
+   * Takes a 2- or 5-digit add-on (EAN-2 or EAN-5) printed right of the bars,
+   * written after the number and a space. The hint is for the add-on field.
+   */
+  addOn?: { hint: string };
+  /**
+   * ISSN: the 2-digit sequence variant, the barcode's 11th and 12th digits,
+   * written after the ISSN and a space (00 when left out).
+   */
+  variant?: { hint: string };
 }
 
 /** Every symbology the generator draws, in picker order. */
@@ -96,6 +116,57 @@ export const BARCODE_FORMATS: readonly BarcodeFormat[] = [
     barHeightMm: 23,
     maxLength: 16,
     detectorFormats: ["upc_e"],
+  },
+  {
+    id: "isbn",
+    label: "ISBN",
+    kind: "linear",
+    summary: "Books, with the ISBN printed above the bars",
+    example: "978-1-873671-00-9",
+    inputHint:
+      "An ISBN-13 (leave its check digit off and it's added), or a whole ISBN-10 to convert, with or without hyphens. The hyphens are placed for you.",
+    quietZone: { min: 11, default: 11 },
+    barHeightMm: 23,
+    maxLength: 30,
+    detectorFormats: ["ean_13"],
+    addOn: {
+      hint: "Optional. In the US and Canada, 5 digits for the price: 5 and the US$ price (52499 is $24.99), or 90000 for none.",
+    },
+  },
+  {
+    id: "issn",
+    label: "ISSN",
+    kind: "linear",
+    summary: "Magazines, journals and newspapers, with an issue add-on",
+    example: "0317-8471 00 05",
+    inputHint:
+      "The 8-character ISSN (NNNN-NNNC), or its first 7 digits and the check digit is added. A 13-digit 977 number works too.",
+    quietZone: { min: 11, default: 11 },
+    barHeightMm: 23,
+    maxLength: 30,
+    detectorFormats: ["ean_13"],
+    variant: {
+      hint: "2 digits, 00 for the regular edition. Publishers change it for a new price or a special edition.",
+    },
+    addOn: {
+      hint: "Optional: usually the issue number in 2 digits, or 5 digits.",
+    },
+  },
+  {
+    id: "ismn",
+    label: "ISMN",
+    kind: "linear",
+    summary: "Printed music: scores, parts and songbooks",
+    example: "979-0-3452-4680-5",
+    inputHint:
+      "An ISMN of 13 digits starting 979-0, or the old 10-character form starting with M, with or without hyphens. Leave the check digit off and it's added.",
+    quietZone: { min: 11, default: 11 },
+    barHeightMm: 23,
+    maxLength: 30,
+    detectorFormats: ["ean_13"],
+    addOn: {
+      hint: "Optional: 2 or 5 digits, if a distributor asks for one.",
+    },
   },
   {
     id: "code128",
@@ -256,6 +327,27 @@ export const BARCODE_ISSUE_CODES = [
   "gs1BadChars",
   "gs1Ai",
   "gs1TooLong",
+  "isbnChars",
+  "isbnLength",
+  "isbnPrefix",
+  "isbnIsIsmn",
+  "isbnUnknownRange",
+  "isbn10Converted",
+  "isbnHyphenated",
+  "issnChars",
+  "issnLength",
+  "issnPrefix",
+  "issnParts",
+  "issnVariant",
+  "issnEanVariant",
+  "issnVariantAssumed",
+  "issnFromEan",
+  "ismnChars",
+  "ismnLength",
+  "ismnPrefix",
+  "ismnConverted",
+  "addOnDigits",
+  "addOnLength",
   "unknownFormat",
 ] as const;
 
@@ -284,6 +376,8 @@ export type BarcodeInput =
 
 const digitCount = (n: number | string) =>
   `${n} digit${Number(n) === 1 ? "" : "s"}`;
+const charCount = (n: number | string) =>
+  `${n} character${Number(n) === 1 ? "" : "s"}`;
 const count = (n: number | string) => Number(n).toLocaleString("en-US");
 const englishChars = (chars: readonly string[] = []) =>
   chars
@@ -354,6 +448,48 @@ export function barcodeIssueText(issue: BarcodeIssue): string {
       return `AI (${v.ai}): ${issue.inner ? barcodeIssueText(issue.inner) : ""}`;
     case "gs1TooLong":
       return `GS1-128 holds up to ${v.max} characters of AIs and data; this has ${v.count}. Split it over two barcodes.`;
+    case "isbnChars":
+      return "An ISBN takes digits, hyphens and spaces; an ISBN-10 can end in X.";
+    case "isbnLength":
+      return `An ISBN has 13 digits, or 10 in the old ISBN-10 form; this has ${digitCount(v.count ?? 0)}.`;
+    case "isbnPrefix":
+      return "An ISBN-13 starts with 978 or 979.";
+    case "isbnIsIsmn":
+      return "Numbers starting 979-0 are ISMNs, for printed music. Pick ISMN as the barcode type.";
+    case "isbnUnknownRange":
+      return "This ISBN isn't in a range the ISBN agencies had given out when this generator was last updated. Check the number, or type it with a hyphen between each of its five parts to print it as written.";
+    case "isbn10Converted":
+      return `Converted from ISBN-10 ${v.isbn10}.`;
+    case "isbnHyphenated":
+      return `Hyphens placed by the ISBN ranges: ${v.isbn}.`;
+    case "issnChars":
+      return "An ISSN takes digits and a hyphen, and its check digit can be X.";
+    case "issnLength":
+      return `An ISSN has 8 characters (NNNN-NNNC), or 7 digits without the check digit; this has ${charCount(v.count ?? 0)}.`;
+    case "issnPrefix":
+      return "A 13-digit ISSN barcode number starts with 977.";
+    case "issnParts":
+      return "Write the ISSN, the 2-digit sequence variant and the add-on, with a space between each: 0317-8471 00 05.";
+    case "issnVariant":
+      return "The sequence variant is 2 digits: 00 for the regular edition.";
+    case "issnEanVariant":
+      return `This 977 number already holds sequence variant ${v.variant}. Leave the variant empty, or enter the 8-character ISSN.`;
+    case "issnVariantAssumed":
+      return "Sequence variant 00 used.";
+    case "issnFromEan":
+      return `Read from the 977 number: ISSN ${v.issn}, sequence variant ${v.variant}.`;
+    case "ismnChars":
+      return "An ISMN takes digits, hyphens and spaces, with an M at the start of the old 10-character form.";
+    case "ismnLength":
+      return `An ISMN has 13 digits starting 979-0, or 10 characters starting with M in the old form; this has ${charCount(v.count ?? 0)}.`;
+    case "ismnPrefix":
+      return "An ISMN starts with 979-0, or M in the old form. Other numbers starting 978 or 979 are ISBNs: pick ISBN as the barcode type.";
+    case "ismnConverted":
+      return `Converted from the old form ${v.ismn10}.`;
+    case "addOnDigits":
+      return "The add-on takes digits only.";
+    case "addOnLength":
+      return `An add-on has 2 or 5 digits; this has ${digitCount(v.count ?? 0)}.`;
     case "unknownFormat":
       return "Unknown barcode format.";
   }
@@ -665,13 +801,367 @@ function gs1Input(raw: string): BarcodeInput {
   return done(parts.join(""), notes);
 }
 
-/** Checks `raw` for `format`; on success, the value the encoder draws. */
+/** What may follow an ISBN, ISSN or ISMN in its own field. */
+export interface BarcodeInputParts {
+  /** 2 or 5 digits printed right of the bars; empty for none */
+  addOn?: string;
+  /** ISSN only: the 2-digit sequence variant; empty for 00 */
+  variant?: string;
+}
+
+interface SplitValue {
+  main: string;
+  addOn: string;
+  variant: string;
+}
+
+/** Could `text` be the number itself, with or without its check digit? */
+const ISBN_SHAPE = (text: string) =>
+  /^(?:\d{9}[\dX]|97[89]\d{9,10})$/i.test(text.replace(/[\s-]/g, ""));
+const ISMN_SHAPE = (text: string) =>
+  /^(?:M\d{8,9}|9790\d{8,9})$/i.test(text.replace(/[\s-]/g, ""));
+
+/**
+ * "978-1-873671-00-9 52250" as the number and its add-on. The number may
+ * have spaces of its own, so the last group is the add-on only when the
+ * rest, and not the whole, has the shape of the number.
+ */
+function splitTrailingAddOn(
+  raw: string,
+  isNumber: (text: string) => boolean,
+): SplitValue {
+  const text = raw.trim();
+  const at = text.search(/\s\S+$/);
+  if (at > 0) {
+    const main = text.slice(0, at).trim();
+    if (!isNumber(text) && isNumber(main)) {
+      return { main, addOn: text.slice(at).trim(), variant: "" };
+    }
+  }
+  return { main: text, addOn: "", variant: "" };
+}
+
+/**
+ * "0317-8471 00 05" as the ISSN, its sequence variant and its add-on. One
+ * group after the ISSN is the variant (2 digits) or, with 5 digits, the
+ * add-on; after a 13-digit 977 number, which holds its variant, it's the
+ * add-on.
+ */
+function splitIssn(raw: string): SplitValue | BarcodeIssue {
+  const groups = raw.trim().split(/\s+/).filter(Boolean);
+  let main = groups.shift() ?? "";
+  // "0317 8471": the ISSN's halves with a space between them
+  if (/^\d{4}$/.test(main) && /^\d{3}[\dX]?$/i.test(groups[0] ?? "")) {
+    main += groups.shift();
+  }
+  if (/^\d{12,13}$/.test(main.replace(/-/g, ""))) {
+    if (groups.length > 1) return { code: "issnParts" };
+    return { main, variant: "", addOn: groups[0] ?? "" };
+  }
+  if (groups.length > 2) return { code: "issnParts" };
+  if (groups.length === 1 && /^\d{5}$/.test(groups[0] as string)) {
+    return { main, variant: "", addOn: groups[0] as string };
+  }
+  return { main, variant: groups[0] ?? "", addOn: groups[1] ?? "" };
+}
+
+/**
+ * The number, add-on and sequence variant of a value of `id`, for the
+ * generator's separate fields; formats without them keep the whole value
+ * as `main`.
+ */
+export function splitBarcodeValue(id: BarcodeFormatId, value: string) {
+  if (id === "isbn") return splitTrailingAddOn(value, ISBN_SHAPE);
+  if (id === "ismn") return splitTrailingAddOn(value, ISMN_SHAPE);
+  if (id === "issn") {
+    const split = splitIssn(value);
+    if ("main" in split) return split;
+  }
+  return { main: value, addOn: "", variant: "" };
+}
+
+/**
+ * The EAN-13 a checked ISBN, ISSN or ISMN value is drawn as (what readers
+ * decode), or null for other formats.
+ */
+export function publicationEan13(
+  id: BarcodeFormatId,
+  value: string,
+): string | null {
+  if (id === "isbn" || id === "ismn") {
+    return (value.split(" ")[0] as string).replace(/-/g, "");
+  }
+  if (id === "issn") {
+    const match = /^(\d{4})-(\d{3})[\dX] (\d{2})/.exec(value);
+    if (!match) return null;
+    const body = `977${match[1]}${match[2]}${match[3]}`;
+    return body + gs1CheckDigit(body);
+  }
+  return null;
+}
+
+function addOnIssue(addOn: string): BarcodeIssue | null {
+  if (!addOn) return null;
+  if (!/^\d+$/.test(addOn)) return { code: "addOnDigits" };
+  if (addOn.length !== 2 && addOn.length !== 5) {
+    return { code: "addOnLength", values: { count: addOn.length } };
+  }
+  return null;
+}
+
+/**
+ * The hyphens as typed, when they split an ISBN into all its parts (four,
+ * or five with the check digit): the fallback for numbers newer than the
+ * ranges. The check digit is `isbn13`'s.
+ */
+function typedIsbnHyphens(
+  text: string,
+  isbn13: string,
+  isTen: boolean,
+): string | null {
+  const parts = text.split(/[\s-]+/).filter(Boolean);
+  const elements = isTen ? ["978", ...parts] : parts;
+  const body =
+    elements.length === 5 && (elements[4] as string).length === 1
+      ? elements.slice(0, 4)
+      : elements;
+  if (body.length !== 4 || body.join("") !== isbn13.slice(0, 12)) return null;
+  return `${body.join("-")}-${isbn13[12]}`;
+}
+
+/**
+ * An ISBN-13, or an ISBN-10 turned into one (978, its 9 digits and a new
+ * check digit), hyphenated by the ISBN ranges for the text above the bars.
+ */
+function isbnInput(main: string, addOn: string): BarcodeInput {
+  const text = main.trim();
+  const compact = text.replace(/[\s-]/g, "").toUpperCase();
+  if (!compact) {
+    return fail({ code: "enterDigits", values: { short: 12, length: 13 } });
+  }
+  if (
+    !/^\d+X?$/.test(compact) ||
+    (compact.endsWith("X") && compact.length !== 10)
+  ) {
+    return fail({ code: "isbnChars" });
+  }
+  // An ISBN-10 is taken whole: 9 digits could as well be an ISBN-13 being typed.
+  if (![10, 12, 13].includes(compact.length)) {
+    return fail({ code: "isbnLength", values: { count: compact.length } });
+  }
+  const isTen = compact.length === 10;
+  const notes: BarcodeIssue[] = [];
+  let isbn13: string;
+  if (isTen) {
+    const body = compact.slice(0, 9);
+    const check = isbn10CheckDigit(body);
+    const given = compact[9] as string;
+    if (given !== check) {
+      return fail({
+        code: "wrongCheckDigit",
+        values: { expected: check, given },
+      });
+    }
+    isbn13 = `978${body}${gs1CheckDigit(`978${body}`)}`;
+  } else {
+    if (!/^97[89]/.test(compact)) return fail({ code: "isbnPrefix" });
+    if (compact.startsWith("9790")) return fail({ code: "isbnIsIsmn" });
+    const body = compact.slice(0, 12);
+    const check = gs1CheckDigit(body);
+    if (compact.length === 13) {
+      const given = Number(compact[12]);
+      if (given !== check) {
+        return fail({
+          code: "wrongCheckDigit",
+          values: { expected: check, given },
+        });
+      }
+    } else {
+      notes.push({ code: "checkDigitAdded", values: { check } });
+    }
+    isbn13 = body + check;
+  }
+
+  const typed = typedIsbnHyphens(text, isbn13, isTen);
+  let isbn = hyphenateIsbn(isbn13);
+  if (!isbn) {
+    // In a range newer than the ones here: print the hyphens as typed.
+    if (!typed) return fail({ code: "isbnUnknownRange" });
+    isbn = typed;
+  } else if (isTen) {
+    const body = isbn13.slice(3, 12);
+    notes.unshift({
+      code: "isbn10Converted",
+      values: { isbn10: `${isbn.slice(4, -1)}${isbn10CheckDigit(body)}` },
+    });
+  } else if (/[\s-]/.test(text) && typed !== isbn) {
+    notes.push({ code: "isbnHyphenated", values: { isbn } });
+  }
+
+  const addOnProblem = addOnIssue(addOn.trim());
+  if (addOnProblem) return fail(addOnProblem);
+  return done(addOn.trim() ? `${isbn} ${addOn.trim()}` : isbn, notes);
+}
+
+/**
+ * An ISSN (or the 977 number of an ISSN barcode), its sequence variant and
+ * add-on, as "0317-8471 00 05": what the encoder takes.
+ */
+function issnInput(
+  main: string,
+  variantIn: string,
+  addOn: string,
+): BarcodeInput {
+  const compact = main.trim().replace(/[\s-]/g, "").toUpperCase();
+  const typedVariant = variantIn.trim();
+  if (!compact) {
+    return fail({ code: "enterDigits", values: { short: 7, length: 8 } });
+  }
+  const notes: BarcodeIssue[] = [];
+  let issn7: string;
+  let variant: string;
+  if (/^\d{12,13}$/.test(compact)) {
+    if (!compact.startsWith("977")) return fail({ code: "issnPrefix" });
+    const body = compact.slice(0, 12);
+    const check = gs1CheckDigit(body);
+    if (compact.length === 13 && Number(compact[12]) !== check) {
+      return fail({
+        code: "wrongCheckDigit",
+        values: { expected: check, given: Number(compact[12]) },
+      });
+    }
+    issn7 = compact.slice(3, 10);
+    variant = compact.slice(10, 12);
+    if (typedVariant && typedVariant !== variant) {
+      return fail({ code: "issnEanVariant", values: { variant } });
+    }
+    notes.push({
+      code: "issnFromEan",
+      values: {
+        issn: `${issn7.slice(0, 4)}-${issn7.slice(4)}${issnCheckDigit(issn7)}`,
+        variant,
+      },
+    });
+  } else {
+    if (!/^\d+X?$/.test(compact)) return fail({ code: "issnChars" });
+    if (compact.length !== 7 && compact.length !== 8) {
+      return fail({ code: "issnLength", values: { count: compact.length } });
+    }
+    if (compact.length === 7 && compact.endsWith("X")) {
+      return fail({ code: "issnChars" });
+    }
+    issn7 = compact.slice(0, 7);
+    const check = issnCheckDigit(issn7);
+    const given = compact[7];
+    if (given !== undefined && given !== check) {
+      return fail({
+        code: "wrongCheckDigit",
+        values: { expected: check, given },
+      });
+    }
+    if (given === undefined) {
+      notes.push({ code: "checkDigitAdded", values: { check } });
+    }
+    if (!typedVariant) {
+      variant = "00";
+      notes.push({ code: "issnVariantAssumed" });
+    } else if (/^\d{2}$/.test(typedVariant)) {
+      variant = typedVariant;
+    } else {
+      return fail({ code: "issnVariant" });
+    }
+  }
+
+  const addOnProblem = addOnIssue(addOn.trim());
+  if (addOnProblem) return fail(addOnProblem);
+  const issn = `${issn7.slice(0, 4)}-${issn7.slice(4)}${issnCheckDigit(issn7)}`;
+  return done(
+    `${issn} ${variant}${addOn.trim() ? ` ${addOn.trim()}` : ""}`,
+    notes,
+  );
+}
+
+/**
+ * An ISMN (979-0 and 9 digits), or the old form (M and 9 characters) turned
+ * into one: M becomes 979-0 and the check digit stays the same.
+ */
+function ismnInput(main: string, addOn: string): BarcodeInput {
+  const compact = main.trim().replace(/[\s-]/g, "").toUpperCase();
+  if (!compact) {
+    return fail({ code: "enterDigits", values: { short: 12, length: 13 } });
+  }
+  if (!/^M?\d+$/.test(compact)) return fail({ code: "ismnChars" });
+  const old = compact.startsWith("M");
+  if (
+    old
+      ? compact.length < 9 || compact.length > 10
+      : compact.length < 12 || compact.length > 13
+  ) {
+    return fail({ code: "ismnLength", values: { count: compact.length } });
+  }
+  if (!(old || compact.startsWith("9790"))) {
+    return fail({ code: "ismnPrefix" });
+  }
+  const body = old ? `9790${compact.slice(1, 9)}` : compact.slice(0, 12);
+  const given = old ? compact[9] : compact[12];
+  const check = gs1CheckDigit(body);
+  const notes: BarcodeIssue[] = [];
+  if (given !== undefined && Number(given) !== check) {
+    return fail({
+      code: "wrongCheckDigit",
+      values: { expected: check, given: Number(given) },
+    });
+  }
+  if (given === undefined) {
+    notes.push({ code: "checkDigitAdded", values: { check } });
+  }
+  const ismn = hyphenateIsmn(body + check);
+  if (old) {
+    notes.unshift({
+      code: "ismnConverted",
+      values: { ismn10: `M-${ismn.slice(6)}` },
+    });
+  }
+
+  const addOnProblem = addOnIssue(addOn.trim());
+  if (addOnProblem) return fail(addOnProblem);
+  return done(addOn.trim() ? `${ismn} ${addOn.trim()}` : ismn, notes);
+}
+
+/**
+ * Checks `raw` for `format`; on success, the value the encoder draws. For
+ * ISBN, ISSN and ISMN, `raw` holds the add-on (and an ISSN's variant) after
+ * the number, unless the generator passes them in `parts` from their own
+ * fields.
+ */
 export function validateBarcodeInput(
   id: BarcodeFormatId,
   raw: string,
+  parts?: BarcodeInputParts,
 ): BarcodeInput {
   const format = getBarcodeFormat(id);
   switch (id) {
+    case "isbn": {
+      const split = parts
+        ? { main: raw, addOn: parts.addOn ?? "" }
+        : splitTrailingAddOn(raw, ISBN_SHAPE);
+      return isbnInput(split.main, split.addOn);
+    }
+    case "ismn": {
+      const split = parts
+        ? { main: raw, addOn: parts.addOn ?? "" }
+        : splitTrailingAddOn(raw, ISMN_SHAPE);
+      return ismnInput(split.main, split.addOn);
+    }
+    case "issn": {
+      if (parts) {
+        return issnInput(raw, parts.variant ?? "", parts.addOn ?? "");
+      }
+      const split = splitIssn(raw);
+      return "main" in split
+        ? issnInput(split.main, split.variant, split.addOn)
+        : fail(split);
+    }
     case "ean13":
       return gs1Number("EAN-13", raw, 13);
     case "ean8":
@@ -728,8 +1218,9 @@ export function validateBarcodeInput(
  * True when what a reader decoded is the value the generator drew. Readers
  * differ in how they report some symbologies: a UPC-A may come back as the
  * 13-digit EAN with a leading 0, a UPC-E as its expanded UPC-A (12 or 13
- * digits), and GS1-128 with or without brackets around the AIs and with
- * GS (0x1D) separators between fields.
+ * digits), GS1-128 with or without brackets around the AIs and with GS
+ * (0x1D) separators between fields, and an ISBN, ISSN or ISMN as its EAN-13
+ * digits, with or without the add-on.
  */
 export function decodedMatches(
   id: BarcodeFormatId,
@@ -737,6 +1228,18 @@ export function decodedMatches(
   decoded: string,
 ): boolean {
   switch (id) {
+    case "isbn":
+    case "issn":
+    case "ismn": {
+      // Readers that read add-ons report them after the EAN-13.
+      const ean = publicationEan13(id, value);
+      const { addOn } = splitBarcodeValue(id, value);
+      return (
+        decoded === ean ||
+        (addOn !== "" &&
+          (decoded === `${ean} ${addOn}` || decoded === `${ean}${addOn}`))
+      );
+    }
     case "upca":
       return decoded === value || decoded === `0${value}`;
     case "upce": {

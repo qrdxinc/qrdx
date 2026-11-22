@@ -300,6 +300,43 @@ export function ScoreCheckStep({
   );
 }
 
+// ── find_frames ────────────────────────────────────────────────────────────
+
+export function FrameSearchStep({
+  part,
+}: {
+  part: PartOf<"tool-find_frames">;
+}) {
+  const t = useTranslations("editor.ai.agentParts");
+  if (part.state !== "output-available") {
+    return (
+      <ul>
+        <StepLine
+          loader={FinderTrace}
+          status={part.state === "output-error" ? "failed" : "running"}
+        >
+          {part.state === "output-error"
+            ? t("couldntSearchTheFrames")
+            : t("searchingTheFrames")}
+        </StepLine>
+      </ul>
+    );
+  }
+  const { frames, query } = part.output;
+  return (
+    <ul className="space-y-0.5">
+      <StepLine status="done">
+        {t("foundFramesForQuery", { count: frames.length, query })}
+        {frames.length > 0 && (
+          <span className="block">
+            {frames.map((frame) => frame.name).join(", ")}
+          </span>
+        )}
+      </StepLine>
+    </ul>
+  );
+}
+
 // ── ask_user ───────────────────────────────────────────────────────────────
 
 export function AskUserCard({

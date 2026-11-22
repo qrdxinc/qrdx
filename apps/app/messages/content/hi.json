@@ -32350,5 +32350,461 @@
     "text": "Pix, SEPA ट्रांसफ़र, PayNow, PromptPay या VietQR पेमेंट कोड, जिसकी जाँच Playground के फ़ॉर्म की तरह होती है।",
     "status": "machine",
     "context": "mcp.tools.14.description"
+  },
+  "291d41cbf4b9": {
+    "source": "Books, with the ISBN printed above the bars",
+    "text": "किताबें, बार के ऊपर छपे ISBN के साथ",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.summary"
+  },
+  "54344ae77017": {
+    "source": "An ISBN-13 (leave its check digit off and it's added), or a whole ISBN-10 to convert, with or without hyphens. The hyphens are placed for you.",
+    "text": "13 अंकों का ISBN-13 (चेक डिजिट न डालें तो वह जुड़ जाता है), या बदलने के लिए पूरा ISBN-10, हाइफ़न के साथ या बिना। हाइफ़न आपके लिए अपने आप लग जाते हैं।",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.inputHint"
+  },
+  "a2e6713f08d5": {
+    "source": "Optional. In the US and Canada, 5 digits for the price: 5 and the US$ price (52499 is $24.99), or 90000 for none.",
+    "text": "ज़रूरी नहीं। अमेरिका और कनाडा में कीमत के लिए 5 अंक: 5 और US$ में कीमत (52499 यानी $24.99), या कीमत न देनी हो तो 90000।",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.addOn.hint"
+  },
+  "e9e1f300825c": {
+    "source": "Magazines, journals and newspapers, with an issue add-on",
+    "text": "पत्रिकाएँ, जर्नल और अख़बार, अंक वाले ऐड-ऑन के साथ",
+    "status": "machine",
+    "context": "barcodes.formats.issn.summary"
+  },
+  "966fa72ffe19": {
+    "source": "The 8-character ISSN (NNNN-NNNC), or its first 7 digits and the check digit is added. A 13-digit 977 number works too.",
+    "text": "8 अक्षरों का ISSN (NNNN-NNNC), या उसके पहले 7 अंक, चेक डिजिट अपने आप जुड़ जाता है। 977 से शुरू होने वाला 13 अंकों का नंबर भी चलता है।",
+    "status": "machine",
+    "context": "barcodes.formats.issn.inputHint"
+  },
+  "9843a124a0e4": {
+    "source": "Optional: usually the issue number in 2 digits, or 5 digits.",
+    "text": "ज़रूरी नहीं: आमतौर पर 2 अंकों में अंक संख्या, या 5 अंक।",
+    "status": "machine",
+    "context": "barcodes.formats.issn.addOn.hint"
+  },
+  "1ee9182bc1fb": {
+    "source": "Printed music: scores, parts and songbooks",
+    "text": "छपा संगीत: स्कोर, पार्ट और गानों की किताबें",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.summary"
+  },
+  "b4688bb37eca": {
+    "source": "An ISMN of 13 digits starting 979-0, or the old 10-character form starting with M, with or without hyphens. Leave the check digit off and it's added.",
+    "text": "979-0 से शुरू होने वाला 13 अंकों का ISMN, या M से शुरू होने वाला पुराना 10 अक्षरों का रूप, हाइफ़न के साथ या बिना। चेक डिजिट न डालें तो वह जुड़ जाता है।",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.inputHint"
+  },
+  "7057f3f09102": {
+    "source": "Optional: 2 or 5 digits, if a distributor asks for one.",
+    "text": "ज़रूरी नहीं: 2 या 5 अंक, अगर डिस्ट्रीब्यूटर माँगे।",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.addOn.hint"
+  },
+  "8c6f1a2db028": {
+    "source": "The barcode on retail products almost everywhere outside North America. It holds a 13-digit GTIN: a company prefix from GS1, an item number and a check digit. Books, magazines and printed music use it too; their types below print the ISBN, ISSN or ISMN above the bars.",
+    "text": "उत्तरी अमेरिका के बाहर लगभग हर जगह रिटेल प्रोडक्ट पर लगने वाला बारकोड। इसमें 13 अंकों का GTIN होता है: GS1 से मिला कंपनी प्रीफ़िक्स, आइटम नंबर और चेक डिजिट। किताबें, पत्रिकाएँ और छपा संगीत भी इसे इस्तेमाल करते हैं; इनके नीचे दिए टाइप बार के ऊपर ISBN, ISSN या ISMN छापते हैं।",
+    "status": "machine",
+    "context": "barcodes.uses.ean13"
+  },
+  "e27297574e0f": {
+    "source": "Books. The ISBN-13 is drawn as an EAN-13 starting 978 or 979, with the hyphenated ISBN printed above the bars. ISBN-10s are converted, and a 5-digit price add-on can go beside it for the US and Canadian book trade.",
+    "text": "किताबें। ISBN-13 को 978 या 979 से शुरू होने वाले EAN-13 के रूप में बनाया जाता है, और बार के ऊपर हाइफ़न वाला ISBN छपता है। ISBN-10 बदल दिए जाते हैं, और अमेरिका व कनाडा के किताब बाज़ार के लिए बगल में 5 अंकों का कीमत वाला ऐड-ऑन लग सकता है।",
+    "status": "machine",
+    "context": "barcodes.uses.isbn"
+  },
+  "79c76e0d75e5": {
+    "source": "Magazines, journals and newspapers. The ISSN goes into an EAN-13 starting 977 with 2 digits for price or edition changes, and a 2-digit add-on usually carries the issue number.",
+    "text": "पत्रिकाएँ, जर्नल और अख़बार। ISSN को 977 से शुरू होने वाले EAN-13 में रखा जाता है, जिसमें कीमत या संस्करण बदलने के लिए 2 अंक होते हैं, और 2 अंकों का ऐड-ऑन आमतौर पर अंक संख्या बताता है।",
+    "status": "machine",
+    "context": "barcodes.uses.issn"
+  },
+  "cc84a096325d": {
+    "source": "Printed music: scores, parts and songbooks. The ISMN is drawn as an EAN-13 starting 979-0 with the ISMN printed above it, and old numbers starting with M are converted.",
+    "text": "छपा संगीत: स्कोर, पार्ट और गानों की किताबें। ISMN को 979-0 से शुरू होने वाले EAN-13 के रूप में बनाया जाता है और उसके ऊपर ISMN छपता है; M से शुरू होने वाले पुराने नंबर बदल दिए जाते हैं।",
+    "status": "machine",
+    "context": "barcodes.uses.ismn"
+  },
+  "2182d8e7b974": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "दुकानों में बिकने वाले प्रोडक्ट के लिए, हाँ। EAN, UPC, ITF-14 और GS1-128 में GTIN होता है, और GTIN आपकी कंपनी को GS1 (या आपके देश में GS1 के संगठन) से लाइसेंस पर मिलते हैं; रिटेलर के सिस्टम अपने से बनाए नंबर को नहीं पहचानेंगे। किताबें, सीरियल और छपा संगीत इसकी जगह अपनी राष्ट्रीय एजेंसी से मिला ISBN, ISSN या ISMN इस्तेमाल करते हैं। यह जनरेटर कोई भी वैध नंबर बना देता है, पर नंबर जारी या रजिस्टर नहीं करता। अपने स्टॉक, एसेट या टिकट के लिए Code 128, Code 39 और Code 93 में किसी रजिस्ट्रेशन की ज़रूरत नहीं है।",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "44ff97b6fe1e": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN and the GTIN and SSCC fields of GS1-128: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "हाँ, EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN और GS1-128 के GTIN व SSCC फ़ील्ड के लिए: आख़िरी अंक न डालें तो वह निकाल लिया जाता है। पूरा नंबर डालें तो चेक डिजिट जाँचा जाता है; गलत होने पर बारकोड की जगह एरर दिखता है।",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "ecc099e5186f": {
+    "source": "Yes, with the ISBN barcode type: it's an EAN-13 of the ISBN-13 with the hyphenated ISBN printed above the bars, and it takes an ISBN-10 and a 5-digit price add-on too. ISSN (magazines) and ISMN (printed music) have their own types.",
+    "text": "हाँ, ISBN बारकोड टाइप के साथ: यह ISBN-13 का EAN-13 होता है, जिसमें बार के ऊपर हाइफ़न वाला ISBN छपा होता है। इसमें ISBN-10 और 5 अंकों का प्राइस ऐड-ऑन भी डाला जा सकता है। ISSN (पत्रिकाओं के लिए) और ISMN (छपे हुए संगीत के लिए) के अपने अलग टाइप हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ean-13.faqs.2.answer"
+  },
+  "3835c42e60bf": {
+    "source": "Free ISBN Barcode Generator with Price Add-on",
+    "text": "प्राइस ऐड-ऑन के साथ फ़्री ISBN बारकोड जनरेटर",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.title"
+  },
+  "176aa5f9c65e": {
+    "source": "Make an ISBN barcode for a book cover: ISBN-13 or ISBN-10, check digit and hyphens worked out, and an optional price add-on. SVG, PDF and EPS. Free.",
+    "text": "किताब के कवर के लिए ISBN बारकोड बनाएँ: ISBN-13 या ISBN-10, चेक डिजिट और हाइफ़न अपने आप, और चाहें तो प्राइस ऐड-ऑन भी। SVG, PDF और EPS में। फ़्री।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.metaDescription"
+  },
+  "da610243ac4c": {
+    "source": "An ISBN barcode is an EAN-13 of the book's 13-digit ISBN, with the ISBN printed above the bars. Type the ISBN, with or without hyphens, and the generator checks it, places the hyphens and draws the barcode, with a 5-digit price add-on if you sell in the US or Canada.",
+    "text": "ISBN बारकोड किताब के 13 अंकों वाले ISBN का EAN-13 होता है, जिसमें बार के ऊपर ISBN छपा होता है। ISBN हाइफ़न के साथ या बिना टाइप करें, जनरेटर उसे जाँचता है, हाइफ़न लगाता है और बारकोड बनाता है। अगर आप US या कनाडा में बेचते हैं, तो 5 अंकों का प्राइस ऐड-ऑन भी जोड़ सकते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.intro"
+  },
+  "0b6b8b3c5b67": {
+    "source": "The back cover of books, where bookshops, distributors and libraries scan it to look the book up. The ISBN Users' Manual recommends the lower right of the back cover, near the spine.",
+    "text": "किताबों का पिछला कवर, जहाँ बुकशॉप, डिस्ट्रीब्यूटर और लाइब्रेरी किताब खोजने के लिए इसे स्कैन करती हैं। ISBN Users' Manual के अनुसार इसे पिछले कवर पर नीचे दाईं ओर, स्पाइन के पास रखना बेहतर है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.0"
+  },
+  "a1da95764261": {
+    "source": "Each edition and format of a book has its own ISBN, so a hardback, a paperback and an audiobook each carry a different barcode. ISBNs start with 978 or 979; numbers starting 979-0 are ISMNs, for printed music.",
+    "text": "किताब के हर एडिशन और फ़ॉर्मैट का अपना ISBN होता है, इसलिए हार्डबैक, पेपरबैक और ऑडियोबुक, हर एक पर अलग बारकोड होता है। ISBN 978 या 979 से शुरू होते हैं; 979-0 से शुरू होने वाले नंबर ISMN होते हैं, जो छपे हुए संगीत के लिए हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.1"
+  },
+  "3e73fd5280af": {
+    "source": "Where do ISBNs come from?",
+    "text": "ISBN कहाँ से मिलते हैं?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.title"
+  },
+  "e439e1b8c34c": {
+    "source": "From the ISBN agency of the country where the publisher is based. Some agencies charge for ISBNs and some give them out free; the International ISBN Agency lists them all.",
+    "text": "उस देश की ISBN एजेंसी से, जहाँ प्रकाशक स्थित है। कुछ एजेंसियाँ ISBN के पैसे लेती हैं और कुछ मुफ़्त देती हैं; International ISBN Agency सभी की सूची देती है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.0"
+  },
+  "69d6787067ee": {
+    "source": "This generator draws the barcode of an ISBN you already have. It doesn't issue or register ISBNs.",
+    "text": "यह जनरेटर उस ISBN का बारकोड बनाता है जो आपके पास पहले से है। यह ISBN जारी या रजिस्टर नहीं करता।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.1"
+  },
+  "2c37843cb158": {
+    "source": "Type an ISBN-13 or an ISBN-10, with or without hyphens or spaces. Twelve digits get the check digit added and thirteen have it checked. A whole ISBN-10, check digit included, is converted to its ISBN-13: 978 in front of its first nine digits and a new check digit.",
+    "text": "ISBN-13 या ISBN-10 टाइप करें, हाइफ़न या स्पेस के साथ या बिना। बारह अंक डालने पर चेक डिजिट जुड़ जाता है और तेरह अंक डालने पर उसकी जाँच होती है। चेक डिजिट सहित पूरा ISBN-10 उसके ISBN-13 में बदल दिया जाता है: पहले नौ अंकों के आगे 978 और नया चेक डिजिट।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.0"
+  },
+  "c521fc56dc83": {
+    "source": "The ISBN above the bars is split into its five parts (prefix, registration group, registrant, publication and check digit) by the ranges the International ISBN Agency publishes, because the parts' lengths differ from one country and publisher to the next.",
+    "text": "बार के ऊपर का ISBN International ISBN Agency की प्रकाशित रेंज के हिसाब से पाँच हिस्सों (प्रीफ़िक्स, रजिस्ट्रेशन ग्रुप, रजिस्ट्रेंट, पब्लिकेशन और चेक डिजिट) में बाँटा जाता है, क्योंकि हिस्सों की लंबाई हर देश और प्रकाशक के लिए अलग होती है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.1"
+  },
+  "e9a28cedaf04": {
+    "source": "The check digit is the EAN-13 one: the first 12 digits are weighted 1, 3, 1, 3… and the check digit brings their sum to a multiple of 10.",
+    "text": "चेक डिजिट EAN-13 वाला ही है: पहले 12 अंकों को 1, 3, 1, 3… से गुणा किया जाता है और चेक डिजिट उनके जोड़ को 10 का गुणज बना देता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.2"
+  },
+  "8d1f674af2a1": {
+    "source": "The add-on goes in its own field. In the US and Canada it's 5 digits: the first is the currency (5 for US dollars, 6 for Canadian dollars) and the rest the price, so 52499 is US$24.99, and 90000 means no price. Elsewhere the ISBN Users' Manual keeps 90000 to 98999 for publishers' own use.",
+    "text": "ऐड-ऑन के लिए अलग फ़ील्ड है। US और कनाडा में यह 5 अंकों का होता है: पहला अंक करेंसी है (US डॉलर के लिए 5, कनाडाई डॉलर के लिए 6) और बाकी कीमत, इसलिए 52499 का मतलब US$24.99 है, और 90000 का मतलब है कोई कीमत नहीं। बाकी जगहों पर ISBN Users' Manual 90000 से 98999 तक प्रकाशकों के अपने उपयोग के लिए रखता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.3"
+  },
+  "e4dc52a1d225": {
+    "source": "An ISBN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISBN बारकोड एक EAN-13 है, इसलिए EAN-13 के साइज़ लागू होते हैं: 100% पर क्वाइट ज़ोन सहित 37.29 mm चौड़ा, 0.33 mm मॉड्यूल के साथ, और GS1 80% से 200% तक की अनुमति देता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.0"
+  },
+  "8b96afae7ca3": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%, and put the add-on 9 modules right of the main bars, within the 7 to 12 GS1 allows. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "वेक्टर डाउनलोड 0.353 mm का मॉड्यूल इस्तेमाल करते हैं, यानी लगभग 107%, और ऐड-ऑन को मुख्य बार से 9 मॉड्यूल दाईं ओर रखते हैं, जो GS1 की अनुमत 7 से 12 की सीमा में है। साइज़ बदलते समय अनुपात वही रखें और बार की ऊँचाई न काटें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.1"
+  },
+  "c705fd825b60": {
+    "source": "Keep cover artwork out of the quiet zones and away from the ISBN line above the bars.",
+    "text": "कवर की आर्टवर्क को क्वाइट ज़ोन से और बार के ऊपर वाली ISBN लाइन से दूर रखें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.2"
+  },
+  "196d06fdae79": {
+    "source": "Can I use my old ISBN-10?",
+    "text": "क्या मैं अपना पुराना ISBN-10 इस्तेमाल कर सकता हूँ?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.question"
+  },
+  "fd750967eae9": {
+    "source": "Yes. Type it and the generator converts it to the ISBN-13 that goes in the barcode: 978, its first nine digits and a new check digit. ISBN agencies have only given out 13-digit ISBNs since 1 January 2007.",
+    "text": "हाँ। उसे टाइप करें और जनरेटर उसे उस ISBN-13 में बदल देता है जो बारकोड में जाता है: 978, उसके पहले नौ अंक और एक नया चेक डिजिट। ISBN एजेंसियाँ 1 जनवरी 2007 से सिर्फ़ 13 अंकों वाले ISBN ही देती हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.answer"
+  },
+  "6c5182bf9e13": {
+    "source": "Do I need the 5-digit price add-on?",
+    "text": "क्या मुझे 5 अंकों का प्राइस ऐड-ऑन चाहिए?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.question"
+  },
+  "a9c462c78717": {
+    "source": "Only if you sell through the US or Canadian book trade, which uses it for the cover price. Use 90000 if you don't want a price in the barcode. Outside North America, leave it off.",
+    "text": "सिर्फ़ तब, जब आप US या कनाडा के बुक ट्रेड से बेचते हैं, जो इसे कवर प्राइस के लिए इस्तेमाल करता है। अगर बारकोड में कीमत नहीं चाहिए तो 90000 डालें। उत्तरी अमेरिका के बाहर इसे छोड़ दें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.answer"
+  },
+  "38a719101040": {
+    "source": "Is an ISBN barcode just an EAN-13?",
+    "text": "क्या ISBN बारकोड बस एक EAN-13 है?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.question"
+  },
+  "cd2e286d9bfd": {
+    "source": "The bars are an EAN-13 of the ISBN-13, and checkout scanners read it as one. An ISBN barcode also prints the hyphenated ISBN above the bars, as the ISBN Users' Manual asks, which the EAN-13 generator doesn't.",
+    "text": "बार ISBN-13 का EAN-13 होते हैं, और चेकआउट स्कैनर उन्हें EAN-13 की तरह ही पढ़ते हैं। ISBN बारकोड बार के ऊपर हाइफ़न वाला ISBN भी छापता है, जैसा ISBN Users' Manual कहता है, जो EAN-13 जनरेटर नहीं करता।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.answer"
+  },
+  "e8ce71038550": {
+    "source": "Why are the hyphens different from the ones I typed?",
+    "text": "हाइफ़न मेरे टाइप किए हाइफ़न से अलग क्यों हैं?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.question"
+  },
+  "4fec2a0ce9cf": {
+    "source": "Each part of an ISBN has a length set by the International ISBN Agency's ranges, and the generator places the hyphens from them. If your ISBN is in a range newer than the generator's copy, type it with its hyphens and they're printed as you wrote them.",
+    "text": "ISBN के हर हिस्से की लंबाई International ISBN Agency की रेंज से तय होती है, और जनरेटर उन्हीं के आधार पर हाइफ़न लगाता है। अगर आपका ISBN जनरेटर की कॉपी से नई रेंज में है, तो उसे हाइफ़न के साथ टाइप करें और वह वैसा ही छपेगा जैसा आपने लिखा।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.answer"
+  },
+  "f188d75a04c1": {
+    "source": "Free ISSN Barcode Generator for Magazines",
+    "text": "पत्रिकाओं के लिए फ़्री ISSN बारकोड जनरेटर",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.title"
+  },
+  "1f64921e91f2": {
+    "source": "Make an ISSN barcode for a magazine or journal: the 977 EAN-13 with its sequence variant and an issue add-on, check digits worked out. SVG, PDF, EPS. Free.",
+    "text": "पत्रिका या जर्नल के लिए ISSN बारकोड बनाएं: सीक्वेंस वेरिएंट और इश्यू ऐड-ऑन के साथ 977 वाला EAN-13, चेक डिजिट अपने आप निकल जाते हैं। SVG, PDF, EPS। फ़्री।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.metaDescription"
+  },
+  "bfca3d83074b": {
+    "source": "An ISSN barcode puts the ISSN of a magazine, journal or newspaper into an EAN-13 starting 977, usually with a 2-digit add-on for the issue number. Type the ISSN and the issue, and the generator works out both check digits and draws the barcode with the ISSN above it.",
+    "text": "ISSN बारकोड किसी पत्रिका, जर्नल या अख़बार के ISSN को 977 से शुरू होने वाले EAN-13 में डालता है, आमतौर पर इश्यू नंबर के लिए 2 अंकों के ऐड-ऑन के साथ। ISSN और इश्यू टाइप करें, जनरेटर दोनों चेक डिजिट निकालता है और ऊपर ISSN के साथ बारकोड बना देता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.intro"
+  },
+  "c97f6be9f476": {
+    "source": "Covers of magazines, journals, newspapers and other serials sold in shops. Retailers and wholesalers scan the main barcode to find the title, and the add-on tells one issue from the next.",
+    "text": "दुकानों में बिकने वाली पत्रिकाओं, जर्नल, अख़बारों और दूसरी सीरियल पत्र-पत्रिकाओं के कवर पर। रिटेलर और थोक विक्रेता मुख्य बारकोड स्कैन करके टाइटल पहचानते हैं, और ऐड-ऑन से एक इश्यू दूसरे से अलग पहचाना जाता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.0"
+  },
+  "b78d01fd74c8": {
+    "source": "A title published both in print and online has a different ISSN for each; the barcode goes on the print edition.",
+    "text": "जो टाइटल प्रिंट और ऑनलाइन दोनों में छपता है, उसके हर रूप का ISSN अलग होता है; बारकोड प्रिंट एडिशन पर लगता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.1"
+  },
+  "2a6774d25d70": {
+    "source": "Where do ISSNs come from?",
+    "text": "ISSN कहां से मिलते हैं?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.title"
+  },
+  "21ee727a32d4": {
+    "source": "From the national ISSN centre of the publisher's country, or the ISSN International Centre where there's none. Publishers don't make up ISSNs themselves.",
+    "text": "प्रकाशक के देश के राष्ट्रीय ISSN केंद्र से, या जहां कोई केंद्र नहीं है वहां ISSN इंटरनेशनल सेंटर से। प्रकाशक अपने ISSN ख़ुद नहीं बनाते।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.0"
+  },
+  "b88925ce2ed3": {
+    "source": "This generator draws the barcode of an ISSN you already have; it doesn't issue or register ISSNs. Distributors may have their own rules for the variant and add-on digits, so check with yours.",
+    "text": "यह जनरेटर आपके पास पहले से मौजूद ISSN का बारकोड बनाता है; यह ISSN जारी या रजिस्टर नहीं करता। वेरिएंट और ऐड-ऑन अंकों के लिए डिस्ट्रीब्यूटर के अपने नियम हो सकते हैं, इसलिए अपने डिस्ट्रीब्यूटर से पूछ लें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.1"
+  },
+  "3cd9c9d76ec9": {
+    "source": "Type the 8-character ISSN, NNNN-NNNC, or its first 7 digits to have the check digit added. An ISSN's check digit is weighted 8 down to 2, modulo 11, so it can be X.",
+    "text": "8 अक्षरों का ISSN, NNNN-NNNC, टाइप करें, या उसके पहले 7 अंक डालें ताकि चेक डिजिट जुड़ जाए। ISSN का चेक डिजिट 8 से 2 तक के वेट और modulo 11 से निकलता है, इसलिए वह X भी हो सकता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.0"
+  },
+  "e18df648537b": {
+    "source": "The barcode holds 977, the ISSN's first 7 digits (its check digit is left out), the 2-digit sequence variant and an EAN-13 check digit. The variant is 00 unless you change it: publishers use it for extra information such as a change of price.",
+    "text": "बारकोड में 977, ISSN के पहले 7 अंक (उसका चेक डिजिट छोड़ दिया जाता है), 2 अंकों का सीक्वेंस वेरिएंट और EAN-13 चेक डिजिट होते हैं। वेरिएंट 00 रहता है जब तक आप उसे न बदलें: प्रकाशक इसे कीमत बदलने जैसी अतिरिक्त जानकारी के लिए इस्तेमाल करते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.1"
+  },
+  "217b7f21d84b": {
+    "source": "The add-on is usually the issue number in 2 digits; 5 digits work too. You can also type the 13-digit 977 number from an existing barcode, and the ISSN and variant are read from it.",
+    "text": "ऐड-ऑन आमतौर पर 2 अंकों का इश्यू नंबर होता है; 5 अंक भी चलते हैं। आप किसी मौजूदा बारकोड का 13 अंकों का 977 नंबर भी टाइप कर सकते हैं, और उससे ISSN और वेरिएंट पढ़ लिए जाते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.2"
+  },
+  "81617eedd878": {
+    "source": "An ISSN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISSN बारकोड एक EAN-13 है, इसलिए EAN-13 के साइज़ लागू होते हैं: 100% पर क्वाइट ज़ोन समेत 37.29 mm चौड़ा, 0.33 mm मॉड्यूल के साथ, और GS1 80% से 200% तक की इजाज़त देता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.sizing.0"
+  },
+  "029b41d87aed": {
+    "source": "What should the 2-digit add-on be?",
+    "text": "2 अंकों का ऐड-ऑन क्या होना चाहिए?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.question"
+  },
+  "a6d582e1f7e1": {
+    "source": "Usually the issue number, counted the way your distributor asks: a weekly title and a monthly title number their issues differently. A new issue only needs a new add-on, not a new ISSN.",
+    "text": "आमतौर पर इश्यू नंबर, उसी तरह गिना हुआ जैसा आपका डिस्ट्रीब्यूटर कहता है: साप्ताहिक और मासिक टाइटल अपने इश्यू अलग तरह से गिनते हैं। नए इश्यू के लिए सिर्फ़ नया ऐड-ऑन चाहिए, नया ISSN नहीं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.answer"
+  },
+  "8bf75513f21a": {
+    "source": "When do I change the sequence variant?",
+    "text": "सीक्वेंस वेरिएंट कब बदलना चाहिए?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.question"
+  },
+  "d47879b0459f": {
+    "source": "When an issue needs a different main barcode, for example for a different cover price. Most titles keep 00.",
+    "text": "जब किसी इश्यू को अलग मुख्य बारकोड चाहिए, जैसे कवर की कीमत अलग होने पर। ज़्यादातर टाइटल 00 ही रखते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.answer"
+  },
+  "05f5e8f2dfc8": {
+    "source": "Is an ISSN barcode an EAN-13?",
+    "text": "क्या ISSN बारकोड एक EAN-13 है?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.question"
+  },
+  "14b5a2d47c79": {
+    "source": "Yes, one starting 977, and checkout scanners read it as one. The add-on is a small separate barcode to its right; scanners set up to read add-ons report it after the 13 digits.",
+    "text": "हां, जो 977 से शुरू होता है, और चेकआउट स्कैनर उसे EAN-13 की तरह ही पढ़ते हैं। ऐड-ऑन उसके दाईं ओर एक छोटा अलग बारकोड होता है; ऐड-ऑन पढ़ने के लिए सेट किए गए स्कैनर उसे 13 अंकों के बाद बताते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.answer"
+  },
+  "8258c7e9de6f": {
+    "source": "Free ISMN Barcode Generator for Printed Music",
+    "text": "छपे हुए संगीत के लिए फ़्री ISMN बारकोड जनरेटर",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.title"
+  },
+  "ab1e3a860c80": {
+    "source": "Make an ISMN barcode for sheet music and scores: 979-0 ISMNs or old M- numbers, check digit and hyphens worked out. SVG, PDF and EPS for print. Free.",
+    "text": "शीट म्यूज़िक और स्कोर के लिए ISMN बारकोड बनाएँ: 979-0 वाले ISMN या पुराने M- नंबर, चेक डिजिट और हाइफ़न अपने-आप। प्रिंट के लिए SVG, PDF और EPS। फ़्री।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.metaDescription"
+  },
+  "8360e12af0d1": {
+    "source": "An ISMN identifies a publication of notated music, such as a score, a set of parts or a songbook, and is printed as an EAN-13 starting 979-0 with the ISMN above the bars. Type the ISMN, or an old number starting with M, and download the barcode for your cover.",
+    "text": "ISMN किसी नोटेटेड म्यूज़िक प्रकाशन की पहचान है, जैसे स्कोर, पार्ट्स का सेट या सॉन्गबुक। यह 979-0 से शुरू होने वाले EAN-13 के रूप में छपता है और ISMN बार के ऊपर लिखा होता है। ISMN या M से शुरू होने वाला पुराना नंबर डालें और अपने कवर के लिए बारकोड डाउनलोड करें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.intro"
+  },
+  "b7522c7e8483": {
+    "source": "Printed and digital sheet music: scores, parts, songbooks and other notated music, scanned by music shops, distributors and libraries. Each part sold on its own has its own ISMN.",
+    "text": "छपा हुआ और डिजिटल शीट म्यूज़िक: स्कोर, पार्ट्स, सॉन्गबुक और दूसरा नोटेटेड म्यूज़िक, जिन्हें म्यूज़िक शॉप, डिस्ट्रीब्यूटर और लाइब्रेरी स्कैन करते हैं। अलग से बिकने वाले हर पार्ट का अपना ISMN होता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.0"
+  },
+  "befd5a2d10e8": {
+    "source": "Books about music get an ISBN instead, and sound recordings have identifiers of their own. A songbook can have both an ISMN and an ISBN.",
+    "text": "संगीत के बारे में किताबों को इसकी जगह ISBN मिलता है, और साउंड रिकॉर्डिंग की अपनी अलग पहचान होती है। एक सॉन्गबुक में ISMN और ISBN दोनों हो सकते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.1"
+  },
+  "a8a30623f353": {
+    "source": "Where do ISMNs come from?",
+    "text": "ISMN कहाँ से मिलते हैं?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.title"
+  },
+  "775f3d68ead8": {
+    "source": "From the ISMN agency of the publisher's country, appointed by the International ISMN Agency. A publisher gets a registrant number and usually numbers its publications from it.",
+    "text": "प्रकाशक के देश की ISMN एजेंसी से, जिसे International ISMN Agency नियुक्त करती है। प्रकाशक को एक रजिस्ट्रेंट नंबर मिलता है और वह आमतौर पर उसी से अपने प्रकाशनों को नंबर देता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.0"
+  },
+  "30668fbec2bc": {
+    "source": "This generator draws the barcode of an ISMN you already have. It doesn't issue or register ISMNs.",
+    "text": "यह जनरेटर आपके पास पहले से मौजूद ISMN का बारकोड बनाता है। यह ISMN जारी या रजिस्टर नहीं करता।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.1"
+  },
+  "8f30796bbe15": {
+    "source": "Type the 13 digits starting 979-0, with or without hyphens, or 12 to have the check digit added. An old 10-character ISMN starting with M is converted: the M becomes 979-0 and the check digit stays the same.",
+    "text": "979-0 से शुरू होने वाले 13 अंक डालें, हाइफ़न के साथ या बिना, या 12 अंक डालें ताकि चेक डिजिट जोड़ दिया जाए। M से शुरू होने वाला पुराना 10 अक्षरों का ISMN बदल दिया जाता है: M की जगह 979-0 आ जाता है और चेक डिजिट वही रहता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.0"
+  },
+  "168c909528f2": {
+    "source": "The ISMN above the bars is split into prefix, registrant, item and check digit. The registrant's length comes from its first digit, as the ISMN Users' Manual sets out: 000 to 099, 1000 to 3999, 40000 to 69999, 700000 to 899999, then 9000000 to 9999999.",
+    "text": "बार के ऊपर लिखा ISMN प्रीफ़िक्स, रजिस्ट्रेंट, आइटम और चेक डिजिट में बँटा होता है। रजिस्ट्रेंट की लंबाई उसके पहले अंक से तय होती है, जैसा ISMN Users' Manual में बताया गया है: 000 से 099, 1000 से 3999, 40000 से 69999, 700000 से 899999, फिर 9000000 से 9999999।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.1"
+  },
+  "78cca6abd0a8": {
+    "source": "An ISMN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISMN बारकोड एक EAN-13 है, इसलिए EAN-13 के साइज़ लागू होते हैं: 100% पर क्वाइट ज़ोन के साथ 37.29 mm चौड़ा, 0.33 mm मॉड्यूल के साथ, और GS1 80% से 200% तक की अनुमति देता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.0"
+  },
+  "44f3668734ec": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "वेक्टर डाउनलोड में 0.353 mm का मॉड्यूल इस्तेमाल होता है, यानी लगभग 107%। साइज़ बदलते समय अनुपात बनाए रखें और बार की ऊँचाई न काटें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.1"
+  },
+  "c3d3d98f6c6f": {
+    "source": "Can I use an old ISMN starting with M?",
+    "text": "क्या मैं M से शुरू होने वाला पुराना ISMN इस्तेमाल कर सकता हूँ?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.question"
+  },
+  "96dbf79e7003": {
+    "source": "Yes. Type it and the generator converts it: M-2306-7118-7 becomes 979-0-2306-7118-7, with the same check digit. ISMNs have been 13 digits since 2008.",
+    "text": "हाँ। उसे डालें और जनरेटर उसे बदल देगा: M-2306-7118-7 बन जाता है 979-0-2306-7118-7, उसी चेक डिजिट के साथ। ISMN 2008 से 13 अंकों के हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.answer"
+  },
+  "d3b707d21e7c": {
+    "source": "ISMN or ISBN for a songbook?",
+    "text": "सॉन्गबुक के लिए ISMN या ISBN?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.question"
+  },
+  "986280e8e50f": {
+    "source": "It can have both, and the ISMN Users' Manual leaves the choice to the publisher when only one is used. Books about music, with no notated music as their content, take an ISBN.",
+    "text": "उसमें दोनों हो सकते हैं, और जब सिर्फ़ एक का इस्तेमाल हो तो ISMN Users' Manual चुनाव प्रकाशक पर छोड़ता है। संगीत के बारे में किताबें, जिनकी सामग्री नोटेटेड म्यूज़िक नहीं है, ISBN लेती हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.answer"
+  },
+  "af6b85c2a74a": {
+    "source": "Can I add a price add-on?",
+    "text": "क्या मैं प्राइस ऐड-ऑन जोड़ सकता हूँ?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.question"
+  },
+  "e685660fa860": {
+    "source": "Yes, 2 or 5 digits, in the add-on field. The ISMN Users' Manual doesn't ask for one, so add it only if your distributor does.",
+    "text": "हाँ, 2 या 5 अंकों का, ऐड-ऑन फ़ील्ड में। ISMN Users' Manual इसकी माँग नहीं करता, इसलिए इसे तभी जोड़ें जब आपका डिस्ट्रीब्यूटर कहे।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.answer"
+  },
+  "e71d1a8889ec": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 या Aztec। वैल्यू (चेक डिजिट, लंबाई, अक्षर) की जाँच करता है और एक PNG के साथ पब्लिक SVG, PNG, PDF और दूसरे इमेज URL लौटाता है।",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

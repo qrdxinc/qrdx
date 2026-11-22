@@ -1303,7 +1303,7 @@
   },
   "7fe0c71abc28": {
     "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
-    "text": "コードをPNG、SVG、WebP、GIF、BMP、ICO形式でダウンロードします。",
+    "text": "コードをPNG、SVG、WebP、GIF、BMP、ICOのいずれかの形式でダウンロードします。",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2311,7 +2311,7 @@
   },
   "d046bc78405e": {
     "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
-    "text": "PNG、SVG、WebP、GIF、BMP、ICOでダウンロードするか、フルエディタでコードをデザインできます。",
+    "text": "PNG、SVG、WebP、GIF、BMP、ICOのいずれかをダウンロードするか、フルエディターでコードのスタイルを整えます。",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -32350,5 +32350,461 @@
     "text": "Pix、SEPA送金、PayNow、PromptPay、VietQRの決済コードです。Playgroundのフォームと同じ基準で検証されます。",
     "status": "machine",
     "context": "mcp.tools.14.description"
+  },
+  "291d41cbf4b9": {
+    "source": "Books, with the ISBN printed above the bars",
+    "text": "書籍用。バーの上にISBNを印字します",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.summary"
+  },
+  "54344ae77017": {
+    "source": "An ISBN-13 (leave its check digit off and it's added), or a whole ISBN-10 to convert, with or without hyphens. The hyphens are placed for you.",
+    "text": "ISBN-13(チェックディジットを省くと自動で追加されます)、または変換するISBN-10全体を入力してください。ハイフンの有無は問いません。ハイフンは自動で挿入されます。",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.inputHint"
+  },
+  "a2e6713f08d5": {
+    "source": "Optional. In the US and Canada, 5 digits for the price: 5 and the US$ price (52499 is $24.99), or 90000 for none.",
+    "text": "任意。米国とカナダでは価格を表す5桁を入力します。5と米ドルの価格(52499なら24.99ドル)、価格なしの場合は90000です。",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.addOn.hint"
+  },
+  "e9e1f300825c": {
+    "source": "Magazines, journals and newspapers, with an issue add-on",
+    "text": "雑誌、学術誌、新聞用。号を示すアドオン付き",
+    "status": "machine",
+    "context": "barcodes.formats.issn.summary"
+  },
+  "966fa72ffe19": {
+    "source": "The 8-character ISSN (NNNN-NNNC), or its first 7 digits and the check digit is added. A 13-digit 977 number works too.",
+    "text": "8文字のISSN(NNNN-NNNC)、または先頭7桁を入力するとチェックディジットが追加されます。977で始まる13桁の番号も使えます。",
+    "status": "machine",
+    "context": "barcodes.formats.issn.inputHint"
+  },
+  "9843a124a0e4": {
+    "source": "Optional: usually the issue number in 2 digits, or 5 digits.",
+    "text": "任意。通常は2桁の号数、または5桁を入力します。",
+    "status": "machine",
+    "context": "barcodes.formats.issn.addOn.hint"
+  },
+  "1ee9182bc1fb": {
+    "source": "Printed music: scores, parts and songbooks",
+    "text": "楽譜用:スコア、パート譜、歌集",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.summary"
+  },
+  "b4688bb37eca": {
+    "source": "An ISMN of 13 digits starting 979-0, or the old 10-character form starting with M, with or without hyphens. Leave the check digit off and it's added.",
+    "text": "979-0で始まる13桁のISMN、またはMで始まる旧形式の10文字の番号を、ハイフンの有無を問わず入力できます。チェックディジットを省くと自動で追加されます。",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.inputHint"
+  },
+  "7057f3f09102": {
+    "source": "Optional: 2 or 5 digits, if a distributor asks for one.",
+    "text": "任意。流通業者から求められた場合は、2桁または5桁を入力します。",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.addOn.hint"
+  },
+  "8c6f1a2db028": {
+    "source": "The barcode on retail products almost everywhere outside North America. It holds a 13-digit GTIN: a company prefix from GS1, an item number and a check digit. Books, magazines and printed music use it too; their types below print the ISBN, ISSN or ISMN above the bars.",
+    "text": "北米以外のほとんどの国で、小売商品に使われているバーコードです。13桁のGTINを表し、GS1が付与する事業者コード、商品番号、チェックディジットで構成されます。書籍、雑誌、楽譜でも使われ、下記の各タイプではバーの上にISBN、ISSN、ISMNが印字されます。",
+    "status": "machine",
+    "context": "barcodes.uses.ean13"
+  },
+  "e27297574e0f": {
+    "source": "Books. The ISBN-13 is drawn as an EAN-13 starting 978 or 979, with the hyphenated ISBN printed above the bars. ISBN-10s are converted, and a 5-digit price add-on can go beside it for the US and Canadian book trade.",
+    "text": "書籍用です。ISBN-13は978または979で始まるEAN-13として描画され、バーの上にハイフン付きのISBNが印字されます。ISBN-10は変換され、米国とカナダの書籍流通向けに5桁の価格アドオンを横に付けることもできます。",
+    "status": "machine",
+    "context": "barcodes.uses.isbn"
+  },
+  "79c76e0d75e5": {
+    "source": "Magazines, journals and newspapers. The ISSN goes into an EAN-13 starting 977 with 2 digits for price or edition changes, and a 2-digit add-on usually carries the issue number.",
+    "text": "雑誌、学術誌、新聞用です。ISSNは977で始まるEAN-13に収められ、価格や版の変更を示す2桁が付きます。2桁のアドオンには通常、号数が入ります。",
+    "status": "machine",
+    "context": "barcodes.uses.issn"
+  },
+  "cc84a096325d": {
+    "source": "Printed music: scores, parts and songbooks. The ISMN is drawn as an EAN-13 starting 979-0 with the ISMN printed above it, and old numbers starting with M are converted.",
+    "text": "楽譜用:スコア、パート譜、歌集。ISMNは979-0で始まるEAN-13として描画され、その上にISMNが印字されます。Mで始まる旧番号は変換されます。",
+    "status": "machine",
+    "context": "barcodes.uses.ismn"
+  },
+  "2182d8e7b974": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "店舗で販売する商品なら、必要です。EAN、UPC、ITF-14、GS1-128はGTINを表し、GTINはGS1(またはお住まいの国のGS1の組織)から事業者に付与されます。独自に作った番号は小売店のシステムで認識されません。書籍、逐次刊行物、楽譜は、代わりに各国の機関が発行するISBN、ISSN、ISMNを使います。このジェネレーターは有効な番号であれば描画できますが、番号の発行や登録は行いません。自社の在庫、資産、チケットなどには、Code 128、Code 39、Code 93を登録なしで使えます。",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "44ff97b6fe1e": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN and the GTIN and SSCC fields of GS1-128: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "はい。EAN-13、EAN-8、UPC-A、UPC-E、ITF-14、ISBN、ISSN、ISMN、およびGS1-128のGTINとSSCCの各フィールドが対象です。最後の1桁を省くと自動で計算されます。番号をすべて入力した場合はチェックディジットが検証され、誤りがあるとバーコードではなくエラーが表示されます。",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "ecc099e5186f": {
+    "source": "Yes, with the ISBN barcode type: it's an EAN-13 of the ISBN-13 with the hyphenated ISBN printed above the bars, and it takes an ISBN-10 and a 5-digit price add-on too. ISSN (magazines) and ISMN (printed music) have their own types.",
+    "text": "はい、ISBNバーコードタイプをお使いください。ISBN-13のEAN-13で、バーの上にハイフン付きのISBNが印字されます。ISBN-10と5桁の価格アドオンにも対応しています。ISSN(雑誌)とISMN(楽譜)には専用のタイプがあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ean-13.faqs.2.answer"
+  },
+  "3835c42e60bf": {
+    "source": "Free ISBN Barcode Generator with Price Add-on",
+    "text": "価格アドオン対応の無料ISBNバーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.title"
+  },
+  "176aa5f9c65e": {
+    "source": "Make an ISBN barcode for a book cover: ISBN-13 or ISBN-10, check digit and hyphens worked out, and an optional price add-on. SVG, PDF and EPS. Free.",
+    "text": "書籍のカバー用ISBNバーコードを作成できます。ISBN-13とISBN-10に対応し、チェックディジットとハイフンは自動で処理され、価格アドオンも任意で付けられます。SVG、PDF、EPS形式。無料。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.metaDescription"
+  },
+  "da610243ac4c": {
+    "source": "An ISBN barcode is an EAN-13 of the book's 13-digit ISBN, with the ISBN printed above the bars. Type the ISBN, with or without hyphens, and the generator checks it, places the hyphens and draws the barcode, with a 5-digit price add-on if you sell in the US or Canada.",
+    "text": "ISBNバーコードは、書籍の13桁のISBNをEAN-13にしたもので、バーの上にISBNが印字されます。ハイフンの有無にかかわらずISBNを入力すると、ジェネレーターが内容を確認し、ハイフンを配置してバーコードを描画します。米国やカナダで販売する場合は、5桁の価格アドオンも付けられます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.intro"
+  },
+  "0b6b8b3c5b67": {
+    "source": "The back cover of books, where bookshops, distributors and libraries scan it to look the book up. The ISBN Users' Manual recommends the lower right of the back cover, near the spine.",
+    "text": "書籍の裏表紙です。書店、取次、図書館が書籍を検索するためにスキャンします。ISBN Users' Manualでは、裏表紙の右下、背に近い位置が推奨されています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.0"
+  },
+  "a1da95764261": {
+    "source": "Each edition and format of a book has its own ISBN, so a hardback, a paperback and an audiobook each carry a different barcode. ISBNs start with 978 or 979; numbers starting 979-0 are ISMNs, for printed music.",
+    "text": "書籍は版や形式ごとに固有のISBNが付くため、ハードカバー、ペーパーバック、オーディオブックはそれぞれ異なるバーコードになります。ISBNは978または979で始まります。979-0で始まる番号は、楽譜用のISMNです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.1"
+  },
+  "3e73fd5280af": {
+    "source": "Where do ISBNs come from?",
+    "text": "ISBNはどこで取得できますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.title"
+  },
+  "e439e1b8c34c": {
+    "source": "From the ISBN agency of the country where the publisher is based. Some agencies charge for ISBNs and some give them out free; the International ISBN Agency lists them all.",
+    "text": "出版社が所在する国のISBN機関から取得します。ISBNを有料で発行する機関もあれば、無料で配布する機関もあります。International ISBN Agencyにすべての機関の一覧があります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.0"
+  },
+  "69d6787067ee": {
+    "source": "This generator draws the barcode of an ISBN you already have. It doesn't issue or register ISBNs.",
+    "text": "このジェネレーターは、すでにお持ちのISBNのバーコードを描画するものです。ISBNの発行や登録は行いません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.1"
+  },
+  "2c37843cb158": {
+    "source": "Type an ISBN-13 or an ISBN-10, with or without hyphens or spaces. Twelve digits get the check digit added and thirteen have it checked. A whole ISBN-10, check digit included, is converted to its ISBN-13: 978 in front of its first nine digits and a new check digit.",
+    "text": "ISBN-13またはISBN-10を、ハイフンやスペースの有無を問わず入力してください。12桁の場合はチェックディジットを追加し、13桁の場合はチェックディジットを検証します。チェックディジットを含むISBN-10全体を入力すると、ISBN-13に変換されます。先頭9桁の前に978を付け、新しいチェックディジットを計算します。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.0"
+  },
+  "c521fc56dc83": {
+    "source": "The ISBN above the bars is split into its five parts (prefix, registration group, registrant, publication and check digit) by the ranges the International ISBN Agency publishes, because the parts' lengths differ from one country and publisher to the next.",
+    "text": "バーの上のISBNは、International ISBN Agencyが公開している範囲表に基づき、5つの部分(接頭辞、登録グループ、出版者、出版物、チェックディジット)に区切られます。各部分の長さは国や出版社によって異なるためです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.1"
+  },
+  "e9a28cedaf04": {
+    "source": "The check digit is the EAN-13 one: the first 12 digits are weighted 1, 3, 1, 3… and the check digit brings their sum to a multiple of 10.",
+    "text": "チェックディジットはEAN-13と同じ方式です。先頭の12桁に1、3、1、3…の重みを掛け、その合計が10の倍数になるようにチェックディジットを決めます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.2"
+  },
+  "8d1f674af2a1": {
+    "source": "The add-on goes in its own field. In the US and Canada it's 5 digits: the first is the currency (5 for US dollars, 6 for Canadian dollars) and the rest the price, so 52499 is US$24.99, and 90000 means no price. Elsewhere the ISBN Users' Manual keeps 90000 to 98999 for publishers' own use.",
+    "text": "アドオンは専用の入力欄に入力します。米国とカナダでは5桁で、1桁目が通貨(5は米ドル、6はカナダドル)、残りが価格を表します。たとえば52499はUS$24.99で、90000は価格なしを意味します。それ以外の地域では、ISBN Users' Manualにより90000から98999までが出版社の独自用途に確保されています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.3"
+  },
+  "e4dc52a1d225": {
+    "source": "An ISBN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISBNバーコードはEAN-13なので、EAN-13のサイズがそのまま当てはまります。モジュール幅0.33 mmの100%で、クワイエットゾーンを含めて幅37.29 mmです。GS1では80%から200%までが認められています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.0"
+  },
+  "8b96afae7ca3": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%, and put the add-on 9 modules right of the main bars, within the 7 to 12 GS1 allows. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "ベクター形式のダウンロードでは、モジュール幅0.353 mm(約107%)を使用し、アドオンはメインバーの右に9モジュール空けて配置します。これはGS1が認める7から12の範囲内です。拡大縮小するときは縦横比を保ち、バーの高さを削らないでください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.1"
+  },
+  "c705fd825b60": {
+    "source": "Keep cover artwork out of the quiet zones and away from the ISBN line above the bars.",
+    "text": "カバーのアートワークは、クワイエットゾーンやバーの上のISBN行にかからないようにしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.2"
+  },
+  "196d06fdae79": {
+    "source": "Can I use my old ISBN-10?",
+    "text": "古いISBN-10は使えますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.question"
+  },
+  "fd750967eae9": {
+    "source": "Yes. Type it and the generator converts it to the ISBN-13 that goes in the barcode: 978, its first nine digits and a new check digit. ISBN agencies have only given out 13-digit ISBNs since 1 January 2007.",
+    "text": "はい。入力すると、ジェネレーターがバーコードに使うISBN-13に変換します。978に先頭9桁を続け、新しいチェックディジットを付けます。ISBN機関は2007年1月1日以降、13桁のISBNのみを発行しています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.answer"
+  },
+  "6c5182bf9e13": {
+    "source": "Do I need the 5-digit price add-on?",
+    "text": "5桁の価格アドオンは必要ですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.question"
+  },
+  "a9c462c78717": {
+    "source": "Only if you sell through the US or Canadian book trade, which uses it for the cover price. Use 90000 if you don't want a price in the barcode. Outside North America, leave it off.",
+    "text": "米国またはカナダの書籍流通で販売する場合のみ必要です。この地域ではアドオンを定価の表示に使います。バーコードに価格を入れたくない場合は90000を使ってください。北米以外では付けないでください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.answer"
+  },
+  "38a719101040": {
+    "source": "Is an ISBN barcode just an EAN-13?",
+    "text": "ISBNバーコードはEAN-13と同じものですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.question"
+  },
+  "cd2e286d9bfd": {
+    "source": "The bars are an EAN-13 of the ISBN-13, and checkout scanners read it as one. An ISBN barcode also prints the hyphenated ISBN above the bars, as the ISBN Users' Manual asks, which the EAN-13 generator doesn't.",
+    "text": "バーはISBN-13のEAN-13で、レジのスキャナーもEAN-13として読み取ります。ISBNバーコードでは、ISBN Users' Manualの指定どおり、バーの上にハイフン付きのISBNも印字されます。EAN-13ジェネレーターにはこの機能はありません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.answer"
+  },
+  "e8ce71038550": {
+    "source": "Why are the hyphens different from the ones I typed?",
+    "text": "入力したハイフンと位置が違うのはなぜですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.question"
+  },
+  "4fec2a0ce9cf": {
+    "source": "Each part of an ISBN has a length set by the International ISBN Agency's ranges, and the generator places the hyphens from them. If your ISBN is in a range newer than the generator's copy, type it with its hyphens and they're printed as you wrote them.",
+    "text": "ISBNの各部分の長さは、International ISBN Agencyの範囲表で決まっており、ジェネレーターはそれに基づいてハイフンを配置します。お持ちのISBNがジェネレーターの持つデータより新しい範囲に属する場合は、ハイフン付きで入力すると、入力したとおりに印字されます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.answer"
+  },
+  "f188d75a04c1": {
+    "source": "Free ISSN Barcode Generator for Magazines",
+    "text": "雑誌向け無料ISSNバーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.title"
+  },
+  "1f64921e91f2": {
+    "source": "Make an ISSN barcode for a magazine or journal: the 977 EAN-13 with its sequence variant and an issue add-on, check digits worked out. SVG, PDF, EPS. Free.",
+    "text": "雑誌や学術誌のISSNバーコードを作成できます。977から始まるEAN-13にシーケンスバリアントと号数のアドオンを付け、チェックデジットも自動計算します。SVG、PDF、EPSに対応。無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.metaDescription"
+  },
+  "bfca3d83074b": {
+    "source": "An ISSN barcode puts the ISSN of a magazine, journal or newspaper into an EAN-13 starting 977, usually with a 2-digit add-on for the issue number. Type the ISSN and the issue, and the generator works out both check digits and draws the barcode with the ISSN above it.",
+    "text": "ISSNバーコードは、雑誌、学術誌、新聞のISSNを977から始まるEAN-13に収めたもので、通常は号数を表す2桁のアドオンが付きます。ISSNと号数を入力すると、2つのチェックデジットを自動計算し、上にISSNを添えたバーコードを描画します。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.intro"
+  },
+  "c97f6be9f476": {
+    "source": "Covers of magazines, journals, newspapers and other serials sold in shops. Retailers and wholesalers scan the main barcode to find the title, and the add-on tells one issue from the next.",
+    "text": "店頭で販売される雑誌、学術誌、新聞などの継続刊行物のカバーに使われます。小売店や卸売業者はメインのバーコードをスキャンして刊行物を特定し、アドオンで号の違いを見分けます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.0"
+  },
+  "b78d01fd74c8": {
+    "source": "A title published both in print and online has a different ISSN for each; the barcode goes on the print edition.",
+    "text": "印刷版とオンライン版の両方で発行されるタイトルには、それぞれ別のISSNが付きます。バーコードは印刷版に付けます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.1"
+  },
+  "2a6774d25d70": {
+    "source": "Where do ISSNs come from?",
+    "text": "ISSNはどこで取得できますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.title"
+  },
+  "21ee727a32d4": {
+    "source": "From the national ISSN centre of the publisher's country, or the ISSN International Centre where there's none. Publishers don't make up ISSNs themselves.",
+    "text": "発行者の所在国にあるISSN国内センターから取得します。該当するセンターがない場合は、ISSN国際センターが担当します。発行者が自分でISSNを決めることはできません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.0"
+  },
+  "b88925ce2ed3": {
+    "source": "This generator draws the barcode of an ISSN you already have; it doesn't issue or register ISSNs. Distributors may have their own rules for the variant and add-on digits, so check with yours.",
+    "text": "このジェネレーターは、すでにお持ちのISSNのバーコードを描画するものです。ISSNの発行や登録は行いません。バリアントやアドオンの桁については、取次会社ごとに独自の規則がある場合があるため、ご利用の取次会社にご確認ください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.1"
+  },
+  "3cd9c9d76ec9": {
+    "source": "Type the 8-character ISSN, NNNN-NNNC, or its first 7 digits to have the check digit added. An ISSN's check digit is weighted 8 down to 2, modulo 11, so it can be X.",
+    "text": "8文字のISSN（NNNN-NNNC）または先頭7桁を入力してください。先頭7桁の場合はチェックデジットが追加されます。ISSNのチェックデジットは8から2までの重みを掛けて11で割った余りで求めるため、Xになることがあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.0"
+  },
+  "e18df648537b": {
+    "source": "The barcode holds 977, the ISSN's first 7 digits (its check digit is left out), the 2-digit sequence variant and an EAN-13 check digit. The variant is 00 unless you change it: publishers use it for extra information such as a change of price.",
+    "text": "バーコードには、977、ISSNの先頭7桁（チェックデジットは除く）、2桁のシーケンスバリアント、EAN-13のチェックデジットが入ります。バリアントは変更しない限り00です。発行者は価格変更などの追加情報を示すためにバリアントを使います。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.1"
+  },
+  "217b7f21d84b": {
+    "source": "The add-on is usually the issue number in 2 digits; 5 digits work too. You can also type the 13-digit 977 number from an existing barcode, and the ISSN and variant are read from it.",
+    "text": "アドオンは通常、2桁の号数です。5桁も使えます。既存のバーコードの977から始まる13桁の番号を入力することもでき、その場合はISSNとバリアントが読み取られます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.2"
+  },
+  "81617eedd878": {
+    "source": "An ISSN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISSNバーコードはEAN-13なので、EAN-13のサイズが適用されます。倍率100%でクワイエットゾーンを含めた幅は37.29 mm、モジュールは0.33 mmで、GS1では80%から200%まで認められています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.sizing.0"
+  },
+  "029b41d87aed": {
+    "source": "What should the 2-digit add-on be?",
+    "text": "2桁のアドオンには何を入れますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.question"
+  },
+  "a6d582e1f7e1": {
+    "source": "Usually the issue number, counted the way your distributor asks: a weekly title and a monthly title number their issues differently. A new issue only needs a new add-on, not a new ISSN.",
+    "text": "通常は号数を入れます。数え方は取次会社の指定に従ってください。週刊誌と月刊誌では号数の付け方が異なります。新しい号に必要なのは新しいアドオンだけで、新しいISSNは必要ありません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.answer"
+  },
+  "8bf75513f21a": {
+    "source": "When do I change the sequence variant?",
+    "text": "シーケンスバリアントはいつ変更しますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.question"
+  },
+  "d47879b0459f": {
+    "source": "When an issue needs a different main barcode, for example for a different cover price. Most titles keep 00.",
+    "text": "表紙価格が異なる場合など、号ごとに別のメインバーコードが必要なときです。ほとんどのタイトルは00のままです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.answer"
+  },
+  "05f5e8f2dfc8": {
+    "source": "Is an ISSN barcode an EAN-13?",
+    "text": "ISSNバーコードはEAN-13ですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.question"
+  },
+  "14b5a2d47c79": {
+    "source": "Yes, one starting 977, and checkout scanners read it as one. The add-on is a small separate barcode to its right; scanners set up to read add-ons report it after the 13 digits.",
+    "text": "はい、977から始まるEAN-13で、レジのスキャナーもEAN-13として読み取ります。アドオンは右側にある小さな別のバーコードです。アドオンの読み取りに対応したスキャナーは、13桁の後にアドオンを報告します。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.answer"
+  },
+  "8258c7e9de6f": {
+    "source": "Free ISMN Barcode Generator for Printed Music",
+    "text": "楽譜向け無料ISMNバーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.title"
+  },
+  "ab1e3a860c80": {
+    "source": "Make an ISMN barcode for sheet music and scores: 979-0 ISMNs or old M- numbers, check digit and hyphens worked out. SVG, PDF and EPS for print. Free.",
+    "text": "楽譜やスコア用のISMNバーコードを作成できます。979-0のISMNにも旧M-番号にも対応し、チェックディジットとハイフンは自動で算出します。印刷用にSVG、PDF、EPSで出力でき、無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.metaDescription"
+  },
+  "8360e12af0d1": {
+    "source": "An ISMN identifies a publication of notated music, such as a score, a set of parts or a songbook, and is printed as an EAN-13 starting 979-0 with the ISMN above the bars. Type the ISMN, or an old number starting with M, and download the barcode for your cover.",
+    "text": "ISMNは、スコア、パート譜、歌集など、楽譜として記譜された音楽出版物を識別する番号です。979-0で始まるEAN-13として印刷され、バーの上にISMNが表示されます。ISMN、またはMで始まる旧番号を入力すると、表紙用のバーコードをダウンロードできます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.intro"
+  },
+  "b7522c7e8483": {
+    "source": "Printed and digital sheet music: scores, parts, songbooks and other notated music, scanned by music shops, distributors and libraries. Each part sold on its own has its own ISMN.",
+    "text": "印刷版・デジタル版の楽譜(スコア、パート譜、歌集などの記譜された音楽)で使われ、楽器店、取次、図書館でスキャンされます。単独で販売するパート譜には、それぞれ固有のISMNが付きます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.0"
+  },
+  "befd5a2d10e8": {
+    "source": "Books about music get an ISBN instead, and sound recordings have identifiers of their own. A songbook can have both an ISMN and an ISBN.",
+    "text": "音楽に関する書籍にはISMNではなくISBNが付き、録音物には別の識別子があります。歌集にはISMNとISBNの両方が付く場合もあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.1"
+  },
+  "a8a30623f353": {
+    "source": "Where do ISMNs come from?",
+    "text": "ISMNはどこで取得しますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.title"
+  },
+  "775f3d68ead8": {
+    "source": "From the ISMN agency of the publisher's country, appointed by the International ISMN Agency. A publisher gets a registrant number and usually numbers its publications from it.",
+    "text": "出版社の国のISMN機関から取得します。この機関は国際ISMN機関が指定しています。出版社には登録者番号が割り当てられ、通常はその番号をもとに出版物へ番号を振ります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.0"
+  },
+  "30668fbec2bc": {
+    "source": "This generator draws the barcode of an ISMN you already have. It doesn't issue or register ISMNs.",
+    "text": "このジェネレーターは、すでにお持ちのISMNのバーコードを描画します。ISMNの発行や登録は行いません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.1"
+  },
+  "8f30796bbe15": {
+    "source": "Type the 13 digits starting 979-0, with or without hyphens, or 12 to have the check digit added. An old 10-character ISMN starting with M is converted: the M becomes 979-0 and the check digit stays the same.",
+    "text": "979-0で始まる13桁の数字(ハイフンの有無は問いません)、またはチェックディジットを付加する場合は12桁を入力してください。Mで始まる旧形式の10文字のISMNは変換されます。Mは979-0になり、チェックディジットは変わりません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.0"
+  },
+  "168c909528f2": {
+    "source": "The ISMN above the bars is split into prefix, registrant, item and check digit. The registrant's length comes from its first digit, as the ISMN Users' Manual sets out: 000 to 099, 1000 to 3999, 40000 to 69999, 700000 to 899999, then 9000000 to 9999999.",
+    "text": "バーの上のISMNは、プレフィックス、登録者、アイテム、チェックディジットに区切られます。登録者番号の長さは、ISMN Users' Manualの定めに従って最初の数字で決まります。000から099、1000から3999、40000から69999、700000から899999、そして9000000から9999999です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.1"
+  },
+  "78cca6abd0a8": {
+    "source": "An ISMN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISMNバーコードはEAN-13なので、EAN-13のサイズが適用されます。倍率100%、モジュール幅0.33 mmのとき、クワイエットゾーンを含めた幅は37.29 mmで、GS1では80%から200%までが認められています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.0"
+  },
+  "44f3668734ec": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "ベクター形式のダウンロードでは、モジュール幅0.353 mm(約107%)を使用しています。拡大縮小するときは縦横比を保ち、バーの高さを削らないでください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.1"
+  },
+  "c3d3d98f6c6f": {
+    "source": "Can I use an old ISMN starting with M?",
+    "text": "Mで始まる旧ISMNは使えますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.question"
+  },
+  "96dbf79e7003": {
+    "source": "Yes. Type it and the generator converts it: M-2306-7118-7 becomes 979-0-2306-7118-7, with the same check digit. ISMNs have been 13 digits since 2008.",
+    "text": "はい。入力するとジェネレーターが変換します。M-2306-7118-7は979-0-2306-7118-7になり、チェックディジットは同じです。ISMNは2008年から13桁になっています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.answer"
+  },
+  "d3b707d21e7c": {
+    "source": "ISMN or ISBN for a songbook?",
+    "text": "歌集にはISMNとISBNのどちらですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.question"
+  },
+  "986280e8e50f": {
+    "source": "It can have both, and the ISMN Users' Manual leaves the choice to the publisher when only one is used. Books about music, with no notated music as their content, take an ISBN.",
+    "text": "両方付けることもできます。どちらか一方だけを使う場合は、ISMN Users' Manualにより出版社が選べます。記譜された音楽を内容としない音楽関連書籍には、ISBNを付けます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.answer"
+  },
+  "af6b85c2a74a": {
+    "source": "Can I add a price add-on?",
+    "text": "価格のアドオンは追加できますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.question"
+  },
+  "e685660fa860": {
+    "source": "Yes, 2 or 5 digits, in the add-on field. The ISMN Users' Manual doesn't ask for one, so add it only if your distributor does.",
+    "text": "はい。アドオン欄に2桁または5桁を入力してください。ISMN Users' Manualでは求められていないため、取次から指定された場合のみ追加してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.answer"
+  },
+  "e71d1a8889ec": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417、Aztecに対応しています。値（チェックデジット、桁数、使用文字）を検証し、PNGに加えて、SVG、PNG、PDFなどの公開画像URLを返します。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }
