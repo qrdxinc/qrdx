@@ -83,6 +83,8 @@ import {
   emailPayloadSchema,
   geoPayloadSchema,
   paymentPayloadSchema,
+  buildMecardPayload,
+  mecardPayloadSchema,
   smsPayloadSchema,
   vcardPayloadSchema,
   wifiPayloadSchema,
@@ -794,6 +796,24 @@ export function registerQrTools(server: McpServer) {
       annotations: { ...readOnly, title: "Contact (vCard) QR payload" },
     },
     (input) => ({ content: [text(buildVcardPayload(input))] }),
+  );
+
+  // Added 2026-11-22 (payments)
+  server.registerTool(
+    "qr_payload_mecard",
+    {
+      title: "Contact (MeCard) QR payload",
+      description:
+        "Build a MeCard contact payload (MECARD:N:last,first;TEL:...;;), the compact alternative to a vCard: fewer characters, so a smaller code. Android phones read it; Apple doesn't document it for the iPhone Camera, so prefer qr_payload_vcard when the contact must reach every phone. Pass the result as `data` to generate_qr_code.",
+      inputSchema: mecardPayloadSchema,
+      annotations: { ...readOnly, title: "Contact (MeCard) QR payload" },
+    },
+    (input) => {
+      const built = buildMecardPayload(input);
+      return built.ok
+        ? { content: [text(built.value)] }
+        : { isError: true, content: [text(built.message)] };
+    },
   );
 
   server.registerTool(

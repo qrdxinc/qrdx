@@ -2682,6 +2682,55 @@ export const QR_TYPES: QrTypeContent[] = [
       ],
     },
   },
+  // ─── Added 2026-11-22 (payments) ──────────────────────────────────────────
+  {
+    type: "mecard",
+    name: "MeCard",
+    group: "contact",
+    summary: "Share a contact in a smaller code than a vCard.",
+    metaDescription:
+      "Make a MeCard QR code: name, phone, email, website, address, birthday and a note in the compact MECARD format, so the code stays small. Free.",
+    intro: [
+      "A MeCard QR code holds a contact in one short line of text: your name, phone number, email, website, address, birthday and a note. Phones that read it offer to save the contact, the same way a vCard code works.",
+      "The format comes from NTT Docomo and needs fewer characters than a vCard for the same details, so the code has fewer, larger modules and scans from further away. Android phones read it; Apple doesn't document MeCard for the iPhone Camera, so test with an iPhone, or use a vCard when the contact has to reach everyone.",
+    ],
+    steps: [
+      "Enter your first name, and your last name if you want it saved.",
+      "Add the details people need: a phone number, an email, a website or an address.",
+      "Scan the preview with an Android phone and an iPhone to see that both offer to save it.",
+      "Download the code for a badge, a card or a flyer.",
+    ],
+    payload: {
+      format:
+        "MECARD:N:<last>,<first>;TEL:<phone>;EMAIL:<email>;BDAY:<YYYYMMDD>;ADR:<address>;URL:<website>;NOTE:<note>;;",
+      example:
+        "MECARD:N:Sample,Sam;TEL:+12025550142;EMAIL:sam@example.com;URL:https\\://example.com;;",
+      notes: [
+        "Each field is NAME:value and ends with a semicolon; the record ends with two.",
+        "The name is written last name, a comma, then first name.",
+        "The characters \\ ; : and , inside a value are escaped with a backslash, as the format asks, so a web address is written https\\://.",
+        "The birthday is 8 digits: year, month and day. SOUND holds how the name is read (kana for a Japanese name) and NICKNAME a familiar name.",
+      ],
+    },
+    faqs: [
+      {
+        question: "MeCard or vCard?",
+        answer:
+          "A vCard can hold more (a company, a job title, several numbers) and is the format every phone documents. A MeCard holds the basics in fewer characters, so the code is smaller. Use MeCard when the code has to be small and most people scanning it use Android.",
+      },
+      {
+        question: "Does the iPhone camera read MeCard codes?",
+        answer:
+          "Apple doesn't document which contact formats the Camera app reads. Scan the preview with an iPhone before you print, and switch to a vCard if it shows the text instead of offering to save the contact.",
+      },
+      {
+        question: "Is my contact sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the details you type are remembered only in this browser.",
+      },
+    ],
+    related: ["vcard", "phone", "email", "sms"],
+  },
 ];
 
 export const QR_TYPE_SLUGS: ContentType[] = QR_TYPES.map((t) => t.type);

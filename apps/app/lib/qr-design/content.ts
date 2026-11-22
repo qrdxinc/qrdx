@@ -26,6 +26,7 @@ import {
   instagramSchema,
   lineSchema,
   linkedinSchema,
+  mecardSchema,
   litecoinSchema,
   mapsSchema,
   mastodonSchema,
@@ -128,6 +129,8 @@ export const CONTENT_FORM_SCHEMAS = {
   bitcoincash: bitcoincashSchema,
   solana: solanaSchema,
   monero: moneroSchema,
+  // Added 2026-11-22 (payments)
+  mecard: mecardSchema,
 } satisfies Record<ContentType, z.ZodType>;
 
 export const CONTENT_TYPE_IDS = Object.keys(CONTENT_FORM_SCHEMAS) as [
@@ -243,7 +246,7 @@ const BOOLEAN_FIELD_NAMES = new Set(
 );
 
 const FIELD_DESCRIPTIONS: Record<string, string> = {
-  url: "Web address (url, google-drive); website (vcard)",
+  url: "Web address (url, google-drive); website (vcard, mecard)",
   text: "Plain text",
   recipient: "Email address (comma-separate several)",
   subject: "Email subject",
@@ -263,13 +266,16 @@ const FIELD_DESCRIPTIONS: Record<string, string> = {
   identity: "Enterprise Wi-Fi identity (username) (wifi, WPA2-EAP)",
   anonymousIdentity:
     "Enterprise Wi-Fi anonymous outer identity, optional (wifi, WPA2-EAP)",
+  reading: "How the name is read, e.g. in kana (mecard SOUND)",
+  nickname: "Nickname (mecard)",
+  birthday: "Birthday, YYYY-MM-DD (mecard)",
   firstName: "Contact first name",
   lastName: "Contact last name",
   organization: "Contact company",
   phone: "Contact phone",
   email: "Contact email",
   address: "Contact street address, or a crypto wallet address",
-  note: "Note (vcard, upi, venmo)",
+  note: "Note (vcard, mecard, upi, venmo)",
   // Added 2026-11-11
   pixKey: "Pix key: CPF, CNPJ, +55 phone, email or random key",
   city: "Receiver city (pix), up to 15 characters",
@@ -407,6 +413,7 @@ export function describeContent(content: QRContentConfig): string {
       case "wifi":
         return content.ssid;
       case "vcard":
+      case "mecard":
         return [content.firstName, content.lastName].filter(Boolean).join(" ");
       case "url":
         return content.url;

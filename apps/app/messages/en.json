@@ -2000,7 +2000,10 @@
       "phase2": "Phase 2",
       "identity": "Identity",
       "anonymousIdentity": "Anonymous identity",
-      "wifiEnterpriseNote": "This is an enterprise network: phones join it with a username and password, not from this page. Open your Wi-Fi settings, choose “{ssid}” and enter these details. Copy the password from here."
+      "wifiEnterpriseNote": "This is an enterprise network: phones join it with a username and password, not from this page. Open your Wi-Fi settings, choose “{ssid}” and enter these details. Copy the password from here.",
+      "nameReading": "Name reading",
+      "nickname": "Nickname",
+      "birthday": "Birthday"
     },
     "link": {
       "verdicts": {
@@ -4764,8 +4767,27 @@
           "k1827q8t": "Label",
           "k1c3pxvv": "Recipient name",
           "ksjj37t": "Description",
-          "kb8wbld": "Solana address"
+          "kb8wbld": "Solana address",
+          "k16fb7ko": "First name",
+          "ks90y1x": "Alex",
+          "ke5j6io": "Last name",
+          "k1ao7o6p": "Morgan",
+          "k3clleu": "Name reading",
+          "k1yfbac9": "Optional",
+          "k18da13l": "How the name is pronounced, like kana for a Japanese name. Phones that support it sort contacts by it.",
+          "k1qv15nx": "Nickname",
+          "kkb2lhr": "Phone",
+          "kinbfc7": "Email",
+          "kdc7alm": "Website",
+          "k1hmz0i4": "Birthday",
+          "kv2y2ur": "Address",
+          "k1a6n5b3": "1 Main St, Springfield",
+          "k5mau71": "Note",
+          "k1ihvu1w": "Met at the spring fair"
         }
+      },
+      "contactForms": {
+        "meCardNote": "Android phones read MeCard contacts and offer to save them. Apple doesn't document MeCard for the iPhone Camera, so test on an iPhone, or use a vCard when the contact has to reach everyone."
       }
     },
     "contentTypeModal": {

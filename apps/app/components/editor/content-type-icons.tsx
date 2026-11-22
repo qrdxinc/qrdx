@@ -22,6 +22,7 @@ import {
   Sms,
   TaskSquare,
   Text,
+  UserSquare,
   WalletMoney,
   Wifi,
 } from "iconsax-reactjs";
@@ -65,6 +66,8 @@ const ICONS: Record<string, AnyIcon> = {
   Text,
   WalletMoney,
   Wifi,
+  // Added 2026-11-22 (payments)
+  UserSquare,
   ...Object.fromEntries(
     Object.entries(CONTENT_TYPE_BRANDS).map(([type, slug]) => [
       `brand:${type}`,

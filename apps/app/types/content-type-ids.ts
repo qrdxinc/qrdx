@@ -66,6 +66,8 @@ export const CONTENT_TYPE_IDS = [
   "bitcoincash",
   "solana",
   "monero",
+  // Added 2026-11-22 (payments)
+  "mecard",
 ] as const satisfies readonly ContentType[];
 
 type NeverListed<T extends never> = T;

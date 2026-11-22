@@ -34,6 +34,7 @@ import {
   LitecoinForm,
   MapsForm,
   MastodonForm,
+  MeCardForm,
   MoneroForm,
   PayNowForm,
   PayPalForm,
@@ -136,6 +137,8 @@ export const FORMS: Record<ContentType, React.ComponentType> = {
   bitcoincash: BitcoinCashForm,
   solana: SolanaForm,
   monero: MoneroForm,
+  // Added 2026-11-22 (payments)
+  mecard: MeCardForm,
 };
 
 const QUICK_STYLE_COUNT = 8;

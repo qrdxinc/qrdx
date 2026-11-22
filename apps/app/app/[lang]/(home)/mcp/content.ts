@@ -12,7 +12,6 @@ import {
   ColorSwatch,
   DocumentDownload,
   DocumentText,
-  type Icon,
   Location,
   MagicStar,
   MessageText,
@@ -24,7 +23,9 @@ import {
   Sms,
   TableDocument,
   TicketStar,
+  UserSquare,
   Wifi,
+  type Icon,
 } from "iconsax-reactjs";
 import type { CardIcon } from "@/components/sections/tools/cards";
 
@@ -157,6 +158,14 @@ export const MCP_TOOLS: {
     description:
       "A vCard 3.0 contact: name, organization, title, phones, email, website, address and note.",
     icon: Personalcard,
+  },
+  // Added 2026-11-22 (payments)
+  {
+    name: "qr_payload_mecard",
+    title: "Contact card (MeCard)",
+    description:
+      "A MeCard contact: the same basics as a vCard in fewer characters, so the code is smaller.",
+    icon: UserSquare,
   },
   {
     name: "qr_payload_email",

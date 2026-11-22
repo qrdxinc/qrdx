@@ -907,6 +907,17 @@ const CONTENT: Record<ContentType, ContentSpec> = {
     },
     preset: "classic",
   },
+  // ── Added 2026-11-22 (payments) ──
+  mecard: {
+    label: "MeCard",
+    config: {
+      type: "mecard",
+      firstName: "Sam",
+      lastName: "Sample",
+      email: "sam@example.com",
+    },
+    preset: "minimal",
+  },
 };
 
 /** Hosted pages, each opening its live demo on qrdx.dev. */

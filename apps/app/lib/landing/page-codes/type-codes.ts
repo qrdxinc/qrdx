@@ -5,6 +5,7 @@ import {
   demoAs,
   email,
   generatorAs,
+  mecard,
   phone,
   place,
   SAMPLE_PHONES,
@@ -1383,6 +1384,28 @@ const TYPE_TILES: Record<ContentType, TileSpec[]> = {
       framed("sticker", "XMR accepted"),
     ),
     tile("Invoice", monero.page("payment", "invoice"), "monochrome", null),
+  ],
+  // Added 2026-11-22 (payments)
+  mecard: [
+    tile(
+      "Name badge",
+      mecard("Sam", "Sample", "sam@example.com"),
+      "minimal",
+      framed("badge", "Save my contact"),
+    ),
+    tile(
+      "Business card",
+      mecard("Alex", "Example", "alex@example.com"),
+      "lavender",
+      official("save-contact"),
+    ),
+    tile(
+      "Sticker",
+      mecard("Riya", "Sample", "riya@example.com"),
+      "butter",
+      framed("sticker", "Add me"),
+    ),
+    tile("Flyer", mecard("Jo", "Example", "jo@example.com"), "slate", null),
   ],
 };
 

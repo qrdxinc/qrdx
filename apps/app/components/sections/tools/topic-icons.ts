@@ -115,6 +115,8 @@ export const QR_TYPE_ICONS: Record<ContentType, CardIcon> = {
   paynow: CardSend,
   promptpay: Mobile,
   vietqr: Bank,
+  // Added 2026-11-22 (payments)
+  mecard: UserSquare,
 };
 
 export const QR_TYPE_GROUP_ICONS: Record<QrTypeGroup, CardIcon> = {

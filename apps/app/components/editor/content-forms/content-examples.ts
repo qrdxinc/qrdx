@@ -154,6 +154,13 @@ export const CONTENT_EXAMPLES: { [T in ContentType]: Example<T> } = {
       "4DemoWa11etAddressForTheQRdxExamp1eDemoWa11etAddressForTheQRdxExamp1eDemoWa11etAddressForTheQRd",
     label: "Bloom Café",
   },
+  // Added 2026-11-22 (payments)
+  mecard: {
+    firstName: "Alex",
+    lastName: "Morgan",
+    phone: "+1 202 555 0142",
+    email: "alex@example.com",
+  },
 };
 
 /** Fields that only pick a mode, so they don't count as entered content. */

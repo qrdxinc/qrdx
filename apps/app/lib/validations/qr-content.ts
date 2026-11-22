@@ -30,6 +30,8 @@ import {
   wifiIssue,
   zoomIssue,
 } from "@/utils/qr-content-encoder";
+// Added 2026-11-22 (payments)
+import { meCardIssue } from "@/utils/mecard";
 import {
   isAmazonUrl,
   isGoogleDriveFileUrl,
@@ -552,6 +554,26 @@ export const solanaSchema = cryptoSchema("solana", "Solana");
 export const moneroSchema = cryptoSchema("monero", "Monero");
 
 // ─── end of the 2026-11-11 schemas ──────────────────────────────────────────
+
+// ─── Added 2026-11-22 (payments) ────────────────────────────────────────────
+
+// MeCard
+export const mecardSchema = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: optionalText,
+    reading: optionalText,
+    nickname: optionalText,
+    phone: optionalText,
+    email: optionalText,
+    url: optionalText,
+    birthday: optionalText,
+    address: optionalText,
+    note: optionalText,
+  })
+  .superRefine(checkedBy((value) => meCardIssue(value)));
+
+// ─── end of the 2026-11-22 (payments) schemas ───────────────────────────────
 
 // Export type inference helpers
 export type UrlFormData = z.infer<typeof urlSchema>;

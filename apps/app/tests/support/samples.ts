@@ -156,4 +156,13 @@ export const SAMPLES: {
       "44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A",
     amount: "0.25",
   },
+  // Added 2026-11-22 (payments)
+  mecard: {
+    type: "mecard",
+    firstName: "Ada",
+    lastName: "Lovelace",
+    phone: "+441234567890",
+    email: "ada@example.com",
+    birthday: "1815-12-10",
+  },
 };

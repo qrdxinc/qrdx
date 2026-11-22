@@ -76,6 +76,8 @@ const NEVER_SAMPLED: ContentType[] = [
   "bitcoincash",
   "solana",
   "monero",
+  // Added 2026-11-22 (payments): a contact and payments
+  "mecard",
 ];
 
 const sampled = Object.entries(PLAYGROUND_SAMPLES) as [

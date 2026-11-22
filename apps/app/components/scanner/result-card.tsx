@@ -346,6 +346,12 @@ function Details({ parsed }: { parsed: ParsedScan }) {
           <FieldList
             fields={[
               { label: t("name"), value: contact.name },
+              ...(contact.reading
+                ? [{ label: t("nameReading"), value: contact.reading }]
+                : []),
+              ...(contact.nickname
+                ? [{ label: t("nickname"), value: contact.nickname }]
+                : []),
               ...(contact.organization
                 ? [{ label: t("organization"), value: contact.organization }]
                 : []),
@@ -382,6 +388,16 @@ function Details({ parsed }: { parsed: ParsedScan }) {
               })),
               ...(contact.address
                 ? [{ label: t("address"), value: contact.address }]
+                : []),
+              ...(contact.birthday
+                ? [
+                    {
+                      label: t("birthday"),
+                      value:
+                        formatWhen(contact.birthday, true, locale) ??
+                        contact.birthday,
+                    },
+                  ]
                 : []),
               ...(contact.note
                 ? [{ label: t("note"), value: contact.note }]

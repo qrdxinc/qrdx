@@ -238,6 +238,32 @@ export function buildVcardPayload(
   return `${lines.map(foldLine).join("\r\n")}\r\n`;
 }
 
+// ── MeCard (added 2026-11-22, payments) ───────────────────────────────────
+// The compact MECARD: contact, built by the playground's own encoder
+// (utils/mecard.ts).
+
+export const mecardPayloadSchema = z.object({
+  firstName: z.string().trim().min(1).max(100).describe("Given name"),
+  lastName: optionalText(100, "Family name"),
+  reading: optionalText(
+    100,
+    "How the name is read, like kana for a Japanese name (SOUND)",
+  ),
+  nickname: optionalText(100, "Nickname"),
+  phone: optionalText(30, "Phone number, international format recommended"),
+  email: optionalText(254, "Email address"),
+  url: optionalText(500, "Website URL"),
+  birthday: optionalText(10, "Birthday, YYYY-MM-DD"),
+  address: optionalText(300, "Postal address, one line"),
+  note: optionalText(500, "Free-form note"),
+});
+
+export function buildMecardPayload(
+  input: z.output<typeof mecardPayloadSchema>,
+): PaymentPayloadResult {
+  return fromDesignContent(validateDesignContent({ type: "mecard", ...input }));
+}
+
 // ── Email (mailto:) ────────────────────────────────────────────────────────
 
 export const emailPayloadSchema = z.object({
@@ -397,11 +423,10 @@ export type PaymentPayloadResult =
   | { ok: true; value: string }
   | { ok: false; message: string };
 
-export function buildPaymentPayload(
-  input: z.output<typeof paymentPayloadSchema>,
+/** A design-content check as a tool result: the payload, or every issue. */
+function fromDesignContent(
+  result: ReturnType<typeof validateDesignContent>,
 ): PaymentPayloadResult {
-  const { scheme, ...fields } = input;
-  const result = validateDesignContent({ type: scheme, ...fields });
   if (result.ok) return { ok: true, value: result.value };
   return {
     ok: false,
@@ -411,4 +436,11 @@ export function buildPaymentPayload(
       )
       .join("; "),
   };
+}
+
+export function buildPaymentPayload(
+  input: z.output<typeof paymentPayloadSchema>,
+): PaymentPayloadResult {
+  const { scheme, ...fields } = input;
+  return fromDesignContent(validateDesignContent({ type: scheme, ...fields }));
 }

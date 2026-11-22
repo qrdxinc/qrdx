@@ -60,7 +60,9 @@ export type ContentType =
   | "dogecoin"
   | "bitcoincash"
   | "solana"
-  | "monero";
+  | "monero"
+  // Added 2026-11-22 (payments)
+  | "mecard";
 
 /**
  * URL/Plain Text Content
@@ -567,6 +569,27 @@ export interface MoneroContent extends CryptoPaymentFields {
 
 // ─── end of the 2026-11-11 types ────────────────────────────────────────────
 
+// ─── Added 2026-11-22 (payments) ────────────────────────────────────────────
+
+/** A MeCard contact (MECARD:), the compact alternative to a vCard. */
+export interface MeCardContent {
+  type: "mecard";
+  firstName: string;
+  lastName?: string;
+  /** How the name is read, e.g. in kana (SOUND:) */
+  reading?: string;
+  nickname?: string;
+  phone?: string;
+  email?: string;
+  url?: string;
+  /** YYYY-MM-DD */
+  birthday?: string;
+  address?: string;
+  note?: string;
+}
+
+// ─── end of the 2026-11-22 (payments) types ─────────────────────────────────
+
 /**
  * Union type for all content configurations
  */
@@ -626,7 +649,9 @@ export type QRContentConfig =
   | DogecoinContent
   | BitcoinCashContent
   | SolanaContent
-  | MoneroContent;
+  | MoneroContent
+  // Added 2026-11-22 (payments)
+  | MeCardContent;
 
 /**
  * Content type metadata for UI rendering
@@ -1087,6 +1112,21 @@ export const CONTENT_TYPES_METADATA: ContentTypeMetadata[] = [
     description: "Receive Monero to your wallet",
     keywords: ["xmr", "crypto", "wallet", "privacy", "payment"],
   },
+  // ─── Added 2026-11-22 (payments) ──────────────────────────────────────────
+  {
+    type: "mecard",
+    label: "MeCard",
+    icon: "UserSquare",
+    description: "Share a contact in a smaller code than a vCard",
+    keywords: [
+      "mecard",
+      "contact",
+      "business card",
+      "address book",
+      "docomo",
+      "compact",
+    ],
+  },
 ];
 
 /**
@@ -1137,6 +1177,8 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
       "telegram",
       "signal",
       "line",
+      // Added 2026-11-22 (payments)
+      "mecard",
     ],
   },
   {

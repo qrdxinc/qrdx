@@ -66,6 +66,8 @@ import {
   sepaIssue,
   vietQrIssue,
 } from "./payment-qr-codes";
+// Added 2026-11-22 (payments)
+import { encodeMeCard, meCardIssue } from "./mecard";
 
 /** Largest payload a QR code holds (version 40-L, byte mode). */
 export const MAX_QR_PAYLOAD_BYTES = 2953;
@@ -1457,6 +1459,9 @@ export function encodeQRContent(content: QRContentConfig | null): string {
     case "solana":
     case "monero":
       return encodeCrypto(content);
+    // Added 2026-11-22 (payments)
+    case "mecard":
+      return encodeMeCard(content);
     default:
       return "";
   }
@@ -1802,6 +1807,9 @@ function validateFields(content: QRContentConfig): Validation {
     case "solana":
     case "monero":
       return fromIssue(cryptoIssue(content));
+    // Added 2026-11-22 (payments)
+    case "mecard":
+      return fromIssue(meCardIssue(content));
 
     default:
       return { valid: false, error: "Unknown content type" };

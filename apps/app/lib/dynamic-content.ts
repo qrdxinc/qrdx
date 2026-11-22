@@ -82,6 +82,8 @@ export const STATIC_ONLY_TYPES = [
   "bitcoincash",
   "solana",
   "monero",
+  // Added 2026-11-22 (payments)
+  "mecard",
 ] as const satisfies readonly ContentType[];
 
 /**

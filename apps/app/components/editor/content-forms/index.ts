@@ -36,6 +36,8 @@ export {
 } from "./link-forms";
 export { LinkedInForm } from "./linkedin-form";
 export { MapsForm } from "./maps-form";
+// Added 2026-11-22 (payments)
+export { MeCardForm } from "./mecard-form";
 export {
   PayNowForm,
   PixForm,

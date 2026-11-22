@@ -18,6 +18,12 @@ export interface Contact {
   urls: string[];
   address?: string;
   note?: string;
+  // Added 2026-11-22 (payments): MeCard fields
+  nickname?: string;
+  /** YYYY-MM-DD */
+  birthday?: string;
+  /** How the name is read (MeCard SOUND) */
+  reading?: string;
 }
 
 export interface CalendarEvent {
@@ -440,26 +446,81 @@ function parseVcard(value: string): ParsedScan | null {
   return { kind: "contact", format: "vcard", contact, vcard: `${vcard}\r\n` };
 }
 
+/**
+ * MeCard fields with their escapes kept: "N:Doe\\,Jr,John" stays one value,
+ * so the name can be split on its unescaped comma before unescaping.
+ */
+function rawMeCardFields(body: string): Map<string, string[]> {
+  const map = new Map<string, string[]>();
+  let current = "";
+  const push = () => {
+    const colon = current.indexOf(":");
+    if (colon > 0) {
+      const key = current.slice(0, colon).trim().toUpperCase();
+      map.set(key, [...(map.get(key) ?? []), current.slice(colon + 1)]);
+    }
+    current = "";
+  };
+  for (let i = 0; i < body.length; i++) {
+    const char = body[i] as string;
+    if (char === "\\" && i + 1 < body.length) {
+      current += char + body[i + 1];
+      i++;
+    } else if (char === ";") {
+      push();
+    } else {
+      current += char;
+    }
+  }
+  push();
+  return map;
+}
+
+/** Splits on unescaped commas, then unescapes each part. */
+function meCardParts(raw: string): string[] {
+  return splitEscaped(raw, ",").map((part) => part.trim());
+}
+
+const unescapeMeCard = (raw: string) => raw.replace(/\\(.)/gs, "$1");
+
 function parseMecard(value: string): ParsedScan | null {
-  const fields = keyValues(value.slice(7));
-  const rawName = fields.get("N")?.[0] ?? "";
+  const raw = rawMeCardFields(value.slice(7));
+  const one = (key: string) => {
+    const found = raw.get(key)?.[0];
+    return found === undefined
+      ? undefined
+      : unescapeMeCard(found).trim() || undefined;
+  };
+  const all = (key: string) =>
+    (raw.get(key) ?? []).map((item) => unescapeMeCard(item).trim()).filter(Boolean);
   // MeCard names are "Last,First".
-  const [last = "", firstName = ""] = rawName
-    .split(",")
-    .map((part) => part.trim());
-  const name = [firstName, last].filter(Boolean).join(" ") || rawName.trim();
-  if (!name && !fields.get("TEL") && !fields.get("EMAIL")) return null;
+  const rawName = raw.get("N")?.[0] ?? "";
+  const nameParts = rawName.includes(",") ? meCardParts(rawName) : [];
+  const [last = "", firstName = ""] = nameParts.length
+    ? nameParts
+    : [unescapeMeCard(rawName).trim(), ""];
+  const name = (
+    nameParts.length ? [firstName, last] : [last]
+  )
+    .filter(Boolean)
+    .join(" ");
+  if (!name && !raw.get("TEL") && !raw.get("EMAIL")) return null;
+  const birthday = one("BDAY");
 
   const contact: Contact = {
     name: name || "Unnamed contact",
-    organization: fields.get("ORG")?.[0]?.trim() || undefined,
-    phones: (fields.get("TEL") ?? []).map((tel) => tel.trim()).filter(Boolean),
-    emails: (fields.get("EMAIL") ?? [])
-      .map((mail) => mail.trim())
-      .filter(Boolean),
-    urls: (fields.get("URL") ?? []).map((url) => url.trim()).filter(Boolean),
-    address: fields.get("ADR")?.[0]?.trim() || undefined,
-    note: fields.get("NOTE")?.[0]?.trim() || undefined,
+    organization: one("ORG"),
+    phones: all("TEL"),
+    emails: all("EMAIL"),
+    urls: all("URL"),
+    address: one("ADR"),
+    note: one("NOTE"),
+    nickname: one("NICKNAME"),
+    birthday:
+      birthday && /^\d{8}$/.test(birthday)
+        ? `${birthday.slice(0, 4)}-${birthday.slice(4, 6)}-${birthday.slice(6)}`
+        : birthday,
+    reading: one("SOUND"),
   };
   return {
     kind: "contact",
@@ -494,6 +555,8 @@ export function contactToVcard(
     ...contact.urls.map((url) => `URL:${escapeVcardText(url)}`),
     contact.address && `ADR:;;${escapeVcardText(contact.address)};;;;`,
     contact.note && `NOTE:${escapeVcardText(contact.note)}`,
+    contact.nickname && `NICKNAME:${escapeVcardText(contact.nickname)}`,
+    contact.birthday && `BDAY:${contact.birthday}`,
     "END:VCARD",
   ].filter((line): line is string => Boolean(line));
   return `${lines.join("\r\n")}\r\n`;
