@@ -128,16 +128,17 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
 
   // Added 2026-11-22 (links), by picker category. Simple Icons has no
   // FaceTime, Microsoft Teams, Microsoft Forms, Amazon Music or Canva mark:
-  // those take a generic glyph on a fill near the product's own colour.
+  // those take the type's own icon (CONTENT_TYPES_METADATA) as the glyph, on
+  // a fill near the product's own colour.
 
   // Links & files
   "google-docs": { fill: "#4285F4", glyph: "brand:googledocs" },
   "google-sheets": { fill: "#34A853", glyph: "brand:googlesheets" },
   "google-slides": { fill: "#FBBC04", glyph: "brand:googleslides" },
   "google-forms": { fill: "#7248B9", glyph: "brand:googleforms" },
-  "microsoft-forms": { fill: "#0BA790", glyph: "TaskSquare" },
+  "microsoft-forms": { fill: "#0BA790", glyph: "Task" },
   notion: { fill: "#000000", glyph: "brand:notion" },
-  canva: { fill: "#8E5CF0", glyph: "Gallery" },
+  canva: { fill: "#8E5CF0", glyph: "Brush2" },
   "app-store": { fill: "#0D96F6", glyph: "brand:appstore" },
   "google-play": { fill: "#414141", glyph: "brand:googleplay" },
 
@@ -177,13 +178,13 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   "apple-music": { fill: "#FA243C", glyph: "brand:applemusic" },
   "youtube-music": { fill: "#FF0000", glyph: "brand:youtubemusic" },
   "apple-podcasts": { fill: "#9933CC", glyph: "brand:applepodcasts" },
-  "amazon-music": { fill: "#14A3B8", glyph: "Music" },
+  "amazon-music": { fill: "#14A3B8", glyph: "MusicSquare" },
   deezer: { fill: "#A238FF", glyph: "brand:deezer" },
   tidal: { fill: "#000000", glyph: "brand:tidal" },
   bandcamp: { fill: "#408294", glyph: "brand:bandcamp" },
 
   // Business
-  "microsoft-teams": { fill: "#5B5BD6", glyph: "Profile2User" },
+  "microsoft-teams": { fill: "#5B5BD6", glyph: "People" },
   webex: { fill: "#000000", glyph: "brand:webex" },
   calendly: { fill: "#006BFF", glyph: "brand:calendly" },
   "google-classroom": { fill: "#0F9D58", glyph: "brand:googleclassroom" },

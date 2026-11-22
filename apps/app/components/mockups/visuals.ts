@@ -143,6 +143,13 @@ export const useCaseImages = {
     height: 600,
     alt: "Drawing of a poster with a large QR code on a bus shelter",
   },
+  recordSleeve: {
+    src: "/images/use-cases/record-sleeve-light.svg",
+    darkSrc: "/images/use-cases/record-sleeve-dark.svg",
+    width: 800,
+    height: 600,
+    alt: "Drawing of a record sleeve with a QR code standing beside a speaker, its record half out, and a phone playing music",
+  },
 } satisfies Record<string, Visual>;
 
 /** One illustration per generator category, shared by the hub and every type page in it. */
@@ -150,6 +157,7 @@ export const qrTypeGroupImages: Record<QrTypeGroup, Visual> = {
   utilities: useCaseImages.hotelWifi,
   contact: useCaseImages.businessCard,
   social: useCaseImages.busStopPoster,
+  music: useCaseImages.recordSleeve,
   payments: useCaseImages.marketStallUpi,
   business: useCaseImages.eventCheckIn,
   shopping: useCaseImages.retailShelf,

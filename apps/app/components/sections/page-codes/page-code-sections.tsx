@@ -106,6 +106,13 @@ export async function TopicCodeStrip({
   );
 }
 
+// Six codes (industries, placements) fill rows of 2, 3 or 6. Seven (one per
+// generator group) go 2, 4 or 7 across, the short last row centred: below
+// lg each tile spans two of twice as many columns, so the row's first tile
+// can start one column in.
+const SEVEN_ACROSS =
+  "grid-cols-4 *:col-span-2 [&>*:nth-child(7)]:col-start-2 sm:grid-cols-8 sm:[&>*:nth-child(7)]:col-start-auto sm:[&>*:nth-child(5)]:col-start-2 lg:grid-cols-7 lg:*:col-span-1 lg:[&>*:nth-child(5)]:col-start-auto";
+
 async function HubStrip({
   items,
   label,
@@ -120,7 +127,11 @@ async function HubStrip({
         items={items}
         label={label}
         compact
-        className="grid-cols-2 sm:grid-cols-3 lg:grid-cols-6"
+        className={
+          items.length === 7
+            ? SEVEN_ACROSS
+            : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-6"
+        }
       />
       <p className="text-xs text-muted-foreground text-center text-balance">
         {t("sampleNote")} {t("startNote")}

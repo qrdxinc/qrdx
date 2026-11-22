@@ -19,6 +19,8 @@ export const USE_CASE_ART_IDS = [
   "event-check-in",
   "retail-shelf-tag",
   "bus-stop-poster",
+  // The Music and podcasts group of /qr-code-generator (not a home card).
+  "record-sleeve",
 ] as const;
 
 export type UseCaseArtId = (typeof USE_CASE_ART_IDS)[number];
@@ -71,5 +73,9 @@ export const USE_CASE_CODES: Record<UseCaseArtId, UseCaseCode> = {
   "bus-stop-poster": {
     value: "https://qrdx.dev/tools/print-size",
     style: "fluid",
+  },
+  "record-sleeve": {
+    value: "https://qrdx.dev/qr-code-generator/spotify",
+    style: "classic",
   },
 };
