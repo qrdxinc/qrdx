@@ -5,6 +5,7 @@ import {
   demoAs,
   email,
   generatorAs,
+  mecard,
   phone,
   place,
   SAMPLE_PHONES,
@@ -81,6 +82,17 @@ const dogecoin = as("dogecoin");
 const bitcoincash = as("bitcoincash");
 const solana = as("solana");
 const monero = as("monero");
+// Added 2026-11-22 (payments)
+const swissQrBill = as("swiss-qr-bill");
+const czechSpd = as("czech-spd");
+const swish = as("swish");
+const khqr = as("khqr");
+const lightning = as("lightning");
+const xrp = as("xrp");
+const cardano = as("cardano");
+const tron = as("tron");
+const ton = as("ton");
+const stellar = as("stellar");
 
 const TYPE_TILES: Record<ContentType, TileSpec[]> = {
   url: [
@@ -1383,6 +1395,238 @@ const TYPE_TILES: Record<ContentType, TileSpec[]> = {
       framed("sticker", "XMR accepted"),
     ),
     tile("Invoice", monero.page("payment", "invoice"), "monochrome", null),
+  ],
+  // Added 2026-11-22 (payments)
+  mecard: [
+    tile(
+      "Name badge",
+      mecard("Sam", "Sample", "sam@example.com"),
+      "minimal",
+      framed("badge", "Save my contact"),
+    ),
+    tile(
+      "Business card",
+      mecard("Alex", "Example", "alex@example.com"),
+      "lavender",
+      official("save-contact"),
+    ),
+    tile(
+      "Sticker",
+      mecard("Riya", "Sample", "riya@example.com"),
+      "butter",
+      framed("sticker", "Add me"),
+    ),
+    tile("Flyer", mecard("Jo", "Example", "jo@example.com"), "slate", null),
+  ],
+  "swiss-qr-bill": [
+    tile(
+      "Invoice",
+      swissQrBill.page("payment", "invoice"),
+      "classic",
+      framed("banner-bottom", "Pay by QR-bill"),
+    ),
+    tile("Rent", swissQrBill.generator(), "monochrome", null),
+    tile(
+      "Club fees",
+      swissQrBill.page("payment", "tip-jar"),
+      "graphite",
+      framed("border", "Club fees"),
+    ),
+    tile(
+      "Donations",
+      swissQrBill.page("payment", "donation"),
+      "folio",
+      official("donate"),
+    ),
+  ],
+  "czech-spd": [
+    tile(
+      "Checkout",
+      czechSpd.generator(),
+      "harbor",
+      official("scan-to-pay", "Pay with QR Platba"),
+    ),
+    tile(
+      "Invoice",
+      czechSpd.page("payment", "invoice"),
+      "cobalt",
+      framed("banner-bottom", "Scan to pay"),
+    ),
+    tile(
+      "Tips",
+      czechSpd.page("payment", "tip-jar"),
+      "fog",
+      framed("sticker", "Leave a tip"),
+    ),
+    tile("Donations", czechSpd.page("payment", "donation"), "slate", null),
+  ],
+  swish: [
+    tile(
+      "Checkout",
+      swish.generator(),
+      "lavender",
+      official("scan-to-pay", "Pay with Swish"),
+    ),
+    tile(
+      "Invoice",
+      swish.page("payment", "invoice"),
+      "butter",
+      framed("banner-bottom", "Scan to pay"),
+    ),
+    tile(
+      "Tips",
+      swish.page("payment", "tip-jar"),
+      "jade",
+      framed("sticker", "Leave a tip"),
+    ),
+    tile("Donations", swish.page("payment", "donation"), "meadow", null),
+  ],
+  khqr: [
+    tile(
+      "Checkout",
+      khqr.generator(),
+      "tangerine",
+      official("scan-to-pay", "Pay with KHQR"),
+    ),
+    tile(
+      "Invoice",
+      khqr.page("payment", "invoice"),
+      "emerald",
+      framed("banner-bottom", "Scan to pay"),
+    ),
+    tile(
+      "Tips",
+      khqr.page("payment", "tip-jar"),
+      "sunset",
+      framed("sticker", "Leave a tip"),
+    ),
+    tile("Donations", khqr.page("payment", "donation"), "classic", null),
+  ],
+  lightning: [
+    tile(
+      "Checkout",
+      lightning.generator(),
+      "butter",
+      official("scan-to-pay", "Pay with Lightning"),
+    ),
+    tile(
+      "Invoice",
+      lightning.page("payment", "invoice"),
+      "graphite",
+      framed("banner-bottom", "Scan to pay"),
+    ),
+    tile(
+      "Tips",
+      lightning.page("payment", "tip-jar"),
+      "gradientPurple",
+      framed("sticker", "Leave a tip"),
+    ),
+    tile("Donations", lightning.page("payment", "donation"), "minimal", null),
+  ],
+  xrp: [
+    tile(
+      "Checkout",
+      xrp.generator(),
+      "cobalt",
+      official("scan-to-pay", "Pay with XRP"),
+    ),
+    tile(
+      "Invoice",
+      xrp.page("payment", "invoice"),
+      "slate",
+      framed("banner-bottom", "Scan to pay"),
+    ),
+    tile(
+      "Tips",
+      xrp.page("payment", "tip-jar"),
+      "monochrome",
+      framed("sticker", "Leave a tip"),
+    ),
+    tile("Donations", xrp.page("payment", "donation"), "harbor", null),
+  ],
+  cardano: [
+    tile(
+      "Checkout",
+      cardano.generator(),
+      "amberMinimal",
+      official("scan-to-pay", "Pay with Cardano"),
+    ),
+    tile(
+      "Invoice",
+      cardano.page("payment", "invoice"),
+      "lavender",
+      framed("banner-bottom", "Scan to pay"),
+    ),
+    tile(
+      "Tips",
+      cardano.page("payment", "tip-jar"),
+      "folio",
+      framed("sticker", "Leave a tip"),
+    ),
+    tile("Donations", cardano.page("payment", "donation"), "butter", null),
+  ],
+  tron: [
+    tile(
+      "Checkout",
+      tron.generator(),
+      "sunset",
+      official("scan-to-pay", "Pay with Tron"),
+    ),
+    tile(
+      "Invoice",
+      tron.page("payment", "invoice"),
+      "classic",
+      framed("banner-bottom", "Scan to pay"),
+    ),
+    tile(
+      "Tips",
+      tron.page("payment", "tip-jar"),
+      "jade",
+      framed("sticker", "Leave a tip"),
+    ),
+    tile("Donations", tron.page("payment", "donation"), "slate", null),
+  ],
+  ton: [
+    tile(
+      "Checkout",
+      ton.generator(),
+      "harbor",
+      official("scan-to-pay", "Pay with TON"),
+    ),
+    tile(
+      "Invoice",
+      ton.page("payment", "invoice"),
+      "cobalt",
+      framed("banner-bottom", "Scan to pay"),
+    ),
+    tile(
+      "Tips",
+      ton.page("payment", "tip-jar"),
+      "minimal",
+      framed("sticker", "Leave a tip"),
+    ),
+    tile("Donations", ton.page("payment", "donation"), "lavender", null),
+  ],
+  stellar: [
+    tile(
+      "Checkout",
+      stellar.generator(),
+      "graphite",
+      official("scan-to-pay", "Pay with Stellar"),
+    ),
+    tile(
+      "Invoice",
+      stellar.page("payment", "invoice"),
+      "butter",
+      framed("banner-bottom", "Scan to pay"),
+    ),
+    tile(
+      "Tips",
+      stellar.page("payment", "tip-jar"),
+      "fog",
+      framed("sticker", "Leave a tip"),
+    ),
+    tile("Donations", stellar.page("payment", "donation"), "emerald", null),
   ],
 };
 

@@ -1,9 +1,16 @@
 import { z } from "zod";
 import { validateDesignContent } from "@/lib/qr-design/content";
+import {
+  encodeWifi,
+  WIFI_EAP_METHODS,
+  WIFI_PHASE2_METHODS,
+  wifiIssue,
+} from "@/utils/qr-content-encoder";
 
 // QR payload builders for structured content. Each follows the format that
 // scanner apps (iOS Camera, Google Lens, ZXing) recognize:
-// - Wi-Fi: "WIFI:" URI (Wi-Fi Alliance WPA3 spec §7 / ZXing)
+// - Wi-Fi: "WIFI:" URI (Wi-Fi Alliance WPA3 spec §7 / ZXing), with ZXing's
+//   WPA2-EAP fields for enterprise networks
 // - vCard 3.0: RFC 2426
 // - Email: mailto: URI, RFC 6068
 // - SMS: sms: URI, RFC 5724 (or the common SMSTO: form)
@@ -38,17 +45,55 @@ export const wifiPayloadSchema = z
       .optional()
       .describe("Network password. Leave out for open networks."),
     security: z
-      .enum(["WPA", "WEP", "nopass"])
+      .enum(["WPA", "WEP", "nopass", "SAE", "WPA2-EAP"])
       .default("WPA")
       .describe(
-        "WPA covers WPA, WPA2 and WPA3 personal networks; nopass is an open network",
+        "WPA covers WPA and WPA2 personal networks and WPA2/WPA3 transition networks (every phone joins those); SAE is a WPA3-only network; WPA2-EAP is WPA2/WPA3-Enterprise (802.1X), which phone camera apps don't join (only ZXing-based scanner apps read it); nopass is an open network",
       ),
     hidden: z
       .boolean()
       .default(false)
       .describe("True when the network does not broadcast its SSID"),
+    // Added 2026-11-22 (payments): WPA2-EAP only
+    eapMethod: z
+      .enum(WIFI_EAP_METHODS)
+      .optional()
+      .describe("WPA2-EAP: EAP method, PEAP (default), TTLS or PWD"),
+    phase2: z
+      .enum(WIFI_PHASE2_METHODS)
+      .optional()
+      .describe(
+        "WPA2-EAP with PEAP or TTLS: inner authentication, MSCHAPV2 (default), GTC, PAP or MSCHAP",
+      ),
+    identity: z
+      .string()
+      .max(253)
+      .optional()
+      .describe("WPA2-EAP: the person's identity (username), required"),
+    anonymousIdentity: z
+      .string()
+      .max(253)
+      .optional()
+      .describe(
+        "WPA2-EAP: anonymous (outer) identity, if the network uses one",
+      ),
   })
   .superRefine((value, ctx) => {
+    if (value.security === "SAE" || value.security === "WPA2-EAP") {
+      const found = wifiIssue({
+        ...value,
+        encryption: value.security,
+        password: value.password ?? "",
+      });
+      if (found) {
+        ctx.addIssue({
+          code: "custom",
+          path: found.field ? [found.field] : [],
+          message: found.message,
+        });
+      }
+      return;
+    }
     const length = value.password?.length ?? 0;
     if (value.security === "WPA" && (length < 8 || length > 63)) {
       if (!(length === 64 && /^[0-9a-f]+$/i.test(value.password ?? ""))) {
@@ -74,6 +119,20 @@ const escapeWifi = (value: string) => value.replace(/([\\;,":])/g, "\\$1");
 export function buildWifiPayload(
   input: z.output<typeof wifiPayloadSchema>,
 ): string {
+  // Enterprise networks: the editor's own encoder (E:, PH2:, A:, I:).
+  if (input.security === "WPA2-EAP") {
+    return encodeWifi({
+      type: "wifi",
+      ssid: input.ssid,
+      password: input.password ?? "",
+      encryption: "WPA2-EAP",
+      hidden: input.hidden,
+      eapMethod: input.eapMethod,
+      phase2: input.phase2,
+      identity: input.identity,
+      anonymousIdentity: input.anonymousIdentity,
+    });
+  }
   const fields = [`T:${input.security}`, `S:${escapeWifi(input.ssid)}`];
   if (input.hidden) fields.push("H:true");
   if (input.security !== "nopass" && input.password) {
@@ -179,6 +238,32 @@ export function buildVcardPayload(
   if (input.note) lines.push(`NOTE:${escapeVcard(input.note)}`);
   lines.push("END:VCARD");
   return `${lines.map(foldLine).join("\r\n")}\r\n`;
+}
+
+// ── MeCard (added 2026-11-22, payments) ───────────────────────────────────
+// The compact MECARD: contact, built by the playground's own encoder
+// (utils/mecard.ts).
+
+export const mecardPayloadSchema = z.object({
+  firstName: z.string().trim().min(1).max(100).describe("Given name"),
+  lastName: optionalText(100, "Family name"),
+  reading: optionalText(
+    100,
+    "How the name is read, like kana for a Japanese name (SOUND)",
+  ),
+  nickname: optionalText(100, "Nickname"),
+  phone: optionalText(30, "Phone number, international format recommended"),
+  email: optionalText(254, "Email address"),
+  url: optionalText(500, "Website URL"),
+  birthday: optionalText(10, "Birthday, YYYY-MM-DD"),
+  address: optionalText(300, "Postal address, one line"),
+  note: optionalText(500, "Free-form note"),
+});
+
+export function buildMecardPayload(
+  input: z.output<typeof mecardPayloadSchema>,
+): PaymentPayloadResult {
+  return fromDesignContent(validateDesignContent({ type: "mecard", ...input }));
 }
 
 // ── Email (mailto:) ────────────────────────────────────────────────────────
@@ -287,6 +372,17 @@ export const PAYMENT_SCHEMES = [
   "paynow",
   "promptpay",
   "vietqr",
+  // Added 2026-11-22 (payments)
+  "swiss-qr-bill",
+  "czech-spd",
+  "swish",
+  "khqr",
+  "lightning",
+  "xrp",
+  "cardano",
+  "tron",
+  "ton",
+  "stellar",
 ] as const;
 
 const optionalField = (description: string) =>
@@ -296,22 +392,24 @@ export const paymentPayloadSchema = z.object({
   scheme: z
     .enum(PAYMENT_SCHEMES)
     .describe(
-      "pix (Brazil), sepa (euro credit transfer, EPC069-12), paynow (Singapore), promptpay (Thailand) or vietqr (Vietnam)",
+      "pix (Brazil), sepa (euro credit transfer, EPC069-12), paynow (Singapore), promptpay (Thailand), vietqr (Vietnam), swiss-qr-bill (Swiss QR-bill, SPC 0200), czech-spd (Czech QR Platba), swish (Sweden), khqr (Cambodia, Bakong), or a crypto request: lightning (BOLT 11 invoice, LNURL or Lightning Address), xrp, cardano (CIP-13), tron (plain address), ton, stellar (SEP-0007)",
     ),
   name: optionalField(
-    "pix: receiver name (required, up to 25 characters); sepa: beneficiary name (required); paynow: name shown to the payer",
+    "pix: receiver name (required, up to 25 characters); sepa: beneficiary name (required); paynow: name shown to the payer; swiss-qr-bill: creditor name (required); czech-spd: recipient name; khqr: account holder's name (required)",
   ),
   amount: optionalField(
-    "Amount in the scheme's currency (BRL, EUR, SGD, THB, or whole VND). Leave out to let the payer choose.",
+    "Amount in the scheme's currency (BRL, EUR, SGD, THB, whole VND, CHF/EUR, CZK, SEK, KHR/USD) or coin (ADA, TON or USDT, XLM or USDC). Leave out to let the payer choose.",
   ),
   pixKey: optionalField("pix: CPF, CNPJ, +55 phone, email or random key"),
-  city: optionalField("pix: receiver city, up to 15 characters"),
+  city: optionalField(
+    "pix: receiver city, up to 15 characters; khqr: city (default Phnom Penh)",
+  ),
   txid: optionalField("pix: transaction ID, up to 25 letters and digits"),
   message: optionalField("pix or vietqr: message for the payer"),
-  iban: optionalField("sepa: IBAN"),
+  iban: optionalField("sepa: IBAN; swiss-qr-bill: CH or LI IBAN or QR-IBAN"),
   bic: optionalField("sepa: BIC, optional inside the EEA"),
   reference: optionalField(
-    "sepa: structured RF creditor reference; paynow: bill reference",
+    "sepa: structured RF creditor reference; paynow: bill reference; swiss-qr-bill: QR reference (QR-IBAN) or RF creditor reference (IBAN)",
   ),
   remittance: optionalField(
     "sepa: payment reference text, up to 140 characters (not with reference)",
@@ -327,24 +425,89 @@ export const paymentPayloadSchema = z.object({
     .boolean()
     .optional()
     .describe("paynow: whether the payer may change the amount (default true)"),
-  expiry: optionalField("paynow: last day the code works, YYYY-MM-DD"),
+  expiry: optionalField(
+    "paynow: last day the code works; khqr: required with an amount. YYYY-MM-DD",
+  ),
   bankBin: optionalField("vietqr: the bank's 6-digit BIN"),
   accountType: z
     .enum(["account", "card"])
     .optional()
     .describe("vietqr: account (default) or card"),
   accountNumber: optionalField("vietqr: account or card number"),
+  // Added 2026-11-22 (payments)
+  street: optionalField("swiss-qr-bill: creditor street"),
+  buildingNumber: optionalField("swiss-qr-bill: creditor building number"),
+  postalCode: optionalField("swiss-qr-bill: creditor postcode (required)"),
+  town: optionalField("swiss-qr-bill: creditor town (required)"),
+  country: optionalField(
+    "swiss-qr-bill: creditor 2-letter country code, e.g. CH (required)",
+  ),
+  currency: z
+    .enum(["CHF", "EUR", "KHR", "USD"])
+    .optional()
+    .describe(
+      "swiss-qr-bill: CHF (default) or EUR; khqr: KHR (default) or USD",
+    ),
+  billingInfo: optionalField(
+    "swiss-qr-bill: structured billing information, //S1/…",
+  ),
+  payableBy: z
+    .boolean()
+    .optional()
+    .describe("swiss-qr-bill: true to name the payer in the debtor* fields"),
+  debtorName: optionalField("swiss-qr-bill: payer's name"),
+  debtorStreet: optionalField("swiss-qr-bill: payer's street"),
+  debtorBuildingNumber: optionalField("swiss-qr-bill: payer's building number"),
+  debtorPostalCode: optionalField("swiss-qr-bill: payer's postcode"),
+  debtorTown: optionalField("swiss-qr-bill: payer's town"),
+  debtorCountry: optionalField("swiss-qr-bill: payer's 2-letter country code"),
+  account: optionalField(
+    "czech-spd: Czech IBAN or account number like 19-2000145399/0800",
+  ),
+  variableSymbol: optionalField("czech-spd: variable symbol, up to 10 digits"),
+  specificSymbol: optionalField("czech-spd: specific symbol, up to 10 digits"),
+  constantSymbol: optionalField("czech-spd: constant symbol, up to 10 digits"),
+  dueDate: optionalField("czech-spd: due date, YYYY-MM-DD"),
+  instant: z
+    .boolean()
+    .optional()
+    .describe("czech-spd: ask for an instant payment (PT:IP)"),
+  payee: optionalField("swish: Swedish mobile number or 123 business number"),
+  amountEditable: z
+    .boolean()
+    .optional()
+    .describe("swish: whether the payer may change the amount"),
+  messageEditable: z
+    .boolean()
+    .optional()
+    .describe("swish: whether the payer may change the message"),
+  bakongId: optionalField("khqr: Bakong account ID, name@bank"),
+  billNumber: optionalField("khqr: bill number"),
+  mobile: optionalField("khqr: mobile number with country code"),
+  request: optionalField(
+    "lightning: a BOLT 11 invoice (lnbc…), an LNURL (lnurl1…) or a Lightning Address (name@domain)",
+  ),
+  address: optionalField(
+    "xrp, cardano, tron, ton, stellar: the wallet address",
+  ),
+  destinationTag: optionalField(
+    "xrp: destination tag (the code then holds an X-address)",
+  ),
+  memo: optionalField("stellar: text memo, up to 28 bytes"),
+  token: z
+    .enum(["TON", "USDT", "XLM", "USDC"])
+    .optional()
+    .describe("ton: TON (default) or USDT; stellar: XLM (default) or USDC"),
 });
 
 export type PaymentPayloadResult =
   | { ok: true; value: string }
   | { ok: false; message: string };
 
-export function buildPaymentPayload(
-  input: z.output<typeof paymentPayloadSchema>,
+/** A design-content check as a tool result: the payload, or every issue. */
+function fromDesignContent(
+  result: ReturnType<typeof validateDesignContent>,
 ): PaymentPayloadResult {
-  const { scheme, ...fields } = input;
-  const result = validateDesignContent({ type: scheme, ...fields });
   if (result.ok) return { ok: true, value: result.value };
   return {
     ok: false,
@@ -354,4 +517,11 @@ export function buildPaymentPayload(
       )
       .join("; "),
   };
+}
+
+export function buildPaymentPayload(
+  input: z.output<typeof paymentPayloadSchema>,
+): PaymentPayloadResult {
+  const { scheme, ...fields } = input;
+  return fromDesignContent(validateDesignContent({ type: scheme, ...fields }));
 }

@@ -97,6 +97,7 @@ describe("MCP over Streamable HTTP", () => {
         "list_qr_styles",
         "qr_payload_email",
         "qr_payload_geo",
+        "qr_payload_mecard",
         "qr_payload_payment",
         "qr_payload_sms",
         "qr_payload_vcard",

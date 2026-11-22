@@ -130,6 +130,8 @@ Write colors without the `#`, or encode it as `%23`.
 | `ismn` | ISMN | 13 digits starting 979-0 (12 and the check digit is added) or the old form starting with M, then an optional 2- or 5-digit add-on after a space |
 | `itf14` | ITF-14 | 13 digits or 14 |
 | `gs1-128` | GS1-128 | Application Identifiers in brackets with their values; GTIN and SSCC check digits added or checked; up to 48 characters of data |
+| `gs1-databar` | GS1 DataBar | A GTIN only: `(01)` and 14 digits, or 13 and the check digit is added |
+| `gs1-databar-expanded` | GS1 DataBar Expanded | Application Identifiers in brackets with their values, as for `gs1-128`; up to 74 digits of data, fewer with letters |
 | `code128` | Code 128 | Up to 80 printable ASCII characters |
 | `code39` | Code 39 | Up to 40 capitals, digits, spaces and `- . $ / + %` |
 | `code93` | Code 93 | Up to 40 capitals, digits, spaces and `- . $ / + %`; its two check characters are added |

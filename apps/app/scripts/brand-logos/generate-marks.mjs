@@ -20,6 +20,7 @@ export const UI_SLUGS = [
   "bitcoincash",
   "bluesky",
   "caldotcom",
+  "cardano",
   "cashapp",
   "discord",
   "dogecoin",
@@ -54,6 +55,7 @@ export const UI_SLUGS = [
   "solid",
   "soundcloud",
   "spotify",
+  "stellar",
   "telegram",
   "threads",
   "tiktok",
@@ -65,6 +67,7 @@ export const UI_SLUGS = [
   "whatsapp",
   "wise",
   "x",
+  "xrp",
   "youtube",
   "zoom",
 ];

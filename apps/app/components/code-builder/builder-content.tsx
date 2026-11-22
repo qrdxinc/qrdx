@@ -225,6 +225,29 @@ export const DYNAMIC_TYPE_FIELDS: Record<OtherDynamicType, ContentFieldSpec[]> =
       { name: "username", label: "$Cashtag", placeholder: "$yourcashtag" },
     ],
     revolut: [username("@yourname")],
+    // Added 2026-11-22 (payments)
+    swish: [
+      {
+        name: "payee",
+        label: "Swish number",
+        placeholder: "070 123 45 67",
+        hint: "Your mobile number, or your business's 123 number.",
+        inputMode: "tel",
+      },
+      {
+        name: "amount",
+        label: "Amount (kr)",
+        placeholder: "Leave empty to let the payer choose",
+        optional: true,
+        inputMode: "decimal",
+      },
+      {
+        name: "message",
+        label: "Message",
+        placeholder: "Fika for two",
+        optional: true,
+      },
+    ],
   };
 
 const META = new Map(CONTENT_TYPES_METADATA.map((meta) => [meta.type, meta]));

@@ -144,6 +144,8 @@ const TEXT_FORMATS = new Set<BarcodeFormatId>([
   "code39",
   "code93",
   "gs1-128",
+  "gs1-databar",
+  "gs1-databar-expanded",
 ]);
 
 function ColorField({

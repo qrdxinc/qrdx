@@ -16,17 +16,17 @@ interface Input {
   url: string;
   /**
    * Shape of the individual QR data modules.
-   * Options: square | circle | circle-large | diamond | circle-mixed | pacman | rounded | small-square | vertical-line
+   * Options: square | circle | circle-large | diamond | circle-mixed | pacman | rounded | small-square | vertical-line | horizontal-line | liquid | liquid-horizontal | liquid-vertical | classy | classy-rounded | leaf | plus | hexagon | star | heart | random-dots | mosaic | octagon
    */
   bodyPattern?: Settings["bodyPattern"];
   /**
    * Outer shape of the three corner finder squares.
-   * Options: square | rounded | gear | circle | diya | extra-rounded | message | pointy
+   * Options: square | rounded | gear | circle | diya | extra-rounded | message | pointy | leaf | drop | octagon | bevel | squircle | cushion | shield | petal | leaf-reverse | porthole | notch | plus | bud | bowl
    */
   cornerEyePattern?: Settings["cornerEyePattern"];
   /**
    * Inner dot shape inside each corner finder square.
-   * Options: square | rounded | circle | message | diya | rounded-triangle
+   * Options: square | rounded | circle | message | message-reverse | diya | diya-reverse | rounded-triangle | leaf | drop | plus | cross-rounded | hexagon | octagon | flower | heart | squircle | dots | extra-rounded | leaf-reverse | drop-reverse | cushion
    */
   cornerEyeDotPattern?: Settings["cornerEyeDotPattern"];
   /** Hex foreground color for the QR modules, e.g. "#000000". */
@@ -35,7 +35,7 @@ interface Input {
   bgColor?: string;
   /**
    * Decorative frame template drawn around the QR code.
-   * Options: Arrow | StandardBox | SquareBorder | StrikedBox | Halloween
+   * Options: Arrow | StandardBox | SquareBorder | StrikedBox | Halloween | DotRing
    */
   templateId?: string;
   /**

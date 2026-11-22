@@ -117,3 +117,15 @@ export const SAMPLE_PHONES = [
   "+1 415 555 0163",
   "+1 415 555 0118",
 ] as const;
+
+// Added 2026-11-22 (payments)
+
+/** A MeCard contact: name and email only, like the vCard samples. */
+export const mecard = (
+  firstName: string,
+  lastName: string,
+  email: string,
+): SampleValue => ({
+  value: encode({ type: "mecard", firstName, lastName, email }),
+  type: "mecard",
+});

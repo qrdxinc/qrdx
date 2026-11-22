@@ -113,6 +113,34 @@ describe("renderBarcodeSVG", () => {
     ).toBe("EAN-13: EAN-13 must be 12 or 13 digits");
   });
 
+  it("says GS1 DataBar Expanded is full instead of bwip-js's TypeError", () => {
+    // 49 characters with letters fit; 50 don't. bwip-js 4.11.4 then throws
+    // "Cannot read properties of undefined (reading 'length')"; if an upgrade
+    // changes that, this fails and draw.ts needs a look.
+    const letters = "ABCDEFGHIJKLMNOPQRST";
+    const fits = `(01)09501101530003(10)${letters}(21)ABCDEFGHI`;
+    const full = `(01)09501101530003(10)${letters}(21)ABCDEFGHIJ`;
+    expect(renderBarcodeSVG("gs1-databar-expanded", fits, STYLE).svg).toContain(
+      "<svg",
+    );
+    expect(() => renderBarcodeSVG("gs1-databar-expanded", full, STYLE)).toThrow(
+      "Too much data for one GS1 DataBar Expanded: it holds up to 74 digits, and fewer when there are letters. Remove an AI or shorten a value.",
+    );
+  });
+
+  it("prints the AIs under GS1 DataBar Expanded, which bwip-js leaves bare", () => {
+    const value = "(01)09501101530003(17)261231(10)AB-123";
+    const withText = renderBarcodeSVG("gs1-databar-expanded", value, {
+      ...STYLE,
+      showText: true,
+    });
+    const without = renderBarcodeSVG("gs1-databar-expanded", value, {
+      ...STYLE,
+      showText: false,
+    });
+    expect(withText.heightUnits).toBeGreaterThan(without.heightUnits);
+  });
+
   it("sizes the downloadable SVG in millimetres, one unit to a point", () => {
     const rendered = renderBarcodeSVG("ean13", "5901234123457", STYLE);
     const svg = printableSVG(rendered);

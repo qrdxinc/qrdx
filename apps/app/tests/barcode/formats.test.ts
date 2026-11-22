@@ -5,6 +5,7 @@ import {
   BARCODE_FORMATS,
   barcodeIssueText,
   compressUpca,
+  DATABAR_EXPANDED_MAX_DATA,
   decodedMatches,
   expandUpce,
   GS1_128_MAX_DATA,
@@ -43,6 +44,8 @@ describe("BARCODE_FORMATS", () => {
       "Codabar",
       "ITF-14",
       "GS1-128",
+      "GS1 DataBar",
+      "GS1 DataBar Expanded",
       "Data Matrix",
       "PDF417",
       "Aztec",
@@ -267,6 +270,72 @@ describe("GS1-128", () => {
     expect(error("gs1-128", "(10)AB)")).toMatch(/Brackets don't line up/);
     expect(error("gs1-128", `(01)09501101530003(21)${"9".repeat(40)}`)).toMatch(
       new RegExp(`up to ${GS1_128_MAX_DATA} characters`),
+    );
+  });
+});
+
+describe("GS1 DataBar", () => {
+  it("takes a GTIN in (01) and completes or checks its check digit", () => {
+    expect(ok("gs1-databar", "(01)09501101530003")).toEqual({
+      ok: true,
+      value: "(01)09501101530003",
+    });
+    expect(ok("gs1-databar", " (01) 0950110153000 ")).toEqual({
+      ok: true,
+      value: "(01)09501101530003",
+      note: "AI (01): Check digit 3 added.",
+    });
+    expect(error("gs1-databar", "(01)09501101530004")).toMatch(
+      /^AI \(01\): .*should be 3, not 4/,
+    );
+    expect(error("gs1-databar", "(01)0950")).toMatch(/^AI \(01\): /);
+  });
+
+  it("refuses anything but a GTIN, in words rather than bwip-js's", () => {
+    const gtinOnly =
+      "GS1 DataBar holds only a GTIN: (01) and its 14 digits. For dates, a batch or a weight, use GS1 DataBar Expanded or GS1-128.";
+    expect(error("gs1-databar", "(01)09501101530003(10)AB-123")).toBe(gtinOnly);
+    expect(error("gs1-databar", "(10)AB-123")).toBe(gtinOnly);
+    expect(error("gs1-databar", "(02)09501101530003")).toBe(gtinOnly);
+    expect(error("gs1-databar", "09501101530003")).toMatch(
+      /Start with an Application Identifier/,
+    );
+    expect(error("gs1-databar", "")).toMatch(/Enter Application Identifiers/);
+  });
+});
+
+describe("GS1 DataBar Expanded", () => {
+  it("takes AIs in brackets like GS1-128", () => {
+    expect(
+      ok("gs1-databar-expanded", "(01)09501101530003(17)261231(10)AB-123"),
+    ).toEqual({
+      ok: true,
+      value: "(01)09501101530003(17)261231(10)AB-123",
+    });
+    expect(ok("gs1-databar-expanded", "(01)0950110153000(3103)000123")).toEqual(
+      {
+        ok: true,
+        value: "(01)09501101530003(3103)000123",
+        note: "AI (01): Check digit 3 added.",
+      },
+    );
+    expect(error("gs1-databar-expanded", "(01)09501101530004")).toMatch(
+      /^AI \(01\): .*should be 3, not 4/,
+    );
+    expect(error("gs1-databar-expanded", "(10)AB 12(21)é")).toMatch(
+      /GS1 doesn't allow: é/,
+    );
+  });
+
+  it("holds more than GS1-128's 48 characters, up to its own limit", () => {
+    // 66 digits of AIs and data: too long for GS1-128, fine here.
+    const long =
+      "(01)09501101530003(3103)000123(11)261231(13)261231(15)261231(17)261231(16)261231";
+    expect(ok("gs1-databar-expanded", long).value).toBe(long);
+    expect(error("gs1-128", long)).toMatch(/GS1-128 holds up to 48/);
+    const tooLong = `(01)09501101530003(21)${"1".repeat(20)}(10)${"2".repeat(20)}(240)${"3".repeat(20)}`;
+    expect(error("gs1-databar-expanded", tooLong)).toBe(
+      `GS1 DataBar Expanded holds up to ${DATABAR_EXPANDED_MAX_DATA} digits of AIs and data, and fewer when there are letters; this has 83 characters. Remove an AI or shorten a value.`,
     );
   });
 });
@@ -545,6 +614,28 @@ describe("decodedMatches", () => {
       decodedMatches("gs1-128", gs1, "010950110153000310AB-123\x1d17261231"),
     ).toBe(true);
     expect(decodedMatches("gs1-128", gs1, gs1)).toBe(true);
+    // What ZXing returns for GS1 DataBar: no brackets, GS between fields,
+    // sometimes after the ]e0 symbology identifier.
+    expect(
+      decodedMatches("gs1-databar", "(01)09501101530003", "0109501101530003"),
+    ).toBe(true);
+    expect(
+      decodedMatches(
+        "gs1-databar",
+        "(01)09501101530003",
+        "]e00109501101530003",
+      ),
+    ).toBe(true);
+    expect(
+      decodedMatches("gs1-databar", "(01)09501101530003", "0109501101530004"),
+    ).toBe(false);
+    expect(
+      decodedMatches(
+        "gs1-databar-expanded",
+        gs1,
+        "010950110153000310AB-123\x1d17261231",
+      ),
+    ).toBe(true);
     expect(decodedMatches("code128", "ABC", "ABD")).toBe(false);
   });
 
@@ -584,6 +675,12 @@ describe("issue codes (the generator translates by code)", () => {
       ["gs1-128", "01)09501101530003"],
       ["gs1-128", "(01)0950"],
       ["gs1-128", "(01)09501101530004"],
+      ["gs1-databar", "(10)AB-123"],
+      ["gs1-databar", "(01)09501101530004"],
+      [
+        "gs1-databar-expanded",
+        `(21)${"1".repeat(20)}(10)${"2".repeat(20)}(240)${"3".repeat(30)}`,
+      ],
       ["isbn", ""],
       ["isbn", "97818736710X"],
       ["isbn", "978187367"],

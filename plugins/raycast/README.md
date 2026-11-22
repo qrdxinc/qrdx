@@ -7,7 +7,7 @@ A [Raycast](https://www.raycast.com) extension that makes styled QR codes, built
 - **Generate QR with AI:** describe the code you want and Raycast AI fills in the settings. This command and the AI tools in `ai.yaml` need access to Raycast AI.
 - **Open in QRdx Playground** (⌘O) opens the full editor at qrdx.dev with the code's web address. Other content, colors and patterns stay in Raycast.
 
-It depends on `qrdx` 0.0.47 from npm, so it offers that version's patterns.
+It depends on `qrdx` 0.0.60 from npm and offers every body pattern, eye frame, eye centre and template that version offers, taken from `qrdx` itself, so updating `qrdx` brings its new shapes along.
 
 ## Install from source
 

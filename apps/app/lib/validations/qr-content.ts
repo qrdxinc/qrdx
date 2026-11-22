@@ -4,6 +4,22 @@
 
 import { z } from "zod";
 import {
+  cardanoIssue,
+  cryptoAmount,
+  evmNetwork,
+  isTokenContract,
+  lightningIssue,
+  STABLECOIN_DECIMALS,
+  stellarIssue,
+  tonIssue,
+  tronIssue,
+  xrpIssue,
+} from "@/utils/crypto-payments";
+import { czechSpdIssue } from "@/utils/czech-spd";
+// Added 2026-11-22 (payments)
+import { meCardIssue } from "@/utils/mecard";
+import {
+  khqrIssue,
   payNowIssue,
   pixIssue,
   promptPayIssue,
@@ -24,9 +40,14 @@ import {
   soundCloudIssue,
   telegramIssue,
   twitchIssue,
+  WIFI_EAP_METHODS,
+  WIFI_PHASE2_METHODS,
   wazeIssue,
+  wifiIssue,
   zoomIssue,
 } from "@/utils/qr-content-encoder";
+import { swishIssue } from "@/utils/swish";
+import { swissQrBillContentIssue } from "@/utils/swiss-qr-bill";
 import {
   isAmazonUrl,
   isGoogleDriveFileUrl,
@@ -79,12 +100,19 @@ export const whatsappSchema = z.object({
 });
 
 // WiFi
-export const wifiSchema = z.object({
-  ssid: z.string().min(1, "WiFi SSID is required"),
-  password: z.string(),
-  encryption: z.enum(["WPA", "WEP", "nopass"]),
-  hidden: z.boolean().optional(),
-});
+export const wifiSchema = z
+  .object({
+    ssid: z.string().min(1, "WiFi SSID is required"),
+    password: z.string(),
+    encryption: z.enum(["WPA", "WEP", "nopass", "SAE", "WPA2-EAP"]),
+    hidden: z.boolean().optional(),
+    // Added 2026-11-22 (payments): WPA2/WPA3-Enterprise sign-in
+    eapMethod: z.enum(WIFI_EAP_METHODS).optional(),
+    phase2: z.enum(WIFI_PHASE2_METHODS).optional(),
+    identity: z.string().optional(),
+    anonymousIdentity: z.string().optional(),
+  })
+  .superRefine(checkedBy(wifiIssue));
 
 // vCard
 export const vcardSchema = z.object({
@@ -276,22 +304,63 @@ export const bitcoinSchema = z.object({
 });
 
 // Ethereum
-export const ethereumSchema = z.object({
-  address: z
-    .string()
-    .min(1, "Ethereum address is required")
-    .regex(/^0x[a-fA-F0-9]{40}$/, "Invalid Ethereum address format"),
-  amount: z
-    .string()
-    .regex(/^\d*\.?\d*$/, "Invalid amount format")
-    .optional()
-    .or(z.literal("")),
-  gas: z
-    .string()
-    .regex(/^\d*\.?\d*$/, "Invalid gas format")
-    .optional()
-    .or(z.literal("")),
-});
+export const ethereumSchema = z
+  .object({
+    address: z
+      .string()
+      .min(1, "Ethereum address is required")
+      .regex(/^0x[a-fA-F0-9]{40}$/, "Invalid Ethereum address format"),
+    amount: z
+      .string()
+      .regex(/^\d*\.?\d*$/, "Invalid amount format")
+      .optional()
+      .or(z.literal("")),
+    gas: z
+      .string()
+      .regex(/^\d*\.?\d*$/, "Invalid gas format")
+      .optional()
+      .or(z.literal("")),
+    // Added 2026-11-22 (payments): network and stablecoin
+    network: z.string().optional(),
+    token: z.enum(["USDT", "USDC"]).optional(),
+  })
+  .superRefine((value, ctx) => {
+    const network = evmNetwork(value.network);
+    if (!network) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Pick a network",
+        path: ["network"],
+      });
+      return;
+    }
+    if (isTokenContract(value.address)) {
+      ctx.addIssue({
+        code: "custom",
+        message:
+          "This is a token contract, not a wallet. Paste the address that receives the payment.",
+        path: ["address"],
+      });
+    }
+    if (value.token && !network.tokens[value.token]) {
+      ctx.addIssue({
+        code: "custom",
+        message: `${value.token} isn't issued on ${network.name} by its issuer. Pick another network.`,
+        path: ["token"],
+      });
+    }
+    if (
+      value.token &&
+      value.amount?.trim() &&
+      !cryptoAmount(value.amount, STABLECOIN_DECIMALS)
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        message: `Enter an amount with up to ${STABLECOIN_DECIMALS} decimals`,
+        path: ["amount"],
+      });
+    }
+  });
 
 // Etsy
 export const etsySchema = z.object({
@@ -531,8 +600,16 @@ function cryptoSchema(
       amount: optionalText,
       label: optionalText,
       message: optionalText,
+      // Added 2026-11-22 (payments): Solana Pay's SPL stablecoins
+      ...(type === "solana" && {
+        token: z.enum(["SOL", "USDC", "USDT"]).optional(),
+      }),
     })
-    .superRefine(checkedBy((value) => cryptoIssue({ ...value, type })));
+    .superRefine(
+      checkedBy((value) =>
+        cryptoIssue({ ...value, type } as Parameters<typeof cryptoIssue>[0]),
+      ),
+    );
 }
 
 export const litecoinSchema = cryptoSchema("litecoin", "Litecoin");
@@ -542,6 +619,142 @@ export const solanaSchema = cryptoSchema("solana", "Solana");
 export const moneroSchema = cryptoSchema("monero", "Monero");
 
 // ─── end of the 2026-11-11 schemas ──────────────────────────────────────────
+
+// ─── Added 2026-11-22 (payments) ────────────────────────────────────────────
+
+// MeCard
+export const mecardSchema = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: optionalText,
+    reading: optionalText,
+    nickname: optionalText,
+    phone: optionalText,
+    email: optionalText,
+    url: optionalText,
+    birthday: optionalText,
+    address: optionalText,
+    note: optionalText,
+  })
+  .superRefine(checkedBy((value) => meCardIssue(value)));
+
+// Swiss QR-bill
+export const swissQrBillSchema = z
+  .object({
+    iban: z.string().min(1, "IBAN is required"),
+    name: z.string().min(1, "Name is required"),
+    street: optionalText,
+    buildingNumber: optionalText,
+    postalCode: z.string().min(1, "Postcode is required"),
+    town: z.string().min(1, "Town is required"),
+    country: z.string().min(1, "Country is required"),
+    currency: z.enum(["CHF", "EUR"]).optional(),
+    amount: optionalText,
+    reference: optionalText,
+    message: optionalText,
+    billingInfo: optionalText,
+    payableBy: z.boolean().optional(),
+    debtorName: optionalText,
+    debtorStreet: optionalText,
+    debtorBuildingNumber: optionalText,
+    debtorPostalCode: optionalText,
+    debtorTown: optionalText,
+    debtorCountry: optionalText,
+  })
+  .superRefine(checkedBy(swissQrBillContentIssue));
+
+// Czech QR Platba
+export const czechSpdSchema = z
+  .object({
+    account: z.string().min(1, "Account is required"),
+    bic: optionalText,
+    amount: optionalText,
+    name: optionalText,
+    message: optionalText,
+    variableSymbol: optionalText,
+    specificSymbol: optionalText,
+    constantSymbol: optionalText,
+    dueDate: optionalText,
+    instant: z.boolean().optional(),
+  })
+  .superRefine(checkedBy((value) => czechSpdIssue(value)));
+
+// Swish
+export const swishSchema = z
+  .object({
+    payee: z.string().min(1, "Swish number is required"),
+    amount: optionalText,
+    message: optionalText,
+    amountEditable: z.boolean().optional(),
+    messageEditable: z.boolean().optional(),
+  })
+  .superRefine(checkedBy(swishIssue));
+
+// KHQR (Cambodia)
+export const khqrSchema = z
+  .object({
+    bakongId: z.string().min(1, "Bakong account ID is required"),
+    name: z.string().min(1, "Name is required"),
+    city: optionalText,
+    currency: z.enum(["KHR", "USD"]).optional(),
+    amount: optionalText,
+    expiry: optionalText,
+    billNumber: optionalText,
+    mobile: optionalText,
+  })
+  .superRefine(checkedBy((value) => khqrIssue(value)));
+
+// Lightning
+export const lightningSchema = z
+  .object({
+    request: z
+      .string()
+      .min(1, "Invoice, LNURL or Lightning Address is required"),
+  })
+  .superRefine(checkedBy(lightningIssue));
+
+// XRP Ledger
+export const xrpSchema = z
+  .object({
+    address: z.string().min(1, "XRP address is required"),
+    destinationTag: optionalText,
+  })
+  .superRefine(checkedBy(xrpIssue));
+
+// Cardano
+export const cardanoSchema = z
+  .object({
+    address: z.string().min(1, "Cardano address is required"),
+    amount: optionalText,
+  })
+  .superRefine(checkedBy(cardanoIssue));
+
+// Tron
+export const tronSchema = z
+  .object({ address: z.string().min(1, "Tron address is required") })
+  .superRefine(checkedBy(tronIssue));
+
+// TON
+export const tonSchema = z
+  .object({
+    address: z.string().min(1, "TON address is required"),
+    amount: optionalText,
+    message: optionalText,
+    token: z.enum(["TON", "USDT"]).optional(),
+  })
+  .superRefine(checkedBy(tonIssue));
+
+// Stellar
+export const stellarSchema = z
+  .object({
+    address: z.string().min(1, "Stellar address is required"),
+    amount: optionalText,
+    memo: optionalText,
+    token: z.enum(["XLM", "USDC"]).optional(),
+  })
+  .superRefine(checkedBy(stellarIssue));
+
+// ─── end of the 2026-11-22 (payments) schemas ───────────────────────────────
 
 // Export type inference helpers
 export type UrlFormData = z.infer<typeof urlSchema>;

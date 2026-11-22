@@ -154,6 +154,58 @@ export const CONTENT_EXAMPLES: { [T in ContentType]: Example<T> } = {
       "4DemoWa11etAddressForTheQRdxExamp1eDemoWa11etAddressForTheQRdxExamp1eDemoWa11etAddressForTheQRd",
     label: "Bloom Café",
   },
+  // Added 2026-11-22 (payments)
+  mecard: {
+    firstName: "Alex",
+    lastName: "Morgan",
+    phone: "+1 202 555 0142",
+    email: "alex@example.com",
+  },
+  // SIX's own sample QR-IBAN and QR reference (QR-bill guidelines, Annex A).
+  "swiss-qr-bill": {
+    iban: "CH44 3199 9123 0008 8901 2",
+    name: "Bloom Cafe Example",
+    street: "Musterstrasse",
+    buildingNumber: "1",
+    postalCode: "8000",
+    town: "Seldwyla",
+    country: "CH",
+    currency: "CHF",
+    amount: "12.50",
+    reference: "21 00000 00003 13947 14300 09017",
+    message: "Example invoice 1024",
+  },
+  // Each standard's or chain's own published sample values.
+  "czech-spd": {
+    account: "CZ91 0600 0000 0000 0000 0123",
+    amount: "450",
+    message: "Platba za zbozi",
+    variableSymbol: "1234567890",
+  },
+  swish: { payee: "123 118 11 89", amount: "100", message: "Fika for two" },
+  khqr: { bakongId: "jonhsmith@nbcq", name: "Jonh Smith", currency: "KHR" },
+  lightning: {
+    request:
+      "LNURL1DP68GURN8GHJ7UM9WFMXJCM99E3K7MF0V9CXJ0M385EKVCENXC6R2C35XVUKXEFCV5MKVV34X5EKZD3EV56NYD3HXQURZEPEXEJXXEPNXSCRVWFNV9NXZCN9XQ6XYEFHVGCXXCMYXYMNSERXFQ5FNS",
+  },
+  xrp: { address: "rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf", destinationTag: "276" },
+  cardano: {
+    address: "addr1vx2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzers66hrl8",
+    amount: "12.5",
+  },
+  tron: { address: "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL" },
+  ton: {
+    address: "UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K",
+    token: "TON",
+    amount: "0.005",
+    message: "hello",
+  },
+  stellar: {
+    address: "GCALNQQBXAPZ2WIRSDDBMSTAKCUH5SG6U76YBFLQLIXJTF7FE5AX7AOO",
+    token: "XLM",
+    amount: "120.1234567",
+    memo: "skdjfasf",
+  },
 };
 
 /** Fields that only pick a mode, so they don't count as entered content. */
@@ -167,6 +219,15 @@ const NEUTRAL_FIELDS = new Set([
   "accountType",
   "editable",
   "navigate",
+  // Added 2026-11-22 (payments)
+  "currency",
+  "country",
+  "payableBy",
+  "instant",
+  "amountEditable",
+  "messageEditable",
+  "token",
+  "network",
 ]);
 
 /** True when nobody has typed anything into this type's form yet. */

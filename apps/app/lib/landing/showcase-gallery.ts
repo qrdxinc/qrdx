@@ -142,6 +142,8 @@ const SAMPLE_GREETING = "Hello from QRdx";
 export const SAMPLE_HOSTS = [
   CANONICAL_HOST,
   "wa.me",
+  // Added 2026-11-22 (payments): Swish's payment links
+  "app.swish.nu",
   "www.google.com",
   "search.google.com",
   "www.facebook.com",
@@ -906,6 +908,82 @@ const CONTENT: Record<ContentType, ContentSpec> = {
         "4DemoWa11etAddressForTheQRdxExamp1eDemoWa11etAddressForTheQRdxExamp1eDemoWa11etAddressForTheQRd",
     },
     preset: "classic",
+  },
+  // ── Added 2026-11-22 (payments) ──
+  mecard: {
+    label: "MeCard",
+    config: {
+      type: "mecard",
+      firstName: "Sam",
+      lastName: "Sample",
+      email: "sam@example.com",
+    },
+    preset: "minimal",
+  },
+  // SIX's sample QR-IBAN and QR reference (QR-bill guidelines, Annex A).
+  "swiss-qr-bill": {
+    label: "Swiss QR-bill",
+    // An IBAN without a reference keeps the code small enough for the wall.
+    config: {
+      type: "swiss-qr-bill",
+      iban: "CH5800791123000889012",
+      name: "QRdx Sample",
+      postalCode: "8000",
+      town: "Bern",
+      country: "CH",
+    },
+    preset: "monochrome",
+  },
+  "czech-spd": {
+    label: "QR Platba",
+    config: {
+      type: "czech-spd",
+      account: "CZ9106000000000000000123",
+      message: "Sample payment",
+    },
+    preset: "harbor",
+  },
+  swish: {
+    config: { type: "swish", payee: "1231181189", message: "Sample" },
+    preset: "lavender",
+  },
+  khqr: {
+    config: { type: "khqr", bakongId: "sample@example", name: "QRdx Sample" },
+    preset: "minimal",
+  },
+  lightning: {
+    config: { type: "lightning", request: "yourname@example.com" },
+    preset: "minimal",
+  },
+  xrp: {
+    config: { type: "xrp", address: "rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf" },
+    preset: "cobalt",
+  },
+  cardano: {
+    config: {
+      type: "cardano",
+      address: "addr1vx2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzers66hrl8",
+    },
+    preset: "folio",
+  },
+  tron: {
+    config: { type: "tron", address: "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL" },
+    preset: "sunset",
+  },
+  ton: {
+    label: "TON",
+    config: {
+      type: "ton",
+      address: "UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K",
+    },
+    preset: "harbor",
+  },
+  stellar: {
+    config: {
+      type: "stellar",
+      address: "GCALNQQBXAPZ2WIRSDDBMSTAKCUH5SG6U76YBFLQLIXJTF7FE5AX7AOO",
+    },
+    preset: "graphite",
   },
 };
 
