@@ -30862,5 +30862,461 @@
     "text": "下载 PNG、WebP 或 SVG，也可以在完整编辑器中设计二维码样式。",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
+  },
+  "291d41cbf4b9": {
+    "source": "Books, with the ISBN printed above the bars",
+    "text": "书籍，ISBN 印在条码上方",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.summary"
+  },
+  "54344ae77017": {
+    "source": "An ISBN-13 (leave its check digit off and it's added), or a whole ISBN-10 to convert, with or without hyphens. The hyphens are placed for you.",
+    "text": "可输入 ISBN-13（省略校验位会自动补上），也可输入完整的 ISBN-10 进行转换，带不带连字符均可。连字符会自动加好。",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.inputHint"
+  },
+  "a2e6713f08d5": {
+    "source": "Optional. In the US and Canada, 5 digits for the price: 5 and the US$ price (52499 is $24.99), or 90000 for none.",
+    "text": "可选。在美国和加拿大，用 5 位数字表示价格：5 加美元价格（52499 表示 24.99 美元），无价格则填 90000。",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.addOn.hint"
+  },
+  "e9e1f300825c": {
+    "source": "Magazines, journals and newspapers, with an issue add-on",
+    "text": "杂志、期刊和报纸，附带期号附加码",
+    "status": "machine",
+    "context": "barcodes.formats.issn.summary"
+  },
+  "966fa72ffe19": {
+    "source": "The 8-character ISSN (NNNN-NNNC), or its first 7 digits and the check digit is added. A 13-digit 977 number works too.",
+    "text": "8 位字符的 ISSN（NNNN-NNNC），或只输入前 7 位，校验位会自动补上。13 位的 977 开头号码也可以。",
+    "status": "machine",
+    "context": "barcodes.formats.issn.inputHint"
+  },
+  "9843a124a0e4": {
+    "source": "Optional: usually the issue number in 2 digits, or 5 digits.",
+    "text": "可选：通常为 2 位的期号，或 5 位数字。",
+    "status": "machine",
+    "context": "barcodes.formats.issn.addOn.hint"
+  },
+  "1ee9182bc1fb": {
+    "source": "Printed music: scores, parts and songbooks",
+    "text": "乐谱出版物：总谱、分谱和歌曲集",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.summary"
+  },
+  "b4688bb37eca": {
+    "source": "An ISMN of 13 digits starting 979-0, or the old 10-character form starting with M, with or without hyphens. Leave the check digit off and it's added.",
+    "text": "以 979-0 开头的 13 位 ISMN，或以 M 开头的旧版 10 位字符格式，带不带连字符均可。省略校验位会自动补上。",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.inputHint"
+  },
+  "7057f3f09102": {
+    "source": "Optional: 2 or 5 digits, if a distributor asks for one.",
+    "text": "可选：2 位或 5 位数字，如发行商有要求。",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.addOn.hint"
+  },
+  "8c6f1a2db028": {
+    "source": "The barcode on retail products almost everywhere outside North America. It holds a 13-digit GTIN: a company prefix from GS1, an item number and a check digit. Books, magazines and printed music use it too; their types below print the ISBN, ISSN or ISMN above the bars.",
+    "text": "北美以外几乎所有地区零售商品上使用的条码。它包含一个 13 位的 GTIN：由 GS1 分配的公司前缀、商品编号和校验位。书籍、杂志和乐谱出版物也使用它；下面对应的类型会把 ISBN、ISSN 或 ISMN 印在条码上方。",
+    "status": "machine",
+    "context": "barcodes.uses.ean13"
+  },
+  "e27297574e0f": {
+    "source": "Books. The ISBN-13 is drawn as an EAN-13 starting 978 or 979, with the hyphenated ISBN printed above the bars. ISBN-10s are converted, and a 5-digit price add-on can go beside it for the US and Canadian book trade.",
+    "text": "用于书籍。ISBN-13 以 978 或 979 开头，按 EAN-13 绘制，带连字符的 ISBN 印在条码上方。ISBN-10 会被转换，旁边还可加上 5 位的价格附加码，供美国和加拿大的图书贸易使用。",
+    "status": "machine",
+    "context": "barcodes.uses.isbn"
+  },
+  "79c76e0d75e5": {
+    "source": "Magazines, journals and newspapers. The ISSN goes into an EAN-13 starting 977 with 2 digits for price or edition changes, and a 2-digit add-on usually carries the issue number.",
+    "text": "用于杂志、期刊和报纸。ISSN 会写入以 977 开头的 EAN-13，其中 2 位用于价格或版本变化，另有 2 位附加码，通常表示期号。",
+    "status": "machine",
+    "context": "barcodes.uses.issn"
+  },
+  "cc84a096325d": {
+    "source": "Printed music: scores, parts and songbooks. The ISMN is drawn as an EAN-13 starting 979-0 with the ISMN printed above it, and old numbers starting with M are converted.",
+    "text": "用于乐谱出版物：总谱、分谱和歌曲集。ISMN 按以 979-0 开头的 EAN-13 绘制，ISMN 印在条码上方，以 M 开头的旧号码会被转换。",
+    "status": "machine",
+    "context": "barcodes.uses.ismn"
+  },
+  "2182d8e7b974": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "如果是在商店销售的商品，是的。EAN、UPC、ITF-14 和 GS1-128 承载的是 GTIN，而 GTIN 由 GS1（或你所在国家的 GS1 组织）授权给你的公司；零售商的系统不会识别随意编造的号码。书籍、连续出版物和乐谱出版物则改用国家相应机构分配的 ISBN、ISSN 或 ISMN。本生成器可以绘制任何有效号码，但不负责发放或注册号码。如果用于自己的库存、资产或票券，Code 128、Code 39 和 Code 93 无需注册。",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "44ff97b6fe1e": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN and the GTIN and SSCC fields of GS1-128: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "会，适用于 EAN-13、EAN-8、UPC-A、UPC-E、ITF-14、ISBN、ISSN、ISMN，以及 GS1-128 的 GTIN 和 SSCC 字段：省略最后一位，系统会自动算出。输入完整号码时会验证校验位；校验位有误则显示错误提示，而不会生成条码。",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "ecc099e5186f": {
+    "source": "Yes, with the ISBN barcode type: it's an EAN-13 of the ISBN-13 with the hyphenated ISBN printed above the bars, and it takes an ISBN-10 and a 5-digit price add-on too. ISSN (magazines) and ISMN (printed music) have their own types.",
+    "text": "可以，请使用 ISBN 条形码类型：它是以 ISBN-13 生成的 EAN-13，条形码上方印有带连字符的 ISBN，还支持 ISBN-10 和 5 位价格附加码。ISSN（杂志）和 ISMN（乐谱）有各自的类型。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ean-13.faqs.2.answer"
+  },
+  "3835c42e60bf": {
+    "source": "Free ISBN Barcode Generator with Price Add-on",
+    "text": "免费 ISBN 条形码生成器，支持价格附加码",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.title"
+  },
+  "176aa5f9c65e": {
+    "source": "Make an ISBN barcode for a book cover: ISBN-13 or ISBN-10, check digit and hyphens worked out, and an optional price add-on. SVG, PDF and EPS. Free.",
+    "text": "为书籍封面制作 ISBN 条形码：支持 ISBN-13 或 ISBN-10，自动计算校验码并添加连字符，还可选价格附加码。提供 SVG、PDF 和 EPS 下载。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.metaDescription"
+  },
+  "da610243ac4c": {
+    "source": "An ISBN barcode is an EAN-13 of the book's 13-digit ISBN, with the ISBN printed above the bars. Type the ISBN, with or without hyphens, and the generator checks it, places the hyphens and draws the barcode, with a 5-digit price add-on if you sell in the US or Canada.",
+    "text": "ISBN 条形码就是图书 13 位 ISBN 的 EAN-13，ISBN 印在条形码上方。输入 ISBN（带不带连字符均可），生成器会校验、添加连字符并绘制条形码；如果你在美国或加拿大销售，还可加上 5 位价格附加码。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.intro"
+  },
+  "0b6b8b3c5b67": {
+    "source": "The back cover of books, where bookshops, distributors and libraries scan it to look the book up. The ISBN Users' Manual recommends the lower right of the back cover, near the spine.",
+    "text": "书籍封底：书店、经销商和图书馆通过扫描它来查询图书。《ISBN 用户手册》建议放在封底右下角、靠近书脊处。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.0"
+  },
+  "a1da95764261": {
+    "source": "Each edition and format of a book has its own ISBN, so a hardback, a paperback and an audiobook each carry a different barcode. ISBNs start with 978 or 979; numbers starting 979-0 are ISMNs, for printed music.",
+    "text": "书籍的每个版本和格式都有各自的 ISBN，因此精装本、平装本和有声书各带不同的条形码。ISBN 以 978 或 979 开头；以 979-0 开头的号码是 ISMN，用于乐谱。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.1"
+  },
+  "3e73fd5280af": {
+    "source": "Where do ISBNs come from?",
+    "text": "ISBN 从哪里来？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.title"
+  },
+  "e439e1b8c34c": {
+    "source": "From the ISBN agency of the country where the publisher is based. Some agencies charge for ISBNs and some give them out free; the International ISBN Agency lists them all.",
+    "text": "来自出版商所在国家的 ISBN 机构。有的机构收费，有的免费发放；国际 ISBN 机构列出了全部机构。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.0"
+  },
+  "69d6787067ee": {
+    "source": "This generator draws the barcode of an ISBN you already have. It doesn't issue or register ISBNs.",
+    "text": "本生成器为你已有的 ISBN 绘制条形码，不负责分配或注册 ISBN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.1"
+  },
+  "2c37843cb158": {
+    "source": "Type an ISBN-13 or an ISBN-10, with or without hyphens or spaces. Twelve digits get the check digit added and thirteen have it checked. A whole ISBN-10, check digit included, is converted to its ISBN-13: 978 in front of its first nine digits and a new check digit.",
+    "text": "输入 ISBN-13 或 ISBN-10，带不带连字符或空格均可。输入十二位数字会自动补上校验码，输入十三位则会校验。完整的 ISBN-10（含校验码）会转换为 ISBN-13：在前九位数字前加上 978，并重新计算校验码。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.0"
+  },
+  "c521fc56dc83": {
+    "source": "The ISBN above the bars is split into its five parts (prefix, registration group, registrant, publication and check digit) by the ranges the International ISBN Agency publishes, because the parts' lengths differ from one country and publisher to the next.",
+    "text": "条形码上方的 ISBN 按国际 ISBN 机构发布的区段范围拆分为五个部分（前缀、登记组、登记者、出版物和校验码），因为各部分的长度因国家和出版商而异。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.1"
+  },
+  "e9a28cedaf04": {
+    "source": "The check digit is the EAN-13 one: the first 12 digits are weighted 1, 3, 1, 3… and the check digit brings their sum to a multiple of 10.",
+    "text": "校验码与 EAN-13 相同：前 12 位数字依次按 1、3、1、3……加权，校验码使其总和成为 10 的倍数。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.2"
+  },
+  "8d1f674af2a1": {
+    "source": "The add-on goes in its own field. In the US and Canada it's 5 digits: the first is the currency (5 for US dollars, 6 for Canadian dollars) and the rest the price, so 52499 is US$24.99, and 90000 means no price. Elsewhere the ISBN Users' Manual keeps 90000 to 98999 for publishers' own use.",
+    "text": "附加码在单独的字段中填写。在美国和加拿大为 5 位数字：第一位是货币（5 代表美元，6 代表加元），其余是价格，所以 52499 即 US$24.99，90000 表示无价格。在其他地区，《ISBN 用户手册》将 90000 至 98999 留给出版商自用。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.3"
+  },
+  "e4dc52a1d225": {
+    "source": "An ISBN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISBN 条形码就是 EAN-13，因此适用 EAN-13 的尺寸：100% 时（含空白区）宽 37.29 mm，模块宽度 0.33 mm，GS1 允许 80% 到 200%。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.0"
+  },
+  "8b96afae7ca3": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%, and put the add-on 9 modules right of the main bars, within the 7 to 12 GS1 allows. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "矢量下载文件使用 0.353 mm 的模块宽度，约为 107%，并将附加码置于主条形码右侧 9 个模块处，在 GS1 允许的 7 到 12 之内。缩放时请保持比例，不要裁短条高。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.1"
+  },
+  "c705fd825b60": {
+    "source": "Keep cover artwork out of the quiet zones and away from the ISBN line above the bars.",
+    "text": "封面图案请避开空白区，并远离条形码上方的 ISBN 行。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.2"
+  },
+  "196d06fdae79": {
+    "source": "Can I use my old ISBN-10?",
+    "text": "我能用旧的 ISBN-10 吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.question"
+  },
+  "fd750967eae9": {
+    "source": "Yes. Type it and the generator converts it to the ISBN-13 that goes in the barcode: 978, its first nine digits and a new check digit. ISBN agencies have only given out 13-digit ISBNs since 1 January 2007.",
+    "text": "可以。输入后，生成器会将其转换为用于条形码的 ISBN-13：978、前九位数字和新的校验码。ISBN 机构自 2007 年 1 月 1 日起只分配 13 位 ISBN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.answer"
+  },
+  "6c5182bf9e13": {
+    "source": "Do I need the 5-digit price add-on?",
+    "text": "需要 5 位价格附加码吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.question"
+  },
+  "a9c462c78717": {
+    "source": "Only if you sell through the US or Canadian book trade, which uses it for the cover price. Use 90000 if you don't want a price in the barcode. Outside North America, leave it off.",
+    "text": "只有通过美国或加拿大的图书渠道销售时才需要，那里用它标示封面定价。如果不想在条形码中包含价格，请使用 90000。北美以外的地区不用加。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.answer"
+  },
+  "38a719101040": {
+    "source": "Is an ISBN barcode just an EAN-13?",
+    "text": "ISBN 条形码就是 EAN-13 吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.question"
+  },
+  "cd2e286d9bfd": {
+    "source": "The bars are an EAN-13 of the ISBN-13, and checkout scanners read it as one. An ISBN barcode also prints the hyphenated ISBN above the bars, as the ISBN Users' Manual asks, which the EAN-13 generator doesn't.",
+    "text": "条形码本身是 ISBN-13 的 EAN-13，收银扫描枪按 EAN-13 读取。ISBN 条形码还会按《ISBN 用户手册》的要求在条形码上方印出带连字符的 ISBN，EAN-13 生成器则不会。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.answer"
+  },
+  "e8ce71038550": {
+    "source": "Why are the hyphens different from the ones I typed?",
+    "text": "为什么连字符和我输入的不一样？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.question"
+  },
+  "4fec2a0ce9cf": {
+    "source": "Each part of an ISBN has a length set by the International ISBN Agency's ranges, and the generator places the hyphens from them. If your ISBN is in a range newer than the generator's copy, type it with its hyphens and they're printed as you wrote them.",
+    "text": "ISBN 每个部分的长度由国际 ISBN 机构的区段范围决定，生成器据此添加连字符。如果你的 ISBN 所在区段比生成器的数据更新，请带连字符输入，它们将按你写的原样印出。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.answer"
+  },
+  "f188d75a04c1": {
+    "source": "Free ISSN Barcode Generator for Magazines",
+    "text": "免费 ISSN 条形码生成器，适用于杂志",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.title"
+  },
+  "1f64921e91f2": {
+    "source": "Make an ISSN barcode for a magazine or journal: the 977 EAN-13 with its sequence variant and an issue add-on, check digits worked out. SVG, PDF, EPS. Free.",
+    "text": "为杂志或期刊制作 ISSN 条形码：以 977 开头的 EAN-13，含序列变体和期号附加码，校验位自动算出。支持 SVG、PDF、EPS。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.metaDescription"
+  },
+  "bfca3d83074b": {
+    "source": "An ISSN barcode puts the ISSN of a magazine, journal or newspaper into an EAN-13 starting 977, usually with a 2-digit add-on for the issue number. Type the ISSN and the issue, and the generator works out both check digits and draws the barcode with the ISSN above it.",
+    "text": "ISSN 条形码把杂志、期刊或报纸的 ISSN 放进以 977 开头的 EAN-13，通常再加一个表示期号的 2 位附加码。输入 ISSN 和期号，生成器会算出两个校验位，并绘制条形码，ISSN 显示在条形码上方。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.intro"
+  },
+  "c97f6be9f476": {
+    "source": "Covers of magazines, journals, newspapers and other serials sold in shops. Retailers and wholesalers scan the main barcode to find the title, and the add-on tells one issue from the next.",
+    "text": "用于在商店销售的杂志、期刊、报纸及其他连续出版物的封面。零售商和批发商扫描主条形码来识别刊名，附加码则用来区分不同的期号。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.0"
+  },
+  "b78d01fd74c8": {
+    "source": "A title published both in print and online has a different ISSN for each; the barcode goes on the print edition.",
+    "text": "同时有印刷版和在线版的刊物，两者的 ISSN 各不相同；条形码用于印刷版。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.1"
+  },
+  "2a6774d25d70": {
+    "source": "Where do ISSNs come from?",
+    "text": "ISSN 从哪里获得？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.title"
+  },
+  "21ee727a32d4": {
+    "source": "From the national ISSN centre of the publisher's country, or the ISSN International Centre where there's none. Publishers don't make up ISSNs themselves.",
+    "text": "由出版方所在国家的 ISSN 国家中心提供；没有国家中心的，则由 ISSN 国际中心提供。出版方不能自行编造 ISSN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.0"
+  },
+  "b88925ce2ed3": {
+    "source": "This generator draws the barcode of an ISSN you already have; it doesn't issue or register ISSNs. Distributors may have their own rules for the variant and add-on digits, so check with yours.",
+    "text": "本生成器只为你已有的 ISSN 绘制条形码，不负责分配或登记 ISSN。发行商对变体和附加码数字可能有自己的规定，请向你的发行商确认。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.1"
+  },
+  "3cd9c9d76ec9": {
+    "source": "Type the 8-character ISSN, NNNN-NNNC, or its first 7 digits to have the check digit added. An ISSN's check digit is weighted 8 down to 2, modulo 11, so it can be X.",
+    "text": "输入 8 位字符的 ISSN（NNNN-NNNC），或只输入前 7 位数字，由系统补上校验位。ISSN 的校验位按 8 到 2 递减加权、以 11 取模计算，因此可能是 X。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.0"
+  },
+  "e18df648537b": {
+    "source": "The barcode holds 977, the ISSN's first 7 digits (its check digit is left out), the 2-digit sequence variant and an EAN-13 check digit. The variant is 00 unless you change it: publishers use it for extra information such as a change of price.",
+    "text": "条形码包含 977、ISSN 的前 7 位数字（不含其校验位）、2 位序列变体和 EAN-13 校验位。除非你修改，变体默认为 00：出版方用它来表示额外信息，例如价格变动。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.1"
+  },
+  "217b7f21d84b": {
+    "source": "The add-on is usually the issue number in 2 digits; 5 digits work too. You can also type the 13-digit 977 number from an existing barcode, and the ISSN and variant are read from it.",
+    "text": "附加码通常是 2 位的期号；5 位也可以。你也可以直接输入现有条形码上的 13 位 977 编号，系统会从中读出 ISSN 和变体。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.2"
+  },
+  "81617eedd878": {
+    "source": "An ISSN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISSN 条形码就是 EAN-13，因此适用 EAN-13 的尺寸：在 100% 时，含空白区宽 37.29 mm，模块宽 0.33 mm；GS1 允许的缩放范围为 80% 到 200%。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.sizing.0"
+  },
+  "029b41d87aed": {
+    "source": "What should the 2-digit add-on be?",
+    "text": "2 位附加码应该填什么？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.question"
+  },
+  "a6d582e1f7e1": {
+    "source": "Usually the issue number, counted the way your distributor asks: a weekly title and a monthly title number their issues differently. A new issue only needs a new add-on, not a new ISSN.",
+    "text": "通常是期号，具体按发行商要求的方式计数：周刊和月刊的期号编法并不相同。新的一期只需更换附加码，不需要新的 ISSN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.answer"
+  },
+  "8bf75513f21a": {
+    "source": "When do I change the sequence variant?",
+    "text": "什么时候需要更改序列变体？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.question"
+  },
+  "d47879b0459f": {
+    "source": "When an issue needs a different main barcode, for example for a different cover price. Most titles keep 00.",
+    "text": "当某一期需要不同的主条形码时，例如封面定价不同。大多数刊物保持 00。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.answer"
+  },
+  "05f5e8f2dfc8": {
+    "source": "Is an ISSN barcode an EAN-13?",
+    "text": "ISSN 条形码是 EAN-13 吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.question"
+  },
+  "14b5a2d47c79": {
+    "source": "Yes, one starting 977, and checkout scanners read it as one. The add-on is a small separate barcode to its right; scanners set up to read add-ons report it after the 13 digits.",
+    "text": "是的，是以 977 开头的 EAN-13，收银扫描枪也按 EAN-13 读取。附加码是其右侧另一个独立的小条形码；支持读取附加码的扫描枪会在 13 位数字之后输出附加码。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.answer"
+  },
+  "8258c7e9de6f": {
+    "source": "Free ISMN Barcode Generator for Printed Music",
+    "text": "免费 ISMN 条形码生成器：适用于印刷乐谱",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.title"
+  },
+  "ab1e3a860c80": {
+    "source": "Make an ISMN barcode for sheet music and scores: 979-0 ISMNs or old M- numbers, check digit and hyphens worked out. SVG, PDF and EPS for print. Free.",
+    "text": "制作乐谱和总谱用的 ISMN 条形码：支持 979-0 开头的 ISMN 或旧版 M- 编号，自动算出校验码和连字符。提供用于印刷的 SVG、PDF 和 EPS。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.metaDescription"
+  },
+  "8360e12af0d1": {
+    "source": "An ISMN identifies a publication of notated music, such as a score, a set of parts or a songbook, and is printed as an EAN-13 starting 979-0 with the ISMN above the bars. Type the ISMN, or an old number starting with M, and download the barcode for your cover.",
+    "text": "ISMN 用来标识一种乐谱类出版物，例如总谱、分谱或歌曲集，印刷时是以 979-0 开头的 EAN-13，ISMN 号码印在条码上方。输入 ISMN 或以 M 开头的旧编号，即可下载用于封面的条形码。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.intro"
+  },
+  "b7522c7e8483": {
+    "source": "Printed and digital sheet music: scores, parts, songbooks and other notated music, scanned by music shops, distributors and libraries. Each part sold on its own has its own ISMN.",
+    "text": "印刷版和数字版乐谱：总谱、分谱、歌曲集及其他乐谱，由乐谱店、经销商和图书馆扫描。单独销售的每个分谱都有各自的 ISMN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.0"
+  },
+  "befd5a2d10e8": {
+    "source": "Books about music get an ISBN instead, and sound recordings have identifiers of their own. A songbook can have both an ISMN and an ISBN.",
+    "text": "关于音乐的图书使用 ISBN，录音制品则有各自的标识符。一本歌曲集可以同时拥有 ISMN 和 ISBN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.1"
+  },
+  "a8a30623f353": {
+    "source": "Where do ISMNs come from?",
+    "text": "ISMN 从哪里获得？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.title"
+  },
+  "775f3d68ead8": {
+    "source": "From the ISMN agency of the publisher's country, appointed by the International ISMN Agency. A publisher gets a registrant number and usually numbers its publications from it.",
+    "text": "来自出版者所在国家的 ISMN 机构，由国际 ISMN 机构指定。出版者会获得一个出版者号，通常以此为基础给自己的出版物编号。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.0"
+  },
+  "30668fbec2bc": {
+    "source": "This generator draws the barcode of an ISMN you already have. It doesn't issue or register ISMNs.",
+    "text": "本生成器为你已有的 ISMN 绘制条形码，不负责分配或注册 ISMN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.1"
+  },
+  "8f30796bbe15": {
+    "source": "Type the 13 digits starting 979-0, with or without hyphens, or 12 to have the check digit added. An old 10-character ISMN starting with M is converted: the M becomes 979-0 and the check digit stays the same.",
+    "text": "输入以 979-0 开头的 13 位数字（可带或不带连字符），或输入 12 位数字由系统补上校验码。以 M 开头的 10 位字符旧版 ISMN 会被转换：M 变为 979-0，校验码保持不变。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.0"
+  },
+  "168c909528f2": {
+    "source": "The ISMN above the bars is split into prefix, registrant, item and check digit. The registrant's length comes from its first digit, as the ISMN Users' Manual sets out: 000 to 099, 1000 to 3999, 40000 to 69999, 700000 to 899999, then 9000000 to 9999999.",
+    "text": "条码上方的 ISMN 会拆分为前缀、出版者号、出版物号和校验码。出版者号的长度由其首位数字决定，依据《ISMN 用户手册》：000 至 099、1000 至 3999、40000 至 69999、700000 至 899999，然后是 9000000 至 9999999。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.1"
+  },
+  "78cca6abd0a8": {
+    "source": "An ISMN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISMN 条形码就是 EAN-13，因此适用 EAN-13 的尺寸：100% 时含空白区宽 37.29 mm，模块宽 0.33 mm，GS1 允许 80% 至 200%。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.0"
+  },
+  "44f3668734ec": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "矢量格式下载使用 0.353 mm 的模块宽度，约为 107%。缩放时请保持比例，不要裁剪条高。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.1"
+  },
+  "c3d3d98f6c6f": {
+    "source": "Can I use an old ISMN starting with M?",
+    "text": "可以使用以 M 开头的旧版 ISMN 吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.question"
+  },
+  "96dbf79e7003": {
+    "source": "Yes. Type it and the generator converts it: M-2306-7118-7 becomes 979-0-2306-7118-7, with the same check digit. ISMNs have been 13 digits since 2008.",
+    "text": "可以。输入后生成器会自动转换：M-2306-7118-7 会变成 979-0-2306-7118-7，校验码相同。自 2008 年起，ISMN 均为 13 位数字。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.answer"
+  },
+  "d3b707d21e7c": {
+    "source": "ISMN or ISBN for a songbook?",
+    "text": "歌曲集用 ISMN 还是 ISBN？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.question"
+  },
+  "986280e8e50f": {
+    "source": "It can have both, and the ISMN Users' Manual leaves the choice to the publisher when only one is used. Books about music, with no notated music as their content, take an ISBN.",
+    "text": "可以两者都有。仅使用其中一种时，《ISMN 用户手册》将选择权交给出版者。内容不是乐谱的音乐类图书使用 ISBN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.answer"
+  },
+  "af6b85c2a74a": {
+    "source": "Can I add a price add-on?",
+    "text": "可以加价格附加码吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.question"
+  },
+  "e685660fa860": {
+    "source": "Yes, 2 or 5 digits, in the add-on field. The ISMN Users' Manual doesn't ask for one, so add it only if your distributor does.",
+    "text": "可以，在附加码字段中输入 2 位或 5 位数字。《ISMN 用户手册》并未要求添加，所以只有在经销商要求时才需要加。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.answer"
+  },
+  "e71d1a8889ec": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "支持 EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417 或 Aztec。会校验输入的值（校验位、长度、字符），并返回一张 PNG 图片，以及公开的 SVG、PNG、PDF 等图片链接。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

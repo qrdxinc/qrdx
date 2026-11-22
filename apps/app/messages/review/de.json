@@ -5931,6 +5931,14 @@
     "source": "ae666056181c",
     "status": "machine"
   },
+  "barcodeTool.addOn": {
+    "source": "1d36d78123e1",
+    "status": "machine"
+  },
+  "barcodeTool.variant": {
+    "source": "eaa8eb1aeb31",
+    "status": "machine"
+  },
   "barcodeTool.barColor": {
     "source": "4fde3f3ee7a9",
     "status": "machine"
@@ -6017,6 +6025,10 @@
   },
   "barcodeTool.scan.passed": {
     "source": "8700f215fada",
+    "status": "machine"
+  },
+  "barcodeTool.scan.addOnNotChecked": {
+    "source": "9af84201f0ee",
     "status": "machine"
   },
   "barcodeTool.scan.mismatch": {
@@ -6165,6 +6177,90 @@
   },
   "barcodeTool.issues.gs1TooLong": {
     "source": "94da50fa92a1",
+    "status": "machine"
+  },
+  "barcodeTool.issues.isbnChars": {
+    "source": "ec905288f954",
+    "status": "machine"
+  },
+  "barcodeTool.issues.isbnLength": {
+    "source": "abb25d1478be",
+    "status": "machine"
+  },
+  "barcodeTool.issues.isbnPrefix": {
+    "source": "6356b15e68bf",
+    "status": "machine"
+  },
+  "barcodeTool.issues.isbnIsIsmn": {
+    "source": "c6e093ac62a1",
+    "status": "machine"
+  },
+  "barcodeTool.issues.isbnUnknownRange": {
+    "source": "0d84995bed9d",
+    "status": "machine"
+  },
+  "barcodeTool.issues.isbn10Converted": {
+    "source": "b4da3740e3aa",
+    "status": "machine"
+  },
+  "barcodeTool.issues.isbnHyphenated": {
+    "source": "037d21f6d461",
+    "status": "machine"
+  },
+  "barcodeTool.issues.issnChars": {
+    "source": "495684b78bbf",
+    "status": "machine"
+  },
+  "barcodeTool.issues.issnLength": {
+    "source": "a5a3ca0ec21d",
+    "status": "machine"
+  },
+  "barcodeTool.issues.issnPrefix": {
+    "source": "310a0d83e47d",
+    "status": "machine"
+  },
+  "barcodeTool.issues.issnParts": {
+    "source": "b16b51ab2dda",
+    "status": "machine"
+  },
+  "barcodeTool.issues.issnVariant": {
+    "source": "b8ed1232dafa",
+    "status": "machine"
+  },
+  "barcodeTool.issues.issnEanVariant": {
+    "source": "872309257ac5",
+    "status": "machine"
+  },
+  "barcodeTool.issues.issnVariantAssumed": {
+    "source": "d141d351e0a0",
+    "status": "machine"
+  },
+  "barcodeTool.issues.issnFromEan": {
+    "source": "5f582d39c435",
+    "status": "machine"
+  },
+  "barcodeTool.issues.ismnChars": {
+    "source": "ef8f4e943948",
+    "status": "machine"
+  },
+  "barcodeTool.issues.ismnLength": {
+    "source": "6514f0c62b31",
+    "status": "machine"
+  },
+  "barcodeTool.issues.ismnPrefix": {
+    "source": "a3884a568563",
+    "status": "machine"
+  },
+  "barcodeTool.issues.ismnConverted": {
+    "source": "041abb30d2ef",
+    "status": "machine"
+  },
+  "barcodeTool.issues.addOnDigits": {
+    "source": "bf409a88b82b",
+    "status": "machine"
+  },
+  "barcodeTool.issues.addOnLength": {
+    "source": "95d2597147fb",
     "status": "machine"
   },
   "barcodeTool.issues.unknownFormat": {
