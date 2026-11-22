@@ -4,13 +4,11 @@ import type { ColorConfig, QRProps } from "../types";
 import { normalizeColorConfig } from "../types/color-helpers";
 import { EYE_POSITIONS } from "../types/constants";
 import type { QRArtPixels } from "./art";
-import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_FGCOLOR,
   DEFAULT_MARGIN,
   DEFAULT_SIZE,
-  ERROR_LEVEL_MAP,
 } from "./constants";
 import { handleImageLoad } from "./detection";
 import { withQRSize } from "./download";
@@ -24,6 +22,7 @@ import {
   weakestEyePattern,
 } from "./looks";
 import { circleQuietZone, getLayoutMargin, isShapedCode } from "./qr-shape";
+import { encodeSymbol } from "./symbol";
 import { getTemplateCodeShare } from "./template-placement";
 import { getImageSettings, getLuminance, resolveErrorLevel } from "./utils";
 import { parseColor, type RGBAColor } from "./utils/parse-color";
@@ -702,9 +701,10 @@ function contrastChecks(
 }
 
 function moduleCount(props: QRProps) {
-  return qrcodegen.QrCode.encodeText(
+  return encodeSymbol(
     props.value,
-    ERROR_LEVEL_MAP[resolveErrorLevel(props)]
+    resolveErrorLevel(props),
+    props.exactLevel
   ).getModules();
 }
 
@@ -777,6 +777,7 @@ function logoCheck(props: QRProps): {
       margin: props.margin ?? DEFAULT_MARGIN,
       level,
       shape: props.shape,
+      exactLevel: props.exactLevel,
     },
     imageSettings
   );

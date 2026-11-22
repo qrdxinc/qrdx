@@ -80,6 +80,7 @@ const svgProps = {
   eyeColors: null,
   moduleScale: Number,
   autoLevel: flag,
+  exactLevel: flag,
   shape: null,
   eyeShapes: null,
   eyeGradient: null,

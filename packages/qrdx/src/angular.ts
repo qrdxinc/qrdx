@@ -106,6 +106,7 @@ export class QRCode implements QRCodeInputs {
   readonly logoOptions: Prop<"logoOptions"> = input();
   readonly hideLogo: Prop<"hideLogo"> = input();
   readonly autoLevel: Prop<"autoLevel"> = input();
+  readonly exactLevel: Prop<"exactLevel"> = input();
   readonly scale: Prop<"scale"> = input();
   readonly templateId: Prop<"templateId"> = input();
   readonly customTemplate: Prop<"customTemplate"> = input();
@@ -148,6 +149,7 @@ export class QRCode implements QRCodeInputs {
       logoOptions: this.logoOptions(),
       hideLogo: this.hideLogo(),
       autoLevel: this.autoLevel(),
+      exactLevel: this.exactLevel(),
       scale: this.scale(),
       templateId: this.templateId(),
       customTemplate: this.customTemplate(),

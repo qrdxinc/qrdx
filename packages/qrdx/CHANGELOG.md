@@ -2,6 +2,15 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## 0.0.62
+
+### Exact error correction (`exactLevel`)
+
+- **`exactLevel` encodes at exactly the level the code is drawn at.** `level` has been a minimum: when the data still fits the same version at a higher level, the encoder uses the higher one, so a code asked for at `M` could come out at `Q` or `H`. With `exactLevel: true` it stays at the level asked for (or the one `autoLevel` raises it to). It's off by default, and without it every code is byte for byte what 0.0.61 drew (tests/exact-level.test.ts pins a code the encoder raises from `M` to `Q`).
+- **One symbol everywhere.** Every path that builds the matrix encodes through one function now (`encodeSymbol` in `src/symbol.ts`), so the SVG tree, the plain renderer (`getQRAsSVG`), the canvas, `getQRAsSVGDataUri` and the PNG, JPG, WebP, PDF and EPS built on it, `getQRData`'s logo layout, the logo budget (`getLogoBlockDamage`, `getLogoSizeLimit`), `getBgRadiusLimit`, `getQRModuleCount` and the scan score all see the same symbol. With `exactLevel` a logo is held to the budget of the level drawn, not the raised one.
+- Swiss QR-bills need it: SIX's Swiss Implementation Guidelines for the QR-bill ask for error correction `M` (section 6.1). The encoder only raises `M` for data of 46 bytes or less (versions 1 to 4), and the shortest valid Swiss QR-bill is about 74 bytes, so no bill came out above `M`; `exactLevel` makes that a guarantee rather than a property of the capacity tables.
+- The option is a prop of every component (`exactLevel`), an attribute of `<qrdx-code>` (`exact-level`), an input of the Angular component and a flag of the Vue one, and is part of `qrPropsSchema`. `getQRData` and `resolveQRCodeProps` pass it on.
+
 ## 0.0.61
 
 ### React 16.8 and 17

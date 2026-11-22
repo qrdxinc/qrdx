@@ -1,11 +1,11 @@
 /** biome-ignore-all lint/style/noMagicNumbers: print measurements */
 import type { jsPDF as JsPDF, ShadingPattern } from "jspdf";
 import type { QRProps } from "../types";
-import qrcodegen from "./codegen";
-import { DEFAULT_MARGIN, ERROR_LEVEL_MAP } from "./constants";
+import { DEFAULT_MARGIN } from "./constants";
 import { downloadFile } from "./download";
 import { getFrameLayout, isFrameActive } from "./frame";
 import { getLayoutMargin } from "./qr-shape";
+import { encodeSymbol } from "./symbol";
 import { resolveErrorLevel } from "./utils";
 import { COORD_DECIMALS, fmt } from "./utils/fmt";
 import { type RGBAColor, rgbToCmyk } from "./utils/parse-color";
@@ -100,10 +100,7 @@ function toMillimetres(value: number, unit: PrintUnit = "mm"): number {
 /** Modules across the code for these props, margin included. */
 export function getQRModuleCount(props: QRProps): number {
   const level = resolveErrorLevel(props);
-  const symbol = qrcodegen.QrCode.encodeText(
-    props.value,
-    ERROR_LEVEL_MAP[level]
-  ).size;
+  const symbol = encodeSymbol(props.value, level, props.exactLevel).size;
   // A circle code is drawn further in, inside its disc
   return (
     symbol +
