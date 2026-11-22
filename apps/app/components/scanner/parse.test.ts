@@ -3,11 +3,13 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { csvCell, toCsv } from "./csv";
 import {
+  controlName,
   formatWei,
   isValidGtin,
   type ParsedScan,
   parseGs1ElementString,
   parseScan,
+  showControlCharacters,
   summarizeScan,
 } from "./parse";
 
@@ -249,6 +251,35 @@ describe("GS1 and product codes", () => {
     assert.equal(parseScan("(01)09506000134352", "data_matrix").kind, "gs1");
   });
 
+  it("reads GS1 DataBar's bare element strings as GS1 data, and only DataBar's", () => {
+    for (const format of [
+      "databar_omni",
+      "databar_limited",
+      "databar_stacked",
+    ]) {
+      const { data } = expectKind(parseScan("0109521234543213", format), "gs1");
+      assert.equal(data.gtin, "09521234543213");
+      assert.deepEqual(data.fields, [
+        { label: "GTIN", value: "09521234543213" },
+      ]);
+    }
+    const expanded = expectKind(
+      parseScan("010950110153000310LOT-7\u001d17261231", "databar_expanded"),
+      "gs1",
+    );
+    assert.deepEqual(expanded.data.fields, [
+      { label: "GTIN", value: "09501101530003" },
+      { label: "Batch / lot", value: "LOT-7" },
+      { label: "Expiry date", value: "2026-12-31" },
+    ]);
+    // The same digits from any other format stay what they were.
+    for (const format of ["code_128", "qr_code", "data_matrix", "maxi_code"]) {
+      assert.equal(parseScan("0109521234543213", format).kind, "text");
+    }
+    assert.equal(parseScan("0109521234543213").kind, "text");
+    assert.equal(parseScan("hello", "databar_expanded").kind, "text");
+  });
+
   it("validates EAN/UPC check digits", () => {
     assert.equal(isValidGtin("4006381333931"), true);
     assert.equal(isValidGtin("4006381333932"), false);
@@ -282,6 +313,19 @@ describe("helpers", () => {
     assert.equal(formatWei("1500000000000000000"), "1.5");
     assert.equal(formatWei("2.014e18"), "2.014");
     assert.equal(formatWei("abc"), null);
+  });
+
+  it("shows control characters as pictures", () => {
+    assert.equal(
+      showControlCharacters("[)>\u001e01\u001d96\u001e\u0004"),
+      "[)>␞01␝96␞␄",
+    );
+    assert.equal(showControlCharacters("a\tb\r\nc\u007f"), "a\tb\r\nc␡");
+    assert.equal(showControlCharacters("plain ✓ 日本"), "plain ✓ 日本");
+    assert.deepEqual(
+      ["\u001d", "\u001e", "\u0004", "\u007f"].map(controlName),
+      ["GS", "RS", "EOT", "DEL"],
+    );
   });
 
   it("summarizes scans for lists", () => {

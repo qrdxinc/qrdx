@@ -8,7 +8,13 @@ import { toCsv } from "./csv";
 import { formatLabel } from "./detector";
 import { downloadText } from "./download";
 import type { HistoryEntry } from "./history";
-import { KIND_LABELS, parseScan, type ScanKind, summarizeScan } from "./parse";
+import {
+  KIND_LABELS,
+  parseScan,
+  type ScanKind,
+  showControlCharacters,
+  summarizeScan,
+} from "./parse";
 import { KIND_ICONS } from "./result-card";
 
 function kindOf(entry: HistoryEntry): ScanKind {
@@ -47,7 +53,9 @@ export function EntryList({
       {entries.map((entry) => {
         const kind = kindOf(entry);
         const Icon = KIND_ICONS[kind];
-        const summary = summarizeScan(parseScan(entry.value, entry.format));
+        const summary = showControlCharacters(
+          summarizeScan(parseScan(entry.value, entry.format)),
+        );
         return (
           <li className="flex items-center gap-1 pr-1" key={entry.id}>
             <button
@@ -61,7 +69,7 @@ export function EntryList({
               />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-sm">
-                  {summary || entry.value}
+                  {summary || showControlCharacters(entry.value)}
                 </span>
                 <span className="text-muted-foreground block text-xs">
                   {t(`kinds.${kind}`)} · {formatLabel(entry.format)} ·{" "}

@@ -1370,6 +1370,8 @@
     "formatQr": "二维码",
     "formatEan": "EAN-13 和 EAN-8",
     "formatUpc": "UPC-A 和 UPC-E",
+    "formatDatabar": "GS1 DataBar（包括 Limited、Expanded 及其堆叠版本）",
+    "formatMaxi": "MaxiCode（需使用仅包含该码且方向正置的图像）",
     "types": {
       "links": {
         "name": "链接",
@@ -1433,7 +1435,7 @@
       "offlineQuestion": "可以离线使用吗？",
       "offlineAnswer": "使用过一次后，浏览器会保留扫描器页面及其解码器，因此无需联网即可打开并读取二维码。链接安全检查需要联网，离线发现的链接可以稍后在历史记录中检查。",
       "browsersQuestion": "支持哪些浏览器？",
-      "browsersAnswer": "任何支持访问相机的现代浏览器：手机和电脑上的 Chrome、Edge、Safari 和 Firefox。内置条码读取器的浏览器（Android 和 macOS 上的 Chrome）会直接使用它；其他浏览器会在你首次扫描时下载开源解码器（ZXing，编译为 WebAssembly，来自 jsDelivr CDN，约 1 MB）。相机需要 https 页面和你的授权。",
+      "browsersAnswer": "任何支持摄像头访问的现代浏览器均可使用：手机和电脑上的 Chrome、Edge、Safari 和 Firefox。带有内置条码读取器的浏览器（Android 和 macOS 上的 Chrome）会用它读取其支持的格式。其余格式由开源解码器（ZXing，编译为 WebAssembly，从 jsDelivr CDN 加载，约 1 MB）读取：在其他浏览器上是所有格式，在有内置读取器的浏览器上则是 Micro QR、rMQR、GS1 DataBar 和 MaxiCode。解码器会在首次需要时下载。摄像头需要 https 页面和你的授权。",
       "installQuestion": "可以把扫描器安装为应用吗？",
       "installAnswer": "可以。在 Chrome、Edge 或 Samsung Internet 中，点按扫描器下方的“安装应用”，也可以使用浏览器自带的安装选项。在 iPhone 和 iPad 上，点按扫描器下方的“添加到主屏幕”查看操作步骤。该应用会在独立窗口中直接打开扫描器，用它扫描过一次后即可离线使用，历史记录只保存在你的设备上。",
       "shareQuestion": "可以通过截图扫描二维码吗？",

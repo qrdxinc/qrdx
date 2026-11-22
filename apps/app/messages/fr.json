@@ -1370,6 +1370,8 @@
     "formatQr": "QR code",
     "formatEan": "EAN-13 et EAN-8",
     "formatUpc": "UPC-A et UPC-E",
+    "formatDatabar": "GS1 DataBar (avec les versions Limited, Expanded et empilées)",
+    "formatMaxi": "MaxiCode (à partir d’une image droite du code seul)",
     "types": {
       "links": {
         "name": "Liens",
@@ -1433,7 +1435,7 @@
       "offlineQuestion": "Fonctionne-t-il hors ligne ?",
       "offlineAnswer": "Une fois que vous l'avez utilisé pour un scan, votre navigateur conserve la page du scanner et son décodeur : il s'ouvre et lit les codes sans connexion. Les vérifications de sécurité des liens nécessitent une connexion, et les liens trouvés hors ligne peuvent être vérifiés plus tard depuis votre historique.",
       "browsersQuestion": "Quels navigateurs sont pris en charge ?",
-      "browsersAnswer": "Tout navigateur récent avec accès à la caméra : Chrome, Edge, Safari et Firefox sur téléphone et ordinateur. Les navigateurs dotés d'un lecteur de codes-barres intégré (Chrome sur Android et macOS) l'utilisent directement ; les autres téléchargent un décodeur open source (ZXing, compilé en WebAssembly, environ 1 Mo depuis le CDN jsDelivr) lors de votre premier scan. La caméra nécessite une page en https et votre autorisation.",
+      "browsersAnswer": "Tout navigateur moderne avec accès à la caméra : Chrome, Edge, Safari et Firefox sur téléphone et ordinateur. Les navigateurs dotés d’un lecteur de codes-barres intégré (Chrome sur Android et macOS) l’utilisent pour les formats qu’il lit. Un décodeur open source (ZXing, compilé en WebAssembly, environ 1 Mo depuis le CDN jsDelivr) lit le reste : tous les formats sur les autres navigateurs, ainsi que Micro QR, rMQR, GS1 DataBar et MaxiCode là où un lecteur intégré existe. Il se télécharge la première fois qu’il est nécessaire. La caméra nécessite une page en https et votre autorisation.",
       "installQuestion": "Puis-je installer le scanner comme une application ?",
       "installAnswer": "Oui. Dans Chrome, Edge ou Samsung Internet, appuyez sur Installer l’application sous le scanner, ou utilisez l’option d’installation du navigateur. Sur iPhone et iPad, appuyez sur Ajouter à l’écran d’accueil sous le scanner pour voir les étapes. L’application s’ouvre directement sur le scanner dans sa propre fenêtre, fonctionne hors ligne une fois que vous avez effectué un scan avec elle, et conserve son historique sur votre appareil.",
       "shareQuestion": "Puis-je scanner un QR code à partir d’une capture d’écran ?",

@@ -1370,6 +1370,8 @@
     "formatQr": "QRコード",
     "formatEan": "EAN-13とEAN-8",
     "formatUpc": "UPC-AとUPC-E",
+    "formatDatabar": "GS1 DataBar（Limited、Expanded、スタック型を含む）",
+    "formatMaxi": "MaxiCode（コードだけを写した正立の画像から読み取り）",
     "types": {
       "links": {
         "name": "リンク",
@@ -1433,7 +1435,7 @@
       "offlineQuestion": "オフラインでも使えますか？",
       "offlineAnswer": "一度スキャンすると、ブラウザーがスキャナーのページとデコーダーを保持するため、接続がなくてもページを開いてコードを読み取れます。リンクの安全チェックには接続が必要です。オフラインで見つけたリンクは、あとから履歴で確認できます。",
       "browsersQuestion": "対応しているブラウザーは？",
-      "browsersAnswer": "カメラにアクセスできる最新のブラウザーであれば利用できます。スマートフォンでもパソコンでも、Chrome、Edge、Safari、Firefoxに対応しています。バーコードリーダーが内蔵されたブラウザー（AndroidとmacOSのChrome）ではそれを直接使い、それ以外のブラウザーでは、初回のスキャン時にオープンソースのデコーダー（WebAssemblyにコンパイルされたZXing、jsDelivr CDNから約1 MB）をダウンロードします。カメラの利用にはhttpsのページと、お客様の許可が必要です。",
+      "browsersAnswer": "カメラにアクセスできる最新のブラウザであれば、スマートフォンでもパソコンでも、Chrome、Edge、Safari、Firefox で利用できます。バーコードリーダーを内蔵したブラウザ(Android と macOS の Chrome)では、そのリーダーが対応する形式を読み取ります。残りの形式はオープンソースのデコーダー(WebAssembly にコンパイルした ZXing で、jsDelivr CDN から約 1 MB)が読み取ります。内蔵リーダーのないブラウザではすべての形式、内蔵リーダーがあるブラウザでは Micro QR、rMQR、GS1 DataBar、MaxiCode が対象です。デコーダーは初めて必要になったときにダウンロードされます。カメラを使うには https のページであることと、ユーザーの許可が必要です。",
       "installQuestion": "スキャナーをアプリとしてインストールできますか？",
       "installAnswer": "はい。Chrome、Edge、Samsung Internetでは、スキャナーの下にある「アプリをインストール」をタップするか、ブラウザー標準のインストール機能をご利用ください。iPhoneとiPadでは、スキャナーの下にある「ホーム画面に追加」をタップすると手順が表示されます。アプリはスキャナーが直接開く専用ウィンドウで動作し、一度スキャンすればオフラインでも使え、履歴はお使いのデバイスに保存されます。",
       "shareQuestion": "スクリーンショットからQRコードをスキャンできますか?",

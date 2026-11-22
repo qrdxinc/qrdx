@@ -1370,6 +1370,8 @@
     "formatQr": "QR-Code",
     "formatEan": "EAN-13 und EAN-8",
     "formatUpc": "UPC-A und UPC-E",
+    "formatDatabar": "GS1 DataBar (mit Limited, Expanded und den gestapelten Varianten)",
+    "formatMaxi": "MaxiCode (anhand eines aufrecht stehenden Bilds, das nur den Code zeigt)",
     "types": {
       "links": {
         "name": "Links",
@@ -1433,7 +1435,7 @@
       "offlineQuestion": "Funktioniert es offline?",
       "offlineAnswer": "Sobald du damit gescannt hast, behält dein Browser die Scanner-Seite und ihren Decoder, sodass sie sich öffnet und Codes ohne Verbindung liest. Link-Sicherheitsprüfungen brauchen eine Verbindung, und offline gefundene Links kannst du später aus deinem Verlauf prüfen.",
       "browsersQuestion": "Welche Browser werden unterstützt?",
-      "browsersAnswer": "Jeder moderne Browser mit Kamerazugriff: Chrome, Edge, Safari und Firefox auf Smartphones und Computern. Browser mit eingebautem Barcode-Reader (Chrome unter Android und macOS) nutzen ihn direkt; andere laden beim ersten Scan einen Open-Source-Decoder herunter (ZXing, zu WebAssembly kompiliert, etwa 1 MB vom jsDelivr-CDN). Die Kamera braucht eine https-Seite und deine Erlaubnis.",
+      "browsersAnswer": "Jeder moderne Browser mit Kamerazugriff: Chrome, Edge, Safari und Firefox auf Smartphones und Computern. Browser mit integriertem Barcode-Reader (Chrome unter Android und macOS) nutzen ihn für die Formate, die er liest. Ein Open-Source-Decoder (ZXing, kompiliert zu WebAssembly, etwa 1 MB vom jsDelivr-CDN) liest den Rest: alle Formate in anderen Browsern sowie Micro QR, rMQR, GS1 DataBar und MaxiCode dort, wo ein integrierter Reader vorhanden ist. Er wird beim ersten Bedarf heruntergeladen. Die Kamera braucht eine https-Seite und deine Erlaubnis.",
       "installQuestion": "Kann ich den Scanner als App installieren?",
       "installAnswer": "Ja. In Chrome, Edge oder Samsung Internet tippst du unter dem Scanner auf „App installieren“ oder nutzt die Installieren-Option des Browsers. Auf iPhone und iPad tippst du unter dem Scanner auf „Zum Home-Bildschirm“, dort findest du die Schritte. Die App öffnet sich direkt im Scanner in einem eigenen Fenster, funktioniert offline, sobald du damit gescannt hast, und speichert ihren Verlauf auf deinem Gerät.",
       "shareQuestion": "Kann ich einen QR-Code aus einem Screenshot scannen?",

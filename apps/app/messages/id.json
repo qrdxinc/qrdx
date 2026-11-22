@@ -1370,6 +1370,8 @@
     "formatQr": "Kode QR",
     "formatEan": "EAN-13 dan EAN-8",
     "formatUpc": "UPC-A dan UPC-E",
+    "formatDatabar": "GS1 DataBar (termasuk versi Limited, Expanded, dan versi bertumpuk)",
+    "formatMaxi": "MaxiCode (dari gambar tegak yang hanya berisi kodenya)",
     "types": {
       "links": {
         "name": "Tautan",
@@ -1433,7 +1435,7 @@
       "offlineQuestion": "Apakah berfungsi secara offline?",
       "offlineAnswer": "Setelah Anda memindai dengannya, browser menyimpan halaman pemindai beserta dekodernya, sehingga halaman terbuka dan membaca kode tanpa koneksi. Pemeriksaan keamanan tautan memerlukan koneksi, dan tautan yang ditemukan saat offline dapat diperiksa nanti dari riwayat Anda.",
       "browsersQuestion": "Browser apa yang didukung?",
-      "browsersAnswer": "Browser modern apa pun dengan akses kamera: Chrome, Edge, Safari, dan Firefox di ponsel maupun komputer. Browser dengan pembaca barcode bawaan (Chrome di Android dan macOS) menggunakannya langsung; yang lain mengunduh dekoder open-source (ZXing, dikompilasi ke WebAssembly, sekitar 1 MB dari CDN jsDelivr) saat pertama kali Anda memindai. Kamera memerlukan halaman https dan izin Anda.",
+      "browsersAnswer": "Browser modern apa pun dengan akses kamera: Chrome, Edge, Safari, dan Firefox di ponsel maupun komputer. Browser dengan pembaca barcode bawaan (Chrome di Android dan macOS) menggunakannya untuk format yang bisa dibacanya. Decoder open source (ZXing, dikompilasi ke WebAssembly, sekitar 1 MB dari CDN jsDelivr) membaca sisanya: semua format di browser lain, serta Micro QR, rMQR, GS1 DataBar, dan MaxiCode di browser yang memiliki pembaca bawaan. Decoder ini diunduh saat pertama kali dibutuhkan. Kamera memerlukan halaman https dan izin Anda.",
       "installQuestion": "Bisakah saya memasang pemindai sebagai aplikasi?",
       "installAnswer": "Ya. Di Chrome, Edge, atau Samsung Internet, ketuk Install app di bawah pemindai, atau gunakan opsi Instal bawaan browser Anda. Di iPhone dan iPad, ketuk Add to Home Screen di bawah pemindai untuk melihat langkah-langkahnya. Aplikasi ini langsung terbuka ke pemindai di jendelanya sendiri, berfungsi secara offline setelah Anda melakukan pemindaian dengannya, dan menyimpan riwayatnya di perangkat Anda.",
       "shareQuestion": "Bisakah saya memindai kode QR dari tangkapan layar?",
