@@ -1020,6 +1020,39 @@ const PAGES: (Look & { type: string; variant: string; label: string })[] = [
     label: "Playlist page",
     preset: "periwinkle",
   },
+  // Added 2026-11-22 (pages)
+  {
+    type: "location",
+    variant: "shop",
+    label: "Location page",
+    preset: "harbor",
+  },
+  { type: "resume", variant: "designer", label: "Resume", preset: "minimal" },
+  {
+    type: "wifi",
+    variant: "cafe",
+    label: "Guest Wi-Fi page",
+    preset: "guestWifi",
+  },
+  {
+    type: "invitation",
+    variant: "wedding",
+    label: "Invitation",
+    preset: "sweetheart",
+  },
+  {
+    type: "form",
+    variant: "contact-us",
+    label: "Contact form",
+    preset: "helpDesk",
+  },
+  {
+    type: "asset-tag",
+    variant: "luggage",
+    label: "Lost and found tag",
+    preset: "cobalt",
+  },
+  { type: "message", variant: "gift-note", label: "Message", preset: "bloom" },
   {
     type: "custom",
     variant: "coming-soon",

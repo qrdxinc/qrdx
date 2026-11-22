@@ -1730,6 +1730,7 @@
       "linkCopied": "लिंक कॉपी हुआ",
       "copyThisLink": "यह लिंक कॉपी करें",
       "details": "विवरण",
+      "timeline": "टाइमलाइन",
       "links": "लिंक",
       "socialProfiles": "सोशल प्रोफ़ाइल",
       "mapOf": "{place} का मैप",
@@ -1793,7 +1794,24 @@
         "password": "पासवर्ड",
         "noPassword": "कुछ नहीं, बस कनेक्ट करें",
         "copyNetwork": "नेटवर्क का नाम कॉपी करें",
-        "copyPassword": "पासवर्ड कॉपी करें"
+        "copyPassword": "पासवर्ड कॉपी करें",
+        "security": "सिक्योरिटी",
+        "steps": {
+          "title": "कैसे जुड़ें",
+          "iphone": "iPhone पर",
+          "android": "Android पर",
+          "copy": "ऊपर दिए बटन से पासवर्ड कॉपी करें।",
+          "iphoneOpen": "Settings खोलें और Wi-Fi पर टैप करें। पक्का करें कि Wi-Fi चालू है।",
+          "androidOpen": "Settings खोलें और Network & internet पर टैप करें, फिर Internet पर। कुछ फ़ोन में यह Connections और फिर Wi-Fi होता है।",
+          "pick": "नेटवर्क की सूची में “{ssid}” पर टैप करें।",
+          "iphoneHidden": "Other पर टैप करें, नाम में “{ssid}” लिखें और सिक्योरिटी का प्रकार चुनें।",
+          "androidHidden": "सूची के नीचे Add network पर टैप करें, “{ssid}” लिखें और सिक्योरिटी का प्रकार चुनें। Advanced options में Hidden network को Yes पर सेट करें।",
+          "iphonePassword": "पासवर्ड पेस्ट करें और Join पर टैप करें।",
+          "androidPassword": "पासवर्ड पेस्ट करें और Connect पर टैप करें।",
+          "androidPasswordSave": "पासवर्ड पेस्ट करें और Save पर टैप करें।",
+          "iphoneJoin": "Join पर टैप करें।",
+          "androidSave": "Save पर टैप करें।"
+        }
       },
       "payment": {
         "types": {

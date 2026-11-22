@@ -1730,6 +1730,7 @@
       "linkCopied": "Tautan disalin",
       "copyThisLink": "Salin tautan ini",
       "details": "Detail",
+      "timeline": "Linimasa",
       "links": "Tautan",
       "socialProfiles": "Profil sosial",
       "mapOf": "Peta {place}",
@@ -1793,7 +1794,24 @@
         "password": "Kata sandi",
         "noPassword": "Tidak ada, langsung sambung",
         "copyNetwork": "Salin nama jaringan",
-        "copyPassword": "Salin kata sandi"
+        "copyPassword": "Salin kata sandi",
+        "security": "Keamanan",
+        "steps": {
+          "title": "Cara terhubung",
+          "iphone": "Di iPhone",
+          "android": "Di Android",
+          "copy": "Salin kata sandi dengan tombol di atas.",
+          "iphoneOpen": "Buka Pengaturan dan ketuk Wi-Fi. Pastikan Wi-Fi aktif.",
+          "androidOpen": "Buka Pengaturan dan ketuk Jaringan & internet, lalu Internet. Di beberapa ponsel, menunya adalah Koneksi, lalu Wi-Fi.",
+          "pick": "Ketuk “{ssid}” di daftar jaringan.",
+          "iphoneHidden": "Ketuk Lainnya, ketik “{ssid}” sebagai nama, lalu pilih jenis keamanan.",
+          "androidHidden": "Ketuk Tambahkan jaringan di bagian bawah daftar, ketik “{ssid}”, lalu pilih jenis keamanan. Di Opsi lanjutan, setel Jaringan tersembunyi ke Ya.",
+          "iphonePassword": "Tempel kata sandi dan ketuk Gabung.",
+          "androidPassword": "Tempel kata sandi dan ketuk Hubungkan.",
+          "androidPasswordSave": "Tempel kata sandi dan ketuk Simpan.",
+          "iphoneJoin": "Ketuk Gabung.",
+          "androidSave": "Ketuk Simpan."
+        }
       },
       "payment": {
         "types": {

@@ -7049,6 +7049,318 @@
     "status": "machine",
     "context": "hostedTypes.business-card.faqs.6.answer"
   },
+  "1ca2f18940fc": {
+    "source": "Guest Wi-Fi Page",
+    "text": "게스트 Wi-Fi 페이지",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.name"
+  },
+  "96eb9f2c3d84": {
+    "source": "Guest Wi-Fi Page QR Code Generator",
+    "text": "게스트 Wi-Fi 페이지 QR 코드 생성기",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.title"
+  },
+  "8a24b43ab1d4": {
+    "source": "A Wi-Fi page with the password to copy and steps to join.",
+    "text": "복사할 수 있는 비밀번호와 연결 방법을 담은 Wi-Fi 페이지예요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.summary"
+  },
+  "ed9fc8717762": {
+    "source": "Create your Wi-Fi page",
+    "text": "Wi-Fi 페이지 만들기",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.cta"
+  },
+  "780cef41732a": {
+    "source": "A guest Wi-Fi page behind a QR code: network name, a password to copy and steps to join on iPhone and Android. Change the password, keep the code.",
+    "text": "QR 코드 뒤에 게스트 Wi-Fi 페이지를 연결하세요. 네트워크 이름, 복사할 수 있는 비밀번호, iPhone과 Android 연결 방법을 담았어요. 비밀번호는 바꿔도 코드는 그대로 쓸 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.metaDescription"
+  },
+  "7705c99273c9": {
+    "source": "A guest Wi-Fi page QR code opens a page QRdx hosts for you with your network name, the password with a copy button, and short steps to join on iPhone and Android in each guest's own language. Add house rules, where the router is, or a button to message you.",
+    "text": "게스트 Wi-Fi 페이지 QR 코드를 스캔하면 QRdx가 호스팅하는 페이지가 열려요. 네트워크 이름, 복사 버튼이 있는 비밀번호, 각 게스트의 언어로 안내하는 iPhone과 Android 연결 방법이 담겨 있어요. 이용 규칙, 공유기 위치, 또는 메시지를 보낼 수 있는 버튼도 추가할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.intro.0"
+  },
+  "8a4f8768c9f7": {
+    "source": "It helps where a Wi-Fi QR code can't: a scanner app or an older phone that doesn't join networks, a hidden network, or a guest who wants to read the password. The code holds a link, so you can change the password after printing and every printed code shows the new one. It needs a free QRdx account.",
+    "text": "Wi-Fi QR 코드로는 어려운 경우에 도움이 돼요. 네트워크에 연결하지 못하는 스캐너 앱이나 오래된 휴대폰, 숨겨진 네트워크, 비밀번호를 직접 읽고 싶은 게스트가 그런 경우예요. 코드에는 링크가 들어 있어서 인쇄한 후에도 비밀번호를 바꿀 수 있고, 인쇄된 모든 코드에 새 비밀번호가 표시돼요. 무료 QRdx 계정이 필요해요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.intro.1"
+  },
+  "790c957105ec": {
+    "source": "Sign in or create a free account, then start a Guest Wi-Fi page: the button above opens it with that type picked.",
+    "text": "로그인하거나 무료 계정을 만든 다음 게스트 Wi-Fi 페이지를 시작하세요. 위의 버튼을 누르면 해당 유형이 선택된 상태로 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.0"
+  },
+  "7eceaef80531": {
+    "source": "Pick a template (Café, Holiday rental or Office visitors) and enter your network name, password and security type.",
+    "text": "템플릿(카페, 휴가용 숙소, 사무실 방문객) 중 하나를 고르고 네트워크 이름, 비밀번호, 보안 유형을 입력하세요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.1"
+  },
+  "a30554b8d54e": {
+    "source": "Add your house rules or a note, then publish.",
+    "text": "이용 규칙이나 안내 문구를 추가한 다음 게시하세요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.2"
+  },
+  "883636a91149": {
+    "source": "Copy buttons",
+    "text": "복사 버튼",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.0.title"
+  },
+  "26aa6584ec79": {
+    "source": "The network name and the password each have a copy button, so guests paste the password instead of typing it.",
+    "text": "네트워크 이름과 비밀번호에 각각 복사 버튼이 있어서 게스트가 비밀번호를 직접 입력하지 않고 붙여넣을 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.0.description"
+  },
+  "f56144df1d82": {
+    "source": "How to join",
+    "text": "연결 방법",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.1.title"
+  },
+  "f7595ea62095": {
+    "source": "Short steps for iPhone and Android in each guest's language, including how to add a hidden network by name.",
+    "text": "각 게스트의 언어로 안내하는 iPhone과 Android용 간단한 방법이에요. 숨겨진 네트워크를 이름으로 추가하는 방법도 포함돼 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.1.description"
+  },
+  "4dd01fe64a3c": {
+    "source": "House rules and notes",
+    "text": "이용 규칙과 안내",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.2.title"
+  },
+  "610c7ed9a6d3": {
+    "source": "Your own text under the network: quiet hours, check-out time, where the router is, or a button to message you.",
+    "text": "네트워크 아래에 직접 쓴 글을 넣을 수 있어요. 조용히 해야 하는 시간, 체크아웃 시간, 공유기 위치, 또는 메시지를 보낼 수 있는 버튼 등이에요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.2.description"
+  },
+  "e9d7496c9fb0": {
+    "source": "The code counts scans without cookies, so you can see how often guests use it.",
+    "text": "코드는 쿠키 없이 스캔 수를 집계해서 게스트가 얼마나 자주 이용하는지 확인할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.3.description"
+  },
+  "806878faf2ce": {
+    "source": "Changed the password? Edit the page and publish: every printed code shows the new one, so there's nothing to reprint.",
+    "text": "비밀번호를 바꿨나요? 페이지를 수정하고 게시하세요. 인쇄된 모든 코드에 새 비밀번호가 표시되니 다시 인쇄할 필요가 없어요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.editing.0"
+  },
+  "be47acc58b76": {
+    "source": "Anyone who opens the page can read the password, just as anyone who scans a Wi-Fi QR code can join. Use a guest network that's kept apart from your own devices.",
+    "text": "Wi-Fi QR 코드를 스캔하면 누구나 연결할 수 있는 것처럼, 페이지를 여는 사람은 누구나 비밀번호를 볼 수 있어요. 내 기기와 분리된 게스트 네트워크를 사용하세요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.editing.1"
+  },
+  "978f0f684e30": {
+    "source": "A Wi-Fi QR code or a guest Wi-Fi page?",
+    "text": "Wi-Fi QR 코드와 게스트 Wi-Fi 페이지, 어느 쪽이 좋을까요?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.title"
+  },
+  "0cec0b722791": {
+    "source": "Wi-Fi QR code (static)",
+    "text": "Wi-Fi QR 코드(정적)",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticLabel"
+  },
+  "39d66e242d1b": {
+    "source": "No account: the network name and password are written into the code.",
+    "text": "계정이 필요 없어요. 네트워크 이름과 비밀번호가 코드에 직접 들어 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.0"
+  },
+  "03619cc70529": {
+    "source": "The camera apps on iPhone and most Android phones offer to join in one tap.",
+    "text": "iPhone과 대부분의 Android 휴대폰에서는 카메라 앱이 한 번의 탭으로 연결을 안내해요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.1"
+  },
+  "23018da6e439": {
+    "source": "A new password means printing a new code, and there's nowhere for house rules.",
+    "text": "비밀번호가 바뀌면 새 코드를 인쇄해야 하고, 이용 규칙을 넣을 곳도 없어요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.2"
+  },
+  "9378a2b19253": {
+    "source": "Guest Wi-Fi page",
+    "text": "게스트 Wi-Fi 페이지",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedLabel"
+  },
+  "61efac606d6b": {
+    "source": "Guests copy the password and follow the steps: a web page can't join the network for them.",
+    "text": "게스트가 비밀번호를 복사하고 안내에 따라 연결해요. 웹 페이지가 대신 네트워크에 연결해 줄 수는 없어요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedPoints.1"
+  },
+  "76bc165fb118": {
+    "source": "Change the password or the rules any time; printed codes keep working.",
+    "text": "비밀번호나 규칙을 언제든 바꿀 수 있고, 인쇄된 코드는 계속 작동해요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedPoints.2"
+  },
+  "84638455a9b7": {
+    "source": "Is the guest Wi-Fi page free?",
+    "text": "게스트 Wi-Fi 페이지는 무료인가요?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.0.question"
+  },
+  "1146130f429a": {
+    "source": "Can the page join the network for my guests?",
+    "text": "페이지에서 손님 대신 네트워크에 연결할 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.1.question"
+  },
+  "0d653bdee46d": {
+    "source": "No. Browsers aren't allowed to change a phone's Wi-Fi settings, so the page shows the password with a copy button and the steps to join. For a one-tap join, print a Wi-Fi QR code as well.",
+    "text": "아니요. 브라우저는 휴대폰의 Wi-Fi 설정을 변경할 수 없어서, 페이지에는 복사 버튼이 있는 비밀번호와 연결 방법이 표시돼요. 한 번 탭으로 연결하려면 Wi-Fi QR 코드도 함께 인쇄하세요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.1.answer"
+  },
+  "3fe7c580c1ad": {
+    "source": "Can I change the password after printing?",
+    "text": "인쇄한 뒤에도 비밀번호를 바꿀 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.2.question"
+  },
+  "8bf162a39c41": {
+    "source": "Yes. Edit the page and publish; every printed code shows the new password.",
+    "text": "네. 페이지를 수정한 뒤 게시하면 인쇄된 모든 코드에 새 비밀번호가 표시돼요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.2.answer"
+  },
+  "d10fa6440c9c": {
+    "source": "Is the password private?",
+    "text": "비밀번호는 비공개인가요?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.3.question"
+  },
+  "6251b3132ebd": {
+    "source": "No. Anyone who scans the code or opens the page's link can read it. Hosted pages are hidden from search engines unless you turn on Show in search engines, but treat the password as shared with everyone who can see the code.",
+    "text": "아니요. 코드를 스캔하거나 페이지 링크를 여는 사람은 누구나 볼 수 있어요. 호스팅 페이지는 검색 엔진 노출을 켜지 않는 한 검색 엔진에 표시되지 않지만, 비밀번호는 코드를 볼 수 있는 모든 사람과 공유된다고 생각하세요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.3.answer"
+  },
+  "094d2ca95331": {
+    "source": "Does it work with a hidden network?",
+    "text": "숨겨진 네트워크에서도 작동하나요?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.4.question"
+  },
+  "6ae57f9836e7": {
+    "source": "Yes. Switch on Hidden network and the steps explain how to add the network by its name on iPhone and Android.",
+    "text": "네. 숨겨진 네트워크를 켜면 iPhone과 Android에서 네트워크 이름으로 추가하는 방법이 안내돼요.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.4.answer"
+  },
+  "e3a4fd489669": {
+    "source": "What happens to my page if I stop paying?",
+    "text": "결제를 중단하면 내 페이지는 어떻게 되나요?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.5.question"
+  },
+  "947bcf8e59d4": {
+    "source": "Location Page",
+    "text": "위치 페이지",
+    "status": "machine",
+    "context": "hostedTypes.location.name"
+  },
+  "02319258a3ba": {
+    "source": "Location Page QR Code Generator",
+    "text": "위치 페이지 QR 코드 생성기",
+    "status": "machine",
+    "context": "hostedTypes.location.title"
+  },
+  "fd35eced5b69": {
+    "source": "Your address with a map and buttons for three map apps.",
+    "text": "지도와 지도 앱 세 개의 버튼이 있는 내 주소 페이지예요.",
+    "status": "machine",
+    "context": "hostedTypes.location.summary"
+  },
+  "0b2b20865271": {
+    "source": "Create your location page",
+    "text": "위치 페이지 만들기",
+    "status": "machine",
+    "context": "hostedTypes.location.cta"
+  },
+  "c1765e065619": {
+    "source": "A location page behind a QR code: your address, a map, directions in Google Maps, Apple Maps or Waze, and opening hours. Moved? Edit it, keep the code.",
+    "text": "QR 코드로 여는 위치 페이지: 주소, 지도, Google Maps·Apple Maps·Waze 길 안내, 영업시간까지. 이전했나요? 페이지만 수정하면 코드는 그대로 써요.",
+    "status": "machine",
+    "context": "hostedTypes.location.metaDescription"
+  },
+  "16a27aa3d4a2": {
+    "source": "A location QR code opens a page QRdx hosts for you with your address, an optional map, and buttons that open directions in Google Maps, Apple Maps or Waze, so people use the app they already have. Add opening hours with an Open now badge, where the entrance is, parking and the nearest stop.",
+    "text": "위치 QR 코드는 QRdx가 호스팅하는 페이지를 열어 주소, 선택형 지도, Google Maps·Apple Maps·Waze에서 길 안내를 여는 버튼을 보여 줘요. 사람들이 이미 쓰는 앱을 그대로 쓸 수 있어요. 영업 중 배지가 있는 영업시간, 입구 위치, 주차, 가장 가까운 정류장도 추가할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.location.intro.0"
+  },
+  "e738ca7afa86": {
+    "source": "The code holds a short link, so if you move or change your hours, edit the page and every printed code shows the new details. It needs a free QRdx account. For a code that opens Google Maps with no account, use the Google Maps QR code generator.",
+    "text": "코드에는 짧은 링크가 담겨 있어서 이전하거나 영업시간이 바뀌면 페이지만 수정하면 인쇄된 모든 코드에 새 정보가 표시돼요. 무료 QRdx 계정이 필요해요. 계정 없이 Google Maps를 여는 코드가 필요하다면 Google Maps QR 코드 생성기를 이용하세요.",
+    "status": "machine",
+    "context": "hostedTypes.location.intro.1"
+  },
+  "696b3dc5074d": {
+    "source": "Sign in or create a free account, then start a Location page: the button above opens it with that type picked.",
+    "text": "로그인하거나 무료 계정을 만든 다음 위치 페이지를 시작하세요. 위의 버튼을 누르면 해당 유형이 선택된 상태로 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.0"
+  },
+  "eb83237a6c10": {
+    "source": "Pick a template (Shop, Venue or Meeting point) and enter the address.",
+    "text": "템플릿(매장, 행사장 또는 만남 장소)을 고르고 주소를 입력하세요.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.1"
+  },
+  "3fa0e6b2c4e0": {
+    "source": "Turn the map and the Waze button on or off, add opening hours and notes, then publish.",
+    "text": "지도와 Waze 버튼을 켜거나 끄고, 영업시간과 메모를 추가한 다음 게시하세요.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.2"
+  },
+  "318af76a1e2d": {
+    "source": "Download the page's QR code, print it and scan it once to check the directions.",
+    "text": "페이지의 QR 코드를 다운로드해 인쇄하고, 한 번 스캔해서 길 안내를 확인하세요.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.3"
+  },
+  "e2b0c6645a9c": {
+    "source": "Three map apps",
+    "text": "지도 앱 세 개",
+    "status": "machine",
+    "context": "hostedTypes.location.features.0.title"
+  },
+  "42b8522cde04": {
+    "source": "Google Maps, Apple Maps and Waze buttons, each opening the app when it's installed and its website when it isn't.",
+    "text": "Google Maps, Apple Maps, Waze 버튼이 있고, 앱이 설치되어 있으면 앱이, 없으면 웹사이트가 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.0.description"
+  },
+  "db85ab728a6f": {
+    "source": "A map on the page",
+    "text": "페이지 속 지도",
+    "status": "machine",
+    "context": "hostedTypes.location.features.1.title"
+  },
+  "7c73682dea5e": {
+    "source": "An embedded Google map of the address when you turn it on. It loads content from Google for visitors, so it stays off until you choose it.",
+    "text": "켜면 주소가 표시된 Google 지도가 페이지에 삽입돼요. 방문자에게 Google의 콘텐츠를 불러오므로, 직접 선택하기 전까지는 꺼져 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.1.description"
+  },
   "d96545f726d0": {
     "source": "Food and drink",
     "text": "식음료",
@@ -10252,6 +10564,798 @@
     "text": "당일 일정",
     "status": "machine",
     "context": "industries.0.hospitality-travel.items.weddings.useCases.2.title"
+  },
+  "092183849e85": {
+    "source": "Each part of the day with its time and place, from arrival to the last dance.",
+    "text": "도착부터 마지막 댄스까지, 하루의 각 순서를 시간과 장소와 함께 보여 줍니다.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.2.description"
+  },
+  "91654e103aac": {
+    "source": "RSVP form",
+    "text": "참석 회신 양식",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.3.title"
+  },
+  "f241c06b0d1e": {
+    "source": "The questions you choose, answered in your dashboard and exported as CSV. On Pro and Business, each reply can also be emailed to you.",
+    "text": "선택한 질문에 대한 답변이 대시보드에 모이고 CSV로 내보낼 수 있습니다. Pro와 Business에서는 각 회신을 이메일로 받을 수도 있습니다.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.3.description"
+  },
+  "1e9ebf115622": {
+    "source": "Plans change: edit the page and publish, and every printed invitation shows the new time, venue or schedule. Guests who already added it to their calendar keep the old entry, so let them know too.",
+    "text": "계획은 바뀌기 마련입니다. 페이지를 수정하고 게시하면 인쇄된 모든 초대장에 새 시간, 장소, 일정이 표시됩니다. 이미 캘린더에 추가한 손님에게는 이전 일정이 그대로 남으니 따로 알려 주세요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.editing.0"
+  },
+  "7b75fe2b1ea7": {
+    "source": "RSVPs count towards the workspace's form responses: 50 a month on Free and 1,000 on Pro. Replies you already have are never deleted or hidden.",
+    "text": "참석 회신은 워크스페이스의 양식 응답 수에 포함됩니다. 무료는 월 50건, Pro는 1,000건입니다. 이미 받은 회신은 삭제되거나 숨겨지지 않습니다.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.editing.1"
+  },
+  "993133794ae8": {
+    "source": "A WhatsApp RSVP code or an invitation page?",
+    "text": "WhatsApp 회신 코드와 초대장 페이지 중 무엇이 좋을까요?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.title"
+  },
+  "616488ff8254": {
+    "source": "WhatsApp QR code (static)",
+    "text": "WhatsApp QR 코드(정적)",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticLabel"
+  },
+  "e8de31362aa7": {
+    "source": "No account: the code opens a WhatsApp chat with you, with a reply such as \"We'll be there\" already typed.",
+    "text": "계정이 필요 없어요. 코드를 스캔하면 \"참석할게요\" 같은 회신 문구가 미리 입력된 WhatsApp 채팅이 열립니다.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.0"
+  },
+  "dc4d26fc23b2": {
+    "source": "Replies arrive one by one among your other chats.",
+    "text": "회신이 다른 채팅 사이에 하나씩 도착해요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.1"
+  },
+  "aa0cece2b632": {
+    "source": "Holds no date, venue or schedule, and can't change after printing.",
+    "text": "날짜, 장소, 일정을 담을 수 없고 인쇄 후에는 바꿀 수 없어요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.2"
+  },
+  "656461639aea": {
+    "source": "Invitation page",
+    "text": "초대장 페이지",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedLabel"
+  },
+  "30aa3ff6733e": {
+    "source": "Date, directions, the schedule, dress code and add to calendar.",
+    "text": "날짜, 길 안내, 일정, 드레스 코드, 캘린더 추가까지 담겨 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedPoints.1"
+  },
+  "8e81f846ab6b": {
+    "source": "RSVPs in one list you can export; edit the details any time.",
+    "text": "참석 회신을 한 목록에 모아 내보낼 수 있고, 세부 정보는 언제든 수정할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedPoints.2"
+  },
+  "41de38518aae": {
+    "source": "Is the invitation page free?",
+    "text": "초대장 페이지는 무료인가요?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.0.question"
+  },
+  "d177a825637d": {
+    "source": "Where do the RSVPs go?",
+    "text": "RSVP는 어디로 가나요?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.1.question"
+  },
+  "8a9e879b12a9": {
+    "source": "To the page's Responses in your dashboard: one row per reply with every answer, newest first, and Export CSV for a spreadsheet. On Pro and Business you can also get each reply by email.",
+    "text": "대시보드에 있는 해당 페이지의 응답으로 들어와요. 답장마다 한 행씩 모든 답변이 최신순으로 표시되고, 스프레드시트용으로 CSV 내보내기도 할 수 있어요. Pro와 Business에서는 답장을 이메일로 받을 수도 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.1.answer"
+  },
+  "c191eb2e7a14": {
+    "source": "How many RSVPs can I collect?",
+    "text": "RSVP를 몇 개까지 받을 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.2.question"
+  },
+  "1366d371549e": {
+    "source": "Free includes 50 form responses a month across the workspace, Pro 1,000 and Business 10,000. When the limit is reached, the form asks guests to try again later and keeps what they typed.",
+    "text": "무료는 워크스페이스 전체에서 한 달에 양식 응답 50건, Pro는 1,000건, Business는 10,000건이 포함돼요. 한도에 도달하면 양식에서 손님에게 나중에 다시 시도해 달라고 안내하고, 입력한 내용은 그대로 유지해요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.2.answer"
+  },
+  "595f61fcb4a2": {
+    "source": "Can I change the time or venue after printing?",
+    "text": "인쇄한 후에도 시간이나 장소를 바꿀 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.3.question"
+  },
+  "b0322f9622b5": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new details.",
+    "text": "네. 페이지를 수정하고 게시하면 인쇄된 모든 코드에서 새로운 정보가 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.3.answer"
+  },
+  "fb83860a331f": {
+    "source": "Can guests see who else is coming?",
+    "text": "손님이 다른 참석자를 볼 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.4.question"
+  },
+  "f3f3682f40ab": {
+    "source": "No. Replies are only shown to you and your workspace in the dashboard.",
+    "text": "아니요. 답장은 대시보드에서 회원님과 워크스페이스에만 표시돼요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.4.answer"
+  },
+  "5641d7b645e1": {
+    "source": "Contact Form",
+    "text": "문의 양식",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.name"
+  },
+  "bd9b785d0b0a": {
+    "source": "Contact Form QR Code Generator",
+    "text": "문의 양식 QR 코드 생성기",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.title"
+  },
+  "5f92106ba4e8": {
+    "source": "A contact or quote form whose answers land in your dashboard.",
+    "text": "답변이 대시보드로 들어오는 문의 또는 견적 양식이에요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.summary"
+  },
+  "c1162defa3b4": {
+    "source": "Create your form",
+    "text": "양식 만들기",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.cta"
+  },
+  "f00f66270223": {
+    "source": "Turn a QR code into a contact form: name, email, phone and a message, or the questions you choose. Answers land in your dashboard. Free QRdx account.",
+    "text": "QR 코드를 문의 양식으로 만들어 보세요. 이름, 이메일, 전화번호, 메시지 또는 직접 고른 질문을 담을 수 있어요. 답변은 대시보드로 들어와요. 무료 QRdx 계정이 필요해요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.metaDescription"
+  },
+  "24d59e12d7d5": {
+    "source": "A contact form QR code opens a short form QRdx hosts for you. Keep the fields you need, such as name, email, phone and a message, or add your own questions: a choice of services, a postcode, a consent box. People fill it in on their phone and press send.",
+    "text": "문의 양식 QR 코드는 QRdx가 호스팅하는 짧은 양식을 열어요. 이름, 이메일, 전화번호, 메시지처럼 필요한 입력란만 남기거나 서비스 선택, 우편번호, 동의 체크박스 같은 질문을 직접 추가할 수 있어요. 사람들은 휴대폰으로 작성하고 보내기만 누르면 돼요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.intro.0"
+  },
+  "de0ddc29f037": {
+    "source": "Answers arrive in your dashboard with the time and the code that was scanned, so a flyer, a van and a trade show stand can each have their own code. It needs a free QRdx account.",
+    "text": "답변은 시간 및 스캔된 코드 정보와 함께 대시보드에 도착해요. 그래서 전단지, 승합차, 박람회 부스마다 각각 다른 코드를 쓸 수 있어요. 무료 QRdx 계정이 필요해요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.intro.1"
+  },
+  "612ac20e96b1": {
+    "source": "Sign in or create a free account, then start a Contact form page: the button above opens it with that type picked.",
+    "text": "로그인하거나 무료 계정을 만든 다음 문의 양식 페이지를 시작하세요. 위의 버튼을 누르면 해당 유형이 선택된 상태로 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.0"
+  },
+  "508691430417": {
+    "source": "Pick a template (Contact us, Quote request or Trade show leads) and keep, remove or add questions.",
+    "text": "템플릿(문의하기, 견적 요청, 박람회 리드 중 하나)을 고르고 질문을 유지하거나 삭제하거나 추가하세요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.1"
+  },
+  "0ac9db140d42": {
+    "source": "Write the button label and the thank-you message, then publish.",
+    "text": "버튼 문구와 감사 메시지를 작성한 다음 게시하세요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.2"
+  },
+  "839b29840b1c": {
+    "source": "Download the page's QR code, print it and send yourself a test response.",
+    "text": "페이지의 QR 코드를 다운로드해 인쇄하고, 테스트 응답을 직접 보내 보세요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.3"
+  },
+  "ff16e16ba20a": {
+    "source": "Fields you choose",
+    "text": "원하는 입력란",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.0.title"
+  },
+  "8173a6163d9b": {
+    "source": "Text, email, phone, choices and a consent checkbox, each optional or required, with your own labels.",
+    "text": "텍스트, 이메일, 전화번호, 선택지, 동의 체크박스를 직접 정한 라벨로 선택 또는 필수 항목으로 만들 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.0.description"
+  },
+  "62da88be11f1": {
+    "source": "Responses inbox",
+    "text": "응답 수신함",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.1.title"
+  },
+  "a9ef10ed6abd": {
+    "source": "Every answer under Responses, newest first, with Export CSV for a spreadsheet or CRM.",
+    "text": "모든 답변이 응답 아래에 최신순으로 쌓이고, 스프레드시트나 CRM용으로 CSV 내보내기도 할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.1.description"
+  },
+  "cf343af2aa51": {
+    "source": "Alerts and webhooks",
+    "text": "알림과 웹훅",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.2.title"
+  },
+  "942723529851": {
+    "source": "Email alerts for each response on Pro and Business; Slack, Discord and webhooks on Business.",
+    "text": "Pro와 Business에서는 응답마다 이메일 알림을 받고, Business에서는 Slack, Discord, 웹훅도 쓸 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.2.description"
+  },
+  "cc9899ecf4d1": {
+    "source": "Spam protection",
+    "text": "스팸 차단",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.3.title"
+  },
+  "369640adf648": {
+    "source": "A hidden field that only bots fill in, and limits on how often one device can send.",
+    "text": "봇만 채우는 숨은 입력란과, 한 기기가 보낼 수 있는 횟수 제한으로 스팸을 막아요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.3.description"
+  },
+  "471fd667e702": {
+    "source": "Change the questions any time and publish: printed codes open the new form, and exports keep the columns of removed questions that already have answers.",
+    "text": "질문은 언제든 바꾸고 게시할 수 있어요. 인쇄된 코드에서는 새 양식이 열리고, 이미 답변이 있는 삭제된 질문의 열은 내보내기에 그대로 남아요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.editing.0"
+  },
+  "b313ffcebf30": {
+    "source": "Responses count per workspace each calendar month: 50 on Free, 1,000 on Pro and 10,000 on Business. Responses you already have are never deleted or hidden.",
+    "text": "응답 수는 매달 워크스페이스별로 집계해요. 무료는 50건, Pro는 1,000건, Business는 10,000건이에요. 이미 받은 응답은 삭제되거나 숨겨지지 않아요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.editing.1"
+  },
+  "9b73a932433f": {
+    "source": "An email QR code or a contact form?",
+    "text": "이메일 QR 코드와 문의 양식 중 무엇이 좋을까요?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.title"
+  },
+  "0945c3f7e4d8": {
+    "source": "Email QR code (static)",
+    "text": "이메일 QR 코드(정적)",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticLabel"
+  },
+  "2c8b423b87fd": {
+    "source": "No account: the code opens an email draft to you, with the subject and message filled in.",
+    "text": "계정이 필요 없어요. 코드를 스캔하면 제목과 내용이 미리 채워진 이메일 초안이 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.0"
+  },
+  "3b50d6dff15f": {
+    "source": "People need an email app set up on their phone.",
+    "text": "휴대폰에 이메일 앱이 설정되어 있어야 해요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.1"
+  },
+  "eb7ac7a2b531": {
+    "source": "Replies land among your other email, and the address can't change after printing.",
+    "text": "답장이 다른 이메일과 섞여 들어오고, 인쇄한 뒤에는 주소를 바꿀 수 없어요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.2"
+  },
+  "2520a0ba5663": {
+    "source": "Contact form",
+    "text": "문의 양식",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedLabel"
+  },
+  "7161e0bc1656": {
+    "source": "A free QRdx account; the code opens a form QRdx hosts.",
+    "text": "무료 QRdx 계정이 필요해요. 코드를 스캔하면 QRdx가 호스팅하는 양식이 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.0"
+  },
+  "b60dc1aafda3": {
+    "source": "Works in any phone browser, with the questions you choose.",
+    "text": "어떤 휴대폰 브라우저에서든 작동하고, 원하는 질문을 넣을 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.1"
+  },
+  "85e4e25b83ee": {
+    "source": "Answers in one list you can export; edit the form any time.",
+    "text": "답변은 내보낼 수 있는 하나의 목록에 모이고, 양식은 언제든 수정할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.2"
+  },
+  "2748bdccf6b3": {
+    "source": "Is the contact form free?",
+    "text": "문의 양식은 무료인가요?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.0.question"
+  },
+  "fdb380dac2a7": {
+    "source": "Where do the answers go?",
+    "text": "답변은 어디로 가나요?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.1.question"
+  },
+  "76afe3c4df88": {
+    "source": "To the page's Responses in your dashboard, newest first, with the time and the code that was scanned. Export CSV gives one row per response and one column per question. On Pro and Business each response can also be emailed to you.",
+    "text": "대시보드의 해당 페이지 응답 목록에 최신순으로 쌓이고, 시간과 스캔된 코드가 함께 기록돼요. CSV 내보내기를 누르면 응답 하나가 한 행, 질문 하나가 한 열인 파일을 받을 수 있어요. Pro와 Business에서는 각 응답을 이메일로 받아볼 수도 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.1.answer"
+  },
+  "3551dcf6310f": {
+    "source": "How many responses can I get?",
+    "text": "응답은 몇 개까지 받을 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.2.question"
+  },
+  "3987ec8d1d8b": {
+    "source": "Free includes 50 responses a month across the workspace, Pro 1,000 and Business 10,000. The count starts over on the 1st of each month.",
+    "text": "무료는 워크스페이스 전체에서 한 달에 응답 50개, Pro는 1,000개, Business는 10,000개가 포함돼요. 횟수는 매달 1일에 다시 시작돼요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.2.answer"
+  },
+  "2e1892954768": {
+    "source": "Can I change the questions after printing?",
+    "text": "인쇄한 뒤에도 질문을 바꿀 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.3.question"
+  },
+  "f95195d386de": {
+    "source": "Yes. Edit the form and publish; the printed code opens the new version, and the answers you already have stay.",
+    "text": "네. 양식을 수정하고 게시하면 인쇄된 코드가 새 버전을 열고, 이미 받은 답변은 그대로 남아요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.3.answer"
+  },
+  "9298d959ba09": {
+    "source": "Is it protected from spam?",
+    "text": "스팸은 막아 주나요?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.4.question"
+  },
+  "efaf8ac5c2b5": {
+    "source": "Yes. A hidden field catches most bots and one device can only send so often. When the server has Cloudflare Turnstile keys, forms also run Turnstile's invisible check.",
+    "text": "네. 숨겨진 필드가 대부분의 봇을 걸러내고, 한 기기에서는 일정 횟수까지만 보낼 수 있어요. 서버에 Cloudflare Turnstile 키가 있으면 양식에 Turnstile의 보이지 않는 검사도 함께 적용돼요.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.4.answer"
+  },
+  "05155378bc81": {
+    "source": "What happens to my form if I stop paying?",
+    "text": "결제를 중단하면 내 양식은 어떻게 되나요?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.5.question"
+  },
+  "2c9859114c4a": {
+    "source": "Lost and Found Tag",
+    "text": "분실물 태그",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.name"
+  },
+  "5afcae8b513b": {
+    "source": "Lost and Found QR Code Generator",
+    "text": "분실물 QR 코드 생성기",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.title"
+  },
+  "41ff183b7c90": {
+    "source": "A tag page that helps whoever finds your things reach you.",
+    "text": "물건을 발견한 사람이 나에게 연락할 수 있도록 돕는 태그 페이지예요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.summary"
+  },
+  "1d5f0256e045": {
+    "source": "Create your tag",
+    "text": "태그 만들기",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.cta"
+  },
+  "a7b776dc197e": {
+    "source": "Lost and found QR tags for luggage, laptops and keys: call and message buttons, a reward note and a found-it form. New number? Edit it, keep the tag.",
+    "text": "여행 가방, 노트북, 열쇠용 분실물 QR 태그예요. 전화와 문자 버튼, 사례 안내, 발견 신고 양식이 있어요. 번호가 바뀌었나요? 수정만 하면 태그는 그대로 쓸 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.metaDescription"
+  },
+  "587e0aef48c8": {
+    "source": "A lost and found QR code goes on a sticker or tag on your bag, laptop, keys or camera. Whoever finds it scans it and gets a page QRdx hosts for you: who it belongs to, buttons to call, text or WhatsApp you, a reward note if you offer one, and a form to say where it is.",
+    "text": "분실물 QR 코드는 가방, 노트북, 열쇠, 카메라에 붙이는 스티커나 태그에 넣어요. 물건을 발견한 사람이 스캔하면 QRdx가 호스팅하는 페이지가 열려요. 주인이 누구인지, 전화·문자·WhatsApp 버튼, 사례를 제안했다면 사례 안내, 물건이 어디 있는지 알리는 양식이 담겨 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.intro.0"
+  },
+  "7bb0e4c767fd": {
+    "source": "The tag holds a short link, so a new phone number or email is one edit away and the tag you stuck on years ago still reaches you. It needs a free QRdx account.",
+    "text": "태그에는 짧은 링크가 담겨 있어서 전화번호나 이메일이 바뀌어도 한 번만 수정하면 되고, 몇 년 전에 붙인 태그로도 계속 연락받을 수 있어요. 무료 QRdx 계정이 필요해요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.intro.1"
+  },
+  "7613d544d3c7": {
+    "source": "Sign in or create a free account, then start a Lost & found tag page: the button above opens it with that type picked.",
+    "text": "로그인하거나 무료 계정을 만든 뒤 분실물 태그 페이지를 시작해요. 위 버튼을 누르면 해당 유형이 선택된 채로 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.0"
+  },
+  "97f20df0be67": {
+    "source": "Pick a template (Luggage, Laptop & equipment or Keys) and add the buttons and details a finder needs.",
+    "text": "템플릿(여행 가방, 노트북·장비, 열쇠)을 고르고, 발견한 사람에게 필요한 버튼과 정보를 추가해요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.1"
+  },
+  "8f968c5028e2": {
+    "source": "Publish, then download the QR code and print it as a sticker or tag.",
+    "text": "게시한 다음 QR 코드를 내려받아 스티커나 태그로 인쇄해요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.2"
+  },
+  "3e021a9e4d11": {
+    "source": "Scan it once to check the call button dials your number.",
+    "text": "한 번 스캔해서 전화 버튼이 내 번호로 연결되는지 확인해요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.3"
+  },
+  "745d4a506420": {
+    "source": "Call and message",
+    "text": "전화와 메시지",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.0.title"
+  },
+  "3e2443966b7f": {
+    "source": "Buttons that call or text you, and WhatsApp when you turn it on for your number.",
+    "text": "전화나 문자를 보내는 버튼과, 내 번호에 켜 두면 WhatsApp 버튼도 표시돼요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.0.description"
+  },
+  "6e9083892ccc": {
+    "source": "Found-it form",
+    "text": "발견 신고 양식",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.1.title"
+  },
+  "30321a296311": {
+    "source": "The finder says where the item is and how to reach them; the answer lands in your dashboard.",
+    "text": "습득자가 물건이 있는 곳과 연락 방법을 알려 주면, 답변이 대시보드에 도착해요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.1.description"
+  },
+  "9e4356ede63a": {
+    "source": "Asset details",
+    "text": "자산 정보",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.2.title"
+  },
+  "183fcfaed161": {
+    "source": "An asset number, the item and where to return it, for company laptops and equipment.",
+    "text": "회사 노트북과 장비를 위해 자산 번호, 물품, 반환 장소를 적을 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.2.description"
+  },
+  "4e97e8ef3f82": {
+    "source": "Every scan is counted without cookies, so you can see when someone has scanned the tag.",
+    "text": "모든 스캔을 쿠키 없이 집계하므로 누군가 태그를 스캔한 시점을 확인할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.3.description"
+  },
+  "321fff1796c8": {
+    "source": "New number or email? Edit the page and publish; every tag you've already stuck on opens the new details.",
+    "text": "번호나 이메일이 바뀌었나요? 페이지를 수정하고 게시하면, 이미 붙여 둔 모든 태그에서 새 정보가 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.editing.0"
+  },
+  "2119defa490a": {
+    "source": "Anyone who finds the item can read the page, so show only what helps them return it: a first name and a phone number are usually enough.",
+    "text": "물건을 발견한 사람은 누구나 이 페이지를 볼 수 있으니, 돌려받는 데 도움이 되는 정보만 보여 주세요. 보통 이름과 전화번호면 충분해요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.editing.1"
+  },
+  "7b793947d98d": {
+    "source": "A phone QR code or a lost and found page?",
+    "text": "전화 QR 코드와 분실물 페이지 중 무엇이 좋을까요?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.title"
+  },
+  "2608f2b404fc": {
+    "source": "Phone QR code (static)",
+    "text": "전화 QR 코드(정적)",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticLabel"
+  },
+  "e01ecb6f4d7d": {
+    "source": "No account: the code holds your number and the phone offers to call it.",
+    "text": "계정이 필요 없어요. 코드에 번호가 담겨 있고, 휴대폰이 전화를 걸 수 있게 안내해요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.0"
+  },
+  "7c0c86f3e6d4": {
+    "source": "Nothing to load: the call starts straight from the camera.",
+    "text": "불러올 것이 없어요. 카메라에서 바로 전화가 시작돼요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.1"
+  },
+  "477e43229676": {
+    "source": "No form or reward note, and a new number means a new tag.",
+    "text": "양식도 사례금 안내도 없고, 번호가 바뀌면 새 태그가 필요해요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.2"
+  },
+  "2a7150b065ae": {
+    "source": "Lost and found page",
+    "text": "분실물 페이지",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedLabel"
+  },
+  "b4d6958c32d2": {
+    "source": "Call, text and WhatsApp buttons, a reward note and a found-it form.",
+    "text": "전화, 문자, WhatsApp 버튼과 사례금 안내, 발견 신고 양식이 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedPoints.1"
+  },
+  "baf6af7960b4": {
+    "source": "Change your number any time; tags already in use keep working.",
+    "text": "번호는 언제든 바꿀 수 있고, 이미 사용 중인 태그도 계속 작동해요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedPoints.2"
+  },
+  "37c7d37a83ba": {
+    "source": "Is the lost and found tag free?",
+    "text": "분실물 태그는 무료인가요?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.0.question"
+  },
+  "fcf0432e7942": {
+    "source": "Can I see where my item was found?",
+    "text": "내 물건이 발견된 위치를 볼 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.question"
+  },
+  "09a86d50c977": {
+    "source": "Roughly. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network, never an exact spot. The found-it form lets the finder tell you where the item is.",
+    "text": "대략적으로만 볼 수 있어요. 다른 동적 QR 코드처럼 태그의 분석에는 스캔된 시간과 네트워크 기준의 국가, 지역, 도시가 표시되며 정확한 위치는 알 수 없어요. 발견 신고 양식을 통해 습득자가 물건이 있는 곳을 알려 줄 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "c17c0e25132b": {
+    "source": "Can I change my number later?",
+    "text": "나중에 번호를 바꿀 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.2.question"
+  },
+  "1dd2b80dc028": {
+    "source": "Yes. Edit the page and publish; every printed tag opens the new details.",
+    "text": "네. 페이지를 수정하고 게시하면 인쇄된 모든 태그에서 새 정보가 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.2.answer"
+  },
+  "e3d5f4c7a00c": {
+    "source": "Is my phone number public?",
+    "text": "내 전화번호가 공개되나요?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.3.question"
+  },
+  "797afc9f16c8": {
+    "source": "Anyone who scans the tag or opens its link can see what's on the page. Hosted pages are hidden from search engines unless you turn on Show in search engines. Show only what a finder needs.",
+    "text": "태그를 스캔하거나 링크를 여는 사람은 누구나 페이지 내용을 볼 수 있어요. 호스팅 페이지는 '검색 엔진에 표시'를 켜지 않으면 검색 엔진에 노출되지 않아요. 습득자에게 필요한 정보만 보여 주세요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.3.answer"
+  },
+  "35d2dc81fd11": {
+    "source": "What happens to my tag if I stop paying?",
+    "text": "결제를 중단하면 태그는 어떻게 되나요?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.4.question"
+  },
+  "2f77668a9dfb": {
+    "source": "Message",
+    "text": "메시지",
+    "status": "machine",
+    "context": "hostedTypes.message.name"
+  },
+  "8cb91b6873f2": {
+    "source": "Message QR Code Generator",
+    "text": "메시지 QR 코드 생성기",
+    "status": "machine",
+    "context": "hostedTypes.message.title"
+  },
+  "a3750df639df": {
+    "source": "A short note with a photo and a button, editable after printing.",
+    "text": "사진과 버튼이 있는 짧은 메모로, 인쇄한 뒤에도 수정할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.message.summary"
+  },
+  "ec0c539b9cda": {
+    "source": "Create your message",
+    "text": "메시지 만들기",
+    "status": "machine",
+    "context": "hostedTypes.message.cta"
+  },
+  "33e2d1eea3f2": {
+    "source": "Put a message behind a QR code: a gift note, a thank-you card or a notice on the door, with a photo and one button. Edit it after printing, same code.",
+    "text": "선물 메모, 감사 카드, 문 앞 안내문 같은 메시지를 사진과 버튼 하나와 함께 QR 코드에 담아 보세요. 인쇄한 뒤에도 같은 코드로 수정할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.message.metaDescription"
+  },
+  "4e8ae41b881f": {
+    "source": "A message QR code opens a short note on a page QRdx hosts for you: a heading, a few lines, an optional photo and one button. Put it on a gift tag, a card in every parcel or a sign on the door.",
+    "text": "메시지 QR 코드는 QRdx가 호스팅해 주는 페이지에서 짧은 메모를 열어 줘요. 제목, 몇 줄의 글, 선택 사항인 사진 한 장, 버튼 하나로 구성돼요. 선물 태그, 모든 택배 상자에 넣는 카드, 문에 거는 안내판에 붙여 보세요.",
+    "status": "machine",
+    "context": "hostedTypes.message.intro.0"
+  },
+  "456218072bba": {
+    "source": "The code holds a link, not the words, so you can change the message after printing, from \"Closed today\" back to your opening hours, and see how many people scanned it. It needs a free QRdx account. For words written into the code itself, with no account, use the text QR code generator.",
+    "text": "코드에는 글이 아니라 링크가 들어 있어서, 인쇄한 뒤에도 메시지를 바꿀 수 있어요. \"오늘 휴무\"에서 영업시간 안내로 되돌릴 수도 있고, 몇 명이 스캔했는지도 볼 수 있어요. 무료 QRdx 계정이 필요해요. 계정 없이 코드 자체에 글을 담으려면 텍스트 QR 코드 생성기를 사용하세요.",
+    "status": "machine",
+    "context": "hostedTypes.message.intro.1"
+  },
+  "7da74768bf63": {
+    "source": "Sign in or create a free account, then start a Message page: the button above opens it with that type picked.",
+    "text": "로그인하거나 무료 계정을 만든 뒤 메시지 페이지를 시작하세요. 위의 버튼을 누르면 해당 유형이 선택된 상태로 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.0"
+  },
+  "5e99aa77b021": {
+    "source": "Pick a template (Gift note, Thank-you card or Notice) and write your message.",
+    "text": "템플릿(선물 메모, 감사 카드, 공지)을 고르고 메시지를 작성하세요.",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.1"
+  },
+  "fc9716d72b51": {
+    "source": "Add a photo and a button if you want them, then publish.",
+    "text": "원하면 사진과 버튼을 추가한 뒤 게시하세요.",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.2"
+  },
+  "9dfc4e242770": {
+    "source": "Your words, your look",
+    "text": "나만의 문구, 나만의 스타일",
+    "status": "machine",
+    "context": "hostedTypes.message.features.0.title"
+  },
+  "4b201b59260e": {
+    "source": "A heading and text in the fonts and colors you pick, with a photo if you add one.",
+    "text": "직접 고른 글꼴과 색상의 제목과 텍스트에, 사진을 추가하면 사진도 함께 보여요.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.0.description"
+  },
+  "2ceae1f2641b": {
+    "source": "One button",
+    "text": "버튼 하나",
+    "status": "machine",
+    "context": "hostedTypes.message.features.1.title"
+  },
+  "cd1bf434100b": {
+    "source": "Send people on to a booking, a review page, your shop or a playlist.",
+    "text": "예약, 리뷰 페이지, 쇼핑몰, 플레이리스트로 사람들을 안내하세요.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.1.description"
+  },
+  "2a2fe4991d42": {
+    "source": "Edit after printing",
+    "text": "인쇄 후에도 수정",
+    "status": "machine",
+    "context": "hostedTypes.message.features.2.title"
+  },
+  "ebbe4bb0b19d": {
+    "source": "Change the message any time; the printed code stays the same.",
+    "text": "메시지는 언제든 바꿀 수 있고, 인쇄한 코드는 그대로예요.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.2.description"
+  },
+  "985b7ad943b5": {
+    "source": "See how many people opened the message and when, counted without cookies.",
+    "text": "메시지를 몇 명이 언제 열었는지 쿠키 없이 집계해서 보여 줘요.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.3.description"
+  },
+  "fbb4c19d8fd8": {
+    "source": "Edit the text, photo or button and publish: every printed code shows the new version, and each publish is kept as a version.",
+    "text": "텍스트, 사진, 버튼을 수정하고 게시하면 인쇄된 모든 코드에 새 버전이 보여요. 게시할 때마다 하나의 버전으로 남아요.",
+    "status": "machine",
+    "context": "hostedTypes.message.editing.0"
+  },
+  "bd74e35ffe1c": {
+    "source": "Need it live only for a while? Start and end dates in the code's controls apply to the page too.",
+    "text": "잠시 동안만 공개하고 싶나요? 코드 설정의 시작일과 종료일은 페이지에도 적용돼요.",
+    "status": "machine",
+    "context": "hostedTypes.message.editing.1"
+  },
+  "09452877bd55": {
+    "source": "A text QR code or a message page?",
+    "text": "텍스트 QR 코드와 메시지 페이지 중 무엇이 좋을까요?",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.title"
+  },
+  "aa2a4285ea5d": {
+    "source": "Text QR code (static)",
+    "text": "텍스트 QR 코드(정적)",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticLabel"
+  },
+  "b7b15a64c7ad": {
+    "source": "No account, and nothing to load: the words are inside the code.",
+    "text": "계정이 필요 없고 불러올 것도 없어요. 글이 코드 안에 들어 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.0"
+  },
+  "4c8e4443a7c2": {
+    "source": "Scanner apps show the text as plain words, with no photo or button.",
+    "text": "스캐너 앱에는 텍스트가 일반 글자로만 표시되고, 사진이나 버튼은 없어요.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.1"
+  },
+  "a83eb9f84bcd": {
+    "source": "Can't change after printing, and long messages make the code dense.",
+    "text": "인쇄 후에는 바꿀 수 없고, 메시지가 길면 코드가 촘촘해져요.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.2"
+  },
+  "92f8f5e7ec88": {
+    "source": "Message page",
+    "text": "메시지 페이지",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedLabel"
+  },
+  "9deb7cfca570": {
+    "source": "Your heading, text, a photo and a button, in your colors.",
+    "text": "제목, 텍스트, 사진, 버튼을 내 색상으로 보여 줘요.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedPoints.1"
+  },
+  "a4d205d5c8e0": {
+    "source": "Change it any time; printed codes keep working, and scans are counted.",
+    "text": "언제든 바꿀 수 있고, 인쇄한 코드는 계속 작동하며, 스캔 수도 집계돼요.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedPoints.2"
+  },
+  "94013c5ed254": {
+    "source": "Is the message page free?",
+    "text": "메시지 페이지는 무료인가요?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.0.question"
+  },
+  "15e30bf1567a": {
+    "source": "Can I change the message after printing?",
+    "text": "인쇄 후에 메시지를 바꿀 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.1.question"
+  },
+  "25b0908fef26": {
+    "source": "Yes. Edit the page and publish; the printed code opens the new message.",
+    "text": "네. 페이지를 수정하고 게시하면 인쇄된 코드가 새 메시지를 열어요.",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.1.answer"
+  },
+  "517b066b2ce1": {
+    "source": "No. The phone's camera opens the message in the browser.",
+    "text": "아니요. 휴대폰 카메라가 브라우저에서 메시지를 열어 줘요.",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.2.answer"
+  },
+  "ac23dcbd8150": {
+    "source": "Should I use a text QR code instead?",
+    "text": "대신 텍스트 QR 코드를 써야 할까요?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.3.question"
+  },
+  "0b2c90ef4e88": {
+    "source": "If the message is short, won't change and doesn't need a photo, yes: a text code needs no account and works without internet. For a photo, a button or changes after printing, use the message page.",
+    "text": "메시지가 짧고, 바뀌지 않고, 사진이 필요 없다면 그래요. 텍스트 코드는 계정이 필요 없고 인터넷 없이도 작동해요. 사진, 버튼, 인쇄 후 변경이 필요하면 메시지 페이지를 사용하세요.",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.3.answer"
+  },
+  "c52e2d3c7d09": {
+    "source": "What happens to my message if I stop paying?",
+    "text": "결제를 중단하면 내 메시지는 어떻게 되나요?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.4.question"
   },
   "b069a7124740": {
     "source": "A welcome-sign code that opens the timeline, so guests know when the speeches and the last bus are.",
@@ -20543,6 +21647,60 @@
     "status": "machine",
     "context": "pageTypes.playlist.description"
   },
+  "9b3cdeee94a8": {
+    "source": "An address with a map, buttons for Google Maps, Apple Maps and Waze, and opening hours.",
+    "text": "지도가 포함된 주소, Google Maps, Apple Maps, Waze 버튼, 영업시간을 보여줘요.",
+    "status": "machine",
+    "context": "pageTypes.location.description"
+  },
+  "5dcb6aa3e0c2": {
+    "source": "A CV with your photo, experience, education, skills, links and a PDF to download.",
+    "text": "사진, 경력, 학력, 기술, 링크와 다운로드할 수 있는 PDF가 담긴 이력서예요.",
+    "status": "machine",
+    "context": "pageTypes.resume.description"
+  },
+  "486d02a939b0": {
+    "source": "The network name, a password to copy and how to join on iPhone and Android.",
+    "text": "네트워크 이름, 복사할 수 있는 비밀번호, iPhone과 Android에서 연결하는 방법을 안내해요.",
+    "status": "machine",
+    "context": "pageTypes.wifi.description"
+  },
+  "c019f67a1531": {
+    "source": "Names, date and venue with directions, the day's schedule and an RSVP form.",
+    "text": "이름, 날짜, 장소와 찾아오는 길, 당일 일정, 참석 여부 회신 양식이 들어 있어요.",
+    "status": "machine",
+    "context": "pageTypes.invitation.description"
+  },
+  "72dc45c74a13": {
+    "source": "Contact form page",
+    "text": "문의 양식 페이지",
+    "status": "machine",
+    "context": "pageTypes.form.name"
+  },
+  "42612d5672e8": {
+    "source": "A contact, quote or lead form with the fields you choose, answered in your dashboard.",
+    "text": "원하는 항목으로 구성하는 문의, 견적, 잠재 고객 양식이며 답변은 대시보드에서 확인해요.",
+    "status": "machine",
+    "context": "pageTypes.form.description"
+  },
+  "b102a1575161": {
+    "source": "Lost and found tag page",
+    "text": "분실물 찾기 태그 페이지",
+    "status": "machine",
+    "context": "pageTypes.asset-tag.name"
+  },
+  "44b7fe768d0d": {
+    "source": "Call and message buttons and a found-it form for a bag, laptop or set of keys.",
+    "text": "가방, 노트북, 열쇠 꾸러미를 위한 전화·메시지 버튼과 발견 신고 양식이에요.",
+    "status": "machine",
+    "context": "pageTypes.asset-tag.description"
+  },
+  "61ac711e4a3e": {
+    "source": "A short note with a photo and one button: a gift message, a thank-you or a notice.",
+    "text": "사진과 버튼 하나가 있는 짧은 메모로, 선물 메시지, 감사 인사, 공지에 쓸 수 있어요.",
+    "status": "machine",
+    "context": "pageTypes.message.description"
+  },
   "615e54d4d3a0": {
     "source": "Landing page",
     "text": "랜딩 페이지",
@@ -20740,6 +21898,12 @@
     "text": "길 안내",
     "status": "machine",
     "context": "pageCodes.type-maps-3.label"
+  },
+  "0d67c9ccac05": {
+    "source": "The venue's address with Google Maps, Apple Maps and Waze buttons.",
+    "text": "장소 주소와 함께 Google Maps, Apple Maps, Waze 버튼이 표시됩니다.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.1.description"
   },
   "3ba4f61a5e80": {
     "source": "Landmark",
@@ -22361,6 +23525,216 @@
     "status": "machine",
     "context": "pageCodes.on-window-decals-2.label"
   },
+  "5c9b6bc549d5": {
+    "source": "Hours for each day, split shifts included, with an Open now badge that follows the time zone you set.",
+    "text": "요일별 영업시간을 나눠 쓰는 시간대까지 포함해 입력할 수 있고, 설정한 시간대에 맞춰 영업 중 배지가 표시돼요.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.2.description"
+  },
+  "c9c20ae26ddc": {
+    "source": "Notes that help",
+    "text": "도움이 되는 메모",
+    "status": "machine",
+    "context": "hostedTypes.location.features.3.title"
+  },
+  "e456a733811d": {
+    "source": "Where the entrance is, parking, the nearest stop or step-free access, as text or a list of details.",
+    "text": "입구 위치, 주차, 가장 가까운 정류장, 계단 없는 이동 경로를 텍스트나 세부 정보 목록으로 알려 줄 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.3.description"
+  },
+  "3464ffee3ac9": {
+    "source": "Moved, or changed your hours? Edit the page and publish; signs, flyers and cards that are already printed open the new details.",
+    "text": "이전했거나 영업시간이 바뀌었나요? 페이지를 수정하고 게시하세요. 이미 인쇄된 간판, 전단지, 카드에서도 새 정보가 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.location.editing.0"
+  },
+  "a6b4cdfe7043": {
+    "source": "Every scan is counted without cookies, so you can see when people look up the way to you.",
+    "text": "모든 스캔은 쿠키 없이 집계되므로 사람들이 언제 찾아오는 길을 검색하는지 확인할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.location.editing.1"
+  },
+  "ddab20f026f2": {
+    "source": "A Google Maps QR code or a location page?",
+    "text": "Google 지도 QR 코드와 위치 페이지 중 무엇이 좋을까요?",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.title"
+  },
+  "318adf7e74b1": {
+    "source": "Google Maps QR code (static)",
+    "text": "Google 지도 QR 코드(정적)",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticLabel"
+  },
+  "5619f199b4c9": {
+    "source": "No account: the code holds a Google Maps link to the place.",
+    "text": "계정이 필요 없어요. 코드에 해당 장소의 Google 지도 링크가 들어 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.0"
+  },
+  "75c63fd0a67c": {
+    "source": "Opens Google Maps, or its website where the app isn't installed.",
+    "text": "Google 지도 앱이 설치되어 있지 않으면 웹사이트가 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.1"
+  },
+  "1f2d0305ebeb": {
+    "source": "Can't change after printing, and shows nothing else: no hours or notes.",
+    "text": "인쇄 후에는 바꿀 수 없고, 영업시간이나 안내 같은 다른 정보도 보여 주지 않아요.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.2"
+  },
+  "f92408835ad7": {
+    "source": "Location page",
+    "text": "위치 페이지",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedLabel"
+  },
+  "94bbda41fd5a": {
+    "source": "Google Maps, Apple Maps and Waze, plus a map, hours and notes.",
+    "text": "Google 지도, Apple 지도, Waze로 열 수 있고 지도, 영업시간, 안내 사항도 보여 줘요.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedPoints.1"
+  },
+  "ea6f083ebdb6": {
+    "source": "Edit the address or hours any time; printed codes keep working.",
+    "text": "주소나 영업시간을 언제든 수정할 수 있어요. 인쇄한 코드는 그대로 작동해요.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedPoints.2"
+  },
+  "77c3fea4604c": {
+    "source": "Is the location page free?",
+    "text": "위치 페이지는 무료인가요?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.0.question"
+  },
+  "3e8ce35cffda": {
+    "source": "Which map apps does it open?",
+    "text": "어떤 지도 앱이 열리나요?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.1.question"
+  },
+  "b0daf58795a0": {
+    "source": "Google Maps, Apple Maps and, when you turn its button on, Waze. Each button opens the app when it's installed and the map's website when it isn't.",
+    "text": "Google 지도, Apple 지도, 그리고 버튼을 켜면 Waze가 열려요. 각 버튼은 앱이 설치되어 있으면 앱을, 없으면 해당 지도의 웹사이트를 열어요.",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.1.answer"
+  },
+  "2ae8f6d3fc5a": {
+    "source": "Can I change the address after printing?",
+    "text": "인쇄한 후에도 주소를 바꿀 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.2.question"
+  },
+  "e597bc8c476f": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new address.",
+    "text": "네. 페이지를 수정하고 게시하면 인쇄된 모든 코드가 새 주소로 연결돼요.",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.2.answer"
+  },
+  "3cce71e7cdc9": {
+    "source": "Does the map load anything from Google?",
+    "text": "지도가 Google에서 무언가를 불러오나요?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.3.question"
+  },
+  "cffb66cc6a3d": {
+    "source": "The embedded map does: it's a Google map, so it loads content from Google when the page opens. That's why it's off until you turn it on. Without it, the page loads nothing from Google until someone taps the Google Maps button.",
+    "text": "삽입된 지도는 불러와요. Google 지도이기 때문에 페이지가 열릴 때 Google에서 콘텐츠를 불러와요. 그래서 직접 켜기 전까지는 꺼져 있어요. 지도를 끄면 누군가 Google 지도 버튼을 누르기 전까지 페이지는 Google에서 아무것도 불러오지 않아요.",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.3.answer"
+  },
+  "d640c7421da0": {
+    "source": "Resume",
+    "text": "이력서",
+    "status": "machine",
+    "context": "hostedTypes.resume.name"
+  },
+  "7d41961e2188": {
+    "source": "Resume and CV QR Code Generator",
+    "text": "이력서 및 CV QR 코드 생성기",
+    "status": "machine",
+    "context": "hostedTypes.resume.title"
+  },
+  "1da120a9b83d": {
+    "source": "A CV page with your photo, experience, skills and a PDF.",
+    "text": "사진, 경력, 기술, PDF가 담긴 CV 페이지예요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.summary"
+  },
+  "0c6569c34c06": {
+    "source": "Create your resume page",
+    "text": "이력서 페이지 만들기",
+    "status": "machine",
+    "context": "hostedTypes.resume.cta"
+  },
+  "dde5a4aef253": {
+    "source": "Put your resume behind a QR code: a CV page with your photo, experience, education, skills, links and a PDF to download. Update it, keep the code.",
+    "text": "이력서를 QR 코드에 담아 보세요. 사진, 경력, 학력, 기술, 링크와 내려받을 수 있는 PDF가 담긴 CV 페이지예요. 내용은 업데이트해도 코드는 그대로 쓸 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.metaDescription"
+  },
+  "0f494ff25d20": {
+    "source": "A resume QR code opens a CV page QRdx hosts for you: your photo and headline, a short summary, your experience and education in order, your skills, links to your portfolio, LinkedIn or GitHub, and your CV as a PDF to download.",
+    "text": "이력서 QR 코드를 스캔하면 QRdx가 호스팅하는 CV 페이지가 열려요. 사진과 한 줄 소개, 짧은 요약, 순서대로 정리된 경력과 학력, 기술, 포트폴리오·LinkedIn·GitHub 링크, 그리고 내려받을 수 있는 PDF 형식의 CV가 담겨요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.intro.0"
+  },
+  "f6cd57836459": {
+    "source": "Print the code on a paper CV, a business card or a portfolio, and whoever scans it sees the latest version: edit the page when you change jobs and every printed code opens it. It needs a free QRdx account.",
+    "text": "종이 CV, 명함, 포트폴리오에 코드를 인쇄하면 스캔한 사람은 항상 최신 버전을 볼 수 있어요. 이직할 때 페이지만 수정하면 인쇄된 모든 코드가 그 페이지로 연결돼요. 무료 QRdx 계정이 필요해요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.intro.1"
+  },
+  "56ce2e15bbf3": {
+    "source": "Sign in or create a free account, then start a Resume / CV page: the button above opens it with that type picked.",
+    "text": "로그인하거나 무료 계정을 만든 다음 이력서 / CV 페이지를 시작하세요. 위 버튼을 누르면 해당 유형이 선택된 상태로 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.0"
+  },
+  "47e67c939ed0": {
+    "source": "Pick a template (Designer, Developer or Graduate), add your photo and fill in your experience, education and skills.",
+    "text": "템플릿(Designer, Developer, Graduate) 중 하나를 고르고 사진을 추가한 다음 경력, 학력, 기술을 입력하세요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.1"
+  },
+  "d1453a85a2cc": {
+    "source": "Add your links and your CV as a PDF, then publish.",
+    "text": "링크와 PDF 형식의 CV를 추가한 다음 게시하세요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.2"
+  },
+  "2dc8630cde01": {
+    "source": "Download the page's QR code for your printed CV or card, and scan it once to check.",
+    "text": "인쇄할 CV나 명함에 넣을 페이지의 QR 코드를 내려받고, 한 번 스캔해서 확인하세요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.3"
+  },
+  "cd30e1c67168": {
+    "source": "Experience and education",
+    "text": "경력과 학력",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.0.title"
+  },
+  "8f990906d6d5": {
+    "source": "Each role or course with its dates, the company or school, and a line about what you did, in order.",
+    "text": "각 직무나 과정을 기간, 회사나 학교, 맡았던 일 한 줄과 함께 순서대로 보여줘요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.0.description"
+  },
+  "9ab011df98c4": {
+    "source": "Skills and facts",
+    "text": "스킬과 정보",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.1.title"
+  },
+  "d03983ae376e": {
+    "source": "Skills, languages or where you're based, as a list or as tiles.",
+    "text": "스킬, 구사 언어, 거주 지역을 목록이나 타일로 보여줘요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.1.description"
+  },
   "3c0a0424af51": {
     "source": "Book a table",
     "text": "테이블 예약",
@@ -22372,6 +23746,204 @@
     "text": "링크",
     "status": "machine",
     "context": "pageCodes.on-window-decals-4.label"
+  },
+  "46bec34da8f4": {
+    "source": "Your portfolio, LinkedIn, GitHub or email as buttons.",
+    "text": "포트폴리오, LinkedIn, GitHub, 이메일을 버튼으로 연결해요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.2.description"
+  },
+  "4628486be4b4": {
+    "source": "Your CV as a PDF",
+    "text": "PDF 이력서",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.3.title"
+  },
+  "8de72360756b": {
+    "source": "A download button for the PDF, uploaded to QRdx or linked from where it already lives.",
+    "text": "QRdx에 업로드했거나 이미 올려 둔 곳에서 링크한 PDF를 내려받는 버튼이에요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.3.description"
+  },
+  "4c2a0d00a057": {
+    "source": "Edit the page and publish when anything changes: a new job, a new skill, a new photo. Every printed code opens the new version, and each publish is kept as a version.",
+    "text": "새 직장, 새 스킬, 새 사진 등 바뀐 내용이 있으면 페이지를 수정하고 게시하세요. 인쇄된 코드는 모두 새 버전을 열고, 게시할 때마다 버전으로 보관돼요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.editing.0"
+  },
+  "00ad204e50ef": {
+    "source": "Replace an uploaded PDF in Dashboard → Files and the page offers the new file within a minute. Scans are counted without cookies, so you can see when someone opens your CV.",
+    "text": "Dashboard → Files에서 업로드한 PDF를 교체하면 1분 안에 페이지에 새 파일이 표시돼요. 스캔은 쿠키 없이 집계되므로 누가 이력서를 열었는지 확인할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.editing.1"
+  },
+  "c80e313b1313": {
+    "source": "A LinkedIn QR code or a resume page?",
+    "text": "LinkedIn QR 코드와 이력서 페이지 중 무엇이 좋을까요?",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.title"
+  },
+  "f9fa807326c5": {
+    "source": "LinkedIn QR code (static)",
+    "text": "LinkedIn QR 코드(정적)",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticLabel"
+  },
+  "c124deca7c39": {
+    "source": "No account: the code opens your LinkedIn profile.",
+    "text": "계정이 필요 없어요. 코드를 스캔하면 LinkedIn 프로필이 열려요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.0"
+  },
+  "a4805184b32b": {
+    "source": "The profile stays current as you edit it on LinkedIn.",
+    "text": "LinkedIn에서 프로필을 수정하면 항상 최신 상태로 유지돼요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.1"
+  },
+  "25cbff28c8e6": {
+    "source": "It shows LinkedIn's layout, and people who aren't signed in may see only part of it.",
+    "text": "LinkedIn의 레이아웃으로 표시되고, 로그인하지 않은 사람에게는 일부만 보일 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.2"
+  },
+  "ba4f5e6fc3f3": {
+    "source": "Resume page",
+    "text": "이력서 페이지",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedLabel"
+  },
+  "2f8d0d236823": {
+    "source": "Your own layout and colors, a PDF to download, and no sign-in for readers.",
+    "text": "나만의 레이아웃과 색상, 내려받을 수 있는 PDF를 제공하고, 보는 사람은 로그인할 필요가 없어요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedPoints.1"
+  },
+  "38cbb9f63722": {
+    "source": "Edit it any time; printed codes keep working, and scans are counted.",
+    "text": "언제든 수정할 수 있고, 인쇄한 코드도 계속 작동하며, 스캔 수도 집계돼요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedPoints.2"
+  },
+  "acd460d2ac53": {
+    "source": "Is the resume page free?",
+    "text": "이력서 페이지는 무료인가요?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.0.question"
+  },
+  "fe4a5505c7d4": {
+    "source": "Can people download my CV?",
+    "text": "다른 사람이 제 이력서를 내려받을 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.1.question"
+  },
+  "244f5983c68c": {
+    "source": "Yes. Add the PDF to the page's Downloads block, uploaded to QRdx (up to 10 MB per file on Free) or linked from where it's already online.",
+    "text": "네. 페이지의 Downloads 블록에 PDF를 추가하세요. QRdx에 업로드하거나(무료 플랜은 파일당 최대 10 MB) 이미 온라인에 있는 파일을 링크할 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.1.answer"
+  },
+  "2d7c7ff033e8": {
+    "source": "Can I update it after printing?",
+    "text": "인쇄한 뒤에도 수정할 수 있나요?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.2.question"
+  },
+  "387fa17c1328": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new version.",
+    "text": "네. 페이지를 수정하고 게시하면 인쇄된 모든 코드가 새 버전을 열어요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.2.answer"
+  },
+  "3f3dcd5af52f": {
+    "source": "Will my resume show up in search engines?",
+    "text": "이력서가 검색 엔진에 노출되나요?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.3.question"
+  },
+  "cf87edfd462e": {
+    "source": "Not unless you want it to. Hosted pages are hidden from search engines until you turn on Show in search engines in the page's settings. Anyone with the code or the link can read it, so leave out your home address and anything you'd rather keep private.",
+    "text": "원하지 않으면 노출되지 않아요. 호스팅 페이지는 페이지 설정에서 Show in search engines를 켜기 전까지 검색 엔진에 표시되지 않아요. 코드나 링크가 있는 사람은 누구나 볼 수 있으니 집 주소나 공개하고 싶지 않은 정보는 넣지 마세요.",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.3.answer"
+  },
+  "af4ea02852eb": {
+    "source": "Invitation",
+    "text": "초대장",
+    "status": "machine",
+    "context": "hostedTypes.invitation.name"
+  },
+  "396c3d455879": {
+    "source": "Invitation QR Code Generator for Weddings and Parties",
+    "text": "결혼식과 파티를 위한 초대장 QR 코드 생성기",
+    "status": "machine",
+    "context": "hostedTypes.invitation.title"
+  },
+  "6fca6f8201f6": {
+    "source": "An invitation page with the day's plan, directions and an RSVP.",
+    "text": "당일 일정, 오시는 길, 참석 여부 회신을 담은 초대장 페이지예요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.summary"
+  },
+  "32f0a378b3bb": {
+    "source": "Create your invitation",
+    "text": "초대장 만들기",
+    "status": "machine",
+    "context": "hostedTypes.invitation.cta"
+  },
+  "e891e2e79058": {
+    "source": "Put a QR code on your invitations: a page with the date, directions to the venue, the day's schedule, dress code and an RSVP form. Plans change? Edit it.",
+    "text": "초대장에 QR 코드를 넣어 보세요. 날짜, 장소 안내, 당일 일정, 드레스 코드, 참석 여부 회신 양식을 담은 페이지가 열려요. 계획이 바뀌었나요? 수정하면 돼요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.metaDescription"
+  },
+  "5dc58074dd33": {
+    "source": "An invitation QR code opens a page QRdx hosts for you with what doesn't fit on the card: the date and time with add-to-calendar buttons, the venue with directions in Google Maps, Apple Maps or Waze, the schedule of the day, the dress code and an RSVP form.",
+    "text": "초대장 QR 코드는 카드에 다 담기지 않는 내용을 보여 주는, QRdx가 호스팅하는 페이지를 엽니다. 캘린더 추가 버튼이 있는 날짜와 시간, Google Maps, Apple Maps, Waze로 길 안내를 볼 수 있는 장소, 당일 일정, 드레스 코드, 참석 여부 회신 양식이 들어 있습니다.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.intro.0"
+  },
+  "dbe70020ae1f": {
+    "source": "Replies arrive in your dashboard, one row per guest, ready to export to a spreadsheet. If the start time or the venue changes, edit the page and every printed card shows the new plan. It needs a free QRdx account.",
+    "text": "회신은 대시보드에 손님별로 한 줄씩 도착하며, 스프레드시트로 내보낼 수 있습니다. 시작 시간이나 장소가 바뀌면 페이지를 수정하세요. 인쇄된 모든 카드에 새 계획이 표시됩니다. 무료 QRdx 계정이 필요합니다.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.intro.1"
+  },
+  "1c76ae9fe9e0": {
+    "source": "Sign in or create a free account, then start an Invitation page: the button above opens it with that type picked.",
+    "text": "로그인하거나 무료 계정을 만든 다음 초대장 페이지를 시작하세요. 위의 버튼을 누르면 해당 유형이 선택된 상태로 열립니다.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.0"
+  },
+  "02c74768d194": {
+    "source": "Pick a template (Wedding, Birthday party or Dinner party), set the date, time and venue, and fill in the schedule.",
+    "text": "템플릿(웨딩, 생일 파티, 디너 파티) 중 하나를 고르고 날짜, 시간, 장소를 설정한 뒤 일정을 채워 주세요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.1"
+  },
+  "2456d9dd518c": {
+    "source": "Choose the RSVP questions, such as meal choices or a plus one, then publish.",
+    "text": "식사 선택이나 동반 1인 같은 회신 질문을 고른 다음 게시하세요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.2"
+  },
+  "4ac2a6697269": {
+    "source": "Download the QR code, add it to your printed invitations and scan one to check.",
+    "text": "QR 코드를 다운로드해 인쇄할 초대장에 넣고, 하나를 스캔해서 확인해 보세요.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.3"
+  },
+  "d0efffa65ea7": {
+    "source": "Add to calendar",
+    "text": "캘린더에 추가",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.0.title"
+  },
+  "3b59759cc462": {
+    "source": "Google Calendar, Outlook and Yahoo buttons, plus an .ics file for Apple Calendar and other calendar apps.",
+    "text": "Google Calendar, Outlook, Yahoo 버튼과 Apple Calendar 및 다른 캘린더 앱용 .ics 파일을 제공합니다.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.0.description"
   },
   "fcb222345dec": {
     "source": "Pay online",
@@ -24491,6 +26063,42 @@
     "status": "machine",
     "context": "templates.business.variants.florist.description"
   },
+  "c1845d31d001": {
+    "source": "An address with a map, directions in Google Maps, Apple Maps or Waze, and opening hours",
+    "text": "지도, Google Maps·Apple Maps·Waze 길찾기, 영업시간이 담긴 주소 페이지예요",
+    "status": "machine",
+    "context": "templates.location.description"
+  },
+  "b8ab2a217187": {
+    "source": "Map, directions, opening hours and parking",
+    "text": "지도, 길찾기, 영업시간, 주차 안내",
+    "status": "machine",
+    "context": "templates.location.variants.shop.description"
+  },
+  "aea1b15df626": {
+    "source": "Venue",
+    "text": "행사장",
+    "status": "machine",
+    "context": "templates.location.variants.venue.name"
+  },
+  "1ceb7bd6e470": {
+    "source": "Where the entrance is, parking and step-free access",
+    "text": "입구 위치, 주차, 계단 없는 출입 안내",
+    "status": "machine",
+    "context": "templates.location.variants.venue.description"
+  },
+  "f08183059fe9": {
+    "source": "Meeting point",
+    "text": "만남의 장소",
+    "status": "machine",
+    "context": "templates.location.variants.meeting-point.name"
+  },
+  "f72241b0335d": {
+    "source": "Where a tour or pick-up starts, and who to call",
+    "text": "투어나 픽업이 시작되는 곳과 연락할 사람",
+    "status": "machine",
+    "context": "templates.location.variants.meeting-point.description"
+  },
   "c56217ae2eb3": {
     "source": "vCard Plus",
     "text": "vCard Plus",
@@ -24545,6 +26153,54 @@
     "status": "machine",
     "context": "templates.vcard.variants.realtor.description"
   },
+  "50953f52a4ff": {
+    "source": "Resume / CV",
+    "text": "이력서 / CV",
+    "status": "machine",
+    "context": "templates.resume.label"
+  },
+  "2a32d0d6e33b": {
+    "source": "Your photo, experience, education, skills and links, with your CV to download",
+    "text": "사진, 경력, 학력, 기술, 링크와 다운로드할 수 있는 CV를 담아요",
+    "status": "machine",
+    "context": "templates.resume.description"
+  },
+  "8b6d8e40753a": {
+    "source": "Designer",
+    "text": "디자이너",
+    "status": "machine",
+    "context": "templates.resume.variants.designer.name"
+  },
+  "82b9eaf08aab": {
+    "source": "Photo, experience, skills and a portfolio link",
+    "text": "사진, 경력, 기술, 포트폴리오 링크",
+    "status": "machine",
+    "context": "templates.resume.variants.designer.description"
+  },
+  "3fb7b39416f1": {
+    "source": "Developer",
+    "text": "개발자",
+    "status": "machine",
+    "context": "templates.resume.variants.developer.name"
+  },
+  "0f537a221c23": {
+    "source": "Dark, with skills as tiles and code links",
+    "text": "어두운 테마에 타일형 기술 목록과 코드 링크",
+    "status": "machine",
+    "context": "templates.resume.variants.developer.description"
+  },
+  "aba1eecaad22": {
+    "source": "Graduate",
+    "text": "졸업생",
+    "status": "machine",
+    "context": "templates.resume.variants.graduate.name"
+  },
+  "0c10ec4fb011": {
+    "source": "Education first, internships and a short summary",
+    "text": "학력을 먼저, 인턴십과 짧은 요약",
+    "status": "machine",
+    "context": "templates.resume.variants.graduate.description"
+  },
   "ea6b729fa6bd": {
     "source": "A digital menu with prices, allergens, opening hours and Wi-Fi",
     "text": "가격, 알레르기 유발 성분, 영업시간, Wi-Fi를 담은 디지털 메뉴",
@@ -24592,6 +26248,42 @@
     "text": "밝고 모던하며 모든 메뉴에 사진이 들어가요",
     "status": "machine",
     "context": "templates.menu.variants.juice-bar.description"
+  },
+  "4ea3a3bf1a89": {
+    "source": "Network name, a password to copy and how to join on iPhone and Android",
+    "text": "네트워크 이름, 복사할 수 있는 비밀번호, iPhone과 Android 연결 방법을 안내해요",
+    "status": "machine",
+    "context": "templates.wifi.description"
+  },
+  "96b91b2e6589": {
+    "source": "Free Wi-Fi with a few house rules",
+    "text": "간단한 이용 수칙이 있는 무료 Wi-Fi",
+    "status": "machine",
+    "context": "templates.wifi.variants.cafe.description"
+  },
+  "d8578da3456b": {
+    "source": "Holiday rental",
+    "text": "휴가용 숙소",
+    "status": "machine",
+    "context": "templates.wifi.variants.rental.name"
+  },
+  "d928982eb2f7": {
+    "source": "Wi-Fi, house rules and a button to message the host",
+    "text": "Wi-Fi, 이용 수칙, 호스트에게 메시지를 보내는 버튼",
+    "status": "machine",
+    "context": "templates.wifi.variants.rental.description"
+  },
+  "ff0d47c74167": {
+    "source": "Office visitors",
+    "text": "사무실 방문자",
+    "status": "machine",
+    "context": "templates.wifi.variants.office.name"
+  },
+  "b17fdc39da42": {
+    "source": "A hidden guest network with steps to add it by hand",
+    "text": "숨겨진 게스트 네트워크와 직접 추가하는 방법",
+    "status": "machine",
+    "context": "templates.wifi.variants.office.description"
   },
   "152428da2871": {
     "source": "Coupon",
@@ -24695,6 +26387,42 @@
     "status": "machine",
     "context": "templates.event.variants.wedding.description"
   },
+  "fbbfaed1101f": {
+    "source": "Names, date and venue with directions, the day's schedule and an RSVP",
+    "text": "이름, 날짜, 길찾기가 있는 장소, 당일 일정과 참석 여부 회신을 담아요",
+    "status": "machine",
+    "context": "templates.invitation.description"
+  },
+  "2dbed8f02c6d": {
+    "source": "The day's schedule, dress code and an RSVP with meal choices",
+    "text": "당일 일정, 드레스 코드, 식사 선택이 있는 참석 회신",
+    "status": "machine",
+    "context": "templates.invitation.variants.wedding.description"
+  },
+  "f2fd01ac74f9": {
+    "source": "Birthday party",
+    "text": "생일 파티",
+    "status": "machine",
+    "context": "templates.invitation.variants.birthday.name"
+  },
+  "5eaa0f0a6e09": {
+    "source": "Night colours, what's happening when and a quick RSVP",
+    "text": "밤 분위기의 색감, 시간대별 일정, 간단한 참석 회신",
+    "status": "machine",
+    "context": "templates.invitation.variants.birthday.description"
+  },
+  "9c6facaf6820": {
+    "source": "Dinner party",
+    "text": "디너 파티",
+    "status": "machine",
+    "context": "templates.invitation.variants.dinner.name"
+  },
+  "62572e43ee04": {
+    "source": "A small gathering: time, address and food needs",
+    "text": "소규모 모임을 위한 시간, 주소, 음식 요청 사항",
+    "status": "machine",
+    "context": "templates.invitation.variants.dinner.description"
+  },
   "27c1551f4d14": {
     "source": "App download",
     "text": "앱 다운로드",
@@ -24790,6 +26518,42 @@
     "text": "관심사와 동의 항목이 있는 다크 뉴스레터 가입",
     "status": "machine",
     "context": "templates.feedback.variants.sign-up.description"
+  },
+  "4072912559f9": {
+    "source": "A contact or enquiry form with the fields you pick; replies reach your inbox",
+    "text": "원하는 항목으로 만드는 문의 양식이에요. 답변은 받은편지함으로 도착해요",
+    "status": "machine",
+    "context": "templates.form.description"
+  },
+  "b9cf3101ee8a": {
+    "source": "Name, email, phone and a message",
+    "text": "이름, 이메일, 전화번호, 메시지",
+    "status": "machine",
+    "context": "templates.form.variants.contact-us.description"
+  },
+  "b8415494efa4": {
+    "source": "Quote request",
+    "text": "견적 요청",
+    "status": "machine",
+    "context": "templates.form.variants.quote-request.name"
+  },
+  "8094c02f232c": {
+    "source": "The job, where it is and how to reach you",
+    "text": "작업 내용, 위치, 연락 방법을 받아요",
+    "status": "machine",
+    "context": "templates.form.variants.quote-request.description"
+  },
+  "de7a7767c119": {
+    "source": "Trade show leads",
+    "text": "박람회 리드",
+    "status": "machine",
+    "context": "templates.form.variants.lead-capture.name"
+  },
+  "8a11ce975f38": {
+    "source": "Details and interests from a stand, with consent",
+    "text": "부스에서 받은 정보와 관심 분야를 동의와 함께 받아요",
+    "status": "machine",
+    "context": "templates.form.variants.lead-capture.description"
   },
   "fb9ef894175c": {
     "source": "Product",
@@ -25067,6 +26831,54 @@
     "status": "machine",
     "context": "templates.medical.variants.allergy-card.description"
   },
+  "930d77cd70a4": {
+    "source": "Lost & found tag",
+    "text": "분실물 태그",
+    "status": "machine",
+    "context": "templates.asset-tag.label"
+  },
+  "5931911e74c8": {
+    "source": "A tag for bags, laptops and keys that helps whoever finds them reach you",
+    "text": "가방, 노트북, 열쇠를 발견한 사람이 나에게 연락할 수 있게 해주는 태그예요",
+    "status": "machine",
+    "context": "templates.asset-tag.description"
+  },
+  "f02b64ad84de": {
+    "source": "Luggage",
+    "text": "여행 가방",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.luggage.name"
+  },
+  "661729da6609": {
+    "source": "Call and message buttons, a reward and a found-it form",
+    "text": "전화와 메시지 버튼, 사례금, 발견 신고 양식",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.luggage.description"
+  },
+  "021f6da3aa83": {
+    "source": "Laptop & equipment",
+    "text": "노트북 및 장비",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.equipment.name"
+  },
+  "46158f15e064": {
+    "source": "Company property with an asset number and where to return it",
+    "text": "자산 번호와 반환 장소가 있는 회사 물품용이에요",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.equipment.description"
+  },
+  "f0d66a79c138": {
+    "source": "Keys",
+    "text": "열쇠",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.keys.name"
+  },
+  "ed54cd7c3b99": {
+    "source": "Short and simple: who to call and a reward",
+    "text": "간단하게 연락처와 사례금만 담아요",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.keys.description"
+  },
   "a9400aaa15f9": {
     "source": "A menu, brochure or manual people can read and download",
     "text": "사람들이 읽고 다운로드할 수 있는 메뉴, 브로셔, 설명서",
@@ -25294,6 +27106,48 @@
     "text": "순서대로 듣거나 다운로드할 수 있는 챕터",
     "status": "machine",
     "context": "templates.playlist.variants.audiobook.description"
+  },
+  "bfd8dc7a29e9": {
+    "source": "A short note behind a code: a gift message, a thank-you or a notice",
+    "text": "코드 뒤에 담는 짧은 메모예요. 선물 메시지, 감사 인사, 공지에 쓸 수 있어요",
+    "status": "machine",
+    "context": "templates.message.description"
+  },
+  "dafdcd6f7be1": {
+    "source": "Gift note",
+    "text": "선물 메모",
+    "status": "machine",
+    "context": "templates.message.variants.gift-note.name"
+  },
+  "05d204ba3747": {
+    "source": "A personal note with a photo and one button",
+    "text": "사진과 버튼 하나가 있는 개인 메모예요",
+    "status": "machine",
+    "context": "templates.message.variants.gift-note.description"
+  },
+  "1a829c65cee3": {
+    "source": "Thank-you card",
+    "text": "감사 카드",
+    "status": "machine",
+    "context": "templates.message.variants.thank-you.name"
+  },
+  "73bfc51857e2": {
+    "source": "A note for the card in every parcel",
+    "text": "모든 택배에 넣는 카드에 담을 메모예요",
+    "status": "machine",
+    "context": "templates.message.variants.thank-you.description"
+  },
+  "65659145569b": {
+    "source": "Notice",
+    "text": "공지",
+    "status": "machine",
+    "context": "templates.message.variants.notice.name"
+  },
+  "db5d25fed89b": {
+    "source": "A sign on the door: closed today, moved or back soon",
+    "text": "문에 붙이는 안내문: 오늘 휴무, 이전, 곧 돌아옴",
+    "status": "machine",
+    "context": "templates.message.variants.notice.description"
   },
   "f8af257eb7bb": {
     "source": "Custom page",

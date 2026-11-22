@@ -1730,6 +1730,7 @@
       "linkCopied": "Link copiado",
       "copyThisLink": "Copiar este link",
       "details": "Detalhes",
+      "timeline": "Linha do tempo",
       "links": "Links",
       "socialProfiles": "Redes sociais",
       "mapOf": "Mapa de {place}",
@@ -1793,7 +1794,24 @@
         "password": "Senha",
         "noPassword": "Nenhuma, é só conectar",
         "copyNetwork": "Copiar nome da rede",
-        "copyPassword": "Copiar senha"
+        "copyPassword": "Copiar senha",
+        "security": "Segurança",
+        "steps": {
+          "title": "Como conectar",
+          "iphone": "No iPhone",
+          "android": "No Android",
+          "copy": "Copie a senha com o botão acima.",
+          "iphoneOpen": "Abra os Ajustes e toque em Wi-Fi. Confirme que o Wi-Fi está ligado.",
+          "androidOpen": "Abra as Configurações e toque em Rede e internet, depois em Internet. Em alguns celulares, é Conexões e depois Wi-Fi.",
+          "pick": "Toque em “{ssid}” na lista de redes.",
+          "iphoneHidden": "Toque em Outra, digite “{ssid}” como nome e escolha o tipo de segurança.",
+          "androidHidden": "Toque em Adicionar rede no fim da lista, digite “{ssid}” e escolha o tipo de segurança. Em Opções avançadas, defina Rede oculta como Sim.",
+          "iphonePassword": "Cole a senha e toque em Conectar.",
+          "androidPassword": "Cole a senha e toque em Conectar.",
+          "androidPasswordSave": "Cole a senha e toque em Salvar.",
+          "iphoneJoin": "Toque em Conectar.",
+          "androidSave": "Toque em Salvar."
+        }
       },
       "payment": {
         "types": {

@@ -1730,6 +1730,7 @@
       "linkCopied": "Lien copié",
       "copyThisLink": "Copier ce lien",
       "details": "Détails",
+      "timeline": "Chronologie",
       "links": "Liens",
       "socialProfiles": "Réseaux sociaux",
       "mapOf": "Carte de {place}",
@@ -1793,7 +1794,24 @@
         "password": "Mot de passe",
         "noPassword": "Aucun, connectez-vous",
         "copyNetwork": "Copier le nom du réseau",
-        "copyPassword": "Copier le mot de passe"
+        "copyPassword": "Copier le mot de passe",
+        "security": "Sécurité",
+        "steps": {
+          "title": "Comment se connecter",
+          "iphone": "Sur iPhone",
+          "android": "Sur Android",
+          "copy": "Copiez le mot de passe avec le bouton ci-dessus.",
+          "iphoneOpen": "Ouvrez Réglages et touchez Wi-Fi. Vérifiez que le Wi-Fi est activé.",
+          "androidOpen": "Ouvrez Paramètres et touchez Réseau et Internet, puis Internet. Sur certains téléphones, il s’agit de Connexions, puis Wi-Fi.",
+          "pick": "Touchez « {ssid} » dans la liste des réseaux.",
+          "iphoneHidden": "Touchez Autre, saisissez « {ssid} » comme nom et choisissez le type de sécurité.",
+          "androidHidden": "Touchez Ajouter un réseau en bas de la liste, saisissez « {ssid} » et choisissez le type de sécurité. Dans Options avancées, réglez Réseau masqué sur Oui.",
+          "iphonePassword": "Collez le mot de passe et touchez Rejoindre.",
+          "androidPassword": "Collez le mot de passe et touchez Se connecter.",
+          "androidPasswordSave": "Collez le mot de passe et touchez Enregistrer.",
+          "iphoneJoin": "Touchez Rejoindre.",
+          "androidSave": "Touchez Enregistrer."
+        }
       },
       "payment": {
         "types": {

@@ -73,6 +73,12 @@ export function AddressMapEditor({
         label="Show a map"
         onChange={(showMap) => set({ showMap })}
       />
+      <SwitchField
+        checked={value.showWaze}
+        hint="Adds a Waze button next to Google Maps and Apple Maps."
+        label="Waze button"
+        onChange={(showWaze) => set({ showWaze })}
+      />
     </div>
   );
 }

@@ -104,6 +104,42 @@ export const PAGE_TYPES = {
     description:
       "Several tracks in a row: a mix, the stops of an audio tour or a book's chapters.",
   },
+  // Added 2026-11-22 (pages)
+  location: {
+    name: "Location page",
+    description:
+      "An address with a map, buttons for Google Maps, Apple Maps and Waze, and opening hours.",
+  },
+  resume: {
+    name: "Resume page",
+    description:
+      "A CV with your photo, experience, education, skills, links and a PDF to download.",
+  },
+  wifi: {
+    name: "Guest Wi-Fi page",
+    description:
+      "The network name, a password to copy and how to join on iPhone and Android.",
+  },
+  invitation: {
+    name: "Invitation page",
+    description:
+      "Names, date and venue with directions, the day's schedule and an RSVP form.",
+  },
+  form: {
+    name: "Contact form page",
+    description:
+      "A contact, quote or lead form with the fields you choose, answered in your dashboard.",
+  },
+  "asset-tag": {
+    name: "Lost and found tag page",
+    description:
+      "Call and message buttons and a found-it form for a bag, laptop or set of keys.",
+  },
+  message: {
+    name: "Message page",
+    description:
+      "A short note with a photo and one button: a gift message, a thank-you or a notice.",
+  },
 } as const satisfies Record<string, SeoPageType>;
 
 export type PageTypeId = keyof typeof PAGE_TYPES;

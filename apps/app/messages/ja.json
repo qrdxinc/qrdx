@@ -1730,6 +1730,7 @@
       "linkCopied": "リンクをコピーしました",
       "copyThisLink": "このリンクをコピー",
       "details": "詳細",
+      "timeline": "タイムライン",
       "links": "リンク",
       "socialProfiles": "SNSプロフィール",
       "mapOf": "{place}の地図",
@@ -1793,7 +1794,24 @@
         "password": "パスワード",
         "noPassword": "なし、そのまま接続",
         "copyNetwork": "ネットワーク名をコピー",
-        "copyPassword": "パスワードをコピー"
+        "copyPassword": "パスワードをコピー",
+        "security": "セキュリティ",
+        "steps": {
+          "title": "接続方法",
+          "iphone": "iPhoneの場合",
+          "android": "Androidの場合",
+          "copy": "上のボタンでパスワードをコピーします。",
+          "iphoneOpen": "「設定」を開き、「Wi-Fi」をタップします。Wi-Fiがオンになっていることを確認してください。",
+          "androidOpen": "「設定」を開き、「ネットワークとインターネット」、「インターネット」の順にタップします。機種によっては「接続」、「Wi-Fi」の順になります。",
+          "pick": "ネットワーク一覧から「{ssid}」をタップします。",
+          "iphoneHidden": "「その他」をタップし、ネットワーク名に「{ssid}」と入力して、セキュリティの種類を選択します。",
+          "androidHidden": "一覧の下部にある「ネットワークを追加」をタップし、「{ssid}」と入力して、セキュリティの種類を選択します。「詳細設定」で「非公開ネットワーク」を「はい」にします。",
+          "iphonePassword": "パスワードを貼り付け、「接続」をタップします。",
+          "androidPassword": "パスワードを貼り付け、「接続」をタップします。",
+          "androidPasswordSave": "パスワードを貼り付け、「保存」をタップします。",
+          "iphoneJoin": "「接続」をタップします。",
+          "androidSave": "「保存」をタップします。"
+        }
       },
       "payment": {
         "types": {

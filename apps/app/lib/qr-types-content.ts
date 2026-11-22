@@ -187,6 +187,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["url", "vcard", "wifi", "email"],
+    hosted: "message",
   },
   {
     type: "email",
@@ -234,6 +235,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["phone", "sms", "whatsapp", "vcard"],
+    hosted: "contact-form",
   },
   {
     type: "phone",
@@ -279,6 +281,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["sms", "whatsapp", "vcard", "email"],
+    hosted: "lost-and-found",
   },
   {
     type: "sms",
@@ -378,6 +381,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["phone", "sms", "vcard", "instagram"],
+    hosted: "invitation",
   },
   {
     type: "wifi",
@@ -429,6 +433,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["vcard", "url", "text", "maps"],
+    hosted: "guest-wifi",
   },
   {
     type: "vcard",
@@ -530,6 +535,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["google-review", "wifi", "vcard", "calcom"],
+    hosted: "location",
   },
   {
     type: "facebook",
@@ -833,6 +839,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["vcard", "twitter", "calcom", "email"],
+    hosted: "resume",
   },
   {
     type: "youtube",
