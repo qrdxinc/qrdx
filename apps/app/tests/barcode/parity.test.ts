@@ -20,6 +20,7 @@ import {
   type BarcodeFormatId,
   decodedMatches,
   getBarcodeFormat,
+  isScanCheckable,
   validateBarcodeInput,
 } from "@/lib/barcode/formats";
 import { renderBarcodeSVG } from "@/lib/barcode/render";
@@ -122,6 +123,15 @@ describe("browser and server draw the same SVG", () => {
   });
 });
 
+/**
+ * Formats a reader here decodes. DotCode and Intelligent Mail aren't among
+ * them (tests/barcode/decode.test.ts), so their files are compared pixel for
+ * pixel and drawn as vectors below, but not decoded.
+ */
+const DECODABLE = BARCODE_FORMATS.filter((format) =>
+  isScanCheckable(format.id),
+);
+
 /** `found` holds the value drawn, in one of the format's reader formats. */
 const expectDecodes = async (
   id: BarcodeFormatId,
@@ -169,7 +179,7 @@ describe("server raster files are the generator's PNG", () => {
   );
 
   it.each(
-    BARCODE_FORMATS.flatMap((format) =>
+    DECODABLE.flatMap((format) =>
       (["png", "jpg", "webp", "avif"] as const).map(
         (type) => [format.label, type, format.id] as const,
       ),
@@ -217,7 +227,7 @@ describe("server BMP files are the PNG's pixels", () => {
     expect(Buffer.from(decoded.rgba).equals(pixels.data)).toBe(true);
   });
 
-  it.each(BARCODE_FORMATS.map((format) => [format.label, format.id] as const))(
+  it.each(DECODABLE.map((format) => [format.label, format.id] as const))(
     "%s as BMP decodes as the value drawn",
     async (_, id) => {
       const file = await renderBarcodeFile(

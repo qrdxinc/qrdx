@@ -1968,7 +1968,7 @@
     "crumb": "Generatore di codici a barre",
     "title": "Generatore di codici a barre gratis",
     "intro1": "Crea codici a barre per vendita al dettaglio, spedizioni e inventario in {count, number} formati, da EAN-13 e UPC-A a Code 128, GS1-128, ITF-14 e Data Matrix. Scrivi il numero e la cifra di controllo viene calcolata al posto tuo; se è sbagliata, te ne accorgi prima di stampare.",
-    "intro2": "Ogni codice a barre viene disegnato e verificato con una scansione nel tuo browser, poi salvato come PNG o JPG per gli schermi, oppure come SVG, PDF ed EPS per la stampa. È gratis, senza account e senza filigrana. Accedi per tenere i codici a barre nella tua dashboard e modificarli più avanti.",
+    "intro2": "Ogni codice a barre viene disegnato nel tuo browser e verificato lì con una scansione (tranne DotCode e USPS Intelligent Mail, che nessun lettore qui è in grado di decodificare), poi salvato come PNG o JPG per gli schermi, oppure come SVG, PDF ed EPS per la stampa. È gratuito, senza account e senza filigrana. Accedi per conservare i codici a barre nella tua dashboard e modificarli più tardi.",
     "toolLabel": "Generatore di codici a barre",
     "formatsEyebrow": "Formati",
     "whichTitle": "Quale codice a barre usare?",
@@ -2054,7 +2054,8 @@
       "passed": "Controllo della scansione superato: un lettore di codici a barre decodifica il PNG come {label} <mono>{value}</mono>",
       "addOnNotChecked": "Questo controllo legge solo l’EAN-13, non l’add-on {addOn}: fai la scansione di una stampa di prova con uno scanner che legga gli add-on.",
       "mismatch": "Controllo della scansione non superato: il lettore ha letto \"{decoded}\" invece di questo {label}.",
-      "failed": "Controllo della scansione non superato: il lettore non è riuscito a decodificare questo {label}. Aumenta il contrasto, le dimensioni o la zona di rispetto."
+      "failed": "Controllo della scansione non superato: il lettore non è riuscito a decodificare questo {label}. Aumenta il contrasto, le dimensioni o la zona di rispetto.",
+      "unchecked": "Non verificato con la scansione: il lettore usato per questo controllo non decodifica {label}. Prima di stampare, testa il codice a barre con un lettore che supporti {label}."
     },
     "save": {
       "signIn": "<link>Accedi</link> per salvare i codici a barre nella tua dashboard e modificarli più tardi.",
@@ -2094,6 +2095,13 @@
       "gs1BadChars": "L’AI ({ai}) contiene caratteri non ammessi da GS1: {chars}",
       "gs1Ai": "AI ({ai}): {inner}",
       "gs1TooLong": "GS1-128 contiene fino a {max} caratteri tra AI e dati; qui ce ne sono {count}. Dividi su due codici a barre.",
+      "databarGtinOnly": "GS1 DataBar contiene solo un GTIN: (01) e le sue 14 cifre. Per date, un lotto o un peso, usa GS1 DataBar Expanded o GS1-128.",
+      "databarTooLong": "GS1 DataBar Expanded contiene fino a {max} cifre tra AI e dati, e meno se ci sono lettere; questo ha {count} caratteri. Rimuovi un AI o accorcia un valore.",
+      "imbEnter": "Inserisci il codice di tracciamento di 20 cifre, poi il ZIP Code di instradamento, se c’è.",
+      "imbTrackingLength": "Il codice di tracciamento ha 20 cifre: ID del codice a barre (2), tipo di servizio (3), ID del mittente e numero seriale (15). Questo ha {count, plural, one {# cifra} other {# cifre}}.",
+      "imbRoutingLength": "Dopo il codice di tracciamento di 20 cifre arriva il ZIP Code di instradamento: 5 cifre, 9 (ZIP+4) oppure 11 (ZIP+4 e punto di consegna). Qui ci sono {count, plural, one {# cifra} other {# cifre}} dopo il codice di tracciamento.",
+      "imbBarcodeId": "L’ID del codice a barre (le prime 2 cifre) termina con un numero da 0 a 4; questo è {id}.",
+      "imbFields": "ID del codice a barre {barcodeId}, tipo di servizio {serviceType}, ID del mittente {mailerId}, numero seriale {serial}, {routing, select, none {nessun codice di instradamento} other {codice di instradamento {routing}}}.",
       "isbnChars": "Un ISBN accetta cifre, trattini e spazi; un ISBN-10 può terminare con X.",
       "isbnLength": "Un ISBN ha 13 cifre, oppure 10 nel vecchio formato ISBN-10; questo ha {count, plural, one {# cifra} other {# cifre}}.",
       "isbnPrefix": "Un ISBN-13 inizia con 978 o 979.",

@@ -2,16 +2,19 @@
 // ZXing (the `barcode-detector` ponyfill, ZXing compiled to WebAssembly, the
 // same decoder /scan falls back to), and compares the result with the value
 // drawn. Always the WebAssembly reader, never the browser's own
-// BarcodeDetector, so every browser gets the same answer.
+// BarcodeDetector, so every browser gets the same answer. Formats it can't
+// read (DotCode, Intelligent Mail: isScanCheckable) are reported unchecked,
+// never failed.
 import type { BarcodeFormat as DetectorFormat } from "barcode-detector/ponyfill";
 import {
   BARCODE_FORMATS,
   type BarcodeFormatId,
   decodedMatches,
   getBarcodeFormat,
+  isScanCheckable,
 } from "./formats";
 
-/** Every format the generator draws, as BarcodeDetector names. */
+/** Every format the generator scan-checks, as BarcodeDetector names. */
 export const SCAN_CHECK_FORMATS = [
   ...new Set(BARCODE_FORMATS.flatMap((format) => format.detectorFormats)),
 ] as DetectorFormat[];
@@ -42,14 +45,21 @@ function getDetector(): Promise<Detector> {
 export type ScanCheckResult =
   | { status: "pass"; decoded: string }
   | { status: "mismatch"; decoded: string; format: string }
-  | { status: "fail" };
+  | { status: "fail" }
+  /** No reader here decodes this format, so it wasn't checked. */
+  | { status: "unchecked" };
 
-/** Decodes `image` and checks it reads back as `value` in format `id`. */
+/**
+ * Decodes `image` and checks it reads back as `value` in format `id`. A
+ * format no reader here decodes comes back unchecked, without loading the
+ * decoder.
+ */
 export async function checkBarcodeScan(
   image: ImageBitmapSource,
   id: BarcodeFormatId,
   value: string,
 ): Promise<ScanCheckResult> {
+  if (!isScanCheckable(id)) return { status: "unchecked" };
   const detector = await getDetector();
   const found = await detector.detect(image);
   const expected = getBarcodeFormat(id).detectorFormats as readonly string[];

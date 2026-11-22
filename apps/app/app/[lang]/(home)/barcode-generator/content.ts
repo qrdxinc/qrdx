@@ -28,12 +28,16 @@ export const BARCODE_USES: Record<BarcodeFormatId, string> = {
     "A retail GTIN in a smaller barcode than an EAN-13 or UPC-A, for items too small for those. Not every checkout scanner has it switched on, so check with the retailer before printing.",
   "gs1-databar-expanded":
     "A GTIN plus more data, such as a weight, a price or an expiry date, marked by the same Application Identifiers as GS1-128. Used on fresh food sold by weight, so the checkout reads the price or weight from the barcode.",
+  "intelligent-mail":
+    "US mail: the 4-state barcode USPS sorts letters and flats by and tracks them with. It holds a mailer ID from USPS, a service type, a serial number and the delivery ZIP Code. Mailers print it to get automation prices and track their mail.",
   datamatrix:
     "A small square 2D code that holds a lot in little space, used to mark parts, electronics and labels. This is plain Data Matrix; the GS1 version required on some regulated packaging isn't offered here.",
   pdf417:
     "A stacked 2D code that holds up to about a kilobyte of text. You'll find it on driver's licenses, ID cards and boarding passes.",
   aztec:
     "A square 2D code found from its center, so it needs no blank margin. Transport operators use it for tickets shown on phone screens and printed at home.",
+  dotcode:
+    "A 2D code of separate dots, made for inkjet printers marking packs at line speed: cigarette and tobacco packs for EU traceability, medicines and drinks. Its dots needn't touch, so rough, fast printing still reads.",
 };
 
 /** The page FAQ. */
@@ -56,7 +60,7 @@ export const BARCODE_FAQS: { question: string; answer: string }[] = [
   {
     question: "Will my barcode scan?",
     answer:
-      "As you edit, the generator decodes the PNG it would download with ZXing, an open-source barcode reader, and tells you whether it reads back the value you entered. It also warns about low contrast, light bars on a dark background, red bars and a quiet zone below the minimum. It can't see your printer, label stock or lighting, so print a test and scan it with the scanners that will read it.",
+      "As you edit, the generator decodes the PNG it would download with ZXing, an open-source barcode reader, and tells you whether it reads back the value you entered. It also warns about low contrast, light bars on a dark background, red bars and a quiet zone below the minimum. ZXing doesn't read DotCode or USPS Intelligent Mail, so those two aren't checked; test them with a reader that supports them. It can't see your printer, label stock or lighting, so print a test and scan it with the scanners that will read it.",
   },
   {
     question: "Which file format should I download?",

@@ -34660,5 +34660,563 @@
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 atau Aztec. Memeriksa nilainya (digit pemeriksa, panjang, karakter) dan mengembalikan PNG beserta URL gambar publik dalam format SVG, PNG, PDF, dan lainnya.",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "15c6793537de": {
+    "source": "A GTIN in a short barcode for small retail items",
+    "text": "GTIN dalam barcode pendek untuk barang ritel berukuran kecil",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.summary"
+  },
+  "b5cc716296fb": {
+    "source": "A GTIN as (01) and its 14 digits, e.g. (01)09501101530003. Leave off the last digit and the check digit is added.",
+    "text": "GTIN sebagai (01) beserta 14 digitnya, mis. (01)09501101530003. Jika digit terakhir dihilangkan, digit pemeriksa akan ditambahkan.",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.inputHint"
+  },
+  "e9f24dfc8256": {
+    "source": "GTIN plus weight, price or dates for fresh food",
+    "text": "GTIN plus berat, harga, atau tanggal untuk makanan segar",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.summary"
+  },
+  "9ba22a61f006": {
+    "source": "Application Identifiers in brackets, each followed by its value, e.g. (01)09501101530003(17)261231(10)AB-123.",
+    "text": "Application Identifier dalam tanda kurung, masing-masing diikuti nilainya, mis. (01)09501101530003(17)261231(10)AB-123.",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.inputHint"
+  },
+  "05b46ef73281": {
+    "source": "The 4-state barcode USPS sorts and tracks US mail by",
+    "text": "Barcode 4-state yang digunakan USPS untuk menyortir dan melacak surat di AS",
+    "status": "machine",
+    "context": "barcodes.formats.intelligent-mail.summary"
+  },
+  "17d83963b8ce": {
+    "source": "20 digits of tracking code: barcode ID (2), service type (3), mailer ID and serial number (15). Then the routing ZIP Code, if any: 5, 9 or 11 digits. Spaces and hyphens are ignored.",
+    "text": "20 digit kode pelacakan: ID barcode (2), jenis layanan (3), ID pengirim surat dan nomor seri (15). Lalu ZIP Code tujuan, jika ada: 5, 9, atau 11 digit. Spasi dan tanda hubung diabaikan.",
+    "status": "machine",
+    "context": "barcodes.formats.intelligent-mail.inputHint"
+  },
+  "dea590368a35": {
+    "source": "Dots for high-speed inkjet: cigarette packs and medicines",
+    "text": "Titik-titik untuk inkjet berkecepatan tinggi: bungkus rokok dan obat-obatan",
+    "status": "machine",
+    "context": "barcodes.formats.dotcode.summary"
+  },
+  "2368b06cffad": {
+    "source": "Any text, up to about 390 letters or 780 digits; less with accents or other scripts.",
+    "text": "Teks apa pun, hingga sekitar 390 huruf atau 780 digit; lebih sedikit jika memakai aksen atau aksara lain.",
+    "status": "machine",
+    "context": "barcodes.formats.dotcode.inputHint"
+  },
+  "baa23c86f1fc": {
+    "source": "A retail GTIN in a smaller barcode than an EAN-13 or UPC-A, for items too small for those. Not every checkout scanner has it switched on, so check with the retailer before printing.",
+    "text": "GTIN ritel dalam barcode yang lebih kecil daripada EAN-13 atau UPC-A, untuk barang yang terlalu kecil bagi keduanya. Tidak semua pemindai kasir mengaktifkannya, jadi tanyakan dulu kepada peritel sebelum mencetak.",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar"
+  },
+  "5092dbf6ba77": {
+    "source": "A GTIN plus more data, such as a weight, a price or an expiry date, marked by the same Application Identifiers as GS1-128. Used on fresh food sold by weight, so the checkout reads the price or weight from the barcode.",
+    "text": "GTIN plus data tambahan, seperti berat, harga, atau tanggal kedaluwarsa, yang ditandai dengan Application Identifier yang sama seperti GS1-128. Digunakan pada makanan segar yang dijual per berat, sehingga kasir membaca harga atau berat dari barcode.",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar-expanded"
+  },
+  "6b90e94726c6": {
+    "source": "US mail: the 4-state barcode USPS sorts letters and flats by and tracks them with. It holds a mailer ID from USPS, a service type, a serial number and the delivery ZIP Code. Mailers print it to get automation prices and track their mail.",
+    "text": "Surat di AS: barcode 4-state yang digunakan USPS untuk menyortir surat dan flat serta melacaknya. Barcode ini memuat ID pengirim surat dari USPS, jenis layanan, nomor seri, dan ZIP Code tujuan pengiriman. Pengirim surat mencetaknya untuk mendapatkan tarif otomasi dan melacak surat mereka.",
+    "status": "machine",
+    "context": "barcodes.uses.intelligent-mail"
+  },
+  "165c46930f26": {
+    "source": "A 2D code of separate dots, made for inkjet printers marking packs at line speed: cigarette and tobacco packs for EU traceability, medicines and drinks. Its dots needn't touch, so rough, fast printing still reads.",
+    "text": "Kode 2D berupa titik-titik terpisah, dibuat untuk printer inkjet yang menandai kemasan pada kecepatan lini produksi: bungkus rokok dan tembakau untuk keterlacakan di UE, obat-obatan, dan minuman. Titik-titiknya tidak perlu bersentuhan, sehingga hasil cetak yang kasar dan cepat tetap terbaca.",
+    "status": "machine",
+    "context": "barcodes.uses.dotcode"
+  },
+  "db0826917a45": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14, GS1-128 and GS1 DataBar carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "Untuk produk yang dijual di toko, ya. EAN, UPC, ITF-14, GS1-128, dan GS1 DataBar membawa GTIN, dan GTIN dilisensikan kepada perusahaan Anda oleh GS1 (atau organisasi GS1 di negara Anda); sistem peritel tidak akan mengenali nomor karangan. Buku, terbitan berseri, dan musik cetak menggunakan ISBN, ISSN, atau ISMN dari lembaga nasionalnya. Generator ini membuat nomor valid apa pun, tetapi tidak menerbitkan atau mendaftarkan nomor. Untuk stok, aset, atau tiket Anda sendiri, Code 128, Code 39, dan Code 93 tidak memerlukan pendaftaran.",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "5d57866e493c": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, the GTIN of GS1 DataBar and the GTIN and SSCC fields of GS1-128 and GS1 DataBar Expanded: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "Ya, untuk EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, GTIN pada GS1 DataBar, serta kolom GTIN dan SSCC pada GS1-128 dan GS1 DataBar Expanded: hilangkan digit terakhir dan digit tersebut akan dihitung. Masukkan nomor lengkap dan digit pemeriksa akan diverifikasi; jika salah, akan muncul pesan galat, bukan barcode.",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "384846f3f60d": {
+    "source": "As you edit, the generator decodes the PNG it would download with ZXing, an open-source barcode reader, and tells you whether it reads back the value you entered. It also warns about low contrast, light bars on a dark background, red bars and a quiet zone below the minimum. ZXing doesn't read DotCode or USPS Intelligent Mail, so those two aren't checked; test them with a reader that supports them. It can't see your printer, label stock or lighting, so print a test and scan it with the scanners that will read it.",
+    "text": "Saat Anda mengedit, generator mendekode PNG yang akan diunduh dengan ZXing, pembaca barcode open-source, lalu memberi tahu apakah hasilnya terbaca sama dengan nilai yang Anda masukkan. Generator juga memberi peringatan tentang kontras rendah, garis terang pada latar gelap, garis merah, dan zona tenang di bawah batas minimum. ZXing tidak membaca DotCode atau USPS Intelligent Mail, jadi keduanya tidak diperiksa; uji dengan pembaca yang mendukungnya. Generator tidak dapat melihat printer, bahan label, atau pencahayaan Anda, jadi cetak uji coba dan lakukan pemindaian dengan pemindai yang akan membacanya.",
+    "status": "machine",
+    "context": "barcodes.faqs.3.answer"
+  },
+  "c2d9a57f6443": {
+    "source": "Free GS1 DataBar Barcode Generator (Omnidirectional)",
+    "text": "Generator Barcode GS1 DataBar (Omnidirectional) Gratis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.title"
+  },
+  "418eae1158ca": {
+    "source": "Make a GS1 DataBar Omnidirectional barcode from a GTIN, with the check digit added or checked. Scan-checked in your browser. SVG, PDF, EPS and PNG. Free.",
+    "text": "Buat barcode GS1 DataBar Omnidirectional dari GTIN, dengan digit pemeriksa yang ditambahkan atau diperiksa. Pemindaian diperiksa di browser Anda. SVG, PDF, EPS, dan PNG. Gratis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.metaDescription"
+  },
+  "4a41d40d111a": {
+    "source": "GS1 DataBar Omnidirectional holds one thing: a product's 14-digit GTIN, the number an EAN-13 or UPC-A carries. Type it after (01), check that it scans and download it.",
+    "text": "GS1 DataBar Omnidirectional hanya menyimpan satu hal: GTIN 14 digit suatu produk, nomor yang juga dibawa oleh EAN-13 atau UPC-A. Ketik nomor itu setelah (01), periksa apakah bisa dipindai, lalu unduh.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.intro"
+  },
+  "c74d27dff93f": {
+    "source": "Retail items too small for an EAN-13 or UPC-A: its bars are as wide as an EAN-13's but much shorter. Checkout scanners read it from any angle, like an EAN-13.",
+    "text": "Barang ritel yang terlalu kecil untuk EAN-13 atau UPC-A: lebar batangnya sama dengan EAN-13, tetapi jauh lebih pendek. Pemindai di kasir dapat membacanya dari sudut mana pun, seperti EAN-13.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.0"
+  },
+  "53ad38e77560": {
+    "source": "Not every scanner has GS1 DataBar switched on. Ask the retailer that will scan it before you print, and use EAN-13 or UPC-A when in doubt.",
+    "text": "Tidak semua pemindai mengaktifkan GS1 DataBar. Tanyakan kepada peritel yang akan memindainya sebelum Anda mencetak, dan gunakan EAN-13 atau UPC-A jika ragu.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.1"
+  },
+  "0a7f916a956b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar?",
+    "text": "Apakah saya memerlukan nomor GS1 untuk GS1 DataBar?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.title"
+  },
+  "aaa22f8cfea2": {
+    "source": "Yes. The GTIN it holds is built from a GS1 company prefix, like the number in an EAN-13 or UPC-A.",
+    "text": "Ya. GTIN yang disimpannya dibuat dari prefiks perusahaan GS1, seperti nomor pada EAN-13 atau UPC-A.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.paragraphs.0"
+  },
+  "14553ad995d0": {
+    "source": "Write the GTIN after (01), as 14 digits: (01)09501101530003. A 13-digit EAN-13 number becomes a GTIN with a 0 in front, and a 12-digit UPC-A number with two.",
+    "text": "Tulis GTIN setelah (01), sebanyak 14 digit: (01)09501101530003. Nomor EAN-13 13 digit menjadi GTIN dengan angka 0 di depannya, dan nomor UPC-A 12 digit dengan dua angka 0.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.0"
+  },
+  "847870e5f20f": {
+    "source": "Leave off the last digit and the check digit is added; enter all 14 and it's checked. The brackets aren't encoded; they show that (01), the GTIN, follows.",
+    "text": "Hilangkan digit terakhir dan digit pemeriksa akan ditambahkan; masukkan seluruh 14 digit dan digit itu akan diperiksa. Tanda kurung tidak dikodekan; tanda itu hanya menunjukkan bahwa (01), yaitu GTIN, mengikuti.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.1"
+  },
+  "7c9ca8195d32": {
+    "source": "GS1 DataBar holds nothing but the GTIN. For a weight, a price, a batch or a date, use GS1 DataBar Expanded, which takes the same (AI)value input.",
+    "text": "GS1 DataBar hanya menyimpan GTIN. Untuk berat, harga, batch, atau tanggal, gunakan GS1 DataBar Expanded, yang menerima input (AI)nilai yang sama.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.2"
+  },
+  "ee3674a025e6": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 33 modules high, 11.6 mm at this module.",
+    "text": "Berkas unduhan memakai modul 0.353 mm dan batang setinggi 15 mm. GS1 mensyaratkan batang setinggi minimal 33 modul, yaitu 11.6 mm pada modul ini.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.0"
+  },
+  "052b836a39de": {
+    "source": "The bars are 96 modules wide, 33.5 mm here: about the width of an EAN-13's bars at the same module. The printed GTIN is a little wider than the bars, so the file is wider too.",
+    "text": "Lebar batangnya 96 modul, yaitu 33.5 mm di sini: kira-kira sama dengan lebar batang EAN-13 pada modul yang sama. GTIN yang tercetak sedikit lebih lebar daripada batangnya, sehingga berkasnya juga lebih lebar.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.1"
+  },
+  "395264c48174": {
+    "source": "What does a scanner return?",
+    "text": "Apa yang dikembalikan pemindai?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.question"
+  },
+  "07d9e012bffd": {
+    "source": "The digits 01 and the GTIN, 16 in all, sometimes after a symbology identifier (]e0), and with no brackets. The scan check here accepts both forms.",
+    "text": "Digit 01 dan GTIN, totalnya 16 digit, terkadang didahului pengenal simbologi (]e0), dan tanpa tanda kurung. Pemeriksaan pemindaian di sini menerima kedua bentuk tersebut.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.answer"
+  },
+  "76f18e2501c2": {
+    "source": "My scanner reads EAN-13 but not this. Why?",
+    "text": "Pemindai saya bisa membaca EAN-13 tetapi tidak yang ini. Mengapa?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.question"
+  },
+  "6b564f4ef227": {
+    "source": "Most likely GS1 DataBar is switched off in its settings. Many scanners let you turn each symbology on or off; check the manual for GS1 DataBar, which older documents call RSS-14.",
+    "text": "Kemungkinan besar GS1 DataBar dinonaktifkan di pengaturannya. Banyak pemindai memungkinkan Anda mengaktifkan atau menonaktifkan setiap simbologi; periksa buku panduannya untuk GS1 DataBar, yang di dokumen lama disebut RSS-14.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.answer"
+  },
+  "6a37ed0e9a98": {
+    "source": "Can it hold a weight or an expiry date?",
+    "text": "Apakah bisa menyimpan berat atau tanggal kedaluwarsa?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.question"
+  },
+  "e888aaaf74e2": {
+    "source": "No, only the GTIN. GS1 DataBar Expanded holds the GTIN with other Application Identifiers, such as (3103) for a weight or (17) for an expiry date.",
+    "text": "Tidak, hanya GTIN. GS1 DataBar Expanded menyimpan GTIN bersama Application Identifier lain, seperti (3103) untuk berat atau (17) untuk tanggal kedaluwarsa.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.answer"
+  },
+  "e17f7a55d5c6": {
+    "source": "Free GS1 DataBar Expanded Barcode Generator",
+    "text": "Generator Barcode GS1 DataBar Expanded Gratis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.title"
+  },
+  "14f0f00fb5e9": {
+    "source": "Make a GS1 DataBar Expanded barcode: a GTIN with weight, price, batch or expiry in one retail barcode. Check digits added. Scan-checked. SVG, PDF, PNG.",
+    "text": "Buat barcode GS1 DataBar Expanded: GTIN dengan berat, harga, batch, atau tanggal kedaluwarsa dalam satu barcode ritel. Digit pemeriksa ditambahkan. Sudah diperiksa pemindaian. SVG, PDF, PNG.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.metaDescription"
+  },
+  "ac78f2470ebf": {
+    "source": "GS1 DataBar Expanded carries a GTIN and more data in one barcode a checkout scanner reads, each piece marked by an Application Identifier (AI) in brackets: (01) for the GTIN, (17) for an expiry date, (10) for a batch. Type the AIs and values; check digits are added or checked for you.",
+    "text": "GS1 DataBar Expanded membawa GTIN dan data lainnya dalam satu barcode yang dibaca pemindai kasir, dengan setiap data ditandai oleh Application Identifier (AI) dalam tanda kurung: (01) untuk GTIN, (17) untuk tanggal kedaluwarsa, (10) untuk batch. Ketik AI dan nilainya; digit pemeriksa ditambahkan atau diperiksa untuk Anda.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.intro"
+  },
+  "f15374e67a3a": {
+    "source": "Fresh food sold by weight, such as meat, cheese and deli counters, where the weight or the price travels with the GTIN so the checkout can read it from the barcode.",
+    "text": "Makanan segar yang dijual per berat, seperti daging, keju, dan konter deli, di mana berat atau harga disertakan bersama GTIN sehingga kasir dapat membacanya dari barcode.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.0"
+  },
+  "a2c9d9d7f3f1": {
+    "source": "North American coupons use its stacked form, GS1 DataBar Expanded Stacked, which this generator doesn't draw.",
+    "text": "Kupon di Amerika Utara menggunakan bentuk bertumpuknya, GS1 DataBar Expanded Stacked, yang tidak digambar oleh generator ini.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.1"
+  },
+  "fc1be266ea8b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar Expanded?",
+    "text": "Apakah saya memerlukan nomor GS1 untuk GS1 DataBar Expanded?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.title"
+  },
+  "b1afd422b8bf": {
+    "source": "For the GTIN in (01), yes: it's built from a GS1 company prefix. Weights, prices, batches and dates are your own data.",
+    "text": "Untuk GTIN di (01), ya: GTIN dibuat dari prefiks perusahaan GS1. Berat, harga, batch, dan tanggal adalah data milik Anda sendiri.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.paragraphs.0"
+  },
+  "f06c2fc00957": {
+    "source": "GTINs in (01) and (02) and SSCCs in (00) get their check digit added when you leave it off, or checked when you don't. The encoder also checks the data against GS1's rules: a batch (10) without a GTIN, for example, is refused.",
+    "text": "GTIN di (01) dan (02) serta SSCC di (00) akan ditambahkan digit pemeriksanya jika Anda tidak mengisinya, atau diperiksa jika Anda mengisinya. Encoder juga memeriksa data sesuai aturan GS1: misalnya, batch (10) tanpa GTIN akan ditolak.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.1"
+  },
+  "d2722491f265": {
+    "source": "It holds up to 74 digits of AIs and data, and fewer when there are letters. Put variable-length fields such as (10) batch last, so no separator is needed after them.",
+    "text": "Barcode ini memuat hingga 74 digit AI dan data, dan lebih sedikit jika ada huruf. Letakkan kolom dengan panjang bervariasi, seperti batch (10), di bagian akhir agar tidak perlu pemisah setelahnya.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.2"
+  },
+  "71bcd6597001": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 34 modules high, 12 mm at this module.",
+    "text": "Unduhan menggunakan modul 0.353 mm dan batang setinggi 15 mm. GS1 meminta batang setinggi minimal 34 modul, yaitu 12 mm pada modul ini.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.0"
+  },
+  "f7a219456cad": {
+    "source": "It's long, not tall: the example's bars are 98.8 mm long, a little more than the same data as GS1-128 (93.8 mm). More data makes it longer still.",
+    "text": "Barcode ini panjang, bukan tinggi: batang pada contoh sepanjang 98.8 mm, sedikit lebih panjang daripada data yang sama dalam GS1-128 (93.8 mm). Semakin banyak data, semakin panjang barcodenya.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.1"
+  },
+  "5c3434d2ba5d": {
+    "source": "The brackets are only for people. Readers report the data with a symbology identifier (]e0) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+    "text": "Tanda kurung hanya untuk manusia. Pembaca melaporkan data dengan pengenal simbologi (]e0) atau tanpa pengenal, dan memisahkan kolom dengan panjang bervariasi dengan karakter GS yang tidak terlihat. Pemeriksaan pemindaian di sini menerima semua bentuk tersebut.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.0.answer"
+  },
+  "99a9136f6b20": {
+    "source": "GS1 DataBar Expanded or GS1-128?",
+    "text": "GS1 DataBar Expanded atau GS1-128?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.question"
+  },
+  "08d1a93af707": {
+    "source": "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
+    "text": "Gunakan yang diminta oleh peritel atau mitra dagang Anda. GS1 DataBar Expanded adalah barcode ritel, dibaca di kasir pada barang seperti makanan segar; GS1-128 adalah barcode logistik pada dus, palet, dan label pengiriman.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.answer"
+  },
+  "08800fa0826e": {
+    "source": "Free USPS Intelligent Mail Barcode Generator (IMb)",
+    "text": "Generator Barcode USPS Intelligent Mail (IMb) Gratis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.title"
+  },
+  "e1f3e12a5dfb": {
+    "source": "Make a USPS Intelligent Mail barcode (IMb) from its 20-digit tracking code and ZIP Code, drawn to the USPS-B-3200 sizes. SVG, PDF, EPS and PNG. Free.",
+    "text": "Buat barcode USPS Intelligent Mail (IMb) dari kode pelacakan 20 digit dan ZIP Code, digambar sesuai ukuran USPS-B-3200. SVG, PDF, EPS, dan PNG. Gratis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.metaDescription"
+  },
+  "08927b65f433": {
+    "source": "The Intelligent Mail barcode (IMb) is the row of 65 short and tall bars on US letters and flats. It holds a 20-digit tracking code and the delivery ZIP Code, and USPS sorting machines read it to route and track each piece. Type the digits and download it, drawn to the sizes in the USPS specification, USPS-B-3200.",
+    "text": "Barcode Intelligent Mail (IMb) adalah deretan 65 batang pendek dan tinggi pada surat dan flat di AS. Barcode ini berisi kode pelacakan 20 digit dan ZIP Code tujuan pengiriman, dan mesin penyortir USPS membacanya untuk mengarahkan dan melacak setiap kiriman. Ketik digitnya lalu unduh, digambar sesuai ukuran dalam spesifikasi USPS, USPS-B-3200.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.intro"
+  },
+  "27a0ea79ffac": {
+    "source": "Letters, postcards and flats mailed in the US. Mailers print it in the address block to get automation prices, and with a serial number of its own on each piece, to see where their mail is in the USPS network.",
+    "text": "Surat, kartu pos, dan flat yang dikirim di AS. Pengirim mencetaknya di blok alamat untuk mendapatkan tarif otomasi, dan dengan nomor seri tersendiri pada setiap kiriman, untuk melihat posisi surat mereka di jaringan USPS.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.0"
+  },
+  "d3d72da9381d": {
+    "source": "Parcels use a different barcode, the Intelligent Mail package barcode (IMpb).",
+    "text": "Paket menggunakan barcode yang berbeda, yaitu barcode paket Intelligent Mail (IMpb).",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.1"
+  },
+  "426bfaa60a9c": {
+    "source": "The scan check on this page can't read Intelligent Mail: the reader it uses doesn't decode it, so the generator says the barcode wasn't checked. Test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+    "text": "Pemeriksaan pemindaian di halaman ini tidak dapat membaca Intelligent Mail: pembaca yang digunakan tidak mendekodenya, sehingga generator menyatakan barcode tidak diperiksa. Uji kiriman yang sudah dicetak dengan pembaca yang mendukung Intelligent Mail sebelum pengiriman massal.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.2"
+  },
+  "cadc93f1c51d": {
+    "source": "Where do the numbers come from?",
+    "text": "Dari mana angka-angkanya berasal?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.title"
+  },
+  "8d2e9549ce6f": {
+    "source": "From USPS and from you. USPS assigns the mailer ID (request one in its Business Customer Gateway), the barcode ID, which marks the presort level, and the service type ID, which names the mail class and services such as address correction. Its tables of valid IDs are on PostalPro.",
+    "text": "Dari USPS dan dari Anda. USPS menetapkan mailer ID (ajukan di Business Customer Gateway), barcode ID yang menandai tingkat presort, dan service type ID yang menyebutkan kelas surat serta layanan seperti koreksi alamat. Tabel ID yang valid tersedia di PostalPro.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.paragraphs.0"
+  },
+  "def6e8bc633e": {
+    "source": "The serial number is yours: give each mailpiece its own, so its scans can be told apart. The routing code is the delivery ZIP Code: 5 digits, ZIP+4 (9) or ZIP+4 and the 2-digit delivery point (11), keeping leading zeros: 02768, not 2768.",
+    "text": "Nomor seri adalah milik Anda: beri setiap kiriman nomor sendiri agar pemindaiannya dapat dibedakan. Kode routing adalah ZIP Code tujuan: 5 digit, ZIP+4 (9) atau ZIP+4 dan 2 digit titik pengantaran (11), dengan nol di depan tetap dipertahankan: 02768, bukan 2768.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.paragraphs.1"
+  },
+  "48445032cd31": {
+    "source": "Type the 20-digit tracking code, then the routing code: 20, 25, 29 or 31 digits in all. Spaces and hyphens are ignored, so you can write it the way it's printed.",
+    "text": "Ketik kode pelacakan 20 digit, lalu kode routing: total 20, 25, 29, atau 31 digit. Spasi dan tanda hubung diabaikan, jadi Anda bisa menulisnya seperti yang tercetak.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.0"
+  },
+  "9249299dc3fa": {
+    "source": "The tracking code is the barcode ID (2 digits, the second 0 to 4), the service type ID (3), then the mailer ID and serial number (15). A mailer ID starting with 9 has 9 digits and leaves 6 for the serial; any other has 6 and leaves 9. The line under the field shows how your digits were split.",
+    "text": "Kode pelacakan terdiri dari barcode ID (2 digit, digit kedua 0 sampai 4), service type ID (3), lalu mailer ID dan nomor seri (15). Mailer ID yang diawali 9 memiliki 9 digit dan menyisakan 6 untuk nomor seri; selain itu memiliki 6 digit dan menyisakan 9. Baris di bawah kolom menunjukkan bagaimana digit Anda dibagi.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.1"
+  },
+  "c20c0431f8d3": {
+    "source": "There's no check digit to type: the barcode carries its own 11-bit error check, worked out from the digits. Tests here draw the four worked examples in USPS-B-3200 and compare all 65 bars of each.",
+    "text": "Tidak ada digit pemeriksa yang perlu diketik: barcode membawa pemeriksaan kesalahan 11 bit sendiri, yang dihitung dari digitnya. Pengujian di sini menggambar empat contoh dalam USPS-B-3200 dan membandingkan seluruh 65 batang pada masing-masing.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.2"
+  },
+  "43856aa2ddd3": {
+    "source": "The bars follow USPS-B-3200: 0.02 in (0.51 mm) wide, about 22 to the inch, and the full bars 0.156 in (3.96 mm) tall, inside the 0.125 to 0.165 in USPS allows. The bar height has no slider for this reason. Print the SVG, PDF or EPS at 100%.",
+    "text": "Batang mengikuti USPS-B-3200: lebar 0.02 in (0.51 mm), sekitar 22 per inci, dan batang penuh setinggi 0.156 in (3.96 mm), dalam rentang 0.125 hingga 0.165 in yang diizinkan USPS. Karena itu tinggi batang tidak memiliki penggeser. Cetak SVG, PDF, atau EPS pada 100%.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.0"
+  },
+  "683d4d63e73f": {
+    "source": "USPS asks for 0.125 in (3.2 mm) clear on each side and 0.028 in above and below. The quiet zone starts at 7 bar widths (0.14 in) each side, and the image keeps 0.042 in above and below.",
+    "text": "USPS meminta ruang kosong 0.125 in (3.2 mm) di setiap sisi dan 0.028 in di atas dan bawah. Zona tenang dimulai dari 7 lebar batang (0.14 in) di setiap sisi, dan gambar mempertahankan 0.042 in di atas dan bawah.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.1"
+  },
+  "41b44b5537ef": {
+    "source": "Image size starts at 2×: at 1× the bars round to whole pixels that are wider than USPS allows.",
+    "text": "Ukuran gambar dimulai dari 2×: pada 1× batang dibulatkan ke piksel utuh yang lebih lebar daripada yang diizinkan USPS.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.2"
+  },
+  "1afb70ae817f": {
+    "source": "Can this page check that it scans?",
+    "text": "Apakah halaman ini bisa memeriksa bahwa barcode dapat dipindai?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.0.question"
+  },
+  "496ff47f7448": {
+    "source": "No. The scan check uses ZXing, which doesn't read Intelligent Mail, so it says the barcode wasn't checked instead of guessing. The encoding is tested against the specification's worked examples, but test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+    "text": "Tidak. Pemeriksaan pemindaian menggunakan ZXing, yang tidak membaca Intelligent Mail, sehingga menyatakan barcode tidak diperiksa alih-alih menebak. Pengodeannya diuji dengan contoh dalam spesifikasi, tetapi uji kiriman yang sudah dicetak dengan pembaca yang mendukung Intelligent Mail sebelum pengiriman massal.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.0.answer"
+  },
+  "4ded19de7497": {
+    "source": "Should I print the digits?",
+    "text": "Perlukah mencetak digitnya?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.1.question"
+  },
+  "4e1235e563b0": {
+    "source": "Some USPS services require the digits printed with the barcode; most mail doesn't. When they're printed, USPS-B-3200 wants each field separated by a space, in a 10- to 12-point sans serif starting at the first bar, 0.028 to 0.5 in from the bars. The generator prints them that way, 10-point, under the bars; turn them off with the switch under the colors.",
+    "text": "Beberapa layanan USPS mewajibkan digit dicetak bersama barcode; sebagian besar surat tidak. Jika dicetak, USPS-B-3200 meminta setiap kolom dipisahkan spasi, dengan huruf sans serif 10 hingga 12 poin yang dimulai dari batang pertama, berjarak 0.028 hingga 0.5 in dari batang. Generator mencetaknya seperti itu, 10 poin, di bawah batang; matikan dengan sakelar di bawah pilihan warna.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.1.answer"
+  },
+  "a88f6abebd5a": {
+    "source": "Where does it go on the envelope?",
+    "text": "Di mana letaknya pada amplop?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.2.question"
+  },
+  "41dfe627f5f3": {
+    "source": "Usually in the address block, above the name or below the city line. USPS Publication 25 and the Domestic Mail Manual set the exact areas, and the clear space each side.",
+    "text": "Biasanya di blok alamat, di atas nama atau di bawah baris kota. USPS Publication 25 dan Domestic Mail Manual menetapkan area yang tepat, beserta ruang kosong di setiap sisi.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.2.answer"
+  },
+  "fed4deb9261e": {
+    "source": "Does it replace POSTNET?",
+    "text": "Apakah menggantikan POSTNET?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.3.question"
+  },
+  "1a22b24585c1": {
+    "source": "Yes. Intelligent Mail carries the ZIP Code the old POSTNET barcode did, plus the tracking code, and USPS no longer gives automation prices for POSTNET.",
+    "text": "Ya. Intelligent Mail membawa ZIP Code seperti barcode POSTNET lama, ditambah kode pelacakan, dan USPS tidak lagi memberikan tarif otomasi untuk POSTNET.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.3.answer"
+  },
+  "809a20da4279": {
+    "source": "Free DotCode Generator",
+    "text": "Generator DotCode Gratis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.title"
+  },
+  "b4832c2f8588": {
+    "source": "Make a DotCode, the dot-based 2D code printed by high-speed inkjet on tobacco packs and medicines. Up to about 390 letters or 780 digits. SVG, PDF, PNG.",
+    "text": "Buat DotCode, kode 2D berbasis titik yang dicetak printer inkjet berkecepatan tinggi pada kemasan rokok dan obat. Hingga sekitar 390 huruf atau 780 angka. SVG, PDF, PNG.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.metaDescription"
+  },
+  "a0787e9911ce": {
+    "source": "DotCode is a 2D code made of separate dots instead of squares, designed for the inkjet and laser printers that mark products on fast production lines. Type any text, up to about 390 letters or 780 digits here, and download it as a vector or an image.",
+    "text": "DotCode adalah kode 2D yang tersusun dari titik-titik terpisah, bukan kotak, dirancang untuk printer inkjet dan laser yang menandai produk di lini produksi yang cepat. Ketik teks apa pun di sini, hingga sekitar 390 huruf atau 780 angka, lalu unduh sebagai vektor atau gambar.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.intro"
+  },
+  "77c3d396cc26": {
+    "source": "Cigarette and tobacco packs sold in the EU: the traceability system of the Tobacco Products Directive accepts DotCode, as well as Data Matrix and QR codes, for the unique identifier on each pack.",
+    "text": "Kemasan rokok dan tembakau yang dijual di UE: sistem keterlusuran dalam Tobacco Products Directive menerima DotCode, serta kode Data Matrix dan QR, untuk pengenal unik pada setiap kemasan.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.0"
+  },
+  "6f7a3cf5e9a0": {
+    "source": "Medicines, drinks and other goods coded on the line. The dots don't have to touch, so a fast inkjet printer can mark each item as it passes, on cartons, cans or labels.",
+    "text": "Obat, minuman, dan barang lain yang dikodekan di lini produksi. Titik-titiknya tidak harus bersentuhan, sehingga printer inkjet cepat dapat menandai setiap barang saat lewat, pada karton, kaleng, atau label.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.1"
+  },
+  "b487e6726e21": {
+    "source": "Readers need a camera-based scanner with DotCode switched on; many phone apps and older scanners don't read it. The scan check on this page can't read it either, so it says the code wasn't checked: test a print with a reader that supports DotCode.",
+    "text": "Pembaca memerlukan pemindai berbasis kamera dengan DotCode yang diaktifkan; banyak aplikasi ponsel dan pemindai lama tidak dapat membacanya. Pemeriksaan pemindaian di halaman ini juga tidak dapat membacanya, sehingga akan menyatakan kode tidak diperiksa: uji hasil cetak dengan pembaca yang mendukung DotCode.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.2"
+  },
+  "d10de8916710": {
+    "source": "Plain DotCode or GS1 DotCode?",
+    "text": "DotCode biasa atau GS1 DotCode?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.title"
+  },
+  "e14dc8e2518c": {
+    "source": "This page makes plain DotCode: it holds whatever text you type, with no registration.",
+    "text": "Halaman ini membuat DotCode biasa: memuat teks apa pun yang Anda ketik, tanpa pendaftaran.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.paragraphs.0"
+  },
+  "bf0eb652072c": {
+    "source": "GS1 DotCode, which carries GS1 Application Identifiers after a special first character, isn't offered here. For GS1 data in a barcode from this generator, use GS1-128.",
+    "text": "GS1 DotCode, yang membawa GS1 Application Identifiers setelah karakter pertama khusus, tidak tersedia di sini. Untuk data GS1 dalam barcode dari generator ini, gunakan GS1-128.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.paragraphs.1"
+  },
+  "8bf6cbe5b87d": {
+    "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Accents and other scripts are stored as UTF-8 bytes, which take more room, and some readers show them wrongly.",
+    "text": "Teks apa pun: huruf, angka, simbol, jeda baris, aksen, dan aksara lain. Aksen dan aksara lain disimpan sebagai byte UTF-8 yang memakan lebih banyak ruang, dan beberapa pembaca menampilkannya dengan salah.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.0"
+  },
+  "931ac20be28a": {
+    "source": "A DotCode here holds up to about 390 letters or 780 digits. Larger ones were tested with an outside DotCode reader, which didn't read them, so the generator stops there.",
+    "text": "Sebuah DotCode di sini memuat hingga sekitar 390 huruf atau 780 angka. Kode yang lebih besar diuji dengan pembaca DotCode eksternal yang tidak dapat membacanya, jadi generator berhenti di batas itu.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.1"
+  },
+  "15862cdb1e4f": {
+    "source": "Text that starts with two digits gets a marker in front saying it isn't GS1 data, as the DotCode specification asks; some readers show that marker as an invisible character before the text.",
+    "text": "Teks yang diawali dua angka diberi penanda di depannya yang menyatakan bahwa itu bukan data GS1, sesuai permintaan spesifikasi DotCode; beberapa pembaca menampilkan penanda itu sebagai karakter tak terlihat sebelum teks.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.2"
+  },
+  "44135469d48f": {
+    "source": "The code grows as you add text, keeping a wide rectangle. Dots sit on every other square of a checkerboard grid, so no two dots touch.",
+    "text": "Kode membesar seiring bertambahnya teks, dengan tetap berbentuk persegi panjang lebar. Titik-titik berada pada setiap kotak selang-seling di kisi papan catur, sehingga tidak ada dua titik yang bersentuhan.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.3"
+  },
+  "f6ea4a41ebfa": {
+    "source": "The vector downloads use a 0.71 mm module: each dot is that wide, on a grid of that pitch. Scale it to the dot size of the printer that will mark it.",
+    "text": "Unduhan vektor memakai modul 0,71 mm: setiap titik selebar itu, pada kisi dengan jarak sebesar itu. Skalakan sesuai ukuran titik printer yang akan menandainya.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.0"
+  },
+  "391f0966e32a": {
+    "source": "DotCode needs 3 modules of blank space all round, which the generator starts with.",
+    "text": "DotCode memerlukan ruang kosong selebar 3 modul di sekelilingnya, yang sudah disertakan generator sejak awal.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.1"
+  },
+  "b5f1309ddb3c": {
+    "source": "Image size starts at 2×: at 1× each dot is 2 pixels across, which the outside reader it was tested with didn't read.",
+    "text": "Ukuran gambar dimulai dari 2×: pada 1× setiap titik selebar 2 piksel, yang tidak dapat dibaca oleh pembaca eksternal yang digunakan dalam pengujian.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.2"
+  },
+  "b06cb65dac76": {
+    "source": "Test with the reader that will read it, at the size and on the material you'll print.",
+    "text": "Uji dengan pembaca yang akan membacanya, pada ukuran dan bahan yang akan Anda cetak.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.3"
+  },
+  "485ea440b904": {
+    "source": "No. The scan check uses ZXing, which doesn't read DotCode, so it says the code wasn't checked instead of guessing. Test a print with a reader that supports DotCode.",
+    "text": "Tidak. Pemeriksaan pemindaian memakai ZXing, yang tidak membaca DotCode, sehingga akan menyatakan kode tidak diperiksa, bukan menebak. Uji hasil cetak dengan pembaca yang mendukung DotCode.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.0.answer"
+  },
+  "a134c4d1ed2a": {
+    "source": "DotCode or Data Matrix?",
+    "text": "DotCode atau Data Matrix?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.1.question"
+  },
+  "28f500feaa97": {
+    "source": "Use the one your printer and the readers on your line support. Data Matrix is read by more scanners; DotCode suits fast inkjet printers, whose round dots don't have to join up into squares.",
+    "text": "Gunakan yang didukung oleh printer dan pembaca di lini produksi Anda. Data Matrix dibaca oleh lebih banyak pemindai; DotCode cocok untuk printer inkjet cepat, yang titik bulatnya tidak perlu menyatu menjadi kotak.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.1.answer"
+  },
+  "2a96012f1a58": {
+    "source": "Can a phone read DotCode?",
+    "text": "Bisakah ponsel membaca DotCode?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.2.question"
+  },
+  "24b4e41f8a31": {
+    "source": "Some barcode scanner apps can, but most phone camera apps can't. For codes people scan with a phone, use a QR code.",
+    "text": "Beberapa aplikasi pemindai barcode bisa, tetapi sebagian besar aplikasi kamera ponsel tidak. Untuk kode yang dipindai orang dengan ponsel, gunakan kode QR.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.2.answer"
+  },
+  "f4792c25be3c": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, atau DotCode. Memeriksa nilainya (digit pemeriksa, panjang, karakter) dan mengembalikan PNG beserta URL gambar publik dalam format SVG, PNG, PDF, dan lainnya.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

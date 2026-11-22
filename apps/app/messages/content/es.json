@@ -34660,5 +34660,563 @@
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 o Aztec. Comprueba el valor (dígitos de control, longitudes, caracteres) y devuelve un PNG junto con URL públicas de SVG, PNG, PDF y otros formatos de imagen.",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "15c6793537de": {
+    "source": "A GTIN in a short barcode for small retail items",
+    "text": "Un GTIN en un código de barras corto para artículos pequeños de venta al por menor",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.summary"
+  },
+  "b5cc716296fb": {
+    "source": "A GTIN as (01) and its 14 digits, e.g. (01)09501101530003. Leave off the last digit and the check digit is added.",
+    "text": "Un GTIN como (01) y sus 14 dígitos, p. ej. (01)09501101530003. Si omites el último dígito, se añade el dígito de control.",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.inputHint"
+  },
+  "e9f24dfc8256": {
+    "source": "GTIN plus weight, price or dates for fresh food",
+    "text": "GTIN más peso, precio o fechas para alimentos frescos",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.summary"
+  },
+  "9ba22a61f006": {
+    "source": "Application Identifiers in brackets, each followed by its value, e.g. (01)09501101530003(17)261231(10)AB-123.",
+    "text": "Identificadores de aplicación entre paréntesis, cada uno seguido de su valor, p. ej. (01)09501101530003(17)261231(10)AB-123.",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.inputHint"
+  },
+  "05b46ef73281": {
+    "source": "The 4-state barcode USPS sorts and tracks US mail by",
+    "text": "El código de barras de 4 estados con el que USPS clasifica y rastrea el correo de EE. UU.",
+    "status": "machine",
+    "context": "barcodes.formats.intelligent-mail.summary"
+  },
+  "17d83963b8ce": {
+    "source": "20 digits of tracking code: barcode ID (2), service type (3), mailer ID and serial number (15). Then the routing ZIP Code, if any: 5, 9 or 11 digits. Spaces and hyphens are ignored.",
+    "text": "20 dígitos de código de seguimiento: ID del código de barras (2), tipo de servicio (3), ID del remitente y número de serie (15). Después, el código ZIP de enrutamiento, si lo hay: 5, 9 u 11 dígitos. Se ignoran los espacios y los guiones.",
+    "status": "machine",
+    "context": "barcodes.formats.intelligent-mail.inputHint"
+  },
+  "dea590368a35": {
+    "source": "Dots for high-speed inkjet: cigarette packs and medicines",
+    "text": "Puntos para inyección de tinta de alta velocidad: cajetillas de cigarrillos y medicamentos",
+    "status": "machine",
+    "context": "barcodes.formats.dotcode.summary"
+  },
+  "2368b06cffad": {
+    "source": "Any text, up to about 390 letters or 780 digits; less with accents or other scripts.",
+    "text": "Cualquier texto, hasta unas 390 letras o 780 dígitos; menos con acentos u otros alfabetos.",
+    "status": "machine",
+    "context": "barcodes.formats.dotcode.inputHint"
+  },
+  "baa23c86f1fc": {
+    "source": "A retail GTIN in a smaller barcode than an EAN-13 or UPC-A, for items too small for those. Not every checkout scanner has it switched on, so check with the retailer before printing.",
+    "text": "Un GTIN de venta al por menor en un código de barras más pequeño que un EAN-13 o un UPC-A, para artículos demasiado pequeños para esos. No todos los escáneres de caja lo tienen activado, así que consúltalo con el minorista antes de imprimir.",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar"
+  },
+  "5092dbf6ba77": {
+    "source": "A GTIN plus more data, such as a weight, a price or an expiry date, marked by the same Application Identifiers as GS1-128. Used on fresh food sold by weight, so the checkout reads the price or weight from the barcode.",
+    "text": "Un GTIN con más datos, como un peso, un precio o una fecha de caducidad, marcados con los mismos identificadores de aplicación que GS1-128. Se usa en alimentos frescos que se venden por peso, de modo que la caja lee el precio o el peso del código de barras.",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar-expanded"
+  },
+  "6b90e94726c6": {
+    "source": "US mail: the 4-state barcode USPS sorts letters and flats by and tracks them with. It holds a mailer ID from USPS, a service type, a serial number and the delivery ZIP Code. Mailers print it to get automation prices and track their mail.",
+    "text": "Correo de EE. UU.: el código de barras de 4 estados con el que USPS clasifica cartas y envíos planos y los rastrea. Contiene un ID de remitente de USPS, un tipo de servicio, un número de serie y el código ZIP de entrega. Los remitentes lo imprimen para obtener tarifas de automatización y rastrear su correo.",
+    "status": "machine",
+    "context": "barcodes.uses.intelligent-mail"
+  },
+  "165c46930f26": {
+    "source": "A 2D code of separate dots, made for inkjet printers marking packs at line speed: cigarette and tobacco packs for EU traceability, medicines and drinks. Its dots needn't touch, so rough, fast printing still reads.",
+    "text": "Un código 2D de puntos separados, creado para impresoras de inyección de tinta que marcan envases a la velocidad de la línea: cajetillas de cigarrillos y tabaco para la trazabilidad en la UE, medicamentos y bebidas. Sus puntos no necesitan tocarse, así que una impresión rápida y poco precisa también se lee.",
+    "status": "machine",
+    "context": "barcodes.uses.dotcode"
+  },
+  "db0826917a45": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14, GS1-128 and GS1 DataBar carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "Para productos que se venden en tiendas, sí. EAN, UPC, ITF-14, GS1-128 y GS1 DataBar llevan un GTIN, y GS1 (o la organización de GS1 de tu país) concede los GTIN bajo licencia a tu empresa; los sistemas de los minoristas no reconocerán un número inventado. Los libros, las publicaciones seriadas y la música impresa usan en su lugar un ISBN, ISSN o ISMN de su agencia nacional. Este generador dibuja cualquier número válido, pero no emite ni registra números. Para tu propio inventario, activos o entradas, Code 128, Code 39 y Code 93 no requieren registro.",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "5d57866e493c": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, the GTIN of GS1 DataBar and the GTIN and SSCC fields of GS1-128 and GS1 DataBar Expanded: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "Sí, para EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, el GTIN de GS1 DataBar y los campos GTIN y SSCC de GS1-128 y GS1 DataBar Expanded: omite el último dígito y se calcula. Si introduces el número completo, se verifica el dígito de control; si es incorrecto, aparece un error en lugar de un código de barras.",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "384846f3f60d": {
+    "source": "As you edit, the generator decodes the PNG it would download with ZXing, an open-source barcode reader, and tells you whether it reads back the value you entered. It also warns about low contrast, light bars on a dark background, red bars and a quiet zone below the minimum. ZXing doesn't read DotCode or USPS Intelligent Mail, so those two aren't checked; test them with a reader that supports them. It can't see your printer, label stock or lighting, so print a test and scan it with the scanners that will read it.",
+    "text": "Mientras editas, el generador decodifica con ZXing, un lector de códigos de barras de código abierto, el PNG que se descargaría y te indica si lee el mismo valor que introdujiste. También avisa de bajo contraste, barras claras sobre fondo oscuro, barras rojas y una zona de silencio por debajo del mínimo. ZXing no lee DotCode ni USPS Intelligent Mail, así que esos dos no se comprueban; pruébalos con un lector que los admita. No puede ver tu impresora, tus etiquetas ni la iluminación, así que imprime una prueba y escanéala con los escáneres que la leerán.",
+    "status": "machine",
+    "context": "barcodes.faqs.3.answer"
+  },
+  "c2d9a57f6443": {
+    "source": "Free GS1 DataBar Barcode Generator (Omnidirectional)",
+    "text": "Generador gratuito de códigos de barras GS1 DataBar (Omnidirectional)",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.title"
+  },
+  "418eae1158ca": {
+    "source": "Make a GS1 DataBar Omnidirectional barcode from a GTIN, with the check digit added or checked. Scan-checked in your browser. SVG, PDF, EPS and PNG. Free.",
+    "text": "Crea un código de barras GS1 DataBar Omnidirectional a partir de un GTIN, con el dígito de control añadido o comprobado. Escaneo verificado en tu navegador. SVG, PDF, EPS y PNG. Gratis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.metaDescription"
+  },
+  "4a41d40d111a": {
+    "source": "GS1 DataBar Omnidirectional holds one thing: a product's 14-digit GTIN, the number an EAN-13 or UPC-A carries. Type it after (01), check that it scans and download it.",
+    "text": "GS1 DataBar Omnidirectional contiene una sola cosa: el GTIN de 14 dígitos de un producto, el número que llevan un EAN-13 o un UPC-A. Escríbelo después de (01), comprueba que se escanea y descárgalo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.intro"
+  },
+  "c74d27dff93f": {
+    "source": "Retail items too small for an EAN-13 or UPC-A: its bars are as wide as an EAN-13's but much shorter. Checkout scanners read it from any angle, like an EAN-13.",
+    "text": "Artículos de venta al por menor demasiado pequeños para un EAN-13 o un UPC-A: sus barras tienen el mismo ancho que las de un EAN-13, pero son mucho más cortas. Los escáneres de caja lo leen desde cualquier ángulo, igual que un EAN-13.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.0"
+  },
+  "53ad38e77560": {
+    "source": "Not every scanner has GS1 DataBar switched on. Ask the retailer that will scan it before you print, and use EAN-13 or UPC-A when in doubt.",
+    "text": "No todos los escáneres tienen activado GS1 DataBar. Antes de imprimir, pregunta al comercio que lo va a escanear y usa EAN-13 o UPC-A si tienes dudas.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.1"
+  },
+  "0a7f916a956b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar?",
+    "text": "¿Necesito números GS1 para GS1 DataBar?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.title"
+  },
+  "aaa22f8cfea2": {
+    "source": "Yes. The GTIN it holds is built from a GS1 company prefix, like the number in an EAN-13 or UPC-A.",
+    "text": "Sí. El GTIN que contiene se construye a partir de un prefijo de empresa GS1, igual que el número de un EAN-13 o un UPC-A.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.paragraphs.0"
+  },
+  "14553ad995d0": {
+    "source": "Write the GTIN after (01), as 14 digits: (01)09501101530003. A 13-digit EAN-13 number becomes a GTIN with a 0 in front, and a 12-digit UPC-A number with two.",
+    "text": "Escribe el GTIN después de (01), con 14 dígitos: (01)09501101530003. Un número EAN-13 de 13 dígitos se convierte en GTIN con un 0 delante, y un número UPC-A de 12 dígitos, con dos.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.0"
+  },
+  "847870e5f20f": {
+    "source": "Leave off the last digit and the check digit is added; enter all 14 and it's checked. The brackets aren't encoded; they show that (01), the GTIN, follows.",
+    "text": "Si omites el último dígito, se añade el dígito de control; si introduces los 14, se comprueba. Los paréntesis no se codifican: indican que a continuación va (01), el GTIN.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.1"
+  },
+  "7c9ca8195d32": {
+    "source": "GS1 DataBar holds nothing but the GTIN. For a weight, a price, a batch or a date, use GS1 DataBar Expanded, which takes the same (AI)value input.",
+    "text": "GS1 DataBar solo contiene el GTIN. Para un peso, un precio, un lote o una fecha, usa GS1 DataBar Expanded, que acepta la misma entrada con formato (AI)valor.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.2"
+  },
+  "ee3674a025e6": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 33 modules high, 11.6 mm at this module.",
+    "text": "Las descargas usan un módulo de 0.353 mm y barras de 15 mm. GS1 pide barras de al menos 33 módulos de alto, es decir, 11.6 mm con este módulo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.0"
+  },
+  "052b836a39de": {
+    "source": "The bars are 96 modules wide, 33.5 mm here: about the width of an EAN-13's bars at the same module. The printed GTIN is a little wider than the bars, so the file is wider too.",
+    "text": "Las barras tienen 96 módulos de ancho, 33.5 mm aquí: aproximadamente el ancho de las barras de un EAN-13 con el mismo módulo. El GTIN impreso es algo más ancho que las barras, por eso el archivo también es más ancho.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.1"
+  },
+  "395264c48174": {
+    "source": "What does a scanner return?",
+    "text": "¿Qué devuelve un escáner?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.question"
+  },
+  "07d9e012bffd": {
+    "source": "The digits 01 and the GTIN, 16 in all, sometimes after a symbology identifier (]e0), and with no brackets. The scan check here accepts both forms.",
+    "text": "Los dígitos 01 y el GTIN, 16 en total, a veces tras un identificador de simbología (]e0), y sin paréntesis. La comprobación de escaneo de aquí acepta ambas formas.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.answer"
+  },
+  "76f18e2501c2": {
+    "source": "My scanner reads EAN-13 but not this. Why?",
+    "text": "Mi escáner lee EAN-13, pero este no. ¿Por qué?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.question"
+  },
+  "6b564f4ef227": {
+    "source": "Most likely GS1 DataBar is switched off in its settings. Many scanners let you turn each symbology on or off; check the manual for GS1 DataBar, which older documents call RSS-14.",
+    "text": "Lo más probable es que GS1 DataBar esté desactivado en su configuración. Muchos escáneres permiten activar o desactivar cada simbología; consulta el manual para GS1 DataBar, que los documentos antiguos llaman RSS-14.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.answer"
+  },
+  "6a37ed0e9a98": {
+    "source": "Can it hold a weight or an expiry date?",
+    "text": "¿Puede contener un peso o una fecha de caducidad?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.question"
+  },
+  "e888aaaf74e2": {
+    "source": "No, only the GTIN. GS1 DataBar Expanded holds the GTIN with other Application Identifiers, such as (3103) for a weight or (17) for an expiry date.",
+    "text": "No, solo el GTIN. GS1 DataBar Expanded contiene el GTIN junto con otros Application Identifiers, como (3103) para un peso o (17) para una fecha de caducidad.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.answer"
+  },
+  "e17f7a55d5c6": {
+    "source": "Free GS1 DataBar Expanded Barcode Generator",
+    "text": "Generador gratis de código de barras GS1 DataBar Expanded",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.title"
+  },
+  "14f0f00fb5e9": {
+    "source": "Make a GS1 DataBar Expanded barcode: a GTIN with weight, price, batch or expiry in one retail barcode. Check digits added. Scan-checked. SVG, PDF, PNG.",
+    "text": "Crea un código de barras GS1 DataBar Expanded: un GTIN con peso, precio, lote o caducidad en un solo código de barras de venta minorista. Dígitos de control añadidos. Escaneo verificado. SVG, PDF, PNG.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.metaDescription"
+  },
+  "ac78f2470ebf": {
+    "source": "GS1 DataBar Expanded carries a GTIN and more data in one barcode a checkout scanner reads, each piece marked by an Application Identifier (AI) in brackets: (01) for the GTIN, (17) for an expiry date, (10) for a batch. Type the AIs and values; check digits are added or checked for you.",
+    "text": "GS1 DataBar Expanded lleva un GTIN y más datos en un solo código de barras que lee el escáner de caja, y cada dato se marca con un Identificador de Aplicación (AI) entre paréntesis: (01) para el GTIN, (17) para una fecha de caducidad, (10) para un lote. Escribe los AI y sus valores; los dígitos de control se añaden o se comprueban por ti.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.intro"
+  },
+  "f15374e67a3a": {
+    "source": "Fresh food sold by weight, such as meat, cheese and deli counters, where the weight or the price travels with the GTIN so the checkout can read it from the barcode.",
+    "text": "Alimentos frescos que se venden por peso, como carne, queso y mostradores de charcutería, donde el peso o el precio viaja con el GTIN para que la caja pueda leerlo en el código de barras.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.0"
+  },
+  "a2c9d9d7f3f1": {
+    "source": "North American coupons use its stacked form, GS1 DataBar Expanded Stacked, which this generator doesn't draw.",
+    "text": "Los cupones de Norteamérica usan su forma apilada, GS1 DataBar Expanded Stacked, que este generador no dibuja.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.1"
+  },
+  "fc1be266ea8b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar Expanded?",
+    "text": "¿Necesito números GS1 para GS1 DataBar Expanded?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.title"
+  },
+  "b1afd422b8bf": {
+    "source": "For the GTIN in (01), yes: it's built from a GS1 company prefix. Weights, prices, batches and dates are your own data.",
+    "text": "Para el GTIN en (01), sí: se construye a partir de un prefijo de empresa GS1. Los pesos, precios, lotes y fechas son datos tuyos.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.paragraphs.0"
+  },
+  "f06c2fc00957": {
+    "source": "GTINs in (01) and (02) and SSCCs in (00) get their check digit added when you leave it off, or checked when you don't. The encoder also checks the data against GS1's rules: a batch (10) without a GTIN, for example, is refused.",
+    "text": "A los GTIN en (01) y (02) y a los SSCC en (00) se les añade el dígito de control si no lo incluyes, o se comprueba si lo incluyes. El codificador también verifica los datos según las reglas de GS1: por ejemplo, se rechaza un lote (10) sin un GTIN.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.1"
+  },
+  "d2722491f265": {
+    "source": "It holds up to 74 digits of AIs and data, and fewer when there are letters. Put variable-length fields such as (10) batch last, so no separator is needed after them.",
+    "text": "Admite hasta 74 dígitos de AI y datos, y menos cuando hay letras. Pon al final los campos de longitud variable, como el lote (10), para que no haga falta ningún separador después.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.2"
+  },
+  "71bcd6597001": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 34 modules high, 12 mm at this module.",
+    "text": "Las descargas usan un módulo de 0.353 mm y barras de 15 mm. GS1 pide barras de al menos 34 módulos de alto, 12 mm con este módulo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.0"
+  },
+  "f7a219456cad": {
+    "source": "It's long, not tall: the example's bars are 98.8 mm long, a little more than the same data as GS1-128 (93.8 mm). More data makes it longer still.",
+    "text": "Es largo, no alto: las barras del ejemplo miden 98.8 mm de largo, algo más que los mismos datos en GS1-128 (93.8 mm). Con más datos resulta aún más largo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.1"
+  },
+  "5c3434d2ba5d": {
+    "source": "The brackets are only for people. Readers report the data with a symbology identifier (]e0) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+    "text": "Los paréntesis son solo para las personas. Los lectores informan de los datos con un identificador de simbología (]e0) o sin él, y separan los campos de longitud variable con un carácter GS invisible. La comprobación de escaneo de aquí acepta todas estas formas.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.0.answer"
+  },
+  "99a9136f6b20": {
+    "source": "GS1 DataBar Expanded or GS1-128?",
+    "text": "¿GS1 DataBar Expanded o GS1-128?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.question"
+  },
+  "08d1a93af707": {
+    "source": "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
+    "text": "Usa el que te pida tu minorista o socio comercial. GS1 DataBar Expanded es el de venta minorista, que se lee en caja en productos como alimentos frescos; GS1-128 es el código de barras logístico de cajas, palés y etiquetas de envío.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.answer"
+  },
+  "08800fa0826e": {
+    "source": "Free USPS Intelligent Mail Barcode Generator (IMb)",
+    "text": "Generador gratuito de código de barras USPS Intelligent Mail (IMb)",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.title"
+  },
+  "e1f3e12a5dfb": {
+    "source": "Make a USPS Intelligent Mail barcode (IMb) from its 20-digit tracking code and ZIP Code, drawn to the USPS-B-3200 sizes. SVG, PDF, EPS and PNG. Free.",
+    "text": "Crea un código de barras USPS Intelligent Mail (IMb) a partir de su código de seguimiento de 20 dígitos y el ZIP Code, dibujado con las medidas de USPS-B-3200. SVG, PDF, EPS y PNG. Gratis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.metaDescription"
+  },
+  "08927b65f433": {
+    "source": "The Intelligent Mail barcode (IMb) is the row of 65 short and tall bars on US letters and flats. It holds a 20-digit tracking code and the delivery ZIP Code, and USPS sorting machines read it to route and track each piece. Type the digits and download it, drawn to the sizes in the USPS specification, USPS-B-3200.",
+    "text": "El código de barras Intelligent Mail (IMb) es la fila de 65 barras cortas y largas que llevan las cartas y los formatos planos en EE. UU. Contiene un código de seguimiento de 20 dígitos y el ZIP Code de entrega, y las máquinas de clasificación de USPS lo leen para encaminar y rastrear cada envío. Escribe los dígitos y descárgalo, dibujado con las medidas de la especificación de USPS, USPS-B-3200.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.intro"
+  },
+  "27a0ea79ffac": {
+    "source": "Letters, postcards and flats mailed in the US. Mailers print it in the address block to get automation prices, and with a serial number of its own on each piece, to see where their mail is in the USPS network.",
+    "text": "Cartas, postales y formatos planos enviados por correo en EE. UU. Los remitentes lo imprimen en el bloque de la dirección para obtener tarifas de automatización y, con un número de serie propio en cada envío, para ver dónde está su correo dentro de la red de USPS.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.0"
+  },
+  "d3d72da9381d": {
+    "source": "Parcels use a different barcode, the Intelligent Mail package barcode (IMpb).",
+    "text": "Los paquetes usan otro código de barras, el código de barras de paquete de Intelligent Mail (IMpb).",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.1"
+  },
+  "426bfaa60a9c": {
+    "source": "The scan check on this page can't read Intelligent Mail: the reader it uses doesn't decode it, so the generator says the barcode wasn't checked. Test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+    "text": "La comprobación de escaneo de esta página no puede leer Intelligent Mail: el lector que usa no lo decodifica, así que el generador indica que el código de barras no se comprobó. Prueba un envío impreso con un lector compatible con Intelligent Mail antes de hacer un envío masivo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.2"
+  },
+  "cadc93f1c51d": {
+    "source": "Where do the numbers come from?",
+    "text": "¿De dónde salen los números?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.title"
+  },
+  "8d2e9549ce6f": {
+    "source": "From USPS and from you. USPS assigns the mailer ID (request one in its Business Customer Gateway), the barcode ID, which marks the presort level, and the service type ID, which names the mail class and services such as address correction. Its tables of valid IDs are on PostalPro.",
+    "text": "De USPS y de ti. USPS asigna el ID de remitente (solicítalo en su Business Customer Gateway), el ID de código de barras, que indica el nivel de preclasificación, y el ID de tipo de servicio, que nombra la clase de correo y servicios como la corrección de direcciones. Sus tablas de ID válidos están en PostalPro.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.paragraphs.0"
+  },
+  "def6e8bc633e": {
+    "source": "The serial number is yours: give each mailpiece its own, so its scans can be told apart. The routing code is the delivery ZIP Code: 5 digits, ZIP+4 (9) or ZIP+4 and the 2-digit delivery point (11), keeping leading zeros: 02768, not 2768.",
+    "text": "El número de serie es tuyo: da uno distinto a cada envío para distinguir sus escaneos. El código de encaminamiento es el ZIP Code de entrega: 5 dígitos, ZIP+4 (9) o ZIP+4 y los 2 dígitos del punto de entrega (11), conservando los ceros iniciales: 02768, no 2768.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.paragraphs.1"
+  },
+  "48445032cd31": {
+    "source": "Type the 20-digit tracking code, then the routing code: 20, 25, 29 or 31 digits in all. Spaces and hyphens are ignored, so you can write it the way it's printed.",
+    "text": "Escribe el código de seguimiento de 20 dígitos y después el código de encaminamiento: 20, 25, 29 o 31 dígitos en total. Los espacios y los guiones se ignoran, así que puedes escribirlo tal como está impreso.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.0"
+  },
+  "9249299dc3fa": {
+    "source": "The tracking code is the barcode ID (2 digits, the second 0 to 4), the service type ID (3), then the mailer ID and serial number (15). A mailer ID starting with 9 has 9 digits and leaves 6 for the serial; any other has 6 and leaves 9. The line under the field shows how your digits were split.",
+    "text": "El código de seguimiento es el ID de código de barras (2 dígitos, el segundo de 0 a 4), el ID de tipo de servicio (3), y después el ID de remitente y el número de serie (15). Un ID de remitente que empieza por 9 tiene 9 dígitos y deja 6 para el número de serie; cualquier otro tiene 6 y deja 9. La línea bajo el campo muestra cómo se dividieron tus dígitos.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.1"
+  },
+  "c20c0431f8d3": {
+    "source": "There's no check digit to type: the barcode carries its own 11-bit error check, worked out from the digits. Tests here draw the four worked examples in USPS-B-3200 and compare all 65 bars of each.",
+    "text": "No hay dígito de control que escribir: el código de barras lleva su propia comprobación de errores de 11 bits, calculada a partir de los dígitos. Las pruebas de aquí dibujan los cuatro ejemplos resueltos de USPS-B-3200 y comparan las 65 barras de cada uno.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.2"
+  },
+  "43856aa2ddd3": {
+    "source": "The bars follow USPS-B-3200: 0.02 in (0.51 mm) wide, about 22 to the inch, and the full bars 0.156 in (3.96 mm) tall, inside the 0.125 to 0.165 in USPS allows. The bar height has no slider for this reason. Print the SVG, PDF or EPS at 100%.",
+    "text": "Las barras siguen USPS-B-3200: 0.02 in (0.51 mm) de ancho, unas 22 por pulgada, y las barras completas miden 0.156 in (3.96 mm) de alto, dentro del rango de 0.125 a 0.165 in que permite USPS. Por eso la altura de las barras no tiene control deslizante. Imprime el SVG, PDF o EPS al 100 %.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.0"
+  },
+  "683d4d63e73f": {
+    "source": "USPS asks for 0.125 in (3.2 mm) clear on each side and 0.028 in above and below. The quiet zone starts at 7 bar widths (0.14 in) each side, and the image keeps 0.042 in above and below.",
+    "text": "USPS pide 0.125 in (3.2 mm) libres a cada lado y 0.028 in por encima y por debajo. La zona de silencio empieza en 7 anchos de barra (0.14 in) a cada lado, y la imagen conserva 0.042 in por encima y por debajo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.1"
+  },
+  "41b44b5537ef": {
+    "source": "Image size starts at 2×: at 1× the bars round to whole pixels that are wider than USPS allows.",
+    "text": "El tamaño de imagen empieza en 2×: en 1× las barras se redondean a píxeles enteros que son más anchos de lo que permite USPS.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.2"
+  },
+  "1afb70ae817f": {
+    "source": "Can this page check that it scans?",
+    "text": "¿Puede esta página comprobar que se escanea?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.0.question"
+  },
+  "496ff47f7448": {
+    "source": "No. The scan check uses ZXing, which doesn't read Intelligent Mail, so it says the barcode wasn't checked instead of guessing. The encoding is tested against the specification's worked examples, but test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+    "text": "No. La comprobación de escaneo usa ZXing, que no lee Intelligent Mail, así que indica que el código de barras no se comprobó en lugar de adivinar. La codificación se prueba con los ejemplos resueltos de la especificación, pero prueba un envío impreso con un lector compatible con Intelligent Mail antes de hacer un envío masivo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.0.answer"
+  },
+  "4ded19de7497": {
+    "source": "Should I print the digits?",
+    "text": "¿Debo imprimir los dígitos?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.1.question"
+  },
+  "4e1235e563b0": {
+    "source": "Some USPS services require the digits printed with the barcode; most mail doesn't. When they're printed, USPS-B-3200 wants each field separated by a space, in a 10- to 12-point sans serif starting at the first bar, 0.028 to 0.5 in from the bars. The generator prints them that way, 10-point, under the bars; turn them off with the switch under the colors.",
+    "text": "Algunos servicios de USPS exigen imprimir los dígitos junto con el código de barras; la mayoría del correo no. Cuando se imprimen, USPS-B-3200 pide separar cada campo con un espacio, en una fuente sans serif de 10 a 12 puntos que empiece en la primera barra, a una distancia de 0.028 a 0.5 in de las barras. El generador los imprime así, a 10 puntos, bajo las barras; puedes quitarlos con el interruptor que hay bajo los colores.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.1.answer"
+  },
+  "a88f6abebd5a": {
+    "source": "Where does it go on the envelope?",
+    "text": "¿Dónde va en el sobre?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.2.question"
+  },
+  "41dfe627f5f3": {
+    "source": "Usually in the address block, above the name or below the city line. USPS Publication 25 and the Domestic Mail Manual set the exact areas, and the clear space each side.",
+    "text": "Normalmente en el bloque de la dirección, encima del nombre o debajo de la línea de la ciudad. La USPS Publication 25 y el Domestic Mail Manual fijan las áreas exactas y el espacio libre a cada lado.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.2.answer"
+  },
+  "fed4deb9261e": {
+    "source": "Does it replace POSTNET?",
+    "text": "¿Sustituye a POSTNET?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.3.question"
+  },
+  "1a22b24585c1": {
+    "source": "Yes. Intelligent Mail carries the ZIP Code the old POSTNET barcode did, plus the tracking code, and USPS no longer gives automation prices for POSTNET.",
+    "text": "Sí. Intelligent Mail lleva el ZIP Code que llevaba el antiguo código de barras POSTNET, además del código de seguimiento, y USPS ya no ofrece tarifas de automatización para POSTNET.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.3.answer"
+  },
+  "809a20da4279": {
+    "source": "Free DotCode Generator",
+    "text": "Generador de DotCode gratis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.title"
+  },
+  "b4832c2f8588": {
+    "source": "Make a DotCode, the dot-based 2D code printed by high-speed inkjet on tobacco packs and medicines. Up to about 390 letters or 780 digits. SVG, PDF, PNG.",
+    "text": "Crea un DotCode, el código 2D de puntos que imprimen las impresoras de inyección de tinta de alta velocidad en cajetillas de tabaco y medicamentos. Hasta unas 390 letras o 780 dígitos. SVG, PDF, PNG.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.metaDescription"
+  },
+  "a0787e9911ce": {
+    "source": "DotCode is a 2D code made of separate dots instead of squares, designed for the inkjet and laser printers that mark products on fast production lines. Type any text, up to about 390 letters or 780 digits here, and download it as a vector or an image.",
+    "text": "DotCode es un código 2D formado por puntos separados en lugar de cuadrados, pensado para las impresoras de inyección de tinta y láser que marcan productos en líneas de producción rápidas. Escribe aquí cualquier texto, hasta unas 390 letras o 780 dígitos, y descárgalo como vector o como imagen.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.intro"
+  },
+  "77c3d396cc26": {
+    "source": "Cigarette and tobacco packs sold in the EU: the traceability system of the Tobacco Products Directive accepts DotCode, as well as Data Matrix and QR codes, for the unique identifier on each pack.",
+    "text": "Cajetillas de cigarrillos y tabaco vendidas en la UE: el sistema de trazabilidad de la Directiva sobre productos del tabaco acepta DotCode, además de Data Matrix y códigos QR, para el identificador único de cada cajetilla.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.0"
+  },
+  "6f7a3cf5e9a0": {
+    "source": "Medicines, drinks and other goods coded on the line. The dots don't have to touch, so a fast inkjet printer can mark each item as it passes, on cartons, cans or labels.",
+    "text": "Medicamentos, bebidas y otros productos codificados en la línea. Los puntos no tienen que tocarse, así que una impresora de inyección de tinta rápida puede marcar cada artículo al pasar, en cajas, latas o etiquetas.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.1"
+  },
+  "b487e6726e21": {
+    "source": "Readers need a camera-based scanner with DotCode switched on; many phone apps and older scanners don't read it. The scan check on this page can't read it either, so it says the code wasn't checked: test a print with a reader that supports DotCode.",
+    "text": "Para leerlo hace falta un lector con cámara que tenga DotCode activado; muchas apps de móvil y lectores antiguos no lo leen. La comprobación de escaneo de esta página tampoco puede leerlo, así que indica que el código no se comprobó: prueba una impresión con un lector compatible con DotCode.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.2"
+  },
+  "d10de8916710": {
+    "source": "Plain DotCode or GS1 DotCode?",
+    "text": "¿DotCode normal o GS1 DotCode?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.title"
+  },
+  "e14dc8e2518c": {
+    "source": "This page makes plain DotCode: it holds whatever text you type, with no registration.",
+    "text": "Esta página crea DotCode normal: contiene el texto que escribas, sin necesidad de registro.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.paragraphs.0"
+  },
+  "bf0eb652072c": {
+    "source": "GS1 DotCode, which carries GS1 Application Identifiers after a special first character, isn't offered here. For GS1 data in a barcode from this generator, use GS1-128.",
+    "text": "GS1 DotCode, que incluye identificadores de aplicación GS1 después de un primer carácter especial, no se ofrece aquí. Para datos GS1 en un código de barras de este generador, usa GS1-128.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.paragraphs.1"
+  },
+  "8bf6cbe5b87d": {
+    "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Accents and other scripts are stored as UTF-8 bytes, which take more room, and some readers show them wrongly.",
+    "text": "Cualquier texto: letras, dígitos, símbolos, saltos de línea, acentos y otros alfabetos. Los acentos y otros alfabetos se guardan como bytes UTF-8, que ocupan más espacio, y algunos lectores los muestran mal.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.0"
+  },
+  "931ac20be28a": {
+    "source": "A DotCode here holds up to about 390 letters or 780 digits. Larger ones were tested with an outside DotCode reader, which didn't read them, so the generator stops there.",
+    "text": "Aquí un DotCode contiene hasta unas 390 letras o 780 dígitos. Los más grandes se probaron con un lector de DotCode externo, que no los leyó, así que el generador se detiene en ese límite.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.1"
+  },
+  "15862cdb1e4f": {
+    "source": "Text that starts with two digits gets a marker in front saying it isn't GS1 data, as the DotCode specification asks; some readers show that marker as an invisible character before the text.",
+    "text": "Al texto que empieza con dos dígitos se le añade delante un marcador que indica que no son datos GS1, como pide la especificación de DotCode; algunos lectores muestran ese marcador como un carácter invisible antes del texto.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.2"
+  },
+  "44135469d48f": {
+    "source": "The code grows as you add text, keeping a wide rectangle. Dots sit on every other square of a checkerboard grid, so no two dots touch.",
+    "text": "El código crece a medida que añades texto, manteniendo un rectángulo ancho. Los puntos se colocan en una de cada dos casillas de una cuadrícula de tablero de ajedrez, de modo que nunca se tocan dos puntos.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.3"
+  },
+  "f6ea4a41ebfa": {
+    "source": "The vector downloads use a 0.71 mm module: each dot is that wide, on a grid of that pitch. Scale it to the dot size of the printer that will mark it.",
+    "text": "Las descargas vectoriales usan un módulo de 0.71 mm: cada punto tiene ese ancho, en una cuadrícula con esa separación. Escálalo al tamaño de punto de la impresora que lo va a marcar.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.0"
+  },
+  "391f0966e32a": {
+    "source": "DotCode needs 3 modules of blank space all round, which the generator starts with.",
+    "text": "DotCode necesita 3 módulos de espacio en blanco alrededor, con los que el generador ya empieza.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.1"
+  },
+  "b5f1309ddb3c": {
+    "source": "Image size starts at 2×: at 1× each dot is 2 pixels across, which the outside reader it was tested with didn't read.",
+    "text": "El tamaño de imagen empieza en 2×: a 1× cada punto mide 2 píxeles de ancho, y el lector externo con el que se probó no lo leyó.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.2"
+  },
+  "b06cb65dac76": {
+    "source": "Test with the reader that will read it, at the size and on the material you'll print.",
+    "text": "Haz la prueba con el lector que lo leerá, al tamaño y sobre el material con el que vayas a imprimir.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.3"
+  },
+  "485ea440b904": {
+    "source": "No. The scan check uses ZXing, which doesn't read DotCode, so it says the code wasn't checked instead of guessing. Test a print with a reader that supports DotCode.",
+    "text": "No. La comprobación de escaneo usa ZXing, que no lee DotCode, así que indica que el código no se comprobó en lugar de adivinar. Prueba una impresión con un lector compatible con DotCode.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.0.answer"
+  },
+  "a134c4d1ed2a": {
+    "source": "DotCode or Data Matrix?",
+    "text": "¿DotCode o Data Matrix?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.1.question"
+  },
+  "28f500feaa97": {
+    "source": "Use the one your printer and the readers on your line support. Data Matrix is read by more scanners; DotCode suits fast inkjet printers, whose round dots don't have to join up into squares.",
+    "text": "Usa el que admitan tu impresora y los lectores de tu línea. Data Matrix lo leen más lectores; DotCode se adapta a las impresoras de inyección de tinta rápidas, cuyos puntos redondos no tienen que unirse formando cuadrados.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.1.answer"
+  },
+  "2a96012f1a58": {
+    "source": "Can a phone read DotCode?",
+    "text": "¿Puede un móvil leer DotCode?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.2.question"
+  },
+  "24b4e41f8a31": {
+    "source": "Some barcode scanner apps can, but most phone camera apps can't. For codes people scan with a phone, use a QR code.",
+    "text": "Algunas apps de lectura de códigos de barras sí pueden, pero la mayoría de las apps de cámara del móvil no. Para códigos que la gente escanea con el móvil, usa un código QR.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.2.answer"
+  },
+  "f4792c25be3c": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec o DotCode. Comprueba el valor (dígitos de control, longitudes, caracteres) y devuelve un PNG junto con URLs públicas de SVG, PNG, PDF y otros formatos de imagen.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

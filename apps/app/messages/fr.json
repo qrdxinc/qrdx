@@ -1968,7 +1968,7 @@
     "crumb": "Générateur de codes-barres",
     "title": "Générateur de codes-barres gratuit",
     "intro1": "Créez des codes-barres pour le commerce, l'expédition et l'inventaire dans {count, number} formats, d'EAN-13 et UPC-A à Code 128, GS1-128, ITF-14 et Data Matrix. Saisissez le numéro : le chiffre de contrôle est calculé pour vous, et un chiffre erroné est détecté avant l'impression.",
-    "intro2": "Chaque code-barres est dessiné et vérifié par scan dans votre navigateur, puis enregistré en PNG ou JPG pour les écrans, ou en SVG, PDF et EPS pour l'impression. C'est gratuit, sans compte et sans filigrane. Connectez-vous pour conserver vos codes-barres dans votre tableau de bord et les modifier plus tard.",
+    "intro2": "Chaque code-barres est dessiné dans votre navigateur et vérifié par scan à cet endroit (sauf DotCode et USPS Intelligent Mail, qu’aucun lecteur d’ici ne décode), puis enregistré en PNG ou JPG pour les écrans, ou en SVG, PDF et EPS pour l’impression. C’est gratuit, sans compte et sans filigrane. Connectez-vous pour conserver vos codes-barres dans votre tableau de bord et les modifier plus tard.",
     "toolLabel": "Générateur de codes-barres",
     "formatsEyebrow": "Formats",
     "whichTitle": "Quel code-barres choisir ?",
@@ -2054,7 +2054,8 @@
       "passed": "Vérification du scan réussie : un lecteur de codes-barres décode le PNG comme {label} <mono>{value}</mono>",
       "addOnNotChecked": "Cette vérification lit uniquement l’EAN-13, pas l’extension {addOn} : scannez une impression test avec un lecteur qui lit les extensions.",
       "mismatch": "Échec de la vérification du scan : le lecteur a obtenu « {decoded} » au lieu de ce {label}.",
-      "failed": "Échec de la vérification du scan : le lecteur n'a pas pu décoder ce {label}. Augmentez le contraste, la taille ou la zone de silence."
+      "failed": "Échec de la vérification du scan : le lecteur n'a pas pu décoder ce {label}. Augmentez le contraste, la taille ou la zone de silence.",
+      "unchecked": "Non vérifié par scan : le lecteur utilisé pour cette vérification ne décode pas {label}. Avant d’imprimer, testez le code-barres avec un lecteur compatible avec {label}."
     },
     "save": {
       "signIn": "<link>Connectez-vous</link> pour enregistrer des codes-barres dans votre tableau de bord et les modifier plus tard.",
@@ -2094,6 +2095,13 @@
       "gs1BadChars": "L’AI ({ai}) contient des caractères non autorisés par GS1 : {chars}",
       "gs1Ai": "AI ({ai}) : {inner}",
       "gs1TooLong": "GS1-128 accepte jusqu’à {max} caractères d’AI et de données ; ici, il y en a {count}. Répartissez-les sur deux codes-barres.",
+      "databarGtinOnly": "GS1 DataBar ne contient qu’un GTIN : (01) et ses 14 chiffres. Pour des dates, un lot ou un poids, utilisez GS1 DataBar Expanded ou GS1-128.",
+      "databarTooLong": "GS1 DataBar Expanded contient jusqu’à {max} chiffres d’AI et de données, et moins s’il y a des lettres ; celui-ci compte {count} caractères. Supprimez un AI ou raccourcissez une valeur.",
+      "imbEnter": "Saisissez le code de suivi à 20 chiffres, puis le code postal de routage ZIP Code s’il y en a un.",
+      "imbTrackingLength": "Le code de suivi compte 20 chiffres : ID du code-barres (2), type de service (3), ID de l’expéditeur et numéro de série (15). Celui-ci compte {count, plural, one {# chiffre} other {# chiffres}}.",
+      "imbRoutingLength": "Après le code de suivi à 20 chiffres vient le code postal de routage ZIP Code : 5 chiffres, 9 (ZIP+4) ou 11 (ZIP+4 et point de livraison). Il y a ici {count, plural, one {# chiffre} other {# chiffres}} après le code de suivi.",
+      "imbBarcodeId": "L’ID du code-barres (les 2 premiers chiffres) se termine par un chiffre de 0 à 4 ; ici, c’est {id}.",
+      "imbFields": "ID du code-barres {barcodeId}, type de service {serviceType}, ID de l’expéditeur {mailerId}, numéro de série {serial}, {routing, select, none {aucun code de routage} other {code de routage {routing}}}.",
       "isbnChars": "Un ISBN accepte des chiffres, des traits d’union et des espaces ; un ISBN-10 peut se terminer par X.",
       "isbnLength": "Un ISBN compte 13 chiffres, ou 10 dans l’ancien format ISBN-10 ; celui-ci en compte {count, plural, one {# chiffre} other {# chiffres}}.",
       "isbnPrefix": "Un ISBN-13 commence par 978 ou 979.",

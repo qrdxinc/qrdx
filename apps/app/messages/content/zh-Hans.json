@@ -34660,5 +34660,563 @@
     "text": "支持 EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417 或 Aztec。会校验输入的值（校验位、长度、字符），并返回一张 PNG 图片，以及公开的 SVG、PNG、PDF 等图片链接。",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "15c6793537de": {
+    "source": "A GTIN in a short barcode for small retail items",
+    "text": "将 GTIN 编入小巧条码，适用于小件零售商品",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.summary"
+  },
+  "b5cc716296fb": {
+    "source": "A GTIN as (01) and its 14 digits, e.g. (01)09501101530003. Leave off the last digit and the check digit is added.",
+    "text": "以 (01) 加 14 位数字表示的 GTIN，例如 (01)09501101530003。省略最后一位，系统会自动补上校验位。",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.inputHint"
+  },
+  "e9f24dfc8256": {
+    "source": "GTIN plus weight, price or dates for fresh food",
+    "text": "GTIN 加重量、价格或日期，适用于生鲜食品",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.summary"
+  },
+  "9ba22a61f006": {
+    "source": "Application Identifiers in brackets, each followed by its value, e.g. (01)09501101530003(17)261231(10)AB-123.",
+    "text": "方括号中的应用标识符（Application Identifier），后面各接其对应的值，例如 (01)09501101530003(17)261231(10)AB-123。",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.inputHint"
+  },
+  "05b46ef73281": {
+    "source": "The 4-state barcode USPS sorts and tracks US mail by",
+    "text": "美国邮政（USPS）用来分拣和跟踪美国邮件的 4 态条码",
+    "status": "machine",
+    "context": "barcodes.formats.intelligent-mail.summary"
+  },
+  "17d83963b8ce": {
+    "source": "20 digits of tracking code: barcode ID (2), service type (3), mailer ID and serial number (15). Then the routing ZIP Code, if any: 5, 9 or 11 digits. Spaces and hyphens are ignored.",
+    "text": "20 位追踪码：条码 ID（2 位）、服务类型（3 位）、寄件人 ID 和序列号（15 位）。之后是投递路由的 ZIP Code（如有）：5 位、9 位或 11 位。空格和连字符会被忽略。",
+    "status": "machine",
+    "context": "barcodes.formats.intelligent-mail.inputHint"
+  },
+  "dea590368a35": {
+    "source": "Dots for high-speed inkjet: cigarette packs and medicines",
+    "text": "由点阵组成，适用于高速喷码：烟盒和药品",
+    "status": "machine",
+    "context": "barcodes.formats.dotcode.summary"
+  },
+  "2368b06cffad": {
+    "source": "Any text, up to about 390 letters or 780 digits; less with accents or other scripts.",
+    "text": "任意文本，最多约 390 个字母或 780 个数字；含重音符号或其他文字时容量更少。",
+    "status": "machine",
+    "context": "barcodes.formats.dotcode.inputHint"
+  },
+  "baa23c86f1fc": {
+    "source": "A retail GTIN in a smaller barcode than an EAN-13 or UPC-A, for items too small for those. Not every checkout scanner has it switched on, so check with the retailer before printing.",
+    "text": "用比 EAN-13 或 UPC-A 更小的条码承载零售 GTIN，适合小到放不下那两种条码的商品。并非所有收银扫描器都开启了对它的支持，印刷前请先向零售商确认。",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar"
+  },
+  "5092dbf6ba77": {
+    "source": "A GTIN plus more data, such as a weight, a price or an expiry date, marked by the same Application Identifiers as GS1-128. Used on fresh food sold by weight, so the checkout reads the price or weight from the barcode.",
+    "text": "在 GTIN 之外携带更多数据，例如重量、价格或有效期，并使用与 GS1-128 相同的应用标识符来标记。用于按重量销售的生鲜食品，收银时可直接从条码读取价格或重量。",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar-expanded"
+  },
+  "6b90e94726c6": {
+    "source": "US mail: the 4-state barcode USPS sorts letters and flats by and tracks them with. It holds a mailer ID from USPS, a service type, a serial number and the delivery ZIP Code. Mailers print it to get automation prices and track their mail.",
+    "text": "美国邮件：USPS 用来分拣信件和大型平信并跟踪它们的 4 态条码。它包含 USPS 分配的邮寄者 ID、服务类型、序列号和投递地址的 ZIP Code（邮政编码）。寄件方打印它来获得自动化邮资价格，并跟踪自己的邮件。",
+    "status": "machine",
+    "context": "barcodes.uses.intelligent-mail"
+  },
+  "165c46930f26": {
+    "source": "A 2D code of separate dots, made for inkjet printers marking packs at line speed: cigarette and tobacco packs for EU traceability, medicines and drinks. Its dots needn't touch, so rough, fast printing still reads.",
+    "text": "由分离圆点组成的 2D 码，专为喷墨打印机在生产线速度下标记包装而设计：用于欧盟追溯的香烟和烟草包装、药品和饮料。圆点不必相连，因此粗糙、高速的打印也能读取。",
+    "status": "machine",
+    "context": "barcodes.uses.dotcode"
+  },
+  "db0826917a45": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14, GS1-128 and GS1 DataBar carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "如果是在商店销售的商品，需要。EAN、UPC、ITF-14、GS1-128 和 GS1 DataBar 都携带 GTIN，而 GTIN 由 GS1（或您所在国家的 GS1 组织）授权给贵公司；零售商的系统不会识别随意编造的号码。图书、连续出版物和印刷乐谱则使用其国家机构分配的 ISBN、ISSN 或 ISMN。本生成器可以绘制任何有效号码，但不会分配或注册号码。如果用于自己的库存、资产或票券，Code 128、Code 39 和 Code 93 无需注册。",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "5d57866e493c": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, the GTIN of GS1 DataBar and the GTIN and SSCC fields of GS1-128 and GS1 DataBar Expanded: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "可以，适用于 EAN-13、EAN-8、UPC-A、UPC-E、ITF-14、ISBN、ISSN、ISMN、GS1 DataBar 的 GTIN，以及 GS1-128 和 GS1 DataBar Expanded 的 GTIN 与 SSCC 字段：省略最后一位，系统会自动算出。输入完整号码时会验证校验位；校验位错误时会显示错误提示，而不是条码。",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "384846f3f60d": {
+    "source": "As you edit, the generator decodes the PNG it would download with ZXing, an open-source barcode reader, and tells you whether it reads back the value you entered. It also warns about low contrast, light bars on a dark background, red bars and a quiet zone below the minimum. ZXing doesn't read DotCode or USPS Intelligent Mail, so those two aren't checked; test them with a reader that supports them. It can't see your printer, label stock or lighting, so print a test and scan it with the scanners that will read it.",
+    "text": "编辑时，生成器会用开源条码读取器 ZXing 解码即将下载的 PNG，并告诉您能否读回您输入的值。它还会对对比度过低、深色背景上的浅色条、红色条以及小于最小值的空白区发出警告。ZXing 无法读取 DotCode 或 USPS Intelligent Mail，因此这两种不在检查范围内；请用支持它们的读取器测试。它无法了解您的打印机、标签材质或光照条件，所以请先打印测试，并用实际会读取它的扫描器来扫描。",
+    "status": "machine",
+    "context": "barcodes.faqs.3.answer"
+  },
+  "c2d9a57f6443": {
+    "source": "Free GS1 DataBar Barcode Generator (Omnidirectional)",
+    "text": "免费 GS1 DataBar Omnidirectional 条形码生成器",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.title"
+  },
+  "418eae1158ca": {
+    "source": "Make a GS1 DataBar Omnidirectional barcode from a GTIN, with the check digit added or checked. Scan-checked in your browser. SVG, PDF, EPS and PNG. Free.",
+    "text": "用 GTIN 生成 GS1 DataBar Omnidirectional 条形码，自动补全或校验校验位。在浏览器中完成扫描校验。支持 SVG、PDF、EPS 和 PNG。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.metaDescription"
+  },
+  "4a41d40d111a": {
+    "source": "GS1 DataBar Omnidirectional holds one thing: a product's 14-digit GTIN, the number an EAN-13 or UPC-A carries. Type it after (01), check that it scans and download it.",
+    "text": "GS1 DataBar Omnidirectional 只存放一项内容：商品的 14 位 GTIN，也就是 EAN-13 或 UPC-A 所承载的编号。在 (01) 后输入它，检查能否扫描，然后下载。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.intro"
+  },
+  "c74d27dff93f": {
+    "source": "Retail items too small for an EAN-13 or UPC-A: its bars are as wide as an EAN-13's but much shorter. Checkout scanners read it from any angle, like an EAN-13.",
+    "text": "适用于太小而放不下 EAN-13 或 UPC-A 的零售商品：它的条宽与 EAN-13 相当，但高度矮得多。与 EAN-13 一样，收银台扫描器可以从任意角度读取。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.0"
+  },
+  "53ad38e77560": {
+    "source": "Not every scanner has GS1 DataBar switched on. Ask the retailer that will scan it before you print, and use EAN-13 or UPC-A when in doubt.",
+    "text": "并非每台扫描器都开启了 GS1 DataBar。印刷前请先询问将要扫描它的零售商，拿不准时请使用 EAN-13 或 UPC-A。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.1"
+  },
+  "0a7f916a956b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar?",
+    "text": "使用 GS1 DataBar 需要 GS1 编码吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.title"
+  },
+  "aaa22f8cfea2": {
+    "source": "Yes. The GTIN it holds is built from a GS1 company prefix, like the number in an EAN-13 or UPC-A.",
+    "text": "需要。它所承载的 GTIN 由 GS1 公司前缀生成，和 EAN-13 或 UPC-A 中的编号一样。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.paragraphs.0"
+  },
+  "14553ad995d0": {
+    "source": "Write the GTIN after (01), as 14 digits: (01)09501101530003. A 13-digit EAN-13 number becomes a GTIN with a 0 in front, and a 12-digit UPC-A number with two.",
+    "text": "在 (01) 后填写 14 位的 GTIN：(01)09501101530003。13 位的 EAN-13 号码前面补一个 0 后成为 GTIN，12 位的 UPC-A 号码则补两个。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.0"
+  },
+  "847870e5f20f": {
+    "source": "Leave off the last digit and the check digit is added; enter all 14 and it's checked. The brackets aren't encoded; they show that (01), the GTIN, follows.",
+    "text": "省略最后一位，系统会自动补上校验位；输入全部 14 位，则会进行校验。括号不会被编码，只用来表示后面跟着的是 (01)，即 GTIN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.1"
+  },
+  "7c9ca8195d32": {
+    "source": "GS1 DataBar holds nothing but the GTIN. For a weight, a price, a batch or a date, use GS1 DataBar Expanded, which takes the same (AI)value input.",
+    "text": "GS1 DataBar 只能存放 GTIN。如需重量、价格、批次或日期，请使用 GS1 DataBar Expanded，它的 (AI)value 输入方式与此相同。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.2"
+  },
+  "ee3674a025e6": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 33 modules high, 11.6 mm at this module.",
+    "text": "下载文件采用 0.353 mm 的模块宽度和 15 mm 的条高。GS1 要求条高至少为 33 个模块，在此模块宽度下为 11.6 mm。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.0"
+  },
+  "052b836a39de": {
+    "source": "The bars are 96 modules wide, 33.5 mm here: about the width of an EAN-13's bars at the same module. The printed GTIN is a little wider than the bars, so the file is wider too.",
+    "text": "条码宽 96 个模块，此处为 33.5 mm：在相同模块宽度下，约等于 EAN-13 条码的宽度。印出的 GTIN 文字比条码略宽，因此文件也更宽。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.1"
+  },
+  "395264c48174": {
+    "source": "What does a scanner return?",
+    "text": "扫描器会返回什么？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.question"
+  },
+  "07d9e012bffd": {
+    "source": "The digits 01 and the GTIN, 16 in all, sometimes after a symbology identifier (]e0), and with no brackets. The scan check here accepts both forms.",
+    "text": "返回数字 01 和 GTIN，共 16 位，有时前面带有符号标识符（]e0），且不含括号。这里的扫描校验两种形式都接受。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.answer"
+  },
+  "76f18e2501c2": {
+    "source": "My scanner reads EAN-13 but not this. Why?",
+    "text": "我的扫描器能读 EAN-13，却读不了它，为什么？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.question"
+  },
+  "6b564f4ef227": {
+    "source": "Most likely GS1 DataBar is switched off in its settings. Many scanners let you turn each symbology on or off; check the manual for GS1 DataBar, which older documents call RSS-14.",
+    "text": "很可能是扫描器设置中关闭了 GS1 DataBar。许多扫描器允许分别开启或关闭每种码制；请在说明书中查找 GS1 DataBar，旧文档里称之为 RSS-14。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.answer"
+  },
+  "6a37ed0e9a98": {
+    "source": "Can it hold a weight or an expiry date?",
+    "text": "它能存放重量或有效期吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.question"
+  },
+  "e888aaaf74e2": {
+    "source": "No, only the GTIN. GS1 DataBar Expanded holds the GTIN with other Application Identifiers, such as (3103) for a weight or (17) for an expiry date.",
+    "text": "不能，只能存放 GTIN。GS1 DataBar Expanded 可以在 GTIN 之外加入其他 Application Identifier，例如表示重量的 (3103) 或表示有效期的 (17)。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.answer"
+  },
+  "e17f7a55d5c6": {
+    "source": "Free GS1 DataBar Expanded Barcode Generator",
+    "text": "免费 GS1 DataBar Expanded 条形码生成器",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.title"
+  },
+  "14f0f00fb5e9": {
+    "source": "Make a GS1 DataBar Expanded barcode: a GTIN with weight, price, batch or expiry in one retail barcode. Check digits added. Scan-checked. SVG, PDF, PNG.",
+    "text": "生成 GS1 DataBar Expanded 条形码：一个零售条形码即可包含 GTIN 以及重量、价格、批号或有效期。自动添加校验位，并经过扫描检查。支持 SVG、PDF、PNG。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.metaDescription"
+  },
+  "ac78f2470ebf": {
+    "source": "GS1 DataBar Expanded carries a GTIN and more data in one barcode a checkout scanner reads, each piece marked by an Application Identifier (AI) in brackets: (01) for the GTIN, (17) for an expiry date, (10) for a batch. Type the AIs and values; check digits are added or checked for you.",
+    "text": "GS1 DataBar Expanded 可在一个收银台扫描枪能读取的条形码中携带 GTIN 和更多数据，每项数据都由括号中的应用标识符（AI）标明：(01) 表示 GTIN，(17) 表示有效期，(10) 表示批号。输入 AI 和对应的值即可，校验位会自动为您添加或检查。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.intro"
+  },
+  "f15374e67a3a": {
+    "source": "Fresh food sold by weight, such as meat, cheese and deli counters, where the weight or the price travels with the GTIN so the checkout can read it from the barcode.",
+    "text": "按重量销售的生鲜食品，例如肉类、奶酪和熟食柜台的商品，重量或价格会与 GTIN 一起编入条形码，收银台可直接从条形码中读取。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.0"
+  },
+  "a2c9d9d7f3f1": {
+    "source": "North American coupons use its stacked form, GS1 DataBar Expanded Stacked, which this generator doesn't draw.",
+    "text": "北美的优惠券使用它的堆叠形式 GS1 DataBar Expanded Stacked，本生成器不支持绘制该形式。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.1"
+  },
+  "fc1be266ea8b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar Expanded?",
+    "text": "使用 GS1 DataBar Expanded 需要 GS1 号码吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.title"
+  },
+  "b1afd422b8bf": {
+    "source": "For the GTIN in (01), yes: it's built from a GS1 company prefix. Weights, prices, batches and dates are your own data.",
+    "text": "(01) 中的 GTIN 需要：它由 GS1 公司前缀生成。重量、价格、批号和日期则是您自己的数据。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.paragraphs.0"
+  },
+  "f06c2fc00957": {
+    "source": "GTINs in (01) and (02) and SSCCs in (00) get their check digit added when you leave it off, or checked when you don't. The encoder also checks the data against GS1's rules: a batch (10) without a GTIN, for example, is refused.",
+    "text": "(01) 和 (02) 中的 GTIN 以及 (00) 中的 SSCC，如果您省略校验位，会自动为其添加；如果您填写了校验位，则会进行检查。编码器还会按照 GS1 的规则检查数据：例如，有批号 (10) 却没有 GTIN 的数据会被拒绝。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.1"
+  },
+  "d2722491f265": {
+    "source": "It holds up to 74 digits of AIs and data, and fewer when there are letters. Put variable-length fields such as (10) batch last, so no separator is needed after them.",
+    "text": "它最多可容纳 74 位数字的 AI 和数据，包含字母时容量会更少。请把 (10) 批号这类可变长度字段放在最后，这样它们后面就不需要分隔符。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.2"
+  },
+  "71bcd6597001": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 34 modules high, 12 mm at this module.",
+    "text": "下载文件使用 0.353 mm 的模块和 15 mm 的条高。GS1 要求条高至少为 34 个模块，在此模块尺寸下为 12 mm。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.0"
+  },
+  "f7a219456cad": {
+    "source": "It's long, not tall: the example's bars are 98.8 mm long, a little more than the same data as GS1-128 (93.8 mm). More data makes it longer still.",
+    "text": "它的特点是长而不高：示例中的条形码长 98.8 mm，比相同数据的 GS1-128（93.8 mm）略长。数据越多，条形码就越长。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.1"
+  },
+  "5c3434d2ba5d": {
+    "source": "The brackets are only for people. Readers report the data with a symbology identifier (]e0) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+    "text": "括号只是给人看的。读取器返回数据时会带上符号标识符（]e0）或不带，并用不可见的 GS 字符分隔可变长度字段。这里的扫描检查接受以上所有形式。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.0.answer"
+  },
+  "99a9136f6b20": {
+    "source": "GS1 DataBar Expanded or GS1-128?",
+    "text": "GS1 DataBar Expanded 还是 GS1-128？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.question"
+  },
+  "08d1a93af707": {
+    "source": "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
+    "text": "请使用您的零售商或贸易伙伴要求的那一种。GS1 DataBar Expanded 是零售用条形码，在收银台读取，用于生鲜食品等商品；GS1-128 是物流条形码，用于箱、托盘和运输标签。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.answer"
+  },
+  "08800fa0826e": {
+    "source": "Free USPS Intelligent Mail Barcode Generator (IMb)",
+    "text": "免费 USPS Intelligent Mail 条形码生成器（IMb）",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.title"
+  },
+  "e1f3e12a5dfb": {
+    "source": "Make a USPS Intelligent Mail barcode (IMb) from its 20-digit tracking code and ZIP Code, drawn to the USPS-B-3200 sizes. SVG, PDF, EPS and PNG. Free.",
+    "text": "用 20 位追踪码和 ZIP Code 生成 USPS Intelligent Mail 条形码（IMb），按 USPS-B-3200 尺寸绘制。支持 SVG、PDF、EPS 和 PNG。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.metaDescription"
+  },
+  "08927b65f433": {
+    "source": "The Intelligent Mail barcode (IMb) is the row of 65 short and tall bars on US letters and flats. It holds a 20-digit tracking code and the delivery ZIP Code, and USPS sorting machines read it to route and track each piece. Type the digits and download it, drawn to the sizes in the USPS specification, USPS-B-3200.",
+    "text": "Intelligent Mail 条形码（IMb）是美国信函和大型平信上那一排高矮不一的 65 根竖条。它包含 20 位追踪码和投递地的 ZIP Code，USPS 分拣机读取它来为每件邮件分拣路由并追踪。输入数字即可下载，按 USPS 规范 USPS-B-3200 中的尺寸绘制。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.intro"
+  },
+  "27a0ea79ffac": {
+    "source": "Letters, postcards and flats mailed in the US. Mailers print it in the address block to get automation prices, and with a serial number of its own on each piece, to see where their mail is in the USPS network.",
+    "text": "在美国寄送的信函、明信片和大型平信。寄件人把它印在地址栏中以获得自动化邮资优惠价，并给每件邮件加上各自独有的序列号，以便查看邮件在 USPS 网络中的位置。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.0"
+  },
+  "d3d72da9381d": {
+    "source": "Parcels use a different barcode, the Intelligent Mail package barcode (IMpb).",
+    "text": "包裹使用另一种条形码，即 Intelligent Mail 包裹条形码（IMpb）。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.1"
+  },
+  "426bfaa60a9c": {
+    "source": "The scan check on this page can't read Intelligent Mail: the reader it uses doesn't decode it, so the generator says the barcode wasn't checked. Test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+    "text": "本页的扫描检查无法读取 Intelligent Mail：它所用的读取器不能解码这种条形码，所以生成器会提示该条形码未经检查。寄送前，请用支持 Intelligent Mail 的读取器测试已印出的邮件。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.2"
+  },
+  "cadc93f1c51d": {
+    "source": "Where do the numbers come from?",
+    "text": "这些数字从哪里来？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.title"
+  },
+  "8d2e9549ce6f": {
+    "source": "From USPS and from you. USPS assigns the mailer ID (request one in its Business Customer Gateway), the barcode ID, which marks the presort level, and the service type ID, which names the mail class and services such as address correction. Its tables of valid IDs are on PostalPro.",
+    "text": "一部分来自 USPS，一部分来自你。USPS 分配邮寄方 ID（可在其 Business Customer Gateway 申请）、条形码 ID（标明预分拣级别）以及服务类型 ID（标明邮件类别和地址更正等服务）。有效 ID 表可在 PostalPro 查到。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.paragraphs.0"
+  },
+  "def6e8bc633e": {
+    "source": "The serial number is yours: give each mailpiece its own, so its scans can be told apart. The routing code is the delivery ZIP Code: 5 digits, ZIP+4 (9) or ZIP+4 and the 2-digit delivery point (11), keeping leading zeros: 02768, not 2768.",
+    "text": "序列号由你自己定：给每件邮件各设一个，这样才能区分它们的扫描记录。路由码就是投递地的 ZIP Code：5 位、ZIP+4（9 位），或 ZIP+4 加 2 位投递点码（11 位），前导零要保留：02768，而不是 2768。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.paragraphs.1"
+  },
+  "48445032cd31": {
+    "source": "Type the 20-digit tracking code, then the routing code: 20, 25, 29 or 31 digits in all. Spaces and hyphens are ignored, so you can write it the way it's printed.",
+    "text": "先输入 20 位追踪码，再输入路由码：总共 20、25、29 或 31 位。空格和连字符会被忽略，所以可以按印刷的样子书写。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.0"
+  },
+  "9249299dc3fa": {
+    "source": "The tracking code is the barcode ID (2 digits, the second 0 to 4), the service type ID (3), then the mailer ID and serial number (15). A mailer ID starting with 9 has 9 digits and leaves 6 for the serial; any other has 6 and leaves 9. The line under the field shows how your digits were split.",
+    "text": "追踪码由条形码 ID（2 位，第二位为 0 到 4）、服务类型 ID（3 位），再加邮寄方 ID 和序列号（15 位）组成。以 9 开头的邮寄方 ID 为 9 位，序列号剩 6 位；其他邮寄方 ID 为 6 位，序列号剩 9 位。输入框下方的一行会显示你输入的数字是如何拆分的。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.1"
+  },
+  "c20c0431f8d3": {
+    "source": "There's no check digit to type: the barcode carries its own 11-bit error check, worked out from the digits. Tests here draw the four worked examples in USPS-B-3200 and compare all 65 bars of each.",
+    "text": "无需输入校验位：条形码自带 11 位错误校验，由这些数字计算得出。这里的测试会绘制 USPS-B-3200 中的四个示例，并逐一比对每个示例的全部 65 根条。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.2"
+  },
+  "43856aa2ddd3": {
+    "source": "The bars follow USPS-B-3200: 0.02 in (0.51 mm) wide, about 22 to the inch, and the full bars 0.156 in (3.96 mm) tall, inside the 0.125 to 0.165 in USPS allows. The bar height has no slider for this reason. Print the SVG, PDF or EPS at 100%.",
+    "text": "条宽遵循 USPS-B-3200：0.02 in (0.51 mm) 宽，约每英寸 22 根，全高条高 0.156 in (3.96 mm)，处于 USPS 允许的 0.125 至 0.165 in 范围内。因此条高没有滑块可调。请以 100% 打印 SVG、PDF 或 EPS。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.0"
+  },
+  "683d4d63e73f": {
+    "source": "USPS asks for 0.125 in (3.2 mm) clear on each side and 0.028 in above and below. The quiet zone starts at 7 bar widths (0.14 in) each side, and the image keeps 0.042 in above and below.",
+    "text": "USPS 要求两侧各留 0.125 in (3.2 mm) 空白，上下各 0.028 in。静区从两侧各 7 个条宽（0.14 in）起算，图像上下保留 0.042 in。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.1"
+  },
+  "41b44b5537ef": {
+    "source": "Image size starts at 2×: at 1× the bars round to whole pixels that are wider than USPS allows.",
+    "text": "图像尺寸从 2× 起：1× 时条会被取整为整数像素，比 USPS 允许的更宽。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.2"
+  },
+  "1afb70ae817f": {
+    "source": "Can this page check that it scans?",
+    "text": "这个页面能检查它是否可扫描吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.0.question"
+  },
+  "496ff47f7448": {
+    "source": "No. The scan check uses ZXing, which doesn't read Intelligent Mail, so it says the barcode wasn't checked instead of guessing. The encoding is tested against the specification's worked examples, but test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+    "text": "不能。扫描检查使用 ZXing，它不能读取 Intelligent Mail，所以会提示条形码未经检查，而不是猜测。编码已按规范中的示例测试，但寄送前仍请用支持 Intelligent Mail 的读取器测试已印出的邮件。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.0.answer"
+  },
+  "4ded19de7497": {
+    "source": "Should I print the digits?",
+    "text": "要打印数字吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.1.question"
+  },
+  "4e1235e563b0": {
+    "source": "Some USPS services require the digits printed with the barcode; most mail doesn't. When they're printed, USPS-B-3200 wants each field separated by a space, in a 10- to 12-point sans serif starting at the first bar, 0.028 to 0.5 in from the bars. The generator prints them that way, 10-point, under the bars; turn them off with the switch under the colors.",
+    "text": "部分 USPS 服务要求随条形码一并印出数字；大多数邮件不需要。印出时，USPS-B-3200 要求各字段以空格分隔，使用 10 至 12 磅无衬线字体，从第一根条开始，与条相距 0.028 至 0.5 in。生成器按此方式在条下方印出数字，字号 10 磅；可用颜色下方的开关关闭。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.1.answer"
+  },
+  "a88f6abebd5a": {
+    "source": "Where does it go on the envelope?",
+    "text": "它应该放在信封的什么位置？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.2.question"
+  },
+  "41dfe627f5f3": {
+    "source": "Usually in the address block, above the name or below the city line. USPS Publication 25 and the Domestic Mail Manual set the exact areas, and the clear space each side.",
+    "text": "通常在地址栏内，姓名上方或城市行下方。具体区域以及两侧的留白，由 USPS Publication 25 和 Domestic Mail Manual 规定。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.2.answer"
+  },
+  "fed4deb9261e": {
+    "source": "Does it replace POSTNET?",
+    "text": "它会取代 POSTNET 吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.3.question"
+  },
+  "1a22b24585c1": {
+    "source": "Yes. Intelligent Mail carries the ZIP Code the old POSTNET barcode did, plus the tracking code, and USPS no longer gives automation prices for POSTNET.",
+    "text": "会。Intelligent Mail 带有旧 POSTNET 条形码所含的 ZIP Code，外加追踪码，而且 USPS 已不再为 POSTNET 提供自动化优惠价。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.3.answer"
+  },
+  "809a20da4279": {
+    "source": "Free DotCode Generator",
+    "text": "免费 DotCode 生成器",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.title"
+  },
+  "b4832c2f8588": {
+    "source": "Make a DotCode, the dot-based 2D code printed by high-speed inkjet on tobacco packs and medicines. Up to about 390 letters or 780 digits. SVG, PDF, PNG.",
+    "text": "生成 DotCode，一种由圆点组成的 2D 码，由高速喷墨打印机印在烟草包装和药品上。最多约 390 个字母或 780 个数字。支持 SVG、PDF、PNG。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.metaDescription"
+  },
+  "a0787e9911ce": {
+    "source": "DotCode is a 2D code made of separate dots instead of squares, designed for the inkjet and laser printers that mark products on fast production lines. Type any text, up to about 390 letters or 780 digits here, and download it as a vector or an image.",
+    "text": "DotCode 是一种由分散的圆点而非方块组成的 2D 码，专为在高速生产线上给产品打码的喷墨和激光打印机设计。在这里输入任意文本，最多约 390 个字母或 780 个数字，即可下载为矢量图或图片。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.intro"
+  },
+  "77c3d396cc26": {
+    "source": "Cigarette and tobacco packs sold in the EU: the traceability system of the Tobacco Products Directive accepts DotCode, as well as Data Matrix and QR codes, for the unique identifier on each pack.",
+    "text": "在欧盟销售的香烟和烟草包装：《烟草制品指令》的追溯系统接受 DotCode，以及 Data Matrix 和二维码，作为每包产品的唯一标识。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.0"
+  },
+  "6f7a3cf5e9a0": {
+    "source": "Medicines, drinks and other goods coded on the line. The dots don't have to touch, so a fast inkjet printer can mark each item as it passes, on cartons, cans or labels.",
+    "text": "在生产线上打码的药品、饮料和其他商品。圆点不必相连，因此高速喷码机可以在商品经过时，把码打在纸箱、罐体或标签上。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.1"
+  },
+  "b487e6726e21": {
+    "source": "Readers need a camera-based scanner with DotCode switched on; many phone apps and older scanners don't read it. The scan check on this page can't read it either, so it says the code wasn't checked: test a print with a reader that supports DotCode.",
+    "text": "读取需要开启 DotCode 的摄像头式扫码器；许多手机应用和较旧的扫码器无法读取。本页的扫描检查同样无法读取它，所以会提示该码未经检查：请用支持 DotCode 的读码器测试打印件。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.2"
+  },
+  "d10de8916710": {
+    "source": "Plain DotCode or GS1 DotCode?",
+    "text": "普通 DotCode 还是 GS1 DotCode？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.title"
+  },
+  "e14dc8e2518c": {
+    "source": "This page makes plain DotCode: it holds whatever text you type, with no registration.",
+    "text": "本页生成的是普通 DotCode：可以容纳你输入的任意文本，无需注册。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.paragraphs.0"
+  },
+  "bf0eb652072c": {
+    "source": "GS1 DotCode, which carries GS1 Application Identifiers after a special first character, isn't offered here. For GS1 data in a barcode from this generator, use GS1-128.",
+    "text": "GS1 DotCode 会在一个特殊的首字符之后携带 GS1 应用标识符，这里不提供。如需在本生成器的条码中使用 GS1 数据，请使用 GS1-128。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.paragraphs.1"
+  },
+  "8bf6cbe5b87d": {
+    "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Accents and other scripts are stored as UTF-8 bytes, which take more room, and some readers show them wrongly.",
+    "text": "任意文本：字母、数字、符号、换行、带重音的字符和其他文字。带重音的字符和其他文字会以 UTF-8 字节存储，占用空间更多，部分读码器还会显示错误。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.0"
+  },
+  "931ac20be28a": {
+    "source": "A DotCode here holds up to about 390 letters or 780 digits. Larger ones were tested with an outside DotCode reader, which didn't read them, so the generator stops there.",
+    "text": "这里的 DotCode 最多可容纳约 390 个字母或 780 个数字。更大的码用外部 DotCode 读码器测试时无法读取，因此生成器限制在此上限。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.1"
+  },
+  "15862cdb1e4f": {
+    "source": "Text that starts with two digits gets a marker in front saying it isn't GS1 data, as the DotCode specification asks; some readers show that marker as an invisible character before the text.",
+    "text": "以两位数字开头的文本，前面会加上一个标记，说明它不是 GS1 数据，这是 DotCode 规范的要求；部分读码器会把该标记显示为文本前的一个不可见字符。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.2"
+  },
+  "44135469d48f": {
+    "source": "The code grows as you add text, keeping a wide rectangle. Dots sit on every other square of a checkerboard grid, so no two dots touch.",
+    "text": "随着文本增加，码会变大，并保持宽矩形。圆点位于棋盘格网格中隔一格的方块上，因此任意两个圆点都不会相连。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.3"
+  },
+  "f6ea4a41ebfa": {
+    "source": "The vector downloads use a 0.71 mm module: each dot is that wide, on a grid of that pitch. Scale it to the dot size of the printer that will mark it.",
+    "text": "矢量下载使用 0.71 mm 的模块：每个圆点的宽度即为此值，网格间距也是如此。请按照将要打码的打印机的点径进行缩放。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.0"
+  },
+  "391f0966e32a": {
+    "source": "DotCode needs 3 modules of blank space all round, which the generator starts with.",
+    "text": "DotCode 四周需要留出 3 个模块的空白，生成器默认已留出。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.1"
+  },
+  "b5f1309ddb3c": {
+    "source": "Image size starts at 2×: at 1× each dot is 2 pixels across, which the outside reader it was tested with didn't read.",
+    "text": "图片尺寸从 2× 起：在 1× 时每个圆点宽 2 像素，测试所用的外部读码器无法读取。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.2"
+  },
+  "b06cb65dac76": {
+    "source": "Test with the reader that will read it, at the size and on the material you'll print.",
+    "text": "请使用实际读取它的读码器，按你将打印的尺寸并在对应的材料上进行测试。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.3"
+  },
+  "485ea440b904": {
+    "source": "No. The scan check uses ZXing, which doesn't read DotCode, so it says the code wasn't checked instead of guessing. Test a print with a reader that supports DotCode.",
+    "text": "不能。扫描检查使用的是 ZXing，它无法读取 DotCode，所以会提示该码未经检查，而不是猜测结果。请用支持 DotCode 的读码器测试打印件。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.0.answer"
+  },
+  "a134c4d1ed2a": {
+    "source": "DotCode or Data Matrix?",
+    "text": "DotCode 还是 Data Matrix？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.1.question"
+  },
+  "28f500feaa97": {
+    "source": "Use the one your printer and the readers on your line support. Data Matrix is read by more scanners; DotCode suits fast inkjet printers, whose round dots don't have to join up into squares.",
+    "text": "选择你的打印机和生产线上的读码器所支持的那一种。Data Matrix 能被更多扫码器读取；DotCode 适合高速喷码机，其圆点不必连成方块。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.1.answer"
+  },
+  "2a96012f1a58": {
+    "source": "Can a phone read DotCode?",
+    "text": "手机能读取 DotCode 吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.2.question"
+  },
+  "24b4e41f8a31": {
+    "source": "Some barcode scanner apps can, but most phone camera apps can't. For codes people scan with a phone, use a QR code.",
+    "text": "部分条码扫描应用可以，但大多数手机相机应用不行。如果是供人用手机扫描的码，请使用二维码。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.2.answer"
+  },
+  "f4792c25be3c": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "支持 EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、USPS Intelligent Mail、Data Matrix、PDF417、Aztec 或 DotCode。会检查内容（校验位、长度、字符），并返回一张 PNG 图片，以及公开的 SVG、PNG、PDF 等图片链接。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

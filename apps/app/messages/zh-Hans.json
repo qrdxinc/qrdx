@@ -1968,7 +1968,7 @@
     "crumb": "条形码生成器",
     "title": "免费条形码生成器",
     "intro1": "支持 {count, number} 种格式，可制作零售、物流和库存条形码，从 EAN-13、UPC-A 到 Code 128、GS1-128、ITF-14 和 Data Matrix。输入号码，校验位自动计算；校验位有误，打印前就会发现。",
-    "intro2": "每个条形码都在浏览器中绘制并完成扫描检查，可保存为适合屏幕使用的 PNG 或 JPG，也可保存为适合印刷的 SVG、PDF 和 EPS。免费使用，无需账号，没有水印。登录后可将条形码保存在控制台，以后随时编辑。",
+    "intro2": "每个条形码都在你的浏览器中绘制，并在浏览器中完成扫描校验（DotCode 和 USPS Intelligent Mail 除外，这里没有任何读码器能解码它们），然后导出为 PNG 或 JPG 用于屏幕显示，或导出为 SVG、PDF 和 EPS 用于印刷。免费使用，无需账号，无水印。登录后可将条形码保存在控制台中，以后还能继续编辑。",
     "toolLabel": "条形码生成器",
     "formatsEyebrow": "格式",
     "whichTitle": "我该用哪种条形码？",
@@ -2054,7 +2054,8 @@
       "passed": "扫描检测通过：条码阅读器将该 PNG 解码为 {label} <mono>{value}</mono>",
       "addOnNotChecked": "此检测仅读取 EAN-13，不包含附加码 {addOn}：请用能读取附加码的扫描器扫描试印样张。",
       "mismatch": "扫描检测未通过：阅读器读取到的是“{decoded}”，与此 {label} 不一致。",
-      "failed": "扫描检测未通过：阅读器无法解码此 {label}。请提高对比度、增大尺寸或加宽静区。"
+      "failed": "扫描检测未通过：阅读器无法解码此 {label}。请提高对比度、增大尺寸或加宽静区。",
+      "unchecked": "未经扫描检查：此检查所用的读取器无法解码 {label}。打印前，请使用支持 {label} 的读取器测试该条码。"
     },
     "save": {
       "signIn": "<link>登录</link>后即可将条码保存到控制台，日后随时编辑。",
@@ -2094,6 +2095,13 @@
       "gs1BadChars": "AI ({ai}) 包含 GS1 不允许的字符：{chars}",
       "gs1Ai": "AI ({ai})：{inner}",
       "gs1TooLong": "GS1-128 最多可容纳 {max} 个 AI 和数据字符；当前为 {count} 个。请拆分为两个条形码。",
+      "databarGtinOnly": "GS1 DataBar 只能容纳 GTIN：(01) 及其 14 位数字。如需包含日期、批次或重量，请使用 GS1 DataBar Expanded 或 GS1-128。",
+      "databarTooLong": "GS1 DataBar Expanded 最多可容纳 {max} 位 AI 和数据数字，包含字母时容量更少；当前有 {count} 个字符。请删除一个 AI 或缩短某个值。",
+      "imbEnter": "请输入 20 位追踪码，如有投递邮编，再接着输入。",
+      "imbTrackingLength": "追踪码为 20 位：条码 ID（2 位）、服务类型（3 位）、邮寄方 ID 和序列号（15 位）。当前为 {count, plural, other {# 位数字}}。",
+      "imbRoutingLength": "20 位追踪码之后是投递邮编：5 位、9 位（ZIP+4）或 11 位（ZIP+4 加投递点）。追踪码之后当前为 {count, plural, other {# 位数字}}。",
+      "imbBarcodeId": "条码 ID（前 2 位数字）的末位须为 0 至 4；当前为 {id}。",
+      "imbFields": "条码 ID {barcodeId}，服务类型 {serviceType}，邮寄方 ID {mailerId}，序列号 {serial}，{routing, select, none {无投递邮编} other {投递邮编 {routing}}}。",
       "isbnChars": "ISBN 只能包含数字、连字符和空格；ISBN-10 末位可以是 X。",
       "isbnLength": "ISBN 为 13 位数字，或旧版 ISBN-10 格式的 10 位数字；当前有 {count, plural, one {# 位数字} other {# 位数字}}。",
       "isbnPrefix": "ISBN-13 以 978 或 979 开头。",

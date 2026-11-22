@@ -4,7 +4,7 @@
 
 QR Image → Generate can return ICO (a favicon with 16, 32, 48 and 256 px images in one file) and GIF (at most 256 colors; a design that would stop scanning when reduced is refused).
 
-Barcode Image → Generate makes barcodes with no API key (`GET /barcode`): EAN-13, EAN-8, UPC-A, UPC-E, ISBN, ISSN, ISMN, Code 128, Code 39, Code 93, Codabar, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Data Matrix, PDF417 and Aztec, as PNG, JPG, WebP, AVIF, BMP, SVG, PDF or EPS, with colors, scale, bar height, quiet zone, printed text and rotation.
+Barcode Image → Generate makes barcodes with no API key (`GET /barcode`): EAN-13, EAN-8, UPC-A, UPC-E, ISBN, ISSN, ISMN, Code 128, Code 39, Code 93, Codabar, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, USPS Intelligent Mail, Data Matrix, PDF417, Aztec and DotCode, as PNG, JPG, WebP, AVIF, BMP, SVG, PDF or EPS, with colors, scale, bar height, quiet zone, printed text and rotation.
 
 QR Image → Generate's description lists every format it makes (PNG, WebP, GIF, BMP, ICO, SVG and EPS).
 
