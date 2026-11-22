@@ -302,6 +302,42 @@ describe("generate command", () => {
       expect(exitCode).toBe(0);
       expect(existsSync(out)).toBe(true);
     });
+
+    it("the saved line names the icon's sizes, not --size", () => {
+      const out = tmp("saved-line.ico");
+      cleanups.push(out);
+      const { exitCode, stdout } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--size",
+        "300",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(0);
+      expect(stdout).toContain("(16, 32, 48 and 256 px)");
+      expect(stdout).not.toMatch(/\d+×\d+/);
+      expect(stdout).not.toContain("frame was left out");
+    });
+
+    it("says the frame was left out, and the saved line has no frame size", () => {
+      const out = tmp("framed.ico");
+      cleanups.push(out);
+      const { exitCode, stdout } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--frame",
+        "speech-bubble",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(0);
+      expect(stdout).toContain("(16, 32, 48 and 256 px)");
+      expect(stdout).toContain(
+        "An ICO holds the code alone, so the frame was left out."
+      );
+      expect(readFileSync(out).readUInt16LE(4)).toBe(4);
+    });
   });
 
   describe("flags", () => {
