@@ -26,8 +26,15 @@ describe("parseBarcodeFormat", () => {
     }
     expect(parseBarcodeFormat("ean_13")).toBe("ean13");
     expect(parseBarcodeFormat("UCC-128")).toBe("gs1-128");
+    expect(parseBarcodeFormat("DataBar")).toBe("gs1-databar");
+    expect(parseBarcodeFormat("RSS-14")).toBe("gs1-databar");
+    expect(parseBarcodeFormat("databar_expanded")).toBe("gs1-databar-expanded");
+    expect(parseBarcodeFormat("RSS Expanded")).toBe("gs1-databar-expanded");
     expect(parseBarcodeFormat("azteccode")).toBe("aztec");
     expect(parseBarcodeFormat("Codabar")).toBe("codabar");
+    expect(parseBarcodeFormat("ISBN-13")).toBe("isbn");
+    expect(parseBarcodeFormat("isbn10")).toBe("isbn");
+    expect(parseBarcodeFormat("Bookland")).toBe("isbn");
     expect(parseBarcodeFormat("qr")).toBeNull();
   });
 });

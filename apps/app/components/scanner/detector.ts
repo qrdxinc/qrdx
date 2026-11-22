@@ -16,6 +16,8 @@ export const SCAN_FORMATS = [
   "code_93",
   "codabar",
   "itf",
+  "databar_omni",
+  "databar_expanded",
 ] as const;
 
 export type ScanFormat = (typeof SCAN_FORMATS)[number];
@@ -36,6 +38,8 @@ export const FORMAT_LABELS: Record<string, string> = {
   code_93: "Code 93",
   codabar: "Codabar",
   itf: "ITF",
+  databar_omni: "GS1 DataBar",
+  databar_expanded: "GS1 DataBar Expanded",
 };
 
 export function formatLabel(format: string): string {

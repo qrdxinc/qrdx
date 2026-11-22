@@ -5,10 +5,13 @@ import {
   BARCODE_FORMATS,
   barcodeIssueText,
   compressUpca,
+  DATABAR_EXPANDED_MAX_DATA,
   decodedMatches,
   expandUpce,
   GS1_128_MAX_DATA,
   gs1CheckDigit,
+  publicationEan13,
+  splitBarcodeValue,
   validateBarcodeInput,
 } from "@/lib/barcode/formats";
 
@@ -32,12 +35,17 @@ describe("BARCODE_FORMATS", () => {
       "EAN-8",
       "UPC-A",
       "UPC-E",
+      "ISBN",
+      "ISSN",
+      "ISMN",
       "Code 128",
       "Code 39",
       "Code 93",
       "Codabar",
       "ITF-14",
       "GS1-128",
+      "GS1 DataBar",
+      "GS1 DataBar Expanded",
       "Data Matrix",
       "PDF417",
       "Aztec",
@@ -266,11 +274,325 @@ describe("GS1-128", () => {
   });
 });
 
+describe("GS1 DataBar", () => {
+  it("takes a GTIN in (01) and completes or checks its check digit", () => {
+    expect(ok("gs1-databar", "(01)09501101530003")).toEqual({
+      ok: true,
+      value: "(01)09501101530003",
+    });
+    expect(ok("gs1-databar", " (01) 0950110153000 ")).toEqual({
+      ok: true,
+      value: "(01)09501101530003",
+      note: "AI (01): Check digit 3 added.",
+    });
+    expect(error("gs1-databar", "(01)09501101530004")).toMatch(
+      /^AI \(01\): .*should be 3, not 4/,
+    );
+    expect(error("gs1-databar", "(01)0950")).toMatch(/^AI \(01\): /);
+  });
+
+  it("refuses anything but a GTIN, in words rather than bwip-js's", () => {
+    const gtinOnly =
+      "GS1 DataBar holds only a GTIN: (01) and its 14 digits. For dates, a batch or a weight, use GS1 DataBar Expanded or GS1-128.";
+    expect(error("gs1-databar", "(01)09501101530003(10)AB-123")).toBe(gtinOnly);
+    expect(error("gs1-databar", "(10)AB-123")).toBe(gtinOnly);
+    expect(error("gs1-databar", "(02)09501101530003")).toBe(gtinOnly);
+    expect(error("gs1-databar", "09501101530003")).toMatch(
+      /Start with an Application Identifier/,
+    );
+    expect(error("gs1-databar", "")).toMatch(/Enter Application Identifiers/);
+  });
+});
+
+describe("GS1 DataBar Expanded", () => {
+  it("takes AIs in brackets like GS1-128", () => {
+    expect(
+      ok("gs1-databar-expanded", "(01)09501101530003(17)261231(10)AB-123"),
+    ).toEqual({
+      ok: true,
+      value: "(01)09501101530003(17)261231(10)AB-123",
+    });
+    expect(ok("gs1-databar-expanded", "(01)0950110153000(3103)000123")).toEqual(
+      {
+        ok: true,
+        value: "(01)09501101530003(3103)000123",
+        note: "AI (01): Check digit 3 added.",
+      },
+    );
+    expect(error("gs1-databar-expanded", "(01)09501101530004")).toMatch(
+      /^AI \(01\): .*should be 3, not 4/,
+    );
+    expect(error("gs1-databar-expanded", "(10)AB 12(21)é")).toMatch(
+      /GS1 doesn't allow: é/,
+    );
+  });
+
+  it("holds more than GS1-128's 48 characters, up to its own limit", () => {
+    // 66 digits of AIs and data: too long for GS1-128, fine here.
+    const long =
+      "(01)09501101530003(3103)000123(11)261231(13)261231(15)261231(17)261231(16)261231";
+    expect(ok("gs1-databar-expanded", long).value).toBe(long);
+    expect(error("gs1-128", long)).toMatch(/GS1-128 holds up to 48/);
+    const tooLong = `(01)09501101530003(21)${"1".repeat(20)}(10)${"2".repeat(20)}(240)${"3".repeat(20)}`;
+    expect(error("gs1-databar-expanded", tooLong)).toBe(
+      `GS1 DataBar Expanded holds up to ${DATABAR_EXPANDED_MAX_DATA} digits of AIs and data, and fewer when there are letters; this has 83 characters. Remove an AI or shorten a value.`,
+    );
+  });
+});
+
 describe("2D formats", () => {
   it("take any text, including Unicode and line breaks, up to the limit", () => {
     for (const id of ["datamatrix", "pdf417", "aztec"] as const) {
       expect(ok(id, "héllo ✓\nline two").value).toBe("héllo ✓\nline two");
       expect(error(id, "x".repeat(1001))).toMatch(/up to 1,000 characters/);
+    }
+  });
+});
+
+describe("ISBN", () => {
+  it("takes an ISBN-13 with or without hyphens or spaces, and hyphenates it", () => {
+    for (const raw of [
+      "978-1-873671-00-9",
+      "9781873671009",
+      "978 1 873671 00 9",
+      " 978-1873671009 ",
+    ]) {
+      expect(ok("isbn", raw).value).toBe("978-1-873671-00-9");
+    }
+    expect(ok("isbn", "9791090636071").value).toBe("979-10-90636-07-1");
+  });
+
+  it("adds a missing check digit and checks a given one", () => {
+    expect(ok("isbn", "978187367100")).toEqual({
+      ok: true,
+      value: "978-1-873671-00-9",
+      note: "Check digit 9 added.",
+    });
+    expect(error("isbn", "9781873671008")).toMatch(/should be 9, not 8/);
+  });
+
+  it("converts an ISBN-10 to its ISBN-13 with a new check digit", () => {
+    // ISO 2108's example: 0-306-40615-2 is 978-0-306-40615-7.
+    expect(ok("isbn", "0-306-40615-2")).toEqual({
+      ok: true,
+      value: "978-0-306-40615-7",
+      note: "Converted from ISBN-10 0-306-40615-2.",
+    });
+    expect(ok("isbn", "1-56581-231-x").value).toBe("978-1-56581-231-4");
+    expect(ok("isbn", "156581231X").value).toBe("978-1-56581-231-4");
+    expect(error("isbn", "0-306-40615-3")).toMatch(/should be 2, not 3/);
+    expect(error("isbn", "1-56581-231-4")).toMatch(/should be X, not 4/);
+  });
+
+  it("places the hyphens by the ranges and says so when they differ", () => {
+    expect(ok("isbn", "978-18-73671-00-9")).toEqual({
+      ok: true,
+      value: "978-1-873671-00-9",
+      note: "Hyphens placed by the ISBN ranges: 978-1-873671-00-9.",
+    });
+  });
+
+  it("keeps typed hyphens for a range newer than the data, and asks for them otherwise", () => {
+    expect(error("isbn", "9786700000007")).toMatch(
+      /isn't in a range the ISBN agencies had given out/,
+    );
+    expect(ok("isbn", "978-670-0000-00-7").value).toBe("978-670-0000-00-7");
+    expect(ok("isbn", "978-670-0000-00").value).toBe("978-670-0000-00-7");
+  });
+
+  it("refuses what isn't an ISBN", () => {
+    expect(error("isbn", "")).toBe(
+      "Enter 12 digits, or all 13 with the check digit.",
+    );
+    // 9 digits: an ISBN-13 being typed, not an ISBN-10 short of its check digit
+    expect(error("isbn", "978-1-87367")).toBe(
+      "An ISBN has 13 digits, or 10 in the old ISBN-10 form; this has 9 digits.",
+    );
+    expect(error("isbn", "97818736710")).toMatch(/this has 11 digits/);
+    expect(error("isbn", "5901234123457")).toBe(
+      "An ISBN-13 starts with 978 or 979.",
+    );
+    expect(error("isbn", "9790345246805")).toMatch(/are ISMNs/);
+    expect(error("isbn", "97818736710X")).toMatch(/can end in X/);
+    expect(error("isbn", "978-1-87367l-00-9")).toMatch(/can end in X/);
+  });
+
+  it("takes a 2- or 5-digit add-on after a space, or in its own part", () => {
+    expect(ok("isbn", "978-1-873671-00-9 52250").value).toBe(
+      "978-1-873671-00-9 52250",
+    );
+    expect(ok("isbn", "978 1 873671 00 9 90000").value).toBe(
+      "978-1-873671-00-9 90000",
+    );
+    expect(ok("isbn", "978187367100 12").value).toBe("978-1-873671-00-9 12");
+    expect(ok("isbn", "1873671008 52499").value).toBe(
+      "978-1-873671-00-9 52499",
+    );
+    const parts = validateBarcodeInput("isbn", "978 1 873671 00 9", {
+      addOn: " 52250 ",
+    });
+    expect(parts.ok && parts.value).toBe("978-1-873671-00-9 52250");
+    expect(error("isbn", "978-1-873671-00-9 123")).toBe(
+      "An add-on has 2 or 5 digits; this has 3 digits.",
+    );
+    expect(error("isbn", "978-1-873671-00-9 5225A")).toBe(
+      "The add-on takes digits only.",
+    );
+  });
+});
+
+describe("ISSN", () => {
+  it("takes the 8-character ISSN, with 00 as the sequence variant", () => {
+    expect(ok("issn", "0317-8471")).toEqual({
+      ok: true,
+      value: "0317-8471 00",
+      note: "Sequence variant 00 used.",
+    });
+    expect(ok("issn", "03178471 00").value).toBe("0317-8471 00");
+    expect(ok("issn", "0317 8471 00").value).toBe("0317-8471 00");
+    expect(ok("issn", "0311-175x 00").value).toBe("0311-175X 00");
+  });
+
+  it("adds a missing check digit (modulo 11, X for 10) and checks a given one", () => {
+    expect(ok("issn", "0311175 00")).toEqual({
+      ok: true,
+      value: "0311-175X 00",
+      note: "Check digit X added.",
+    });
+    expect(error("issn", "0317-8472")).toMatch(/should be 1, not 2/);
+    expect(error("issn", "0311-1750")).toMatch(/should be X, not 0/);
+  });
+
+  it("reads the variant and add-on in order, or from their own parts", () => {
+    expect(ok("issn", "0317-8471 00 05").value).toBe("0317-8471 00 05");
+    expect(ok("issn", "0317-8471 99 12345").value).toBe("0317-8471 99 12345");
+    // A lone 5-digit group can only be the add-on.
+    expect(ok("issn", "0317-8471 12345").value).toBe("0317-8471 00 12345");
+    const parts = validateBarcodeInput("issn", "0317-8471", {
+      variant: "03",
+      addOn: "11",
+    });
+    expect(parts.ok && parts.value).toBe("0317-8471 03 11");
+    expect(error("issn", "0317-8471 1")).toBe(
+      "The sequence variant is 2 digits: 00 for the regular edition.",
+    );
+    expect(error("issn", "0317-8471 00 05 1")).toMatch(
+      /with a space between each/,
+    );
+    expect(error("issn", "0317-8471 00 123")).toMatch(/this has 3 digits/);
+  });
+
+  it("reads the ISSN and variant out of a 13-digit 977 number", () => {
+    // 977 + 0317847 + 00 + check digit 1
+    expect(ok("issn", "9770317847001")).toEqual({
+      ok: true,
+      value: "0317-8471 00",
+      note: "Read from the 977 number: ISSN 0317-8471, sequence variant 00.",
+    });
+    expect(ok("issn", "977031784700 05").value).toBe("0317-8471 00 05");
+    expect(error("issn", "9770317847002")).toMatch(/should be 1, not 2/);
+    expect(error("issn", "9780317847001")).toBe(
+      "A 13-digit ISSN barcode number starts with 977.",
+    );
+    const twice = validateBarcodeInput("issn", "9770317847001", {
+      variant: "05",
+    });
+    expect(!twice.ok && twice.issue).toEqual({
+      code: "issnEanVariant",
+      values: { variant: "00" },
+    });
+  });
+
+  it("refuses what isn't an ISSN", () => {
+    expect(error("issn", "")).toBe(
+      "Enter 7 digits, or all 8 with the check digit.",
+    );
+    expect(error("issn", "0317-84")).toMatch(/this has 6 characters/);
+    expect(error("issn", "03X7-8471")).toMatch(/can be X/);
+    expect(error("issn", "031784711")).toMatch(/this has 9 characters/);
+  });
+});
+
+describe("ISMN", () => {
+  it("takes 979-0 ISMNs, adds a missing check digit and checks a given one", () => {
+    // The ISMN Users' Manual's example
+    expect(ok("ismn", "979-0-3452-4680-5").value).toBe("979-0-3452-4680-5");
+    expect(ok("ismn", "9790345246805").value).toBe("979-0-3452-4680-5");
+    expect(ok("ismn", "979034524680")).toEqual({
+      ok: true,
+      value: "979-0-3452-4680-5",
+      note: "Check digit 5 added.",
+    });
+    expect(error("ismn", "979-0-3452-4680-6")).toMatch(/should be 5, not 6/);
+  });
+
+  it("converts the old M form, keeping its check digit", () => {
+    expect(ok("ismn", "M-2306-7118-7")).toEqual({
+      ok: true,
+      value: "979-0-2306-7118-7",
+      note: "Converted from the old form M-2306-7118-7.",
+    });
+    expect(ok("ismn", "m 3452 4680").value).toBe("979-0-3452-4680-5");
+    expect(error("ismn", "M-2306-7118-6")).toMatch(/should be 7, not 6/);
+  });
+
+  it("takes an add-on and refuses ISBNs and other numbers", () => {
+    expect(ok("ismn", "979-0-3452-4680-5 12").value).toBe(
+      "979-0-3452-4680-5 12",
+    );
+    expect(error("ismn", "9781873671009")).toMatch(/are ISBNs/);
+    expect(error("ismn", "97903452468")).toMatch(/this has 11 characters/);
+    expect(error("ismn", "979-0-3452-468O-5")).toMatch(/takes digits/);
+  });
+});
+
+describe("splitBarcodeValue and publicationEan13", () => {
+  it("split a checked value into the generator's fields", () => {
+    expect(splitBarcodeValue("isbn", "978-1-873671-00-9 52250")).toEqual({
+      main: "978-1-873671-00-9",
+      addOn: "52250",
+      variant: "",
+    });
+    expect(splitBarcodeValue("issn", "0317-8471 00 05")).toEqual({
+      main: "0317-8471",
+      variant: "00",
+      addOn: "05",
+    });
+    expect(splitBarcodeValue("ismn", "979-0-3452-4680-5")).toEqual({
+      main: "979-0-3452-4680-5",
+      addOn: "",
+      variant: "",
+    });
+    expect(splitBarcodeValue("code128", "A B 12")).toEqual({
+      main: "A B 12",
+      addOn: "",
+      variant: "",
+    });
+  });
+
+  it("give the EAN-13 each value is drawn as", () => {
+    expect(publicationEan13("isbn", "978-1-873671-00-9 52250")).toBe(
+      "9781873671009",
+    );
+    expect(publicationEan13("issn", "0317-8471 00 05")).toBe("9770317847001");
+    expect(publicationEan13("issn", "0311-175X 99")).toBe(
+      `977031117599${gs1CheckDigit("977031117599")}`,
+    );
+    expect(publicationEan13("ismn", "979-0-3452-4680-5")).toBe("9790345246805");
+    expect(publicationEan13("ean13", "5901234123457")).toBeNull();
+  });
+
+  it("round-trip: every checked value checks to itself", () => {
+    for (const [id, raw] of [
+      ["isbn", "1-56581-231-X 52499"],
+      ["issn", "9770317847001 05"],
+      ["ismn", "M-2306-7118-7 12"],
+    ] as const) {
+      const once = ok(id, raw).value;
+      expect(ok(id, once).value).toBe(once);
+      const { main, ...parts } = splitBarcodeValue(id, once);
+      const fromParts = validateBarcodeInput(id, main, parts);
+      expect(fromParts.ok && fromParts.value).toBe(once);
     }
   });
 });
@@ -292,7 +614,46 @@ describe("decodedMatches", () => {
       decodedMatches("gs1-128", gs1, "010950110153000310AB-123\x1d17261231"),
     ).toBe(true);
     expect(decodedMatches("gs1-128", gs1, gs1)).toBe(true);
+    // What ZXing returns for GS1 DataBar: no brackets, GS between fields,
+    // sometimes after the ]e0 symbology identifier.
+    expect(
+      decodedMatches("gs1-databar", "(01)09501101530003", "0109501101530003"),
+    ).toBe(true);
+    expect(
+      decodedMatches(
+        "gs1-databar",
+        "(01)09501101530003",
+        "]e00109501101530003",
+      ),
+    ).toBe(true);
+    expect(
+      decodedMatches("gs1-databar", "(01)09501101530003", "0109501101530004"),
+    ).toBe(false);
+    expect(
+      decodedMatches(
+        "gs1-databar-expanded",
+        gs1,
+        "010950110153000310AB-123\x1d17261231",
+      ),
+    ).toBe(true);
     expect(decodedMatches("code128", "ABC", "ABD")).toBe(false);
+  });
+
+  it("reads ISBN, ISSN and ISMN as their EAN-13, with or without the add-on", () => {
+    const isbn = "978-1-873671-00-9 52250";
+    expect(decodedMatches("isbn", isbn, "9781873671009")).toBe(true);
+    expect(decodedMatches("isbn", isbn, "978187367100952250")).toBe(true);
+    expect(decodedMatches("isbn", isbn, "9781873671009 52250")).toBe(true);
+    expect(decodedMatches("isbn", isbn, "978187367100952251")).toBe(false);
+    expect(decodedMatches("issn", "0317-8471 00 05", "977031784700105")).toBe(
+      true,
+    );
+    expect(decodedMatches("ismn", "979-0-3452-4680-5", "9790345246805")).toBe(
+      true,
+    );
+    expect(decodedMatches("ismn", "979-0-3452-4680-5", "979034524680512")).toBe(
+      false,
+    );
   });
 });
 
@@ -314,6 +675,28 @@ describe("issue codes (the generator translates by code)", () => {
       ["gs1-128", "01)09501101530003"],
       ["gs1-128", "(01)0950"],
       ["gs1-128", "(01)09501101530004"],
+      ["gs1-databar", "(10)AB-123"],
+      ["gs1-databar", "(01)09501101530004"],
+      [
+        "gs1-databar-expanded",
+        `(21)${"1".repeat(20)}(10)${"2".repeat(20)}(240)${"3".repeat(30)}`,
+      ],
+      ["isbn", ""],
+      ["isbn", "97818736710X"],
+      ["isbn", "978187367"],
+      ["isbn", "5901234123457"],
+      ["isbn", "9790345246805"],
+      ["isbn", "9786700000007"],
+      ["isbn", "978-1-873671-00-9 1"],
+      ["isbn", "978-1-873671-00-9 1a"],
+      ["issn", "03X78471"],
+      ["issn", "031784"],
+      ["issn", "9780317847001"],
+      ["issn", "0317-8471 00 05 1"],
+      ["issn", "0317-8471 1"],
+      ["ismn", "979-0-3452-468X-5"],
+      ["ismn", "M-2306"],
+      ["ismn", "9781873671009"],
     ] as const) {
       const result = validateBarcodeInput(id, raw);
       if (result.ok) throw new Error(`${id} "${raw}" was accepted`);
@@ -340,6 +723,15 @@ describe("issue codes (the generator translates by code)", () => {
     expect(result.ok && result.notes?.map((note) => note.code)).toEqual([
       "numberSystemAssumed",
       "checkDigitAdded",
+    ]);
+    const isbn = validateBarcodeInput("isbn", "156581231X");
+    expect(isbn.ok && isbn.notes).toEqual([
+      { code: "isbn10Converted", values: { isbn10: "1-56581-231-X" } },
+    ]);
+    const issn = validateBarcodeInput("issn", "0317847");
+    expect(issn.ok && issn.notes?.map((note) => note.code)).toEqual([
+      "checkDigitAdded",
+      "issnVariantAssumed",
     ]);
   });
 });

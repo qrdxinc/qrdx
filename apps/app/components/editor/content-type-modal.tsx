@@ -31,6 +31,11 @@ import {
   TypeIconTile,
 } from "@/components/editor/content-type-icons";
 import { DialogCloseButton } from "@/components/editor/dialog-close-button";
+import {
+  TYPE_MARK_LIFT,
+  TypeMark,
+  TypeMarkArt,
+} from "@/components/editor/type-mark";
 import { InfoHint } from "@/components/help/info-hint";
 import { useContentText } from "@/components/i18n/content-text";
 import { useLocalizeHref } from "@/components/i18n/locale-link";
@@ -49,6 +54,7 @@ import {
 const RECENT_KEY = "qrdx:recent-qr-types";
 const MAX_RECENT = 4;
 const PAGES_SECTION = "hosted-pages";
+const POPULAR_SECTION = "popular";
 
 const META_BY_TYPE = new Map<ContentType, ContentTypeMetadata>(
   CONTENT_TYPES_METADATA.map((meta) => [meta.type, meta]),
@@ -88,6 +94,14 @@ const PAGE_KEYWORDS: Record<string, string[]> = {
   pet: ["pet", "dog", "cat", "collar", "lost pet"],
   medical: ["medical", "emergency", "ice", "allergy", "health"],
   playlist: ["playlist", "mixtape", "audio tour", "audiobook", "tracks"],
+  // Added 2026-11-22 (pages)
+  location: ["address", "directions", "map", "waze", "google maps"],
+  resume: ["cv", "resume", "portfolio", "job", "experience"],
+  wifi: ["wi-fi", "wifi", "password", "guest", "airbnb", "hotel"],
+  invitation: ["invitation", "wedding", "birthday", "rsvp", "party"],
+  form: ["contact form", "lead", "enquiry", "quote", "contact"],
+  "asset-tag": ["lost and found", "luggage", "keys", "laptop", "asset"],
+  message: ["message", "note", "gift", "greeting", "thank you"],
 };
 
 interface TypeItem {
@@ -520,9 +534,7 @@ export function ContentTypeModal({
         {item.kind === "type" ? (
           <TypeIconTile icon={item.icon} type={item.type} />
         ) : (
-          <span className="bg-muted/40 text-foreground/80 grid size-9 shrink-0 place-items-center rounded-lg border">
-            <item.Icon className="size-4" />
-          </span>
+          <TypeMark fallbackIcon={item.Icon} pageType={item.pageType} />
         )}
         <span className="min-w-0 flex-1">
           <span className="flex items-center gap-2 text-sm leading-5 font-medium">
@@ -542,6 +554,49 @@ export function ContentTypeModal({
         ) : highlighted ? (
           <Kbd className="hidden shrink-0 sm:inline-flex">↵</Kbd>
         ) : null}
+      </button>
+    );
+  };
+
+  // Popular: visual cards (the mark on a soft wash of its colour), 4 across
+  // where the list is wide enough, 2 on phones. Same keys as the rows.
+  const renderCard = (item: TypeItem) => {
+    const isCurrent = item.type === contentType;
+    return (
+      <button
+        aria-current={isCurrent ? "true" : undefined}
+        className={cn(
+          "group bg-card flex w-full min-w-0 flex-col rounded-xl border text-left transition-colors outline-none",
+          "hover:border-foreground/15 hover:bg-accent/40",
+          "focus-visible:border-foreground/25 focus-visible:bg-accent/40 focus-visible:ring-ring/40 focus-visible:ring-[3px]",
+          isCurrent && "border-foreground/20 bg-accent/50",
+        )}
+        data-picker-tile=""
+        key={item.key}
+        onClick={() => selectItem(item)}
+        type="button"
+      >
+        <TypeMarkArt
+          className="aspect-[16/10] w-full max-sm:aspect-auto max-sm:h-28"
+          fallbackIcon={getTypeIcon(item.icon)}
+          markClassName={TYPE_MARK_LIFT}
+          phoneSize={56}
+          size={64}
+          type={item.type}
+        />
+        <span className="block w-full min-w-0 px-3 pb-3">
+          <span className="flex items-center gap-2 text-sm leading-5 font-medium">
+            <span className="truncate">{tc(item.label)}</span>
+            {isCurrent && (
+              <span className="text-muted-foreground shrink-0 rounded-full border px-1.5 text-[10px] leading-4 font-medium">
+                {t("current")}
+              </span>
+            )}
+          </span>
+          <span className="text-muted-foreground mt-0.5 line-clamp-2 text-xs leading-4">
+            {tc(item.description)}
+          </span>
+        </span>
       </button>
     );
   };
@@ -673,7 +728,7 @@ export function ContentTypeModal({
 
             {/* biome-ignore lint/a11y/noStaticElementInteractions: arrow-key navigation between the tiles inside */}
             <div
-              className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5"
+              className="@container relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5"
               onKeyDown={handleListKeyDown}
               ref={scrollRef}
             >
@@ -745,9 +800,19 @@ export function ContentTypeModal({
                           </a>
                         )}
                       </div>
-                      <div className={grid}>
-                        {section.items.map((item) => renderTile(item))}
-                      </div>
+                      {section.id === POPULAR_SECTION ? (
+                        <div className="grid grid-cols-2 gap-2 @lg:grid-cols-4">
+                          {section.items.map((item) =>
+                            item.kind === "type"
+                              ? renderCard(item)
+                              : renderTile(item),
+                          )}
+                        </div>
+                      ) : (
+                        <div className={grid}>
+                          {section.items.map((item) => renderTile(item))}
+                        </div>
+                      )}
                     </section>
                   ))}
                   <div aria-hidden className="h-px" data-spy-end="" />

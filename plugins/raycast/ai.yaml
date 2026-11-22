@@ -14,11 +14,11 @@ instructions: |
   When the user asks to list, show, or find saved QR codes:
   - Use the list-saved tool
 
-  Supported body patterns: circle, circle-large, square, diamond, circle-mixed, pacman, rounded, small-square, vertical-line, horizontal-line, liquid, liquid-horizontal, liquid-vertical, classy, classy-rounded, leaf, plus, hexagon, star, heart, random-dots, mosaic, octagon
-  Supported corner eye patterns: square, rounded, gear, circle, diya, extra-rounded, message, pointy, leaf, drop, octagon, bevel, squircle, cushion, shield, petal, leaf-reverse
-  Supported corner dot patterns: square, rounded, circle, message, message-reverse, diya, diya-reverse, rounded-triangle, leaf, drop, plus, cross-rounded, hexagon, octagon, flower, heart, squircle, dots, extra-rounded, leaf-reverse, drop-reverse
+  Supported body patterns: square, circle, circle-large, diamond, circle-mixed, pacman, rounded, small-square, vertical-line, horizontal-line, liquid, liquid-horizontal, liquid-vertical, classy, classy-rounded, leaf, plus, hexagon, star, heart, random-dots, mosaic, octagon
+  Supported corner eye patterns: square, rounded, gear, circle, diya, extra-rounded, message, pointy, leaf, drop, octagon, bevel, squircle, cushion, shield, petal, leaf-reverse, porthole, notch, plus, bud, bowl
+  Supported corner dot patterns: square, rounded, circle, message, message-reverse, diya, diya-reverse, rounded-triangle, leaf, drop, plus, cross-rounded, hexagon, octagon, flower, heart, squircle, dots, extra-rounded, leaf-reverse, drop-reverse, cushion
   Never use the retired styles: curly eyes, or diamond, star and banner eye dots (they don't scan reliably). Prefer square or rounded eyes when the code must scan everywhere.
-  Supported templates: Arrow, StandardBox, SquareBorder, StrikedBox, Halloween
+  Supported templates: Arrow, StandardBox, SquareBorder, StrikedBox, Halloween, DotRing
 
 evals:
   - input: "@qrdx generate a QR code for https://qrdx.dev with rounded style"

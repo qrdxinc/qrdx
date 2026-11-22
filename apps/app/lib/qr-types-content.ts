@@ -187,6 +187,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["url", "vcard", "wifi", "email"],
+    hosted: "message",
   },
   {
     type: "email",
@@ -234,6 +235,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["phone", "sms", "whatsapp", "vcard"],
+    hosted: "contact-form",
   },
   {
     type: "phone",
@@ -279,6 +281,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["sms", "whatsapp", "vcard", "email"],
+    hosted: "lost-and-found",
   },
   {
     type: "sms",
@@ -378,6 +381,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["phone", "sms", "vcard", "instagram"],
+    hosted: "invitation",
   },
   {
     type: "wifi",
@@ -385,25 +389,28 @@ export const QR_TYPES: QrTypeContent[] = [
     group: "utilities",
     summary: "Join a Wi-Fi network without typing the password.",
     metaDescription:
-      "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
+      "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WPA3, WEP and open networks, hidden SSIDs, correct escaping. Free.",
     intro: [
       "A Wi-Fi QR code lets guests join your network by pointing their camera at it, instead of reading out a 20-character password. The camera apps on iPhone and on most Android phones (or Google Lens) recognize the format and offer to join the network.",
       "It's popular in homes, cafés, holiday rentals, offices and event venues. The network name and password are stored in the code itself, so it works without an internet connection. Anyone who can photograph the code can read the password, so put guest-network codes where only guests can see them.",
     ],
     steps: [
       "Enter the network name (SSID) exactly as it appears, including capital letters and spaces.",
-      "Choose the security type: WPA/WPA2 for almost every modern router, WEP for very old ones, or No password for open networks.",
+      "Choose the security type: WPA/WPA2 for almost every modern router (including ones in WPA2/WPA3 mode), WPA3 only for networks that refuse WPA2, WEP for very old ones, or No password for open networks.",
       "Enter the password, and switch on Hidden network only if your router doesn't broadcast its name.",
       "Scan the preview with your phone to test that it joins, then download and print.",
     ],
     payload: {
-      format: "WIFI:T:<WPA|WEP|nopass>;S:<ssid>;P:<password>;H:<true|false>;;",
+      format:
+        "WIFI:T:<WPA|SAE|WEP|nopass>;S:<ssid>;P:<password>;H:<true|false>;;",
       example: "WIFI:T:WPA;S:Cafe Guest;P:latte\\;art;H:false;;",
       notes: [
         "This is the de-facto Wi-Fi format documented by the ZXing project. Fields can appear in any order, each ends with a semicolon, and the record ends with an extra semicolon.",
         'The characters \\ ; , : and " in the network name or password must be escaped with a backslash. QRdx does it for you, so a password of latte;art is stored as latte\\;art.',
         "T:nopass marks an open network and the password field is left out.",
         "H:true tells the phone the network is hidden, so it connects even though the name isn't broadcast.",
+        "T:SAE marks a network that accepts only WPA3, as the Wi-Fi Alliance's WPA3 specification writes it. Android's Wi-Fi settings scanner reads it from Android 10; Apple doesn't document it for the iPhone Camera, so a network that also accepts WPA2 is better written as T:WPA.",
+        "T:WPA2-EAP marks a WPA2/WPA3-Enterprise network, with ZXing's E: (EAP method), PH2: (phase 2), A: (anonymous identity) and I: (identity) fields. Scanner apps built on ZXing read them; phone camera apps don't join enterprise networks from a code.",
       ],
     },
     faqs: [
@@ -415,7 +422,7 @@ export const QR_TYPES: QrTypeContent[] = [
       {
         question: "Why won't my phone connect?",
         answer:
-          "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. Enterprise networks that need a username or certificate (WPA2-Enterprise) aren't supported by this format.",
+          "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. For enterprise networks that need a username (WPA2/WPA3-Enterprise), QRdx can write the sign-in details, but phone camera apps don't join from them: Android's Wi-Fi scanner reads only personal and open networks, and iPhones set up enterprise Wi-Fi with a configuration profile. Networks that need a certificate can't be put in a code at all.",
       },
       {
         question: "Does the code still work if I change the password?",
@@ -429,6 +436,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["vcard", "url", "text", "maps"],
+    hosted: "guest-wifi",
   },
   {
     type: "vcard",
@@ -530,6 +538,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["google-review", "wifi", "vcard", "calcom"],
+    hosted: "location",
   },
   {
     type: "facebook",
@@ -833,6 +842,7 @@ export const QR_TYPES: QrTypeContent[] = [
       },
     ],
     related: ["vcard", "twitter", "calcom", "email"],
+    hosted: "resume",
   },
   {
     type: "youtube",
@@ -1317,7 +1327,7 @@ export const QR_TYPES: QrTypeContent[] = [
     details: {
       title: "Lightning, testnet and address checks",
       paragraphs: [
-        "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",
+        "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments make a Lightning code from your wallet's invoice, LNURL or Lightning Address instead.",
         "The generator checks the address's length (26 to 62 characters), not its checksum, and it can't tell mainnet from testnet: a testnet address (starting with tb1, m, n or 2) makes a code no ordinary wallet can pay. Scan the preview with the wallet that will pay before you print.",
       ],
     },
@@ -1326,40 +1336,42 @@ export const QR_TYPES: QrTypeContent[] = [
     type: "ethereum",
     name: "Ethereum",
     group: "payments",
-    summary: "Share an EIP-681 Ethereum payment request.",
+    summary: "Request ETH, USDC or USDT on Ethereum and other EVM networks.",
     metaDescription:
-      "Make an Ethereum QR code in the EIP-681 ethereum: format with an optional ETH amount (in wei) and gas limit. Free PNG and SVG, no signup.",
+      "Make an Ethereum QR code in the EIP-681 format for ETH, USDC or USDT on Ethereum, Base, Polygon, Arbitrum and three more EVM networks. Free.",
     intro: [
-      "An Ethereum QR code holds your wallet address in the EIP-681 ethereum: format, optionally with an amount of ETH and a gas limit. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
-      "Ethereum addresses are 42-character hexadecimal strings that are easy to mistype, which makes a QR code the safest way to share one at events, on invoices or on donation pages. The code contains only your public address; private keys and recovery phrases must never go into a QR code.",
+      "An Ethereum QR code holds a payment request in the EIP-681 ethereum: format: your wallet address, the network and, if you like, an amount. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
+      "Pick Ethereum or another EVM network (BNB Smart Chain, Polygon, Arbitrum One, OP Mainnet, Base or Avalanche C-Chain) and ask for the network's own coin, or for USDT or USDC where Tether and Circle list the contract themselves. Addresses are 42-character hexadecimal strings that are easy to mistype, so a code is safer than copying one by hand. It contains only your public address; private keys and recovery phrases must never go into a QR code.",
     ],
     steps: [
       "Copy your address (starting with 0x) from your wallet and paste it in.",
-      "Optionally enter an amount in ETH and a gas limit.",
-      "Scan the preview with your wallet and check the address and amount.",
-      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+      "Pick the network, then the network's own coin, USDC or USDT.",
+      "Optionally enter an amount, and a gas limit for a coin payment.",
+      "Scan the preview with your wallet, check the address, network and amount, and download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
-      format: "ethereum:<address>?value=<amount>e18&gas=<gas limit>",
+      format:
+        "ethereum:<address>[@<chainId>]?value=<amount>e18&gas=<gas limit>, or for a token: ethereum:<token contract>@<chainId>/transfer?address=<recipient>&uint256=<amount in base units>",
       example:
         "ethereum:0xfb6916095ca1df60bb79Ce92ce3ea74c37c5d359?value=2.014e18",
       notes: [
-        "EIP-681 amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the ETH amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
+        "Coin amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
+        "Other networks are named with @chainId: BNB Smart Chain 56, Polygon 137, Arbitrum One 42161, OP Mainnet 10, Base 8453 and Avalanche C-Chain 43114. On Ethereum itself (chain 1) no @1 is added.",
+        "A USDC or USDT request is a transfer on the token's contract, with the amount in base units (6 decimals). 1.5 USDC on Base is ethereum:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913@8453/transfer?address=<recipient>&uint256=1500000.",
         "gas is a synonym for gasLimit, a suggested limit the payer can edit. A plain ETH transfer uses 21000.",
-        "EIP-681 can name a network with @chainId (for example @137), but this generator doesn't add one, so wallets use their current network.",
         "Wallet support for EIP-681 parameters varies; test with the wallet your payers use.",
       ],
     },
     faqs: [
       {
-        question: "Can I request USDC or another token?",
+        question: "Can I request USDC or USDT?",
         answer:
-          "This generator creates native ETH transfers. Token requests need the token contract and a transfer function call in the URI, which this form doesn't build.",
+          "Yes, on the networks where Tether and Circle list the contract themselves: USDT on Ethereum and Avalanche, USDC on Ethereum, Polygon, Arbitrum, OP Mainnet, Base and Avalanche. QRdx refuses a token contract pasted as the recipient.",
       },
       {
-        question: "Does it work on other EVM networks?",
+        question: "Does every wallet read the network and token?",
         answer:
-          "The address format is the same on networks like Polygon or Arbitrum, but no chain ID is added, so the payer must pick the right network in their wallet.",
+          "No. MetaMask Mobile reads @chainId and /transfer, but some wallets fill in only the recipient and drop the token and amount. Print the token, network and amount next to the code so the payer can check them.",
       },
       {
         question: "Is it safe to share?",
@@ -1369,8 +1381,9 @@ export const QR_TYPES: QrTypeContent[] = [
     ],
     related: ["bitcoin", "paypal", "venmo", "text"],
     details: {
-      title: "Address checks and ENS names",
+      title: "Networks, address checks and ENS names",
       paragraphs: [
+        "The network's own coin is ETH on Ethereum, Arbitrum One, OP Mainnet and Base, BNB on BNB Smart Chain, POL on Polygon and AVAX on Avalanche C-Chain. The same 0x address works on all of them, so pick the network your payer will send on.",
         "The generator checks that the address is 0x followed by 40 hexadecimal characters. It doesn't check the mixed-case EIP-55 checksum; wallets check that when they scan, so paste the address exactly as your wallet shows it rather than typing it.",
         "ENS names such as name.eth aren't accepted. EIP-681 allows them, but the payer's wallet would have to look the name up; a 0x address works in every wallet that reads the code.",
       ],
@@ -2598,26 +2611,27 @@ export const QR_TYPES: QrTypeContent[] = [
     type: "solana",
     name: "Solana",
     group: "payments",
-    summary: "Receive SOL with a Solana Pay request.",
+    summary: "Receive SOL, USDC or USDT with a Solana Pay request.",
     metaDescription:
-      "Create a Solana Pay QR code for SOL payments to your wallet, with an optional amount, label and message. Solana Pay transfer request format. Free.",
+      "Create a Solana Pay QR code for SOL, USDC or USDT to your wallet, with an optional amount, label and message, in the transfer request format. Free.",
     intro: [
-      "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount in SOL, a label and a message. Wallets that support Solana Pay fill in the payment.",
+      "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount, a label and a message. It can ask for SOL, or for USDC or USDT with the mints Circle and Tether list. Wallets that support Solana Pay fill in the payment.",
       "QRdx writes the solana: URI from the Solana Pay specification, in your browser.",
     ],
     steps: [
       "Paste your Solana wallet address.",
-      "Optionally add an amount in SOL, a label and a message.",
+      "Pick SOL, USDC or USDT, and optionally add an amount, a label and a message.",
       "Scan the preview with a Solana Pay wallet to check it.",
       "Download the code.",
     ],
     payload: {
-      format: "solana:<address>?amount=<SOL>&label=<label>&message=<message>",
+      format:
+        "solana:<address>?amount=<amount>&spl-token=<mint>&label=<label>&message=<message>",
       example:
-        "solana:DemoWa11etAddressForTheQRdxExamp1eDemo?amount=0.5&label=Bloom%20Cafe",
+        "solana:mvines9iiHiQTysrwkJjGf2gb9Ex9jXJX8ns3qwf2kN?amount=0.01&spl-token=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
       notes: [
-        "Amounts are in SOL with up to 9 decimals.",
-        "This code requests SOL. Token payments (USDC and others) need the token's mint address, which this generator doesn't add.",
+        "Amounts are in SOL with up to 9 decimals, or in USDC or USDT with up to 6.",
+        "spl-token names the token's mint, as Circle and Tether list them: USDC is EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v and USDT is Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB. Without spl-token the code requests SOL.",
       ],
     },
     faqs: [
@@ -2626,12 +2640,17 @@ export const QR_TYPES: QrTypeContent[] = [
         answer:
           "Most mobile Solana wallets scan them. Test with the wallets your customers use.",
       },
+      {
+        question: "Can I request USDC or USDT?",
+        answer:
+          "Yes. Pick one and the code adds Solana Pay's spl-token with the mint Circle or Tether lists, and the amount is in that token.",
+      },
     ],
     related: ["ethereum", "bitcoin", "litecoin", "monero"],
     details: {
       title: "What this Solana Pay code includes",
       paragraphs: [
-        "It's a Solana Pay transfer request: the recipient, an amount in SOL, a label and a message. Solana Pay also defines spl-token for token payments and reference for matching a payment to an order; this generator adds neither, so use your point-of-sale tool when you need them.",
+        "It's a Solana Pay transfer request: the recipient, an amount, spl-token for USDC or USDT, a label and a message. Solana Pay also defines reference for matching a payment to an order; this generator doesn't add it, so use your point-of-sale tool when you need it.",
         "Solana Pay transaction requests, where the code holds a link to your server and the server builds the transaction, aren't made here either.",
       ],
     },
@@ -2678,6 +2697,552 @@ export const QR_TYPES: QrTypeContent[] = [
         "Separate payment IDs are deprecated in Monero, so the generator doesn't add one. Use a subaddress for each customer or code, or the integrated address an exchange or shop gives you.",
       ],
     },
+  },
+  // ─── Added 2026-11-22 (payments) ──────────────────────────────────────────
+  {
+    type: "mecard",
+    name: "MeCard",
+    group: "contact",
+    summary: "Share a contact in a smaller code than a vCard.",
+    metaDescription:
+      "Make a MeCard QR code: name, phone, email, website, address, birthday and a note in the compact MECARD format, so the code stays small. Free.",
+    intro: [
+      "A MeCard QR code holds a contact in one short line of text: your name, phone number, email, website, address, birthday and a note. Phones that read it offer to save the contact, the same way a vCard code works.",
+      "The format comes from NTT Docomo and needs fewer characters than a vCard for the same details, so the code has fewer, larger modules and scans from further away. Android phones read it; Apple doesn't document MeCard for the iPhone Camera, so test with an iPhone, or use a vCard when the contact has to reach everyone.",
+    ],
+    steps: [
+      "Enter your first name, and your last name if you want it saved.",
+      "Add the details people need: a phone number, an email, a website or an address.",
+      "Scan the preview with an Android phone and an iPhone to see that both offer to save it.",
+      "Download the code for a badge, a card or a flyer.",
+    ],
+    payload: {
+      format:
+        "MECARD:N:<last>,<first>;TEL:<phone>;EMAIL:<email>;BDAY:<YYYYMMDD>;ADR:<address>;URL:<website>;NOTE:<note>;;",
+      example:
+        "MECARD:N:Sample,Sam;TEL:+12025550142;EMAIL:sam@example.com;URL:https\\://example.com;;",
+      notes: [
+        "Each field is NAME:value and ends with a semicolon; the record ends with two.",
+        "The name is written last name, a comma, then first name.",
+        "The characters \\ ; : and , inside a value are escaped with a backslash, as the format asks, so a web address is written https\\://.",
+        "The birthday is 8 digits: year, month and day. SOUND holds how the name is read (kana for a Japanese name) and NICKNAME a familiar name.",
+      ],
+    },
+    faqs: [
+      {
+        question: "MeCard or vCard?",
+        answer:
+          "A vCard can hold more (a company, a job title, several numbers) and is the format every phone documents. A MeCard holds the basics in fewer characters, so the code is smaller. Use MeCard when the code has to be small and most people scanning it use Android.",
+      },
+      {
+        question: "Does the iPhone camera read MeCard codes?",
+        answer:
+          "Apple doesn't document which contact formats the Camera app reads. Scan the preview with an iPhone before you print, and switch to a vCard if it shows the text instead of offering to save the contact.",
+      },
+      {
+        question: "Is my contact sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the details you type are remembered only in this browser.",
+      },
+    ],
+    related: ["vcard", "phone", "email", "sms"],
+  },
+  {
+    type: "swiss-qr-bill",
+    name: "Swiss QR-bill",
+    group: "payments",
+    summary: "Make the payment code of a Swiss QR-bill, with the Swiss cross.",
+    metaDescription:
+      "Create the Swiss QR Code of a QR-bill: IBAN or QR-IBAN, address, amount in CHF or EUR, QR or RF reference with check digits, and the Swiss cross. Free.",
+    intro: [
+      "A Swiss QR-bill carries its payment details in a QR code with a Swiss cross in the middle: your IBAN or QR-IBAN, your name and address, the amount and the reference. The person paying scans it with the QR scanner in their Swiss or Liechtenstein banking app, checks the payment and confirms it.",
+      "QRdx writes the code to SIX's Swiss Implementation Guidelines for the QR-bill: the Swiss Payments Code version 0200, a structured address, and a QR reference or RF creditor reference with its check digits checked. It draws the code at error correction level M with the 7 mm Swiss cross on top, as the guidelines ask. This is the code for the payment part; the receipt and the rest of the printed bill are up to your invoicing.",
+    ],
+    steps: [
+      "Enter your IBAN or QR-IBAN and your name and address as they appear on the account.",
+      "Choose francs or euros and, if you like, an amount.",
+      "With a QR-IBAN, add the 27-digit QR reference from your invoicing; with an IBAN, an RF creditor reference or none.",
+      "Scan the preview with your banking app, then print the code at least 46 × 46 mm, black on white.",
+    ],
+    payload: {
+      format:
+        "SPC\n0200\n1\n<IBAN>\nS\n<name>\n<street>\n<number>\n<postcode>\n<town>\n<country>\n(7 empty lines)\n<amount>\n<CHF|EUR>\n(payer: S and 6 lines, or 7 empty)\n<QRR|SCOR|NON>\n<reference>\n<message>\nEPD",
+      example:
+        "SPC\n0200\n1\nCH4431999123000889012\nS\nRobert Schneider AG\nRue du Lac\n1268\n2501\nBiel\nCH\n\n\n\n\n\n\n\n1949.75\nCHF\n\n\n\n\n\n\n\nQRR\n210000000003139471430009017\nOrder of 15 June 2026\nEPD",
+      notes: [
+        "Every line up to EPD is written, empty ones included, and nothing follows the last line. QRdx joins the lines with line feeds, which the guidelines allow.",
+        "A QR-IBAN (institution ID 30000 to 31999) always takes a 27-digit QR reference, checked with its modulo 10 recursive check digit, and francs only. An IBAN takes an RF creditor reference (ISO 11649) or no reference.",
+        "Amounts are written with two decimals, from 0.01 to 999,999,999.99. Leave the amount empty and the payer enters it.",
+        "Text uses the Latin character set the guidelines list. Curly quotes and dashes are written as plain ones; anything else outside the set is refused.",
+        "The code holds at most 997 bytes and is drawn at error correction M with the Swiss cross at 7/46 of its width.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Which apps read a Swiss QR-bill code?",
+        answer:
+          "Swiss and Liechtenstein banking apps and e-banking scan it with their QR scanner, depending on the bank. A phone's camera app only shows the text, because the code holds payment data, not a link.",
+      },
+      {
+        question: "QR-IBAN or IBAN?",
+        answer:
+          "A QR-IBAN comes with a QR reference that your bank uses to match payments to invoices automatically. A normal IBAN works with an RF creditor reference or none. Your bank tells you which one your account has.",
+      },
+      {
+        question: "Can I change the colours?",
+        answer:
+          "The guidelines describe the Swiss QR Code in black and white with the Swiss cross, at 46 × 46 mm. Keep it that way on bills you send, so every banking app reads it.",
+      },
+      {
+        question: "Is my IBAN sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the playground never puts payment details in a link.",
+      },
+    ],
+    related: ["sepa", "czech-spd", "pix", "vcard"],
+  },
+  {
+    type: "czech-spd",
+    name: "QR Platba",
+    group: "payments",
+    summary: "Fill in a Czech bank transfer with account, amount and symbols.",
+    metaDescription:
+      "Create a QR Platba code for Czech bank transfers: IBAN or account number, amount in CZK, message and variable symbol, to ČBA standard no. 26. Free.",
+    intro: [
+      "A QR Platba code fills in a Czech bank transfer for the person paying: your account, the amount in koruna, a message and the variable symbol. They scan it with the QR scanner in their banking app, check the payment and confirm it, so nobody retypes an account number from an invoice.",
+      "The format is the Short Payment Descriptor from the Czech Banking Association's standard no. 26 (ČBA, version 1.2), and most banks on the Czech market offer QR Platba in their apps. A phone's camera app only shows the text. Slovakia uses a different format, PAY by square, which QRdx doesn't make.",
+    ],
+    steps: [
+      "Enter your Czech IBAN, or a domestic account number like 19-2000145399/0800, which QRdx checks and turns into the IBAN.",
+      "Optionally add an amount in CZK, a message and a variable symbol such as an invoice number.",
+      "Add a due date, a specific or constant symbol, or ask for an instant payment, if you need them.",
+      "Use error correction level M for print, as the standard asks, and scan the preview with a Czech banking app.",
+    ],
+    payload: {
+      format:
+        "SPD*1.0*ACC:<IBAN>[+<BIC>]*AM:<amount>*CC:CZK*RN:<name>*DT:<YYYYMMDD>*PT:IP*MSG:<message>*X-VS:<variable symbol>*X-SS:<specific symbol>*X-KS:<constant symbol>",
+      example:
+        "SPD*1.0*ACC:CZ9106000000000000000123*AM:450.00*CC:CZK*MSG:PLATBA ZA ZBOZI*X-VS:1234567890",
+      notes: [
+        "Each field is KEY:value and the fields are separated by *. Only the account is required, and QRdx leaves empty fields out.",
+        "Amounts are in CZK with two decimals, up to 9,999,999.99. Messages are up to 60 characters and names up to 35.",
+        "Variable, specific and constant symbols are up to 10 digits each, and leading zeros are kept.",
+        "Text is written in upper case without diacritics, the way the standard's reference generator does by default, so the code stays compact (QR alphanumeric mode) and every bank reads it. A * inside a value is written %2A.",
+        "PT:IP asks for an instant payment, for banks that support it.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Which apps read QR Platba codes?",
+        answer:
+          "The QR scanners in Czech banking apps; most banks on the Czech market offer QR Platba. A phone's camera app only shows the text, because the code holds payment details, not a link.",
+      },
+      {
+        question: "Why is my message in capital letters?",
+        answer:
+          "QRdx writes text in upper case without diacritics, as the standard's reference generator does by default. The code stays smaller and every bank reads it.",
+      },
+      {
+        question: "Does it work for payments in Slovakia?",
+        answer:
+          "No. Slovak banks use a different format, PAY by square, which QRdx doesn't make.",
+      },
+      {
+        question: "Is my account number sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the playground never puts bank details in a link.",
+      },
+    ],
+    related: ["sepa", "swiss-qr-bill", "pix", "vcard"],
+    details: {
+      title: "Account numbers and check digits",
+      paragraphs: [
+        "A domestic account number has an optional prefix, the number and the four-digit bank code, as in 19-2000145399/0800. QRdx checks the prefix and the number with their mod 11 check, turns them into the IBAN and checks its check digits, so a mistyped account is caught before you print.",
+        "A Czech IBAN is checked with its check digits and written as typed. Add the BIC only if your bank asks for it; it follows the IBAN after a +.",
+      ],
+    },
+  },
+  {
+    type: "swish",
+    name: "Swish",
+    group: "payments",
+    summary: "Get paid with Swish to a mobile or business number.",
+    metaDescription:
+      "Make a Swish QR code for a Swedish mobile or 123 business number, with an optional amount and message you can lock or let the payer change. Free.",
+    intro: [
+      "A Swish QR code opens a payment in the Swish app with your number filled in, and an amount and a message if you add them. It's a link, so a phone's camera opens the Swish app, and the scanner inside Swish reads it too.",
+      "QRdx writes the link in the format Swish's developer documentation describes. It takes a Swedish mobile number or a 10-digit business number starting with 123. An amount or message in the code is locked unless you let the payer change it.",
+    ],
+    steps: [
+      "Enter your Swish number: a Swedish mobile like 070 123 45 67, or your 123 business number.",
+      "Optionally add an amount from 1 to 150,000 kronor and a message of up to 50 characters.",
+      "Choose whether the payer may change the amount or the message.",
+      "Scan the preview with your phone's camera to check that Swish opens with the right details, then download the code.",
+    ],
+    payload: {
+      format:
+        "https://app.swish.nu/1/p/sw/?sw=<number>[&amt=<amount>][&msg=<message>][&edit=amt|msg|amt,msg]",
+      example:
+        "https://app.swish.nu/1/p/sw/?sw=1231181189&amt=100&msg=Fika%20for%20two&edit=amt",
+      notes: [
+        'The format is from Swish\'s developer documentation, "Create QR code from specification".',
+        "A mobile number is written 46 and 9 digits, so 070 123 45 67 becomes 46701234567. Business numbers are 10 digits starting with 123.",
+        "Amounts are in kronor, 1 to 150,000 with up to 2 decimals, the range Swish's own generator takes. Messages are up to 50 characters and percent-encoded.",
+        "edit lists what the payer may change: amt, msg or both. An amount or message that isn't listed is locked.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Does the phone camera open Swish?",
+        answer:
+          "Yes. The code is a link on app.swish.nu, the Swish app's verified link domain on iOS and Android, so the camera opens the app. The scanner in the Swish app reads it too.",
+      },
+      {
+        question: "Can I put the Swish symbol in the middle?",
+        answer:
+          "Swish's guidelines ask for the code in black and white with the Swish symbol in the centre on a white circle, 25% of the code's width. QRdx doesn't add the symbol; if you want it, take it from Swish's marketing toolbox and add it as the code's logo.",
+      },
+      {
+        question: "Is my Swish number sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the playground never puts payment details in a link.",
+      },
+    ],
+    related: ["revolut", "paypal", "sepa", "vcard"],
+  },
+  {
+    type: "khqr",
+    name: "KHQR",
+    group: "payments",
+    summary: "Get paid in riel or dollars from Cambodian banking apps.",
+    metaDescription:
+      "Make a KHQR code for a Bakong account in riel or US dollars, with an optional amount, expiry day and bill number. National Bank of Cambodia format. Free.",
+    intro: [
+      "A KHQR code lets people in Cambodia pay you from their banking app. It holds your Bakong account ID, your name and city, and the currency, riel or US dollars. KHQR is the National Bank of Cambodia's payment code on Bakong, and Cambodian banking apps that accept KHQR scan it.",
+      "Leave the amount empty for a static code anyone can pay any amount, which you can print once and keep. With an amount it becomes a dynamic KHQR, which Bakong requires to carry a creation time and an expiry, so QRdx asks for an expiry day and the code stops working after it.",
+    ],
+    steps: [
+      "Copy your Bakong account ID (name@bank) from your bank app or the Bakong app and paste it in.",
+      "Enter the name payers should see and your city, and pick KHR or USD.",
+      "Optionally add an amount with an expiry day, a bill number or a mobile number.",
+      "Scan the preview with a banking app that accepts KHQR, then download the code.",
+    ],
+    payload: {
+      format:
+        "000201 010211 29[00 <Bakong ID>] 52 5999 53 <116|840> [54 <amount>] 58 KH 59 <name> 60 <city> [62 …] [99 …] 6304<CRC>",
+      example:
+        "00020101021129180014jonhsmith@nbcq5204599953031165802KH5910Jonh Smith6010Phnom Penh6304856B",
+      notes: [
+        "Tag 29 holds the person's own Bakong account ID, up to 32 characters. The merchant category is 5999 and the country KH.",
+        "Currency 116 is riel and 840 is US dollars. Riel amounts are whole numbers; dollar amounts have up to 2 decimals.",
+        "Names are up to 25 characters and cities up to 15; the city is Phnom Penh unless you change it. Tag 62 holds the bill number and mobile number.",
+        "A code with an amount carries its creation time and expiry in tag 99. The checksum is CRC16-CCITT over the whole payload, as in every EMV payment code.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Why does a code with an amount expire?",
+        answer:
+          "Bakong requires a KHQR with an amount to carry a creation time and an expiry, so the code stops working after the day you pick. For a sign you print once, leave the amount empty.",
+      },
+      {
+        question: "Where do I find my Bakong account ID?",
+        answer:
+          "In your bank app or the Bakong app; it looks like name@bank. QRdx can't check that an ID exists, so copy it rather than typing it, and scan the preview with a banking app before you print.",
+      },
+      {
+        question: "Is my account sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the playground never puts payment details in a link.",
+      },
+    ],
+    related: ["promptpay", "vietqr", "paynow", "upi"],
+  },
+  {
+    type: "lightning",
+    name: "Lightning",
+    group: "payments",
+    summary: "Share a Lightning invoice, LNURL or Lightning Address.",
+    metaDescription:
+      "Make a Lightning QR code from a BOLT 11 invoice, an LNURL or a Lightning Address. Invoices are checked; an address becomes its LNURL-pay code. Free.",
+    intro: [
+      "A Lightning QR code lets a Bitcoin Lightning wallet pay you. Paste one of three things: a BOLT 11 invoice from your wallet (lnbc…), an LNURL (lnurl1…), or a Lightning Address such as name@domain.com.",
+      "An invoice can be paid once and expires, after an hour by BOLT 11's default, so a printed invoice code goes stale. For a sign, a sticker or anything else you print, use an LNURL or a Lightning Address: QRdx turns an address into its LNURL-pay, which wallets that support LNURL-pay scan.",
+    ],
+    steps: [
+      "Copy an invoice, an LNURL or your Lightning Address from your wallet and paste it in.",
+      "QRdx checks an invoice's or LNURL's checksum; only mainnet invoices (lnbc…) are accepted.",
+      "Scan the preview with the wallet that will pay to check it.",
+      "Download the code, and print a Lightning Address as text beside it.",
+    ],
+    payload: {
+      format: "lightning:<INVOICE> or LNURL1…",
+      example:
+        "LNURL1DP68GURN8GHJ7CNFW33K76TW9EHHYEE09EMK2MRV944KUMMHDCHKCMN4WFK8QTMNV96X7UMGDY227A3J",
+      notes: [
+        "An invoice is written lightning:<INVOICE> with the invoice in upper case, as BOLT 11 asks for QR codes. Its Bech32 checksum and prefix are checked, and only mainnet (lnbc) invoices are accepted.",
+        "A Lightning Address is turned into its LNURL-pay (LUD-16 and LUD-01): https://domain/.well-known/lnurlp/name, Bech32-encoded. The example is satoshi@bitcoin.org.",
+        "The code holds the bare upper case LNURL, which LNURL-pay wallets scan (LUD-06). No spec defines a QR form for name@domain itself.",
+        "Invoices are 200 to 600 characters or more, so an invoice code is dense; print it larger.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Can I print an invoice code?",
+        answer:
+          "Not for long. An invoice can be paid once and expires, after an hour by BOLT 11's default. Use an LNURL or a Lightning Address for anything printed.",
+      },
+      {
+        question: "Why doesn't the code hold my Lightning Address?",
+        answer:
+          "No spec defines a QR form for name@domain, so QRdx writes the address's LNURL-pay, which LNURL-pay wallets scan. Print the address as text beside the code for people who'd rather type it.",
+      },
+      {
+        question: "Is my invoice sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and QRdx doesn't contact your Lightning Address's server to make it.",
+      },
+    ],
+    related: ["bitcoin", "ethereum", "solana", "monero"],
+  },
+  {
+    type: "xrp",
+    name: "XRP",
+    group: "payments",
+    summary:
+      "Share an XRP Ledger address, with a destination tag if you need one.",
+    metaDescription:
+      "Make an XRP QR code with your XRP Ledger address, checked with its checksum. Add a destination tag and the code holds an X-address that keeps both. Free.",
+    intro: [
+      "An XRP QR code holds your XRP Ledger address, so the payer's wallet reads it instead of someone typing it. The XRP Ledger has no finished payment URI standard, so the code holds the plain classic address (r…), which XRPL wallets read.",
+      "With a destination tag, QRdx writes the X-address instead (XLS-5, final), which packs the address and the tag together under one checksum. A wallet that doesn't understand an X-address refuses it rather than sending without the tag. Print the classic address and the tag as text too, since some exchanges ask for them separately.",
+    ],
+    steps: [
+      "Paste your classic XRP Ledger address (r…) from your wallet or exchange.",
+      "If you were given a destination tag, enter it in its own field.",
+      "Scan the preview with the wallet that will pay to check it.",
+      "Download the code, and print the address and tag as text beside it.",
+    ],
+    payload: {
+      format: "<classic address> or, with a destination tag, <X-address>",
+      example: "rDTXLQ7ZKZVKz33zJbHjgVShjsBnqMBhmN",
+      notes: [
+        "The classic address is checked with its Base58 checksum (a double SHA-256).",
+        "With a destination tag the code holds the X-address (XLS-5): rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf with tag 276 is XVLhHMPHU98es4dbozjVtdWzVrDjtVoKj3MnFGMXEFMnvJV.",
+        "Tag 0 and no tag are different, so enter 0 only if you were given 0.",
+        "There's no amount: no amount format works across XRP wallets.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Can I request an amount?",
+        answer:
+          "No. No amount format works across XRP wallets, so the payer enters the amount.",
+      },
+      {
+        question: "When do I need a destination tag?",
+        answer:
+          "When your exchange or service gives you one. Copy it exactly: tag 0 and no tag are different.",
+      },
+      {
+        question: "Is my address sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the playground never puts payment details in a link.",
+      },
+    ],
+    related: ["stellar", "bitcoin", "ethereum", "litecoin"],
+  },
+  {
+    type: "cardano",
+    name: "Cardano",
+    group: "payments",
+    summary: "Request ADA with a CIP-13 Cardano payment link.",
+    metaDescription:
+      "Make a Cardano QR code in the CIP-13 web+cardano: format with your addr1 address and an optional amount in ADA. Address checked with its checksum. Free.",
+    intro: [
+      "A Cardano QR code holds your payment address and, if you like, an amount in ADA, in the web+cardano: format from CIP-13. Wallets that implement CIP-13 payment URIs fill in the payment when they scan it.",
+      "CIP-13's status is proposed, and it lists Yoroi and Begin as wallets implementing payment URIs. Other wallets may only read a plain address, so scan the preview with the wallets your payers use before you print.",
+    ],
+    steps: [
+      "Paste a mainnet payment address (addr1…) from your wallet.",
+      "Optionally enter an amount in ADA, with up to 6 decimals.",
+      "Scan the preview with the wallets your payers use.",
+      "Download the code.",
+    ],
+    payload: {
+      format: "web+cardano:<address>?amount=<ADA>",
+      example:
+        "web+cardano:addr1vx2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzers66hrl8?amount=12.5",
+      notes: [
+        "Defined by CIP-13. The amount is decimal ADA with up to 6 decimals.",
+        "CIP-13 defines only the amount, so there's no label or message.",
+        "QRdx takes mainnet Shelley payment addresses (addr1…) and checks their Bech32 checksum. Stake addresses and testnet addresses are refused, and older Byron addresses aren't accepted.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Which wallets read it?",
+        answer:
+          "CIP-13 lists Yoroi and Begin as implementing payment URIs. Other wallets may read only plain addresses, so test with your payers' wallets.",
+      },
+      {
+        question: "Why is my address refused?",
+        answer:
+          "QRdx takes mainnet Shelley payment addresses starting with addr1. A stake address, a testnet address or an older Byron address isn't accepted.",
+      },
+      {
+        question: "Is my address sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the playground never puts payment details in a link.",
+      },
+    ],
+    related: ["solana", "ethereum", "bitcoin", "stellar"],
+  },
+  {
+    type: "tron",
+    name: "Tron",
+    group: "payments",
+    summary: "Share a Tron address for TRX or USDT (TRC-20).",
+    metaDescription:
+      "Make a Tron QR code with your T… address for TRX or USDT on TRC-20, checked with its Base58Check checksum. Print the coin and network beside it. Free.",
+    intro: [
+      "A Tron QR code holds your Tron address, the T… address your wallet shows on its own receive screen. No static payment URI is documented for Tron wallets: the documented transfer deep link needs the payer's own address and a callback, so it can't be printed.",
+      'TRX, TRC-10 tokens and TRC-20 tokens such as USDT all use the same address, so the code can\'t say which coin or network you expect. Print it next to the code: "USDT (TRC-20, Tron network)" or "TRX".',
+    ],
+    steps: [
+      "Copy the address from your wallet's receive screen and paste it in.",
+      "QRdx checks its checksum, and refuses Tether's USDT contract address if it's pasted by mistake.",
+      "Scan the preview with your wallet to check the address.",
+      "Download the code and print the coin and network beside it.",
+    ],
+    payload: {
+      format: "<T… address>",
+      example: "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL",
+      notes: [
+        "The address is checked with its Base58Check checksum and its 0x41 prefix byte.",
+        "Tether's USDT contract (TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t) is refused as a recipient: it's the token's contract, not a wallet.",
+        "There's no amount: no static request format is documented for Tron wallets.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Can I ask for USDT?",
+        answer:
+          'The same address receives TRX and TRC-20 USDT, and the code can\'t say which. Print "USDT (TRC-20, Tron network)" next to it so payers send on the right network.',
+      },
+      {
+        question: "Can I add an amount?",
+        answer:
+          "No. Tron wallets document no static request format with an amount, so the payer enters it.",
+      },
+      {
+        question: "Is my address sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the playground never puts payment details in a link.",
+      },
+    ],
+    related: ["ton", "ethereum", "solana", "bitcoin"],
+  },
+  {
+    type: "ton",
+    name: "TON",
+    group: "payments",
+    summary: "Request TON or USDT with a ton://transfer link.",
+    metaDescription:
+      "Make a TON QR code with a ton://transfer link: your address, an amount in TON or USDT and a comment. Address checked with its CRC-16 checksum. Free.",
+    intro: [
+      "A TON QR code holds a ton://transfer link from TON's deep link docs: your address and, if you like, an amount and a comment. It can ask for TON or for USDT, Tether's own jetton on TON.",
+      "TON's docs note that the ton:// link works across TON wallets, but whether a wallet honours the USDT jetton parameter is up to the wallet. Scan a USDT code with the wallets your payers use before you print it.",
+    ],
+    steps: [
+      "Paste the address your wallet shows (UQ… or EQ…).",
+      "Pick TON or USDT and, if you like, an amount.",
+      "Optionally add a comment, such as an order number.",
+      "Scan the preview with a TON wallet to check it, then download the code.",
+    ],
+    payload: {
+      format:
+        "ton://transfer/<address>?amount=<base units>&text=<message>, and for USDT ton://transfer/<address>?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=<micro-USDT>&text=<message>",
+      example:
+        "ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?amount=5000000&text=hello",
+      notes: [
+        "Amounts are typed in TON (up to 9 decimals) or USDT (up to 6) and written in base units: amount=5000000 in the example is 0.005 TON.",
+        "For USDT the link adds jetton= with Tether's USDT on TON, and the amount is in millionths: ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=5000&text=hello is 0.005 USDT.",
+        "The address must be a user-friendly mainnet address, UQ… (non-bounceable, recommended for wallets) or EQ…, and is checked with its CRC-16. Raw 0:… addresses have no checksum, so QRdx asks for the form your wallet shows.",
+        "text is the transfer's comment, percent-encoded.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Do all TON wallets pay USDT from the code?",
+        answer:
+          "TON's docs leave the jetton parameter to each wallet, so test a USDT code with the wallets your payers use. A code for TON works across TON wallets.",
+      },
+      {
+        question: "UQ or EQ address?",
+        answer:
+          "Both work. UQ… is the non-bounceable form, which is recommended for wallets; EQ… is the bounceable one. Paste the one your wallet shows.",
+      },
+      {
+        question: "Is my address sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the playground never puts payment details in a link.",
+      },
+    ],
+    related: ["tron", "solana", "ethereum", "bitcoin"],
+  },
+  {
+    type: "stellar",
+    name: "Stellar",
+    group: "payments",
+    summary: "Request XLM or USDC with a SEP-0007 Stellar link.",
+    metaDescription:
+      "Make a Stellar QR code in the SEP-0007 web+stellar:pay format for XLM or Circle's USDC, with an optional amount and a text memo for exchanges. Free.",
+    intro: [
+      "A Stellar QR code holds a SEP-0007 payment request: your account and, if you like, an amount, the asset and a memo. It can ask for XLM or for USDC from the issuer Circle lists.",
+      "Exchanges often need a memo to match a deposit to your account, so the code can carry one. Wallet support for SEP-7 varies, so scan the preview with the wallets your payers use before you print.",
+    ],
+    steps: [
+      "Paste your Stellar address (G…).",
+      "Pick XLM or USDC and, if you like, an amount.",
+      "Add a text memo if your exchange or service gave you one.",
+      "Scan the preview with a Stellar wallet to check it, then download the code.",
+    ],
+    payload: {
+      format:
+        "web+stellar:pay?destination=<G…>&amount=<amount>[&asset_code=USDC&asset_issuer=GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN][&memo=<text>&memo_type=MEMO_TEXT]",
+      example:
+        "web+stellar:pay?destination=GCALNQQBXAPZ2WIRSDDBMSTAKCUH5SG6U76YBFLQLIXJTF7FE5AX7AOO&amount=120.1234567&memo=skdjfasf&memo_type=MEMO_TEXT",
+      notes: [
+        "Defined by SEP-0007, which is active. Amounts have up to 7 decimals.",
+        "For USDC the link names asset_code=USDC and the issuer Circle lists. The receiving account needs a USDC trustline to receive it.",
+        "Memos are text (MEMO_TEXT) of up to 28 bytes, percent-encoded.",
+        "The address is checked as a StrKey: Base32 with a CRC-16 checksum.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Can I receive USDC?",
+        answer:
+          "Yes, if your account has a USDC trustline for Circle's issuer. Without one the account can't receive USDC, so add the trustline in your wallet first.",
+      },
+      {
+        question: "Do I need a memo?",
+        answer:
+          "Add one when your exchange or service gives you one, exactly as given. Text memos are up to 28 bytes.",
+      },
+      {
+        question: "Which wallets read it?",
+        answer:
+          "Wallet support for SEP-7 varies. Test with the wallets your payers use.",
+      },
+      {
+        question: "Is my address sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the playground never puts payment details in a link.",
+      },
+    ],
+    related: ["xrp", "cardano", "solana", "ethereum"],
   },
 ];
 

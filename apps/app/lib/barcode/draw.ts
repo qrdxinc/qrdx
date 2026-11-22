@@ -27,6 +27,10 @@ export interface DrawOptions {
   textxalign?: "center";
   /** Add the symbology's check characters (Code 93's C and K) */
   includecheck?: boolean;
+  /** Modules between an EAN-13 and its add-on (ISBN, ISSN, ISMN) */
+  addongap?: number;
+  /** Text printed under the bars when the encoder prints none of its own */
+  alttext?: string;
 }
 
 /** One bwip-js build: its encoder per format and its SVG drawing. */
@@ -44,12 +48,17 @@ export const BCID: Record<BarcodeFormatId, string> = {
   ean8: "ean8",
   upca: "upca",
   upce: "upce",
+  isbn: "isbn",
+  issn: "issn",
+  ismn: "ismn",
   code128: "code128",
   code39: "code39",
   code93: "code93",
   codabar: "rationalizedCodabar",
   itf14: "itf14",
   "gs1-128": "gs1-128",
+  "gs1-databar": "databaromni",
+  "gs1-databar-expanded": "databarexpanded",
   datamatrix: "datamatrix",
   pdf417: "pdf417",
   aztec: "azteccode",
@@ -64,12 +73,17 @@ export const MODULE_UNITS: Record<BarcodeFormatId, number> = {
   ean8: 1,
   upca: 1,
   upce: 1,
+  isbn: 1,
+  issn: 1,
+  ismn: 1,
   code128: 1,
   code39: 1,
   code93: 1,
   codabar: 1,
   itf14: 1,
   "gs1-128": 1,
+  "gs1-databar": 1,
+  "gs1-databar-expanded": 1,
   datamatrix: 2,
   pdf417: 1,
   aztec: 2,
@@ -129,13 +143,25 @@ export function drawOptions(
       id === "code39" ||
       id === "code93" ||
       id === "codabar" ||
-      id === "gs1-128"
+      id === "gs1-128" ||
+      id === "gs1-databar" ||
+      id === "gs1-databar-expanded"
     ) {
       options.textxalign = "center";
+    }
+    // bwip-js prints no text under DataBar Expanded, so give it the AIs and
+    // values the way GS1-128 prints them.
+    if (id === "gs1-databar-expanded" && style.showText) {
+      options.alttext = value;
     }
     // Code 93's two check characters are part of the symbology, and readers
     // reject a symbol without them; bwip-js leaves them out unless asked.
     if (id === "code93") options.includecheck = true;
+    // GS1 puts an EAN-13's add-on 7 to 12 modules right of the bars. BWIPP
+    // uses 12, where ZXing (the reader /scan falls back to, and many scanner
+    // apps) no longer finds it; 9 is inside both. Without an add-on the
+    // option draws nothing.
+    if (id === "isbn" || id === "issn" || id === "ismn") options.addongap = 9;
   }
   return options;
 }
@@ -156,6 +182,14 @@ export function drawBarcode<Drawing>(
   try {
     svg = build.encoders[id](drawOptions(id, value, style), build.drawingSVG());
   } catch (error) {
+    // bwip-js 4.11.4 has no message for a DataBar Expanded past its last
+    // segment: it fails with a TypeError of its own. That only happens when
+    // the data doesn't fit (tests/barcode/render.test.ts).
+    if (id === "gs1-databar-expanded" && error instanceof TypeError) {
+      throw new Error(
+        "Too much data for one GS1 DataBar Expanded: it holds up to 74 digits, and fewer when there are letters. Remove an AI or shorten a value.",
+      );
+    }
     throw new Error(encoderMessage(format.label, error));
   }
 

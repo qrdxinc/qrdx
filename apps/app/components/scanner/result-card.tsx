@@ -72,6 +72,17 @@ const PAYMENT_NAMES: Record<PaymentScheme, string> = {
   bitcoincash: "Bitcoin Cash",
   solana: "Solana Pay",
   monero: "Monero",
+  // Added 2026-11-22 (payments)
+  "swiss-qr-bill": "Swiss QR-bill",
+  "czech-spd": "QR Platba",
+  swish: "Swish",
+  khqr: "KHQR",
+  lightning: "Lightning",
+  xrp: "XRP",
+  cardano: "Cardano",
+  tron: "Tron",
+  ton: "TON",
+  stellar: "Stellar",
 };
 
 /** The copy button's label: scanner.result.<key>. */
@@ -92,6 +103,17 @@ const COPY_LABELS = {
   bitcoincash: "copyAddress",
   solana: "copyAddress",
   monero: "copyAddress",
+  // Added 2026-11-22 (payments)
+  "swiss-qr-bill": "copyIban",
+  "czech-spd": "copyIban",
+  swish: "copyNumber",
+  khqr: "copyAccount",
+  lightning: "copyText",
+  xrp: "copyAddress",
+  cardano: "copyAddress",
+  tron: "copyAddress",
+  ton: "copyAddress",
+  stellar: "copyAddress",
 } as const satisfies Record<PaymentScheme, string>;
 
 type Translate = ReturnType<typeof useTranslations<"scanner.result">>;
@@ -103,6 +125,10 @@ const BANK_APP_SCHEMES = new Set<PaymentScheme>([
   "promptpay",
   "vietqr",
   "emv",
+  // Added 2026-11-22 (payments)
+  "swiss-qr-bill",
+  "czech-spd",
+  "khqr",
 ]);
 
 /**
@@ -158,6 +184,30 @@ function WifiDetails({
         fields={[
           { label: t("ssid"), value: parsed.ssid },
           { label: t("security"), value: parsed.security },
+          ...(parsed.enterprise?.method
+            ? [{ label: t("eapMethod"), value: parsed.enterprise.method }]
+            : []),
+          ...(parsed.enterprise?.phase2
+            ? [{ label: t("phase2"), value: parsed.enterprise.phase2 }]
+            : []),
+          ...(parsed.enterprise?.identity
+            ? [
+                {
+                  label: t("identity"),
+                  value: parsed.enterprise.identity,
+                  mono: true,
+                },
+              ]
+            : []),
+          ...(parsed.enterprise?.anonymousIdentity
+            ? [
+                {
+                  label: t("anonymousIdentity"),
+                  value: parsed.enterprise.anonymousIdentity,
+                  mono: true,
+                },
+              ]
+            : []),
           ...(parsed.hidden ? [{ label: t("hidden"), value: t("yes") }] : []),
           ...(parsed.password
             ? [
@@ -199,7 +249,9 @@ function WifiDetails({
         <CopyButton label={t("copyNetwork")} value={parsed.ssid} />
       </div>
       <p className="text-muted-foreground text-xs leading-relaxed">
-        {t("wifiNote", { ssid: parsed.ssid })}
+        {parsed.enterprise
+          ? t("wifiEnterpriseNote", { ssid: parsed.ssid })
+          : t("wifiNote", { ssid: parsed.ssid })}
       </p>
     </div>
   );
@@ -320,6 +372,12 @@ function Details({ parsed }: { parsed: ParsedScan }) {
           <FieldList
             fields={[
               { label: t("name"), value: contact.name },
+              ...(contact.reading
+                ? [{ label: t("nameReading"), value: contact.reading }]
+                : []),
+              ...(contact.nickname
+                ? [{ label: t("nickname"), value: contact.nickname }]
+                : []),
               ...(contact.organization
                 ? [{ label: t("organization"), value: contact.organization }]
                 : []),
@@ -356,6 +414,16 @@ function Details({ parsed }: { parsed: ParsedScan }) {
               })),
               ...(contact.address
                 ? [{ label: t("address"), value: contact.address }]
+                : []),
+              ...(contact.birthday
+                ? [
+                    {
+                      label: t("birthday"),
+                      value:
+                        formatWhen(contact.birthday, true, locale) ??
+                        contact.birthday,
+                    },
+                  ]
                 : []),
               ...(contact.note
                 ? [{ label: t("note"), value: contact.note }]

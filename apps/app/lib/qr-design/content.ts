@@ -11,7 +11,9 @@ import {
   bitcoinSchema,
   blueskySchema,
   calcomSchema,
+  cardanoSchema,
   cashappSchema,
+  czechSpdSchema,
   discordSchema,
   dogecoinSchema,
   dubshSchema,
@@ -24,11 +26,14 @@ import {
   googleMeetSchema,
   googleReviewSchema,
   instagramSchema,
+  khqrSchema,
+  lightningSchema,
   lineSchema,
   linkedinSchema,
   litecoinSchema,
   mapsSchema,
   mastodonSchema,
+  mecardSchema,
   moneroSchema,
   paynowSchema,
   paypalSchema,
@@ -45,10 +50,15 @@ import {
   solanaSchema,
   soundcloudSchema,
   spotifySchema,
+  stellarSchema,
+  swishSchema,
+  swissQrBillSchema,
   telegramSchema,
   textSchema,
   threadsSchema,
   tiktokSchema,
+  tonSchema,
+  tronSchema,
   twitchSchema,
   twitterSchema,
   upiSchema,
@@ -59,6 +69,7 @@ import {
   wazeSchema,
   whatsappSchema,
   wifiSchema,
+  xrpSchema,
   youtubeSchema,
   zoomSchema,
 } from "@/lib/validations/qr-content";
@@ -128,6 +139,18 @@ export const CONTENT_FORM_SCHEMAS = {
   bitcoincash: bitcoincashSchema,
   solana: solanaSchema,
   monero: moneroSchema,
+  // Added 2026-11-22 (payments)
+  mecard: mecardSchema,
+  "swiss-qr-bill": swissQrBillSchema,
+  "czech-spd": czechSpdSchema,
+  swish: swishSchema,
+  khqr: khqrSchema,
+  lightning: lightningSchema,
+  xrp: xrpSchema,
+  cardano: cardanoSchema,
+  tron: tronSchema,
+  ton: tonSchema,
+  stellar: stellarSchema,
 } satisfies Record<ContentType, z.ZodType>;
 
 export const CONTENT_TYPE_IDS = Object.keys(CONTENT_FORM_SCHEMAS) as [
@@ -210,7 +233,7 @@ export function contentCatalog() {
   }));
 }
 
-/** One line per type: `wifi (WiFi): ssid*, password, encryption=WPA|WEP|nopass, hidden` */
+/** One line per type: `wifi (WiFi): ssid*, password, encryption=WPA|WEP|nopass|SAE|WPA2-EAP, hidden, …` */
 export function contentFieldGuide(): string {
   return CONTENT_TYPE_IDS.map((type) => {
     const fields = CONTENT_FIELDS[type]
@@ -243,7 +266,7 @@ const BOOLEAN_FIELD_NAMES = new Set(
 );
 
 const FIELD_DESCRIPTIONS: Record<string, string> = {
-  url: "Web address (url, google-drive); website (vcard)",
+  url: "Web address (url, google-drive); website (vcard, mecard)",
   text: "Plain text",
   recipient: "Email address (comma-separate several)",
   subject: "Email subject",
@@ -253,28 +276,75 @@ const FIELD_DESCRIPTIONS: Record<string, string> = {
     "Prefilled message (sms, whatsapp) or payment message (bitcoin, crypto, pix, vietqr)",
   ssid: "Wi-Fi network name",
   password: "Wi-Fi password (8-63 characters for WPA)",
-  encryption: "Wi-Fi security: WPA (WPA/WPA2/WPA3), WEP or nopass (open)",
+  encryption:
+    "Wi-Fi security: WPA (WPA/WPA2, and WPA2/WPA3 transition), SAE (WPA3 only), WPA2-EAP (WPA2/WPA3-Enterprise), WEP or nopass (open)",
   hidden: "Wi-Fi network is hidden",
+  // Added 2026-11-22 (payments)
+  eapMethod: "Enterprise Wi-Fi EAP method: PEAP, TTLS or PWD (wifi, WPA2-EAP)",
+  phase2:
+    "Enterprise Wi-Fi inner authentication: MSCHAPV2, GTC, PAP or MSCHAP (wifi, WPA2-EAP with PEAP or TTLS)",
+  identity: "Enterprise Wi-Fi identity (username) (wifi, WPA2-EAP)",
+  anonymousIdentity:
+    "Enterprise Wi-Fi anonymous outer identity, optional (wifi, WPA2-EAP)",
+  reading: "How the name is read, e.g. in kana (mecard SOUND)",
+  nickname: "Nickname (mecard)",
+  birthday: "Birthday, YYYY-MM-DD (mecard)",
+  street: "Street (swiss-qr-bill creditor)",
+  buildingNumber: "Building number (swiss-qr-bill creditor)",
+  postalCode: "Postcode (swiss-qr-bill creditor)",
+  town: "Town (swiss-qr-bill creditor)",
+  country: "2-letter country code, e.g. CH (swiss-qr-bill creditor)",
+  currency:
+    "CHF or EUR (swiss-qr-bill, default CHF); KHR or USD (khqr, default KHR)",
+  billingInfo: "Structured billing information starting //S1/ (swiss-qr-bill)",
+  payableBy: "Whether the bill names who pays (swiss-qr-bill debtor* fields)",
+  debtorName: "Payer's name (swiss-qr-bill, with payableBy)",
+  debtorStreet: "Payer's street (swiss-qr-bill)",
+  debtorBuildingNumber: "Payer's building number (swiss-qr-bill)",
+  debtorPostalCode: "Payer's postcode (swiss-qr-bill, with payableBy)",
+  debtorTown: "Payer's town (swiss-qr-bill, with payableBy)",
+  debtorCountry:
+    "Payer's 2-letter country code (swiss-qr-bill, with payableBy)",
+  account: "Czech IBAN or account number like 19-2000145399/0800 (czech-spd)",
+  variableSymbol: "Variable symbol, up to 10 digits (czech-spd)",
+  specificSymbol: "Specific symbol, up to 10 digits (czech-spd)",
+  constantSymbol: "Constant symbol, up to 10 digits (czech-spd)",
+  dueDate: "Due date, YYYY-MM-DD (czech-spd)",
+  instant: "Ask for an instant payment (czech-spd)",
+  payee: "Swedish mobile number or 123 business number (swish)",
+  amountEditable: "Whether the payer may change the amount (swish)",
+  messageEditable: "Whether the payer may change the message (swish)",
+  bakongId: "Bakong account ID, name@bank (khqr)",
+  expiry:
+    "Last day the code works, YYYY-MM-DD (paynow; khqr, required with an amount)",
+  billNumber: "Bill number (khqr)",
+  mobile: "Mobile number with country code (khqr)",
+  request: "BOLT 11 invoice, LNURL or Lightning Address (lightning)",
+  destinationTag: "Destination tag, makes an X-address (xrp)",
+  memo: "Text memo, up to 28 bytes (stellar)",
+  network:
+    "EVM chain ID (ethereum): 1, 56, 137, 42161, 10, 8453 or 43114; default 1",
+  token:
+    "Stablecoin: USDT|USDC (ethereum, network permitting), USDC|USDT (solana), USDT (ton), USDC (stellar)",
   firstName: "Contact first name",
   lastName: "Contact last name",
   organization: "Contact company",
   phone: "Contact phone",
   email: "Contact email",
   address: "Contact street address, or a crypto wallet address",
-  note: "Note (vcard, upi, venmo)",
+  note: "Note (vcard, mecard, upi, venmo)",
   // Added 2026-11-11
   pixKey: "Pix key: CPF, CNPJ, +55 phone, email or random key",
   city: "Receiver city (pix), up to 15 characters",
   txid: "Pix transaction ID, up to 25 letters and digits",
-  iban: "IBAN (sepa)",
+  iban: "IBAN (sepa); CH or LI IBAN or QR-IBAN (swiss-qr-bill)",
   bic: "BIC (sepa), optional",
   reference:
-    "Structured RF creditor reference (sepa) or bill reference (paynow)",
+    "Structured RF creditor reference (sepa), bill reference (paynow), or QR reference with a QR-IBAN / RF reference with an IBAN (swiss-qr-bill)",
   remittance: "Payment reference text (sepa), up to 140 characters",
   proxyType: "Who gets paid: paynow mobile|uen, promptpay mobile|id|ewallet",
   proxy: "Mobile number, UEN (paynow) or national/tax/e-wallet ID (promptpay)",
   editable: "Whether the payer may change the amount (paynow)",
-  expiry: "Last day the code works, YYYY-MM-DD (paynow)",
   bankBin: "The bank's 6-digit BIN (vietqr)",
   accountType: "account or card (vietqr)",
   accountNumber: "Bank account or card number (vietqr)",
@@ -291,7 +361,7 @@ const FIELD_DESCRIPTIONS: Record<string, string> = {
   channelUrl: "YouTube channel URL",
   videoUrl: "YouTube video URL",
   upiId: "UPI ID, e.g. name@bank",
-  name: "Payee name (upi, paynow), receiver (pix), beneficiary (sepa) or file name (google-drive)",
+  name: "Payee name (upi, paynow), receiver (pix), beneficiary (sepa), creditor (swiss-qr-bill) or file name (google-drive)",
   amount:
     "Amount in the payment's currency, digits and an optional decimal point",
   paypalUrl: "PayPal.me link",
@@ -399,6 +469,7 @@ export function describeContent(content: QRContentConfig): string {
       case "wifi":
         return content.ssid;
       case "vcard":
+      case "mecard":
         return [content.firstName, content.lastName].filter(Boolean).join(" ");
       case "url":
         return content.url;
@@ -415,7 +486,13 @@ export function describeContent(content: QRContentConfig): string {
       // Bank codes: the receiver's name, never the key or account number.
       case "pix":
       case "sepa":
+      case "swiss-qr-bill":
+      case "khqr":
         return content.name;
+      case "czech-spd":
+        return content.name ?? "";
+      case "swish":
+        return "";
       case "paynow":
         return content.name ?? "";
       case "promptpay":

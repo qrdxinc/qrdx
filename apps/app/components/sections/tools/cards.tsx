@@ -47,6 +47,11 @@ interface LinkCardProps {
   icon?: CardIcon;
   /** Small line under the description (badges, counts). */
   meta?: ReactNode;
+  /**
+   * A picture across the top of the card (the hub's type marks); the text
+   * moves under it and `icon` is left out.
+   */
+  art?: ReactNode;
   className?: string;
 }
 
@@ -60,6 +65,7 @@ export function LinkCard({
   description,
   icon,
   meta,
+  art,
   className,
 }: LinkCardProps) {
   return (
@@ -68,12 +74,20 @@ export function LinkCard({
       className={cn(
         cardClass,
         interactiveCardClass,
-        "flex h-full min-w-0 items-start gap-3.5 p-4",
+        art
+          ? "flex h-full min-w-0 flex-col"
+          : "flex h-full min-w-0 items-start gap-3.5 p-4",
         className,
       )}
     >
-      {icon && <IconTile icon={icon} />}
-      <span className="flex min-w-0 flex-1 flex-col gap-1">
+      {art}
+      {icon && !art && <IconTile icon={icon} />}
+      <span
+        className={cn(
+          "flex min-w-0 flex-1 flex-col gap-1",
+          art && "px-4 pt-1 pb-4",
+        )}
+      >
         <span className="flex items-start gap-2 text-sm font-medium leading-snug text-foreground">
           <span className="min-w-0 text-pretty">{title}</span>
           <ArrowRight

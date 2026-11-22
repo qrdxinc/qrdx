@@ -49,6 +49,16 @@ import {
 } from "@/components/editor/content-forms/link-forms";
 import { LinkedInForm } from "@/components/editor/content-forms/linkedin-form";
 import { MapsForm } from "@/components/editor/content-forms/maps-form";
+// Added 2026-11-22 (payments)
+import { MeCardForm } from "@/components/editor/content-forms/mecard-form";
+import {
+  CardanoForm,
+  LightningForm,
+  StellarForm,
+  TonForm,
+  TronForm,
+  XrpForm,
+} from "@/components/editor/content-forms/more-crypto-forms";
 import {
   PayNowForm,
   PixForm,
@@ -56,6 +66,11 @@ import {
   SepaForm,
   VietQrForm,
 } from "@/components/editor/content-forms/payment-forms";
+import {
+  CzechSpdForm,
+  KhqrForm,
+  SwishForm,
+} from "@/components/editor/content-forms/payment-standards-forms";
 import { PayPalForm } from "@/components/editor/content-forms/paypal-form";
 import { PhoneForm } from "@/components/editor/content-forms/phone-form";
 import { PinterestForm } from "@/components/editor/content-forms/pinterest-form";
@@ -63,6 +78,7 @@ import { RedditForm } from "@/components/editor/content-forms/reddit-form";
 import { SmsForm } from "@/components/editor/content-forms/sms-form";
 import { SnapchatForm } from "@/components/editor/content-forms/snapchat-form";
 import { SpotifyForm } from "@/components/editor/content-forms/spotify-form";
+import { SwissQrBillForm } from "@/components/editor/content-forms/swiss-qr-bill-form";
 import { TextForm } from "@/components/editor/content-forms/text-form";
 import { ThreadsForm } from "@/components/editor/content-forms/threads-form";
 import { TikTokForm } from "@/components/editor/content-forms/tiktok-form";
@@ -157,6 +173,18 @@ const FORMS: Partial<Record<ContentType, ComponentType>> = {
   bitcoincash: BitcoinCashForm,
   solana: SolanaForm,
   monero: MoneroForm,
+  // Added 2026-11-22 (payments)
+  mecard: MeCardForm,
+  "swiss-qr-bill": SwissQrBillForm,
+  "czech-spd": CzechSpdForm,
+  swish: SwishForm,
+  khqr: KhqrForm,
+  lightning: LightningForm,
+  xrp: XrpForm,
+  cardano: CardanoForm,
+  tron: TronForm,
+  ton: TonForm,
+  stellar: StellarForm,
 };
 
 function LinkOnlyForm({ type }: { type: "dubsh" | "google-drive" }) {

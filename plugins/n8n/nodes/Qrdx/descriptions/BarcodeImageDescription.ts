@@ -83,10 +83,40 @@ export const barcodeImageFields: INodeProperties[] = [
         description: "Small retail packs; 7 digits, or 8 with the check digit",
       },
       {
+        name: "GS1 DataBar",
+        value: "gs1-databar",
+        description:
+          "A GTIN on small retail items, as (01) and 14 digits, like (01)09501101530003",
+      },
+      {
+        name: "GS1 DataBar Expanded",
+        value: "gs1-databar-expanded",
+        description:
+          "A GTIN with a weight, price or date for the checkout, as Application Identifiers in brackets, like (01)09501101530003(17)261231",
+      },
+      {
         name: "GS1-128",
         value: "gs1-128",
         description:
           "Supply chain data (GTIN, batch, dates, weights) as Application Identifiers in brackets, like (01)09501101530003(10)AB-123",
+      },
+      {
+        name: "ISBN",
+        value: "isbn",
+        description:
+          "Books: an ISBN-13 or ISBN-10, printed with the ISBN above the bars; a 2- or 5-digit add-on after a space",
+      },
+      {
+        name: "ISMN",
+        value: "ismn",
+        description:
+          "Printed music: an ISMN starting 979-0, or the old form starting with M; a 2- or 5-digit add-on after a space",
+      },
+      {
+        name: "ISSN",
+        value: "issn",
+        description:
+          "Magazines and journals: the ISSN, then the 2-digit sequence variant and an issue add-on, like 0317-8471 00 05",
       },
       {
         name: "ITF-14",

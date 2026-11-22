@@ -16,10 +16,12 @@ import {
   Call,
   Car,
   Card,
+  CardReceive,
   CardSend,
   ClipboardText,
   ClipboardTick,
   Coffee,
+  Coin,
   Courthouse,
   DirectInbox,
   DirectSend,
@@ -27,6 +29,7 @@ import {
   DocumentText,
   Flag,
   Flag2,
+  Flash,
   Gallery,
   Glass,
   Hashtag,
@@ -40,8 +43,10 @@ import {
   Link2,
   Location,
   Lovely,
+  Map as MapIcon,
   MessageText,
   Mobile,
+  MoneyRecive,
   Moneys,
   Monitor,
   Musicnote,
@@ -55,6 +60,7 @@ import {
   Profile2User,
   Receipt,
   Receipt2,
+  ReceiptText,
   Reserve,
   RulerPen,
   Scissor,
@@ -64,8 +70,10 @@ import {
   ShoppingCart,
   Signpost,
   Sms,
+  SmsStar,
   Sticker,
   Tag,
+  TagUser,
   Teacher,
   Ticket,
   TicketDiscount,
@@ -73,10 +81,13 @@ import {
   Tree,
   Truck,
   TruckFast,
+  UserEdit,
   UserSquare,
   VideoPlay,
+  Wallet2,
   Weight,
   Wifi,
+  WifiSquare,
 } from "iconsax-reactjs";
 import { LinkedinIcon } from "@/components/landing/social-networks";
 import { brandIcon } from "@/lib/brand-logos/brand-logo";
@@ -115,6 +126,14 @@ export const QR_TYPE_ICONS: Record<ContentType, CardIcon> = {
   paynow: CardSend,
   promptpay: Mobile,
   vietqr: Bank,
+  // Added 2026-11-22 (payments)
+  mecard: UserSquare,
+  "swiss-qr-bill": ReceiptText,
+  "czech-spd": MoneyRecive,
+  swish: Wallet2,
+  khqr: CardReceive,
+  lightning: Flash,
+  tron: Coin,
 };
 
 export const QR_TYPE_GROUP_ICONS: Record<QrTypeGroup, CardIcon> = {
@@ -230,6 +249,14 @@ export const PAGE_TYPE_ICONS: Record<PageTypeId, CardIcon> = {
   pet: Pet,
   medical: Health,
   playlist: MusicPlaylist,
+  // Added 2026-11-22 (pages)
+  location: MapIcon,
+  resume: Briefcase,
+  wifi: WifiSquare,
+  invitation: Lovely,
+  form: UserEdit,
+  "asset-tag": TagUser,
+  message: SmsStar,
 };
 
 export function topicIcon(slug: string, groupId?: string): CardIcon {

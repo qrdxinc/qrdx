@@ -42,12 +42,17 @@ export const DOWNLOAD_SIZES_MM: Record<
   ean8: { width: 28.6, height: 22.8 },
   upca: { width: 47.2, height: 27.8 },
   upce: { width: 30.3, height: 27.8 },
+  isbn: { width: 50.1, height: 31 },
+  issn: { width: 55.3, height: 31 },
+  ismn: { width: 50.1, height: 31 },
   code128: { width: 69.9, height: 19.2 },
   code39: { width: 57.5, height: 19.2 },
   code93: { width: 42.3, height: 19.2 },
   codabar: { width: 37.7, height: 19.2 },
   itf14: { width: 60.4, height: 31.7 },
   "gs1-128": { width: 100.9, height: 19.2 },
+  "gs1-databar": { width: 46.6, height: 19.2 },
+  "gs1-databar-expanded": { width: 105.8, height: 19.2 },
   datamatrix: { width: 15.5, height: 15.5 },
   pdf417: { width: 43.7, height: 8.8 },
   aztec: { width: 19, height: 19 },
@@ -111,7 +116,7 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
       {
         question: "Can I make an ISBN barcode?",
         answer:
-          "Yes: an ISBN-13 is an EAN-13. Enter the 13 digits without dashes. The 5-digit price add-on some book trades print beside it isn't drawn here.",
+          "Yes, with the ISBN barcode type: it's an EAN-13 of the ISBN-13 with the hyphenated ISBN printed above the bars, and it takes an ISBN-10 and a 5-digit price add-on too. ISSN (magazines) and ISMN (printed music) have their own types.",
       },
       {
         question: "Why does my 13-digit number show an error?",
@@ -306,6 +311,93 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
     ],
   },
   {
+    id: "gs1-databar",
+    slug: "gs1-databar",
+    title: "Free GS1 DataBar Barcode Generator (Omnidirectional)",
+    metaDescription:
+      "Make a GS1 DataBar Omnidirectional barcode from a GTIN, with the check digit added or checked. Scan-checked in your browser. SVG, PDF, EPS and PNG. Free.",
+    intro:
+      "GS1 DataBar Omnidirectional holds one thing: a product's 14-digit GTIN, the number an EAN-13 or UPC-A carries. Type it after (01), check that it scans and download it.",
+    usedFor: [
+      "Retail items too small for an EAN-13 or UPC-A: its bars are as wide as an EAN-13's but much shorter. Checkout scanners read it from any angle, like an EAN-13.",
+      "Not every scanner has GS1 DataBar switched on. Ask the retailer that will scan it before you print, and use EAN-13 or UPC-A when in doubt.",
+    ],
+    numbers: {
+      title: "Do I need GS1 numbers for GS1 DataBar?",
+      paragraphs: [
+        "Yes. The GTIN it holds is built from a GS1 company prefix, like the number in an EAN-13 or UPC-A.",
+        GS1_NUMBERS,
+      ],
+    },
+    rules: [
+      "Write the GTIN after (01), as 14 digits: (01)09501101530003. A 13-digit EAN-13 number becomes a GTIN with a 0 in front, and a 12-digit UPC-A number with two.",
+      "Leave off the last digit and the check digit is added; enter all 14 and it's checked. The brackets aren't encoded; they show that (01), the GTIN, follows.",
+      "GS1 DataBar holds nothing but the GTIN. For a weight, a price, a batch or a date, use GS1 DataBar Expanded, which takes the same (AI)value input.",
+    ],
+    sizing: [
+      "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 33 modules high, 11.6 mm at this module.",
+      "The bars are 96 modules wide, 33.5 mm here: about the width of an EAN-13's bars at the same module. The printed GTIN is a little wider than the bars, so the file is wider too.",
+    ],
+    faqs: [
+      {
+        question: "What does a scanner return?",
+        answer:
+          "The digits 01 and the GTIN, 16 in all, sometimes after a symbology identifier (]e0), and with no brackets. The scan check here accepts both forms.",
+      },
+      {
+        question: "My scanner reads EAN-13 but not this. Why?",
+        answer:
+          "Most likely GS1 DataBar is switched off in its settings. Many scanners let you turn each symbology on or off; check the manual for GS1 DataBar, which older documents call RSS-14.",
+      },
+      {
+        question: "Can it hold a weight or an expiry date?",
+        answer:
+          "No, only the GTIN. GS1 DataBar Expanded holds the GTIN with other Application Identifiers, such as (3103) for a weight or (17) for an expiry date.",
+      },
+    ],
+  },
+  {
+    id: "gs1-databar-expanded",
+    slug: "gs1-databar-expanded",
+    title: "Free GS1 DataBar Expanded Barcode Generator",
+    metaDescription:
+      "Make a GS1 DataBar Expanded barcode: a GTIN with weight, price, batch or expiry in one retail barcode. Check digits added. Scan-checked. SVG, PDF, PNG.",
+    intro:
+      "GS1 DataBar Expanded carries a GTIN and more data in one barcode a checkout scanner reads, each piece marked by an Application Identifier (AI) in brackets: (01) for the GTIN, (17) for an expiry date, (10) for a batch. Type the AIs and values; check digits are added or checked for you.",
+    usedFor: [
+      "Fresh food sold by weight, such as meat, cheese and deli counters, where the weight or the price travels with the GTIN so the checkout can read it from the barcode.",
+      "North American coupons use its stacked form, GS1 DataBar Expanded Stacked, which this generator doesn't draw.",
+    ],
+    numbers: {
+      title: "Do I need GS1 numbers for GS1 DataBar Expanded?",
+      paragraphs: [
+        "For the GTIN in (01), yes: it's built from a GS1 company prefix. Weights, prices, batches and dates are your own data.",
+        GS1_NUMBERS,
+      ],
+    },
+    rules: [
+      "Write each AI in brackets followed by its value: (01)09501101530003(17)261231(10)AB-123. The brackets aren't encoded; they show where each field starts.",
+      "GTINs in (01) and (02) and SSCCs in (00) get their check digit added when you leave it off, or checked when you don't. The encoder also checks the data against GS1's rules: a batch (10) without a GTIN, for example, is refused.",
+      "It holds up to 74 digits of AIs and data, and fewer when there are letters. Put variable-length fields such as (10) batch last, so no separator is needed after them.",
+    ],
+    sizing: [
+      "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 34 modules high, 12 mm at this module.",
+      "It's long, not tall: the example's bars are 98.8 mm long, a little more than the same data as GS1-128 (93.8 mm). More data makes it longer still.",
+    ],
+    faqs: [
+      {
+        question: "Why does my scanner show no brackets?",
+        answer:
+          "The brackets are only for people. Readers report the data with a symbology identifier (]e0) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+      },
+      {
+        question: "GS1 DataBar Expanded or GS1-128?",
+        answer:
+          "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
+      },
+    ],
+  },
+  {
     id: "datamatrix",
     slug: "data-matrix",
     title: "Free Data Matrix Code Generator",
@@ -428,6 +520,151 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
         question: "My UPC-A can't be shortened. What now?",
         answer:
           "Print the UPC-A, at down to 80% if space is tight, or ask GS1 US for a number that has a UPC-E form.",
+      },
+    ],
+  },
+  {
+    id: "isbn",
+    slug: "isbn",
+    title: "Free ISBN Barcode Generator with Price Add-on",
+    metaDescription:
+      "Make an ISBN barcode for a book cover: ISBN-13 or ISBN-10, check digit and hyphens worked out, and an optional price add-on. SVG, PDF and EPS. Free.",
+    intro:
+      "An ISBN barcode is an EAN-13 of the book's 13-digit ISBN, with the ISBN printed above the bars. Type the ISBN, with or without hyphens, and the generator checks it, places the hyphens and draws the barcode, with a 5-digit price add-on if you sell in the US or Canada.",
+    usedFor: [
+      "The back cover of books, where bookshops, distributors and libraries scan it to look the book up. The ISBN Users' Manual recommends the lower right of the back cover, near the spine.",
+      "Each edition and format of a book has its own ISBN, so a hardback, a paperback and an audiobook each carry a different barcode. ISBNs start with 978 or 979; numbers starting 979-0 are ISMNs, for printed music.",
+    ],
+    numbers: {
+      title: "Where do ISBNs come from?",
+      paragraphs: [
+        "From the ISBN agency of the country where the publisher is based. Some agencies charge for ISBNs and some give them out free; the International ISBN Agency lists them all.",
+        "This generator draws the barcode of an ISBN you already have. It doesn't issue or register ISBNs.",
+      ],
+    },
+    rules: [
+      "Type an ISBN-13 or an ISBN-10, with or without hyphens or spaces. Twelve digits get the check digit added and thirteen have it checked. A whole ISBN-10, check digit included, is converted to its ISBN-13: 978 in front of its first nine digits and a new check digit.",
+      "The ISBN above the bars is split into its five parts (prefix, registration group, registrant, publication and check digit) by the ranges the International ISBN Agency publishes, because the parts' lengths differ from one country and publisher to the next.",
+      "The check digit is the EAN-13 one: the first 12 digits are weighted 1, 3, 1, 3… and the check digit brings their sum to a multiple of 10.",
+      "The add-on goes in its own field. In the US and Canada it's 5 digits: the first is the currency (5 for US dollars, 6 for Canadian dollars) and the rest the price, so 52499 is US$24.99, and 90000 means no price. Elsewhere the ISBN Users' Manual keeps 90000 to 98999 for publishers' own use.",
+    ],
+    sizing: [
+      "An ISBN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+      "The vector downloads use a 0.353 mm module, about 107%, and put the add-on 9 modules right of the main bars, within the 7 to 12 GS1 allows. Keep the proportions when you scale, and don't cut the bar height.",
+      "Keep cover artwork out of the quiet zones and away from the ISBN line above the bars.",
+    ],
+    faqs: [
+      {
+        question: "Can I use my old ISBN-10?",
+        answer:
+          "Yes. Type it and the generator converts it to the ISBN-13 that goes in the barcode: 978, its first nine digits and a new check digit. ISBN agencies have only given out 13-digit ISBNs since 1 January 2007.",
+      },
+      {
+        question: "Do I need the 5-digit price add-on?",
+        answer:
+          "Only if you sell through the US or Canadian book trade, which uses it for the cover price. Use 90000 if you don't want a price in the barcode. Outside North America, leave it off.",
+      },
+      {
+        question: "Is an ISBN barcode just an EAN-13?",
+        answer:
+          "The bars are an EAN-13 of the ISBN-13, and checkout scanners read it as one. An ISBN barcode also prints the hyphenated ISBN above the bars, as the ISBN Users' Manual asks, which the EAN-13 generator doesn't.",
+      },
+      {
+        question: "Why are the hyphens different from the ones I typed?",
+        answer:
+          "Each part of an ISBN has a length set by the International ISBN Agency's ranges, and the generator places the hyphens from them. If your ISBN is in a range newer than the generator's copy, type it with its hyphens and they're printed as you wrote them.",
+      },
+    ],
+  },
+  {
+    id: "issn",
+    slug: "issn",
+    title: "Free ISSN Barcode Generator for Magazines",
+    metaDescription:
+      "Make an ISSN barcode for a magazine or journal: the 977 EAN-13 with its sequence variant and an issue add-on, check digits worked out. SVG, PDF, EPS. Free.",
+    intro:
+      "An ISSN barcode puts the ISSN of a magazine, journal or newspaper into an EAN-13 starting 977, usually with a 2-digit add-on for the issue number. Type the ISSN and the issue, and the generator works out both check digits and draws the barcode with the ISSN above it.",
+    usedFor: [
+      "Covers of magazines, journals, newspapers and other serials sold in shops. Retailers and wholesalers scan the main barcode to find the title, and the add-on tells one issue from the next.",
+      "A title published both in print and online has a different ISSN for each; the barcode goes on the print edition.",
+    ],
+    numbers: {
+      title: "Where do ISSNs come from?",
+      paragraphs: [
+        "From the national ISSN centre of the publisher's country, or the ISSN International Centre where there's none. Publishers don't make up ISSNs themselves.",
+        "This generator draws the barcode of an ISSN you already have; it doesn't issue or register ISSNs. Distributors may have their own rules for the variant and add-on digits, so check with yours.",
+      ],
+    },
+    rules: [
+      "Type the 8-character ISSN, NNNN-NNNC, or its first 7 digits to have the check digit added. An ISSN's check digit is weighted 8 down to 2, modulo 11, so it can be X.",
+      "The barcode holds 977, the ISSN's first 7 digits (its check digit is left out), the 2-digit sequence variant and an EAN-13 check digit. The variant is 00 unless you change it: publishers use it for extra information such as a change of price.",
+      "The add-on is usually the issue number in 2 digits; 5 digits work too. You can also type the 13-digit 977 number from an existing barcode, and the ISSN and variant are read from it.",
+    ],
+    sizing: [
+      "An ISSN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+      "The vector downloads use a 0.353 mm module, about 107%, and put the add-on 9 modules right of the main bars, within the 7 to 12 GS1 allows. Keep the proportions when you scale, and don't cut the bar height.",
+    ],
+    faqs: [
+      {
+        question: "What should the 2-digit add-on be?",
+        answer:
+          "Usually the issue number, counted the way your distributor asks: a weekly title and a monthly title number their issues differently. A new issue only needs a new add-on, not a new ISSN.",
+      },
+      {
+        question: "When do I change the sequence variant?",
+        answer:
+          "When an issue needs a different main barcode, for example for a different cover price. Most titles keep 00.",
+      },
+      {
+        question: "Is an ISSN barcode an EAN-13?",
+        answer:
+          "Yes, one starting 977, and checkout scanners read it as one. The add-on is a small separate barcode to its right; scanners set up to read add-ons report it after the 13 digits.",
+      },
+    ],
+  },
+  {
+    id: "ismn",
+    slug: "ismn",
+    title: "Free ISMN Barcode Generator for Printed Music",
+    metaDescription:
+      "Make an ISMN barcode for sheet music and scores: 979-0 ISMNs or old M- numbers, check digit and hyphens worked out. SVG, PDF and EPS for print. Free.",
+    intro:
+      "An ISMN identifies a publication of notated music, such as a score, a set of parts or a songbook, and is printed as an EAN-13 starting 979-0 with the ISMN above the bars. Type the ISMN, or an old number starting with M, and download the barcode for your cover.",
+    usedFor: [
+      "Printed and digital sheet music: scores, parts, songbooks and other notated music, scanned by music shops, distributors and libraries. Each part sold on its own has its own ISMN.",
+      "Books about music get an ISBN instead, and sound recordings have identifiers of their own. A songbook can have both an ISMN and an ISBN.",
+    ],
+    numbers: {
+      title: "Where do ISMNs come from?",
+      paragraphs: [
+        "From the ISMN agency of the publisher's country, appointed by the International ISMN Agency. A publisher gets a registrant number and usually numbers its publications from it.",
+        "This generator draws the barcode of an ISMN you already have. It doesn't issue or register ISMNs.",
+      ],
+    },
+    rules: [
+      "Type the 13 digits starting 979-0, with or without hyphens, or 12 to have the check digit added. An old 10-character ISMN starting with M is converted: the M becomes 979-0 and the check digit stays the same.",
+      "The ISMN above the bars is split into prefix, registrant, item and check digit. The registrant's length comes from its first digit, as the ISMN Users' Manual sets out: 000 to 099, 1000 to 3999, 40000 to 69999, 700000 to 899999, then 9000000 to 9999999.",
+      "The check digit is the EAN-13 one: the first 12 digits are weighted 1, 3, 1, 3… and the check digit brings their sum to a multiple of 10.",
+    ],
+    sizing: [
+      "An ISMN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+      "The vector downloads use a 0.353 mm module, about 107%. Keep the proportions when you scale, and don't cut the bar height.",
+    ],
+    faqs: [
+      {
+        question: "Can I use an old ISMN starting with M?",
+        answer:
+          "Yes. Type it and the generator converts it: M-2306-7118-7 becomes 979-0-2306-7118-7, with the same check digit. ISMNs have been 13 digits since 2008.",
+      },
+      {
+        question: "ISMN or ISBN for a songbook?",
+        answer:
+          "It can have both, and the ISMN Users' Manual leaves the choice to the publisher when only one is used. Books about music, with no notated music as their content, take an ISBN.",
+      },
+      {
+        question: "Can I add a price add-on?",
+        answer:
+          "Yes, 2 or 5 digits, in the add-on field. The ISMN Users' Manual doesn't ask for one, so add it only if your distributor does.",
       },
     ],
   },

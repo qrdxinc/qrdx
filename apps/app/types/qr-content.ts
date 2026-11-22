@@ -60,7 +60,19 @@ export type ContentType =
   | "dogecoin"
   | "bitcoincash"
   | "solana"
-  | "monero";
+  | "monero"
+  // Added 2026-11-22 (payments)
+  | "mecard"
+  | "swiss-qr-bill"
+  | "czech-spd"
+  | "swish"
+  | "khqr"
+  | "lightning"
+  | "xrp"
+  | "cardano"
+  | "tron"
+  | "ton"
+  | "stellar";
 
 /**
  * URL/Plain Text Content
@@ -113,9 +125,28 @@ export interface WifiContent {
   type: "wifi";
   ssid: string;
   password: string;
-  encryption: "WPA" | "WEP" | "nopass";
+  /**
+   * WPA: WPA/WPA2 personal, and WPA2/WPA3 transition networks. SAE: WPA3
+   * personal only. WPA2-EAP: WPA2/WPA3-Enterprise (802.1X).
+   */
+  encryption: "WPA" | "WEP" | "nopass" | "SAE" | "WPA2-EAP";
   hidden?: boolean;
+  // Added 2026-11-22 (payments): WPA2-EAP only
+  /** EAP method (E:) */
+  eapMethod?: WifiEapMethod;
+  /** Phase 2 (inner) authentication (PH2:), for PEAP and TTLS */
+  phase2?: WifiPhase2Method;
+  /** The person's sign-in name (I:) */
+  identity?: string;
+  /** Outer identity sent before the tunnel is up (A:) */
+  anonymousIdentity?: string;
 }
+
+/** EAP methods a Wi-Fi QR code can name; TLS needs a certificate, so it's left out. */
+export type WifiEapMethod = "PEAP" | "TTLS" | "PWD";
+
+/** Inner authentication for PEAP and TTLS. */
+export type WifiPhase2Method = "MSCHAPV2" | "GTC" | "PAP" | "MSCHAP";
 
 /**
  * vCard Contact Content
@@ -294,6 +325,11 @@ export interface EthereumContent {
   address: string;
   amount?: string;
   gas?: string;
+  // Added 2026-11-22 (payments)
+  /** EIP-155 chain ID; Ethereum mainnet when empty */
+  network?: string;
+  /** A stablecoin instead of the network's own coin */
+  token?: "USDT" | "USDC";
 }
 
 /**
@@ -539,6 +575,8 @@ export interface BitcoinCashContent extends CryptoPaymentFields {
 /** Solana Pay transfer request. */
 export interface SolanaContent extends CryptoPaymentFields {
   type: "solana";
+  /** Added 2026-11-22 (payments): an SPL stablecoin instead of SOL */
+  token?: "SOL" | "USDC" | "USDT";
 }
 
 /** Monero payment request (monero: URI). */
@@ -547,6 +585,154 @@ export interface MoneroContent extends CryptoPaymentFields {
 }
 
 // ─── end of the 2026-11-11 types ────────────────────────────────────────────
+
+// ─── Added 2026-11-22 (payments) ────────────────────────────────────────────
+
+/** A MeCard contact (MECARD:), the compact alternative to a vCard. */
+export interface MeCardContent {
+  type: "mecard";
+  firstName: string;
+  lastName?: string;
+  /** How the name is read, e.g. in kana (SOUND:) */
+  reading?: string;
+  nickname?: string;
+  phone?: string;
+  email?: string;
+  url?: string;
+  /** YYYY-MM-DD */
+  birthday?: string;
+  address?: string;
+  note?: string;
+}
+
+/** A Swiss QR-bill (SIX Swiss Payments Code, SPC 0200), the payment part's code. */
+export interface SwissQrBillContent {
+  type: "swiss-qr-bill";
+  /** IBAN or QR-IBAN, CH or LI */
+  iban: string;
+  /** Creditor (structured address) */
+  name: string;
+  street?: string;
+  buildingNumber?: string;
+  postalCode: string;
+  town: string;
+  /** ISO 3166-1 alpha-2 */
+  country: string;
+  currency?: "CHF" | "EUR";
+  amount?: string;
+  /** QR reference (with a QR-IBAN) or RF creditor reference (with an IBAN) */
+  reference?: string;
+  message?: string;
+  /** Structured billing information, //S1/… */
+  billingInfo?: string;
+  /** Whether the bill names who pays */
+  payableBy?: boolean;
+  debtorName?: string;
+  debtorStreet?: string;
+  debtorBuildingNumber?: string;
+  debtorPostalCode?: string;
+  debtorTown?: string;
+  debtorCountry?: string;
+}
+
+/** A Czech QR Platba code (ČBA Short Payment Descriptor, SPD*1.0). */
+export interface CzechSpdContent {
+  type: "czech-spd";
+  /** A Czech IBAN, or an account number like 19-2000145399/0800 */
+  account: string;
+  bic?: string;
+  /** Czech crowns */
+  amount?: string;
+  /** Recipient name (RN) */
+  name?: string;
+  message?: string;
+  /** Variabilní symbol (X-VS), up to 10 digits */
+  variableSymbol?: string;
+  /** Specifický symbol (X-SS) */
+  specificSymbol?: string;
+  /** Konstantní symbol (X-KS) */
+  constantSymbol?: string;
+  /** Due date, YYYY-MM-DD (DT) */
+  dueDate?: string;
+  /** Ask for an instant payment (PT:IP) */
+  instant?: boolean;
+}
+
+/** A Swish payment link (Sweden). */
+export interface SwishContent {
+  type: "swish";
+  /** Swedish mobile number or 123 business number */
+  payee: string;
+  /** Kronor */
+  amount?: string;
+  message?: string;
+  /** Whether the payer may change the amount */
+  amountEditable?: boolean;
+  /** Whether the payer may change the message */
+  messageEditable?: boolean;
+}
+
+/** A KHQR code (Cambodia, Bakong) to a person's Bakong account. */
+export interface KhqrContent {
+  type: "khqr";
+  /** Bakong account ID, name@bank */
+  bakongId: string;
+  name: string;
+  city?: string;
+  currency?: "KHR" | "USD";
+  amount?: string;
+  /** With an amount: the last day the code works, YYYY-MM-DD */
+  expiry?: string;
+  billNumber?: string;
+  mobile?: string;
+}
+
+/** Lightning: a BOLT 11 invoice, an LNURL or a Lightning Address. */
+export interface LightningContent {
+  type: "lightning";
+  request: string;
+}
+
+/** XRP Ledger: a classic address, with an optional destination tag. */
+export interface XrpContent {
+  type: "xrp";
+  address: string;
+  destinationTag?: string;
+}
+
+/** Cardano: a CIP-13 payment request. */
+export interface CardanoContent {
+  type: "cardano";
+  address: string;
+  /** ADA */
+  amount?: string;
+}
+
+/** Tron: the plain address (TRX and TRC-20 tokens share it). */
+export interface TronContent {
+  type: "tron";
+  address: string;
+}
+
+/** TON: a ton://transfer request, in TON or USDT. */
+export interface TonContent {
+  type: "ton";
+  address: string;
+  amount?: string;
+  message?: string;
+  token?: "TON" | "USDT";
+}
+
+/** Stellar: a SEP-0007 pay request, in XLM or USDC. */
+export interface StellarContent {
+  type: "stellar";
+  address: string;
+  amount?: string;
+  memo?: string;
+  token?: "XLM" | "USDC";
+}
+
+// ─── end of the 2026-11-22 (payments) types ─────────────────────────────────
 
 /**
  * Union type for all content configurations
@@ -607,7 +793,19 @@ export type QRContentConfig =
   | DogecoinContent
   | BitcoinCashContent
   | SolanaContent
-  | MoneroContent;
+  | MoneroContent
+  // Added 2026-11-22 (payments)
+  | MeCardContent
+  | SwissQrBillContent
+  | CzechSpdContent
+  | SwishContent
+  | KhqrContent
+  | LightningContent
+  | XrpContent
+  | CardanoContent
+  | TronContent
+  | TonContent
+  | StellarContent;
 
 /**
  * Content type metadata for UI rendering
@@ -840,7 +1038,23 @@ export const CONTENT_TYPES_METADATA: ContentTypeMetadata[] = [
     label: "Ethereum",
     icon: "brand:ethereum",
     description: "Receive ETH to your wallet",
-    keywords: ["eth", "crypto", "wallet", "web3", "payment"],
+    keywords: [
+      "eth",
+      "crypto",
+      "wallet",
+      "web3",
+      "payment",
+      // Added 2026-11-22 (payments)
+      "bnb",
+      "polygon",
+      "arbitrum",
+      "optimism",
+      "base",
+      "avalanche",
+      "usdt",
+      "usdc",
+      "evm",
+    ],
   },
   {
     type: "etsy",
@@ -1059,7 +1273,17 @@ export const CONTENT_TYPES_METADATA: ContentTypeMetadata[] = [
     label: "Solana",
     icon: "brand:solana",
     description: "Receive SOL with Solana Pay",
-    keywords: ["sol", "solana pay", "crypto", "wallet", "web3", "payment"],
+    keywords: [
+      "sol",
+      "solana pay",
+      "crypto",
+      "wallet",
+      "web3",
+      "payment",
+      // Added 2026-11-22 (payments)
+      "usdc",
+      "usdt",
+    ],
   },
   {
     type: "monero",
@@ -1067,6 +1291,121 @@ export const CONTENT_TYPES_METADATA: ContentTypeMetadata[] = [
     icon: "brand:monero",
     description: "Receive Monero to your wallet",
     keywords: ["xmr", "crypto", "wallet", "privacy", "payment"],
+  },
+  // ─── Added 2026-11-22 (payments) ──────────────────────────────────────────
+  {
+    type: "mecard",
+    label: "MeCard",
+    icon: "UserSquare",
+    description: "Share a contact in a smaller code than a vCard",
+    keywords: [
+      "mecard",
+      "contact",
+      "business card",
+      "address book",
+      "docomo",
+      "compact",
+    ],
+  },
+  {
+    type: "swiss-qr-bill",
+    label: "Swiss QR-bill",
+    icon: "ReceiptText",
+    description: "Make the payment code of a Swiss QR-bill",
+    keywords: [
+      "qr-rechnung",
+      "qr-facture",
+      "qr-fattura",
+      "switzerland",
+      "schweiz",
+      "liechtenstein",
+      "qr-iban",
+      "invoice",
+      "chf",
+      "payment",
+    ],
+  },
+  {
+    type: "czech-spd",
+    label: "QR Platba",
+    icon: "MoneyRecive",
+    description: "Get paid by bank transfer in Czechia",
+    keywords: [
+      "czech",
+      "czechia",
+      "cesko",
+      "spd",
+      "spayd",
+      "qr platba",
+      "variabilni symbol",
+      "bank transfer",
+      "payment",
+    ],
+  },
+  {
+    type: "swish",
+    label: "Swish",
+    icon: "Wallet2",
+    description: "Get paid with Swish in Sweden",
+    keywords: ["sweden", "sverige", "swish", "payment", "pay", "money"],
+  },
+  {
+    type: "khqr",
+    label: "KHQR",
+    icon: "CardReceive",
+    description: "Get paid to a Bakong account in Cambodia",
+    keywords: ["cambodia", "bakong", "khqr", "riel", "payment", "pay"],
+  },
+  {
+    type: "lightning",
+    label: "Lightning",
+    icon: "Flash",
+    description: "Get paid in bitcoin over Lightning",
+    keywords: [
+      "lightning network",
+      "lnurl",
+      "bolt11",
+      "invoice",
+      "lightning address",
+      "sats",
+      "bitcoin",
+      "crypto",
+    ],
+  },
+  {
+    type: "xrp",
+    label: "XRP",
+    icon: "brand:xrp",
+    description: "Receive XRP to your wallet",
+    keywords: ["xrpl", "ripple", "destination tag", "crypto", "wallet"],
+  },
+  {
+    type: "cardano",
+    label: "Cardano",
+    icon: "brand:cardano",
+    description: "Receive ADA to your wallet",
+    keywords: ["ada", "crypto", "wallet", "payment"],
+  },
+  {
+    type: "tron",
+    label: "Tron",
+    icon: "Coin",
+    description: "Share your Tron address for TRX or USDT",
+    keywords: ["trx", "usdt", "trc20", "trc-20", "tether", "crypto", "wallet"],
+  },
+  {
+    type: "ton",
+    label: "TON",
+    icon: "brand:ton",
+    description: "Receive TON or USDT on TON",
+    keywords: ["toncoin", "gram", "telegram", "usdt", "jetton", "crypto"],
+  },
+  {
+    type: "stellar",
+    label: "Stellar",
+    icon: "brand:stellar",
+    description: "Receive XLM or USDC on Stellar",
+    keywords: ["xlm", "lumens", "usdc", "sep-7", "crypto", "wallet"],
   },
 ];
 
@@ -1118,6 +1457,8 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
       "telegram",
       "signal",
       "line",
+      // Added 2026-11-22 (payments)
+      "mecard",
     ],
   },
   {
@@ -1172,6 +1513,11 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
       "venmo",
       "cashapp",
       "revolut",
+      // Added 2026-11-22 (payments)
+      "swiss-qr-bill",
+      "czech-spd",
+      "swish",
+      "khqr",
     ],
   },
   {
@@ -1186,6 +1532,13 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
       "dogecoin",
       "bitcoincash",
       "monero",
+      // Added 2026-11-22 (payments)
+      "lightning",
+      "xrp",
+      "cardano",
+      "tron",
+      "ton",
+      "stellar",
     ],
   },
   {

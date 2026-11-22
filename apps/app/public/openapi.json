@@ -3195,13 +3195,13 @@
         "summary": "Render a barcode image",
         "tags": ["Barcodes"],
         "security": [],
-        "description": "A static barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.\n\n**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and SSCC fields) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.\n\n**Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel; the background is always a solid color, so it has the same pixels as the PNG.\n\nValues that shouldn't sit in a URL can go in a `POST` body instead.",
+        "description": "A static barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.\n\n**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128 and GS1 DataBar Expanded (GTIN and SSCC fields) and GS1 DataBar (its GTIN) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an ISSN (`0317-8471`) or its 13-digit 977 number, an ISMN (979-0) or its old M form, each with or without its check digit; a 2- or 5-digit add-on follows after a space (`978-1-873671-00-9 52250`), and an ISSN's 2-digit sequence variant comes before it (`0317-8471 00 05`, 00 when left out). Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.\n\n**Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel; the background is always a solid color, so it has the same pixels as the PNG.\n\nValues that shouldn't sit in a URL can go in a `POST` body instead.",
         "parameters": [
           {
             "name": "format",
             "in": "query",
             "required": true,
-            "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec)",
+            "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec)",
             "schema": {
               "type": "string",
               "enum": [
@@ -3209,12 +3209,17 @@
                 "ean8",
                 "upca",
                 "upce",
+                "isbn",
+                "issn",
+                "ismn",
                 "code128",
                 "code39",
                 "code93",
                 "codabar",
                 "itf14",
                 "gs1-128",
+                "gs1-databar",
+                "gs1-databar-expanded",
                 "datamatrix",
                 "pdf417",
                 "aztec"
@@ -3226,7 +3231,7 @@
             "name": "data",
             "in": "query",
             "required": true,
-            "description": "The number or text to encode. Retail numbers (EAN, UPC, ITF-14, GS1 GTINs and SSCCs) can leave the check digit off and it's added; a wrong one is an error.",
+            "description": "The number or text to encode. Retail numbers (EAN, UPC, ITF-14, GS1 GTINs and SSCCs, ISBN, ISSN, ISMN) can leave the check digit off and it's added; a wrong one is an error. ISBN, ISSN and ISMN take a 2- or 5-digit add-on after a space (978-1-873671-00-9 52250); an ISSN takes its 2-digit sequence variant before the add-on (0317-8471 00 05).",
             "schema": {
               "type": "string",
               "minLength": 1,
@@ -3439,23 +3444,28 @@
                       "ean8",
                       "upca",
                       "upce",
+                      "isbn",
+                      "issn",
+                      "ismn",
                       "code128",
                       "code39",
                       "code93",
                       "codabar",
                       "itf14",
                       "gs1-128",
+                      "gs1-databar",
+                      "gs1-databar-expanded",
                       "datamatrix",
                       "pdf417",
                       "aztec"
                     ],
-                    "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec)"
+                    "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec)"
                   },
                   "data": {
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 1000,
-                    "description": "The number or text to encode. Retail numbers (EAN, UPC, ITF-14, GS1 GTINs and SSCCs) can leave the check digit off and it's added; a wrong one is an error."
+                    "description": "The number or text to encode. Retail numbers (EAN, UPC, ITF-14, GS1 GTINs and SSCCs, ISBN, ISSN, ISMN) can leave the check digit off and it's added; a wrong one is an error. ISBN, ISSN and ISMN take a 2- or 5-digit add-on after a space (978-1-873671-00-9 52250); an ISSN takes its 2-digit sequence variant before the add-on (0317-8471 00 05)."
                   },
                   "type": {
                     "default": "svg",
@@ -3700,12 +3710,17 @@
                 "ean8",
                 "upca",
                 "upce",
+                "isbn",
+                "issn",
+                "ismn",
                 "code128",
                 "code39",
                 "code93",
                 "codabar",
                 "itf14",
                 "gs1-128",
+                "gs1-databar",
+                "gs1-databar-expanded",
                 "datamatrix",
                 "pdf417",
                 "aztec"
@@ -3891,23 +3906,28 @@
                       "ean8",
                       "upca",
                       "upce",
+                      "isbn",
+                      "issn",
+                      "ismn",
                       "code128",
                       "code39",
                       "code93",
                       "codabar",
                       "itf14",
                       "gs1-128",
+                      "gs1-databar",
+                      "gs1-databar-expanded",
                       "datamatrix",
                       "pdf417",
                       "aztec"
                     ],
-                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, code128, code39, code93, codabar, itf14, gs1-128, datamatrix, pdf417 or aztec"
+                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, datamatrix, pdf417 or aztec"
                   },
                   "value": {
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 1000,
-                    "description": "The number or text to encode, checked against the format's rules. Retail numbers can leave the check digit off and it's added."
+                    "description": "The number or text to encode, checked against the format's rules. Retail and book numbers can leave the check digit off and it's added; ISBN, ISSN and ISMN take a 2- or 5-digit add-on after a space (an ISSN's 2-digit sequence variant comes first)."
                   },
                   "options": {
                     "description": "How it's drawn; anything left out uses the format's defaults (black on white, the minimum quiet zone, scale 4)",
@@ -4232,23 +4252,28 @@
                       "ean8",
                       "upca",
                       "upce",
+                      "isbn",
+                      "issn",
+                      "ismn",
                       "code128",
                       "code39",
                       "code93",
                       "codabar",
                       "itf14",
                       "gs1-128",
+                      "gs1-databar",
+                      "gs1-databar-expanded",
                       "datamatrix",
                       "pdf417",
                       "aztec"
                     ],
-                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, code128, code39, code93, codabar, itf14, gs1-128, datamatrix, pdf417 or aztec"
+                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, datamatrix, pdf417 or aztec"
                   },
                   "value": {
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 1000,
-                    "description": "The number or text to encode, checked against the format's rules. Retail numbers can leave the check digit off and it's added."
+                    "description": "The number or text to encode, checked against the format's rules. Retail and book numbers can leave the check digit off and it's added; ISBN, ISSN and ISMN take a 2- or 5-digit add-on after a space (an ISSN's 2-digit sequence variant comes first)."
                   },
                   "options": {
                     "description": "How it's drawn: replaces the saved options (fields left out go back to the format's defaults)",
@@ -6279,12 +6304,17 @@
               "ean8",
               "upca",
               "upce",
+              "isbn",
+              "issn",
+              "ismn",
               "code128",
               "code39",
               "code93",
               "codabar",
               "itf14",
               "gs1-128",
+              "gs1-databar",
+              "gs1-databar-expanded",
               "datamatrix",
               "pdf417",
               "aztec"

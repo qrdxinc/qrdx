@@ -86,6 +86,9 @@ const EXTRA_VALUES: Partial<Record<BarcodeFormatId, string[]>> = {
   ean8: ["9638507"],
   upca: ["01234500005"],
   upce: ["654321", "01234558", "065100004327"],
+  isbn: ["0-306-40615-2", "978-0-571-08989-5 52499", "979-10-90636-07-1 12"],
+  issn: ["0378-5955", "0311-175X 99 12345", "9770317847001 05"],
+  ismn: ["M-2306-7118-7", "979-0-099-12345-2 90000"],
   code128: ["12345678", "abc DEF 123 !#%", "QRDX 0042-ALPHA/beta"],
   code39: ["ABC-123 $/+%."],
   code93: ["ABC-123 $/+%.", "1234567890", "Q".repeat(40)],
@@ -95,6 +98,15 @@ const EXTRA_VALUES: Partial<Record<BarcodeFormatId, string[]>> = {
     "(00)10614141123456789",
     "(01)09501101530003(10)LOT-7(17)261231",
     "(01)09501101530003(3103)000123",
+  ],
+  "gs1-databar": ["(01)0950110153000", "(01)05901234123457"],
+  "gs1-databar-expanded": [
+    "(01)09501101530003(3103)000123",
+    "(01)09501101530003(10)abc-def",
+    // 66 digits: more than GS1-128 holds
+    "(01)09501101530003(3103)000123(11)261231(13)261231(15)261231(17)261231(16)261231",
+    // 49 characters with letters: the most that fits
+    "(01)09501101530003(10)ABCDEFGHIJKLMNOPQRST(21)ABCDEFGHI",
   ],
   datamatrix: ["héllo ✓ 日本", "A".repeat(300)],
   pdf417: ["Line one\nLine two", "1234567890".repeat(20)],
@@ -146,6 +158,57 @@ describe("generated barcodes decode with the scanner's reader", () => {
       ).toBe(true);
     },
   );
+});
+
+describe("ISBN, ISSN and ISMN add-ons read back", () => {
+  // The ponyfill reads the EAN-13 and skips add-ons, so these go to ZXing's
+  // own reader with add-ons required: the add-on digits follow the EAN-13's.
+  type Read = (
+    input: Blob,
+    options: { formats: string[]; eanAddOnSymbol: "Require" },
+  ) => Promise<{ text: string }[]>;
+  let read: Read;
+  beforeAll(async () => {
+    const require = createRequire(import.meta.url);
+    const fromDetector = createRequire(
+      require.resolve("barcode-detector/ponyfill"),
+    );
+    const reader = (await import(
+      fromDetector.resolve("zxing-wasm/reader")
+    )) as { readBarcodes: Read };
+    read = reader.readBarcodes;
+  });
+
+  it.each([
+    ["isbn", "978-1-873671-00-9 52250", "978187367100952250"],
+    ["isbn", "0-306-40615-2 90000", "978030640615790000"],
+    ["issn", "0317-8471 00 05", "977031784700105"],
+    ["issn", "0311-175X 03 12345", "977031117503212345"],
+    ["ismn", "979-0-3452-4680-5 12", "979034524680512"],
+  ] as const)("%s %j", async (id, raw, expected) => {
+    const checked = validateBarcodeInput(id, raw);
+    if (!checked.ok) throw new Error(checked.error);
+    for (const scale of [1, 2, 4]) {
+      const { svg } = renderBarcodeSVG(id, checked.value, {
+        ...BASE,
+        quietZone: getBarcodeFormat(id).quietZone.default,
+        scale,
+      });
+      const png = await sharp(Buffer.from(svg), { density: 72 })
+        .flatten({ background: "#ffffff" })
+        .png()
+        .toBuffer();
+      const found = await read(
+        new Blob([new Uint8Array(png)], { type: "image/png" }),
+        { formats: ["EAN13"], eanAddOnSymbol: "Require" },
+      );
+      expect(
+        found.map((code) => code.text),
+        `scale ${scale}`,
+      ).toEqual([expected]);
+      expect(decodedMatches(id, checked.value, expected)).toBe(true);
+    }
+  });
 });
 
 describe("coupon block barcodes decode with the same reader", () => {

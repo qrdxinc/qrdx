@@ -42,6 +42,8 @@ on:
       - apps/app/lib/ai/art-models.ts
       - apps/app/lib/ai/models.ts
       - apps/app/lib/barcode/formats.ts
+      - apps/app/lib/barcode/isbn-ranges.generated.ts
+      - apps/app/lib/barcode/publication.ts
       - apps/app/lib/brand-logos/catalog.generated.ts
       - apps/app/lib/landing/page-type-ids.ts
       - apps/app/ee/audit-log/limits.ts

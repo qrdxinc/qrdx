@@ -269,6 +269,20 @@ describe("GET /v1/barcode", () => {
     expect(await eps.text()).toMatch(/^%!PS-Adobe-3\.0 EPSF-3\.0/);
   });
 
+  it("draws ISBNs with their add-on as every file type", async () => {
+    const data = encodeURIComponent("1-56581-231-X 52499");
+    const svg = await getImage(`format=isbn&data=${data}`);
+    expect(svg.status).toBe(200);
+    expect(await svg.text()).toMatch(/^<svg /);
+    for (const type of ["png", "pdf", "eps"]) {
+      const file = await getImage(`format=ISBN-13&data=${data}&type=${type}`);
+      expect(file.status, type).toBe(200);
+      expect(file.headers.get("content-disposition"), type).toContain(
+        `isbn-978-1-56581-231-4-52499.${type}`,
+      );
+    }
+  });
+
   it("takes the format as people write it", async () => {
     for (const format of ["EAN-13", "ean_13", "Ean13"]) {
       expect(
@@ -307,6 +321,19 @@ describe("GET /v1/barcode", () => {
     ["gs1-128", "01095011015300", /Start with an Application Identifier/],
     ["gs1-128", "(01)09501101530004", /AI \(01\).*check digit should be 3/],
     ["gs1-128", "(10)", /AI \(10\) has no value/],
+    ["gs1-databar", "(01)0950110153000", undefined],
+    ["gs1-databar", "(01)09501101530003(10)AB", /holds only a GTIN/],
+    ["gs1-databar", "(01)09501101530004", /check digit should be 3/],
+    [
+      "gs1-databar-expanded",
+      "(01)09501101530003(17)261231(10)AB-123",
+      undefined,
+    ],
+    [
+      "gs1-databar-expanded",
+      "(01)09501101530003(10)AB 12(21)é",
+      /GS1 doesn't allow: é/,
+    ],
     ["code128", "café", /plain ASCII.*Not allowed: é/],
     ["code128", "A".repeat(81), /up to 80 characters; this has 81/],
     ["code39", "qrdx", /no lowercase letters/],
@@ -317,6 +344,15 @@ describe("GET /v1/barcode", () => {
     ["code93", "qrdx", /Code 93 here has no lowercase letters/],
     ["code93", "QRDX#1", /Not allowed: #/],
     ["datamatrix", "x".repeat(1001), /at most 1000 characters/],
+    ["isbn", "978-1-873671-00-9 52250", undefined],
+    ["isbn", "1-56581-231-X", undefined],
+    ["isbn", "9781873671008", /check digit should be 9, not 8/],
+    ["isbn", "978-1-873671-00-9 123", /add-on has 2 or 5 digits/],
+    ["issn", "0317-8471 00 05", undefined],
+    ["issn", "0317-8472", /check digit should be 1, not 2/],
+    ["issn", "0317-8471 00 05 1", /with a space between each/],
+    ["ismn", "M-2306-7118-7", undefined],
+    ["ismn", "9781873671009", /are ISBNs/],
   ])("%s %j", async (format, data, error) => {
     const response = await getImage(
       `format=${format}&data=${encodeURIComponent(data)}`,
