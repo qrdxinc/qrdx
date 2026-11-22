@@ -119,6 +119,8 @@ export function mapLinks(query: string) {
   return {
     google: `https://www.google.com/maps/search/?api=1&query=${q}`,
     apple: `https://maps.apple.com/?q=${q}`,
+    // Waze's deep link: the app when installed, waze.com otherwise.
+    waze: `https://waze.com/ul?q=${q}`,
     embed: `https://maps.google.com/maps?q=${q}&output=embed`,
   };
 }

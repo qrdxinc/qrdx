@@ -2129,6 +2129,7 @@
       "linkCopied": "Link copied",
       "copyThisLink": "Copy this link",
       "details": "Details",
+      "timeline": "Timeline",
       "links": "Links",
       "socialProfiles": "Social profiles",
       "mapOf": "Map of {place}",
@@ -2192,7 +2193,24 @@
         "password": "Password",
         "noPassword": "None, just connect",
         "copyNetwork": "Copy network name",
-        "copyPassword": "Copy password"
+        "copyPassword": "Copy password",
+        "security": "Security",
+        "steps": {
+          "title": "How to join",
+          "iphone": "On iPhone",
+          "android": "On Android",
+          "copy": "Copy the password with the button above.",
+          "iphoneOpen": "Open Settings and tap Wi-Fi. Make sure Wi-Fi is on.",
+          "androidOpen": "Open Settings and tap Network & internet, then Internet. On some phones it's Connections, then Wi-Fi.",
+          "pick": "Tap “{ssid}” in the list of networks.",
+          "iphoneHidden": "Tap Other, type “{ssid}” as the name and choose the security type.",
+          "androidHidden": "Tap Add network at the bottom of the list, type “{ssid}” and choose the security type. Under Advanced options, set Hidden network to Yes.",
+          "iphonePassword": "Paste the password and tap Join.",
+          "androidPassword": "Paste the password and tap Connect.",
+          "androidPasswordSave": "Paste the password and tap Save.",
+          "iphoneJoin": "Tap Join.",
+          "androidSave": "Tap Save."
+        }
       },
       "payment": {
         "types": {

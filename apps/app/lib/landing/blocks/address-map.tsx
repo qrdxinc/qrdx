@@ -24,6 +24,8 @@ export const addressMapSchema = z.object({
   note: lineText(200).default(""),
   /** Embed a Google map (loads Google content on the page) */
   showMap: z.boolean().default(false),
+  /** A Waze button beside Google Maps and Apple Maps */
+  showWaze: z.boolean().default(false),
 });
 
 export type AddressMapProps = z.output<typeof addressMapSchema>;
@@ -80,18 +82,30 @@ function AddressMapBlock({
           )}
         </address>
       </div>
-      {props.showMap && (
-        <iframe
-          className="aspect-video w-full rounded-[calc(var(--lp-radius)*0.75)] border-0"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          src={maps.embed}
-          title={t("mapOf", { place: query })}
-        />
-      )}
+      {props.showMap &&
+        (context.thumbnail ? (
+          // Scaled-down previews never load Google's map.
+          <div
+            aria-hidden="true"
+            className="grid aspect-video w-full place-items-center rounded-[calc(var(--lp-radius)*0.75)] bg-(--lp-fg)/5"
+          >
+            <MapPin className="size-6 opacity-40" />
+          </div>
+        ) : (
+          <iframe
+            className="aspect-video w-full rounded-[calc(var(--lp-radius)*0.75)] border-0"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            src={maps.embed}
+            title={t("mapOf", { place: query })}
+          />
+        ))}
       <div className="grid grid-cols-2 gap-2">
         <a
-          className={buttonClass("filled", cn("min-h-11 text-sm", shape))}
+          className={buttonClass(
+            "filled",
+            cn("min-h-11 text-sm", props.showWaze && "col-span-2", shape),
+          )}
           {...linkProps(maps.google, id, "google-maps")}
         >
           <Navigation aria-hidden="true" className="size-4" />
@@ -103,6 +117,14 @@ function AddressMapBlock({
         >
           Apple Maps
         </a>
+        {props.showWaze && (
+          <a
+            className={buttonClass("outline", cn("min-h-11 text-sm", shape))}
+            {...linkProps(maps.waze, id, "waze")}
+          >
+            Waze
+          </a>
+        )}
       </div>
     </section>
   );
@@ -112,7 +134,8 @@ export const addressMapBlock = registerBlock({
   type: "address-map",
   category: "contact",
   label: "Address & map",
-  description: "Your address with directions in Google or Apple Maps",
+  description:
+    "Your address with directions in Google Maps, Apple Maps or Waze",
   icon: MapPin,
   schema: addressMapSchema,
   defaults: {

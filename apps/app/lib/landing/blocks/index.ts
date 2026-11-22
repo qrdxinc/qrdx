@@ -11,6 +11,7 @@ import "./apps";
 import "./form";
 import "./rating";
 import "./details";
+import "./timeline";
 import "./product";
 import "./payment";
 

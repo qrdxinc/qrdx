@@ -22,6 +22,14 @@ import "./real-estate";
 import "./pet";
 import "./medical";
 import "./playlist";
+// Added 2026-11-22 (pages)
+import "./location";
+import "./resume";
+import "./wifi";
+import "./invitation";
+import "./form";
+import "./asset-tag";
+import "./message";
 import "./custom";
 
 export * from "./registry";
