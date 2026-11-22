@@ -1301,6 +1301,12 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "Unduh kode dalam format PNG, SVG, WebP, GIF, BMP, atau ICO.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
   "ff8e12a3d1d9": {
     "source": "The text is stored as-is in UTF-8, so accents, emoji and non-Latin scripts work. Each non-ASCII character takes 2 to 4 bytes.",
     "text": "Teks disimpan apa adanya dalam UTF-8, sehingga huruf beraksen, emoji, dan aksara non-Latin dapat digunakan. Setiap karakter non-ASCII memakai 2 hingga 4 byte.",
@@ -1799,6 +1805,12 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.summary"
   },
+  "88a28035b215": {
+    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WPA3, WEP and open networks, hidden SSIDs, correct escaping. Free.",
+    "text": "Buat kode QR Wi-Fi agar tamu terhubung ke jaringan Anda dengan satu kali pemindaian. Mendukung WPA/WPA2, WPA3, WEP, dan jaringan terbuka, SSID tersembunyi, serta escaping yang benar. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.metaDescription"
+  },
   "ee330fcc62d7": {
     "source": "A Wi-Fi QR code lets guests join your network by pointing their camera at it, instead of reading out a 20-character password. The camera apps on iPhone and on most Android phones (or Google Lens) recognize the format and offer to join the network.",
     "text": "Kode QR Wi-Fi memungkinkan tamu terhubung ke jaringan Anda cukup dengan mengarahkan kamera ke kode tersebut, tanpa perlu membacakan kata sandi 20 karakter. Aplikasi kamera di iPhone dan di sebagian besar ponsel Android (atau Google Lens) mengenali formatnya dan menawarkan untuk terhubung ke jaringan.",
@@ -1816,6 +1828,12 @@
     "text": "Masukkan nama jaringan (SSID) persis seperti yang tampil, termasuk huruf kapital dan spasi.",
     "status": "machine",
     "context": "qrTypes.types.wifi.steps.0"
+  },
+  "7769a5a4517e": {
+    "source": "Choose the security type: WPA/WPA2 for almost every modern router (including ones in WPA2/WPA3 mode), WPA3 only for networks that refuse WPA2, WEP for very old ones, or No password for open networks.",
+    "text": "Pilih jenis keamanan: WPA/WPA2 untuk hampir semua router modern (termasuk yang memakai mode WPA2/WPA3), WPA3 hanya untuk jaringan yang menolak WPA2, WEP untuk router yang sangat lama, atau Tanpa kata sandi untuk jaringan terbuka.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.steps.1"
   },
   "1eebf98339b3": {
     "source": "Enter the password, and switch on Hidden network only if your router doesn't broadcast its name.",
@@ -1853,6 +1871,18 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.payload.notes.3"
   },
+  "3f864e1191d8": {
+    "source": "T:SAE marks a network that accepts only WPA3, as the Wi-Fi Alliance's WPA3 specification writes it. Android's Wi-Fi settings scanner reads it from Android 10; Apple doesn't document it for the iPhone Camera, so a network that also accepts WPA2 is better written as T:WPA.",
+    "text": "T:SAE menandai jaringan yang hanya menerima WPA3, sesuai penulisan dalam spesifikasi WPA3 dari Wi-Fi Alliance. Pemindai di pengaturan Wi-Fi Android membacanya mulai Android 10; Apple tidak mendokumentasikannya untuk Kamera iPhone, jadi jaringan yang juga menerima WPA2 sebaiknya ditulis sebagai T:WPA.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.payload.notes.4"
+  },
+  "ce5bbff335e8": {
+    "source": "T:WPA2-EAP marks a WPA2/WPA3-Enterprise network, with ZXing's E: (EAP method), PH2: (phase 2), A: (anonymous identity) and I: (identity) fields. Scanner apps built on ZXing read them; phone camera apps don't join enterprise networks from a code.",
+    "text": "T:WPA2-EAP menandai jaringan WPA2/WPA3-Enterprise, dengan kolom E: (metode EAP), PH2: (fase 2), A: (identitas anonim), dan I: (identitas) dari ZXing. Aplikasi pemindai berbasis ZXing dapat membacanya; aplikasi kamera ponsel tidak menghubungkan ke jaringan enterprise dari sebuah kode.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.payload.notes.5"
+  },
   "1674145adaf8": {
     "source": "Is it safe to put my Wi-Fi password in a QR code?",
     "text": "Apakah aman menaruh kata sandi Wi-Fi saya di kode QR?",
@@ -1870,6 +1900,12 @@
     "text": "Mengapa ponsel saya tidak terhubung?",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.question"
+  },
+  "feaacd0db501": {
+    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. For enterprise networks that need a username (WPA2/WPA3-Enterprise), QRdx can write the sign-in details, but phone camera apps don't join from them: Android's Wi-Fi scanner reads only personal and open networks, and iPhones set up enterprise Wi-Fi with a configuration profile. Networks that need a certificate can't be put in a code at all.",
+    "text": "Periksa apakah nama jaringan persis sama (huruf besar dan kecil dibedakan), jenis keamanannya benar, dan Anda berada dalam jangkauan. Untuk jaringan enterprise yang memerlukan nama pengguna (WPA2/WPA3-Enterprise), QRdx dapat menuliskan detail masuknya, tetapi aplikasi kamera ponsel tidak terhubung dari kode tersebut: pemindai Wi-Fi Android hanya membaca jaringan pribadi dan terbuka, dan iPhone menyiapkan Wi-Fi enterprise dengan profil konfigurasi. Jaringan yang memerlukan sertifikat sama sekali tidak dapat dimasukkan ke dalam kode.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.faqs.1.answer"
   },
   "2cd620c4e0bd": {
     "source": "Does the code still work if I change the password?",
@@ -2272,6 +2308,12 @@
     "text": "Lakukan pemindaian pada pratinjau untuk memastikan profil Anda terbuka.",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
+  },
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "Unduh PNG, SVG, WebP, GIF, BMP, atau ICO, atau atur gaya kode di editor lengkap.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   },
   "c7d94000c2ce": {
     "source": "QRdx removes a leading @ and adds the username to Instagram's profile URL.",
@@ -3827,17 +3869,83 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.title"
   },
+  "d665e6e266e7": {
+    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments make a Lightning code from your wallet's invoice, LNURL or Lightning Address instead.",
+    "text": "Ini adalah permintaan on-chain: dompet membayar ke alamat Anda di blockchain Bitcoin. Dompet yang hanya mendukung Lightning tidak dapat membayarnya, dan generator ini tidak menambahkan invoice lightning= ke URI, jadi untuk pembayaran Lightning, buat kode Lightning dari invoice, LNURL, atau Lightning Address di dompet Anda.",
+    "status": "machine",
+    "context": "qrTypes.types.bitcoin.details.paragraphs.0"
+  },
   "e3130a29c7fc": {
     "source": "The generator checks the address's length (26 to 62 characters), not its checksum, and it can't tell mainnet from testnet: a testnet address (starting with tb1, m, n or 2) makes a code no ordinary wallet can pay. Scan the preview with the wallet that will pay before you print.",
     "text": "Generator memeriksa panjang alamat (26 hingga 62 karakter), bukan checksum-nya, dan tidak dapat membedakan mainnet dari testnet: alamat testnet (diawali tb1, m, n, atau 2) menghasilkan kode yang tidak bisa dibayar oleh dompet biasa. Pindai pratinjau dengan dompet yang akan digunakan untuk membayar sebelum Anda mencetak.",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.paragraphs.1"
   },
+  "01b290b322d0": {
+    "source": "Request ETH, USDC or USDT on Ethereum and other EVM networks.",
+    "text": "Minta ETH, USDC, atau USDT di Ethereum dan jaringan EVM lainnya.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.summary"
+  },
+  "3b28ba3d3302": {
+    "source": "Make an Ethereum QR code in the EIP-681 format for ETH, USDC or USDT on Ethereum, Base, Polygon, Arbitrum and three more EVM networks. Free.",
+    "text": "Buat kode QR Ethereum dalam format EIP-681 untuk ETH, USDC, atau USDT di Ethereum, Base, Polygon, Arbitrum, dan tiga jaringan EVM lainnya. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.metaDescription"
+  },
+  "de75bfd458c1": {
+    "source": "An Ethereum QR code holds a payment request in the EIP-681 ethereum: format: your wallet address, the network and, if you like, an amount. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
+    "text": "Kode QR Ethereum berisi permintaan pembayaran dalam format ethereum: EIP-681: alamat dompet Anda, jaringan, dan jika mau, jumlah. Memindainya dengan dompet yang kompatibel akan membuka transfer ke alamat Anda dengan nilai-nilai tersebut sudah terisi.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.intro.0"
+  },
+  "239eb953556c": {
+    "source": "Pick Ethereum or another EVM network (BNB Smart Chain, Polygon, Arbitrum One, OP Mainnet, Base or Avalanche C-Chain) and ask for the network's own coin, or for USDT or USDC where Tether and Circle list the contract themselves. Addresses are 42-character hexadecimal strings that are easy to mistype, so a code is safer than copying one by hand. It contains only your public address; private keys and recovery phrases must never go into a QR code.",
+    "text": "Pilih Ethereum atau jaringan EVM lainnya (BNB Smart Chain, Polygon, Arbitrum One, OP Mainnet, Base, atau Avalanche C-Chain) lalu minta koin bawaan jaringan tersebut, atau USDT atau USDC di tempat Tether dan Circle sendiri mencantumkan kontraknya. Alamat berupa string heksadesimal 42 karakter yang mudah salah ketik, jadi kode lebih aman daripada menyalin alamat secara manual. Kode ini hanya berisi alamat publik Anda; kunci privat dan frasa pemulihan tidak boleh dimasukkan ke dalam kode QR.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.intro.1"
+  },
   "b2a3ae1b9d75": {
     "source": "Copy your address (starting with 0x) from your wallet and paste it in.",
     "text": "Salin alamat Anda (diawali 0x) dari dompet Anda lalu tempelkan di sini.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.0"
+  },
+  "d0f2f478d75b": {
+    "source": "Pick the network, then the network's own coin, USDC or USDT.",
+    "text": "Pilih jaringan, lalu koin bawaan jaringan tersebut, USDC, atau USDT.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.1"
+  },
+  "d2404df4ac55": {
+    "source": "Optionally enter an amount, and a gas limit for a coin payment.",
+    "text": "Jika mau, masukkan jumlah, dan batas gas untuk pembayaran koin.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.2"
+  },
+  "c26a548900d7": {
+    "source": "Scan the preview with your wallet, check the address, network and amount, and download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "Pindai pratinjau dengan dompet Anda, periksa alamat, jaringan, dan jumlahnya, lalu unduh kode dalam format PNG, SVG, WebP, GIF, BMP, atau ICO.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.3"
+  },
+  "05e6e058eee6": {
+    "source": "Coin amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
+    "text": "Jumlah koin (value) dinyatakan dalam wei, satuan terkecil: 1 ETH sama dengan 10^18 wei. Halaman ini mengonversi jumlah yang Anda ketik dengan menambahkan eksponen e18, sehingga 0.05 ETH ditulis sebagai value=0.05e18.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.0"
+  },
+  "3faef68d6dd6": {
+    "source": "Other networks are named with @chainId: BNB Smart Chain 56, Polygon 137, Arbitrum One 42161, OP Mainnet 10, Base 8453 and Avalanche C-Chain 43114. On Ethereum itself (chain 1) no @1 is added.",
+    "text": "Jaringan lain ditulis dengan @chainId: BNB Smart Chain 56, Polygon 137, Arbitrum One 42161, OP Mainnet 10, Base 8453, dan Avalanche C-Chain 43114. Di Ethereum sendiri (chain 1), @1 tidak ditambahkan.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.1"
+  },
+  "ce817f8fbb90": {
+    "source": "A USDC or USDT request is a transfer on the token's contract, with the amount in base units (6 decimals). 1.5 USDC on Base is ethereum:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913@8453/transfer?address=<recipient>&uint256=1500000.",
+    "text": "Permintaan USDC atau USDT adalah transfer pada kontrak token, dengan jumlah dalam satuan dasar (6 desimal). 1.5 USDC di Base ditulis ethereum:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913@8453/transfer?address=<recipient>&uint256=1500000.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.2"
   },
   "e090a66eb3e0": {
     "source": "gas is a synonym for gasLimit, a suggested limit the payer can edit. A plain ETH transfer uses 21000.",
@@ -3851,6 +3959,30 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.3"
   },
+  "b00a3b7e1e38": {
+    "source": "Can I request USDC or USDT?",
+    "text": "Bisakah saya meminta USDC atau USDT?",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.0.question"
+  },
+  "c0ff9d9c88f0": {
+    "source": "Yes, on the networks where Tether and Circle list the contract themselves: USDT on Ethereum and Avalanche, USDC on Ethereum, Polygon, Arbitrum, OP Mainnet, Base and Avalanche. QRdx refuses a token contract pasted as the recipient.",
+    "text": "Bisa, di jaringan tempat Tether dan Circle sendiri mencantumkan kontraknya: USDT di Ethereum dan Avalanche, USDC di Ethereum, Polygon, Arbitrum, OP Mainnet, Base, dan Avalanche. QRdx menolak kontrak token yang ditempelkan sebagai penerima.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.0.answer"
+  },
+  "eab753923b7d": {
+    "source": "Does every wallet read the network and token?",
+    "text": "Apakah semua dompet membaca jaringan dan token?",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.1.question"
+  },
+  "d8b487263aac": {
+    "source": "No. MetaMask Mobile reads @chainId and /transfer, but some wallets fill in only the recipient and drop the token and amount. Print the token, network and amount next to the code so the payer can check them.",
+    "text": "Tidak. MetaMask Mobile membaca @chainId dan /transfer, tetapi beberapa dompet hanya mengisi penerima dan mengabaikan token serta jumlahnya. Cantumkan token, jaringan, dan jumlah di samping kode agar pembayar dapat memeriksanya.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.1.answer"
+  },
   "3a2bdfb5aaa2": {
     "source": "Is it safe to share?",
     "text": "Apakah aman dibagikan?",
@@ -3862,6 +3994,18 @@
     "text": "Ya. Kode ini hanya berisi alamat publik Anda. Jangan pernah menyandikan kunci privat atau frasa pemulihan.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.2.answer"
+  },
+  "3195635e1572": {
+    "source": "Networks, address checks and ENS names",
+    "text": "Jaringan, pemeriksaan alamat, dan nama ENS",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.details.title"
+  },
+  "121d5568b110": {
+    "source": "The network's own coin is ETH on Ethereum, Arbitrum One, OP Mainnet and Base, BNB on BNB Smart Chain, POL on Polygon and AVAX on Avalanche C-Chain. The same 0x address works on all of them, so pick the network your payer will send on.",
+    "text": "Koin bawaan jaringan adalah ETH di Ethereum, Arbitrum One, OP Mainnet, dan Base, BNB di BNB Smart Chain, POL di Polygon, dan AVAX di Avalanche C-Chain. Alamat 0x yang sama berlaku di semuanya, jadi pilih jaringan yang akan dipakai pembayar untuk mengirim.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.details.paragraphs.0"
   },
   "65464924c87e": {
     "source": "The generator checks that the address is 0x followed by 40 hexadecimal characters. It doesn't check the mixed-case EIP-55 checksum; wallets check that when they scan, so paste the address exactly as your wallet shows it rather than typing it.",
@@ -7120,6 +7264,576 @@
     "text": "Apakah akun saya dikirim ke QRdx?",
     "status": "machine",
     "context": "qrTypes.types.khqr.faqs.2.question"
+  },
+  "2c1402d1fc89": {
+    "source": "Share a Lightning invoice, LNURL or Lightning Address.",
+    "text": "Bagikan invoice Lightning, LNURL, atau Lightning Address.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.summary"
+  },
+  "67d71c0b24eb": {
+    "source": "Make a Lightning QR code from a BOLT 11 invoice, an LNURL or a Lightning Address. Invoices are checked; an address becomes its LNURL-pay code. Free.",
+    "text": "Buat kode QR Lightning dari invoice BOLT 11, LNURL, atau Lightning Address. Invoice diperiksa; alamat diubah menjadi kode LNURL-pay-nya. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.metaDescription"
+  },
+  "b89cd1654e54": {
+    "source": "A Lightning QR code lets a Bitcoin Lightning wallet pay you. Paste one of three things: a BOLT 11 invoice from your wallet (lnbc…), an LNURL (lnurl1…), or a Lightning Address such as name@domain.com.",
+    "text": "Kode QR Lightning memungkinkan dompet Bitcoin Lightning membayar Anda. Tempelkan salah satu dari tiga hal ini: invoice BOLT 11 dari dompet Anda (lnbc…), LNURL (lnurl1…), atau Lightning Address seperti name@domain.com.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.intro.0"
+  },
+  "665b6bd1db36": {
+    "source": "An invoice can be paid once and expires, after an hour by BOLT 11's default, so a printed invoice code goes stale. For a sign, a sticker or anything else you print, use an LNURL or a Lightning Address: QRdx turns an address into its LNURL-pay, which wallets that support LNURL-pay scan.",
+    "text": "Invoice hanya dapat dibayar sekali dan kedaluwarsa, setelah satu jam menurut pengaturan bawaan BOLT 11, sehingga kode invoice yang dicetak akan basi. Untuk papan, stiker, atau apa pun yang Anda cetak, gunakan LNURL atau Lightning Address: QRdx mengubah alamat menjadi LNURL-pay-nya, yang dapat dipindai oleh dompet yang mendukung LNURL-pay.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.intro.1"
+  },
+  "77b6de5bcc8d": {
+    "source": "Copy an invoice, an LNURL or your Lightning Address from your wallet and paste it in.",
+    "text": "Salin invoice, LNURL, atau Lightning Address Anda dari dompet, lalu tempelkan di sini.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.0"
+  },
+  "99738c1f186e": {
+    "source": "QRdx checks an invoice's or LNURL's checksum; only mainnet invoices (lnbc…) are accepted.",
+    "text": "QRdx memeriksa checksum invoice atau LNURL; hanya invoice mainnet (lnbc…) yang diterima.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.1"
+  },
+  "4d7c70004d55": {
+    "source": "Scan the preview with the wallet that will pay to check it.",
+    "text": "Lakukan pemindaian pratinjau dengan dompet yang akan membayar untuk memeriksanya.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.2"
+  },
+  "af0f158f8d39": {
+    "source": "Download the code, and print a Lightning Address as text beside it.",
+    "text": "Unduh kodenya, lalu cetak Lightning Address sebagai teks di sampingnya.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.3"
+  },
+  "373462ea7e0b": {
+    "source": "An invoice is written lightning:<INVOICE> with the invoice in upper case, as BOLT 11 asks for QR codes. Its Bech32 checksum and prefix are checked, and only mainnet (lnbc) invoices are accepted.",
+    "text": "Invoice ditulis lightning:<INVOICE> dengan invoice dalam huruf besar, sebagaimana diminta BOLT 11 untuk kode QR. Checksum Bech32 dan prefiksnya diperiksa, dan hanya invoice mainnet (lnbc) yang diterima.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.0"
+  },
+  "2949c548ac93": {
+    "source": "A Lightning Address is turned into its LNURL-pay (LUD-16 and LUD-01): https://domain/.well-known/lnurlp/name, Bech32-encoded. The example is satoshi@bitcoin.org.",
+    "text": "Lightning Address diubah menjadi LNURL-pay-nya (LUD-16 dan LUD-01): https://domain/.well-known/lnurlp/name, dengan enkode Bech32. Contohnya satoshi@bitcoin.org.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.1"
+  },
+  "7f916613b6c6": {
+    "source": "The code holds the bare upper case LNURL, which LNURL-pay wallets scan (LUD-06). No spec defines a QR form for name@domain itself.",
+    "text": "Kode ini berisi LNURL huruf besar apa adanya, yang dipindai oleh dompet LNURL-pay (LUD-06). Tidak ada spesifikasi yang mendefinisikan bentuk QR untuk name@domain itu sendiri.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.2"
+  },
+  "cecaa53fd26a": {
+    "source": "Invoices are 200 to 600 characters or more, so an invoice code is dense; print it larger.",
+    "text": "Invoice panjangnya 200 hingga 600 karakter atau lebih, sehingga kode invoice sangat padat; cetak dalam ukuran lebih besar.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.3"
+  },
+  "99358e5563bc": {
+    "source": "Can I print an invoice code?",
+    "text": "Bisakah saya mencetak kode invoice?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.0.question"
+  },
+  "97da46ebe9a0": {
+    "source": "Not for long. An invoice can be paid once and expires, after an hour by BOLT 11's default. Use an LNURL or a Lightning Address for anything printed.",
+    "text": "Tidak untuk waktu lama. Invoice hanya dapat dibayar sekali dan kedaluwarsa, setelah satu jam menurut pengaturan bawaan BOLT 11. Gunakan LNURL atau Lightning Address untuk apa pun yang dicetak.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.0.answer"
+  },
+  "8d306b6fe7d4": {
+    "source": "Why doesn't the code hold my Lightning Address?",
+    "text": "Mengapa kode tidak berisi Lightning Address saya?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.1.question"
+  },
+  "6840dcacef1d": {
+    "source": "No spec defines a QR form for name@domain, so QRdx writes the address's LNURL-pay, which LNURL-pay wallets scan. Print the address as text beside the code for people who'd rather type it.",
+    "text": "Tidak ada spesifikasi yang mendefinisikan bentuk QR untuk name@domain, jadi QRdx menulis LNURL-pay dari alamat tersebut, yang dipindai oleh dompet LNURL-pay. Cetak alamat sebagai teks di samping kode untuk orang yang lebih suka mengetiknya.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.1.answer"
+  },
+  "020f1df312e2": {
+    "source": "Is my invoice sent to QRdx?",
+    "text": "Apakah invoice saya dikirim ke QRdx?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.2.question"
+  },
+  "9a2536823508": {
+    "source": "No. The code is made in your browser, and QRdx doesn't contact your Lightning Address's server to make it.",
+    "text": "Tidak. Kode dibuat di browser Anda, dan QRdx tidak menghubungi server Lightning Address Anda untuk membuatnya.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.2.answer"
+  },
+  "9e2e53faff95": {
+    "source": "Share an XRP Ledger address, with a destination tag if you need one.",
+    "text": "Bagikan alamat XRP Ledger, lengkap dengan destination tag jika Anda membutuhkannya.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.summary"
+  },
+  "7af9f7d47d3c": {
+    "source": "Make an XRP QR code with your XRP Ledger address, checked with its checksum. Add a destination tag and the code holds an X-address that keeps both. Free.",
+    "text": "Buat kode QR XRP dengan alamat XRP Ledger Anda, diperiksa dengan checksum-nya. Tambahkan destination tag dan kode akan berisi X-address yang menyimpan keduanya. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.metaDescription"
+  },
+  "d72b63a5ad07": {
+    "source": "An XRP QR code holds your XRP Ledger address, so the payer's wallet reads it instead of someone typing it. The XRP Ledger has no finished payment URI standard, so the code holds the plain classic address (r…), which XRPL wallets read.",
+    "text": "Kode QR XRP berisi alamat XRP Ledger Anda, sehingga dompet pembayar membacanya tanpa perlu mengetik alamat secara manual. XRP Ledger belum memiliki standar URI pembayaran yang final, jadi kode ini berisi alamat classic biasa (r…), yang dapat dibaca oleh dompet XRPL.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.intro.0"
+  },
+  "4f85c6d1c602": {
+    "source": "With a destination tag, QRdx writes the X-address instead (XLS-5, final), which packs the address and the tag together under one checksum. A wallet that doesn't understand an X-address refuses it rather than sending without the tag. Print the classic address and the tag as text too, since some exchanges ask for them separately.",
+    "text": "Dengan destination tag, QRdx menuliskan X-address (XLS-5, final), yang menggabungkan alamat dan tag dalam satu checksum. Dompet yang tidak memahami X-address akan menolaknya, bukan mengirim tanpa tag. Cetak juga alamat classic dan tag sebagai teks, karena beberapa bursa memintanya secara terpisah.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.intro.1"
+  },
+  "c11baa66a136": {
+    "source": "Paste your classic XRP Ledger address (r…) from your wallet or exchange.",
+    "text": "Tempel alamat XRP Ledger classic Anda (r…) dari dompet atau bursa Anda.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.0"
+  },
+  "3025dd9f38d1": {
+    "source": "If you were given a destination tag, enter it in its own field.",
+    "text": "Jika Anda diberi destination tag, masukkan di kolomnya sendiri.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.1"
+  },
+  "0c7a8a070054": {
+    "source": "Download the code, and print the address and tag as text beside it.",
+    "text": "Unduh kodenya, lalu cetak alamat dan tag sebagai teks di sampingnya.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.3"
+  },
+  "8b35bf5a17d7": {
+    "source": "The classic address is checked with its Base58 checksum (a double SHA-256).",
+    "text": "Alamat classic diperiksa dengan checksum Base58 (SHA-256 ganda).",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.0"
+  },
+  "aa15e1fe974a": {
+    "source": "With a destination tag the code holds the X-address (XLS-5): rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf with tag 276 is XVLhHMPHU98es4dbozjVtdWzVrDjtVoKj3MnFGMXEFMnvJV.",
+    "text": "Dengan destination tag, kode berisi X-address (XLS-5): rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf dengan tag 276 menjadi XVLhHMPHU98es4dbozjVtdWzVrDjtVoKj3MnFGMXEFMnvJV.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.1"
+  },
+  "f9fe297c6cef": {
+    "source": "Tag 0 and no tag are different, so enter 0 only if you were given 0.",
+    "text": "Tag 0 dan tanpa tag itu berbeda, jadi masukkan 0 hanya jika Anda memang diberi 0.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.2"
+  },
+  "1e43d3dd2ccf": {
+    "source": "There's no amount: no amount format works across XRP wallets.",
+    "text": "Tidak ada jumlah: tidak ada format jumlah yang berlaku di semua dompet XRP.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.3"
+  },
+  "b40aeaf4eb33": {
+    "source": "Can I request an amount?",
+    "text": "Bisakah saya meminta jumlah tertentu?",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.0.question"
+  },
+  "badc2c555609": {
+    "source": "No. No amount format works across XRP wallets, so the payer enters the amount.",
+    "text": "Tidak. Tidak ada format jumlah yang berlaku di semua dompet XRP, jadi pembayar memasukkan jumlahnya sendiri.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.0.answer"
+  },
+  "885113776864": {
+    "source": "When do I need a destination tag?",
+    "text": "Kapan saya membutuhkan destination tag?",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.1.question"
+  },
+  "48cb32049a4b": {
+    "source": "When your exchange or service gives you one. Copy it exactly: tag 0 and no tag are different.",
+    "text": "Saat bursa atau layanan Anda memberikannya. Salin persis seperti aslinya: tag 0 dan tanpa tag itu berbeda.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.1.answer"
+  },
+  "ff1d090c6e22": {
+    "source": "Is my address sent to QRdx?",
+    "text": "Apakah alamat saya dikirim ke QRdx?",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.2.question"
+  },
+  "deac18fb7b7a": {
+    "source": "Request ADA with a CIP-13 Cardano payment link.",
+    "text": "Minta ADA dengan tautan pembayaran Cardano CIP-13.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.summary"
+  },
+  "8472618ab7fd": {
+    "source": "Make a Cardano QR code in the CIP-13 web+cardano: format with your addr1 address and an optional amount in ADA. Address checked with its checksum. Free.",
+    "text": "Buat kode QR Cardano dalam format CIP-13 web+cardano: dengan alamat addr1 Anda dan jumlah ADA opsional. Alamat diperiksa dengan checksum-nya. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.metaDescription"
+  },
+  "3f20ad9d36d6": {
+    "source": "A Cardano QR code holds your payment address and, if you like, an amount in ADA, in the web+cardano: format from CIP-13. Wallets that implement CIP-13 payment URIs fill in the payment when they scan it.",
+    "text": "Kode QR Cardano berisi alamat pembayaran Anda dan, jika diinginkan, jumlah dalam ADA, dalam format web+cardano: dari CIP-13. Dompet yang mengimplementasikan URI pembayaran CIP-13 akan mengisi pembayaran saat memindainya.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.intro.0"
+  },
+  "a35655958b18": {
+    "source": "CIP-13's status is proposed, and it lists Yoroi and Begin as wallets implementing payment URIs. Other wallets may only read a plain address, so scan the preview with the wallets your payers use before you print.",
+    "text": "Status CIP-13 adalah proposed, dan daftarnya mencantumkan Yoroi dan Begin sebagai dompet yang mengimplementasikan URI pembayaran. Dompet lain mungkin hanya membaca alamat biasa, jadi lakukan pemindaian pratinjau dengan dompet yang digunakan pembayar Anda sebelum mencetak.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.intro.1"
+  },
+  "8d04344477dd": {
+    "source": "Paste a mainnet payment address (addr1…) from your wallet.",
+    "text": "Tempel alamat pembayaran mainnet (addr1…) dari dompet Anda.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.0"
+  },
+  "29403c48bdc1": {
+    "source": "Optionally enter an amount in ADA, with up to 6 decimals.",
+    "text": "Masukkan jumlah dalam ADA jika perlu, dengan hingga 6 desimal.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.1"
+  },
+  "0a19a1f4064e": {
+    "source": "Scan the preview with the wallets your payers use.",
+    "text": "Pindai pratinjau dengan dompet yang digunakan pembayar Anda.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.2"
+  },
+  "10a20be51b8a": {
+    "source": "Defined by CIP-13. The amount is decimal ADA with up to 6 decimals.",
+    "text": "Ditentukan oleh CIP-13. Jumlahnya berupa ADA desimal dengan hingga 6 desimal.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.0"
+  },
+  "6e27720303a4": {
+    "source": "CIP-13 defines only the amount, so there's no label or message.",
+    "text": "CIP-13 hanya menentukan jumlah, jadi tidak ada label atau pesan.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.1"
+  },
+  "899005da8290": {
+    "source": "QRdx takes mainnet Shelley payment addresses (addr1…) and checks their Bech32 checksum. Stake addresses and testnet addresses are refused, and older Byron addresses aren't accepted.",
+    "text": "QRdx menerima alamat pembayaran Shelley mainnet (addr1…) dan memeriksa checksum Bech32-nya. Alamat stake dan alamat testnet ditolak, dan alamat Byron yang lebih lama tidak diterima.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.2"
+  },
+  "61421398a492": {
+    "source": "Which wallets read it?",
+    "text": "Dompet mana yang bisa membacanya?",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.0.question"
+  },
+  "d6ee36d68c1f": {
+    "source": "CIP-13 lists Yoroi and Begin as implementing payment URIs. Other wallets may read only plain addresses, so test with your payers' wallets.",
+    "text": "CIP-13 mencantumkan Yoroi dan Begin sebagai dompet yang mengimplementasikan URI pembayaran. Dompet lain mungkin hanya membaca alamat biasa, jadi uji dengan dompet para pembayar Anda.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.0.answer"
+  },
+  "475fb46585a1": {
+    "source": "Why is my address refused?",
+    "text": "Mengapa alamat saya ditolak?",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.1.question"
+  },
+  "962c2a8064ea": {
+    "source": "QRdx takes mainnet Shelley payment addresses starting with addr1. A stake address, a testnet address or an older Byron address isn't accepted.",
+    "text": "QRdx menerima alamat pembayaran Shelley mainnet yang diawali addr1. Alamat stake, alamat testnet, atau alamat Byron yang lebih lama tidak diterima.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.1.answer"
+  },
+  "7cfadbe6a7a3": {
+    "source": "Share a Tron address for TRX or USDT (TRC-20).",
+    "text": "Bagikan alamat Tron untuk TRX atau USDT (TRC-20).",
+    "status": "machine",
+    "context": "qrTypes.types.tron.summary"
+  },
+  "fae1c6bfb4f5": {
+    "source": "Make a Tron QR code with your T… address for TRX or USDT on TRC-20, checked with its Base58Check checksum. Print the coin and network beside it. Free.",
+    "text": "Buat kode QR Tron dengan alamat T… Anda untuk TRX atau USDT di TRC-20, diperiksa dengan checksum Base58Check. Cetak nama koin dan jaringan di sampingnya. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.metaDescription"
+  },
+  "91c7de63b71d": {
+    "source": "A Tron QR code holds your Tron address, the T… address your wallet shows on its own receive screen. No static payment URI is documented for Tron wallets: the documented transfer deep link needs the payer's own address and a callback, so it can't be printed.",
+    "text": "Kode QR Tron berisi alamat Tron Anda, yaitu alamat T… yang ditampilkan dompet Anda di layar terimanya. Tidak ada URI pembayaran statis yang terdokumentasi untuk dompet Tron: tautan dalam (deep link) transfer yang terdokumentasi membutuhkan alamat pembayar sendiri dan sebuah callback, sehingga tidak bisa dicetak.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.intro.0"
+  },
+  "acb202e6262f": {
+    "source": "TRX, TRC-10 tokens and TRC-20 tokens such as USDT all use the same address, so the code can't say which coin or network you expect. Print it next to the code: \"USDT (TRC-20, Tron network)\" or \"TRX\".",
+    "text": "TRX, token TRC-10, dan token TRC-20 seperti USDT semuanya memakai alamat yang sama, sehingga kode ini tidak dapat menyatakan koin atau jaringan mana yang Anda harapkan. Cetak keterangannya di samping kode: \"USDT (TRC-20, jaringan Tron)\" atau \"TRX\".",
+    "status": "machine",
+    "context": "qrTypes.types.tron.intro.1"
+  },
+  "196085cd88ec": {
+    "source": "Copy the address from your wallet's receive screen and paste it in.",
+    "text": "Salin alamat dari layar terima di dompet Anda, lalu tempelkan di sini.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.0"
+  },
+  "a3db84ddbd5f": {
+    "source": "QRdx checks its checksum, and refuses Tether's USDT contract address if it's pasted by mistake.",
+    "text": "QRdx memeriksa checksum-nya dan menolak alamat kontrak USDT milik Tether jika tertempel karena salah.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.1"
+  },
+  "2b3b4bc0d981": {
+    "source": "Download the code and print the coin and network beside it.",
+    "text": "Unduh kodenya dan cetak nama koin serta jaringan di sampingnya.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.3"
+  },
+  "89948a6b276f": {
+    "source": "The address is checked with its Base58Check checksum and its 0x41 prefix byte.",
+    "text": "Alamat diperiksa dengan checksum Base58Check dan byte awalan 0x41.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.0"
+  },
+  "0f5cd7670a47": {
+    "source": "Tether's USDT contract (TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t) is refused as a recipient: it's the token's contract, not a wallet.",
+    "text": "Kontrak USDT milik Tether (TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t) ditolak sebagai penerima: itu adalah kontrak token, bukan dompet.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.1"
+  },
+  "2371d64a8f81": {
+    "source": "There's no amount: no static request format is documented for Tron wallets.",
+    "text": "Tidak ada jumlah: tidak ada format permintaan statis yang terdokumentasi untuk dompet Tron.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.2"
+  },
+  "c8ff8a9709d8": {
+    "source": "Can I ask for USDT?",
+    "text": "Bisakah meminta USDT?",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.0.question"
+  },
+  "752d8e7dd646": {
+    "source": "The same address receives TRX and TRC-20 USDT, and the code can't say which. Print \"USDT (TRC-20, Tron network)\" next to it so payers send on the right network.",
+    "text": "Alamat yang sama menerima TRX dan USDT TRC-20, dan kode ini tidak dapat menyatakan yang mana. Cetak \"USDT (TRC-20, jaringan Tron)\" di sampingnya agar pembayar mengirim lewat jaringan yang tepat.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.0.answer"
+  },
+  "21ff3a8d2f73": {
+    "source": "Can I add an amount?",
+    "text": "Bisakah menambah jumlah?",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.1.question"
+  },
+  "bc7ed8c3d426": {
+    "source": "No. Tron wallets document no static request format with an amount, so the payer enters it.",
+    "text": "Tidak. Dompet Tron tidak mendokumentasikan format permintaan statis dengan jumlah, jadi pembayar mengisinya sendiri.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.1.answer"
+  },
+  "1ed2997d6e49": {
+    "source": "Request TON or USDT with a ton://transfer link.",
+    "text": "Minta TON atau USDT dengan tautan ton://transfer.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.summary"
+  },
+  "18453f5eef0f": {
+    "source": "Make a TON QR code with a ton://transfer link: your address, an amount in TON or USDT and a comment. Address checked with its CRC-16 checksum. Free.",
+    "text": "Buat kode QR TON dengan tautan ton://transfer: alamat Anda, jumlah dalam TON atau USDT, dan komentar. Alamat diperiksa dengan checksum CRC-16. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.metaDescription"
+  },
+  "cd9104ba5b6e": {
+    "source": "A TON QR code holds a ton://transfer link from TON's deep link docs: your address and, if you like, an amount and a comment. It can ask for TON or for USDT, Tether's own jetton on TON.",
+    "text": "Kode QR TON berisi tautan ton://transfer dari dokumentasi deep link TON: alamat Anda dan, jika diinginkan, jumlah serta komentar. Kode ini dapat meminta TON atau USDT, jetton milik Tether sendiri di TON.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.intro.0"
+  },
+  "23f4a1d0fbda": {
+    "source": "TON's docs note that the ton:// link works across TON wallets, but whether a wallet honours the USDT jetton parameter is up to the wallet. Scan a USDT code with the wallets your payers use before you print it.",
+    "text": "Dokumentasi TON menyebutkan bahwa tautan ton:// berfungsi di berbagai dompet TON, tetapi apakah sebuah dompet mendukung parameter jetton USDT bergantung pada dompetnya. Lakukan pemindaian kode USDT dengan dompet yang dipakai pembayar Anda sebelum mencetaknya.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.intro.1"
+  },
+  "0adc1f6b84ae": {
+    "source": "Paste the address your wallet shows (UQ… or EQ…).",
+    "text": "Tempelkan alamat yang ditampilkan dompet Anda (UQ… atau EQ…).",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.0"
+  },
+  "31efb3d9cae4": {
+    "source": "Pick TON or USDT and, if you like, an amount.",
+    "text": "Pilih TON atau USDT dan, jika diinginkan, jumlahnya.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.1"
+  },
+  "3a88fa85c549": {
+    "source": "Optionally add a comment, such as an order number.",
+    "text": "Tambahkan komentar jika perlu, misalnya nomor pesanan.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.2"
+  },
+  "c7a81ad47a41": {
+    "source": "Scan the preview with a TON wallet to check it, then download the code.",
+    "text": "Lakukan pemindaian pratinjau dengan dompet TON untuk memeriksanya, lalu unduh kodenya.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.3"
+  },
+  "470e2147ed23": {
+    "source": "Amounts are typed in TON (up to 9 decimals) or USDT (up to 6) and written in base units: amount=5000000 in the example is 0.005 TON.",
+    "text": "Jumlah diketik dalam TON (hingga 9 desimal) atau USDT (hingga 6) dan ditulis dalam satuan dasar: amount=5000000 pada contoh berarti 0,005 TON.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.0"
+  },
+  "7d1c71573759": {
+    "source": "For USDT the link adds jetton= with Tether's USDT on TON, and the amount is in millionths: ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=5000&text=hello is 0.005 USDT.",
+    "text": "Untuk USDT, tautan menambahkan jetton= dengan USDT milik Tether di TON, dan jumlahnya dalam per sejuta: ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=5000&text=hello berarti 0,005 USDT.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.1"
+  },
+  "3059f661e1ed": {
+    "source": "The address must be a user-friendly mainnet address, UQ… (non-bounceable, recommended for wallets) or EQ…, and is checked with its CRC-16. Raw 0:… addresses have no checksum, so QRdx asks for the form your wallet shows.",
+    "text": "Alamat harus berupa alamat mainnet yang ramah pengguna, UQ… (non-bounceable, direkomendasikan untuk dompet) atau EQ…, dan diperiksa dengan CRC-16. Alamat mentah 0:… tidak memiliki checksum, sehingga QRdx meminta bentuk yang ditampilkan dompet Anda.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.2"
+  },
+  "fbb13bfe8c28": {
+    "source": "text is the transfer's comment, percent-encoded.",
+    "text": "text adalah komentar transfer, dikodekan dengan percent-encoding.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.3"
+  },
+  "0d5e0f89b214": {
+    "source": "Do all TON wallets pay USDT from the code?",
+    "text": "Apakah semua dompet TON membayar USDT dari kode ini?",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.0.question"
+  },
+  "9963235976b8": {
+    "source": "TON's docs leave the jetton parameter to each wallet, so test a USDT code with the wallets your payers use. A code for TON works across TON wallets.",
+    "text": "Dokumentasi TON menyerahkan parameter jetton kepada masing-masing dompet, jadi uji kode USDT dengan dompet yang dipakai pembayar Anda. Kode untuk TON berfungsi di berbagai dompet TON.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.0.answer"
+  },
+  "50d64d793123": {
+    "source": "UQ or EQ address?",
+    "text": "Alamat UQ atau EQ?",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.1.question"
+  },
+  "50967eb308c7": {
+    "source": "Both work. UQ… is the non-bounceable form, which is recommended for wallets; EQ… is the bounceable one. Paste the one your wallet shows.",
+    "text": "Keduanya berfungsi. UQ… adalah bentuk non-bounceable yang direkomendasikan untuk dompet; EQ… adalah bentuk bounceable. Tempelkan yang ditampilkan dompet Anda.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.1.answer"
+  },
+  "8f7296730753": {
+    "source": "Request XLM or USDC with a SEP-0007 Stellar link.",
+    "text": "Minta XLM atau USDC dengan tautan Stellar SEP-0007.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.summary"
+  },
+  "a0c8bd2a6b27": {
+    "source": "Make a Stellar QR code in the SEP-0007 web+stellar:pay format for XLM or Circle's USDC, with an optional amount and a text memo for exchanges. Free.",
+    "text": "Buat kode QR Stellar dalam format SEP-0007 web+stellar:pay untuk XLM atau USDC dari Circle, dengan jumlah opsional dan memo teks untuk exchange. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.metaDescription"
+  },
+  "72dc868dc688": {
+    "source": "A Stellar QR code holds a SEP-0007 payment request: your account and, if you like, an amount, the asset and a memo. It can ask for XLM or for USDC from the issuer Circle lists.",
+    "text": "Kode QR Stellar berisi permintaan pembayaran SEP-0007: akun Anda dan, jika diinginkan, jumlah, aset, dan memo. Kode ini dapat meminta XLM atau USDC dari penerbit yang tercantum di Circle.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.intro.0"
+  },
+  "68320de87231": {
+    "source": "Exchanges often need a memo to match a deposit to your account, so the code can carry one. Wallet support for SEP-7 varies, so scan the preview with the wallets your payers use before you print.",
+    "text": "Exchange sering memerlukan memo untuk mencocokkan setoran dengan akun Anda, jadi kode ini dapat membawa memo. Dukungan dompet untuk SEP-7 berbeda-beda, jadi lakukan pemindaian pratinjau dengan dompet yang digunakan pembayar Anda sebelum mencetak.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.intro.1"
+  },
+  "903a63c78ec1": {
+    "source": "Paste your Stellar address (G…).",
+    "text": "Tempel alamat Stellar Anda (G…).",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.0"
+  },
+  "6c063e9c2b5b": {
+    "source": "Pick XLM or USDC and, if you like, an amount.",
+    "text": "Pilih XLM atau USDC dan, jika diinginkan, jumlahnya.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.1"
+  },
+  "79717628bbe3": {
+    "source": "Add a text memo if your exchange or service gave you one.",
+    "text": "Tambahkan memo teks jika exchange atau layanan Anda memberikannya.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.2"
+  },
+  "0c90e0315096": {
+    "source": "Scan the preview with a Stellar wallet to check it, then download the code.",
+    "text": "Pindai pratinjau dengan dompet Stellar untuk memeriksanya, lalu unduh kodenya.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.3"
+  },
+  "fd1585fbd449": {
+    "source": "Defined by SEP-0007, which is active. Amounts have up to 7 decimals.",
+    "text": "Didefinisikan oleh SEP-0007, yang berstatus aktif. Jumlah dapat memiliki hingga 7 desimal.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.0"
+  },
+  "300904ea50bd": {
+    "source": "For USDC the link names asset_code=USDC and the issuer Circle lists. The receiving account needs a USDC trustline to receive it.",
+    "text": "Untuk USDC, tautan mencantumkan asset_code=USDC dan penerbit yang tercantum di Circle. Akun penerima memerlukan trustline USDC untuk menerimanya.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.1"
+  },
+  "785baf528367": {
+    "source": "Memos are text (MEMO_TEXT) of up to 28 bytes, percent-encoded.",
+    "text": "Memo berupa teks (MEMO_TEXT) hingga 28 byte, dengan percent-encoding.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.2"
+  },
+  "b3dcb7c3ae00": {
+    "source": "The address is checked as a StrKey: Base32 with a CRC-16 checksum.",
+    "text": "Alamat diperiksa sebagai StrKey: Base32 dengan checksum CRC-16.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.3"
+  },
+  "a05966b114fd": {
+    "source": "Can I receive USDC?",
+    "text": "Bisakah saya menerima USDC?",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.0.question"
+  },
+  "326020a817c9": {
+    "source": "Yes, if your account has a USDC trustline for Circle's issuer. Without one the account can't receive USDC, so add the trustline in your wallet first.",
+    "text": "Bisa, jika akun Anda memiliki trustline USDC untuk penerbit Circle. Tanpa trustline, akun tidak dapat menerima USDC, jadi tambahkan trustline di dompet Anda terlebih dahulu.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.0.answer"
+  },
+  "f9438f4a8553": {
+    "source": "Do I need a memo?",
+    "text": "Apakah saya perlu memo?",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.1.question"
+  },
+  "2e2dd93a7195": {
+    "source": "Add one when your exchange or service gives you one, exactly as given. Text memos are up to 28 bytes.",
+    "text": "Tambahkan memo jika exchange atau layanan Anda memberikannya, persis seperti yang diberikan. Memo teks maksimal 28 byte.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.1.answer"
+  },
+  "056ecc71a8ff": {
+    "source": "Wallet support for SEP-7 varies. Test with the wallets your payers use.",
+    "text": "Dukungan dompet untuk SEP-7 berbeda-beda. Uji dengan dompet yang digunakan pembayar Anda.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.2.answer"
   },
   "1d393b0081b6": {
     "source": "PDF",
@@ -22091,6 +22805,24 @@
     "status": "machine",
     "context": "pageCodes.on-tickets-4.label"
   },
+  "3d33dc0484e1": {
+    "source": "Name badge",
+    "text": "Tanda pengenal",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-1.label"
+  },
+  "7e2d81cbed8a": {
+    "source": "Sticker",
+    "text": "Stiker",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-3.label"
+  },
+  "9dce86898f29": {
+    "source": "Flyer",
+    "text": "Brosur",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-4.label"
+  },
   "0432f20a0f65": {
     "source": "Table menu",
     "text": "Menu meja",
@@ -30617,6 +31349,18 @@
     "status": "machine",
     "context": "mcp.tools.10.description"
   },
+  "e22e80134ee4": {
+    "source": "Contact card (MeCard)",
+    "text": "Kartu kontak (MeCard)",
+    "status": "machine",
+    "context": "mcp.tools.14.title"
+  },
+  "5ec08b9f5893": {
+    "source": "A MeCard contact: the same basics as a vCard in fewer characters, so the code is smaller.",
+    "text": "Kontak MeCard: info dasar yang sama seperti vCard dengan karakter lebih sedikit, sehingga kodenya lebih kecil.",
+    "status": "machine",
+    "context": "mcp.tools.14.description"
+  },
   "61964d1b5f82": {
     "source": "A mailto: link with optional cc, bcc, subject and body.",
     "text": "Tautan mailto: dengan cc, bcc, subjek, dan isi pesan yang bersifat opsional.",
@@ -30646,6 +31390,18 @@
     "text": "Lokasi geo: dari garis lintang dan garis bujur.",
     "status": "machine",
     "context": "mcp.tools.13.description"
+  },
+  "7048f38b33f1": {
+    "source": "Payment",
+    "text": "Pembayaran",
+    "status": "machine",
+    "context": "mcp.tools.18.title"
+  },
+  "e9eb33d195b5": {
+    "source": "A Pix, SEPA, Swiss QR-bill, QR Platba, Swish, PayNow, PromptPay, VietQR or KHQR payment code, or a Lightning, XRP, Cardano, Tron, TON or Stellar request, checked like the playground's forms.",
+    "text": "Kode pembayaran Pix, SEPA, Swiss QR-bill, QR Platba, Swish, PayNow, PromptPay, VietQR atau KHQR, atau permintaan Lightning, XRP, Cardano, Tron, TON atau Stellar, diperiksa seperti formulir di Playground.",
+    "status": "machine",
+    "context": "mcp.tools.18.description"
   },
   "f963ece25fc7": {
     "source": "Can Claude make a QR code?",
