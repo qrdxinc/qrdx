@@ -38800,5 +38800,23 @@
     "text": "Più o meno, a meno che chi trova l'oggetto non condivida di più. Come ogni QR code dinamico, le analisi del tag mostrano quando è stato scansionato e il paese, la regione e la città in base alla rete. Con Pro e Business puoi attivare la posizione precisa per il codice del tag: subito dopo una scansione, il browser di chi lo ha trovato chiede se condividere la propria posizione e, se acconsente, vedi dove è stato scansionato, arrotondato a circa 100 m. Il modulo \"trovato\" permette a chi trova l'oggetto di dirti dove si trova.",
     "status": "machine",
     "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "dc0eabcf8882": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, portfolio or creator page.",
+    "text": "Porta le persone a un profilo, un canale, un server Discord, una newsletter, un portfolio o una pagina creator.",
+    "status": "machine",
+    "context": "qrTypes.groups.social.description"
+  },
+  "f6614584199c": {
+    "source": "Music and podcasts",
+    "text": "Musica e podcast",
+    "status": "machine",
+    "context": "qrTypes.groups.music.title"
+  },
+  "73d839cde7ab": {
+    "source": "Songs, albums, playlists, artist pages and podcasts on Spotify, Apple Music, SoundCloud, Bandcamp and other services.",
+    "text": "Brani, album, playlist, pagine degli artisti e podcast su Spotify, Apple Music, SoundCloud, Bandcamp e altri servizi.",
+    "status": "machine",
+    "context": "qrTypes.groups.music.description"
   }
 }

@@ -25,6 +25,7 @@ export const GENERATOR_HUB_TYPES: ContentType[] = [
   "wifi",
   "vcard",
   "instagram",
+  "spotify",
   "upi",
   "google-review",
   "etsy",

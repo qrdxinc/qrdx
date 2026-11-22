@@ -1,4 +1,5 @@
-// The eight use-case scenes, drawn in the home hero's isometric line style.
+// The use-case scenes (eight on the home page, plus the music sleeve on the
+// generator pages), drawn in the home hero's isometric line style.
 // Each returns SVG markup for a 400 × 300 viewBox; generate.ts adds the
 // theme styles, the shared gradients and the real code (`#code`).
 //
@@ -566,6 +567,57 @@ function busStopPoster() {
   ].join("");
 }
 
+// --- 9. Music and podcasts: a record sleeve beside a speaker ---------------
+
+function recordSleeve() {
+  const cam = camera(200, 178, 1);
+
+  // Speaker, back right, its cones on the face toward the viewer's left.
+  const speaker = cam.box(32, -60, 0, 84, -16, 92);
+  const onSpeaker = cam.onLeft(32, -16, 92);
+  const cone = (cy: number, r: number, cap: number) =>
+    `${circle(26, cy, r, "f")}${circle(26, cy, r * 0.66, "s2")}${circle(26, cy, cap, "f")}`;
+
+  // The sleeve stands on a small foot, facing the same way; its record is
+  // half out of the open edge, in the plane just behind the front.
+  const [X0, X1, Y0, Y1, Z0, Z1] = [-80, -6, -2, 3, 6, 80];
+  const sleeve = cam.box(X0, Y0, Z0, X1, Y1, Z1);
+  const onSleeve = cam.onLeft(X0, Y1, Z1);
+  const onRecord = cam.onLeft(X0, 0.5, Z1);
+  const record = `${circle(80, 35, 32, "s2")}${circle(80, 35, 25, "l")}${circle(80, 35, 18, "l")}${circle(80, 35, 10, "f")}${circle(80, 35, 1.6, "dot")}`;
+  const [fx, fy] = cam.p((X0 + X1) / 2, Y1, (Z0 + Z1) / 2);
+
+  // A phone lying in front, playing: cover art, title and a progress bar.
+  const phone = card(cam, 50, 32, 34, 62, -18, 0, 3);
+  const play = "M14.5 49.5v7l6 -3.5z";
+
+  return [
+    shade(200, 270, 150, 16),
+    slab(cam, -112, -66, 112, 62, -14, 0, 12),
+    path(speaker.left, "s"),
+    path(speaker.right, "s2"),
+    path(speaker.top, "f"),
+    g(onSpeaker, `${cone(22, 8, 2.6)}${cone(62, 19, 5)}`),
+    bloom(fx, fy, 66, 60),
+    g(onRecord, record),
+    slab(cam, -84, -8, -2, 10, 0, 6, 3),
+    path(sleeve.right, "s2"),
+    path(sleeve.top, "s"),
+    path(sleeve.left, "f"),
+    g(
+      onSleeve,
+      `${line(10, 34, 11, "tx2")}${line(10, 26, 17)}${code(14, 22, 46)}`,
+    ),
+    path(sleeve.left, "rim"),
+    phone.sides,
+    phone.top,
+    g(
+      phone.face,
+      `<path class="scr" d="${roundRect(3, 3, 28, 56, 4.5)}"/><path class="acc" d="${roundRect(7, 8, 20, 20, 3)}"/>${line(7, 23, 34, "tx2")}${line(7, 18, 39)}<path class="l2" d="M7 45H27"/><path class="f" d="${play}"/>`,
+    ),
+  ].join("");
+}
+
 export const SCENES: Record<UseCaseArtId, () => string> = {
   "cafe-table-tent": cafeTableTent,
   "business-card": businessCard,
@@ -575,4 +627,5 @@ export const SCENES: Record<UseCaseArtId, () => string> = {
   "event-check-in": eventCheckIn,
   "retail-shelf-tag": retailShelfTag,
   "bus-stop-poster": busStopPoster,
+  "record-sleeve": recordSleeve,
 };

@@ -38800,5 +38800,23 @@
     "text": "大致位置可以知道，除非拾到者提供更多信息。和所有动态二维码一样，标签的分析数据会显示它被扫描的时间，以及根据网络判断的国家、地区和城市。在 Pro 和 Business 上，你可以为标签的二维码开启精确定位：扫描后，拾到者的浏览器会询问是否分享其位置，如果对方允许，你就能看到扫描位置，精确到约 100 m。拾到者也可以通过“找到了”表单告诉你物品在哪里。",
     "status": "machine",
     "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "dc0eabcf8882": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, portfolio or creator page.",
+    "text": "将人们引导至个人主页、频道、Discord 服务器、新闻通讯、作品集或创作者页面。",
+    "status": "machine",
+    "context": "qrTypes.groups.social.description"
+  },
+  "f6614584199c": {
+    "source": "Music and podcasts",
+    "text": "音乐和播客",
+    "status": "machine",
+    "context": "qrTypes.groups.music.title"
+  },
+  "73d839cde7ab": {
+    "source": "Songs, albums, playlists, artist pages and podcasts on Spotify, Apple Music, SoundCloud, Bandcamp and other services.",
+    "text": "Spotify、Apple Music、SoundCloud、Bandcamp 等服务上的歌曲、专辑、歌单、艺人主页和播客。",
+    "status": "machine",
+    "context": "qrTypes.groups.music.description"
   }
 }

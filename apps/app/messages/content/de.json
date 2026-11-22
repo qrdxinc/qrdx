@@ -38800,5 +38800,23 @@
     "text": "Ungefähr, solange die finderende Person nicht mehr preisgibt. Wie bei jedem dynamischen QR-Code zeigen dir die Statistiken des Tags, wann er gescannt wurde, und das Land, die Region und die Stadt anhand des Netzwerks. Mit Pro und Business kannst du für den Code des Tags die genaue Standortermittlung aktivieren: Direkt nach einem Scan fragt der Browser der finderenden Person, ob sie ihren Standort teilen möchte. Erlaubt sie das, siehst du, wo gescannt wurde, auf etwa 100 m gerundet. Über das Formular „Gefunden“ kann die finderende Person dir mitteilen, wo sich der Gegenstand befindet.",
     "status": "machine",
     "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "dc0eabcf8882": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, portfolio or creator page.",
+    "text": "Schicke Leute zu einem Profil, Kanal, Discord-Server, Newsletter, Portfolio oder einer Creator-Seite.",
+    "status": "machine",
+    "context": "qrTypes.groups.social.description"
+  },
+  "f6614584199c": {
+    "source": "Music and podcasts",
+    "text": "Musik und Podcasts",
+    "status": "machine",
+    "context": "qrTypes.groups.music.title"
+  },
+  "73d839cde7ab": {
+    "source": "Songs, albums, playlists, artist pages and podcasts on Spotify, Apple Music, SoundCloud, Bandcamp and other services.",
+    "text": "Songs, Alben, Playlists, Künstlerseiten und Podcasts auf Spotify, Apple Music, SoundCloud, Bandcamp und anderen Diensten.",
+    "status": "machine",
+    "context": "qrTypes.groups.music.description"
   }
 }

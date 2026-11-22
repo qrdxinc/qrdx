@@ -106,6 +106,13 @@ export async function TopicCodeStrip({
   );
 }
 
+// Six codes (industries, placements) fill rows of 2, 3 or 6. Seven (one per
+// generator group) wrap 2, 4 or 7 across, the short last row centred rather
+// than one tile left alone at the start of a row. gap-3 is 0.75rem.
+const SEVEN_LIST = "flex flex-wrap justify-center";
+const SEVEN_TILE =
+  "w-[calc((100%_-_0.75rem)/2)] sm:w-[calc((100%_-_2.25rem)/4)] lg:w-[calc((100%_-_4.5rem)/7)]";
+
 async function HubStrip({
   items,
   label,
@@ -114,13 +121,17 @@ async function HubStrip({
   label: string;
 }) {
   const t = await getTranslations("pageCodes");
+  const seven = items.length === 7;
   return (
     <div className="flex w-full flex-col items-center gap-3 pt-4">
       <CodeTiles
         items={items}
         label={label}
         compact
-        className="grid-cols-2 sm:grid-cols-3 lg:grid-cols-6"
+        className={
+          seven ? SEVEN_LIST : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-6"
+        }
+        itemClassName={seven ? SEVEN_TILE : undefined}
       />
       <p className="text-xs text-muted-foreground text-center text-balance">
         {t("sampleNote")} {t("startNote")}
