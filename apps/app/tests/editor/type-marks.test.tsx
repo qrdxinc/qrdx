@@ -142,9 +142,13 @@ describe("glyph colour", () => {
       .map(([id]) => id);
     expect(dark).toEqual([
       "type snapchat",
-      "type spotify",
       "type waze",
       "type stellar",
+      "type kakaotalk",
+      "type linktree",
+      "type buymeacoffee",
+      "type spotify",
+      "type tripadvisor",
     ]);
   });
 
