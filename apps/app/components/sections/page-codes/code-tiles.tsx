@@ -139,8 +139,7 @@ function CodeTile({
 /**
  * A row of sample codes. `heading`: tile names are h3s (inside a section
  * with an h2). `compact`: smaller captions with the theme only, for the
- * hub rows. `itemClassName`: each tile's width, when `className` lays the
- * list out as a wrapping flex row instead of a grid.
+ * six-across hub rows.
  */
 export async function CodeTiles({
   items,
@@ -148,7 +147,6 @@ export async function CodeTiles({
   heading = false,
   compact = false,
   className,
-  itemClassName,
 }: {
   items: CodeTileItem[];
   /** Accessible name of the list. */
@@ -156,13 +154,12 @@ export async function CodeTiles({
   heading?: boolean;
   compact?: boolean;
   className?: string;
-  itemClassName?: string;
 }) {
   const alt = await altText(items.map((item) => item.code));
   return (
     <ul aria-label={label} className={cn("grid w-full gap-3", className)}>
       {items.map((item) => (
-        <li key={item.code.id} className={cn("min-w-0", itemClassName)}>
+        <li key={item.code.id} className="min-w-0">
           <CodeTile item={item} heading={heading} compact={compact} alt={alt} />
         </li>
       ))}
