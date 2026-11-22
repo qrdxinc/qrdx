@@ -84,7 +84,8 @@ describe("the looks in the style vocabulary", () => {
       },
       eyeShapes: { topRight: { outer: "curly" } },
       moduleScale: 1,
-      shape: "square",
+      // A silhouette draws in place of the named outline: neither is kept
+      shape: "circle",
       bgRadius: 0,
       silhouette: {
         type: "silhouette",
@@ -95,7 +96,8 @@ describe("the looks in the style vocabulary", () => {
     } as ThemeStyles);
     // A gradient on one eye is dropped, its solid centre kept
     expect(design.eyeColors).toEqual({ topLeft: { inner: "#111111" } });
-    // A retired shape, full-size dots, a square, no rounding: left out
+    // A retired shape, full-size dots, the silhouette's outline, no
+    // rounding: left out
     expect(design.eyeShapes).toBeUndefined();
     expect(design.moduleScale).toBeUndefined();
     expect(design.shape).toBeUndefined();
@@ -261,6 +263,61 @@ describe("the looks in the style vocabulary", () => {
     ).toEqual({ style: "keep" });
   });
 
+  it("keeps a frame's accent and label size across a change of the same frame", () => {
+    const current = fromThemeStyles(
+      {
+        ...EDITOR,
+        frame: {
+          style: "custom",
+          spec: CUP.spec,
+          text: "Hi",
+          secondaryColor: "#FF0000",
+          fontScale: 1.3,
+        },
+      },
+      undefined,
+      { officialFrameId, keepOwn: true },
+    );
+    expect(current.frame).toMatchObject({
+      style: "official",
+      id: "cafe-cup",
+      secondaryColor: "#FF0000",
+      fontScale: 1.3,
+    });
+    const changed = sanitizeDesignStyle(
+      answer({ frame: { style: "official", id: "cafe-cup", text: "Hello" } }),
+      current,
+      { inherit: current, isOfficialFrame },
+    );
+    expect(changed.frame).toEqual({
+      style: "official",
+      id: "cafe-cup",
+      text: "Hello",
+      secondaryColor: "#FF0000",
+      fontScale: 1.3,
+    });
+    expect(toThemeStyles(changed, OFFICIAL_FRAME_SOURCES).frame).toMatchObject({
+      secondaryColor: "#FF0000",
+      fontScale: 1.3,
+    });
+    // Another frame doesn't take them
+    const other = sanitizeDesignStyle(
+      answer({ frame: { style: "banner-bottom", text: "Scan me" } }),
+      current,
+      { inherit: current, isOfficialFrame },
+    );
+    expect(other.frame).toEqual({ style: "banner-bottom", text: "Scan me" });
+  });
+
+  it("reads the designer's percents back without float noise", () => {
+    const style = sanitizeDesignStyle(
+      answer({ moduleScale: 57, shadow: { opacity: 29, dx: 7 } }),
+      CLASSIC_STYLE,
+    );
+    expect(style.moduleScale).toBe(0.57);
+    expect(style.shadow).toEqual({ opacity: 0.29, dx: 0.07 });
+  });
+
   it("lists changed looks in plain words", () => {
     const lines = styleDiff(
       { ...CLASSIC_STYLE, shadow: { opacity: 0.2 } },
@@ -288,6 +345,42 @@ describe("repairs reach the looks", () => {
     );
     expect(style.eyeColors?.topLeft?.outer).not.toBe("#FDE68A");
     expect(changes.join("\n")).toMatch(/colors of single eyes/);
+  });
+
+  it("leaves a single eye's gradient alone instead of failing on it", () => {
+    // Community themes (the MCP tool's base) can carry gradients per eye
+    const gradient = {
+      type: "linear",
+      stops: [
+        { color: "#FDE68A", offset: 0 },
+        { color: "#FEF3C7", offset: 100 },
+      ],
+    };
+    const { style } = repairDesign(
+      {
+        ...CLASSIC_STYLE,
+        eyeColors: {
+          topLeft: { outer: gradient, inner: "#FDE68A" },
+        } as unknown as DesignStyle["eyeColors"],
+      },
+      [{ id: "contrast", message: "Low contrast" }],
+    );
+    expect(style.eyeColors?.topLeft?.outer).toEqual(gradient);
+    expect(style.eyeColors?.topLeft?.inner).not.toBe("#FDE68A");
+  });
+
+  it("squares every eye on the last decode repair, single eyes too", () => {
+    const { style } = repairDesign(
+      {
+        ...CLASSIC_STYLE,
+        cornerEyePattern: "squircle",
+        eyeShapes: { topLeft: { outer: "squircle", inner: "dots" } },
+      },
+      [{ id: "decode-96", message: "Doesn't decode at 96 px" }],
+      { final: true },
+    );
+    expect(style.cornerEyePattern).toBe("square");
+    expect(style.eyeShapes).toBeUndefined();
   });
 
   it("makes the dots full size, then drops the shadow, when the code won't decode small", () => {

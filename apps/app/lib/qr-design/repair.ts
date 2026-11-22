@@ -285,8 +285,14 @@ function fixContrast(
     const eyeColors = Object.fromEntries(
       Object.entries(next.eyeColors).map(([position, eye]) => {
         if (!eye) return [position, eye];
-        const outer = eye.outer && readable(eye.outer, next, min);
-        const inner = eye.inner && readable(eye.inner, next, min);
+        // Only solid #RRGGBB colors: a gradient or picture from a community
+        // theme (the MCP tool) is drawn as it is
+        const fix = (color: string | undefined) =>
+          typeof color === "string" && HEX_COLOR.test(color)
+            ? readable(color, next, min)
+            : color;
+        const outer = fix(eye.outer);
+        const inner = fix(eye.inner);
         if (outer !== eye.outer || inner !== eye.inner) adjusted = true;
         return [
           position,
@@ -451,11 +457,15 @@ export function repairDesign(
     if (
       final &&
       (next.cornerEyePattern !== "square" ||
-        next.cornerEyeDotPattern !== "square")
+        next.cornerEyeDotPattern !== "square" ||
+        next.eyeShapes)
     ) {
       changes.push("Squared the corner eyes so phones lock on faster");
-      next.cornerEyePattern = "square";
-      next.cornerEyeDotPattern = "square";
+      // Every eye: a single eye's own shapes go too
+      next = withEyeShapes(
+        { ...next, cornerEyePattern: "square", cornerEyeDotPattern: "square" },
+        undefined,
+      );
     }
   }
   return { style: next, changes };

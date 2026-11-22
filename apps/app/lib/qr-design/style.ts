@@ -25,6 +25,8 @@ import {
   EYE_GRADIENT_SPANS,
   EYE_POSITIONS,
   type EyePosition,
+  FRAME_FONT_SCALE_MAX,
+  FRAME_FONT_SCALE_MIN,
   FRAME_STYLES,
   FRAME_TEXT_MAX_LENGTH,
   type FrameSpec,
@@ -177,18 +179,22 @@ const PERCENT_FIELDS: Partial<Record<LookKey, true | readonly string[]>> = {
   logoOptions: ["size", "padding", "x", "y"],
 };
 
-/** One look with its numbers scaled by `factor` (unchanged when not numbers). */
-function scaleLook(key: LookKey, value: unknown, factor: number): unknown {
+/**
+ * One look with its numbers turned into percents ("to") or back into the
+ * engine's units ("from"); dividing keeps 57 from becoming 0.5700000000000001.
+ */
+function scaleLook(key: LookKey, value: unknown, way: "to" | "from"): unknown {
   const fields = PERCENT_FIELDS[key];
   if (!fields) return value;
+  const scale = (item: number) => (way === "to" ? item * 100 : item / 100);
   if (fields === true) {
-    return typeof value === "number" ? value * factor : value;
+    return typeof value === "number" ? scale(value) : value;
   }
   if (!value || typeof value !== "object") return value;
   return Object.fromEntries(
     Object.entries(value).map(([field, item]) => [
       field,
-      fields.includes(field) && typeof item === "number" ? item * factor : item,
+      fields.includes(field) && typeof item === "number" ? scale(item) : item,
     ]),
   );
 }
@@ -213,7 +219,7 @@ export function toDesignerView(
   delete view.eyeShapes;
   for (const key of LOOK_KEYS) {
     if (view[key] === undefined) continue;
-    const scaled = scaleLook(key, view[key], 100);
+    const scaled = scaleLook(key, view[key], "to");
     view[key] =
       typeof scaled === "number"
         ? Math.round(scaled)
@@ -258,7 +264,17 @@ const builtInFrameSchemaOf = ({ hex, label }: Builders) =>
     ).optional(),
     color: hex("Frame color").optional(),
     textColor: hex("Frame label color").optional(),
+    secondaryColor: hex(
+      "Accent color: the end of gradient-border's gradient, or an official frame's accent",
+    ).optional(),
   });
+
+/** Label size, kept from the editor (never designed). */
+const fontScaleSchema = z
+  .number()
+  .min(FRAME_FONT_SCALE_MIN)
+  .max(FRAME_FONT_SCALE_MAX)
+  .optional();
 
 const frameSchemaOf = (builders: Builders) =>
   builtInFrameSchemaOf(builders).extend({
@@ -328,7 +344,7 @@ const lookFieldsOf = ({ hex, num }: Builders) => ({
   moduleScale: num(
     MODULE_SCALE_MIN,
     MODULE_SCALE_MAX,
-    "Size of each dot (1 is full size; smaller dots leave gaps and scan less well)",
+    "Size of each dot (full size by default; smaller dots leave gaps and scan less well)",
   ),
   shape: z
     .enum(DESIGN_SHAPES)
@@ -347,7 +363,7 @@ const lookFieldsOf = ({ hex, num }: Builders) => ({
       width: num(
         HALO_WIDTH_MIN,
         HALO_WIDTH_MAX,
-        "Rim width in modules",
+        "Rim width, as a share of a module",
       ).optional(),
     })
     .describe(
@@ -364,12 +380,12 @@ const lookFieldsOf = ({ hex, num }: Builders) => ({
       dx: num(
         -SHADOW_OFFSET_MAX,
         SHADOW_OFFSET_MAX,
-        "Offset to the right, in modules",
+        "Offset to the right, as a share of a module",
       ).optional(),
       dy: num(
         -SHADOW_OFFSET_MAX,
         SHADOW_OFFSET_MAX,
-        "Offset down, in modules",
+        "Offset down, as a share of a module",
       ).optional(),
     })
     .describe("A see-through copy of the dark dots and eyes under them"),
@@ -383,10 +399,10 @@ const lookFieldsOf = ({ hex, num }: Builders) => ({
       padding: num(
         0,
         LOGO_PADDING_MAX,
-        "Clear space around it, in modules",
+        "Clear space around it, as a share of a module",
       ).optional(),
-      x: num(0, 1, "Center across the code (0.5 is the middle)").optional(),
-      y: num(0, 1, "Center down the code (0.5 is the middle)").optional(),
+      x: num(0, 1, "Center across the code (halfway is the middle)").optional(),
+      y: num(0, 1, "Center down the code (halfway is the middle)").optional(),
       shape: z
         .enum(LOGO_SHAPES)
         .optional()
@@ -452,16 +468,22 @@ const styleSchemaOf = (builders: Builders) => {
 };
 
 /** A built-in frame (the MCP tool's frame input). */
-export const designFrameSchema = builtInFrameSchemaOf(strict);
+export const designFrameSchema = builtInFrameSchemaOf(strict).extend({
+  fontScale: fontScaleSchema,
+});
 
 const strictLooks = lookFieldsOf(strict);
 
 /** The complete look of a code (no content); the looks are optional. */
-export const designStyleSchema = styleSchemaOf(strict).extend(
-  Object.fromEntries(
-    LOOK_KEYS.map((key) => [key, strictLooks[key].optional()]),
-  ) as { [K in LookKey]: z.ZodOptional<(typeof strictLooks)[K]> },
-);
+export const designStyleSchema = styleSchemaOf(strict)
+  .extend({
+    frame: frameSchemaOf(strict).extend({ fontScale: fontScaleSchema }),
+  })
+  .extend(
+    Object.fromEntries(
+      LOOK_KEYS.map((key) => [key, strictLooks[key].optional()]),
+    ) as { [K in LookKey]: z.ZodOptional<(typeof strictLooks)[K]> },
+  );
 
 const looseLooks = lookFieldsOf(loose);
 
@@ -725,21 +747,28 @@ export interface SanitizeOptions {
 }
 
 /** The frame of a designer answer made valid, or `fallback`'s. */
+/** The same frame: its style, and its id for an official one. */
+const sameFrame = (a: DesignFrame, b: DesignFrame) =>
+  a.style === b.style && (a.style !== "official" || a.id === b.id);
+
 function cleanFrame(
   frame: DesignerOutput["frame"],
   fallback: DesignFrame,
-  { isOfficialFrame, hasOwnFrame = false }: SanitizeOptions,
+  { isOfficialFrame, hasOwnFrame = false, inherit }: SanitizeOptions,
 ): DesignFrame {
   const text = cleanLabel(frame.text);
   const secondaryText = cleanLabel(frame.secondaryText);
   const color = hexOrNone(frame.color);
   const textColor = hexOrNone(frame.textColor);
+  const secondaryColor = hexOrNone(frame.secondaryColor);
   const labels = {
     ...(text !== undefined ? { text } : {}),
     ...(secondaryText ? { secondaryText } : {}),
     ...(color ? { color } : {}),
     ...(textColor ? { textColor } : {}),
+    ...(secondaryColor ? { secondaryColor } : {}),
   };
+  let cleaned: DesignFrame;
   if (frame.style === "official") {
     const id = frame.id?.trim().toLowerCase();
     if (!(id && isOfficialFrame?.(id))) {
@@ -747,12 +776,23 @@ function cleanFrame(
         ? fallback
         : { style: "none" };
     }
-    return { style: "official", id, ...labels };
+    cleaned = { style: "official", id, ...labels };
+  } else if (frame.style === "keep") {
+    if (!hasOwnFrame) return { style: "none" };
+    cleaned = { style: "keep", ...labels };
+  } else {
+    cleaned = { style: frame.style, ...labels };
   }
-  if (frame.style === "keep") {
-    return hasOwnFrame ? { style: "keep", ...labels } : { style: "none" };
+  // The same frame as before keeps its accent and label size unless the
+  // answer sets them (the designer never sets the label size)
+  const before = inherit?.frame;
+  if (before && cleaned.style !== "none" && sameFrame(before, cleaned)) {
+    if (!cleaned.secondaryColor && before.secondaryColor) {
+      cleaned.secondaryColor = before.secondaryColor;
+    }
+    if (before.fontScale !== undefined) cleaned.fontScale = before.fontScale;
   }
-  return { style: frame.style, ...labels };
+  return cleaned;
 }
 
 /** A logo choice made valid: a choice, a brand slug, or `fallback`. */
@@ -809,7 +849,7 @@ export function sanitizeDesignStyle(
     lookInput[key] =
       value === undefined
         ? options.inherit?.[key]
-        : scaleLook(key, value, 1 / 100);
+        : scaleLook(key, value, "from");
   }
   const { frame: _frame, logo: _logo, gradients: _gradients, ...core } = raw;
   for (const key of [...LOOK_KEYS, ...FLAT_EYE_KEYS]) {
@@ -936,6 +976,8 @@ const frameLabels = (frame: DesignFrame) => ({
     : {}),
   ...(frame.color ? { color: frame.color } : {}),
   ...(frame.textColor ? { textColor: frame.textColor } : {}),
+  ...(frame.secondaryColor ? { secondaryColor: frame.secondaryColor } : {}),
+  ...(frame.fontScale !== undefined ? { fontScale: frame.fontScale } : {}),
 });
 
 /**
@@ -1069,6 +1111,14 @@ function frameOf(
       : {}),
     ...(frame.textColor && HEX_COLOR.test(frame.textColor)
       ? { textColor: frame.textColor }
+      : {}),
+    ...(frame.secondaryColor && HEX_COLOR.test(frame.secondaryColor)
+      ? { secondaryColor: frame.secondaryColor }
+      : {}),
+    ...(frame.fontScale !== undefined &&
+    frame.fontScale >= FRAME_FONT_SCALE_MIN &&
+    frame.fontScale <= FRAME_FONT_SCALE_MAX
+      ? { fontScale: frame.fontScale }
       : {}),
   };
   if (frame.style === "custom") {

@@ -353,7 +353,8 @@ function onOfficialFrame(style: DesignStyle, frameId: string | undefined) {
   const { style: _style, id: _id, ...labels } = style.frame;
   return {
     ...style,
-    frame: { ...labels, style: "official" as const, id: frameId },
+    // The key order sanitizeDesignStyle writes, so equal frames compare equal
+    frame: { style: "official" as const, id: frameId, ...labels },
     // A frame and a border template never go together
     templateId: "default",
   };
@@ -653,6 +654,19 @@ export const QR_AGENT_TOOLS: QRAgentTools = {
         scoredWithSample = false;
       }
 
+      // Checked before it counts as a design
+      const frameId = input.frame_id?.trim().toLowerCase();
+      if (frameId && !isOfficialFrame(frameId)) {
+        return {
+          ok: false,
+          issues: [
+            {
+              message: `There's no official frame "${frameId.slice(0, 80)}". Call find_frames and use an id it returns.`,
+            },
+          ],
+        };
+      }
+
       // A model that keeps retrying a failing design would loop to the step
       // limit; three designs per request is plenty for a repair or a retry.
       context.designCalls.count++;
@@ -677,17 +691,6 @@ export const QR_AGENT_TOOLS: QRAgentTools = {
         });
       progress({ stage: "designing" });
 
-      const frameId = input.frame_id?.trim().toLowerCase();
-      if (frameId && !isOfficialFrame(frameId)) {
-        return {
-          ok: false,
-          issues: [
-            {
-              message: `There's no official frame "${frameId.slice(0, 80)}". Call find_frames and use an id it returns.`,
-            },
-          ],
-        };
-      }
       const request = {
         messages,
         brief: input.brief,
@@ -819,6 +822,22 @@ export const QR_AGENT_TOOLS: QRAgentTools = {
       "Put a design from design_qr in the user's editor (its content and style). The user approves or rejects it first. Call it after telling the user the score.",
     inputSchema: applyDesignInput,
     contextSchema: agentContextSchema,
+    // The model gets the outcome, not the style (a frame of the user's own
+    // can be their uploaded artwork) or the content's values
+    toModelOutput: ({ output }) => ({
+      type: "json",
+      value: (output.ok
+        ? {
+            ok: true,
+            designId: output.designId,
+            content: output.content?.summary ?? "unchanged",
+            score: output.score,
+            grade: output.grade,
+            changes: output.changes,
+            followups: output.followups,
+          }
+        : output) as unknown as JSONValue,
+    }),
     execute: async (input, { context }): Promise<ApplyDesignOutput> => {
       const design = context.designs.get(input.design_id);
       if (!design) {
@@ -849,6 +868,11 @@ export const QR_AGENT_TOOLS: QRAgentTools = {
       "Save a look (style, frame and its text, border and logo, no content) to the user's account as a reusable template. The user approves first.",
     inputSchema: saveTemplateInput,
     contextSchema: agentContextSchema,
+    // The outcome only: the saved style stays out of the model's context
+    toModelOutput: ({ output }) => {
+      const { style: _style, ...outcome } = output;
+      return { type: "json", value: outcome as unknown as JSONValue };
+    },
     execute: async (input, { context }): Promise<SaveTemplateOutput> => {
       const name = input.name.trim().slice(0, TEMPLATE_NAME_MAX_LENGTH);
       const design = input.design_id

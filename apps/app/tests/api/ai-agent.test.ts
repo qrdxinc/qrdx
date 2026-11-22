@@ -422,10 +422,12 @@ describe("the QR agent", () => {
     });
     // Resuming didn't use another AI request.
     expect(state.reserved).toEqual(["anthropic/claude-haiku-5.5"]);
-    // The chat model saw the approved result.
-    expect(promptText(gateway.calls[0] as GatewayCall)).toContain(
-      "apply_design",
-    );
+    // The chat model saw the approved result: the outcome, not the style
+    // or the content's values
+    const resumed = promptText(gateway.calls[0] as GatewayCall);
+    expect(resumed).toContain("apply_design");
+    expect(resumed).not.toContain("themeStyles");
+    expect(resumed).toContain("WiFi · Cafe Guest");
   });
 
   it("leaves the editor alone when the user rejects", async () => {
