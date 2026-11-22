@@ -227,6 +227,7 @@ export const SAMPLES: {
     token: "XLM",
     amount: "120.1234567",
     memo: "skdjfasf",
+  },
   // Added 2026-11-22 (links)
   messenger: { type: "messenger", username: "qrdx.dev" },
   viber: { type: "viber", phoneNumber: "+14155550132", message: "Hi" },

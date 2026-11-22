@@ -269,7 +269,7 @@ function googlePlayUrl(raw: string): URL | null {
     : null;
 }
 
-// ─── Viber, Zalo, Teams and FaceTime ───────────────────────────────────────
+// ─── Viber, Teams and FaceTime ─────────────────────────────────────────────
 
 const VIBER_INVITE_HOSTS = onHosts("invite.viber.com", "vb.me");
 

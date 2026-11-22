@@ -4,7 +4,6 @@
 
 import { z } from "zod";
 import type { HandleLinkType, PastedLinkType } from "@/types/qr-content";
-import { type LinkType, linkTypeIssue } from "@/utils/link-types";
 import {
   cardanoIssue,
   cryptoAmount,
@@ -18,6 +17,7 @@ import {
   xrpIssue,
 } from "@/utils/crypto-payments";
 import { czechSpdIssue } from "@/utils/czech-spd";
+import { type LinkType, linkTypeIssue } from "@/utils/link-types";
 // Added 2026-11-22 (payments)
 import { meCardIssue } from "@/utils/mecard";
 import {

@@ -72,7 +72,7 @@ export type ContentType =
   | "cardano"
   | "tron"
   | "ton"
-  | "stellar";
+  | "stellar"
   // Added 2026-11-22 (links)
   | HandleLinkType
   | PastedLinkType
@@ -927,7 +927,7 @@ export type QRContentConfig =
   | CardanoContent
   | TronContent
   | TonContent
-  | StellarContent;
+  | StellarContent
   // Added 2026-11-22 (links)
   | HandleLinkContent
   | PastedLinkContent
@@ -1537,6 +1537,7 @@ export const CONTENT_TYPES_METADATA: ContentTypeMetadata[] = [
     icon: "brand:stellar",
     description: "Receive XLM or USDC on Stellar",
     keywords: ["xlm", "lumens", "usdc", "sep-7", "crypto", "wallet"],
+  },
   // ─── Added 2026-11-22 (links) ─────────────────────────────────────────────
   {
     type: "messenger",

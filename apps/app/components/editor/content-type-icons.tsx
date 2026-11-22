@@ -34,8 +34,8 @@ import {
   TaskSquare,
   Text,
   UserSquare,
-  Wallet2,
   Video,
+  Wallet2,
   WalletMoney,
   Wifi,
 } from "iconsax-reactjs";

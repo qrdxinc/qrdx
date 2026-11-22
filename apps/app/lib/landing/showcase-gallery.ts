@@ -1024,6 +1024,7 @@ const CONTENT: Record<ContentType, ContentSpec> = {
       address: "GCALNQQBXAPZ2WIRSDDBMSTAKCUH5SG6U76YBFLQLIXJTF7FE5AX7AOO",
     },
     preset: "graphite",
+  },
   // Added 2026-11-22 (links): the platform's own account or a placeholder
   messenger: {
     config: { type: "messenger", username: "yourname" },

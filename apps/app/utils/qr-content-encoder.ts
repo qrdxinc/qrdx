@@ -54,7 +54,6 @@ import type {
   YouTubeContent,
   ZoomContent,
 } from "@/types/qr-content";
-import { encodeLinkType, isLinkTypeContent, linkTypeIssue } from "./link-types";
 import {
   baseUnits,
   cardanoIssue,
@@ -76,6 +75,7 @@ import {
   xrpIssue,
 } from "./crypto-payments";
 import { czechSpdIssue, encodeCzechSpd } from "./czech-spd";
+import { encodeLinkType, isLinkTypeContent, linkTypeIssue } from "./link-types";
 // Added 2026-11-22 (payments)
 import { encodeMeCard, meCardIssue } from "./mecard";
 import {

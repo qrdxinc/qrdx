@@ -205,6 +205,7 @@ export const CONTENT_EXAMPLES: { [T in ContentType]: Example<T> } = {
     token: "XLM",
     amount: "120.1234567",
     memo: "skdjfasf",
+  },
   // Added 2026-11-22 (links)
   messenger: { username: "bloomandleafstudio" },
   viber: {
