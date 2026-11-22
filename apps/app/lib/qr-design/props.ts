@@ -30,7 +30,7 @@ export function editorCodeProps(
     frame: style.frame,
     hideLogo: !style.showLogo,
     logo: style.customLogo ?? DEFAULT_QR_LOGO,
-    ...styleEngineOptions(style),
+    ...styleEngineOptions(style, value),
   };
 }
 
@@ -57,7 +57,7 @@ export function designQRProps(
       logo,
       level: style.level,
       margin: style.margin,
-      ...styleEngineOptions(style),
+      ...styleEngineOptions(style, value),
     }),
     level: style.level,
     cornerEyePattern: style.cornerEyePattern,

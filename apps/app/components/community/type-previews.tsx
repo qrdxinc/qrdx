@@ -135,7 +135,7 @@ export function SwatchCrop({
         margin={SWATCH_CODE.margin}
         size={SWATCH_CODE.size}
         value={SWATCH_CODE.value}
-        {...styleEngineOptions(look)}
+        {...styleEngineOptions(look, SWATCH_CODE.value)}
       />
     </div>
   );

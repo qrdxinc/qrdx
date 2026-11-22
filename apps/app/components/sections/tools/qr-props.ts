@@ -18,6 +18,7 @@ export function buildQrProps(
   styles: ThemeStyles,
   { quietZone, logo }: BuildOptions,
 ): QRProps {
+  const margin = quietZone ? QUIET_ZONE_MODULES : (styles.margin ?? 0);
   return getQRData({
     value,
     fgColor: styles.fgColor,
@@ -31,7 +32,7 @@ export function buildQrProps(
     templateId: styles.templateId,
     hideLogo: !styles.showLogo,
     logo: logo ?? styles.customLogo ?? DEFAULT_QR_LOGO,
-    margin: quietZone ? QUIET_ZONE_MODULES : (styles.margin ?? 0),
-    ...styleEngineOptions(styles),
+    margin,
+    ...styleEngineOptions(styles, value, margin),
   });
 }

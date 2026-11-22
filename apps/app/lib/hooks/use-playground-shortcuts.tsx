@@ -151,7 +151,7 @@ export function usePlaygroundShortcuts({
             logo: themeState.styles.customLogo ?? DEFAULT_QR_LOGO,
             level: themeState.styles.level,
             margin: themeState.styles.margin,
-            ...styleEngineOptions(themeState.styles),
+            ...styleEngineOptions(themeState.styles, value),
           }),
           level: themeState.styles.level,
           cornerEyePattern: themeState.styles.cornerEyePattern,

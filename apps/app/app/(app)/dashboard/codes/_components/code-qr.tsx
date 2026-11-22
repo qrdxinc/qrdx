@@ -77,7 +77,7 @@ export function CodeQr({
         margin={s.margin}
         templateId={s.templateId}
         value={value}
-        {...styleEngineOptions(s)}
+        {...styleEngineOptions(s, value)}
       />
     </div>
   );
@@ -101,7 +101,7 @@ export async function downloadCodeQr(
         logo: s.customLogo ?? DEFAULT_QR_LOGO,
         margin: s.margin,
         level: s.level,
-        ...styleEngineOptions(s),
+        ...styleEngineOptions(s, code.shortLink),
       }),
       level: s.level,
       cornerEyePattern: s.cornerEyePattern,

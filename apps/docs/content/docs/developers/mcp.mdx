@@ -162,7 +162,7 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | `search_docs` | Finds QRdx docs pages for a question or key words. Returns up to 8 pages with their titles, paths and a short excerpt. Takes an optional language |
 | `read_docs_page` | Returns one docs page as Markdown, by its path from `search_docs` or its URL. Long pages are cut at 12,000 characters, and a page with no translation comes back in English |
 
-The payload tools return a plain string. Your assistant then passes it as `data` to `generate_qr_code`.
+The payload tools return a plain string. Your assistant then passes it as `data` to `generate_qr_code`. A Swiss QR-bill payload is encoded at exactly the error correction level asked for, never higher, since SIX's guidelines want `M`.
 
 ### design_qr
 
