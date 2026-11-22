@@ -2100,6 +2100,8 @@
       "gs1BadChars": "AI ({ai}) enthält Zeichen, die GS1 nicht erlaubt: {chars}",
       "gs1Ai": "AI ({ai}): {inner}",
       "gs1TooLong": "GS1-128 fasst bis zu {max} Zeichen für AIs und Daten; hier sind es {count}. Teile die Daten auf zwei Barcodes auf.",
+      "databarGtinOnly": "GS1 DataBar enthält nur eine GTIN: (01) und deren 14 Ziffern. Für Datumsangaben, eine Charge oder ein Gewicht nutze GS1 DataBar Expanded oder GS1-128.",
+      "databarTooLong": "GS1 DataBar Expanded fasst bis zu {max} Ziffern an AIs und Daten, bei Buchstaben weniger; hier sind es {count} Zeichen. Entferne eine AI oder kürze einen Wert.",
       "isbnChars": "Eine ISBN besteht aus Ziffern, Bindestrichen und Leerzeichen; eine ISBN-10 kann auf X enden.",
       "isbnLength": "Eine ISBN hat 13 Ziffern, in der alten ISBN-10-Form 10. Diese hat {count, plural, one {# Ziffer} other {# Ziffern}}.",
       "isbnPrefix": "Eine ISBN-13 beginnt mit 978 oder 979.",

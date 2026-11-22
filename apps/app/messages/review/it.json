@@ -6299,6 +6299,14 @@
     "source": "94da50fa92a1",
     "status": "machine"
   },
+  "barcodeTool.issues.databarGtinOnly": {
+    "source": "3a0d9f236e8c",
+    "status": "machine"
+  },
+  "barcodeTool.issues.databarTooLong": {
+    "source": "70d18146d80d",
+    "status": "machine"
+  },
   "barcodeTool.issues.isbnChars": {
     "source": "ec905288f954",
     "status": "machine"

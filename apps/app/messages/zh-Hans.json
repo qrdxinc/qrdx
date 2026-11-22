@@ -2100,6 +2100,8 @@
       "gs1BadChars": "AI ({ai}) 包含 GS1 不允许的字符：{chars}",
       "gs1Ai": "AI ({ai})：{inner}",
       "gs1TooLong": "GS1-128 最多可容纳 {max} 个 AI 和数据字符；当前为 {count} 个。请拆分为两个条形码。",
+      "databarGtinOnly": "GS1 DataBar 只能容纳 GTIN：(01) 及其 14 位数字。如需包含日期、批次或重量，请使用 GS1 DataBar Expanded 或 GS1-128。",
+      "databarTooLong": "GS1 DataBar Expanded 最多可容纳 {max} 位 AI 和数据数字，包含字母时容量更少；当前内容有 {count} 个字符。请删除一个 AI 或缩短某个值。",
       "isbnChars": "ISBN 只能包含数字、连字符和空格；ISBN-10 末位可以是 X。",
       "isbnLength": "ISBN 为 13 位数字，或旧版 ISBN-10 格式的 10 位数字；当前有 {count, plural, one {# 位数字} other {# 位数字}}。",
       "isbnPrefix": "ISBN-13 以 978 或 979 开头。",

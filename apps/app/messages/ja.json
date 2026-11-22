@@ -2100,6 +2100,8 @@
       "gs1BadChars": "AI ({ai})にGS1で使用できない文字が含まれています:{chars}",
       "gs1Ai": "AI ({ai}):{inner}",
       "gs1TooLong": "GS1-128に含められるAIとデータは最大{max}文字です。現在は{count}文字です。2つのバーコードに分けてください。",
+      "databarGtinOnly": "GS1 DataBarで扱えるのはGTINのみで、(01)とその14桁の数字です。日付、バッチ、重量を含める場合は、GS1 DataBar ExpandedまたはGS1-128を使用してください。",
+      "databarTooLong": "GS1 DataBar Expandedで扱えるのはAIとデータを合わせて最大{max}桁で、文字が含まれる場合はさらに少なくなります。現在は{count}文字です。AIを減らすか、値を短くしてください。",
       "isbnChars": "ISBN に使えるのは数字、ハイフン、スペースです。ISBN-10 は末尾を X にできます。",
       "isbnLength": "ISBN は13桁、または旧形式の ISBN-10 では10桁です。現在の入力は {count, plural, other {#桁}}です。",
       "isbnPrefix": "ISBN-13 は 978 または 979 で始まります。",

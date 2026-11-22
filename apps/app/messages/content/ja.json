@@ -38236,5 +38236,257 @@
     "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417、Aztecに対応しています。値（チェックデジット、桁数、使用文字）を検証し、PNGに加えて、SVG、PNG、PDFなどの公開画像URLを返します。",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "a68faeef9b21": {
+    "source": "Roughly, unless the finder shares more. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network. On Pro and Business you can switch on precise location for the tag's code: right after a scan, the finder's browser asks whether to share their location, and if they allow it you see where it was scanned, rounded to about 100 m. The found-it form lets the finder tell you where the item is.",
+    "text": "おおよその場所はわかりますが、見つけた方が追加で共有しない限り、正確な場所まではわかりません。他の動的QRコードと同様に、タグのアナリティクスには、スキャンされた日時と、ネットワークから判別した国・地域・市区町村が表示されます。ProとBusinessでは、タグのコードで精密な位置情報をオンにできます。スキャン直後に、見つけた方のブラウザが位置情報を共有するかどうかを尋ね、許可されるとスキャンされた場所が約100 m単位に丸められて表示されます。発見フォームを使えば、見つけた方が落とし物の場所を知らせることもできます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "15c6793537de": {
+    "source": "A GTIN in a short barcode for small retail items",
+    "text": "小型の小売商品向けに、GTINを短いバーコードにしたものです",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.summary"
+  },
+  "b5cc716296fb": {
+    "source": "A GTIN as (01) and its 14 digits, e.g. (01)09501101530003. Leave off the last digit and the check digit is added.",
+    "text": "(01)に続けてGTINの14桁を入力します（例：(01)09501101530003）。最後の1桁を省くと、チェックディジットが自動で付きます。",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.inputHint"
+  },
+  "e9f24dfc8256": {
+    "source": "GTIN plus weight, price or dates for fresh food",
+    "text": "生鮮食品向けに、GTINに重量・価格・日付を加えたものです",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.summary"
+  },
+  "9ba22a61f006": {
+    "source": "Application Identifiers in brackets, each followed by its value, e.g. (01)09501101530003(17)261231(10)AB-123.",
+    "text": "アプリケーション識別子をかっこで囲み、そのあとに値を続けて入力します（例：(01)09501101530003(17)261231(10)AB-123）。",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.inputHint"
+  },
+  "baa23c86f1fc": {
+    "source": "A retail GTIN in a smaller barcode than an EAN-13 or UPC-A, for items too small for those. Not every checkout scanner has it switched on, so check with the retailer before printing.",
+    "text": "EAN-13やUPC-Aでは大きすぎる小さな商品向けに、小売用のGTINをより小さなバーコードで表します。すべてのレジのスキャナーで読み取れるとは限らないため、印刷の前に小売店へご確認ください。",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar"
+  },
+  "5092dbf6ba77": {
+    "source": "A GTIN plus more data, such as a weight, a price or an expiry date, marked by the same Application Identifiers as GS1-128. Used on fresh food sold by weight, so the checkout reads the price or weight from the barcode.",
+    "text": "GTINに加えて、重量、価格、賞味期限などのデータも持てます。GS1-128と同じアプリケーション識別子で区別します。重量で販売する生鮮食品に使われ、レジはバーコードから価格や重量を読み取ります。",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar-expanded"
+  },
+  "db0826917a45": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14, GS1-128 and GS1 DataBar carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "店頭で販売する商品の場合は必要です。EAN、UPC、ITF-14、GS1-128、GS1 DataBarにはGTINが含まれ、GTINはGS1（またはお住まいの国のGS1加盟組織）から貴社に付与されます。適当に作った番号は、小売店のシステムでは認識されません。書籍、逐次刊行物、楽譜には、代わりに各国の機関が発行するISBN、ISSN、ISMNを使います。このジェネレーターは有効な番号であればどれでもバーコードにできますが、番号の発行や登録は行いません。自社の在庫、資産、チケットなどには、Code 128、Code 39、Code 93を使えば登録は不要です。",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "5d57866e493c": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, the GTIN of GS1 DataBar and the GTIN and SSCC fields of GS1-128 and GS1 DataBar Expanded: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "はい。EAN-13、EAN-8、UPC-A、UPC-E、ITF-14、ISBN、ISSN、ISMN、GS1 DataBarのGTIN、そしてGS1-128とGS1 DataBar ExpandedのGTINおよびSSCCの各フィールドが対象です。最後の1桁を省くと、自動で計算されます。番号をすべて入力した場合はチェックディジットが検証され、誤っているとバーコードは表示されず、エラーが表示されます。",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "c2d9a57f6443": {
+    "source": "Free GS1 DataBar Barcode Generator (Omnidirectional)",
+    "text": "無料のGS1 DataBarバーコードジェネレーター（Omnidirectional）",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.title"
+  },
+  "418eae1158ca": {
+    "source": "Make a GS1 DataBar Omnidirectional barcode from a GTIN, with the check digit added or checked. Scan-checked in your browser. SVG, PDF, EPS and PNG. Free.",
+    "text": "GTINからGS1 DataBar Omnidirectionalバーコードを作成できます。チェックデジットの追加や確認にも対応。ブラウザー上でスキャンチェック済み。SVG、PDF、EPS、PNG形式。無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.metaDescription"
+  },
+  "4a41d40d111a": {
+    "source": "GS1 DataBar Omnidirectional holds one thing: a product's 14-digit GTIN, the number an EAN-13 or UPC-A carries. Type it after (01), check that it scans and download it.",
+    "text": "GS1 DataBar Omnidirectionalに入れられるのは、EAN-13やUPC-Aと同じ商品の14桁のGTINだけです。(01)の後に入力し、スキャンできることを確認してダウンロードしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.intro"
+  },
+  "c74d27dff93f": {
+    "source": "Retail items too small for an EAN-13 or UPC-A: its bars are as wide as an EAN-13's but much shorter. Checkout scanners read it from any angle, like an EAN-13.",
+    "text": "EAN-13やUPC-Aには小さすぎる小売商品向けです。バーの幅はEAN-13と同じですが、高さはかなり低くなります。レジのスキャナーならEAN-13と同様に、どの角度からでも読み取れます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.0"
+  },
+  "53ad38e77560": {
+    "source": "Not every scanner has GS1 DataBar switched on. Ask the retailer that will scan it before you print, and use EAN-13 or UPC-A when in doubt.",
+    "text": "すべてのスキャナーでGS1 DataBarが有効になっているわけではありません。印刷する前に、スキャンする小売店へ確認してください。迷う場合はEAN-13かUPC-Aを使いましょう。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.1"
+  },
+  "0a7f916a956b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar?",
+    "text": "GS1 DataBarにGS1番号は必要ですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.title"
+  },
+  "aaa22f8cfea2": {
+    "source": "Yes. The GTIN it holds is built from a GS1 company prefix, like the number in an EAN-13 or UPC-A.",
+    "text": "はい。EAN-13やUPC-Aの番号と同じく、含まれるGTINはGS1事業者コードをもとに作られます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.paragraphs.0"
+  },
+  "14553ad995d0": {
+    "source": "Write the GTIN after (01), as 14 digits: (01)09501101530003. A 13-digit EAN-13 number becomes a GTIN with a 0 in front, and a 12-digit UPC-A number with two.",
+    "text": "GTINは(01)の後に14桁で入力してください（例：(01)09501101530003）。13桁のEAN-13の番号は先頭に0を付けるとGTINになり、12桁のUPC-Aの番号は先頭に0を2つ付けるとGTINになります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.0"
+  },
+  "847870e5f20f": {
+    "source": "Leave off the last digit and the check digit is added; enter all 14 and it's checked. The brackets aren't encoded; they show that (01), the GTIN, follows.",
+    "text": "最後の1桁を省くとチェックデジットが追加され、14桁すべてを入力すると確認されます。かっこはエンコードされません。後ろに(01)、つまりGTINが続くことを示すものです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.1"
+  },
+  "7c9ca8195d32": {
+    "source": "GS1 DataBar holds nothing but the GTIN. For a weight, a price, a batch or a date, use GS1 DataBar Expanded, which takes the same (AI)value input.",
+    "text": "GS1 DataBarに入るのはGTINだけです。重量、価格、バッチ、日付を入れたい場合は、同じ(AI)value形式で入力できるGS1 DataBar Expandedを使ってください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.2"
+  },
+  "ee3674a025e6": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 33 modules high, 11.6 mm at this module.",
+    "text": "ダウンロードされるファイルは、モジュール0.353 mm、バーの高さ15 mmで作られています。GS1ではバーの高さを33モジュール以上、このモジュールでは11.6 mm以上とするよう定めています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.0"
+  },
+  "052b836a39de": {
+    "source": "The bars are 96 modules wide, 33.5 mm here: about the width of an EAN-13's bars at the same module. The printed GTIN is a little wider than the bars, so the file is wider too.",
+    "text": "バーの幅は96モジュール、ここでは33.5 mmです。同じモジュールで比べると、EAN-13のバーとほぼ同じ幅です。印字されるGTINはバーより少し幅が広いため、ファイルの幅もそれに合わせて広くなります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.1"
+  },
+  "395264c48174": {
+    "source": "What does a scanner return?",
+    "text": "スキャナーは何を返しますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.question"
+  },
+  "07d9e012bffd": {
+    "source": "The digits 01 and the GTIN, 16 in all, sometimes after a symbology identifier (]e0), and with no brackets. The scan check here accepts both forms.",
+    "text": "数字の01とGTINの合計16桁が、かっこなしで返されます。先頭にシンボロジー識別子（]e0）が付く場合もあります。ここのスキャンチェックは、どちらの形式にも対応しています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.answer"
+  },
+  "76f18e2501c2": {
+    "source": "My scanner reads EAN-13 but not this. Why?",
+    "text": "スキャナーでEAN-13は読めるのに、これは読めません。なぜですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.question"
+  },
+  "6b564f4ef227": {
+    "source": "Most likely GS1 DataBar is switched off in its settings. Many scanners let you turn each symbology on or off; check the manual for GS1 DataBar, which older documents call RSS-14.",
+    "text": "スキャナーの設定でGS1 DataBarがオフになっている可能性が高いです。多くのスキャナーでは、シンボロジーごとにオンとオフを切り替えられます。マニュアルで、古い資料ではRSS-14と呼ばれているGS1 DataBarの項目を確認してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.answer"
+  },
+  "6a37ed0e9a98": {
+    "source": "Can it hold a weight or an expiry date?",
+    "text": "重量や賞味期限は入れられますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.question"
+  },
+  "e888aaaf74e2": {
+    "source": "No, only the GTIN. GS1 DataBar Expanded holds the GTIN with other Application Identifiers, such as (3103) for a weight or (17) for an expiry date.",
+    "text": "いいえ、入れられるのはGTINだけです。GS1 DataBar Expandedなら、GTINに加えて、重量の(3103)や賞味期限の(17)など、ほかのApplication Identifierも入れられます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.answer"
+  },
+  "e17f7a55d5c6": {
+    "source": "Free GS1 DataBar Expanded Barcode Generator",
+    "text": "無料のGS1 DataBar Expandedバーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.title"
+  },
+  "14f0f00fb5e9": {
+    "source": "Make a GS1 DataBar Expanded barcode: a GTIN with weight, price, batch or expiry in one retail barcode. Check digits added. Scan-checked. SVG, PDF, PNG.",
+    "text": "GS1 DataBar Expandedバーコードを作成。重量、価格、バッチ、有効期限を含むGTINを1つの小売用バーコードにまとめます。チェックデジットを自動追加。スキャン確認済み。SVG、PDF、PNGに対応。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.metaDescription"
+  },
+  "ac78f2470ebf": {
+    "source": "GS1 DataBar Expanded carries a GTIN and more data in one barcode a checkout scanner reads, each piece marked by an Application Identifier (AI) in brackets: (01) for the GTIN, (17) for an expiry date, (10) for a batch. Type the AIs and values; check digits are added or checked for you.",
+    "text": "GS1 DataBar Expandedは、レジのスキャナーが読み取れる1つのバーコードにGTINとその他のデータを収められます。各データには括弧付きのアプリケーション識別子(AI)を付けます。GTINは(01)、有効期限は(17)、バッチは(10)です。AIと値を入力すると、チェックデジットが自動で追加または確認されます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.intro"
+  },
+  "f15374e67a3a": {
+    "source": "Fresh food sold by weight, such as meat, cheese and deli counters, where the weight or the price travels with the GTIN so the checkout can read it from the barcode.",
+    "text": "肉、チーズ、惣菜売り場など量り売りの生鮮食品。重量や価格がGTINとともにバーコードに含まれるため、レジでそのまま読み取れます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.0"
+  },
+  "a2c9d9d7f3f1": {
+    "source": "North American coupons use its stacked form, GS1 DataBar Expanded Stacked, which this generator doesn't draw.",
+    "text": "北米のクーポンには積層型のGS1 DataBar Expanded Stackedが使われますが、このジェネレーターでは作成できません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.1"
+  },
+  "fc1be266ea8b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar Expanded?",
+    "text": "GS1 DataBar ExpandedにGS1番号は必要ですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.title"
+  },
+  "b1afd422b8bf": {
+    "source": "For the GTIN in (01), yes: it's built from a GS1 company prefix. Weights, prices, batches and dates are your own data.",
+    "text": "(01)のGTINには必要です。GS1事業者コードをもとに作られるためです。重量、価格、バッチ、日付はご自身のデータです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.paragraphs.0"
+  },
+  "f06c2fc00957": {
+    "source": "GTINs in (01) and (02) and SSCCs in (00) get their check digit added when you leave it off, or checked when you don't. The encoder also checks the data against GS1's rules: a batch (10) without a GTIN, for example, is refused.",
+    "text": "(01)と(02)のGTIN、(00)のSSCCは、チェックデジットを省くと自動で追加され、入力すると確認されます。エンコーダーはGS1のルールに沿ってデータも検証します。たとえば、GTINのないバッチ(10)は受け付けられません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.1"
+  },
+  "d2722491f265": {
+    "source": "It holds up to 74 digits of AIs and data, and fewer when there are letters. Put variable-length fields such as (10) batch last, so no separator is needed after them.",
+    "text": "AIとデータは最大74桁まで入り、文字を含む場合はそれより少なくなります。(10)のバッチなど可変長のフィールドは最後に置くと、その後に区切り文字が不要になります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.2"
+  },
+  "71bcd6597001": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 34 modules high, 12 mm at this module.",
+    "text": "ダウンロードでは、モジュール幅0.353 mm、バーの高さ15 mmを使用します。GS1ではバーの高さを34モジュール以上、このモジュール幅では12 mm以上と定めています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.0"
+  },
+  "f7a219456cad": {
+    "source": "It's long, not tall: the example's bars are 98.8 mm long, a little more than the same data as GS1-128 (93.8 mm). More data makes it longer still.",
+    "text": "縦ではなく横に長い形式です。例のバーの長さは98.8 mmで、同じデータのGS1-128(93.8 mm)より少し長くなります。データが増えるとさらに長くなります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.1"
+  },
+  "5c3434d2ba5d": {
+    "source": "The brackets are only for people. Readers report the data with a symbology identifier (]e0) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+    "text": "括弧は人が読むためのものです。リーダーはシンボル識別子(]e0)付き、またはなしでデータを返し、可変長のフィールドは見えないGS文字で区切ります。ここでのスキャン確認は、これらの形式すべてに対応しています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.0.answer"
+  },
+  "99a9136f6b20": {
+    "source": "GS1 DataBar Expanded or GS1-128?",
+    "text": "GS1 DataBar ExpandedとGS1-128の違いは?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.question"
+  },
+  "08d1a93af707": {
+    "source": "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
+    "text": "取引先や小売店が指定するほうを使ってください。GS1 DataBar Expandedは小売用で、生鮮食品などの商品をレジで読み取ります。GS1-128はケース、パレット、配送ラベルに使う物流用のバーコードです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.answer"
+  },
+  "4bc1d6a80c0d": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417、Aztecに対応しています。値（チェックディジット、桁数、文字）を検証し、PNGと、SVG、PNG、PDFなどの公開画像URLを返します。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

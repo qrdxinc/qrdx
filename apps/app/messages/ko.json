@@ -2100,6 +2100,8 @@
       "gs1BadChars": "AI ({ai})에 GS1에서 허용하지 않는 문자가 있어요: {chars}",
       "gs1Ai": "AI ({ai}): {inner}",
       "gs1TooLong": "GS1-128은 AI와 데이터를 합쳐 최대 {max}자까지 담을 수 있어요. 현재 {count}자예요. 바코드 두 개로 나누세요.",
+      "databarGtinOnly": "GS1 DataBar는 GTIN만 담을 수 있어요. (01)과 14자리 숫자만 가능합니다. 날짜, 배치, 무게를 넣으려면 GS1 DataBar Expanded 또는 GS1-128을 사용하세요.",
+      "databarTooLong": "GS1 DataBar Expanded는 AI와 데이터를 합쳐 최대 {max}자리까지 담을 수 있고, 문자가 있으면 더 적게 담깁니다. 지금은 {count}자입니다. AI를 하나 빼거나 값을 줄이세요.",
       "isbnChars": "ISBN에는 숫자, 하이픈, 공백을 사용할 수 있으며, ISBN-10은 X로 끝날 수 있습니다.",
       "isbnLength": "ISBN은 13자리이거나 이전 형식인 ISBN-10의 10자리여야 합니다. 현재 {count, plural, other {#자리}}입니다.",
       "isbnPrefix": "ISBN-13은 978 또는 979로 시작합니다.",

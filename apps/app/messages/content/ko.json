@@ -38236,5 +38236,257 @@
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 또는 Aztec을 지원해요. 값(체크 디지트, 길이, 문자)을 확인한 뒤 PNG와 공개 SVG, PNG, PDF 등의 이미지 URL을 반환해요.",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "a68faeef9b21": {
+    "source": "Roughly, unless the finder shares more. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network. On Pro and Business you can switch on precise location for the tag's code: right after a scan, the finder's browser asks whether to share their location, and if they allow it you see where it was scanned, rounded to about 100 m. The found-it form lets the finder tell you where the item is.",
+    "text": "대략적인 위치만 알 수 있어요. 발견한 사람이 더 많은 정보를 공유하지 않는 한 그래요. 모든 동적 QR 코드와 마찬가지로 태그의 분석 화면에서 스캔된 시점과 네트워크 기준의 국가, 지역, 도시를 확인할 수 있어요. Pro와 Business에서는 태그의 코드에 정밀 위치를 켤 수 있어요. 스캔 직후 발견한 사람의 브라우저가 위치를 공유할지 묻고, 허용하면 약 100 m 단위로 반올림된 스캔 위치를 볼 수 있어요. 발견 신고 양식에서는 발견한 사람이 물건이 있는 곳을 직접 알려 줄 수 있어요.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "15c6793537de": {
+    "source": "A GTIN in a short barcode for small retail items",
+    "text": "작은 소매 상품을 위한 짧은 바코드에 담은 GTIN",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.summary"
+  },
+  "b5cc716296fb": {
+    "source": "A GTIN as (01) and its 14 digits, e.g. (01)09501101530003. Leave off the last digit and the check digit is added.",
+    "text": "(01)과 14자리 숫자로 된 GTIN, 예: (01)09501101530003. 마지막 숫자를 빼고 입력하면 체크 디지트가 추가돼요.",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.inputHint"
+  },
+  "e9f24dfc8256": {
+    "source": "GTIN plus weight, price or dates for fresh food",
+    "text": "신선 식품용 GTIN과 중량, 가격 또는 날짜 정보",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.summary"
+  },
+  "9ba22a61f006": {
+    "source": "Application Identifiers in brackets, each followed by its value, e.g. (01)09501101530003(17)261231(10)AB-123.",
+    "text": "괄호 안의 Application Identifier와 그 뒤에 이어지는 값, 예: (01)09501101530003(17)261231(10)AB-123.",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.inputHint"
+  },
+  "baa23c86f1fc": {
+    "source": "A retail GTIN in a smaller barcode than an EAN-13 or UPC-A, for items too small for those. Not every checkout scanner has it switched on, so check with the retailer before printing.",
+    "text": "EAN-13이나 UPC-A보다 작은 바코드에 소매용 GTIN을 담아요. 이 바코드들을 쓰기에는 너무 작은 상품에 알맞아요. 모든 계산대 스캐너에서 이 바코드를 읽도록 설정되어 있는 것은 아니므로, 인쇄하기 전에 판매처에 확인하세요.",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar"
+  },
+  "5092dbf6ba77": {
+    "source": "A GTIN plus more data, such as a weight, a price or an expiry date, marked by the same Application Identifiers as GS1-128. Used on fresh food sold by weight, so the checkout reads the price or weight from the barcode.",
+    "text": "GTIN에 중량, 가격, 유통기한 같은 데이터를 더한 바코드로, GS1-128과 같은 Application Identifier로 구분해요. 무게 단위로 판매하는 신선 식품에 쓰여, 계산대에서 바코드로 가격이나 중량을 읽어요.",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar-expanded"
+  },
+  "db0826917a45": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14, GS1-128 and GS1 DataBar carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "매장에서 판매하는 상품이라면 필요해요. EAN, UPC, ITF-14, GS1-128, GS1 DataBar에는 GTIN이 들어가는데, GTIN은 GS1(또는 해당 국가의 GS1 기관)이 회사에 사용권을 부여하는 번호이며, 임의로 만든 번호는 소매업체의 시스템이 인식하지 못해요. 도서, 연속간행물, 인쇄된 악보는 대신 해당 국가 기관에서 받은 ISBN, ISSN, ISMN을 사용해요. 이 생성기는 유효한 번호라면 무엇이든 그려 주지만, 번호를 발급하거나 등록하지는 않아요. 자체 재고, 자산, 티켓에는 Code 128, Code 39, Code 93을 등록 없이 쓸 수 있어요.",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "5d57866e493c": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, the GTIN of GS1 DataBar and the GTIN and SSCC fields of GS1-128 and GS1 DataBar Expanded: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "네, EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, GS1 DataBar의 GTIN, 그리고 GS1-128과 GS1 DataBar Expanded의 GTIN 및 SSCC 필드에서 가능해요. 마지막 숫자를 빼고 입력하면 자동으로 계산돼요. 전체 번호를 입력하면 체크 디지트를 검증하고, 틀렸다면 바코드 대신 오류가 표시돼요.",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "c2d9a57f6443": {
+    "source": "Free GS1 DataBar Barcode Generator (Omnidirectional)",
+    "text": "무료 GS1 DataBar 바코드 생성기 (Omnidirectional)",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.title"
+  },
+  "418eae1158ca": {
+    "source": "Make a GS1 DataBar Omnidirectional barcode from a GTIN, with the check digit added or checked. Scan-checked in your browser. SVG, PDF, EPS and PNG. Free.",
+    "text": "GTIN으로 GS1 DataBar Omnidirectional 바코드를 만들어요. 체크 디지트를 추가하거나 확인해 드려요. 브라우저에서 스캔을 확인해요. SVG, PDF, EPS, PNG 지원. 무료예요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.metaDescription"
+  },
+  "4a41d40d111a": {
+    "source": "GS1 DataBar Omnidirectional holds one thing: a product's 14-digit GTIN, the number an EAN-13 or UPC-A carries. Type it after (01), check that it scans and download it.",
+    "text": "GS1 DataBar Omnidirectional에는 한 가지만 담겨요. EAN-13이나 UPC-A에 들어 있는 번호인 상품의 14자리 GTIN이에요. (01) 뒤에 입력하고, 스캔되는지 확인한 다음 다운로드하세요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.intro"
+  },
+  "c74d27dff93f": {
+    "source": "Retail items too small for an EAN-13 or UPC-A: its bars are as wide as an EAN-13's but much shorter. Checkout scanners read it from any angle, like an EAN-13.",
+    "text": "EAN-13이나 UPC-A를 쓰기에는 너무 작은 소매 상품에 써요. 바의 너비는 EAN-13과 같지만 높이는 훨씬 낮아요. 계산대 스캐너는 EAN-13처럼 어느 각도에서든 읽어요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.0"
+  },
+  "53ad38e77560": {
+    "source": "Not every scanner has GS1 DataBar switched on. Ask the retailer that will scan it before you print, and use EAN-13 or UPC-A when in doubt.",
+    "text": "모든 스캐너에서 GS1 DataBar가 켜져 있는 것은 아니에요. 인쇄하기 전에 스캔할 소매업체에 먼저 문의하고, 확실하지 않으면 EAN-13이나 UPC-A를 사용하세요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.1"
+  },
+  "0a7f916a956b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar?",
+    "text": "GS1 DataBar에는 GS1 번호가 필요한가요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.title"
+  },
+  "aaa22f8cfea2": {
+    "source": "Yes. The GTIN it holds is built from a GS1 company prefix, like the number in an EAN-13 or UPC-A.",
+    "text": "네. 여기에 담기는 GTIN은 EAN-13이나 UPC-A의 번호처럼 GS1 회사 접두어로 만들어져요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.paragraphs.0"
+  },
+  "14553ad995d0": {
+    "source": "Write the GTIN after (01), as 14 digits: (01)09501101530003. A 13-digit EAN-13 number becomes a GTIN with a 0 in front, and a 12-digit UPC-A number with two.",
+    "text": "GTIN은 (01) 뒤에 14자리로 쓰세요: (01)09501101530003. 13자리 EAN-13 번호는 앞에 0을 붙이면 GTIN이 되고, 12자리 UPC-A 번호는 0을 두 개 붙이면 돼요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.0"
+  },
+  "847870e5f20f": {
+    "source": "Leave off the last digit and the check digit is added; enter all 14 and it's checked. The brackets aren't encoded; they show that (01), the GTIN, follows.",
+    "text": "마지막 숫자를 빼고 입력하면 체크 디지트가 추가되고, 14자리를 모두 입력하면 확인해요. 괄호는 인코딩되지 않아요. 뒤에 (01), 즉 GTIN이 이어진다는 것을 보여 줄 뿐이에요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.1"
+  },
+  "7c9ca8195d32": {
+    "source": "GS1 DataBar holds nothing but the GTIN. For a weight, a price, a batch or a date, use GS1 DataBar Expanded, which takes the same (AI)value input.",
+    "text": "GS1 DataBar에는 GTIN만 담겨요. 무게, 가격, 배치, 날짜가 필요하면 같은 (AI)value 입력을 쓰는 GS1 DataBar Expanded를 사용하세요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.2"
+  },
+  "ee3674a025e6": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 33 modules high, 11.6 mm at this module.",
+    "text": "다운로드 파일은 0.353 mm 모듈과 15 mm 높이의 바를 사용해요. GS1은 바 높이를 33모듈 이상, 이 모듈에서는 11.6 mm 이상으로 권장해요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.0"
+  },
+  "052b836a39de": {
+    "source": "The bars are 96 modules wide, 33.5 mm here: about the width of an EAN-13's bars at the same module. The printed GTIN is a little wider than the bars, so the file is wider too.",
+    "text": "바의 너비는 96모듈, 여기서는 33.5 mm예요. 같은 모듈에서 EAN-13 바의 너비와 거의 같아요. 함께 인쇄되는 GTIN이 바보다 조금 더 넓어서 파일도 더 넓어요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.1"
+  },
+  "395264c48174": {
+    "source": "What does a scanner return?",
+    "text": "스캐너는 무엇을 반환하나요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.question"
+  },
+  "07d9e012bffd": {
+    "source": "The digits 01 and the GTIN, 16 in all, sometimes after a symbology identifier (]e0), and with no brackets. The scan check here accepts both forms.",
+    "text": "숫자 01과 GTIN, 총 16자리를 반환해요. 앞에 심볼로지 식별자(]e0)가 붙기도 하며, 괄호는 없어요. 여기의 스캔 확인은 두 형식을 모두 인정해요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.answer"
+  },
+  "76f18e2501c2": {
+    "source": "My scanner reads EAN-13 but not this. Why?",
+    "text": "스캐너가 EAN-13은 읽는데 이 바코드는 못 읽어요. 왜 그런가요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.question"
+  },
+  "6b564f4ef227": {
+    "source": "Most likely GS1 DataBar is switched off in its settings. Many scanners let you turn each symbology on or off; check the manual for GS1 DataBar, which older documents call RSS-14.",
+    "text": "스캐너 설정에서 GS1 DataBar가 꺼져 있을 가능성이 가장 커요. 많은 스캐너에서 심볼로지별로 켜고 끌 수 있어요. 설명서에서 GS1 DataBar를 확인하세요. 오래된 문서에서는 RSS-14라고 불러요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.answer"
+  },
+  "6a37ed0e9a98": {
+    "source": "Can it hold a weight or an expiry date?",
+    "text": "무게나 유통기한도 담을 수 있나요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.question"
+  },
+  "e888aaaf74e2": {
+    "source": "No, only the GTIN. GS1 DataBar Expanded holds the GTIN with other Application Identifiers, such as (3103) for a weight or (17) for an expiry date.",
+    "text": "아니요, GTIN만 담을 수 있어요. GS1 DataBar Expanded는 무게를 뜻하는 (3103)이나 유통기한을 뜻하는 (17) 같은 다른 Application Identifier와 GTIN을 함께 담아요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.answer"
+  },
+  "e17f7a55d5c6": {
+    "source": "Free GS1 DataBar Expanded Barcode Generator",
+    "text": "무료 GS1 DataBar Expanded 바코드 생성기",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.title"
+  },
+  "14f0f00fb5e9": {
+    "source": "Make a GS1 DataBar Expanded barcode: a GTIN with weight, price, batch or expiry in one retail barcode. Check digits added. Scan-checked. SVG, PDF, PNG.",
+    "text": "GS1 DataBar Expanded 바코드를 만들어 보세요. 중량, 가격, 배치, 유통기한이 포함된 GTIN을 하나의 리테일 바코드에 담아요. 체크 디지트 자동 추가. 스캔 검증 완료. SVG, PDF, PNG.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.metaDescription"
+  },
+  "ac78f2470ebf": {
+    "source": "GS1 DataBar Expanded carries a GTIN and more data in one barcode a checkout scanner reads, each piece marked by an Application Identifier (AI) in brackets: (01) for the GTIN, (17) for an expiry date, (10) for a batch. Type the AIs and values; check digits are added or checked for you.",
+    "text": "GS1 DataBar Expanded는 계산대 스캐너가 읽는 하나의 바코드에 GTIN과 추가 데이터를 담아요. 각 데이터는 괄호 안의 Application Identifier(AI)로 구분해요. GTIN은 (01), 유통기한은 (17), 배치는 (10)이에요. AI와 값을 입력하면 체크 디지트가 자동으로 추가되거나 검증돼요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.intro"
+  },
+  "f15374e67a3a": {
+    "source": "Fresh food sold by weight, such as meat, cheese and deli counters, where the weight or the price travels with the GTIN so the checkout can read it from the barcode.",
+    "text": "고기, 치즈, delicatessen 코너처럼 무게 단위로 판매하는 신선식품에 쓰여요. 중량이나 가격이 GTIN과 함께 담겨 있어 계산대에서 바코드로 바로 읽을 수 있어요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.0"
+  },
+  "a2c9d9d7f3f1": {
+    "source": "North American coupons use its stacked form, GS1 DataBar Expanded Stacked, which this generator doesn't draw.",
+    "text": "북미의 쿠폰은 GS1 DataBar Expanded Stacked라는 적층 형태를 사용해요. 이 생성기는 해당 형태를 그리지 않아요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.1"
+  },
+  "fc1be266ea8b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar Expanded?",
+    "text": "GS1 DataBar Expanded에 GS1 번호가 필요한가요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.title"
+  },
+  "b1afd422b8bf": {
+    "source": "For the GTIN in (01), yes: it's built from a GS1 company prefix. Weights, prices, batches and dates are your own data.",
+    "text": "(01)의 GTIN에는 필요해요. GTIN은 GS1 회사 접두어를 바탕으로 만들어지기 때문이에요. 중량, 가격, 배치, 날짜는 직접 정하는 데이터예요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.paragraphs.0"
+  },
+  "f06c2fc00957": {
+    "source": "GTINs in (01) and (02) and SSCCs in (00) get their check digit added when you leave it off, or checked when you don't. The encoder also checks the data against GS1's rules: a batch (10) without a GTIN, for example, is refused.",
+    "text": "(01)과 (02)의 GTIN, (00)의 SSCC는 체크 디지트를 생략하면 자동으로 추가되고, 입력하면 검증돼요. 인코더는 GS1 규칙에 맞는지도 확인해요. 예를 들어 GTIN 없이 배치 (10)만 있으면 거부돼요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.1"
+  },
+  "d2722491f265": {
+    "source": "It holds up to 74 digits of AIs and data, and fewer when there are letters. Put variable-length fields such as (10) batch last, so no separator is needed after them.",
+    "text": "AI와 데이터를 합쳐 최대 74자리까지 담을 수 있고, 문자가 들어가면 더 적어요. (10) 배치처럼 길이가 가변인 필드는 마지막에 두면 뒤에 구분자가 필요 없어요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.2"
+  },
+  "71bcd6597001": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 34 modules high, 12 mm at this module.",
+    "text": "다운로드 파일은 0.353 mm 모듈과 15 mm 높이의 바를 사용해요. GS1은 바 높이를 최소 34모듈로 요구하며, 이 모듈에서는 12 mm예요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.0"
+  },
+  "f7a219456cad": {
+    "source": "It's long, not tall: the example's bars are 98.8 mm long, a little more than the same data as GS1-128 (93.8 mm). More data makes it longer still.",
+    "text": "높이보다 길이가 긴 바코드예요. 예시의 바 길이는 98.8 mm로, 같은 데이터를 GS1-128로 만든 경우(93.8 mm)보다 조금 더 길어요. 데이터가 늘어나면 더 길어져요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.1"
+  },
+  "5c3434d2ba5d": {
+    "source": "The brackets are only for people. Readers report the data with a symbology identifier (]e0) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+    "text": "괄호는 사람이 보기 위한 표시일 뿐이에요. 리더는 심볼로지 식별자(]e0)와 함께 또는 식별자 없이 데이터를 보고하고, 가변 길이 필드는 보이지 않는 GS 문자로 구분해요. 여기의 스캔 검증은 이 형태를 모두 인식해요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.0.answer"
+  },
+  "99a9136f6b20": {
+    "source": "GS1 DataBar Expanded or GS1-128?",
+    "text": "GS1 DataBar Expanded와 GS1-128 중 무엇이 좋을까요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.question"
+  },
+  "08d1a93af707": {
+    "source": "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
+    "text": "소매업체나 거래처가 요청하는 쪽을 사용하세요. GS1 DataBar Expanded는 신선식품 같은 상품을 계산대에서 읽는 리테일용이고, GS1-128은 박스, 팔레트, 배송 라벨에 쓰는 물류용 바코드예요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.answer"
+  },
+  "4bc1d6a80c0d": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417, Aztec을 지원해요. 값(체크 디지트, 길이, 문자)을 확인한 뒤 PNG와 함께 공개 SVG, PNG, PDF 등의 이미지 URL을 반환해요.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

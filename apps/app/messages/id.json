@@ -2100,6 +2100,8 @@
       "gs1BadChars": "AI ({ai}) memiliki karakter yang tidak diizinkan GS1: {chars}",
       "gs1Ai": "AI ({ai}): {inner}",
       "gs1TooLong": "GS1-128 menampung hingga {max} karakter AI dan data; ini memiliki {count}. Bagi menjadi dua barcode.",
+      "databarGtinOnly": "GS1 DataBar hanya menampung satu GTIN: (01) beserta 14 digitnya. Untuk tanggal, batch, atau berat, gunakan GS1 DataBar Expanded atau GS1-128.",
+      "databarTooLong": "GS1 DataBar Expanded menampung hingga {max} digit AI dan data, dan lebih sedikit jika ada huruf; data ini memiliki {count} karakter. Hapus satu AI atau persingkat salah satu nilai.",
       "isbnChars": "ISBN berisi angka, tanda hubung, dan spasi; ISBN-10 dapat diakhiri dengan X.",
       "isbnLength": "ISBN terdiri dari 13 digit, atau 10 digit pada bentuk lama ISBN-10; nomor ini memiliki {count, plural, one {# digit} other {# digit}}.",
       "isbnPrefix": "ISBN-13 diawali dengan 978 atau 979.",

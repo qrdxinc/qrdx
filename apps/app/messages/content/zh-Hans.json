@@ -38236,5 +38236,257 @@
     "text": "支持 EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417 或 Aztec。会校验输入的值（校验位、长度、字符），并返回一张 PNG 图片，以及公开的 SVG、PNG、PDF 等图片链接。",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "a68faeef9b21": {
+    "source": "Roughly, unless the finder shares more. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network. On Pro and Business you can switch on precise location for the tag's code: right after a scan, the finder's browser asks whether to share their location, and if they allow it you see where it was scanned, rounded to about 100 m. The found-it form lets the finder tell you where the item is.",
+    "text": "大致位置可以知道，除非拾到者提供更多信息。与所有动态二维码一样，标签的分析数据会显示被扫描的时间，以及来自网络的国家、地区和城市。在 Pro 和 Business 上，你可以为标签的二维码开启精确定位：扫描后，拾到者的浏览器会询问是否共享其位置，如果对方允许，你就能看到扫描发生的位置，精确到约 100 m。拾到者也可以通过“已找到”表单告诉你物品在哪里。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "15c6793537de": {
+    "source": "A GTIN in a short barcode for small retail items",
+    "text": "短条码中的 GTIN，适用于小型零售商品",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.summary"
+  },
+  "b5cc716296fb": {
+    "source": "A GTIN as (01) and its 14 digits, e.g. (01)09501101530003. Leave off the last digit and the check digit is added.",
+    "text": "以 (01) 开头加 14 位数字的 GTIN，例如 (01)09501101530003。省略最后一位，校验位会自动补上。",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.inputHint"
+  },
+  "e9f24dfc8256": {
+    "source": "GTIN plus weight, price or dates for fresh food",
+    "text": "GTIN 加重量、价格或日期，适用于生鲜食品",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.summary"
+  },
+  "9ba22a61f006": {
+    "source": "Application Identifiers in brackets, each followed by its value, e.g. (01)09501101530003(17)261231(10)AB-123.",
+    "text": "括号中的应用标识符（Application Identifier），后面各接其对应的值，例如 (01)09501101530003(17)261231(10)AB-123。",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.inputHint"
+  },
+  "baa23c86f1fc": {
+    "source": "A retail GTIN in a smaller barcode than an EAN-13 or UPC-A, for items too small for those. Not every checkout scanner has it switched on, so check with the retailer before printing.",
+    "text": "用比 EAN-13 或 UPC-A 更小的条码承载零售 GTIN，适用于这两种码放不下的小件商品。并非每台收银扫描枪都开启了对它的支持，印刷前请先向零售商确认。",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar"
+  },
+  "5092dbf6ba77": {
+    "source": "A GTIN plus more data, such as a weight, a price or an expiry date, marked by the same Application Identifiers as GS1-128. Used on fresh food sold by weight, so the checkout reads the price or weight from the barcode.",
+    "text": "在 GTIN 之外携带更多数据，例如重量、价格或有效期，使用与 GS1-128 相同的应用标识符（Application Identifier）来标记。用于按重量销售的生鲜食品，收银时可直接从条码中读取价格或重量。",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar-expanded"
+  },
+  "db0826917a45": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14, GS1-128 and GS1 DataBar carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "如果是在商店里销售的商品，需要。EAN、UPC、ITF-14、GS1-128 和 GS1 DataBar 都承载 GTIN，而 GTIN 由 GS1（或你所在国家的 GS1 组织）授权给你的公司；零售商的系统不会识别自编的号码。图书、连续出版物和印刷乐谱则改用所在国家机构分配的 ISBN、ISSN 或 ISMN。本生成器可以绘制任何有效号码，但不负责发放或注册号码。如果用于自己的库存、资产或票券，Code 128、Code 39 和 Code 93 无需注册。",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "5d57866e493c": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, the GTIN of GS1 DataBar and the GTIN and SSCC fields of GS1-128 and GS1 DataBar Expanded: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "会，适用于 EAN-13、EAN-8、UPC-A、UPC-E、ITF-14、ISBN、ISSN、ISMN、GS1 DataBar 的 GTIN，以及 GS1-128 和 GS1 DataBar Expanded 的 GTIN 与 SSCC 字段：省略最后一位，系统会自动算出。输入完整号码时会验证校验位；校验位有误时会显示错误，而不是生成条码。",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "c2d9a57f6443": {
+    "source": "Free GS1 DataBar Barcode Generator (Omnidirectional)",
+    "text": "免费 GS1 DataBar Omnidirectional 条形码生成器",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.title"
+  },
+  "418eae1158ca": {
+    "source": "Make a GS1 DataBar Omnidirectional barcode from a GTIN, with the check digit added or checked. Scan-checked in your browser. SVG, PDF, EPS and PNG. Free.",
+    "text": "根据 GTIN 生成 GS1 DataBar Omnidirectional 条形码，自动补上或检查校验位。在浏览器中完成扫描检查。支持 SVG、PDF、EPS 和 PNG。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.metaDescription"
+  },
+  "4a41d40d111a": {
+    "source": "GS1 DataBar Omnidirectional holds one thing: a product's 14-digit GTIN, the number an EAN-13 or UPC-A carries. Type it after (01), check that it scans and download it.",
+    "text": "GS1 DataBar Omnidirectional 只能容纳一项内容：商品的 14 位 GTIN，也就是 EAN-13 或 UPC-A 所承载的编号。在 (01) 后输入，检查能否扫描，然后下载。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.intro"
+  },
+  "c74d27dff93f": {
+    "source": "Retail items too small for an EAN-13 or UPC-A: its bars are as wide as an EAN-13's but much shorter. Checkout scanners read it from any angle, like an EAN-13.",
+    "text": "适用于对 EAN-13 或 UPC-A 来说太小的零售商品：条的宽度与 EAN-13 相当，但矮得多。和 EAN-13 一样，收银扫描枪可从任意角度读取。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.0"
+  },
+  "53ad38e77560": {
+    "source": "Not every scanner has GS1 DataBar switched on. Ask the retailer that will scan it before you print, and use EAN-13 or UPC-A when in doubt.",
+    "text": "并非所有扫描枪都开启了 GS1 DataBar。打印前请先询问将要扫描它的零售商，拿不准时请使用 EAN-13 或 UPC-A。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.1"
+  },
+  "0a7f916a956b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar?",
+    "text": "使用 GS1 DataBar 需要 GS1 号码吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.title"
+  },
+  "aaa22f8cfea2": {
+    "source": "Yes. The GTIN it holds is built from a GS1 company prefix, like the number in an EAN-13 or UPC-A.",
+    "text": "需要。它所承载的 GTIN 由 GS1 公司前缀生成，与 EAN-13 或 UPC-A 中的号码一样。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.paragraphs.0"
+  },
+  "14553ad995d0": {
+    "source": "Write the GTIN after (01), as 14 digits: (01)09501101530003. A 13-digit EAN-13 number becomes a GTIN with a 0 in front, and a 12-digit UPC-A number with two.",
+    "text": "在 (01) 后填写 GTIN，共 14 位：(01)09501101530003。13 位的 EAN-13 号码在前面加一个 0 即成为 GTIN，12 位的 UPC-A 号码则加两个 0。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.0"
+  },
+  "847870e5f20f": {
+    "source": "Leave off the last digit and the check digit is added; enter all 14 and it's checked. The brackets aren't encoded; they show that (01), the GTIN, follows.",
+    "text": "省略最后一位，系统会自动补上校验位；输入全部 14 位，则会对其进行检查。括号不会被编码，只是表示后面跟着的是 (01)，即 GTIN。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.1"
+  },
+  "7c9ca8195d32": {
+    "source": "GS1 DataBar holds nothing but the GTIN. For a weight, a price, a batch or a date, use GS1 DataBar Expanded, which takes the same (AI)value input.",
+    "text": "GS1 DataBar 只能容纳 GTIN。如需重量、价格、批号或日期，请使用 GS1 DataBar Expanded，它支持相同的 (AI)value 输入格式。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.2"
+  },
+  "ee3674a025e6": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 33 modules high, 11.6 mm at this module.",
+    "text": "下载文件采用 0.353 mm 的模块和 15 mm 高的条。GS1 要求条高至少为 33 个模块，在此模块尺寸下为 11.6 mm。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.0"
+  },
+  "052b836a39de": {
+    "source": "The bars are 96 modules wide, 33.5 mm here: about the width of an EAN-13's bars at the same module. The printed GTIN is a little wider than the bars, so the file is wider too.",
+    "text": "条宽为 96 个模块，此处为 33.5 mm：在相同模块尺寸下，与 EAN-13 的条宽大致相当。印刷出的 GTIN 数字比条略宽，所以文件也更宽。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.1"
+  },
+  "395264c48174": {
+    "source": "What does a scanner return?",
+    "text": "扫描枪会返回什么？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.question"
+  },
+  "07d9e012bffd": {
+    "source": "The digits 01 and the GTIN, 16 in all, sometimes after a symbology identifier (]e0), and with no brackets. The scan check here accepts both forms.",
+    "text": "返回数字 01 和 GTIN，共 16 位，有时前面带有码制标识符 (]e0)，且不含括号。此处的扫描检查两种形式都接受。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.answer"
+  },
+  "76f18e2501c2": {
+    "source": "My scanner reads EAN-13 but not this. Why?",
+    "text": "我的扫描枪能读 EAN-13，却读不了它，为什么？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.question"
+  },
+  "6b564f4ef227": {
+    "source": "Most likely GS1 DataBar is switched off in its settings. Many scanners let you turn each symbology on or off; check the manual for GS1 DataBar, which older documents call RSS-14.",
+    "text": "很可能是扫描枪设置中关闭了 GS1 DataBar。许多扫描枪可以分别开启或关闭每种码制；请在说明书中查找 GS1 DataBar，旧文档称之为 RSS-14。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.answer"
+  },
+  "6a37ed0e9a98": {
+    "source": "Can it hold a weight or an expiry date?",
+    "text": "它能容纳重量或有效期吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.question"
+  },
+  "e888aaaf74e2": {
+    "source": "No, only the GTIN. GS1 DataBar Expanded holds the GTIN with other Application Identifiers, such as (3103) for a weight or (17) for an expiry date.",
+    "text": "不能，只能容纳 GTIN。GS1 DataBar Expanded 可将 GTIN 与其他 Application Identifier 一起编码，例如表示重量的 (3103) 或表示有效期的 (17)。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.answer"
+  },
+  "e17f7a55d5c6": {
+    "source": "Free GS1 DataBar Expanded Barcode Generator",
+    "text": "免费 GS1 DataBar Expanded 条码生成器",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.title"
+  },
+  "14f0f00fb5e9": {
+    "source": "Make a GS1 DataBar Expanded barcode: a GTIN with weight, price, batch or expiry in one retail barcode. Check digits added. Scan-checked. SVG, PDF, PNG.",
+    "text": "生成 GS1 DataBar Expanded 条码：在一个零售条码中包含 GTIN 以及重量、价格、批号或有效期。自动添加校验位，并经过扫描检查。支持 SVG、PDF、PNG。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.metaDescription"
+  },
+  "ac78f2470ebf": {
+    "source": "GS1 DataBar Expanded carries a GTIN and more data in one barcode a checkout scanner reads, each piece marked by an Application Identifier (AI) in brackets: (01) for the GTIN, (17) for an expiry date, (10) for a batch. Type the AIs and values; check digits are added or checked for you.",
+    "text": "GS1 DataBar Expanded 可以在一个收银台扫码枪能读取的条码中携带 GTIN 和更多数据，每项数据由括号中的应用标识符（AI）标明：(01) 表示 GTIN，(17) 表示有效期，(10) 表示批号。输入 AI 和对应的值即可，校验位会为您自动添加或检查。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.intro"
+  },
+  "f15374e67a3a": {
+    "source": "Fresh food sold by weight, such as meat, cheese and deli counters, where the weight or the price travels with the GTIN so the checkout can read it from the barcode.",
+    "text": "按重量销售的生鲜食品，例如肉类、奶酪和熟食柜台，重量或价格会与 GTIN 一起编入条码，收银台可直接从条码中读取。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.0"
+  },
+  "a2c9d9d7f3f1": {
+    "source": "North American coupons use its stacked form, GS1 DataBar Expanded Stacked, which this generator doesn't draw.",
+    "text": "北美的优惠券使用它的堆叠形式 GS1 DataBar Expanded Stacked，本生成器不支持绘制这种形式。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.1"
+  },
+  "fc1be266ea8b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar Expanded?",
+    "text": "使用 GS1 DataBar Expanded 需要 GS1 编码吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.title"
+  },
+  "b1afd422b8bf": {
+    "source": "For the GTIN in (01), yes: it's built from a GS1 company prefix. Weights, prices, batches and dates are your own data.",
+    "text": "(01) 中的 GTIN 需要：它由 GS1 公司前缀生成。重量、价格、批号和日期则是您自己的数据。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.paragraphs.0"
+  },
+  "f06c2fc00957": {
+    "source": "GTINs in (01) and (02) and SSCCs in (00) get their check digit added when you leave it off, or checked when you don't. The encoder also checks the data against GS1's rules: a batch (10) without a GTIN, for example, is refused.",
+    "text": "(01) 和 (02) 中的 GTIN 以及 (00) 中的 SSCC，如果您没有填写校验位，会自动添加；如果填写了，则会进行检查。编码器还会按照 GS1 的规则检查数据：例如，有批号 (10) 却没有 GTIN 的数据会被拒绝。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.1"
+  },
+  "d2722491f265": {
+    "source": "It holds up to 74 digits of AIs and data, and fewer when there are letters. Put variable-length fields such as (10) batch last, so no separator is needed after them.",
+    "text": "它最多可容纳 74 位数字的 AI 和数据，包含字母时容量更少。请把 (10) 批号这类可变长度字段放在最后，这样其后就不需要分隔符。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.2"
+  },
+  "71bcd6597001": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 34 modules high, 12 mm at this module.",
+    "text": "下载文件使用 0.353 mm 的模块宽度和 15 mm 高的条。GS1 要求条的高度至少为 34 个模块，在此模块宽度下为 12 mm。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.0"
+  },
+  "f7a219456cad": {
+    "source": "It's long, not tall: the example's bars are 98.8 mm long, a little more than the same data as GS1-128 (93.8 mm). More data makes it longer still.",
+    "text": "它是长而不高的：示例中的条长 98.8 mm，比相同数据的 GS1-128（93.8 mm）略长。数据越多，条码越长。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.1"
+  },
+  "5c3434d2ba5d": {
+    "source": "The brackets are only for people. Readers report the data with a symbology identifier (]e0) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+    "text": "括号只是给人看的。扫描设备返回数据时会带上符号标识符（]e0）或不带，并用不可见的 GS 字符分隔可变长度字段。这里的扫描检查可以接受以上所有形式。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.0.answer"
+  },
+  "99a9136f6b20": {
+    "source": "GS1 DataBar Expanded or GS1-128?",
+    "text": "GS1 DataBar Expanded 还是 GS1-128？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.question"
+  },
+  "08d1a93af707": {
+    "source": "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
+    "text": "请使用您的零售商或贸易伙伴要求的那一种。GS1 DataBar Expanded 是零售用条码，在生鲜食品等商品的收银台被读取；GS1-128 是用于箱、托盘和运输标签的物流条码。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.answer"
+  },
+  "4bc1d6a80c0d": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "支持 EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417 或 Aztec。会校验内容（校验位、长度、字符），并返回一张 PNG 图片，以及公开的 SVG、PNG、PDF 等图片链接。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }
