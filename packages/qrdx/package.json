@@ -1,6 +1,6 @@
 {
   "name": "qrdx",
-  "version": "0.0.60",
+  "version": "0.0.61",
   "description": "Customizable QR code generator for React and plain JavaScript: SVG and canvas rendering, dot and eye patterns, gradients, logos, frames, Logo QR and Image QR art, PNG/JPG/WebP/SVG/PDF/EPS export, a scan score and QR scanning.",
   "keywords": [
     "qr-code",
@@ -199,6 +199,7 @@
     "test": "vitest run",
     "readme": "node scripts/readme-catalogue.mjs",
     "check:package": "node scripts/check-package.mjs",
+    "check:react": "node scripts/react-compat.mjs",
     "prepublishOnly": "node -e \"if(!(process.env.npm_config_user_agent||'').startsWith('bun/')){console.error('Publish through the Publish workflow, or with bun publish, which replaces workspace ranges with real versions.');process.exit(1)}\" && bun run build && bun run test && node scripts/readme-catalogue.mjs --check"
   },
   "dependencies": {
@@ -218,6 +219,7 @@
     "next": "16.4.5",
     "publint": "0.3.25",
     "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "sharp": "0.35.5",
     "tsup": "^9.0.0",
     "typescript": "6.0.3",
@@ -238,8 +240,7 @@
   "peerDependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "jspdf": "^2.5.0 || ^3.0.0 || ^4.0.0",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
+    "react": ">=16.8.0",
     "sharp": ">=0.34.0",
     "vue": ">=3.3.0",
     "preact": ">=10.0.0",
@@ -254,9 +255,6 @@
       "optional": true
     },
     "react": {
-      "optional": true
-    },
-    "react-dom": {
       "optional": true
     },
     "sharp": {

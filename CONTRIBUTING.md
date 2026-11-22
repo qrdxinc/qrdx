@@ -157,6 +157,13 @@ bun run --filter qrdx build:inplace
 bun run --filter qrdx check:package
 ```
 
+The same job checks the React components on every React line the package supports (`react >=16.8.0`), on the same terms. `packages/qrdx/scripts/react-compat.mjs` packs the package the same way and installs the tarball with npm next to React 16.8, 17, 18 and the React 19 the package's own tests use, each in a folder of its own. Each React renders a set of designs (the default code, a gradient, dots with custom eyes, eye shapes and looks, a template, a logo, a frame with text, root attributes, `QRFrameSVG`, `QRCodeCanvas` and `getQRAsSVG`) through the built package, to static markup with `react-dom/server` and in a DOM (jsdom) with `react-dom`, and both must be React 19's, character for character, with nothing logged by React. Every name the built ES modules import from `react` must be one that version exports, and a small app (`scripts/react-compat/consumer.tsx`) must type-check against its `@types/react`, with `skipLibCheck` off so the package's own `.d.ts` files are checked too. It needs the network, takes about 8 seconds with an empty npm cache and 5 with a warm one, and keeps its install folders when something fails (`--keep` keeps them anyway). After changing the React components, their types or the build, run it yourself:
+
+```bash
+bun run --filter qrdx build:inplace
+bun run --filter qrdx check:react
+```
+
 The official frames (`packages/qrdx/src/frames/official`, hundreds of them) all get their spec, color, layout and generator checks and one crisp decode on every run, but the slow scan checks (the phone-camera model at three distances, 160 and 320 px, the scan score, zbar, PDF and EPS) only go to a sample: the hand-made frames, one frame per layout, and a set that rotates daily so every frame comes round (`packages/qrdx/scripts/official-frames/sample.mjs`). To scan every frame, as the weekly and release `Frame scan` workflow does, set `QRDX_FULL_FRAME_SCAN=1`:
 
 ```bash

@@ -1,5 +1,4 @@
-import type { JSX } from "react";
-import type { QRPropsSVG } from "../types/react";
+import type { QRPropsSVG, ReactQRElement } from "../types/react";
 import { withElementFactory } from "./jsx/runtime";
 import { drawPlainQRCode, preparePlainQRCode } from "./plain";
 import { REACT_ELEMENTS } from "./react-elements";
@@ -9,9 +8,9 @@ import { REACT_ELEMENTS } from "./react-elements";
  * background rect, plus the logo and frame (`getQRAsSVGNode` is the same
  * without React). A logo that isn't a data URL is fetched as base64 first.
  */
-export async function getQRAsSVG(props: QRPropsSVG): Promise<JSX.Element> {
+export async function getQRAsSVG(props: QRPropsSVG): Promise<ReactQRElement> {
   const plain = await preparePlainQRCode(props);
   return withElementFactory(REACT_ELEMENTS, () =>
     drawPlainQRCode(plain)
-  ) as unknown as JSX.Element;
+  ) as unknown as ReactQRElement;
 }

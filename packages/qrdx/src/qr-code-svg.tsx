@@ -1,5 +1,4 @@
-import type { JSX } from "react";
-import type { QRPropsSVG } from "../types/react";
+import type { QRPropsSVG, ReactQRElement } from "../types/react";
 import { withElementFactory } from "./jsx/runtime";
 import { REACT_ELEMENTS } from "./react-elements";
 import { createQRCodeTree } from "./utils";
@@ -10,8 +9,8 @@ import { createQRCodeTree } from "./utils";
  * markup is exactly `toSVGString`'s. No hooks: it renders in React Server
  * Components too.
  */
-export function QRCodeSVG(props: QRPropsSVG): JSX.Element {
+export function QRCodeSVG(props: QRPropsSVG): ReactQRElement {
   return withElementFactory(REACT_ELEMENTS, () =>
     createQRCodeTree(props)
-  ) as unknown as JSX.Element;
+  ) as unknown as ReactQRElement;
 }

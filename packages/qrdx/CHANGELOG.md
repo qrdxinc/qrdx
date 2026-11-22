@@ -2,6 +2,16 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## 0.0.61
+
+### React 16.8 and 17
+
+- **The React components work from React 16.8.** The peer range is `react >=16.8.0` (it was `>=18.0.0`), so an app on React 16.8, 17 or 18 installs qrdx without peer warnings or `--legacy-peer-deps`. Nothing else changes for React 18 and 19: every design draws the same markup in each of them.
+- **No `react/jsx-runtime`.** The React entry and its `"use client"` canvas file build their elements with `createElement`, since `react/jsx-runtime` only exists from React 16.14. Children go in as `createElement`'s arguments, the way `jsx` and `jsxs` check them, so React asks for keys exactly where it did before. The React entry grows by 77 bytes gzipped (`index.mjs`, 115,595 bytes; 202 more minified) and the canvas file shrinks by 40 (`qr-code-canvas.mjs`, 28,782); every other entry is byte for byte the same.
+- **`react-dom` is no longer a peer dependency.** Nothing in qrdx imports it: SVG strings, data URLs and downloads go through the core since 0.0.51.
+- **Types for @types/react 16 and 17.** The components returned `JSX.Element` imported from `react`, which the `react` module of @types/react 16 and early 17 doesn't have. They now return `ReactElement<any, any>`, the same type. The `ref` of `QRPropsSVG` and `QRCodePropsSVG` is a ref object or callback: under @types/react 16 to 18 it also took a string, and a typed set of these props spread into `QRCode` didn't type-check.
+- `scripts/react-compat.mjs` (`bun run --filter qrdx check:react`) installs the packed package next to React 16.8, 17, 18 and 19 and checks that each draws 11 designs to the same static markup and DOM as React 19, logs nothing, links every import, and type-checks a small app against @types/react 16.9, 17.0, 18.3 and 19.3. CI runs it on every pull request that changes qrdx.
+
 ## 0.0.60
 
 ### Halo colors are adjusted, not refused

@@ -36359,9 +36359,9 @@
     "status": "machine",
     "context": "integrations.entries.react.steps.0.title"
   },
-  "7e14cc035ccd": {
-    "source": "react and react-dom 18 or newer are peer dependencies.",
-    "text": "reactとreact-dom 18以降がピア依存関係として必要です。",
+  "21258cd335e6": {
+    "source": "react 16.8 or newer is a peer dependency.",
+    "text": "react 16.8 以降がピア依存関係として必要です。",
     "status": "machine",
     "context": "integrations.entries.react.steps.0.body"
   },

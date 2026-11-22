@@ -77,6 +77,23 @@ describe("React-free bundles", () => {
   });
 });
 
+// The React entry and its "use client" canvas file take React's element
+// functions from "react" alone: not react/jsx-runtime, which React has had
+// only since 16.14, and not react-dom, so they work from React 16.8
+// (scripts/react-compat.mjs renders them with each React line).
+describe("React entry", () => {
+  it.each(["index.mjs", "index.js", "qr-code-canvas.mjs", "qr-code-canvas.js"])(
+    "%s imports nothing of React's but react",
+    (file) => {
+      if (!existsSync(dist(file))) return;
+      const react = imports(read(file)).filter((specifier) =>
+        /^react(-dom)?(\/|$)/.test(specifier)
+      );
+      expect(react).toEqual(["react"]);
+    }
+  );
+});
+
 // <qrdx-code> (qrdx/element): the element takes the engine from dist/core,
 // the auto-define entry takes the element from its built file, and the
 // no-bundler pair stands alone.

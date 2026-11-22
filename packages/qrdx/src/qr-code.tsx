@@ -1,7 +1,9 @@
 // memo/useMemo are available in React Server Components, so QRCode can render
-// on the server; only QRCodeCanvas needs a client boundary.
-import { memo, useMemo } from "react";
-import type { QRCodePropsSVG } from "../types/react";
+// on the server; only QRCodeCanvas needs a client boundary. createElement
+// rather than JSX: compiled JSX would import react/jsx-runtime, which React
+// has had only since 16.14.
+import { createElement, memo, useMemo } from "react";
+import type { QRCodePropsSVG, ReactQRElement } from "../types/react";
 import {
   getQRCodeData,
   getQRCodeSVGProps,
@@ -14,14 +16,14 @@ import { QRCodeSVG } from "./qr-code-svg";
  * `scale`). Any other prop (`className`, `aria-label`, `role`, `data-*`…)
  * goes on the `<svg>`, as with `QRCodeSVG`.
  */
-export const QRCode = memo((props: QRCodePropsSVG) => {
+export const QRCode = memo((props: QRCodePropsSVG): ReactQRElement => {
   const qrData = useMemo(
     () => getQRCodeData(props),
     // biome-ignore lint/correctness/useExhaustiveDependencies: the layout reads exactly these props (QR_CODE_DATA_KEYS, the list getQRCodeData lays out from)
     QR_CODE_DATA_KEYS.map((key) => props[key])
   );
 
-  return <QRCodeSVG {...getQRCodeSVGProps(props, qrData)} />;
+  return createElement(QRCodeSVG, getQRCodeSVGProps(props, qrData));
 });
 
 QRCode.displayName = "QRCode";
