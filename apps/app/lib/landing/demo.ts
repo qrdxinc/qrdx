@@ -119,6 +119,10 @@ const DOWNLOADS: Record<string, Array<{ file: string; label: string }>> = {
     { file: "apartment-brochure.pdf", label: "Installation guide" },
     { file: "restaurant-menu.pdf", label: "Spare parts list" },
   ],
+  // Added 2026-11-22 (pages)
+  "resume/designer": [{ file: "cv-lena-park.pdf", label: "Lena Park, CV" }],
+  "resume/developer": [{ file: "cv-sam-okafor.pdf", label: "Sam Okafor, CV" }],
+  "resume/graduate": [{ file: "cv-priya-raman.pdf", label: "Priya Raman, CV" }],
 };
 
 /** Sample PDF by "<type>/<template id>". */

@@ -1730,6 +1730,7 @@
       "linkCopied": "链接已复制",
       "copyThisLink": "复制此链接",
       "details": "详情",
+      "timeline": "时间线",
       "links": "链接",
       "socialProfiles": "社交媒体账号",
       "mapOf": "{place}的地图",
@@ -1793,7 +1794,24 @@
         "password": "密码",
         "noPassword": "无需密码，直接连接",
         "copyNetwork": "复制网络名称",
-        "copyPassword": "复制密码"
+        "copyPassword": "复制密码",
+        "security": "安全类型",
+        "steps": {
+          "title": "连接方法",
+          "iphone": "iPhone 上",
+          "android": "Android 上",
+          "copy": "点击上方按钮复制密码。",
+          "iphoneOpen": "打开“设置”，点按“无线局域网”，并确保 Wi-Fi 已开启。",
+          "androidOpen": "打开“设置”，点按“网络和互联网”，再点按“互联网”。部分手机上请依次点按“连接”和 Wi-Fi。",
+          "pick": "在网络列表中点按“{ssid}”。",
+          "iphoneHidden": "点按“其他”，输入“{ssid}”作为网络名称，并选择安全类型。",
+          "androidHidden": "点按列表底部的“添加网络”，输入“{ssid}”并选择安全类型。在“高级选项”中，将“隐藏网络”设为“是”。",
+          "iphonePassword": "粘贴密码，然后点按“加入”。",
+          "androidPassword": "粘贴密码，然后点按“连接”。",
+          "androidPasswordSave": "粘贴密码，然后点按“保存”。",
+          "iphoneJoin": "点按“加入”。",
+          "androidSave": "点按“保存”。"
+        }
       },
       "payment": {
         "types": {

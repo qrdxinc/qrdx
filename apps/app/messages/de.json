@@ -1730,6 +1730,7 @@
       "linkCopied": "Link kopiert",
       "copyThisLink": "Link kopieren",
       "details": "Details",
+      "timeline": "Zeitplan",
       "links": "Links",
       "socialProfiles": "Social-Profile",
       "mapOf": "Karte von {place}",
@@ -1793,7 +1794,24 @@
         "password": "Passwort",
         "noPassword": "Keins, einfach verbinden",
         "copyNetwork": "Netzwerkname kopieren",
-        "copyPassword": "Passwort kopieren"
+        "copyPassword": "Passwort kopieren",
+        "security": "Sicherheit",
+        "steps": {
+          "title": "So verbindest du dich",
+          "iphone": "Auf dem iPhone",
+          "android": "Auf Android",
+          "copy": "Kopiere das Passwort mit der Schaltfläche oben.",
+          "iphoneOpen": "Öffne die Einstellungen und tippe auf WLAN. Achte darauf, dass WLAN eingeschaltet ist.",
+          "androidOpen": "Öffne die Einstellungen und tippe auf Netzwerk & Internet, dann auf Internet. Bei manchen Geräten heißt es Verbindungen, dann WLAN.",
+          "pick": "Tippe in der Netzwerkliste auf „{ssid}“.",
+          "iphoneHidden": "Tippe auf Andere, gib „{ssid}“ als Namen ein und wähle den Sicherheitstyp.",
+          "androidHidden": "Tippe unten in der Liste auf Netzwerk hinzufügen, gib „{ssid}“ ein und wähle den Sicherheitstyp. Stelle unter Erweiterte Optionen „Verstecktes Netzwerk“ auf Ja.",
+          "iphonePassword": "Füge das Passwort ein und tippe auf Verbinden.",
+          "androidPassword": "Füge das Passwort ein und tippe auf Verbinden.",
+          "androidPasswordSave": "Füge das Passwort ein und tippe auf Speichern.",
+          "iphoneJoin": "Tippe auf Verbinden.",
+          "androidSave": "Tippe auf Speichern."
+        }
       },
       "payment": {
         "types": {

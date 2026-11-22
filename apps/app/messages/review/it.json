@@ -5059,6 +5059,10 @@
     "source": "45989de49fb7",
     "status": "machine"
   },
+  "scanPages.hosted.timeline": {
+    "source": "9dcff98e275f",
+    "status": "machine"
+  },
   "scanPages.hosted.links": {
     "source": "9024c197d849",
     "status": "machine"
@@ -5261,6 +5265,66 @@
   },
   "scanPages.hosted.wifi.copyPassword": {
     "source": "e8cd8b5d57c9",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.security": {
+    "source": "8f6fb4eb7f42",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.title": {
+    "source": "f56144df1d82",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.iphone": {
+    "source": "873081b6807b",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.android": {
+    "source": "d085d4c0606e",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.copy": {
+    "source": "86e78c84d044",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.iphoneOpen": {
+    "source": "fc7dd33bd0e3",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.androidOpen": {
+    "source": "fd413571a669",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.pick": {
+    "source": "c62e9751393e",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.iphoneHidden": {
+    "source": "85d0892df28b",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.androidHidden": {
+    "source": "cbdf51e40974",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.iphonePassword": {
+    "source": "6045768ad273",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.androidPassword": {
+    "source": "3baa833b654a",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.androidPasswordSave": {
+    "source": "0c004f9958b3",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.iphoneJoin": {
+    "source": "339650421289",
+    "status": "machine"
+  },
+  "scanPages.hosted.wifi.steps.androidSave": {
+    "source": "cc2b1dc8f3c0",
     "status": "machine"
   },
   "scanPages.hosted.payment.types.bank": {

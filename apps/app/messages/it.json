@@ -1730,6 +1730,7 @@
       "linkCopied": "Link copiato",
       "copyThisLink": "Copia questo link",
       "details": "Dettagli",
+      "timeline": "Cronologia",
       "links": "Link",
       "socialProfiles": "Profili social",
       "mapOf": "Mappa di {place}",
@@ -1793,7 +1794,24 @@
         "password": "Password",
         "noPassword": "Nessuna, connettiti e basta",
         "copyNetwork": "Copia nome della rete",
-        "copyPassword": "Copia password"
+        "copyPassword": "Copia password",
+        "security": "Sicurezza",
+        "steps": {
+          "title": "Come connettersi",
+          "iphone": "Su iPhone",
+          "android": "Su Android",
+          "copy": "Copia la password con il pulsante qui sopra.",
+          "iphoneOpen": "Apri Impostazioni e tocca Wi-Fi. Assicurati che il Wi-Fi sia attivo.",
+          "androidOpen": "Apri Impostazioni e tocca Rete e internet, poi Internet. Su alcuni telefoni è Connessioni, poi Wi-Fi.",
+          "pick": "Tocca “{ssid}” nell’elenco delle reti.",
+          "iphoneHidden": "Tocca Altra, scrivi “{ssid}” come nome e scegli il tipo di sicurezza.",
+          "androidHidden": "Tocca Aggiungi rete in fondo all’elenco, scrivi “{ssid}” e scegli il tipo di sicurezza. In Opzioni avanzate, imposta Rete nascosta su Sì.",
+          "iphonePassword": "Incolla la password e tocca Connetti.",
+          "androidPassword": "Incolla la password e tocca Connetti.",
+          "androidPasswordSave": "Incolla la password e tocca Salva.",
+          "iphoneJoin": "Tocca Connetti.",
+          "androidSave": "Tocca Salva."
+        }
       },
       "payment": {
         "types": {

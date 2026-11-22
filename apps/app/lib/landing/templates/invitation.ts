@@ -51,7 +51,8 @@ registerTemplate({
           type: "event",
           props: {
             title: "Clara & Ben's wedding",
-            description: "Ceremony at three, then dinner and dancing.",
+            description:
+              "Ceremony in the orchard at seven, then dinner and dancing.",
             venue: "Oak Hill Farm",
             address: "Oak Hill Lane, Stow-on-the-Wold, United Kingdom",
             timeZone: "Europe/London",
@@ -63,15 +64,15 @@ registerTemplate({
           props: {
             title: "The day",
             items: [
-              { when: "2:30 pm", title: "Arrive", place: "The orchard" },
-              { when: "3:00 pm", title: "Ceremony", place: "The orchard" },
+              { when: "6:30 pm", title: "Arrive", place: "The orchard" },
+              { when: "7:00 pm", title: "Ceremony", place: "The orchard" },
               {
-                when: "4:00 pm",
+                when: "7:45 pm",
                 title: "Drinks and photos",
                 place: "The lawn",
               },
-              { when: "6:30 pm", title: "Dinner", place: "The barn" },
-              { when: "9:00 pm", title: "Dancing", place: "The barn" },
+              { when: "8:30 pm", title: "Dinner", place: "The barn" },
+              { when: "10:30 pm", title: "Dancing", place: "The barn" },
             ],
           },
         },
@@ -79,7 +80,7 @@ registerTemplate({
           type: "address-map",
           props: {
             title: "Getting there",
-            name: "Oak Hill Farm",
+            name: "",
             address: {
               street: "Oak Hill Lane",
               city: "Stow-on-the-Wold",
@@ -192,13 +193,14 @@ registerTemplate({
         {
           type: "address-map",
           props: {
-            title: "",
-            name: "The Lantern Rooms",
+            title: "Getting there",
+            name: "",
             address: {
               street: "88 King Street",
               city: "Manchester",
               country: "United Kingdom",
             },
+            note: "Upstairs, through the side door on Cross Street.",
             showWaze: true,
           },
         },

@@ -7049,6 +7049,1548 @@
     "status": "machine",
     "context": "hostedTypes.business-card.faqs.6.answer"
   },
+  "1ca2f18940fc": {
+    "source": "Guest Wi-Fi Page",
+    "text": "Página de Wi-Fi para invitados",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.name"
+  },
+  "96eb9f2c3d84": {
+    "source": "Guest Wi-Fi Page QR Code Generator",
+    "text": "Generador de código QR para página de Wi-Fi de invitados",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.title"
+  },
+  "8a24b43ab1d4": {
+    "source": "A Wi-Fi page with the password to copy and steps to join.",
+    "text": "Una página de Wi-Fi con la contraseña para copiar y los pasos para conectarse.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.summary"
+  },
+  "ed9fc8717762": {
+    "source": "Create your Wi-Fi page",
+    "text": "Crea tu página de Wi-Fi",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.cta"
+  },
+  "780cef41732a": {
+    "source": "A guest Wi-Fi page behind a QR code: network name, a password to copy and steps to join on iPhone and Android. Change the password, keep the code.",
+    "text": "Una página de Wi-Fi para invitados tras un código QR: nombre de la red, contraseña para copiar y pasos para conectarse en iPhone y Android. Cambia la contraseña y conserva el código.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.metaDescription"
+  },
+  "7705c99273c9": {
+    "source": "A guest Wi-Fi page QR code opens a page QRdx hosts for you with your network name, the password with a copy button, and short steps to join on iPhone and Android in each guest's own language. Add house rules, where the router is, or a button to message you.",
+    "text": "El código QR de una página de Wi-Fi para invitados abre una página que QRdx aloja por ti con el nombre de tu red, la contraseña con un botón para copiarla y unos pasos breves para conectarse en iPhone y Android, en el idioma de cada invitado. Añade normas de la casa, dónde está el router o un botón para escribirte.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.intro.0"
+  },
+  "8a4f8768c9f7": {
+    "source": "It helps where a Wi-Fi QR code can't: a scanner app or an older phone that doesn't join networks, a hidden network, or a guest who wants to read the password. The code holds a link, so you can change the password after printing and every printed code shows the new one. It needs a free QRdx account.",
+    "text": "Sirve donde un código QR de Wi-Fi no llega: una app de escaneo o un teléfono antiguo que no se une a redes, una red oculta o un invitado que quiere leer la contraseña. El código contiene un enlace, así que puedes cambiar la contraseña después de imprimir y todos los códigos impresos mostrarán la nueva. Necesita una cuenta gratuita de QRdx.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.intro.1"
+  },
+  "790c957105ec": {
+    "source": "Sign in or create a free account, then start a Guest Wi-Fi page: the button above opens it with that type picked.",
+    "text": "Inicia sesión o crea una cuenta gratuita y empieza una página de Wi-Fi para invitados: el botón de arriba la abre con ese tipo ya elegido.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.0"
+  },
+  "7eceaef80531": {
+    "source": "Pick a template (Café, Holiday rental or Office visitors) and enter your network name, password and security type.",
+    "text": "Elige una plantilla (Café, Alquiler vacacional o Visitas de oficina) e introduce el nombre de tu red, la contraseña y el tipo de seguridad.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.1"
+  },
+  "a30554b8d54e": {
+    "source": "Add your house rules or a note, then publish.",
+    "text": "Añade tus normas de la casa o una nota y publica.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.2"
+  },
+  "883636a91149": {
+    "source": "Copy buttons",
+    "text": "Botones de copiar",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.0.title"
+  },
+  "26aa6584ec79": {
+    "source": "The network name and the password each have a copy button, so guests paste the password instead of typing it.",
+    "text": "El nombre de la red y la contraseña tienen cada uno un botón de copiar, así los invitados pegan la contraseña en lugar de escribirla.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.0.description"
+  },
+  "f56144df1d82": {
+    "source": "How to join",
+    "text": "Cómo conectarse",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.1.title"
+  },
+  "f7595ea62095": {
+    "source": "Short steps for iPhone and Android in each guest's language, including how to add a hidden network by name.",
+    "text": "Pasos breves para iPhone y Android en el idioma de cada invitado, incluido cómo añadir una red oculta por su nombre.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.1.description"
+  },
+  "4dd01fe64a3c": {
+    "source": "House rules and notes",
+    "text": "Normas y notas",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.2.title"
+  },
+  "610c7ed9a6d3": {
+    "source": "Your own text under the network: quiet hours, check-out time, where the router is, or a button to message you.",
+    "text": "Tu propio texto bajo la red: horas de silencio, hora de salida, dónde está el router o un botón para escribirte.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.2.description"
+  },
+  "e9d7496c9fb0": {
+    "source": "The code counts scans without cookies, so you can see how often guests use it.",
+    "text": "El código cuenta los escaneos sin cookies, para que veas con qué frecuencia lo usan los invitados.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.3.description"
+  },
+  "806878faf2ce": {
+    "source": "Changed the password? Edit the page and publish: every printed code shows the new one, so there's nothing to reprint.",
+    "text": "¿Has cambiado la contraseña? Edita la página y publica: todos los códigos impresos mostrarán la nueva, así que no hay nada que reimprimir.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.editing.0"
+  },
+  "be47acc58b76": {
+    "source": "Anyone who opens the page can read the password, just as anyone who scans a Wi-Fi QR code can join. Use a guest network that's kept apart from your own devices.",
+    "text": "Cualquiera que abra la página puede leer la contraseña, igual que cualquiera que escanee un código QR de Wi-Fi puede conectarse. Usa una red de invitados separada de tus propios dispositivos.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.editing.1"
+  },
+  "978f0f684e30": {
+    "source": "A Wi-Fi QR code or a guest Wi-Fi page?",
+    "text": "¿Código QR de Wi-Fi o página de Wi-Fi para invitados?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.title"
+  },
+  "0cec0b722791": {
+    "source": "Wi-Fi QR code (static)",
+    "text": "Código QR de Wi-Fi (estático)",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticLabel"
+  },
+  "39d66e242d1b": {
+    "source": "No account: the network name and password are written into the code.",
+    "text": "Sin cuenta: el nombre de la red y la contraseña van escritos en el código.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.0"
+  },
+  "03619cc70529": {
+    "source": "The camera apps on iPhone and most Android phones offer to join in one tap.",
+    "text": "Las apps de cámara del iPhone y de la mayoría de los teléfonos Android ofrecen conectarse con un toque.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.1"
+  },
+  "23018da6e439": {
+    "source": "A new password means printing a new code, and there's nowhere for house rules.",
+    "text": "Una contraseña nueva implica imprimir un código nuevo, y no hay dónde poner las normas de la casa.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.2"
+  },
+  "9378a2b19253": {
+    "source": "Guest Wi-Fi page",
+    "text": "Página de Wi-Fi para invitados",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedLabel"
+  },
+  "61efac606d6b": {
+    "source": "Guests copy the password and follow the steps: a web page can't join the network for them.",
+    "text": "Los invitados copian la contraseña y siguen los pasos: una página web no puede conectarlos a la red.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedPoints.1"
+  },
+  "76bc165fb118": {
+    "source": "Change the password or the rules any time; printed codes keep working.",
+    "text": "Cambia la contraseña o las normas cuando quieras; los códigos impresos siguen funcionando.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedPoints.2"
+  },
+  "84638455a9b7": {
+    "source": "Is the guest Wi-Fi page free?",
+    "text": "¿La página de Wi-Fi para invitados es gratis?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.0.question"
+  },
+  "1146130f429a": {
+    "source": "Can the page join the network for my guests?",
+    "text": "¿Puede la página conectar a mis invitados a la red?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.1.question"
+  },
+  "0d653bdee46d": {
+    "source": "No. Browsers aren't allowed to change a phone's Wi-Fi settings, so the page shows the password with a copy button and the steps to join. For a one-tap join, print a Wi-Fi QR code as well.",
+    "text": "No. Los navegadores no pueden cambiar los ajustes de Wi-Fi de un teléfono, así que la página muestra la contraseña con un botón para copiarla y los pasos para conectarse. Para conectarse con un toque, imprime también un código QR de Wi-Fi.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.1.answer"
+  },
+  "3fe7c580c1ad": {
+    "source": "Can I change the password after printing?",
+    "text": "¿Puedo cambiar la contraseña después de imprimir?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.2.question"
+  },
+  "8bf162a39c41": {
+    "source": "Yes. Edit the page and publish; every printed code shows the new password.",
+    "text": "Sí. Edita la página y publícala; todos los códigos impresos mostrarán la nueva contraseña.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.2.answer"
+  },
+  "d10fa6440c9c": {
+    "source": "Is the password private?",
+    "text": "¿La contraseña es privada?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.3.question"
+  },
+  "6251b3132ebd": {
+    "source": "No. Anyone who scans the code or opens the page's link can read it. Hosted pages are hidden from search engines unless you turn on Show in search engines, but treat the password as shared with everyone who can see the code.",
+    "text": "No. Cualquiera que escanee el código o abra el enlace de la página puede verla. Las páginas alojadas no aparecen en los buscadores a menos que actives Show in search engines, pero considera que la contraseña la conoce todo el que pueda ver el código.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.3.answer"
+  },
+  "094d2ca95331": {
+    "source": "Does it work with a hidden network?",
+    "text": "¿Funciona con una red oculta?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.4.question"
+  },
+  "6ae57f9836e7": {
+    "source": "Yes. Switch on Hidden network and the steps explain how to add the network by its name on iPhone and Android.",
+    "text": "Sí. Activa Hidden network y los pasos explican cómo añadir la red por su nombre en iPhone y Android.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.4.answer"
+  },
+  "e3a4fd489669": {
+    "source": "What happens to my page if I stop paying?",
+    "text": "¿Qué pasa con mi página si dejo de pagar?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.5.question"
+  },
+  "947bcf8e59d4": {
+    "source": "Location Page",
+    "text": "Página de ubicación",
+    "status": "machine",
+    "context": "hostedTypes.location.name"
+  },
+  "02319258a3ba": {
+    "source": "Location Page QR Code Generator",
+    "text": "Generador de código QR para página de ubicación",
+    "status": "machine",
+    "context": "hostedTypes.location.title"
+  },
+  "fd35eced5b69": {
+    "source": "Your address with a map and buttons for three map apps.",
+    "text": "Tu dirección con un mapa y botones para tres aplicaciones de mapas.",
+    "status": "machine",
+    "context": "hostedTypes.location.summary"
+  },
+  "0b2b20865271": {
+    "source": "Create your location page",
+    "text": "Crea tu página de ubicación",
+    "status": "machine",
+    "context": "hostedTypes.location.cta"
+  },
+  "c1765e065619": {
+    "source": "A location page behind a QR code: your address, a map, directions in Google Maps, Apple Maps or Waze, and opening hours. Moved? Edit it, keep the code.",
+    "text": "Una página de ubicación detrás de un código QR: tu dirección, un mapa, indicaciones en Google Maps, Apple Maps o Waze, y el horario. ¿Te has mudado? Edítala y conserva el código.",
+    "status": "machine",
+    "context": "hostedTypes.location.metaDescription"
+  },
+  "16a27aa3d4a2": {
+    "source": "A location QR code opens a page QRdx hosts for you with your address, an optional map, and buttons that open directions in Google Maps, Apple Maps or Waze, so people use the app they already have. Add opening hours with an Open now badge, where the entrance is, parking and the nearest stop.",
+    "text": "Un código QR de ubicación abre una página que QRdx aloja por ti con tu dirección, un mapa opcional y botones que abren las indicaciones en Google Maps, Apple Maps o Waze, para que cada persona use la aplicación que ya tiene. Añade el horario con una insignia de Abierto ahora, dónde está la entrada, el aparcamiento y la parada más cercana.",
+    "status": "machine",
+    "context": "hostedTypes.location.intro.0"
+  },
+  "e738ca7afa86": {
+    "source": "The code holds a short link, so if you move or change your hours, edit the page and every printed code shows the new details. It needs a free QRdx account. For a code that opens Google Maps with no account, use the Google Maps QR code generator.",
+    "text": "El código contiene un enlace corto, así que si te mudas o cambias tu horario, edita la página y todos los códigos impresos mostrarán los nuevos datos. Requiere una cuenta gratuita de QRdx. Para un código que abra Google Maps sin cuenta, usa el generador de códigos QR de Google Maps.",
+    "status": "machine",
+    "context": "hostedTypes.location.intro.1"
+  },
+  "696b3dc5074d": {
+    "source": "Sign in or create a free account, then start a Location page: the button above opens it with that type picked.",
+    "text": "Inicia sesión o crea una cuenta gratuita y empieza una página de ubicación: el botón de arriba la abre con ese tipo ya elegido.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.0"
+  },
+  "eb83237a6c10": {
+    "source": "Pick a template (Shop, Venue or Meeting point) and enter the address.",
+    "text": "Elige una plantilla (Tienda, Local o Punto de encuentro) e introduce la dirección.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.1"
+  },
+  "3fa0e6b2c4e0": {
+    "source": "Turn the map and the Waze button on or off, add opening hours and notes, then publish.",
+    "text": "Activa o desactiva el mapa y el botón de Waze, añade el horario y notas, y publica.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.2"
+  },
+  "318af76a1e2d": {
+    "source": "Download the page's QR code, print it and scan it once to check the directions.",
+    "text": "Descarga el código QR de la página, imprímelo y escanéalo una vez para comprobar las indicaciones.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.3"
+  },
+  "e2b0c6645a9c": {
+    "source": "Three map apps",
+    "text": "Tres apps de mapas",
+    "status": "machine",
+    "context": "hostedTypes.location.features.0.title"
+  },
+  "42b8522cde04": {
+    "source": "Google Maps, Apple Maps and Waze buttons, each opening the app when it's installed and its website when it isn't.",
+    "text": "Botones de Google Maps, Apple Maps y Waze, cada uno abre la aplicación si está instalada y su sitio web si no lo está.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.0.description"
+  },
+  "db85ab728a6f": {
+    "source": "A map on the page",
+    "text": "Un mapa en la página",
+    "status": "machine",
+    "context": "hostedTypes.location.features.1.title"
+  },
+  "7c73682dea5e": {
+    "source": "An embedded Google map of the address when you turn it on. It loads content from Google for visitors, so it stays off until you choose it.",
+    "text": "Un mapa de Google incrustado con la dirección, cuando lo activas. Carga contenido de Google para los visitantes, por eso permanece desactivado hasta que lo elijas.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.1.description"
+  },
+  "7c01795782fe": {
+    "source": "Opening hours",
+    "text": "Horario",
+    "status": "machine",
+    "context": "pageCodes.on-window-decals-2.label"
+  },
+  "5c9b6bc549d5": {
+    "source": "Hours for each day, split shifts included, with an Open now badge that follows the time zone you set.",
+    "text": "El horario de cada día, con turnos partidos incluidos, y una insignia de Abierto ahora que sigue la zona horaria que configures.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.2.description"
+  },
+  "c9c20ae26ddc": {
+    "source": "Notes that help",
+    "text": "Notas útiles",
+    "status": "machine",
+    "context": "hostedTypes.location.features.3.title"
+  },
+  "e456a733811d": {
+    "source": "Where the entrance is, parking, the nearest stop or step-free access, as text or a list of details.",
+    "text": "Dónde está la entrada, el aparcamiento, la parada más cercana o el acceso sin escalones, como texto o como lista de detalles.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.3.description"
+  },
+  "3464ffee3ac9": {
+    "source": "Moved, or changed your hours? Edit the page and publish; signs, flyers and cards that are already printed open the new details.",
+    "text": "¿Te has mudado o has cambiado tu horario? Edita la página y publica; los carteles, folletos y tarjetas que ya están impresos abren los nuevos datos.",
+    "status": "machine",
+    "context": "hostedTypes.location.editing.0"
+  },
+  "a6b4cdfe7043": {
+    "source": "Every scan is counted without cookies, so you can see when people look up the way to you.",
+    "text": "Cada escaneo se cuenta sin cookies, así que puedes ver cuándo la gente busca cómo llegar hasta ti.",
+    "status": "machine",
+    "context": "hostedTypes.location.editing.1"
+  },
+  "ddab20f026f2": {
+    "source": "A Google Maps QR code or a location page?",
+    "text": "¿Un código QR de Google Maps o una página de ubicación?",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.title"
+  },
+  "318adf7e74b1": {
+    "source": "Google Maps QR code (static)",
+    "text": "Código QR de Google Maps (estático)",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticLabel"
+  },
+  "5619f199b4c9": {
+    "source": "No account: the code holds a Google Maps link to the place.",
+    "text": "Sin cuenta: el código contiene un enlace de Google Maps al lugar.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.0"
+  },
+  "75c63fd0a67c": {
+    "source": "Opens Google Maps, or its website where the app isn't installed.",
+    "text": "Abre Google Maps, o su sitio web donde la app no está instalada.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.1"
+  },
+  "1f2d0305ebeb": {
+    "source": "Can't change after printing, and shows nothing else: no hours or notes.",
+    "text": "No se puede cambiar tras imprimirlo y no muestra nada más: ni horarios ni notas.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.2"
+  },
+  "f92408835ad7": {
+    "source": "Location page",
+    "text": "Página de ubicación",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedLabel"
+  },
+  "94bbda41fd5a": {
+    "source": "Google Maps, Apple Maps and Waze, plus a map, hours and notes.",
+    "text": "Google Maps, Apple Maps y Waze, además de un mapa, horarios y notas.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedPoints.1"
+  },
+  "ea6f083ebdb6": {
+    "source": "Edit the address or hours any time; printed codes keep working.",
+    "text": "Edita la dirección o el horario cuando quieras; los códigos impresos siguen funcionando.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedPoints.2"
+  },
+  "77c3fea4604c": {
+    "source": "Is the location page free?",
+    "text": "¿Es gratis la página de ubicación?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.0.question"
+  },
+  "3e8ce35cffda": {
+    "source": "Which map apps does it open?",
+    "text": "¿Qué apps de mapas abre?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.1.question"
+  },
+  "b0daf58795a0": {
+    "source": "Google Maps, Apple Maps and, when you turn its button on, Waze. Each button opens the app when it's installed and the map's website when it isn't.",
+    "text": "Google Maps, Apple Maps y, si activas su botón, Waze. Cada botón abre la app si está instalada y el sitio web del mapa si no lo está.",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.1.answer"
+  },
+  "2ae8f6d3fc5a": {
+    "source": "Can I change the address after printing?",
+    "text": "¿Puedo cambiar la dirección después de imprimir?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.2.question"
+  },
+  "e597bc8c476f": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new address.",
+    "text": "Sí. Edita la página y publícala; todos los códigos impresos abrirán la nueva dirección.",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.2.answer"
+  },
+  "3cce71e7cdc9": {
+    "source": "Does the map load anything from Google?",
+    "text": "¿El mapa carga algo de Google?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.3.question"
+  },
+  "cffb66cc6a3d": {
+    "source": "The embedded map does: it's a Google map, so it loads content from Google when the page opens. That's why it's off until you turn it on. Without it, the page loads nothing from Google until someone taps the Google Maps button.",
+    "text": "El mapa incrustado sí: es un mapa de Google, así que carga contenido de Google al abrir la página. Por eso está desactivado hasta que lo actives. Sin él, la página no carga nada de Google hasta que alguien toca el botón de Google Maps.",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.3.answer"
+  },
+  "d640c7421da0": {
+    "source": "Resume",
+    "text": "Currículum",
+    "status": "machine",
+    "context": "hostedTypes.resume.name"
+  },
+  "7d41961e2188": {
+    "source": "Resume and CV QR Code Generator",
+    "text": "Generador de códigos QR para currículum y CV",
+    "status": "machine",
+    "context": "hostedTypes.resume.title"
+  },
+  "1da120a9b83d": {
+    "source": "A CV page with your photo, experience, skills and a PDF.",
+    "text": "Una página de CV con tu foto, experiencia, habilidades y un PDF.",
+    "status": "machine",
+    "context": "hostedTypes.resume.summary"
+  },
+  "0c6569c34c06": {
+    "source": "Create your resume page",
+    "text": "Crea tu página de currículum",
+    "status": "machine",
+    "context": "hostedTypes.resume.cta"
+  },
+  "dde5a4aef253": {
+    "source": "Put your resume behind a QR code: a CV page with your photo, experience, education, skills, links and a PDF to download. Update it, keep the code.",
+    "text": "Pon tu currículum tras un código QR: una página de CV con tu foto, experiencia, formación, habilidades, enlaces y un PDF para descargar. Actualízala y conserva el código.",
+    "status": "machine",
+    "context": "hostedTypes.resume.metaDescription"
+  },
+  "0f494ff25d20": {
+    "source": "A resume QR code opens a CV page QRdx hosts for you: your photo and headline, a short summary, your experience and education in order, your skills, links to your portfolio, LinkedIn or GitHub, and your CV as a PDF to download.",
+    "text": "Un código QR de currículum abre una página de CV que QRdx aloja por ti: tu foto y titular, un breve resumen, tu experiencia y formación en orden, tus habilidades, enlaces a tu portafolio, LinkedIn o GitHub, y tu CV en PDF para descargar.",
+    "status": "machine",
+    "context": "hostedTypes.resume.intro.0"
+  },
+  "f6cd57836459": {
+    "source": "Print the code on a paper CV, a business card or a portfolio, and whoever scans it sees the latest version: edit the page when you change jobs and every printed code opens it. It needs a free QRdx account.",
+    "text": "Imprime el código en un CV en papel, una tarjeta de visita o un portafolio, y quien lo escanee verá la última versión: edita la página cuando cambies de trabajo y todos los códigos impresos la abrirán. Necesita una cuenta de QRdx gratuita.",
+    "status": "machine",
+    "context": "hostedTypes.resume.intro.1"
+  },
+  "56ce2e15bbf3": {
+    "source": "Sign in or create a free account, then start a Resume / CV page: the button above opens it with that type picked.",
+    "text": "Inicia sesión o crea una cuenta gratuita y luego empieza una página de Currículum / CV: el botón de arriba la abre con ese tipo seleccionado.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.0"
+  },
+  "47e67c939ed0": {
+    "source": "Pick a template (Designer, Developer or Graduate), add your photo and fill in your experience, education and skills.",
+    "text": "Elige una plantilla (Designer, Developer o Graduate), añade tu foto y completa tu experiencia, formación y habilidades.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.1"
+  },
+  "d1453a85a2cc": {
+    "source": "Add your links and your CV as a PDF, then publish.",
+    "text": "Añade tus enlaces y tu CV en PDF, y luego publica.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.2"
+  },
+  "2dc8630cde01": {
+    "source": "Download the page's QR code for your printed CV or card, and scan it once to check.",
+    "text": "Descarga el código QR de la página para tu CV o tarjeta impresos y escanéalo una vez para comprobarlo.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.3"
+  },
+  "cd30e1c67168": {
+    "source": "Experience and education",
+    "text": "Experiencia y formación",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.0.title"
+  },
+  "8f990906d6d5": {
+    "source": "Each role or course with its dates, the company or school, and a line about what you did, in order.",
+    "text": "Cada puesto o curso con sus fechas, la empresa o el centro de estudios y una línea sobre lo que hiciste, en orden.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.0.description"
+  },
+  "9ab011df98c4": {
+    "source": "Skills and facts",
+    "text": "Habilidades y datos",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.1.title"
+  },
+  "d03983ae376e": {
+    "source": "Skills, languages or where you're based, as a list or as tiles.",
+    "text": "Habilidades, idiomas o dónde vives, como lista o como mosaicos.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.1.description"
+  },
+  "9024c197d849": {
+    "source": "Links",
+    "text": "Enlaces",
+    "status": "machine",
+    "context": "pageCodes.on-window-decals-4.label"
+  },
+  "46bec34da8f4": {
+    "source": "Your portfolio, LinkedIn, GitHub or email as buttons.",
+    "text": "Tu portafolio, LinkedIn, GitHub o correo electrónico como botones.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.2.description"
+  },
+  "4628486be4b4": {
+    "source": "Your CV as a PDF",
+    "text": "Tu CV en PDF",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.3.title"
+  },
+  "8de72360756b": {
+    "source": "A download button for the PDF, uploaded to QRdx or linked from where it already lives.",
+    "text": "Un botón de descarga del PDF, subido a QRdx o enlazado desde donde ya está.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.3.description"
+  },
+  "4c2a0d00a057": {
+    "source": "Edit the page and publish when anything changes: a new job, a new skill, a new photo. Every printed code opens the new version, and each publish is kept as a version.",
+    "text": "Edita la página y publícala cuando cambie algo: un nuevo trabajo, una nueva habilidad, una nueva foto. Cada código impreso abre la versión nueva, y cada publicación se guarda como una versión.",
+    "status": "machine",
+    "context": "hostedTypes.resume.editing.0"
+  },
+  "00ad204e50ef": {
+    "source": "Replace an uploaded PDF in Dashboard → Files and the page offers the new file within a minute. Scans are counted without cookies, so you can see when someone opens your CV.",
+    "text": "Sustituye un PDF subido en Dashboard → Files y la página ofrecerá el archivo nuevo en un minuto. Los escaneos se cuentan sin cookies, así que puedes ver cuándo alguien abre tu CV.",
+    "status": "machine",
+    "context": "hostedTypes.resume.editing.1"
+  },
+  "c80e313b1313": {
+    "source": "A LinkedIn QR code or a resume page?",
+    "text": "¿Código QR de LinkedIn o página de currículum?",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.title"
+  },
+  "f9fa807326c5": {
+    "source": "LinkedIn QR code (static)",
+    "text": "Código QR de LinkedIn (estático)",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticLabel"
+  },
+  "c124deca7c39": {
+    "source": "No account: the code opens your LinkedIn profile.",
+    "text": "Sin cuenta: el código abre tu perfil de LinkedIn.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.0"
+  },
+  "a4805184b32b": {
+    "source": "The profile stays current as you edit it on LinkedIn.",
+    "text": "El perfil se mantiene al día a medida que lo editas en LinkedIn.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.1"
+  },
+  "25cbff28c8e6": {
+    "source": "It shows LinkedIn's layout, and people who aren't signed in may see only part of it.",
+    "text": "Muestra el diseño de LinkedIn, y quienes no han iniciado sesión pueden ver solo una parte.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.2"
+  },
+  "ba4f5e6fc3f3": {
+    "source": "Resume page",
+    "text": "Página de CV",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedLabel"
+  },
+  "2f8d0d236823": {
+    "source": "Your own layout and colors, a PDF to download, and no sign-in for readers.",
+    "text": "Tu propio diseño y colores, un PDF para descargar y sin inicio de sesión para quien lo lee.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedPoints.1"
+  },
+  "38cbb9f63722": {
+    "source": "Edit it any time; printed codes keep working, and scans are counted.",
+    "text": "Edítala cuando quieras; los códigos impresos siguen funcionando y los escaneos se cuentan.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedPoints.2"
+  },
+  "acd460d2ac53": {
+    "source": "Is the resume page free?",
+    "text": "¿Es gratis la página de currículum?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.0.question"
+  },
+  "fe4a5505c7d4": {
+    "source": "Can people download my CV?",
+    "text": "¿Se puede descargar mi CV?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.1.question"
+  },
+  "244f5983c68c": {
+    "source": "Yes. Add the PDF to the page's Downloads block, uploaded to QRdx (up to 10 MB per file on Free) or linked from where it's already online.",
+    "text": "Sí. Añade el PDF al bloque Downloads de la página, subido a QRdx (hasta 10 MB por archivo en el plan Gratis) o enlazado desde donde ya esté en línea.",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.1.answer"
+  },
+  "2d7c7ff033e8": {
+    "source": "Can I update it after printing?",
+    "text": "¿Puedo actualizarlo después de imprimir?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.2.question"
+  },
+  "387fa17c1328": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new version.",
+    "text": "Sí. Edita la página y publícala; cada código impreso abre la versión nueva.",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.2.answer"
+  },
+  "3f3dcd5af52f": {
+    "source": "Will my resume show up in search engines?",
+    "text": "¿Aparecerá mi currículum en los buscadores?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.3.question"
+  },
+  "cf87edfd462e": {
+    "source": "Not unless you want it to. Hosted pages are hidden from search engines until you turn on Show in search engines in the page's settings. Anyone with the code or the link can read it, so leave out your home address and anything you'd rather keep private.",
+    "text": "Solo si tú quieres. Las páginas alojadas están ocultas para los buscadores hasta que activas Show in search engines en los ajustes de la página. Cualquiera que tenga el código o el enlace puede leerla, así que no incluyas tu dirección personal ni nada que prefieras mantener privado.",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.3.answer"
+  },
+  "af4ea02852eb": {
+    "source": "Invitation",
+    "text": "Invitación",
+    "status": "machine",
+    "context": "hostedTypes.invitation.name"
+  },
+  "396c3d455879": {
+    "source": "Invitation QR Code Generator for Weddings and Parties",
+    "text": "Generador de códigos QR para invitaciones de bodas y fiestas",
+    "status": "machine",
+    "context": "hostedTypes.invitation.title"
+  },
+  "6fca6f8201f6": {
+    "source": "An invitation page with the day's plan, directions and an RSVP.",
+    "text": "Una página de invitación con el plan del día, cómo llegar y confirmación de asistencia.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.summary"
+  },
+  "32f0a378b3bb": {
+    "source": "Create your invitation",
+    "text": "Crea tu invitación",
+    "status": "machine",
+    "context": "hostedTypes.invitation.cta"
+  },
+  "e891e2e79058": {
+    "source": "Put a QR code on your invitations: a page with the date, directions to the venue, the day's schedule, dress code and an RSVP form. Plans change? Edit it.",
+    "text": "Pon un código QR en tus invitaciones: una página con la fecha, cómo llegar al lugar, el programa del día, el código de vestimenta y un formulario de confirmación de asistencia. ¿Cambian los planes? Edítala.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.metaDescription"
+  },
+  "5dc58074dd33": {
+    "source": "An invitation QR code opens a page QRdx hosts for you with what doesn't fit on the card: the date and time with add-to-calendar buttons, the venue with directions in Google Maps, Apple Maps or Waze, the schedule of the day, the dress code and an RSVP form.",
+    "text": "Un código QR de invitación abre una página que QRdx aloja por ti con lo que no cabe en la tarjeta: la fecha y la hora con botones para añadir al calendario, el lugar con indicaciones en Google Maps, Apple Maps o Waze, el programa del día, el código de vestimenta y un formulario de confirmación de asistencia.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.intro.0"
+  },
+  "dbe70020ae1f": {
+    "source": "Replies arrive in your dashboard, one row per guest, ready to export to a spreadsheet. If the start time or the venue changes, edit the page and every printed card shows the new plan. It needs a free QRdx account.",
+    "text": "Las respuestas llegan a tu panel, una fila por invitado, listas para exportar a una hoja de cálculo. Si cambia la hora de inicio o el lugar, edita la página y todas las tarjetas impresas mostrarán el nuevo plan. Necesita una cuenta gratuita de QRdx.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.intro.1"
+  },
+  "1c76ae9fe9e0": {
+    "source": "Sign in or create a free account, then start an Invitation page: the button above opens it with that type picked.",
+    "text": "Inicia sesión o crea una cuenta gratuita y luego empieza una página de invitación: el botón de arriba la abre con ese tipo ya elegido.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.0"
+  },
+  "02c74768d194": {
+    "source": "Pick a template (Wedding, Birthday party or Dinner party), set the date, time and venue, and fill in the schedule.",
+    "text": "Elige una plantilla (Boda, Fiesta de cumpleaños o Cena), define la fecha, la hora y el lugar, y completa el programa.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.1"
+  },
+  "2456d9dd518c": {
+    "source": "Choose the RSVP questions, such as meal choices or a plus one, then publish.",
+    "text": "Elige las preguntas de la confirmación de asistencia, como las opciones de menú o un acompañante, y publica.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.2"
+  },
+  "4ac2a6697269": {
+    "source": "Download the QR code, add it to your printed invitations and scan one to check.",
+    "text": "Descarga el código QR, añádelo a tus invitaciones impresas y escanea una para comprobarlo.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.3"
+  },
+  "d0efffa65ea7": {
+    "source": "Add to calendar",
+    "text": "Añadir al calendario",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.0.title"
+  },
+  "3b59759cc462": {
+    "source": "Google Calendar, Outlook and Yahoo buttons, plus an .ics file for Apple Calendar and other calendar apps.",
+    "text": "Botones de Google Calendar, Outlook y Yahoo, además de un archivo .ics para Apple Calendar y otras aplicaciones de calendario.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.0.description"
+  },
+  "c95356784006": {
+    "source": "Directions",
+    "text": "Cómo llegar",
+    "status": "machine",
+    "context": "pageCodes.type-maps-3.label"
+  },
+  "0d67c9ccac05": {
+    "source": "The venue's address with Google Maps, Apple Maps and Waze buttons.",
+    "text": "La dirección del lugar con botones de Google Maps, Apple Maps y Waze.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.1.description"
+  },
+  "22b742cb5792": {
+    "source": "The day's schedule",
+    "text": "El programa del día",
+    "status": "machine",
+    "context": "industries.0.hospitality-travel.items.weddings.useCases.2.title"
+  },
+  "092183849e85": {
+    "source": "Each part of the day with its time and place, from arrival to the last dance.",
+    "text": "Cada momento del día con su hora y lugar, desde la llegada hasta el último baile.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.2.description"
+  },
+  "91654e103aac": {
+    "source": "RSVP form",
+    "text": "Confirmar asistencia",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.3.title"
+  },
+  "f241c06b0d1e": {
+    "source": "The questions you choose, answered in your dashboard and exported as CSV. On Pro and Business, each reply can also be emailed to you.",
+    "text": "Las preguntas que elijas, respondidas en tu panel y exportadas como CSV. En Pro y Business, cada respuesta también puede enviarse a tu correo.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.3.description"
+  },
+  "1e9ebf115622": {
+    "source": "Plans change: edit the page and publish, and every printed invitation shows the new time, venue or schedule. Guests who already added it to their calendar keep the old entry, so let them know too.",
+    "text": "Los planes cambian: edita la página y publica, y cada invitación impresa mostrará la nueva hora, el nuevo lugar o el nuevo programa. Los invitados que ya la añadieron a su calendario conservan la entrada anterior, así que avísales también.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.editing.0"
+  },
+  "7b75fe2b1ea7": {
+    "source": "RSVPs count towards the workspace's form responses: 50 a month on Free and 1,000 on Pro. Replies you already have are never deleted or hidden.",
+    "text": "Las confirmaciones cuentan para las respuestas de formularios del espacio de trabajo: 50 al mes en Gratis y 1,000 en Pro. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.editing.1"
+  },
+  "993133794ae8": {
+    "source": "A WhatsApp RSVP code or an invitation page?",
+    "text": "¿Un código de confirmación por WhatsApp o una página de invitación?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.title"
+  },
+  "616488ff8254": {
+    "source": "WhatsApp QR code (static)",
+    "text": "Código QR de WhatsApp (estático)",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticLabel"
+  },
+  "e8de31362aa7": {
+    "source": "No account: the code opens a WhatsApp chat with you, with a reply such as \"We'll be there\" already typed.",
+    "text": "Sin cuenta: el código abre un chat de WhatsApp contigo, con una respuesta como \"Allí estaremos\" ya escrita.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.0"
+  },
+  "dc4d26fc23b2": {
+    "source": "Replies arrive one by one among your other chats.",
+    "text": "Las respuestas llegan una a una entre tus otros chats.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.1"
+  },
+  "aa0cece2b632": {
+    "source": "Holds no date, venue or schedule, and can't change after printing.",
+    "text": "No contiene fecha, lugar ni programa, y no puede cambiar después de imprimirse.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.2"
+  },
+  "656461639aea": {
+    "source": "Invitation page",
+    "text": "Página de invitación",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedLabel"
+  },
+  "30aa3ff6733e": {
+    "source": "Date, directions, the schedule, dress code and add to calendar.",
+    "text": "Fecha, indicaciones, programa, código de vestimenta y añadir al calendario.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedPoints.1"
+  },
+  "8e81f846ab6b": {
+    "source": "RSVPs in one list you can export; edit the details any time.",
+    "text": "Confirmaciones en una sola lista que puedes exportar; edita los detalles cuando quieras.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedPoints.2"
+  },
+  "41de38518aae": {
+    "source": "Is the invitation page free?",
+    "text": "¿La página de invitación es gratis?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.0.question"
+  },
+  "d177a825637d": {
+    "source": "Where do the RSVPs go?",
+    "text": "¿Adónde van las confirmaciones?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.1.question"
+  },
+  "8a9e879b12a9": {
+    "source": "To the page's Responses in your dashboard: one row per reply with every answer, newest first, and Export CSV for a spreadsheet. On Pro and Business you can also get each reply by email.",
+    "text": "A Respuestas de la página en tu panel: una fila por respuesta con todo lo contestado, las más recientes primero, y Export CSV para una hoja de cálculo. En Pro y Business también puedes recibir cada respuesta por correo electrónico.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.1.answer"
+  },
+  "c191eb2e7a14": {
+    "source": "How many RSVPs can I collect?",
+    "text": "¿Cuántas confirmaciones puedo recibir?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.2.question"
+  },
+  "1366d371549e": {
+    "source": "Free includes 50 form responses a month across the workspace, Pro 1,000 and Business 10,000. When the limit is reached, the form asks guests to try again later and keeps what they typed.",
+    "text": "Gratis incluye 50 respuestas de formulario al mes en todo el espacio de trabajo, Pro 1,000 y Business 10,000. Al alcanzar el límite, el formulario pide a los invitados que lo intenten más tarde y conserva lo que han escrito.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.2.answer"
+  },
+  "595f61fcb4a2": {
+    "source": "Can I change the time or venue after printing?",
+    "text": "¿Puedo cambiar la hora o el lugar después de imprimir?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.3.question"
+  },
+  "b0322f9622b5": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new details.",
+    "text": "Sí. Edita la página y publícala; todos los códigos impresos abrirán los nuevos datos.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.3.answer"
+  },
+  "fb83860a331f": {
+    "source": "Can guests see who else is coming?",
+    "text": "¿Pueden los invitados ver quién más asistirá?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.4.question"
+  },
+  "f3f3682f40ab": {
+    "source": "No. Replies are only shown to you and your workspace in the dashboard.",
+    "text": "No. Las respuestas solo las ves tú y tu espacio de trabajo en el panel.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.4.answer"
+  },
+  "5641d7b645e1": {
+    "source": "Contact Form",
+    "text": "Formulario de contacto",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.name"
+  },
+  "bd9b785d0b0a": {
+    "source": "Contact Form QR Code Generator",
+    "text": "Generador de código QR para formulario de contacto",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.title"
+  },
+  "5f92106ba4e8": {
+    "source": "A contact or quote form whose answers land in your dashboard.",
+    "text": "Un formulario de contacto o de presupuesto cuyas respuestas llegan a tu panel.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.summary"
+  },
+  "c1162defa3b4": {
+    "source": "Create your form",
+    "text": "Crea tu formulario",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.cta"
+  },
+  "f00f66270223": {
+    "source": "Turn a QR code into a contact form: name, email, phone and a message, or the questions you choose. Answers land in your dashboard. Free QRdx account.",
+    "text": "Convierte un código QR en un formulario de contacto: nombre, correo, teléfono y un mensaje, o las preguntas que elijas. Las respuestas llegan a tu panel. Cuenta de QRdx gratis.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.metaDescription"
+  },
+  "24d59e12d7d5": {
+    "source": "A contact form QR code opens a short form QRdx hosts for you. Keep the fields you need, such as name, email, phone and a message, or add your own questions: a choice of services, a postcode, a consent box. People fill it in on their phone and press send.",
+    "text": "Un código QR de formulario de contacto abre un formulario breve que QRdx aloja por ti. Conserva los campos que necesites, como nombre, correo, teléfono y un mensaje, o añade tus propias preguntas: una elección de servicios, un código postal, una casilla de consentimiento. Las personas lo rellenan en su teléfono y pulsan enviar.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.intro.0"
+  },
+  "de0ddc29f037": {
+    "source": "Answers arrive in your dashboard with the time and the code that was scanned, so a flyer, a van and a trade show stand can each have their own code. It needs a free QRdx account.",
+    "text": "Las respuestas llegan a tu panel con la hora y el código que se escaneó, así que un folleto, una furgoneta y un stand en una feria pueden tener cada uno su propio código. Necesita una cuenta de QRdx gratuita.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.intro.1"
+  },
+  "612ac20e96b1": {
+    "source": "Sign in or create a free account, then start a Contact form page: the button above opens it with that type picked.",
+    "text": "Inicia sesión o crea una cuenta gratuita y empieza una página de Formulario de contacto: el botón de arriba la abre con ese tipo ya elegido.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.0"
+  },
+  "508691430417": {
+    "source": "Pick a template (Contact us, Quote request or Trade show leads) and keep, remove or add questions.",
+    "text": "Elige una plantilla (Contáctanos, Solicitud de presupuesto o Contactos de feria) y conserva, quita o añade preguntas.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.1"
+  },
+  "0ac9db140d42": {
+    "source": "Write the button label and the thank-you message, then publish.",
+    "text": "Escribe el texto del botón y el mensaje de agradecimiento, y luego publica.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.2"
+  },
+  "839b29840b1c": {
+    "source": "Download the page's QR code, print it and send yourself a test response.",
+    "text": "Descarga el código QR de la página, imprímelo y envíate una respuesta de prueba.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.3"
+  },
+  "ff16e16ba20a": {
+    "source": "Fields you choose",
+    "text": "Campos a tu elección",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.0.title"
+  },
+  "8173a6163d9b": {
+    "source": "Text, email, phone, choices and a consent checkbox, each optional or required, with your own labels.",
+    "text": "Texto, correo, teléfono, opciones y una casilla de consentimiento, cada uno opcional u obligatorio, con tus propias etiquetas.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.0.description"
+  },
+  "62da88be11f1": {
+    "source": "Responses inbox",
+    "text": "Bandeja de respuestas",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.1.title"
+  },
+  "a9ef10ed6abd": {
+    "source": "Every answer under Responses, newest first, with Export CSV for a spreadsheet or CRM.",
+    "text": "Cada respuesta en Respuestas, las más recientes primero, con Export CSV para una hoja de cálculo o un CRM.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.1.description"
+  },
+  "cf343af2aa51": {
+    "source": "Alerts and webhooks",
+    "text": "Alertas y webhooks",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.2.title"
+  },
+  "942723529851": {
+    "source": "Email alerts for each response on Pro and Business; Slack, Discord and webhooks on Business.",
+    "text": "Alertas por correo de cada respuesta en Pro y Business; Slack, Discord y webhooks en Business.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.2.description"
+  },
+  "cc9899ecf4d1": {
+    "source": "Spam protection",
+    "text": "Protección antispam",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.3.title"
+  },
+  "369640adf648": {
+    "source": "A hidden field that only bots fill in, and limits on how often one device can send.",
+    "text": "Un campo oculto que solo rellenan los bots y límites de la frecuencia con la que un dispositivo puede enviar.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.3.description"
+  },
+  "471fd667e702": {
+    "source": "Change the questions any time and publish: printed codes open the new form, and exports keep the columns of removed questions that already have answers.",
+    "text": "Cambia las preguntas cuando quieras y publica: los códigos impresos abren el nuevo formulario, y las exportaciones conservan las columnas de las preguntas eliminadas que ya tienen respuestas.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.editing.0"
+  },
+  "b313ffcebf30": {
+    "source": "Responses count per workspace each calendar month: 50 on Free, 1,000 on Pro and 10,000 on Business. Responses you already have are never deleted or hidden.",
+    "text": "Las respuestas se cuentan por espacio de trabajo cada mes natural: 50 en Gratis, 1,000 en Pro y 10,000 en Business. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.editing.1"
+  },
+  "9b73a932433f": {
+    "source": "An email QR code or a contact form?",
+    "text": "¿Un código QR de correo o un formulario de contacto?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.title"
+  },
+  "0945c3f7e4d8": {
+    "source": "Email QR code (static)",
+    "text": "Código QR de correo (estático)",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticLabel"
+  },
+  "2c8b423b87fd": {
+    "source": "No account: the code opens an email draft to you, with the subject and message filled in.",
+    "text": "Sin cuenta: el código abre un borrador de correo dirigido a ti, con el asunto y el mensaje ya rellenados.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.0"
+  },
+  "3b50d6dff15f": {
+    "source": "People need an email app set up on their phone.",
+    "text": "Las personas necesitan tener una app de correo configurada en el teléfono.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.1"
+  },
+  "eb7ac7a2b531": {
+    "source": "Replies land among your other email, and the address can't change after printing.",
+    "text": "Las respuestas llegan mezcladas con el resto de tu correo, y la dirección no se puede cambiar después de imprimir.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.2"
+  },
+  "2520a0ba5663": {
+    "source": "Contact form",
+    "text": "Formulario de contacto",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedLabel"
+  },
+  "7161e0bc1656": {
+    "source": "A free QRdx account; the code opens a form QRdx hosts.",
+    "text": "Una cuenta gratuita de QRdx; el código abre un formulario alojado por QRdx.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.0"
+  },
+  "b60dc1aafda3": {
+    "source": "Works in any phone browser, with the questions you choose.",
+    "text": "Funciona en el navegador de cualquier teléfono, con las preguntas que tú elijas.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.1"
+  },
+  "85e4e25b83ee": {
+    "source": "Answers in one list you can export; edit the form any time.",
+    "text": "Las respuestas en una sola lista que puedes exportar; edita el formulario cuando quieras.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.2"
+  },
+  "2748bdccf6b3": {
+    "source": "Is the contact form free?",
+    "text": "¿El formulario de contacto es gratis?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.0.question"
+  },
+  "fdb380dac2a7": {
+    "source": "Where do the answers go?",
+    "text": "¿Adónde van las respuestas?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.1.question"
+  },
+  "76afe3c4df88": {
+    "source": "To the page's Responses in your dashboard, newest first, with the time and the code that was scanned. Export CSV gives one row per response and one column per question. On Pro and Business each response can also be emailed to you.",
+    "text": "A las Respuestas de la página en tu panel, las más recientes primero, con la hora y el código que se escaneó. Export CSV genera una fila por respuesta y una columna por pregunta. En Pro y Business, cada respuesta también se puede enviar a tu correo.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.1.answer"
+  },
+  "3551dcf6310f": {
+    "source": "How many responses can I get?",
+    "text": "¿Cuántas respuestas puedo recibir?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.2.question"
+  },
+  "3987ec8d1d8b": {
+    "source": "Free includes 50 responses a month across the workspace, Pro 1,000 and Business 10,000. The count starts over on the 1st of each month.",
+    "text": "Gratis incluye 50 respuestas al mes en todo el espacio de trabajo, Pro 1,000 y Business 10,000. El recuento se reinicia el día 1 de cada mes.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.2.answer"
+  },
+  "2e1892954768": {
+    "source": "Can I change the questions after printing?",
+    "text": "¿Puedo cambiar las preguntas después de imprimir?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.3.question"
+  },
+  "f95195d386de": {
+    "source": "Yes. Edit the form and publish; the printed code opens the new version, and the answers you already have stay.",
+    "text": "Sí. Edita el formulario y publícalo; el código impreso abre la nueva versión y las respuestas que ya tienes se conservan.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.3.answer"
+  },
+  "9298d959ba09": {
+    "source": "Is it protected from spam?",
+    "text": "¿Está protegido contra el spam?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.4.question"
+  },
+  "efaf8ac5c2b5": {
+    "source": "Yes. A hidden field catches most bots and one device can only send so often. When the server has Cloudflare Turnstile keys, forms also run Turnstile's invisible check.",
+    "text": "Sí. Un campo oculto detecta a la mayoría de los bots y un mismo dispositivo solo puede enviar con cierta frecuencia. Cuando el servidor tiene claves de Cloudflare Turnstile, los formularios también ejecutan la verificación invisible de Turnstile.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.4.answer"
+  },
+  "05155378bc81": {
+    "source": "What happens to my form if I stop paying?",
+    "text": "¿Qué pasa con mi formulario si dejo de pagar?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.5.question"
+  },
+  "2c9859114c4a": {
+    "source": "Lost and Found Tag",
+    "text": "Etiqueta de objetos perdidos",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.name"
+  },
+  "5afcae8b513b": {
+    "source": "Lost and Found QR Code Generator",
+    "text": "Generador de códigos QR de objetos perdidos",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.title"
+  },
+  "41ff183b7c90": {
+    "source": "A tag page that helps whoever finds your things reach you.",
+    "text": "Una página de etiqueta que ayuda a quien encuentre tus cosas a ponerse en contacto contigo.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.summary"
+  },
+  "1d5f0256e045": {
+    "source": "Create your tag",
+    "text": "Crea tu etiqueta",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.cta"
+  },
+  "a7b776dc197e": {
+    "source": "Lost and found QR tags for luggage, laptops and keys: call and message buttons, a reward note and a found-it form. New number? Edit it, keep the tag.",
+    "text": "Etiquetas QR de objetos perdidos para equipaje, portátiles y llaves: botones de llamada y mensaje, una nota de recompensa y un formulario de hallazgo. ¿Número nuevo? Edítalo y conserva la etiqueta.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.metaDescription"
+  },
+  "587e0aef48c8": {
+    "source": "A lost and found QR code goes on a sticker or tag on your bag, laptop, keys or camera. Whoever finds it scans it and gets a page QRdx hosts for you: who it belongs to, buttons to call, text or WhatsApp you, a reward note if you offer one, and a form to say where it is.",
+    "text": "Un código QR de objetos perdidos va en una pegatina o etiqueta en tu bolso, portátil, llaves o cámara. Quien lo encuentre lo escanea y accede a una página que QRdx aloja para ti: de quién es, botones para llamarte, enviarte un mensaje o escribirte por WhatsApp, una nota de recompensa si ofreces una y un formulario para indicar dónde está.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.intro.0"
+  },
+  "7bb0e4c767fd": {
+    "source": "The tag holds a short link, so a new phone number or email is one edit away and the tag you stuck on years ago still reaches you. It needs a free QRdx account.",
+    "text": "La etiqueta contiene un enlace corto, así que cambiar de número de teléfono o de correo es cuestión de una edición, y la etiqueta que pegaste hace años sigue llegando a ti. Necesita una cuenta gratuita de QRdx.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.intro.1"
+  },
+  "7613d544d3c7": {
+    "source": "Sign in or create a free account, then start a Lost & found tag page: the button above opens it with that type picked.",
+    "text": "Inicia sesión o crea una cuenta gratuita y luego empieza una página de etiqueta Lost & found: el botón de arriba la abre con ese tipo ya seleccionado.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.0"
+  },
+  "97f20df0be67": {
+    "source": "Pick a template (Luggage, Laptop & equipment or Keys) and add the buttons and details a finder needs.",
+    "text": "Elige una plantilla (Luggage, Laptop & equipment o Keys) y añade los botones y los datos que necesita quien lo encuentre.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.1"
+  },
+  "8f968c5028e2": {
+    "source": "Publish, then download the QR code and print it as a sticker or tag.",
+    "text": "Publica, descarga el código QR e imprímelo como pegatina o etiqueta.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.2"
+  },
+  "3e021a9e4d11": {
+    "source": "Scan it once to check the call button dials your number.",
+    "text": "Escanéalo una vez para comprobar que el botón de llamada marca tu número.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.3"
+  },
+  "745d4a506420": {
+    "source": "Call and message",
+    "text": "Llamada y mensaje",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.0.title"
+  },
+  "3e2443966b7f": {
+    "source": "Buttons that call or text you, and WhatsApp when you turn it on for your number.",
+    "text": "Botones para llamarte o escribirte un SMS, y WhatsApp cuando lo activas para tu número.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.0.description"
+  },
+  "6e9083892ccc": {
+    "source": "Found-it form",
+    "text": "Formulario de hallazgo",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.1.title"
+  },
+  "30321a296311": {
+    "source": "The finder says where the item is and how to reach them; the answer lands in your dashboard.",
+    "text": "Quien lo encuentra indica dónde está el objeto y cómo contactarle; la respuesta llega a tu panel.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.1.description"
+  },
+  "9e4356ede63a": {
+    "source": "Asset details",
+    "text": "Datos del activo",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.2.title"
+  },
+  "183fcfaed161": {
+    "source": "An asset number, the item and where to return it, for company laptops and equipment.",
+    "text": "Un número de activo, el objeto y dónde devolverlo, para portátiles y equipos de la empresa.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.2.description"
+  },
+  "4e97e8ef3f82": {
+    "source": "Every scan is counted without cookies, so you can see when someone has scanned the tag.",
+    "text": "Cada escaneo se cuenta sin cookies, así puedes ver cuándo alguien ha escaneado la etiqueta.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.3.description"
+  },
+  "321fff1796c8": {
+    "source": "New number or email? Edit the page and publish; every tag you've already stuck on opens the new details.",
+    "text": "¿Nuevo número o correo? Edita la página y publica; todas las etiquetas que ya has pegado abren los datos nuevos.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.editing.0"
+  },
+  "2119defa490a": {
+    "source": "Anyone who finds the item can read the page, so show only what helps them return it: a first name and a phone number are usually enough.",
+    "text": "Cualquiera que encuentre el objeto puede leer la página, así que muestra solo lo que ayude a devolverlo: un nombre de pila y un número de teléfono suelen bastar.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.editing.1"
+  },
+  "7b793947d98d": {
+    "source": "A phone QR code or a lost and found page?",
+    "text": "¿Un código QR de teléfono o una página de objetos perdidos?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.title"
+  },
+  "2608f2b404fc": {
+    "source": "Phone QR code (static)",
+    "text": "Código QR de teléfono (estático)",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticLabel"
+  },
+  "e01ecb6f4d7d": {
+    "source": "No account: the code holds your number and the phone offers to call it.",
+    "text": "Sin cuenta: el código guarda tu número y el teléfono ofrece llamarlo.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.0"
+  },
+  "7c0c86f3e6d4": {
+    "source": "Nothing to load: the call starts straight from the camera.",
+    "text": "Nada que cargar: la llamada se inicia directamente desde la cámara.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.1"
+  },
+  "477e43229676": {
+    "source": "No form or reward note, and a new number means a new tag.",
+    "text": "Sin formulario ni nota de recompensa, y un número nuevo implica una etiqueta nueva.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.2"
+  },
+  "2a7150b065ae": {
+    "source": "Lost and found page",
+    "text": "Página de objetos perdidos",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedLabel"
+  },
+  "b4d6958c32d2": {
+    "source": "Call, text and WhatsApp buttons, a reward note and a found-it form.",
+    "text": "Botones de llamada, SMS y WhatsApp, una nota de recompensa y un formulario de hallazgo.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedPoints.1"
+  },
+  "baf6af7960b4": {
+    "source": "Change your number any time; tags already in use keep working.",
+    "text": "Cambia tu número cuando quieras; las etiquetas que ya están en uso siguen funcionando.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedPoints.2"
+  },
+  "37c7d37a83ba": {
+    "source": "Is the lost and found tag free?",
+    "text": "¿La etiqueta de objetos perdidos es gratis?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.0.question"
+  },
+  "fcf0432e7942": {
+    "source": "Can I see where my item was found?",
+    "text": "¿Puedo ver dónde se encontró mi objeto?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.question"
+  },
+  "09a86d50c977": {
+    "source": "Roughly. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network, never an exact spot. The found-it form lets the finder tell you where the item is.",
+    "text": "Aproximadamente. Como todo código dinámico, las estadísticas de la etiqueta muestran cuándo se escaneó y el país, la región y la ciudad según la red, nunca un lugar exacto. El formulario de hallazgo permite a quien lo encuentra decirte dónde está el objeto.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "c17c0e25132b": {
+    "source": "Can I change my number later?",
+    "text": "¿Puedo cambiar mi número después?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.2.question"
+  },
+  "1dd2b80dc028": {
+    "source": "Yes. Edit the page and publish; every printed tag opens the new details.",
+    "text": "Sí. Edita la página y publica; todas las etiquetas impresas abren los datos nuevos.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.2.answer"
+  },
+  "e3d5f4c7a00c": {
+    "source": "Is my phone number public?",
+    "text": "¿Mi número de teléfono es público?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.3.question"
+  },
+  "797afc9f16c8": {
+    "source": "Anyone who scans the tag or opens its link can see what's on the page. Hosted pages are hidden from search engines unless you turn on Show in search engines. Show only what a finder needs.",
+    "text": "Cualquiera que escanee la etiqueta o abra su enlace puede ver lo que hay en la página. Las páginas alojadas están ocultas para los buscadores a menos que actives Mostrar en buscadores. Muestra solo lo que necesita quien lo encuentra.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.3.answer"
+  },
+  "35d2dc81fd11": {
+    "source": "What happens to my tag if I stop paying?",
+    "text": "¿Qué pasa con mi etiqueta si dejo de pagar?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.4.question"
+  },
+  "2f77668a9dfb": {
+    "source": "Message",
+    "text": "Mensaje",
+    "status": "machine",
+    "context": "hostedTypes.message.name"
+  },
+  "8cb91b6873f2": {
+    "source": "Message QR Code Generator",
+    "text": "Generador de códigos QR de mensaje",
+    "status": "machine",
+    "context": "hostedTypes.message.title"
+  },
+  "a3750df639df": {
+    "source": "A short note with a photo and a button, editable after printing.",
+    "text": "Una nota breve con una foto y un botón, editable después de imprimir.",
+    "status": "machine",
+    "context": "hostedTypes.message.summary"
+  },
+  "ec0c539b9cda": {
+    "source": "Create your message",
+    "text": "Crea tu mensaje",
+    "status": "machine",
+    "context": "hostedTypes.message.cta"
+  },
+  "33e2d1eea3f2": {
+    "source": "Put a message behind a QR code: a gift note, a thank-you card or a notice on the door, with a photo and one button. Edit it after printing, same code.",
+    "text": "Pon un mensaje detrás de un código QR: una nota de regalo, una tarjeta de agradecimiento o un aviso en la puerta, con una foto y un botón. Edítalo después de imprimir, con el mismo código.",
+    "status": "machine",
+    "context": "hostedTypes.message.metaDescription"
+  },
+  "4e8ae41b881f": {
+    "source": "A message QR code opens a short note on a page QRdx hosts for you: a heading, a few lines, an optional photo and one button. Put it on a gift tag, a card in every parcel or a sign on the door.",
+    "text": "Un código QR de mensaje abre una nota breve en una página alojada por QRdx para ti: un título, unas líneas, una foto opcional y un botón. Ponlo en una etiqueta de regalo, en una tarjeta dentro de cada paquete o en un cartel en la puerta.",
+    "status": "machine",
+    "context": "hostedTypes.message.intro.0"
+  },
+  "456218072bba": {
+    "source": "The code holds a link, not the words, so you can change the message after printing, from \"Closed today\" back to your opening hours, and see how many people scanned it. It needs a free QRdx account. For words written into the code itself, with no account, use the text QR code generator.",
+    "text": "El código contiene un enlace, no las palabras, así que puedes cambiar el mensaje después de imprimir, de \"Cerrado hoy\" otra vez a tu horario de apertura, y ver cuántas personas lo escanearon. Requiere una cuenta gratuita de QRdx. Para palabras escritas en el propio código, sin cuenta, usa el generador de códigos QR de texto.",
+    "status": "machine",
+    "context": "hostedTypes.message.intro.1"
+  },
+  "7da74768bf63": {
+    "source": "Sign in or create a free account, then start a Message page: the button above opens it with that type picked.",
+    "text": "Inicia sesión o crea una cuenta gratuita y luego empieza una página de Mensaje: el botón de arriba la abre con ese tipo ya elegido.",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.0"
+  },
+  "5e99aa77b021": {
+    "source": "Pick a template (Gift note, Thank-you card or Notice) and write your message.",
+    "text": "Elige una plantilla (Nota de regalo, Tarjeta de agradecimiento o Aviso) y escribe tu mensaje.",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.1"
+  },
+  "fc9716d72b51": {
+    "source": "Add a photo and a button if you want them, then publish.",
+    "text": "Añade una foto y un botón si quieres y después publica.",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.2"
+  },
+  "9dfc4e242770": {
+    "source": "Your words, your look",
+    "text": "Tus palabras, tu estilo",
+    "status": "machine",
+    "context": "hostedTypes.message.features.0.title"
+  },
+  "4b201b59260e": {
+    "source": "A heading and text in the fonts and colors you pick, with a photo if you add one.",
+    "text": "Un título y un texto con las fuentes y los colores que elijas, y con una foto si la añades.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.0.description"
+  },
+  "2ceae1f2641b": {
+    "source": "One button",
+    "text": "Un solo botón",
+    "status": "machine",
+    "context": "hostedTypes.message.features.1.title"
+  },
+  "cd1bf434100b": {
+    "source": "Send people on to a booking, a review page, your shop or a playlist.",
+    "text": "Lleva a las personas a una reserva, una página de reseñas, tu tienda o una lista de reproducción.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.1.description"
+  },
+  "2a2fe4991d42": {
+    "source": "Edit after printing",
+    "text": "Edita tras imprimir",
+    "status": "machine",
+    "context": "hostedTypes.message.features.2.title"
+  },
+  "ebbe4bb0b19d": {
+    "source": "Change the message any time; the printed code stays the same.",
+    "text": "Cambia el mensaje cuando quieras; el código impreso sigue igual.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.2.description"
+  },
+  "985b7ad943b5": {
+    "source": "See how many people opened the message and when, counted without cookies.",
+    "text": "Consulta cuántas personas abrieron el mensaje y cuándo, contadas sin cookies.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.3.description"
+  },
+  "fbb4c19d8fd8": {
+    "source": "Edit the text, photo or button and publish: every printed code shows the new version, and each publish is kept as a version.",
+    "text": "Edita el texto, la foto o el botón y publica: todos los códigos impresos muestran la nueva versión, y cada publicación se guarda como una versión.",
+    "status": "machine",
+    "context": "hostedTypes.message.editing.0"
+  },
+  "bd74e35ffe1c": {
+    "source": "Need it live only for a while? Start and end dates in the code's controls apply to the page too.",
+    "text": "¿Lo necesitas activo solo durante un tiempo? Las fechas de inicio y fin en los controles del código también se aplican a la página.",
+    "status": "machine",
+    "context": "hostedTypes.message.editing.1"
+  },
+  "09452877bd55": {
+    "source": "A text QR code or a message page?",
+    "text": "¿Un código QR de texto o una página de mensaje?",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.title"
+  },
+  "aa2a4285ea5d": {
+    "source": "Text QR code (static)",
+    "text": "Código QR de texto (estático)",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticLabel"
+  },
+  "b7b15a64c7ad": {
+    "source": "No account, and nothing to load: the words are inside the code.",
+    "text": "Sin cuenta y sin nada que cargar: las palabras están dentro del código.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.0"
+  },
+  "4c8e4443a7c2": {
+    "source": "Scanner apps show the text as plain words, with no photo or button.",
+    "text": "Las apps de escaneo muestran el texto como palabras sin formato, sin foto ni botón.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.1"
+  },
+  "a83eb9f84bcd": {
+    "source": "Can't change after printing, and long messages make the code dense.",
+    "text": "No se puede cambiar tras imprimir, y los mensajes largos hacen el código más denso.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.2"
+  },
+  "92f8f5e7ec88": {
+    "source": "Message page",
+    "text": "Página de mensaje",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedLabel"
+  },
+  "9deb7cfca570": {
+    "source": "Your heading, text, a photo and a button, in your colors.",
+    "text": "Tu título, texto, una foto y un botón, con tus colores.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedPoints.1"
+  },
+  "a4d205d5c8e0": {
+    "source": "Change it any time; printed codes keep working, and scans are counted.",
+    "text": "Cámbiala cuando quieras; los códigos impresos siguen funcionando y los escaneos se cuentan.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedPoints.2"
+  },
+  "94013c5ed254": {
+    "source": "Is the message page free?",
+    "text": "¿La página de mensaje es gratis?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.0.question"
+  },
+  "15e30bf1567a": {
+    "source": "Can I change the message after printing?",
+    "text": "¿Puedo cambiar el mensaje después de imprimir?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.1.question"
+  },
+  "25b0908fef26": {
+    "source": "Yes. Edit the page and publish; the printed code opens the new message.",
+    "text": "Sí. Edita la página y publica; el código impreso abre el mensaje nuevo.",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.1.answer"
+  },
+  "517b066b2ce1": {
+    "source": "No. The phone's camera opens the message in the browser.",
+    "text": "No. La cámara del teléfono abre el mensaje en el navegador.",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.2.answer"
+  },
+  "ac23dcbd8150": {
+    "source": "Should I use a text QR code instead?",
+    "text": "¿Debería usar un código QR de texto en su lugar?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.3.question"
+  },
+  "0b2c90ef4e88": {
+    "source": "If the message is short, won't change and doesn't need a photo, yes: a text code needs no account and works without internet. For a photo, a button or changes after printing, use the message page.",
+    "text": "Si el mensaje es corto, no va a cambiar y no necesita foto, sí: un código de texto no necesita cuenta y funciona sin internet. Para una foto, un botón o cambios después de imprimir, usa la página de mensaje.",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.3.answer"
+  },
+  "c52e2d3c7d09": {
+    "source": "What happens to my message if I stop paying?",
+    "text": "¿Qué pasa con mi mensaje si dejo de pagar?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.4.question"
+  },
   "d96545f726d0": {
     "source": "Food and drink",
     "text": "Comida y bebida",
@@ -10246,12 +11788,6 @@
     "text": "Mapas de la ceremonia y la recepción, aparcamiento, horarios del autobús y datos del hotel en una sola página.",
     "status": "machine",
     "context": "industries.0.hospitality-travel.items.weddings.useCases.1.description"
-  },
-  "22b742cb5792": {
-    "source": "The day's schedule",
-    "text": "El programa del día",
-    "status": "machine",
-    "context": "industries.0.hospitality-travel.items.weddings.useCases.2.title"
   },
   "b069a7124740": {
     "source": "A welcome-sign code that opens the timeline, so guests know when the speeches and the last bus are.",
@@ -20543,6 +22079,60 @@
     "status": "machine",
     "context": "pageTypes.playlist.description"
   },
+  "9b3cdeee94a8": {
+    "source": "An address with a map, buttons for Google Maps, Apple Maps and Waze, and opening hours.",
+    "text": "Una dirección con mapa, botones para Google Maps, Apple Maps y Waze, y horario de apertura.",
+    "status": "machine",
+    "context": "pageTypes.location.description"
+  },
+  "5dcb6aa3e0c2": {
+    "source": "A CV with your photo, experience, education, skills, links and a PDF to download.",
+    "text": "Un CV con tu foto, experiencia, formación, habilidades, enlaces y un PDF para descargar.",
+    "status": "machine",
+    "context": "pageTypes.resume.description"
+  },
+  "486d02a939b0": {
+    "source": "The network name, a password to copy and how to join on iPhone and Android.",
+    "text": "El nombre de la red, una contraseña para copiar y cómo conectarse en iPhone y Android.",
+    "status": "machine",
+    "context": "pageTypes.wifi.description"
+  },
+  "c019f67a1531": {
+    "source": "Names, date and venue with directions, the day's schedule and an RSVP form.",
+    "text": "Nombres, fecha y lugar con indicaciones para llegar, el programa del día y un formulario de confirmación de asistencia.",
+    "status": "machine",
+    "context": "pageTypes.invitation.description"
+  },
+  "72dc45c74a13": {
+    "source": "Contact form page",
+    "text": "Página de formulario",
+    "status": "machine",
+    "context": "pageTypes.form.name"
+  },
+  "42612d5672e8": {
+    "source": "A contact, quote or lead form with the fields you choose, answered in your dashboard.",
+    "text": "Un formulario de contacto, presupuesto o captación con los campos que elijas, cuyas respuestas llegan a tu panel.",
+    "status": "machine",
+    "context": "pageTypes.form.description"
+  },
+  "b102a1575161": {
+    "source": "Lost and found tag page",
+    "text": "Página de etiqueta de objetos perdidos",
+    "status": "machine",
+    "context": "pageTypes.asset-tag.name"
+  },
+  "44b7fe768d0d": {
+    "source": "Call and message buttons and a found-it form for a bag, laptop or set of keys.",
+    "text": "Botones de llamada y mensaje y un formulario de «lo encontré» para una mochila, un portátil o unas llaves.",
+    "status": "machine",
+    "context": "pageTypes.asset-tag.description"
+  },
+  "61ac711e4a3e": {
+    "source": "A short note with a photo and one button: a gift message, a thank-you or a notice.",
+    "text": "Una nota breve con una foto y un botón: un mensaje de regalo, un agradecimiento o un aviso.",
+    "status": "machine",
+    "context": "pageTypes.message.description"
+  },
   "615e54d4d3a0": {
     "source": "Landing page",
     "text": "Página de destino",
@@ -20734,12 +22324,6 @@
     "text": "Inicio de ruta",
     "status": "machine",
     "context": "pageCodes.type-maps-2.label"
-  },
-  "c95356784006": {
-    "source": "Directions",
-    "text": "Cómo llegar",
-    "status": "machine",
-    "context": "pageCodes.type-maps-3.label"
   },
   "3ba4f61a5e80": {
     "source": "Landmark",
@@ -22355,23 +23939,11 @@
     "status": "machine",
     "context": "pageCodes.on-shelves-3.label"
   },
-  "7c01795782fe": {
-    "source": "Opening hours",
-    "text": "Horario",
-    "status": "machine",
-    "context": "pageCodes.on-window-decals-2.label"
-  },
   "3c0a0424af51": {
     "source": "Book a table",
     "text": "Reserva mesa",
     "status": "machine",
     "context": "pageCodes.on-window-decals-3.label"
-  },
-  "9024c197d849": {
-    "source": "Links",
-    "text": "Enlaces",
-    "status": "machine",
-    "context": "pageCodes.on-window-decals-4.label"
   },
   "fcb222345dec": {
     "source": "Pay online",
@@ -24491,6 +26063,42 @@
     "status": "machine",
     "context": "templates.business.variants.florist.description"
   },
+  "c1845d31d001": {
+    "source": "An address with a map, directions in Google Maps, Apple Maps or Waze, and opening hours",
+    "text": "Una dirección con mapa, indicaciones en Google Maps, Apple Maps o Waze y horario de apertura",
+    "status": "machine",
+    "context": "templates.location.description"
+  },
+  "b8ab2a217187": {
+    "source": "Map, directions, opening hours and parking",
+    "text": "Mapa, indicaciones, horario y aparcamiento",
+    "status": "machine",
+    "context": "templates.location.variants.shop.description"
+  },
+  "aea1b15df626": {
+    "source": "Venue",
+    "text": "Local",
+    "status": "machine",
+    "context": "templates.location.variants.venue.name"
+  },
+  "1ceb7bd6e470": {
+    "source": "Where the entrance is, parking and step-free access",
+    "text": "Dónde está la entrada, el aparcamiento y el acceso sin escalones",
+    "status": "machine",
+    "context": "templates.location.variants.venue.description"
+  },
+  "f08183059fe9": {
+    "source": "Meeting point",
+    "text": "Punto de encuentro",
+    "status": "machine",
+    "context": "templates.location.variants.meeting-point.name"
+  },
+  "f72241b0335d": {
+    "source": "Where a tour or pick-up starts, and who to call",
+    "text": "Dónde empieza una visita o una recogida, y a quién llamar",
+    "status": "machine",
+    "context": "templates.location.variants.meeting-point.description"
+  },
   "c56217ae2eb3": {
     "source": "vCard Plus",
     "text": "vCard Plus",
@@ -24545,6 +26153,54 @@
     "status": "machine",
     "context": "templates.vcard.variants.realtor.description"
   },
+  "50953f52a4ff": {
+    "source": "Resume / CV",
+    "text": "Currículum / CV",
+    "status": "machine",
+    "context": "templates.resume.label"
+  },
+  "2a32d0d6e33b": {
+    "source": "Your photo, experience, education, skills and links, with your CV to download",
+    "text": "Tu foto, experiencia, formación, habilidades y enlaces, con tu CV para descargar",
+    "status": "machine",
+    "context": "templates.resume.description"
+  },
+  "8b6d8e40753a": {
+    "source": "Designer",
+    "text": "Diseñador",
+    "status": "machine",
+    "context": "templates.resume.variants.designer.name"
+  },
+  "82b9eaf08aab": {
+    "source": "Photo, experience, skills and a portfolio link",
+    "text": "Foto, experiencia, habilidades y un enlace al portafolio",
+    "status": "machine",
+    "context": "templates.resume.variants.designer.description"
+  },
+  "3fb7b39416f1": {
+    "source": "Developer",
+    "text": "Desarrollador",
+    "status": "machine",
+    "context": "templates.resume.variants.developer.name"
+  },
+  "0f537a221c23": {
+    "source": "Dark, with skills as tiles and code links",
+    "text": "Oscuro, con las habilidades en recuadros y enlaces a código",
+    "status": "machine",
+    "context": "templates.resume.variants.developer.description"
+  },
+  "aba1eecaad22": {
+    "source": "Graduate",
+    "text": "Recién graduado",
+    "status": "machine",
+    "context": "templates.resume.variants.graduate.name"
+  },
+  "0c10ec4fb011": {
+    "source": "Education first, internships and a short summary",
+    "text": "Primero la formación, además de prácticas y un breve resumen",
+    "status": "machine",
+    "context": "templates.resume.variants.graduate.description"
+  },
   "ea6b729fa6bd": {
     "source": "A digital menu with prices, allergens, opening hours and Wi-Fi",
     "text": "Un menú digital con precios, alérgenos, horarios y Wi-Fi",
@@ -24592,6 +26248,42 @@
     "text": "Luminoso y moderno, con una foto para cada producto",
     "status": "machine",
     "context": "templates.menu.variants.juice-bar.description"
+  },
+  "4ea3a3bf1a89": {
+    "source": "Network name, a password to copy and how to join on iPhone and Android",
+    "text": "Nombre de la red, una contraseña para copiar y cómo conectarse en iPhone y Android",
+    "status": "machine",
+    "context": "templates.wifi.description"
+  },
+  "96b91b2e6589": {
+    "source": "Free Wi-Fi with a few house rules",
+    "text": "Wi-Fi gratis con unas pocas normas de la casa",
+    "status": "machine",
+    "context": "templates.wifi.variants.cafe.description"
+  },
+  "d8578da3456b": {
+    "source": "Holiday rental",
+    "text": "Alquiler vacacional",
+    "status": "machine",
+    "context": "templates.wifi.variants.rental.name"
+  },
+  "d928982eb2f7": {
+    "source": "Wi-Fi, house rules and a button to message the host",
+    "text": "Wi-Fi, normas de la casa y un botón para escribir al anfitrión",
+    "status": "machine",
+    "context": "templates.wifi.variants.rental.description"
+  },
+  "ff0d47c74167": {
+    "source": "Office visitors",
+    "text": "Visitas a la oficina",
+    "status": "machine",
+    "context": "templates.wifi.variants.office.name"
+  },
+  "b17fdc39da42": {
+    "source": "A hidden guest network with steps to add it by hand",
+    "text": "Una red de invitados oculta con los pasos para añadirla a mano",
+    "status": "machine",
+    "context": "templates.wifi.variants.office.description"
   },
   "152428da2871": {
     "source": "Coupon",
@@ -24695,6 +26387,42 @@
     "status": "machine",
     "context": "templates.event.variants.wedding.description"
   },
+  "fbbfaed1101f": {
+    "source": "Names, date and venue with directions, the day's schedule and an RSVP",
+    "text": "Nombres, fecha y lugar con indicaciones, el programa del día y una confirmación de asistencia",
+    "status": "machine",
+    "context": "templates.invitation.description"
+  },
+  "2dbed8f02c6d": {
+    "source": "The day's schedule, dress code and an RSVP with meal choices",
+    "text": "El programa del día, el código de vestimenta y una confirmación de asistencia con opciones de menú",
+    "status": "machine",
+    "context": "templates.invitation.variants.wedding.description"
+  },
+  "f2fd01ac74f9": {
+    "source": "Birthday party",
+    "text": "Fiesta de cumpleaños",
+    "status": "machine",
+    "context": "templates.invitation.variants.birthday.name"
+  },
+  "5eaa0f0a6e09": {
+    "source": "Night colours, what's happening when and a quick RSVP",
+    "text": "Colores de noche, qué pasa y cuándo, y una confirmación rápida",
+    "status": "machine",
+    "context": "templates.invitation.variants.birthday.description"
+  },
+  "9c6facaf6820": {
+    "source": "Dinner party",
+    "text": "Cena con amigos",
+    "status": "machine",
+    "context": "templates.invitation.variants.dinner.name"
+  },
+  "62572e43ee04": {
+    "source": "A small gathering: time, address and food needs",
+    "text": "Una reunión pequeña: hora, dirección y necesidades de comida",
+    "status": "machine",
+    "context": "templates.invitation.variants.dinner.description"
+  },
   "27c1551f4d14": {
     "source": "App download",
     "text": "Descarga de app",
@@ -24790,6 +26518,42 @@
     "text": "Registro oscuro a un boletín con intereses y consentimiento",
     "status": "machine",
     "context": "templates.feedback.variants.sign-up.description"
+  },
+  "4072912559f9": {
+    "source": "A contact or enquiry form with the fields you pick; replies reach your inbox",
+    "text": "Un formulario de contacto o de consulta con los campos que elijas; las respuestas llegan a tu bandeja de entrada",
+    "status": "machine",
+    "context": "templates.form.description"
+  },
+  "b9cf3101ee8a": {
+    "source": "Name, email, phone and a message",
+    "text": "Nombre, correo, teléfono y un mensaje",
+    "status": "machine",
+    "context": "templates.form.variants.contact-us.description"
+  },
+  "b8415494efa4": {
+    "source": "Quote request",
+    "text": "Solicitud de presupuesto",
+    "status": "machine",
+    "context": "templates.form.variants.quote-request.name"
+  },
+  "8094c02f232c": {
+    "source": "The job, where it is and how to reach you",
+    "text": "El trabajo, dónde es y cómo contactarte",
+    "status": "machine",
+    "context": "templates.form.variants.quote-request.description"
+  },
+  "de7a7767c119": {
+    "source": "Trade show leads",
+    "text": "Contactos de feria",
+    "status": "machine",
+    "context": "templates.form.variants.lead-capture.name"
+  },
+  "8a11ce975f38": {
+    "source": "Details and interests from a stand, with consent",
+    "text": "Datos e intereses desde un stand, con consentimiento",
+    "status": "machine",
+    "context": "templates.form.variants.lead-capture.description"
   },
   "fb9ef894175c": {
     "source": "Product",
@@ -25067,6 +26831,54 @@
     "status": "machine",
     "context": "templates.medical.variants.allergy-card.description"
   },
+  "930d77cd70a4": {
+    "source": "Lost & found tag",
+    "text": "Etiqueta de objetos perdidos",
+    "status": "machine",
+    "context": "templates.asset-tag.label"
+  },
+  "5931911e74c8": {
+    "source": "A tag for bags, laptops and keys that helps whoever finds them reach you",
+    "text": "Una etiqueta para bolsos, portátiles y llaves que ayuda a quien los encuentre a contactarte",
+    "status": "machine",
+    "context": "templates.asset-tag.description"
+  },
+  "f02b64ad84de": {
+    "source": "Luggage",
+    "text": "Equipaje",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.luggage.name"
+  },
+  "661729da6609": {
+    "source": "Call and message buttons, a reward and a found-it form",
+    "text": "Botones de llamada y mensaje, una recompensa y un formulario de «lo encontré»",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.luggage.description"
+  },
+  "021f6da3aa83": {
+    "source": "Laptop & equipment",
+    "text": "Portátil y equipos",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.equipment.name"
+  },
+  "46158f15e064": {
+    "source": "Company property with an asset number and where to return it",
+    "text": "Propiedad de la empresa con número de activo y dónde devolverla",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.equipment.description"
+  },
+  "f0d66a79c138": {
+    "source": "Keys",
+    "text": "Llaves",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.keys.name"
+  },
+  "ed54cd7c3b99": {
+    "source": "Short and simple: who to call and a reward",
+    "text": "Breve y sencillo: a quién llamar y una recompensa",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.keys.description"
+  },
   "a9400aaa15f9": {
     "source": "A menu, brochure or manual people can read and download",
     "text": "Una carta, un folleto o un manual que la gente puede leer y descargar",
@@ -25294,6 +27106,48 @@
     "text": "Capítulos para escuchar en orden o descargar",
     "status": "machine",
     "context": "templates.playlist.variants.audiobook.description"
+  },
+  "bfd8dc7a29e9": {
+    "source": "A short note behind a code: a gift message, a thank-you or a notice",
+    "text": "Una nota breve tras un código: un mensaje de regalo, un agradecimiento o un aviso",
+    "status": "machine",
+    "context": "templates.message.description"
+  },
+  "dafdcd6f7be1": {
+    "source": "Gift note",
+    "text": "Nota de regalo",
+    "status": "machine",
+    "context": "templates.message.variants.gift-note.name"
+  },
+  "05d204ba3747": {
+    "source": "A personal note with a photo and one button",
+    "text": "Una nota personal con una foto y un botón",
+    "status": "machine",
+    "context": "templates.message.variants.gift-note.description"
+  },
+  "1a829c65cee3": {
+    "source": "Thank-you card",
+    "text": "Tarjeta de gracias",
+    "status": "machine",
+    "context": "templates.message.variants.thank-you.name"
+  },
+  "73bfc51857e2": {
+    "source": "A note for the card in every parcel",
+    "text": "Una nota para la tarjeta de cada paquete",
+    "status": "machine",
+    "context": "templates.message.variants.thank-you.description"
+  },
+  "65659145569b": {
+    "source": "Notice",
+    "text": "Aviso",
+    "status": "machine",
+    "context": "templates.message.variants.notice.name"
+  },
+  "db5d25fed89b": {
+    "source": "A sign on the door: closed today, moved or back soon",
+    "text": "Un cartel en la puerta: cerrado hoy, trasladado o volvemos pronto",
+    "status": "machine",
+    "context": "templates.message.variants.notice.description"
   },
   "f8af257eb7bb": {
     "source": "Custom page",

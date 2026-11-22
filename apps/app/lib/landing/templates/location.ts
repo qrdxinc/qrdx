@@ -41,7 +41,10 @@ registerTemplate({
           type: "header",
           props: {
             layout: "banner",
-            cover: templatePhoto("cover-shop", "A small shop front"),
+            cover: templatePhoto(
+              "photo-red-door",
+              "A red door in a brick wall",
+            ),
             eyebrow: "Find us",
             title: "Paper & Pine",
             size: "lg",
