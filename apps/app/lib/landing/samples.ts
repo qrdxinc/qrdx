@@ -48,6 +48,7 @@ const SAMPLE_PLACEHOLDER_LINKS: ReadonlySet<string> = new Set([
   "discord.com",
   "dribbble.com",
   "facebook.com",
+  "github.com",
   "instagram.com",
   "linkedin.com",
   "mixcloud.com",

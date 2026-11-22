@@ -1730,6 +1730,7 @@
       "linkCopied": "Tautan disalin",
       "copyThisLink": "Salin tautan ini",
       "details": "Detail",
+      "timeline": "Linimasa",
       "links": "Tautan",
       "socialProfiles": "Profil sosial",
       "mapOf": "Peta {place}",
@@ -1793,7 +1794,24 @@
         "password": "Kata sandi",
         "noPassword": "Tidak ada, langsung sambung",
         "copyNetwork": "Salin nama jaringan",
-        "copyPassword": "Salin kata sandi"
+        "copyPassword": "Salin kata sandi",
+        "security": "Keamanan",
+        "steps": {
+          "title": "Cara terhubung",
+          "iphone": "Di iPhone",
+          "android": "Di Android",
+          "copy": "Salin kata sandi dengan tombol di atas.",
+          "iphoneOpen": "Buka Pengaturan dan ketuk Wi-Fi. Pastikan Wi-Fi aktif.",
+          "androidOpen": "Buka Pengaturan dan ketuk Jaringan & internet, lalu Internet. Di beberapa ponsel, menunya adalah Koneksi, lalu Wi-Fi.",
+          "pick": "Ketuk “{ssid}” di daftar jaringan.",
+          "iphoneHidden": "Ketuk Lainnya, ketik “{ssid}” sebagai nama, lalu pilih jenis keamanan.",
+          "androidHidden": "Ketuk Tambahkan jaringan di bagian bawah daftar, ketik “{ssid}”, lalu pilih jenis keamanan. Di Opsi lanjutan, setel Jaringan tersembunyi ke Ya.",
+          "iphonePassword": "Tempel kata sandi dan ketuk Gabung.",
+          "androidPassword": "Tempel kata sandi dan ketuk Hubungkan.",
+          "androidPasswordSave": "Tempel kata sandi dan ketuk Simpan.",
+          "iphoneJoin": "Ketuk Gabung.",
+          "androidSave": "Ketuk Simpan."
+        }
       },
       "payment": {
         "types": {
@@ -2001,6 +2019,8 @@
     "linear": "Linear (1D)",
     "linearInput": "Angka atau teks untuk disandikan",
     "textInput": "Teks untuk disandikan",
+    "addOn": "Add-on",
+    "variant": "Varian urutan",
     "barColor": "Warna garis",
     "background": "Latar belakang",
     "barHeight": "Tinggi garis",
@@ -2024,6 +2044,7 @@
       "checking": "Memeriksa PNG dengan pembaca barcode…",
       "unavailable": "Pemeriksaan pemindaian tidak dapat memuat dekodernya, sehingga barcode ini tidak diperiksa. Uji kode yang dicetak dengan pemindai.",
       "passed": "Pemeriksaan pemindaian berhasil: pembaca barcode mendekode PNG sebagai {label} <mono>{value}</mono>",
+      "addOnNotChecked": "Pemeriksaan ini hanya membaca EAN-13, bukan add-on {addOn}: lakukan pemindaian pada hasil cetak uji dengan pemindai yang dapat membaca add-on.",
       "mismatch": "Pemeriksaan pemindaian gagal: pembaca menghasilkan \"{decoded}\", bukan {label} ini.",
       "failed": "Pemeriksaan pemindaian gagal: pembaca tidak dapat mendekode {label} ini. Tingkatkan kontras, ukuran, atau area kosong di sekelilingnya."
     },
@@ -2065,6 +2086,27 @@
       "gs1BadChars": "AI ({ai}) memiliki karakter yang tidak diizinkan GS1: {chars}",
       "gs1Ai": "AI ({ai}): {inner}",
       "gs1TooLong": "GS1-128 menampung hingga {max} karakter AI dan data; ini memiliki {count}. Bagi menjadi dua barcode.",
+      "isbnChars": "ISBN berisi angka, tanda hubung, dan spasi; ISBN-10 dapat diakhiri dengan X.",
+      "isbnLength": "ISBN terdiri dari 13 digit, atau 10 digit pada bentuk lama ISBN-10; nomor ini memiliki {count, plural, one {# digit} other {# digit}}.",
+      "isbnPrefix": "ISBN-13 diawali dengan 978 atau 979.",
+      "isbnIsIsmn": "Nomor yang diawali 979-0 adalah ISMN, untuk musik cetak. Pilih ISMN sebagai jenis barcode.",
+      "isbnUnknownRange": "ISBN ini tidak berada dalam rentang yang telah diberikan lembaga ISBN saat generator ini terakhir diperbarui. Periksa nomornya, atau ketik dengan tanda hubung di antara kelima bagiannya agar dicetak persis seperti yang ditulis.",
+      "isbn10Converted": "Dikonversi dari ISBN-10 {isbn10}.",
+      "isbnHyphenated": "Tanda hubung ditempatkan menurut rentang ISBN: {isbn}.",
+      "issnChars": "ISSN berisi angka dan tanda hubung, dan digit pemeriksanya dapat berupa X.",
+      "issnLength": "ISSN terdiri dari 8 karakter (NNNN-NNNC), atau 7 digit tanpa digit pemeriksa; nomor ini memiliki {count, plural, one {# karakter} other {# karakter}}.",
+      "issnPrefix": "Nomor barcode ISSN 13 digit diawali dengan 977.",
+      "issnParts": "Tulis ISSN, varian urutan 2 digit, dan add-on, dengan spasi di antara masing-masing: 0317-8471 00 05.",
+      "issnVariant": "Varian urutan terdiri dari 2 digit: 00 untuk edisi reguler.",
+      "issnEanVariant": "Nomor 977 ini sudah memuat varian urutan {variant}. Kosongkan varian, atau masukkan ISSN 8 karakter.",
+      "issnVariantAssumed": "Varian urutan 00 digunakan.",
+      "issnFromEan": "Dibaca dari nomor 977: ISSN {issn}, varian urutan {variant}.",
+      "ismnChars": "ISMN berisi angka, tanda hubung, dan spasi, dengan huruf M di awal bentuk lama yang terdiri dari 10 karakter.",
+      "ismnLength": "ISMN terdiri dari 13 digit yang diawali 979-0, atau 10 karakter yang diawali M pada bentuk lama; nomor ini memiliki {count, plural, one {# karakter} other {# karakter}}.",
+      "ismnPrefix": "ISMN diawali dengan 979-0, atau M pada bentuk lama. Nomor lain yang diawali 978 atau 979 adalah ISBN: pilih ISBN sebagai jenis barcode.",
+      "ismnConverted": "Dikonversi dari bentuk lama {ismn10}.",
+      "addOnDigits": "Add-on hanya berisi angka.",
+      "addOnLength": "Add-on terdiri dari 2 atau 5 digit; nomor ini memiliki {count, plural, one {# digit} other {# digit}}.",
       "unknownFormat": "Format barcode tidak dikenal.",
       "space": "spasi",
       "lineBreak": "jeda baris"
@@ -3603,7 +3645,10 @@
         "showLess": "Tampilkan lebih sedikit",
         "showValueMore": "Tampilkan {value, number} lagi",
         "applyThisDesign": "Terapkan desain ini",
-        "notAppliedYourEditorIs": "Tidak diterapkan. Editor Anda tidak berubah."
+        "notAppliedYourEditorIs": "Tidak diterapkan. Editor Anda tidak berubah.",
+        "searchingTheFrames": "Menelusuri bingkai resmi…",
+        "couldntSearchTheFrames": "Tidak dapat mencari bingkai",
+        "foundFramesForQuery": "{count, plural, =0 {Tidak ada bingkai resmi untuk “{query}”} other {Ditemukan # bingkai resmi untuk “{query}”:}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

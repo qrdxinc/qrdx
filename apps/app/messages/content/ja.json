@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "コードをPNG、WebP、SVGでダウンロードします。",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "コードをPNG、SVG、WebP、GIF、BMP、ICOのいずれかの形式でダウンロードします。",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "PNG、WebP、SVGのいずれかをダウンロードするか、フルエディタでコードをデザインします。",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "PNG、SVG、WebP、GIF、BMP、ICOのいずれかをダウンロードするか、フルエディターでコードのスタイルを整えます。",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -7049,6 +7049,318 @@
     "status": "machine",
     "context": "hostedTypes.business-card.faqs.6.answer"
   },
+  "1ca2f18940fc": {
+    "source": "Guest Wi-Fi Page",
+    "text": "ゲストWi-Fiページ",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.name"
+  },
+  "96eb9f2c3d84": {
+    "source": "Guest Wi-Fi Page QR Code Generator",
+    "text": "ゲストWi-Fiページ QRコードジェネレーター",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.title"
+  },
+  "8a24b43ab1d4": {
+    "source": "A Wi-Fi page with the password to copy and steps to join.",
+    "text": "コピーできるパスワードと接続手順を載せたWi-Fiページです。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.summary"
+  },
+  "ed9fc8717762": {
+    "source": "Create your Wi-Fi page",
+    "text": "Wi-Fiページを作成",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.cta"
+  },
+  "780cef41732a": {
+    "source": "A guest Wi-Fi page behind a QR code: network name, a password to copy and steps to join on iPhone and Android. Change the password, keep the code.",
+    "text": "QRコードの先にあるゲスト向けWi-Fiページです。ネットワーク名、コピーできるパスワード、iPhoneとAndroidでの接続手順を表示します。パスワードを変更しても、コードはそのまま使えます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.metaDescription"
+  },
+  "7705c99273c9": {
+    "source": "A guest Wi-Fi page QR code opens a page QRdx hosts for you with your network name, the password with a copy button, and short steps to join on iPhone and Android in each guest's own language. Add house rules, where the router is, or a button to message you.",
+    "text": "ゲストWi-FiページのQRコードを読み取ると、QRdxがホストするページが開き、ネットワーク名、コピーボタン付きのパスワード、iPhoneとAndroidでの簡単な接続手順が各ゲストの言語で表示されます。ハウスルールやルーターの設置場所、メッセージを送るボタンも追加できます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.intro.0"
+  },
+  "8a4f8768c9f7": {
+    "source": "It helps where a Wi-Fi QR code can't: a scanner app or an older phone that doesn't join networks, a hidden network, or a guest who wants to read the password. The code holds a link, so you can change the password after printing and every printed code shows the new one. It needs a free QRdx account.",
+    "text": "Wi-Fi QRコードでは対応できない場面で役立ちます。たとえば、ネットワークへの接続に対応していないスキャナーアプリや古いスマートフォン、非公開ネットワーク、パスワードを自分で確認したいゲストなどです。コードに入っているのはリンクなので、印刷後にパスワードを変更しても、印刷済みのどのコードにも新しいパスワードが表示されます。無料のQRdxアカウントが必要です。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.intro.1"
+  },
+  "790c957105ec": {
+    "source": "Sign in or create a free account, then start a Guest Wi-Fi page: the button above opens it with that type picked.",
+    "text": "サインインするか無料アカウントを作成し、ゲストWi-Fiページを開始します。上のボタンを押すと、このタイプを選んだ状態で開きます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.0"
+  },
+  "7eceaef80531": {
+    "source": "Pick a template (Café, Holiday rental or Office visitors) and enter your network name, password and security type.",
+    "text": "テンプレート(カフェ、バケーションレンタル、オフィスの来訪者)を選び、ネットワーク名、パスワード、セキュリティの種類を入力します。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.1"
+  },
+  "a30554b8d54e": {
+    "source": "Add your house rules or a note, then publish.",
+    "text": "ハウスルールやメモを追加して、公開します。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.2"
+  },
+  "883636a91149": {
+    "source": "Copy buttons",
+    "text": "コピーボタン",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.0.title"
+  },
+  "26aa6584ec79": {
+    "source": "The network name and the password each have a copy button, so guests paste the password instead of typing it.",
+    "text": "ネットワーク名とパスワードにそれぞれコピーボタンがあり、ゲストは入力せずにパスワードを貼り付けられます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.0.description"
+  },
+  "f56144df1d82": {
+    "source": "How to join",
+    "text": "接続方法",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.1.title"
+  },
+  "f7595ea62095": {
+    "source": "Short steps for iPhone and Android in each guest's language, including how to add a hidden network by name.",
+    "text": "iPhoneとAndroid向けの簡単な手順を各ゲストの言語で表示します。非公開ネットワークを名前で追加する方法も含まれます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.1.description"
+  },
+  "4dd01fe64a3c": {
+    "source": "House rules and notes",
+    "text": "ハウスルールとメモ",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.2.title"
+  },
+  "610c7ed9a6d3": {
+    "source": "Your own text under the network: quiet hours, check-out time, where the router is, or a button to message you.",
+    "text": "ネットワークの下にご自身の文章を載せられます。静かにしてほしい時間帯、チェックアウト時刻、ルーターの場所、メッセージを送るボタンなどです。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.2.description"
+  },
+  "e9d7496c9fb0": {
+    "source": "The code counts scans without cookies, so you can see how often guests use it.",
+    "text": "このコードはCookieを使わずにスキャン数を数えるので、ゲストがどのくらい利用しているかを確認できます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.3.description"
+  },
+  "806878faf2ce": {
+    "source": "Changed the password? Edit the page and publish: every printed code shows the new one, so there's nothing to reprint.",
+    "text": "パスワードを変更しましたか?ページを編集して公開すれば、印刷済みのどのコードにも新しいパスワードが表示されるので、刷り直す必要はありません。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.editing.0"
+  },
+  "be47acc58b76": {
+    "source": "Anyone who opens the page can read the password, just as anyone who scans a Wi-Fi QR code can join. Use a guest network that's kept apart from your own devices.",
+    "text": "Wi-Fi QRコードをスキャンした人なら誰でも接続できるのと同じように、ページを開いた人なら誰でもパスワードを読めます。ご自身の端末とは分けたゲスト用ネットワークをお使いください。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.editing.1"
+  },
+  "978f0f684e30": {
+    "source": "A Wi-Fi QR code or a guest Wi-Fi page?",
+    "text": "Wi-Fi QRコードとゲストWi-Fiページ、どちらを選びますか?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.title"
+  },
+  "0cec0b722791": {
+    "source": "Wi-Fi QR code (static)",
+    "text": "Wi-Fi QRコード(静的)",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticLabel"
+  },
+  "39d66e242d1b": {
+    "source": "No account: the network name and password are written into the code.",
+    "text": "アカウント不要です。ネットワーク名とパスワードがコードに書き込まれます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.0"
+  },
+  "03619cc70529": {
+    "source": "The camera apps on iPhone and most Android phones offer to join in one tap.",
+    "text": "iPhoneとほとんどのAndroidスマートフォンのカメラアプリで、ワンタップで接続できます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.1"
+  },
+  "23018da6e439": {
+    "source": "A new password means printing a new code, and there's nowhere for house rules.",
+    "text": "パスワードを変えるには新しいコードを印刷する必要があり、ハウスルールを載せる場所もありません。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.2"
+  },
+  "9378a2b19253": {
+    "source": "Guest Wi-Fi page",
+    "text": "ゲストWi-Fiページ",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedLabel"
+  },
+  "61efac606d6b": {
+    "source": "Guests copy the password and follow the steps: a web page can't join the network for them.",
+    "text": "ゲストはパスワードをコピーして手順に従います。Webページがネットワークに代わりに接続することはできません。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedPoints.1"
+  },
+  "76bc165fb118": {
+    "source": "Change the password or the rules any time; printed codes keep working.",
+    "text": "パスワードやルールはいつでも変更でき、印刷済みのコードはそのまま使えます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedPoints.2"
+  },
+  "84638455a9b7": {
+    "source": "Is the guest Wi-Fi page free?",
+    "text": "ゲスト用Wi-Fiページは無料ですか？",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.0.question"
+  },
+  "1146130f429a": {
+    "source": "Can the page join the network for my guests?",
+    "text": "ページからゲストのネットワーク接続を行えますか？",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.1.question"
+  },
+  "0d653bdee46d": {
+    "source": "No. Browsers aren't allowed to change a phone's Wi-Fi settings, so the page shows the password with a copy button and the steps to join. For a one-tap join, print a Wi-Fi QR code as well.",
+    "text": "いいえ。ブラウザーからスマートフォンのWi-Fi設定を変更することはできないため、ページにはパスワードをコピーボタンと接続手順とともに表示します。ワンタップで接続したい場合は、Wi-Fi QRコードも併せて印刷してください。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.1.answer"
+  },
+  "3fe7c580c1ad": {
+    "source": "Can I change the password after printing?",
+    "text": "印刷後にパスワードを変更できますか？",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.2.question"
+  },
+  "8bf162a39c41": {
+    "source": "Yes. Edit the page and publish; every printed code shows the new password.",
+    "text": "はい。ページを編集して公開すると、印刷済みのすべてのコードに新しいパスワードが表示されます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.2.answer"
+  },
+  "d10fa6440c9c": {
+    "source": "Is the password private?",
+    "text": "パスワードは非公開ですか？",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.3.question"
+  },
+  "6251b3132ebd": {
+    "source": "No. Anyone who scans the code or opens the page's link can read it. Hosted pages are hidden from search engines unless you turn on Show in search engines, but treat the password as shared with everyone who can see the code.",
+    "text": "いいえ。コードをスキャンした人やページのリンクを開いた人は、誰でも読めます。ホスト型ページは、検索エンジンに表示をオンにしない限り検索エンジンには表示されませんが、パスワードはコードを見られる全員と共有されるものとお考えください。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.3.answer"
+  },
+  "094d2ca95331": {
+    "source": "Does it work with a hidden network?",
+    "text": "ステルスネットワークでも使えますか？",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.4.question"
+  },
+  "6ae57f9836e7": {
+    "source": "Yes. Switch on Hidden network and the steps explain how to add the network by its name on iPhone and Android.",
+    "text": "はい。「Hidden network」をオンにすると、iPhoneとAndroidでネットワーク名からネットワークを追加する手順が表示されます。",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.4.answer"
+  },
+  "e3a4fd489669": {
+    "source": "What happens to my page if I stop paying?",
+    "text": "料金のお支払いをやめると、ページはどうなりますか？",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.5.question"
+  },
+  "947bcf8e59d4": {
+    "source": "Location Page",
+    "text": "ロケーションページ",
+    "status": "machine",
+    "context": "hostedTypes.location.name"
+  },
+  "02319258a3ba": {
+    "source": "Location Page QR Code Generator",
+    "text": "ロケーションページ QRコードジェネレーター",
+    "status": "machine",
+    "context": "hostedTypes.location.title"
+  },
+  "fd35eced5b69": {
+    "source": "Your address with a map and buttons for three map apps.",
+    "text": "住所と地図、3つの地図アプリのボタンをまとめたページです。",
+    "status": "machine",
+    "context": "hostedTypes.location.summary"
+  },
+  "0b2b20865271": {
+    "source": "Create your location page",
+    "text": "ロケーションページを作成",
+    "status": "machine",
+    "context": "hostedTypes.location.cta"
+  },
+  "c1765e065619": {
+    "source": "A location page behind a QR code: your address, a map, directions in Google Maps, Apple Maps or Waze, and opening hours. Moved? Edit it, keep the code.",
+    "text": "QRコードで開くロケーションページ。住所、地図、Google Maps・Apple Maps・Waze での経路案内、営業時間を掲載できます。移転しても、ページを編集すればコードはそのまま使えます。",
+    "status": "machine",
+    "context": "hostedTypes.location.metaDescription"
+  },
+  "16a27aa3d4a2": {
+    "source": "A location QR code opens a page QRdx hosts for you with your address, an optional map, and buttons that open directions in Google Maps, Apple Maps or Waze, so people use the app they already have. Add opening hours with an Open now badge, where the entrance is, parking and the nearest stop.",
+    "text": "ロケーションQRコードを読み取ると、QRdxがホストするページが開き、住所、任意の地図、Google Maps・Apple Maps・Waze で経路を開くボタンが表示されます。利用者は普段使っているアプリで道順を確認できます。「営業中」バッジ付きの営業時間や、入口の場所、駐車場、最寄りの停留所も追加できます。",
+    "status": "machine",
+    "context": "hostedTypes.location.intro.0"
+  },
+  "e738ca7afa86": {
+    "source": "The code holds a short link, so if you move or change your hours, edit the page and every printed code shows the new details. It needs a free QRdx account. For a code that opens Google Maps with no account, use the Google Maps QR code generator.",
+    "text": "コードには短縮リンクが含まれているため、移転や営業時間の変更があっても、ページを編集すれば印刷済みのすべてのコードに新しい情報が表示されます。無料のQRdxアカウントが必要です。アカウントなしでGoogle Mapsを開くコードが必要な場合は、Google Maps QRコードジェネレーターをご利用ください。",
+    "status": "machine",
+    "context": "hostedTypes.location.intro.1"
+  },
+  "696b3dc5074d": {
+    "source": "Sign in or create a free account, then start a Location page: the button above opens it with that type picked.",
+    "text": "ログインするか無料アカウントを作成して、ロケーションページを開始します。上のボタンを押すと、このタイプが選択された状態で開きます。",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.0"
+  },
+  "eb83237a6c10": {
+    "source": "Pick a template (Shop, Venue or Meeting point) and enter the address.",
+    "text": "テンプレート（ショップ、会場、集合場所）を選んで、住所を入力します。",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.1"
+  },
+  "3fa0e6b2c4e0": {
+    "source": "Turn the map and the Waze button on or off, add opening hours and notes, then publish.",
+    "text": "地図とWazeボタンのオン・オフを切り替え、営業時間とメモを追加して、公開します。",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.2"
+  },
+  "318af76a1e2d": {
+    "source": "Download the page's QR code, print it and scan it once to check the directions.",
+    "text": "ページのQRコードをダウンロードして印刷し、一度スキャンして道順を確認します。",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.3"
+  },
+  "e2b0c6645a9c": {
+    "source": "Three map apps",
+    "text": "3つの地図アプリ",
+    "status": "machine",
+    "context": "hostedTypes.location.features.0.title"
+  },
+  "42b8522cde04": {
+    "source": "Google Maps, Apple Maps and Waze buttons, each opening the app when it's installed and its website when it isn't.",
+    "text": "Google Maps、Apple Maps、Wazeのボタンを用意しています。アプリがインストールされていればアプリが、なければウェブサイトが開きます。",
+    "status": "machine",
+    "context": "hostedTypes.location.features.0.description"
+  },
+  "db85ab728a6f": {
+    "source": "A map on the page",
+    "text": "ページ上の地図",
+    "status": "machine",
+    "context": "hostedTypes.location.features.1.title"
+  },
+  "7c73682dea5e": {
+    "source": "An embedded Google map of the address when you turn it on. It loads content from Google for visitors, so it stays off until you choose it.",
+    "text": "オンにすると、住所のGoogleマップを埋め込んで表示します。訪問者にはGoogleのコンテンツが読み込まれるため、選択するまではオフのままです。",
+    "status": "machine",
+    "context": "hostedTypes.location.features.1.description"
+  },
   "d96545f726d0": {
     "source": "Food and drink",
     "text": "飲食",
@@ -10252,6 +10564,798 @@
     "text": "当日のスケジュール",
     "status": "machine",
     "context": "industries.0.hospitality-travel.items.weddings.useCases.2.title"
+  },
+  "092183849e85": {
+    "source": "Each part of the day with its time and place, from arrival to the last dance.",
+    "text": "到着から最後のダンスまで、当日の各プログラムを時間と場所とともに掲載します。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.2.description"
+  },
+  "91654e103aac": {
+    "source": "RSVP form",
+    "text": "出欠フォーム",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.3.title"
+  },
+  "f241c06b0d1e": {
+    "source": "The questions you choose, answered in your dashboard and exported as CSV. On Pro and Business, each reply can also be emailed to you.",
+    "text": "選んだ質問への回答はダッシュボードに届き、CSVでエクスポートできます。ProとBusinessでは、各返信をメールで受け取ることもできます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.3.description"
+  },
+  "1e9ebf115622": {
+    "source": "Plans change: edit the page and publish, and every printed invitation shows the new time, venue or schedule. Guests who already added it to their calendar keep the old entry, so let them know too.",
+    "text": "予定が変わっても大丈夫です。ページを編集して公開すれば、印刷済みのすべての招待状に新しい時間、会場、スケジュールが表示されます。すでにカレンダーに追加したゲストの予定は古いままなので、そちらにもお知らせください。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.editing.0"
+  },
+  "7b75fe2b1ea7": {
+    "source": "RSVPs count towards the workspace's form responses: 50 a month on Free and 1,000 on Pro. Replies you already have are never deleted or hidden.",
+    "text": "出欠の返信は、ワークスペースのフォーム回答数に含まれます。上限はフリーで月50件、Proで1,000件です。すでに届いた返信が削除されたり非表示になったりすることはありません。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.editing.1"
+  },
+  "993133794ae8": {
+    "source": "A WhatsApp RSVP code or an invitation page?",
+    "text": "WhatsAppの出欠用コードと招待状ページ、どちらがよいですか。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.title"
+  },
+  "616488ff8254": {
+    "source": "WhatsApp QR code (static)",
+    "text": "WhatsApp QRコード（静的）",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticLabel"
+  },
+  "e8de31362aa7": {
+    "source": "No account: the code opens a WhatsApp chat with you, with a reply such as \"We'll be there\" already typed.",
+    "text": "アカウント不要です。コードを読み取ると、あなたとのWhatsAppチャットが開き、「出席します」などの返信文があらかじめ入力されています。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.0"
+  },
+  "dc4d26fc23b2": {
+    "source": "Replies arrive one by one among your other chats.",
+    "text": "返信はほかのチャットに混ざって1件ずつ届きます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.1"
+  },
+  "aa0cece2b632": {
+    "source": "Holds no date, venue or schedule, and can't change after printing.",
+    "text": "日付、会場、スケジュールは載せられず、印刷後に変更することもできません。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.2"
+  },
+  "656461639aea": {
+    "source": "Invitation page",
+    "text": "招待状ページ",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedLabel"
+  },
+  "30aa3ff6733e": {
+    "source": "Date, directions, the schedule, dress code and add to calendar.",
+    "text": "日付、経路、スケジュール、ドレスコード、カレンダーへの追加を掲載できます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedPoints.1"
+  },
+  "8e81f846ab6b": {
+    "source": "RSVPs in one list you can export; edit the details any time.",
+    "text": "出欠の返信は1つのリストにまとまり、エクスポートできます。詳細はいつでも編集できます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedPoints.2"
+  },
+  "41de38518aae": {
+    "source": "Is the invitation page free?",
+    "text": "招待状ページは無料ですか?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.0.question"
+  },
+  "d177a825637d": {
+    "source": "Where do the RSVPs go?",
+    "text": "RSVPはどこに届きますか?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.1.question"
+  },
+  "8a9e879b12a9": {
+    "source": "To the page's Responses in your dashboard: one row per reply with every answer, newest first, and Export CSV for a spreadsheet. On Pro and Business you can also get each reply by email.",
+    "text": "ダッシュボードにあるそのページの「Responses」に届きます。回答は1件につき1行で、すべての回答が新しい順に並び、スプレッドシート用に「Export CSV」も使えます。ProとBusinessでは、返信ごとにメールで受け取ることもできます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.1.answer"
+  },
+  "c191eb2e7a14": {
+    "source": "How many RSVPs can I collect?",
+    "text": "RSVPは何件まで集められますか?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.2.question"
+  },
+  "1366d371549e": {
+    "source": "Free includes 50 form responses a month across the workspace, Pro 1,000 and Business 10,000. When the limit is reached, the form asks guests to try again later and keeps what they typed.",
+    "text": "フリーはワークスペース全体で月50件のフォーム回答、Proは1,000件、Businessは10,000件まで含まれます。上限に達すると、フォームはゲストに時間をおいて再度お試しいただくよう案内し、入力内容はそのまま保持します。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.2.answer"
+  },
+  "595f61fcb4a2": {
+    "source": "Can I change the time or venue after printing?",
+    "text": "印刷後に日時や会場を変更できますか?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.3.question"
+  },
+  "b0322f9622b5": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new details.",
+    "text": "はい。ページを編集して公開すれば、印刷済みのどのコードでも新しい内容が開きます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.3.answer"
+  },
+  "fb83860a331f": {
+    "source": "Can guests see who else is coming?",
+    "text": "ほかに誰が来るかをゲストは見られますか?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.4.question"
+  },
+  "f3f3682f40ab": {
+    "source": "No. Replies are only shown to you and your workspace in the dashboard.",
+    "text": "いいえ。返信は、ダッシュボードであなたとワークスペースのメンバーにだけ表示されます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.4.answer"
+  },
+  "5641d7b645e1": {
+    "source": "Contact Form",
+    "text": "お問い合わせフォーム",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.name"
+  },
+  "bd9b785d0b0a": {
+    "source": "Contact Form QR Code Generator",
+    "text": "お問い合わせフォームQRコード作成",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.title"
+  },
+  "5f92106ba4e8": {
+    "source": "A contact or quote form whose answers land in your dashboard.",
+    "text": "回答がダッシュボードに届く、お問い合わせや見積もり用のフォームです。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.summary"
+  },
+  "c1162defa3b4": {
+    "source": "Create your form",
+    "text": "フォームを作成",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.cta"
+  },
+  "f00f66270223": {
+    "source": "Turn a QR code into a contact form: name, email, phone and a message, or the questions you choose. Answers land in your dashboard. Free QRdx account.",
+    "text": "QRコードをお問い合わせフォームに。名前、メールアドレス、電話番号、メッセージ、または任意の質問を設定できます。回答はダッシュボードに届きます。QRdxの無料アカウントで利用できます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.metaDescription"
+  },
+  "24d59e12d7d5": {
+    "source": "A contact form QR code opens a short form QRdx hosts for you. Keep the fields you need, such as name, email, phone and a message, or add your own questions: a choice of services, a postcode, a consent box. People fill it in on their phone and press send.",
+    "text": "お問い合わせフォームのQRコードを開くと、QRdxがホストする短いフォームが表示されます。名前、メールアドレス、電話番号、メッセージなど必要な項目を残すほか、サービスの選択肢、郵便番号、同意ボックスといった独自の質問も追加できます。相手はスマートフォンで入力し、送信を押すだけです。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.intro.0"
+  },
+  "de0ddc29f037": {
+    "source": "Answers arrive in your dashboard with the time and the code that was scanned, so a flyer, a van and a trade show stand can each have their own code. It needs a free QRdx account.",
+    "text": "回答は、時刻とスキャンされたコードの情報とともにダッシュボードに届くため、チラシ、バン、展示会ブースにそれぞれ別のコードを用意できます。QRdxの無料アカウントが必要です。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.intro.1"
+  },
+  "612ac20e96b1": {
+    "source": "Sign in or create a free account, then start a Contact form page: the button above opens it with that type picked.",
+    "text": "サインインまたは無料アカウントを作成し、お問い合わせフォームのページを開始します。上のボタンから、このタイプを選んだ状態で開けます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.0"
+  },
+  "508691430417": {
+    "source": "Pick a template (Contact us, Quote request or Trade show leads) and keep, remove or add questions.",
+    "text": "テンプレート(「Contact us」「Quote request」「Trade show leads」)を選び、質問を残す、削除する、追加するなどして整えます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.1"
+  },
+  "0ac9db140d42": {
+    "source": "Write the button label and the thank-you message, then publish.",
+    "text": "ボタンのラベルとお礼のメッセージを入力して、公開します。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.2"
+  },
+  "839b29840b1c": {
+    "source": "Download the page's QR code, print it and send yourself a test response.",
+    "text": "ページのQRコードをダウンロードして印刷し、テスト回答を自分宛てに送信してみましょう。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.3"
+  },
+  "ff16e16ba20a": {
+    "source": "Fields you choose",
+    "text": "自由に選べる項目",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.0.title"
+  },
+  "8173a6163d9b": {
+    "source": "Text, email, phone, choices and a consent checkbox, each optional or required, with your own labels.",
+    "text": "テキスト、メールアドレス、電話番号、選択肢、同意チェックボックスを用意しています。それぞれ任意か必須かを選べ、ラベルも自由に設定できます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.0.description"
+  },
+  "62da88be11f1": {
+    "source": "Responses inbox",
+    "text": "回答の受信箱",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.1.title"
+  },
+  "a9ef10ed6abd": {
+    "source": "Every answer under Responses, newest first, with Export CSV for a spreadsheet or CRM.",
+    "text": "すべての回答が「Responses」に新しい順で並びます。スプレッドシートやCRM向けに「Export CSV」も使えます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.1.description"
+  },
+  "cf343af2aa51": {
+    "source": "Alerts and webhooks",
+    "text": "通知とWebhook",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.2.title"
+  },
+  "942723529851": {
+    "source": "Email alerts for each response on Pro and Business; Slack, Discord and webhooks on Business.",
+    "text": "回答ごとのメール通知はProとBusinessで、Slack、Discord、WebhookはBusinessで利用できます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.2.description"
+  },
+  "cc9899ecf4d1": {
+    "source": "Spam protection",
+    "text": "スパム対策",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.3.title"
+  },
+  "369640adf648": {
+    "source": "A hidden field that only bots fill in, and limits on how often one device can send.",
+    "text": "ボットだけが入力する非表示フィールドと、1台の端末からの送信頻度の制限を備えています。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.3.description"
+  },
+  "471fd667e702": {
+    "source": "Change the questions any time and publish: printed codes open the new form, and exports keep the columns of removed questions that already have answers.",
+    "text": "質問はいつでも変更して公開できます。印刷済みのコードでは新しいフォームが開き、回答のある削除済みの質問の列はエクスポートにも残ります。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.editing.0"
+  },
+  "b313ffcebf30": {
+    "source": "Responses count per workspace each calendar month: 50 on Free, 1,000 on Pro and 10,000 on Business. Responses you already have are never deleted or hidden.",
+    "text": "回答数は毎月(暦月)ワークスペースごとに集計され、フリーは50件、Proは1,000件、Businessは10,000件です。すでにある回答が削除されたり非表示になったりすることはありません。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.editing.1"
+  },
+  "9b73a932433f": {
+    "source": "An email QR code or a contact form?",
+    "text": "メールのQRコードとお問い合わせフォーム、どちらにしますか？",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.title"
+  },
+  "0945c3f7e4d8": {
+    "source": "Email QR code (static)",
+    "text": "メールのQRコード（静的）",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticLabel"
+  },
+  "2c8b423b87fd": {
+    "source": "No account: the code opens an email draft to you, with the subject and message filled in.",
+    "text": "アカウント不要：コードを読み取ると、件名と本文が入力済みのメール下書きが開き、あなた宛てに送れます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.0"
+  },
+  "3b50d6dff15f": {
+    "source": "People need an email app set up on their phone.",
+    "text": "スマートフォンにメールアプリの設定が必要です。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.1"
+  },
+  "eb7ac7a2b531": {
+    "source": "Replies land among your other email, and the address can't change after printing.",
+    "text": "返信はほかのメールに紛れてしまい、印刷後にアドレスを変更することはできません。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.2"
+  },
+  "2520a0ba5663": {
+    "source": "Contact form",
+    "text": "お問い合わせフォーム",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedLabel"
+  },
+  "7161e0bc1656": {
+    "source": "A free QRdx account; the code opens a form QRdx hosts.",
+    "text": "QRdxの無料アカウントが必要です。コードを読み取ると、QRdxがホストするフォームが開きます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.0"
+  },
+  "b60dc1aafda3": {
+    "source": "Works in any phone browser, with the questions you choose.",
+    "text": "どのスマートフォンのブラウザーでも動作し、質問は自由に選べます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.1"
+  },
+  "85e4e25b83ee": {
+    "source": "Answers in one list you can export; edit the form any time.",
+    "text": "回答は1つの一覧にまとまり、エクスポートできます。フォームはいつでも編集できます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.2"
+  },
+  "2748bdccf6b3": {
+    "source": "Is the contact form free?",
+    "text": "お問い合わせフォームは無料ですか？",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.0.question"
+  },
+  "fdb380dac2a7": {
+    "source": "Where do the answers go?",
+    "text": "回答はどこに届きますか？",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.1.question"
+  },
+  "76afe3c4df88": {
+    "source": "To the page's Responses in your dashboard, newest first, with the time and the code that was scanned. Export CSV gives one row per response and one column per question. On Pro and Business each response can also be emailed to you.",
+    "text": "ダッシュボードのそのページの「回答」に、新しい順で届きます。時刻とスキャンされたコードも表示されます。CSVをエクスポートすると、1件の回答が1行、1つの質問が1列になります。ProとBusinessでは、各回答をメールで受け取ることもできます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.1.answer"
+  },
+  "3551dcf6310f": {
+    "source": "How many responses can I get?",
+    "text": "回答は何件まで受け取れますか？",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.2.question"
+  },
+  "3987ec8d1d8b": {
+    "source": "Free includes 50 responses a month across the workspace, Pro 1,000 and Business 10,000. The count starts over on the 1st of each month.",
+    "text": "フリーはワークスペース全体で月50件、Proは1,000件、Businessは10,000件まで含まれます。件数は毎月1日にリセットされます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.2.answer"
+  },
+  "2e1892954768": {
+    "source": "Can I change the questions after printing?",
+    "text": "印刷後に質問を変更できますか？",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.3.question"
+  },
+  "f95195d386de": {
+    "source": "Yes. Edit the form and publish; the printed code opens the new version, and the answers you already have stay.",
+    "text": "はい。フォームを編集して公開すると、印刷済みのコードから新しいバージョンが開きます。これまでの回答もそのまま残ります。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.3.answer"
+  },
+  "9298d959ba09": {
+    "source": "Is it protected from spam?",
+    "text": "スパム対策はされていますか？",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.4.question"
+  },
+  "efaf8ac5c2b5": {
+    "source": "Yes. A hidden field catches most bots and one device can only send so often. When the server has Cloudflare Turnstile keys, forms also run Turnstile's invisible check.",
+    "text": "はい。非表示のフィールドでほとんどのボットを検出し、1台のデバイスから送信できる頻度にも上限があります。サーバーにCloudflare Turnstileのキーが設定されている場合は、フォームでTurnstileの非表示チェックも実行されます。",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.4.answer"
+  },
+  "05155378bc81": {
+    "source": "What happens to my form if I stop paying?",
+    "text": "お支払いをやめると、フォームはどうなりますか？",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.5.question"
+  },
+  "2c9859114c4a": {
+    "source": "Lost and Found Tag",
+    "text": "落とし物タグ",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.name"
+  },
+  "5afcae8b513b": {
+    "source": "Lost and Found QR Code Generator",
+    "text": "落とし物QRコードジェネレーター",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.title"
+  },
+  "41ff183b7c90": {
+    "source": "A tag page that helps whoever finds your things reach you.",
+    "text": "拾った人があなたに連絡しやすくなる、タグ用のページです。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.summary"
+  },
+  "1d5f0256e045": {
+    "source": "Create your tag",
+    "text": "タグを作成",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.cta"
+  },
+  "a7b776dc197e": {
+    "source": "Lost and found QR tags for luggage, laptops and keys: call and message buttons, a reward note and a found-it form. New number? Edit it, keep the tag.",
+    "text": "荷物、ノートパソコン、鍵に付ける落とし物QRタグ。通話とメッセージのボタン、お礼のメモ、見つけた人向けフォームを備えています。番号が変わっても、編集すればタグはそのまま使えます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.metaDescription"
+  },
+  "587e0aef48c8": {
+    "source": "A lost and found QR code goes on a sticker or tag on your bag, laptop, keys or camera. Whoever finds it scans it and gets a page QRdx hosts for you: who it belongs to, buttons to call, text or WhatsApp you, a reward note if you offer one, and a form to say where it is.",
+    "text": "落とし物QRコードは、バッグ、ノートパソコン、鍵、カメラなどに貼るステッカーやタグに付けて使います。拾った人がスキャンすると、QRdxがあなたのためにホストするページが開きます。持ち主の情報、電話・SMS・WhatsAppで連絡するボタン、お礼を用意している場合はそのメモ、場所を伝えるフォームが表示されます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.intro.0"
+  },
+  "7bb0e4c767fd": {
+    "source": "The tag holds a short link, so a new phone number or email is one edit away and the tag you stuck on years ago still reaches you. It needs a free QRdx account.",
+    "text": "タグには短いリンクが入っているので、電話番号やメールアドレスが変わっても編集するだけで済み、何年も前に貼ったタグからも連絡が届きます。QRdxの無料アカウントが必要です。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.intro.1"
+  },
+  "7613d544d3c7": {
+    "source": "Sign in or create a free account, then start a Lost & found tag page: the button above opens it with that type picked.",
+    "text": "サインインするか無料アカウントを作成して、「Lost & found」タグページを作り始めます。上のボタンを押すと、そのタイプを選んだ状態で開きます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.0"
+  },
+  "97f20df0be67": {
+    "source": "Pick a template (Luggage, Laptop & equipment or Keys) and add the buttons and details a finder needs.",
+    "text": "テンプレート（荷物、ノートパソコン・機器、鍵）を選び、拾った人に必要なボタンや情報を追加します。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.1"
+  },
+  "8f968c5028e2": {
+    "source": "Publish, then download the QR code and print it as a sticker or tag.",
+    "text": "公開したらQRコードをダウンロードし、ステッカーやタグとして印刷します。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.2"
+  },
+  "3e021a9e4d11": {
+    "source": "Scan it once to check the call button dials your number.",
+    "text": "一度スキャンして、通話ボタンであなたの番号に発信されるか確認します。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.3"
+  },
+  "745d4a506420": {
+    "source": "Call and message",
+    "text": "電話とメッセージ",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.0.title"
+  },
+  "3e2443966b7f": {
+    "source": "Buttons that call or text you, and WhatsApp when you turn it on for your number.",
+    "text": "電話やSMSをかけるボタンを表示します。お使いの番号でオンにすると、WhatsAppも使えます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.0.description"
+  },
+  "6e9083892ccc": {
+    "source": "Found-it form",
+    "text": "発見報告フォーム",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.1.title"
+  },
+  "30321a296311": {
+    "source": "The finder says where the item is and how to reach them; the answer lands in your dashboard.",
+    "text": "見つけた方が、物がある場所と連絡方法を入力します。回答はダッシュボードに届きます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.1.description"
+  },
+  "9e4356ede63a": {
+    "source": "Asset details",
+    "text": "資産情報",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.2.title"
+  },
+  "183fcfaed161": {
+    "source": "An asset number, the item and where to return it, for company laptops and equipment.",
+    "text": "会社のノートPCや備品向けに、資産番号、品名、返却先を表示できます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.2.description"
+  },
+  "4e97e8ef3f82": {
+    "source": "Every scan is counted without cookies, so you can see when someone has scanned the tag.",
+    "text": "スキャンはすべてCookieなしでカウントされるので、タグがいつスキャンされたかを確認できます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.3.description"
+  },
+  "321fff1796c8": {
+    "source": "New number or email? Edit the page and publish; every tag you've already stuck on opens the new details.",
+    "text": "番号やメールアドレスが変わりましたか?ページを編集して公開すれば、すでに貼ったタグはすべて新しい情報を開きます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.editing.0"
+  },
+  "2119defa490a": {
+    "source": "Anyone who finds the item can read the page, so show only what helps them return it: a first name and a phone number are usually enough.",
+    "text": "物を見つけた人は誰でもページを読めます。返却に役立つ情報だけを載せましょう。名前と電話番号だけで十分なことがほとんどです。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.editing.1"
+  },
+  "7b793947d98d": {
+    "source": "A phone QR code or a lost and found page?",
+    "text": "電話のQRコードと落とし物ページ、どちらがよいですか?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.title"
+  },
+  "2608f2b404fc": {
+    "source": "Phone QR code (static)",
+    "text": "電話のQRコード(静的)",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticLabel"
+  },
+  "e01ecb6f4d7d": {
+    "source": "No account: the code holds your number and the phone offers to call it.",
+    "text": "アカウント不要:コードに番号が入っていて、スマートフォンが発信を提案します。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.0"
+  },
+  "7c0c86f3e6d4": {
+    "source": "Nothing to load: the call starts straight from the camera.",
+    "text": "読み込み不要:カメラからそのまま発信できます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.1"
+  },
+  "477e43229676": {
+    "source": "No form or reward note, and a new number means a new tag.",
+    "text": "フォームやお礼のメモはなく、番号が変わるとタグも作り直しになります。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.2"
+  },
+  "2a7150b065ae": {
+    "source": "Lost and found page",
+    "text": "落とし物ページ",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedLabel"
+  },
+  "b4d6958c32d2": {
+    "source": "Call, text and WhatsApp buttons, a reward note and a found-it form.",
+    "text": "電話、SMS、WhatsAppのボタン、お礼のメモ、発見報告フォームを備えています。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedPoints.1"
+  },
+  "baf6af7960b4": {
+    "source": "Change your number any time; tags already in use keep working.",
+    "text": "番号はいつでも変更できます。使用中のタグもそのまま使えます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedPoints.2"
+  },
+  "37c7d37a83ba": {
+    "source": "Is the lost and found tag free?",
+    "text": "落とし物タグは無料ですか?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.0.question"
+  },
+  "fcf0432e7942": {
+    "source": "Can I see where my item was found?",
+    "text": "物が見つかった場所はわかりますか?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.question"
+  },
+  "09a86d50c977": {
+    "source": "Roughly. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network, never an exact spot. The found-it form lets the finder tell you where the item is.",
+    "text": "おおよそわかります。すべての動的QRコードと同じく、タグの分析では、スキャンされた日時と、ネットワークから推定される国、地域、市区町村がわかりますが、正確な場所まではわかりません。発見報告フォームを使えば、見つけた方が物のある場所を知らせてくれます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "c17c0e25132b": {
+    "source": "Can I change my number later?",
+    "text": "後から番号を変更できますか?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.2.question"
+  },
+  "1dd2b80dc028": {
+    "source": "Yes. Edit the page and publish; every printed tag opens the new details.",
+    "text": "はい。ページを編集して公開すれば、印刷済みのタグはすべて新しい情報を開きます。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.2.answer"
+  },
+  "e3d5f4c7a00c": {
+    "source": "Is my phone number public?",
+    "text": "電話番号は公開されますか?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.3.question"
+  },
+  "797afc9f16c8": {
+    "source": "Anyone who scans the tag or opens its link can see what's on the page. Hosted pages are hidden from search engines unless you turn on Show in search engines. Show only what a finder needs.",
+    "text": "タグをスキャンした人やリンクを開いた人は誰でも、ページの内容を見られます。ホスト型ページは、「検索エンジンに表示」をオンにしない限り検索エンジンには表示されません。見つけた人に必要な情報だけを載せましょう。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.3.answer"
+  },
+  "35d2dc81fd11": {
+    "source": "What happens to my tag if I stop paying?",
+    "text": "支払いをやめたら、タグはどうなりますか?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.4.question"
+  },
+  "2f77668a9dfb": {
+    "source": "Message",
+    "text": "メッセージ",
+    "status": "machine",
+    "context": "hostedTypes.message.name"
+  },
+  "8cb91b6873f2": {
+    "source": "Message QR Code Generator",
+    "text": "メッセージQRコードジェネレーター",
+    "status": "machine",
+    "context": "hostedTypes.message.title"
+  },
+  "a3750df639df": {
+    "source": "A short note with a photo and a button, editable after printing.",
+    "text": "写真とボタン付きの短いメッセージ。印刷後も編集できます。",
+    "status": "machine",
+    "context": "hostedTypes.message.summary"
+  },
+  "ec0c539b9cda": {
+    "source": "Create your message",
+    "text": "メッセージを作成",
+    "status": "machine",
+    "context": "hostedTypes.message.cta"
+  },
+  "33e2d1eea3f2": {
+    "source": "Put a message behind a QR code: a gift note, a thank-you card or a notice on the door, with a photo and one button. Edit it after printing, same code.",
+    "text": "QRコードの先にメッセージを置けます。ギフトのメモ、お礼のカード、ドアの貼り紙に、写真とボタンを1つ添えられます。印刷後も同じコードのまま編集できます。",
+    "status": "machine",
+    "context": "hostedTypes.message.metaDescription"
+  },
+  "4e8ae41b881f": {
+    "source": "A message QR code opens a short note on a page QRdx hosts for you: a heading, a few lines, an optional photo and one button. Put it on a gift tag, a card in every parcel or a sign on the door.",
+    "text": "メッセージQRコードは、QRdxがホストするページに短いメモを表示します。見出し、数行の文章、任意の写真、そしてボタンが1つ付きます。ギフトタグや、すべての荷物に入れるカード、ドアの掲示などにお使いください。",
+    "status": "machine",
+    "context": "hostedTypes.message.intro.0"
+  },
+  "456218072bba": {
+    "source": "The code holds a link, not the words, so you can change the message after printing, from \"Closed today\" back to your opening hours, and see how many people scanned it. It needs a free QRdx account. For words written into the code itself, with no account, use the text QR code generator.",
+    "text": "コードに入っているのは文章ではなくリンクです。そのため、印刷後でもメッセージを変更でき、たとえば「本日休業」から営業時間の案内に戻すこともできます。スキャンした人数も確認できます。無料のQRdxアカウントが必要です。アカウントなしでコード自体に文章を埋め込みたい場合は、テキストQRコードジェネレーターをお使いください。",
+    "status": "machine",
+    "context": "hostedTypes.message.intro.1"
+  },
+  "7da74768bf63": {
+    "source": "Sign in or create a free account, then start a Message page: the button above opens it with that type picked.",
+    "text": "ログインするか無料アカウントを作成し、メッセージページを開始します。上のボタンを押すと、そのタイプを選んだ状態で開きます。",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.0"
+  },
+  "5e99aa77b021": {
+    "source": "Pick a template (Gift note, Thank-you card or Notice) and write your message.",
+    "text": "テンプレート(ギフトノート、サンクスカード、お知らせ)を選んで、メッセージを書きます。",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.1"
+  },
+  "fc9716d72b51": {
+    "source": "Add a photo and a button if you want them, then publish.",
+    "text": "必要に応じて写真とボタンを追加し、公開します。",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.2"
+  },
+  "9dfc4e242770": {
+    "source": "Your words, your look",
+    "text": "あなたの言葉、あなたらしいデザイン",
+    "status": "machine",
+    "context": "hostedTypes.message.features.0.title"
+  },
+  "4b201b59260e": {
+    "source": "A heading and text in the fonts and colors you pick, with a photo if you add one.",
+    "text": "お好みのフォントと色で見出しと本文を表示します。写真を追加することもできます。",
+    "status": "machine",
+    "context": "hostedTypes.message.features.0.description"
+  },
+  "2ceae1f2641b": {
+    "source": "One button",
+    "text": "ボタンが1つ",
+    "status": "machine",
+    "context": "hostedTypes.message.features.1.title"
+  },
+  "cd1bf434100b": {
+    "source": "Send people on to a booking, a review page, your shop or a playlist.",
+    "text": "予約ページ、レビューページ、ショップ、プレイリストなどへ案内できます。",
+    "status": "machine",
+    "context": "hostedTypes.message.features.1.description"
+  },
+  "2a2fe4991d42": {
+    "source": "Edit after printing",
+    "text": "印刷後も編集できます",
+    "status": "machine",
+    "context": "hostedTypes.message.features.2.title"
+  },
+  "ebbe4bb0b19d": {
+    "source": "Change the message any time; the printed code stays the same.",
+    "text": "メッセージはいつでも変更できます。印刷したコードはそのままです。",
+    "status": "machine",
+    "context": "hostedTypes.message.features.2.description"
+  },
+  "985b7ad943b5": {
+    "source": "See how many people opened the message and when, counted without cookies.",
+    "text": "メッセージが開かれた回数と時間を確認できます。カウントにCookieは使いません。",
+    "status": "machine",
+    "context": "hostedTypes.message.features.3.description"
+  },
+  "fbb4c19d8fd8": {
+    "source": "Edit the text, photo or button and publish: every printed code shows the new version, and each publish is kept as a version.",
+    "text": "テキスト、写真、ボタンを編集して公開すると、印刷済みのコードすべてに新しい内容が表示されます。公開するたびにバージョンとして保存されます。",
+    "status": "machine",
+    "context": "hostedTypes.message.editing.0"
+  },
+  "bd74e35ffe1c": {
+    "source": "Need it live only for a while? Start and end dates in the code's controls apply to the page too.",
+    "text": "公開期間を限定したい場合は、コードの設定にある開始日と終了日がページにも適用されます。",
+    "status": "machine",
+    "context": "hostedTypes.message.editing.1"
+  },
+  "09452877bd55": {
+    "source": "A text QR code or a message page?",
+    "text": "テキストQRコードとメッセージページのどちらがよいでしょうか?",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.title"
+  },
+  "aa2a4285ea5d": {
+    "source": "Text QR code (static)",
+    "text": "テキストQRコード(静的)",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticLabel"
+  },
+  "b7b15a64c7ad": {
+    "source": "No account, and nothing to load: the words are inside the code.",
+    "text": "アカウントは不要で、読み込むものもありません。文章はコードの中に入っています。",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.0"
+  },
+  "4c8e4443a7c2": {
+    "source": "Scanner apps show the text as plain words, with no photo or button.",
+    "text": "スキャナーアプリでは文章がそのままテキストとして表示され、写真やボタンはありません。",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.1"
+  },
+  "a83eb9f84bcd": {
+    "source": "Can't change after printing, and long messages make the code dense.",
+    "text": "印刷後は変更できません。また、長いメッセージではコードが細かくなります。",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.2"
+  },
+  "92f8f5e7ec88": {
+    "source": "Message page",
+    "text": "メッセージページ",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedLabel"
+  },
+  "9deb7cfca570": {
+    "source": "Your heading, text, a photo and a button, in your colors.",
+    "text": "見出し、本文、写真、ボタンを、あなたの色で表示できます。",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedPoints.1"
+  },
+  "a4d205d5c8e0": {
+    "source": "Change it any time; printed codes keep working, and scans are counted.",
+    "text": "いつでも変更できます。印刷済みのコードはそのまま使え、スキャン数もカウントされます。",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedPoints.2"
+  },
+  "94013c5ed254": {
+    "source": "Is the message page free?",
+    "text": "メッセージページは無料ですか?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.0.question"
+  },
+  "15e30bf1567a": {
+    "source": "Can I change the message after printing?",
+    "text": "印刷後にメッセージを変更できますか?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.1.question"
+  },
+  "25b0908fef26": {
+    "source": "Yes. Edit the page and publish; the printed code opens the new message.",
+    "text": "はい。ページを編集して公開すると、印刷済みのコードから新しいメッセージが開きます。",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.1.answer"
+  },
+  "517b066b2ce1": {
+    "source": "No. The phone's camera opens the message in the browser.",
+    "text": "いいえ。スマートフォンのカメラでブラウザにメッセージが開きます。",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.2.answer"
+  },
+  "ac23dcbd8150": {
+    "source": "Should I use a text QR code instead?",
+    "text": "代わりにテキストQRコードを使うべきですか?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.3.question"
+  },
+  "0b2c90ef4e88": {
+    "source": "If the message is short, won't change and doesn't need a photo, yes: a text code needs no account and works without internet. For a photo, a button or changes after printing, use the message page.",
+    "text": "メッセージが短く、変更の予定がなく、写真も不要であれば、テキストコードがおすすめです。アカウントは不要で、インターネットがなくても読み取れます。写真やボタンが必要な場合や、印刷後に変更したい場合は、メッセージページをお使いください。",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.3.answer"
+  },
+  "c52e2d3c7d09": {
+    "source": "What happens to my message if I stop paying?",
+    "text": "支払いを止めた場合、メッセージはどうなりますか?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.4.question"
   },
   "b069a7124740": {
     "source": "A welcome-sign code that opens the timeline, so guests know when the speeches and the last bus are.",
@@ -20543,6 +21647,60 @@
     "status": "machine",
     "context": "pageTypes.playlist.description"
   },
+  "9b3cdeee94a8": {
+    "source": "An address with a map, buttons for Google Maps, Apple Maps and Waze, and opening hours.",
+    "text": "地図付きの住所、Google マップ・Apple マップ・Waze へのボタン、営業時間を表示します。",
+    "status": "machine",
+    "context": "pageTypes.location.description"
+  },
+  "5dcb6aa3e0c2": {
+    "source": "A CV with your photo, experience, education, skills, links and a PDF to download.",
+    "text": "写真、職歴、学歴、スキル、リンク、ダウンロード用のPDFを載せた履歴書です。",
+    "status": "machine",
+    "context": "pageTypes.resume.description"
+  },
+  "486d02a939b0": {
+    "source": "The network name, a password to copy and how to join on iPhone and Android.",
+    "text": "ネットワーク名、コピーできるパスワード、iPhoneとAndroidでの接続方法を表示します。",
+    "status": "machine",
+    "context": "pageTypes.wifi.description"
+  },
+  "c019f67a1531": {
+    "source": "Names, date and venue with directions, the day's schedule and an RSVP form.",
+    "text": "名前、日付、会場への道順、当日のスケジュール、出欠確認フォームを掲載します。",
+    "status": "machine",
+    "context": "pageTypes.invitation.description"
+  },
+  "72dc45c74a13": {
+    "source": "Contact form page",
+    "text": "お問い合わせフォームページ",
+    "status": "machine",
+    "context": "pageTypes.form.name"
+  },
+  "42612d5672e8": {
+    "source": "A contact, quote or lead form with the fields you choose, answered in your dashboard.",
+    "text": "お問い合わせ、見積もり、リード獲得用のフォームです。項目は自由に選べ、回答はダッシュボードで確認できます。",
+    "status": "machine",
+    "context": "pageTypes.form.description"
+  },
+  "b102a1575161": {
+    "source": "Lost and found tag page",
+    "text": "忘れ物・紛失物タグページ",
+    "status": "machine",
+    "context": "pageTypes.asset-tag.name"
+  },
+  "44b7fe768d0d": {
+    "source": "Call and message buttons and a found-it form for a bag, laptop or set of keys.",
+    "text": "バッグ、ノートパソコン、鍵などに付ける、電話とメッセージのボタンと発見報告フォームです。",
+    "status": "machine",
+    "context": "pageTypes.asset-tag.description"
+  },
+  "61ac711e4a3e": {
+    "source": "A short note with a photo and one button: a gift message, a thank-you or a notice.",
+    "text": "写真と1つのボタンを添えた短いメモです。ギフトのメッセージ、お礼、お知らせなどに使えます。",
+    "status": "machine",
+    "context": "pageTypes.message.description"
+  },
   "615e54d4d3a0": {
     "source": "Landing page",
     "text": "ランディングページ",
@@ -20740,6 +21898,12 @@
     "text": "道案内",
     "status": "machine",
     "context": "pageCodes.type-maps-3.label"
+  },
+  "0d67c9ccac05": {
+    "source": "The venue's address with Google Maps, Apple Maps and Waze buttons.",
+    "text": "会場の住所と、Google Maps、Apple Maps、Wazeのボタンです。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.1.description"
   },
   "3ba4f61a5e80": {
     "source": "Landmark",
@@ -22361,6 +23525,216 @@
     "status": "machine",
     "context": "pageCodes.on-window-decals-2.label"
   },
+  "5c9b6bc549d5": {
+    "source": "Hours for each day, split shifts included, with an Open now badge that follows the time zone you set.",
+    "text": "曜日ごとの営業時間を、中抜けのある時間帯も含めて設定できます。「営業中」バッジは、設定したタイムゾーンに合わせて表示されます。",
+    "status": "machine",
+    "context": "hostedTypes.location.features.2.description"
+  },
+  "c9c20ae26ddc": {
+    "source": "Notes that help",
+    "text": "役立つメモ",
+    "status": "machine",
+    "context": "hostedTypes.location.features.3.title"
+  },
+  "e456a733811d": {
+    "source": "Where the entrance is, parking, the nearest stop or step-free access, as text or a list of details.",
+    "text": "入口の場所、駐車場、最寄りの停留所、段差のないアクセスなどを、テキストまたは詳細のリストで掲載できます。",
+    "status": "machine",
+    "context": "hostedTypes.location.features.3.description"
+  },
+  "3464ffee3ac9": {
+    "source": "Moved, or changed your hours? Edit the page and publish; signs, flyers and cards that are already printed open the new details.",
+    "text": "移転や営業時間の変更があっても、ページを編集して公開すれば、印刷済みの看板、チラシ、カードから新しい情報が開きます。",
+    "status": "machine",
+    "context": "hostedTypes.location.editing.0"
+  },
+  "a6b4cdfe7043": {
+    "source": "Every scan is counted without cookies, so you can see when people look up the way to you.",
+    "text": "スキャンはすべてCookieなしで集計されるため、お店への道順を調べた人がいつ来たかを確認できます。",
+    "status": "machine",
+    "context": "hostedTypes.location.editing.1"
+  },
+  "ddab20f026f2": {
+    "source": "A Google Maps QR code or a location page?",
+    "text": "Google MapsのQRコードと場所ページ、どちらがおすすめ？",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.title"
+  },
+  "318adf7e74b1": {
+    "source": "Google Maps QR code (static)",
+    "text": "Google Maps QRコード（静的）",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticLabel"
+  },
+  "5619f199b4c9": {
+    "source": "No account: the code holds a Google Maps link to the place.",
+    "text": "アカウント不要：コードに場所へのGoogle Mapsリンクが入っています。",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.0"
+  },
+  "75c63fd0a67c": {
+    "source": "Opens Google Maps, or its website where the app isn't installed.",
+    "text": "Google Mapsを開きます。アプリが入っていない場合はそのWebサイトが開きます。",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.1"
+  },
+  "1f2d0305ebeb": {
+    "source": "Can't change after printing, and shows nothing else: no hours or notes.",
+    "text": "印刷後は変更できず、営業時間やメモなどの情報も表示できません。",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.2"
+  },
+  "f92408835ad7": {
+    "source": "Location page",
+    "text": "場所ページ",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedLabel"
+  },
+  "94bbda41fd5a": {
+    "source": "Google Maps, Apple Maps and Waze, plus a map, hours and notes.",
+    "text": "Google Maps、Apple Maps、Waze に対応し、地図、営業時間、メモも表示できます。",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedPoints.1"
+  },
+  "ea6f083ebdb6": {
+    "source": "Edit the address or hours any time; printed codes keep working.",
+    "text": "住所や営業時間はいつでも編集できます。印刷済みのコードもそのまま使えます。",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedPoints.2"
+  },
+  "77c3fea4604c": {
+    "source": "Is the location page free?",
+    "text": "場所ページは無料ですか？",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.0.question"
+  },
+  "3e8ce35cffda": {
+    "source": "Which map apps does it open?",
+    "text": "どの地図アプリが開きますか？",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.1.question"
+  },
+  "b0daf58795a0": {
+    "source": "Google Maps, Apple Maps and, when you turn its button on, Waze. Each button opens the app when it's installed and the map's website when it isn't.",
+    "text": "Google Maps、Apple Maps、ボタンをオンにした場合は Waze が開きます。各ボタンは、アプリが入っていればアプリを、入っていなければ地図のWebサイトを開きます。",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.1.answer"
+  },
+  "2ae8f6d3fc5a": {
+    "source": "Can I change the address after printing?",
+    "text": "印刷後に住所を変更できますか？",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.2.question"
+  },
+  "e597bc8c476f": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new address.",
+    "text": "はい。ページを編集して公開すると、印刷済みのコードはすべて新しい住所を開きます。",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.2.answer"
+  },
+  "3cce71e7cdc9": {
+    "source": "Does the map load anything from Google?",
+    "text": "地図はGoogleからコンテンツを読み込みますか？",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.3.question"
+  },
+  "cffb66cc6a3d": {
+    "source": "The embedded map does: it's a Google map, so it loads content from Google when the page opens. That's why it's off until you turn it on. Without it, the page loads nothing from Google until someone taps the Google Maps button.",
+    "text": "埋め込み地図は読み込みます。Googleの地図なので、ページを開くときにGoogleからコンテンツを読み込みます。そのため、オンにするまでは無効になっています。埋め込み地図がなければ、誰かがGoogle Mapsボタンをタップするまで、ページはGoogleから何も読み込みません。",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.3.answer"
+  },
+  "d640c7421da0": {
+    "source": "Resume",
+    "text": "履歴書",
+    "status": "machine",
+    "context": "hostedTypes.resume.name"
+  },
+  "7d41961e2188": {
+    "source": "Resume and CV QR Code Generator",
+    "text": "履歴書・職務経歴書のQRコード作成",
+    "status": "machine",
+    "context": "hostedTypes.resume.title"
+  },
+  "1da120a9b83d": {
+    "source": "A CV page with your photo, experience, skills and a PDF.",
+    "text": "写真、経歴、スキル、PDFを載せた履歴書ページです。",
+    "status": "machine",
+    "context": "hostedTypes.resume.summary"
+  },
+  "0c6569c34c06": {
+    "source": "Create your resume page",
+    "text": "履歴書ページを作成",
+    "status": "machine",
+    "context": "hostedTypes.resume.cta"
+  },
+  "dde5a4aef253": {
+    "source": "Put your resume behind a QR code: a CV page with your photo, experience, education, skills, links and a PDF to download. Update it, keep the code.",
+    "text": "履歴書をQRコードにまとめましょう。写真、経歴、学歴、スキル、リンク、ダウンロード用のPDFを載せた履歴書ページです。内容を更新しても、コードはそのまま使えます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.metaDescription"
+  },
+  "0f494ff25d20": {
+    "source": "A resume QR code opens a CV page QRdx hosts for you: your photo and headline, a short summary, your experience and education in order, your skills, links to your portfolio, LinkedIn or GitHub, and your CV as a PDF to download.",
+    "text": "履歴書のQRコードは、QRdxがホストする履歴書ページを開きます。写真とキャッチコピー、短い自己紹介、時系列の職歴と学歴、スキル、ポートフォリオ、LinkedIn、GitHubなどへのリンク、そしてダウンロードできるPDF形式の履歴書を載せられます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.intro.0"
+  },
+  "f6cd57836459": {
+    "source": "Print the code on a paper CV, a business card or a portfolio, and whoever scans it sees the latest version: edit the page when you change jobs and every printed code opens it. It needs a free QRdx account.",
+    "text": "紙の履歴書、名刺、ポートフォリオにコードを印刷すれば、スキャンした人は常に最新版を見られます。転職したらページを編集するだけで、印刷済みのコードすべてから開けます。無料のQRdxアカウントが必要です。",
+    "status": "machine",
+    "context": "hostedTypes.resume.intro.1"
+  },
+  "56ce2e15bbf3": {
+    "source": "Sign in or create a free account, then start a Resume / CV page: the button above opens it with that type picked.",
+    "text": "サインインするか無料アカウントを作成し、履歴書／CVページを始めます。上のボタンを押すと、そのタイプを選んだ状態で開きます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.0"
+  },
+  "47e67c939ed0": {
+    "source": "Pick a template (Designer, Developer or Graduate), add your photo and fill in your experience, education and skills.",
+    "text": "テンプレート（Designer、Developer、Graduate）を選び、写真を追加して、経歴、学歴、スキルを入力します。",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.1"
+  },
+  "d1453a85a2cc": {
+    "source": "Add your links and your CV as a PDF, then publish.",
+    "text": "リンクとPDF形式の履歴書を追加して、公開します。",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.2"
+  },
+  "2dc8630cde01": {
+    "source": "Download the page's QR code for your printed CV or card, and scan it once to check.",
+    "text": "ページのQRコードをダウンロードして、印刷する履歴書やカードに使い、一度スキャンして確認しましょう。",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.3"
+  },
+  "cd30e1c67168": {
+    "source": "Experience and education",
+    "text": "職歴と学歴",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.0.title"
+  },
+  "8f990906d6d5": {
+    "source": "Each role or course with its dates, the company or school, and a line about what you did, in order.",
+    "text": "それぞれの職務や講座を、期間、会社または学校名、取り組んだ内容の一文とともに、順番に掲載します。",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.0.description"
+  },
+  "9ab011df98c4": {
+    "source": "Skills and facts",
+    "text": "スキルと基本情報",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.1.title"
+  },
+  "d03983ae376e": {
+    "source": "Skills, languages or where you're based, as a list or as tiles.",
+    "text": "スキル、言語、拠点などを、リストまたはタイルで表示できます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.1.description"
+  },
   "3c0a0424af51": {
     "source": "Book a table",
     "text": "席の予約",
@@ -22372,6 +23746,204 @@
     "text": "リンク集",
     "status": "machine",
     "context": "pageCodes.on-window-decals-4.label"
+  },
+  "46bec34da8f4": {
+    "source": "Your portfolio, LinkedIn, GitHub or email as buttons.",
+    "text": "ポートフォリオ、LinkedIn、GitHub、メールアドレスをボタンで掲載できます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.2.description"
+  },
+  "4628486be4b4": {
+    "source": "Your CV as a PDF",
+    "text": "PDFの履歴書",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.3.title"
+  },
+  "8de72360756b": {
+    "source": "A download button for the PDF, uploaded to QRdx or linked from where it already lives.",
+    "text": "PDFのダウンロードボタンです。QRdxにアップロードしたファイルも、すでに公開しているファイルへのリンクも使えます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.3.description"
+  },
+  "4c2a0d00a057": {
+    "source": "Edit the page and publish when anything changes: a new job, a new skill, a new photo. Every printed code opens the new version, and each publish is kept as a version.",
+    "text": "転職、新しいスキル、新しい写真など、変更があったらページを編集して公開してください。印刷済みのコードはすべて新しいバージョンを開き、公開のたびにバージョンとして保存されます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.editing.0"
+  },
+  "00ad204e50ef": {
+    "source": "Replace an uploaded PDF in Dashboard → Files and the page offers the new file within a minute. Scans are counted without cookies, so you can see when someone opens your CV.",
+    "text": "アップロードしたPDFは、Dashboard → Filesで差し替えると、1分以内にページへ新しいファイルが反映されます。スキャンはCookieなしで集計されるので、誰かが履歴書を開いたタイミングを確認できます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.editing.1"
+  },
+  "c80e313b1313": {
+    "source": "A LinkedIn QR code or a resume page?",
+    "text": "LinkedInのQRコードと履歴書ページ、どちらがよいでしょうか?",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.title"
+  },
+  "f9fa807326c5": {
+    "source": "LinkedIn QR code (static)",
+    "text": "LinkedIn QRコード(静的)",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticLabel"
+  },
+  "c124deca7c39": {
+    "source": "No account: the code opens your LinkedIn profile.",
+    "text": "アカウントは不要です。コードからLinkedInのプロフィールが開きます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.0"
+  },
+  "a4805184b32b": {
+    "source": "The profile stays current as you edit it on LinkedIn.",
+    "text": "LinkedInで編集すれば、プロフィールは常に最新の状態に保たれます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.1"
+  },
+  "25cbff28c8e6": {
+    "source": "It shows LinkedIn's layout, and people who aren't signed in may see only part of it.",
+    "text": "表示はLinkedInのレイアウトのままで、サインインしていない人にはプロフィールの一部しか表示されないことがあります。",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.2"
+  },
+  "ba4f5e6fc3f3": {
+    "source": "Resume page",
+    "text": "履歴書ページ",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedLabel"
+  },
+  "2f8d0d236823": {
+    "source": "Your own layout and colors, a PDF to download, and no sign-in for readers.",
+    "text": "レイアウトも色も自由に決められ、PDFをダウンロードでき、閲覧者のサインインも不要です。",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedPoints.1"
+  },
+  "38cbb9f63722": {
+    "source": "Edit it any time; printed codes keep working, and scans are counted.",
+    "text": "いつでも編集でき、印刷済みのコードもそのまま使え、スキャンも集計されます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedPoints.2"
+  },
+  "acd460d2ac53": {
+    "source": "Is the resume page free?",
+    "text": "履歴書ページは無料ですか?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.0.question"
+  },
+  "fe4a5505c7d4": {
+    "source": "Can people download my CV?",
+    "text": "履歴書をダウンロードしてもらえますか?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.1.question"
+  },
+  "244f5983c68c": {
+    "source": "Yes. Add the PDF to the page's Downloads block, uploaded to QRdx (up to 10 MB per file on Free) or linked from where it's already online.",
+    "text": "はい。ページのダウンロードブロックにPDFを追加してください。QRdxにアップロードする方法(フリーでは1ファイル10 MBまで)と、すでにオンラインにあるファイルへリンクする方法があります。",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.1.answer"
+  },
+  "2d7c7ff033e8": {
+    "source": "Can I update it after printing?",
+    "text": "印刷後に更新できますか?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.2.question"
+  },
+  "387fa17c1328": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new version.",
+    "text": "はい。ページを編集して公開すれば、印刷済みのコードはすべて新しいバージョンを開きます。",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.2.answer"
+  },
+  "3f3dcd5af52f": {
+    "source": "Will my resume show up in search engines?",
+    "text": "履歴書は検索エンジンに表示されますか?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.3.question"
+  },
+  "cf87edfd462e": {
+    "source": "Not unless you want it to. Hosted pages are hidden from search engines until you turn on Show in search engines in the page's settings. Anyone with the code or the link can read it, so leave out your home address and anything you'd rather keep private.",
+    "text": "ご希望がない限り表示されません。ホスト型ページは、ページの設定で「検索エンジンに表示」をオンにするまで、検索エンジンには表示されません。コードまたはリンクを知っていれば誰でも閲覧できるため、自宅の住所や公開したくない情報は載せないでください。",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.3.answer"
+  },
+  "af4ea02852eb": {
+    "source": "Invitation",
+    "text": "招待状",
+    "status": "machine",
+    "context": "hostedTypes.invitation.name"
+  },
+  "396c3d455879": {
+    "source": "Invitation QR Code Generator for Weddings and Parties",
+    "text": "結婚式やパーティー向け招待状QRコードジェネレーター",
+    "status": "machine",
+    "context": "hostedTypes.invitation.title"
+  },
+  "6fca6f8201f6": {
+    "source": "An invitation page with the day's plan, directions and an RSVP.",
+    "text": "当日の予定、アクセス方法、出欠確認をまとめた招待状ページです。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.summary"
+  },
+  "32f0a378b3bb": {
+    "source": "Create your invitation",
+    "text": "招待状を作成",
+    "status": "machine",
+    "context": "hostedTypes.invitation.cta"
+  },
+  "e891e2e79058": {
+    "source": "Put a QR code on your invitations: a page with the date, directions to the venue, the day's schedule, dress code and an RSVP form. Plans change? Edit it.",
+    "text": "招待状にQRコードを載せましょう。日時、会場へのアクセス、当日のスケジュール、ドレスコード、出欠確認フォームをまとめたページが開きます。予定が変わっても、編集すれば大丈夫です。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.metaDescription"
+  },
+  "5dc58074dd33": {
+    "source": "An invitation QR code opens a page QRdx hosts for you with what doesn't fit on the card: the date and time with add-to-calendar buttons, the venue with directions in Google Maps, Apple Maps or Waze, the schedule of the day, the dress code and an RSVP form.",
+    "text": "招待状のQRコードを読み取ると、カードに載せきれない内容をまとめた、QRdxがホストするページが開きます。カレンダーに追加するボタン付きの日時、Google Map、Apple Maps、Wazeで経路を確認できる会場、当日のスケジュール、ドレスコード、出欠確認フォームを掲載できます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.intro.0"
+  },
+  "dbe70020ae1f": {
+    "source": "Replies arrive in your dashboard, one row per guest, ready to export to a spreadsheet. If the start time or the venue changes, edit the page and every printed card shows the new plan. It needs a free QRdx account.",
+    "text": "返信はダッシュボードに届き、ゲストごとに1行で表示されるため、スプレッドシートへそのままエクスポートできます。開始時刻や会場が変わったときも、ページを編集すれば、印刷済みのすべてのカードに新しい予定が表示されます。無料のQRdxアカウントが必要です。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.intro.1"
+  },
+  "1c76ae9fe9e0": {
+    "source": "Sign in or create a free account, then start an Invitation page: the button above opens it with that type picked.",
+    "text": "ログインするか無料アカウントを作成し、招待状ページを作り始めます。上のボタンを押すと、そのタイプが選ばれた状態で開きます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.0"
+  },
+  "02c74768d194": {
+    "source": "Pick a template (Wedding, Birthday party or Dinner party), set the date, time and venue, and fill in the schedule.",
+    "text": "テンプレート（ウェディング、誕生日パーティー、ディナーパーティー）を選び、日付、時刻、会場を設定して、スケジュールを入力します。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.1"
+  },
+  "2456d9dd518c": {
+    "source": "Choose the RSVP questions, such as meal choices or a plus one, then publish.",
+    "text": "食事の選択や同伴者の有無など、出欠確認の質問を選んで公開します。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.2"
+  },
+  "4ac2a6697269": {
+    "source": "Download the QR code, add it to your printed invitations and scan one to check.",
+    "text": "QRコードをダウンロードして印刷する招待状に加え、1枚をスキャンして確認します。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.3"
+  },
+  "d0efffa65ea7": {
+    "source": "Add to calendar",
+    "text": "カレンダーに追加",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.0.title"
+  },
+  "3b59759cc462": {
+    "source": "Google Calendar, Outlook and Yahoo buttons, plus an .ics file for Apple Calendar and other calendar apps.",
+    "text": "Google カレンダー、Outlook、Yahooのボタンに加え、Apple カレンダーなどのカレンダーアプリ用の.icsファイルも用意されます。",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.0.description"
   },
   "fcb222345dec": {
     "source": "Pay online",
@@ -24491,6 +26063,42 @@
     "status": "machine",
     "context": "templates.business.variants.florist.description"
   },
+  "c1845d31d001": {
+    "source": "An address with a map, directions in Google Maps, Apple Maps or Waze, and opening hours",
+    "text": "住所と地図、Google マップ・Apple マップ・Waze での道順、営業時間を掲載します",
+    "status": "machine",
+    "context": "templates.location.description"
+  },
+  "b8ab2a217187": {
+    "source": "Map, directions, opening hours and parking",
+    "text": "地図、道順、営業時間、駐車場",
+    "status": "machine",
+    "context": "templates.location.variants.shop.description"
+  },
+  "aea1b15df626": {
+    "source": "Venue",
+    "text": "会場",
+    "status": "machine",
+    "context": "templates.location.variants.venue.name"
+  },
+  "1ceb7bd6e470": {
+    "source": "Where the entrance is, parking and step-free access",
+    "text": "入口の場所、駐車場、段差のないアクセス",
+    "status": "machine",
+    "context": "templates.location.variants.venue.description"
+  },
+  "f08183059fe9": {
+    "source": "Meeting point",
+    "text": "待ち合わせ場所",
+    "status": "machine",
+    "context": "templates.location.variants.meeting-point.name"
+  },
+  "f72241b0335d": {
+    "source": "Where a tour or pick-up starts, and who to call",
+    "text": "ツアーや送迎の出発場所と、連絡先",
+    "status": "machine",
+    "context": "templates.location.variants.meeting-point.description"
+  },
   "c56217ae2eb3": {
     "source": "vCard Plus",
     "text": "vCard Plus",
@@ -24545,6 +26153,54 @@
     "status": "machine",
     "context": "templates.vcard.variants.realtor.description"
   },
+  "50953f52a4ff": {
+    "source": "Resume / CV",
+    "text": "履歴書 / CV",
+    "status": "machine",
+    "context": "templates.resume.label"
+  },
+  "2a32d0d6e33b": {
+    "source": "Your photo, experience, education, skills and links, with your CV to download",
+    "text": "写真、職歴、学歴、スキル、リンクを掲載し、CVをダウンロードできます",
+    "status": "machine",
+    "context": "templates.resume.description"
+  },
+  "8b6d8e40753a": {
+    "source": "Designer",
+    "text": "デザイナー",
+    "status": "machine",
+    "context": "templates.resume.variants.designer.name"
+  },
+  "82b9eaf08aab": {
+    "source": "Photo, experience, skills and a portfolio link",
+    "text": "写真、職歴、スキル、ポートフォリオへのリンク",
+    "status": "machine",
+    "context": "templates.resume.variants.designer.description"
+  },
+  "3fb7b39416f1": {
+    "source": "Developer",
+    "text": "開発者",
+    "status": "machine",
+    "context": "templates.resume.variants.developer.name"
+  },
+  "0f537a221c23": {
+    "source": "Dark, with skills as tiles and code links",
+    "text": "ダークな配色で、スキルをタイル表示し、コードへのリンクを掲載",
+    "status": "machine",
+    "context": "templates.resume.variants.developer.description"
+  },
+  "aba1eecaad22": {
+    "source": "Graduate",
+    "text": "新卒",
+    "status": "machine",
+    "context": "templates.resume.variants.graduate.name"
+  },
+  "0c10ec4fb011": {
+    "source": "Education first, internships and a short summary",
+    "text": "学歴を先頭に、インターンシップと短い自己紹介",
+    "status": "machine",
+    "context": "templates.resume.variants.graduate.description"
+  },
   "ea6b729fa6bd": {
     "source": "A digital menu with prices, allergens, opening hours and Wi-Fi",
     "text": "価格、アレルゲン、営業時間、Wi-Fiを載せたデジタルメニュー",
@@ -24592,6 +26248,42 @@
     "text": "明るくモダンで、すべての商品に写真付き",
     "status": "machine",
     "context": "templates.menu.variants.juice-bar.description"
+  },
+  "4ea3a3bf1a89": {
+    "source": "Network name, a password to copy and how to join on iPhone and Android",
+    "text": "ネットワーク名、コピーできるパスワード、iPhoneとAndroidでの接続方法",
+    "status": "machine",
+    "context": "templates.wifi.description"
+  },
+  "96b91b2e6589": {
+    "source": "Free Wi-Fi with a few house rules",
+    "text": "いくつかのご利用ルール付きの無料Wi-Fi",
+    "status": "machine",
+    "context": "templates.wifi.variants.cafe.description"
+  },
+  "d8578da3456b": {
+    "source": "Holiday rental",
+    "text": "民泊・貸別荘",
+    "status": "machine",
+    "context": "templates.wifi.variants.rental.name"
+  },
+  "d928982eb2f7": {
+    "source": "Wi-Fi, house rules and a button to message the host",
+    "text": "Wi-Fi、ハウスルール、ホストにメッセージを送るボタン",
+    "status": "machine",
+    "context": "templates.wifi.variants.rental.description"
+  },
+  "ff0d47c74167": {
+    "source": "Office visitors",
+    "text": "オフィスの来訪者",
+    "status": "machine",
+    "context": "templates.wifi.variants.office.name"
+  },
+  "b17fdc39da42": {
+    "source": "A hidden guest network with steps to add it by hand",
+    "text": "非表示のゲスト用ネットワークと、手動で追加する手順",
+    "status": "machine",
+    "context": "templates.wifi.variants.office.description"
   },
   "152428da2871": {
     "source": "Coupon",
@@ -24695,6 +26387,42 @@
     "status": "machine",
     "context": "templates.event.variants.wedding.description"
   },
+  "fbbfaed1101f": {
+    "source": "Names, date and venue with directions, the day's schedule and an RSVP",
+    "text": "お名前、日付、会場と道順、当日のスケジュール、出欠確認",
+    "status": "machine",
+    "context": "templates.invitation.description"
+  },
+  "2dbed8f02c6d": {
+    "source": "The day's schedule, dress code and an RSVP with meal choices",
+    "text": "当日のスケジュール、ドレスコード、食事の選択付き出欠確認",
+    "status": "machine",
+    "context": "templates.invitation.variants.wedding.description"
+  },
+  "f2fd01ac74f9": {
+    "source": "Birthday party",
+    "text": "誕生日パーティー",
+    "status": "machine",
+    "context": "templates.invitation.variants.birthday.name"
+  },
+  "5eaa0f0a6e09": {
+    "source": "Night colours, what's happening when and a quick RSVP",
+    "text": "夜をイメージした配色、時間ごとの予定、かんたんな出欠確認",
+    "status": "machine",
+    "context": "templates.invitation.variants.birthday.description"
+  },
+  "9c6facaf6820": {
+    "source": "Dinner party",
+    "text": "ディナーパーティー",
+    "status": "machine",
+    "context": "templates.invitation.variants.dinner.name"
+  },
+  "62572e43ee04": {
+    "source": "A small gathering: time, address and food needs",
+    "text": "少人数の集まりに向けて、時間、住所、食事の希望を案内",
+    "status": "machine",
+    "context": "templates.invitation.variants.dinner.description"
+  },
   "27c1551f4d14": {
     "source": "App download",
     "text": "アプリのダウンロード",
@@ -24790,6 +26518,42 @@
     "text": "興味のある分野と同意欄付きのダークなニュースレター登録",
     "status": "machine",
     "context": "templates.feedback.variants.sign-up.description"
+  },
+  "4072912559f9": {
+    "source": "A contact or enquiry form with the fields you pick; replies reach your inbox",
+    "text": "選んだ項目で作る問い合わせフォーム。返信はお使いの受信トレイに届きます",
+    "status": "machine",
+    "context": "templates.form.description"
+  },
+  "b9cf3101ee8a": {
+    "source": "Name, email, phone and a message",
+    "text": "お名前、メールアドレス、電話番号、メッセージ",
+    "status": "machine",
+    "context": "templates.form.variants.contact-us.description"
+  },
+  "b8415494efa4": {
+    "source": "Quote request",
+    "text": "見積もり依頼",
+    "status": "machine",
+    "context": "templates.form.variants.quote-request.name"
+  },
+  "8094c02f232c": {
+    "source": "The job, where it is and how to reach you",
+    "text": "作業内容、場所、連絡先を伝えられます",
+    "status": "machine",
+    "context": "templates.form.variants.quote-request.description"
+  },
+  "de7a7767c119": {
+    "source": "Trade show leads",
+    "text": "展示会のリード",
+    "status": "machine",
+    "context": "templates.form.variants.lead-capture.name"
+  },
+  "8a11ce975f38": {
+    "source": "Details and interests from a stand, with consent",
+    "text": "ブースでの詳細情報と関心事項を、同意を得て収集します",
+    "status": "machine",
+    "context": "templates.form.variants.lead-capture.description"
   },
   "fb9ef894175c": {
     "source": "Product",
@@ -25067,6 +26831,54 @@
     "status": "machine",
     "context": "templates.medical.variants.allergy-card.description"
   },
+  "930d77cd70a4": {
+    "source": "Lost & found tag",
+    "text": "落とし物タグ",
+    "status": "machine",
+    "context": "templates.asset-tag.label"
+  },
+  "5931911e74c8": {
+    "source": "A tag for bags, laptops and keys that helps whoever finds them reach you",
+    "text": "バッグ、ノートパソコン、鍵に付けて、拾った人があなたに連絡できるようにするタグです",
+    "status": "machine",
+    "context": "templates.asset-tag.description"
+  },
+  "f02b64ad84de": {
+    "source": "Luggage",
+    "text": "スーツケース",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.luggage.name"
+  },
+  "661729da6609": {
+    "source": "Call and message buttons, a reward and a found-it form",
+    "text": "電話・メッセージボタン、お礼、見つけた方向けフォーム",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.luggage.description"
+  },
+  "021f6da3aa83": {
+    "source": "Laptop & equipment",
+    "text": "PC・備品",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.equipment.name"
+  },
+  "46158f15e064": {
+    "source": "Company property with an asset number and where to return it",
+    "text": "資産番号と返却先を記載した会社の備品用です",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.equipment.description"
+  },
+  "f0d66a79c138": {
+    "source": "Keys",
+    "text": "鍵",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.keys.name"
+  },
+  "ed54cd7c3b99": {
+    "source": "Short and simple: who to call and a reward",
+    "text": "シンプルに、連絡先とお礼だけを載せます",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.keys.description"
+  },
   "a9400aaa15f9": {
     "source": "A menu, brochure or manual people can read and download",
     "text": "読んだりダウンロードしたりできるメニュー、パンフレット、マニュアル",
@@ -25294,6 +27106,48 @@
     "text": "順番に聴くことも、ダウンロードすることもできるチャプター",
     "status": "machine",
     "context": "templates.playlist.variants.audiobook.description"
+  },
+  "bfd8dc7a29e9": {
+    "source": "A short note behind a code: a gift message, a thank-you or a notice",
+    "text": "コードの先に表示する短いメモです。ギフトメッセージ、お礼、お知らせに使えます",
+    "status": "machine",
+    "context": "templates.message.description"
+  },
+  "dafdcd6f7be1": {
+    "source": "Gift note",
+    "text": "ギフトメモ",
+    "status": "machine",
+    "context": "templates.message.variants.gift-note.name"
+  },
+  "05d204ba3747": {
+    "source": "A personal note with a photo and one button",
+    "text": "写真とボタン1つを添えた、心のこもったメモです",
+    "status": "machine",
+    "context": "templates.message.variants.gift-note.description"
+  },
+  "1a829c65cee3": {
+    "source": "Thank-you card",
+    "text": "お礼状",
+    "status": "machine",
+    "context": "templates.message.variants.thank-you.name"
+  },
+  "73bfc51857e2": {
+    "source": "A note for the card in every parcel",
+    "text": "荷物に同封するカード用のメモです",
+    "status": "machine",
+    "context": "templates.message.variants.thank-you.description"
+  },
+  "65659145569b": {
+    "source": "Notice",
+    "text": "お知らせ",
+    "status": "machine",
+    "context": "templates.message.variants.notice.name"
+  },
+  "db5d25fed89b": {
+    "source": "A sign on the door: closed today, moved or back soon",
+    "text": "ドアの掲示用です。本日休業、移転、まもなく戻ります、など",
+    "status": "machine",
+    "context": "templates.message.variants.notice.description"
   },
   "f8af257eb7bb": {
     "source": "Custom page",
@@ -30850,5 +32704,473 @@
     "text": "QRdxは、プロンプト、参照画像、生成された画像を保存せず、クレジットの消費数だけを記録します。プロンプト、QRコード画像、参照画像は、アートワークを作成するためにVercel AI Gateway経由でOpenAIのGPT Image 2に送信され、結果はそのままブラウザに返されます。残したい画像はダウンロードしてください。",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "コードをPNG、WebP、SVGでダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "PNG、WebP、SVGのいずれかをダウンロードするか、フルエディタでコードをデザインします。",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
+  },
+  "291d41cbf4b9": {
+    "source": "Books, with the ISBN printed above the bars",
+    "text": "書籍用。バーの上にISBNを印字します",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.summary"
+  },
+  "54344ae77017": {
+    "source": "An ISBN-13 (leave its check digit off and it's added), or a whole ISBN-10 to convert, with or without hyphens. The hyphens are placed for you.",
+    "text": "ISBN-13(チェックディジットを省くと自動で追加されます)、または変換するISBN-10全体を入力してください。ハイフンの有無は問いません。ハイフンは自動で挿入されます。",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.inputHint"
+  },
+  "a2e6713f08d5": {
+    "source": "Optional. In the US and Canada, 5 digits for the price: 5 and the US$ price (52499 is $24.99), or 90000 for none.",
+    "text": "任意。米国とカナダでは価格を表す5桁を入力します。5と米ドルの価格(52499なら24.99ドル)、価格なしの場合は90000です。",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.addOn.hint"
+  },
+  "e9e1f300825c": {
+    "source": "Magazines, journals and newspapers, with an issue add-on",
+    "text": "雑誌、学術誌、新聞用。号を示すアドオン付き",
+    "status": "machine",
+    "context": "barcodes.formats.issn.summary"
+  },
+  "966fa72ffe19": {
+    "source": "The 8-character ISSN (NNNN-NNNC), or its first 7 digits and the check digit is added. A 13-digit 977 number works too.",
+    "text": "8文字のISSN(NNNN-NNNC)、または先頭7桁を入力するとチェックディジットが追加されます。977で始まる13桁の番号も使えます。",
+    "status": "machine",
+    "context": "barcodes.formats.issn.inputHint"
+  },
+  "9843a124a0e4": {
+    "source": "Optional: usually the issue number in 2 digits, or 5 digits.",
+    "text": "任意。通常は2桁の号数、または5桁を入力します。",
+    "status": "machine",
+    "context": "barcodes.formats.issn.addOn.hint"
+  },
+  "1ee9182bc1fb": {
+    "source": "Printed music: scores, parts and songbooks",
+    "text": "楽譜用:スコア、パート譜、歌集",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.summary"
+  },
+  "b4688bb37eca": {
+    "source": "An ISMN of 13 digits starting 979-0, or the old 10-character form starting with M, with or without hyphens. Leave the check digit off and it's added.",
+    "text": "979-0で始まる13桁のISMN、またはMで始まる旧形式の10文字の番号を、ハイフンの有無を問わず入力できます。チェックディジットを省くと自動で追加されます。",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.inputHint"
+  },
+  "7057f3f09102": {
+    "source": "Optional: 2 or 5 digits, if a distributor asks for one.",
+    "text": "任意。流通業者から求められた場合は、2桁または5桁を入力します。",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.addOn.hint"
+  },
+  "8c6f1a2db028": {
+    "source": "The barcode on retail products almost everywhere outside North America. It holds a 13-digit GTIN: a company prefix from GS1, an item number and a check digit. Books, magazines and printed music use it too; their types below print the ISBN, ISSN or ISMN above the bars.",
+    "text": "北米以外のほとんどの国で、小売商品に使われているバーコードです。13桁のGTINを表し、GS1が付与する事業者コード、商品番号、チェックディジットで構成されます。書籍、雑誌、楽譜でも使われ、下記の各タイプではバーの上にISBN、ISSN、ISMNが印字されます。",
+    "status": "machine",
+    "context": "barcodes.uses.ean13"
+  },
+  "e27297574e0f": {
+    "source": "Books. The ISBN-13 is drawn as an EAN-13 starting 978 or 979, with the hyphenated ISBN printed above the bars. ISBN-10s are converted, and a 5-digit price add-on can go beside it for the US and Canadian book trade.",
+    "text": "書籍用です。ISBN-13は978または979で始まるEAN-13として描画され、バーの上にハイフン付きのISBNが印字されます。ISBN-10は変換され、米国とカナダの書籍流通向けに5桁の価格アドオンを横に付けることもできます。",
+    "status": "machine",
+    "context": "barcodes.uses.isbn"
+  },
+  "79c76e0d75e5": {
+    "source": "Magazines, journals and newspapers. The ISSN goes into an EAN-13 starting 977 with 2 digits for price or edition changes, and a 2-digit add-on usually carries the issue number.",
+    "text": "雑誌、学術誌、新聞用です。ISSNは977で始まるEAN-13に収められ、価格や版の変更を示す2桁が付きます。2桁のアドオンには通常、号数が入ります。",
+    "status": "machine",
+    "context": "barcodes.uses.issn"
+  },
+  "cc84a096325d": {
+    "source": "Printed music: scores, parts and songbooks. The ISMN is drawn as an EAN-13 starting 979-0 with the ISMN printed above it, and old numbers starting with M are converted.",
+    "text": "楽譜用:スコア、パート譜、歌集。ISMNは979-0で始まるEAN-13として描画され、その上にISMNが印字されます。Mで始まる旧番号は変換されます。",
+    "status": "machine",
+    "context": "barcodes.uses.ismn"
+  },
+  "2182d8e7b974": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "店舗で販売する商品なら、必要です。EAN、UPC、ITF-14、GS1-128はGTINを表し、GTINはGS1(またはお住まいの国のGS1の組織)から事業者に付与されます。独自に作った番号は小売店のシステムで認識されません。書籍、逐次刊行物、楽譜は、代わりに各国の機関が発行するISBN、ISSN、ISMNを使います。このジェネレーターは有効な番号であれば描画できますが、番号の発行や登録は行いません。自社の在庫、資産、チケットなどには、Code 128、Code 39、Code 93を登録なしで使えます。",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "44ff97b6fe1e": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN and the GTIN and SSCC fields of GS1-128: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "はい。EAN-13、EAN-8、UPC-A、UPC-E、ITF-14、ISBN、ISSN、ISMN、およびGS1-128のGTINとSSCCの各フィールドが対象です。最後の1桁を省くと自動で計算されます。番号をすべて入力した場合はチェックディジットが検証され、誤りがあるとバーコードではなくエラーが表示されます。",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "ecc099e5186f": {
+    "source": "Yes, with the ISBN barcode type: it's an EAN-13 of the ISBN-13 with the hyphenated ISBN printed above the bars, and it takes an ISBN-10 and a 5-digit price add-on too. ISSN (magazines) and ISMN (printed music) have their own types.",
+    "text": "はい、ISBNバーコードタイプをお使いください。ISBN-13のEAN-13で、バーの上にハイフン付きのISBNが印字されます。ISBN-10と5桁の価格アドオンにも対応しています。ISSN(雑誌)とISMN(楽譜)には専用のタイプがあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ean-13.faqs.2.answer"
+  },
+  "3835c42e60bf": {
+    "source": "Free ISBN Barcode Generator with Price Add-on",
+    "text": "価格アドオン対応の無料ISBNバーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.title"
+  },
+  "176aa5f9c65e": {
+    "source": "Make an ISBN barcode for a book cover: ISBN-13 or ISBN-10, check digit and hyphens worked out, and an optional price add-on. SVG, PDF and EPS. Free.",
+    "text": "書籍のカバー用ISBNバーコードを作成できます。ISBN-13とISBN-10に対応し、チェックディジットとハイフンは自動で処理され、価格アドオンも任意で付けられます。SVG、PDF、EPS形式。無料。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.metaDescription"
+  },
+  "da610243ac4c": {
+    "source": "An ISBN barcode is an EAN-13 of the book's 13-digit ISBN, with the ISBN printed above the bars. Type the ISBN, with or without hyphens, and the generator checks it, places the hyphens and draws the barcode, with a 5-digit price add-on if you sell in the US or Canada.",
+    "text": "ISBNバーコードは、書籍の13桁のISBNをEAN-13にしたもので、バーの上にISBNが印字されます。ハイフンの有無にかかわらずISBNを入力すると、ジェネレーターが内容を確認し、ハイフンを配置してバーコードを描画します。米国やカナダで販売する場合は、5桁の価格アドオンも付けられます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.intro"
+  },
+  "0b6b8b3c5b67": {
+    "source": "The back cover of books, where bookshops, distributors and libraries scan it to look the book up. The ISBN Users' Manual recommends the lower right of the back cover, near the spine.",
+    "text": "書籍の裏表紙です。書店、取次、図書館が書籍を検索するためにスキャンします。ISBN Users' Manualでは、裏表紙の右下、背に近い位置が推奨されています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.0"
+  },
+  "a1da95764261": {
+    "source": "Each edition and format of a book has its own ISBN, so a hardback, a paperback and an audiobook each carry a different barcode. ISBNs start with 978 or 979; numbers starting 979-0 are ISMNs, for printed music.",
+    "text": "書籍は版や形式ごとに固有のISBNが付くため、ハードカバー、ペーパーバック、オーディオブックはそれぞれ異なるバーコードになります。ISBNは978または979で始まります。979-0で始まる番号は、楽譜用のISMNです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.1"
+  },
+  "3e73fd5280af": {
+    "source": "Where do ISBNs come from?",
+    "text": "ISBNはどこで取得できますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.title"
+  },
+  "e439e1b8c34c": {
+    "source": "From the ISBN agency of the country where the publisher is based. Some agencies charge for ISBNs and some give them out free; the International ISBN Agency lists them all.",
+    "text": "出版社が所在する国のISBN機関から取得します。ISBNを有料で発行する機関もあれば、無料で配布する機関もあります。International ISBN Agencyにすべての機関の一覧があります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.0"
+  },
+  "69d6787067ee": {
+    "source": "This generator draws the barcode of an ISBN you already have. It doesn't issue or register ISBNs.",
+    "text": "このジェネレーターは、すでにお持ちのISBNのバーコードを描画するものです。ISBNの発行や登録は行いません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.1"
+  },
+  "2c37843cb158": {
+    "source": "Type an ISBN-13 or an ISBN-10, with or without hyphens or spaces. Twelve digits get the check digit added and thirteen have it checked. A whole ISBN-10, check digit included, is converted to its ISBN-13: 978 in front of its first nine digits and a new check digit.",
+    "text": "ISBN-13またはISBN-10を、ハイフンやスペースの有無を問わず入力してください。12桁の場合はチェックディジットを追加し、13桁の場合はチェックディジットを検証します。チェックディジットを含むISBN-10全体を入力すると、ISBN-13に変換されます。先頭9桁の前に978を付け、新しいチェックディジットを計算します。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.0"
+  },
+  "c521fc56dc83": {
+    "source": "The ISBN above the bars is split into its five parts (prefix, registration group, registrant, publication and check digit) by the ranges the International ISBN Agency publishes, because the parts' lengths differ from one country and publisher to the next.",
+    "text": "バーの上のISBNは、International ISBN Agencyが公開している範囲表に基づき、5つの部分(接頭辞、登録グループ、出版者、出版物、チェックディジット)に区切られます。各部分の長さは国や出版社によって異なるためです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.1"
+  },
+  "e9a28cedaf04": {
+    "source": "The check digit is the EAN-13 one: the first 12 digits are weighted 1, 3, 1, 3… and the check digit brings their sum to a multiple of 10.",
+    "text": "チェックディジットはEAN-13と同じ方式です。先頭の12桁に1、3、1、3…の重みを掛け、その合計が10の倍数になるようにチェックディジットを決めます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.2"
+  },
+  "8d1f674af2a1": {
+    "source": "The add-on goes in its own field. In the US and Canada it's 5 digits: the first is the currency (5 for US dollars, 6 for Canadian dollars) and the rest the price, so 52499 is US$24.99, and 90000 means no price. Elsewhere the ISBN Users' Manual keeps 90000 to 98999 for publishers' own use.",
+    "text": "アドオンは専用の入力欄に入力します。米国とカナダでは5桁で、1桁目が通貨(5は米ドル、6はカナダドル)、残りが価格を表します。たとえば52499はUS$24.99で、90000は価格なしを意味します。それ以外の地域では、ISBN Users' Manualにより90000から98999までが出版社の独自用途に確保されています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.3"
+  },
+  "e4dc52a1d225": {
+    "source": "An ISBN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISBNバーコードはEAN-13なので、EAN-13のサイズがそのまま当てはまります。モジュール幅0.33 mmの100%で、クワイエットゾーンを含めて幅37.29 mmです。GS1では80%から200%までが認められています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.0"
+  },
+  "8b96afae7ca3": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%, and put the add-on 9 modules right of the main bars, within the 7 to 12 GS1 allows. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "ベクター形式のダウンロードでは、モジュール幅0.353 mm(約107%)を使用し、アドオンはメインバーの右に9モジュール空けて配置します。これはGS1が認める7から12の範囲内です。拡大縮小するときは縦横比を保ち、バーの高さを削らないでください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.1"
+  },
+  "c705fd825b60": {
+    "source": "Keep cover artwork out of the quiet zones and away from the ISBN line above the bars.",
+    "text": "カバーのアートワークは、クワイエットゾーンやバーの上のISBN行にかからないようにしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.2"
+  },
+  "196d06fdae79": {
+    "source": "Can I use my old ISBN-10?",
+    "text": "古いISBN-10は使えますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.question"
+  },
+  "fd750967eae9": {
+    "source": "Yes. Type it and the generator converts it to the ISBN-13 that goes in the barcode: 978, its first nine digits and a new check digit. ISBN agencies have only given out 13-digit ISBNs since 1 January 2007.",
+    "text": "はい。入力すると、ジェネレーターがバーコードに使うISBN-13に変換します。978に先頭9桁を続け、新しいチェックディジットを付けます。ISBN機関は2007年1月1日以降、13桁のISBNのみを発行しています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.answer"
+  },
+  "6c5182bf9e13": {
+    "source": "Do I need the 5-digit price add-on?",
+    "text": "5桁の価格アドオンは必要ですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.question"
+  },
+  "a9c462c78717": {
+    "source": "Only if you sell through the US or Canadian book trade, which uses it for the cover price. Use 90000 if you don't want a price in the barcode. Outside North America, leave it off.",
+    "text": "米国またはカナダの書籍流通で販売する場合のみ必要です。この地域ではアドオンを定価の表示に使います。バーコードに価格を入れたくない場合は90000を使ってください。北米以外では付けないでください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.answer"
+  },
+  "38a719101040": {
+    "source": "Is an ISBN barcode just an EAN-13?",
+    "text": "ISBNバーコードはEAN-13と同じものですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.question"
+  },
+  "cd2e286d9bfd": {
+    "source": "The bars are an EAN-13 of the ISBN-13, and checkout scanners read it as one. An ISBN barcode also prints the hyphenated ISBN above the bars, as the ISBN Users' Manual asks, which the EAN-13 generator doesn't.",
+    "text": "バーはISBN-13のEAN-13で、レジのスキャナーもEAN-13として読み取ります。ISBNバーコードでは、ISBN Users' Manualの指定どおり、バーの上にハイフン付きのISBNも印字されます。EAN-13ジェネレーターにはこの機能はありません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.answer"
+  },
+  "e8ce71038550": {
+    "source": "Why are the hyphens different from the ones I typed?",
+    "text": "入力したハイフンと位置が違うのはなぜですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.question"
+  },
+  "4fec2a0ce9cf": {
+    "source": "Each part of an ISBN has a length set by the International ISBN Agency's ranges, and the generator places the hyphens from them. If your ISBN is in a range newer than the generator's copy, type it with its hyphens and they're printed as you wrote them.",
+    "text": "ISBNの各部分の長さは、International ISBN Agencyの範囲表で決まっており、ジェネレーターはそれに基づいてハイフンを配置します。お持ちのISBNがジェネレーターの持つデータより新しい範囲に属する場合は、ハイフン付きで入力すると、入力したとおりに印字されます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.answer"
+  },
+  "f188d75a04c1": {
+    "source": "Free ISSN Barcode Generator for Magazines",
+    "text": "雑誌向け無料ISSNバーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.title"
+  },
+  "1f64921e91f2": {
+    "source": "Make an ISSN barcode for a magazine or journal: the 977 EAN-13 with its sequence variant and an issue add-on, check digits worked out. SVG, PDF, EPS. Free.",
+    "text": "雑誌や学術誌のISSNバーコードを作成できます。977から始まるEAN-13にシーケンスバリアントと号数のアドオンを付け、チェックデジットも自動計算します。SVG、PDF、EPSに対応。無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.metaDescription"
+  },
+  "bfca3d83074b": {
+    "source": "An ISSN barcode puts the ISSN of a magazine, journal or newspaper into an EAN-13 starting 977, usually with a 2-digit add-on for the issue number. Type the ISSN and the issue, and the generator works out both check digits and draws the barcode with the ISSN above it.",
+    "text": "ISSNバーコードは、雑誌、学術誌、新聞のISSNを977から始まるEAN-13に収めたもので、通常は号数を表す2桁のアドオンが付きます。ISSNと号数を入力すると、2つのチェックデジットを自動計算し、上にISSNを添えたバーコードを描画します。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.intro"
+  },
+  "c97f6be9f476": {
+    "source": "Covers of magazines, journals, newspapers and other serials sold in shops. Retailers and wholesalers scan the main barcode to find the title, and the add-on tells one issue from the next.",
+    "text": "店頭で販売される雑誌、学術誌、新聞などの継続刊行物のカバーに使われます。小売店や卸売業者はメインのバーコードをスキャンして刊行物を特定し、アドオンで号の違いを見分けます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.0"
+  },
+  "b78d01fd74c8": {
+    "source": "A title published both in print and online has a different ISSN for each; the barcode goes on the print edition.",
+    "text": "印刷版とオンライン版の両方で発行されるタイトルには、それぞれ別のISSNが付きます。バーコードは印刷版に付けます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.1"
+  },
+  "2a6774d25d70": {
+    "source": "Where do ISSNs come from?",
+    "text": "ISSNはどこで取得できますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.title"
+  },
+  "21ee727a32d4": {
+    "source": "From the national ISSN centre of the publisher's country, or the ISSN International Centre where there's none. Publishers don't make up ISSNs themselves.",
+    "text": "発行者の所在国にあるISSN国内センターから取得します。該当するセンターがない場合は、ISSN国際センターが担当します。発行者が自分でISSNを決めることはできません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.0"
+  },
+  "b88925ce2ed3": {
+    "source": "This generator draws the barcode of an ISSN you already have; it doesn't issue or register ISSNs. Distributors may have their own rules for the variant and add-on digits, so check with yours.",
+    "text": "このジェネレーターは、すでにお持ちのISSNのバーコードを描画するものです。ISSNの発行や登録は行いません。バリアントやアドオンの桁については、取次会社ごとに独自の規則がある場合があるため、ご利用の取次会社にご確認ください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.1"
+  },
+  "3cd9c9d76ec9": {
+    "source": "Type the 8-character ISSN, NNNN-NNNC, or its first 7 digits to have the check digit added. An ISSN's check digit is weighted 8 down to 2, modulo 11, so it can be X.",
+    "text": "8文字のISSN（NNNN-NNNC）または先頭7桁を入力してください。先頭7桁の場合はチェックデジットが追加されます。ISSNのチェックデジットは8から2までの重みを掛けて11で割った余りで求めるため、Xになることがあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.0"
+  },
+  "e18df648537b": {
+    "source": "The barcode holds 977, the ISSN's first 7 digits (its check digit is left out), the 2-digit sequence variant and an EAN-13 check digit. The variant is 00 unless you change it: publishers use it for extra information such as a change of price.",
+    "text": "バーコードには、977、ISSNの先頭7桁（チェックデジットは除く）、2桁のシーケンスバリアント、EAN-13のチェックデジットが入ります。バリアントは変更しない限り00です。発行者は価格変更などの追加情報を示すためにバリアントを使います。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.1"
+  },
+  "217b7f21d84b": {
+    "source": "The add-on is usually the issue number in 2 digits; 5 digits work too. You can also type the 13-digit 977 number from an existing barcode, and the ISSN and variant are read from it.",
+    "text": "アドオンは通常、2桁の号数です。5桁も使えます。既存のバーコードの977から始まる13桁の番号を入力することもでき、その場合はISSNとバリアントが読み取られます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.2"
+  },
+  "81617eedd878": {
+    "source": "An ISSN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISSNバーコードはEAN-13なので、EAN-13のサイズが適用されます。倍率100%でクワイエットゾーンを含めた幅は37.29 mm、モジュールは0.33 mmで、GS1では80%から200%まで認められています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.sizing.0"
+  },
+  "029b41d87aed": {
+    "source": "What should the 2-digit add-on be?",
+    "text": "2桁のアドオンには何を入れますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.question"
+  },
+  "a6d582e1f7e1": {
+    "source": "Usually the issue number, counted the way your distributor asks: a weekly title and a monthly title number their issues differently. A new issue only needs a new add-on, not a new ISSN.",
+    "text": "通常は号数を入れます。数え方は取次会社の指定に従ってください。週刊誌と月刊誌では号数の付け方が異なります。新しい号に必要なのは新しいアドオンだけで、新しいISSNは必要ありません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.answer"
+  },
+  "8bf75513f21a": {
+    "source": "When do I change the sequence variant?",
+    "text": "シーケンスバリアントはいつ変更しますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.question"
+  },
+  "d47879b0459f": {
+    "source": "When an issue needs a different main barcode, for example for a different cover price. Most titles keep 00.",
+    "text": "表紙価格が異なる場合など、号ごとに別のメインバーコードが必要なときです。ほとんどのタイトルは00のままです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.answer"
+  },
+  "05f5e8f2dfc8": {
+    "source": "Is an ISSN barcode an EAN-13?",
+    "text": "ISSNバーコードはEAN-13ですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.question"
+  },
+  "14b5a2d47c79": {
+    "source": "Yes, one starting 977, and checkout scanners read it as one. The add-on is a small separate barcode to its right; scanners set up to read add-ons report it after the 13 digits.",
+    "text": "はい、977から始まるEAN-13で、レジのスキャナーもEAN-13として読み取ります。アドオンは右側にある小さな別のバーコードです。アドオンの読み取りに対応したスキャナーは、13桁の後にアドオンを報告します。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.answer"
+  },
+  "8258c7e9de6f": {
+    "source": "Free ISMN Barcode Generator for Printed Music",
+    "text": "楽譜向け無料ISMNバーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.title"
+  },
+  "ab1e3a860c80": {
+    "source": "Make an ISMN barcode for sheet music and scores: 979-0 ISMNs or old M- numbers, check digit and hyphens worked out. SVG, PDF and EPS for print. Free.",
+    "text": "楽譜やスコア用のISMNバーコードを作成できます。979-0のISMNにも旧M-番号にも対応し、チェックディジットとハイフンは自動で算出します。印刷用にSVG、PDF、EPSで出力でき、無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.metaDescription"
+  },
+  "8360e12af0d1": {
+    "source": "An ISMN identifies a publication of notated music, such as a score, a set of parts or a songbook, and is printed as an EAN-13 starting 979-0 with the ISMN above the bars. Type the ISMN, or an old number starting with M, and download the barcode for your cover.",
+    "text": "ISMNは、スコア、パート譜、歌集など、楽譜として記譜された音楽出版物を識別する番号です。979-0で始まるEAN-13として印刷され、バーの上にISMNが表示されます。ISMN、またはMで始まる旧番号を入力すると、表紙用のバーコードをダウンロードできます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.intro"
+  },
+  "b7522c7e8483": {
+    "source": "Printed and digital sheet music: scores, parts, songbooks and other notated music, scanned by music shops, distributors and libraries. Each part sold on its own has its own ISMN.",
+    "text": "印刷版・デジタル版の楽譜(スコア、パート譜、歌集などの記譜された音楽)で使われ、楽器店、取次、図書館でスキャンされます。単独で販売するパート譜には、それぞれ固有のISMNが付きます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.0"
+  },
+  "befd5a2d10e8": {
+    "source": "Books about music get an ISBN instead, and sound recordings have identifiers of their own. A songbook can have both an ISMN and an ISBN.",
+    "text": "音楽に関する書籍にはISMNではなくISBNが付き、録音物には別の識別子があります。歌集にはISMNとISBNの両方が付く場合もあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.1"
+  },
+  "a8a30623f353": {
+    "source": "Where do ISMNs come from?",
+    "text": "ISMNはどこで取得しますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.title"
+  },
+  "775f3d68ead8": {
+    "source": "From the ISMN agency of the publisher's country, appointed by the International ISMN Agency. A publisher gets a registrant number and usually numbers its publications from it.",
+    "text": "出版社の国のISMN機関から取得します。この機関は国際ISMN機関が指定しています。出版社には登録者番号が割り当てられ、通常はその番号をもとに出版物へ番号を振ります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.0"
+  },
+  "30668fbec2bc": {
+    "source": "This generator draws the barcode of an ISMN you already have. It doesn't issue or register ISMNs.",
+    "text": "このジェネレーターは、すでにお持ちのISMNのバーコードを描画します。ISMNの発行や登録は行いません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.1"
+  },
+  "8f30796bbe15": {
+    "source": "Type the 13 digits starting 979-0, with or without hyphens, or 12 to have the check digit added. An old 10-character ISMN starting with M is converted: the M becomes 979-0 and the check digit stays the same.",
+    "text": "979-0で始まる13桁の数字(ハイフンの有無は問いません)、またはチェックディジットを付加する場合は12桁を入力してください。Mで始まる旧形式の10文字のISMNは変換されます。Mは979-0になり、チェックディジットは変わりません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.0"
+  },
+  "168c909528f2": {
+    "source": "The ISMN above the bars is split into prefix, registrant, item and check digit. The registrant's length comes from its first digit, as the ISMN Users' Manual sets out: 000 to 099, 1000 to 3999, 40000 to 69999, 700000 to 899999, then 9000000 to 9999999.",
+    "text": "バーの上のISMNは、プレフィックス、登録者、アイテム、チェックディジットに区切られます。登録者番号の長さは、ISMN Users' Manualの定めに従って最初の数字で決まります。000から099、1000から3999、40000から69999、700000から899999、そして9000000から9999999です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.1"
+  },
+  "78cca6abd0a8": {
+    "source": "An ISMN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "ISMNバーコードはEAN-13なので、EAN-13のサイズが適用されます。倍率100%、モジュール幅0.33 mmのとき、クワイエットゾーンを含めた幅は37.29 mmで、GS1では80%から200%までが認められています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.0"
+  },
+  "44f3668734ec": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "ベクター形式のダウンロードでは、モジュール幅0.353 mm(約107%)を使用しています。拡大縮小するときは縦横比を保ち、バーの高さを削らないでください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.1"
+  },
+  "c3d3d98f6c6f": {
+    "source": "Can I use an old ISMN starting with M?",
+    "text": "Mで始まる旧ISMNは使えますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.question"
+  },
+  "96dbf79e7003": {
+    "source": "Yes. Type it and the generator converts it: M-2306-7118-7 becomes 979-0-2306-7118-7, with the same check digit. ISMNs have been 13 digits since 2008.",
+    "text": "はい。入力するとジェネレーターが変換します。M-2306-7118-7は979-0-2306-7118-7になり、チェックディジットは同じです。ISMNは2008年から13桁になっています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.answer"
+  },
+  "d3b707d21e7c": {
+    "source": "ISMN or ISBN for a songbook?",
+    "text": "歌集にはISMNとISBNのどちらですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.question"
+  },
+  "986280e8e50f": {
+    "source": "It can have both, and the ISMN Users' Manual leaves the choice to the publisher when only one is used. Books about music, with no notated music as their content, take an ISBN.",
+    "text": "両方付けることもできます。どちらか一方だけを使う場合は、ISMN Users' Manualにより出版社が選べます。記譜された音楽を内容としない音楽関連書籍には、ISBNを付けます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.answer"
+  },
+  "af6b85c2a74a": {
+    "source": "Can I add a price add-on?",
+    "text": "価格のアドオンは追加できますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.question"
+  },
+  "e685660fa860": {
+    "source": "Yes, 2 or 5 digits, in the add-on field. The ISMN Users' Manual doesn't ask for one, so add it only if your distributor does.",
+    "text": "はい。アドオン欄に2桁または5桁を入力してください。ISMN Users' Manualでは求められていないため、取次から指定された場合のみ追加してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.answer"
+  },
+  "e71d1a8889ec": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417、Aztecに対応しています。値（チェックデジット、桁数、使用文字）を検証し、PNGに加えて、SVG、PNG、PDFなどの公開画像URLを返します。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

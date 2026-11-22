@@ -1,0 +1,55 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Length 883 >>
+stream
+BT /F2 20 Tf 0 g 40 531 Td (Sam Okafor) Tj ET
+BT /F1 10 Tf 0.4 g 40 509 Td (Backend engineer, Lagos \(remote\)  |  sam@example.com) Tj ET
+0.85 G 0.6 w 40 491 m 380 491 l S
+BT /F2 11 Tf 0 g 40 463 Td (Experience) Tj ET
+BT /F1 10 Tf 0.15 g 40 446 Td (Senior backend engineer, Brightline Payments) Tj ET
+BT /F1 10 Tf 0.15 g 300 446 Td (2021 - now) Tj ET
+BT /F1 10 Tf 0.15 g 40 431 Td (Backend engineer, Northwind Logistics) Tj ET
+BT /F1 10 Tf 0.15 g 300 431 Td (2018 - 2021) Tj ET
+BT /F1 10 Tf 0.15 g 40 416 Td (Software engineer, Example Bank) Tj ET
+BT /F1 10 Tf 0.15 g 300 416 Td (2016 - 2018) Tj ET
+BT /F2 11 Tf 0 g 40 387 Td (Skills) Tj ET
+BT /F1 10 Tf 0.15 g 40 370 Td (Go, TypeScript, PostgreSQL) Tj ET
+BT /F1 10 Tf 0.15 g 40 355 Td (API design, payments, on-call) Tj ET
+0.85 G 0.6 w 40 56 m 380 56 l S
+BT /F1 8 Tf 0.5 g 40 40 Td (Sample document for a QRdx template demo.) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 420 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Title (Sam Okafor, CV) /Producer (QRdx template demo) >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000218 00000 n 
+0000000320 00000 n 
+0000001253 00000 n 
+0000001389 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R /Info 7 0 R >>
+startxref
+1465
+%%EOF

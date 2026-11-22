@@ -1730,6 +1730,7 @@
       "linkCopied": "リンクをコピーしました",
       "copyThisLink": "このリンクをコピー",
       "details": "詳細",
+      "timeline": "タイムライン",
       "links": "リンク",
       "socialProfiles": "SNSプロフィール",
       "mapOf": "{place}の地図",
@@ -1793,7 +1794,24 @@
         "password": "パスワード",
         "noPassword": "なし、そのまま接続",
         "copyNetwork": "ネットワーク名をコピー",
-        "copyPassword": "パスワードをコピー"
+        "copyPassword": "パスワードをコピー",
+        "security": "セキュリティ",
+        "steps": {
+          "title": "接続方法",
+          "iphone": "iPhoneの場合",
+          "android": "Androidの場合",
+          "copy": "上のボタンでパスワードをコピーします。",
+          "iphoneOpen": "「設定」を開き、「Wi-Fi」をタップします。Wi-Fiがオンになっていることを確認してください。",
+          "androidOpen": "「設定」を開き、「ネットワークとインターネット」、「インターネット」の順にタップします。機種によっては「接続」、「Wi-Fi」の順になります。",
+          "pick": "ネットワーク一覧から「{ssid}」をタップします。",
+          "iphoneHidden": "「その他」をタップし、ネットワーク名に「{ssid}」と入力して、セキュリティの種類を選択します。",
+          "androidHidden": "一覧の下部にある「ネットワークを追加」をタップし、「{ssid}」と入力して、セキュリティの種類を選択します。「詳細設定」で「非公開ネットワーク」を「はい」にします。",
+          "iphonePassword": "パスワードを貼り付け、「接続」をタップします。",
+          "androidPassword": "パスワードを貼り付け、「接続」をタップします。",
+          "androidPasswordSave": "パスワードを貼り付け、「保存」をタップします。",
+          "iphoneJoin": "「接続」をタップします。",
+          "androidSave": "「保存」をタップします。"
+        }
       },
       "payment": {
         "types": {
@@ -2001,6 +2019,8 @@
     "linear": "リニア（1D）",
     "linearInput": "エンコードする数字またはテキスト",
     "textInput": "エンコードするテキスト",
+    "addOn": "アドオン",
+    "variant": "シーケンスバリアント",
     "barColor": "バーの色",
     "background": "背景",
     "barHeight": "バーの高さ",
@@ -2024,6 +2044,7 @@
       "checking": "バーコードリーダーでPNGを確認しています…",
       "unavailable": "スキャンチェックのデコーダーを読み込めなかったため、このバーコードは確認されていません。印刷したコードをスキャナーでテストしてください。",
       "passed": "スキャンチェック成功：バーコードリーダーがPNGを{label}の <mono>{value}</mono> として読み取れました",
+      "addOnNotChecked": "このチェックで読み取るのは EAN-13 のみで、アドオン {addOn} は対象外です。アドオンを読み取れるスキャナーで、テスト印刷をスキャンしてください。",
       "mismatch": "スキャンチェック失敗：リーダーが読み取った値は、この{label}ではなく「{decoded}」でした。",
       "failed": "スキャンチェック失敗：リーダーがこの{label}を読み取れませんでした。コントラスト、サイズ、クワイエットゾーンのいずれかを上げてください。"
     },
@@ -2065,6 +2086,27 @@
       "gs1BadChars": "AI ({ai})にGS1で使用できない文字が含まれています:{chars}",
       "gs1Ai": "AI ({ai}):{inner}",
       "gs1TooLong": "GS1-128に含められるAIとデータは最大{max}文字です。現在は{count}文字です。2つのバーコードに分けてください。",
+      "isbnChars": "ISBN に使えるのは数字、ハイフン、スペースです。ISBN-10 は末尾を X にできます。",
+      "isbnLength": "ISBN は13桁、または旧形式の ISBN-10 では10桁です。現在の入力は {count, plural, other {#桁}}です。",
+      "isbnPrefix": "ISBN-13 は 978 または 979 で始まります。",
+      "isbnIsIsmn": "979-0 で始まる番号は、楽譜向けの ISMN です。バーコードの種類で ISMN を選んでください。",
+      "isbnUnknownRange": "この ISBN は、本ジェネレーターの最終更新時点で ISBN 機関が割り当て済みだった範囲に含まれていません。番号をご確認いただくか、5つの各部分をハイフンで区切って入力すると、入力どおりに印刷できます。",
+      "isbn10Converted": "ISBN-10 の {isbn10} から変換しました。",
+      "isbnHyphenated": "ISBN の範囲に基づいてハイフンを挿入しました: {isbn}。",
+      "issnChars": "ISSN に使えるのは数字とハイフンで、チェックデジットは X にできます。",
+      "issnLength": "ISSN は8文字(NNNN-NNNC)、またはチェックデジットを除いた7桁です。現在の入力は {count, plural, other {#文字}}です。",
+      "issnPrefix": "13桁の ISSN バーコード番号は 977 で始まります。",
+      "issnParts": "ISSN、2桁のシーケンスバリアント、アドオンを、それぞれスペースで区切って入力してください: 0317-8471 00 05。",
+      "issnVariant": "シーケンスバリアントは2桁です。通常版は 00 です。",
+      "issnEanVariant": "この 977 の番号には、すでにシーケンスバリアント {variant} が含まれています。バリアントを空にするか、8文字の ISSN を入力してください。",
+      "issnVariantAssumed": "シーケンスバリアント 00 を使用しました。",
+      "issnFromEan": "977 の番号から読み取りました: ISSN {issn}、シーケンスバリアント {variant}。",
+      "ismnChars": "ISMN に使えるのは数字、ハイフン、スペースです。10文字の旧形式では先頭に M が付きます。",
+      "ismnLength": "ISMN は 979-0 で始まる13桁、または旧形式の M で始まる10文字です。現在の入力は {count, plural, other {#文字}}です。",
+      "ismnPrefix": "ISMN は 979-0、または旧形式の M で始まります。978 や 979 で始まるそのほかの番号は ISBN です。バーコードの種類で ISBN を選んでください。",
+      "ismnConverted": "旧形式の {ismn10} から変換しました。",
+      "addOnDigits": "アドオンには数字のみ使えます。",
+      "addOnLength": "アドオンは2桁または5桁です。現在の入力は {count, plural, other {#桁}}です。",
       "unknownFormat": "不明なバーコード形式です。",
       "space": "スペース",
       "lineBreak": "改行"
@@ -3603,7 +3645,10 @@
         "showLess": "表示を減らす",
         "showValueMore": "さらに{value, number}件を表示",
         "applyThisDesign": "このデザインを適用",
-        "notAppliedYourEditorIs": "適用されませんでした。エディターは変更されていません。"
+        "notAppliedYourEditorIs": "適用されませんでした。エディターは変更されていません。",
+        "searchingTheFrames": "公式フレームを検索しています…",
+        "couldntSearchTheFrames": "フレームを検索できませんでした",
+        "foundFramesForQuery": "{count, plural, =0 {「{query}」に該当する公式フレームはありません} other {「{query}」の公式フレームが # 件見つかりました：}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

@@ -25,6 +25,7 @@ import {
   expandUpce,
   getBarcodeFormat,
   gs1CheckDigit,
+  publicationEan13,
   validateBarcodeInput,
 } from "@/lib/barcode/formats";
 import { defaultBarcodeStyle } from "@/lib/barcode/style";
@@ -86,19 +87,26 @@ export async function generateMetadata({
   });
 }
 
-/** Formats whose number ends in a GS1 check digit (EAN, UPC, ITF-14, GTIN). */
+/**
+ * Formats whose number ends in a GS1 check digit (EAN, UPC, ITF-14, GTIN,
+ * and the EAN-13 of an ISBN, ISSN or ISMN).
+ */
 const GS1_NUMBERS = new Set<BarcodeFormatId>([
   "ean13",
   "ean8",
   "upca",
   "upce",
+  "isbn",
+  "issn",
+  "ismn",
   "itf14",
   "gs1-128",
 ]);
 
 /**
  * The digits a worked check digit example runs over: the example without
- * its check digit (UPC-E: its expanded UPC-A; GS1-128: the GTIN in (01)).
+ * its check digit (UPC-E: its expanded UPC-A; GS1-128: the GTIN in (01);
+ * ISBN, ISSN and ISMN: the EAN-13 they're drawn as).
  */
 function checkBody(id: BarcodeFormatId, value: string): string | null {
   switch (id) {
@@ -109,6 +117,10 @@ function checkBody(id: BarcodeFormatId, value: string): string | null {
       return value.slice(0, -1);
     case "upce":
       return expandUpce(value).slice(0, 11);
+    case "isbn":
+    case "issn":
+    case "ismn":
+      return publicationEan13(id, value)?.slice(0, 12) ?? null;
     case "gs1-128":
       return /\(01\)(\d{13})\d/.exec(value)?.[1] ?? null;
     default:

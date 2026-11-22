@@ -57,6 +57,18 @@ export function WifiEditor({ value, onChange }: BlockEditorProps<WifiProps>) {
         placeholder="Ask staff if you can't connect"
         value={value.note}
       />
+      <SwitchField
+        checked={value.showSecurity}
+        hint="Shows WPA or WEP, for guests who add the network by hand"
+        label="Show the security type"
+        onChange={(showSecurity) => set({ showSecurity })}
+      />
+      <SwitchField
+        checked={value.showSteps}
+        hint="Short steps for iPhone and Android, in each visitor's language"
+        label="Show how to join"
+        onChange={(showSteps) => set({ showSteps })}
+      />
     </div>
   );
 }

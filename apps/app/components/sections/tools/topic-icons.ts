@@ -40,6 +40,7 @@ import {
   Link2,
   Location,
   Lovely,
+  Map as MapIcon,
   MessageText,
   Mobile,
   Moneys,
@@ -64,8 +65,10 @@ import {
   ShoppingCart,
   Signpost,
   Sms,
+  SmsStar,
   Sticker,
   Tag,
+  TagUser,
   Teacher,
   Ticket,
   TicketDiscount,
@@ -73,10 +76,12 @@ import {
   Tree,
   Truck,
   TruckFast,
+  UserEdit,
   UserSquare,
   VideoPlay,
   Weight,
   Wifi,
+  WifiSquare,
 } from "iconsax-reactjs";
 import { LinkedinIcon } from "@/components/landing/social-networks";
 import { brandIcon } from "@/lib/brand-logos/brand-logo";
@@ -230,6 +235,14 @@ export const PAGE_TYPE_ICONS: Record<PageTypeId, CardIcon> = {
   pet: Pet,
   medical: Health,
   playlist: MusicPlaylist,
+  // Added 2026-11-22 (pages)
+  location: MapIcon,
+  resume: Briefcase,
+  wifi: WifiSquare,
+  invitation: Lovely,
+  form: UserEdit,
+  "asset-tag": TagUser,
+  message: SmsStar,
 };
 
 export function topicIcon(slug: string, groupId?: string): CardIcon {

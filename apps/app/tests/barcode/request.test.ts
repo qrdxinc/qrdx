@@ -28,6 +28,9 @@ describe("parseBarcodeFormat", () => {
     expect(parseBarcodeFormat("UCC-128")).toBe("gs1-128");
     expect(parseBarcodeFormat("azteccode")).toBe("aztec");
     expect(parseBarcodeFormat("Codabar")).toBe("codabar");
+    expect(parseBarcodeFormat("ISBN-13")).toBe("isbn");
+    expect(parseBarcodeFormat("isbn10")).toBe("isbn");
+    expect(parseBarcodeFormat("Bookland")).toBe("isbn");
     expect(parseBarcodeFormat("qr")).toBeNull();
   });
 });

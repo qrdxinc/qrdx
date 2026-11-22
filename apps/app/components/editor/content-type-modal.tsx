@@ -94,6 +94,14 @@ const PAGE_KEYWORDS: Record<string, string[]> = {
   pet: ["pet", "dog", "cat", "collar", "lost pet"],
   medical: ["medical", "emergency", "ice", "allergy", "health"],
   playlist: ["playlist", "mixtape", "audio tour", "audiobook", "tracks"],
+  // Added 2026-11-22 (pages)
+  location: ["address", "directions", "map", "waze", "google maps"],
+  resume: ["cv", "resume", "portfolio", "job", "experience"],
+  wifi: ["wi-fi", "wifi", "password", "guest", "airbnb", "hotel"],
+  invitation: ["invitation", "wedding", "birthday", "rsvp", "party"],
+  form: ["contact form", "lead", "enquiry", "quote", "contact"],
+  "asset-tag": ["lost and found", "luggage", "keys", "laptop", "asset"],
+  message: ["message", "note", "gift", "greeting", "thank you"],
 };
 
 interface TypeItem {

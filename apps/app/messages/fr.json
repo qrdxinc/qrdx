@@ -1730,6 +1730,7 @@
       "linkCopied": "Lien copié",
       "copyThisLink": "Copier ce lien",
       "details": "Détails",
+      "timeline": "Chronologie",
       "links": "Liens",
       "socialProfiles": "Réseaux sociaux",
       "mapOf": "Carte de {place}",
@@ -1793,7 +1794,24 @@
         "password": "Mot de passe",
         "noPassword": "Aucun, connectez-vous",
         "copyNetwork": "Copier le nom du réseau",
-        "copyPassword": "Copier le mot de passe"
+        "copyPassword": "Copier le mot de passe",
+        "security": "Sécurité",
+        "steps": {
+          "title": "Comment se connecter",
+          "iphone": "Sur iPhone",
+          "android": "Sur Android",
+          "copy": "Copiez le mot de passe avec le bouton ci-dessus.",
+          "iphoneOpen": "Ouvrez Réglages et touchez Wi-Fi. Vérifiez que le Wi-Fi est activé.",
+          "androidOpen": "Ouvrez Paramètres et touchez Réseau et Internet, puis Internet. Sur certains téléphones, il s’agit de Connexions, puis Wi-Fi.",
+          "pick": "Touchez « {ssid} » dans la liste des réseaux.",
+          "iphoneHidden": "Touchez Autre, saisissez « {ssid} » comme nom et choisissez le type de sécurité.",
+          "androidHidden": "Touchez Ajouter un réseau en bas de la liste, saisissez « {ssid} » et choisissez le type de sécurité. Dans Options avancées, réglez Réseau masqué sur Oui.",
+          "iphonePassword": "Collez le mot de passe et touchez Rejoindre.",
+          "androidPassword": "Collez le mot de passe et touchez Se connecter.",
+          "androidPasswordSave": "Collez le mot de passe et touchez Enregistrer.",
+          "iphoneJoin": "Touchez Rejoindre.",
+          "androidSave": "Touchez Enregistrer."
+        }
       },
       "payment": {
         "types": {
@@ -2001,6 +2019,8 @@
     "linear": "Linéaire (1D)",
     "linearInput": "Nombre ou texte à encoder",
     "textInput": "Texte à encoder",
+    "addOn": "Extension",
+    "variant": "Variante de séquence",
     "barColor": "Couleur des barres",
     "background": "Arrière-plan",
     "barHeight": "Hauteur des barres",
@@ -2024,6 +2044,7 @@
       "checking": "Vérification du PNG avec un lecteur de code-barres…",
       "unavailable": "La vérification du scan n'a pas pu charger son décodeur, ce code-barres n'a donc pas été vérifié. Testez le code imprimé avec un lecteur.",
       "passed": "Vérification du scan réussie : un lecteur de codes-barres décode le PNG comme {label} <mono>{value}</mono>",
+      "addOnNotChecked": "Cette vérification lit uniquement l’EAN-13, pas l’extension {addOn} : scannez une impression test avec un lecteur qui lit les extensions.",
       "mismatch": "Échec de la vérification du scan : le lecteur a obtenu « {decoded} » au lieu de ce {label}.",
       "failed": "Échec de la vérification du scan : le lecteur n'a pas pu décoder ce {label}. Augmentez le contraste, la taille ou la zone de silence."
     },
@@ -2065,6 +2086,27 @@
       "gs1BadChars": "L’AI ({ai}) contient des caractères non autorisés par GS1 : {chars}",
       "gs1Ai": "AI ({ai}) : {inner}",
       "gs1TooLong": "GS1-128 accepte jusqu’à {max} caractères d’AI et de données ; ici, il y en a {count}. Répartissez-les sur deux codes-barres.",
+      "isbnChars": "Un ISBN accepte des chiffres, des traits d’union et des espaces ; un ISBN-10 peut se terminer par X.",
+      "isbnLength": "Un ISBN compte 13 chiffres, ou 10 dans l’ancien format ISBN-10 ; celui-ci en compte {count, plural, one {# chiffre} other {# chiffres}}.",
+      "isbnPrefix": "Un ISBN-13 commence par 978 ou 979.",
+      "isbnIsIsmn": "Les numéros commençant par 979-0 sont des ISMN, utilisés pour la musique imprimée. Choisissez ISMN comme type de code-barres.",
+      "isbnUnknownRange": "Cet ISBN ne figure pas dans une plage attribuée par les agences ISBN à la dernière mise à jour de ce générateur. Vérifiez le numéro, ou saisissez-le avec un trait d’union entre chacune de ses cinq parties pour l’imprimer tel quel.",
+      "isbn10Converted": "Converti à partir de l’ISBN-10 {isbn10}.",
+      "isbnHyphenated": "Traits d’union placés selon les plages ISBN : {isbn}.",
+      "issnChars": "Un ISSN accepte des chiffres et un trait d’union, et son chiffre de contrôle peut être X.",
+      "issnLength": "Un ISSN compte 8 caractères (NNNN-NNNC), ou 7 chiffres sans le chiffre de contrôle ; celui-ci compte {count, plural, one {# caractère} other {# caractères}}.",
+      "issnPrefix": "Un numéro de code-barres ISSN à 13 chiffres commence par 977.",
+      "issnParts": "Saisissez l’ISSN, la variante de séquence à 2 chiffres et l’extension, séparés par un espace : 0317-8471 00 05.",
+      "issnVariant": "La variante de séquence compte 2 chiffres : 00 pour l’édition courante.",
+      "issnEanVariant": "Ce numéro 977 contient déjà la variante de séquence {variant}. Laissez la variante vide, ou saisissez l’ISSN à 8 caractères.",
+      "issnVariantAssumed": "Variante de séquence 00 utilisée.",
+      "issnFromEan": "Lu à partir du numéro 977 : ISSN {issn}, variante de séquence {variant}.",
+      "ismnChars": "Un ISMN accepte des chiffres, des traits d’union et des espaces, avec un M au début de l’ancien format à 10 caractères.",
+      "ismnLength": "Un ISMN compte 13 chiffres commençant par 979-0, ou 10 caractères commençant par M dans l’ancien format ; celui-ci compte {count, plural, one {# caractère} other {# caractères}}.",
+      "ismnPrefix": "Un ISMN commence par 979-0, ou par M dans l’ancien format. Les autres numéros commençant par 978 ou 979 sont des ISBN : choisissez ISBN comme type de code-barres.",
+      "ismnConverted": "Converti à partir de l’ancien format {ismn10}.",
+      "addOnDigits": "L’extension n’accepte que des chiffres.",
+      "addOnLength": "Une extension compte 2 ou 5 chiffres ; celle-ci en compte {count, plural, one {# chiffre} other {# chiffres}}.",
       "unknownFormat": "Format de code-barres inconnu.",
       "space": "espace",
       "lineBreak": "un saut de ligne"
@@ -3603,7 +3645,10 @@
         "showLess": "Afficher moins",
         "showValueMore": "Afficher {value, number} de plus",
         "applyThisDesign": "Appliquer ce design",
-        "notAppliedYourEditorIs": "Non appliqué. Votre éditeur reste inchangé."
+        "notAppliedYourEditorIs": "Non appliqué. Votre éditeur reste inchangé.",
+        "searchingTheFrames": "Recherche dans les cadres officiels…",
+        "couldntSearchTheFrames": "Impossible de rechercher les cadres",
+        "foundFramesForQuery": "{count, plural, =0 {Aucun cadre officiel pour « {query} »} one {# cadre officiel trouvé pour « {query} » :} other {# cadres officiels trouvés pour « {query} » :}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

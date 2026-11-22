@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "Scarica il codice in PNG, WebP o SVG.",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "Scarica il codice in formato PNG, SVG, WebP, GIF, BMP o ICO.",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "Scarica un PNG, WebP o SVG, oppure personalizza lo stile del codice nell'editor completo.",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "Scarica un file PNG, SVG, WebP, GIF, BMP o ICO, oppure personalizza lo stile del codice nell'editor completo.",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -7049,6 +7049,1548 @@
     "status": "machine",
     "context": "hostedTypes.business-card.faqs.6.answer"
   },
+  "1ca2f18940fc": {
+    "source": "Guest Wi-Fi Page",
+    "text": "Pagina Wi-Fi ospiti",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.name"
+  },
+  "96eb9f2c3d84": {
+    "source": "Guest Wi-Fi Page QR Code Generator",
+    "text": "Generatore di QR code per pagina Wi-Fi ospiti",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.title"
+  },
+  "8a24b43ab1d4": {
+    "source": "A Wi-Fi page with the password to copy and steps to join.",
+    "text": "Una pagina Wi-Fi con la password da copiare e i passaggi per connettersi.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.summary"
+  },
+  "ed9fc8717762": {
+    "source": "Create your Wi-Fi page",
+    "text": "Crea la tua pagina Wi-Fi",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.cta"
+  },
+  "780cef41732a": {
+    "source": "A guest Wi-Fi page behind a QR code: network name, a password to copy and steps to join on iPhone and Android. Change the password, keep the code.",
+    "text": "Una pagina Wi-Fi per gli ospiti dietro un QR code: nome della rete, password da copiare e passaggi per connettersi su iPhone e Android. Cambia la password, tieni il codice.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.metaDescription"
+  },
+  "7705c99273c9": {
+    "source": "A guest Wi-Fi page QR code opens a page QRdx hosts for you with your network name, the password with a copy button, and short steps to join on iPhone and Android in each guest's own language. Add house rules, where the router is, or a button to message you.",
+    "text": "Il QR code di una pagina Wi-Fi per ospiti apre una pagina che QRdx ospita per te, con il nome della rete, la password con un pulsante per copiarla e brevi passaggi per connettersi su iPhone e Android nella lingua di ciascun ospite. Aggiungi le regole della casa, dove si trova il router o un pulsante per scriverti.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.intro.0"
+  },
+  "8a4f8768c9f7": {
+    "source": "It helps where a Wi-Fi QR code can't: a scanner app or an older phone that doesn't join networks, a hidden network, or a guest who wants to read the password. The code holds a link, so you can change the password after printing and every printed code shows the new one. It needs a free QRdx account.",
+    "text": "Serve dove un QR code Wi-Fi non basta: un'app di scansione o un telefono più vecchio che non si collega alle reti, una rete nascosta, o un ospite che vuole leggere la password. Il codice contiene un link, quindi puoi cambiare la password dopo la stampa e ogni codice stampato mostrerà quella nuova. Serve un account QRdx gratuito.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.intro.1"
+  },
+  "790c957105ec": {
+    "source": "Sign in or create a free account, then start a Guest Wi-Fi page: the button above opens it with that type picked.",
+    "text": "Accedi o crea un account gratuito, poi avvia una pagina Wi-Fi ospiti: il pulsante qui sopra la apre con quel tipo già selezionato.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.0"
+  },
+  "7eceaef80531": {
+    "source": "Pick a template (Café, Holiday rental or Office visitors) and enter your network name, password and security type.",
+    "text": "Scegli un modello (Café, Casa vacanze o Visitatori in ufficio) e inserisci il nome della rete, la password e il tipo di sicurezza.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.1"
+  },
+  "a30554b8d54e": {
+    "source": "Add your house rules or a note, then publish.",
+    "text": "Aggiungi le regole della casa o una nota, poi pubblica.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.steps.2"
+  },
+  "883636a91149": {
+    "source": "Copy buttons",
+    "text": "Pulsanti di copia",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.0.title"
+  },
+  "26aa6584ec79": {
+    "source": "The network name and the password each have a copy button, so guests paste the password instead of typing it.",
+    "text": "Il nome della rete e la password hanno ciascuno un pulsante per copiare, così gli ospiti incollano la password invece di digitarla.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.0.description"
+  },
+  "f56144df1d82": {
+    "source": "How to join",
+    "text": "Come connettersi",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.1.title"
+  },
+  "f7595ea62095": {
+    "source": "Short steps for iPhone and Android in each guest's language, including how to add a hidden network by name.",
+    "text": "Brevi passaggi per iPhone e Android nella lingua di ogni ospite, compreso come aggiungere una rete nascosta con il suo nome.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.1.description"
+  },
+  "4dd01fe64a3c": {
+    "source": "House rules and notes",
+    "text": "Regole della casa e note",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.2.title"
+  },
+  "610c7ed9a6d3": {
+    "source": "Your own text under the network: quiet hours, check-out time, where the router is, or a button to message you.",
+    "text": "Un tuo testo sotto la rete: orari di silenzio, orario di check-out, dove si trova il router o un pulsante per scriverti.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.2.description"
+  },
+  "e9d7496c9fb0": {
+    "source": "The code counts scans without cookies, so you can see how often guests use it.",
+    "text": "Il codice conta le scansioni senza cookie, così puoi vedere quanto spesso lo usano gli ospiti.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.features.3.description"
+  },
+  "806878faf2ce": {
+    "source": "Changed the password? Edit the page and publish: every printed code shows the new one, so there's nothing to reprint.",
+    "text": "Hai cambiato la password? Modifica la pagina e pubblica: ogni codice stampato mostra quella nuova, quindi non c'è nulla da ristampare.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.editing.0"
+  },
+  "be47acc58b76": {
+    "source": "Anyone who opens the page can read the password, just as anyone who scans a Wi-Fi QR code can join. Use a guest network that's kept apart from your own devices.",
+    "text": "Chiunque apra la pagina può leggere la password, così come chiunque scansioni un QR code Wi-Fi può connettersi. Usa una rete per gli ospiti separata dai tuoi dispositivi.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.editing.1"
+  },
+  "978f0f684e30": {
+    "source": "A Wi-Fi QR code or a guest Wi-Fi page?",
+    "text": "QR code Wi-Fi o pagina Wi-Fi per ospiti?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.title"
+  },
+  "0cec0b722791": {
+    "source": "Wi-Fi QR code (static)",
+    "text": "QR code Wi-Fi (statico)",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticLabel"
+  },
+  "39d66e242d1b": {
+    "source": "No account: the network name and password are written into the code.",
+    "text": "Nessun account: il nome della rete e la password sono scritti nel codice.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.0"
+  },
+  "03619cc70529": {
+    "source": "The camera apps on iPhone and most Android phones offer to join in one tap.",
+    "text": "Le app fotocamera su iPhone e sulla maggior parte dei telefoni Android propongono di connettersi con un tocco.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.1"
+  },
+  "23018da6e439": {
+    "source": "A new password means printing a new code, and there's nowhere for house rules.",
+    "text": "Una nuova password significa stampare un nuovo codice, e non c'è spazio per le regole della casa.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.staticPoints.2"
+  },
+  "9378a2b19253": {
+    "source": "Guest Wi-Fi page",
+    "text": "Pagina Wi-Fi ospiti",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedLabel"
+  },
+  "61efac606d6b": {
+    "source": "Guests copy the password and follow the steps: a web page can't join the network for them.",
+    "text": "Gli ospiti copiano la password e seguono i passaggi: una pagina web non può collegarli alla rete al posto loro.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedPoints.1"
+  },
+  "76bc165fb118": {
+    "source": "Change the password or the rules any time; printed codes keep working.",
+    "text": "Cambia la password o le regole quando vuoi; i codici stampati continuano a funzionare.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.compare.hostedPoints.2"
+  },
+  "84638455a9b7": {
+    "source": "Is the guest Wi-Fi page free?",
+    "text": "La pagina Wi-Fi per gli ospiti è gratuita?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.0.question"
+  },
+  "1146130f429a": {
+    "source": "Can the page join the network for my guests?",
+    "text": "La pagina può collegare alla rete i miei ospiti?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.1.question"
+  },
+  "0d653bdee46d": {
+    "source": "No. Browsers aren't allowed to change a phone's Wi-Fi settings, so the page shows the password with a copy button and the steps to join. For a one-tap join, print a Wi-Fi QR code as well.",
+    "text": "No. I browser non possono modificare le impostazioni Wi-Fi di un telefono, quindi la pagina mostra la password con un pulsante per copiarla e i passaggi per connettersi. Per collegarsi con un tocco, stampa anche un QR code Wi-Fi.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.1.answer"
+  },
+  "3fe7c580c1ad": {
+    "source": "Can I change the password after printing?",
+    "text": "Posso cambiare la password dopo la stampa?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.2.question"
+  },
+  "8bf162a39c41": {
+    "source": "Yes. Edit the page and publish; every printed code shows the new password.",
+    "text": "Sì. Modifica la pagina e pubblica: ogni codice stampato mostra la nuova password.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.2.answer"
+  },
+  "d10fa6440c9c": {
+    "source": "Is the password private?",
+    "text": "La password è privata?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.3.question"
+  },
+  "6251b3132ebd": {
+    "source": "No. Anyone who scans the code or opens the page's link can read it. Hosted pages are hidden from search engines unless you turn on Show in search engines, but treat the password as shared with everyone who can see the code.",
+    "text": "No. Chiunque faccia la scansione del codice o apra il link della pagina può leggerla. Le pagine ospitate sono nascoste ai motori di ricerca, a meno che tu non attivi Mostra nei motori di ricerca, ma considera la password condivisa con chiunque possa vedere il codice.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.3.answer"
+  },
+  "094d2ca95331": {
+    "source": "Does it work with a hidden network?",
+    "text": "Funziona con una rete nascosta?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.4.question"
+  },
+  "6ae57f9836e7": {
+    "source": "Yes. Switch on Hidden network and the steps explain how to add the network by its name on iPhone and Android.",
+    "text": "Sì. Attiva Rete nascosta e i passaggi spiegano come aggiungere la rete tramite il nome su iPhone e Android.",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.4.answer"
+  },
+  "e3a4fd489669": {
+    "source": "What happens to my page if I stop paying?",
+    "text": "Cosa succede alla mia pagina se smetto di pagare?",
+    "status": "machine",
+    "context": "hostedTypes.guest-wifi.faqs.5.question"
+  },
+  "947bcf8e59d4": {
+    "source": "Location Page",
+    "text": "Pagina di posizione",
+    "status": "machine",
+    "context": "hostedTypes.location.name"
+  },
+  "02319258a3ba": {
+    "source": "Location Page QR Code Generator",
+    "text": "Generatore di QR code per pagina di posizione",
+    "status": "machine",
+    "context": "hostedTypes.location.title"
+  },
+  "fd35eced5b69": {
+    "source": "Your address with a map and buttons for three map apps.",
+    "text": "Il tuo indirizzo con una mappa e pulsanti per tre app di mappe.",
+    "status": "machine",
+    "context": "hostedTypes.location.summary"
+  },
+  "0b2b20865271": {
+    "source": "Create your location page",
+    "text": "Crea la tua pagina di posizione",
+    "status": "machine",
+    "context": "hostedTypes.location.cta"
+  },
+  "c1765e065619": {
+    "source": "A location page behind a QR code: your address, a map, directions in Google Maps, Apple Maps or Waze, and opening hours. Moved? Edit it, keep the code.",
+    "text": "Una pagina di posizione dietro a un QR code: il tuo indirizzo, una mappa, le indicazioni in Google Maps, Apple Maps o Waze e gli orari di apertura. Ti sei trasferito? Modificala e tieni lo stesso codice.",
+    "status": "machine",
+    "context": "hostedTypes.location.metaDescription"
+  },
+  "16a27aa3d4a2": {
+    "source": "A location QR code opens a page QRdx hosts for you with your address, an optional map, and buttons that open directions in Google Maps, Apple Maps or Waze, so people use the app they already have. Add opening hours with an Open now badge, where the entrance is, parking and the nearest stop.",
+    "text": "Un QR code di posizione apre una pagina che QRdx ospita per te con il tuo indirizzo, una mappa facoltativa e pulsanti che aprono le indicazioni in Google Maps, Apple Maps o Waze, così le persone usano l'app che hanno già. Aggiungi gli orari di apertura con un badge Aperto ora, dove si trova l'ingresso, il parcheggio e la fermata più vicina.",
+    "status": "machine",
+    "context": "hostedTypes.location.intro.0"
+  },
+  "e738ca7afa86": {
+    "source": "The code holds a short link, so if you move or change your hours, edit the page and every printed code shows the new details. It needs a free QRdx account. For a code that opens Google Maps with no account, use the Google Maps QR code generator.",
+    "text": "Il codice contiene un link breve: se ti trasferisci o cambi gli orari, modifica la pagina e ogni codice stampato mostra i nuovi dati. Serve un account QRdx gratuito. Per un codice che apre Google Maps senza account, usa il generatore di QR code per Google Maps.",
+    "status": "machine",
+    "context": "hostedTypes.location.intro.1"
+  },
+  "696b3dc5074d": {
+    "source": "Sign in or create a free account, then start a Location page: the button above opens it with that type picked.",
+    "text": "Accedi o crea un account gratuito, poi avvia una pagina di posizione: il pulsante qui sopra la apre con quel tipo già selezionato.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.0"
+  },
+  "eb83237a6c10": {
+    "source": "Pick a template (Shop, Venue or Meeting point) and enter the address.",
+    "text": "Scegli un modello (Negozio, Locale o Punto d'incontro) e inserisci l'indirizzo.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.1"
+  },
+  "3fa0e6b2c4e0": {
+    "source": "Turn the map and the Waze button on or off, add opening hours and notes, then publish.",
+    "text": "Attiva o disattiva la mappa e il pulsante Waze, aggiungi orari di apertura e note, poi pubblica.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.2"
+  },
+  "318af76a1e2d": {
+    "source": "Download the page's QR code, print it and scan it once to check the directions.",
+    "text": "Scarica il QR code della pagina, stampalo e fai una scansione per verificare le indicazioni.",
+    "status": "machine",
+    "context": "hostedTypes.location.steps.3"
+  },
+  "e2b0c6645a9c": {
+    "source": "Three map apps",
+    "text": "Tre app di mappe",
+    "status": "machine",
+    "context": "hostedTypes.location.features.0.title"
+  },
+  "42b8522cde04": {
+    "source": "Google Maps, Apple Maps and Waze buttons, each opening the app when it's installed and its website when it isn't.",
+    "text": "Pulsanti per Google Maps, Apple Maps e Waze: ciascuno apre l'app se è installata e il sito web se non lo è.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.0.description"
+  },
+  "db85ab728a6f": {
+    "source": "A map on the page",
+    "text": "Una mappa nella pagina",
+    "status": "machine",
+    "context": "hostedTypes.location.features.1.title"
+  },
+  "7c73682dea5e": {
+    "source": "An embedded Google map of the address when you turn it on. It loads content from Google for visitors, so it stays off until you choose it.",
+    "text": "Una mappa Google incorporata con l'indirizzo, quando la attivi. Per i visitatori carica contenuti da Google, quindi resta disattivata finché non la scegli tu.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.1.description"
+  },
+  "7c01795782fe": {
+    "source": "Opening hours",
+    "text": "Orari di apertura",
+    "status": "machine",
+    "context": "pageCodes.on-window-decals-2.label"
+  },
+  "5c9b6bc549d5": {
+    "source": "Hours for each day, split shifts included, with an Open now badge that follows the time zone you set.",
+    "text": "Orari per ogni giorno, con turni spezzati inclusi, e un badge Aperto ora che segue il fuso orario che imposti.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.2.description"
+  },
+  "c9c20ae26ddc": {
+    "source": "Notes that help",
+    "text": "Note utili",
+    "status": "machine",
+    "context": "hostedTypes.location.features.3.title"
+  },
+  "e456a733811d": {
+    "source": "Where the entrance is, parking, the nearest stop or step-free access, as text or a list of details.",
+    "text": "Dove si trova l'ingresso, il parcheggio, la fermata più vicina o l'accesso senza gradini, come testo o elenco di dettagli.",
+    "status": "machine",
+    "context": "hostedTypes.location.features.3.description"
+  },
+  "3464ffee3ac9": {
+    "source": "Moved, or changed your hours? Edit the page and publish; signs, flyers and cards that are already printed open the new details.",
+    "text": "Ti sei trasferito o hai cambiato gli orari? Modifica la pagina e pubblica: insegne, volantini e biglietti già stampati aprono i nuovi dati.",
+    "status": "machine",
+    "context": "hostedTypes.location.editing.0"
+  },
+  "a6b4cdfe7043": {
+    "source": "Every scan is counted without cookies, so you can see when people look up the way to you.",
+    "text": "Ogni scansione viene conteggiata senza cookie, così puoi vedere quando le persone cercano la strada per arrivare da te.",
+    "status": "machine",
+    "context": "hostedTypes.location.editing.1"
+  },
+  "ddab20f026f2": {
+    "source": "A Google Maps QR code or a location page?",
+    "text": "Un QR code di Google Maps o una pagina della posizione?",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.title"
+  },
+  "318adf7e74b1": {
+    "source": "Google Maps QR code (static)",
+    "text": "QR code di Google Maps (statico)",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticLabel"
+  },
+  "5619f199b4c9": {
+    "source": "No account: the code holds a Google Maps link to the place.",
+    "text": "Nessun account: il codice contiene un link di Google Maps al luogo.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.0"
+  },
+  "75c63fd0a67c": {
+    "source": "Opens Google Maps, or its website where the app isn't installed.",
+    "text": "Apre Google Maps, o il suo sito web dove l'app non è installata.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.1"
+  },
+  "1f2d0305ebeb": {
+    "source": "Can't change after printing, and shows nothing else: no hours or notes.",
+    "text": "Non si può modificare dopo la stampa e non mostra altro: né orari né note.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.staticPoints.2"
+  },
+  "f92408835ad7": {
+    "source": "Location page",
+    "text": "Pagina della posizione",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedLabel"
+  },
+  "94bbda41fd5a": {
+    "source": "Google Maps, Apple Maps and Waze, plus a map, hours and notes.",
+    "text": "Google Maps, Apple Maps e Waze, più una mappa, gli orari e le note.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedPoints.1"
+  },
+  "ea6f083ebdb6": {
+    "source": "Edit the address or hours any time; printed codes keep working.",
+    "text": "Modifica l'indirizzo o gli orari quando vuoi: i codici stampati continuano a funzionare.",
+    "status": "machine",
+    "context": "hostedTypes.location.compare.hostedPoints.2"
+  },
+  "77c3fea4604c": {
+    "source": "Is the location page free?",
+    "text": "La pagina della posizione è gratuita?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.0.question"
+  },
+  "3e8ce35cffda": {
+    "source": "Which map apps does it open?",
+    "text": "Quali app di mappe apre?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.1.question"
+  },
+  "b0daf58795a0": {
+    "source": "Google Maps, Apple Maps and, when you turn its button on, Waze. Each button opens the app when it's installed and the map's website when it isn't.",
+    "text": "Google Maps, Apple Maps e, se attivi il suo pulsante, Waze. Ogni pulsante apre l'app se è installata, altrimenti il sito web della mappa.",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.1.answer"
+  },
+  "2ae8f6d3fc5a": {
+    "source": "Can I change the address after printing?",
+    "text": "Posso cambiare l'indirizzo dopo la stampa?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.2.question"
+  },
+  "e597bc8c476f": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new address.",
+    "text": "Sì. Modifica la pagina e pubblica: ogni codice stampato apre il nuovo indirizzo.",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.2.answer"
+  },
+  "3cce71e7cdc9": {
+    "source": "Does the map load anything from Google?",
+    "text": "La mappa carica qualcosa da Google?",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.3.question"
+  },
+  "cffb66cc6a3d": {
+    "source": "The embedded map does: it's a Google map, so it loads content from Google when the page opens. That's why it's off until you turn it on. Without it, the page loads nothing from Google until someone taps the Google Maps button.",
+    "text": "La mappa incorporata sì: è una mappa di Google, quindi carica contenuti da Google quando la pagina si apre. Per questo è disattivata finché non la attivi. Senza di essa, la pagina non carica nulla da Google finché qualcuno non tocca il pulsante Google Maps.",
+    "status": "machine",
+    "context": "hostedTypes.location.faqs.3.answer"
+  },
+  "d640c7421da0": {
+    "source": "Resume",
+    "text": "Curriculum",
+    "status": "machine",
+    "context": "hostedTypes.resume.name"
+  },
+  "7d41961e2188": {
+    "source": "Resume and CV QR Code Generator",
+    "text": "Generatore di QR code per curriculum e CV",
+    "status": "machine",
+    "context": "hostedTypes.resume.title"
+  },
+  "1da120a9b83d": {
+    "source": "A CV page with your photo, experience, skills and a PDF.",
+    "text": "Una pagina CV con la tua foto, esperienza, competenze e un PDF.",
+    "status": "machine",
+    "context": "hostedTypes.resume.summary"
+  },
+  "0c6569c34c06": {
+    "source": "Create your resume page",
+    "text": "Crea la tua pagina curriculum",
+    "status": "machine",
+    "context": "hostedTypes.resume.cta"
+  },
+  "dde5a4aef253": {
+    "source": "Put your resume behind a QR code: a CV page with your photo, experience, education, skills, links and a PDF to download. Update it, keep the code.",
+    "text": "Metti il tuo curriculum dietro a un QR code: una pagina CV con la tua foto, esperienza, formazione, competenze, link e un PDF da scaricare. Aggiornala, mantieni il codice.",
+    "status": "machine",
+    "context": "hostedTypes.resume.metaDescription"
+  },
+  "0f494ff25d20": {
+    "source": "A resume QR code opens a CV page QRdx hosts for you: your photo and headline, a short summary, your experience and education in order, your skills, links to your portfolio, LinkedIn or GitHub, and your CV as a PDF to download.",
+    "text": "Un QR code per il curriculum apre una pagina CV che QRdx ospita per te: la tua foto e il tuo titolo professionale, un breve riepilogo, esperienza e formazione in ordine, le tue competenze, i link al tuo portfolio, a LinkedIn o a GitHub e il tuo CV in PDF da scaricare.",
+    "status": "machine",
+    "context": "hostedTypes.resume.intro.0"
+  },
+  "f6cd57836459": {
+    "source": "Print the code on a paper CV, a business card or a portfolio, and whoever scans it sees the latest version: edit the page when you change jobs and every printed code opens it. It needs a free QRdx account.",
+    "text": "Stampa il codice su un CV cartaceo, un biglietto da visita o un portfolio, e chi lo scansiona vede la versione più recente: modifica la pagina quando cambi lavoro e ogni codice stampato la apre. Serve un account QRdx gratuito.",
+    "status": "machine",
+    "context": "hostedTypes.resume.intro.1"
+  },
+  "56ce2e15bbf3": {
+    "source": "Sign in or create a free account, then start a Resume / CV page: the button above opens it with that type picked.",
+    "text": "Accedi o crea un account gratuito, poi avvia una pagina Curriculum / CV: il pulsante qui sopra la apre con quel tipo già selezionato.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.0"
+  },
+  "47e67c939ed0": {
+    "source": "Pick a template (Designer, Developer or Graduate), add your photo and fill in your experience, education and skills.",
+    "text": "Scegli un modello (Designer, Developer o Graduate), aggiungi la tua foto e compila esperienza, formazione e competenze.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.1"
+  },
+  "d1453a85a2cc": {
+    "source": "Add your links and your CV as a PDF, then publish.",
+    "text": "Aggiungi i tuoi link e il tuo CV in PDF, poi pubblica.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.2"
+  },
+  "2dc8630cde01": {
+    "source": "Download the page's QR code for your printed CV or card, and scan it once to check.",
+    "text": "Scarica il QR code della pagina per il tuo CV stampato o il tuo biglietto, ed eseguine una scansione per verificare.",
+    "status": "machine",
+    "context": "hostedTypes.resume.steps.3"
+  },
+  "cd30e1c67168": {
+    "source": "Experience and education",
+    "text": "Esperienza e formazione",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.0.title"
+  },
+  "8f990906d6d5": {
+    "source": "Each role or course with its dates, the company or school, and a line about what you did, in order.",
+    "text": "Ogni ruolo o corso con le sue date, l'azienda o la scuola e una riga su cosa hai fatto, in ordine.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.0.description"
+  },
+  "9ab011df98c4": {
+    "source": "Skills and facts",
+    "text": "Competenze e info",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.1.title"
+  },
+  "d03983ae376e": {
+    "source": "Skills, languages or where you're based, as a list or as tiles.",
+    "text": "Competenze, lingue o dove vivi, come elenco o come riquadri.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.1.description"
+  },
+  "9024c197d849": {
+    "source": "Links",
+    "text": "Link",
+    "status": "machine",
+    "context": "pageCodes.on-window-decals-4.label"
+  },
+  "46bec34da8f4": {
+    "source": "Your portfolio, LinkedIn, GitHub or email as buttons.",
+    "text": "Il tuo portfolio, LinkedIn, GitHub o la tua email come pulsanti.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.2.description"
+  },
+  "4628486be4b4": {
+    "source": "Your CV as a PDF",
+    "text": "Il tuo CV in PDF",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.3.title"
+  },
+  "8de72360756b": {
+    "source": "A download button for the PDF, uploaded to QRdx or linked from where it already lives.",
+    "text": "Un pulsante per scaricare il PDF, caricato su QRdx o collegato da dove si trova già.",
+    "status": "machine",
+    "context": "hostedTypes.resume.features.3.description"
+  },
+  "4c2a0d00a057": {
+    "source": "Edit the page and publish when anything changes: a new job, a new skill, a new photo. Every printed code opens the new version, and each publish is kept as a version.",
+    "text": "Modifica la pagina e pubblica quando qualcosa cambia: un nuovo lavoro, una nuova competenza, una nuova foto. Ogni codice stampato apre la nuova versione e ogni pubblicazione viene conservata come versione.",
+    "status": "machine",
+    "context": "hostedTypes.resume.editing.0"
+  },
+  "00ad204e50ef": {
+    "source": "Replace an uploaded PDF in Dashboard → Files and the page offers the new file within a minute. Scans are counted without cookies, so you can see when someone opens your CV.",
+    "text": "Sostituisci un PDF caricato in Dashboard → Files e la pagina offre il nuovo file entro un minuto. Le scansioni vengono conteggiate senza cookie, così puoi vedere quando qualcuno apre il tuo CV.",
+    "status": "machine",
+    "context": "hostedTypes.resume.editing.1"
+  },
+  "c80e313b1313": {
+    "source": "A LinkedIn QR code or a resume page?",
+    "text": "Un QR code di LinkedIn o una pagina curriculum?",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.title"
+  },
+  "f9fa807326c5": {
+    "source": "LinkedIn QR code (static)",
+    "text": "QR code di LinkedIn (statico)",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticLabel"
+  },
+  "c124deca7c39": {
+    "source": "No account: the code opens your LinkedIn profile.",
+    "text": "Nessun account: il codice apre il tuo profilo LinkedIn.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.0"
+  },
+  "a4805184b32b": {
+    "source": "The profile stays current as you edit it on LinkedIn.",
+    "text": "Il profilo resta aggiornato man mano che lo modifichi su LinkedIn.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.1"
+  },
+  "25cbff28c8e6": {
+    "source": "It shows LinkedIn's layout, and people who aren't signed in may see only part of it.",
+    "text": "Mostra il layout di LinkedIn, e chi non ha effettuato l'accesso potrebbe vederne solo una parte.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.staticPoints.2"
+  },
+  "ba4f5e6fc3f3": {
+    "source": "Resume page",
+    "text": "Pagina curriculum",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedLabel"
+  },
+  "2f8d0d236823": {
+    "source": "Your own layout and colors, a PDF to download, and no sign-in for readers.",
+    "text": "Layout e colori tuoi, un PDF da scaricare e nessun accesso richiesto a chi legge.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedPoints.1"
+  },
+  "38cbb9f63722": {
+    "source": "Edit it any time; printed codes keep working, and scans are counted.",
+    "text": "Modificala quando vuoi: i codici stampati continuano a funzionare e le scansioni vengono conteggiate.",
+    "status": "machine",
+    "context": "hostedTypes.resume.compare.hostedPoints.2"
+  },
+  "acd460d2ac53": {
+    "source": "Is the resume page free?",
+    "text": "La pagina curriculum è gratuita?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.0.question"
+  },
+  "fe4a5505c7d4": {
+    "source": "Can people download my CV?",
+    "text": "Si può scaricare il mio CV?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.1.question"
+  },
+  "244f5983c68c": {
+    "source": "Yes. Add the PDF to the page's Downloads block, uploaded to QRdx (up to 10 MB per file on Free) or linked from where it's already online.",
+    "text": "Sì. Aggiungi il PDF al blocco Download della pagina, caricato su QRdx (fino a 10 MB per file con Free) o collegato da dove è già online.",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.1.answer"
+  },
+  "2d7c7ff033e8": {
+    "source": "Can I update it after printing?",
+    "text": "Posso aggiornarlo dopo la stampa?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.2.question"
+  },
+  "387fa17c1328": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new version.",
+    "text": "Sì. Modifica la pagina e pubblica: ogni codice stampato apre la nuova versione.",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.2.answer"
+  },
+  "3f3dcd5af52f": {
+    "source": "Will my resume show up in search engines?",
+    "text": "Il mio curriculum comparirà nei motori di ricerca?",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.3.question"
+  },
+  "cf87edfd462e": {
+    "source": "Not unless you want it to. Hosted pages are hidden from search engines until you turn on Show in search engines in the page's settings. Anyone with the code or the link can read it, so leave out your home address and anything you'd rather keep private.",
+    "text": "No, a meno che tu non lo voglia. Le pagine ospitate sono nascoste ai motori di ricerca finché non attivi Show in search engines nelle impostazioni della pagina. Chiunque abbia il codice o il link può leggerla, quindi lascia fuori il tuo indirizzo di casa e tutto ciò che preferisci tenere privato.",
+    "status": "machine",
+    "context": "hostedTypes.resume.faqs.3.answer"
+  },
+  "af4ea02852eb": {
+    "source": "Invitation",
+    "text": "Invito",
+    "status": "machine",
+    "context": "hostedTypes.invitation.name"
+  },
+  "396c3d455879": {
+    "source": "Invitation QR Code Generator for Weddings and Parties",
+    "text": "Generatore di QR code per inviti a matrimoni e feste",
+    "status": "machine",
+    "context": "hostedTypes.invitation.title"
+  },
+  "6fca6f8201f6": {
+    "source": "An invitation page with the day's plan, directions and an RSVP.",
+    "text": "Una pagina d'invito con il programma della giornata, le indicazioni e la conferma di partecipazione.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.summary"
+  },
+  "32f0a378b3bb": {
+    "source": "Create your invitation",
+    "text": "Crea il tuo invito",
+    "status": "machine",
+    "context": "hostedTypes.invitation.cta"
+  },
+  "e891e2e79058": {
+    "source": "Put a QR code on your invitations: a page with the date, directions to the venue, the day's schedule, dress code and an RSVP form. Plans change? Edit it.",
+    "text": "Metti un QR code sui tuoi inviti: una pagina con la data, le indicazioni per raggiungere il luogo, il programma della giornata, il dress code e un modulo di conferma. I piani cambiano? Modificala.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.metaDescription"
+  },
+  "5dc58074dd33": {
+    "source": "An invitation QR code opens a page QRdx hosts for you with what doesn't fit on the card: the date and time with add-to-calendar buttons, the venue with directions in Google Maps, Apple Maps or Waze, the schedule of the day, the dress code and an RSVP form.",
+    "text": "Un QR code per invito apre una pagina che QRdx ospita per te con ciò che non entra nel biglietto: data e ora con i pulsanti per aggiungere al calendario, il luogo con le indicazioni su Google Maps, Apple Maps o Waze, il programma della giornata, il dress code e un modulo di conferma della presenza.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.intro.0"
+  },
+  "dbe70020ae1f": {
+    "source": "Replies arrive in your dashboard, one row per guest, ready to export to a spreadsheet. If the start time or the venue changes, edit the page and every printed card shows the new plan. It needs a free QRdx account.",
+    "text": "Le risposte arrivano nella tua dashboard, una riga per ogni invitato, pronte da esportare in un foglio di calcolo. Se l'orario di inizio o il luogo cambiano, modifica la pagina e ogni biglietto stampato mostra il nuovo programma. Serve un account QRdx gratuito.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.intro.1"
+  },
+  "1c76ae9fe9e0": {
+    "source": "Sign in or create a free account, then start an Invitation page: the button above opens it with that type picked.",
+    "text": "Accedi o crea un account gratuito, poi avvia una pagina Invito: il pulsante qui sopra la apre con quel tipo già selezionato.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.0"
+  },
+  "02c74768d194": {
+    "source": "Pick a template (Wedding, Birthday party or Dinner party), set the date, time and venue, and fill in the schedule.",
+    "text": "Scegli un modello (Matrimonio, Festa di compleanno o Cena), imposta data, ora e luogo e compila il programma.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.1"
+  },
+  "2456d9dd518c": {
+    "source": "Choose the RSVP questions, such as meal choices or a plus one, then publish.",
+    "text": "Scegli le domande della conferma di presenza, come il menu o un accompagnatore, poi pubblica.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.2"
+  },
+  "4ac2a6697269": {
+    "source": "Download the QR code, add it to your printed invitations and scan one to check.",
+    "text": "Scarica il QR code, aggiungilo ai tuoi inviti stampati e fai una scansione di prova per controllare.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.steps.3"
+  },
+  "d0efffa65ea7": {
+    "source": "Add to calendar",
+    "text": "Aggiungi al calendario",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.0.title"
+  },
+  "3b59759cc462": {
+    "source": "Google Calendar, Outlook and Yahoo buttons, plus an .ics file for Apple Calendar and other calendar apps.",
+    "text": "Pulsanti per Google Calendar, Outlook e Yahoo, più un file .ics per Apple Calendar e altre app di calendario.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.0.description"
+  },
+  "c95356784006": {
+    "source": "Directions",
+    "text": "Indicazioni",
+    "status": "machine",
+    "context": "pageCodes.type-maps-3.label"
+  },
+  "0d67c9ccac05": {
+    "source": "The venue's address with Google Maps, Apple Maps and Waze buttons.",
+    "text": "L'indirizzo del luogo con i pulsanti per Google Maps, Apple Maps e Waze.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.1.description"
+  },
+  "22b742cb5792": {
+    "source": "The day's schedule",
+    "text": "Il programma della giornata",
+    "status": "machine",
+    "context": "industries.0.hospitality-travel.items.weddings.useCases.2.title"
+  },
+  "092183849e85": {
+    "source": "Each part of the day with its time and place, from arrival to the last dance.",
+    "text": "Ogni momento della giornata con orario e luogo, dall'arrivo all'ultimo ballo.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.2.description"
+  },
+  "91654e103aac": {
+    "source": "RSVP form",
+    "text": "Modulo RSVP",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.3.title"
+  },
+  "f241c06b0d1e": {
+    "source": "The questions you choose, answered in your dashboard and exported as CSV. On Pro and Business, each reply can also be emailed to you.",
+    "text": "Le domande che scegli, con le risposte nella tua dashboard e l'esportazione in CSV. Con Pro e Business, ogni risposta può anche arrivarti via email.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.features.3.description"
+  },
+  "1e9ebf115622": {
+    "source": "Plans change: edit the page and publish, and every printed invitation shows the new time, venue or schedule. Guests who already added it to their calendar keep the old entry, so let them know too.",
+    "text": "I programmi cambiano: modifica la pagina e pubblica, e ogni invito stampato mostra il nuovo orario, il nuovo luogo o il nuovo programma. Gli invitati che l'hanno già aggiunto al calendario mantengono la voce precedente, quindi avvisali.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.editing.0"
+  },
+  "7b75fe2b1ea7": {
+    "source": "RSVPs count towards the workspace's form responses: 50 a month on Free and 1,000 on Pro. Replies you already have are never deleted or hidden.",
+    "text": "Le conferme contano nelle risposte ai moduli dello spazio di lavoro: 50 al mese con Gratuito e 1.000 con Pro. Le risposte che hai già non vengono mai eliminate né nascoste.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.editing.1"
+  },
+  "993133794ae8": {
+    "source": "A WhatsApp RSVP code or an invitation page?",
+    "text": "Un codice WhatsApp per le conferme o una pagina d'invito?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.title"
+  },
+  "616488ff8254": {
+    "source": "WhatsApp QR code (static)",
+    "text": "QR code WhatsApp (statico)",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticLabel"
+  },
+  "e8de31362aa7": {
+    "source": "No account: the code opens a WhatsApp chat with you, with a reply such as \"We'll be there\" already typed.",
+    "text": "Nessun account: il codice apre una chat WhatsApp con te, con una risposta come \"Ci saremo\" già scritta.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.0"
+  },
+  "dc4d26fc23b2": {
+    "source": "Replies arrive one by one among your other chats.",
+    "text": "Le risposte arrivano una alla volta, in mezzo alle altre chat.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.1"
+  },
+  "aa0cece2b632": {
+    "source": "Holds no date, venue or schedule, and can't change after printing.",
+    "text": "Non contiene data, luogo né programma e non può cambiare dopo la stampa.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.staticPoints.2"
+  },
+  "656461639aea": {
+    "source": "Invitation page",
+    "text": "Pagina d'invito",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedLabel"
+  },
+  "30aa3ff6733e": {
+    "source": "Date, directions, the schedule, dress code and add to calendar.",
+    "text": "Data, indicazioni stradali, programma, dress code e aggiunta al calendario.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedPoints.1"
+  },
+  "8e81f846ab6b": {
+    "source": "RSVPs in one list you can export; edit the details any time.",
+    "text": "Conferme in un unico elenco esportabile; puoi modificare i dettagli quando vuoi.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.compare.hostedPoints.2"
+  },
+  "41de38518aae": {
+    "source": "Is the invitation page free?",
+    "text": "La pagina dell'invito è gratuita?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.0.question"
+  },
+  "d177a825637d": {
+    "source": "Where do the RSVPs go?",
+    "text": "Dove finiscono le conferme di partecipazione?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.1.question"
+  },
+  "8a9e879b12a9": {
+    "source": "To the page's Responses in your dashboard: one row per reply with every answer, newest first, and Export CSV for a spreadsheet. On Pro and Business you can also get each reply by email.",
+    "text": "Nella sezione Risposte della pagina, nella tua dashboard: una riga per ogni risposta con tutte le risposte date, dalla più recente, ed Export CSV per un foglio di calcolo. Con Pro e Business puoi anche ricevere ogni risposta via email.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.1.answer"
+  },
+  "c191eb2e7a14": {
+    "source": "How many RSVPs can I collect?",
+    "text": "Quante conferme posso raccogliere?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.2.question"
+  },
+  "1366d371549e": {
+    "source": "Free includes 50 form responses a month across the workspace, Pro 1,000 and Business 10,000. When the limit is reached, the form asks guests to try again later and keeps what they typed.",
+    "text": "Gratuito include 50 risposte al modulo al mese in tutto il workspace, Pro 1.000 e Business 10.000. Quando il limite viene raggiunto, il modulo chiede agli ospiti di riprovare più tardi e conserva ciò che hanno scritto.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.2.answer"
+  },
+  "595f61fcb4a2": {
+    "source": "Can I change the time or venue after printing?",
+    "text": "Posso cambiare orario o luogo dopo la stampa?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.3.question"
+  },
+  "b0322f9622b5": {
+    "source": "Yes. Edit the page and publish; every printed code opens the new details.",
+    "text": "Sì. Modifica la pagina e pubblica: ogni codice stampato apre i nuovi dettagli.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.3.answer"
+  },
+  "fb83860a331f": {
+    "source": "Can guests see who else is coming?",
+    "text": "Gli ospiti possono vedere chi altro partecipa?",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.4.question"
+  },
+  "f3f3682f40ab": {
+    "source": "No. Replies are only shown to you and your workspace in the dashboard.",
+    "text": "No. Le risposte sono visibili solo a te e al tuo workspace nella dashboard.",
+    "status": "machine",
+    "context": "hostedTypes.invitation.faqs.4.answer"
+  },
+  "5641d7b645e1": {
+    "source": "Contact Form",
+    "text": "Modulo di contatto",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.name"
+  },
+  "bd9b785d0b0a": {
+    "source": "Contact Form QR Code Generator",
+    "text": "Generatore di QR code per modulo di contatto",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.title"
+  },
+  "5f92106ba4e8": {
+    "source": "A contact or quote form whose answers land in your dashboard.",
+    "text": "Un modulo di contatto o di preventivo le cui risposte arrivano nella tua dashboard.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.summary"
+  },
+  "c1162defa3b4": {
+    "source": "Create your form",
+    "text": "Crea il tuo modulo",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.cta"
+  },
+  "f00f66270223": {
+    "source": "Turn a QR code into a contact form: name, email, phone and a message, or the questions you choose. Answers land in your dashboard. Free QRdx account.",
+    "text": "Trasforma un QR code in un modulo di contatto: nome, email, telefono e un messaggio, oppure le domande che scegli tu. Le risposte arrivano nella tua dashboard. Account QRdx gratuito.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.metaDescription"
+  },
+  "24d59e12d7d5": {
+    "source": "A contact form QR code opens a short form QRdx hosts for you. Keep the fields you need, such as name, email, phone and a message, or add your own questions: a choice of services, a postcode, a consent box. People fill it in on their phone and press send.",
+    "text": "Un QR code per modulo di contatto apre un breve modulo che QRdx ospita per te. Tieni i campi che ti servono, come nome, email, telefono e un messaggio, oppure aggiungi le tue domande: una scelta di servizi, un CAP, una casella di consenso. Le persone lo compilano dal telefono e premono invia.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.intro.0"
+  },
+  "de0ddc29f037": {
+    "source": "Answers arrive in your dashboard with the time and the code that was scanned, so a flyer, a van and a trade show stand can each have their own code. It needs a free QRdx account.",
+    "text": "Le risposte arrivano nella tua dashboard con l'ora e il codice che è stato scansionato, così un volantino, un furgone e uno stand in fiera possono avere ciascuno il proprio codice. Serve un account QRdx gratuito.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.intro.1"
+  },
+  "612ac20e96b1": {
+    "source": "Sign in or create a free account, then start a Contact form page: the button above opens it with that type picked.",
+    "text": "Accedi o crea un account gratuito, poi avvia una pagina Modulo di contatto: il pulsante qui sopra la apre con quel tipo già selezionato.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.0"
+  },
+  "508691430417": {
+    "source": "Pick a template (Contact us, Quote request or Trade show leads) and keep, remove or add questions.",
+    "text": "Scegli un modello (Contattaci, Richiesta di preventivo o Contatti dalla fiera) e mantieni, rimuovi o aggiungi domande.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.1"
+  },
+  "0ac9db140d42": {
+    "source": "Write the button label and the thank-you message, then publish.",
+    "text": "Scrivi l'etichetta del pulsante e il messaggio di ringraziamento, poi pubblica.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.2"
+  },
+  "839b29840b1c": {
+    "source": "Download the page's QR code, print it and send yourself a test response.",
+    "text": "Scarica il QR code della pagina, stampalo e invia a te stesso una risposta di prova.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.steps.3"
+  },
+  "ff16e16ba20a": {
+    "source": "Fields you choose",
+    "text": "Campi a tua scelta",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.0.title"
+  },
+  "8173a6163d9b": {
+    "source": "Text, email, phone, choices and a consent checkbox, each optional or required, with your own labels.",
+    "text": "Testo, email, telefono, scelte e una casella di consenso, ciascuno facoltativo o obbligatorio, con le tue etichette.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.0.description"
+  },
+  "62da88be11f1": {
+    "source": "Responses inbox",
+    "text": "Posta delle risposte",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.1.title"
+  },
+  "a9ef10ed6abd": {
+    "source": "Every answer under Responses, newest first, with Export CSV for a spreadsheet or CRM.",
+    "text": "Ogni risposta in Risposte, dalla più recente, con Export CSV per un foglio di calcolo o un CRM.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.1.description"
+  },
+  "cf343af2aa51": {
+    "source": "Alerts and webhooks",
+    "text": "Avvisi e webhook",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.2.title"
+  },
+  "942723529851": {
+    "source": "Email alerts for each response on Pro and Business; Slack, Discord and webhooks on Business.",
+    "text": "Avvisi via email per ogni risposta con Pro e Business; Slack, Discord e webhook con Business.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.2.description"
+  },
+  "cc9899ecf4d1": {
+    "source": "Spam protection",
+    "text": "Protezione antispam",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.3.title"
+  },
+  "369640adf648": {
+    "source": "A hidden field that only bots fill in, and limits on how often one device can send.",
+    "text": "Un campo nascosto che compilano solo i bot e limiti sulla frequenza con cui un dispositivo può inviare.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.features.3.description"
+  },
+  "471fd667e702": {
+    "source": "Change the questions any time and publish: printed codes open the new form, and exports keep the columns of removed questions that already have answers.",
+    "text": "Cambia le domande quando vuoi e pubblica: i codici stampati aprono il nuovo modulo, e le esportazioni mantengono le colonne delle domande rimosse che hanno già risposte.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.editing.0"
+  },
+  "b313ffcebf30": {
+    "source": "Responses count per workspace each calendar month: 50 on Free, 1,000 on Pro and 10,000 on Business. Responses you already have are never deleted or hidden.",
+    "text": "Le risposte si contano per workspace in ogni mese solare: 50 con Gratuito, 1.000 con Pro e 10.000 con Business. Le risposte che hai già non vengono mai eliminate né nascoste.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.editing.1"
+  },
+  "9b73a932433f": {
+    "source": "An email QR code or a contact form?",
+    "text": "Un QR code e-mail o un modulo di contatto?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.title"
+  },
+  "0945c3f7e4d8": {
+    "source": "Email QR code (static)",
+    "text": "QR code e-mail (statico)",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticLabel"
+  },
+  "2c8b423b87fd": {
+    "source": "No account: the code opens an email draft to you, with the subject and message filled in.",
+    "text": "Nessun account: il codice apre una bozza di e-mail indirizzata a te, con oggetto e messaggio già compilati.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.0"
+  },
+  "3b50d6dff15f": {
+    "source": "People need an email app set up on their phone.",
+    "text": "Serve un'app di posta configurata sul telefono.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.1"
+  },
+  "eb7ac7a2b531": {
+    "source": "Replies land among your other email, and the address can't change after printing.",
+    "text": "Le risposte finiscono tra le altre e-mail e l'indirizzo non si può cambiare dopo la stampa.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.staticPoints.2"
+  },
+  "2520a0ba5663": {
+    "source": "Contact form",
+    "text": "Modulo di contatto",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedLabel"
+  },
+  "7161e0bc1656": {
+    "source": "A free QRdx account; the code opens a form QRdx hosts.",
+    "text": "Un account QRdx gratuito; il codice apre un modulo ospitato da QRdx.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.0"
+  },
+  "b60dc1aafda3": {
+    "source": "Works in any phone browser, with the questions you choose.",
+    "text": "Funziona nel browser di qualsiasi telefono, con le domande che scegli tu.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.1"
+  },
+  "85e4e25b83ee": {
+    "source": "Answers in one list you can export; edit the form any time.",
+    "text": "Risposte in un unico elenco che puoi esportare; modifica il modulo quando vuoi.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.compare.hostedPoints.2"
+  },
+  "2748bdccf6b3": {
+    "source": "Is the contact form free?",
+    "text": "Il modulo di contatto è gratuito?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.0.question"
+  },
+  "fdb380dac2a7": {
+    "source": "Where do the answers go?",
+    "text": "Dove finiscono le risposte?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.1.question"
+  },
+  "76afe3c4df88": {
+    "source": "To the page's Responses in your dashboard, newest first, with the time and the code that was scanned. Export CSV gives one row per response and one column per question. On Pro and Business each response can also be emailed to you.",
+    "text": "Nelle Risposte della pagina nella tua dashboard, dalla più recente, con l'ora e il codice scansionato. Esporta CSV dà una riga per risposta e una colonna per domanda. Con Pro e Business ogni risposta può anche esserti inviata via e-mail.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.1.answer"
+  },
+  "3551dcf6310f": {
+    "source": "How many responses can I get?",
+    "text": "Quante risposte posso ricevere?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.2.question"
+  },
+  "3987ec8d1d8b": {
+    "source": "Free includes 50 responses a month across the workspace, Pro 1,000 and Business 10,000. The count starts over on the 1st of each month.",
+    "text": "Il piano Gratuito include 50 risposte al mese in tutto il workspace, Pro 1,000 e Business 10,000. Il conteggio riparte il 1° di ogni mese.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.2.answer"
+  },
+  "2e1892954768": {
+    "source": "Can I change the questions after printing?",
+    "text": "Posso cambiare le domande dopo la stampa?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.3.question"
+  },
+  "f95195d386de": {
+    "source": "Yes. Edit the form and publish; the printed code opens the new version, and the answers you already have stay.",
+    "text": "Sì. Modifica il modulo e pubblica: il codice stampato apre la nuova versione e le risposte che hai già restano.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.3.answer"
+  },
+  "9298d959ba09": {
+    "source": "Is it protected from spam?",
+    "text": "È protetto dallo spam?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.4.question"
+  },
+  "efaf8ac5c2b5": {
+    "source": "Yes. A hidden field catches most bots and one device can only send so often. When the server has Cloudflare Turnstile keys, forms also run Turnstile's invisible check.",
+    "text": "Sì. Un campo nascosto blocca la maggior parte dei bot e un dispositivo può inviare solo con una certa frequenza. Quando il server ha le chiavi Cloudflare Turnstile, i moduli eseguono anche il controllo invisibile di Turnstile.",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.4.answer"
+  },
+  "05155378bc81": {
+    "source": "What happens to my form if I stop paying?",
+    "text": "Che fine fa il mio modulo se smetto di pagare?",
+    "status": "machine",
+    "context": "hostedTypes.contact-form.faqs.5.question"
+  },
+  "2c9859114c4a": {
+    "source": "Lost and Found Tag",
+    "text": "Tag oggetti smarriti",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.name"
+  },
+  "5afcae8b513b": {
+    "source": "Lost and Found QR Code Generator",
+    "text": "Generatore di QR code per oggetti smarriti",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.title"
+  },
+  "41ff183b7c90": {
+    "source": "A tag page that helps whoever finds your things reach you.",
+    "text": "Una pagina per il tag che aiuta chi trova le tue cose a contattarti.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.summary"
+  },
+  "1d5f0256e045": {
+    "source": "Create your tag",
+    "text": "Crea il tuo tag",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.cta"
+  },
+  "a7b776dc197e": {
+    "source": "Lost and found QR tags for luggage, laptops and keys: call and message buttons, a reward note and a found-it form. New number? Edit it, keep the tag.",
+    "text": "Tag QR per oggetti smarriti su bagagli, laptop e chiavi: pulsanti per chiamare e scrivere, una nota sulla ricompensa e un modulo di ritrovamento. Nuovo numero? Modificalo, il tag resta.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.metaDescription"
+  },
+  "587e0aef48c8": {
+    "source": "A lost and found QR code goes on a sticker or tag on your bag, laptop, keys or camera. Whoever finds it scans it and gets a page QRdx hosts for you: who it belongs to, buttons to call, text or WhatsApp you, a reward note if you offer one, and a form to say where it is.",
+    "text": "Un QR code per oggetti smarriti va su un adesivo o un tag sulla borsa, sul laptop, sulle chiavi o sulla fotocamera. Chi lo trova lo scansiona e vede una pagina ospitata da QRdx per te: di chi è l'oggetto, pulsanti per chiamarti, scriverti o contattarti su WhatsApp, una nota sulla ricompensa se ne offri una e un modulo per dire dove si trova.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.intro.0"
+  },
+  "7bb0e4c767fd": {
+    "source": "The tag holds a short link, so a new phone number or email is one edit away and the tag you stuck on years ago still reaches you. It needs a free QRdx account.",
+    "text": "Il tag contiene un link breve, quindi un nuovo numero di telefono o una nuova e-mail sono a una modifica di distanza e il tag che hai attaccato anni fa ti raggiunge ancora. Serve un account QRdx gratuito.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.intro.1"
+  },
+  "7613d544d3c7": {
+    "source": "Sign in or create a free account, then start a Lost & found tag page: the button above opens it with that type picked.",
+    "text": "Accedi o crea un account gratuito, poi avvia una pagina Tag oggetti smarriti: il pulsante qui sopra la apre con quel tipo già scelto.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.0"
+  },
+  "97f20df0be67": {
+    "source": "Pick a template (Luggage, Laptop & equipment or Keys) and add the buttons and details a finder needs.",
+    "text": "Scegli un modello (Bagagli, Laptop e attrezzatura o Chiavi) e aggiungi i pulsanti e i dettagli che servono a chi trova l'oggetto.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.1"
+  },
+  "8f968c5028e2": {
+    "source": "Publish, then download the QR code and print it as a sticker or tag.",
+    "text": "Pubblica, poi scarica il QR code e stampalo come adesivo o tag.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.2"
+  },
+  "3e021a9e4d11": {
+    "source": "Scan it once to check the call button dials your number.",
+    "text": "Fai una scansione per verificare che il pulsante di chiamata componga il tuo numero.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.steps.3"
+  },
+  "745d4a506420": {
+    "source": "Call and message",
+    "text": "Chiama e scrivi",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.0.title"
+  },
+  "3e2443966b7f": {
+    "source": "Buttons that call or text you, and WhatsApp when you turn it on for your number.",
+    "text": "Pulsanti per chiamarti o mandarti un SMS, e WhatsApp se lo attivi per il tuo numero.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.0.description"
+  },
+  "6e9083892ccc": {
+    "source": "Found-it form",
+    "text": "Modulo \"trovato\"",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.1.title"
+  },
+  "30321a296311": {
+    "source": "The finder says where the item is and how to reach them; the answer lands in your dashboard.",
+    "text": "Chi trova l'oggetto dice dove si trova e come contattarlo; la risposta arriva nella tua dashboard.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.1.description"
+  },
+  "9e4356ede63a": {
+    "source": "Asset details",
+    "text": "Dati dell'asset",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.2.title"
+  },
+  "183fcfaed161": {
+    "source": "An asset number, the item and where to return it, for company laptops and equipment.",
+    "text": "Un numero di asset, l'oggetto e dove restituirlo, per laptop e attrezzature aziendali.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.2.description"
+  },
+  "4e97e8ef3f82": {
+    "source": "Every scan is counted without cookies, so you can see when someone has scanned the tag.",
+    "text": "Ogni scansione viene conteggiata senza cookie, così puoi vedere quando qualcuno ha scansionato il tag.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.features.3.description"
+  },
+  "321fff1796c8": {
+    "source": "New number or email? Edit the page and publish; every tag you've already stuck on opens the new details.",
+    "text": "Nuovo numero o nuova email? Modifica la pagina e pubblica: ogni tag che hai già attaccato apre i nuovi dati.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.editing.0"
+  },
+  "2119defa490a": {
+    "source": "Anyone who finds the item can read the page, so show only what helps them return it: a first name and a phone number are usually enough.",
+    "text": "Chiunque trovi l'oggetto può leggere la pagina, quindi mostra solo ciò che aiuta a restituirlo: di solito bastano un nome e un numero di telefono.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.editing.1"
+  },
+  "7b793947d98d": {
+    "source": "A phone QR code or a lost and found page?",
+    "text": "QR code telefonico o pagina degli oggetti smarriti?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.title"
+  },
+  "2608f2b404fc": {
+    "source": "Phone QR code (static)",
+    "text": "QR code telefonico (statico)",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticLabel"
+  },
+  "e01ecb6f4d7d": {
+    "source": "No account: the code holds your number and the phone offers to call it.",
+    "text": "Nessun account: il codice contiene il tuo numero e il telefono propone di chiamarlo.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.0"
+  },
+  "7c0c86f3e6d4": {
+    "source": "Nothing to load: the call starts straight from the camera.",
+    "text": "Niente da caricare: la chiamata parte direttamente dalla fotocamera.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.1"
+  },
+  "477e43229676": {
+    "source": "No form or reward note, and a new number means a new tag.",
+    "text": "Nessun modulo né nota per la ricompensa, e un nuovo numero richiede un nuovo tag.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.staticPoints.2"
+  },
+  "2a7150b065ae": {
+    "source": "Lost and found page",
+    "text": "Pagina degli oggetti smarriti",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedLabel"
+  },
+  "b4d6958c32d2": {
+    "source": "Call, text and WhatsApp buttons, a reward note and a found-it form.",
+    "text": "Pulsanti per chiamare, scrivere un SMS e usare WhatsApp, una nota per la ricompensa e un modulo \"trovato\".",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedPoints.1"
+  },
+  "baf6af7960b4": {
+    "source": "Change your number any time; tags already in use keep working.",
+    "text": "Cambia il numero quando vuoi: i tag già in uso continuano a funzionare.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.compare.hostedPoints.2"
+  },
+  "37c7d37a83ba": {
+    "source": "Is the lost and found tag free?",
+    "text": "Il tag per oggetti smarriti è gratuito?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.0.question"
+  },
+  "fcf0432e7942": {
+    "source": "Can I see where my item was found?",
+    "text": "Posso vedere dove è stato trovato il mio oggetto?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.question"
+  },
+  "09a86d50c977": {
+    "source": "Roughly. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network, never an exact spot. The found-it form lets the finder tell you where the item is.",
+    "text": "Più o meno. Come ogni QR code dinamico, le statistiche del tag mostrano quando è stato scansionato e il paese, la regione e la città dalla rete, mai un punto esatto. Il modulo \"trovato\" permette a chi trova l'oggetto di dirti dove si trova.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "c17c0e25132b": {
+    "source": "Can I change my number later?",
+    "text": "Posso cambiare numero più avanti?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.2.question"
+  },
+  "1dd2b80dc028": {
+    "source": "Yes. Edit the page and publish; every printed tag opens the new details.",
+    "text": "Sì. Modifica la pagina e pubblica: ogni tag stampato apre i nuovi dati.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.2.answer"
+  },
+  "e3d5f4c7a00c": {
+    "source": "Is my phone number public?",
+    "text": "Il mio numero è pubblico?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.3.question"
+  },
+  "797afc9f16c8": {
+    "source": "Anyone who scans the tag or opens its link can see what's on the page. Hosted pages are hidden from search engines unless you turn on Show in search engines. Show only what a finder needs.",
+    "text": "Chiunque scansioni il tag o apra il suo link può vedere ciò che c'è nella pagina. Le pagine ospitate sono nascoste ai motori di ricerca, a meno che tu non attivi Mostra nei motori di ricerca. Mostra solo ciò che serve a chi trova l'oggetto.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.3.answer"
+  },
+  "35d2dc81fd11": {
+    "source": "What happens to my tag if I stop paying?",
+    "text": "Cosa succede al mio tag se smetto di pagare?",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.4.question"
+  },
+  "2f77668a9dfb": {
+    "source": "Message",
+    "text": "Messaggio",
+    "status": "machine",
+    "context": "hostedTypes.message.name"
+  },
+  "8cb91b6873f2": {
+    "source": "Message QR Code Generator",
+    "text": "Generatore di QR code per messaggi",
+    "status": "machine",
+    "context": "hostedTypes.message.title"
+  },
+  "a3750df639df": {
+    "source": "A short note with a photo and a button, editable after printing.",
+    "text": "Una breve nota con foto e un pulsante, modificabile dopo la stampa.",
+    "status": "machine",
+    "context": "hostedTypes.message.summary"
+  },
+  "ec0c539b9cda": {
+    "source": "Create your message",
+    "text": "Crea il tuo messaggio",
+    "status": "machine",
+    "context": "hostedTypes.message.cta"
+  },
+  "33e2d1eea3f2": {
+    "source": "Put a message behind a QR code: a gift note, a thank-you card or a notice on the door, with a photo and one button. Edit it after printing, same code.",
+    "text": "Metti un messaggio dietro a un QR code: un biglietto regalo, un biglietto di ringraziamento o un avviso sulla porta, con una foto e un pulsante. Modificalo dopo la stampa, con lo stesso codice.",
+    "status": "machine",
+    "context": "hostedTypes.message.metaDescription"
+  },
+  "4e8ae41b881f": {
+    "source": "A message QR code opens a short note on a page QRdx hosts for you: a heading, a few lines, an optional photo and one button. Put it on a gift tag, a card in every parcel or a sign on the door.",
+    "text": "Un QR code messaggio apre una breve nota su una pagina che QRdx ospita per te: un titolo, qualche riga, una foto facoltativa e un pulsante. Mettilo su un biglietto regalo, su un cartoncino in ogni pacco o su un cartello sulla porta.",
+    "status": "machine",
+    "context": "hostedTypes.message.intro.0"
+  },
+  "456218072bba": {
+    "source": "The code holds a link, not the words, so you can change the message after printing, from \"Closed today\" back to your opening hours, and see how many people scanned it. It needs a free QRdx account. For words written into the code itself, with no account, use the text QR code generator.",
+    "text": "Il codice contiene un link, non le parole: così puoi cambiare il messaggio dopo la stampa, da \"Chiuso oggi\" di nuovo ai tuoi orari di apertura, e vedere quante persone lo hanno scansionato. Serve un account QRdx gratuito. Per parole scritte nel codice stesso, senza account, usa il generatore di QR code di testo.",
+    "status": "machine",
+    "context": "hostedTypes.message.intro.1"
+  },
+  "7da74768bf63": {
+    "source": "Sign in or create a free account, then start a Message page: the button above opens it with that type picked.",
+    "text": "Accedi o crea un account gratuito, poi avvia una pagina Messaggio: il pulsante qui sopra la apre con quel tipo già selezionato.",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.0"
+  },
+  "5e99aa77b021": {
+    "source": "Pick a template (Gift note, Thank-you card or Notice) and write your message.",
+    "text": "Scegli un modello (Biglietto regalo, Biglietto di ringraziamento o Avviso) e scrivi il tuo messaggio.",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.1"
+  },
+  "fc9716d72b51": {
+    "source": "Add a photo and a button if you want them, then publish.",
+    "text": "Aggiungi una foto e un pulsante, se vuoi, poi pubblica.",
+    "status": "machine",
+    "context": "hostedTypes.message.steps.2"
+  },
+  "9dfc4e242770": {
+    "source": "Your words, your look",
+    "text": "Le tue parole, il tuo stile",
+    "status": "machine",
+    "context": "hostedTypes.message.features.0.title"
+  },
+  "4b201b59260e": {
+    "source": "A heading and text in the fonts and colors you pick, with a photo if you add one.",
+    "text": "Un titolo e un testo con i font e i colori che scegli, con una foto se la aggiungi.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.0.description"
+  },
+  "2ceae1f2641b": {
+    "source": "One button",
+    "text": "Un pulsante",
+    "status": "machine",
+    "context": "hostedTypes.message.features.1.title"
+  },
+  "cd1bf434100b": {
+    "source": "Send people on to a booking, a review page, your shop or a playlist.",
+    "text": "Porta le persone a una prenotazione, a una pagina di recensioni, al tuo negozio o a una playlist.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.1.description"
+  },
+  "2a2fe4991d42": {
+    "source": "Edit after printing",
+    "text": "Modifica dopo la stampa",
+    "status": "machine",
+    "context": "hostedTypes.message.features.2.title"
+  },
+  "ebbe4bb0b19d": {
+    "source": "Change the message any time; the printed code stays the same.",
+    "text": "Cambia il messaggio quando vuoi: il codice stampato resta lo stesso.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.2.description"
+  },
+  "985b7ad943b5": {
+    "source": "See how many people opened the message and when, counted without cookies.",
+    "text": "Vedi quante persone hanno aperto il messaggio e quando, conteggiate senza cookie.",
+    "status": "machine",
+    "context": "hostedTypes.message.features.3.description"
+  },
+  "fbb4c19d8fd8": {
+    "source": "Edit the text, photo or button and publish: every printed code shows the new version, and each publish is kept as a version.",
+    "text": "Modifica il testo, la foto o il pulsante e pubblica: ogni codice stampato mostra la nuova versione e ogni pubblicazione viene conservata come versione.",
+    "status": "machine",
+    "context": "hostedTypes.message.editing.0"
+  },
+  "bd74e35ffe1c": {
+    "source": "Need it live only for a while? Start and end dates in the code's controls apply to the page too.",
+    "text": "Ti serve online solo per un periodo? Le date di inizio e fine nei controlli del codice valgono anche per la pagina.",
+    "status": "machine",
+    "context": "hostedTypes.message.editing.1"
+  },
+  "09452877bd55": {
+    "source": "A text QR code or a message page?",
+    "text": "QR code di testo o pagina messaggio?",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.title"
+  },
+  "aa2a4285ea5d": {
+    "source": "Text QR code (static)",
+    "text": "QR code di testo (statico)",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticLabel"
+  },
+  "b7b15a64c7ad": {
+    "source": "No account, and nothing to load: the words are inside the code.",
+    "text": "Nessun account e niente da caricare: le parole sono dentro il codice.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.0"
+  },
+  "4c8e4443a7c2": {
+    "source": "Scanner apps show the text as plain words, with no photo or button.",
+    "text": "Le app di scansione mostrano il testo come semplici parole, senza foto né pulsante.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.1"
+  },
+  "a83eb9f84bcd": {
+    "source": "Can't change after printing, and long messages make the code dense.",
+    "text": "Non si può cambiare dopo la stampa, e i messaggi lunghi rendono il codice fitto.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.staticPoints.2"
+  },
+  "92f8f5e7ec88": {
+    "source": "Message page",
+    "text": "Pagina messaggio",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedLabel"
+  },
+  "9deb7cfca570": {
+    "source": "Your heading, text, a photo and a button, in your colors.",
+    "text": "Il tuo titolo, il testo, una foto e un pulsante, nei tuoi colori.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedPoints.1"
+  },
+  "a4d205d5c8e0": {
+    "source": "Change it any time; printed codes keep working, and scans are counted.",
+    "text": "Cambialo quando vuoi: i codici stampati continuano a funzionare e le scansioni vengono conteggiate.",
+    "status": "machine",
+    "context": "hostedTypes.message.compare.hostedPoints.2"
+  },
+  "94013c5ed254": {
+    "source": "Is the message page free?",
+    "text": "La pagina messaggio è gratuita?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.0.question"
+  },
+  "15e30bf1567a": {
+    "source": "Can I change the message after printing?",
+    "text": "Posso cambiare il messaggio dopo la stampa?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.1.question"
+  },
+  "25b0908fef26": {
+    "source": "Yes. Edit the page and publish; the printed code opens the new message.",
+    "text": "Sì. Modifica la pagina e pubblica: il codice stampato apre il nuovo messaggio.",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.1.answer"
+  },
+  "517b066b2ce1": {
+    "source": "No. The phone's camera opens the message in the browser.",
+    "text": "No. La fotocamera del telefono apre il messaggio nel browser.",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.2.answer"
+  },
+  "ac23dcbd8150": {
+    "source": "Should I use a text QR code instead?",
+    "text": "Dovrei usare invece un QR code di testo?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.3.question"
+  },
+  "0b2c90ef4e88": {
+    "source": "If the message is short, won't change and doesn't need a photo, yes: a text code needs no account and works without internet. For a photo, a button or changes after printing, use the message page.",
+    "text": "Se il messaggio è breve, non cambierà e non ha bisogno di una foto, sì: un codice di testo non richiede un account e funziona senza internet. Per una foto, un pulsante o modifiche dopo la stampa, usa la pagina messaggio.",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.3.answer"
+  },
+  "c52e2d3c7d09": {
+    "source": "What happens to my message if I stop paying?",
+    "text": "Che cosa succede al mio messaggio se smetto di pagare?",
+    "status": "machine",
+    "context": "hostedTypes.message.faqs.4.question"
+  },
   "d96545f726d0": {
     "source": "Food and drink",
     "text": "Cibo e bevande",
@@ -10246,12 +11788,6 @@
     "text": "Mappe per cerimonia e ricevimento, parcheggio, orari delle navette e dettagli sugli hotel in un'unica pagina.",
     "status": "machine",
     "context": "industries.0.hospitality-travel.items.weddings.useCases.1.description"
-  },
-  "22b742cb5792": {
-    "source": "The day's schedule",
-    "text": "Il programma della giornata",
-    "status": "machine",
-    "context": "industries.0.hospitality-travel.items.weddings.useCases.2.title"
   },
   "b069a7124740": {
     "source": "A welcome-sign code that opens the timeline, so guests know when the speeches and the last bus are.",
@@ -20543,6 +22079,60 @@
     "status": "machine",
     "context": "pageTypes.playlist.description"
   },
+  "9b3cdeee94a8": {
+    "source": "An address with a map, buttons for Google Maps, Apple Maps and Waze, and opening hours.",
+    "text": "Un indirizzo con una mappa, pulsanti per Google Maps, Apple Maps e Waze, e gli orari di apertura.",
+    "status": "machine",
+    "context": "pageTypes.location.description"
+  },
+  "5dcb6aa3e0c2": {
+    "source": "A CV with your photo, experience, education, skills, links and a PDF to download.",
+    "text": "Un CV con la tua foto, esperienze, formazione, competenze, link e un PDF da scaricare.",
+    "status": "machine",
+    "context": "pageTypes.resume.description"
+  },
+  "486d02a939b0": {
+    "source": "The network name, a password to copy and how to join on iPhone and Android.",
+    "text": "Il nome della rete, una password da copiare e come connettersi su iPhone e Android.",
+    "status": "machine",
+    "context": "pageTypes.wifi.description"
+  },
+  "c019f67a1531": {
+    "source": "Names, date and venue with directions, the day's schedule and an RSVP form.",
+    "text": "Nomi, data e luogo con indicazioni stradali, il programma della giornata e un modulo per confermare la presenza.",
+    "status": "machine",
+    "context": "pageTypes.invitation.description"
+  },
+  "72dc45c74a13": {
+    "source": "Contact form page",
+    "text": "Pagina con modulo di contatto",
+    "status": "machine",
+    "context": "pageTypes.form.name"
+  },
+  "42612d5672e8": {
+    "source": "A contact, quote or lead form with the fields you choose, answered in your dashboard.",
+    "text": "Un modulo di contatto, preventivo o lead con i campi che scegli tu, le cui risposte arrivano nella tua dashboard.",
+    "status": "machine",
+    "context": "pageTypes.form.description"
+  },
+  "b102a1575161": {
+    "source": "Lost and found tag page",
+    "text": "Pagina per etichetta smarrito e ritrovato",
+    "status": "machine",
+    "context": "pageTypes.asset-tag.name"
+  },
+  "44b7fe768d0d": {
+    "source": "Call and message buttons and a found-it form for a bag, laptop or set of keys.",
+    "text": "Pulsanti per chiamare e scrivere e un modulo «l'ho trovato» per una borsa, un portatile o un mazzo di chiavi.",
+    "status": "machine",
+    "context": "pageTypes.asset-tag.description"
+  },
+  "61ac711e4a3e": {
+    "source": "A short note with a photo and one button: a gift message, a thank-you or a notice.",
+    "text": "Un breve messaggio con una foto e un pulsante: un biglietto d'auguri per un regalo, un ringraziamento o un avviso.",
+    "status": "machine",
+    "context": "pageTypes.message.description"
+  },
   "615e54d4d3a0": {
     "source": "Landing page",
     "text": "Landing page",
@@ -20734,12 +22324,6 @@
     "text": "Inizio sentiero",
     "status": "machine",
     "context": "pageCodes.type-maps-2.label"
-  },
-  "c95356784006": {
-    "source": "Directions",
-    "text": "Indicazioni",
-    "status": "machine",
-    "context": "pageCodes.type-maps-3.label"
   },
   "3ba4f61a5e80": {
     "source": "Landmark",
@@ -22355,23 +23939,11 @@
     "status": "machine",
     "context": "pageCodes.on-shelves-3.label"
   },
-  "7c01795782fe": {
-    "source": "Opening hours",
-    "text": "Orari di apertura",
-    "status": "machine",
-    "context": "pageCodes.on-window-decals-2.label"
-  },
   "3c0a0424af51": {
     "source": "Book a table",
     "text": "Prenota un tavolo",
     "status": "machine",
     "context": "pageCodes.on-window-decals-3.label"
-  },
-  "9024c197d849": {
-    "source": "Links",
-    "text": "Link",
-    "status": "machine",
-    "context": "pageCodes.on-window-decals-4.label"
   },
   "fcb222345dec": {
     "source": "Pay online",
@@ -24491,6 +26063,42 @@
     "status": "machine",
     "context": "templates.business.variants.florist.description"
   },
+  "c1845d31d001": {
+    "source": "An address with a map, directions in Google Maps, Apple Maps or Waze, and opening hours",
+    "text": "Un indirizzo con mappa, indicazioni in Google Maps, Apple Maps o Waze e orari di apertura",
+    "status": "machine",
+    "context": "templates.location.description"
+  },
+  "b8ab2a217187": {
+    "source": "Map, directions, opening hours and parking",
+    "text": "Mappa, indicazioni, orari di apertura e parcheggio",
+    "status": "machine",
+    "context": "templates.location.variants.shop.description"
+  },
+  "aea1b15df626": {
+    "source": "Venue",
+    "text": "Location",
+    "status": "machine",
+    "context": "templates.location.variants.venue.name"
+  },
+  "1ceb7bd6e470": {
+    "source": "Where the entrance is, parking and step-free access",
+    "text": "Dov'è l'ingresso, il parcheggio e l'accesso senza barriere",
+    "status": "machine",
+    "context": "templates.location.variants.venue.description"
+  },
+  "f08183059fe9": {
+    "source": "Meeting point",
+    "text": "Punto d'incontro",
+    "status": "machine",
+    "context": "templates.location.variants.meeting-point.name"
+  },
+  "f72241b0335d": {
+    "source": "Where a tour or pick-up starts, and who to call",
+    "text": "Dove inizia un tour o un ritiro e chi chiamare",
+    "status": "machine",
+    "context": "templates.location.variants.meeting-point.description"
+  },
   "c56217ae2eb3": {
     "source": "vCard Plus",
     "text": "vCard Plus",
@@ -24545,6 +26153,54 @@
     "status": "machine",
     "context": "templates.vcard.variants.realtor.description"
   },
+  "50953f52a4ff": {
+    "source": "Resume / CV",
+    "text": "Resume / CV",
+    "status": "machine",
+    "context": "templates.resume.label"
+  },
+  "2a32d0d6e33b": {
+    "source": "Your photo, experience, education, skills and links, with your CV to download",
+    "text": "La tua foto, esperienza, formazione, competenze e link, con il tuo CV da scaricare",
+    "status": "machine",
+    "context": "templates.resume.description"
+  },
+  "8b6d8e40753a": {
+    "source": "Designer",
+    "text": "Designer",
+    "status": "machine",
+    "context": "templates.resume.variants.designer.name"
+  },
+  "82b9eaf08aab": {
+    "source": "Photo, experience, skills and a portfolio link",
+    "text": "Foto, esperienza, competenze e un link al portfolio",
+    "status": "machine",
+    "context": "templates.resume.variants.designer.description"
+  },
+  "3fb7b39416f1": {
+    "source": "Developer",
+    "text": "Sviluppatore",
+    "status": "machine",
+    "context": "templates.resume.variants.developer.name"
+  },
+  "0f537a221c23": {
+    "source": "Dark, with skills as tiles and code links",
+    "text": "Scuro, con le competenze in riquadri e link al codice",
+    "status": "machine",
+    "context": "templates.resume.variants.developer.description"
+  },
+  "aba1eecaad22": {
+    "source": "Graduate",
+    "text": "Neolaureato",
+    "status": "machine",
+    "context": "templates.resume.variants.graduate.name"
+  },
+  "0c10ec4fb011": {
+    "source": "Education first, internships and a short summary",
+    "text": "Prima la formazione, poi tirocini e un breve riepilogo",
+    "status": "machine",
+    "context": "templates.resume.variants.graduate.description"
+  },
   "ea6b729fa6bd": {
     "source": "A digital menu with prices, allergens, opening hours and Wi-Fi",
     "text": "Un menu digitale con prezzi, allergeni, orari di apertura e Wi-Fi",
@@ -24592,6 +26248,42 @@
     "text": "Luminoso e moderno, con una foto per ogni voce",
     "status": "machine",
     "context": "templates.menu.variants.juice-bar.description"
+  },
+  "4ea3a3bf1a89": {
+    "source": "Network name, a password to copy and how to join on iPhone and Android",
+    "text": "Nome della rete, una password da copiare e come connettersi su iPhone e Android",
+    "status": "machine",
+    "context": "templates.wifi.description"
+  },
+  "96b91b2e6589": {
+    "source": "Free Wi-Fi with a few house rules",
+    "text": "Wi-Fi gratuito con qualche regola della casa",
+    "status": "machine",
+    "context": "templates.wifi.variants.cafe.description"
+  },
+  "d8578da3456b": {
+    "source": "Holiday rental",
+    "text": "Casa vacanze",
+    "status": "machine",
+    "context": "templates.wifi.variants.rental.name"
+  },
+  "d928982eb2f7": {
+    "source": "Wi-Fi, house rules and a button to message the host",
+    "text": "Wi-Fi, regole della casa e un pulsante per scrivere all'host",
+    "status": "machine",
+    "context": "templates.wifi.variants.rental.description"
+  },
+  "ff0d47c74167": {
+    "source": "Office visitors",
+    "text": "Visitatori in ufficio",
+    "status": "machine",
+    "context": "templates.wifi.variants.office.name"
+  },
+  "b17fdc39da42": {
+    "source": "A hidden guest network with steps to add it by hand",
+    "text": "Una rete ospiti nascosta con i passaggi per aggiungerla a mano",
+    "status": "machine",
+    "context": "templates.wifi.variants.office.description"
   },
   "152428da2871": {
     "source": "Coupon",
@@ -24695,6 +26387,42 @@
     "status": "machine",
     "context": "templates.event.variants.wedding.description"
   },
+  "fbbfaed1101f": {
+    "source": "Names, date and venue with directions, the day's schedule and an RSVP",
+    "text": "Nomi, data e luogo con indicazioni, il programma della giornata e una conferma di partecipazione",
+    "status": "machine",
+    "context": "templates.invitation.description"
+  },
+  "2dbed8f02c6d": {
+    "source": "The day's schedule, dress code and an RSVP with meal choices",
+    "text": "Il programma della giornata, il dress code e una conferma di partecipazione con scelta del menu",
+    "status": "machine",
+    "context": "templates.invitation.variants.wedding.description"
+  },
+  "f2fd01ac74f9": {
+    "source": "Birthday party",
+    "text": "Festa di compleanno",
+    "status": "machine",
+    "context": "templates.invitation.variants.birthday.name"
+  },
+  "5eaa0f0a6e09": {
+    "source": "Night colours, what's happening when and a quick RSVP",
+    "text": "Colori da sera, cosa succede e quando, e una conferma rapida",
+    "status": "machine",
+    "context": "templates.invitation.variants.birthday.description"
+  },
+  "9c6facaf6820": {
+    "source": "Dinner party",
+    "text": "Cena tra amici",
+    "status": "machine",
+    "context": "templates.invitation.variants.dinner.name"
+  },
+  "62572e43ee04": {
+    "source": "A small gathering: time, address and food needs",
+    "text": "Un piccolo ritrovo: orario, indirizzo ed esigenze alimentari",
+    "status": "machine",
+    "context": "templates.invitation.variants.dinner.description"
+  },
   "27c1551f4d14": {
     "source": "App download",
     "text": "Download app",
@@ -24790,6 +26518,42 @@
     "text": "Iscrizione alla newsletter scura con interessi e consenso",
     "status": "machine",
     "context": "templates.feedback.variants.sign-up.description"
+  },
+  "4072912559f9": {
+    "source": "A contact or enquiry form with the fields you pick; replies reach your inbox",
+    "text": "Un modulo di contatto o di richiesta con i campi che scegli tu; le risposte arrivano nella tua casella di posta",
+    "status": "machine",
+    "context": "templates.form.description"
+  },
+  "b9cf3101ee8a": {
+    "source": "Name, email, phone and a message",
+    "text": "Nome, email, telefono e un messaggio",
+    "status": "machine",
+    "context": "templates.form.variants.contact-us.description"
+  },
+  "b8415494efa4": {
+    "source": "Quote request",
+    "text": "Richiesta di preventivo",
+    "status": "machine",
+    "context": "templates.form.variants.quote-request.name"
+  },
+  "8094c02f232c": {
+    "source": "The job, where it is and how to reach you",
+    "text": "Il lavoro, dove si trova e come contattarti",
+    "status": "machine",
+    "context": "templates.form.variants.quote-request.description"
+  },
+  "de7a7767c119": {
+    "source": "Trade show leads",
+    "text": "Contatti da fiera",
+    "status": "machine",
+    "context": "templates.form.variants.lead-capture.name"
+  },
+  "8a11ce975f38": {
+    "source": "Details and interests from a stand, with consent",
+    "text": "Dati e interessi raccolti allo stand, con consenso",
+    "status": "machine",
+    "context": "templates.form.variants.lead-capture.description"
   },
   "fb9ef894175c": {
     "source": "Product",
@@ -25067,6 +26831,54 @@
     "status": "machine",
     "context": "templates.medical.variants.allergy-card.description"
   },
+  "930d77cd70a4": {
+    "source": "Lost & found tag",
+    "text": "Etichetta smarrimenti",
+    "status": "machine",
+    "context": "templates.asset-tag.label"
+  },
+  "5931911e74c8": {
+    "source": "A tag for bags, laptops and keys that helps whoever finds them reach you",
+    "text": "Un'etichetta per borse, laptop e chiavi che aiuta chi li trova a contattarti",
+    "status": "machine",
+    "context": "templates.asset-tag.description"
+  },
+  "f02b64ad84de": {
+    "source": "Luggage",
+    "text": "Bagaglio",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.luggage.name"
+  },
+  "661729da6609": {
+    "source": "Call and message buttons, a reward and a found-it form",
+    "text": "Pulsanti per chiamare e scrivere, una ricompensa e un modulo \"l'ho trovato\"",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.luggage.description"
+  },
+  "021f6da3aa83": {
+    "source": "Laptop & equipment",
+    "text": "Laptop e attrezzature",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.equipment.name"
+  },
+  "46158f15e064": {
+    "source": "Company property with an asset number and where to return it",
+    "text": "Proprietà aziendale con numero di inventario e dove restituirla",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.equipment.description"
+  },
+  "f0d66a79c138": {
+    "source": "Keys",
+    "text": "Chiavi",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.keys.name"
+  },
+  "ed54cd7c3b99": {
+    "source": "Short and simple: who to call and a reward",
+    "text": "Breve e semplice: chi chiamare e una ricompensa",
+    "status": "machine",
+    "context": "templates.asset-tag.variants.keys.description"
+  },
   "a9400aaa15f9": {
     "source": "A menu, brochure or manual people can read and download",
     "text": "Un menu, una brochure o un manuale da leggere e scaricare",
@@ -25294,6 +27106,48 @@
     "text": "Capitoli da ascoltare in ordine o da scaricare",
     "status": "machine",
     "context": "templates.playlist.variants.audiobook.description"
+  },
+  "bfd8dc7a29e9": {
+    "source": "A short note behind a code: a gift message, a thank-you or a notice",
+    "text": "Un breve messaggio dietro un codice: un biglietto regalo, un ringraziamento o un avviso",
+    "status": "machine",
+    "context": "templates.message.description"
+  },
+  "dafdcd6f7be1": {
+    "source": "Gift note",
+    "text": "Biglietto regalo",
+    "status": "machine",
+    "context": "templates.message.variants.gift-note.name"
+  },
+  "05d204ba3747": {
+    "source": "A personal note with a photo and one button",
+    "text": "Un messaggio personale con una foto e un pulsante",
+    "status": "machine",
+    "context": "templates.message.variants.gift-note.description"
+  },
+  "1a829c65cee3": {
+    "source": "Thank-you card",
+    "text": "Biglietto di ringraziamento",
+    "status": "machine",
+    "context": "templates.message.variants.thank-you.name"
+  },
+  "73bfc51857e2": {
+    "source": "A note for the card in every parcel",
+    "text": "Un messaggio per il biglietto in ogni pacco",
+    "status": "machine",
+    "context": "templates.message.variants.thank-you.description"
+  },
+  "65659145569b": {
+    "source": "Notice",
+    "text": "Avviso",
+    "status": "machine",
+    "context": "templates.message.variants.notice.name"
+  },
+  "db5d25fed89b": {
+    "source": "A sign on the door: closed today, moved or back soon",
+    "text": "Un cartello sulla porta: chiuso oggi, trasferito o presto di ritorno",
+    "status": "machine",
+    "context": "templates.message.variants.notice.description"
   },
   "f8af257eb7bb": {
     "source": "Custom page",
@@ -30850,5 +32704,473 @@
     "text": "QRdx non salva il tuo prompt, l'immagine di riferimento né le immagini generate: conta soltanto i tuoi crediti. Il prompt, l'immagine del QR code e l'eventuale immagine di riferimento vengono inviati tramite Vercel AI Gateway a GPT Image 2 di OpenAI per creare l'opera, e il risultato torna direttamente al tuo browser, quindi scarica quelle che vuoi conservare.",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "Scarica il codice in PNG, WebP o SVG.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "Scarica un PNG, WebP o SVG, oppure personalizza lo stile del codice nell'editor completo.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
+  },
+  "291d41cbf4b9": {
+    "source": "Books, with the ISBN printed above the bars",
+    "text": "Libri, con l'ISBN stampato sopra le barre",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.summary"
+  },
+  "54344ae77017": {
+    "source": "An ISBN-13 (leave its check digit off and it's added), or a whole ISBN-10 to convert, with or without hyphens. The hyphens are placed for you.",
+    "text": "Un ISBN-13 (senza la cifra di controllo, che viene aggiunta) oppure un ISBN-10 completo da convertire, con o senza trattini. I trattini vengono inseriti per te.",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.inputHint"
+  },
+  "a2e6713f08d5": {
+    "source": "Optional. In the US and Canada, 5 digits for the price: 5 and the US$ price (52499 is $24.99), or 90000 for none.",
+    "text": "Facoltativo. Negli Stati Uniti e in Canada, 5 cifre per il prezzo: 5 e il prezzo in US$ (52499 è $24.99), oppure 90000 per nessun prezzo.",
+    "status": "machine",
+    "context": "barcodes.formats.isbn.addOn.hint"
+  },
+  "e9e1f300825c": {
+    "source": "Magazines, journals and newspapers, with an issue add-on",
+    "text": "Riviste, periodici e quotidiani, con add-on per il numero",
+    "status": "machine",
+    "context": "barcodes.formats.issn.summary"
+  },
+  "966fa72ffe19": {
+    "source": "The 8-character ISSN (NNNN-NNNC), or its first 7 digits and the check digit is added. A 13-digit 977 number works too.",
+    "text": "L'ISSN di 8 caratteri (NNNN-NNNC), oppure le sue prime 7 cifre e la cifra di controllo viene aggiunta. Funziona anche un numero 977 di 13 cifre.",
+    "status": "machine",
+    "context": "barcodes.formats.issn.inputHint"
+  },
+  "9843a124a0e4": {
+    "source": "Optional: usually the issue number in 2 digits, or 5 digits.",
+    "text": "Facoltativo: di solito il numero dell'uscita in 2 cifre, oppure 5 cifre.",
+    "status": "machine",
+    "context": "barcodes.formats.issn.addOn.hint"
+  },
+  "1ee9182bc1fb": {
+    "source": "Printed music: scores, parts and songbooks",
+    "text": "Musica stampata: spartiti, parti e raccolte di canzoni",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.summary"
+  },
+  "b4688bb37eca": {
+    "source": "An ISMN of 13 digits starting 979-0, or the old 10-character form starting with M, with or without hyphens. Leave the check digit off and it's added.",
+    "text": "Un ISMN di 13 cifre che inizia con 979-0, oppure la vecchia forma di 10 caratteri che inizia con M, con o senza trattini. Lascia fuori la cifra di controllo e verrà aggiunta.",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.inputHint"
+  },
+  "7057f3f09102": {
+    "source": "Optional: 2 or 5 digits, if a distributor asks for one.",
+    "text": "Facoltativo: 2 o 5 cifre, se un distributore lo richiede.",
+    "status": "machine",
+    "context": "barcodes.formats.ismn.addOn.hint"
+  },
+  "8c6f1a2db028": {
+    "source": "The barcode on retail products almost everywhere outside North America. It holds a 13-digit GTIN: a company prefix from GS1, an item number and a check digit. Books, magazines and printed music use it too; their types below print the ISBN, ISSN or ISMN above the bars.",
+    "text": "Il codice a barre dei prodotti al dettaglio in quasi tutto il mondo fuori dal Nord America. Contiene un GTIN di 13 cifre: un prefisso aziendale assegnato da GS1, un numero articolo e una cifra di controllo. Lo usano anche libri, riviste e musica stampata; i loro tipi qui sotto stampano l'ISBN, l'ISSN o l'ISMN sopra le barre.",
+    "status": "machine",
+    "context": "barcodes.uses.ean13"
+  },
+  "e27297574e0f": {
+    "source": "Books. The ISBN-13 is drawn as an EAN-13 starting 978 or 979, with the hyphenated ISBN printed above the bars. ISBN-10s are converted, and a 5-digit price add-on can go beside it for the US and Canadian book trade.",
+    "text": "Libri. L'ISBN-13 viene disegnato come un EAN-13 che inizia con 978 o 979, con l'ISBN con i trattini stampato sopra le barre. Gli ISBN-10 vengono convertiti e accanto si può aggiungere un add-on di prezzo di 5 cifre per il mercato librario di Stati Uniti e Canada.",
+    "status": "machine",
+    "context": "barcodes.uses.isbn"
+  },
+  "79c76e0d75e5": {
+    "source": "Magazines, journals and newspapers. The ISSN goes into an EAN-13 starting 977 with 2 digits for price or edition changes, and a 2-digit add-on usually carries the issue number.",
+    "text": "Riviste, periodici e quotidiani. L'ISSN viene inserito in un EAN-13 che inizia con 977, con 2 cifre per le variazioni di prezzo o di edizione, e un add-on di 2 cifre di solito riporta il numero dell'uscita.",
+    "status": "machine",
+    "context": "barcodes.uses.issn"
+  },
+  "cc84a096325d": {
+    "source": "Printed music: scores, parts and songbooks. The ISMN is drawn as an EAN-13 starting 979-0 with the ISMN printed above it, and old numbers starting with M are converted.",
+    "text": "Musica stampata: spartiti, parti e raccolte di canzoni. L'ISMN viene disegnato come un EAN-13 che inizia con 979-0, con l'ISMN stampato sopra, e i vecchi numeri che iniziano con M vengono convertiti.",
+    "status": "machine",
+    "context": "barcodes.uses.ismn"
+  },
+  "2182d8e7b974": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "Per i prodotti venduti nei negozi, sì. EAN, UPC, ITF-14 e GS1-128 contengono un GTIN, e i GTIN vengono concessi in licenza alla tua azienda da GS1 (o dall'organizzazione GS1 del tuo paese); i sistemi dei rivenditori non riconoscono un numero inventato. Libri, periodici e musica stampata usano invece un ISBN, ISSN o ISMN rilasciato dalla loro agenzia nazionale. Questo generatore disegna qualsiasi numero valido, ma non emette né registra numeri. Per le tue scorte, i tuoi beni o i tuoi biglietti, Code 128, Code 39 e Code 93 non richiedono alcuna registrazione.",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "44ff97b6fe1e": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN and the GTIN and SSCC fields of GS1-128: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "Sì, per EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN e per i campi GTIN e SSCC di GS1-128: lascia fuori l'ultima cifra e verrà calcolata. Se inserisci il numero completo, la cifra di controllo viene verificata; se è sbagliata, compare un errore invece del codice a barre.",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "ecc099e5186f": {
+    "source": "Yes, with the ISBN barcode type: it's an EAN-13 of the ISBN-13 with the hyphenated ISBN printed above the bars, and it takes an ISBN-10 and a 5-digit price add-on too. ISSN (magazines) and ISMN (printed music) have their own types.",
+    "text": "Sì, con il tipo di barcode ISBN: è un EAN-13 dell'ISBN-13 con l'ISBN con i trattini stampato sopra le barre, e accetta anche un ISBN-10 e un add-on del prezzo a 5 cifre. ISSN (riviste) e ISMN (musica stampata) hanno i loro tipi.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ean-13.faqs.2.answer"
+  },
+  "3835c42e60bf": {
+    "source": "Free ISBN Barcode Generator with Price Add-on",
+    "text": "Generatore gratuito di barcode ISBN con add-on del prezzo",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.title"
+  },
+  "176aa5f9c65e": {
+    "source": "Make an ISBN barcode for a book cover: ISBN-13 or ISBN-10, check digit and hyphens worked out, and an optional price add-on. SVG, PDF and EPS. Free.",
+    "text": "Crea un barcode ISBN per la copertina di un libro: ISBN-13 o ISBN-10, cifra di controllo e trattini calcolati, e add-on del prezzo facoltativo. SVG, PDF ed EPS. Gratis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.metaDescription"
+  },
+  "da610243ac4c": {
+    "source": "An ISBN barcode is an EAN-13 of the book's 13-digit ISBN, with the ISBN printed above the bars. Type the ISBN, with or without hyphens, and the generator checks it, places the hyphens and draws the barcode, with a 5-digit price add-on if you sell in the US or Canada.",
+    "text": "Un barcode ISBN è un EAN-13 dell'ISBN a 13 cifre del libro, con l'ISBN stampato sopra le barre. Scrivi l'ISBN, con o senza trattini: il generatore lo controlla, inserisce i trattini e disegna il barcode, con un add-on del prezzo a 5 cifre se vendi negli Stati Uniti o in Canada.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.intro"
+  },
+  "0b6b8b3c5b67": {
+    "source": "The back cover of books, where bookshops, distributors and libraries scan it to look the book up. The ISBN Users' Manual recommends the lower right of the back cover, near the spine.",
+    "text": "La quarta di copertina dei libri, dove librerie, distributori e biblioteche lo leggono con la scansione per cercare il libro. Il manuale ISBN Users' Manual consiglia l'angolo in basso a destra della quarta di copertina, vicino al dorso.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.0"
+  },
+  "a1da95764261": {
+    "source": "Each edition and format of a book has its own ISBN, so a hardback, a paperback and an audiobook each carry a different barcode. ISBNs start with 978 or 979; numbers starting 979-0 are ISMNs, for printed music.",
+    "text": "Ogni edizione e formato di un libro ha il proprio ISBN, quindi un'edizione con copertina rigida, una in brossura e un audiolibro hanno ciascuno un barcode diverso. Gli ISBN iniziano con 978 o 979; i numeri che iniziano con 979-0 sono ISMN, per la musica stampata.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.usedFor.1"
+  },
+  "3e73fd5280af": {
+    "source": "Where do ISBNs come from?",
+    "text": "Da dove arrivano gli ISBN?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.title"
+  },
+  "e439e1b8c34c": {
+    "source": "From the ISBN agency of the country where the publisher is based. Some agencies charge for ISBNs and some give them out free; the International ISBN Agency lists them all.",
+    "text": "Dall'agenzia ISBN del paese in cui ha sede l'editore. Alcune agenzie fanno pagare gli ISBN e altre li assegnano gratis; l'International ISBN Agency le elenca tutte.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.0"
+  },
+  "69d6787067ee": {
+    "source": "This generator draws the barcode of an ISBN you already have. It doesn't issue or register ISBNs.",
+    "text": "Questo generatore disegna il barcode di un ISBN che hai già. Non emette né registra ISBN.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.numbers.paragraphs.1"
+  },
+  "2c37843cb158": {
+    "source": "Type an ISBN-13 or an ISBN-10, with or without hyphens or spaces. Twelve digits get the check digit added and thirteen have it checked. A whole ISBN-10, check digit included, is converted to its ISBN-13: 978 in front of its first nine digits and a new check digit.",
+    "text": "Scrivi un ISBN-13 o un ISBN-10, con o senza trattini o spazi. Con dodici cifre viene aggiunta la cifra di controllo, con tredici viene verificata. Un ISBN-10 completo, cifra di controllo inclusa, viene convertito nel suo ISBN-13: 978 davanti alle prime nove cifre e una nuova cifra di controllo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.0"
+  },
+  "c521fc56dc83": {
+    "source": "The ISBN above the bars is split into its five parts (prefix, registration group, registrant, publication and check digit) by the ranges the International ISBN Agency publishes, because the parts' lengths differ from one country and publisher to the next.",
+    "text": "L'ISBN sopra le barre viene diviso nelle sue cinque parti (prefisso, gruppo di registrazione, registrante, pubblicazione e cifra di controllo) in base agli intervalli pubblicati dall'International ISBN Agency, perché la lunghezza delle parti cambia da un paese e da un editore all'altro.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.1"
+  },
+  "e9a28cedaf04": {
+    "source": "The check digit is the EAN-13 one: the first 12 digits are weighted 1, 3, 1, 3… and the check digit brings their sum to a multiple of 10.",
+    "text": "La cifra di controllo è quella dell'EAN-13: le prime 12 cifre sono pesate 1, 3, 1, 3… e la cifra di controllo porta la loro somma a un multiplo di 10.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.2"
+  },
+  "8d1f674af2a1": {
+    "source": "The add-on goes in its own field. In the US and Canada it's 5 digits: the first is the currency (5 for US dollars, 6 for Canadian dollars) and the rest the price, so 52499 is US$24.99, and 90000 means no price. Elsewhere the ISBN Users' Manual keeps 90000 to 98999 for publishers' own use.",
+    "text": "L'add-on va nel suo campo. Negli Stati Uniti e in Canada è di 5 cifre: la prima è la valuta (5 per i dollari statunitensi, 6 per i dollari canadesi) e le altre sono il prezzo, quindi 52499 è US$24.99, e 90000 significa nessun prezzo. Altrove l'ISBN Users' Manual riserva da 90000 a 98999 all'uso interno degli editori.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.rules.3"
+  },
+  "e4dc52a1d225": {
+    "source": "An ISBN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "Un barcode ISBN è un EAN-13, quindi valgono le dimensioni dell'EAN-13: larghezza di 37.29 mm con le zone di silenzio al 100%, con un modulo di 0.33 mm, e GS1 ammette dall'80% al 200%.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.0"
+  },
+  "8b96afae7ca3": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%, and put the add-on 9 modules right of the main bars, within the 7 to 12 GS1 allows. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "I download vettoriali usano un modulo di 0.353 mm, circa il 107%, e mettono l'add-on a 9 moduli a destra delle barre principali, entro i valori da 7 a 12 ammessi da GS1. Mantieni le proporzioni quando ridimensioni e non ridurre l'altezza delle barre.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.1"
+  },
+  "c705fd825b60": {
+    "source": "Keep cover artwork out of the quiet zones and away from the ISBN line above the bars.",
+    "text": "Tieni la grafica della copertina fuori dalle zone di silenzio e lontana dalla riga dell'ISBN sopra le barre.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.sizing.2"
+  },
+  "196d06fdae79": {
+    "source": "Can I use my old ISBN-10?",
+    "text": "Posso usare il mio vecchio ISBN-10?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.question"
+  },
+  "fd750967eae9": {
+    "source": "Yes. Type it and the generator converts it to the ISBN-13 that goes in the barcode: 978, its first nine digits and a new check digit. ISBN agencies have only given out 13-digit ISBNs since 1 January 2007.",
+    "text": "Sì. Scrivilo e il generatore lo converte nell'ISBN-13 che va nel barcode: 978, le sue prime nove cifre e una nuova cifra di controllo. Le agenzie ISBN assegnano solo ISBN a 13 cifre dal 1 gennaio 2007.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.0.answer"
+  },
+  "6c5182bf9e13": {
+    "source": "Do I need the 5-digit price add-on?",
+    "text": "Mi serve l'add-on del prezzo a 5 cifre?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.question"
+  },
+  "a9c462c78717": {
+    "source": "Only if you sell through the US or Canadian book trade, which uses it for the cover price. Use 90000 if you don't want a price in the barcode. Outside North America, leave it off.",
+    "text": "Solo se vendi attraverso il mercato librario statunitense o canadese, che lo usa per il prezzo di copertina. Usa 90000 se non vuoi un prezzo nel barcode. Fuori dal Nord America, lascialo vuoto.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.1.answer"
+  },
+  "38a719101040": {
+    "source": "Is an ISBN barcode just an EAN-13?",
+    "text": "Un barcode ISBN è semplicemente un EAN-13?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.question"
+  },
+  "cd2e286d9bfd": {
+    "source": "The bars are an EAN-13 of the ISBN-13, and checkout scanners read it as one. An ISBN barcode also prints the hyphenated ISBN above the bars, as the ISBN Users' Manual asks, which the EAN-13 generator doesn't.",
+    "text": "Le barre sono un EAN-13 dell'ISBN-13 e gli scanner delle casse lo leggono come tale. Un barcode ISBN stampa anche l'ISBN con i trattini sopra le barre, come richiede l'ISBN Users' Manual, cosa che il generatore EAN-13 non fa.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.2.answer"
+  },
+  "e8ce71038550": {
+    "source": "Why are the hyphens different from the ones I typed?",
+    "text": "Perché i trattini sono diversi da quelli che ho scritto?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.question"
+  },
+  "4fec2a0ce9cf": {
+    "source": "Each part of an ISBN has a length set by the International ISBN Agency's ranges, and the generator places the hyphens from them. If your ISBN is in a range newer than the generator's copy, type it with its hyphens and they're printed as you wrote them.",
+    "text": "Ogni parte di un ISBN ha una lunghezza stabilita dagli intervalli dell'International ISBN Agency e il generatore mette i trattini in base a quelli. Se il tuo ISBN rientra in un intervallo più recente della copia del generatore, scrivilo con i trattini e verrà stampato come l'hai scritto.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.isbn.faqs.3.answer"
+  },
+  "f188d75a04c1": {
+    "source": "Free ISSN Barcode Generator for Magazines",
+    "text": "Generatore gratuito di codici a barre ISSN per riviste",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.title"
+  },
+  "1f64921e91f2": {
+    "source": "Make an ISSN barcode for a magazine or journal: the 977 EAN-13 with its sequence variant and an issue add-on, check digits worked out. SVG, PDF, EPS. Free.",
+    "text": "Crea un codice a barre ISSN per una rivista o un periodico: l'EAN-13 977 con la sua variante di sequenza e un add-on per il numero, con le cifre di controllo calcolate. SVG, PDF, EPS. Gratuito.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.metaDescription"
+  },
+  "bfca3d83074b": {
+    "source": "An ISSN barcode puts the ISSN of a magazine, journal or newspaper into an EAN-13 starting 977, usually with a 2-digit add-on for the issue number. Type the ISSN and the issue, and the generator works out both check digits and draws the barcode with the ISSN above it.",
+    "text": "Un codice a barre ISSN inserisce l'ISSN di una rivista, di un periodico o di un quotidiano in un EAN-13 che inizia con 977, di solito con un add-on di 2 cifre per il numero dell'uscita. Digita l'ISSN e il numero: il generatore calcola entrambe le cifre di controllo e disegna il codice a barre con l'ISSN sopra.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.intro"
+  },
+  "c97f6be9f476": {
+    "source": "Covers of magazines, journals, newspapers and other serials sold in shops. Retailers and wholesalers scan the main barcode to find the title, and the add-on tells one issue from the next.",
+    "text": "Copertine di riviste, periodici, quotidiani e altre pubblicazioni seriali vendute nei negozi. Rivenditori e distributori eseguono la scansione del codice a barre principale per trovare la testata, mentre l'add-on distingue un numero dal successivo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.0"
+  },
+  "b78d01fd74c8": {
+    "source": "A title published both in print and online has a different ISSN for each; the barcode goes on the print edition.",
+    "text": "Una testata pubblicata sia su carta sia online ha un ISSN diverso per ciascuna edizione; il codice a barre va sull'edizione cartacea.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.usedFor.1"
+  },
+  "2a6774d25d70": {
+    "source": "Where do ISSNs come from?",
+    "text": "Da dove arrivano gli ISSN?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.title"
+  },
+  "21ee727a32d4": {
+    "source": "From the national ISSN centre of the publisher's country, or the ISSN International Centre where there's none. Publishers don't make up ISSNs themselves.",
+    "text": "Dal centro ISSN nazionale del paese dell'editore o, se non esiste, dall'ISSN International Centre. Gli editori non si inventano gli ISSN da soli.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.0"
+  },
+  "b88925ce2ed3": {
+    "source": "This generator draws the barcode of an ISSN you already have; it doesn't issue or register ISSNs. Distributors may have their own rules for the variant and add-on digits, so check with yours.",
+    "text": "Questo generatore disegna il codice a barre di un ISSN che hai già; non assegna né registra ISSN. I distributori possono avere regole proprie per la variante e le cifre dell'add-on, quindi chiedi al tuo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.numbers.paragraphs.1"
+  },
+  "3cd9c9d76ec9": {
+    "source": "Type the 8-character ISSN, NNNN-NNNC, or its first 7 digits to have the check digit added. An ISSN's check digit is weighted 8 down to 2, modulo 11, so it can be X.",
+    "text": "Digita l'ISSN di 8 caratteri, NNNN-NNNC, oppure le sue prime 7 cifre per far aggiungere la cifra di controllo. La cifra di controllo di un ISSN è pesata da 8 a 2, modulo 11, quindi può essere X.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.0"
+  },
+  "e18df648537b": {
+    "source": "The barcode holds 977, the ISSN's first 7 digits (its check digit is left out), the 2-digit sequence variant and an EAN-13 check digit. The variant is 00 unless you change it: publishers use it for extra information such as a change of price.",
+    "text": "Il codice a barre contiene 977, le prime 7 cifre dell'ISSN (la sua cifra di controllo è esclusa), la variante di sequenza di 2 cifre e una cifra di controllo EAN-13. La variante è 00 a meno che tu non la cambi: gli editori la usano per informazioni aggiuntive, come una variazione di prezzo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.1"
+  },
+  "217b7f21d84b": {
+    "source": "The add-on is usually the issue number in 2 digits; 5 digits work too. You can also type the 13-digit 977 number from an existing barcode, and the ISSN and variant are read from it.",
+    "text": "L'add-on di solito è il numero dell'uscita in 2 cifre; vanno bene anche 5 cifre. Puoi anche digitare il numero 977 di 13 cifre di un codice a barre esistente: ISSN e variante vengono letti da lì.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.rules.2"
+  },
+  "81617eedd878": {
+    "source": "An ISSN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "Un codice a barre ISSN è un EAN-13, quindi valgono le dimensioni dell'EAN-13: 37.29 mm di larghezza con le zone di silenzio al 100%, con un modulo di 0.33 mm, e GS1 consente dall'80% al 200%.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.sizing.0"
+  },
+  "029b41d87aed": {
+    "source": "What should the 2-digit add-on be?",
+    "text": "Che add-on di 2 cifre devo usare?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.question"
+  },
+  "a6d582e1f7e1": {
+    "source": "Usually the issue number, counted the way your distributor asks: a weekly title and a monthly title number their issues differently. A new issue only needs a new add-on, not a new ISSN.",
+    "text": "Di solito il numero dell'uscita, contato come chiede il tuo distributore: una testata settimanale e una mensile numerano le uscite in modo diverso. Un nuovo numero richiede solo un nuovo add-on, non un nuovo ISSN.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.0.answer"
+  },
+  "8bf75513f21a": {
+    "source": "When do I change the sequence variant?",
+    "text": "Quando cambio la variante di sequenza?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.question"
+  },
+  "d47879b0459f": {
+    "source": "When an issue needs a different main barcode, for example for a different cover price. Most titles keep 00.",
+    "text": "Quando un numero richiede un codice a barre principale diverso, per esempio per un prezzo di copertina diverso. La maggior parte delle testate mantiene 00.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.1.answer"
+  },
+  "05f5e8f2dfc8": {
+    "source": "Is an ISSN barcode an EAN-13?",
+    "text": "Un codice a barre ISSN è un EAN-13?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.question"
+  },
+  "14b5a2d47c79": {
+    "source": "Yes, one starting 977, and checkout scanners read it as one. The add-on is a small separate barcode to its right; scanners set up to read add-ons report it after the 13 digits.",
+    "text": "Sì, uno che inizia con 977, e gli scanner delle casse lo leggono come tale. L'add-on è un piccolo codice a barre separato alla sua destra; gli scanner configurati per leggere gli add-on lo riportano dopo le 13 cifre.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.issn.faqs.2.answer"
+  },
+  "8258c7e9de6f": {
+    "source": "Free ISMN Barcode Generator for Printed Music",
+    "text": "Generatore gratuito di barcode ISMN per la musica stampata",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.title"
+  },
+  "ab1e3a860c80": {
+    "source": "Make an ISMN barcode for sheet music and scores: 979-0 ISMNs or old M- numbers, check digit and hyphens worked out. SVG, PDF and EPS for print. Free.",
+    "text": "Crea un barcode ISMN per spartiti e partiture: ISMN 979-0 o vecchi numeri M-, con cifra di controllo e trattini già calcolati. SVG, PDF ed EPS per la stampa. Gratuito.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.metaDescription"
+  },
+  "8360e12af0d1": {
+    "source": "An ISMN identifies a publication of notated music, such as a score, a set of parts or a songbook, and is printed as an EAN-13 starting 979-0 with the ISMN above the bars. Type the ISMN, or an old number starting with M, and download the barcode for your cover.",
+    "text": "Un ISMN identifica una pubblicazione di musica notata, come una partitura, un set di parti o un canzoniere, e si stampa come EAN-13 che inizia con 979-0, con l'ISMN sopra le barre. Inserisci l'ISMN, o un vecchio numero che inizia con M, e scarica il barcode per la tua copertina.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.intro"
+  },
+  "b7522c7e8483": {
+    "source": "Printed and digital sheet music: scores, parts, songbooks and other notated music, scanned by music shops, distributors and libraries. Each part sold on its own has its own ISMN.",
+    "text": "Spartiti stampati e digitali: partiture, parti, canzonieri e altra musica notata, letti in scansione da negozi di musica, distributori e biblioteche. Ogni parte venduta separatamente ha il suo ISMN.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.0"
+  },
+  "befd5a2d10e8": {
+    "source": "Books about music get an ISBN instead, and sound recordings have identifiers of their own. A songbook can have both an ISMN and an ISBN.",
+    "text": "I libri sulla musica hanno invece un ISBN, e le registrazioni audio hanno identificativi propri. Un canzoniere può avere sia un ISMN sia un ISBN.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.usedFor.1"
+  },
+  "a8a30623f353": {
+    "source": "Where do ISMNs come from?",
+    "text": "Da dove arrivano gli ISMN?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.title"
+  },
+  "775f3d68ead8": {
+    "source": "From the ISMN agency of the publisher's country, appointed by the International ISMN Agency. A publisher gets a registrant number and usually numbers its publications from it.",
+    "text": "Dall'agenzia ISMN del paese dell'editore, nominata dall'International ISMN Agency. L'editore riceve un numero di registrante e di solito numera da lì le proprie pubblicazioni.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.0"
+  },
+  "30668fbec2bc": {
+    "source": "This generator draws the barcode of an ISMN you already have. It doesn't issue or register ISMNs.",
+    "text": "Questo generatore disegna il barcode di un ISMN che hai già. Non emette né registra ISMN.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.numbers.paragraphs.1"
+  },
+  "8f30796bbe15": {
+    "source": "Type the 13 digits starting 979-0, with or without hyphens, or 12 to have the check digit added. An old 10-character ISMN starting with M is converted: the M becomes 979-0 and the check digit stays the same.",
+    "text": "Inserisci le 13 cifre che iniziano con 979-0, con o senza trattini, oppure 12 per far aggiungere la cifra di controllo. Un vecchio ISMN di 10 caratteri che inizia con M viene convertito: la M diventa 979-0 e la cifra di controllo resta la stessa.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.0"
+  },
+  "168c909528f2": {
+    "source": "The ISMN above the bars is split into prefix, registrant, item and check digit. The registrant's length comes from its first digit, as the ISMN Users' Manual sets out: 000 to 099, 1000 to 3999, 40000 to 69999, 700000 to 899999, then 9000000 to 9999999.",
+    "text": "L'ISMN sopra le barre è diviso in prefisso, registrante, elemento e cifra di controllo. La lunghezza del registrante dipende dalla sua prima cifra, come stabilito dall'ISMN Users' Manual: da 000 a 099, da 1000 a 3999, da 40000 a 69999, da 700000 a 899999, poi da 9000000 a 9999999.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.rules.1"
+  },
+  "78cca6abd0a8": {
+    "source": "An ISMN barcode is an EAN-13, so EAN-13 sizes apply: 37.29 mm wide with its quiet zones at 100%, with a 0.33 mm module, and GS1 allows 80% to 200%.",
+    "text": "Un barcode ISMN è un EAN-13, quindi valgono le dimensioni dell'EAN-13: 37.29 mm di larghezza con le zone di quiete al 100%, con un modulo di 0.33 mm, e GS1 ammette dall'80% al 200%.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.0"
+  },
+  "44f3668734ec": {
+    "source": "The vector downloads use a 0.353 mm module, about 107%. Keep the proportions when you scale, and don't cut the bar height.",
+    "text": "I download vettoriali usano un modulo di 0.353 mm, circa il 107%. Mantieni le proporzioni quando scali e non ridurre l'altezza delle barre.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.sizing.1"
+  },
+  "c3d3d98f6c6f": {
+    "source": "Can I use an old ISMN starting with M?",
+    "text": "Posso usare un vecchio ISMN che inizia con M?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.question"
+  },
+  "96dbf79e7003": {
+    "source": "Yes. Type it and the generator converts it: M-2306-7118-7 becomes 979-0-2306-7118-7, with the same check digit. ISMNs have been 13 digits since 2008.",
+    "text": "Sì. Inseriscilo e il generatore lo converte: M-2306-7118-7 diventa 979-0-2306-7118-7, con la stessa cifra di controllo. Dal 2008 gli ISMN hanno 13 cifre.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.0.answer"
+  },
+  "d3b707d21e7c": {
+    "source": "ISMN or ISBN for a songbook?",
+    "text": "ISMN o ISBN per un canzoniere?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.question"
+  },
+  "986280e8e50f": {
+    "source": "It can have both, and the ISMN Users' Manual leaves the choice to the publisher when only one is used. Books about music, with no notated music as their content, take an ISBN.",
+    "text": "Può avere entrambi, e l'ISMN Users' Manual lascia la scelta all'editore quando se ne usa uno solo. I libri sulla musica, il cui contenuto non è musica notata, hanno un ISBN.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.1.answer"
+  },
+  "af6b85c2a74a": {
+    "source": "Can I add a price add-on?",
+    "text": "Posso aggiungere un add-on di prezzo?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.question"
+  },
+  "e685660fa860": {
+    "source": "Yes, 2 or 5 digits, in the add-on field. The ISMN Users' Manual doesn't ask for one, so add it only if your distributor does.",
+    "text": "Sì, di 2 o 5 cifre, nel campo add-on. L'ISMN Users' Manual non lo richiede, quindi aggiungilo solo se lo chiede il tuo distributore.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.ismn.faqs.2.answer"
+  },
+  "e71d1a8889ec": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 o Aztec. Verifica il valore (cifre di controllo, lunghezze, caratteri) e restituisce un PNG più gli URL pubblici di immagini in SVG, PNG, PDF e altri formati.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }
