@@ -1,5 +1,6 @@
 import type { ContentType } from "@/types/qr-content";
 import { codesFor, framed, official, type TileSpec, tile } from "./build";
+import { LINK_TYPE_TILES } from "./link-type-codes";
 import type { PageCode } from "./model";
 import {
   demoAs,
@@ -1628,6 +1629,8 @@ const TYPE_TILES: Record<ContentType, TileSpec[]> = {
     ),
     tile("Donations", stellar.page("payment", "donation"), "emerald", null),
   ],
+  // Added 2026-11-22 (links): ./link-type-codes.ts
+  ...LINK_TYPE_TILES,
 };
 
 export const TYPE_CODES: Record<ContentType, PageCode[]> = Object.fromEntries(

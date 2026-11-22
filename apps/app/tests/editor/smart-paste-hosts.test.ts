@@ -229,20 +229,21 @@ const REAL: [string, ReturnType<typeof parseURL>][] = [
     },
   ],
   [
+    // A form is a Google Forms code since 2026-11-22 (Attendance is a use)
     "https://docs.google.com/forms/d/e/1FAIpQ/viewform",
     {
-      type: "attendance",
+      type: "google-forms",
       config: {
-        type: "attendance",
-        formUrl: "https://docs.google.com/forms/d/e/1FAIpQ/viewform",
+        type: "google-forms",
+        url: "https://docs.google.com/forms/d/e/1FAIpQ/viewform",
       },
     },
   ],
   [
     "https://forms.gle/abc123",
     {
-      type: "attendance",
-      config: { type: "attendance", formUrl: "https://forms.gle/abc123" },
+      type: "google-forms",
+      config: { type: "google-forms", url: "https://forms.gle/abc123" },
     },
   ],
   [
@@ -257,13 +258,13 @@ const REAL: [string, ReturnType<typeof parseURL>][] = [
     },
   ],
   [
+    // Docs, Sheets and Slides have their own types since 2026-11-22
     "https://docs.google.com/spreadsheets/d/abc/edit#gid=0",
     {
-      type: "google-drive",
+      type: "google-sheets",
       config: {
-        type: "google-drive",
+        type: "google-sheets",
         url: "https://docs.google.com/spreadsheets/d/abc/edit#gid=0",
-        source: "manual",
       },
     },
   ],

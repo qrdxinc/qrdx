@@ -8,6 +8,7 @@ import {
   Box,
   Briefcase,
   Brush,
+  Brush2,
   Building3,
   Building4,
   Bus,
@@ -51,6 +52,7 @@ import {
   Monitor,
   Musicnote,
   MusicPlaylist,
+  MusicSquare,
   Note,
   People,
   Personalcard,
@@ -74,6 +76,7 @@ import {
   Sticker,
   Tag,
   TagUser,
+  Task,
   Teacher,
   Ticket,
   TicketDiscount,
@@ -83,6 +86,7 @@ import {
   TruckFast,
   UserEdit,
   UserSquare,
+  Video,
   VideoPlay,
   Wallet2,
   Weight,
@@ -134,6 +138,12 @@ export const QR_TYPE_ICONS: Record<ContentType, CardIcon> = {
   khqr: CardReceive,
   lightning: Flash,
   tron: Coin,
+  // Added 2026-11-22 (links): no Simple Icons mark for these
+  facetime: Video,
+  "microsoft-teams": People,
+  "microsoft-forms": Task,
+  "amazon-music": MusicSquare,
+  canva: Brush2,
 };
 
 export const QR_TYPE_GROUP_ICONS: Record<QrTypeGroup, CardIcon> = {

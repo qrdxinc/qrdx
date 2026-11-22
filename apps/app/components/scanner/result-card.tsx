@@ -19,6 +19,7 @@ import {
   Call as Phone,
   SearchNormal1 as Search,
   Text as Type,
+  Video,
   Wallet,
   Wifi,
 } from "iconsax-reactjs";
@@ -47,6 +48,7 @@ export const KIND_ICONS: Record<ScanKind, LucideIcon> = {
   event: CalendarDays,
   geo: MapPin,
   phone: Phone,
+  facetime: Video,
   sms: MessageSquare,
   email: Mail,
   payment: Wallet,
@@ -527,6 +529,24 @@ function Details({ parsed }: { parsed: ParsedScan }) {
             </LinkButton>
             <CopyButton label={t("copyNumber")} value={parsed.number} />
           </div>
+        </div>
+      );
+    case "facetime":
+      return (
+        <div className="flex flex-col gap-3">
+          <FieldList
+            fields={[{ label: t("to"), value: parsed.target, mono: true }]}
+          />
+          <div className="flex flex-wrap gap-2">
+            <LinkButton href={parsed.url}>
+              <Video className="size-3.5" />
+              {parsed.audio ? t("startFaceTimeAudio") : t("startFaceTime")}
+            </LinkButton>
+            <CopyButton label={t("copyText")} value={parsed.target} />
+          </div>
+          <p className="text-muted-foreground text-xs leading-relaxed">
+            {t("faceTimeNote")}
+          </p>
         </div>
       );
     case "sms":

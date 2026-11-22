@@ -3,6 +3,7 @@
  */
 
 import { z } from "zod";
+import type { HandleLinkType, PastedLinkType } from "@/types/qr-content";
 import {
   cardanoIssue,
   cryptoAmount,
@@ -16,6 +17,7 @@ import {
   xrpIssue,
 } from "@/utils/crypto-payments";
 import { czechSpdIssue } from "@/utils/czech-spd";
+import { type LinkType, linkTypeIssue } from "@/utils/link-types";
 // Added 2026-11-22 (payments)
 import { meCardIssue } from "@/utils/mecard";
 import {
@@ -755,6 +757,100 @@ export const stellarSchema = z
   .superRefine(checkedBy(stellarIssue));
 
 // ─── end of the 2026-11-22 (payments) schemas ───────────────────────────────
+// ─── Added 2026-11-22 (links) ───────────────────────────────────────────────
+// The link and app types: their fields, checked by utils/link-types.ts.
+
+/** The message a type's check gives for empty content. */
+const requiredFor = (type: LinkType) =>
+  linkTypeIssue({ type } as Parameters<typeof linkTypeIssue>[0])?.message ??
+  "Required";
+
+function linkSchema<Shape extends z.ZodRawShape>(type: LinkType, shape: Shape) {
+  return z
+    .object(shape)
+    .superRefine(
+      checkedBy((value) =>
+        linkTypeIssue({ ...value, type } as Parameters<
+          typeof linkTypeIssue
+        >[0]),
+      ),
+    );
+}
+
+/** A username or a pasted profile link. */
+const handleSchema = (type: HandleLinkType) =>
+  linkSchema(type, { username: z.string().min(1, requiredFor(type)) });
+
+/** A link pasted from the app or site. */
+const pastedSchema = (type: PastedLinkType) =>
+  linkSchema(type, { url: z.string().min(1, requiredFor(type)) });
+
+export const LINK_TYPE_SCHEMAS = {
+  messenger: handleSchema("messenger"),
+  viber: linkSchema("viber", {
+    phoneNumber: optionalText,
+    message: optionalText,
+    link: optionalText,
+  }),
+  kakaotalk: pastedSchema("kakaotalk"),
+  zalo: pastedSchema("zalo"),
+  facetime: linkSchema("facetime", {
+    contact: optionalText,
+    url: optionalText,
+    audioOnly: z.boolean().optional(),
+  }),
+  "microsoft-teams": linkSchema("microsoft-teams", {
+    url: optionalText,
+    users: optionalText,
+    message: optionalText,
+  }),
+  webex: pastedSchema("webex"),
+  vk: pastedSchema("vk"),
+  weibo: pastedSchema("weibo"),
+  tumblr: handleSchema("tumblr"),
+  medium: handleSchema("medium"),
+  substack: handleSchema("substack"),
+  github: handleSchema("github"),
+  behance: handleSchema("behance"),
+  dribbble: handleSchema("dribbble"),
+  linktree: handleSchema("linktree"),
+  patreon: handleSchema("patreon"),
+  kofi: handleSchema("kofi"),
+  buymeacoffee: handleSchema("buymeacoffee"),
+  "apple-music": pastedSchema("apple-music"),
+  "youtube-music": pastedSchema("youtube-music"),
+  "apple-podcasts": pastedSchema("apple-podcasts"),
+  "amazon-music": pastedSchema("amazon-music"),
+  deezer: pastedSchema("deezer"),
+  tidal: pastedSchema("tidal"),
+  bandcamp: handleSchema("bandcamp"),
+  "google-docs": pastedSchema("google-docs"),
+  "google-sheets": pastedSchema("google-sheets"),
+  "google-slides": pastedSchema("google-slides"),
+  "google-forms": pastedSchema("google-forms"),
+  "microsoft-forms": pastedSchema("microsoft-forms"),
+  notion: pastedSchema("notion"),
+  canva: pastedSchema("canva"),
+  "google-classroom": pastedSchema("google-classroom"),
+  calendly: handleSchema("calendly"),
+  "app-store": linkSchema("app-store", {
+    app: z.string().min(1, requiredFor("app-store")),
+    writeReview: z.boolean().optional(),
+  }),
+  "google-play": linkSchema("google-play", {
+    app: z.string().min(1, requiredFor("google-play")),
+  }),
+  tripadvisor: pastedSchema("tripadvisor"),
+  trustpilot: linkSchema("trustpilot", {
+    website: z.string().min(1, requiredFor("trustpilot")),
+    writeReview: z.boolean().optional(),
+  }),
+  yelp: pastedSchema("yelp"),
+  airbnb: pastedSchema("airbnb"),
+  "booking-com": pastedSchema("booking-com"),
+} satisfies Record<LinkType, z.ZodType>;
+
+// ─── end of the 2026-11-22 (links) schemas ──────────────────────────────────
 
 // Export type inference helpers
 export type UrlFormData = z.infer<typeof urlSchema>;

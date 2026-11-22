@@ -64,6 +64,24 @@ export const PLAYGROUND_SAMPLES = {
   twitch: { type: "twitch", username: "twitch" },
   soundcloud: { type: "soundcloud", username: "soundcloud" },
   waze: { type: "waze", location: "Eiffel Tower, Paris" },
+  // Added 2026-11-22 (links): each platform's own account or page.
+  vk: { type: "vk", url: "https://vk.com/vk" },
+  tumblr: { type: "tumblr", username: "staff" },
+  medium: { type: "medium", username: "@Medium" },
+  substack: { type: "substack", username: "on" },
+  github: { type: "github", username: "github" },
+  dribbble: { type: "dribbble", username: "dribbble" },
+  linktree: { type: "linktree", username: "linktree" },
+  "apple-music": {
+    type: "apple-music",
+    url: "https://music.apple.com/us/browse",
+  },
+  "youtube-music": {
+    type: "youtube-music",
+    url: "https://music.youtube.com/explore",
+  },
+  bandcamp: { type: "bandcamp", username: "daily" },
+  "google-play": { type: "google-play", app: "com.google.android.apps.maps" },
 } as const satisfies {
   [Type in ContentType]?: Extract<QRContentConfig, { type: Type }>;
 };

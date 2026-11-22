@@ -103,6 +103,8 @@ export type ParsedScan =
   | { kind: "event"; event: CalendarEvent; ics: string }
   | { kind: "geo"; lat: number; lon: number; label?: string }
   | { kind: "phone"; number: string }
+  /** Added 2026-11-22 (links): facetime: and facetime-audio: links */
+  | { kind: "facetime"; target: string; audio: boolean; url: string }
   | { kind: "sms"; number: string; body: string }
   | { kind: "email"; to: string; subject: string; body: string }
   | {
@@ -129,6 +131,7 @@ export const KIND_LABELS: Record<ScanKind, string> = {
   event: "Calendar event",
   geo: "Location",
   phone: "Phone number",
+  facetime: "FaceTime call",
   sms: "Text message",
   email: "Email",
   payment: "Payment",
@@ -174,6 +177,14 @@ export function parseScan(raw: string, format?: string): ParsedScan {
     return parseEvent(value) ?? text(raw);
   }
   if (lower.startsWith("geo:")) return parseGeo(value) ?? text(raw);
+  // Added 2026-11-22 (links)
+  const faceTime = /^facetime(-audio)?:(?:\/\/)?(.+)$/i.exec(value);
+  if (faceTime) {
+    const target = decodeSafe(faceTime[2] as string).trim();
+    return target
+      ? { kind: "facetime", target, audio: Boolean(faceTime[1]), url: value }
+      : text(raw);
+  }
   if (lower.startsWith("tel:")) {
     const number = decodeSafe(value.slice(4)).trim();
     return number ? { kind: "phone", number } : text(raw);
@@ -1621,6 +1632,8 @@ export function summarizeScan(parsed: ParsedScan): string {
       return parsed.label ?? `${parsed.lat}, ${parsed.lon}`;
     case "phone":
       return parsed.number;
+    case "facetime":
+      return parsed.target;
     case "sms":
       return parsed.number || parsed.body;
     case "email":

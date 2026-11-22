@@ -206,6 +206,69 @@ export const CONTENT_EXAMPLES: { [T in ContentType]: Example<T> } = {
     amount: "120.1234567",
     memo: "skdjfasf",
   },
+  // Added 2026-11-22 (links)
+  messenger: { username: "bloomandleafstudio" },
+  viber: {
+    phoneNumber: "+1 202 555 0142",
+    message: "Hi! Is the studio open on Sunday?",
+  },
+  kakaotalk: { url: "https://pf.kakao.com/_BloomLeafExample" },
+  zalo: { url: "https://zalo.me/1234567890123456789" },
+  facetime: { contact: "+1 202 555 0142" },
+  "microsoft-teams": {
+    users: "hello@example.com",
+    message: "Hi! Scanned your poster.",
+  },
+  webex: { url: "https://example.webex.com/meet/bloomandleaf" },
+  calendly: { username: "bloomandleaf-example/30min" },
+  "google-classroom": {
+    url: "https://classroom.google.com/c/ExampleClass1234",
+  },
+  vk: { url: "https://vk.com/bloomandleafexample" },
+  weibo: { url: "https://weibo.com/u/1234567890" },
+  tumblr: { username: "bloomandleaf-example" },
+  medium: { username: "@bloomandleafexample" },
+  substack: { username: "bloomandleafexample" },
+  github: { username: "bloomandleaf-example/garden-planner" },
+  behance: { username: "bloomandleafexample" },
+  dribbble: { username: "bloomandleafexample" },
+  linktree: { username: "bloomandleafexample" },
+  patreon: { username: "bloomandleafexample" },
+  kofi: { username: "bloomandleafexample" },
+  buymeacoffee: { username: "bloomandleafexample" },
+  "apple-music": { url: "https://music.apple.com/us/album/example/1234567890" },
+  "youtube-music": { url: "https://music.youtube.com/playlist?list=PLexample" },
+  "apple-podcasts": {
+    url: "https://podcasts.apple.com/us/podcast/bloom-and-leaf/id1234567890",
+  },
+  "amazon-music": { url: "https://music.amazon.com/albums/B0EXAMPLE1" },
+  deezer: { url: "https://www.deezer.com/en/album/123456789" },
+  tidal: { url: "https://tidal.com/browse/album/123456789" },
+  bandcamp: { username: "bloomandleafexample" },
+  "google-docs": {
+    url: "https://docs.google.com/document/d/example-document-id/edit",
+  },
+  "google-sheets": {
+    url: "https://docs.google.com/spreadsheets/d/example-sheet-id/edit",
+  },
+  "google-slides": {
+    url: "https://docs.google.com/presentation/d/example-deck-id/edit",
+  },
+  "google-forms": { url: "https://forms.gle/ExampleForm123" },
+  "microsoft-forms": { url: "https://forms.office.com/r/Example123" },
+  notion: { url: "https://bloomandleaf.notion.site/Example-page" },
+  canva: { url: "https://www.canva.com/design/DAExample123/view" },
+  "app-store": { app: "id1234567890" },
+  "google-play": { app: "com.example.bloomandleaf" },
+  tripadvisor: {
+    url: "https://www.tripadvisor.com/Restaurant_Review-g60713-d1234567-Reviews-Bloom_Cafe_Example-San_Francisco_California.html",
+  },
+  trustpilot: { website: "example.com", writeReview: true },
+  yelp: { url: "https://www.yelp.com/biz/bloom-cafe-example-san-francisco" },
+  airbnb: { url: "https://www.airbnb.com/rooms/12345678" },
+  "booking-com": {
+    url: "https://www.booking.com/hotel/us/bloom-inn-example.html",
+  },
 };
 
 /** Fields that only pick a mode, so they don't count as entered content. */
@@ -228,6 +291,9 @@ const NEUTRAL_FIELDS = new Set([
   "messageEditable",
   "token",
   "network",
+  // Added 2026-11-22 (links)
+  "audioOnly",
+  "writeReview",
 ]);
 
 /** True when nobody has typed anything into this type's form yet. */
