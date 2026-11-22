@@ -1,0 +1,132 @@
+// The colours and glyphs of the type marks (components/editor/type-mark.tsx):
+// the app-icon tile every QR content type and hosted page type is drawn with
+// in the type picker, the editor's type row and the /qr-code-generator hub.
+//
+// Adding a type: add one entry here, keyed by its id.
+// - fill: the tile's colour as #RRGGBB. Brands use their official Simple
+//   Icons colour (BRAND_MARKS[slug].hex in lib/brand-logos/marks.generated.ts).
+// - glyph: "brand:<simple-icons slug>" for a brand's real mark (the slug must
+//   be in UI_SLUGS, scripts/brand-logos/generate-marks.mjs), an iconsax icon
+//   name the mark knows (TYPE_MARK_GLYPHS in the component), or
+//   "integration:<slug>" for an editor integration's own logo.
+// The glyph's colour is computed (white when white on the fill reaches 3:1,
+// else near-black), so any fill works; tests/editor/type-marks.test.ts checks
+// every type has an entry. A type without one draws a neutral slate tile with
+// its own icon, so a new type never breaks the UI.
+//
+// Colour lives only inside the marks (and the soft washes behind big ones);
+// everything around them stays monochrome.
+
+import type { PageTypeIdentifier } from "@/lib/landing/page-type-ids";
+import type { ContentType } from "@/types/qr-content";
+
+export interface TypeMarkEntry {
+  /** Tile colour, #RRGGBB. */
+  fill: string;
+  /** "brand:<slug>", "integration:<slug>" or an iconsax icon name. */
+  glyph: string;
+}
+
+/** The tile of a type with no entry: neutral slate. */
+export const FALLBACK_FILL = "#6E6E78";
+
+/** Marks for the QR content types (CONTENT_TYPES_METADATA), by type id. */
+export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
+  // Links & files
+  url: { fill: "#5B5BD6", glyph: "Link" },
+  text: { fill: "#6E6E78", glyph: "Text" },
+  "google-drive": { fill: "#4285F4", glyph: "brand:googledrive" },
+  dubsh: { fill: "#000000", glyph: "integration:dub" },
+
+  // Contact & connect
+  vcard: { fill: "#14A3B8", glyph: "Personalcard" },
+  phone: { fill: "#30B95A", glyph: "Call" },
+  email: { fill: "#F2950B", glyph: "Sms" },
+  sms: { fill: "#2FB8A0", glyph: "MessageText1" },
+  whatsapp: { fill: "#25D366", glyph: "brand:whatsapp" },
+  wifi: { fill: "#0A84FF", glyph: "Wifi" },
+  telegram: { fill: "#26A5E4", glyph: "brand:telegram" },
+  signal: { fill: "#3B45FD", glyph: "brand:signal" },
+  line: { fill: "#00C300", glyph: "brand:line" },
+
+  // Social & media
+  instagram: { fill: "#FF0069", glyph: "brand:instagram" },
+  facebook: { fill: "#0866FF", glyph: "brand:facebook" },
+  twitter: { fill: "#000000", glyph: "brand:x" },
+  linkedin: { fill: "#0A66C2", glyph: "LinkedinLogo" },
+  tiktok: { fill: "#000000", glyph: "brand:tiktok" },
+  youtube: { fill: "#FF0000", glyph: "brand:youtube" },
+  threads: { fill: "#000000", glyph: "brand:threads" },
+  snapchat: { fill: "#FFFC00", glyph: "brand:snapchat" },
+  pinterest: { fill: "#BD081C", glyph: "brand:pinterest" },
+  reddit: { fill: "#FF4500", glyph: "brand:reddit" },
+  spotify: { fill: "#1ED760", glyph: "brand:spotify" },
+  discord: { fill: "#5865F2", glyph: "brand:discord" },
+  bluesky: { fill: "#1185FE", glyph: "brand:bluesky" },
+  mastodon: { fill: "#6364FF", glyph: "brand:mastodon" },
+  twitch: { fill: "#9146FF", glyph: "brand:twitch" },
+  soundcloud: { fill: "#FF5500", glyph: "brand:soundcloud" },
+
+  // Business
+  "google-review": { fill: "#4285F4", glyph: "brand:google" },
+  calcom: { fill: "#292929", glyph: "brand:caldotcom" },
+  attendance: { fill: "#8E5CF0", glyph: "TaskSquare" },
+  maps: { fill: "#F04438", glyph: "Location" },
+  waze: { fill: "#33CCFF", glyph: "brand:waze" },
+  zoom: { fill: "#0B5CFF", glyph: "brand:zoom" },
+  "google-meet": { fill: "#00897B", glyph: "brand:googlemeet" },
+
+  // Payments (UPI, PayNow, PromptPay and VietQR have no Simple Icons mark)
+  upi: { fill: "#F26B21", glyph: "MoneySend" },
+  pix: { fill: "#77B6A8", glyph: "brand:pix" },
+  sepa: { fill: "#2350A9", glyph: "brand:sepa" },
+  paynow: { fill: "#7B3FA0", glyph: "CardSend" },
+  // #1B4F9C in the first table; it read as SEPA's navy right above it.
+  promptpay: { fill: "#14A3B8", glyph: "Mobile" },
+  vietqr: { fill: "#D7263D", glyph: "Bank" },
+  paypal: { fill: "#002991", glyph: "brand:paypal" },
+  venmo: { fill: "#008CFF", glyph: "brand:venmo" },
+  cashapp: { fill: "#00C244", glyph: "brand:cashapp" },
+  revolut: { fill: "#191C1F", glyph: "brand:revolut" },
+
+  // Crypto
+  bitcoin: { fill: "#F7931A", glyph: "brand:bitcoin" },
+  ethereum: { fill: "#3C3C3D", glyph: "brand:ethereum" },
+  solana: { fill: "#9945FF", glyph: "brand:solana" },
+  litecoin: { fill: "#A6A9AA", glyph: "brand:litecoin" },
+  dogecoin: { fill: "#C2A633", glyph: "brand:dogecoin" },
+  bitcoincash: { fill: "#0AC18E", glyph: "brand:bitcoincash" },
+  monero: { fill: "#FF6600", glyph: "brand:monero" },
+
+  // Shopping (Amazon and Flipkart have no Simple Icons mark)
+  amazon: { fill: "#FF9F1C", glyph: "ShoppingCart" },
+  flipkart: { fill: "#2874F0", glyph: "Bag2" },
+  etsy: { fill: "#F16521", glyph: "brand:etsy" },
+};
+
+/** Marks for the hosted page types (lib/landing/page-type-ids.ts), by id. */
+export const PAGE_TYPE_MARKS: Partial<
+  Record<PageTypeIdentifier, TypeMarkEntry>
+> = {
+  links: { fill: "#5B5BD6", glyph: "Link21" },
+  social: { fill: "#8E5CF0", glyph: "Profile2User" },
+  business: { fill: "#14A3B8", glyph: "Shop" },
+  vcard: { fill: "#0A84FF", glyph: "UserTag" },
+  pdf: { fill: "#E5484D", glyph: "DocumentText" },
+  images: { fill: "#2FB8A0", glyph: "Gallery" },
+  mp3: { fill: "#EE46BC", glyph: "Music" },
+  video: { fill: "#7B3FA0", glyph: "Video" },
+  menu: { fill: "#F2950B", glyph: "Reserve" },
+  coupon: { fill: "#E5407A", glyph: "TicketDiscount" },
+  event: { fill: "#F0603C", glyph: "Calendar1" },
+  apps: { fill: "#30B95A", glyph: "Mobile" },
+  feedback: { fill: "#8E5CF0", glyph: "MessageFavorite" },
+  product: { fill: "#1B4F9C", glyph: "Box" },
+  booking: { fill: "#0A84FF", glyph: "CalendarEdit" },
+  payment: { fill: "#30B95A", glyph: "Moneys" },
+  "real-estate": { fill: "#14A3B8", glyph: "House" },
+  pet: { fill: "#F26B21", glyph: "Pet" },
+  medical: { fill: "#F04438", glyph: "Health" },
+  playlist: { fill: "#7B3FA0", glyph: "MusicPlaylist" },
+  custom: { fill: "#6E6E78", glyph: "Element4" },
+};

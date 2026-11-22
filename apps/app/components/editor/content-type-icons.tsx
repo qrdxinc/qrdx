@@ -1,7 +1,6 @@
 "use client";
 
 import { Star } from "@repo/design-system/components/icons";
-import { cn } from "@repo/design-system/lib/utils";
 import {
   Bag2,
   Bank,
@@ -26,14 +25,10 @@ import {
   Wifi,
 } from "iconsax-reactjs";
 import type { ComponentType } from "react";
+import { TypeMark } from "@/components/editor/type-mark";
 import { LinkedinIcon } from "@/components/landing/social-networks";
-import {
-  IntegrationLogo,
-  logoForIntegration,
-} from "@/components/sections/integrations/integration-logo";
 import { brandIcon } from "@/lib/brand-logos/brand-logo";
 import { CONTENT_TYPE_BRANDS } from "@/lib/brand-logos/content-types";
-import { getIntegrationByContentType } from "@/lib/integration-catalog";
 import type { ContentType } from "@/types/qr-content";
 
 type AnyIcon = Icon | ComponentType<{ className?: string }>;
@@ -77,7 +72,10 @@ export function getTypeIcon(name: string | undefined): AnyIcon {
   return (name && ICONS[name]) || Link;
 }
 
-/** Icon tile for a QR type: a third-party logo for app integrations, otherwise an iconsax icon. */
+/**
+ * A QR type's mark at list size (36 px): its colour and real mark, or the
+ * neutral tile with its icon for a type without an entry yet.
+ */
 export function TypeIconTile({
   type,
   icon,
@@ -87,27 +85,11 @@ export function TypeIconTile({
   icon?: string;
   className?: string;
 }) {
-  const integration = getIntegrationByContentType(type);
-  const IconComponent = getTypeIcon(icon);
-
-  if (integration && type !== "google-drive") {
-    return (
-      <IntegrationLogo
-        className={cn("size-9", className)}
-        logo={logoForIntegration(integration.slug, integration.logos)}
-        size="sm"
-      />
-    );
-  }
-
   return (
-    <span
-      className={cn(
-        "bg-muted/40 text-foreground/80 grid size-9 shrink-0 place-items-center rounded-lg border",
-        className,
-      )}
-    >
-      <IconComponent className="size-4" />
-    </span>
+    <TypeMark
+      className={className}
+      fallbackIcon={getTypeIcon(icon)}
+      type={type}
+    />
   );
 }
