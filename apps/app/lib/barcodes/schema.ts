@@ -24,7 +24,7 @@ export const barcodeTitleSchema = z
 const formatField = z
   .enum(BARCODE_FORMAT_IDS)
   .describe(
-    "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, code128, code39, code93, codabar, itf14, gs1-128, datamatrix, pdf417 or aztec",
+    "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, datamatrix, pdf417 or aztec",
   );
 
 const valueField = z
@@ -32,7 +32,7 @@ const valueField = z
   .min(1, "Required: the number or text to encode")
   .max(BARCODE_DATA_MAX)
   .describe(
-    "The number or text to encode, checked against the format's rules. Retail numbers can leave the check digit off and it's added.",
+    "The number or text to encode, checked against the format's rules. Retail and book numbers can leave the check digit off and it's added; ISBN, ISSN and ISMN take a 2- or 5-digit add-on after a space (an ISSN's 2-digit sequence variant comes first).",
   );
 
 const folderField = z

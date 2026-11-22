@@ -89,6 +89,24 @@ export const barcodeImageFields: INodeProperties[] = [
           "Supply chain data (GTIN, batch, dates, weights) as Application Identifiers in brackets, like (01)09501101530003(10)AB-123",
       },
       {
+        name: "ISBN",
+        value: "isbn",
+        description:
+          "Books: an ISBN-13 or ISBN-10, printed with the ISBN above the bars; a 2- or 5-digit add-on after a space",
+      },
+      {
+        name: "ISMN",
+        value: "ismn",
+        description:
+          "Printed music: an ISMN starting 979-0, or the old form starting with M; a 2- or 5-digit add-on after a space",
+      },
+      {
+        name: "ISSN",
+        value: "issn",
+        description:
+          "Magazines and journals: the ISSN, then the 2-digit sequence variant and an issue add-on, like 0317-8471 00 05",
+      },
+      {
         name: "ITF-14",
         value: "itf14",
         description:
