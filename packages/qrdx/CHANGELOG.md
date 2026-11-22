@@ -2,9 +2,16 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
-## 0.0.59
+## 0.0.60
 
-- **The looks redraw in React.** A mounted `QRCode` now redraws when `eyeShapes`, `eyeGradient`, `bgRadius`, `backdrop`, `halo` or `shadow` changes. In 0.0.58 its layout was kept until another prop changed, so turning one of these on showed nothing.
+### Halo colors are adjusted, not refused
+
+- **Any halo color draws.** A `halo.color` used to be drawn only when it fell between `HALO_LIGHT_MIN` (`#d1d5db`) and the background, so most colors a person picks drew no rim at all. Now `fitHaloColor(color, bgColor)` keeps the color's hue (in OKLab) and as much of its chroma as fits, and moves only its lightness until both decoders' greys (Rec. 709 for jsQR, Rec. 601 for ZXing) read it in that range. A grey stays a grey. `#881337` on white is drawn as `#ffc9cf`, `#2563eb` as `#c1d7ff`. SVG, canvas, PDF and EPS all draw the adjusted color.
+- `getHaloRisk` returns a `HaloRisk`, which is `HaloRefusal | HaloAdjustment`. It still refuses what no color can fix (`see-through`, `picture` and `dark-background`), and reports `reason: "adjusted"` with the drawn `color` when it moved the color. The `rim` reason is gone: code that checked for it should check for `adjusted`.
+- The scan score passes an adjusted halo with no penalty, and judges contrast against the color that is drawn.
+- `haloTints(color, bgColor, count = 4)` returns tints of a color that are drawn as they are, darkest first.
+- The range is now checked against each decoder's grey instead of the darker of the two, so a saturated rim can't read lighter than the background to one of them. `#ffff00` on `#e5e7eb` was drawn as it is, although jsQR reads it lighter than the background; it is now drawn as `#f9f800`.
+- tests/halo-colors-decode.test.ts draws adjusted rims for every body pattern at halo widths 0.1, 0.3 and 0.5 and at 4, 6 and 9 px per module, and decodes them with jsQR and ZXing: each reads wherever the code reads without a halo.
 
 ### Patterns: new eye frames and an eye centre
 
@@ -13,12 +20,11 @@ Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/
 - Each new shape reads every render its reference shapes read (gear and octagon eyes; square and rounded centres) with a fixed sample of partners from the catalogue, in sharp renders (resvg, 4 to 20 px per module) and through the phone-camera model (4, 6 and 9 px), decoded by jsQR and by ZXing (tests/decode-new-*.test.ts). Through the camera model, jsQR also reads each one next to every eye or body and centre, at every error correction level, light-on-dark, with brand colors and with a centre logo (tests/catalog-*.test.ts).
 - `WITHDRAWN_BODY_PATTERNS`, `WITHDRAWN_CORNER_EYE_PATTERNS` and `WITHDRAWN_CORNER_EYE_DOT_PATTERNS` map the shapes that preview builds offered and that were dropped before this release (bodies `x`, `flower`, `pebble`, `beads`, `bubble`, `chain`, `petal`, `drop` and `squircle`; eyes `pebble`, `tag`, `crest`, `doodle` and `stamp`; centres `bevel` and `notch`) to existing ones: the schemas parse such an id as its replacement and the renderer draws it, so no design that names one fails (tests/withdrawn-shapes.test.ts).
 - New geometry helpers in `shapes.ts` (`scoopedRectPath`, `notchedRectPath`, `cushionPath`, `shieldPath`, `octagonPoints`). These are internal.
+- `@qrdx/cli` 0.0.16 offers the new eye frames and centre in its prompts and takes them as `--eye` and `--dot`.
 
-### Frame library: shapes, everyday objects and playful scenes
+## 0.0.59
 
-- **101 more official frames**, 1,114 in all. 29 join `call-to-action`: hexagons, octagons, hearts, a scroll, swallowtail flags, pattern borders, raised cards, corner tabs, a text frame, bottom badges, top ribbons, plain borders in three weights, a circle viewfinder, a sketched circle, starbursts and spinning rays. Each decodes at phone distances, scores Great and reads with zbar, like every official frame.
-- **Two new collections:** `objects` ("Everyday objects", 28 frames: tablets, laptops, monitors, mugs, parcels, bottles, billboards, open books, map pins, a globe and more) and `playful` ("Playful & surprising", 44 frames: a TV set, a record sleeve, a fish tank, a robot, a cat holding the code, a snow globe, a flying saucer and more). `OfficialFrameCollection` and `OFFICIAL_FRAME_COLLECTIONS` include them, so code with a case or a `Record` for every collection needs the new ids.
-- The generator now also writes `src/frames/catalogue/batches.ts`, the official frame ids by the round that added them, so the app can mark the latest ones as new. It isn't exported.
+- **The looks redraw in React.** A mounted `QRCode` now redraws when `eyeShapes`, `eyeGradient`, `bgRadius`, `backdrop`, `halo` or `shadow` changes. In 0.0.58 its layout was kept until another prop changed, so turning one of these on showed nothing.
 
 ## 0.0.58
 
