@@ -122,30 +122,47 @@ jobs:
         if: steps.reuse.outputs.hit != 'true'
         run: bun x turbo build --filter=qrdx --filter=@qrdx/cli 2>&1 | tee -a "$RUNNER_TEMP/turbo.log"
 
-      # publint and are-the-types-wrong on the packed qrdx tarball
-      # (packages/qrdx/scripts/check-package.mjs), so an entry or a build
-      # change that breaks how Node, TypeScript or a bundler resolves the
-      # package fails here instead of for the people who install it. Same
-      # scope as the app build below: a pull request into staging runs it
-      # when it changes qrdx or a package qrdx uses (turbo --affected), or
-      # this workflow; everything else always runs it. The check took 2.1
-      # seconds on a laptop (2026-11-20).
-      - name: Check the qrdx package
+      # Whether this run checks the qrdx package (the two steps below). Same
+      # scope as the app build below: a pull request into staging does when
+      # it changes qrdx or a package qrdx uses (turbo --affected), or this
+      # workflow; everything else always does.
+      - name: Decide whether to check the qrdx package
+        id: qrdx
         if: steps.reuse.outputs.hit != 'true'
         env:
           TURBO_SCM_BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
           AFFECTED: ${{ github.event_name == 'pull_request' && github.base_ref != 'main' }}
         run: |
+          check=true
           if [ "$AFFECTED" = "true" ]; then
             # Either command failing fails the step (bash -e), never skips the check.
             affected="$(bun x turbo ls --affected --output=json)"
             qrdx_affected="$(jq '.packages.items | any(.name == "qrdx")' <<<"$affected")"
             if [ "$qrdx_affected" != "true" ] && git diff --quiet "$TURBO_SCM_BASE"...HEAD -- .github/workflows/ci.yml; then
               echo "This pull request doesn't change qrdx, so its package isn't checked." | tee -a "$GITHUB_STEP_SUMMARY"
-              exit 0
+              check=false
             fi
           fi
-          bun run --filter qrdx check:package
+          echo "check=$check" >>"$GITHUB_OUTPUT"
+
+      # publint and are-the-types-wrong on the packed qrdx tarball
+      # (packages/qrdx/scripts/check-package.mjs), so an entry or a build
+      # change that breaks how Node, TypeScript or a bundler resolves the
+      # package fails here instead of for the people who install it. The
+      # check took 2.1 seconds on a laptop (2026-11-20).
+      - name: Check the qrdx package
+        if: steps.qrdx.outputs.check == 'true'
+        run: bun run --filter qrdx check:package
+
+      # The packed tarball installed with npm next to React 16.8, 17, 18 and
+      # 19 (packages/qrdx/scripts/react-compat.mjs): each React renders the
+      # same designs to the same markup and DOM as React 19, and a small app
+      # type-checks against each one's @types/react. It needs the network
+      # (npm) and took 8 seconds on a laptop with an empty npm cache, 5
+      # with a warm one (2026-11-22).
+      - name: Check qrdx on React 16.8, 17, 18 and 19
+        if: steps.qrdx.outputs.check == 'true'
+        run: bun run --filter qrdx check:react
 
       # Turbo doesn't see apps/native (outside the workspace), so its
       # typecheck runs here too: a few seconds.

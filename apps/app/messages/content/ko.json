@@ -31451,9 +31451,9 @@
     "status": "machine",
     "context": "integrations.entries.react.steps.0.title"
   },
-  "7e14cc035ccd": {
-    "source": "react and react-dom 18 or newer are peer dependencies.",
-    "text": "react와 react-dom 18 이상이 peer dependency로 필요합니다.",
+  "21258cd335e6": {
+    "source": "react 16.8 or newer is a peer dependency.",
+    "text": "react 16.8 이상 버전이 피어 의존성(peer dependency)으로 필요해요.",
     "status": "machine",
     "context": "integrations.entries.react.steps.0.body"
   },

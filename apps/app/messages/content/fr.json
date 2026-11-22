@@ -31451,9 +31451,9 @@
     "status": "machine",
     "context": "integrations.entries.react.steps.0.title"
   },
-  "7e14cc035ccd": {
-    "source": "react and react-dom 18 or newer are peer dependencies.",
-    "text": "react et react-dom 18 ou version ultérieure sont des dépendances peer.",
+  "21258cd335e6": {
+    "source": "react 16.8 or newer is a peer dependency.",
+    "text": "React 16.8 ou version ultérieure est une dépendance peer.",
     "status": "machine",
     "context": "integrations.entries.react.steps.0.body"
   },
