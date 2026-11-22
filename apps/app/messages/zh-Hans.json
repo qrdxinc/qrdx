@@ -889,7 +889,9 @@
     "seeAll": "查看全部",
     "faq": "常见问题",
     "designFree": "设计免费二维码",
-    "createDynamic": "创建动态二维码"
+    "createDynamic": "创建动态二维码",
+    "newTag": "新",
+    "nameIsNew": "{name}，新"
   },
   "pageCodes": {
     "sampleNote": "以下为内置主题的示例。每个二维码都可以扫描，但都不指向真实账户。",
@@ -1188,6 +1190,7 @@
         "format": "格式",
         "formatPng": "PNG（图片）",
         "formatWebp": "WebP（图片，体积更小）",
+        "formatGif": "GIF（图片，256 色）",
         "formatBmp": "BMP（未压缩图像）",
         "formatIco": "ICO（favicon，16 至 256 px）",
         "formatSvg": "SVG（矢量，适合印刷）",
@@ -3430,6 +3433,7 @@
         "pdfAndEpsDrawEvery": "PDF 和 EPS 将每个圆点绘制为矢量形状，并将线性和径向渐变保留为平滑的矢量渐变。",
         "jpgCantBeTransparent": "JPG 不支持透明",
         "bmpCantBeTransparent": "BMP 不支持透明：背景会变为白色",
+        "gifWouldNotScan": "GIF 最多支持 256 种颜色，而此设计需要更多颜色：压缩到 256 色后将无法扫描。请改为下载 PNG。",
         "moreFormats": "更多格式",
         "vector": " · 矢量",
         "anySize": "任意尺寸",
@@ -3452,6 +3456,7 @@
           "png": "适合网页、文档和幻灯片。",
           "jpg": "适合电子邮件和小文件。",
           "webp": "适合需要快速加载的网站 · 无损，通常比 PNG 更小。",
+          "gif": "适合只支持 GIF 的旧工具和邮件编辑器 · 最多 256 种颜色，其中一种可设为透明。",
           "bmp": "适合只支持 BMP 的旧系统和嵌入式工具 · 未压缩 24 位，透明背景会变为白色。",
           "ico": "适合用作网站图标 · 一个文件包含 16、32、48 和 256 px 的图像。小尺寸仅用于图标，不适合扫描。",
           "svg": "适合 Figma、Illustrator 和网站 · 任意尺寸都保持清晰。",
@@ -4490,7 +4495,9 @@
           "topLeft": "左上",
           "topRight": "右上",
           "bottomLeft": "左下"
-        }
+        },
+        "eyesContinueTheCodes": "定位点延续二维码渐变",
+        "offEachEyeSweeps": "关闭时，每个定位点使用各自的渐变。开启后，定位点的渐变会铺满整个二维码，因此与圆点颜色相同的定位点会与圆点连成一体。"
       },
       "frameControls": {
         "uploadSvg": "上传 SVG",
@@ -4561,7 +4568,12 @@
         "logosMustBeValueMb": "Logo 大小不能超过 {value, number}MB。",
         "unsupportedLogoFormat": "不支持的 Logo 格式",
         "logoIsTooLarge": "Logo 文件过大",
-        "failedToReadLogoFile": "读取 Logo 文件失败"
+        "failedToReadLogoFile": "读取 Logo 文件失败",
+        "brandCount": "{count, number} 个品牌",
+        "iconName": "{name} 图标",
+        "brandName": "{name} 标志",
+        "yourLogo": "你的标志",
+        "qrdxLogo": "QRdx 标志"
       },
       "logoCropControls": {
         "shape": "形状",
@@ -4659,6 +4671,58 @@
       },
       "sidePanel": {
         "closeTitle": "关闭{title}"
+      },
+      "eyeShapesSection": {
+        "eyeShapes": "定位点形状",
+        "sameForAll": "全部相同",
+        "giveEachCornerEyeIts": "为每个角上的定位点单独设置外框和中心形状。未设置的定位点将使用“定位点形状”。",
+        "whichEye": "选择定位点",
+        "frame": "外框",
+        "center": "中心",
+        "frameShapes": "外框形状",
+        "centerShapes": "中心形状",
+        "useTheSameShapesFor": "所有定位点使用相同形状",
+        "positions": {
+          "topLeft": "左上",
+          "topRight": "右上",
+          "bottomLeft": "左下"
+        }
+      },
+      "cornersSection": {
+        "roundedCorners": "圆角",
+        "square": "直角",
+        "cornerRadius": "圆角半径",
+        "roundTheBackgroundsCorners": "将背景的四角变圆。二维码的内边距会保留在圆角之内。",
+        "upToMaxpercentWithThis": "在当前内边距下最大为 {maxPercent, number}%：增加内边距可使圆角更大。",
+        "addPaddingToRound": "请增加内边距以设置圆角：二维码的四角需要留出静区。",
+        "aShapedCodeHasIts": "异形二维码有自己的轮廓。",
+        "colorAroundIt": "周围的颜色",
+        "backdrop": "底衬",
+        "seeThroughOutsideThe": "角落外侧透明：二维码后面的内容会在此处显示。",
+        "inAFrameTheFrame": "使用边框时，边框会填满二维码周围的空间：开启“四周填色”即可看到角落。"
+      },
+      "haloSection": {
+        "halo": "光晕",
+        "off": "关闭",
+        "showAHalo": "显示光晕",
+        "aLightRimAround": "每个点和定位眼周围的浅色边缘。颜色任选：系统会将其调得足够浅，以保证二维码可以扫描。",
+        "width": "宽度",
+        "color": "颜色",
+        "drawnAs": "绘制为 {color}，确保二维码仍可扫描",
+        "tintsOfYourDots": "点的浅色调",
+        "seeThroughBackground": "光晕需要不透明的背景。请选择纯色背景以显示光晕。",
+        "pictureBackground": "光晕无法用于图片背景。请选择背景颜色以显示光晕。",
+        "darkBackground": "光晕需要浅色背景，至少为浅灰色。请选择更浅的背景以显示光晕。"
+      },
+      "shadowSection": {
+        "shadow": "阴影",
+        "off": "关闭",
+        "showAShadow": "显示阴影",
+        "aSeeThroughCopy": "点和定位眼的透明副本，偏移在它们下方。",
+        "across": "横向",
+        "down": "纵向",
+        "opacity": "不透明度",
+        "color": "颜色"
       }
     },
     "customTextarea": {
@@ -4738,24 +4802,28 @@
     "partInline": {
       "parts": {
         "eyes": {
+          "name": "定位眼",
           "edit": "编辑定位点",
           "options": "定位点选项",
           "random": "随机定位点",
           "more": "更多定位点选项"
         },
         "dots": {
+          "name": "点",
           "edit": "编辑圆点",
           "options": "圆点选项",
           "random": "随机圆点",
           "more": "更多圆点选项"
         },
         "logo": {
+          "name": "徽标",
           "edit": "编辑标志",
           "options": "标志选项",
           "random": "随机标志",
           "more": "更多标志选项"
         },
         "background": {
+          "name": "背景",
           "edit": "编辑背景",
           "options": "背景选项",
           "random": "随机背景",
@@ -4763,6 +4831,7 @@
           "editShape": "编辑二维码形状"
         },
         "frame": {
+          "name": "边框",
           "edit": "编辑边框",
           "options": "边框选项",
           "random": "随机边框",
@@ -4770,17 +4839,27 @@
         }
       },
       "items": {
+        "eyeShape": "定位眼形状",
+        "thisEyesShape": "此定位眼的形状",
         "eyeColor": "定位点颜色",
         "centerColor": "中心颜色",
         "pattern": "图案",
         "dotColor": "圆点颜色",
         "dotSize": "圆点大小",
+        "halo": "光晕",
+        "shadow": "阴影",
         "logo": "标志",
         "quickIcons": "快捷图标",
         "logoSize": "标志大小",
+        "logoPosition": "Logo 位置",
         "hideLogo": "隐藏标志",
         "backgroundColor": "背景颜色",
+        "palettes": "配色方案",
+        "paddingAndCorners": "边距和圆角",
+        "roundedCorners": "圆角",
         "frameStyle": "边框样式",
+        "frameTextAndColors": "边框文字和颜色",
+        "frame": "边框",
         "whichEyes": "选择定位点",
         "allEyes": "所有定位点",
         "thisEye": "此定位点",
@@ -4788,6 +4867,7 @@
         "thisEyesCenterColor": "此定位点的中心颜色",
         "sameAsTheOthers": "与其他定位点相同",
         "eyesWithTheirOwnColor": "有独立颜色的定位点会保持原色。如需单独更改，请选择“此定位点”。",
+        "eyesWithTheirOwnShape": "已设置独立形状的码眼会保留该形状。要更改某个码眼，请选择“此码眼”。",
         "logoShapeAndPlate": "Logo 形状和底板",
         "clearSpace": "留白区域",
         "content": "内容",
@@ -4796,8 +4876,9 @@
       },
       "random": "随机",
       "moreOptions": "更多选项",
+      "labelWontScanHere": "{label}：此处无法扫描",
       "sheet": {
-        "changesShowOnTheCode": "你所做的更改会实时显示在二维码上。点击“完成”即可保留。",
+        "changesShowOnTheCode": "更改会随您的操作实时显示在二维码上。撤销会还原每一项设计更改，按 Esc 键则会将二维码内容恢复原状。",
         "done": "完成"
       },
       "content": {
@@ -4813,7 +4894,8 @@
         "codeShape": "二维码形状",
         "names": {
           "square": "方形"
-        }
+        },
+        "aShapeTakesThePlace": "带形状的二维码会取代边框。"
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "目前，Logo 将纠错级别提高到了 {level}。"
@@ -4829,7 +4911,8 @@
       },
       "drop": {
         "dropToUseAsLogo": "松开即可用作 Logo"
-      }
+      },
+      "labelWithValue": "{label}（{value}）"
     },
     "gradientPicker": {
       "pickASolidColorA": "为{label}选择纯色、渐变或色板。"
@@ -7258,6 +7341,7 @@
           "downloadPng": "下载 PNG",
           "downloadWebp": "下载 WebP",
           "downloadSvg": "下载 SVG",
+          "downloadGif": "下载 GIF",
           "downloadBmp": "下载 BMP",
           "downloadIco": "下载 ICO",
           "moreFormats": "更多格式",
@@ -7284,6 +7368,7 @@
           "scansShowANoLonger2": "扫描将显示“已停用”页面。你可以随时从回收站恢复。",
           "itsBackInArchived": "已移回“已归档”。",
           "onlyTeamOwnersAndAdmins": "只有团队所有者和管理员可以删除他人创建的二维码。",
+          "gifWouldNotScan": "GIF 仅支持 256 种颜色，而此设计需要更多颜色：缩减到 256 色后将无法扫描。请改为下载 PNG。",
           "downloadFailedPleaseTryAgain": "下载失败，请重试。",
           "shortLinkCopied": "短链接已复制",
           "couldntCopyTheShortLink": "无法复制短链接",
@@ -7316,6 +7401,7 @@
         },
         "codeQr": {
           "moreFormats": "更多",
+          "gifWouldNotScan": "GIF 仅支持 256 种颜色，而此设计需要更多颜色：缩减到 256 色后将无法扫描。请改为下载 PNG。",
           "downloadFailedPleaseTryAgain": "下载失败，请重试。"
         },
         "codesCards": {
@@ -7356,6 +7442,7 @@
           "download": "下载",
           "pngImagesZip": "PNG 图片（ZIP）",
           "webpImagesZip": "WebP 图片（ZIP）",
+          "gifImagesZip": "GIF 图片（ZIP）",
           "bmpImagesZip": "BMP 图片（ZIP）",
           "icoImagesZip": "ICO 网站图标 (ZIP)",
           "svgImagesZip": "SVG 图片（ZIP）",
