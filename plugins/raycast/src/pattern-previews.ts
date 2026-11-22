@@ -9,8 +9,16 @@ import { join } from "node:path";
 import { environment } from "@raycast/api";
 import type { BodyPattern, CornerEyeDotPattern, CornerEyePattern } from "qrdx";
 import { QRCodeSVG } from "qrdx";
+import { version as QRDX_VERSION } from "qrdx/package.json";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import {
+  BODY_PATTERNS,
+  CORNER_DOT_PATTERNS,
+  CORNER_EYE_PATTERNS,
+  isCornerDotPattern,
+  TEMPLATES,
+} from "./types";
 
 const PREVIEW_VALUE = "https://qrdx.dev";
 const PREVIEW_SIZE = 64;
@@ -29,7 +37,8 @@ function renderSVGString(overrides: Record<string, unknown>): string {
 }
 
 function getCacheDir(): string {
-  const dir = join(environment.supportPath, "previews");
+  // One folder per qrdx version, so an update redraws every preview.
+  const dir = join(environment.supportPath, "previews", QRDX_VERSION);
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   return dir;
 }
@@ -58,21 +67,9 @@ function previewPNG(key: string, overrides: Record<string, unknown>): string {
 
 // ─── Body patterns ────────────────────────────────────────────────────────────
 
-const BODY_PATTERN_VALUES: BodyPattern[] = [
-  "square",
-  "circle",
-  "circle-large",
-  "diamond",
-  "circle-mixed",
-  "pacman",
-  "rounded",
-  "small-square",
-  "vertical-line",
-];
-
 export const bodyPatternPreviews: Record<BodyPattern, string> = (() => {
   const map = {} as Record<BodyPattern, string>;
-  for (const p of BODY_PATTERN_VALUES) {
+  for (const p of BODY_PATTERNS) {
     map[p] = previewPNG(`body-${p}`, { bodyPattern: p });
   }
   return map;
@@ -80,24 +77,15 @@ export const bodyPatternPreviews: Record<BodyPattern, string> = (() => {
 
 // ─── Corner eye patterns ──────────────────────────────────────────────────────
 
-const CORNER_EYE_PATTERN_VALUES: CornerEyePattern[] = [
-  "square",
-  "rounded",
-  "gear",
-  "circle",
-  "diya",
-  "extra-rounded",
-  "message",
-  "pointy",
-];
-
 export const cornerEyePatternPreviews: Record<CornerEyePattern, string> =
   (() => {
     const map = {} as Record<CornerEyePattern, string>;
-    for (const p of CORNER_EYE_PATTERN_VALUES) {
+    for (const p of CORNER_EYE_PATTERNS) {
+      // The frame with its namesake centre where qrdx has one (circle,
+      // leaf, …), and a round centre otherwise.
       map[p] = previewPNG(`eye-${p}`, {
         cornerEyePattern: p,
-        cornerEyeDotPattern: p as unknown as CornerEyeDotPattern,
+        cornerEyeDotPattern: isCornerDotPattern(p) ? p : "circle",
       });
     }
     return map;
@@ -105,21 +93,10 @@ export const cornerEyePatternPreviews: Record<CornerEyePattern, string> =
 
 // ─── Corner dot patterns ──────────────────────────────────────────────────────
 
-const CORNER_DOT_PATTERN_VALUES: CornerEyeDotPattern[] = [
-  "square",
-  "rounded",
-  "circle",
-  "message",
-  "message-reverse",
-  "diya",
-  "diya-reverse",
-  "rounded-triangle",
-];
-
 export const cornerDotPatternPreviews: Record<CornerEyeDotPattern, string> =
   (() => {
     const map = {} as Record<CornerEyeDotPattern, string>;
-    for (const p of CORNER_DOT_PATTERN_VALUES) {
+    for (const p of CORNER_DOT_PATTERNS) {
       map[p] = previewPNG(`dot-${p}`, { cornerEyeDotPattern: p });
     }
     return map;
@@ -127,18 +104,9 @@ export const cornerDotPatternPreviews: Record<CornerEyeDotPattern, string> =
 
 // ─── Templates ────────────────────────────────────────────────────────────────
 
-const TEMPLATE_VALUES = [
-  "",
-  "Arrow",
-  "StandardBox",
-  "SquareBorder",
-  "StrikedBox",
-  "Halloween",
-] as const;
-
 export const templatePreviews: Record<string, string> = (() => {
   const map: Record<string, string> = {};
-  for (const t of TEMPLATE_VALUES) {
+  for (const { value: t } of TEMPLATES) {
     map[t] = previewPNG(`template-${t || "none"}`, t ? { templateId: t } : {});
   }
   return map;
