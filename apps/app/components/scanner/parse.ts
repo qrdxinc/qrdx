@@ -322,7 +322,10 @@ function parseWifi(value: string): ParsedScan | null {
   // ZXing reads a non-boolean H: as the phase 2 method in older codes.
   const rawHidden = (field("H") ?? "").toLowerCase();
   const legacyPhase2 =
-    type === "WPA2-EAP" && !phase2 && rawHidden && !/^(true|false)$/.test(rawHidden)
+    type === "WPA2-EAP" &&
+    !phase2 &&
+    rawHidden &&
+    !/^(true|false)$/.test(rawHidden)
       ? field("H")
       : undefined;
   return {
@@ -492,16 +495,16 @@ function parseMecard(value: string): ParsedScan | null {
       : unescapeMeCard(found).trim() || undefined;
   };
   const all = (key: string) =>
-    (raw.get(key) ?? []).map((item) => unescapeMeCard(item).trim()).filter(Boolean);
+    (raw.get(key) ?? [])
+      .map((item) => unescapeMeCard(item).trim())
+      .filter(Boolean);
   // MeCard names are "Last,First".
   const rawName = raw.get("N")?.[0] ?? "";
   const nameParts = rawName.includes(",") ? meCardParts(rawName) : [];
   const [last = "", firstName = ""] = nameParts.length
     ? nameParts
     : [unescapeMeCard(rawName).trim(), ""];
-  const name = (
-    nameParts.length ? [firstName, last] : [last]
-  )
+  const name = (nameParts.length ? [firstName, last] : [last])
     .filter(Boolean)
     .join(" ");
   if (!name && !raw.get("TEL") && !raw.get("EMAIL")) return null;

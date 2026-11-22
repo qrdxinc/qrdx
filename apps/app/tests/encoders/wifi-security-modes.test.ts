@@ -4,10 +4,7 @@
 // PH2:, A: and I: fields, github.com/zxing/zxing/wiki/Barcode-Contents).
 // The modes that were there before keep their exact payloads.
 import { describe, expect, it } from "vitest";
-import {
-  buildWifiPayload,
-  wifiPayloadSchema,
-} from "@/app/api/mcp/payloads";
+import { buildWifiPayload, wifiPayloadSchema } from "@/app/api/mcp/payloads";
 import { parseScan } from "@/components/scanner/parse";
 import { validateDesignContent } from "@/lib/qr-design/content";
 import { wifiSchema } from "@/lib/validations/qr-content";
@@ -137,9 +134,7 @@ describe("enterprise (T:WPA2-EAP)", () => {
   });
 
   it("reads an older code's phase 2 from H:", () => {
-    const parsed = parseScan(
-      "WIFI:T:WPA2-EAP;S:Lab;E:TTLS;H:PAP;I:bo;P:pw;;",
-    );
+    const parsed = parseScan("WIFI:T:WPA2-EAP;S:Lab;E:TTLS;H:PAP;I:bo;P:pw;;");
     expect(parsed).toMatchObject({
       hidden: false,
       enterprise: { method: "TTLS", phase2: "PAP", identity: "bo" },

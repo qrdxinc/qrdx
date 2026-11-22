@@ -76,7 +76,9 @@ export function meCardIssue(
     const url = content.url.trim();
     let parsed: URL | null = null;
     try {
-      parsed = new URL(/^[a-z][a-z\d+.-]*:/i.test(url) ? url : `https://${url}`);
+      parsed = new URL(
+        /^[a-z][a-z\d+.-]*:/i.test(url) ? url : `https://${url}`,
+      );
     } catch {
       parsed = null;
     }

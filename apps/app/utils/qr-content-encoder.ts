@@ -54,6 +54,8 @@ import type {
   YouTubeContent,
   ZoomContent,
 } from "@/types/qr-content";
+// Added 2026-11-22 (payments)
+import { encodeMeCard, meCardIssue } from "./mecard";
 import {
   encodePayNow,
   encodePix,
@@ -66,8 +68,6 @@ import {
   sepaIssue,
   vietQrIssue,
 } from "./payment-qr-codes";
-// Added 2026-11-22 (payments)
-import { encodeMeCard, meCardIssue } from "./mecard";
 
 /** Largest payload a QR code holds (version 40-L, byte mode). */
 export const MAX_QR_PAYLOAD_BYTES = 2953;

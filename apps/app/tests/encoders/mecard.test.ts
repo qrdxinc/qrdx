@@ -74,9 +74,7 @@ describe("encoder", () => {
   });
 
   it("writes a first name alone without a comma", () => {
-    expect(encodeMeCard(card({ lastName: undefined }))).toBe(
-      "MECARD:N:Sean;;",
-    );
+    expect(encodeMeCard(card({ lastName: undefined }))).toBe("MECARD:N:Sean;;");
   });
 });
 
@@ -185,8 +183,7 @@ describe("qr_payload_mecard", () => {
       }),
     ).toEqual({
       ok: true,
-      value:
-        "MECARD:N:Owen,Sean;TEL:+12125551212;URL:https\\://example.com;;",
+      value: "MECARD:N:Owen,Sean;TEL:+12125551212;URL:https\\://example.com;;",
     });
   });
 

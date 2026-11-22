@@ -3,6 +3,8 @@
  */
 
 import { z } from "zod";
+// Added 2026-11-22 (payments)
+import { meCardIssue } from "@/utils/mecard";
 import {
   payNowIssue,
   pixIssue,
@@ -30,8 +32,6 @@ import {
   wifiIssue,
   zoomIssue,
 } from "@/utils/qr-content-encoder";
-// Added 2026-11-22 (payments)
-import { meCardIssue } from "@/utils/mecard";
 import {
   isAmazonUrl,
   isGoogleDriveFileUrl,

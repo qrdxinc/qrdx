@@ -12,6 +12,7 @@ import {
   ColorSwatch,
   DocumentDownload,
   DocumentText,
+  type Icon,
   Location,
   MagicStar,
   MessageText,
@@ -25,7 +26,6 @@ import {
   TicketStar,
   UserSquare,
   Wifi,
-  type Icon,
 } from "iconsax-reactjs";
 import type { CardIcon } from "@/components/sections/tools/cards";
 

@@ -49,6 +49,8 @@ import {
 } from "@/components/editor/content-forms/link-forms";
 import { LinkedInForm } from "@/components/editor/content-forms/linkedin-form";
 import { MapsForm } from "@/components/editor/content-forms/maps-form";
+// Added 2026-11-22 (payments)
+import { MeCardForm } from "@/components/editor/content-forms/mecard-form";
 import {
   PayNowForm,
   PixForm,
@@ -73,8 +75,6 @@ import { VCardForm } from "@/components/editor/content-forms/vcard-form";
 import { VenmoForm } from "@/components/editor/content-forms/venmo-form";
 import { WhatsAppForm } from "@/components/editor/content-forms/whatsapp-form";
 import { WifiForm } from "@/components/editor/content-forms/wifi-form";
-// Added 2026-11-22 (payments)
-import { MeCardForm } from "@/components/editor/content-forms/mecard-form";
 import { YouTubeForm } from "@/components/editor/content-forms/youtube-form";
 import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink } from "@/components/i18n/locale-link";

@@ -74,7 +74,9 @@ export const wifiPayloadSchema = z
       .string()
       .max(253)
       .optional()
-      .describe("WPA2-EAP: anonymous (outer) identity, if the network uses one"),
+      .describe(
+        "WPA2-EAP: anonymous (outer) identity, if the network uses one",
+      ),
   })
   .superRefine((value, ctx) => {
     if (value.security === "SAE" || value.security === "WPA2-EAP") {

@@ -226,7 +226,9 @@ export function WifiForm() {
               {t("identity")}
             </Label>
             <Input
-              aria-describedby={identityError ? "wifi-identity-help" : undefined}
+              aria-describedby={
+                identityError ? "wifi-identity-help" : undefined
+              }
               aria-invalid={Boolean(identityError)}
               autoComplete="off"
               id="wifi-identity"
@@ -285,10 +287,7 @@ export function WifiForm() {
             onChange={(e) => update({ password: e.target.value })}
           />
           {passwordError && (
-            <p
-              className="text-destructive text-[11px]"
-              id="wifi-password-help"
-            >
+            <p className="text-destructive text-[11px]" id="wifi-password-help">
               {passwordError}
             </p>
           )}
