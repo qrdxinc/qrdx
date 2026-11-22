@@ -1769,6 +1769,8 @@
     "formatQr": "QR code",
     "formatEan": "EAN-13 and EAN-8",
     "formatUpc": "UPC-A and UPC-E",
+    "formatDatabar": "GS1 DataBar (with Limited, Expanded and the stacked versions)",
+    "formatMaxi": "MaxiCode (from an upright image of just the code)",
     "types": {
       "links": {
         "name": "Links",
@@ -1832,7 +1834,7 @@
       "offlineQuestion": "Does it work offline?",
       "offlineAnswer": "Once you've scanned with it, your browser keeps the scanner page and its decoder, so it opens and reads codes without a connection. Link safety checks need a connection, and links found offline can be checked later from your history.",
       "browsersQuestion": "Which browsers are supported?",
-      "browsersAnswer": "Any modern browser with camera access: Chrome, Edge, Safari and Firefox on phones and computers. Browsers with a built-in barcode reader (Chrome on Android and macOS) use it directly; others download an open-source decoder (ZXing, compiled to WebAssembly, about 1 MB from the jsDelivr CDN) the first time you scan. The camera needs an https page and your permission.",
+      "browsersAnswer": "Any modern browser with camera access: Chrome, Edge, Safari and Firefox on phones and computers. Browsers with a built-in barcode reader (Chrome on Android and macOS) use it for the formats it reads. An open-source decoder (ZXing, compiled to WebAssembly, about 1 MB from the jsDelivr CDN) reads the rest: every format on other browsers, and Micro QR, rMQR, GS1 DataBar and MaxiCode where there's a built-in reader. It downloads the first time it's needed. The camera needs an https page and your permission.",
       "installQuestion": "Can I install the scanner as an app?",
       "installAnswer": "Yes. In Chrome, Edge or Samsung Internet, tap Install app under the scanner, or use the browser's own Install option. On iPhone and iPad, tap Add to Home Screen under the scanner for the steps. The app opens straight to the scanner in its own window, works offline once you've scanned with it, and keeps its history on your device.",
       "shareQuestion": "Can I scan a QR code from a screenshot?",

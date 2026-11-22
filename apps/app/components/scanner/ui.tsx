@@ -7,6 +7,7 @@ import { cn } from "@repo/design-system/lib/utils";
 import { Copy } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
+import { controlName, isControlCharacter } from "./parse";
 
 export function CopyButton({
   value,
@@ -40,6 +41,40 @@ export function CopyButton({
       {copied ? t("copied") : (label ?? t("copy"))}
     </Button>
   );
+}
+
+const RECORD_SEPARATOR = "\u001e";
+
+/**
+ * Text with its control characters shown as small labels (GS, RS, EOT), and
+ * a line break after each record separator, so a MaxiCode or ANSI MH10.8.3
+ * carrier message reads as its parts. Copy buttons still copy the real text.
+ */
+export function ControlText({ text }: { text: string }) {
+  if (![...text].some(isControlCharacter)) return text;
+  const parts: ReactNode[] = [];
+  let run = "";
+  let offset = 0;
+  for (const char of text) {
+    if (isControlCharacter(char)) {
+      if (run) parts.push(run);
+      run = "";
+      parts.push(
+        <span
+          className="bg-foreground/10 text-muted-foreground mx-0.5 rounded-sm px-1 align-middle font-mono text-[10px] leading-none"
+          key={offset}
+        >
+          {controlName(char)}
+        </span>,
+      );
+      if (char === RECORD_SEPARATOR) parts.push(<br key={`${offset}-br`} />);
+    } else {
+      run += char;
+    }
+    offset += char.length;
+  }
+  if (run) parts.push(run);
+  return parts;
 }
 
 export function FieldList({

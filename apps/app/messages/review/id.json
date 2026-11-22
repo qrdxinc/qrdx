@@ -3951,6 +3951,14 @@
     "source": "6b01317b709a",
     "status": "machine"
   },
+  "scan.formatDatabar": {
+    "source": "36956b7beec3",
+    "status": "machine"
+  },
+  "scan.formatMaxi": {
+    "source": "e70b680c32f0",
+    "status": "machine"
+  },
   "scan.types.links.name": {
     "source": "9024c197d849",
     "status": "machine"
@@ -4120,7 +4128,7 @@
     "status": "machine"
   },
   "scan.faq.browsersAnswer": {
-    "source": "ff4c54e6d866",
+    "source": "554cdfcca7c1",
     "status": "machine"
   },
   "scan.faq.installQuestion": {

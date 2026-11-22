@@ -1370,6 +1370,8 @@
     "formatQr": "QR code",
     "formatEan": "EAN-13 ed EAN-8",
     "formatUpc": "UPC-A e UPC-E",
+    "formatDatabar": "GS1 DataBar (con Limited, Expanded e le versioni stacked)",
+    "formatMaxi": "MaxiCode (da un’immagine dritta del solo codice)",
     "types": {
       "links": {
         "name": "Link",
@@ -1433,7 +1435,7 @@
       "offlineQuestion": "Funziona offline?",
       "offlineAnswer": "Dopo la prima scansione, il browser conserva la pagina dello scanner e il suo decodificatore, così si apre e legge i codici senza connessione. I controlli di sicurezza dei link richiedono una connessione e i link trovati offline si possono controllare più tardi dalla cronologia.",
       "browsersQuestion": "Quali browser sono supportati?",
-      "browsersAnswer": "Qualsiasi browser moderno con accesso alla fotocamera: Chrome, Edge, Safari e Firefox su telefoni e computer. I browser con un lettore di codici a barre integrato (Chrome su Android e macOS) lo usano direttamente; gli altri scaricano un decodificatore open source (ZXing, compilato in WebAssembly, circa 1 MB dalla CDN jsDelivr) la prima volta che scansioni. La fotocamera richiede una pagina https e il tuo permesso.",
+      "browsersAnswer": "Qualsiasi browser moderno con accesso alla fotocamera: Chrome, Edge, Safari e Firefox su smartphone e computer. I browser con un lettore di codici a barre integrato (Chrome su Android e macOS) lo usano per i formati che legge. Un decoder open source (ZXing, compilato in WebAssembly, circa 1 MB dalla CDN jsDelivr) legge il resto: tutti i formati sugli altri browser, e Micro QR, rMQR, GS1 DataBar e MaxiCode dove c’è un lettore integrato. Viene scaricato la prima volta che serve. La fotocamera richiede una pagina https e il tuo consenso.",
       "installQuestion": "Posso installare lo scanner come app?",
       "installAnswer": "Sì. In Chrome, Edge o Samsung Internet, tocca Installa app sotto lo scanner oppure usa l’opzione Installa del browser. Su iPhone e iPad, tocca Aggiungi alla schermata Home sotto lo scanner per vedere i passaggi. L’app si apre direttamente sullo scanner in una finestra tutta sua, funziona offline dopo che hai fatto una scansione con essa e conserva la cronologia sul tuo dispositivo.",
       "shareQuestion": "Posso scansionare un QR code da uno screenshot?",

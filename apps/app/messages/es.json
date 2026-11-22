@@ -1370,6 +1370,8 @@
     "formatQr": "Código QR",
     "formatEan": "EAN-13 y EAN-8",
     "formatUpc": "UPC-A y UPC-E",
+    "formatDatabar": "GS1 DataBar (con Limited, Expanded y las versiones apiladas)",
+    "formatMaxi": "MaxiCode (a partir de una imagen vertical solo del código)",
     "types": {
       "links": {
         "name": "Enlaces",
@@ -1433,7 +1435,7 @@
       "offlineQuestion": "¿Funciona sin conexión?",
       "offlineAnswer": "Una vez que lo has usado, tu navegador guarda la página del escáner y su decodificador, así que se abre y lee códigos sin conexión. Las comprobaciones de seguridad de los enlaces necesitan conexión, y los enlaces encontrados sin conexión se pueden comprobar más tarde desde tu historial.",
       "browsersQuestion": "¿Qué navegadores son compatibles?",
-      "browsersAnswer": "Cualquier navegador moderno con acceso a la cámara: Chrome, Edge, Safari y Firefox en teléfonos y ordenadores. Los navegadores con lector de códigos de barras integrado (Chrome en Android y macOS) lo usan directamente; los demás descargan un decodificador de código abierto (ZXing, compilado a WebAssembly, de aproximadamente 1 MB desde la CDN de jsDelivr) la primera vez que escaneas. La cámara necesita una página https y tu permiso.",
+      "browsersAnswer": "Cualquier navegador moderno con acceso a la cámara: Chrome, Edge, Safari y Firefox, en teléfonos y computadoras. Los navegadores con lector de códigos de barras integrado (Chrome en Android y macOS) lo usan para los formatos que lee. Un decodificador de código abierto (ZXing, compilado a WebAssembly, de aproximadamente 1 MB desde la CDN de jsDelivr) lee el resto: todos los formatos en otros navegadores, y Micro QR, rMQR, GS1 DataBar y MaxiCode donde hay un lector integrado. Se descarga la primera vez que se necesita. La cámara necesita una página https y tu permiso.",
       "installQuestion": "¿Puedo instalar el escáner como una app?",
       "installAnswer": "Sí. En Chrome, Edge o Samsung Internet, toca Instalar app debajo del escáner, o usa la opción de instalación del propio navegador. En iPhone y iPad, toca Añadir a pantalla de inicio debajo del escáner para ver los pasos. La app se abre directamente en el escáner, en su propia ventana, funciona sin conexión una vez que has hecho un escaneo con ella y guarda su historial en tu dispositivo.",
       "shareQuestion": "¿Puedo escanear un código QR desde una captura de pantalla?",

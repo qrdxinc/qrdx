@@ -1370,6 +1370,8 @@
     "formatQr": "QR code",
     "formatEan": "EAN-13 e EAN-8",
     "formatUpc": "UPC-A e UPC-E",
+    "formatDatabar": "GS1 DataBar (com as versões Limited, Expanded e empilhadas)",
+    "formatMaxi": "MaxiCode (a partir de uma imagem na vertical só do código)",
     "types": {
       "links": {
         "name": "Links",
@@ -1433,7 +1435,7 @@
       "offlineQuestion": "Funciona offline?",
       "offlineAnswer": "Depois que você usar o leitor, o navegador guarda a página dele e o decodificador, então ele abre e lê códigos sem conexão. As verificações de segurança dos links precisam de conexão, e os links encontrados offline podem ser verificados depois, pelo histórico.",
       "browsersQuestion": "Quais navegadores são compatíveis?",
-      "browsersAnswer": "Qualquer navegador moderno com acesso à câmera: Chrome, Edge, Safari e Firefox em celulares e computadores. Navegadores com leitor de código de barras integrado (Chrome no Android e no macOS) usam esse leitor diretamente; os outros baixam um decodificador de código aberto (ZXing, compilado para WebAssembly, cerca de 1 MB, pela CDN jsDelivr) na primeira leitura. A câmera exige uma página https e a sua permissão.",
+      "browsersAnswer": "Qualquer navegador moderno com acesso à câmera: Chrome, Edge, Safari e Firefox, no celular e no computador. Navegadores com leitor de código de barras integrado (Chrome no Android e no macOS) usam esse leitor para os formatos que ele lê. Um decodificador de código aberto (ZXing, compilado para WebAssembly, cerca de 1 MB pela CDN jsDelivr) lê o resto: todos os formatos em outros navegadores, e Micro QR, rMQR, GS1 DataBar e MaxiCode onde há leitor integrado. Ele é baixado na primeira vez que for necessário. A câmera exige uma página https e a sua permissão.",
       "installQuestion": "Posso instalar o leitor como um app?",
       "installAnswer": "Sim. No Chrome, no Edge ou no Samsung Internet, toque em Instalar app abaixo do leitor, ou use a opção de instalação do próprio navegador. No iPhone e no iPad, toque em Adicionar à Tela de Início abaixo do leitor para ver os passos. O app abre direto no leitor, em uma janela própria, funciona offline depois que você fez uma leitura com ele e guarda o histórico no seu dispositivo.",
       "shareQuestion": "Posso ler um QR code a partir de uma captura de tela?",

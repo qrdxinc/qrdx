@@ -157,6 +157,13 @@ export function parseScan(raw: string, format?: string): ParsedScan {
     };
   }
 
+  // GS1 DataBar carries only GS1 element strings, which its readers report
+  // without brackets or a prefix: 0109521234543213 for (01)09521234543213.
+  if (format?.startsWith("databar")) {
+    const gs1 = parseGs1ElementString(value, { bare: true });
+    if (gs1) return { kind: "gs1", data: gs1 };
+  }
+
   if (/^https?:\/\//i.test(value)) {
     return parseWebLink(value) ?? { kind: "text", text: raw };
   }
@@ -1394,6 +1401,8 @@ const GS1_AIS: Record<string, AiSpec> = {
   "414": { label: "Location (GLN)", length: 13 },
   "422": { label: "Country of origin", length: 3 },
   "7003": { label: "Expiry date and time", length: 10 },
+  "8110": { label: "Coupon code" },
+  "8112": { label: "Paperless coupon code" },
 };
 
 const DIGITAL_LINK_ALIASES: Record<string, string> = {
@@ -1446,8 +1455,15 @@ function gs1Result(pairs: [string, string][]): Gs1Data | null {
 
 const GS = "\u001d";
 
-/** "(01)09506000134352(17)261231(10)ABC" or the GS-separated raw form. */
-export function parseGs1ElementString(input: string): Gs1Data | null {
+/**
+ * "(01)09506000134352(17)261231(10)ABC" or the GS-separated raw form. With
+ * `bare`, the raw form is read without a GS or a symbology prefix too: for
+ * values from a symbology that holds nothing else (GS1 DataBar).
+ */
+export function parseGs1ElementString(
+  input: string,
+  { bare = false }: { bare?: boolean } = {},
+): Gs1Data | null {
   const value = input.replace(/^\][A-Za-z]\d/, "");
   if (/^\(\d{2,4}\)/.test(value)) {
     const pairs: [string, string][] = [];
@@ -1459,7 +1475,7 @@ export function parseGs1ElementString(input: string): Gs1Data | null {
 
   // The raw form needs a GS separator or a symbology prefix to be told apart
   // from plain digits.
-  if (!value.includes(GS) && value === input) return null;
+  if (!(bare || value.includes(GS)) && value === input) return null;
   if (!/^\d{2}/.test(value)) return null;
   const pairs: [string, string][] = [];
   let rest = value.replace(new RegExp(`^${GS}`), "");
@@ -1523,6 +1539,71 @@ export function isValidGtin(code: string): boolean {
       0,
     );
   return (10 - (sum % 10)) % 10 === check;
+}
+
+/** A C0 control character (but tab and line breaks) or DEL. */
+export function isControlCharacter(char: string): boolean {
+  const code = char.charCodeAt(0);
+  return (
+    char.length === 1 &&
+    ((code < 0x20 && code !== 0x09 && code !== 0x0a && code !== 0x0d) ||
+      code === 0x7f)
+  );
+}
+
+const CONTROL_NAMES = [
+  "NUL",
+  "SOH",
+  "STX",
+  "ETX",
+  "EOT",
+  "ENQ",
+  "ACK",
+  "BEL",
+  "BS",
+  "HT",
+  "LF",
+  "VT",
+  "FF",
+  "CR",
+  "SO",
+  "SI",
+  "DLE",
+  "DC1",
+  "DC2",
+  "DC3",
+  "DC4",
+  "NAK",
+  "SYN",
+  "ETB",
+  "CAN",
+  "EM",
+  "SUB",
+  "ESC",
+  "FS",
+  "GS",
+  "RS",
+  "US",
+];
+
+/** A control character's ASCII name: GS, RS, EOT. */
+export function controlName(char: string): string {
+  return CONTROL_NAMES[char.charCodeAt(0)] ?? "DEL";
+}
+
+/** Control characters as their Unicode pictures: GS as ␝, RS as ␞, EOT as ␄. */
+export function controlPicture(char: string): string {
+  const code = char.charCodeAt(0);
+  return String.fromCharCode(code === 0x7f ? 0x2421 : 0x2400 + code);
+}
+
+/** `text` with its control characters shown as pictures, for one-line lists. */
+export function showControlCharacters(text: string): string {
+  let shown = "";
+  for (const char of text) {
+    shown += isControlCharacter(char) ? controlPicture(char) : char;
+  }
+  return shown;
 }
 
 /** One-line summary for lists, history and CSV. */

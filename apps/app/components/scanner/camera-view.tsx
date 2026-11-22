@@ -14,7 +14,7 @@ import {
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { type DetectedCode, detectCodes, getDetector } from "./detector";
+import { createFrameReader, type DetectedCode, getDetector } from "./detector";
 
 // Torch and zoom are Image Capture extensions, missing from TypeScript's DOM types.
 interface CameraCapabilities extends MediaTrackCapabilities {
@@ -119,13 +119,14 @@ export function CameraView({
     let timer: ReturnType<typeof setTimeout> | undefined;
     let loaded = false;
     let failures = 0;
+    const readFrame = createFrameReader();
 
     const scan = async () => {
       const video = videoRef.current;
       if (cancelled || !video) return;
       if (video.readyState >= 2 && video.videoWidth > 0) {
         try {
-          const codes = await detectCodes(video);
+          const codes = await readFrame(video);
           if (cancelled) return;
           loaded = true;
           setReady(true);
