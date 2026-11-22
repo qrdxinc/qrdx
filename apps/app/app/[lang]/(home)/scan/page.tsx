@@ -75,16 +75,20 @@ export const viewport: Viewport = {
 /** Barcode formats; product names stay as they are in every language. */
 const FORMATS = [
   "formatQr",
+  "Micro QR",
+  "rMQR",
   "Data Matrix",
   "Aztec",
   "PDF417",
   "formatEan",
   "formatUpc",
+  "formatDatabar",
   "Code 128",
   "Code 39",
   "Code 93",
   "Codabar",
   "ITF-14",
+  "formatMaxi",
 ] as const;
 
 const CONTENT_TYPES: {

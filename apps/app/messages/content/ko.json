@@ -899,6 +899,492 @@
     "status": "machine",
     "context": "contentTypes.list.monero.description"
   },
+  "9a523eddafc6": {
+    "source": "Messenger",
+    "text": "Messenger",
+    "status": "machine",
+    "context": "contentTypes.list.messenger.label"
+  },
+  "8bc2e9451ce0": {
+    "source": "Start a Messenger chat with you",
+    "text": "나와 Messenger 채팅 시작하기",
+    "status": "machine",
+    "context": "contentTypes.list.messenger.description"
+  },
+  "2db2c27ad99b": {
+    "source": "Viber",
+    "text": "Viber",
+    "status": "machine",
+    "context": "contentTypes.list.viber.label"
+  },
+  "127559d99e2e": {
+    "source": "Open a Viber business chat or community",
+    "text": "Viber 비즈니스 채팅이나 커뮤니티 열기",
+    "status": "machine",
+    "context": "contentTypes.list.viber.description"
+  },
+  "216924fd2e69": {
+    "source": "KakaoTalk",
+    "text": "KakaoTalk",
+    "status": "machine",
+    "context": "contentTypes.list.kakaotalk.label"
+  },
+  "b39f1ec3ccd1": {
+    "source": "Open a KakaoTalk open chat or channel",
+    "text": "KakaoTalk 오픈채팅이나 채널 열기",
+    "status": "machine",
+    "context": "contentTypes.list.kakaotalk.description"
+  },
+  "8f9500d52394": {
+    "source": "Zalo",
+    "text": "Zalo",
+    "status": "machine",
+    "context": "contentTypes.list.zalo.label"
+  },
+  "4847482adcf9": {
+    "source": "Open a Zalo Official Account or group",
+    "text": "Zalo 공식 계정이나 그룹 열기",
+    "status": "machine",
+    "context": "contentTypes.list.zalo.description"
+  },
+  "465047c17854": {
+    "source": "FaceTime",
+    "text": "FaceTime",
+    "status": "machine",
+    "context": "contentTypes.list.facetime.label"
+  },
+  "4f153691a034": {
+    "source": "Start a FaceTime call",
+    "text": "FaceTime 통화 시작하기",
+    "status": "machine",
+    "context": "contentTypes.list.facetime.description"
+  },
+  "a7b52b269a23": {
+    "source": "Microsoft Teams",
+    "text": "Microsoft Teams",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-teams.label"
+  },
+  "3d13b14cfef7": {
+    "source": "Join a Teams meeting or start a chat",
+    "text": "Teams 회의 참여 또는 채팅 시작하기",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-teams.description"
+  },
+  "382c1b2987d4": {
+    "source": "Webex",
+    "text": "Webex",
+    "status": "machine",
+    "context": "contentTypes.list.webex.label"
+  },
+  "651115a0e158": {
+    "source": "Join a Webex meeting",
+    "text": "Webex 회의 참여하기",
+    "status": "machine",
+    "context": "contentTypes.list.webex.description"
+  },
+  "f7b8dd5ece88": {
+    "source": "Calendly",
+    "text": "Calendly",
+    "status": "machine",
+    "context": "contentTypes.list.calendly.label"
+  },
+  "b51ffd6c5b56": {
+    "source": "Let people book time with you",
+    "text": "나와 일정을 예약할 수 있어요",
+    "status": "machine",
+    "context": "contentTypes.list.calendly.description"
+  },
+  "343856a7c4d7": {
+    "source": "Google Classroom",
+    "text": "Google Classroom",
+    "status": "machine",
+    "context": "contentTypes.list.google-classroom.label"
+  },
+  "a0b88730be29": {
+    "source": "Invite students to a class",
+    "text": "학생을 수업에 초대하기",
+    "status": "machine",
+    "context": "contentTypes.list.google-classroom.description"
+  },
+  "7f607b65bde0": {
+    "source": "VK",
+    "text": "VK",
+    "status": "machine",
+    "context": "contentTypes.list.vk.label"
+  },
+  "4eb6770af4f6": {
+    "source": "Open a VK profile, page or group",
+    "text": "VK 프로필, 페이지 또는 그룹 열기",
+    "status": "machine",
+    "context": "contentTypes.list.vk.description"
+  },
+  "5b16689ed91a": {
+    "source": "Weibo",
+    "text": "Weibo",
+    "status": "machine",
+    "context": "contentTypes.list.weibo.label"
+  },
+  "5f9443faa00a": {
+    "source": "Open a Weibo profile",
+    "text": "Weibo 프로필 열기",
+    "status": "machine",
+    "context": "contentTypes.list.weibo.description"
+  },
+  "3ce8b7c75edc": {
+    "source": "Tumblr",
+    "text": "Tumblr",
+    "status": "machine",
+    "context": "contentTypes.list.tumblr.label"
+  },
+  "4e5c671bbb96": {
+    "source": "Open a Tumblr blog",
+    "text": "Tumblr 블로그 열기",
+    "status": "machine",
+    "context": "contentTypes.list.tumblr.description"
+  },
+  "8e588cd18774": {
+    "source": "Medium",
+    "text": "Medium",
+    "status": "machine",
+    "context": "contentTypes.list.medium.label"
+  },
+  "34700bc18214": {
+    "source": "Open a Medium profile or story",
+    "text": "Medium 프로필이나 스토리 열기",
+    "status": "machine",
+    "context": "contentTypes.list.medium.description"
+  },
+  "8c339ec81c3e": {
+    "source": "Substack",
+    "text": "Substack",
+    "status": "machine",
+    "context": "contentTypes.list.substack.label"
+  },
+  "5c84a14e63b0": {
+    "source": "Open a Substack newsletter",
+    "text": "Substack 뉴스레터 열기",
+    "status": "machine",
+    "context": "contentTypes.list.substack.description"
+  },
+  "f911e414cf6b": {
+    "source": "GitHub",
+    "text": "GitHub",
+    "status": "machine",
+    "context": "contentTypes.list.github.label"
+  },
+  "d61a83c4cae9": {
+    "source": "Open a GitHub profile or repository",
+    "text": "GitHub 프로필이나 저장소 열기",
+    "status": "machine",
+    "context": "contentTypes.list.github.description"
+  },
+  "ad21424a84d7": {
+    "source": "Behance",
+    "text": "Behance",
+    "status": "machine",
+    "context": "contentTypes.list.behance.label"
+  },
+  "6246bf5d9570": {
+    "source": "Open a Behance portfolio",
+    "text": "Behance 포트폴리오 열기",
+    "status": "machine",
+    "context": "contentTypes.list.behance.description"
+  },
+  "61bce589e672": {
+    "source": "Dribbble",
+    "text": "Dribbble",
+    "status": "machine",
+    "context": "contentTypes.list.dribbble.label"
+  },
+  "ee0902dedd27": {
+    "source": "Open a Dribbble portfolio",
+    "text": "Dribbble 포트폴리오 열기",
+    "status": "machine",
+    "context": "contentTypes.list.dribbble.description"
+  },
+  "2339a2623267": {
+    "source": "Linktree",
+    "text": "Linktree",
+    "status": "machine",
+    "context": "contentTypes.list.linktree.label"
+  },
+  "c36a62ec05ac": {
+    "source": "Open your Linktree page",
+    "text": "내 Linktree 페이지 열기",
+    "status": "machine",
+    "context": "contentTypes.list.linktree.description"
+  },
+  "eec736f63bbb": {
+    "source": "Patreon",
+    "text": "Patreon",
+    "status": "machine",
+    "context": "contentTypes.list.patreon.label"
+  },
+  "d990a359dba9": {
+    "source": "Open a Patreon creator page",
+    "text": "Patreon 크리에이터 페이지 열기",
+    "status": "machine",
+    "context": "contentTypes.list.patreon.description"
+  },
+  "76c38e42cf40": {
+    "source": "Ko-fi",
+    "text": "Ko-fi",
+    "status": "machine",
+    "context": "contentTypes.list.kofi.label"
+  },
+  "03f20f7907bc": {
+    "source": "Get tips on your Ko-fi page",
+    "text": "Ko-fi 페이지에서 팁 받기",
+    "status": "machine",
+    "context": "contentTypes.list.kofi.description"
+  },
+  "50a0dd1c115d": {
+    "source": "Buy Me a Coffee",
+    "text": "Buy Me a Coffee",
+    "status": "machine",
+    "context": "contentTypes.list.buymeacoffee.label"
+  },
+  "cb2d6fb0e8f2": {
+    "source": "Get tips on your Buy Me a Coffee page",
+    "text": "Buy Me a Coffee 페이지에서 팁 받기",
+    "status": "machine",
+    "context": "contentTypes.list.buymeacoffee.description"
+  },
+  "3b00b32d64af": {
+    "source": "Apple Music",
+    "text": "Apple Music",
+    "status": "machine",
+    "context": "contentTypes.list.apple-music.label"
+  },
+  "d12f244b2b95": {
+    "source": "Play a song, album or playlist",
+    "text": "노래, 앨범, 플레이리스트 재생",
+    "status": "machine",
+    "context": "contentTypes.list.apple-music.description"
+  },
+  "6921a7cac539": {
+    "source": "YouTube Music",
+    "text": "YouTube Music",
+    "status": "machine",
+    "context": "contentTypes.list.youtube-music.label"
+  },
+  "40dd3b330ddf": {
+    "source": "Apple Podcasts",
+    "text": "Apple Podcasts",
+    "status": "machine",
+    "context": "contentTypes.list.apple-podcasts.label"
+  },
+  "37ad409c6b53": {
+    "source": "Open a podcast or episode",
+    "text": "팟캐스트나 에피소드 열기",
+    "status": "machine",
+    "context": "contentTypes.list.apple-podcasts.description"
+  },
+  "2faf9cfdecef": {
+    "source": "Amazon Music",
+    "text": "Amazon Music",
+    "status": "machine",
+    "context": "contentTypes.list.amazon-music.label"
+  },
+  "4997d093758b": {
+    "source": "Deezer",
+    "text": "Deezer",
+    "status": "machine",
+    "context": "contentTypes.list.deezer.label"
+  },
+  "01bec391e74c": {
+    "source": "Play a track, album or playlist",
+    "text": "트랙, 앨범, 플레이리스트 재생",
+    "status": "machine",
+    "context": "contentTypes.list.deezer.description"
+  },
+  "0f622ac0d050": {
+    "source": "TIDAL",
+    "text": "TIDAL",
+    "status": "machine",
+    "context": "contentTypes.list.tidal.label"
+  },
+  "088f5f25925f": {
+    "source": "Bandcamp",
+    "text": "Bandcamp",
+    "status": "machine",
+    "context": "contentTypes.list.bandcamp.label"
+  },
+  "892c3420832c": {
+    "source": "Open an artist, album or track",
+    "text": "아티스트, 앨범, 트랙 열기",
+    "status": "machine",
+    "context": "contentTypes.list.bandcamp.description"
+  },
+  "507e98c562e1": {
+    "source": "Google Docs",
+    "text": "Google Docs",
+    "status": "machine",
+    "context": "contentTypes.list.google-docs.label"
+  },
+  "5be83e1c47ff": {
+    "source": "Open a shared Google Doc",
+    "text": "공유된 Google 문서 열기",
+    "status": "machine",
+    "context": "contentTypes.list.google-docs.description"
+  },
+  "f109802a741f": {
+    "source": "Google Sheets",
+    "text": "Google Sheets",
+    "status": "machine",
+    "context": "contentTypes.list.google-sheets.label"
+  },
+  "2be210d8ffba": {
+    "source": "Open a shared spreadsheet",
+    "text": "공유된 스프레드시트 열기",
+    "status": "machine",
+    "context": "contentTypes.list.google-sheets.description"
+  },
+  "6da41d861102": {
+    "source": "Google Slides",
+    "text": "Google Slides",
+    "status": "machine",
+    "context": "contentTypes.list.google-slides.label"
+  },
+  "bfcf6a4e1f4f": {
+    "source": "Open a shared presentation",
+    "text": "공유된 프레젠테이션 열기",
+    "status": "machine",
+    "context": "contentTypes.list.google-slides.description"
+  },
+  "805259086913": {
+    "source": "Google Forms",
+    "text": "Google Forms",
+    "status": "machine",
+    "context": "contentTypes.list.google-forms.label"
+  },
+  "f151e09bdf83": {
+    "source": "Open a Google Form",
+    "text": "Google Form 열기",
+    "status": "machine",
+    "context": "contentTypes.list.google-forms.description"
+  },
+  "7645f2073fc8": {
+    "source": "Microsoft Forms",
+    "text": "Microsoft Forms",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-forms.label"
+  },
+  "715275c8faa6": {
+    "source": "Open a Microsoft Form",
+    "text": "Microsoft Form 열기",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-forms.description"
+  },
+  "73bcfe98830b": {
+    "source": "Notion",
+    "text": "Notion",
+    "status": "machine",
+    "context": "contentTypes.list.notion.label"
+  },
+  "66b41a05a1ff": {
+    "source": "Open a public Notion page",
+    "text": "공개 Notion 페이지 열기",
+    "status": "machine",
+    "context": "contentTypes.list.notion.description"
+  },
+  "2f73335c712c": {
+    "source": "Canva",
+    "text": "Canva",
+    "status": "machine",
+    "context": "contentTypes.list.canva.label"
+  },
+  "9b7356ae852d": {
+    "source": "Open a shared Canva design",
+    "text": "공유된 Canva 디자인 열기",
+    "status": "machine",
+    "context": "contentTypes.list.canva.description"
+  },
+  "c4424d160bca": {
+    "source": "App Store",
+    "text": "App Store",
+    "status": "machine",
+    "context": "contentTypes.list.app-store.label"
+  },
+  "ea863e47112e": {
+    "source": "Open an iPhone app's App Store page",
+    "text": "iPhone 앱의 App Store 페이지 열기",
+    "status": "machine",
+    "context": "contentTypes.list.app-store.description"
+  },
+  "027b1684683a": {
+    "source": "Google Play",
+    "text": "Google Play",
+    "status": "machine",
+    "context": "contentTypes.list.google-play.label"
+  },
+  "4e12b2035297": {
+    "source": "Open an Android app's Google Play page",
+    "text": "Android 앱의 Google Play 페이지 열기",
+    "status": "machine",
+    "context": "contentTypes.list.google-play.description"
+  },
+  "d384fa236a1f": {
+    "source": "Tripadvisor",
+    "text": "Tripadvisor",
+    "status": "machine",
+    "context": "contentTypes.list.tripadvisor.label"
+  },
+  "5251ecd50939": {
+    "source": "Open your Tripadvisor listing",
+    "text": "내 Tripadvisor 등록 정보 열기",
+    "status": "machine",
+    "context": "contentTypes.list.tripadvisor.description"
+  },
+  "26abcb97dbdd": {
+    "source": "Trustpilot",
+    "text": "Trustpilot",
+    "status": "machine",
+    "context": "contentTypes.list.trustpilot.label"
+  },
+  "cc1c9c901110": {
+    "source": "Ask customers for a Trustpilot review",
+    "text": "고객에게 Trustpilot 리뷰 요청하기",
+    "status": "machine",
+    "context": "contentTypes.list.trustpilot.description"
+  },
+  "893919d40bac": {
+    "source": "Yelp",
+    "text": "Yelp",
+    "status": "machine",
+    "context": "contentTypes.list.yelp.label"
+  },
+  "6c9fe4ad62aa": {
+    "source": "Open your Yelp business page",
+    "text": "내 Yelp 비즈니스 페이지 열기",
+    "status": "machine",
+    "context": "contentTypes.list.yelp.description"
+  },
+  "1d927621f532": {
+    "source": "Airbnb",
+    "text": "Airbnb",
+    "status": "machine",
+    "context": "contentTypes.list.airbnb.label"
+  },
+  "a33bb31179a5": {
+    "source": "Open an Airbnb listing or experience",
+    "text": "Airbnb 숙소 또는 체험 열기",
+    "status": "machine",
+    "context": "contentTypes.list.airbnb.description"
+  },
+  "14bb3cc7d001": {
+    "source": "Booking.com",
+    "text": "Booking.com",
+    "status": "machine",
+    "context": "contentTypes.list.booking-com.label"
+  },
+  "4ffbeae0492e": {
+    "source": "Open your Booking.com property page",
+    "text": "내 Booking.com 숙소 페이지 열기",
+    "status": "machine",
+    "context": "contentTypes.list.booking-com.description"
+  },
   "ca7e3d788516": {
     "source": "MeCard",
     "text": "MeCard",
@@ -1055,6 +1541,12 @@
     "status": "machine",
     "context": "contentTypes.groups.social.label"
   },
+  "b61fa44e6c70": {
+    "source": "Music & podcasts",
+    "text": "음악 및 팟캐스트",
+    "status": "machine",
+    "context": "contentTypes.groups.music.label"
+  },
   "76f68a75f01e": {
     "source": "Business",
     "text": "비즈니스",
@@ -1085,9 +1577,9 @@
     "status": "machine",
     "context": "qrTypes.groups.utilities.title"
   },
-  "a271af9bf106": {
-    "source": "Websites, plain text, Wi-Fi logins and links to files or short links.",
-    "text": "웹사이트, 일반 텍스트, Wi-Fi 로그인 정보, 파일 링크나 단축 링크를 담을 수 있어요.",
+  "52aef28f5f92": {
+    "source": "Websites, plain text, Wi-Fi logins, shared documents and forms, app store pages and short links.",
+    "text": "웹사이트, 일반 텍스트, Wi-Fi 로그인 정보, 공유 문서와 양식, 앱 스토어 페이지, 짧은 링크를 연결해요.",
     "status": "machine",
     "context": "qrTypes.groups.utilities.description"
   },
@@ -1097,9 +1589,9 @@
     "status": "machine",
     "context": "qrTypes.groups.contact.title"
   },
-  "1771803787ab": {
-    "source": "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Signal or LINE.",
-    "text": "연락처 저장, 전화, 문자, 이메일을 보내거나 WhatsApp, Telegram, Signal, LINE에서 채팅을 열 수 있어요.",
+  "70f1152fb7bd": {
+    "source": "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Messenger, LINE or KakaoTalk.",
+    "text": "연락처를 저장하고, 전화, 문자, 이메일을 보내거나 WhatsApp, Telegram, Messenger, LINE, KakaoTalk 채팅을 열 수 있어요.",
     "status": "machine",
     "context": "qrTypes.groups.contact.description"
   },
@@ -1109,9 +1601,9 @@
     "status": "machine",
     "context": "qrTypes.groups.social.title"
   },
-  "c5bddd3ef7b6": {
-    "source": "Send people to a profile, channel, Discord server or playlist.",
-    "text": "프로필, 채널, Discord 서버, 플레이리스트로 사람들을 안내해 보세요.",
+  "677940560013": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, album or podcast.",
+    "text": "프로필, 채널, Discord 서버, 뉴스레터, 앨범, 팟캐스트로 사람들을 안내해요.",
     "status": "machine",
     "context": "qrTypes.groups.social.description"
   },
@@ -1127,9 +1619,9 @@
     "status": "machine",
     "context": "qrTypes.groups.business.title"
   },
-  "40ae6347e760": {
-    "source": "Reviews, directions, bookings, meetings and attendance check-ins.",
-    "text": "리뷰, 길 안내, 예약, 회의, 출석 체크인을 위한 코드예요.",
+  "5c9a02d00b51": {
+    "source": "Reviews, listings, directions, bookings, meetings, classes and attendance check-ins.",
+    "text": "리뷰, 매물 정보, 길찾기, 예약, 미팅, 수업, 출석 체크인을 연결해요.",
     "status": "machine",
     "context": "qrTypes.groups.business.description"
   },
@@ -6700,6 +7192,2622 @@
     "text": "별도의 결제 ID는 Monero에서 더 이상 사용되지 않으므로 생성기는 결제 ID를 추가하지 않아요. 고객이나 코드마다 서브주소를 사용하거나, 거래소나 상점에서 받은 통합 주소를 사용하세요.",
     "status": "machine",
     "context": "qrTypes.types.monero.details.paragraphs.1"
+  },
+  "87cb1f50205c": {
+    "source": "Open a Messenger chat with you or your Page.",
+    "text": "나 또는 내 Page와의 Messenger 채팅을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.summary"
+  },
+  "b7b98dca2c76": {
+    "source": "Make a Messenger QR code from your Facebook username. People scan to start a chat with you or your Page. m.me link, free, no signup.",
+    "text": "Facebook 사용자 이름으로 Messenger QR 코드를 만드세요. 스캔하면 나 또는 내 Page와 채팅을 시작해요. m.me 링크, 무료, 가입 불필요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.metaDescription"
+  },
+  "8d2f18c58c28": {
+    "source": "A Messenger QR code opens a chat with you, or with your business's Facebook Page, so customers can ask a question from a shop window, a flyer or a receipt.",
+    "text": "Messenger QR 코드는 나 또는 내 비즈니스의 Facebook Page와 채팅을 열어 줘요. 고객이 매장 쇼윈도, 전단지, 영수증에서 바로 질문할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.intro.0"
+  },
+  "500e6c017cda": {
+    "source": "Type the username of your Facebook profile or Page and QRdx builds the m.me link Meta gives every username, or paste the m.me link itself.",
+    "text": "Facebook 프로필 또는 Page의 사용자 이름을 입력하면 QRdx가 Meta에서 모든 사용자 이름에 제공하는 m.me 링크를 만들어 줘요. m.me 링크를 직접 붙여넣어도 돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.intro.1"
+  },
+  "ddd574b28a22": {
+    "source": "Enter your Facebook username, or paste your m.me link.",
+    "text": "Facebook 사용자 이름을 입력하거나 m.me 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.steps.0"
+  },
+  "46bd204ff500": {
+    "source": "Scan the preview to check the chat opens.",
+    "text": "미리보기를 스캔해서 채팅이 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.steps.1"
+  },
+  "a0c86702d095": {
+    "source": "Facebook usernames are letters, digits and dots.",
+    "text": "Facebook 사용자 이름은 영문자, 숫자, 점으로 이루어져 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.payload.notes.0"
+  },
+  "84cca9616632": {
+    "source": "m.me links open the Messenger app when it's installed, or Messenger in the browser.",
+    "text": "m.me 링크는 Messenger 앱이 설치되어 있으면 앱에서, 없으면 브라우저의 Messenger에서 열려요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.payload.notes.1"
+  },
+  "d68dad346d27": {
+    "source": "It's the last part of your profile's or Page's address on Facebook, after facebook.com/. A Page without a username can set one in its settings.",
+    "text": "Facebook에서 프로필 또는 Page 주소 중 facebook.com/ 뒤에 오는 마지막 부분이에요. 사용자 이름이 없는 Page는 설정에서 지정할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.0.answer"
+  },
+  "05a5da7f487f": {
+    "source": "Does it work for a business Page?",
+    "text": "비즈니스 Page에서도 사용할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.1.question"
+  },
+  "a78e0fb4ffec": {
+    "source": "Yes. A Page's m.me link opens a chat with the Page, and the messages arrive in the Page's inbox.",
+    "text": "네. Page의 m.me 링크는 해당 Page와의 채팅을 열고, 메시지는 Page의 받은 메시지함으로 도착해요.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.1.answer"
+  },
+  "c4ba95ee6d7e": {
+    "source": "Open a Viber business chat, community or channel.",
+    "text": "Viber 비즈니스 채팅, 커뮤니티 또는 채널을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.summary"
+  },
+  "a71489e78f3c": {
+    "source": "Create a Viber QR code for a business chat by number, or to invite people to your community or channel. viber.me and invite links. Free.",
+    "text": "번호로 Viber 비즈니스 채팅 QR 코드를 만들거나 커뮤니티와 채널에 사람들을 초대하세요. viber.me 및 초대 링크를 지원해요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.metaDescription"
+  },
+  "6ef9674b9362": {
+    "source": "A Viber QR code opens a chat with your business, or invites people to your Viber community or channel, from a shop counter, a menu or a poster.",
+    "text": "Viber QR 코드는 매장 카운터, 메뉴, 포스터에서 내 비즈니스와의 채팅을 열거나 Viber 커뮤니티 또는 채널에 사람들을 초대해요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.intro.0"
+  },
+  "da02c8d4d928": {
+    "source": "For a chat, enter your Viber Business account's number and an optional first message; QRdx builds the viber.me link Viber gives business accounts. For a community or channel, paste its Invite URL from the app.",
+    "text": "채팅은 Viber Business 계정의 번호와 선택 사항인 첫 메시지를 입력하면, QRdx가 Viber에서 비즈니스 계정에 제공하는 viber.me 링크를 만들어 줘요. 커뮤니티나 채널은 앱에서 복사한 초대 URL을 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.intro.1"
+  },
+  "f261dd7a71b7": {
+    "source": "Choose a business chat, or a community or channel.",
+    "text": "비즈니스 채팅 또는 커뮤니티나 채널을 선택하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.0"
+  },
+  "86882b4b1434": {
+    "source": "Enter the business number with its country code, or paste the Invite URL.",
+    "text": "국가 번호를 포함한 비즈니스 번호를 입력하거나 초대 URL을 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.1"
+  },
+  "9c45559e6431": {
+    "source": "Scan the preview with Viber installed to check it opens.",
+    "text": "Viber가 설치된 기기로 미리보기를 스캔해서 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.2"
+  },
+  "9cb54423b2a8": {
+    "source": "The number is written in full international format, digits only, as Viber asks.",
+    "text": "번호는 Viber 요구에 따라 숫자만 사용한 전체 국제 형식으로 입력돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.payload.notes.0"
+  },
+  "f3530eff7c88": {
+    "source": "Invite URLs are kept exactly as Viber gives them.",
+    "text": "초대 URL은 Viber에서 받은 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.payload.notes.1"
+  },
+  "17a39bc9be1d": {
+    "source": "Can I make a chat code for a personal number?",
+    "text": "개인 번호로도 채팅 코드를 만들 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.0.question"
+  },
+  "9d314104cc35": {
+    "source": "Viber's chat links by number are for Viber Business accounts. For a personal number, share a community or channel, or use a WhatsApp or Telegram code.",
+    "text": "번호로 연결되는 Viber 채팅 링크는 Viber Business 계정용이에요. 개인 번호라면 커뮤니티나 채널을 공유하거나 WhatsApp 또는 Telegram 코드를 사용하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.0.answer"
+  },
+  "cf6610208dfd": {
+    "source": "Will the community link keep working?",
+    "text": "커뮤니티 링크는 계속 작동하나요?",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.1.question"
+  },
+  "2c8b4037a973": {
+    "source": "As long as the Invite URL does. If an admin resets the link in Viber, make a new code.",
+    "text": "초대 URL이 유효한 동안은 작동해요. 관리자가 Viber에서 링크를 재설정하면 새 코드를 만드세요.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.1.answer"
+  },
+  "08e60ec1c791": {
+    "source": "Open a KakaoTalk open chat or channel.",
+    "text": "카카오톡 오픈채팅이나 채널을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.summary"
+  },
+  "5f323e3b6819": {
+    "source": "Make a KakaoTalk QR code that opens your open chat room or Kakao Talk Channel. Paste the link from the app or enter your channel ID. Free.",
+    "text": "오픈채팅방이나 카카오톡 채널을 여는 카카오톡 QR 코드를 만드세요. 앱에서 복사한 링크를 붙여넣거나 채널 ID를 입력하면 돼요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.metaDescription"
+  },
+  "60fd2b87e617": {
+    "source": "A KakaoTalk QR code opens your open chat room, or your business's Kakao Talk Channel where people can add you and send a message.",
+    "text": "카카오톡 QR 코드는 오픈채팅방이나, 사람들이 친구로 추가하고 메시지를 보낼 수 있는 비즈니스 카카오톡 채널을 열어줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.intro.0"
+  },
+  "d9f5c057dd32": {
+    "source": "Paste the open chat link (open.kakao.com/o/…) or the channel link (pf.kakao.com/_…), or type the channel ID that starts with an underscore.",
+    "text": "오픈채팅 링크(open.kakao.com/o/…)나 채널 링크(pf.kakao.com/_…)를 붙여넣거나, 밑줄로 시작하는 채널 ID를 입력하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.intro.1"
+  },
+  "ad9a8bb30a65": {
+    "source": "Copy the open chat's share link, or your channel's link from the Kakao Talk Channel partner center.",
+    "text": "오픈채팅의 공유 링크나 카카오톡 채널 관리자센터의 채널 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.0"
+  },
+  "98bf05380163": {
+    "source": "Paste it here, or type the channel ID, like _AbCdEf.",
+    "text": "여기에 붙여넣거나 _AbCdEf 같은 채널 ID를 입력하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.1"
+  },
+  "e8aece3347c7": {
+    "source": "Scan the preview to check KakaoTalk opens.",
+    "text": "미리보기를 스캔해서 카카오톡이 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.2"
+  },
+  "7409dae6d535": {
+    "source": "A typed channel ID becomes its pf.kakao.com link.",
+    "text": "입력한 채널 ID는 pf.kakao.com 링크로 바뀌어요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.payload.notes.0"
+  },
+  "70374e959bec": {
+    "source": "Pasted links are kept as they are.",
+    "text": "붙여넣은 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.payload.notes.1"
+  },
+  "fa97fa556c79": {
+    "source": "Where is my channel ID?",
+    "text": "채널 ID는 어디에서 확인하나요?",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.0.question"
+  },
+  "ecf630ee7617": {
+    "source": "In the Kakao Talk Channel partner center, with your channel's details. It starts with an underscore.",
+    "text": "카카오톡 채널 관리자센터의 채널 상세 정보에서 확인할 수 있어요. 밑줄로 시작해요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.0.answer"
+  },
+  "2c28296169be": {
+    "source": "Can people join an open chat without the app?",
+    "text": "앱 없이도 오픈채팅에 참여할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.1.question"
+  },
+  "6d4a137b35bb": {
+    "source": "No. The link opens KakaoTalk, which people need to join the room.",
+    "text": "아니요. 링크는 카카오톡을 열어주며, 채팅방에 참여하려면 카카오톡이 필요해요.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.1.answer"
+  },
+  "bbaf8c78fa3e": {
+    "source": "Open a Zalo Official Account or group.",
+    "text": "Zalo 공식 계정이나 그룹을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.summary"
+  },
+  "d9d33227c0a4": {
+    "source": "Create a Zalo QR code for your Official Account or group. Paste the zalo.me link or enter the account's numeric ID. Free, no signup.",
+    "text": "공식 계정이나 그룹용 Zalo QR 코드를 만드세요. zalo.me 링크를 붙여넣거나 계정의 숫자 ID를 입력하면 돼요. 무료이며 가입이 필요 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.metaDescription"
+  },
+  "e723cc18a188": {
+    "source": "A Zalo QR code opens your business's Zalo Official Account, where people can follow you and send a message, or a Zalo group.",
+    "text": "Zalo QR 코드는 사람들이 팔로우하고 메시지를 보낼 수 있는 비즈니스 Zalo 공식 계정이나 Zalo 그룹을 열어줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.intro.0"
+  },
+  "fe519b5483ae": {
+    "source": "Paste the zalo.me link from your Official Account or group, or type the account's numeric ID, and QRdx writes the zalo.me link.",
+    "text": "공식 계정이나 그룹의 zalo.me 링크를 붙여넣거나 계정의 숫자 ID를 입력하면 QRdx가 zalo.me 링크를 만들어 드려요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.intro.1"
+  },
+  "a10894e355ef": {
+    "source": "Copy your Official Account's or group's zalo.me link.",
+    "text": "공식 계정이나 그룹의 zalo.me 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.0"
+  },
+  "30bfe2e7e37b": {
+    "source": "Paste it here, or type the account's ID.",
+    "text": "여기에 붙여넣거나 계정 ID를 입력하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.1"
+  },
+  "f7ea295b1e15": {
+    "source": "Scan the preview with Zalo installed to check it opens.",
+    "text": "Zalo가 설치된 기기로 미리보기를 스캔해서 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.2"
+  },
+  "71a718bd4a29": {
+    "source": "A typed numeric ID becomes its zalo.me link.",
+    "text": "입력한 숫자 ID는 zalo.me 링크로 바뀌어요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.payload.notes.0"
+  },
+  "e3a2a32fde7f": {
+    "source": "Custom names (zalo.me/yourname) and group links are kept as pasted.",
+    "text": "사용자 지정 이름(zalo.me/yourname)과 그룹 링크는 붙여넣은 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.payload.notes.1"
+  },
+  "f582219ddebb": {
+    "source": "Can group links stop working?",
+    "text": "그룹 링크가 작동하지 않을 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.0.question"
+  },
+  "5ed01d72a918": {
+    "source": "Yes. A group admin can turn off or reset the join link, and then the code needs the new one.",
+    "text": "네. 그룹 관리자가 참여 링크를 끄거나 재설정할 수 있으며, 그러면 코드에 새 링크를 넣어야 해요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.0.answer"
+  },
+  "732b44090081": {
+    "source": "Can I use a custom name instead of the ID?",
+    "text": "ID 대신 사용자 지정 이름을 쓸 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.1.question"
+  },
+  "fa714eebb972": {
+    "source": "Yes, once Zalo approves a custom link for your Official Account. Paste the zalo.me link with the name.",
+    "text": "네, Zalo가 공식 계정의 사용자 지정 링크를 승인한 후에 가능해요. 이름이 포함된 zalo.me 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.1.answer"
+  },
+  "8292f1d90083": {
+    "source": "Start a FaceTime call, or join a FaceTime link.",
+    "text": "FaceTime 통화를 시작하거나 FaceTime 링크로 참여해요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.summary"
+  },
+  "f14db888ae14": {
+    "source": "Make a FaceTime QR code that calls a phone number or Apple Account email, or opens a FaceTime link anyone can join. Video or audio. Free.",
+    "text": "전화번호나 Apple 계정 이메일로 전화하거나, 누구나 참여할 수 있는 FaceTime 링크를 여는 FaceTime QR 코드를 만들어 보세요. 영상 또는 음성 통화를 지원해요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.metaDescription"
+  },
+  "2dbda160707d": {
+    "source": "A FaceTime QR code starts a FaceTime call to a phone number or the email of an Apple Account. It works on iPhone, iPad and Mac; other phones can't open it.",
+    "text": "FaceTime QR 코드는 전화번호나 Apple 계정의 이메일로 FaceTime 통화를 시작해요. iPhone, iPad, Mac에서 작동하며, 다른 휴대폰에서는 열 수 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.intro.0"
+  },
+  "f6c8e3e5ded7": {
+    "source": "For a call anyone can join, including people on Android and Windows in their browser, make a link in FaceTime with Create Link and paste it instead.",
+    "text": "Android와 Windows 사용자도 브라우저에서 참여할 수 있는 통화를 원한다면, FaceTime에서 링크 생성으로 링크를 만들어 대신 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.intro.1"
+  },
+  "8b5d591b248b": {
+    "source": "Choose a call to a number or email, or a FaceTime link.",
+    "text": "번호나 이메일로 거는 통화 또는 FaceTime 링크를 선택하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.0"
+  },
+  "09fd479c886e": {
+    "source": "Enter the number or email (and turn on audio only if you like), or paste the link.",
+    "text": "번호나 이메일을 입력하거나(원하면 음성 전용을 켜세요) 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.1"
+  },
+  "867b42180a2d": {
+    "source": "Scan the preview on an iPhone to check FaceTime opens.",
+    "text": "iPhone에서 미리보기를 스캔해 FaceTime이 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.2"
+  },
+  "d2ad4d5aab1a": {
+    "source": "facetime: and facetime-audio: are Apple's URL schemes for FaceTime calls; Apple devices ask before they call.",
+    "text": "facetime:와 facetime-audio:는 FaceTime 통화를 위한 Apple의 URL 스킴이에요. Apple 기기는 전화를 걸기 전에 먼저 확인을 물어봐요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.payload.notes.0"
+  },
+  "2e5ce83a25c2": {
+    "source": "FaceTime links can't be built from a number: make one in the FaceTime app.",
+    "text": "FaceTime 링크는 번호로 만들 수 없어요. FaceTime 앱에서 직접 만드세요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.payload.notes.1"
+  },
+  "b8e808fecf0d": {
+    "source": "Can Android phones scan it?",
+    "text": "Android 휴대폰에서도 스캔할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.0.question"
+  },
+  "d096757b3d02": {
+    "source": "A call code only works on Apple devices. A FaceTime link opens on Android and Windows too, where people join from Chrome or Edge.",
+    "text": "통화 코드는 Apple 기기에서만 작동해요. FaceTime 링크는 Android와 Windows에서도 열리며, Chrome이나 Edge에서 참여할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.0.answer"
+  },
+  "be6a27e5e7a2": {
+    "source": "Does the code call right away?",
+    "text": "코드를 스캔하면 바로 전화가 걸리나요?",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.1.question"
+  },
+  "900c1860bf08": {
+    "source": "No. The device shows who it's about to call and waits for a tap.",
+    "text": "아니요. 기기에 전화를 걸 대상이 표시되고, 탭할 때까지 기다려요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.1.answer"
+  },
+  "2a727bfe6e05": {
+    "source": "Which devices open a FaceTime code",
+    "text": "FaceTime 코드를 열 수 있는 기기",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.title"
+  },
+  "a442097fd994": {
+    "source": "facetime: and facetime-audio: links open FaceTime on iPhone, iPad and Mac. Android phones and Windows PCs have no FaceTime app, so they can't use them; Apple documents the audio scheme for iPhone and iPad.",
+    "text": "facetime: 및 facetime-audio: 링크는 iPhone, iPad, Mac에서 FaceTime을 열어요. Android 휴대폰과 Windows PC에는 FaceTime 앱이 없어서 사용할 수 없어요. Apple은 음성 스킴을 iPhone과 iPad용으로 안내하고 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.paragraphs.0"
+  },
+  "3e3f96efb8a8": {
+    "source": "A FaceTime link (facetime.apple.com/join…) is made in the FaceTime app with Create Link. People on Apple devices join in FaceTime, and others join from a current Chrome or Edge browser, but they can't start calls. FaceTime links aren't available in mainland China.",
+    "text": "FaceTime 링크(facetime.apple.com/join…)는 FaceTime 앱에서 링크 생성으로 만들어요. Apple 기기 사용자는 FaceTime에서 참여하고, 그 외 사용자는 최신 Chrome 또는 Edge 브라우저에서 참여할 수 있지만 통화를 시작할 수는 없어요. FaceTime 링크는 중국 본토에서는 사용할 수 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.paragraphs.1"
+  },
+  "2c015e053f5e": {
+    "source": "Join a Teams meeting or start a Teams chat.",
+    "text": "Teams 회의에 참여하거나 Teams 채팅을 시작해요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.summary"
+  },
+  "6b41a98dac03": {
+    "source": "Create a Microsoft Teams QR code that joins a meeting from its link, or starts a chat with people by work email. For rooms and slides. Free.",
+    "text": "링크로 회의에 참여하거나 업무용 이메일로 채팅을 시작하는 Microsoft Teams QR 코드를 만들어 보세요. 회의실과 슬라이드에 활용할 수 있어요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.metaDescription"
+  },
+  "33bc247b1744": {
+    "source": "A Microsoft Teams QR code opens a meeting, so people join from a room sign, a slide or a printed agenda, or starts a chat with colleagues by their work email.",
+    "text": "Microsoft Teams QR 코드는 회의를 열어 회의실 표지판, 슬라이드, 인쇄된 안건지에서 바로 참여하게 하거나, 업무용 이메일로 동료와 채팅을 시작해요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.intro.0"
+  },
+  "a78ea8ed2e5d": {
+    "source": "Paste the meeting's join link from the invite, or enter one or more work or school email addresses and an optional message. QRdx builds the chat link from Microsoft's deep link format.",
+    "text": "초대장에 있는 회의 참여 링크를 붙여넣거나, 업무용 또는 학교 이메일 주소를 하나 이상 입력하고 원하면 메시지를 추가하세요. QRdx는 Microsoft의 딥링크 형식으로 채팅 링크를 만들어요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.intro.1"
+  },
+  "cf863d521a7b": {
+    "source": "Choose a meeting or a chat.",
+    "text": "회의 또는 채팅을 선택하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.0"
+  },
+  "1edecee263b9": {
+    "source": "Paste the join link, or enter the email addresses and a message.",
+    "text": "참여 링크를 붙여넣거나 이메일 주소와 메시지를 입력하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.1"
+  },
+  "553e5ddd14fc": {
+    "source": "Scan the preview to check Teams opens.",
+    "text": "미리보기를 스캔해 Teams가 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.2"
+  },
+  "667b8ef3c8b2": {
+    "source": "Chat links take work or school accounts, separated by commas.",
+    "text": "채팅 링크에는 업무용 또는 학교 계정을 쉼표로 구분해 넣어요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.payload.notes.0"
+  },
+  "719788589f30": {
+    "source": "Meeting links are kept as pasted, with their passcode.",
+    "text": "회의 링크는 암호를 포함해 붙여넣은 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.payload.notes.1"
+  },
+  "db768bd7023b": {
+    "source": "Do meeting links expire?",
+    "text": "회의 링크는 만료되나요?",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.0.question"
+  },
+  "7448b7eadcd3": {
+    "source": "Newer Teams meeting links can expire some time after the meeting. Use a recurring or scheduled meeting for a printed code, and test it before an event.",
+    "text": "최신 Teams 회의 링크는 회의가 끝나고 일정 시간이 지나면 만료될 수 있어요. 인쇄용 코드에는 반복 회의나 예약된 회의를 사용하고, 행사 전에 꼭 테스트하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.0.answer"
+  },
+  "f426990a2dc2": {
+    "source": "Can guests outside my organization join?",
+    "text": "조직 외부의 게스트도 참여할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.1.question"
+  },
+  "fd8aff9dbbab": {
+    "source": "They can join meetings that allow guests, from the Teams app or the browser. Chats need a work or school account.",
+    "text": "게스트를 허용하는 회의에는 Teams 앱이나 브라우저로 참여할 수 있어요. 채팅에는 업무용 또는 학교 계정이 필요해요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.1.answer"
+  },
+  "fc571860e0e9": {
+    "source": "Join a Webex meeting with one scan.",
+    "text": "스캔 한 번으로 Webex 회의에 참여해요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.summary"
+  },
+  "8d5962a2397f": {
+    "source": "Make a Webex QR code from your Personal Room or meeting link. People join from room signs, slides and agendas. Free, no signup.",
+    "text": "개인 룸이나 회의 링크로 Webex QR 코드를 만들어 보세요. 회의실 표지판, 슬라이드, 안건지에서 바로 참여할 수 있어요. 무료이며 가입이 필요 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.metaDescription"
+  },
+  "970296a4f26b": {
+    "source": "A Webex QR code opens a meeting in Webex, so people join from a slide, a room sign or a printed agenda without typing a meeting number.",
+    "text": "Webex QR 코드는 Webex에서 회의를 열어 주기 때문에, 회의 번호를 입력하지 않아도 슬라이드, 회의실 표지판, 인쇄된 안건지에서 바로 참여할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.intro.0"
+  },
+  "9f5f476c7a50": {
+    "source": "Paste your Personal Room link (yoursite.webex.com/meet/yourname) or the link in a meeting invite. QRdx keeps it as it is.",
+    "text": "개인 룸 링크(yoursite.webex.com/meet/yourname)나 회의 초대에 있는 링크를 붙여넣으세요. QRdx는 링크를 그대로 유지해요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.intro.1"
+  },
+  "0e1b9c3d49d6": {
+    "source": "Copy your Personal Room link or the meeting's link.",
+    "text": "개인 룸 링크 또는 회의 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.steps.0"
+  },
+  "aed1448d9c9c": {
+    "source": "Paste it here.",
+    "text": "여기에 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.steps.1"
+  },
+  "a37041679b12": {
+    "source": "A Personal Room link stays the same for every meeting you host there.",
+    "text": "개인 룸 링크는 그곳에서 진행하는 모든 회의에서 똑같이 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.payload.notes.0"
+  },
+  "86b045721383": {
+    "source": "Invite links for scheduled meetings can differ per person, so use a Personal Room for a printed code.",
+    "text": "예약된 회의의 초대 링크는 사람마다 다를 수 있으니, 인쇄용 코드에는 개인 룸을 사용하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.payload.notes.1"
+  },
+  "511a7b7819b7": {
+    "source": "Which link is best for a room sign?",
+    "text": "회의실 표지판에는 어떤 링크가 가장 좋나요?",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.0.question"
+  },
+  "b2ee0ed99b3a": {
+    "source": "Your Personal Room link. It never changes, so one code works for every meeting you hold there.",
+    "text": "개인 룸 링크예요. 링크가 바뀌지 않아서 코드 하나로 그곳에서 여는 모든 회의에 참여할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.0.answer"
+  },
+  "90cbdbd3d43c": {
+    "source": "Do people need the Webex app?",
+    "text": "Webex 앱이 꼭 있어야 하나요?",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.1.question"
+  },
+  "194c7a004086": {
+    "source": "No. The link offers to open the app, or to join from the browser.",
+    "text": "아니요. 링크를 열면 앱으로 열거나 브라우저에서 참여하는 방법을 선택할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.1.answer"
+  },
+  "3ad9cf5ff75c": {
+    "source": "Let people book time with you on Calendly.",
+    "text": "Calendly에서 나와의 일정을 예약하게 해 보세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.summary"
+  },
+  "c305eb8fcfea": {
+    "source": "Create a Calendly QR code for your scheduling page or one event type. People scan to book a meeting from cards, signs and slides. Free.",
+    "text": "예약 페이지나 특정 이벤트 유형으로 Calendly QR 코드를 만들어 보세요. 명함, 표지판, 슬라이드에서 스캔해 바로 미팅을 예약할 수 있어요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.metaDescription"
+  },
+  "d5239d9a4320": {
+    "source": "A Calendly QR code opens your scheduling page, or one event type, so people book a call or an appointment from a business card, a sign or a slide.",
+    "text": "Calendly QR 코드는 예약 페이지나 특정 이벤트 유형을 열어 주어, 명함, 표지판, 슬라이드에서 바로 통화나 약속을 예약할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.intro.0"
+  },
+  "0d730891775e": {
+    "source": "Type your Calendly name, like yourname or yourname/30min, or paste any calendly.com booking link.",
+    "text": "yourname이나 yourname/30min처럼 Calendly 이름을 입력하거나, calendly.com 예약 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.intro.1"
+  },
+  "e4fe150cc04b": {
+    "source": "Enter your Calendly name, or paste a booking link.",
+    "text": "Calendly 이름을 입력하거나 예약 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.steps.0"
+  },
+  "832fedbb39d5": {
+    "source": "Scan the preview to check your booking page opens.",
+    "text": "미리보기를 스캔해 예약 페이지가 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.steps.1"
+  },
+  "935adb8be11d": {
+    "source": "Pasted links, including shared event links (calendly.com/d/…), are kept as they are.",
+    "text": "공유 이벤트 링크(calendly.com/d/…)를 포함해 붙여넣은 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.payload.notes.0"
+  },
+  "9226c2a03c6c": {
+    "source": "If you rename your Calendly link, the old one stops working, so print a new code.",
+    "text": "Calendly 링크 이름을 바꾸면 이전 링크는 작동하지 않으니, 새 코드를 인쇄하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.payload.notes.1"
+  },
+  "36d777c1bf79": {
+    "source": "Can the code open one meeting type?",
+    "text": "코드로 특정 미팅 유형만 열 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.0.question"
+  },
+  "5b42120ea5af": {
+    "source": "Yes. Add the event's part after your name, like yourname/30min, or paste the event's own link.",
+    "text": "네. yourname/30min처럼 이름 뒤에 이벤트 부분을 추가하거나, 이벤트 자체 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.0.answer"
+  },
+  "606111f3c11c": {
+    "source": "Can I change the booking page later?",
+    "text": "나중에 예약 페이지를 바꿀 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.1.question"
+  },
+  "38b3a1dd98ef": {
+    "source": "The event settings, yes. The link itself is in the code, so make the code dynamic if the link might change.",
+    "text": "이벤트 설정은 바꿀 수 있어요. 하지만 링크 자체는 코드에 들어 있으니, 링크가 바뀔 수 있다면 동적 QR 코드로 만드세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.1.answer"
+  },
+  "506010a11195": {
+    "source": "Invite students to a Google Classroom class.",
+    "text": "Google Classroom 수업에 학생을 초대해요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.summary"
+  },
+  "45245778966b": {
+    "source": "Make a Google Classroom QR code from your class invite link. Students scan to join from a slide, a handout or the classroom door. Free.",
+    "text": "수업 초대 링크로 Google Classroom QR 코드를 만들어 보세요. 학생들은 슬라이드, 유인물, 교실 문에 붙은 코드를 스캔해 바로 참여할 수 있어요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.metaDescription"
+  },
+  "ef3fce3d5ae5": {
+    "source": "A Google Classroom QR code opens your class's invite link, so students join from a slide on the first day, a handout or a sign on the door.",
+    "text": "Google Classroom QR 코드는 수업 초대 링크를 열어 줘요. 학생들은 첫날 슬라이드나 유인물, 교실 문에 붙인 안내판으로 수업에 참여할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.intro.0"
+  },
+  "6cad99945229": {
+    "source": "Copy the class invite link in Classroom and paste it here. Students still sign in with the Google account your school allows.",
+    "text": "Classroom에서 수업 초대 링크를 복사해 여기에 붙여넣으세요. 학생들은 학교에서 허용한 Google 계정으로 로그인해야 해요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.intro.1"
+  },
+  "150a91d20446": {
+    "source": "In your class, use Copy invite link.",
+    "text": "수업에서 초대 링크 복사를 선택하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.0"
+  },
+  "39dcead0fab2": {
+    "source": "Scan the preview to check the class opens.",
+    "text": "미리보기를 스캔해 수업이 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.2"
+  },
+  "e9292f8cee21": {
+    "source": "Download the code, as SVG for posters.",
+    "text": "코드를 다운로드하세요. 포스터에는 SVG를 추천해요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.3"
+  },
+  "904b2dce77d6": {
+    "source": "QRdx keeps the invite link exactly as Classroom gives it.",
+    "text": "QRdx는 Classroom이 제공한 초대 링크를 그대로 유지해요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.payload.notes.0"
+  },
+  "ba62a3800e75": {
+    "source": "Turning the class code off or resetting it in Classroom stops the old link.",
+    "text": "Classroom에서 수업 코드를 끄거나 재설정하면 이전 링크는 작동하지 않아요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.payload.notes.1"
+  },
+  "9cdae0d6136c": {
+    "source": "Can students join with a personal Google account?",
+    "text": "학생이 개인 Google 계정으로 참여할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.0.question"
+  },
+  "85fdee00db23": {
+    "source": "That depends on your school's settings. Classes in a school's Google Workspace often allow only school accounts.",
+    "text": "학교 설정에 따라 달라요. 학교의 Google Workspace에 속한 수업은 학교 계정만 허용하는 경우가 많아요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.0.answer"
+  },
+  "6824f71f44d4": {
+    "source": "Can the code hold just the class code?",
+    "text": "코드에 수업 코드만 담을 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.1.question"
+  },
+  "beda22897f42": {
+    "source": "Google doesn't publish a link for a class code alone, so the code holds the invite link. Students can still type the class code in Classroom.",
+    "text": "Google은 수업 코드만으로 된 링크를 제공하지 않아서 코드에는 초대 링크가 담겨요. 학생들은 Classroom에서 수업 코드를 직접 입력해 참여할 수도 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.1.answer"
+  },
+  "2766a0f43e9a": {
+    "source": "Open your listing on Tripadvisor.",
+    "text": "Tripadvisor의 내 업체 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.summary"
+  },
+  "188388f0e945": {
+    "source": "Create a Tripadvisor QR code that opens your hotel, restaurant or attraction listing, where guests can read and write reviews. Free.",
+    "text": "호텔, 레스토랑, 관광 명소의 Tripadvisor 페이지를 여는 QR 코드를 만들어 보세요. 방문객이 리뷰를 읽고 작성할 수 있어요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.metaDescription"
+  },
+  "ccb9fa61b9b0": {
+    "source": "A Tripadvisor QR code opens your hotel's, restaurant's or attraction's listing, where guests can read reviews and write one.",
+    "text": "Tripadvisor QR 코드는 호텔, 레스토랑, 관광 명소의 페이지를 열어 줘요. 방문객은 리뷰를 읽고 직접 작성할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.intro.0"
+  },
+  "34eb9dea3f27": {
+    "source": "Open your listing on Tripadvisor, copy its address and paste it here. Links on Tripadvisor's country sites work too.",
+    "text": "Tripadvisor에서 내 업체 페이지를 열고 주소를 복사해 여기에 붙여넣으세요. Tripadvisor의 국가별 사이트 링크도 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.intro.1"
+  },
+  "9a03f41cc634": {
+    "source": "Open your listing on Tripadvisor and copy its address.",
+    "text": "Tripadvisor에서 내 업체 페이지를 열고 주소를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.steps.0"
+  },
+  "7642f384e14d": {
+    "source": "Scan the preview to check the listing opens.",
+    "text": "미리보기를 스캔해 업체 페이지가 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.steps.2"
+  },
+  "7fe7e1994114": {
+    "source": "QRdx keeps the listing link as pasted.",
+    "text": "QRdx는 붙여넣은 업체 페이지 링크를 그대로 유지해요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.payload.notes.0"
+  },
+  "bc0427a04ffd": {
+    "source": "Tripadvisor also offers free review tools for businesses in its Management Center.",
+    "text": "Tripadvisor는 Management Center에서 업체를 위한 무료 리뷰 도구도 제공해요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.payload.notes.1"
+  },
+  "8b7bd9aaab58": {
+    "source": "Can I offer a discount for a review?",
+    "text": "리뷰를 써 주면 할인을 제공해도 되나요?",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.0.question"
+  },
+  "22259e73a63b": {
+    "source": "No. Tripadvisor doesn't allow incentives for reviews. Ask guests to share their experience, good or bad.",
+    "text": "안 돼요. Tripadvisor는 리뷰에 대한 대가 제공을 허용하지 않아요. 좋은 경험이든 나쁜 경험이든 솔직하게 공유해 달라고 요청하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.0.answer"
+  },
+  "5dc7af520a6f": {
+    "source": "Does it open the review form?",
+    "text": "리뷰 작성 양식이 바로 열리나요?",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.1.question"
+  },
+  "1efb7723a52c": {
+    "source": "It opens your listing, which has a button to write a review.",
+    "text": "업체 페이지가 열리고, 그곳에 리뷰 작성 버튼이 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.1.answer"
+  },
+  "cfded6153f62": {
+    "source": "Ask customers for a Trustpilot review.",
+    "text": "고객에게 Trustpilot 리뷰를 요청하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.summary"
+  },
+  "f4fd64bf44c1": {
+    "source": "Make a Trustpilot QR code that opens your write-a-review page, or your reviews. Enter your website's domain. For receipts and packaging. Free.",
+    "text": "리뷰 작성 페이지나 리뷰 목록을 여는 Trustpilot QR 코드를 만드세요. 웹사이트 도메인만 입력하면 돼요. 영수증과 포장에 쓰기 좋아요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.metaDescription"
+  },
+  "64ece527dcfd": {
+    "source": "A Trustpilot QR code opens the page where customers write a review of your business, or your Trustpilot reviews page. Print it on receipts, packing slips and counters.",
+    "text": "Trustpilot QR 코드는 고객이 비즈니스에 대한 리뷰를 작성하는 페이지 또는 Trustpilot 리뷰 페이지를 열어 줍니다. 영수증, 포장 명세서, 카운터에 인쇄해 보세요.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.intro.0"
+  },
+  "71d681d2ba01": {
+    "source": "Enter the website domain your Trustpilot page is for, like example.com, or paste your Trustpilot link. QRdx builds Trustpilot's evaluate link for reviews.",
+    "text": "Trustpilot 페이지에 해당하는 웹사이트 도메인(예: example.com)을 입력하거나 Trustpilot 링크를 붙여 넣으세요. 리뷰 보기용으로는 QRdx가 Trustpilot의 evaluate 링크를 만들어 드립니다.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.intro.1"
+  },
+  "4fbb0347c564": {
+    "source": "Enter your website's domain.",
+    "text": "웹사이트 도메인을 입력하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.0"
+  },
+  "bcf190bd1a7b": {
+    "source": "Keep 'Open the review form' on to collect reviews, or turn it off to show your reviews.",
+    "text": "리뷰를 모으려면 '리뷰 작성 양식 열기'를 켜 두고, 기존 리뷰를 보여 주려면 끄세요.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.1"
+  },
+  "86a39b62542f": {
+    "source": "Scan the preview to check your page opens.",
+    "text": "미리보기를 스캔해서 페이지가 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.2"
+  },
+  "236945419cff": {
+    "source": "evaluate opens the review form; review opens your reviews page.",
+    "text": "evaluate는 리뷰 작성 양식을, review는 리뷰 페이지를 엽니다.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.payload.notes.0"
+  },
+  "235a3ece1b74": {
+    "source": "www. is dropped from the domain, as Trustpilot names pages.",
+    "text": "Trustpilot의 페이지 이름 규칙에 맞춰 도메인에서 www.는 제외됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.payload.notes.1"
+  },
+  "e1d0fabfb885": {
+    "source": "Do customers need an account?",
+    "text": "고객에게 계정이 필요한가요?",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.0.question"
+  },
+  "bbb61bcd8385": {
+    "source": "Trustpilot asks reviewers to sign in or sign up before they post.",
+    "text": "Trustpilot은 리뷰를 작성하기 전에 로그인하거나 가입하도록 요구해요.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.0.answer"
+  },
+  "c8ef04c590f4": {
+    "source": "What if my business isn't on Trustpilot yet?",
+    "text": "비즈니스가 아직 Trustpilot에 없다면 어떻게 하나요?",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.1.question"
+  },
+  "df43d70c1b6a": {
+    "source": "Claim your page on Trustpilot first, so the domain has a page to open.",
+    "text": "도메인이 열 수 있는 페이지가 있도록 먼저 Trustpilot에서 페이지를 등록하고 소유권을 인증하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.1.answer"
+  },
+  "0a627e729c0f": {
+    "source": "Open your business page on Yelp.",
+    "text": "Yelp의 비즈니스 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.summary"
+  },
+  "cf8204c0eebc": {
+    "source": "Create a Yelp QR code that opens your business page, with your hours, photos and reviews. For windows, menus and counters. Free.",
+    "text": "영업시간, 사진, 리뷰가 담긴 비즈니스 페이지를 여는 Yelp QR 코드를 만드세요. 창문, 메뉴, 카운터에 쓰기 좋아요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.metaDescription"
+  },
+  "5d70018ada5a": {
+    "source": "A Yelp QR code opens your business page on Yelp, with your hours, photos and reviews, from a window sticker, a menu or a counter card.",
+    "text": "Yelp QR 코드는 창문 스티커, 메뉴, 카운터 카드에서 영업시간, 사진, 리뷰가 있는 Yelp 비즈니스 페이지를 열어 줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.intro.0"
+  },
+  "9d1de0c48737": {
+    "source": "Paste your page's link (yelp.com/biz/…). Yelp asks businesses not to ask for reviews, so the code opens your page and leaves the rest to your customers.",
+    "text": "페이지 링크(yelp.com/biz/…)를 붙여 넣으세요. Yelp는 비즈니스가 리뷰를 요청하지 않도록 안내하므로, 코드는 페이지만 열고 나머지는 고객에게 맡깁니다.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.intro.1"
+  },
+  "38b97420cca7": {
+    "source": "Open your business page on Yelp and copy its address.",
+    "text": "Yelp에서 비즈니스 페이지를 열고 주소를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.steps.0"
+  },
+  "b38f2fa6c40b": {
+    "source": "Links on Yelp's country sites (yelp.ca, yelp.co.uk…) work too.",
+    "text": "Yelp 국가별 사이트(yelp.ca, yelp.co.uk 등)의 링크도 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.payload.notes.0"
+  },
+  "8fa2055787f2": {
+    "source": "QRdx keeps the link as pasted.",
+    "text": "QRdx는 붙여 넣은 링크를 그대로 유지해요.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.payload.notes.1"
+  },
+  "351c8ccc7edc": {
+    "source": "Can I use the code to ask for reviews?",
+    "text": "코드로 리뷰를 요청해도 되나요?",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.0.question"
+  },
+  "93e7a2cf5e48": {
+    "source": "Yelp's guidelines ask businesses not to ask anyone for reviews. Use wording like 'Find us on Yelp' next to the code.",
+    "text": "Yelp 가이드라인은 비즈니스가 누구에게도 리뷰를 요청하지 않도록 안내해요. 코드 옆에는 'Yelp에서 찾아보세요' 같은 문구를 사용하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.0.answer"
+  },
+  "97528cecac2c": {
+    "source": "Does it open the Yelp app?",
+    "text": "Yelp 앱이 열리나요?",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.1.question"
+  },
+  "2fa0b5380152": {
+    "source": "Yelp links open the app when it's installed, or the page in the browser.",
+    "text": "Yelp 링크는 앱이 설치되어 있으면 앱에서 열리고, 그렇지 않으면 브라우저에서 페이지가 열려요.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.1.answer"
+  },
+  "63e740e99848": {
+    "source": "Yelp and review requests",
+    "text": "Yelp와 리뷰 요청",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.title"
+  },
+  "ad213b8a5ead": {
+    "source": "Yelp's policy is 'Don't ask for reviews': reviews it thinks were solicited can be filtered, and a business that pushes for them can get a notice on its page. That's why this code opens your business page, not a review form.",
+    "text": "Yelp의 정책은 '리뷰를 요청하지 마세요'입니다. 요청으로 받은 것으로 판단되는 리뷰는 필터링될 수 있고, 리뷰를 강요하는 비즈니스는 페이지에 공지가 표시될 수 있어요. 그래서 이 코드는 리뷰 작성 양식이 아니라 비즈니스 페이지를 엽니다.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.paragraphs.0"
+  },
+  "bac903724ae6": {
+    "source": "A sign that says 'Find us on Yelp', with Yelp's own branding guidelines, is fine.",
+    "text": "Yelp 자체 브랜드 가이드라인을 따르면서 'Yelp에서 찾아보세요'라고 적은 표지판은 괜찮습니다.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.paragraphs.1"
+  },
+  "d4a359d3ab59": {
+    "source": "Open an Airbnb listing or experience.",
+    "text": "Airbnb 숙소나 체험을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.summary"
+  },
+  "cc27bec817bc": {
+    "source": "Make an Airbnb QR code that opens your listing or experience. For welcome books, flyers and repeat guests. Paste the link. Free.",
+    "text": "숙소나 체험을 여는 Airbnb QR 코드를 만들어 보세요. 웰컴 북, 전단지, 재방문 게스트에게 알맞아요. 링크만 붙여 넣으면 돼요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.metaDescription"
+  },
+  "46f05a7e3512": {
+    "source": "An Airbnb QR code opens your listing or experience, so guests can book again from your welcome book, a fridge magnet or a flyer.",
+    "text": "Airbnb QR 코드는 숙소나 체험 페이지를 열어 줘요. 게스트가 웰컴 북, 냉장고 자석, 전단지에서 바로 다시 예약할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.intro.0"
+  },
+  "fdc0f105097e": {
+    "source": "Use Share on the listing and copy the link, or copy its address (airbnb.com/rooms/…), and paste it here.",
+    "text": "숙소 페이지에서 공유를 눌러 링크를 복사하거나 주소(airbnb.com/rooms/…)를 복사해서 여기에 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.intro.1"
+  },
+  "c6e324dfc8ac": {
+    "source": "Copy your listing's link from Airbnb.",
+    "text": "Airbnb에서 숙소 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.steps.0"
+  },
+  "d0f5c58096ea": {
+    "source": "Share links from the Airbnb app (abnb.me) and Airbnb's country sites work too.",
+    "text": "Airbnb 앱의 공유 링크(abnb.me)와 Airbnb 국가별 사이트 링크도 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.payload.notes.0"
+  },
+  "735286a197bc": {
+    "source": "Does it open the Airbnb app?",
+    "text": "Airbnb 앱이 열리나요?",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.0.question"
+  },
+  "12b0799809ec": {
+    "source": "Airbnb links open the app when it's installed, or the listing in the browser.",
+    "text": "Airbnb 링크는 앱이 설치되어 있으면 앱에서 열리고, 그렇지 않으면 브라우저에서 숙소 페이지가 열려요.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.0.answer"
+  },
+  "cc77753b3a5b": {
+    "source": "Can I link the Wi-Fi or house rules too?",
+    "text": "Wi-Fi나 이용 수칙도 함께 연결할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.1.question"
+  },
+  "c026fdc284bb": {
+    "source": "Use a separate Wi-Fi code for the network, and a hosted page for house rules you may want to change.",
+    "text": "네트워크는 별도의 Wi-Fi 코드를 사용하고, 바뀔 수 있는 이용 수칙은 호스팅 페이지를 사용하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.1.answer"
+  },
+  "643c4e09d6dd": {
+    "source": "Open your property's page on Booking.com.",
+    "text": "Booking.com의 내 숙소 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.summary"
+  },
+  "f355b03e2485": {
+    "source": "Create a Booking.com QR code that opens your hotel's or rental's property page. For flyers, front desks and partners. Free, no signup.",
+    "text": "호텔이나 렌탈 숙소의 Booking.com 숙소 페이지를 여는 QR 코드를 만들어 보세요. 전단지, 프런트 데스크, 파트너용으로 좋아요. 무료이며 가입이 필요 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.metaDescription"
+  },
+  "f560cf60fdbd": {
+    "source": "A Booking.com QR code opens your hotel's or rental's property page, with rooms, prices and guest reviews.",
+    "text": "Booking.com QR 코드는 호텔이나 렌탈 숙소의 페이지를 열어 줘요. 객실, 가격, 게스트 후기를 볼 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.intro.0"
+  },
+  "77ca29fe35a0": {
+    "source": "Open your property on Booking.com, copy its address (booking.com/hotel/…) and paste it here.",
+    "text": "Booking.com에서 내 숙소를 열고 주소(booking.com/hotel/…)를 복사해서 여기에 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.intro.1"
+  },
+  "c87cf5f1e895": {
+    "source": "Copy your property page's address from Booking.com.",
+    "text": "Booking.com에서 내 숙소 페이지 주소를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.steps.0"
+  },
+  "9786991c4c7f": {
+    "source": "Scan the preview to check the page opens.",
+    "text": "미리보기를 스캔해서 페이지가 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.steps.2"
+  },
+  "542898e0f90a": {
+    "source": "Search and date parameters in a pasted link are kept, so remove them for a code that always shows today's prices.",
+    "text": "붙여 넣은 링크의 검색 및 날짜 파라미터는 그대로 유지돼요. 항상 당일 가격이 보이는 코드를 원하면 삭제하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.payload.notes.0"
+  },
+  "266685ad6300": {
+    "source": "Booking.com share links work too.",
+    "text": "Booking.com 공유 링크도 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.payload.notes.1"
+  },
+  "2edc5ad83e08": {
+    "source": "Can guests leave a review from the code?",
+    "text": "게스트가 코드에서 후기를 남길 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.0.question"
+  },
+  "f19c6cbdff57": {
+    "source": "Booking.com collects reviews only from guests who booked through it, by email after the stay.",
+    "text": "Booking.com은 Booking.com으로 예약한 게스트에게만 숙박 후 이메일로 후기를 받아요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.0.answer"
+  },
+  "1a011de41155": {
+    "source": "Does it open the Booking.com app?",
+    "text": "Booking.com 앱이 열리나요?",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.1.question"
+  },
+  "887f4407e5da": {
+    "source": "When it's installed, usually; otherwise the page opens in the browser.",
+    "text": "앱이 설치되어 있으면 대개 앱이 열리고, 그렇지 않으면 브라우저에서 페이지가 열려요.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.1.answer"
+  },
+  "dce24b80ec7d": {
+    "source": "Open a VK profile, community or group.",
+    "text": "VK 프로필, 커뮤니티, 그룹을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.summary"
+  },
+  "6b33a84cb434": {
+    "source": "Make a VK QR code that opens your profile, community or group on vk.com. Paste the link. For posters, packaging and events. Free.",
+    "text": "vk.com에서 내 프로필, 커뮤니티, 그룹을 여는 VK QR 코드를 만들어 보세요. 링크를 붙여넣기만 하면 돼요. 포스터, 포장, 행사에 쓰기 좋아요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.metaDescription"
+  },
+  "5349947e5da2": {
+    "source": "A VK QR code opens your profile, community or group, so people can follow you from a poster, a shop window or a product box.",
+    "text": "VK QR 코드는 내 프로필, 커뮤니티, 그룹을 열어 주어서 포스터, 매장 쇼윈도, 제품 상자에서 바로 팔로우할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.intro.0"
+  },
+  "72653a80e11e": {
+    "source": "Copy the address of your page on vk.com, or use Share in the VK app, and paste it here.",
+    "text": "vk.com에서 내 페이지 주소를 복사하거나 VK 앱의 공유 기능을 사용해 여기에 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.intro.1"
+  },
+  "2fb6c58382f4": {
+    "source": "Copy your page's link from VK.",
+    "text": "VK에서 내 페이지 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.steps.0"
+  },
+  "ca9b805d0cf3": {
+    "source": "QRdx keeps the link as pasted; vk.ru links work too.",
+    "text": "QRdx는 붙여넣은 링크를 그대로 유지해요. vk.ru 링크도 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.payload.notes.0"
+  },
+  "0544ecb41073": {
+    "source": "A link with your numeric ID (vk.com/id…) stays the same if you change your page's short name.",
+    "text": "숫자 ID가 들어간 링크(vk.com/id…)는 페이지의 짧은 이름을 바꿔도 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.payload.notes.1"
+  },
+  "e976b523d66c": {
+    "source": "Does it open the VK app?",
+    "text": "VK 앱이 열리나요?",
+    "status": "machine",
+    "context": "qrTypes.types.vk.faqs.0.question"
+  },
+  "97b5ffb953bc": {
+    "source": "VK links open the app when it's installed, or the page in the browser.",
+    "text": "VK 링크는 앱이 설치되어 있으면 앱으로, 아니면 브라우저의 페이지로 열려요.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.faqs.0.answer"
+  },
+  "6fd056b64157": {
+    "source": "Open a Weibo profile.",
+    "text": "Weibo 프로필을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.summary"
+  },
+  "60703e24236d": {
+    "source": "Create a Weibo QR code that opens your Weibo profile, for packaging, events and posters aimed at audiences in China. Paste the link. Free.",
+    "text": "내 Weibo 프로필을 여는 Weibo QR 코드를 만들어 보세요. 중국 고객을 위한 포장, 행사, 포스터에 알맞아요. 링크를 붙여넣기만 하면 돼요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.metaDescription"
+  },
+  "202991335780": {
+    "source": "A Weibo QR code opens your Weibo profile, so people can follow you from packaging, a trade fair stand or a poster.",
+    "text": "Weibo QR 코드는 내 Weibo 프로필을 열어 주어서 포장, 박람회 부스, 포스터에서 바로 팔로우할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.intro.0"
+  },
+  "bad54233f23a": {
+    "source": "Copy your profile's link (weibo.com/u/… or your custom weibo.com address) and paste it here.",
+    "text": "프로필 링크(weibo.com/u/… 또는 직접 정한 weibo.com 주소)를 복사해 여기에 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.intro.1"
+  },
+  "2257354518d2": {
+    "source": "Copy your Weibo profile's link.",
+    "text": "Weibo 프로필 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.steps.0"
+  },
+  "1a80c77bc193": {
+    "source": "Scan the preview to check the profile opens.",
+    "text": "미리보기를 스캔해 프로필이 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.steps.2"
+  },
+  "0a8c288ad17c": {
+    "source": "QRdx keeps the link as pasted; m.weibo.cn links work too.",
+    "text": "QRdx는 붙여넣은 링크를 그대로 유지해요. m.weibo.cn 링크도 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.payload.notes.0"
+  },
+  "50353c12bbb4": {
+    "source": "The numeric UID link keeps working if you change your nickname.",
+    "text": "숫자 UID 링크는 닉네임을 바꿔도 계속 작동해요.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.payload.notes.1"
+  },
+  "88890e6e08b2": {
+    "source": "Which link should I use?",
+    "text": "어떤 링크를 써야 하나요?",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.faqs.0.question"
+  },
+  "5b4268790355": {
+    "source": "The weibo.com/u/ link with your numeric UID never changes, so it's the safest for print.",
+    "text": "숫자 UID가 들어간 weibo.com/u/ 링크는 바뀌지 않아서 인쇄물에 가장 안전해요.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.faqs.0.answer"
+  },
+  "25eaf6cf78cf": {
+    "source": "Open a Tumblr blog or post.",
+    "text": "Tumblr 블로그나 게시물을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.summary"
+  },
+  "9364b42efe08": {
+    "source": "Make a Tumblr QR code that opens your blog or one post. Type your blog name or paste a link. For zines, stickers and art prints. Free.",
+    "text": "내 블로그나 게시물 하나를 여는 Tumblr QR 코드를 만들어 보세요. 블로그 이름을 입력하거나 링크를 붙여넣으면 돼요. 진, 스티커, 아트 프린트에 쓰기 좋아요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.metaDescription"
+  },
+  "e4b62aae3696": {
+    "source": "A Tumblr QR code opens your blog, or one post, from a zine, a sticker or the back of an art print.",
+    "text": "Tumblr QR 코드는 진, 스티커, 아트 프린트 뒷면에서 내 블로그나 게시물 하나를 열어 줘요.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.intro.0"
+  },
+  "1de2a8cda6a7": {
+    "source": "Type your blog's name and QRdx builds the tumblr.com link, or paste a blog or post link.",
+    "text": "블로그 이름을 입력하면 QRdx가 tumblr.com 링크를 만들어 줘요. 블로그나 게시물 링크를 붙여넣어도 돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.intro.1"
+  },
+  "2285b2d28638": {
+    "source": "Enter your blog name, or paste a link.",
+    "text": "블로그 이름을 입력하거나 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.steps.0"
+  },
+  "36e6fab54cfc": {
+    "source": "Scan the preview to check your blog opens.",
+    "text": "미리보기를 스캔해 블로그가 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.steps.1"
+  },
+  "1f8a49acdb04": {
+    "source": "Blog names are up to 32 letters, digits and hyphens.",
+    "text": "블로그 이름은 영문자, 숫자, 하이픈으로 최대 32자까지 쓸 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.payload.notes.0"
+  },
+  "5df3cdd7595f": {
+    "source": "Pasted links, including yourblog.tumblr.com, are kept as they are.",
+    "text": "yourblog.tumblr.com을 포함해 붙여넣은 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.payload.notes.1"
+  },
+  "b895e5b2ac6e": {
+    "source": "What happens if I rename my blog?",
+    "text": "블로그 이름을 바꾸면 어떻게 되나요?",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.faqs.0.question"
+  },
+  "10092e099cf3": {
+    "source": "The old name stops pointing to you, and someone else can take it, so print a new code.",
+    "text": "예전 이름은 더 이상 내 블로그를 가리키지 않고 다른 사람이 가져갈 수 있으니, 새 코드를 인쇄하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.faqs.0.answer"
+  },
+  "861eae52bfe9": {
+    "source": "Open a Medium profile, publication or story.",
+    "text": "Medium 프로필, 퍼블리케이션 또는 스토리를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.summary"
+  },
+  "870a60730d6a": {
+    "source": "Create a Medium QR code for your profile, a publication or one story. For talk slides, books and handouts. Type your @username. Free.",
+    "text": "프로필, 퍼블리케이션 또는 스토리 하나를 위한 Medium QR 코드를 만들어 보세요. 발표 슬라이드, 책, 배포 자료에 쓰기 좋아요. @username만 입력하면 돼요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.metaDescription"
+  },
+  "197159a87add": {
+    "source": "A Medium QR code opens your profile, a publication or one story, so readers find your writing from a talk slide, a book or a handout.",
+    "text": "Medium QR 코드는 프로필, 퍼블리케이션 또는 스토리 하나를 열어 주어, 독자가 발표 슬라이드, 책, 배포 자료에서 여러분의 글을 찾을 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.intro.0"
+  },
+  "8fe1d8bf11a0": {
+    "source": "Type your @username and QRdx builds the medium.com link, or paste any Medium link.",
+    "text": "@username을 입력하면 QRdx가 medium.com 링크를 만들어 드려요. 아니면 Medium 링크를 붙여넣어도 돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.intro.1"
+  },
+  "cb8de4bcf090": {
+    "source": "Enter your @username, or paste a story or publication link.",
+    "text": "@username을 입력하거나 스토리 또는 퍼블리케이션 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.steps.0"
+  },
+  "cee4f1efc398": {
+    "source": "Scan the preview to check it opens.",
+    "text": "미리보기를 스캔해 제대로 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.steps.1"
+  },
+  "b7839785cbbd": {
+    "source": "Pasted links, including publications on their own subdomains, are kept as they are.",
+    "text": "고유 서브도메인을 쓰는 퍼블리케이션을 포함해, 붙여넣은 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.payload.notes.0"
+  },
+  "41c3ce6e8589": {
+    "source": "If you change your username, the old profile link breaks.",
+    "text": "사용자 이름을 바꾸면 기존 프로필 링크는 작동하지 않아요.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.payload.notes.1"
+  },
+  "4bd0091ade49": {
+    "source": "Can the code open one article?",
+    "text": "코드로 글 하나를 열 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.medium.faqs.0.question"
+  },
+  "cc8811d20a14": {
+    "source": "Yes. Paste the story's link instead of your username.",
+    "text": "네. 사용자 이름 대신 스토리 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.faqs.0.answer"
+  },
+  "eef789fce42b": {
+    "source": "Open a Substack newsletter or profile.",
+    "text": "Substack 뉴스레터나 프로필을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.summary"
+  },
+  "2edab5b2ca55": {
+    "source": "Make a Substack QR code that opens your newsletter so readers can subscribe. For talks, books, zines and events. Free, no signup.",
+    "text": "독자가 구독할 수 있도록 뉴스레터를 여는 Substack QR 코드를 만들어 보세요. 발표, 책, 진, 행사에 쓰기 좋아요. 무료이고 가입도 필요 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.metaDescription"
+  },
+  "493f55909cb8": {
+    "source": "A Substack QR code opens your newsletter, where people can subscribe, from a talk, a book, a zine or an event table.",
+    "text": "Substack QR 코드는 뉴스레터를 열어 주어, 발표, 책, 진, 행사 테이블에서 바로 구독할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.intro.0"
+  },
+  "4d5f82ad939e": {
+    "source": "Type your publication's name (the part before .substack.com) and QRdx builds the link. Type @handle for your Substack profile, or paste any substack.com link.",
+    "text": "퍼블리케이션 이름(.substack.com 앞부분)을 입력하면 QRdx가 링크를 만들어 드려요. Substack 프로필은 @handle을 입력하거나, substack.com 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.intro.1"
+  },
+  "c9360f36e059": {
+    "source": "Enter your publication name or @handle, or paste a link.",
+    "text": "퍼블리케이션 이름이나 @handle을 입력하거나 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.steps.0"
+  },
+  "0f700d32925a": {
+    "source": "A publication on its own domain works in the URL generator.",
+    "text": "자체 도메인을 쓰는 퍼블리케이션은 URL 생성기에서 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.payload.notes.0"
+  },
+  "57cb28bb1a71": {
+    "source": "Pasted substack.com links are kept as they are.",
+    "text": "붙여넣은 substack.com 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.payload.notes.1"
+  },
+  "530282801894": {
+    "source": "Can the code open the subscribe page?",
+    "text": "코드로 구독 페이지를 열 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.substack.faqs.0.question"
+  },
+  "d2c1a6012887": {
+    "source": "Paste your publication's /subscribe link, and the code opens that page.",
+    "text": "퍼블리케이션의 /subscribe 링크를 붙여넣으면 코드가 해당 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.faqs.0.answer"
+  },
+  "9614244e0677": {
+    "source": "Open a GitHub profile, organization or repository.",
+    "text": "GitHub 프로필, 조직 또는 저장소를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.github.summary"
+  },
+  "08011d4d9e2b": {
+    "source": "Create a GitHub QR code for your profile, organization or a repository. For talk slides, stickers, READMEs and conference badges. Free.",
+    "text": "프로필, 조직 또는 저장소를 위한 GitHub QR 코드를 만들어 보세요. 발표 슬라이드, 스티커, README, 콘퍼런스 배지에 쓰기 좋아요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.github.metaDescription"
+  },
+  "0394f0719bbe": {
+    "source": "A GitHub QR code opens a profile, an organization or a repository, so people find your code from a talk slide, a laptop sticker or a conference badge.",
+    "text": "GitHub QR 코드는 프로필, 조직 또는 저장소를 열어 주어, 발표 슬라이드, 노트북 스티커, 콘퍼런스 배지에서 여러분의 코드를 찾을 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.github.intro.0"
+  },
+  "a85d80ce468d": {
+    "source": "Type a username, or owner/repository, and QRdx builds the github.com link. Or paste any GitHub link.",
+    "text": "사용자 이름 또는 owner/repository를 입력하면 QRdx가 github.com 링크를 만들어 드려요. GitHub 링크를 붙여넣어도 돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.github.intro.1"
+  },
+  "7cfd0c32e005": {
+    "source": "Enter a username or owner/repository, or paste a link.",
+    "text": "사용자 이름 또는 owner/repository를 입력하거나 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.github.steps.0"
+  },
+  "31fd671847d1": {
+    "source": "Download the code, as SVG for stickers.",
+    "text": "코드를 다운로드하세요. 스티커용으로는 SVG를 추천해요.",
+    "status": "machine",
+    "context": "qrTypes.types.github.steps.2"
+  },
+  "41f7a5ba234f": {
+    "source": "Usernames are up to 39 letters, digits and single hyphens.",
+    "text": "사용자 이름은 영문자, 숫자, 하이픈 하나씩으로 최대 39자까지 가능해요.",
+    "status": "machine",
+    "context": "qrTypes.types.github.payload.notes.0"
+  },
+  "1d8128fd85f0": {
+    "source": "Pasted links to issues, releases and files are kept as they are.",
+    "text": "이슈, 릴리스, 파일로 연결되는 붙여넣은 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.github.payload.notes.1"
+  },
+  "c170a7e36a1f": {
+    "source": "Can it link a private repository?",
+    "text": "비공개 저장소도 연결할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.github.faqs.0.question"
+  },
+  "c879528cd735": {
+    "source": "Yes, but only people with access can see it; others get a page that isn't found.",
+    "text": "네, 하지만 접근 권한이 있는 사람만 볼 수 있어요. 다른 사람에게는 페이지를 찾을 수 없다고 표시돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.github.faqs.0.answer"
+  },
+  "06ad029cc487": {
+    "source": "Open a Behance portfolio or project.",
+    "text": "Behance 포트폴리오나 프로젝트를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.summary"
+  },
+  "8d601aefb946": {
+    "source": "Make a Behance QR code that opens your portfolio or one project. For business cards, CVs and exhibitions. Type your username. Free.",
+    "text": "포트폴리오나 프로젝트 하나를 여는 Behance QR 코드를 만드세요. 명함, 이력서, 전시회에 쓸 수 있어요. 사용자 이름만 입력하면 됩니다. 무료.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.metaDescription"
+  },
+  "ca0a321ea469": {
+    "source": "A Behance QR code opens your portfolio, or one project, from a business card, a printed CV or an exhibition label.",
+    "text": "Behance QR 코드는 명함, 인쇄한 이력서, 전시 라벨에서 포트폴리오 또는 프로젝트 하나를 열어 줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.intro.0"
+  },
+  "1781487376f6": {
+    "source": "Type your Behance username and QRdx builds the behance.net link, or paste a project link.",
+    "text": "Behance 사용자 이름을 입력하면 QRdx가 behance.net 링크를 만들어 드려요. 프로젝트 링크를 붙여 넣어도 됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.intro.1"
+  },
+  "646c93bdc091": {
+    "source": "Enter your Behance username, or paste a link.",
+    "text": "Behance 사용자 이름을 입력하거나 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.steps.0"
+  },
+  "4006684e2ae6": {
+    "source": "Scan the preview to check your portfolio opens.",
+    "text": "미리보기를 스캔해서 포트폴리오가 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.steps.1"
+  },
+  "e0aea8a42cbd": {
+    "source": "Usernames are 3 to 40 letters, digits, underscores and hyphens.",
+    "text": "사용자 이름은 영문자, 숫자, 밑줄, 하이픈으로 3~40자예요.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.payload.notes.0"
+  },
+  "efaf9b2c5728": {
+    "source": "Behance doesn't redirect an old username, so print a new code if you change it.",
+    "text": "Behance는 이전 사용자 이름을 리디렉션하지 않으므로 이름을 바꾸면 새 코드를 인쇄하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.payload.notes.1"
+  },
+  "9c7fdeea4661": {
+    "source": "Can the code open one project?",
+    "text": "코드로 프로젝트 하나를 열 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.behance.faqs.0.question"
+  },
+  "a8a11a01fd49": {
+    "source": "Yes. Paste the project's link instead of your username.",
+    "text": "네. 사용자 이름 대신 프로젝트 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.faqs.0.answer"
+  },
+  "5bfd7427ea7d": {
+    "source": "Open a Dribbble profile or shot.",
+    "text": "Dribbble 프로필이나 샷을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.summary"
+  },
+  "c38d2b08b815": {
+    "source": "Create a Dribbble QR code for your design profile or one shot. For business cards, CVs and portfolio prints. Type your username. Free.",
+    "text": "디자인 프로필이나 샷 하나를 여는 Dribbble QR 코드를 만드세요. 명함, 이력서, 포트폴리오 인쇄물에 쓸 수 있어요. 사용자 이름만 입력하면 됩니다. 무료.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.metaDescription"
+  },
+  "2c912504e2c2": {
+    "source": "A Dribbble QR code opens your design profile, or one shot, from a business card, a CV or a printed portfolio.",
+    "text": "Dribbble QR 코드는 명함, 이력서, 인쇄한 포트폴리오에서 디자인 프로필 또는 샷 하나를 열어 줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.intro.0"
+  },
+  "a34aeccd8c4d": {
+    "source": "Type your Dribbble username and QRdx builds the dribbble.com link, or paste a shot link.",
+    "text": "Dribbble 사용자 이름을 입력하면 QRdx가 dribbble.com 링크를 만들어 드려요. 샷 링크를 붙여 넣어도 됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.intro.1"
+  },
+  "e1cfc854a8bf": {
+    "source": "Enter your Dribbble username, or paste a link.",
+    "text": "Dribbble 사용자 이름을 입력하거나 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.steps.0"
+  },
+  "2a1dd45b104f": {
+    "source": "Pasted dribbble.com links are kept as they are.",
+    "text": "붙여 넣은 dribbble.com 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.payload.notes.0"
+  },
+  "e993d9a0e552": {
+    "source": "If you change your username, print a new code.",
+    "text": "사용자 이름을 바꾸면 새 코드를 인쇄하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.payload.notes.1"
+  },
+  "693f7e7ecc58": {
+    "source": "Can I link a specific shot?",
+    "text": "특정 샷을 연결할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.faqs.0.question"
+  },
+  "af8bf0177175": {
+    "source": "Yes. Paste the shot's link instead of your username.",
+    "text": "네. 사용자 이름 대신 샷 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.faqs.0.answer"
+  },
+  "7ce9ca31ee43": {
+    "source": "Open your Linktree page.",
+    "text": "Linktree 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.summary"
+  },
+  "68a1c5f49e41": {
+    "source": "Make a QR code for your Linktree page, with all your links in one scan. For merch, posters, cards and stream overlays. Free, no signup.",
+    "text": "모든 링크를 한 번의 스캔으로 모아 보여 주는 Linktree 페이지용 QR 코드를 만드세요. 굿즈, 포스터, 명함, 스트림 오버레이에 쓸 수 있어요. 무료, 가입 필요 없음.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.metaDescription"
+  },
+  "acff1eba1572": {
+    "source": "A Linktree QR code opens your Linktree page, so one scan reaches every link you keep there, from merch, a poster or a business card.",
+    "text": "Linktree QR 코드는 굿즈, 포스터, 명함에서 Linktree 페이지를 열어 주므로 한 번의 스캔으로 그곳에 둔 모든 링크에 닿을 수 있습니다.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.intro.0"
+  },
+  "1e3e691c6031": {
+    "source": "Type your Linktree username and QRdx builds the linktr.ee link, or paste it.",
+    "text": "Linktree 사용자 이름을 입력하면 QRdx가 linktr.ee 링크를 만들어 드려요. 링크를 붙여 넣어도 됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.intro.1"
+  },
+  "f3fe4ed5dffd": {
+    "source": "Enter your Linktree username, or paste your link.",
+    "text": "Linktree 사용자 이름을 입력하거나 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.steps.0"
+  },
+  "1582ea8cd6d3": {
+    "source": "Linktree lets you change your username, which changes the link; print a new code if you do.",
+    "text": "Linktree에서는 사용자 이름을 바꿀 수 있고, 바꾸면 링크도 달라져요. 그럴 때는 새 코드를 인쇄하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.payload.notes.0"
+  },
+  "775236268c04": {
+    "source": "Your page's links can change any time without a new code.",
+    "text": "페이지 안의 링크는 새 코드 없이 언제든 바꿀 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.payload.notes.1"
+  },
+  "f45cf7454549": {
+    "source": "Can QRdx host a links page instead?",
+    "text": "QRdx에서 링크 페이지를 대신 호스팅할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.faqs.0.question"
+  },
+  "4ca0788f138d": {
+    "source": "Yes. A QRdx links page is a hosted page you edit in your dashboard, with a dynamic code you can repoint.",
+    "text": "네. QRdx 링크 페이지는 대시보드에서 편집하는 호스팅 페이지이고, 연결 대상을 바꿀 수 있는 동적 QR 코드를 함께 사용해요.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.faqs.0.answer"
+  },
+  "7d9e443f462e": {
+    "source": "Open your Patreon creator page.",
+    "text": "Patreon 크리에이터 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.summary"
+  },
+  "8598df8a214f": {
+    "source": "Create a Patreon QR code that opens your creator page, so fans can become members. For streams, merch, books and podcasts. Free.",
+    "text": "팬이 멤버가 될 수 있도록 크리에이터 페이지를 여는 Patreon QR 코드를 만들어 보세요. 스트림, 굿즈, 책, 팟캐스트에 활용할 수 있어요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.metaDescription"
+  },
+  "15920a92c854": {
+    "source": "A Patreon QR code opens your creator page, where fans can become members, from a stream overlay, merch, the back of a book or a podcast cover.",
+    "text": "Patreon QR 코드는 스트림 오버레이, 굿즈, 책 뒤표지, 팟캐스트 커버 등에서 팬이 멤버가 될 수 있는 크리에이터 페이지를 열어 줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.intro.0"
+  },
+  "aeef7ae1906e": {
+    "source": "Type your page name (the part after patreon.com/) and QRdx builds the link, or paste it.",
+    "text": "페이지 이름(patreon.com/ 뒤에 오는 부분)을 입력하면 QRdx가 링크를 만들어 드려요. 링크를 붙여 넣어도 됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.intro.1"
+  },
+  "43c8bdc2c551": {
+    "source": "Enter your Patreon page name, or paste your link.",
+    "text": "Patreon 페이지 이름을 입력하거나 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.steps.0"
+  },
+  "20bcffdd8407": {
+    "source": "Pasted patreon.com links are kept as they are.",
+    "text": "붙여 넣은 patreon.com 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.payload.notes.0"
+  },
+  "3c04a76555e9": {
+    "source": "Patreon doesn't redirect an old page name, so print a new code if you change it.",
+    "text": "Patreon은 이전 페이지 이름을 새 이름으로 연결해 주지 않으니, 이름을 바꾸면 새 코드를 인쇄하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.payload.notes.1"
+  },
+  "0028e58fa302": {
+    "source": "Can the code open a tier or post?",
+    "text": "코드로 특정 티어나 게시물을 열 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.faqs.0.question"
+  },
+  "bad418eb3d10": {
+    "source": "Yes. Paste that page's link instead of your name.",
+    "text": "네. 이름 대신 해당 페이지의 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.faqs.0.answer"
+  },
+  "ae1a99df8ac7": {
+    "source": "Get tips and support on your Ko-fi page.",
+    "text": "Ko-fi 페이지에서 팁과 후원을 받아요.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.summary"
+  },
+  "3709c5345c0e": {
+    "source": "Make a Ko-fi QR code that opens your page for tips, memberships and commissions. For streams, stalls and zines. Free, no signup.",
+    "text": "팁, 멤버십, 커미션을 받을 수 있는 Ko-fi 페이지를 여는 Ko-fi QR 코드를 만들어 보세요. 스트림, 가판대, 진에 활용할 수 있어요. 무료이며 가입이 필요 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.metaDescription"
+  },
+  "ff3328940c06": {
+    "source": "A Ko-fi QR code opens your Ko-fi page, where people can leave a tip, join a membership or order a commission, from a stream, a market stall or a zine.",
+    "text": "Ko-fi QR 코드는 스트림, 마켓 가판대, 진(zine) 등에서 사람들이 팁을 남기거나 멤버십에 가입하거나 커미션을 주문할 수 있는 Ko-fi 페이지를 열어 줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.intro.0"
+  },
+  "999124ff98d0": {
+    "source": "Type your Ko-fi page name and QRdx builds the ko-fi.com link, or paste it.",
+    "text": "Ko-fi 페이지 이름을 입력하면 QRdx가 ko-fi.com 링크를 만들어 드려요. 링크를 붙여 넣어도 됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.intro.1"
+  },
+  "fd75d8a45b7b": {
+    "source": "Enter your Ko-fi page name, or paste your link.",
+    "text": "Ko-fi 페이지 이름을 입력하거나 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.steps.0"
+  },
+  "266c163ca30f": {
+    "source": "Payments happen on Ko-fi; the code only opens your page.",
+    "text": "결제는 Ko-fi에서 이루어지며, 코드는 페이지만 열어 줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.payload.notes.0"
+  },
+  "df547abd1c40": {
+    "source": "Pasted ko-fi.com links are kept as they are.",
+    "text": "붙여 넣은 ko-fi.com 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.payload.notes.1"
+  },
+  "406b321ff687": {
+    "source": "Can the code take a payment by itself?",
+    "text": "코드만으로 결제가 되나요?",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.faqs.0.question"
+  },
+  "8bd23835f8bf": {
+    "source": "No. It opens your page, and people pay there with the methods you set up in Ko-fi.",
+    "text": "아니요. 코드는 페이지를 열어 주고, 사람들은 Ko-fi에서 설정한 결제 수단으로 그곳에서 결제합니다.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.faqs.0.answer"
+  },
+  "5a295f00063b": {
+    "source": "Get tips on your Buy Me a Coffee page.",
+    "text": "Buy Me a Coffee 페이지에서 팁을 받아요.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.summary"
+  },
+  "d6aa7af61d70": {
+    "source": "Create a Buy Me a Coffee QR code that opens your page for tips and memberships. For podcasts, blogs, streams and stalls. Free.",
+    "text": "팁과 멤버십을 받을 수 있는 Buy Me a Coffee 페이지를 여는 Buy Me a Coffee QR 코드를 만들어 보세요. 팟캐스트, 블로그, 스트림, 가판대에 활용할 수 있어요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.metaDescription"
+  },
+  "c3fe3a4dacfc": {
+    "source": "A Buy Me a Coffee QR code opens your page, where fans can leave a tip or join a membership, from a podcast cover, a blog post, a stream or a stall.",
+    "text": "Buy Me a Coffee QR 코드는 팟캐스트 커버, 블로그 글, 스트림, 가판대 등에서 팬이 팁을 남기거나 멤버십에 가입할 수 있는 페이지를 열어 줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.intro.0"
+  },
+  "4afe52d75f82": {
+    "source": "Type your page name and QRdx builds the buymeacoffee.com link, or paste it.",
+    "text": "페이지 이름을 입력하면 QRdx가 buymeacoffee.com 링크를 만들어 드려요. 링크를 붙여 넣어도 됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.intro.1"
+  },
+  "48aa0f25da66": {
+    "source": "Enter your page name, or paste your link.",
+    "text": "페이지 이름을 입력하거나 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.steps.0"
+  },
+  "eb193609f3e1": {
+    "source": "Payments happen on Buy Me a Coffee; the code only opens your page.",
+    "text": "결제는 Buy Me a Coffee에서 이루어지며, 코드는 페이지만 열어 줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.payload.notes.0"
+  },
+  "a7e40df94813": {
+    "source": "Pasted links, with or without www., are kept as they are.",
+    "text": "www.가 있든 없든 붙여 넣은 링크는 그대로 유지돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.payload.notes.1"
+  },
+  "586403bd52de": {
+    "source": "Do supporters need an account?",
+    "text": "후원자에게 계정이 필요한가요?",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.faqs.0.question"
+  },
+  "700cb405a3eb": {
+    "source": "No. Supporters can pay on your page without making an account.",
+    "text": "아니요. 후원자는 계정을 만들지 않고도 페이지에서 결제할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.faqs.0.answer"
+  },
+  "da3d835f66a5": {
+    "source": "Play a song, album, artist or playlist on Apple Music.",
+    "text": "Apple Music에서 노래, 앨범, 아티스트 또는 플레이리스트를 재생해요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.summary"
+  },
+  "5b70a21eb8d9": {
+    "source": "Make an Apple Music QR code that plays a song, album or playlist, or opens an artist. For posters, merch and record sleeves. Free.",
+    "text": "노래, 앨범, 플레이리스트를 재생하거나 아티스트 페이지를 여는 Apple Music QR 코드를 만들어 보세요. 포스터, 굿즈, 음반 슬리브에 활용할 수 있어요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.metaDescription"
+  },
+  "e9a832ada552": {
+    "source": "An Apple Music QR code opens a song, an album, a playlist or an artist page, from a gig poster, merch or a record sleeve.",
+    "text": "Apple Music QR 코드는 공연 포스터, 굿즈, 음반 슬리브에서 노래, 앨범, 플레이리스트 또는 아티스트 페이지를 열어 줘요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.intro.0"
+  },
+  "1d0b2b8091ce": {
+    "source": "In Apple Music, use Share and Copy Link, then paste the music.apple.com link here.",
+    "text": "Apple Music에서 공유와 링크 복사를 누른 다음, music.apple.com 링크를 여기에 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.intro.1"
+  },
+  "7e32239c6841": {
+    "source": "Copy the link in Apple Music (Share, Copy Link).",
+    "text": "Apple Music에서 링크를 복사하세요(공유, 링크 복사).",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.steps.0"
+  },
+  "53df6ad14df4": {
+    "source": "People without Apple Music get a preview page in the browser.",
+    "text": "Apple Music이 없는 사람은 브라우저에서 미리듣기 페이지를 보게 돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.payload.notes.1"
+  },
+  "c47d9f67a6ea": {
+    "source": "Does it work on Android?",
+    "text": "Android에서도 작동하나요?",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.faqs.0.question"
+  },
+  "3daafbdced55": {
+    "source": "It opens the Apple Music app for Android when it's installed, or the web player.",
+    "text": "Android용 Apple Music 앱이 설치되어 있으면 앱이 열리고, 없으면 웹 플레이어가 열려요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.faqs.0.answer"
+  },
+  "b610e1c84b86": {
+    "source": "Play a song, album or playlist on YouTube Music.",
+    "text": "YouTube Music에서 노래, 앨범 또는 플레이리스트를 재생해요.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.summary"
+  },
+  "d2d274c8542d": {
+    "source": "Create a YouTube Music QR code that plays a song, album or playlist. For gig posters, merch and flyers. Paste the share link. Free.",
+    "text": "노래, 앨범, 플레이리스트를 재생하는 YouTube Music QR 코드를 만들어 보세요. 공연 포스터, 굿즈, 전단지에 활용할 수 있어요. 공유 링크만 붙여넣으면 돼요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.metaDescription"
+  },
+  "1014322eb424": {
+    "source": "A YouTube Music QR code opens a song, an album, a playlist or an artist in YouTube Music, from a gig poster, merch or a flyer.",
+    "text": "YouTube Music QR 코드는 공연 포스터, 굿즈, 전단지에서 YouTube Music의 노래, 앨범, 플레이리스트 또는 아티스트를 열어 줘요.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.intro.0"
+  },
+  "35397c56f0a7": {
+    "source": "Use Share and Copy link in YouTube Music, then paste the music.youtube.com link here.",
+    "text": "YouTube Music에서 공유와 링크 복사를 누른 다음, music.youtube.com 링크를 여기에 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.intro.1"
+  },
+  "2f2534b61b11": {
+    "source": "Copy the link in YouTube Music (Share, Copy link).",
+    "text": "YouTube Music에서 링크를 복사하세요(공유, 링크 복사).",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.steps.0"
+  },
+  "ad44814db5c7": {
+    "source": "Scan the preview to check it plays.",
+    "text": "미리보기를 스캔해서 재생되는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.steps.2"
+  },
+  "af0b24450654": {
+    "source": "A youtube.com video link works in the YouTube generator.",
+    "text": "youtube.com 동영상 링크는 YouTube 생성기에서 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.payload.notes.1"
+  },
+  "44962c424a22": {
+    "source": "Does it need a subscription?",
+    "text": "구독이 필요한가요?",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.faqs.0.question"
+  },
+  "b43ff9fc4ae9": {
+    "source": "No. People can listen free with ads; a subscription removes them.",
+    "text": "아니요. 광고를 보면 무료로 들을 수 있고, 구독하면 광고가 없어져요.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.faqs.0.answer"
+  },
+  "9b18868b7c45": {
+    "source": "Open a podcast or episode on Apple Podcasts.",
+    "text": "Apple Podcasts에서 팟캐스트나 에피소드를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.summary"
+  },
+  "42288f9aecdc": {
+    "source": "Make an Apple Podcasts QR code that opens your show or one episode, so listeners follow it. For posters, merch and live shows. Free.",
+    "text": "프로그램이나 특정 에피소드를 여는 Apple Podcasts QR 코드를 만들어 청취자가 팔로우하도록 해 보세요. 포스터, 굿즈, 라이브 방송에 활용할 수 있어요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.metaDescription"
+  },
+  "72c460d2c7fa": {
+    "source": "An Apple Podcasts QR code opens your show, or one episode, so listeners can follow it from a poster, a sticker or a live taping.",
+    "text": "Apple Podcasts QR 코드는 프로그램 또는 특정 에피소드를 열어 줘서, 청취자가 포스터, 스티커, 라이브 녹음 현장에서 바로 팔로우할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.intro.0"
+  },
+  "658f5ad2103c": {
+    "source": "Use Share and Copy Link in Apple Podcasts, then paste the podcasts.apple.com link here.",
+    "text": "Apple Podcasts에서 공유와 링크 복사를 누른 다음, podcasts.apple.com 링크를 여기에 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.intro.1"
+  },
+  "7adcd95f5dc7": {
+    "source": "Copy the show's or episode's link in Apple Podcasts.",
+    "text": "Apple Podcasts에서 프로그램 또는 에피소드의 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.steps.0"
+  },
+  "b8ad6d2d675b": {
+    "source": "The link holds your show's number (id…), which never changes.",
+    "text": "링크에는 프로그램 번호(id…)가 들어 있으며, 이 번호는 바뀌지 않아요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.payload.notes.0"
+  },
+  "91c48f777a93": {
+    "source": "QRdx keeps the link as pasted, with an episode's ?i= part.",
+    "text": "QRdx는 에피소드의 ?i= 부분을 포함해 붙여넣은 링크를 그대로 유지해요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.payload.notes.1"
+  },
+  "afdea790bda1": {
+    "source": "What do Android listeners see?",
+    "text": "Android 청취자에게는 무엇이 보이나요?",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.faqs.0.question"
+  },
+  "f15116148361": {
+    "source": "The show's page in the browser, where they can play episodes.",
+    "text": "브라우저에서 프로그램 페이지가 열리고, 거기서 에피소드를 재생할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.faqs.0.answer"
+  },
+  "9c5e381fe815": {
+    "source": "Play music or a podcast on Amazon Music.",
+    "text": "Amazon Music에서 음악이나 팟캐스트를 재생해요.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.summary"
+  },
+  "8910c76fe64e": {
+    "source": "Create an Amazon Music QR code for a song, album, playlist or podcast. For posters, merch and flyers. Paste the link. Free.",
+    "text": "노래, 앨범, 플레이리스트, 팟캐스트로 연결되는 Amazon Music QR 코드를 만드세요. 포스터, 굿즈, 전단지에 활용할 수 있어요. 링크만 붙여넣으면 되고, 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.metaDescription"
+  },
+  "01a0acbc683e": {
+    "source": "An Amazon Music QR code opens a song, an album, a playlist, an artist or a podcast in Amazon Music.",
+    "text": "Amazon Music QR 코드는 Amazon Music에서 노래, 앨범, 플레이리스트, 아티스트 또는 팟캐스트를 열어 줘요.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.intro.0"
+  },
+  "67378c116905": {
+    "source": "Copy the link in Amazon Music and paste it here. Links on Amazon's country music sites work too.",
+    "text": "Amazon Music에서 링크를 복사해 여기에 붙여넣으세요. Amazon 국가별 음악 사이트의 링크도 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.intro.1"
+  },
+  "597acb41d7ec": {
+    "source": "Copy the link in Amazon Music.",
+    "text": "Amazon Music에서 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.steps.0"
+  },
+  "8f25bac036a5": {
+    "source": "Each country site opens the catalog of that country.",
+    "text": "국가별 사이트는 각각 해당 국가의 카탈로그를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.payload.notes.1"
+  },
+  "1dea42070dc6": {
+    "source": "Can people listen without Prime?",
+    "text": "Prime 없이도 들을 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.faqs.0.question"
+  },
+  "7712a5de13be": {
+    "source": "Amazon Music has a free tier with ads in many countries, so many links play for everyone.",
+    "text": "Amazon Music은 많은 국가에서 광고가 포함된 무료 이용 방식을 제공하기 때문에, 많은 링크를 누구나 재생할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.faqs.0.answer"
+  },
+  "aef168ec765f": {
+    "source": "Play a track, album or playlist on Deezer.",
+    "text": "Deezer에서 트랙, 앨범 또는 플레이리스트를 재생해요.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.summary"
+  },
+  "57983725eeb5": {
+    "source": "Make a Deezer QR code that plays a track, album, playlist or podcast. For gig posters, merch and record sleeves. Free, no signup.",
+    "text": "트랙, 앨범, 플레이리스트, 팟캐스트를 재생하는 Deezer QR 코드를 만드세요. 공연 포스터, 굿즈, 음반 슬리브에 활용할 수 있어요. 무료이고 가입이 필요 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.metaDescription"
+  },
+  "28b553d09c48": {
+    "source": "A Deezer QR code opens a track, an album, a playlist, an artist or a podcast in Deezer.",
+    "text": "Deezer QR 코드는 Deezer에서 트랙, 앨범, 플레이리스트, 아티스트 또는 팟캐스트를 열어 줘요.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.intro.0"
+  },
+  "7aded233e7ce": {
+    "source": "Paste a deezer.com link, or a share link (link.deezer.com) from the app.",
+    "text": "deezer.com 링크나 앱의 공유 링크(link.deezer.com)를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.intro.1"
+  },
+  "05ad748a8331": {
+    "source": "Copy the link in Deezer.",
+    "text": "Deezer에서 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.steps.0"
+  },
+  "b00069d2993f": {
+    "source": "Old deezer.page.link share links stopped working in 2025; copy a new link from the app.",
+    "text": "예전 deezer.page.link 공유 링크는 2025년에 작동이 중단되었어요. 앱에서 새 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.payload.notes.1"
+  },
+  "519390394439": {
+    "source": "Does it work without the app?",
+    "text": "앱 없이도 작동하나요?",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.faqs.0.question"
+  },
+  "9d2d6e915c3d": {
+    "source": "Yes. The link opens Deezer in the browser.",
+    "text": "네. 링크를 누르면 브라우저에서 Deezer가 열려요.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.faqs.0.answer"
+  },
+  "a8ae03710a12": {
+    "source": "Play a track, album or playlist on TIDAL.",
+    "text": "TIDAL에서 트랙, 앨범 또는 플레이리스트를 재생해요.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.summary"
+  },
+  "ba39758079e2": {
+    "source": "Create a TIDAL QR code that plays a track, album or playlist, or opens an artist. For merch, sleeves and posters. Free, no signup.",
+    "text": "트랙, 앨범, 플레이리스트를 재생하거나 아티스트를 여는 TIDAL QR 코드를 만드세요. 굿즈, 음반 슬리브, 포스터에 활용할 수 있어요. 무료이고 가입이 필요 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.metaDescription"
+  },
+  "a9b8feb0aff5": {
+    "source": "A TIDAL QR code opens a track, an album, a playlist or an artist on TIDAL.",
+    "text": "TIDAL QR 코드는 TIDAL에서 트랙, 앨범, 플레이리스트 또는 아티스트를 열어 줘요.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.intro.0"
+  },
+  "6f2bc1cbf85d": {
+    "source": "Copy the link in TIDAL and paste it here.",
+    "text": "TIDAL에서 링크를 복사해 여기에 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.intro.1"
+  },
+  "cc818e29db94": {
+    "source": "Copy the link in TIDAL.",
+    "text": "TIDAL에서 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.steps.0"
+  },
+  "5118e6bd40d6": {
+    "source": "QRdx keeps the link as pasted; listen.tidal.com links work too.",
+    "text": "QRdx는 붙여넣은 링크를 그대로 유지해요. listen.tidal.com 링크도 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.payload.notes.0"
+  },
+  "48533995f23e": {
+    "source": "TIDAL's share page also offers the music on other services.",
+    "text": "TIDAL의 공유 페이지에서는 다른 서비스의 음악도 안내해요.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.payload.notes.1"
+  },
+  "d3bbb5482de1": {
+    "source": "What do people without TIDAL see?",
+    "text": "TIDAL이 없는 사람에게는 무엇이 보이나요?",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.faqs.0.question"
+  },
+  "1cc927baa22d": {
+    "source": "A page for the music, which can point them to other streaming services.",
+    "text": "해당 음악의 페이지가 표시되며, 다른 스트리밍 서비스로 안내할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.faqs.0.answer"
+  },
+  "6c70947ff657": {
+    "source": "Open an artist, album or track on Bandcamp.",
+    "text": "Bandcamp에서 아티스트, 앨범 또는 트랙을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.summary"
+  },
+  "b680d265c3ff": {
+    "source": "Make a Bandcamp QR code for your artist page, an album or a track, so fans listen and buy. For merch tables and posters. Free.",
+    "text": "아티스트 페이지, 앨범, 트랙으로 연결되는 Bandcamp QR 코드를 만들어 팬들이 듣고 구매하게 하세요. 굿즈 테이블과 포스터에 좋아요. 무료.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.metaDescription"
+  },
+  "832131758fa2": {
+    "source": "A Bandcamp QR code opens your artist page, an album or a track, where fans can listen and buy, from a merch table, a gig poster or a record sleeve.",
+    "text": "Bandcamp QR 코드는 굿즈 테이블, 공연 포스터, 레코드 슬리브에서 팬들이 듣고 구매할 수 있는 아티스트 페이지, 앨범 또는 트랙을 열어줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.intro.0"
+  },
+  "b9fc4fa34c28": {
+    "source": "Type the part before .bandcamp.com and QRdx builds the link, or paste an album or track link.",
+    "text": ".bandcamp.com 앞부분을 입력하면 QRdx가 링크를 만들어 드려요. 앨범이나 트랙 링크를 붙여 넣어도 됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.intro.1"
+  },
+  "f991b252f953": {
+    "source": "Enter your Bandcamp name, or paste a link.",
+    "text": "Bandcamp 이름을 입력하거나 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.steps.0"
+  },
+  "21c9d5aa856f": {
+    "source": "Pasted bandcamp.com links are kept as they are.",
+    "text": "붙여 넣은 bandcamp.com 링크는 그대로 유지됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.payload.notes.0"
+  },
+  "bae82abdd77d": {
+    "source": "If you change your Bandcamp address, the old one stops working.",
+    "text": "Bandcamp 주소를 바꾸면 이전 주소는 더 이상 작동하지 않습니다.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.payload.notes.1"
+  },
+  "cb68bdc9df2e": {
+    "source": "Can I use it for download codes?",
+    "text": "다운로드 코드에도 사용할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.faqs.0.question"
+  },
+  "fb613c41bf6c": {
+    "source": "Print each Bandcamp download code next to the QR code, or link to your redeem page.",
+    "text": "Bandcamp 다운로드 코드를 QR 코드 옆에 각각 인쇄하거나, 코드 사용 페이지로 연결하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.faqs.0.answer"
+  },
+  "72b1c5315981": {
+    "source": "Open a shared Google Doc.",
+    "text": "공유된 Google Docs 문서를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.summary"
+  },
+  "c113deabd771": {
+    "source": "Create a Google Docs QR code that opens a shared document. For handouts, notes, instructions and menus. Paste the link. Free.",
+    "text": "공유된 문서를 여는 Google Docs QR 코드를 만드세요. 유인물, 메모, 안내문, 메뉴에 좋아요. 링크만 붙여 넣으세요. 무료.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.metaDescription"
+  },
+  "f783149a342b": {
+    "source": "A Google Docs QR code opens a shared document, so people read handouts, meeting notes or instructions on their phone.",
+    "text": "Google Docs QR 코드는 공유된 문서를 열어주므로 사람들이 유인물, 회의록, 안내문을 휴대폰으로 읽을 수 있습니다.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.intro.0"
+  },
+  "e4ea823215ee": {
+    "source": "Paste the document's link. Under Share, set General access to Anyone with the link first, or people without access are asked to sign in and request it.",
+    "text": "문서 링크를 붙여 넣으세요. 먼저 공유에서 일반 액세스를 링크가 있는 모든 사용자로 설정하세요. 그렇지 않으면 권한이 없는 사람은 로그인하고 접근을 요청해야 합니다.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.intro.1"
+  },
+  "edbad1b20e42": {
+    "source": "Share the document with Anyone with the link.",
+    "text": "문서를 링크가 있는 모든 사용자에게 공유하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.0"
+  },
+  "ea0635c25a18": {
+    "source": "Copy its link and paste it here.",
+    "text": "문서 링크를 복사해 여기에 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.1"
+  },
+  "0214b1cc594e": {
+    "source": "Scan the preview on a phone that isn't signed in to check it opens.",
+    "text": "로그인하지 않은 휴대폰으로 미리보기를 스캔해 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.2"
+  },
+  "3d137828f9e0": {
+    "source": "QRdx keeps the link as pasted, including /edit or /view.",
+    "text": "QRdx는 /edit나 /view를 포함해 붙여 넣은 링크를 그대로 유지합니다.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.payload.notes.0"
+  },
+  "cf772cde7b13": {
+    "source": "Editing the document changes what people see, without a new code.",
+    "text": "문서를 수정하면 새 코드 없이도 사람들에게 보이는 내용이 바뀝니다.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.payload.notes.1"
+  },
+  "141c80b0bb75": {
+    "source": "Can people edit the document?",
+    "text": "다른 사람이 문서를 수정할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.faqs.0.question"
+  },
+  "9b2eb6c7485e": {
+    "source": "Only if you share it with edit access. Choose Viewer in the sharing settings for a read-only document.",
+    "text": "편집 권한으로 공유한 경우에만 가능합니다. 읽기 전용 문서로 만들려면 공유 설정에서 뷰어를 선택하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.faqs.0.answer"
+  },
+  "2623efa8a3ce": {
+    "source": "Open a shared Google Sheets spreadsheet.",
+    "text": "공유된 Google Sheets 스프레드시트를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.summary"
+  },
+  "abe675c72775": {
+    "source": "Make a Google Sheets QR code that opens a shared spreadsheet: a schedule, a price list or a sign-up sheet. Paste the link. Free.",
+    "text": "일정표, 가격표, 신청 시트 등 공유된 스프레드시트를 여는 Google Sheets QR 코드를 만드세요. 링크만 붙여 넣으세요. 무료.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.metaDescription"
+  },
+  "9fb0c5aa66c5": {
+    "source": "A Google Sheets QR code opens a shared spreadsheet: a schedule on a door, a price list in a shop, or a sign-up sheet at an event.",
+    "text": "Google Sheets QR 코드는 문 앞의 일정표, 매장의 가격표, 행사장의 신청 시트 같은 공유된 스프레드시트를 열어줍니다.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.intro.0"
+  },
+  "e0fd9ee854cb": {
+    "source": "Paste the spreadsheet's link, shared with Anyone with the link, so people who scan don't have to request access.",
+    "text": "스캔하는 사람이 접근 권한을 요청하지 않아도 되도록, 링크가 있는 모든 사용자에게 공유한 스프레드시트의 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.intro.1"
+  },
+  "caa2767cb7a3": {
+    "source": "Share the spreadsheet with Anyone with the link.",
+    "text": "스프레드시트를 링크가 있는 모든 사용자에게 공유하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.steps.0"
+  },
+  "46ce6ee7bb8c": {
+    "source": "QRdx keeps the link as pasted, including a #gid= tab.",
+    "text": "QRdx는 #gid= 탭을 포함해 붙여 넣은 링크를 그대로 유지합니다.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.payload.notes.0"
+  },
+  "c968adc99f2c": {
+    "source": "Updates to the sheet show up for everyone who scans.",
+    "text": "시트를 업데이트하면 스캔하는 모든 사람에게 반영됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.payload.notes.1"
+  },
+  "ebbe05b2b774": {
+    "source": "Can the code open one tab?",
+    "text": "코드로 특정 탭을 열 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.faqs.0.question"
+  },
+  "ad34102f16d4": {
+    "source": "Yes. Open that tab and copy the link; it ends with #gid= and the tab's number.",
+    "text": "네. 해당 탭을 열고 링크를 복사하세요. 링크 끝에 #gid=와 탭 번호가 붙어 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.faqs.0.answer"
+  },
+  "6f6d3026b204": {
+    "source": "Open a shared Google Slides presentation.",
+    "text": "공유된 Google Slides 프레젠테이션을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.summary"
+  },
+  "8a7d4b2bc8c3": {
+    "source": "Create a Google Slides QR code so people get your deck from the screen: talks, classes and pitches. Paste the link. Free.",
+    "text": "Google Slides QR 코드를 만들어 강연, 수업, 발표에서 화면으로 바로 슬라이드를 전달하세요. 링크를 붙여넣기만 하면 돼요. 무료.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.metaDescription"
+  },
+  "0b7623505595": {
+    "source": "A Google Slides QR code opens a shared presentation, so the audience gets your slides from the screen at a talk, a class or a pitch.",
+    "text": "Google Slides QR 코드는 공유된 프레젠테이션을 열어요. 강연, 수업, 발표 자리에서 청중이 화면의 코드로 슬라이드를 받을 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.intro.0"
+  },
+  "e5a0385c9973": {
+    "source": "Paste the presentation's link, shared with Anyone with the link.",
+    "text": "링크가 있는 모든 사용자에게 공유한 프레젠테이션의 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.intro.1"
+  },
+  "b398a3481d00": {
+    "source": "Share the presentation with Anyone with the link.",
+    "text": "프레젠테이션을 링크가 있는 모든 사용자에게 공유하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.steps.0"
+  },
+  "7d62cf784747": {
+    "source": "Download the code and add it to your last slide.",
+    "text": "코드를 다운로드해서 마지막 슬라이드에 추가하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.steps.3"
+  },
+  "ae7ebb564e93": {
+    "source": "A link ending in /present opens the slideshow instead of the editor.",
+    "text": "/present로 끝나는 링크는 편집기 대신 슬라이드쇼를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.payload.notes.1"
+  },
+  "94c9300b0c42": {
+    "source": "How big should the code be on a slide?",
+    "text": "슬라이드에서 코드는 얼마나 크게 넣어야 하나요?",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.faqs.0.question"
+  },
+  "6b9e44420110": {
+    "source": "Big enough to scan from the back of the room: about a fifth of the slide's height works in most rooms.",
+    "text": "강의실 뒤쪽에서도 스캔할 수 있을 만큼 커야 해요. 대부분의 강의실에서는 슬라이드 높이의 5분의 1 정도면 충분해요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.faqs.0.answer"
+  },
+  "4e63edb837eb": {
+    "source": "Open a Google Form: a survey, quiz or sign-up.",
+    "text": "설문, 퀴즈, 신청용 Google Form을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.summary"
+  },
+  "ea1259be43c6": {
+    "source": "Make a Google Forms QR code that opens your survey, quiz, sign-up or order form. Paste the form link or forms.gle short link. Free.",
+    "text": "설문, 퀴즈, 신청서, 주문서를 여는 Google Forms QR 코드를 만드세요. 양식 링크나 forms.gle 짧은 링크를 붙여넣으면 돼요. 무료.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.metaDescription"
+  },
+  "5e8c22806066": {
+    "source": "A Google Forms QR code opens your form, so people answer a survey, take a quiz or sign up from a poster, a table card or a slide.",
+    "text": "Google Forms QR 코드는 양식을 열어요. 포스터, 테이블 카드, 슬라이드에서 설문에 답하거나 퀴즈를 풀거나 신청할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.intro.0"
+  },
+  "5172691beb36": {
+    "source": "In your form, use Send and the link tab, then paste the link here. The short forms.gle link makes a simpler code.",
+    "text": "양식에서 보내기와 링크 탭을 열고, 링크를 여기에 붙여넣으세요. 짧은 forms.gle 링크를 쓰면 더 단순한 코드가 만들어져요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.intro.1"
+  },
+  "5dd4db45c69a": {
+    "source": "In the form, use Send, then the link tab, and shorten the URL.",
+    "text": "양식에서 보내기, 링크 탭을 차례로 열고 URL을 줄이세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.0"
+  },
+  "9a30e71d599c": {
+    "source": "Paste the link here.",
+    "text": "여기에 링크를 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.1"
+  },
+  "0466946bbb70": {
+    "source": "Scan the preview to check the form opens.",
+    "text": "미리보기를 스캔해서 양식이 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.2"
+  },
+  "b8c006df66fb": {
+    "source": "A form limited to your organization asks people to sign in.",
+    "text": "조직 내부로 제한된 양식은 로그인을 요구해요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.payload.notes.1"
+  },
+  "8914961903e9": {
+    "source": "What's the difference from the Attendance generator?",
+    "text": "출석 생성기와는 어떻게 다른가요?",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.faqs.0.question"
+  },
+  "4e7ea7cf6157": {
+    "source": "Attendance is set up for checking people in. This one opens any Google Form.",
+    "text": "출석 생성기는 출석 확인용으로 설정돼 있어요. 이 생성기는 모든 Google Form을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.faqs.0.answer"
+  },
+  "981fe2e677ce": {
+    "source": "Open a Microsoft Form: a survey, quiz or registration.",
+    "text": "설문, 퀴즈, 등록용 Microsoft Form을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.summary"
+  },
+  "1762405418e2": {
+    "source": "Create a Microsoft Forms QR code that opens your survey, quiz or registration form. Paste the share link from Forms. Free, no signup.",
+    "text": "설문, 퀴즈, 등록 양식을 여는 Microsoft Forms QR 코드를 만드세요. Forms의 공유 링크를 붙여넣으면 돼요. 무료, 가입 필요 없음.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.metaDescription"
+  },
+  "abd10b8db2e6": {
+    "source": "A Microsoft Forms QR code opens your form, so people answer a survey, a quiz or a registration from a poster, a slide or a handout.",
+    "text": "Microsoft Forms QR 코드는 양식을 열어요. 포스터, 슬라이드, 유인물에서 설문에 답하거나 퀴즈를 풀거나 등록할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.intro.0"
+  },
+  "144913e2ee68": {
+    "source": "In your form, use Collect responses and Copy link, then paste it here. A shortened forms.office.com/r/ link makes a simpler code.",
+    "text": "양식에서 응답 수집과 링크 복사를 선택한 다음 여기에 붙여넣으세요. 짧게 줄인 forms.office.com/r/ 링크를 쓰면 더 단순한 코드가 만들어져요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.intro.1"
+  },
+  "7ff8efeca689": {
+    "source": "In the form, use Collect responses, then Copy link.",
+    "text": "양식에서 응답 수집을 선택한 다음 링크 복사를 선택하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.steps.0"
+  },
+  "6573b2aff00e": {
+    "source": "QRdx keeps the link as pasted. Older forms.office.com links keep working.",
+    "text": "QRdx는 붙여넣은 링크를 그대로 유지해요. 이전 forms.office.com 링크도 계속 작동해요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.payload.notes.0"
+  },
+  "1cc44d4e28a5": {
+    "source": "Can anyone answer the form?",
+    "text": "누구나 양식에 응답할 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.faqs.0.question"
+  },
+  "9d5dc9d1c527": {
+    "source": "If you set it so anyone can respond. Forms limited to your organization need a work or school sign-in.",
+    "text": "누구나 응답할 수 있도록 설정하면 가능해요. 조직 내부로 제한된 양식은 회사 또는 학교 계정으로 로그인해야 해요.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.faqs.0.answer"
+  },
+  "427da29d54c2": {
+    "source": "Open a public Notion page.",
+    "text": "공개된 Notion 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.summary"
+  },
+  "09f6d3c89aaa": {
+    "source": "Make a Notion QR code that opens a page you've published to the web: a wiki, guide, menu or portfolio. Paste the link. Free.",
+    "text": "웹에 게시한 페이지(위키, 가이드, 메뉴, 포트폴리오)를 여는 Notion QR 코드를 만드세요. 링크를 붙여넣기만 하면 돼요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.metaDescription"
+  },
+  "5e0f1ce17815": {
+    "source": "A Notion QR code opens a page you've published to the web, like an event guide, a team wiki, a menu or a portfolio.",
+    "text": "Notion QR 코드는 행사 가이드, 팀 위키, 메뉴, 포트폴리오처럼 웹에 게시한 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.intro.0"
+  },
+  "9500a3951f9f": {
+    "source": "In Notion, publish the page to the web, copy its link (yourname.notion.site/…) and paste it here.",
+    "text": "Notion에서 페이지를 웹에 게시하고, 링크(yourname.notion.site/…)를 복사해 여기에 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.intro.1"
+  },
+  "fcd8ee3ad9e3": {
+    "source": "Publish the page to the web in Notion.",
+    "text": "Notion에서 페이지를 웹에 게시하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.steps.0"
+  },
+  "cb792aca552f": {
+    "source": "QRdx keeps the link as pasted; older notion.so public links redirect.",
+    "text": "QRdx는 붙여넣은 링크를 그대로 유지해요. 이전 notion.so 공개 링크는 리디렉션돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.payload.notes.0"
+  },
+  "a8c393324b51": {
+    "source": "If you change your notion.site domain, old links stop working.",
+    "text": "notion.site 도메인을 변경하면 이전 링크는 작동하지 않아요.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.payload.notes.1"
+  },
+  "3ab085d8d82b": {
+    "source": "Do people need a Notion account?",
+    "text": "Notion 계정이 있어야 하나요?",
+    "status": "machine",
+    "context": "qrTypes.types.notion.faqs.0.question"
+  },
+  "d182d02daca2": {
+    "source": "No. Published pages open in any browser.",
+    "text": "아니요. 게시된 페이지는 어떤 브라우저에서든 열려요.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.faqs.0.answer"
+  },
+  "31b9728d3360": {
+    "source": "Open a shared Canva design.",
+    "text": "공유된 Canva 디자인을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.summary"
+  },
+  "7b0e91b6f0d0": {
+    "source": "Create a Canva QR code that opens a design's public view link: a flyer, menu, presentation or portfolio. Paste the link. Free.",
+    "text": "전단지, 메뉴, 프레젠테이션, 포트폴리오 등 디자인의 공개 보기 링크를 여는 Canva QR 코드를 만드세요. 링크를 붙여넣기만 하면 돼요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.metaDescription"
+  },
+  "8b56b4db842f": {
+    "source": "A Canva QR code opens a design you've shared, like a flyer, a menu, a presentation or a portfolio.",
+    "text": "Canva QR 코드는 전단지, 메뉴, 프레젠테이션, 포트폴리오처럼 공유한 디자인을 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.intro.0"
+  },
+  "d550aab7bdc8": {
+    "source": "In Canva, use Share and Public view link, copy it and paste it here.",
+    "text": "Canva에서 공유와 공개 보기 링크를 선택해 링크를 복사한 뒤 여기에 붙여넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.intro.1"
+  },
+  "926d7d1d022d": {
+    "source": "In Canva, use Share, then Public view link, and copy it.",
+    "text": "Canva에서 공유, 공개 보기 링크를 차례로 선택하고 링크를 복사하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.steps.0"
+  },
+  "ed5ad7a15560": {
+    "source": "Scan the preview to check the design opens.",
+    "text": "미리보기를 스캔해 디자인이 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.steps.2"
+  },
+  "8a2d2bdd034c": {
+    "source": "Deleting the public view link in Canva stops the code from opening the design.",
+    "text": "Canva에서 공개 보기 링크를 삭제하면 코드로 디자인을 열 수 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.payload.notes.1"
+  },
+  "ae341d3d278d": {
+    "source": "Will edits to the design show?",
+    "text": "디자인을 수정하면 반영되나요?",
+    "status": "machine",
+    "context": "qrTypes.types.canva.faqs.0.question"
+  },
+  "57048de1a621": {
+    "source": "Yes. The view link shows the current version of the design.",
+    "text": "네. 보기 링크에는 디자인의 현재 버전이 표시돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.faqs.0.answer"
+  },
+  "0058588a8380": {
+    "source": "Open an app's page on the App Store.",
+    "text": "App Store의 앱 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.summary"
+  },
+  "3e67b23ec510": {
+    "source": "Make an App Store QR code that opens your iPhone or iPad app's page, or its review form. Paste the link or app ID. Free.",
+    "text": "iPhone 또는 iPad 앱의 페이지나 리뷰 양식을 여는 App Store QR 코드를 만드세요. 링크나 앱 ID를 붙여넣기만 하면 돼요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.metaDescription"
+  },
+  "1f02960e7dd4": {
+    "source": "An App Store QR code opens your app's page, so people download it from a poster, packaging or your shop counter.",
+    "text": "App Store QR 코드는 앱 페이지를 열어서, 포스터나 포장, 매장 카운터에서 바로 앱을 다운로드할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.intro.0"
+  },
+  "a70e140dbbc0": {
+    "source": "Paste the app's apps.apple.com link, or type its ID (the number after id). Turn on 'Open the review form' to add Apple's write-review action to the link.",
+    "text": "앱의 apps.apple.com 링크를 붙여넣거나 ID(id 뒤의 숫자)를 입력하세요. 'Open the review form'을 켜면 링크에 Apple의 리뷰 작성 동작이 추가돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.intro.1"
+  },
+  "4fd8122bbe24": {
+    "source": "Copy your app's link from the App Store, or find its ID in App Store Connect.",
+    "text": "App Store에서 앱 링크를 복사하거나 App Store Connect에서 앱 ID를 찾으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.0"
+  },
+  "3c441fcc1e32": {
+    "source": "Paste it here; turn on the review form if you're asking for ratings.",
+    "text": "여기에 붙여넣고, 평점을 요청하려면 리뷰 양식을 켜세요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.1"
+  },
+  "ac0b8a0a86af": {
+    "source": "Scan the preview on an iPhone to check it opens.",
+    "text": "iPhone으로 미리보기를 스캔해 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.2"
+  },
+  "e8605d57a3db": {
+    "source": "action=write-review is Apple's documented link to an app's review form.",
+    "text": "action=write-review는 앱의 리뷰 양식으로 연결되는 Apple 공식 링크 방식이에요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.payload.notes.0"
+  },
+  "8cc9ee625d41": {
+    "source": "For one code that offers both stores, make a hosted app page instead.",
+    "text": "두 스토어를 하나의 코드로 안내하려면 호스팅 앱 페이지를 대신 만드세요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.payload.notes.1"
+  },
+  "a59f41936141": {
+    "source": "What happens on Android?",
+    "text": "Android에서는 어떻게 되나요?",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.faqs.0.question"
+  },
+  "eae8e131215d": {
+    "source": "The App Store page opens in the browser. Print a Google Play code next to it for Android.",
+    "text": "App Store 페이지가 브라우저에서 열려요. Android용으로는 Google Play 코드를 옆에 함께 인쇄하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.faqs.0.answer"
+  },
+  "53118d3f8b57": {
+    "source": "Open an Android app's page on Google Play.",
+    "text": "Google Play에서 Android 앱 페이지를 열어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.summary"
+  },
+  "3da7b88ce937": {
+    "source": "Create a Google Play QR code that opens your Android app's store page. Paste the link or type the package name. Free, no signup.",
+    "text": "Android 앱의 스토어 페이지를 여는 Google Play QR 코드를 만들어 보세요. 링크를 붙여 넣거나 패키지 이름을 입력하면 돼요. 무료이며 가입이 필요 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.metaDescription"
+  },
+  "6bed22f3b1f7": {
+    "source": "A Google Play QR code opens your Android app's page in the Play Store, so people install it from a poster, packaging or a shop counter.",
+    "text": "Google Play QR 코드는 Play 스토어의 Android 앱 페이지를 열어 줘요. 포스터, 포장재, 매장 계산대에서 바로 앱을 설치할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.intro.0"
+  },
+  "ac8cb03b5c94": {
+    "source": "Type the app's package name (like com.example.app) and QRdx builds Google's documented store link, or paste the play.google.com link.",
+    "text": "앱의 패키지 이름(예: com.example.app)을 입력하면 QRdx가 Google에서 공개한 스토어 링크를 만들어요. play.google.com 링크를 붙여 넣어도 돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.intro.1"
+  },
+  "768dfa2ceb09": {
+    "source": "Enter the package name, or paste the app's Google Play link.",
+    "text": "패키지 이름을 입력하거나 앱의 Google Play 링크를 붙여 넣으세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.steps.0"
+  },
+  "e7410f3caeb2": {
+    "source": "Scan the preview on an Android phone to check it opens.",
+    "text": "Android 휴대폰으로 미리보기를 스캔해서 제대로 열리는지 확인하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.steps.1"
+  },
+  "4377d1fc2323": {
+    "source": "Package names have two or more parts separated by dots, each starting with a letter.",
+    "text": "패키지 이름은 점으로 구분된 두 개 이상의 부분으로 이루어지며, 각 부분은 문자로 시작해야 해요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.payload.notes.0"
+  },
+  "aef02ca8a480": {
+    "source": "A developer page link (store/apps/dev?id=…) works too.",
+    "text": "개발자 페이지 링크(store/apps/dev?id=…)도 사용할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.payload.notes.1"
+  },
+  "5832dc22413b": {
+    "source": "Can the code open the review form?",
+    "text": "QR 코드로 리뷰 작성 양식을 열 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.faqs.0.question"
+  },
+  "52db9b599b5d": {
+    "source": "Google Play has no link to its review form; people rate an app from its store page or inside the app.",
+    "text": "Google Play에는 리뷰 작성 양식으로 바로 연결되는 링크가 없어요. 사용자는 스토어 페이지나 앱 안에서 평점을 남겨요.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.faqs.0.answer"
   },
   "74da95f9087d": {
     "source": "Share a contact in a smaller code than a vCard.",
@@ -23969,6 +27077,120 @@
     "status": "machine",
     "context": "pageCodes.on-tickets-4.label"
   },
+  "6e5c991e833a": {
+    "source": "Shop help",
+    "text": "쇼핑 문의",
+    "status": "machine",
+    "context": "pageCodes.type-messenger-2.label"
+  },
+  "0a30a815d67d": {
+    "source": "Page",
+    "text": "페이지",
+    "status": "machine",
+    "context": "pageCodes.type-messenger-4.label"
+  },
+  "97368f46f6c6": {
+    "source": "Customer help",
+    "text": "고객 지원",
+    "status": "machine",
+    "context": "pageCodes.type-viber-1.label"
+  },
+  "b7e8acdd522e": {
+    "source": "Orders",
+    "text": "주문",
+    "status": "machine",
+    "context": "pageCodes.type-viber-3.label"
+  },
+  "0600175af842": {
+    "source": "Open chat",
+    "text": "오픈 채팅",
+    "status": "machine",
+    "context": "pageCodes.type-kakaotalk-1.label"
+  },
+  "9c298662a4d6": {
+    "source": "Event chat",
+    "text": "이벤트 채팅",
+    "status": "machine",
+    "context": "pageCodes.type-kakaotalk-3.label"
+  },
+  "25696507596f": {
+    "source": "Official Account",
+    "text": "공식 계정",
+    "status": "machine",
+    "context": "pageCodes.type-zalo-1.label"
+  },
+  "4bec608656df": {
+    "source": "Call me",
+    "text": "전화하기",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-1.label"
+  },
+  "a8bf69b80f2b": {
+    "source": "Studio call",
+    "text": "스튜디오 통화",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-2.label"
+  },
+  "847814d9f5f9": {
+    "source": "Family call",
+    "text": "가족 통화",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-3.label"
+  },
+  "3689f6ebdd46": {
+    "source": "Team meeting",
+    "text": "팀 회의",
+    "status": "machine",
+    "context": "pageCodes.type-microsoft-teams-1.label"
+  },
+  "36a798e3f392": {
+    "source": "Training",
+    "text": "교육",
+    "status": "machine",
+    "context": "pageCodes.type-microsoft-teams-4.label"
+  },
+  "e50569ed429c": {
+    "source": "Personal room",
+    "text": "개인 회의실",
+    "status": "machine",
+    "context": "pageCodes.type-webex-2.label"
+  },
+  "3751e73247f6": {
+    "source": "All-hands",
+    "text": "전체 회의",
+    "status": "machine",
+    "context": "pageCodes.type-webex-3.label"
+  },
+  "8b8b8871bbfb": {
+    "source": "Meeting",
+    "text": "회의",
+    "status": "machine",
+    "context": "pageCodes.type-webex-4.label"
+  },
+  "948e03e7054b": {
+    "source": "Booking",
+    "text": "예약",
+    "status": "machine",
+    "context": "pageCodes.type-calendly-4.label"
+  },
+  "6c0f6d250287": {
+    "source": "First day",
+    "text": "첫 수업",
+    "status": "machine",
+    "context": "pageCodes.type-google-classroom-1.label"
+  },
+  "642d071893ea": {
+    "source": "Classroom door",
+    "text": "교실 문",
+    "status": "machine",
+    "context": "pageCodes.type-google-classroom-2.label"
+  },
+  "00ea63f88347": {
+    "source": "Shop page",
+    "text": "쇼핑몰 페이지",
+    "status": "machine",
+    "context": "pageCodes.type-vk-2.label"
+  },
   "3d33dc0484e1": {
     "source": "Name badge",
     "text": "명찰",
@@ -23986,6 +27208,36 @@
     "text": "전단지",
     "status": "machine",
     "context": "pageCodes.type-mecard-4.label"
+  },
+  "0072e6b93494": {
+    "source": "Design",
+    "text": "디자인",
+    "status": "machine",
+    "context": "pageCodes.type-canva-4.label"
+  },
+  "d6eafe823591": {
+    "source": "Download",
+    "text": "다운로드",
+    "status": "machine",
+    "context": "pageCodes.type-app-store-1.label"
+  },
+  "190a69421640": {
+    "source": "Rate us",
+    "text": "평점 남기기",
+    "status": "machine",
+    "context": "pageCodes.type-app-store-2.label"
+  },
+  "960618202242": {
+    "source": "Store counter",
+    "text": "매장 카운터",
+    "status": "machine",
+    "context": "pageCodes.type-google-play-3.label"
+  },
+  "174c7bd1b3f7": {
+    "source": "Hotel desk",
+    "text": "호텔 데스크",
+    "status": "machine",
+    "context": "pageCodes.type-tripadvisor-2.label"
   },
   "0432f20a0f65": {
     "source": "Table menu",
@@ -24473,6 +27725,42 @@
     "status": "machine",
     "context": "pageCodes.for-salons-4.label"
   },
+  "f4830a1dae29": {
+    "source": "Schedule",
+    "text": "일정표",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-3.label"
+  },
+  "f3befcc6b14e": {
+    "source": "Spreadsheet",
+    "text": "스프레드시트",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-4.label"
+  },
+  "1799ee8d33d6": {
+    "source": "Class deck",
+    "text": "수업 자료",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-2.label"
+  },
+  "6af11cc59404": {
+    "source": "Pitch",
+    "text": "피치",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-3.label"
+  },
+  "5d5ee1577500": {
+    "source": "Presentation",
+    "text": "프레젠테이션",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-4.label"
+  },
+  "3cc08ebe9d5f": {
+    "source": "Sign-up",
+    "text": "가입 신청",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-1.label"
+  },
   "3a08dec415e7": {
     "source": "Class timetable",
     "text": "수업 시간표",
@@ -24623,6 +27911,18 @@
     "status": "machine",
     "context": "pageCodes.on-business-cards-2.label"
   },
+  "cb98674f4d96": {
+    "source": "Exhibition",
+    "text": "전시회",
+    "status": "machine",
+    "context": "pageCodes.type-behance-3.label"
+  },
+  "04e2a9728af7": {
+    "source": "Projects",
+    "text": "프로젝트",
+    "status": "machine",
+    "context": "pageCodes.type-behance-4.label"
+  },
   "14a6d239da60": {
     "source": "2-for-1",
     "text": "2+1 행사",
@@ -24664,6 +27964,60 @@
     "text": "둘러보기",
     "status": "machine",
     "context": "pageCodes.on-brochures-2.label"
+  },
+  "fc7f1aa2054c": {
+    "source": "Listing",
+    "text": "등록 정보",
+    "status": "machine",
+    "context": "pageCodes.type-tripadvisor-4.label"
+  },
+  "6846c19a5714": {
+    "source": "Packing slip",
+    "text": "포장 명세서",
+    "status": "machine",
+    "context": "pageCodes.type-trustpilot-3.label"
+  },
+  "19734a1b58ca": {
+    "source": "Window",
+    "text": "쇼윈도",
+    "status": "machine",
+    "context": "pageCodes.type-yelp-3.label"
+  },
+  "99cf4b5719d6": {
+    "source": "Welcome book",
+    "text": "웰컴 북",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-1.label"
+  },
+  "29f3df617cba": {
+    "source": "Book again",
+    "text": "다시 예약",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-2.label"
+  },
+  "8eab0f09df01": {
+    "source": "Experience",
+    "text": "체험",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-3.label"
+  },
+  "e6aa9b5b8581": {
+    "source": "Front desk",
+    "text": "프런트 데스크",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-1.label"
+  },
+  "a12b6221b64a": {
+    "source": "Guest book",
+    "text": "방명록",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-2.label"
+  },
+  "40040cb181f7": {
+    "source": "Property",
+    "text": "숙소",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-4.label"
   },
   "015b4e0a76e5": {
     "source": "Specifications",
@@ -24827,6 +28181,30 @@
     "status": "machine",
     "context": "pageCodes.on-receipts-4.label"
   },
+  "03aa7dc16797": {
+    "source": "Quiz",
+    "text": "퀴즈",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-3.label"
+  },
+  "2e0e960ab320": {
+    "source": "Form",
+    "text": "양식",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-4.label"
+  },
+  "63ec69fde300": {
+    "source": "Wiki",
+    "text": "위키",
+    "status": "machine",
+    "context": "pageCodes.type-notion-1.label"
+  },
+  "5e3e3c190185": {
+    "source": "Event guide",
+    "text": "행사 안내",
+    "status": "machine",
+    "context": "pageCodes.type-notion-2.label"
+  },
   "e888155d8c7d": {
     "source": "Compare",
     "text": "비교하기",
@@ -24970,6 +28348,42 @@
     "text": "이력서",
     "status": "machine",
     "context": "hostedTypes.resume.name"
+  },
+  "2bce1f4a654f": {
+    "source": "Shots",
+    "text": "샷 모음",
+    "status": "machine",
+    "context": "pageCodes.type-dribbble-4.label"
+  },
+  "c74a09f295d9": {
+    "source": "Band poster",
+    "text": "밴드 포스터",
+    "status": "machine",
+    "context": "pageCodes.type-linktree-3.label"
+  },
+  "9feceb9333b5": {
+    "source": "Membership",
+    "text": "멤버십",
+    "status": "machine",
+    "context": "pageCodes.type-patreon-1.label"
+  },
+  "1eec3071dd26": {
+    "source": "Stream",
+    "text": "스트림",
+    "status": "machine",
+    "context": "pageCodes.type-kofi-2.label"
+  },
+  "faa075c3a741": {
+    "source": "Commissions",
+    "text": "커미션",
+    "status": "machine",
+    "context": "pageCodes.type-kofi-3.label"
+  },
+  "74e8801e4926": {
+    "source": "New single",
+    "text": "신곡",
+    "status": "machine",
+    "context": "pageCodes.type-apple-music-1.label"
   },
   "7d41961e2188": {
     "source": "Resume and CV QR Code Generator",
@@ -27659,6 +31073,90 @@
     "status": "machine",
     "context": "templates.event.label"
   },
+  "c3a7b99442dc": {
+    "source": "Brand page",
+    "text": "브랜드 페이지",
+    "status": "machine",
+    "context": "pageCodes.type-weibo-2.label"
+  },
+  "ccf56ef5db0b": {
+    "source": "Launch",
+    "text": "출시",
+    "status": "machine",
+    "context": "pageCodes.type-weibo-3.label"
+  },
+  "8c6bc099534a": {
+    "source": "Blog",
+    "text": "블로그",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-1.label"
+  },
+  "62bfe02804a0": {
+    "source": "Zine",
+    "text": "진",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-2.label"
+  },
+  "0cea784f9901": {
+    "source": "Art blog",
+    "text": "아트 블로그",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-3.label"
+  },
+  "a80811cf6889": {
+    "source": "Posts",
+    "text": "게시물",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-4.label"
+  },
+  "29d94922512b": {
+    "source": "Article",
+    "text": "아티클",
+    "status": "machine",
+    "context": "pageCodes.type-medium-1.label"
+  },
+  "d95082a2ee57": {
+    "source": "Author",
+    "text": "작가",
+    "status": "machine",
+    "context": "pageCodes.type-medium-3.label"
+  },
+  "6d09cf574882": {
+    "source": "Stories",
+    "text": "스토리",
+    "status": "machine",
+    "context": "pageCodes.type-medium-4.label"
+  },
+  "f84ca2e7716b": {
+    "source": "Newsletter",
+    "text": "뉴스레터",
+    "status": "machine",
+    "context": "pageCodes.type-substack-1.label"
+  },
+  "560401f3f20f": {
+    "source": "Book table",
+    "text": "테이블 예약",
+    "status": "machine",
+    "context": "pageCodes.type-substack-3.label"
+  },
+  "15fc65b69327": {
+    "source": "Publication",
+    "text": "뉴스레터",
+    "status": "machine",
+    "context": "pageCodes.type-substack-4.label"
+  },
+  "13d6ff07b8a5": {
+    "source": "Repository",
+    "text": "리포지토리",
+    "status": "machine",
+    "context": "pageCodes.type-github-1.label"
+  },
+  "419a866e5bf3": {
+    "source": "Talk slide",
+    "text": "발표 슬라이드",
+    "status": "machine",
+    "context": "pageCodes.type-github-2.label"
+  },
   "a66124dde0e9": {
     "source": "Date, venue, tickets and add-to-calendar for an event",
     "text": "이벤트의 날짜, 장소, 티켓, 캘린더 추가",
@@ -28211,6 +31709,12 @@
     "status": "machine",
     "context": "templates.pdf.variants.document.name"
   },
+  "d92bcca77171": {
+    "source": "Sign-up sheet",
+    "text": "참가 신청서",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-1.label"
+  },
   "9cb55ffd93d1": {
     "source": "A guide or manual, front and center",
     "text": "가이드나 설명서를 가장 눈에 띄게",
@@ -28313,6 +31817,12 @@
     "status": "machine",
     "context": "templates.mp3.variants.album.name"
   },
+  "051f01f095a2": {
+    "source": "Track",
+    "text": "트랙",
+    "status": "machine",
+    "context": "pageCodes.type-apple-music-4.label"
+  },
   "f10cf3d63108": {
     "source": "Cover art, a playlist and your profiles",
     "text": "커버 아트, 플레이리스트, 내 프로필을 보여줘요",
@@ -28396,6 +31906,84 @@
     "text": "믹스테이프",
     "status": "machine",
     "context": "templates.playlist.variants.mixtape.name"
+  },
+  "b19c450b47d6": {
+    "source": "Episode",
+    "text": "에피소드",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-2.label"
+  },
+  "dd40d8d1bff8": {
+    "source": "Live taping",
+    "text": "공개 녹음",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-3.label"
+  },
+  "0df6f1cad36c": {
+    "source": "Show",
+    "text": "프로그램",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-4.label"
+  },
+  "74203ab8388c": {
+    "source": "Merch tag",
+    "text": "굿즈 태그",
+    "status": "machine",
+    "context": "pageCodes.type-amazon-music-3.label"
+  },
+  "79ac1952b567": {
+    "source": "New release",
+    "text": "신규 발매",
+    "status": "machine",
+    "context": "pageCodes.type-deezer-1.label"
+  },
+  "dfa82f21b3f3": {
+    "source": "Party",
+    "text": "파티",
+    "status": "machine",
+    "context": "pageCodes.type-deezer-2.label"
+  },
+  "71ab02f6fd29": {
+    "source": "Listening bar",
+    "text": "리스닝 바",
+    "status": "machine",
+    "context": "pageCodes.type-tidal-2.label"
+  },
+  "8888a029aaf6": {
+    "source": "Single",
+    "text": "싱글",
+    "status": "machine",
+    "context": "pageCodes.type-tidal-3.label"
+  },
+  "bfdd510698ef": {
+    "source": "Record",
+    "text": "음반",
+    "status": "machine",
+    "context": "pageCodes.type-bandcamp-3.label"
+  },
+  "1d3981ba1e18": {
+    "source": "Artist",
+    "text": "아티스트",
+    "status": "machine",
+    "context": "pageCodes.type-bandcamp-4.label"
+  },
+  "f84806199588": {
+    "source": "Handout",
+    "text": "배포 자료",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-1.label"
+  },
+  "9e6c24f51918": {
+    "source": "Meeting notes",
+    "text": "회의록",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-2.label"
+  },
+  "934652dce41d": {
+    "source": "Instructions",
+    "text": "이용 안내",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-3.label"
   },
   "fae3b174bf21": {
     "source": "Cover art, the tracklist and where else to listen",
@@ -34037,12 +37625,6 @@
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "코드를 PNG, WebP 또는 SVG로 다운로드하세요.",
-    "status": "machine",
-    "context": "qrTypes.types.text.steps.3"
-  },
   "0135740ce7f9": {
     "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
     "text": "한 번의 스캔으로 손님이 네트워크에 연결되는 Wi-Fi QR 코드를 만들어 보세요. WPA/WPA2, WEP, 개방형 네트워크, 숨김 SSID, 올바른 이스케이프를 지원해요. 무료예요.",
@@ -34060,12 +37642,6 @@
     "text": "네트워크 이름이 정확히 일치하는지(대소문자를 구분해요), 보안 유형이 맞는지, 신호가 닿는 범위 안에 있는지 확인하세요. 사용자 이름이나 인증서가 필요한 기업용 네트워크(WPA2-Enterprise)는 이 형식에서 지원하지 않아요.",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.answer"
-  },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "PNG, WebP 또는 SVG로 다운로드하거나, 전체 편집기에서 코드를 꾸며 보세요.",
-    "status": "machine",
-    "context": "qrTypes.types.instagram.steps.3"
   },
   "da2ccbd9fdc4": {
     "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",

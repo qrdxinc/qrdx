@@ -34,6 +34,8 @@ export {
   WazeForm,
   ZoomForm,
 } from "./link-forms";
+// Added 2026-11-22 (links)
+export { LINK_TYPE_FORM_COMPONENTS } from "./link-type-forms";
 export { LinkedInForm } from "./linkedin-form";
 export { MapsForm } from "./maps-form";
 // Added 2026-11-22 (payments)

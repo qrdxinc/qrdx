@@ -69,12 +69,15 @@ function connect(url) {
 
 /**
  * Starts Chrome and returns a page driver. Call `close()` when done.
- * @param {{ width?: number; height?: number; downloadDir?: string }} [options]
+ * @param {{ width?: number; height?: number; downloadDir?: string; args?: string[] }} [options]
+ *   `args`: extra Chrome flags, such as a fake camera
+ *   (`--use-fake-device-for-media-stream`, `--use-file-for-fake-video-capture=<file>`).
  */
 export async function launch({
   width = 1440,
   height = 1000,
   downloadDir,
+  args = [],
 } = {}) {
   const chromePath = findChrome();
   if (!chromePath) throw new Error("Chrome not found (set CHROME_PATH)");
@@ -95,6 +98,7 @@ export async function launch({
       "--no-default-browser-check",
       "--disable-extensions",
       "--disable-gpu",
+      ...args,
       "about:blank",
     ],
     { stdio: "ignore" },

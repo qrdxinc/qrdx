@@ -27,6 +27,7 @@ import {
   googleReviewSchema,
   instagramSchema,
   khqrSchema,
+  LINK_TYPE_SCHEMAS,
   lightningSchema,
   lineSchema,
   linkedinSchema,
@@ -151,6 +152,8 @@ export const CONTENT_FORM_SCHEMAS = {
   tron: tronSchema,
   ton: tonSchema,
   stellar: stellarSchema,
+  // Added 2026-11-22 (links)
+  ...LINK_TYPE_SCHEMAS,
 } satisfies Record<ContentType, z.ZodType>;
 
 export const CONTENT_TYPE_IDS = Object.keys(CONTENT_FORM_SCHEMAS) as [
@@ -266,14 +269,15 @@ const BOOLEAN_FIELD_NAMES = new Set(
 );
 
 const FIELD_DESCRIPTIONS: Record<string, string> = {
-  url: "Web address (url, google-drive); website (vcard, mecard)",
+  url: "Web address (url, google-drive); website (vcard, mecard); the link copied from the app or site (documents, forms, music, listings, meetings, vk, weibo, kakaotalk, zalo; a FaceTime link; a Teams meeting link)",
   text: "Plain text",
   recipient: "Email address (comma-separate several)",
   subject: "Email subject",
   body: "Email body",
-  phoneNumber: "Phone number, international format, e.g. +14155550123",
+  phoneNumber:
+    "Phone number, international format, e.g. +14155550123 (a Viber Business number for viber)",
   message:
-    "Prefilled message (sms, whatsapp) or payment message (bitcoin, crypto, pix, vietqr)",
+    "Prefilled message (sms, whatsapp, viber, microsoft-teams) or payment message (bitcoin, crypto, pix, vietqr)",
   ssid: "Wi-Fi network name",
   password: "Wi-Fi password (8-63 characters for WPA)",
   encryption:
@@ -348,7 +352,17 @@ const FIELD_DESCRIPTIONS: Record<string, string> = {
   bankBin: "The bank's 6-digit BIN (vietqr)",
   accountType: "account or card (vietqr)",
   accountNumber: "Bank account or card number (vietqr)",
-  link: "signal.me username link or signal.group link (signal)",
+  link: "signal.me username link or signal.group link (signal); community or channel invite link (viber)",
+  // Added 2026-11-22 (links)
+  users:
+    "Work or school email addresses to chat with, comma-separated (microsoft-teams)",
+  contact: "Phone number or Apple Account email to call (facetime)",
+  audioOnly: "Audio call instead of video (facetime), default false",
+  app: "App Store link or app ID (app-store); Google Play link or package name (google-play)",
+  writeReview:
+    "Open the write-a-review form: app-store default false, trustpilot default true",
+  website:
+    "The business's website domain, without https:// (trustpilot), or its Trustpilot link",
   invite: "Discord invite link or code",
   handle: "Handle: alice.bsky.social (bluesky) or @alice@mastodon.social",
   meeting: "Meeting ID or invite link (zoom), or meeting code (google-meet)",
@@ -356,7 +370,7 @@ const FIELD_DESCRIPTIONS: Record<string, string> = {
   location: "Address or 'lat,long'",
   profileUrl: "Profile URL",
   username:
-    "Username or handle; LINE ID (line), $Cashtag (cashapp), SoundCloud profile or link",
+    "Username or handle, or a profile link; LINE ID (line), $Cashtag (cashapp), SoundCloud profile or link, owner/repo (github), publication name (substack, bandcamp)",
   subreddit: "Subreddit name",
   channelUrl: "YouTube channel URL",
   videoUrl: "YouTube video URL",

@@ -72,7 +72,16 @@ export type ContentType =
   | "cardano"
   | "tron"
   | "ton"
-  | "stellar";
+  | "stellar"
+  // Added 2026-11-22 (links)
+  | HandleLinkType
+  | PastedLinkType
+  | "viber"
+  | "microsoft-teams"
+  | "facetime"
+  | "app-store"
+  | "google-play"
+  | "trustpilot";
 
 /**
  * URL/Plain Text Content
@@ -733,6 +742,119 @@ export interface StellarContent {
 }
 
 // ─── end of the 2026-11-22 (payments) types ─────────────────────────────────
+// ─── Added 2026-11-22 (links) ───────────────────────────────────────────────
+// Link and app types. utils/link-types.ts checks and builds each one.
+
+/** Types that take a username or handle, or a pasted profile link. */
+export type HandleLinkType =
+  | "messenger"
+  | "tumblr"
+  | "medium"
+  | "substack"
+  | "behance"
+  | "dribbble"
+  | "github"
+  | "patreon"
+  | "kofi"
+  | "buymeacoffee"
+  | "linktree"
+  | "bandcamp"
+  | "calendly";
+
+/** Types that take a link copied from the app or site. */
+export type PastedLinkType =
+  | "kakaotalk"
+  | "zalo"
+  | "webex"
+  | "vk"
+  | "weibo"
+  | "canva"
+  | "notion"
+  | "apple-music"
+  | "apple-podcasts"
+  | "deezer"
+  | "tidal"
+  | "youtube-music"
+  | "amazon-music"
+  | "google-forms"
+  | "google-docs"
+  | "google-sheets"
+  | "google-slides"
+  | "google-classroom"
+  | "microsoft-forms"
+  | "tripadvisor"
+  | "yelp"
+  | "airbnb"
+  | "booking-com";
+
+/** One content shape per type in `T` (so each keeps its own literal `type`). */
+type ContentOf<T extends string, Fields> = T extends string
+  ? { type: T } & Fields
+  : never;
+
+/** A profile on a service: a username typed, or a profile link pasted. */
+export type HandleLinkContent = ContentOf<HandleLinkType, { username: string }>;
+
+/** A link from the app or site: a document, form, track, listing or meeting. */
+export type PastedLinkContent = ContentOf<PastedLinkType, { url: string }>;
+
+/** Viber: a chat with a business number, or a community or channel link. */
+export interface ViberContent {
+  type: "viber";
+  /** A Viber Business account's number (viber.me links) */
+  phoneNumber?: string;
+  /** Text the chat opens with */
+  message?: string;
+  /** A community or channel invite link from the app */
+  link?: string;
+}
+
+/** Microsoft Teams: a meeting link, or a chat with people by email. */
+export interface MicrosoftTeamsContent {
+  type: "microsoft-teams";
+  url?: string;
+  /** Work or school email addresses, comma-separated */
+  users?: string;
+  message?: string;
+}
+
+/** FaceTime: a call to a phone number or Apple Account email, or a link. */
+export interface FaceTimeContent {
+  type: "facetime";
+  /** Phone number or email (calls from Apple devices) */
+  contact?: string;
+  /** A facetime.apple.com link (opens on any phone, in the browser too) */
+  url?: string;
+  /** Audio call instead of video (default no) */
+  audioOnly?: boolean;
+}
+
+/** App Store: an app's page, by its link or ID. */
+export interface AppStoreContent {
+  type: "app-store";
+  /** apps.apple.com link, or the app ID (id123456789) */
+  app: string;
+  /** Open the "write a review" sheet (default no) */
+  writeReview?: boolean;
+}
+
+/** Google Play: an app's page, by its link or package name. */
+export interface GooglePlayContent {
+  type: "google-play";
+  /** play.google.com link, or the package name (com.example.app) */
+  app: string;
+}
+
+/** Trustpilot: a business's review page, by its website domain. */
+export interface TrustpilotContent {
+  type: "trustpilot";
+  /** The website's domain (example.com), or a trustpilot.com link */
+  website: string;
+  /** Open the "write a review" page (default yes) */
+  writeReview?: boolean;
+}
+
+// ─── end of the 2026-11-22 (links) types ────────────────────────────────────
 
 /**
  * Union type for all content configurations
@@ -805,7 +927,16 @@ export type QRContentConfig =
   | CardanoContent
   | TronContent
   | TonContent
-  | StellarContent;
+  | StellarContent
+  // Added 2026-11-22 (links)
+  | HandleLinkContent
+  | PastedLinkContent
+  | ViberContent
+  | MicrosoftTeamsContent
+  | FaceTimeContent
+  | AppStoreContent
+  | GooglePlayContent
+  | TrustpilotContent;
 
 /**
  * Content type metadata for UI rendering
@@ -1407,6 +1538,301 @@ export const CONTENT_TYPES_METADATA: ContentTypeMetadata[] = [
     description: "Receive XLM or USDC on Stellar",
     keywords: ["xlm", "lumens", "usdc", "sep-7", "crypto", "wallet"],
   },
+  // ─── Added 2026-11-22 (links) ─────────────────────────────────────────────
+  {
+    type: "messenger",
+    label: "Messenger",
+    icon: "brand:messenger",
+    description: "Start a Messenger chat with you",
+    keywords: ["facebook messenger", "m.me", "meta", "chat", "message"],
+  },
+  {
+    type: "viber",
+    label: "Viber",
+    icon: "brand:viber",
+    description: "Open a Viber business chat or community",
+    keywords: ["chat", "message", "community", "channel"],
+  },
+  {
+    type: "kakaotalk",
+    label: "KakaoTalk",
+    icon: "brand:kakaotalk",
+    description: "Open a KakaoTalk open chat or channel",
+    keywords: ["kakao", "open chat", "channel", "korea", "chat"],
+  },
+  {
+    type: "zalo",
+    label: "Zalo",
+    icon: "brand:zalo",
+    description: "Open a Zalo Official Account or group",
+    keywords: ["vietnam", "official account", "oa", "chat", "message"],
+  },
+  {
+    type: "facetime",
+    label: "FaceTime",
+    icon: "Video",
+    description: "Start a FaceTime call",
+    keywords: ["video call", "call", "apple", "iphone", "audio call"],
+  },
+  {
+    type: "microsoft-teams",
+    label: "Microsoft Teams",
+    icon: "People",
+    description: "Join a Teams meeting or start a chat",
+    keywords: ["teams", "meeting", "video call", "chat", "microsoft"],
+  },
+  {
+    type: "webex",
+    label: "Webex",
+    icon: "brand:webex",
+    description: "Join a Webex meeting",
+    keywords: ["cisco", "meeting", "video call", "webinar"],
+  },
+  {
+    type: "calendly",
+    label: "Calendly",
+    icon: "brand:calendly",
+    description: "Let people book time with you",
+    keywords: ["booking", "meeting", "appointment", "schedule", "calendar"],
+  },
+  {
+    type: "google-classroom",
+    label: "Google Classroom",
+    icon: "brand:google-classroom",
+    description: "Invite students to a class",
+    keywords: ["class", "classroom", "school", "teacher", "students"],
+  },
+  {
+    type: "vk",
+    label: "VK",
+    icon: "brand:vk",
+    description: "Open a VK profile, page or group",
+    keywords: ["vkontakte", "vk.com", "russia", "social"],
+  },
+  {
+    type: "weibo",
+    label: "Weibo",
+    icon: "brand:weibo",
+    description: "Open a Weibo profile",
+    keywords: ["sina weibo", "china", "microblog", "social"],
+  },
+  {
+    type: "tumblr",
+    label: "Tumblr",
+    icon: "brand:tumblr",
+    description: "Open a Tumblr blog",
+    keywords: ["blog", "social"],
+  },
+  {
+    type: "medium",
+    label: "Medium",
+    icon: "brand:medium",
+    description: "Open a Medium profile or story",
+    keywords: ["blog", "articles", "writing", "publication"],
+  },
+  {
+    type: "substack",
+    label: "Substack",
+    icon: "brand:substack",
+    description: "Open a Substack newsletter",
+    keywords: ["newsletter", "subscribe", "writing", "blog"],
+  },
+  {
+    type: "github",
+    label: "GitHub",
+    icon: "brand:github",
+    description: "Open a GitHub profile or repository",
+    keywords: ["repo", "repository", "code", "open source", "developer"],
+  },
+  {
+    type: "behance",
+    label: "Behance",
+    icon: "brand:behance",
+    description: "Open a Behance portfolio",
+    keywords: ["portfolio", "design", "adobe", "creative"],
+  },
+  {
+    type: "dribbble",
+    label: "Dribbble",
+    icon: "brand:dribbble",
+    description: "Open a Dribbble portfolio",
+    keywords: ["portfolio", "design", "shots", "creative"],
+  },
+  {
+    type: "linktree",
+    label: "Linktree",
+    icon: "brand:linktree",
+    description: "Open your Linktree page",
+    keywords: ["link in bio", "linktr.ee", "links"],
+  },
+  {
+    type: "patreon",
+    label: "Patreon",
+    icon: "brand:patreon",
+    description: "Open a Patreon creator page",
+    keywords: ["membership", "support", "creator", "donate"],
+  },
+  {
+    type: "kofi",
+    label: "Ko-fi",
+    icon: "brand:kofi",
+    description: "Get tips on your Ko-fi page",
+    keywords: ["ko-fi", "tip", "tips", "donate", "support", "creator"],
+  },
+  {
+    type: "buymeacoffee",
+    label: "Buy Me a Coffee",
+    icon: "brand:buymeacoffee",
+    description: "Get tips on your Buy Me a Coffee page",
+    keywords: ["bmc", "tip", "tips", "donate", "support", "creator"],
+  },
+  {
+    type: "apple-music",
+    label: "Apple Music",
+    icon: "brand:apple-music",
+    description: "Play a song, album or playlist",
+    keywords: ["itunes", "music", "song", "album", "playlist", "apple"],
+  },
+  {
+    type: "youtube-music",
+    label: "YouTube Music",
+    icon: "brand:youtube-music",
+    description: "Play a song, album or playlist",
+    keywords: ["yt music", "music", "song", "album", "playlist"],
+  },
+  {
+    type: "apple-podcasts",
+    label: "Apple Podcasts",
+    icon: "brand:apple-podcasts",
+    description: "Open a podcast or episode",
+    keywords: ["podcast", "episode", "itunes", "apple"],
+  },
+  {
+    type: "amazon-music",
+    label: "Amazon Music",
+    icon: "MusicSquare",
+    description: "Play a song, album, playlist or podcast",
+    keywords: ["music", "song", "album", "playlist", "podcast", "prime"],
+  },
+  {
+    type: "deezer",
+    label: "Deezer",
+    icon: "brand:deezer",
+    description: "Play a track, album or playlist",
+    keywords: ["music", "song", "album", "playlist", "podcast"],
+  },
+  {
+    type: "tidal",
+    label: "TIDAL",
+    icon: "brand:tidal",
+    description: "Play a track, album or playlist",
+    keywords: ["music", "song", "album", "playlist", "hifi"],
+  },
+  {
+    type: "bandcamp",
+    label: "Bandcamp",
+    icon: "brand:bandcamp",
+    description: "Open an artist, album or track",
+    keywords: ["music", "album", "merch", "artist", "band"],
+  },
+  {
+    type: "google-docs",
+    label: "Google Docs",
+    icon: "brand:google-docs",
+    description: "Open a shared Google Doc",
+    keywords: ["docs", "document", "google drive", "file"],
+  },
+  {
+    type: "google-sheets",
+    label: "Google Sheets",
+    icon: "brand:google-sheets",
+    description: "Open a shared spreadsheet",
+    keywords: ["sheets", "spreadsheet", "excel", "google drive"],
+  },
+  {
+    type: "google-slides",
+    label: "Google Slides",
+    icon: "brand:google-slides",
+    description: "Open a shared presentation",
+    keywords: ["slides", "presentation", "deck", "google drive"],
+  },
+  {
+    type: "google-forms",
+    label: "Google Forms",
+    icon: "brand:google-forms",
+    description: "Open a Google Form",
+    keywords: ["form", "survey", "quiz", "sign-up", "forms.gle"],
+  },
+  {
+    type: "microsoft-forms",
+    label: "Microsoft Forms",
+    icon: "Task",
+    description: "Open a Microsoft Form",
+    keywords: ["form", "survey", "quiz", "office", "microsoft 365"],
+  },
+  {
+    type: "notion",
+    label: "Notion",
+    icon: "brand:notion",
+    description: "Open a public Notion page",
+    keywords: ["page", "wiki", "docs", "notion.site"],
+  },
+  {
+    type: "canva",
+    label: "Canva",
+    icon: "Brush2",
+    description: "Open a shared Canva design",
+    keywords: ["design", "presentation", "flyer", "poster", "view"],
+  },
+  {
+    type: "app-store",
+    label: "App Store",
+    icon: "brand:app-store",
+    description: "Open an iPhone app's App Store page",
+    keywords: ["ios", "iphone", "ipad", "apple", "app", "download"],
+  },
+  {
+    type: "google-play",
+    label: "Google Play",
+    icon: "brand:google-play",
+    description: "Open an Android app's Google Play page",
+    keywords: ["android", "play store", "app", "download"],
+  },
+  {
+    type: "tripadvisor",
+    label: "Tripadvisor",
+    icon: "brand:tripadvisor",
+    description: "Open your Tripadvisor listing",
+    keywords: ["reviews", "hotel", "restaurant", "travel", "attraction"],
+  },
+  {
+    type: "trustpilot",
+    label: "Trustpilot",
+    icon: "brand:trustpilot",
+    description: "Ask customers for a Trustpilot review",
+    keywords: ["review", "reviews", "rating", "feedback"],
+  },
+  {
+    type: "yelp",
+    label: "Yelp",
+    icon: "brand:yelp",
+    description: "Open your Yelp business page",
+    keywords: ["reviews", "restaurant", "local business"],
+  },
+  {
+    type: "airbnb",
+    label: "Airbnb",
+    icon: "brand:airbnb",
+    description: "Open an Airbnb listing or experience",
+    keywords: ["rental", "stay", "host", "listing", "travel"],
+  },
+  {
+    type: "booking-com",
+    label: "Booking.com",
+    icon: "brand:booking-com",
+    description: "Open your Booking.com property page",
+    keywords: ["booking", "hotel", "property", "stay", "travel"],
+  },
 ];
 
 /**
@@ -1441,7 +1867,22 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
     id: "links",
     label: "Links & files",
     icon: "Link",
-    types: ["url", "text", "google-drive", "dubsh"],
+    types: [
+      "url",
+      "text",
+      "google-drive",
+      "dubsh",
+      // Added 2026-11-22 (links)
+      "google-docs",
+      "google-sheets",
+      "google-slides",
+      "google-forms",
+      "microsoft-forms",
+      "notion",
+      "canva",
+      "app-store",
+      "google-play",
+    ],
   },
   {
     id: "connect",
@@ -1459,6 +1900,12 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
       "line",
       // Added 2026-11-22 (payments)
       "mecard",
+      // Added 2026-11-22 (links)
+      "messenger",
+      "viber",
+      "kakaotalk",
+      "zalo",
+      "facetime",
     ],
   },
   {
@@ -1476,12 +1923,40 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
       "snapchat",
       "pinterest",
       "reddit",
-      "spotify",
       "discord",
       "bluesky",
       "mastodon",
       "twitch",
+      // Added 2026-11-22 (links)
+      "vk",
+      "weibo",
+      "tumblr",
+      "medium",
+      "substack",
+      "github",
+      "behance",
+      "dribbble",
+      "linktree",
+      "patreon",
+      "kofi",
+      "buymeacoffee",
+    ],
+  },
+  // Added 2026-11-22 (links): Spotify and SoundCloud moved here from Social
+  {
+    id: "music",
+    label: "Music & podcasts",
+    icon: "MusicPlay",
+    types: [
+      "spotify",
+      "apple-music",
+      "youtube-music",
       "soundcloud",
+      "apple-podcasts",
+      "amazon-music",
+      "deezer",
+      "tidal",
+      "bandcamp",
     ],
   },
   {
@@ -1496,6 +1971,16 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
       "waze",
       "zoom",
       "google-meet",
+      // Added 2026-11-22 (links)
+      "microsoft-teams",
+      "webex",
+      "calendly",
+      "google-classroom",
+      "tripadvisor",
+      "trustpilot",
+      "yelp",
+      "airbnb",
+      "booking-com",
     ],
   },
   {

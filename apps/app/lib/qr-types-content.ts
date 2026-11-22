@@ -1,5 +1,6 @@
 import type { ContentType } from "@/types/qr-content";
 import type { HostedTypeSlug } from "./qr-types-content-hosted";
+import { LINK_QR_TYPES } from "./qr-types-content-links";
 
 /**
  * Copy for the /qr-code-generator/[type] pages. One entry per content type the
@@ -53,19 +54,19 @@ export const QR_TYPE_GROUPS: {
     id: "utilities",
     title: "Links, text and Wi-Fi",
     description:
-      "Websites, plain text, Wi-Fi logins and links to files or short links.",
+      "Websites, plain text, Wi-Fi logins, shared documents and forms, app store pages and short links.",
   },
   {
     id: "contact",
     title: "Contact and messaging",
     description:
-      "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Signal or LINE.",
+      "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Messenger, LINE or KakaoTalk.",
   },
   {
     id: "social",
     title: "Social media and music",
     description:
-      "Send people to a profile, channel, Discord server or playlist.",
+      "Send people to a profile, channel, Discord server, newsletter, album or podcast.",
   },
   {
     id: "payments",
@@ -77,7 +78,7 @@ export const QR_TYPE_GROUPS: {
     id: "business",
     title: "Business and events",
     description:
-      "Reviews, directions, bookings, meetings and attendance check-ins.",
+      "Reviews, listings, directions, bookings, meetings, classes and attendance check-ins.",
   },
   {
     id: "shopping",
@@ -3244,6 +3245,8 @@ export const QR_TYPES: QrTypeContent[] = [
     ],
     related: ["xrp", "cardano", "solana", "ethereum"],
   },
+  // Added 2026-11-22 (links)
+  ...LINK_QR_TYPES,
 ];
 
 export const QR_TYPE_SLUGS: ContentType[] = QR_TYPES.map((t) => t.type);

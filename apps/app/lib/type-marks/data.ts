@@ -69,13 +69,10 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   snapchat: { fill: "#FFFC00", glyph: "brand:snapchat", ink: "dark" },
   pinterest: { fill: "#BD081C", glyph: "brand:pinterest" },
   reddit: { fill: "#FF4500", glyph: "brand:reddit" },
-  // Spotify's guidelines: the black logo on light colours like its green.
-  spotify: { fill: "#1ED760", glyph: "brand:spotify", ink: "dark" },
   discord: { fill: "#5865F2", glyph: "brand:discord" },
   bluesky: { fill: "#1185FE", glyph: "brand:bluesky" },
   mastodon: { fill: "#6364FF", glyph: "brand:mastodon" },
   twitch: { fill: "#9146FF", glyph: "brand:twitch" },
-  soundcloud: { fill: "#FF5500", glyph: "brand:soundcloud" },
 
   // Business
   "google-review": { fill: "#4285F4", glyph: "brand:google" },
@@ -128,6 +125,74 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   amazon: { fill: "#D48102", glyph: "ShoppingCart" },
   flipkart: { fill: "#2874F0", glyph: "Bag2" },
   etsy: { fill: "#F16521", glyph: "brand:etsy" },
+
+  // Added 2026-11-22 (links), by picker category. Simple Icons has no
+  // FaceTime, Microsoft Teams, Microsoft Forms, Amazon Music or Canva mark:
+  // those take a generic glyph on a fill near the product's own colour.
+
+  // Links & files
+  "google-docs": { fill: "#4285F4", glyph: "brand:googledocs" },
+  "google-sheets": { fill: "#34A853", glyph: "brand:googlesheets" },
+  "google-slides": { fill: "#FBBC04", glyph: "brand:googleslides" },
+  "google-forms": { fill: "#7248B9", glyph: "brand:googleforms" },
+  "microsoft-forms": { fill: "#0BA790", glyph: "TaskSquare" },
+  notion: { fill: "#000000", glyph: "brand:notion" },
+  canva: { fill: "#8E5CF0", glyph: "Gallery" },
+  "app-store": { fill: "#0D96F6", glyph: "brand:appstore" },
+  "google-play": { fill: "#414141", glyph: "brand:googleplay" },
+
+  // Contact & connect
+  messenger: { fill: "#0866FF", glyph: "brand:messenger" },
+  viber: { fill: "#7360F2", glyph: "brand:viber" },
+  // KakaoTalk's icon draws its speech bubble dark on the yellow.
+  kakaotalk: { fill: "#FFCD00", glyph: "brand:kakaotalk", ink: "dark" },
+  zalo: { fill: "#0068FF", glyph: "brand:zalo" },
+  // FaceTime's green is the Phone app's green.
+  facetime: { fill: "#18AB4D", glyph: "Video" },
+
+  // Social & media
+  vk: { fill: "#0077FF", glyph: "brand:vk" },
+  weibo: { fill: "#E6162D", glyph: "brand:sinaweibo" },
+  tumblr: { fill: "#36465D", glyph: "brand:tumblr" },
+  medium: { fill: "#000000", glyph: "brand:medium" },
+  substack: { fill: "#FF6719", glyph: "brand:substack" },
+  github: { fill: "#181717", glyph: "brand:github" },
+  behance: { fill: "#1769FF", glyph: "brand:behance" },
+  dribbble: { fill: "#EA4C89", glyph: "brand:dribbble" },
+  // Linktree's icon draws its mark in black on the green.
+  linktree: { fill: "#43E55E", glyph: "brand:linktree", ink: "dark" },
+  patreon: { fill: "#000000", glyph: "brand:patreon" },
+  kofi: { fill: "#FF6433", glyph: "brand:kofi" },
+  // Buy Me a Coffee's icon draws its cup in black on the yellow.
+  buymeacoffee: {
+    fill: "#FFDD00",
+    glyph: "brand:buymeacoffee",
+    ink: "dark",
+  },
+
+  // Music & podcasts (Spotify and SoundCloud moved here from Social & media)
+  // Spotify's guidelines: the black logo on light colours like its green.
+  spotify: { fill: "#1ED760", glyph: "brand:spotify", ink: "dark" },
+  soundcloud: { fill: "#FF5500", glyph: "brand:soundcloud" },
+  "apple-music": { fill: "#FA243C", glyph: "brand:applemusic" },
+  "youtube-music": { fill: "#FF0000", glyph: "brand:youtubemusic" },
+  "apple-podcasts": { fill: "#9933CC", glyph: "brand:applepodcasts" },
+  "amazon-music": { fill: "#14A3B8", glyph: "Music" },
+  deezer: { fill: "#A238FF", glyph: "brand:deezer" },
+  tidal: { fill: "#000000", glyph: "brand:tidal" },
+  bandcamp: { fill: "#408294", glyph: "brand:bandcamp" },
+
+  // Business
+  "microsoft-teams": { fill: "#5B5BD6", glyph: "Profile2User" },
+  webex: { fill: "#000000", glyph: "brand:webex" },
+  calendly: { fill: "#006BFF", glyph: "brand:calendly" },
+  "google-classroom": { fill: "#0F9D58", glyph: "brand:googleclassroom" },
+  // Tripadvisor's icon draws its owl in black on the green.
+  tripadvisor: { fill: "#34E0A1", glyph: "brand:tripadvisor", ink: "dark" },
+  trustpilot: { fill: "#00B67A", glyph: "brand:trustpilot" },
+  yelp: { fill: "#FF1A1A", glyph: "brand:yelp" },
+  airbnb: { fill: "#FF5A5F", glyph: "brand:airbnb" },
+  "booking-com": { fill: "#003A9A", glyph: "brand:bookingdotcom" },
 };
 
 /** Marks for the hosted page types (lib/landing/page-type-ids.ts), by id. */

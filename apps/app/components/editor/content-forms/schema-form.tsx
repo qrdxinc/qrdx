@@ -380,7 +380,7 @@ export function SchemaForm({
 
       {children}
 
-      {note && <p className="text-muted-foreground text-xs">{note}</p>}
+      {note && <p className="text-muted-foreground text-xs">{copy(note)}</p>}
     </div>
   );
 }

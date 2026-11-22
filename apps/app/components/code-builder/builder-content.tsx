@@ -10,6 +10,7 @@ import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import { Textarea } from "@repo/design-system/components/ui/textarea";
 import { ArrowSwapHorizontal } from "iconsax-reactjs";
+import { LINK_TYPE_FORMS } from "@/components/editor/content-forms/link-type-fields";
 import { TypeIconTile } from "@/components/editor/content-type-icons";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import {
@@ -20,6 +21,7 @@ import {
 } from "@/lib/dynamic-content";
 import { playgroundHref } from "@/lib/playground-links";
 import { CONTENT_TYPES_METADATA, type ContentType } from "@/types/qr-content";
+import { isLinkType, type LinkType } from "@/utils/link-types";
 
 /** One field of a type's form. */
 export interface ContentFieldSpec {
@@ -46,6 +48,39 @@ const link = (
   label: string,
   placeholder: string,
 ): ContentFieldSpec => ({ name, label, placeholder, inputMode: "url" });
+
+/**
+ * The editor's form fields for the link and app types that can be dynamic:
+ * the text fields, with every field outside the form's first choice (a
+ * chat instead of a meeting, say) optional.
+ */
+function linkTypeBuilderFields() {
+  const entries = OTHER_DYNAMIC_TYPES.filter(
+    (type): type is Extract<OtherDynamicType, LinkType> => isLinkType(type),
+  ).map((type) => {
+    const { fields, modes } = LINK_TYPE_FORMS[type];
+    const first = new Set(modes?.options[0]?.fields ?? []);
+    const specs: ContentFieldSpec[] = fields
+      .filter((field) => field.kind !== "switch")
+      .map((field) => ({
+        name: field.name,
+        label: field.label,
+        ...(field.placeholder ? { placeholder: field.placeholder } : {}),
+        ...(typeof field.hint === "string" ? { hint: field.hint } : {}),
+        ...(field.required && (!modes || first.has(field.name))
+          ? {}
+          : { optional: true }),
+        ...(field.inputMode === "tel" || field.inputMode === "url"
+          ? { inputMode: field.inputMode }
+          : {}),
+      }));
+    return [type, specs] as const;
+  });
+  return Object.fromEntries(entries) as Record<
+    Extract<OtherDynamicType, LinkType>,
+    ContentFieldSpec[]
+  >;
+}
 
 /** The fields each type's form shows, in order. Tests check them against the schemas. */
 export const DYNAMIC_TYPE_FIELDS: Record<OtherDynamicType, ContentFieldSpec[]> =
@@ -248,6 +283,8 @@ export const DYNAMIC_TYPE_FIELDS: Record<OtherDynamicType, ContentFieldSpec[]> =
         optional: true,
       },
     ],
+    // Added 2026-11-22 (links)
+    ...linkTypeBuilderFields(),
   };
 
 const META = new Map(CONTENT_TYPES_METADATA.map((meta) => [meta.type, meta]));

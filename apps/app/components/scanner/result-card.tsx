@@ -19,6 +19,7 @@ import {
   Call as Phone,
   SearchNormal1 as Search,
   Text as Type,
+  Video,
   Wallet,
   Wifi,
 } from "iconsax-reactjs";
@@ -38,7 +39,7 @@ import {
   type ScanKind,
 } from "./parse";
 import { ResultActions } from "./result-actions";
-import { CopyButton, FieldList, LinkButton } from "./ui";
+import { ControlText, CopyButton, FieldList, LinkButton } from "./ui";
 
 export const KIND_ICONS: Record<ScanKind, LucideIcon> = {
   url: Link2,
@@ -47,6 +48,7 @@ export const KIND_ICONS: Record<ScanKind, LucideIcon> = {
   event: CalendarDays,
   geo: MapPin,
   phone: Phone,
+  facetime: Video,
   sms: MessageSquare,
   email: Mail,
   payment: Wallet,
@@ -529,6 +531,24 @@ function Details({ parsed }: { parsed: ParsedScan }) {
           </div>
         </div>
       );
+    case "facetime":
+      return (
+        <div className="flex flex-col gap-3">
+          <FieldList
+            fields={[{ label: t("to"), value: parsed.target, mono: true }]}
+          />
+          <div className="flex flex-wrap gap-2">
+            <LinkButton href={parsed.url}>
+              <Video className="size-3.5" />
+              {parsed.audio ? t("startFaceTimeAudio") : t("startFaceTime")}
+            </LinkButton>
+            <CopyButton label={t("copyText")} value={parsed.target} />
+          </div>
+          <p className="text-muted-foreground text-xs leading-relaxed">
+            {t("faceTimeNote")}
+          </p>
+        </div>
+      );
     case "sms":
       return (
         <div className="flex flex-col gap-3">
@@ -621,7 +641,7 @@ function Details({ parsed }: { parsed: ParsedScan }) {
       return (
         <div className="flex flex-col gap-3">
           <p className="bg-muted/50 max-h-60 overflow-auto rounded-md p-3 text-sm break-words whitespace-pre-wrap">
-            {parsed.text}
+            <ControlText text={parsed.text} />
           </p>
           <div>
             <CopyButton label={t("copyText")} value={parsed.text} />
@@ -668,7 +688,7 @@ export function ResultCard({
           </summary>
           <div className="mt-2 flex flex-col gap-2">
             <p className="bg-muted/50 max-h-48 overflow-auto rounded-md p-3 font-mono text-xs break-all whitespace-pre-wrap">
-              {value}
+              <ControlText text={value} />
             </p>
             <div>
               <CopyButton label={t("result.copyRaw")} value={value} />

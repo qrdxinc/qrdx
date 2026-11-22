@@ -47,6 +47,7 @@ import {
   WazeForm,
   ZoomForm,
 } from "@/components/editor/content-forms/link-forms";
+import { LINK_TYPE_FORM_COMPONENTS } from "@/components/editor/content-forms/link-type-forms";
 import { LinkedInForm } from "@/components/editor/content-forms/linkedin-form";
 import { MapsForm } from "@/components/editor/content-forms/maps-form";
 // Added 2026-11-22 (payments)
@@ -185,6 +186,8 @@ const FORMS: Partial<Record<ContentType, ComponentType>> = {
   tron: TronForm,
   ton: TonForm,
   stellar: StellarForm,
+  // Added 2026-11-22 (links)
+  ...LINK_TYPE_FORM_COMPONENTS,
 };
 
 function LinkOnlyForm({ type }: { type: "dubsh" | "google-drive" }) {

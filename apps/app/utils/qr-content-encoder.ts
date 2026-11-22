@@ -75,6 +75,7 @@ import {
   xrpIssue,
 } from "./crypto-payments";
 import { czechSpdIssue, encodeCzechSpd } from "./czech-spd";
+import { encodeLinkType, isLinkTypeContent, linkTypeIssue } from "./link-types";
 // Added 2026-11-22 (payments)
 import { encodeMeCard, meCardIssue } from "./mecard";
 import {
@@ -798,7 +799,7 @@ export interface ContentIssue {
   message: string;
 }
 
-const problem = (field: string, message: string): ContentIssue => ({
+export const problem = (field: string, message: string): ContentIssue => ({
   field,
   message,
 });
@@ -821,14 +822,14 @@ function linkOn(raw: string, ...hosts: string[]): URL | null {
 }
 
 /** A link as an https address. */
-function httpsLink(url: URL): string {
+export function httpsLink(url: URL): string {
   const copy = new URL(url.toString());
   copy.protocol = "https:";
   return copy.toString();
 }
 
 /** International numbers only: links like t.me/+… need the country code. */
-function internationalPhoneIssue(
+export function internationalPhoneIssue(
   raw: string,
   field: string,
 ): ContentIssue | null {
@@ -841,7 +842,7 @@ function internationalPhoneIssue(
   return null;
 }
 
-const internationalDigits = (raw: string) =>
+export const internationalDigits = (raw: string) =>
   normalizePhone(raw).number.replace(/^\+/, "");
 
 /** "lat, long" within the WGS 84 ranges, else null. */
@@ -1403,6 +1404,8 @@ const fromIssue = (found: ContentIssue | null): Validation =>
  */
 export function encodeQRContent(content: QRContentConfig | null): string {
   if (!content) return "";
+  // Added 2026-11-22 (links)
+  if (isLinkTypeContent(content)) return encodeLinkType(content);
 
   switch (content.type) {
     case "url":
@@ -1604,6 +1607,8 @@ export function validateContent(content: QRContentConfig): Validation {
 }
 
 function validateFields(content: QRContentConfig): Validation {
+  // Added 2026-11-22 (links)
+  if (isLinkTypeContent(content)) return fromIssue(linkTypeIssue(content));
   switch (content.type) {
     case "url":
       if (!content.url || content.url.trim() === "") {
