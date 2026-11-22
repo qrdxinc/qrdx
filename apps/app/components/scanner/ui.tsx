@@ -61,7 +61,7 @@ export function ControlText({ text }: { text: string }) {
       run = "";
       parts.push(
         <span
-          className="bg-foreground/10 text-muted-foreground mx-0.5 rounded-sm px-1 align-middle font-mono text-[10px] leading-none"
+          className="bg-foreground/10 text-muted-foreground mx-0.5 inline-block rounded-sm px-1 py-px align-middle font-mono text-[10px] leading-none"
           key={offset}
         >
           {controlName(char)}
