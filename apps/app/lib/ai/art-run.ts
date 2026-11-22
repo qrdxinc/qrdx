@@ -16,6 +16,7 @@ import {
 } from "@/lib/ai/art";
 import {
   ART_MODEL_TIMEOUT_MS,
+  type ArtTiming,
   generateArtVariant,
   renderControlImage,
 } from "@/lib/ai/art-image";
@@ -66,6 +67,17 @@ const sceneTimeout = () =>
     "AI_ART_TIMEOUT",
     "Making the picture and painting the code into it took too long. No AI credit was used, please try again, or use code mode, which is faster.",
   );
+
+/**
+ * One line per art request that got as far as the model (Vercel's logs): how
+ * long each step took and how it ended, to see how often the 60 s limit is
+ * reached and how much of it the scan check takes. No content or prompts.
+ */
+function logArtTiming(
+  fields: { mode: string; outcome: string; totalMs: number } & ArtTiming,
+) {
+  console.info(JSON.stringify({ event: "ai_art.run", ...fields }));
+}
 
 /** The bytes of an uploaded (base64) data: URL. */
 const dataUrlBytes = (url: string) =>
@@ -118,10 +130,13 @@ export async function runArt({
   // Only a delivered, scannable image uses the credit.
   let variant: AIArtResult["variant"];
   let writtenPrompt: string | undefined;
+  const timing: ArtTiming = {};
+  let outcome = "delivered";
   try {
     // Written after the credit is reserved, so someone out of credits can't
     // run the writer, and before the art call, which gets the time left.
     if (request.prompt === undefined) {
+      const writing = Date.now();
       writtenPrompt = await writeArtPrompt(
         {
           mode: request.mode,
@@ -130,18 +145,23 @@ export async function runArt({
           signal,
         },
         write ? { write } : undefined,
-      );
+      ).finally(() => {
+        timing.writeMs = Date.now() - writing;
+      });
     }
     const description = request.prompt ?? writtenPrompt ?? "";
     const composed = composeArtPrompt(description, request.style);
     const negativePrompt = composeAvoid(request.negativePrompt, composed.avoid);
     if (request.mode === "scene" && !picture) {
+      const making = Date.now();
       picture = await makeScenePicture({
         prompt: composed.prompt,
         negativePrompt,
         seed,
         signal,
         timeoutMs: Math.min(INLINE_PICTURE_TIMEOUT_MS, timeLeft()),
+      }).finally(() => {
+        timing.pictureMs = Date.now() - making;
       });
       if (timeLeft() < MIN_PAINT_MS) throw sceneTimeout();
     }
@@ -157,6 +177,7 @@ export async function runArt({
       control,
       signal,
       timeoutMs: timeLeft(),
+      timing,
     };
     try {
       variant = picture
@@ -173,10 +194,18 @@ export async function runArt({
       throw inlineScene && timedOut ? sceneTimeout() : error;
     }
   } catch (error) {
+    outcome = error instanceof HttpError ? error.code : "error";
     await releaseArtCredits(usageIds).catch((releaseError) =>
       logError(releaseError as Error, { action: "releaseArtCredits" }),
     );
     throw error;
+  } finally {
+    logArtTiming({
+      mode: request.mode,
+      outcome,
+      totalMs: Date.now() - startedAt,
+      ...timing,
+    });
   }
 
   return {

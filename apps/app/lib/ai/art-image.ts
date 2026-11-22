@@ -683,6 +683,22 @@ export async function deliverable({
 // ── One variant ────────────────────────────────────────────────────────────
 
 /**
+ * Where one art request's time went, in ms (lib/ai/art-run.ts logs it when
+ * the request ends). Numbers and the blend only, never the content.
+ */
+export interface ArtTiming {
+  /** Writing a missing description */
+  writeMs?: number;
+  /** Making a scene's picture inside the request */
+  pictureMs?: number;
+  /** The image model call (painting into the picture, for scenes and photos) */
+  modelMs?: number;
+  /** Making the image scan and checking it: the least blend and the gate */
+  deliverMs?: number;
+  blend?: AIArtVariant["blend"];
+}
+
+/**
  * The model's image (or the picture with the code painted in) made to scan
  * and checked (see deliverable), as the variant the response carries.
  * Throws an HttpError that says no credit was used when nothing passes.
@@ -695,6 +711,7 @@ export async function deliverVariant({
   seed,
   signal,
   blendStyle,
+  timing,
 }: {
   text: string;
   art: { png: Uint8Array; pixels: DecodedImage };
@@ -703,7 +720,9 @@ export async function deliverVariant({
   seed: number;
   signal: AbortSignal;
   blendStyle?: BlendStyle;
+  timing?: ArtTiming;
 }): Promise<AIArtVariant> {
+  const started = Date.now();
   const delivery = await deliverable({
     text,
     art,
@@ -711,7 +730,10 @@ export async function deliverVariant({
     visibility,
     signal,
     blendStyle,
+  }).finally(() => {
+    if (timing) timing.deliverMs = Date.now() - started;
   });
+  if (timing && delivery) timing.blend = delivery.blend;
   if (!delivery) {
     throw new HttpError(
       502,
@@ -758,6 +780,7 @@ export async function generateArtVariant({
   model = gatewayArtModel,
   modelId = AI_MODELS.art.model,
   timeoutMs = ART_MODEL_TIMEOUT_MS,
+  timing,
 }: {
   text: string;
   prompt: string;
@@ -774,9 +797,11 @@ export async function generateArtVariant({
   modelId?: string;
   /** How long the model may take before the request fails */
   timeoutMs?: number;
+  timing?: ArtTiming;
 }): Promise<AIArtVariant> {
   const images = [control.png];
   if (reference) images.push(dataUrlBytes(reference));
+  const calling = Date.now();
   const output = await callModel(
     model,
     {
@@ -793,8 +818,18 @@ export async function generateArtVariant({
     },
     signal,
     timeoutMs,
-  );
+  ).finally(() => {
+    if (timing) timing.modelMs = Date.now() - calling;
+  });
   // A PNG: the model's own, or redrawn from its JPEG or WebP.
   const art = await readModelImage(output);
-  return deliverVariant({ text, art, control, visibility, seed, signal });
+  return deliverVariant({
+    text,
+    art,
+    control,
+    visibility,
+    seed,
+    signal,
+    timing,
+  });
 }

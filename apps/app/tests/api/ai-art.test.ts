@@ -157,6 +157,40 @@ describe("POST /api/ai/art", () => {
     expect(usage()).toHaveLength(1);
   });
 
+  it("logs how long each step took and how it ended, without the content", async () => {
+    const info = vi.spyOn(console, "info").mockImplementation(() => {});
+    try {
+      respondWithArt(() => paintedArt(control.png, { keep: 0.75 }));
+      expect((await generate()).status).toBe(200);
+      gateway.respondWith(() =>
+        gatewayError(500, "internal_server_error", "upstream exploded"),
+      );
+      expect((await generate()).status).toBe(502);
+      const lines = info.mock.calls
+        .map(([line]) => String(line))
+        .filter((line) => line.includes('"ai_art.run"'));
+      expect(lines).toHaveLength(2);
+      const [delivered, failed] = lines.map((line) => JSON.parse(line));
+      expect(delivered).toMatchObject({
+        event: "ai_art.run",
+        mode: "code",
+        outcome: "delivered",
+        blend: "none",
+      });
+      for (const key of ["totalMs", "modelMs", "deliverMs"]) {
+        expect(delivered[key], key).toBeGreaterThanOrEqual(0);
+      }
+      expect(failed).toMatchObject({ outcome: "AI_ART_FAILED" });
+      expect(failed.deliverMs).toBeUndefined();
+      for (const line of lines) {
+        expect(line).not.toContain(TEXT);
+        expect(line).not.toContain("zen garden");
+      }
+    } finally {
+      info.mockRestore();
+    }
+  });
+
   it("refunds the credit when the model fails, after one retry", async () => {
     gateway.respondWith(() =>
       gatewayError(500, "internal_server_error", "upstream exploded"),

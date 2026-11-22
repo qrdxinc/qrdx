@@ -32,6 +32,7 @@ import {
   ART_MODEL_TIMEOUT_MS,
   type ArtImageModel,
   type ArtModelImage,
+  type ArtTiming,
   artModelFor,
   type ControlImage,
   callModel,
@@ -500,6 +501,7 @@ export async function generatePictureVariant({
   keepModules,
   featherModules,
   blendStyle = SCENE_BLEND_STYLE,
+  timing,
 }: {
   text: string;
   prompt: string;
@@ -522,12 +524,14 @@ export async function generatePictureVariant({
   keepModules?: number;
   featherModules?: number;
   blendStyle?: BlendStyle;
+  timing?: ArtTiming;
 }): Promise<AIArtVariant> {
   // Square at the delivered size (the client crops photos square).
   const { pixels } = await readModelImage({
     data: picture,
     mediaType: mediaTypeOf(picture),
   });
+  const painting = Date.now();
   const painted = await paintIntoPicture({
     text,
     prompt,
@@ -549,6 +553,8 @@ export async function generatePictureVariant({
     ...(modelId && { modelId }),
     ...(timeoutMs !== undefined && { timeoutMs }),
     signal,
+  }).finally(() => {
+    if (timing) timing.modelMs = Date.now() - painting;
   });
   return deliverVariant({
     text,
@@ -558,5 +564,6 @@ export async function generatePictureVariant({
     seed,
     signal,
     blendStyle,
+    timing,
   });
 }
