@@ -152,12 +152,13 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | `generate_barcode` | Draws an EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec barcode after checking the value (check digits, lengths, characters). Returns a PNG and public [barcode API](/docs/developers/barcode-api) URLs |
 | `save_barcode` | Saves a barcode to your workspace's Barcodes. Needs an [API key](#use-an-api-key) |
 | `generate_ai_art` | Paints a QR code into AI artwork and checks that it scans. Uses one of the workspace's monthly AI art images and takes up to a minute. Needs an [API key](#use-an-api-key). See [AI art API](/docs/developers/ai-art-api) |
-| `qr_payload_wifi` | Builds a `WIFI:` network payload (WPA, WEP or open, optionally hidden) with special characters escaped |
+| `qr_payload_wifi` | Builds a `WIFI:` network payload with special characters escaped: WPA/WPA2 (and WPA2/WPA3 transition), WPA3-only (`T:SAE`), WEP or open, optionally hidden. WPA2/WPA3-Enterprise networks (`T:WPA2-EAP`, with the EAP method and identity) are read by ZXing-based scanner apps, not by phone camera apps |
 | `qr_payload_vcard` | Builds a vCard 3.0 contact (RFC 2426): name, organization, title, phones, email, website, address and note |
+| `qr_payload_mecard` | Builds a MeCard contact (`MECARD:`), the compact alternative to a vCard: name, reading, nickname, phone, email, website, birthday, address and note |
 | `qr_payload_email` | Builds a `mailto:` link (RFC 6068) with optional cc, bcc, subject and body |
 | `qr_payload_sms` | Builds an `sms:` link (RFC 5724) with an optional message, or the older `SMSTO:` form |
 | `qr_payload_geo` | Builds a `geo:` location (RFC 5870) from latitude and longitude |
-| `qr_payload_payment` | Builds a bank payment code: a Pix BR Code, a SEPA credit transfer (EPC069-12), or a PayNow, PromptPay or VietQR code (EMV, with its CRC). It checks the fields like the playground's forms do |
+| `qr_payload_payment` | Builds a payment code: a Pix BR Code, a SEPA credit transfer (EPC069-12), a Swiss QR-bill (SIX Swiss Payments Code), a Czech QR Platba (SPD), a Swish payment, or a PayNow, PromptPay, VietQR or KHQR code (EMV, with its CRC); or a Lightning, XRP, Cardano, Tron, TON or Stellar payment request. It checks the fields like the playground's forms do |
 | `search_docs` | Finds QRdx docs pages for a question or key words. Returns up to 8 pages with their titles, paths and a short excerpt. Takes an optional language |
 | `read_docs_page` | Returns one docs page as Markdown, by its path from `search_docs` or its URL. Long pages are cut at 12,000 characters, and a page with no translation comes back in English |
 

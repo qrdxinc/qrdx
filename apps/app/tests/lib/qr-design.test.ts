@@ -42,9 +42,13 @@ describe("content", () => {
       "password",
       "encryption",
       "hidden",
+      "eapMethod",
+      "phase2",
+      "identity",
+      "anonymousIdentity",
     ]);
     expect(contentFieldGuide()).toContain(
-      "wifi (WiFi): ssid*, password, encryption*=WPA|WEP|nopass, hidden (true/false)",
+      "wifi (WiFi): ssid*, password, encryption*=WPA|WEP|nopass|SAE|WPA2-EAP, hidden (true/false), eapMethod=PEAP|TTLS|PWD, phase2=MSCHAPV2|GTC|PAP|MSCHAP, identity, anonymousIdentity",
     );
   });
 

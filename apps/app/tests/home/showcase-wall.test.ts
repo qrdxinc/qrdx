@@ -260,9 +260,14 @@ describe("wall tiles", () => {
         const handle = SAMPLE_PATHS[host];
         if (handle) expect(pathname, id).toMatch(handle);
       }
-      for (const [address] of value.matchAll(/[\w.+-]+@[\w.-]+/g)) {
+      // A KHQR code's Bakong ID (name@bank) runs straight into the next
+      // EMV field's digits, so its sample host is checked as a prefix.
+      const emails =
+        id === "type-khqr" ? /[\w.+-]+@example(?=52)/g : /[\w.+-]+@[\w.-]+/g;
+      for (const [address] of value.matchAll(emails)) {
         expect(address, id).toMatch(/@example(\.com)?$/);
       }
+      if (id === "type-khqr") expect(value, id).toContain("@example5204");
       for (const [digits] of value.matchAll(/\+?1?415555\d{4}/g)) {
         expect(digits, id).toMatch(/55501\d\d$/);
       }

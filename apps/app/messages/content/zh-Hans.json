@@ -899,6 +899,138 @@
     "status": "machine",
     "context": "contentTypes.list.monero.description"
   },
+  "ca7e3d788516": {
+    "source": "MeCard",
+    "text": "MeCard",
+    "status": "machine",
+    "context": "contentTypes.list.mecard.label"
+  },
+  "2b3ec917f669": {
+    "source": "Share a contact in a smaller code than a vCard",
+    "text": "用比 vCard 更小的二维码分享联系人",
+    "status": "machine",
+    "context": "contentTypes.list.mecard.description"
+  },
+  "839a66ffef0c": {
+    "source": "Swiss QR-bill",
+    "text": "瑞士 QR-bill",
+    "status": "machine",
+    "context": "contentTypes.list.swiss-qr-bill.label"
+  },
+  "5acf23932a9e": {
+    "source": "Make the payment code of a Swiss QR-bill",
+    "text": "生成瑞士 QR-bill 的付款二维码",
+    "status": "machine",
+    "context": "contentTypes.list.swiss-qr-bill.description"
+  },
+  "f05f7394225e": {
+    "source": "QR Platba",
+    "text": "QR Platba",
+    "status": "machine",
+    "context": "contentTypes.list.czech-spd.label"
+  },
+  "96af451632f6": {
+    "source": "Get paid by bank transfer in Czechia",
+    "text": "在捷克通过银行转账收款",
+    "status": "machine",
+    "context": "contentTypes.list.czech-spd.description"
+  },
+  "1e73623015d3": {
+    "source": "Swish",
+    "text": "Swish",
+    "status": "machine",
+    "context": "contentTypes.list.swish.label"
+  },
+  "6d33f419943b": {
+    "source": "Get paid with Swish in Sweden",
+    "text": "在瑞典使用 Swish 收款",
+    "status": "machine",
+    "context": "contentTypes.list.swish.description"
+  },
+  "1bb63743f5df": {
+    "source": "KHQR",
+    "text": "KHQR",
+    "status": "machine",
+    "context": "contentTypes.list.khqr.label"
+  },
+  "110ded7f4f22": {
+    "source": "Get paid to a Bakong account in Cambodia",
+    "text": "收款至柬埔寨的 Bakong 账户",
+    "status": "machine",
+    "context": "contentTypes.list.khqr.description"
+  },
+  "41e68f2cdb38": {
+    "source": "Lightning",
+    "text": "Lightning",
+    "status": "machine",
+    "context": "contentTypes.list.lightning.label"
+  },
+  "b053883a1717": {
+    "source": "Get paid in bitcoin over Lightning",
+    "text": "通过 Lightning 收取比特币",
+    "status": "machine",
+    "context": "contentTypes.list.lightning.description"
+  },
+  "631ff8768671": {
+    "source": "XRP",
+    "text": "XRP",
+    "status": "machine",
+    "context": "contentTypes.list.xrp.label"
+  },
+  "67b5cf5e6a50": {
+    "source": "Receive XRP to your wallet",
+    "text": "将 XRP 收入你的钱包",
+    "status": "machine",
+    "context": "contentTypes.list.xrp.description"
+  },
+  "27df28946736": {
+    "source": "Cardano",
+    "text": "Cardano",
+    "status": "machine",
+    "context": "contentTypes.list.cardano.label"
+  },
+  "958894402906": {
+    "source": "Receive ADA to your wallet",
+    "text": "将 ADA 收入你的钱包",
+    "status": "machine",
+    "context": "contentTypes.list.cardano.description"
+  },
+  "ffafee3c0575": {
+    "source": "Tron",
+    "text": "Tron",
+    "status": "machine",
+    "context": "contentTypes.list.tron.label"
+  },
+  "6b6329dbda8d": {
+    "source": "Share your Tron address for TRX or USDT",
+    "text": "分享你的 Tron 地址，用于收取 TRX 或 USDT",
+    "status": "machine",
+    "context": "contentTypes.list.tron.description"
+  },
+  "1a4219fe5e60": {
+    "source": "TON",
+    "text": "TON",
+    "status": "machine",
+    "context": "contentTypes.list.ton.label"
+  },
+  "3d455c78ae36": {
+    "source": "Receive TON or USDT on TON",
+    "text": "在 TON 上接收 TON 或 USDT",
+    "status": "machine",
+    "context": "contentTypes.list.ton.description"
+  },
+  "9651c62eb76d": {
+    "source": "Stellar",
+    "text": "Stellar",
+    "status": "machine",
+    "context": "contentTypes.list.stellar.label"
+  },
+  "001774bb1ca3": {
+    "source": "Receive XLM or USDC on Stellar",
+    "text": "在 Stellar 上接收 XLM 或 USDC",
+    "status": "machine",
+    "context": "contentTypes.list.stellar.description"
+  },
   "76327dec9ae3": {
     "source": "Popular",
     "text": "热门",
@@ -1673,9 +1805,9 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.summary"
   },
-  "0135740ce7f9": {
-    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
-    "text": "生成 Wi-Fi 二维码，访客扫描一次即可加入网络。支持 WPA/WPA2、WEP 和开放网络，支持隐藏 SSID，转义正确。免费。",
+  "88a28035b215": {
+    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WPA3, WEP and open networks, hidden SSIDs, correct escaping. Free.",
+    "text": "制作 Wi-Fi 二维码，访客扫描一次即可加入你的网络。支持 WPA/WPA2、WPA3、WEP 和开放网络，支持隐藏 SSID，并正确转义特殊字符。免费。",
     "status": "machine",
     "context": "qrTypes.types.wifi.metaDescription"
   },
@@ -1697,9 +1829,9 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.steps.0"
   },
-  "31d04d55ac35": {
-    "source": "Choose the security type: WPA/WPA2 for almost every modern router, WEP for very old ones, or No password for open networks.",
-    "text": "选择加密类型：几乎所有新款路由器都选 WPA/WPA2，非常老的路由器选 WEP，开放网络选“无密码”。",
+  "7769a5a4517e": {
+    "source": "Choose the security type: WPA/WPA2 for almost every modern router (including ones in WPA2/WPA3 mode), WPA3 only for networks that refuse WPA2, WEP for very old ones, or No password for open networks.",
+    "text": "选择加密类型：几乎所有现代路由器（包括 WPA2/WPA3 混合模式）选 WPA/WPA2；只有不接受 WPA2 的网络才选 WPA3；非常老旧的网络选 WEP；开放网络选“无密码”。",
     "status": "machine",
     "context": "qrTypes.types.wifi.steps.1"
   },
@@ -1739,6 +1871,18 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.payload.notes.3"
   },
+  "3f864e1191d8": {
+    "source": "T:SAE marks a network that accepts only WPA3, as the Wi-Fi Alliance's WPA3 specification writes it. Android's Wi-Fi settings scanner reads it from Android 10; Apple doesn't document it for the iPhone Camera, so a network that also accepts WPA2 is better written as T:WPA.",
+    "text": "T:SAE 表示只接受 WPA3 的网络，写法遵循 Wi-Fi Alliance 的 WPA3 规范。Android 的 Wi-Fi 设置扫描器从 Android 10 起可以读取；Apple 没有就 iPhone 相机的支持情况提供说明文档，因此同时接受 WPA2 的网络最好写成 T:WPA。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.payload.notes.4"
+  },
+  "ce5bbff335e8": {
+    "source": "T:WPA2-EAP marks a WPA2/WPA3-Enterprise network, with ZXing's E: (EAP method), PH2: (phase 2), A: (anonymous identity) and I: (identity) fields. Scanner apps built on ZXing read them; phone camera apps don't join enterprise networks from a code.",
+    "text": "T:WPA2-EAP 表示 WPA2/WPA3-Enterprise 网络，并配合 ZXing 的 E:（EAP 方法）、PH2:（第二阶段）、A:（匿名身份）和 I:（身份）字段。基于 ZXing 的扫描应用可以读取这些字段；手机相机应用不会通过二维码加入企业网络。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.payload.notes.5"
+  },
   "1674145adaf8": {
     "source": "Is it safe to put my Wi-Fi password in a QR code?",
     "text": "把 Wi-Fi 密码放进二维码安全吗？",
@@ -1757,9 +1901,9 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.question"
   },
-  "bc95db81d2cd": {
-    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. Enterprise networks that need a username or certificate (WPA2-Enterprise) aren't supported by this format.",
-    "text": "请检查网络名称是否完全一致（区分大小写）、加密类型是否正确，以及你是否在信号范围内。需要用户名或证书的企业网络（WPA2-Enterprise）不受这种格式支持。",
+  "feaacd0db501": {
+    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. For enterprise networks that need a username (WPA2/WPA3-Enterprise), QRdx can write the sign-in details, but phone camera apps don't join from them: Android's Wi-Fi scanner reads only personal and open networks, and iPhones set up enterprise Wi-Fi with a configuration profile. Networks that need a certificate can't be put in a code at all.",
+    "text": "检查网络名称是否完全一致（区分大小写）、加密类型是否正确，以及你是否在信号范围内。对于需要用户名的企业网络（WPA2/WPA3-Enterprise），QRdx 可以写入登录信息，但手机相机应用无法据此加入：Android 的 Wi-Fi 扫描器只能读取个人网络和开放网络，iPhone 则通过配置描述文件设置企业 Wi-Fi。需要证书的网络则完全无法放进二维码。",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.answer"
   },
@@ -3725,9 +3869,9 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.title"
   },
-  "da2ccbd9fdc4": {
-    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",
-    "text": "这是一个链上收款请求：钱包会在比特币区块链上向你的地址付款。仅支持闪电网络的钱包无法支付，而且本生成器不会在 URI 中添加 lightning= 发票，因此如需闪电网络收款，请改为分享钱包中的发票或闪电网络地址。",
+  "d665e6e266e7": {
+    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments make a Lightning code from your wallet's invoice, LNURL or Lightning Address instead.",
+    "text": "这是链上请求：钱包会向你在比特币区块链上的地址付款。仅支持 Lightning 的钱包无法支付，而且本生成器不会在 URI 中添加 lightning= 发票，因此如需 Lightning 付款，请改用钱包的发票、LNURL 或 Lightning Address 来制作 Lightning 二维码。",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.paragraphs.0"
   },
@@ -3737,27 +3881,27 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.paragraphs.1"
   },
-  "80cfbcc768ef": {
-    "source": "Share an EIP-681 Ethereum payment request.",
-    "text": "分享 EIP-681 以太坊收款请求。",
+  "01b290b322d0": {
+    "source": "Request ETH, USDC or USDT on Ethereum and other EVM networks.",
+    "text": "在以太坊及其他 EVM 网络上请求 ETH、USDC 或 USDT。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.summary"
   },
-  "7f57cac75ab7": {
-    "source": "Make an Ethereum QR code in the EIP-681 ethereum: format with an optional ETH amount (in wei) and gas limit. Free PNG and SVG, no signup.",
-    "text": "按 EIP-681 ethereum: 格式生成以太坊二维码，可选填 ETH 金额（以 wei 为单位）和 gas 上限。免费提供 PNG 和 SVG，无需注册。",
+  "3b28ba3d3302": {
+    "source": "Make an Ethereum QR code in the EIP-681 format for ETH, USDC or USDT on Ethereum, Base, Polygon, Arbitrum and three more EVM networks. Free.",
+    "text": "按 EIP-681 格式制作以太坊二维码，适用于以太坊、Base、Polygon、Arbitrum 及另外三个 EVM 网络上的 ETH、USDC 或 USDT。免费。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.metaDescription"
   },
-  "e6df241fc5d0": {
-    "source": "An Ethereum QR code holds your wallet address in the EIP-681 ethereum: format, optionally with an amount of ETH and a gas limit. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
-    "text": "以太坊二维码以 EIP-681 ethereum: 格式保存你的钱包地址，还可以附带 ETH 金额和 gas 上限。用兼容的钱包扫描后，会打开向你的地址转账的页面，并自动填好这些数值。",
+  "de75bfd458c1": {
+    "source": "An Ethereum QR code holds a payment request in the EIP-681 ethereum: format: your wallet address, the network and, if you like, an amount. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
+    "text": "以太坊二维码包含 EIP-681 ethereum: 格式的付款请求：你的钱包地址、网络，以及可选的金额。用兼容的钱包扫描后，会打开一笔转到你地址的转账，并自动填好这些内容。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.intro.0"
   },
-  "4cd43eafd110": {
-    "source": "Ethereum addresses are 42-character hexadecimal strings that are easy to mistype, which makes a QR code the safest way to share one at events, on invoices or on donation pages. The code contains only your public address; private keys and recovery phrases must never go into a QR code.",
-    "text": "以太坊地址是 42 个字符的十六进制字符串，很容易输错，所以在活动现场、发票或捐赠页面上，二维码是分享地址最稳妥的方式。二维码中只包含你的公开地址；私钥和助记词绝不能放进二维码。",
+  "239eb953556c": {
+    "source": "Pick Ethereum or another EVM network (BNB Smart Chain, Polygon, Arbitrum One, OP Mainnet, Base or Avalanche C-Chain) and ask for the network's own coin, or for USDT or USDC where Tether and Circle list the contract themselves. Addresses are 42-character hexadecimal strings that are easy to mistype, so a code is safer than copying one by hand. It contains only your public address; private keys and recovery phrases must never go into a QR code.",
+    "text": "选择以太坊或其他 EVM 网络（BNB Smart Chain、Polygon、Arbitrum One、OP Mainnet、Base 或 Avalanche C-Chain），可以请求该网络自己的原生币，也可以在 Tether 和 Circle 自行公布合约的网络上请求 USDT 或 USDC。地址是 42 个字符的十六进制字符串，很容易输错，所以用二维码比手动复制更安全。二维码只包含你的公开地址；私钥和助记词绝不能放进二维码。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.intro.1"
   },
@@ -3767,23 +3911,41 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.0"
   },
-  "4f1b1c80f3e8": {
-    "source": "Optionally enter an amount in ETH and a gas limit.",
-    "text": "可选填 ETH 金额和 gas 上限。",
+  "d0f2f478d75b": {
+    "source": "Pick the network, then the network's own coin, USDC or USDT.",
+    "text": "选择网络，再选择该网络的原生币、USDC 或 USDT。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.1"
   },
-  "c54d35521f5a": {
-    "source": "Scan the preview with your wallet and check the address and amount.",
-    "text": "用你的钱包扫描预览，并核对地址和金额。",
+  "d2404df4ac55": {
+    "source": "Optionally enter an amount, and a gas limit for a coin payment.",
+    "text": "可选填金额；如果是原生币付款，还可以填 gas 上限。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.2"
   },
-  "155c506bf183": {
-    "source": "EIP-681 amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the ETH amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
-    "text": "EIP-681 中的金额（value）以最小单位 wei 计：1 ETH 等于 10^18 wei。本页会在你输入的 ETH 金额后加上指数 e18 进行换算，因此 0.05 ETH 会写成 value=0.05e18。",
+  "c26a548900d7": {
+    "source": "Scan the preview with your wallet, check the address, network and amount, and download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "用钱包扫描预览，核对地址、网络和金额，然后将二维码下载为 PNG、SVG、WebP、GIF、BMP 或 ICO 格式。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.3"
+  },
+  "05e6e058eee6": {
+    "source": "Coin amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
+    "text": "原生币金额（value）以最小单位 wei 计：1 ETH 等于 10^18 wei。本页会在你输入的金额后加上 e18 指数来换算，所以 0.05 ETH 写作 value=0.05e18。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.0"
+  },
+  "3faef68d6dd6": {
+    "source": "Other networks are named with @chainId: BNB Smart Chain 56, Polygon 137, Arbitrum One 42161, OP Mainnet 10, Base 8453 and Avalanche C-Chain 43114. On Ethereum itself (chain 1) no @1 is added.",
+    "text": "其他网络用 @chainId 表示：BNB Smart Chain 为 56，Polygon 为 137，Arbitrum One 为 42161，OP Mainnet 为 10，Base 为 8453，Avalanche C-Chain 为 43114。以太坊本身（链 1）不会添加 @1。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.1"
+  },
+  "ce817f8fbb90": {
+    "source": "A USDC or USDT request is a transfer on the token's contract, with the amount in base units (6 decimals). 1.5 USDC on Base is ethereum:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913@8453/transfer?address=<recipient>&uint256=1500000.",
+    "text": "USDC 或 USDT 请求是在代币合约上发起的转账，金额以基本单位表示（6 位小数）。在 Base 上请求 1.5 USDC 写作 ethereum:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913@8453/transfer?address=<recipient>&uint256=1500000。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.2"
   },
   "e090a66eb3e0": {
     "source": "gas is a synonym for gasLimit, a suggested limit the payer can edit. A plain ETH transfer uses 21000.",
@@ -3791,39 +3953,33 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.1"
   },
-  "6134aa693235": {
-    "source": "EIP-681 can name a network with @chainId (for example @137), but this generator doesn't add one, so wallets use their current network.",
-    "text": "EIP-681 可以用 @chainId 指定网络（例如 @137），但本生成器不会添加，因此钱包会使用其当前所在的网络。",
-    "status": "machine",
-    "context": "qrTypes.types.ethereum.payload.notes.2"
-  },
   "4a68f3f75c81": {
     "source": "Wallet support for EIP-681 parameters varies; test with the wallet your payers use.",
     "text": "各钱包对 EIP-681 参数的支持程度不一，请用付款方使用的钱包测试。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.3"
   },
-  "644fd366eca2": {
-    "source": "Can I request USDC or another token?",
-    "text": "可以请求 USDC 或其他代币吗？",
+  "b00a3b7e1e38": {
+    "source": "Can I request USDC or USDT?",
+    "text": "可以请求 USDC 或 USDT 吗？",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.0.question"
   },
-  "2047498516c6": {
-    "source": "This generator creates native ETH transfers. Token requests need the token contract and a transfer function call in the URI, which this form doesn't build.",
-    "text": "本生成器生成的是原生 ETH 转账。代币请求需要在 URI 中包含代币合约和 transfer 函数调用，而这个表单不会生成这些内容。",
+  "c0ff9d9c88f0": {
+    "source": "Yes, on the networks where Tether and Circle list the contract themselves: USDT on Ethereum and Avalanche, USDC on Ethereum, Polygon, Arbitrum, OP Mainnet, Base and Avalanche. QRdx refuses a token contract pasted as the recipient.",
+    "text": "可以，但仅限 Tether 和 Circle 自行公布合约的网络：USDT 支持以太坊和 Avalanche，USDC 支持以太坊、Polygon、Arbitrum、OP Mainnet、Base 和 Avalanche。QRdx 会拒绝把代币合约地址粘贴为收款地址的情况。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.0.answer"
   },
-  "a921a84b6c82": {
-    "source": "Does it work on other EVM networks?",
-    "text": "适用于其他 EVM 网络吗？",
+  "eab753923b7d": {
+    "source": "Does every wallet read the network and token?",
+    "text": "所有钱包都能读取网络和代币吗？",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.1.question"
   },
-  "302941b105ef": {
-    "source": "The address format is the same on networks like Polygon or Arbitrum, but no chain ID is added, so the payer must pick the right network in their wallet.",
-    "text": "在 Polygon 或 Arbitrum 等网络上，地址格式是相同的，但不会添加链 ID，因此付款方必须在钱包中选择正确的网络。",
+  "d8b487263aac": {
+    "source": "No. MetaMask Mobile reads @chainId and /transfer, but some wallets fill in only the recipient and drop the token and amount. Print the token, network and amount next to the code so the payer can check them.",
+    "text": "不能。MetaMask Mobile 能读取 @chainId 和 /transfer，但有些钱包只填入收款地址，会丢掉代币和金额。请把代币、网络和金额印在二维码旁边，方便付款人核对。",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.1.answer"
   },
@@ -3839,11 +3995,17 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.2.answer"
   },
-  "d434b3350c1d": {
-    "source": "Address checks and ENS names",
-    "text": "地址校验与 ENS 域名",
+  "3195635e1572": {
+    "source": "Networks, address checks and ENS names",
+    "text": "网络、地址校验与 ENS 名称",
     "status": "machine",
     "context": "qrTypes.types.ethereum.details.title"
+  },
+  "121d5568b110": {
+    "source": "The network's own coin is ETH on Ethereum, Arbitrum One, OP Mainnet and Base, BNB on BNB Smart Chain, POL on Polygon and AVAX on Avalanche C-Chain. The same 0x address works on all of them, so pick the network your payer will send on.",
+    "text": "该网络的原生币：以太坊、Arbitrum One、OP Mainnet 和 Base 上是 ETH，BNB Smart Chain 上是 BNB，Polygon 上是 POL，Avalanche C-Chain 上是 AVAX。同一个 0x 地址在所有这些网络上都适用，所以请选择付款人将要使用的网络。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.details.paragraphs.0"
   },
   "65464924c87e": {
     "source": "The generator checks that the address is 0x followed by 40 hexadecimal characters. It doesn't check the mixed-case EIP-55 checksum; wallets check that when they scan, so paste the address exactly as your wallet shows it rather than typing it.",
@@ -6371,21 +6533,21 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoincash.details.paragraphs.2"
   },
-  "51f7bdf5aaa1": {
-    "source": "Receive SOL with a Solana Pay request.",
-    "text": "通过 Solana Pay 请求接收 SOL。",
+  "37801c6d08b2": {
+    "source": "Receive SOL, USDC or USDT with a Solana Pay request.",
+    "text": "通过 Solana Pay 请求接收 SOL、USDC 或 USDT。",
     "status": "machine",
     "context": "qrTypes.types.solana.summary"
   },
-  "a3b47984a6df": {
-    "source": "Create a Solana Pay QR code for SOL payments to your wallet, with an optional amount, label and message. Solana Pay transfer request format. Free.",
-    "text": "创建 Solana Pay 二维码，向你的钱包收取 SOL，可选填金额、标签和留言。采用 Solana Pay 转账请求格式。免费。",
+  "7ecf8931fc04": {
+    "source": "Create a Solana Pay QR code for SOL, USDC or USDT to your wallet, with an optional amount, label and message, in the transfer request format. Free.",
+    "text": "创建 Solana Pay 二维码，向你的钱包收取 SOL、USDC 或 USDT，可选填金额、标签和留言，采用转账请求格式。免费。",
     "status": "machine",
     "context": "qrTypes.types.solana.metaDescription"
   },
-  "df85b6d18511": {
-    "source": "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount in SOL, a label and a message. Wallets that support Solana Pay fill in the payment.",
-    "text": "Solana 二维码包含一个 Solana Pay 转账请求：你的钱包地址，以及可选的 SOL 金额、标签和留言。支持 Solana Pay 的钱包会自动填好付款信息。",
+  "7b3ba6402374": {
+    "source": "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount, a label and a message. It can ask for SOL, or for USDC or USDT with the mints Circle and Tether list. Wallets that support Solana Pay fill in the payment.",
+    "text": "Solana 二维码包含一条 Solana Pay 转账请求：你的钱包地址，以及可选的金额、标签和留言。它可以请求 SOL，也可以使用 Circle 和 Tether 公布的 mint 地址请求 USDC 或 USDT。支持 Solana Pay 的钱包会自动填好付款信息。",
     "status": "machine",
     "context": "qrTypes.types.solana.intro.0"
   },
@@ -6401,9 +6563,9 @@
     "status": "machine",
     "context": "qrTypes.types.solana.steps.0"
   },
-  "cdcf66a5f861": {
-    "source": "Optionally add an amount in SOL, a label and a message.",
-    "text": "可选填 SOL 金额、标签和留言。",
+  "501c3c8bebde": {
+    "source": "Pick SOL, USDC or USDT, and optionally add an amount, a label and a message.",
+    "text": "选择 SOL、USDC 或 USDT，还可以选填金额、标签和留言。",
     "status": "machine",
     "context": "qrTypes.types.solana.steps.1"
   },
@@ -6413,15 +6575,15 @@
     "status": "machine",
     "context": "qrTypes.types.solana.steps.2"
   },
-  "74b80bb969ce": {
-    "source": "Amounts are in SOL with up to 9 decimals.",
-    "text": "金额以 SOL 为单位，最多 9 位小数。",
+  "73cea79e72c3": {
+    "source": "Amounts are in SOL with up to 9 decimals, or in USDC or USDT with up to 6.",
+    "text": "SOL 的金额最多 9 位小数，USDC 或 USDT 的金额最多 6 位小数。",
     "status": "machine",
     "context": "qrTypes.types.solana.payload.notes.0"
   },
-  "c260bf4dabce": {
-    "source": "This code requests SOL. Token payments (USDC and others) need the token's mint address, which this generator doesn't add.",
-    "text": "此二维码请求的是 SOL。代币付款（USDC 等）需要代币的 mint 地址，本生成器不会添加。",
+  "326844660a7d": {
+    "source": "spl-token names the token's mint, as Circle and Tether list them: USDC is EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v and USDT is Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB. Without spl-token the code requests SOL.",
+    "text": "spl-token 指明代币的 mint 地址，与 Circle 和 Tether 公布的一致：USDC 为 EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v，USDT 为 Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB。没有 spl-token 时，二维码请求的是 SOL。",
     "status": "machine",
     "context": "qrTypes.types.solana.payload.notes.1"
   },
@@ -6437,15 +6599,21 @@
     "status": "machine",
     "context": "qrTypes.types.solana.faqs.0.answer"
   },
+  "4debcf9ae317": {
+    "source": "Yes. Pick one and the code adds Solana Pay's spl-token with the mint Circle or Tether lists, and the amount is in that token.",
+    "text": "可以。选定后，二维码会加入 Solana Pay 的 spl-token，并使用 Circle 或 Tether 公布的 mint 地址，金额以该代币计算。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.faqs.1.answer"
+  },
   "43fcb61a7db3": {
     "source": "What this Solana Pay code includes",
     "text": "此 Solana Pay 二维码包含什么",
     "status": "machine",
     "context": "qrTypes.types.solana.details.title"
   },
-  "36ed60b12391": {
-    "source": "It's a Solana Pay transfer request: the recipient, an amount in SOL, a label and a message. Solana Pay also defines spl-token for token payments and reference for matching a payment to an order; this generator adds neither, so use your point-of-sale tool when you need them.",
-    "text": "这是一个 Solana Pay 转账请求：包含收款方、以 SOL 计的金额、标签和留言。Solana Pay 还定义了用于代币支付的 spl-token，以及用于将付款与订单匹配的 reference；本生成器两者都不添加，需要时请使用你的销售终端工具。",
+  "f843af8bf207": {
+    "source": "It's a Solana Pay transfer request: the recipient, an amount, spl-token for USDC or USDT, a label and a message. Solana Pay also defines reference for matching a payment to an order; this generator doesn't add it, so use your point-of-sale tool when you need it.",
+    "text": "它是一条 Solana Pay 转账请求：包含收款方、金额、用于 USDC 或 USDT 的 spl-token、标签和留言。Solana Pay 还定义了用于将付款与订单对应的 reference；本生成器不会添加它，需要时请使用你的收银系统。",
     "status": "machine",
     "context": "qrTypes.types.solana.details.paragraphs.0"
   },
@@ -6532,6 +6700,1140 @@
     "text": "Monero 已弃用单独的付款 ID，因此生成器不会添加。请为每位客户或每个二维码使用一个子地址，或使用交易所或商店提供给你的集成地址。",
     "status": "machine",
     "context": "qrTypes.types.monero.details.paragraphs.1"
+  },
+  "74da95f9087d": {
+    "source": "Share a contact in a smaller code than a vCard.",
+    "text": "用比 vCard 更小的二维码分享联系人。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.summary"
+  },
+  "c068fb639814": {
+    "source": "Make a MeCard QR code: name, phone, email, website, address, birthday and a note in the compact MECARD format, so the code stays small. Free.",
+    "text": "制作 MeCard 二维码：姓名、电话、邮箱、网站、地址、生日和备注，采用紧凑的 MECARD 格式，让二维码保持小巧。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.metaDescription"
+  },
+  "733c50d5353e": {
+    "source": "A MeCard QR code holds a contact in one short line of text: your name, phone number, email, website, address, birthday and a note. Phones that read it offer to save the contact, the same way a vCard code works.",
+    "text": "MeCard 二维码用一行简短的文字保存一个联系人：你的姓名、电话号码、邮箱、网站、地址、生日和备注。手机读取后会提示保存联系人，与 vCard 二维码的使用方式相同。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.intro.0"
+  },
+  "1353d8961ab7": {
+    "source": "The format comes from NTT Docomo and needs fewer characters than a vCard for the same details, so the code has fewer, larger modules and scans from further away. Android phones read it; Apple doesn't document MeCard for the iPhone Camera, so test with an iPhone, or use a vCard when the contact has to reach everyone.",
+    "text": "这种格式由 NTT Docomo 提出，保存相同信息所需的字符比 vCard 更少，因此二维码的模块更少、更大，可以从更远的距离扫描。Android 手机可以读取；Apple 没有说明 iPhone 相机是否支持 MeCard，所以请用 iPhone 测试，或者在联系人需要让所有人都能收到时改用 vCard。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.intro.1"
+  },
+  "18f1662e2e47": {
+    "source": "Enter your first name, and your last name if you want it saved.",
+    "text": "输入你的名字；如果想一并保存，也输入姓氏。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.0"
+  },
+  "4fdb157369b9": {
+    "source": "Add the details people need: a phone number, an email, a website or an address.",
+    "text": "添加他人需要的信息：电话号码、邮箱、网站或地址。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.1"
+  },
+  "864e378fd3e7": {
+    "source": "Scan the preview with an Android phone and an iPhone to see that both offer to save it.",
+    "text": "分别用 Android 手机和 iPhone 扫描预览，确认两者都会提示保存。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.2"
+  },
+  "5d92cacd009c": {
+    "source": "Download the code for a badge, a card or a flyer.",
+    "text": "下载二维码，用于工牌、名片或传单。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.3"
+  },
+  "53000439462d": {
+    "source": "Each field is NAME:value and ends with a semicolon; the record ends with two.",
+    "text": "每个字段的格式为 NAME:value，并以分号结尾；整条记录以两个分号结尾。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.0"
+  },
+  "337f9be94f36": {
+    "source": "The name is written last name, a comma, then first name.",
+    "text": "姓名按先写姓、再写逗号、最后写名的顺序书写。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.1"
+  },
+  "b3802f5adca6": {
+    "source": "The characters \\ ; : and , inside a value are escaped with a backslash, as the format asks, so a web address is written https\\://.",
+    "text": "按照格式要求，值中的 \\ ; : 和 , 字符会用反斜杠转义，因此网址会写成 https\\://。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.2"
+  },
+  "686f4250ca0a": {
+    "source": "The birthday is 8 digits: year, month and day. SOUND holds how the name is read (kana for a Japanese name) and NICKNAME a familiar name.",
+    "text": "生日为 8 位数字：年、月、日。SOUND 保存姓名的读音（日文姓名用假名），NICKNAME 保存常用的称呼。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.3"
+  },
+  "815e1036f054": {
+    "source": "MeCard or vCard?",
+    "text": "MeCard 还是 vCard？",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.0.question"
+  },
+  "758a7ac0dd8a": {
+    "source": "A vCard can hold more (a company, a job title, several numbers) and is the format every phone documents. A MeCard holds the basics in fewer characters, so the code is smaller. Use MeCard when the code has to be small and most people scanning it use Android.",
+    "text": "vCard 能保存更多内容（公司、职位、多个号码），也是各品牌手机都有文档说明的格式。MeCard 用更少的字符保存基本信息，因此二维码更小。当二维码需要做得小，而且扫描的人大多使用 Android 时，可以选择 MeCard。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.0.answer"
+  },
+  "a4a03a7ff7c8": {
+    "source": "Does the iPhone camera read MeCard codes?",
+    "text": "iPhone 相机能读取 MeCard 二维码吗？",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.1.question"
+  },
+  "f6cef4383fb2": {
+    "source": "Apple doesn't document which contact formats the Camera app reads. Scan the preview with an iPhone before you print, and switch to a vCard if it shows the text instead of offering to save the contact.",
+    "text": "Apple 没有说明相机应用能读取哪些联系人格式。打印前请用 iPhone 扫描预览；如果显示的是文本而不是提示保存联系人，请改用 vCard。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.1.answer"
+  },
+  "aeb4fc782e6a": {
+    "source": "Is my contact sent to QRdx?",
+    "text": "我的联系人会发送给 QRdx 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.2.question"
+  },
+  "b2511e90548f": {
+    "source": "No. The code is made in your browser, and the details you type are remembered only in this browser.",
+    "text": "不会。二维码在你的浏览器中生成，你输入的信息只会保存在当前浏览器中。",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.2.answer"
+  },
+  "153bf335ad30": {
+    "source": "Make the payment code of a Swiss QR-bill, with the Swiss cross.",
+    "text": "生成瑞士 QR-bill 的付款二维码，附瑞士十字标志。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.summary"
+  },
+  "1f1eab6e904d": {
+    "source": "Create the Swiss QR Code of a QR-bill: IBAN or QR-IBAN, address, amount in CHF or EUR, QR or RF reference with check digits, and the Swiss cross. Free.",
+    "text": "创建 QR-bill 的瑞士二维码：IBAN 或 QR-IBAN、地址、以 CHF 或 EUR 计的金额、带校验位的 QR 或 RF 参考号，以及瑞士十字标志。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.metaDescription"
+  },
+  "34cf31c3f1e5": {
+    "source": "A Swiss QR-bill carries its payment details in a QR code with a Swiss cross in the middle: your IBAN or QR-IBAN, your name and address, the amount and the reference. The person paying scans it with the QR scanner in their Swiss or Liechtenstein banking app, checks the payment and confirms it.",
+    "text": "瑞士 QR-bill 把付款信息放进一个中间带有瑞士十字的二维码中：您的 IBAN 或 QR-IBAN、姓名和地址、金额以及参考号。付款人用瑞士或列支敦士登银行 App 中的二维码扫描器扫描，核对付款信息后确认即可。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.intro.0"
+  },
+  "849857bd573d": {
+    "source": "QRdx writes the code to SIX's Swiss Implementation Guidelines for the QR-bill: the Swiss Payments Code version 0200, a structured address, and a QR reference or RF creditor reference with its check digits checked. It draws the code at error correction level M with the 7 mm Swiss cross on top, as the guidelines ask. This is the code for the payment part; the receipt and the rest of the printed bill are up to your invoicing.",
+    "text": "QRdx 按照 SIX 发布的 QR-bill 瑞士实施指南生成二维码：采用 Swiss Payments Code 0200 版、结构化地址，以及已校验校验位的 QR 参考号或 RF 债权人参考号。二维码采用 M 级纠错，并按指南要求在上面叠加 7 mm 的瑞士十字。这里生成的是付款部分的二维码，收据和账单其余的打印内容由您的开票系统负责。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.intro.1"
+  },
+  "4792a0e29f5f": {
+    "source": "Enter your IBAN or QR-IBAN and your name and address as they appear on the account.",
+    "text": "输入您的 IBAN 或 QR-IBAN，以及与账户登记一致的姓名和地址。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.0"
+  },
+  "bfba558a8abe": {
+    "source": "Choose francs or euros and, if you like, an amount.",
+    "text": "选择瑞士法郎或欧元，也可以填写金额。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.1"
+  },
+  "634adfef4d30": {
+    "source": "With a QR-IBAN, add the 27-digit QR reference from your invoicing; with an IBAN, an RF creditor reference or none.",
+    "text": "使用 QR-IBAN 时，填入开票系统中的 27 位 QR 参考号；使用 IBAN 时，可填 RF 债权人参考号，也可以不填。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.2"
+  },
+  "7b9a3d41bb4d": {
+    "source": "Scan the preview with your banking app, then print the code at least 46 × 46 mm, black on white.",
+    "text": "用银行 App 扫描预览，然后以至少 46 × 46 mm 的尺寸、白底黑码打印二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.3"
+  },
+  "6ee013d0eb49": {
+    "source": "Every line up to EPD is written, empty ones included, and nothing follows the last line. QRdx joins the lines with line feeds, which the guidelines allow.",
+    "text": "直到 EPD 的每一行都会写入，空行也不例外，最后一行之后不再有任何内容。QRdx 用换行符连接各行，指南允许这样做。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.0"
+  },
+  "e426d8cc5b0e": {
+    "source": "A QR-IBAN (institution ID 30000 to 31999) always takes a 27-digit QR reference, checked with its modulo 10 recursive check digit, and francs only. An IBAN takes an RF creditor reference (ISO 11649) or no reference.",
+    "text": "QR-IBAN（机构标识 30000 至 31999）必须使用 27 位 QR 参考号，并通过模 10 递归校验位检查，且只能使用瑞士法郎。IBAN 可使用 RF 债权人参考号（ISO 11649），也可以不带参考号。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.1"
+  },
+  "a058beb73635": {
+    "source": "Amounts are written with two decimals, from 0.01 to 999,999,999.99. Leave the amount empty and the payer enters it.",
+    "text": "金额以两位小数书写，范围为 0.01 至 999,999,999.99。金额留空时，由付款人自行输入。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.2"
+  },
+  "e3d1ee53275c": {
+    "source": "Text uses the Latin character set the guidelines list. Curly quotes and dashes are written as plain ones; anything else outside the set is refused.",
+    "text": "文本使用指南列出的拉丁字符集。弯引号和破折号会写成普通的引号和短横线；字符集以外的其他字符会被拒绝。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.3"
+  },
+  "177e8add3f84": {
+    "source": "The code holds at most 997 bytes and is drawn at error correction M with the Swiss cross at 7/46 of its width.",
+    "text": "二维码最多容纳 997 字节，以 M 级纠错绘制，瑞士十字的宽度为二维码宽度的 7/46。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.4"
+  },
+  "9f8771ebb923": {
+    "source": "Which apps read a Swiss QR-bill code?",
+    "text": "哪些应用可以读取瑞士 QR-bill 二维码？",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.0.question"
+  },
+  "de270230a496": {
+    "source": "Swiss and Liechtenstein banking apps and e-banking scan it with their QR scanner, depending on the bank. A phone's camera app only shows the text, because the code holds payment data, not a link.",
+    "text": "瑞士和列支敦士登的银行 App 与网银可以用其二维码扫描器扫描，具体取决于银行。手机的相机 App 只会显示文本，因为这个二维码里是付款数据，而不是链接。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.0.answer"
+  },
+  "090ac73796d7": {
+    "source": "QR-IBAN or IBAN?",
+    "text": "QR-IBAN 还是 IBAN？",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.1.question"
+  },
+  "b8eef59d170e": {
+    "source": "A QR-IBAN comes with a QR reference that your bank uses to match payments to invoices automatically. A normal IBAN works with an RF creditor reference or none. Your bank tells you which one your account has.",
+    "text": "QR-IBAN 配有 QR 参考号，银行用它自动将付款与账单对应。普通 IBAN 可搭配 RF 债权人参考号，也可以不带参考号。您的账户属于哪一种，请向银行确认。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.1.answer"
+  },
+  "5332d85cbf83": {
+    "source": "Can I change the colours?",
+    "text": "可以更改颜色吗？",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.2.question"
+  },
+  "e30f831039d9": {
+    "source": "The guidelines describe the Swiss QR Code in black and white with the Swiss cross, at 46 × 46 mm. Keep it that way on bills you send, so every banking app reads it.",
+    "text": "指南规定瑞士二维码为黑白配色并带瑞士十字，尺寸为 46 × 46 mm。寄出的账单请保持这样，以便所有银行 App 都能读取。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.2.answer"
+  },
+  "e63d6ab6b797": {
+    "source": "No. The code is made in your browser, and the playground never puts payment details in a link.",
+    "text": "不会。二维码在您的浏览器中生成，Playground 也不会把付款信息放进链接里。",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.3.answer"
+  },
+  "04f537f7cada": {
+    "source": "Fill in a Czech bank transfer with account, amount and symbols.",
+    "text": "填写捷克银行转账信息，包括账号、金额和各类符号。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.summary"
+  },
+  "67270dcd5b9c": {
+    "source": "Create a QR Platba code for Czech bank transfers: IBAN or account number, amount in CZK, message and variable symbol, to ČBA standard no. 26. Free.",
+    "text": "生成用于捷克银行转账的 QR Platba 二维码：IBAN 或国内账号、CZK 金额、附言和可变符号，符合 ČBA 第 26 号标准。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.metaDescription"
+  },
+  "1168dc6a7abf": {
+    "source": "A QR Platba code fills in a Czech bank transfer for the person paying: your account, the amount in koruna, a message and the variable symbol. They scan it with the QR scanner in their banking app, check the payment and confirm it, so nobody retypes an account number from an invoice.",
+    "text": "QR Platba 二维码可为付款人填好捷克银行转账信息：你的账号、克朗金额、附言和可变符号。对方用银行应用中的二维码扫描器扫描，核对付款信息并确认，无需再对着发票手动输入账号。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.intro.0"
+  },
+  "e32a2de65dd5": {
+    "source": "The format is the Short Payment Descriptor from the Czech Banking Association's standard no. 26 (ČBA, version 1.2), and most banks on the Czech market offer QR Platba in their apps. A phone's camera app only shows the text. Slovakia uses a different format, PAY by square, which QRdx doesn't make.",
+    "text": "该格式是捷克银行协会（ČBA）第 26 号标准（1.2 版）中的 Short Payment Descriptor，捷克市场上大多数银行的应用都支持 QR Platba。手机相机应用只会显示文本。斯洛伐克使用另一种格式 PAY by square，QRdx 不生成。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.intro.1"
+  },
+  "7adce7aa5e2f": {
+    "source": "Enter your Czech IBAN, or a domestic account number like 19-2000145399/0800, which QRdx checks and turns into the IBAN.",
+    "text": "输入你的捷克 IBAN，或 19-2000145399/0800 这样的国内账号，QRdx 会校验并转换为 IBAN。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.0"
+  },
+  "62b00cfba921": {
+    "source": "Optionally add an amount in CZK, a message and a variable symbol such as an invoice number.",
+    "text": "可选填 CZK 金额、附言和可变符号，例如发票号。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.1"
+  },
+  "5aa4f3055ac0": {
+    "source": "Add a due date, a specific or constant symbol, or ask for an instant payment, if you need them.",
+    "text": "如有需要，可添加到期日、特定符号或常数符号，或要求即时支付。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.2"
+  },
+  "30de678c0315": {
+    "source": "Use error correction level M for print, as the standard asks, and scan the preview with a Czech banking app.",
+    "text": "打印时按标准要求使用纠错等级 M，并用捷克银行应用扫描预览。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.3"
+  },
+  "86457e663210": {
+    "source": "Each field is KEY:value and the fields are separated by *. Only the account is required, and QRdx leaves empty fields out.",
+    "text": "每个字段的格式为 KEY:value，字段之间用 * 分隔。只有账号是必填项，QRdx 会省略空字段。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.0"
+  },
+  "7c5f0c4fff83": {
+    "source": "Amounts are in CZK with two decimals, up to 9,999,999.99. Messages are up to 60 characters and names up to 35.",
+    "text": "金额以 CZK 计，保留两位小数，最高 9,999,999.99。附言最多 60 个字符，姓名最多 35 个。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.1"
+  },
+  "87e817fd0933": {
+    "source": "Variable, specific and constant symbols are up to 10 digits each, and leading zeros are kept.",
+    "text": "可变符号、特定符号和常数符号各最多 10 位数字，前导零会保留。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.2"
+  },
+  "ac5a31c026d2": {
+    "source": "Text is written in upper case without diacritics, the way the standard's reference generator does by default, so the code stays compact (QR alphanumeric mode) and every bank reads it. A * inside a value is written %2A.",
+    "text": "文本以大写且不带变音符号的形式写入，与标准参考生成器的默认做法一致，这样二维码更紧凑（QR 字母数字模式），所有银行都能读取。值中的 * 写作 %2A。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.3"
+  },
+  "34faf78083ed": {
+    "source": "PT:IP asks for an instant payment, for banks that support it.",
+    "text": "PT:IP 表示要求即时支付，适用于支持该功能的银行。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.4"
+  },
+  "f4104434d1b5": {
+    "source": "Which apps read QR Platba codes?",
+    "text": "哪些应用可以读取 QR Platba 二维码？",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.0.question"
+  },
+  "801efb824e7d": {
+    "source": "The QR scanners in Czech banking apps; most banks on the Czech market offer QR Platba. A phone's camera app only shows the text, because the code holds payment details, not a link.",
+    "text": "捷克银行应用中的二维码扫描器；捷克市场上大多数银行都支持 QR Platba。手机相机应用只会显示文本，因为二维码里是付款信息，而不是链接。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.0.answer"
+  },
+  "12c45093ab80": {
+    "source": "Why is my message in capital letters?",
+    "text": "为什么我的附言是大写字母？",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.1.question"
+  },
+  "184d39bb4cb4": {
+    "source": "QRdx writes text in upper case without diacritics, as the standard's reference generator does by default. The code stays smaller and every bank reads it.",
+    "text": "QRdx 以大写且不带变音符号的形式写入文本，与标准参考生成器的默认做法一致。这样二维码更小，所有银行都能读取。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.1.answer"
+  },
+  "26bfeee86716": {
+    "source": "Does it work for payments in Slovakia?",
+    "text": "能用于斯洛伐克的付款吗？",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.2.question"
+  },
+  "eca91d85ebcb": {
+    "source": "No. Slovak banks use a different format, PAY by square, which QRdx doesn't make.",
+    "text": "不能。斯洛伐克银行使用另一种格式 PAY by square，QRdx 不生成。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.2.answer"
+  },
+  "b7eace1568cc": {
+    "source": "Account numbers and check digits",
+    "text": "账号与校验位",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.details.title"
+  },
+  "768f1f0bfce5": {
+    "source": "A domestic account number has an optional prefix, the number and the four-digit bank code, as in 19-2000145399/0800. QRdx checks the prefix and the number with their mod 11 check, turns them into the IBAN and checks its check digits, so a mistyped account is caught before you print.",
+    "text": "国内账号由可选的前缀、账号和四位银行代码组成，例如 19-2000145399/0800。QRdx 会用 mod 11 校验检查前缀和账号，将其转换为 IBAN 并检查其校验位，因此输错的账号在打印前就能发现。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.details.paragraphs.0"
+  },
+  "93350b6001ad": {
+    "source": "A Czech IBAN is checked with its check digits and written as typed. Add the BIC only if your bank asks for it; it follows the IBAN after a +.",
+    "text": "捷克 IBAN 会按其校验位检查，并按输入原样写入。仅在银行要求时才添加 BIC；它接在 IBAN 之后，以 + 分隔。",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.details.paragraphs.1"
+  },
+  "d6555839f9a3": {
+    "source": "Get paid with Swish to a mobile or business number.",
+    "text": "通过 Swish 向手机号或企业号码收款。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.summary"
+  },
+  "6b030cfbfdfc": {
+    "source": "Make a Swish QR code for a Swedish mobile or 123 business number, with an optional amount and message you can lock or let the payer change. Free.",
+    "text": "为瑞典手机号或 123 开头的企业号码生成 Swish 二维码，可附带金额和留言，并可选择锁定或允许付款人修改。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.metaDescription"
+  },
+  "87dd608c89f4": {
+    "source": "A Swish QR code opens a payment in the Swish app with your number filled in, and an amount and a message if you add them. It's a link, so a phone's camera opens the Swish app, and the scanner inside Swish reads it too.",
+    "text": "Swish 二维码会在 Swish 应用中打开一笔付款，并自动填入你的号码；如果你添加了金额和留言，也会一并填入。它是一个链接，所以手机相机会直接打开 Swish 应用，Swish 内置的扫描器同样可以读取。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.intro.0"
+  },
+  "e961c83b431f": {
+    "source": "QRdx writes the link in the format Swish's developer documentation describes. It takes a Swedish mobile number or a 10-digit business number starting with 123. An amount or message in the code is locked unless you let the payer change it.",
+    "text": "QRdx 按照 Swish 开发者文档描述的格式生成链接。它支持瑞典手机号，或以 123 开头的 10 位企业号码。二维码中的金额或留言默认锁定，除非你允许付款人修改。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.intro.1"
+  },
+  "fe2edd77ce8a": {
+    "source": "Enter your Swish number: a Swedish mobile like 070 123 45 67, or your 123 business number.",
+    "text": "输入你的 Swish 号码：瑞典手机号（如 070 123 45 67），或你的 123 企业号码。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.0"
+  },
+  "dacaaddc6a13": {
+    "source": "Optionally add an amount from 1 to 150,000 kronor and a message of up to 50 characters.",
+    "text": "可选择添加 1 至 150,000 克朗的金额，以及最多 50 个字符的留言。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.1"
+  },
+  "f3928869b867": {
+    "source": "Choose whether the payer may change the amount or the message.",
+    "text": "选择付款人是否可以修改金额或留言。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.2"
+  },
+  "20333012e8f8": {
+    "source": "Scan the preview with your phone's camera to check that Swish opens with the right details, then download the code.",
+    "text": "用手机相机扫描预览，确认 Swish 打开后显示的信息无误，然后下载二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.3"
+  },
+  "3260e32e2ca2": {
+    "source": "The format is from Swish's developer documentation, \"Create QR code from specification\".",
+    "text": "该格式来自 Swish 开发者文档中的 \"Create QR code from specification\"。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.0"
+  },
+  "b2414775db2c": {
+    "source": "A mobile number is written 46 and 9 digits, so 070 123 45 67 becomes 46701234567. Business numbers are 10 digits starting with 123.",
+    "text": "手机号写成 46 加 9 位数字，因此 070 123 45 67 会变成 46701234567。企业号码为 10 位数字，以 123 开头。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.1"
+  },
+  "24225545374a": {
+    "source": "Amounts are in kronor, 1 to 150,000 with up to 2 decimals, the range Swish's own generator takes. Messages are up to 50 characters and percent-encoded.",
+    "text": "金额以克朗计，范围为 1 至 150,000，最多保留 2 位小数，与 Swish 自带生成器接受的范围一致。留言最多 50 个字符，并经过百分号编码。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.2"
+  },
+  "eb86d73bf3c6": {
+    "source": "edit lists what the payer may change: amt, msg or both. An amount or message that isn't listed is locked.",
+    "text": "edit 列出付款人可以修改的内容：amt、msg 或两者。未列出的金额或留言即被锁定。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.3"
+  },
+  "5c193517445d": {
+    "source": "Does the phone camera open Swish?",
+    "text": "手机相机能直接打开 Swish 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.0.question"
+  },
+  "a40cf9ad6e26": {
+    "source": "Yes. The code is a link on app.swish.nu, the Swish app's verified link domain on iOS and Android, so the camera opens the app. The scanner in the Swish app reads it too.",
+    "text": "可以。该二维码是 app.swish.nu 上的一个链接，这是 Swish 应用在 iOS 和 Android 上经过验证的链接域名，因此相机会打开应用。Swish 应用内的扫描器同样可以读取。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.0.answer"
+  },
+  "aea453af4eb0": {
+    "source": "Can I put the Swish symbol in the middle?",
+    "text": "可以把 Swish 标志放在中间吗？",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.1.question"
+  },
+  "3f957de5e295": {
+    "source": "Swish's guidelines ask for the code in black and white with the Swish symbol in the centre on a white circle, 25% of the code's width. QRdx doesn't add the symbol; if you want it, take it from Swish's marketing toolbox and add it as the code's logo.",
+    "text": "Swish 的规范要求二维码为黑白两色，并将 Swish 标志置于中央的白色圆形上，宽度为二维码宽度的 25%。QRdx 不会自动添加该标志；如果需要，请从 Swish 的营销工具箱获取，并将其作为二维码的标志添加。",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.1.answer"
+  },
+  "c0ed43219f62": {
+    "source": "Is my Swish number sent to QRdx?",
+    "text": "我的 Swish 号码会发送到 QRdx 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.2.question"
+  },
+  "8c438c696747": {
+    "source": "Get paid in riel or dollars from Cambodian banking apps.",
+    "text": "通过柬埔寨银行应用收取瑞尔或美元付款。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.summary"
+  },
+  "ac6fd425d68d": {
+    "source": "Make a KHQR code for a Bakong account in riel or US dollars, with an optional amount, expiry day and bill number. National Bank of Cambodia format. Free.",
+    "text": "为 Bakong 账户生成瑞尔或美元的 KHQR 二维码，可选填金额、有效日期和账单号。采用柬埔寨国家银行格式。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.metaDescription"
+  },
+  "c47aafa38496": {
+    "source": "A KHQR code lets people in Cambodia pay you from their banking app. It holds your Bakong account ID, your name and city, and the currency, riel or US dollars. KHQR is the National Bank of Cambodia's payment code on Bakong, and Cambodian banking apps that accept KHQR scan it.",
+    "text": "KHQR 二维码可让柬埔寨的用户通过银行应用向你付款。二维码包含你的 Bakong 账户 ID、姓名和城市，以及币种（瑞尔或美元）。KHQR 是柬埔寨国家银行在 Bakong 上推出的支付码，支持 KHQR 的柬埔寨银行应用都可以扫描。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.intro.0"
+  },
+  "81b6d43bf052": {
+    "source": "Leave the amount empty for a static code anyone can pay any amount, which you can print once and keep. With an amount it becomes a dynamic KHQR, which Bakong requires to carry a creation time and an expiry, so QRdx asks for an expiry day and the code stops working after it.",
+    "text": "不填金额时，生成的是静态码，任何人都可以支付任意金额，打印一次即可长期使用。填写金额后则成为动态 KHQR，Bakong 要求其包含创建时间和有效期，因此 QRdx 会让你选择有效日期，过期后该二维码将失效。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.intro.1"
+  },
+  "2f8b8dcf5338": {
+    "source": "Copy your Bakong account ID (name@bank) from your bank app or the Bakong app and paste it in.",
+    "text": "从你的银行应用或 Bakong 应用中复制 Bakong 账户 ID（name@bank），然后粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.0"
+  },
+  "ba77d851da3d": {
+    "source": "Enter the name payers should see and your city, and pick KHR or USD.",
+    "text": "输入付款人看到的名称和你所在的城市，并选择 KHR 或 USD。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.1"
+  },
+  "9d9888545383": {
+    "source": "Optionally add an amount with an expiry day, a bill number or a mobile number.",
+    "text": "也可以添加金额及有效日期、账单号或手机号码。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.2"
+  },
+  "4f3fb576a9e7": {
+    "source": "Scan the preview with a banking app that accepts KHQR, then download the code.",
+    "text": "用支持 KHQR 的银行应用扫描预览，然后下载二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.3"
+  },
+  "eb8197bea8ba": {
+    "source": "Tag 29 holds the person's own Bakong account ID, up to 32 characters. The merchant category is 5999 and the country KH.",
+    "text": "标签 29 保存个人的 Bakong 账户 ID，最长 32 个字符。商户类别为 5999，国家为 KH。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.0"
+  },
+  "c016f225850d": {
+    "source": "Currency 116 is riel and 840 is US dollars. Riel amounts are whole numbers; dollar amounts have up to 2 decimals.",
+    "text": "币种代码 116 代表瑞尔，840 代表美元。瑞尔金额为整数，美元金额最多保留 2 位小数。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.1"
+  },
+  "c77d936e0d4c": {
+    "source": "Names are up to 25 characters and cities up to 15; the city is Phnom Penh unless you change it. Tag 62 holds the bill number and mobile number.",
+    "text": "名称最长 25 个字符，城市最长 15 个字符；如果不修改，城市默认为 Phnom Penh。标签 62 保存账单号和手机号码。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.2"
+  },
+  "30171e1e70a9": {
+    "source": "A code with an amount carries its creation time and expiry in tag 99. The checksum is CRC16-CCITT over the whole payload, as in every EMV payment code.",
+    "text": "带金额的二维码会在标签 99 中保存创建时间和有效期。校验码是对整个内容计算的 CRC16-CCITT，与所有 EMV 支付码相同。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.3"
+  },
+  "c10213c45468": {
+    "source": "Why does a code with an amount expire?",
+    "text": "为什么带金额的二维码会过期？",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.0.question"
+  },
+  "cb919fae6326": {
+    "source": "Bakong requires a KHQR with an amount to carry a creation time and an expiry, so the code stops working after the day you pick. For a sign you print once, leave the amount empty.",
+    "text": "Bakong 要求带金额的 KHQR 包含创建时间和有效期，因此二维码在你选择的日期之后就会失效。如果是打印一次长期使用的牌子，请不要填写金额。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.0.answer"
+  },
+  "f949e134455b": {
+    "source": "Where do I find my Bakong account ID?",
+    "text": "在哪里可以找到我的 Bakong 账户 ID？",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.1.question"
+  },
+  "9881bb779353": {
+    "source": "In your bank app or the Bakong app; it looks like name@bank. QRdx can't check that an ID exists, so copy it rather than typing it, and scan the preview with a banking app before you print.",
+    "text": "在你的银行应用或 Bakong 应用中可以找到，格式类似 name@bank。QRdx 无法验证 ID 是否存在，所以请复制而不是手动输入，并在打印前用银行应用扫描预览。",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.1.answer"
+  },
+  "c7ca4fc0c63a": {
+    "source": "Is my account sent to QRdx?",
+    "text": "我的账户信息会发送给 QRdx 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.2.question"
+  },
+  "2c1402d1fc89": {
+    "source": "Share a Lightning invoice, LNURL or Lightning Address.",
+    "text": "分享 Lightning 发票、LNURL 或 Lightning Address。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.summary"
+  },
+  "67d71c0b24eb": {
+    "source": "Make a Lightning QR code from a BOLT 11 invoice, an LNURL or a Lightning Address. Invoices are checked; an address becomes its LNURL-pay code. Free.",
+    "text": "通过 BOLT 11 发票、LNURL 或 Lightning Address 生成 Lightning 二维码。发票会经过校验;地址会转换为对应的 LNURL-pay 二维码。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.metaDescription"
+  },
+  "b89cd1654e54": {
+    "source": "A Lightning QR code lets a Bitcoin Lightning wallet pay you. Paste one of three things: a BOLT 11 invoice from your wallet (lnbc…), an LNURL (lnurl1…), or a Lightning Address such as name@domain.com.",
+    "text": "Lightning 二维码可以让比特币 Lightning 钱包向你付款。粘贴以下三种内容之一即可:钱包生成的 BOLT 11 发票(lnbc…)、LNURL(lnurl1…),或形如 name@domain.com 的 Lightning Address。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.intro.0"
+  },
+  "665b6bd1db36": {
+    "source": "An invoice can be paid once and expires, after an hour by BOLT 11's default, so a printed invoice code goes stale. For a sign, a sticker or anything else you print, use an LNURL or a Lightning Address: QRdx turns an address into its LNURL-pay, which wallets that support LNURL-pay scan.",
+    "text": "发票只能支付一次,而且会过期,按 BOLT 11 的默认设置为一小时后过期,所以印出来的发票二维码很快就会失效。用于标牌、贴纸或其他印刷品时,请使用 LNURL 或 Lightning Address:QRdx 会把地址转换为对应的 LNURL-pay,支持 LNURL-pay 的钱包可以扫描。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.intro.1"
+  },
+  "77b6de5bcc8d": {
+    "source": "Copy an invoice, an LNURL or your Lightning Address from your wallet and paste it in.",
+    "text": "从钱包中复制发票、LNURL 或你的 Lightning Address,并粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.0"
+  },
+  "99738c1f186e": {
+    "source": "QRdx checks an invoice's or LNURL's checksum; only mainnet invoices (lnbc…) are accepted.",
+    "text": "QRdx 会校验发票或 LNURL 的校验和;只接受主网发票(lnbc…)。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.1"
+  },
+  "4d7c70004d55": {
+    "source": "Scan the preview with the wallet that will pay to check it.",
+    "text": "用将要付款的钱包扫描预览图,确认可以正常使用。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.2"
+  },
+  "af0f158f8d39": {
+    "source": "Download the code, and print a Lightning Address as text beside it.",
+    "text": "下载二维码,如果使用的是 Lightning Address,请把它以文字形式印在二维码旁边。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.3"
+  },
+  "373462ea7e0b": {
+    "source": "An invoice is written lightning:<INVOICE> with the invoice in upper case, as BOLT 11 asks for QR codes. Its Bech32 checksum and prefix are checked, and only mainnet (lnbc) invoices are accepted.",
+    "text": "发票会写成 lightning:<INVOICE>,其中发票内容为大写,这是 BOLT 11 对二维码的要求。系统会校验它的 Bech32 校验和与前缀,只接受主网(lnbc)发票。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.0"
+  },
+  "2949c548ac93": {
+    "source": "A Lightning Address is turned into its LNURL-pay (LUD-16 and LUD-01): https://domain/.well-known/lnurlp/name, Bech32-encoded. The example is satoshi@bitcoin.org.",
+    "text": "Lightning Address 会被转换为对应的 LNURL-pay(LUD-16 和 LUD-01):https://domain/.well-known/lnurlp/name,再进行 Bech32 编码。示例为 satoshi@bitcoin.org。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.1"
+  },
+  "7f916613b6c6": {
+    "source": "The code holds the bare upper case LNURL, which LNURL-pay wallets scan (LUD-06). No spec defines a QR form for name@domain itself.",
+    "text": "二维码中存放的是纯大写的 LNURL,支持 LNURL-pay 的钱包可以扫描它(LUD-06)。目前没有规范为 name@domain 本身定义二维码形式。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.2"
+  },
+  "cecaa53fd26a": {
+    "source": "Invoices are 200 to 600 characters or more, so an invoice code is dense; print it larger.",
+    "text": "发票通常有 200 到 600 个字符甚至更多,因此发票二维码很密集,打印时请放大一些。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.3"
+  },
+  "99358e5563bc": {
+    "source": "Can I print an invoice code?",
+    "text": "可以打印发票二维码吗?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.0.question"
+  },
+  "97da46ebe9a0": {
+    "source": "Not for long. An invoice can be paid once and expires, after an hour by BOLT 11's default. Use an LNURL or a Lightning Address for anything printed.",
+    "text": "用不了多久。发票只能支付一次,而且会过期,按 BOLT 11 的默认设置为一小时后过期。印刷用途请使用 LNURL 或 Lightning Address。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.0.answer"
+  },
+  "8d306b6fe7d4": {
+    "source": "Why doesn't the code hold my Lightning Address?",
+    "text": "为什么二维码里不是我的 Lightning Address?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.1.question"
+  },
+  "6840dcacef1d": {
+    "source": "No spec defines a QR form for name@domain, so QRdx writes the address's LNURL-pay, which LNURL-pay wallets scan. Print the address as text beside the code for people who'd rather type it.",
+    "text": "没有规范为 name@domain 定义二维码形式,所以 QRdx 会写入该地址对应的 LNURL-pay,支持 LNURL-pay 的钱包可以扫描。你可以把地址以文字形式印在二维码旁边,方便喜欢手动输入的人。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.1.answer"
+  },
+  "020f1df312e2": {
+    "source": "Is my invoice sent to QRdx?",
+    "text": "我的发票会发送给 QRdx 吗?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.2.question"
+  },
+  "9a2536823508": {
+    "source": "No. The code is made in your browser, and QRdx doesn't contact your Lightning Address's server to make it.",
+    "text": "不会。二维码在你的浏览器中生成,QRdx 生成时也不会联系你的 Lightning Address 所在的服务器。",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.2.answer"
+  },
+  "9e2e53faff95": {
+    "source": "Share an XRP Ledger address, with a destination tag if you need one.",
+    "text": "分享 XRP Ledger 地址，需要时可附带目标标签。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.summary"
+  },
+  "7af9f7d47d3c": {
+    "source": "Make an XRP QR code with your XRP Ledger address, checked with its checksum. Add a destination tag and the code holds an X-address that keeps both. Free.",
+    "text": "用你的 XRP Ledger 地址生成 XRP 二维码，并通过校验和验证地址。添加目标标签后，二维码会包含同时保留两者的 X-address。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.metaDescription"
+  },
+  "d72b63a5ad07": {
+    "source": "An XRP QR code holds your XRP Ledger address, so the payer's wallet reads it instead of someone typing it. The XRP Ledger has no finished payment URI standard, so the code holds the plain classic address (r…), which XRPL wallets read.",
+    "text": "XRP 二维码包含你的 XRP Ledger 地址，付款人的钱包直接读取，无需手动输入。XRP Ledger 还没有定稿的支付 URI 标准，因此二维码中是普通的经典地址（r…），XRPL 钱包可以读取。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.intro.0"
+  },
+  "4f85c6d1c602": {
+    "source": "With a destination tag, QRdx writes the X-address instead (XLS-5, final), which packs the address and the tag together under one checksum. A wallet that doesn't understand an X-address refuses it rather than sending without the tag. Print the classic address and the tag as text too, since some exchanges ask for them separately.",
+    "text": "带目标标签时，QRdx 会改写为 X-address（XLS-5，最终版），将地址和标签打包在同一个校验和之下。不支持 X-address 的钱包会拒绝识别，而不会漏掉标签直接转账。也请把经典地址和标签以文字形式一并印出，因为有些交易所需要分别填写。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.intro.1"
+  },
+  "c11baa66a136": {
+    "source": "Paste your classic XRP Ledger address (r…) from your wallet or exchange.",
+    "text": "粘贴你钱包或交易所中的经典 XRP Ledger 地址（r…）。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.0"
+  },
+  "3025dd9f38d1": {
+    "source": "If you were given a destination tag, enter it in its own field.",
+    "text": "如果你拿到了目标标签，请填入单独的字段。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.1"
+  },
+  "0c7a8a070054": {
+    "source": "Download the code, and print the address and tag as text beside it.",
+    "text": "下载二维码，并在旁边以文字形式印上地址和标签。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.3"
+  },
+  "8b35bf5a17d7": {
+    "source": "The classic address is checked with its Base58 checksum (a double SHA-256).",
+    "text": "经典地址会用 Base58 校验和（双重 SHA-256）验证。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.0"
+  },
+  "aa15e1fe974a": {
+    "source": "With a destination tag the code holds the X-address (XLS-5): rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf with tag 276 is XVLhHMPHU98es4dbozjVtdWzVrDjtVoKj3MnFGMXEFMnvJV.",
+    "text": "带目标标签时，二维码包含 X-address（XLS-5）：地址 rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf 加标签 276 对应 XVLhHMPHU98es4dbozjVtdWzVrDjtVoKj3MnFGMXEFMnvJV。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.1"
+  },
+  "f9fe297c6cef": {
+    "source": "Tag 0 and no tag are different, so enter 0 only if you were given 0.",
+    "text": "标签 0 与没有标签是不同的，只有当你拿到的标签就是 0 时才填 0。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.2"
+  },
+  "1e43d3dd2ccf": {
+    "source": "There's no amount: no amount format works across XRP wallets.",
+    "text": "不含金额：各 XRP 钱包之间没有通用的金额格式。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.3"
+  },
+  "b40aeaf4eb33": {
+    "source": "Can I request an amount?",
+    "text": "可以指定金额吗？",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.0.question"
+  },
+  "badc2c555609": {
+    "source": "No. No amount format works across XRP wallets, so the payer enters the amount.",
+    "text": "不可以。各 XRP 钱包之间没有通用的金额格式，所以由付款人自己输入金额。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.0.answer"
+  },
+  "885113776864": {
+    "source": "When do I need a destination tag?",
+    "text": "什么时候需要目标标签？",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.1.question"
+  },
+  "48cb32049a4b": {
+    "source": "When your exchange or service gives you one. Copy it exactly: tag 0 and no tag are different.",
+    "text": "当你的交易所或服务提供了目标标签时。请原样复制：标签 0 与没有标签是不同的。",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.1.answer"
+  },
+  "ff1d090c6e22": {
+    "source": "Is my address sent to QRdx?",
+    "text": "我的地址会发送给 QRdx 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.2.question"
+  },
+  "deac18fb7b7a": {
+    "source": "Request ADA with a CIP-13 Cardano payment link.",
+    "text": "用 CIP-13 Cardano 支付链接收取 ADA。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.summary"
+  },
+  "8472618ab7fd": {
+    "source": "Make a Cardano QR code in the CIP-13 web+cardano: format with your addr1 address and an optional amount in ADA. Address checked with its checksum. Free.",
+    "text": "用 CIP-13 的 web+cardano: 格式生成 Cardano 二维码，包含你的 addr1 地址和可选的 ADA 金额。地址会通过校验和验证。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.metaDescription"
+  },
+  "3f20ad9d36d6": {
+    "source": "A Cardano QR code holds your payment address and, if you like, an amount in ADA, in the web+cardano: format from CIP-13. Wallets that implement CIP-13 payment URIs fill in the payment when they scan it.",
+    "text": "Cardano 二维码包含你的收款地址，也可按需加入 ADA 金额，采用 CIP-13 的 web+cardano: 格式。支持 CIP-13 支付 URI 的钱包在扫描后会自动填好付款信息。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.intro.0"
+  },
+  "a35655958b18": {
+    "source": "CIP-13's status is proposed, and it lists Yoroi and Begin as wallets implementing payment URIs. Other wallets may only read a plain address, so scan the preview with the wallets your payers use before you print.",
+    "text": "CIP-13 目前的状态是提议中，它列出 Yoroi 和 Begin 为支持支付 URI 的钱包。其他钱包可能只能读取普通地址，所以打印前请用付款人使用的钱包扫描预览。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.intro.1"
+  },
+  "8d04344477dd": {
+    "source": "Paste a mainnet payment address (addr1…) from your wallet.",
+    "text": "粘贴钱包中的主网收款地址（addr1…）。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.0"
+  },
+  "29403c48bdc1": {
+    "source": "Optionally enter an amount in ADA, with up to 6 decimals.",
+    "text": "可选填 ADA 金额，最多 6 位小数。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.1"
+  },
+  "0a19a1f4064e": {
+    "source": "Scan the preview with the wallets your payers use.",
+    "text": "用付款人使用的钱包扫描预览。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.2"
+  },
+  "10a20be51b8a": {
+    "source": "Defined by CIP-13. The amount is decimal ADA with up to 6 decimals.",
+    "text": "由 CIP-13 定义。金额为十进制 ADA，最多 6 位小数。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.0"
+  },
+  "6e27720303a4": {
+    "source": "CIP-13 defines only the amount, so there's no label or message.",
+    "text": "CIP-13 只定义了金额，所以没有标签或留言。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.1"
+  },
+  "899005da8290": {
+    "source": "QRdx takes mainnet Shelley payment addresses (addr1…) and checks their Bech32 checksum. Stake addresses and testnet addresses are refused, and older Byron addresses aren't accepted.",
+    "text": "QRdx 接受主网 Shelley 收款地址（addr1…），并验证其 Bech32 校验和。质押地址和测试网地址会被拒绝，旧版 Byron 地址也不接受。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.2"
+  },
+  "61421398a492": {
+    "source": "Which wallets read it?",
+    "text": "哪些钱包能读取？",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.0.question"
+  },
+  "d6ee36d68c1f": {
+    "source": "CIP-13 lists Yoroi and Begin as implementing payment URIs. Other wallets may read only plain addresses, so test with your payers' wallets.",
+    "text": "CIP-13 列出 Yoroi 和 Begin 支持支付 URI。其他钱包可能只能读取普通地址，因此请用付款人的钱包测试。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.0.answer"
+  },
+  "475fb46585a1": {
+    "source": "Why is my address refused?",
+    "text": "为什么我的地址被拒绝？",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.1.question"
+  },
+  "962c2a8064ea": {
+    "source": "QRdx takes mainnet Shelley payment addresses starting with addr1. A stake address, a testnet address or an older Byron address isn't accepted.",
+    "text": "QRdx 接受以 addr1 开头的主网 Shelley 收款地址。质押地址、测试网地址或旧版 Byron 地址不被接受。",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.1.answer"
+  },
+  "7cfadbe6a7a3": {
+    "source": "Share a Tron address for TRX or USDT (TRC-20).",
+    "text": "分享用于 TRX 或 USDT（TRC-20）的 Tron 地址。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.summary"
+  },
+  "fae1c6bfb4f5": {
+    "source": "Make a Tron QR code with your T… address for TRX or USDT on TRC-20, checked with its Base58Check checksum. Print the coin and network beside it. Free.",
+    "text": "用你的 T… 地址制作 Tron 二维码，用于 TRX 或 TRC-20 上的 USDT，并通过 Base58Check 校验和检查。在旁边标明币种和网络。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.metaDescription"
+  },
+  "91c7de63b71d": {
+    "source": "A Tron QR code holds your Tron address, the T… address your wallet shows on its own receive screen. No static payment URI is documented for Tron wallets: the documented transfer deep link needs the payer's own address and a callback, so it can't be printed.",
+    "text": "Tron 二维码保存的是你的 Tron 地址，也就是钱包收款页面上显示的 T… 地址。Tron 钱包没有公开的静态支付 URI：文档中的转账深度链接需要付款方自己的地址和回调，因此无法打印出来。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.intro.0"
+  },
+  "acb202e6262f": {
+    "source": "TRX, TRC-10 tokens and TRC-20 tokens such as USDT all use the same address, so the code can't say which coin or network you expect. Print it next to the code: \"USDT (TRC-20, Tron network)\" or \"TRX\".",
+    "text": "TRX、TRC-10 代币以及 USDT 等 TRC-20 代币都使用同一个地址，所以二维码无法说明你期望收到哪种币或哪个网络。请在二维码旁边注明：“USDT（TRC-20，Tron 网络）”或“TRX”。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.intro.1"
+  },
+  "196085cd88ec": {
+    "source": "Copy the address from your wallet's receive screen and paste it in.",
+    "text": "从钱包的收款页面复制地址，然后粘贴进来。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.0"
+  },
+  "a3db84ddbd5f": {
+    "source": "QRdx checks its checksum, and refuses Tether's USDT contract address if it's pasted by mistake.",
+    "text": "QRdx 会检查地址的校验和，如果误粘贴了 Tether 的 USDT 合约地址，会拒绝接受。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.1"
+  },
+  "2b3b4bc0d981": {
+    "source": "Download the code and print the coin and network beside it.",
+    "text": "下载二维码，并在旁边打印币种和网络。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.3"
+  },
+  "89948a6b276f": {
+    "source": "The address is checked with its Base58Check checksum and its 0x41 prefix byte.",
+    "text": "地址会通过 Base58Check 校验和及其 0x41 前缀字节进行检查。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.0"
+  },
+  "0f5cd7670a47": {
+    "source": "Tether's USDT contract (TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t) is refused as a recipient: it's the token's contract, not a wallet.",
+    "text": "Tether 的 USDT 合约（TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t）不能作为收款方：它是代币的合约，不是钱包。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.1"
+  },
+  "2371d64a8f81": {
+    "source": "There's no amount: no static request format is documented for Tron wallets.",
+    "text": "不含金额：Tron 钱包没有公开的静态收款请求格式。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.2"
+  },
+  "c8ff8a9709d8": {
+    "source": "Can I ask for USDT?",
+    "text": "可以指定收 USDT 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.0.question"
+  },
+  "752d8e7dd646": {
+    "source": "The same address receives TRX and TRC-20 USDT, and the code can't say which. Print \"USDT (TRC-20, Tron network)\" next to it so payers send on the right network.",
+    "text": "同一个地址既能收 TRX，也能收 TRC-20 USDT，二维码无法说明是哪一种。请在旁边注明“USDT（TRC-20，Tron 网络）”，让付款方选对网络转账。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.0.answer"
+  },
+  "21ff3a8d2f73": {
+    "source": "Can I add an amount?",
+    "text": "可以添加金额吗？",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.1.question"
+  },
+  "bc7ed8c3d426": {
+    "source": "No. Tron wallets document no static request format with an amount, so the payer enters it.",
+    "text": "不可以。Tron 钱包没有公开带金额的静态请求格式，金额需要由付款方自己输入。",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.1.answer"
+  },
+  "1ed2997d6e49": {
+    "source": "Request TON or USDT with a ton://transfer link.",
+    "text": "通过 ton://transfer 链接请求 TON 或 USDT。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.summary"
+  },
+  "18453f5eef0f": {
+    "source": "Make a TON QR code with a ton://transfer link: your address, an amount in TON or USDT and a comment. Address checked with its CRC-16 checksum. Free.",
+    "text": "用 ton://transfer 链接制作 TON 二维码：包含你的地址、以 TON 或 USDT 计的金额以及备注。地址会通过 CRC-16 校验和检查。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.metaDescription"
+  },
+  "cd9104ba5b6e": {
+    "source": "A TON QR code holds a ton://transfer link from TON's deep link docs: your address and, if you like, an amount and a comment. It can ask for TON or for USDT, Tether's own jetton on TON.",
+    "text": "TON 二维码保存的是 TON 深度链接文档中的 ton://transfer 链接：包含你的地址，也可以按需加上金额和备注。它可以请求 TON，也可以请求 USDT，即 Tether 在 TON 上发行的 jetton。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.intro.0"
+  },
+  "23f4a1d0fbda": {
+    "source": "TON's docs note that the ton:// link works across TON wallets, but whether a wallet honours the USDT jetton parameter is up to the wallet. Scan a USDT code with the wallets your payers use before you print it.",
+    "text": "TON 文档指出 ton:// 链接适用于各种 TON 钱包，但钱包是否支持 USDT jetton 参数由钱包自行决定。打印之前，请用付款方使用的钱包扫描 USDT 二维码进行测试。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.intro.1"
+  },
+  "0adc1f6b84ae": {
+    "source": "Paste the address your wallet shows (UQ… or EQ…).",
+    "text": "粘贴钱包显示的地址（UQ… 或 EQ…）。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.0"
+  },
+  "31efb3d9cae4": {
+    "source": "Pick TON or USDT and, if you like, an amount.",
+    "text": "选择 TON 或 USDT，也可以按需填写金额。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.1"
+  },
+  "3a88fa85c549": {
+    "source": "Optionally add a comment, such as an order number.",
+    "text": "可选：添加备注，例如订单号。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.2"
+  },
+  "c7a81ad47a41": {
+    "source": "Scan the preview with a TON wallet to check it, then download the code.",
+    "text": "用 TON 钱包扫描预览进行检查，然后下载二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.3"
+  },
+  "470e2147ed23": {
+    "source": "Amounts are typed in TON (up to 9 decimals) or USDT (up to 6) and written in base units: amount=5000000 in the example is 0.005 TON.",
+    "text": "金额以 TON（最多 9 位小数）或 USDT（最多 6 位小数）输入，并以基本单位写入：示例中的 amount=5000000 即 0.005 TON。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.0"
+  },
+  "7d1c71573759": {
+    "source": "For USDT the link adds jetton= with Tether's USDT on TON, and the amount is in millionths: ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=5000&text=hello is 0.005 USDT.",
+    "text": "对于 USDT，链接会加上 jetton= 以及 Tether 在 TON 上的 USDT，金额以百万分之一为单位：ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=5000&text=hello 即 0.005 USDT。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.1"
+  },
+  "3059f661e1ed": {
+    "source": "The address must be a user-friendly mainnet address, UQ… (non-bounceable, recommended for wallets) or EQ…, and is checked with its CRC-16. Raw 0:… addresses have no checksum, so QRdx asks for the form your wallet shows.",
+    "text": "地址必须是用户友好格式的主网地址，即 UQ…（不可退回，推荐用于钱包）或 EQ…，并通过 CRC-16 检查。原始的 0:… 地址没有校验和，因此 QRdx 要求使用钱包显示的格式。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.2"
+  },
+  "fbb13bfe8c28": {
+    "source": "text is the transfer's comment, percent-encoded.",
+    "text": "text 是转账备注，经过百分号编码。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.3"
+  },
+  "0d5e0f89b214": {
+    "source": "Do all TON wallets pay USDT from the code?",
+    "text": "所有 TON 钱包都能通过二维码支付 USDT 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.0.question"
+  },
+  "9963235976b8": {
+    "source": "TON's docs leave the jetton parameter to each wallet, so test a USDT code with the wallets your payers use. A code for TON works across TON wallets.",
+    "text": "TON 文档把 jetton 参数交由各钱包自行处理，所以请用付款方使用的钱包测试 USDT 二维码。TON 二维码适用于各种 TON 钱包。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.0.answer"
+  },
+  "50d64d793123": {
+    "source": "UQ or EQ address?",
+    "text": "用 UQ 还是 EQ 地址？",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.1.question"
+  },
+  "50967eb308c7": {
+    "source": "Both work. UQ… is the non-bounceable form, which is recommended for wallets; EQ… is the bounceable one. Paste the one your wallet shows.",
+    "text": "两种都可以。UQ… 是不可退回格式，推荐用于钱包；EQ… 是可退回格式。粘贴你的钱包显示的那一种即可。",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.1.answer"
+  },
+  "8f7296730753": {
+    "source": "Request XLM or USDC with a SEP-0007 Stellar link.",
+    "text": "通过 SEP-0007 Stellar 链接收取 XLM 或 USDC。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.summary"
+  },
+  "a0c8bd2a6b27": {
+    "source": "Make a Stellar QR code in the SEP-0007 web+stellar:pay format for XLM or Circle's USDC, with an optional amount and a text memo for exchanges. Free.",
+    "text": "生成 SEP-0007 web+stellar:pay 格式的 Stellar 二维码，可用于收取 XLM 或 Circle 的 USDC，并可选填金额，以及供交易所使用的文本备注。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.metaDescription"
+  },
+  "72dc868dc688": {
+    "source": "A Stellar QR code holds a SEP-0007 payment request: your account and, if you like, an amount, the asset and a memo. It can ask for XLM or for USDC from the issuer Circle lists.",
+    "text": "Stellar 二维码包含一条 SEP-0007 付款请求：你的账户，以及可选的金额、资产和备注。它可以请求 XLM，也可以请求 Circle 所列发行方的 USDC。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.intro.0"
+  },
+  "68320de87231": {
+    "source": "Exchanges often need a memo to match a deposit to your account, so the code can carry one. Wallet support for SEP-7 varies, so scan the preview with the wallets your payers use before you print.",
+    "text": "交易所通常需要备注才能将充值与你的账户对应起来，因此二维码可以带上备注。各钱包对 SEP-7 的支持不尽相同，打印前请用付款方常用的钱包扫描预览。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.intro.1"
+  },
+  "903a63c78ec1": {
+    "source": "Paste your Stellar address (G…).",
+    "text": "粘贴你的 Stellar 地址（G…）。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.0"
+  },
+  "6c063e9c2b5b": {
+    "source": "Pick XLM or USDC and, if you like, an amount.",
+    "text": "选择 XLM 或 USDC，也可以填写金额。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.1"
+  },
+  "79717628bbe3": {
+    "source": "Add a text memo if your exchange or service gave you one.",
+    "text": "如果交易所或服务提供了备注，请添加文本备注。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.2"
+  },
+  "0c90e0315096": {
+    "source": "Scan the preview with a Stellar wallet to check it, then download the code.",
+    "text": "用 Stellar 钱包扫描预览进行检查，然后下载二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.3"
+  },
+  "fd1585fbd449": {
+    "source": "Defined by SEP-0007, which is active. Amounts have up to 7 decimals.",
+    "text": "由 SEP-0007 定义，该标准目前处于生效状态。金额最多支持 7 位小数。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.0"
+  },
+  "300904ea50bd": {
+    "source": "For USDC the link names asset_code=USDC and the issuer Circle lists. The receiving account needs a USDC trustline to receive it.",
+    "text": "对于 USDC，链接中会写明 asset_code=USDC 以及 Circle 所列的发行方。收款账户需要有 USDC 信任线才能收款。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.1"
+  },
+  "785baf528367": {
+    "source": "Memos are text (MEMO_TEXT) of up to 28 bytes, percent-encoded.",
+    "text": "备注为文本（MEMO_TEXT），最长 28 字节，并经过百分号编码。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.2"
+  },
+  "b3dcb7c3ae00": {
+    "source": "The address is checked as a StrKey: Base32 with a CRC-16 checksum.",
+    "text": "地址会按 StrKey 校验：Base32 编码，带 CRC-16 校验和。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.3"
+  },
+  "a05966b114fd": {
+    "source": "Can I receive USDC?",
+    "text": "我可以收取 USDC 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.0.question"
+  },
+  "326020a817c9": {
+    "source": "Yes, if your account has a USDC trustline for Circle's issuer. Without one the account can't receive USDC, so add the trustline in your wallet first.",
+    "text": "可以，前提是你的账户已为 Circle 的发行方建立 USDC 信任线。没有信任线，账户就无法接收 USDC，所以请先在钱包中添加信任线。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.0.answer"
+  },
+  "f9438f4a8553": {
+    "source": "Do I need a memo?",
+    "text": "我需要填写备注吗？",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.1.question"
+  },
+  "2e2dd93a7195": {
+    "source": "Add one when your exchange or service gives you one, exactly as given. Text memos are up to 28 bytes.",
+    "text": "如果交易所或服务给了你备注，就按原样添加。文本备注最长 28 字节。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.1.answer"
+  },
+  "056ecc71a8ff": {
+    "source": "Wallet support for SEP-7 varies. Test with the wallets your payers use.",
+    "text": "各钱包对 SEP-7 的支持不尽相同。请用付款方常用的钱包进行测试。",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.2.answer"
   },
   "1d393b0081b6": {
     "source": "PDF",
@@ -22667,6 +23969,24 @@
     "status": "machine",
     "context": "pageCodes.on-tickets-4.label"
   },
+  "3d33dc0484e1": {
+    "source": "Name badge",
+    "text": "姓名牌",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-1.label"
+  },
+  "7e2d81cbed8a": {
+    "source": "Sticker",
+    "text": "贴纸",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-3.label"
+  },
+  "9dce86898f29": {
+    "source": "Flyer",
+    "text": "传单",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-4.label"
+  },
   "0432f20a0f65": {
     "source": "Table menu",
     "text": "桌面菜单",
@@ -31883,6 +33203,18 @@
     "status": "machine",
     "context": "mcp.tools.10.description"
   },
+  "e22e80134ee4": {
+    "source": "Contact card (MeCard)",
+    "text": "联系人名片（MeCard）",
+    "status": "machine",
+    "context": "mcp.tools.14.title"
+  },
+  "5ec08b9f5893": {
+    "source": "A MeCard contact: the same basics as a vCard in fewer characters, so the code is smaller.",
+    "text": "MeCard 联系人：基本信息与 vCard 相同，但字符更少，因此二维码更小。",
+    "status": "machine",
+    "context": "mcp.tools.14.description"
+  },
   "61964d1b5f82": {
     "source": "A mailto: link with optional cc, bcc, subject and body.",
     "text": "mailto: 链接，可选抄送、密送、主题和正文。",
@@ -31913,17 +33245,17 @@
     "status": "machine",
     "context": "mcp.tools.13.description"
   },
-  "7b20ff0c7661": {
-    "source": "Bank payment",
-    "text": "银行支付",
+  "7048f38b33f1": {
+    "source": "Payment",
+    "text": "付款",
     "status": "machine",
-    "context": "mcp.tools.14.title"
+    "context": "mcp.tools.18.title"
   },
-  "d56984fa2345": {
-    "source": "A Pix, SEPA transfer, PayNow, PromptPay or VietQR payment code, checked like the playground's forms.",
-    "text": "Pix、SEPA 转账、PayNow、PromptPay 或 VietQR 支付码，校验方式与 Playground 的表单一致。",
+  "e9eb33d195b5": {
+    "source": "A Pix, SEPA, Swiss QR-bill, QR Platba, Swish, PayNow, PromptPay, VietQR or KHQR payment code, or a Lightning, XRP, Cardano, Tron, TON or Stellar request, checked like the playground's forms.",
+    "text": "Pix、SEPA、Swiss QR-bill、QR Platba、Swish、PayNow、PromptPay、VietQR 或 KHQR 付款码，或 Lightning、XRP、Cardano、Tron、TON 或 Stellar 收款请求，校验方式与 Playground 的表单一致。",
     "status": "machine",
-    "context": "mcp.tools.14.description"
+    "context": "mcp.tools.18.description"
   },
   "f963ece25fc7": {
     "source": "Can Claude make a QR code?",
@@ -32711,11 +34043,167 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
+  "0135740ce7f9": {
+    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
+    "text": "生成 Wi-Fi 二维码，访客扫描一次即可加入网络。支持 WPA/WPA2、WEP 和开放网络，支持隐藏 SSID，转义正确。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.metaDescription"
+  },
+  "31d04d55ac35": {
+    "source": "Choose the security type: WPA/WPA2 for almost every modern router, WEP for very old ones, or No password for open networks.",
+    "text": "选择加密类型：几乎所有新款路由器都选 WPA/WPA2，非常老的路由器选 WEP，开放网络选“无密码”。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.steps.1"
+  },
+  "bc95db81d2cd": {
+    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. Enterprise networks that need a username or certificate (WPA2-Enterprise) aren't supported by this format.",
+    "text": "请检查网络名称是否完全一致（区分大小写）、加密类型是否正确，以及你是否在信号范围内。需要用户名或证书的企业网络（WPA2-Enterprise）不受这种格式支持。",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.faqs.1.answer"
+  },
   "5c11d4be5401": {
     "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
     "text": "下载 PNG、WebP 或 SVG，也可以在完整编辑器中设计二维码样式。",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
+  },
+  "da2ccbd9fdc4": {
+    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",
+    "text": "这是一个链上收款请求：钱包会在比特币区块链上向你的地址付款。仅支持闪电网络的钱包无法支付，而且本生成器不会在 URI 中添加 lightning= 发票，因此如需闪电网络收款，请改为分享钱包中的发票或闪电网络地址。",
+    "status": "machine",
+    "context": "qrTypes.types.bitcoin.details.paragraphs.0"
+  },
+  "80cfbcc768ef": {
+    "source": "Share an EIP-681 Ethereum payment request.",
+    "text": "分享 EIP-681 以太坊收款请求。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.summary"
+  },
+  "7f57cac75ab7": {
+    "source": "Make an Ethereum QR code in the EIP-681 ethereum: format with an optional ETH amount (in wei) and gas limit. Free PNG and SVG, no signup.",
+    "text": "按 EIP-681 ethereum: 格式生成以太坊二维码，可选填 ETH 金额（以 wei 为单位）和 gas 上限。免费提供 PNG 和 SVG，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.metaDescription"
+  },
+  "e6df241fc5d0": {
+    "source": "An Ethereum QR code holds your wallet address in the EIP-681 ethereum: format, optionally with an amount of ETH and a gas limit. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
+    "text": "以太坊二维码以 EIP-681 ethereum: 格式保存你的钱包地址，还可以附带 ETH 金额和 gas 上限。用兼容的钱包扫描后，会打开向你的地址转账的页面，并自动填好这些数值。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.intro.0"
+  },
+  "4cd43eafd110": {
+    "source": "Ethereum addresses are 42-character hexadecimal strings that are easy to mistype, which makes a QR code the safest way to share one at events, on invoices or on donation pages. The code contains only your public address; private keys and recovery phrases must never go into a QR code.",
+    "text": "以太坊地址是 42 个字符的十六进制字符串，很容易输错，所以在活动现场、发票或捐赠页面上，二维码是分享地址最稳妥的方式。二维码中只包含你的公开地址；私钥和助记词绝不能放进二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.intro.1"
+  },
+  "4f1b1c80f3e8": {
+    "source": "Optionally enter an amount in ETH and a gas limit.",
+    "text": "可选填 ETH 金额和 gas 上限。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.1"
+  },
+  "c54d35521f5a": {
+    "source": "Scan the preview with your wallet and check the address and amount.",
+    "text": "用你的钱包扫描预览，并核对地址和金额。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.2"
+  },
+  "155c506bf183": {
+    "source": "EIP-681 amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the ETH amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
+    "text": "EIP-681 中的金额（value）以最小单位 wei 计：1 ETH 等于 10^18 wei。本页会在你输入的 ETH 金额后加上指数 e18 进行换算，因此 0.05 ETH 会写成 value=0.05e18。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.0"
+  },
+  "6134aa693235": {
+    "source": "EIP-681 can name a network with @chainId (for example @137), but this generator doesn't add one, so wallets use their current network.",
+    "text": "EIP-681 可以用 @chainId 指定网络（例如 @137），但本生成器不会添加，因此钱包会使用其当前所在的网络。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.2"
+  },
+  "644fd366eca2": {
+    "source": "Can I request USDC or another token?",
+    "text": "可以请求 USDC 或其他代币吗？",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.0.question"
+  },
+  "2047498516c6": {
+    "source": "This generator creates native ETH transfers. Token requests need the token contract and a transfer function call in the URI, which this form doesn't build.",
+    "text": "本生成器生成的是原生 ETH 转账。代币请求需要在 URI 中包含代币合约和 transfer 函数调用，而这个表单不会生成这些内容。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.0.answer"
+  },
+  "a921a84b6c82": {
+    "source": "Does it work on other EVM networks?",
+    "text": "适用于其他 EVM 网络吗？",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.1.question"
+  },
+  "302941b105ef": {
+    "source": "The address format is the same on networks like Polygon or Arbitrum, but no chain ID is added, so the payer must pick the right network in their wallet.",
+    "text": "在 Polygon 或 Arbitrum 等网络上，地址格式是相同的，但不会添加链 ID，因此付款方必须在钱包中选择正确的网络。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.1.answer"
+  },
+  "d434b3350c1d": {
+    "source": "Address checks and ENS names",
+    "text": "地址校验与 ENS 域名",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.details.title"
+  },
+  "51f7bdf5aaa1": {
+    "source": "Receive SOL with a Solana Pay request.",
+    "text": "通过 Solana Pay 请求接收 SOL。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.summary"
+  },
+  "a3b47984a6df": {
+    "source": "Create a Solana Pay QR code for SOL payments to your wallet, with an optional amount, label and message. Solana Pay transfer request format. Free.",
+    "text": "创建 Solana Pay 二维码，向你的钱包收取 SOL，可选填金额、标签和留言。采用 Solana Pay 转账请求格式。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.metaDescription"
+  },
+  "df85b6d18511": {
+    "source": "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount in SOL, a label and a message. Wallets that support Solana Pay fill in the payment.",
+    "text": "Solana 二维码包含一个 Solana Pay 转账请求：你的钱包地址，以及可选的 SOL 金额、标签和留言。支持 Solana Pay 的钱包会自动填好付款信息。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.intro.0"
+  },
+  "cdcf66a5f861": {
+    "source": "Optionally add an amount in SOL, a label and a message.",
+    "text": "可选填 SOL 金额、标签和留言。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.steps.1"
+  },
+  "74b80bb969ce": {
+    "source": "Amounts are in SOL with up to 9 decimals.",
+    "text": "金额以 SOL 为单位，最多 9 位小数。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.payload.notes.0"
+  },
+  "c260bf4dabce": {
+    "source": "This code requests SOL. Token payments (USDC and others) need the token's mint address, which this generator doesn't add.",
+    "text": "此二维码请求的是 SOL。代币付款（USDC 等）需要代币的 mint 地址，本生成器不会添加。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.payload.notes.1"
+  },
+  "36ed60b12391": {
+    "source": "It's a Solana Pay transfer request: the recipient, an amount in SOL, a label and a message. Solana Pay also defines spl-token for token payments and reference for matching a payment to an order; this generator adds neither, so use your point-of-sale tool when you need them.",
+    "text": "这是一个 Solana Pay 转账请求：包含收款方、以 SOL 计的金额、标签和留言。Solana Pay 还定义了用于代币支付的 spl-token，以及用于将付款与订单匹配的 reference；本生成器两者都不添加，需要时请使用你的销售终端工具。",
+    "status": "machine",
+    "context": "qrTypes.types.solana.details.paragraphs.0"
+  },
+  "7b20ff0c7661": {
+    "source": "Bank payment",
+    "text": "银行支付",
+    "status": "machine",
+    "context": "mcp.tools.14.title"
+  },
+  "d56984fa2345": {
+    "source": "A Pix, SEPA transfer, PayNow, PromptPay or VietQR payment code, checked like the playground's forms.",
+    "text": "Pix、SEPA 转账、PayNow、PromptPay 或 VietQR 支付码，校验方式与 Playground 的表单一致。",
+    "status": "machine",
+    "context": "mcp.tools.14.description"
   },
   "291d41cbf4b9": {
     "source": "Books, with the ISBN printed above the bars",

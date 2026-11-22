@@ -49,21 +49,50 @@ import type {
   WazeContent,
   WhatsAppContent,
   WifiContent,
+  WifiEapMethod,
+  WifiPhase2Method,
   YouTubeContent,
   ZoomContent,
 } from "@/types/qr-content";
 import {
+  baseUnits,
+  cardanoIssue,
+  cryptoAmount,
+  encodeCardano,
+  encodeLightning,
+  encodeStellar,
+  encodeTon,
+  encodeTron,
+  encodeXrp,
+  evmNetwork,
+  isTokenContract,
+  lightningIssue,
+  SOLANA_TOKEN_MINTS,
+  STABLECOIN_DECIMALS,
+  stellarIssue,
+  tonIssue,
+  tronIssue,
+  xrpIssue,
+} from "./crypto-payments";
+import { czechSpdIssue, encodeCzechSpd } from "./czech-spd";
+// Added 2026-11-22 (payments)
+import { encodeMeCard, meCardIssue } from "./mecard";
+import {
+  encodeKhqr,
   encodePayNow,
   encodePix,
   encodePromptPay,
   encodeSepa,
   encodeVietQr,
+  khqrIssue,
   payNowIssue,
   pixIssue,
   promptPayIssue,
   sepaIssue,
   vietQrIssue,
 } from "./payment-qr-codes";
+import { encodeSwish, swishIssue } from "./swish";
+import { encodeSwissQrBill, swissQrBillContentIssue } from "./swiss-qr-bill";
 
 /** Largest payload a QR code holds (version 40-L, byte mode). */
 export const MAX_QR_PAYLOAD_BYTES = 2953;
@@ -241,7 +270,92 @@ export function encodeWifi(content: WifiContent): string {
     return `WIFI:T:nopass;S:${escapedSsid};${content.hidden ? "H:true;" : ""};`;
   }
 
+  if (encryption === "WPA2-EAP") return encodeWifiEnterprise(content);
+
+  // WPA, WEP and SAE (WPA3) share one layout.
   return `WIFI:T:${encryption};S:${escapedSsid};P:${escapedPassword};H:${hidden};;`;
+}
+
+// Added 2026-11-22 (payments): WPA3 and WPA2/WPA3-Enterprise networks.
+
+export const WIFI_EAP_METHODS = [
+  "PEAP",
+  "TTLS",
+  "PWD",
+] as const satisfies readonly WifiEapMethod[];
+
+export const WIFI_PHASE2_METHODS = [
+  "MSCHAPV2",
+  "GTC",
+  "PAP",
+  "MSCHAP",
+] as const satisfies readonly WifiPhase2Method[];
+
+/**
+ * An enterprise network in the fields ZXing's Wi-Fi format adds for
+ * WPA2-EAP (github.com/zxing/zxing/wiki/Barcode-Contents): E: the EAP
+ * method, PH2: the inner method, A: the anonymous identity, I: the
+ * identity. PWD has no inner method, so PH2 is left out for it. "" while
+ * the identity or password is missing.
+ */
+function encodeWifiEnterprise(content: WifiContent): string {
+  const identity = content.identity?.trim() ?? "";
+  if (!identity || !content.password) return "";
+  const method = content.eapMethod ?? "PEAP";
+  const fields = [
+    "T:WPA2-EAP",
+    `S:${escapeWifiString(content.ssid)}`,
+    `E:${method}`,
+  ];
+  if (method !== "PWD") fields.push(`PH2:${content.phase2 ?? "MSCHAPV2"}`);
+  const anonymous = content.anonymousIdentity?.trim();
+  if (anonymous) fields.push(`A:${escapeWifiString(anonymous)}`);
+  fields.push(
+    `I:${escapeWifiString(identity)}`,
+    `P:${escapeWifiString(content.password)}`,
+  );
+  if (content.hidden) fields.push("H:true");
+  return `WIFI:${fields.join(";")};;`;
+}
+
+/** The first problem with a Wi-Fi network's fields, or null. */
+export function wifiIssue(content: Partial<WifiContent>): ContentIssue | null {
+  if (!content.ssid || content.ssid.trim() === "") {
+    return problem("ssid", "WiFi SSID is required");
+  }
+  // IEEE 802.11: an SSID is at most 32 bytes.
+  if (utf8.encode(content.ssid).length > 32) {
+    return problem("ssid", "Network names are at most 32 bytes");
+  }
+  const encryption = content.encryption ?? "WPA";
+  const password = content.password ?? "";
+  if (encryption !== "nopass" && !password) {
+    return problem("password", "Password is required for secured networks");
+  }
+  // WPA/WPA2 passphrases are 8-63 characters, or a 64-digit hex key.
+  if (
+    encryption === "WPA" &&
+    (password.length < 8 || password.length > 63) &&
+    !/^[0-9a-f]{64}$/i.test(password)
+  ) {
+    return problem("password", "WPA passwords are 8-63 characters long");
+  }
+  // WPA3 (SAE) passwords have no minimum; phones take up to 63 characters.
+  if (encryption === "SAE" && password.length > 63) {
+    return problem("password", "WPA3 passwords are at most 63 characters");
+  }
+  if (encryption === "WPA2-EAP") {
+    if (content.eapMethod && !WIFI_EAP_METHODS.includes(content.eapMethod)) {
+      return problem("eapMethod", "Pick PEAP, TTLS or PWD");
+    }
+    if (content.phase2 && !WIFI_PHASE2_METHODS.includes(content.phase2)) {
+      return problem("phase2", "Pick MSCHAPV2, GTC, PAP or MSCHAP");
+    }
+    if (!content.identity?.trim()) {
+      return problem("identity", "Identity (username) is required");
+    }
+  }
+  return null;
 }
 
 /**
@@ -588,6 +702,23 @@ export function encodeBitcoin(content: BitcoinContent): string {
 export function encodeEthereum(content: EthereumContent): string {
   const address = content.address?.trim();
   if (!address) return "";
+  // Added 2026-11-22 (payments): other EVM networks (@chainId) and
+  // stablecoins (/transfer to the token contract, amount in base units).
+  const network = evmNetwork(content.network);
+  if (!network) return "";
+  if (content.token) {
+    const contract = network.tokens[content.token];
+    if (!contract) return "";
+    const amount = content.amount?.trim()
+      ? cryptoAmount(content.amount, STABLECOIN_DECIMALS)
+      : null;
+    const tokenParams = [`address=${address}`];
+    if (amount) {
+      tokenParams.push(`uint256=${baseUnits(amount, STABLECOIN_DECIMALS)}`);
+    }
+    return `ethereum:${contract}@${network.chainId}/transfer?${tokenParams.join("&")}`;
+  }
+  const chain = network.chainId === "1" ? "" : `@${network.chainId}`;
 
   const params: string[] = [];
   if (content.amount?.trim()) {
@@ -602,7 +733,7 @@ export function encodeEthereum(content: EthereumContent): string {
   }
 
   const queryString = params.length > 0 ? `?${params.join("&")}` : "";
-  return `ethereum:${address}${queryString}`;
+  return `ethereum:${address}${chain}${queryString}`;
 }
 
 /**
@@ -1221,7 +1352,16 @@ export function cryptoIssue(
   if (!spec.address.test(cryptoAddress(content.type, content.address))) {
     return problem("address", `Enter a valid ${spec.name} address`);
   }
-  const amount = validateAmount(content.amount, spec.decimals, "Amount");
+  const picked = content.type === "solana" ? content.token : undefined;
+  const token = picked === "SOL" ? undefined : picked;
+  if (token && !(token in SOLANA_TOKEN_MINTS)) {
+    return problem("token", "Pick SOL, USDC or USDT");
+  }
+  const amount = validateAmount(
+    content.amount,
+    token ? STABLECOIN_DECIMALS : spec.decimals,
+    "Amount",
+  );
   return amount.valid
     ? null
     : problem("amount", amount.error ?? "Invalid amount");
@@ -1233,6 +1373,10 @@ export function encodeCrypto(content: CryptoContent): string {
   const params: string[] = [];
   if (content.amount?.trim()) {
     params.push(`${spec.params.amount}=${content.amount.trim()}`);
+  }
+  // Added 2026-11-22 (payments): Solana Pay's spl-token for USDC and USDT
+  if (content.type === "solana" && content.token && content.token !== "SOL") {
+    params.push(`spl-token=${SOLANA_TOKEN_MINTS[content.token]}`);
   }
   if (content.label?.trim()) {
     params.push(
@@ -1370,6 +1514,29 @@ export function encodeQRContent(content: QRContentConfig | null): string {
     case "solana":
     case "monero":
       return encodeCrypto(content);
+    // Added 2026-11-22 (payments)
+    case "mecard":
+      return encodeMeCard(content);
+    case "swiss-qr-bill":
+      return encodeSwissQrBill(content);
+    case "czech-spd":
+      return encodeCzechSpd(content);
+    case "swish":
+      return encodeSwish(content);
+    case "khqr":
+      return encodeKhqr(content);
+    case "lightning":
+      return encodeLightning(content);
+    case "xrp":
+      return encodeXrp(content);
+    case "cardano":
+      return encodeCardano(content);
+    case "tron":
+      return encodeTron(content);
+    case "ton":
+      return encodeTon(content);
+    case "stellar":
+      return encodeStellar(content);
     default:
       return "";
   }
@@ -1469,34 +1636,8 @@ function validateFields(content: QRContentConfig): Validation {
     case "whatsapp":
       return validatePhone(content.phoneNumber);
 
-    case "wifi": {
-      if (!content.ssid || content.ssid.trim() === "") {
-        return { valid: false, error: "WiFi SSID is required" };
-      }
-      // IEEE 802.11: an SSID is at most 32 bytes.
-      if (utf8.encode(content.ssid).length > 32) {
-        return { valid: false, error: "Network names are at most 32 bytes" };
-      }
-      const password = content.password ?? "";
-      if (content.encryption !== "nopass" && !password) {
-        return {
-          valid: false,
-          error: "Password is required for secured networks",
-        };
-      }
-      // WPA/WPA2 passphrases are 8-63 characters, or a 64-digit hex key.
-      if (
-        content.encryption === "WPA" &&
-        (password.length < 8 || password.length > 63) &&
-        !/^[0-9a-f]{64}$/i.test(password)
-      ) {
-        return {
-          valid: false,
-          error: "WPA passwords are 8-63 characters long",
-        };
-      }
-      return { valid: true };
-    }
+    case "wifi":
+      return fromIssue(wifiIssue(content));
 
     case "vcard":
       if (!content.firstName || content.firstName.trim() === "") {
@@ -1649,6 +1790,27 @@ function validateFields(content: QRContentConfig): Validation {
       if (!/^0x[a-fA-F0-9]{40}$/.test(content.address.trim())) {
         return { valid: false, error: "Invalid Ethereum address format" };
       }
+      // Added 2026-11-22 (payments)
+      {
+        const network = evmNetwork(content.network);
+        if (!network) return { valid: false, error: "Pick a network" };
+        if (isTokenContract(content.address)) {
+          return {
+            valid: false,
+            error:
+              "This is a token contract, not a wallet. Paste the address that receives the payment.",
+          };
+        }
+        if (content.token) {
+          if (!network.tokens[content.token]) {
+            return {
+              valid: false,
+              error: `${content.token} isn't issued on ${network.name} by its issuer. Pick another network.`,
+            };
+          }
+          return validateAmount(content.amount, STABLECOIN_DECIMALS, "Amount");
+        }
+      }
       // Wei in EIP-681 scientific notation ("1.5e18") is passed through.
       if (/^\d+(\.\d+)?e\d+$/i.test(content.amount?.trim() ?? "")) {
         return { valid: true };
@@ -1741,6 +1903,29 @@ function validateFields(content: QRContentConfig): Validation {
     case "solana":
     case "monero":
       return fromIssue(cryptoIssue(content));
+    // Added 2026-11-22 (payments)
+    case "mecard":
+      return fromIssue(meCardIssue(content));
+    case "swiss-qr-bill":
+      return fromIssue(swissQrBillContentIssue(content));
+    case "czech-spd":
+      return fromIssue(czechSpdIssue(content));
+    case "swish":
+      return fromIssue(swishIssue(content));
+    case "khqr":
+      return fromIssue(khqrIssue(content));
+    case "lightning":
+      return fromIssue(lightningIssue(content));
+    case "xrp":
+      return fromIssue(xrpIssue(content));
+    case "cardano":
+      return fromIssue(cardanoIssue(content));
+    case "tron":
+      return fromIssue(tronIssue(content));
+    case "ton":
+      return fromIssue(tonIssue(content));
+    case "stellar":
+      return fromIssue(stellarIssue(content));
 
     default:
       return { valid: false, error: "Unknown content type" };

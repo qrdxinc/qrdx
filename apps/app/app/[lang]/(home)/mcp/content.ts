@@ -24,6 +24,7 @@ import {
   Sms,
   TableDocument,
   TicketStar,
+  UserSquare,
   Wifi,
 } from "iconsax-reactjs";
 import type { CardIcon } from "@/components/sections/tools/cards";
@@ -158,6 +159,14 @@ export const MCP_TOOLS: {
       "A vCard 3.0 contact: name, organization, title, phones, email, website, address and note.",
     icon: Personalcard,
   },
+  // Added 2026-11-22 (payments)
+  {
+    name: "qr_payload_mecard",
+    title: "Contact card (MeCard)",
+    description:
+      "A MeCard contact: the same basics as a vCard in fewer characters, so the code is smaller.",
+    icon: UserSquare,
+  },
   {
     name: "qr_payload_email",
     title: "Email",
@@ -179,9 +188,9 @@ export const MCP_TOOLS: {
   },
   {
     name: "qr_payload_payment",
-    title: "Bank payment",
+    title: "Payment",
     description:
-      "A Pix, SEPA transfer, PayNow, PromptPay or VietQR payment code, checked like the playground's forms.",
+      "A Pix, SEPA, Swiss QR-bill, QR Platba, Swish, PayNow, PromptPay, VietQR or KHQR payment code, or a Lightning, XRP, Cardano, Tron, TON or Stellar request, checked like the playground's forms.",
     icon: Bank,
   },
 ];

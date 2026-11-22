@@ -73,7 +73,23 @@ function CryptoForm({
 const LITECOIN_FIELDS = cryptoFields("LTC", "ltc1q… or L…");
 const DOGECOIN_FIELDS = cryptoFields("DOGE", "D…");
 const BITCOINCASH_FIELDS = cryptoFields("BCH", "q… (CashAddr)");
-const SOLANA_FIELDS = cryptoFields("SOL", "Solana address");
+// Added 2026-11-22 (payments): USDC and USDT through Solana Pay's spl-token.
+const SOLANA_FIELDS: FormField[] = [
+  {
+    name: "token",
+    label: "Coin",
+    kind: "select",
+    initial: "SOL",
+    options: [
+      { value: "SOL", label: "SOL" },
+      { value: "USDC", label: "USDC (Circle)" },
+      { value: "USDT", label: "USDT (Tether)" },
+    ],
+  },
+  ...cryptoFields("SOL", "Solana address").map((field) =>
+    field.name === "amount" ? { ...field, label: "Amount" } : field,
+  ),
+];
 const MONERO_FIELDS = cryptoFields(
   "XMR",
   "4… or 8…",

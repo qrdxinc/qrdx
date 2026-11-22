@@ -899,6 +899,138 @@
     "status": "machine",
     "context": "contentTypes.list.monero.description"
   },
+  "ca7e3d788516": {
+    "source": "MeCard",
+    "text": "MeCard",
+    "status": "machine",
+    "context": "contentTypes.list.mecard.label"
+  },
+  "2b3ec917f669": {
+    "source": "Share a contact in a smaller code than a vCard",
+    "text": "Partagez un contact dans un code plus petit qu'une vCard",
+    "status": "machine",
+    "context": "contentTypes.list.mecard.description"
+  },
+  "839a66ffef0c": {
+    "source": "Swiss QR-bill",
+    "text": "QR-facture suisse",
+    "status": "machine",
+    "context": "contentTypes.list.swiss-qr-bill.label"
+  },
+  "5acf23932a9e": {
+    "source": "Make the payment code of a Swiss QR-bill",
+    "text": "Créez le code de paiement d'une QR-facture suisse",
+    "status": "machine",
+    "context": "contentTypes.list.swiss-qr-bill.description"
+  },
+  "f05f7394225e": {
+    "source": "QR Platba",
+    "text": "QR Platba",
+    "status": "machine",
+    "context": "contentTypes.list.czech-spd.label"
+  },
+  "96af451632f6": {
+    "source": "Get paid by bank transfer in Czechia",
+    "text": "Recevez un virement bancaire en Tchéquie",
+    "status": "machine",
+    "context": "contentTypes.list.czech-spd.description"
+  },
+  "1e73623015d3": {
+    "source": "Swish",
+    "text": "Swish",
+    "status": "machine",
+    "context": "contentTypes.list.swish.label"
+  },
+  "6d33f419943b": {
+    "source": "Get paid with Swish in Sweden",
+    "text": "Recevez des paiements Swish en Suède",
+    "status": "machine",
+    "context": "contentTypes.list.swish.description"
+  },
+  "1bb63743f5df": {
+    "source": "KHQR",
+    "text": "KHQR",
+    "status": "machine",
+    "context": "contentTypes.list.khqr.label"
+  },
+  "110ded7f4f22": {
+    "source": "Get paid to a Bakong account in Cambodia",
+    "text": "Recevez un paiement sur un compte Bakong au Cambodge",
+    "status": "machine",
+    "context": "contentTypes.list.khqr.description"
+  },
+  "41e68f2cdb38": {
+    "source": "Lightning",
+    "text": "Lightning",
+    "status": "machine",
+    "context": "contentTypes.list.lightning.label"
+  },
+  "b053883a1717": {
+    "source": "Get paid in bitcoin over Lightning",
+    "text": "Recevez des bitcoins via Lightning",
+    "status": "machine",
+    "context": "contentTypes.list.lightning.description"
+  },
+  "631ff8768671": {
+    "source": "XRP",
+    "text": "XRP",
+    "status": "machine",
+    "context": "contentTypes.list.xrp.label"
+  },
+  "67b5cf5e6a50": {
+    "source": "Receive XRP to your wallet",
+    "text": "Recevez des XRP dans votre portefeuille",
+    "status": "machine",
+    "context": "contentTypes.list.xrp.description"
+  },
+  "27df28946736": {
+    "source": "Cardano",
+    "text": "Cardano",
+    "status": "machine",
+    "context": "contentTypes.list.cardano.label"
+  },
+  "958894402906": {
+    "source": "Receive ADA to your wallet",
+    "text": "Recevez des ADA dans votre portefeuille",
+    "status": "machine",
+    "context": "contentTypes.list.cardano.description"
+  },
+  "ffafee3c0575": {
+    "source": "Tron",
+    "text": "Tron",
+    "status": "machine",
+    "context": "contentTypes.list.tron.label"
+  },
+  "6b6329dbda8d": {
+    "source": "Share your Tron address for TRX or USDT",
+    "text": "Partagez votre adresse Tron pour TRX ou USDT",
+    "status": "machine",
+    "context": "contentTypes.list.tron.description"
+  },
+  "1a4219fe5e60": {
+    "source": "TON",
+    "text": "TON",
+    "status": "machine",
+    "context": "contentTypes.list.ton.label"
+  },
+  "3d455c78ae36": {
+    "source": "Receive TON or USDT on TON",
+    "text": "Recevez des TON ou des USDT sur TON",
+    "status": "machine",
+    "context": "contentTypes.list.ton.description"
+  },
+  "9651c62eb76d": {
+    "source": "Stellar",
+    "text": "Stellar",
+    "status": "machine",
+    "context": "contentTypes.list.stellar.label"
+  },
+  "001774bb1ca3": {
+    "source": "Receive XLM or USDC on Stellar",
+    "text": "Recevez des XLM ou des USDC sur Stellar",
+    "status": "machine",
+    "context": "contentTypes.list.stellar.description"
+  },
   "76327dec9ae3": {
     "source": "Popular",
     "text": "Populaires",
@@ -1673,9 +1805,9 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.summary"
   },
-  "0135740ce7f9": {
-    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
-    "text": "Créez un QR code Wi-Fi pour que vos invités rejoignent votre réseau en un seul scan. Réseaux WPA/WPA2, WEP et ouverts, SSID masqués, échappement correct. Gratuit.",
+  "88a28035b215": {
+    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WPA3, WEP and open networks, hidden SSIDs, correct escaping. Free.",
+    "text": "Créez un QR code Wi-Fi pour que vos invités rejoignent votre réseau en un seul scan. Réseaux WPA/WPA2, WPA3, WEP et ouverts, SSID masqués, échappement correct. Gratuit.",
     "status": "machine",
     "context": "qrTypes.types.wifi.metaDescription"
   },
@@ -1697,9 +1829,9 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.steps.0"
   },
-  "31d04d55ac35": {
-    "source": "Choose the security type: WPA/WPA2 for almost every modern router, WEP for very old ones, or No password for open networks.",
-    "text": "Choisissez le type de sécurité : WPA/WPA2 pour presque tous les routeurs récents, WEP pour les très anciens, ou Aucun mot de passe pour les réseaux ouverts.",
+  "7769a5a4517e": {
+    "source": "Choose the security type: WPA/WPA2 for almost every modern router (including ones in WPA2/WPA3 mode), WPA3 only for networks that refuse WPA2, WEP for very old ones, or No password for open networks.",
+    "text": "Choisissez le type de sécurité : WPA/WPA2 pour presque tous les routeurs récents (y compris ceux en mode WPA2/WPA3), WPA3 uniquement pour les réseaux qui refusent le WPA2, WEP pour les très anciens, ou Aucun mot de passe pour les réseaux ouverts.",
     "status": "machine",
     "context": "qrTypes.types.wifi.steps.1"
   },
@@ -1739,6 +1871,18 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.payload.notes.3"
   },
+  "3f864e1191d8": {
+    "source": "T:SAE marks a network that accepts only WPA3, as the Wi-Fi Alliance's WPA3 specification writes it. Android's Wi-Fi settings scanner reads it from Android 10; Apple doesn't document it for the iPhone Camera, so a network that also accepts WPA2 is better written as T:WPA.",
+    "text": "T:SAE désigne un réseau qui accepte uniquement le WPA3, tel que l'écrit la spécification WPA3 de la Wi-Fi Alliance. Le lecteur des réglages Wi-Fi d'Android le lit à partir d'Android 10 ; Apple ne le documente pas pour l'appareil photo de l'iPhone, donc un réseau qui accepte aussi le WPA2 s'écrit mieux avec T:WPA.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.payload.notes.4"
+  },
+  "ce5bbff335e8": {
+    "source": "T:WPA2-EAP marks a WPA2/WPA3-Enterprise network, with ZXing's E: (EAP method), PH2: (phase 2), A: (anonymous identity) and I: (identity) fields. Scanner apps built on ZXing read them; phone camera apps don't join enterprise networks from a code.",
+    "text": "T:WPA2-EAP désigne un réseau WPA2/WPA3-Enterprise, avec les champs ZXing E: (méthode EAP), PH2: (phase 2), A: (identité anonyme) et I: (identité). Les applications de scan basées sur ZXing les lisent ; les applications d'appareil photo des téléphones ne rejoignent pas les réseaux d'entreprise à partir d'un code.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.payload.notes.5"
+  },
   "1674145adaf8": {
     "source": "Is it safe to put my Wi-Fi password in a QR code?",
     "text": "Est-il sûr de mettre mon mot de passe Wi-Fi dans un QR code ?",
@@ -1757,9 +1901,9 @@
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.question"
   },
-  "bc95db81d2cd": {
-    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. Enterprise networks that need a username or certificate (WPA2-Enterprise) aren't supported by this format.",
-    "text": "Vérifiez que le nom du réseau correspond exactement (il est sensible à la casse), que le type de sécurité est correct et que vous êtes à portée. Les réseaux d'entreprise qui exigent un nom d'utilisateur ou un certificat (WPA2-Enterprise) ne sont pas pris en charge par ce format.",
+  "feaacd0db501": {
+    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. For enterprise networks that need a username (WPA2/WPA3-Enterprise), QRdx can write the sign-in details, but phone camera apps don't join from them: Android's Wi-Fi scanner reads only personal and open networks, and iPhones set up enterprise Wi-Fi with a configuration profile. Networks that need a certificate can't be put in a code at all.",
+    "text": "Vérifiez que le nom du réseau correspond exactement (il est sensible à la casse), que le type de sécurité est le bon et que vous êtes à portée. Pour les réseaux d'entreprise qui demandent un nom d'utilisateur (WPA2/WPA3-Enterprise), QRdx peut écrire les identifiants de connexion, mais les applications d'appareil photo des téléphones ne s'y connectent pas à partir de ceux-ci : le lecteur Wi-Fi d'Android ne lit que les réseaux personnels et ouverts, et les iPhone configurent le Wi-Fi d'entreprise avec un profil de configuration. Les réseaux qui exigent un certificat ne peuvent pas du tout être mis dans un code.",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.answer"
   },
@@ -3725,9 +3869,9 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.title"
   },
-  "da2ccbd9fdc4": {
-    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",
-    "text": "Il s'agit d'une demande on-chain : le portefeuille paie votre adresse sur la blockchain Bitcoin. Les portefeuilles uniquement Lightning ne peuvent pas la payer, et ce générateur n'ajoute pas de facture lightning= à l'URI. Pour un paiement Lightning, partagez plutôt une facture ou une adresse Lightning depuis votre portefeuille.",
+  "d665e6e266e7": {
+    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments make a Lightning code from your wallet's invoice, LNURL or Lightning Address instead.",
+    "text": "Il s'agit d'une demande on-chain : le portefeuille paie votre adresse sur la blockchain Bitcoin. Les portefeuilles Lightning uniquement ne peuvent pas la payer, et ce générateur n'ajoute pas de facture lightning= à l'URI ; pour des paiements Lightning, créez plutôt un code Lightning à partir de la facture, du LNURL ou de l'adresse Lightning de votre portefeuille.",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.paragraphs.0"
   },
@@ -3737,27 +3881,27 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoin.details.paragraphs.1"
   },
-  "80cfbcc768ef": {
-    "source": "Share an EIP-681 Ethereum payment request.",
-    "text": "Partagez une demande de paiement Ethereum EIP-681.",
+  "01b290b322d0": {
+    "source": "Request ETH, USDC or USDT on Ethereum and other EVM networks.",
+    "text": "Demandez de l'ETH, de l'USDC ou de l'USDT sur Ethereum et d'autres réseaux EVM.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.summary"
   },
-  "7f57cac75ab7": {
-    "source": "Make an Ethereum QR code in the EIP-681 ethereum: format with an optional ETH amount (in wei) and gas limit. Free PNG and SVG, no signup.",
-    "text": "Créez un QR code Ethereum au format EIP-681 ethereum: avec un montant en ETH (en wei) et une limite de gas facultatifs. PNG et SVG gratuits, sans inscription.",
+  "3b28ba3d3302": {
+    "source": "Make an Ethereum QR code in the EIP-681 format for ETH, USDC or USDT on Ethereum, Base, Polygon, Arbitrum and three more EVM networks. Free.",
+    "text": "Créez un QR code Ethereum au format EIP-681 pour ETH, USDC ou USDT sur Ethereum, Base, Polygon, Arbitrum et trois autres réseaux EVM. Gratuit.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.metaDescription"
   },
-  "e6df241fc5d0": {
-    "source": "An Ethereum QR code holds your wallet address in the EIP-681 ethereum: format, optionally with an amount of ETH and a gas limit. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
-    "text": "Un QR code Ethereum contient l'adresse de votre portefeuille au format EIP-681 ethereum:, avec en option un montant en ETH et une limite de gas. Le scan avec un portefeuille compatible ouvre un transfert vers votre adresse, avec ces valeurs déjà renseignées.",
+  "de75bfd458c1": {
+    "source": "An Ethereum QR code holds a payment request in the EIP-681 ethereum: format: your wallet address, the network and, if you like, an amount. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
+    "text": "Un QR code Ethereum contient une demande de paiement au format EIP-681 (ethereum:) : l'adresse de votre portefeuille, le réseau et, si vous le souhaitez, un montant. Le scanner avec un portefeuille compatible ouvre un transfert vers votre adresse avec ces valeurs déjà renseignées.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.intro.0"
   },
-  "4cd43eafd110": {
-    "source": "Ethereum addresses are 42-character hexadecimal strings that are easy to mistype, which makes a QR code the safest way to share one at events, on invoices or on donation pages. The code contains only your public address; private keys and recovery phrases must never go into a QR code.",
-    "text": "Les adresses Ethereum sont des chaînes hexadécimales de 42 caractères, faciles à mal saisir : un QR code est donc le moyen le plus sûr d'en partager une lors d'événements, sur des factures ou sur des pages de dons. Le code ne contient que votre adresse publique ; les clés privées et les phrases de récupération ne doivent jamais figurer dans un QR code.",
+  "239eb953556c": {
+    "source": "Pick Ethereum or another EVM network (BNB Smart Chain, Polygon, Arbitrum One, OP Mainnet, Base or Avalanche C-Chain) and ask for the network's own coin, or for USDT or USDC where Tether and Circle list the contract themselves. Addresses are 42-character hexadecimal strings that are easy to mistype, so a code is safer than copying one by hand. It contains only your public address; private keys and recovery phrases must never go into a QR code.",
+    "text": "Choisissez Ethereum ou un autre réseau EVM (BNB Smart Chain, Polygon, Arbitrum One, OP Mainnet, Base ou Avalanche C-Chain) et demandez la monnaie native du réseau, ou de l'USDT ou de l'USDC là où Tether et Circle publient eux-mêmes le contrat. Les adresses sont des chaînes hexadécimales de 42 caractères, faciles à mal saisir : un code est donc plus sûr qu'une copie à la main. Il ne contient que votre adresse publique ; les clés privées et les phrases de récupération ne doivent jamais figurer dans un QR code.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.intro.1"
   },
@@ -3767,23 +3911,41 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.0"
   },
-  "4f1b1c80f3e8": {
-    "source": "Optionally enter an amount in ETH and a gas limit.",
-    "text": "Saisissez si vous le souhaitez un montant en ETH et une limite de gas.",
+  "d0f2f478d75b": {
+    "source": "Pick the network, then the network's own coin, USDC or USDT.",
+    "text": "Choisissez le réseau, puis sa monnaie native, l'USDC ou l'USDT.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.1"
   },
-  "c54d35521f5a": {
-    "source": "Scan the preview with your wallet and check the address and amount.",
-    "text": "Faites un scan de l'aperçu avec votre portefeuille et vérifiez l'adresse et le montant.",
+  "d2404df4ac55": {
+    "source": "Optionally enter an amount, and a gas limit for a coin payment.",
+    "text": "Saisissez éventuellement un montant, et une limite de gas pour un paiement en monnaie native.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.steps.2"
   },
-  "155c506bf183": {
-    "source": "EIP-681 amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the ETH amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
-    "text": "Les montants EIP-681 (value) sont exprimés en wei, la plus petite unité : 1 ETH vaut 10^18 wei. Cette page convertit le montant en ETH que vous saisissez en ajoutant l'exposant e18 ; ainsi, 0.05 ETH s'écrit value=0.05e18.",
+  "c26a548900d7": {
+    "source": "Scan the preview with your wallet, check the address, network and amount, and download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "Scannez l'aperçu avec votre portefeuille, vérifiez l'adresse, le réseau et le montant, puis téléchargez le code en PNG, SVG, WebP, GIF, BMP ou ICO.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.3"
+  },
+  "05e6e058eee6": {
+    "source": "Coin amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
+    "text": "Les montants en monnaie native (value) sont exprimés en wei, la plus petite unité : 1 ETH vaut 10^18 wei. Cette page convertit le montant saisi en ajoutant l'exposant e18, donc 0.05 ETH s'écrit value=0.05e18.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.0"
+  },
+  "3faef68d6dd6": {
+    "source": "Other networks are named with @chainId: BNB Smart Chain 56, Polygon 137, Arbitrum One 42161, OP Mainnet 10, Base 8453 and Avalanche C-Chain 43114. On Ethereum itself (chain 1) no @1 is added.",
+    "text": "Les autres réseaux sont désignés par @chainId : BNB Smart Chain 56, Polygon 137, Arbitrum One 42161, OP Mainnet 10, Base 8453 et Avalanche C-Chain 43114. Sur Ethereum même (chaîne 1), aucun @1 n'est ajouté.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.1"
+  },
+  "ce817f8fbb90": {
+    "source": "A USDC or USDT request is a transfer on the token's contract, with the amount in base units (6 decimals). 1.5 USDC on Base is ethereum:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913@8453/transfer?address=<recipient>&uint256=1500000.",
+    "text": "Une demande en USDC ou USDT est un transfert sur le contrat du jeton, avec le montant en unités de base (6 décimales). 1.5 USDC sur Base s'écrit ethereum:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913@8453/transfer?address=<recipient>&uint256=1500000.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.2"
   },
   "e090a66eb3e0": {
     "source": "gas is a synonym for gasLimit, a suggested limit the payer can edit. A plain ETH transfer uses 21000.",
@@ -3791,39 +3953,33 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.1"
   },
-  "6134aa693235": {
-    "source": "EIP-681 can name a network with @chainId (for example @137), but this generator doesn't add one, so wallets use their current network.",
-    "text": "EIP-681 permet de désigner un réseau avec @chainId (par exemple @137), mais ce générateur n'en ajoute pas : les portefeuilles utilisent donc leur réseau actuel.",
-    "status": "machine",
-    "context": "qrTypes.types.ethereum.payload.notes.2"
-  },
   "4a68f3f75c81": {
     "source": "Wallet support for EIP-681 parameters varies; test with the wallet your payers use.",
     "text": "La prise en charge des paramètres EIP-681 varie selon les portefeuilles ; faites un test avec celui qu'utilisent vos payeurs.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.payload.notes.3"
   },
-  "644fd366eca2": {
-    "source": "Can I request USDC or another token?",
-    "text": "Puis-je demander des USDC ou un autre jeton ?",
+  "b00a3b7e1e38": {
+    "source": "Can I request USDC or USDT?",
+    "text": "Puis-je demander de l'USDC ou de l'USDT ?",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.0.question"
   },
-  "2047498516c6": {
-    "source": "This generator creates native ETH transfers. Token requests need the token contract and a transfer function call in the URI, which this form doesn't build.",
-    "text": "Ce générateur crée des transferts d'ETH natif. Les demandes de jetons nécessitent le contrat du jeton et un appel de fonction transfer dans l'URI, ce que ce formulaire ne construit pas.",
+  "c0ff9d9c88f0": {
+    "source": "Yes, on the networks where Tether and Circle list the contract themselves: USDT on Ethereum and Avalanche, USDC on Ethereum, Polygon, Arbitrum, OP Mainnet, Base and Avalanche. QRdx refuses a token contract pasted as the recipient.",
+    "text": "Oui, sur les réseaux où Tether et Circle publient eux-mêmes le contrat : USDT sur Ethereum et Avalanche, USDC sur Ethereum, Polygon, Arbitrum, OP Mainnet, Base et Avalanche. QRdx refuse un contrat de jeton collé comme destinataire.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.0.answer"
   },
-  "a921a84b6c82": {
-    "source": "Does it work on other EVM networks?",
-    "text": "Cela fonctionne-t-il sur d'autres réseaux EVM ?",
+  "eab753923b7d": {
+    "source": "Does every wallet read the network and token?",
+    "text": "Tous les portefeuilles lisent-ils le réseau et le jeton ?",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.1.question"
   },
-  "302941b105ef": {
-    "source": "The address format is the same on networks like Polygon or Arbitrum, but no chain ID is added, so the payer must pick the right network in their wallet.",
-    "text": "Le format d'adresse est le même sur des réseaux comme Polygon ou Arbitrum, mais aucun identifiant de chaîne n'est ajouté : le payeur doit donc choisir le bon réseau dans son portefeuille.",
+  "d8b487263aac": {
+    "source": "No. MetaMask Mobile reads @chainId and /transfer, but some wallets fill in only the recipient and drop the token and amount. Print the token, network and amount next to the code so the payer can check them.",
+    "text": "Non. MetaMask Mobile lit @chainId et /transfer, mais certains portefeuilles ne renseignent que le destinataire et ignorent le jeton et le montant. Imprimez le jeton, le réseau et le montant à côté du code pour que le payeur puisse les vérifier.",
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.1.answer"
   },
@@ -3839,11 +3995,17 @@
     "status": "machine",
     "context": "qrTypes.types.ethereum.faqs.2.answer"
   },
-  "d434b3350c1d": {
-    "source": "Address checks and ENS names",
-    "text": "Vérification des adresses et noms ENS",
+  "3195635e1572": {
+    "source": "Networks, address checks and ENS names",
+    "text": "Réseaux, vérifications d'adresse et noms ENS",
     "status": "machine",
     "context": "qrTypes.types.ethereum.details.title"
+  },
+  "121d5568b110": {
+    "source": "The network's own coin is ETH on Ethereum, Arbitrum One, OP Mainnet and Base, BNB on BNB Smart Chain, POL on Polygon and AVAX on Avalanche C-Chain. The same 0x address works on all of them, so pick the network your payer will send on.",
+    "text": "La monnaie native est l'ETH sur Ethereum, Arbitrum One, OP Mainnet et Base, le BNB sur BNB Smart Chain, le POL sur Polygon et l'AVAX sur Avalanche C-Chain. La même adresse 0x fonctionne sur tous ces réseaux, choisissez donc celui sur lequel votre payeur enverra les fonds.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.details.paragraphs.0"
   },
   "65464924c87e": {
     "source": "The generator checks that the address is 0x followed by 40 hexadecimal characters. It doesn't check the mixed-case EIP-55 checksum; wallets check that when they scan, so paste the address exactly as your wallet shows it rather than typing it.",
@@ -6371,21 +6533,21 @@
     "status": "machine",
     "context": "qrTypes.types.bitcoincash.details.paragraphs.2"
   },
-  "51f7bdf5aaa1": {
-    "source": "Receive SOL with a Solana Pay request.",
-    "text": "Recevez des SOL avec une demande Solana Pay.",
+  "37801c6d08b2": {
+    "source": "Receive SOL, USDC or USDT with a Solana Pay request.",
+    "text": "Recevez des SOL, USDC ou USDT avec une demande Solana Pay.",
     "status": "machine",
     "context": "qrTypes.types.solana.summary"
   },
-  "a3b47984a6df": {
-    "source": "Create a Solana Pay QR code for SOL payments to your wallet, with an optional amount, label and message. Solana Pay transfer request format. Free.",
-    "text": "Créez un QR code Solana Pay pour recevoir des paiements en SOL sur votre portefeuille, avec un montant, un libellé et un message facultatifs. Format de demande de transfert Solana Pay. Gratuit.",
+  "7ecf8931fc04": {
+    "source": "Create a Solana Pay QR code for SOL, USDC or USDT to your wallet, with an optional amount, label and message, in the transfer request format. Free.",
+    "text": "Créez un QR code Solana Pay pour recevoir des SOL, USDC ou USDT sur votre portefeuille, avec un montant, un libellé et un message facultatifs, au format de demande de transfert. Gratuit.",
     "status": "machine",
     "context": "qrTypes.types.solana.metaDescription"
   },
-  "df85b6d18511": {
-    "source": "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount in SOL, a label and a message. Wallets that support Solana Pay fill in the payment.",
-    "text": "Un QR code Solana contient une demande de transfert Solana Pay : l'adresse de votre portefeuille et, si vous le souhaitez, un montant en SOL, un libellé et un message. Les portefeuilles compatibles avec Solana Pay renseignent le paiement.",
+  "7b3ba6402374": {
+    "source": "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount, a label and a message. It can ask for SOL, or for USDC or USDT with the mints Circle and Tether list. Wallets that support Solana Pay fill in the payment.",
+    "text": "Un QR code Solana contient une demande de transfert Solana Pay : l'adresse de votre portefeuille et, si vous le souhaitez, un montant, un libellé et un message. Il peut demander des SOL, ou des USDC ou USDT avec les mints publiés par Circle et Tether. Les portefeuilles compatibles avec Solana Pay renseignent le paiement.",
     "status": "machine",
     "context": "qrTypes.types.solana.intro.0"
   },
@@ -6401,9 +6563,9 @@
     "status": "machine",
     "context": "qrTypes.types.solana.steps.0"
   },
-  "cdcf66a5f861": {
-    "source": "Optionally add an amount in SOL, a label and a message.",
-    "text": "Ajoutez si vous le souhaitez un montant en SOL, un libellé et un message.",
+  "501c3c8bebde": {
+    "source": "Pick SOL, USDC or USDT, and optionally add an amount, a label and a message.",
+    "text": "Choisissez SOL, USDC ou USDT, puis ajoutez si vous le souhaitez un montant, un libellé et un message.",
     "status": "machine",
     "context": "qrTypes.types.solana.steps.1"
   },
@@ -6413,15 +6575,15 @@
     "status": "machine",
     "context": "qrTypes.types.solana.steps.2"
   },
-  "74b80bb969ce": {
-    "source": "Amounts are in SOL with up to 9 decimals.",
-    "text": "Les montants sont en SOL, avec jusqu'à 9 décimales.",
+  "73cea79e72c3": {
+    "source": "Amounts are in SOL with up to 9 decimals, or in USDC or USDT with up to 6.",
+    "text": "Les montants sont en SOL avec jusqu'à 9 décimales, ou en USDC ou USDT avec jusqu'à 6.",
     "status": "machine",
     "context": "qrTypes.types.solana.payload.notes.0"
   },
-  "c260bf4dabce": {
-    "source": "This code requests SOL. Token payments (USDC and others) need the token's mint address, which this generator doesn't add.",
-    "text": "Ce code demande des SOL. Les paiements en jetons (USDC et autres) nécessitent l'adresse mint du jeton, que ce générateur n'ajoute pas.",
+  "326844660a7d": {
+    "source": "spl-token names the token's mint, as Circle and Tether list them: USDC is EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v and USDT is Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB. Without spl-token the code requests SOL.",
+    "text": "spl-token indique le mint du jeton, tel que Circle et Tether le publient : USDC est EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v et USDT est Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB. Sans spl-token, le code demande des SOL.",
     "status": "machine",
     "context": "qrTypes.types.solana.payload.notes.1"
   },
@@ -6437,15 +6599,21 @@
     "status": "machine",
     "context": "qrTypes.types.solana.faqs.0.answer"
   },
+  "4debcf9ae317": {
+    "source": "Yes. Pick one and the code adds Solana Pay's spl-token with the mint Circle or Tether lists, and the amount is in that token.",
+    "text": "Oui. Choisissez-en un et le code ajoute le paramètre spl-token de Solana Pay avec le mint publié par Circle ou Tether, et le montant est exprimé dans ce jeton.",
+    "status": "machine",
+    "context": "qrTypes.types.solana.faqs.1.answer"
+  },
   "43fcb61a7db3": {
     "source": "What this Solana Pay code includes",
     "text": "Ce que contient ce code Solana Pay",
     "status": "machine",
     "context": "qrTypes.types.solana.details.title"
   },
-  "36ed60b12391": {
-    "source": "It's a Solana Pay transfer request: the recipient, an amount in SOL, a label and a message. Solana Pay also defines spl-token for token payments and reference for matching a payment to an order; this generator adds neither, so use your point-of-sale tool when you need them.",
-    "text": "Il s'agit d'une demande de transfert Solana Pay : le destinataire, un montant en SOL, un libellé et un message. Solana Pay définit aussi spl-token pour les paiements en jetons et reference pour associer un paiement à une commande ; ce générateur n'ajoute ni l'un ni l'autre, utilisez donc votre outil de point de vente si vous en avez besoin.",
+  "f843af8bf207": {
+    "source": "It's a Solana Pay transfer request: the recipient, an amount, spl-token for USDC or USDT, a label and a message. Solana Pay also defines reference for matching a payment to an order; this generator doesn't add it, so use your point-of-sale tool when you need it.",
+    "text": "C'est une demande de transfert Solana Pay : le destinataire, un montant, spl-token pour USDC ou USDT, un libellé et un message. Solana Pay définit aussi reference pour associer un paiement à une commande ; ce générateur ne l'ajoute pas, utilisez donc votre outil de point de vente si vous en avez besoin.",
     "status": "machine",
     "context": "qrTypes.types.solana.details.paragraphs.0"
   },
@@ -6532,6 +6700,1140 @@
     "text": "Les ID de paiement séparés sont obsolètes dans Monero, le générateur n'en ajoute donc pas. Utilisez une sous-adresse pour chaque client ou chaque code, ou l'adresse intégrée que vous fournit une plateforme d'échange ou une boutique.",
     "status": "machine",
     "context": "qrTypes.types.monero.details.paragraphs.1"
+  },
+  "74da95f9087d": {
+    "source": "Share a contact in a smaller code than a vCard.",
+    "text": "Partagez un contact dans un code plus petit qu'un vCard.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.summary"
+  },
+  "c068fb639814": {
+    "source": "Make a MeCard QR code: name, phone, email, website, address, birthday and a note in the compact MECARD format, so the code stays small. Free.",
+    "text": "Créez un QR code MeCard : nom, téléphone, e-mail, site web, adresse, date de naissance et une note au format compact MECARD, pour un code plus petit. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.metaDescription"
+  },
+  "733c50d5353e": {
+    "source": "A MeCard QR code holds a contact in one short line of text: your name, phone number, email, website, address, birthday and a note. Phones that read it offer to save the contact, the same way a vCard code works.",
+    "text": "Un QR code MeCard contient un contact en une seule ligne de texte courte : votre nom, numéro de téléphone, e-mail, site web, adresse, date de naissance et une note. Les téléphones qui le lisent proposent d'enregistrer le contact, comme avec un code vCard.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.intro.0"
+  },
+  "1353d8961ab7": {
+    "source": "The format comes from NTT Docomo and needs fewer characters than a vCard for the same details, so the code has fewer, larger modules and scans from further away. Android phones read it; Apple doesn't document MeCard for the iPhone Camera, so test with an iPhone, or use a vCard when the contact has to reach everyone.",
+    "text": "Le format vient de NTT Docomo et demande moins de caractères qu'un vCard pour les mêmes informations : le code a donc moins de modules, plus grands, et se scanne de plus loin. Les téléphones Android le lisent ; Apple ne documente pas MeCard pour l'appareil photo de l'iPhone, testez donc avec un iPhone, ou utilisez un vCard si le contact doit parvenir à tout le monde.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.intro.1"
+  },
+  "18f1662e2e47": {
+    "source": "Enter your first name, and your last name if you want it saved.",
+    "text": "Saisissez votre prénom, et votre nom de famille si vous voulez qu'il soit enregistré.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.0"
+  },
+  "4fdb157369b9": {
+    "source": "Add the details people need: a phone number, an email, a website or an address.",
+    "text": "Ajoutez les informations utiles : un numéro de téléphone, un e-mail, un site web ou une adresse.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.1"
+  },
+  "864e378fd3e7": {
+    "source": "Scan the preview with an Android phone and an iPhone to see that both offer to save it.",
+    "text": "Faites un scan de l'aperçu avec un téléphone Android et un iPhone pour vérifier que les deux proposent de l'enregistrer.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.2"
+  },
+  "5d92cacd009c": {
+    "source": "Download the code for a badge, a card or a flyer.",
+    "text": "Téléchargez le code pour un badge, une carte ou un flyer.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.steps.3"
+  },
+  "53000439462d": {
+    "source": "Each field is NAME:value and ends with a semicolon; the record ends with two.",
+    "text": "Chaque champ s'écrit NOM:valeur et se termine par un point-virgule ; l'enregistrement en se termine par deux.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.0"
+  },
+  "337f9be94f36": {
+    "source": "The name is written last name, a comma, then first name.",
+    "text": "Le nom s'écrit ainsi : nom de famille, une virgule, puis prénom.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.1"
+  },
+  "b3802f5adca6": {
+    "source": "The characters \\ ; : and , inside a value are escaped with a backslash, as the format asks, so a web address is written https\\://.",
+    "text": "Les caractères \\ ; : et , à l'intérieur d'une valeur sont échappés par une barre oblique inverse, comme le format l'exige : une adresse web s'écrit donc https\\://.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.2"
+  },
+  "686f4250ca0a": {
+    "source": "The birthday is 8 digits: year, month and day. SOUND holds how the name is read (kana for a Japanese name) and NICKNAME a familiar name.",
+    "text": "La date de naissance compte 8 chiffres : année, mois et jour. SOUND contient la prononciation du nom (en kana pour un nom japonais) et NICKNAME un surnom.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.payload.notes.3"
+  },
+  "815e1036f054": {
+    "source": "MeCard or vCard?",
+    "text": "MeCard ou vCard ?",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.0.question"
+  },
+  "758a7ac0dd8a": {
+    "source": "A vCard can hold more (a company, a job title, several numbers) and is the format every phone documents. A MeCard holds the basics in fewer characters, so the code is smaller. Use MeCard when the code has to be small and most people scanning it use Android.",
+    "text": "Un vCard peut contenir davantage (une entreprise, un poste, plusieurs numéros) et c'est le format que tous les téléphones documentent. Un MeCard contient l'essentiel en moins de caractères, donc le code est plus petit. Utilisez MeCard quand le code doit rester petit et que la plupart des personnes qui le scannent ont un Android.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.0.answer"
+  },
+  "a4a03a7ff7c8": {
+    "source": "Does the iPhone camera read MeCard codes?",
+    "text": "L'appareil photo de l'iPhone lit-il les codes MeCard ?",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.1.question"
+  },
+  "f6cef4383fb2": {
+    "source": "Apple doesn't document which contact formats the Camera app reads. Scan the preview with an iPhone before you print, and switch to a vCard if it shows the text instead of offering to save the contact.",
+    "text": "Apple ne documente pas les formats de contact que l'app Appareil photo lit. Faites un scan de l'aperçu avec un iPhone avant d'imprimer, et passez à un vCard s'il affiche le texte au lieu de proposer d'enregistrer le contact.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.1.answer"
+  },
+  "aeb4fc782e6a": {
+    "source": "Is my contact sent to QRdx?",
+    "text": "Mon contact est-il envoyé à QRdx ?",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.2.question"
+  },
+  "b2511e90548f": {
+    "source": "No. The code is made in your browser, and the details you type are remembered only in this browser.",
+    "text": "Non. Le code est créé dans votre navigateur, et les informations saisies ne sont conservées que dans ce navigateur.",
+    "status": "machine",
+    "context": "qrTypes.types.mecard.faqs.2.answer"
+  },
+  "153bf335ad30": {
+    "source": "Make the payment code of a Swiss QR-bill, with the Swiss cross.",
+    "text": "Créez le code de paiement d'une facture QR suisse, avec la croix suisse.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.summary"
+  },
+  "1f1eab6e904d": {
+    "source": "Create the Swiss QR Code of a QR-bill: IBAN or QR-IBAN, address, amount in CHF or EUR, QR or RF reference with check digits, and the Swiss cross. Free.",
+    "text": "Créez le QR Code suisse d'une facture QR : IBAN ou QR-IBAN, adresse, montant en CHF ou EUR, référence QR ou RF avec chiffres de contrôle, et croix suisse. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.metaDescription"
+  },
+  "34cf31c3f1e5": {
+    "source": "A Swiss QR-bill carries its payment details in a QR code with a Swiss cross in the middle: your IBAN or QR-IBAN, your name and address, the amount and the reference. The person paying scans it with the QR scanner in their Swiss or Liechtenstein banking app, checks the payment and confirms it.",
+    "text": "Une facture QR suisse transmet ses données de paiement dans un QR code orné d'une croix suisse en son centre : votre IBAN ou QR-IBAN, votre nom et votre adresse, le montant et la référence. La personne qui paie le scanne avec le lecteur de QR code de son application bancaire suisse ou liechtensteinoise, vérifie le paiement et le confirme.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.intro.0"
+  },
+  "849857bd573d": {
+    "source": "QRdx writes the code to SIX's Swiss Implementation Guidelines for the QR-bill: the Swiss Payments Code version 0200, a structured address, and a QR reference or RF creditor reference with its check digits checked. It draws the code at error correction level M with the 7 mm Swiss cross on top, as the guidelines ask. This is the code for the payment part; the receipt and the rest of the printed bill are up to your invoicing.",
+    "text": "QRdx génère le code selon les Swiss Implementation Guidelines de SIX pour la facture QR : Swiss Payments Code version 0200, adresse structurée, et référence QR ou référence créancier RF dont les chiffres de contrôle sont vérifiés. Il dessine le code au niveau de correction d'erreur M, avec la croix suisse de 7 mm par-dessus, comme l'exigent les directives. Il s'agit du code de la section paiement ; le récépissé et le reste de la facture imprimée relèvent de votre outil de facturation.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.intro.1"
+  },
+  "4792a0e29f5f": {
+    "source": "Enter your IBAN or QR-IBAN and your name and address as they appear on the account.",
+    "text": "Saisissez votre IBAN ou QR-IBAN, ainsi que votre nom et votre adresse tels qu'ils figurent sur le compte.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.0"
+  },
+  "bfba558a8abe": {
+    "source": "Choose francs or euros and, if you like, an amount.",
+    "text": "Choisissez les francs ou les euros et, si vous le souhaitez, un montant.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.1"
+  },
+  "634adfef4d30": {
+    "source": "With a QR-IBAN, add the 27-digit QR reference from your invoicing; with an IBAN, an RF creditor reference or none.",
+    "text": "Avec un QR-IBAN, ajoutez la référence QR à 27 chiffres issue de votre facturation ; avec un IBAN, une référence créancier RF ou aucune.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.2"
+  },
+  "7b9a3d41bb4d": {
+    "source": "Scan the preview with your banking app, then print the code at least 46 × 46 mm, black on white.",
+    "text": "Scannez l'aperçu avec votre application bancaire, puis imprimez le code à 46 × 46 mm au minimum, en noir sur blanc.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.steps.3"
+  },
+  "6ee013d0eb49": {
+    "source": "Every line up to EPD is written, empty ones included, and nothing follows the last line. QRdx joins the lines with line feeds, which the guidelines allow.",
+    "text": "Chaque ligne jusqu'à EPD est écrite, y compris les lignes vides, et rien ne suit la dernière ligne. QRdx sépare les lignes par des sauts de ligne, ce que les directives autorisent.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.0"
+  },
+  "e426d8cc5b0e": {
+    "source": "A QR-IBAN (institution ID 30000 to 31999) always takes a 27-digit QR reference, checked with its modulo 10 recursive check digit, and francs only. An IBAN takes an RF creditor reference (ISO 11649) or no reference.",
+    "text": "Un QR-IBAN (identifiant d'établissement de 30000 à 31999) exige toujours une référence QR à 27 chiffres, contrôlée par son chiffre de contrôle récursif modulo 10, et uniquement des francs. Un IBAN accepte une référence créancier RF (ISO 11649) ou aucune référence.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.1"
+  },
+  "a058beb73635": {
+    "source": "Amounts are written with two decimals, from 0.01 to 999,999,999.99. Leave the amount empty and the payer enters it.",
+    "text": "Les montants sont écrits avec deux décimales, de 0.01 à 999,999,999.99. Laissez le montant vide et c'est le payeur qui le saisit.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.2"
+  },
+  "e3d1ee53275c": {
+    "source": "Text uses the Latin character set the guidelines list. Curly quotes and dashes are written as plain ones; anything else outside the set is refused.",
+    "text": "Le texte utilise le jeu de caractères latins indiqué dans les directives. Les guillemets et tirets typographiques sont convertis en caractères simples ; tout autre caractère hors du jeu est refusé.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.3"
+  },
+  "177e8add3f84": {
+    "source": "The code holds at most 997 bytes and is drawn at error correction M with the Swiss cross at 7/46 of its width.",
+    "text": "Le code contient au maximum 997 octets et est dessiné avec une correction d'erreur M, la croix suisse faisant 7/46 de sa largeur.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.payload.notes.4"
+  },
+  "9f8771ebb923": {
+    "source": "Which apps read a Swiss QR-bill code?",
+    "text": "Quelles applications lisent un code de facture QR suisse ?",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.0.question"
+  },
+  "de270230a496": {
+    "source": "Swiss and Liechtenstein banking apps and e-banking scan it with their QR scanner, depending on the bank. A phone's camera app only shows the text, because the code holds payment data, not a link.",
+    "text": "Les applications bancaires suisses et liechtensteinoises ainsi que l'e-banking le scannent avec leur lecteur de QR code, selon la banque. L'appareil photo d'un téléphone n'affiche que le texte, car le code contient des données de paiement, pas un lien.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.0.answer"
+  },
+  "090ac73796d7": {
+    "source": "QR-IBAN or IBAN?",
+    "text": "QR-IBAN ou IBAN ?",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.1.question"
+  },
+  "b8eef59d170e": {
+    "source": "A QR-IBAN comes with a QR reference that your bank uses to match payments to invoices automatically. A normal IBAN works with an RF creditor reference or none. Your bank tells you which one your account has.",
+    "text": "Un QR-IBAN s'accompagne d'une référence QR que votre banque utilise pour rapprocher automatiquement les paiements des factures. Un IBAN classique fonctionne avec une référence créancier RF ou sans référence. Votre banque vous indique lequel correspond à votre compte.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.1.answer"
+  },
+  "5332d85cbf83": {
+    "source": "Can I change the colours?",
+    "text": "Puis-je changer les couleurs ?",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.2.question"
+  },
+  "e30f831039d9": {
+    "source": "The guidelines describe the Swiss QR Code in black and white with the Swiss cross, at 46 × 46 mm. Keep it that way on bills you send, so every banking app reads it.",
+    "text": "Les directives décrivent le QR Code suisse en noir et blanc avec la croix suisse, à 46 × 46 mm. Gardez-le ainsi sur les factures que vous envoyez, pour que toutes les applications bancaires le lisent.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.2.answer"
+  },
+  "e63d6ab6b797": {
+    "source": "No. The code is made in your browser, and the playground never puts payment details in a link.",
+    "text": "Non. Le code est créé dans votre navigateur, et le playground ne met jamais de données de paiement dans un lien.",
+    "status": "machine",
+    "context": "qrTypes.types.swiss-qr-bill.faqs.3.answer"
+  },
+  "04f537f7cada": {
+    "source": "Fill in a Czech bank transfer with account, amount and symbols.",
+    "text": "Préremplissez un virement bancaire tchèque avec compte, montant et symboles.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.summary"
+  },
+  "67270dcd5b9c": {
+    "source": "Create a QR Platba code for Czech bank transfers: IBAN or account number, amount in CZK, message and variable symbol, to ČBA standard no. 26. Free.",
+    "text": "Créez un code QR Platba pour les virements bancaires tchèques : IBAN ou numéro de compte, montant en CZK, message et symbole variable, selon la norme ČBA n° 26. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.metaDescription"
+  },
+  "1168dc6a7abf": {
+    "source": "A QR Platba code fills in a Czech bank transfer for the person paying: your account, the amount in koruna, a message and the variable symbol. They scan it with the QR scanner in their banking app, check the payment and confirm it, so nobody retypes an account number from an invoice.",
+    "text": "Un code QR Platba préremplit un virement bancaire tchèque pour la personne qui paie : votre compte, le montant en couronnes, un message et le symbole variable. Elle le scanne avec le scanner de QR code de son application bancaire, vérifie le paiement et le confirme, et personne n’a à retaper un numéro de compte à partir d’une facture.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.intro.0"
+  },
+  "e32a2de65dd5": {
+    "source": "The format is the Short Payment Descriptor from the Czech Banking Association's standard no. 26 (ČBA, version 1.2), and most banks on the Czech market offer QR Platba in their apps. A phone's camera app only shows the text. Slovakia uses a different format, PAY by square, which QRdx doesn't make.",
+    "text": "Le format est le Short Payment Descriptor de la norme n° 26 de l’Association bancaire tchèque (ČBA, version 1.2), et la plupart des banques du marché tchèque proposent QR Platba dans leurs applications. L’appareil photo d’un téléphone n’affiche que le texte. La Slovaquie utilise un autre format, PAY by square, que QRdx ne génère pas.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.intro.1"
+  },
+  "7adce7aa5e2f": {
+    "source": "Enter your Czech IBAN, or a domestic account number like 19-2000145399/0800, which QRdx checks and turns into the IBAN.",
+    "text": "Saisissez votre IBAN tchèque, ou un numéro de compte national comme 19-2000145399/0800, que QRdx vérifie et convertit en IBAN.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.0"
+  },
+  "62b00cfba921": {
+    "source": "Optionally add an amount in CZK, a message and a variable symbol such as an invoice number.",
+    "text": "Ajoutez si vous le souhaitez un montant en CZK, un message et un symbole variable, par exemple un numéro de facture.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.1"
+  },
+  "5aa4f3055ac0": {
+    "source": "Add a due date, a specific or constant symbol, or ask for an instant payment, if you need them.",
+    "text": "Ajoutez une date d’échéance, un symbole spécifique ou constant, ou demandez un paiement instantané, si vous en avez besoin.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.2"
+  },
+  "30de678c0315": {
+    "source": "Use error correction level M for print, as the standard asks, and scan the preview with a Czech banking app.",
+    "text": "Utilisez le niveau de correction d’erreur M pour l’impression, comme l’exige la norme, et scannez l’aperçu avec une application bancaire tchèque.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.steps.3"
+  },
+  "86457e663210": {
+    "source": "Each field is KEY:value and the fields are separated by *. Only the account is required, and QRdx leaves empty fields out.",
+    "text": "Chaque champ s’écrit CLÉ:valeur et les champs sont séparés par *. Seul le compte est obligatoire, et QRdx omet les champs vides.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.0"
+  },
+  "7c5f0c4fff83": {
+    "source": "Amounts are in CZK with two decimals, up to 9,999,999.99. Messages are up to 60 characters and names up to 35.",
+    "text": "Les montants sont en CZK avec deux décimales, jusqu’à 9 999 999,99. Les messages comptent jusqu’à 60 caractères et les noms jusqu’à 35.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.1"
+  },
+  "87e817fd0933": {
+    "source": "Variable, specific and constant symbols are up to 10 digits each, and leading zeros are kept.",
+    "text": "Les symboles variable, spécifique et constant comptent chacun jusqu’à 10 chiffres, et les zéros initiaux sont conservés.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.2"
+  },
+  "ac5a31c026d2": {
+    "source": "Text is written in upper case without diacritics, the way the standard's reference generator does by default, so the code stays compact (QR alphanumeric mode) and every bank reads it. A * inside a value is written %2A.",
+    "text": "Le texte est écrit en majuscules sans signes diacritiques, comme le fait par défaut le générateur de référence de la norme, afin que le code reste compact (mode alphanumérique du QR code) et que toutes les banques le lisent. Un * dans une valeur s’écrit %2A.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.3"
+  },
+  "34faf78083ed": {
+    "source": "PT:IP asks for an instant payment, for banks that support it.",
+    "text": "PT:IP demande un paiement instantané, pour les banques qui le prennent en charge.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.payload.notes.4"
+  },
+  "f4104434d1b5": {
+    "source": "Which apps read QR Platba codes?",
+    "text": "Quelles applis lisent les codes QR Platba ?",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.0.question"
+  },
+  "801efb824e7d": {
+    "source": "The QR scanners in Czech banking apps; most banks on the Czech market offer QR Platba. A phone's camera app only shows the text, because the code holds payment details, not a link.",
+    "text": "Les scanners de QR code des applications bancaires tchèques ; la plupart des banques du marché tchèque proposent QR Platba. L’appareil photo d’un téléphone n’affiche que le texte, car le code contient des informations de paiement, pas un lien.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.0.answer"
+  },
+  "12c45093ab80": {
+    "source": "Why is my message in capital letters?",
+    "text": "Pourquoi mon message est-il en majuscules ?",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.1.question"
+  },
+  "184d39bb4cb4": {
+    "source": "QRdx writes text in upper case without diacritics, as the standard's reference generator does by default. The code stays smaller and every bank reads it.",
+    "text": "QRdx écrit le texte en majuscules sans signes diacritiques, comme le fait par défaut le générateur de référence de la norme. Le code reste plus petit et toutes les banques le lisent.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.1.answer"
+  },
+  "26bfeee86716": {
+    "source": "Does it work for payments in Slovakia?",
+    "text": "Est-ce que cela fonctionne pour les paiements en Slovaquie ?",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.2.question"
+  },
+  "eca91d85ebcb": {
+    "source": "No. Slovak banks use a different format, PAY by square, which QRdx doesn't make.",
+    "text": "Non. Les banques slovaques utilisent un autre format, PAY by square, que QRdx ne génère pas.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.faqs.2.answer"
+  },
+  "b7eace1568cc": {
+    "source": "Account numbers and check digits",
+    "text": "Numéros de compte et chiffres de contrôle",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.details.title"
+  },
+  "768f1f0bfce5": {
+    "source": "A domestic account number has an optional prefix, the number and the four-digit bank code, as in 19-2000145399/0800. QRdx checks the prefix and the number with their mod 11 check, turns them into the IBAN and checks its check digits, so a mistyped account is caught before you print.",
+    "text": "Un numéro de compte national comprend un préfixe facultatif, le numéro et le code banque à quatre chiffres, comme dans 19-2000145399/0800. QRdx vérifie le préfixe et le numéro avec leur contrôle modulo 11, les convertit en IBAN et vérifie les chiffres de contrôle de celui-ci, ce qui permet de repérer une erreur de saisie avant l’impression.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.details.paragraphs.0"
+  },
+  "93350b6001ad": {
+    "source": "A Czech IBAN is checked with its check digits and written as typed. Add the BIC only if your bank asks for it; it follows the IBAN after a +.",
+    "text": "Un IBAN tchèque est vérifié avec ses chiffres de contrôle et écrit tel que saisi. N’ajoutez le BIC que si votre banque le demande ; il suit l’IBAN après un +.",
+    "status": "machine",
+    "context": "qrTypes.types.czech-spd.details.paragraphs.1"
+  },
+  "d6555839f9a3": {
+    "source": "Get paid with Swish to a mobile or business number.",
+    "text": "Recevez des paiements Swish sur un numéro de mobile ou d'entreprise.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.summary"
+  },
+  "6b030cfbfdfc": {
+    "source": "Make a Swish QR code for a Swedish mobile or 123 business number, with an optional amount and message you can lock or let the payer change. Free.",
+    "text": "Créez un QR code Swish pour un numéro de mobile suédois ou un numéro d'entreprise 123, avec un montant et un message facultatifs que vous pouvez verrouiller ou laisser modifiables par le payeur. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.metaDescription"
+  },
+  "87dd608c89f4": {
+    "source": "A Swish QR code opens a payment in the Swish app with your number filled in, and an amount and a message if you add them. It's a link, so a phone's camera opens the Swish app, and the scanner inside Swish reads it too.",
+    "text": "Un QR code Swish ouvre un paiement dans l'application Swish avec votre numéro déjà renseigné, ainsi qu'un montant et un message si vous les ajoutez. C'est un lien : l'appareil photo d'un téléphone ouvre l'application Swish, et le lecteur intégré à Swish le lit aussi.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.intro.0"
+  },
+  "e961c83b431f": {
+    "source": "QRdx writes the link in the format Swish's developer documentation describes. It takes a Swedish mobile number or a 10-digit business number starting with 123. An amount or message in the code is locked unless you let the payer change it.",
+    "text": "QRdx écrit le lien au format décrit dans la documentation développeur de Swish. Il accepte un numéro de mobile suédois ou un numéro d'entreprise à 10 chiffres commençant par 123. Un montant ou un message inclus dans le code est verrouillé, sauf si vous laissez le payeur le modifier.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.intro.1"
+  },
+  "fe2edd77ce8a": {
+    "source": "Enter your Swish number: a Swedish mobile like 070 123 45 67, or your 123 business number.",
+    "text": "Saisissez votre numéro Swish : un mobile suédois comme 070 123 45 67, ou votre numéro d'entreprise 123.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.0"
+  },
+  "dacaaddc6a13": {
+    "source": "Optionally add an amount from 1 to 150,000 kronor and a message of up to 50 characters.",
+    "text": "Ajoutez si vous le souhaitez un montant de 1 à 150 000 couronnes et un message de 50 caractères maximum.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.1"
+  },
+  "f3928869b867": {
+    "source": "Choose whether the payer may change the amount or the message.",
+    "text": "Choisissez si le payeur peut modifier le montant ou le message.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.2"
+  },
+  "20333012e8f8": {
+    "source": "Scan the preview with your phone's camera to check that Swish opens with the right details, then download the code.",
+    "text": "Faites un scan de l'aperçu avec l'appareil photo de votre téléphone pour vérifier que Swish s'ouvre avec les bons détails, puis téléchargez le code.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.steps.3"
+  },
+  "3260e32e2ca2": {
+    "source": "The format is from Swish's developer documentation, \"Create QR code from specification\".",
+    "text": "Le format provient de la documentation développeur de Swish, « Create QR code from specification ».",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.0"
+  },
+  "b2414775db2c": {
+    "source": "A mobile number is written 46 and 9 digits, so 070 123 45 67 becomes 46701234567. Business numbers are 10 digits starting with 123.",
+    "text": "Un numéro de mobile s'écrit 46 suivi de 9 chiffres : 070 123 45 67 devient donc 46701234567. Les numéros d'entreprise comptent 10 chiffres et commencent par 123.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.1"
+  },
+  "24225545374a": {
+    "source": "Amounts are in kronor, 1 to 150,000 with up to 2 decimals, the range Swish's own generator takes. Messages are up to 50 characters and percent-encoded.",
+    "text": "Les montants sont en couronnes, de 1 à 150 000 avec 2 décimales au maximum, la plage acceptée par le générateur de Swish lui-même. Les messages comptent 50 caractères au maximum et sont encodés en pourcentage.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.2"
+  },
+  "eb86d73bf3c6": {
+    "source": "edit lists what the payer may change: amt, msg or both. An amount or message that isn't listed is locked.",
+    "text": "edit liste ce que le payeur peut modifier : amt, msg ou les deux. Un montant ou un message qui n'est pas listé est verrouillé.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.payload.notes.3"
+  },
+  "5c193517445d": {
+    "source": "Does the phone camera open Swish?",
+    "text": "L'appareil photo ouvre-t-il Swish ?",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.0.question"
+  },
+  "a40cf9ad6e26": {
+    "source": "Yes. The code is a link on app.swish.nu, the Swish app's verified link domain on iOS and Android, so the camera opens the app. The scanner in the Swish app reads it too.",
+    "text": "Oui. Le code est un lien sur app.swish.nu, le domaine de liens vérifié de l'application Swish sur iOS et Android, si bien que l'appareil photo ouvre l'application. Le lecteur de l'application Swish le lit aussi.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.0.answer"
+  },
+  "aea453af4eb0": {
+    "source": "Can I put the Swish symbol in the middle?",
+    "text": "Puis-je placer le symbole Swish au centre ?",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.1.question"
+  },
+  "3f957de5e295": {
+    "source": "Swish's guidelines ask for the code in black and white with the Swish symbol in the centre on a white circle, 25% of the code's width. QRdx doesn't add the symbol; if you want it, take it from Swish's marketing toolbox and add it as the code's logo.",
+    "text": "Les consignes de Swish demandent un code en noir et blanc avec le symbole Swish au centre, sur un cercle blanc, à 25 % de la largeur du code. QRdx n'ajoute pas le symbole ; si vous le souhaitez, récupérez-le dans la boîte à outils marketing de Swish et ajoutez-le comme logo du code.",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.1.answer"
+  },
+  "c0ed43219f62": {
+    "source": "Is my Swish number sent to QRdx?",
+    "text": "Mon numéro Swish est-il envoyé à QRdx ?",
+    "status": "machine",
+    "context": "qrTypes.types.swish.faqs.2.question"
+  },
+  "8c438c696747": {
+    "source": "Get paid in riel or dollars from Cambodian banking apps.",
+    "text": "Recevez des paiements en riel ou en dollars depuis les applications bancaires cambodgiennes.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.summary"
+  },
+  "ac6fd425d68d": {
+    "source": "Make a KHQR code for a Bakong account in riel or US dollars, with an optional amount, expiry day and bill number. National Bank of Cambodia format. Free.",
+    "text": "Créez un code KHQR pour un compte Bakong en riel ou en dollars américains, avec montant, jour d’expiration et numéro de facture en option. Format de la Banque nationale du Cambodge. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.metaDescription"
+  },
+  "c47aafa38496": {
+    "source": "A KHQR code lets people in Cambodia pay you from their banking app. It holds your Bakong account ID, your name and city, and the currency, riel or US dollars. KHQR is the National Bank of Cambodia's payment code on Bakong, and Cambodian banking apps that accept KHQR scan it.",
+    "text": "Un code KHQR permet aux habitants du Cambodge de vous payer depuis leur application bancaire. Il contient votre identifiant de compte Bakong, votre nom et votre ville, ainsi que la devise, riel ou dollars américains. KHQR est le code de paiement de la Banque nationale du Cambodge sur Bakong, et les applications bancaires cambodgiennes qui acceptent KHQR le scannent.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.intro.0"
+  },
+  "81b6d43bf052": {
+    "source": "Leave the amount empty for a static code anyone can pay any amount, which you can print once and keep. With an amount it becomes a dynamic KHQR, which Bakong requires to carry a creation time and an expiry, so QRdx asks for an expiry day and the code stops working after it.",
+    "text": "Laissez le montant vide pour obtenir un QR code statique que chacun peut payer pour n’importe quel montant, et que vous imprimez une fois pour toutes. Avec un montant, il devient un KHQR dynamique, que Bakong oblige à porter une heure de création et une expiration : QRdx vous demande donc un jour d’expiration, et le code cesse de fonctionner après cette date.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.intro.1"
+  },
+  "2f8b8dcf5338": {
+    "source": "Copy your Bakong account ID (name@bank) from your bank app or the Bakong app and paste it in.",
+    "text": "Copiez votre identifiant de compte Bakong (nom@banque) depuis votre application bancaire ou l’application Bakong, puis collez-le.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.0"
+  },
+  "ba77d851da3d": {
+    "source": "Enter the name payers should see and your city, and pick KHR or USD.",
+    "text": "Saisissez le nom que les payeurs doivent voir et votre ville, puis choisissez KHR ou USD.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.1"
+  },
+  "9d9888545383": {
+    "source": "Optionally add an amount with an expiry day, a bill number or a mobile number.",
+    "text": "Ajoutez si vous le souhaitez un montant avec un jour d’expiration, un numéro de facture ou un numéro de mobile.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.2"
+  },
+  "4f3fb576a9e7": {
+    "source": "Scan the preview with a banking app that accepts KHQR, then download the code.",
+    "text": "Faites un scan de l’aperçu avec une application bancaire qui accepte KHQR, puis téléchargez le code.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.steps.3"
+  },
+  "eb8197bea8ba": {
+    "source": "Tag 29 holds the person's own Bakong account ID, up to 32 characters. The merchant category is 5999 and the country KH.",
+    "text": "Le tag 29 contient l’identifiant de compte Bakong personnel de la personne, jusqu’à 32 caractères. La catégorie de commerçant est 5999 et le pays KH.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.0"
+  },
+  "c016f225850d": {
+    "source": "Currency 116 is riel and 840 is US dollars. Riel amounts are whole numbers; dollar amounts have up to 2 decimals.",
+    "text": "La devise 116 correspond au riel et 840 au dollar américain. Les montants en riel sont des nombres entiers ; les montants en dollars ont jusqu’à 2 décimales.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.1"
+  },
+  "c77d936e0d4c": {
+    "source": "Names are up to 25 characters and cities up to 15; the city is Phnom Penh unless you change it. Tag 62 holds the bill number and mobile number.",
+    "text": "Les noms comptent jusqu’à 25 caractères et les villes jusqu’à 15 ; la ville est Phnom Penh sauf si vous la modifiez. Le tag 62 contient le numéro de facture et le numéro de mobile.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.2"
+  },
+  "30171e1e70a9": {
+    "source": "A code with an amount carries its creation time and expiry in tag 99. The checksum is CRC16-CCITT over the whole payload, as in every EMV payment code.",
+    "text": "Un code avec montant porte son heure de création et son expiration dans le tag 99. La somme de contrôle est un CRC16-CCITT calculé sur l’ensemble des données, comme dans tout code de paiement EMV.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.payload.notes.3"
+  },
+  "c10213c45468": {
+    "source": "Why does a code with an amount expire?",
+    "text": "Pourquoi un code avec montant expire-t-il ?",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.0.question"
+  },
+  "cb919fae6326": {
+    "source": "Bakong requires a KHQR with an amount to carry a creation time and an expiry, so the code stops working after the day you pick. For a sign you print once, leave the amount empty.",
+    "text": "Bakong exige qu’un KHQR avec montant porte une heure de création et une expiration : le code cesse donc de fonctionner après le jour que vous choisissez. Pour une affiche imprimée une seule fois, laissez le montant vide.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.0.answer"
+  },
+  "f949e134455b": {
+    "source": "Where do I find my Bakong account ID?",
+    "text": "Où trouver mon identifiant de compte Bakong ?",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.1.question"
+  },
+  "9881bb779353": {
+    "source": "In your bank app or the Bakong app; it looks like name@bank. QRdx can't check that an ID exists, so copy it rather than typing it, and scan the preview with a banking app before you print.",
+    "text": "Dans votre application bancaire ou l’application Bakong ; il ressemble à nom@banque. QRdx ne peut pas vérifier qu’un identifiant existe : copiez-le plutôt que de le saisir, et faites un scan de l’aperçu avec une application bancaire avant d’imprimer.",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.1.answer"
+  },
+  "c7ca4fc0c63a": {
+    "source": "Is my account sent to QRdx?",
+    "text": "Mon compte est-il envoyé à QRdx ?",
+    "status": "machine",
+    "context": "qrTypes.types.khqr.faqs.2.question"
+  },
+  "2c1402d1fc89": {
+    "source": "Share a Lightning invoice, LNURL or Lightning Address.",
+    "text": "Partagez une facture Lightning, un LNURL ou une Lightning Address.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.summary"
+  },
+  "67d71c0b24eb": {
+    "source": "Make a Lightning QR code from a BOLT 11 invoice, an LNURL or a Lightning Address. Invoices are checked; an address becomes its LNURL-pay code. Free.",
+    "text": "Créez un QR code Lightning à partir d'une facture BOLT 11, d'un LNURL ou d'une Lightning Address. Les factures sont vérifiées ; une adresse devient son code LNURL-pay. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.metaDescription"
+  },
+  "b89cd1654e54": {
+    "source": "A Lightning QR code lets a Bitcoin Lightning wallet pay you. Paste one of three things: a BOLT 11 invoice from your wallet (lnbc…), an LNURL (lnurl1…), or a Lightning Address such as name@domain.com.",
+    "text": "Un QR code Lightning permet à un portefeuille Bitcoin Lightning de vous payer. Collez l'un de ces trois éléments : une facture BOLT 11 de votre portefeuille (lnbc…), un LNURL (lnurl1…) ou une Lightning Address comme nom@domaine.com.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.intro.0"
+  },
+  "665b6bd1db36": {
+    "source": "An invoice can be paid once and expires, after an hour by BOLT 11's default, so a printed invoice code goes stale. For a sign, a sticker or anything else you print, use an LNURL or a Lightning Address: QRdx turns an address into its LNURL-pay, which wallets that support LNURL-pay scan.",
+    "text": "Une facture ne peut être payée qu'une fois et expire, au bout d'une heure par défaut avec BOLT 11, si bien qu'un code de facture imprimé devient périmé. Pour une affiche, un autocollant ou tout autre support imprimé, utilisez un LNURL ou une Lightning Address : QRdx transforme une adresse en son LNURL-pay, que les portefeuilles compatibles LNURL-pay savent scanner.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.intro.1"
+  },
+  "77b6de5bcc8d": {
+    "source": "Copy an invoice, an LNURL or your Lightning Address from your wallet and paste it in.",
+    "text": "Copiez une facture, un LNURL ou votre Lightning Address depuis votre portefeuille et collez-la ici.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.0"
+  },
+  "99738c1f186e": {
+    "source": "QRdx checks an invoice's or LNURL's checksum; only mainnet invoices (lnbc…) are accepted.",
+    "text": "QRdx vérifie la somme de contrôle d'une facture ou d'un LNURL ; seules les factures mainnet (lnbc…) sont acceptées.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.1"
+  },
+  "4d7c70004d55": {
+    "source": "Scan the preview with the wallet that will pay to check it.",
+    "text": "Scannez l'aperçu avec le portefeuille qui effectuera le paiement pour le vérifier.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.2"
+  },
+  "af0f158f8d39": {
+    "source": "Download the code, and print a Lightning Address as text beside it.",
+    "text": "Téléchargez le code et, pour une Lightning Address, imprimez-la en texte à côté.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.steps.3"
+  },
+  "373462ea7e0b": {
+    "source": "An invoice is written lightning:<INVOICE> with the invoice in upper case, as BOLT 11 asks for QR codes. Its Bech32 checksum and prefix are checked, and only mainnet (lnbc) invoices are accepted.",
+    "text": "Une facture est écrite sous la forme lightning:<INVOICE>, la facture étant en majuscules, comme BOLT 11 le demande pour les QR codes. Sa somme de contrôle Bech32 et son préfixe sont vérifiés, et seules les factures mainnet (lnbc) sont acceptées.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.0"
+  },
+  "2949c548ac93": {
+    "source": "A Lightning Address is turned into its LNURL-pay (LUD-16 and LUD-01): https://domain/.well-known/lnurlp/name, Bech32-encoded. The example is satoshi@bitcoin.org.",
+    "text": "Une Lightning Address est transformée en son LNURL-pay (LUD-16 et LUD-01) : https://domain/.well-known/lnurlp/name, encodé en Bech32. L'exemple est satoshi@bitcoin.org.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.1"
+  },
+  "7f916613b6c6": {
+    "source": "The code holds the bare upper case LNURL, which LNURL-pay wallets scan (LUD-06). No spec defines a QR form for name@domain itself.",
+    "text": "Le code contient uniquement le LNURL en majuscules, que les portefeuilles LNURL-pay savent scanner (LUD-06). Aucune spécification ne définit de forme QR pour nom@domaine lui-même.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.2"
+  },
+  "cecaa53fd26a": {
+    "source": "Invoices are 200 to 600 characters or more, so an invoice code is dense; print it larger.",
+    "text": "Les factures font de 200 à 600 caractères, voire plus : un code de facture est donc dense. Imprimez-le plus grand.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.payload.notes.3"
+  },
+  "99358e5563bc": {
+    "source": "Can I print an invoice code?",
+    "text": "Puis-je imprimer un code de facture ?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.0.question"
+  },
+  "97da46ebe9a0": {
+    "source": "Not for long. An invoice can be paid once and expires, after an hour by BOLT 11's default. Use an LNURL or a Lightning Address for anything printed.",
+    "text": "Pas pour longtemps. Une facture ne peut être payée qu'une fois et expire, au bout d'une heure par défaut avec BOLT 11. Utilisez un LNURL ou une Lightning Address pour tout ce qui est imprimé.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.0.answer"
+  },
+  "8d306b6fe7d4": {
+    "source": "Why doesn't the code hold my Lightning Address?",
+    "text": "Pourquoi le code ne contient-il pas ma Lightning Address ?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.1.question"
+  },
+  "6840dcacef1d": {
+    "source": "No spec defines a QR form for name@domain, so QRdx writes the address's LNURL-pay, which LNURL-pay wallets scan. Print the address as text beside the code for people who'd rather type it.",
+    "text": "Aucune spécification ne définit de forme QR pour nom@domaine : QRdx écrit donc le LNURL-pay de l'adresse, que les portefeuilles LNURL-pay savent scanner. Imprimez l'adresse en texte à côté du code pour ceux qui préfèrent la saisir.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.1.answer"
+  },
+  "020f1df312e2": {
+    "source": "Is my invoice sent to QRdx?",
+    "text": "Ma facture est-elle envoyée à QRdx ?",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.2.question"
+  },
+  "9a2536823508": {
+    "source": "No. The code is made in your browser, and QRdx doesn't contact your Lightning Address's server to make it.",
+    "text": "Non. Le code est créé dans votre navigateur, et QRdx ne contacte pas le serveur de votre Lightning Address pour le créer.",
+    "status": "machine",
+    "context": "qrTypes.types.lightning.faqs.2.answer"
+  },
+  "9e2e53faff95": {
+    "source": "Share an XRP Ledger address, with a destination tag if you need one.",
+    "text": "Partagez une adresse XRP Ledger, avec un tag de destination si nécessaire.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.summary"
+  },
+  "7af9f7d47d3c": {
+    "source": "Make an XRP QR code with your XRP Ledger address, checked with its checksum. Add a destination tag and the code holds an X-address that keeps both. Free.",
+    "text": "Créez un QR code XRP avec votre adresse XRP Ledger, vérifiée par sa somme de contrôle. Ajoutez un tag de destination et le code contient une X-address qui conserve les deux. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.metaDescription"
+  },
+  "d72b63a5ad07": {
+    "source": "An XRP QR code holds your XRP Ledger address, so the payer's wallet reads it instead of someone typing it. The XRP Ledger has no finished payment URI standard, so the code holds the plain classic address (r…), which XRPL wallets read.",
+    "text": "Un QR code XRP contient votre adresse XRP Ledger, pour que le portefeuille du payeur la lise au lieu de la faire saisir à la main. Le XRP Ledger n'a pas de standard d'URI de paiement finalisé : le code contient donc l'adresse classique simple (r…), que les portefeuilles XRPL savent lire.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.intro.0"
+  },
+  "4f85c6d1c602": {
+    "source": "With a destination tag, QRdx writes the X-address instead (XLS-5, final), which packs the address and the tag together under one checksum. A wallet that doesn't understand an X-address refuses it rather than sending without the tag. Print the classic address and the tag as text too, since some exchanges ask for them separately.",
+    "text": "Avec un tag de destination, QRdx écrit à la place l'X-address (XLS-5, final), qui regroupe l'adresse et le tag sous une seule somme de contrôle. Un portefeuille qui ne comprend pas une X-address la refuse au lieu d'envoyer sans le tag. Imprimez aussi l'adresse classique et le tag sous forme de texte, car certaines plateformes d'échange les demandent séparément.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.intro.1"
+  },
+  "c11baa66a136": {
+    "source": "Paste your classic XRP Ledger address (r…) from your wallet or exchange.",
+    "text": "Collez votre adresse XRP Ledger classique (r…) depuis votre portefeuille ou votre plateforme d'échange.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.0"
+  },
+  "3025dd9f38d1": {
+    "source": "If you were given a destination tag, enter it in its own field.",
+    "text": "Si on vous a donné un tag de destination, saisissez-le dans son propre champ.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.1"
+  },
+  "0c7a8a070054": {
+    "source": "Download the code, and print the address and tag as text beside it.",
+    "text": "Téléchargez le code, et imprimez l'adresse et le tag sous forme de texte à côté.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.steps.3"
+  },
+  "8b35bf5a17d7": {
+    "source": "The classic address is checked with its Base58 checksum (a double SHA-256).",
+    "text": "L'adresse classique est vérifiée avec sa somme de contrôle Base58 (un double SHA-256).",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.0"
+  },
+  "aa15e1fe974a": {
+    "source": "With a destination tag the code holds the X-address (XLS-5): rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf with tag 276 is XVLhHMPHU98es4dbozjVtdWzVrDjtVoKj3MnFGMXEFMnvJV.",
+    "text": "Avec un tag de destination, le code contient l'X-address (XLS-5) : rGWrZyQqhTp9Xu7G5Pkayo7bXjH4k4QYpf avec le tag 276 donne XVLhHMPHU98es4dbozjVtdWzVrDjtVoKj3MnFGMXEFMnvJV.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.1"
+  },
+  "f9fe297c6cef": {
+    "source": "Tag 0 and no tag are different, so enter 0 only if you were given 0.",
+    "text": "Le tag 0 et l'absence de tag sont deux choses différentes : saisissez 0 uniquement si on vous a donné 0.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.2"
+  },
+  "1e43d3dd2ccf": {
+    "source": "There's no amount: no amount format works across XRP wallets.",
+    "text": "Il n'y a pas de montant : aucun format de montant ne fonctionne sur tous les portefeuilles XRP.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.payload.notes.3"
+  },
+  "b40aeaf4eb33": {
+    "source": "Can I request an amount?",
+    "text": "Puis-je demander un montant ?",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.0.question"
+  },
+  "badc2c555609": {
+    "source": "No. No amount format works across XRP wallets, so the payer enters the amount.",
+    "text": "Non. Aucun format de montant ne fonctionne sur tous les portefeuilles XRP, c'est donc le payeur qui saisit le montant.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.0.answer"
+  },
+  "885113776864": {
+    "source": "When do I need a destination tag?",
+    "text": "Quand ai-je besoin d'un tag de destination ?",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.1.question"
+  },
+  "48cb32049a4b": {
+    "source": "When your exchange or service gives you one. Copy it exactly: tag 0 and no tag are different.",
+    "text": "Quand votre plateforme d'échange ou votre service vous en donne un. Copiez-le exactement : le tag 0 et l'absence de tag sont deux choses différentes.",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.1.answer"
+  },
+  "ff1d090c6e22": {
+    "source": "Is my address sent to QRdx?",
+    "text": "Mon adresse est-elle envoyée à QRdx ?",
+    "status": "machine",
+    "context": "qrTypes.types.xrp.faqs.2.question"
+  },
+  "deac18fb7b7a": {
+    "source": "Request ADA with a CIP-13 Cardano payment link.",
+    "text": "Demandez des ADA avec un lien de paiement Cardano CIP-13.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.summary"
+  },
+  "8472618ab7fd": {
+    "source": "Make a Cardano QR code in the CIP-13 web+cardano: format with your addr1 address and an optional amount in ADA. Address checked with its checksum. Free.",
+    "text": "Créez un QR code Cardano au format CIP-13 web+cardano: avec votre adresse addr1 et un montant facultatif en ADA. Adresse vérifiée par sa somme de contrôle. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.metaDescription"
+  },
+  "3f20ad9d36d6": {
+    "source": "A Cardano QR code holds your payment address and, if you like, an amount in ADA, in the web+cardano: format from CIP-13. Wallets that implement CIP-13 payment URIs fill in the payment when they scan it.",
+    "text": "Un QR code Cardano contient votre adresse de paiement et, si vous le souhaitez, un montant en ADA, au format web+cardano: de la CIP-13. Les portefeuilles qui prennent en charge les URI de paiement CIP-13 renseignent le paiement lorsqu'ils le scannent.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.intro.0"
+  },
+  "a35655958b18": {
+    "source": "CIP-13's status is proposed, and it lists Yoroi and Begin as wallets implementing payment URIs. Other wallets may only read a plain address, so scan the preview with the wallets your payers use before you print.",
+    "text": "La CIP-13 a le statut de proposition, et elle cite Yoroi et Begin comme portefeuilles prenant en charge les URI de paiement. D'autres portefeuilles peuvent ne lire qu'une adresse simple : scannez l'aperçu avec les portefeuilles que vos payeurs utilisent avant d'imprimer.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.intro.1"
+  },
+  "8d04344477dd": {
+    "source": "Paste a mainnet payment address (addr1…) from your wallet.",
+    "text": "Collez une adresse de paiement mainnet (addr1…) depuis votre portefeuille.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.0"
+  },
+  "29403c48bdc1": {
+    "source": "Optionally enter an amount in ADA, with up to 6 decimals.",
+    "text": "Saisissez si vous le souhaitez un montant en ADA, avec jusqu'à 6 décimales.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.1"
+  },
+  "0a19a1f4064e": {
+    "source": "Scan the preview with the wallets your payers use.",
+    "text": "Scannez l'aperçu avec les portefeuilles que vos payeurs utilisent.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.steps.2"
+  },
+  "10a20be51b8a": {
+    "source": "Defined by CIP-13. The amount is decimal ADA with up to 6 decimals.",
+    "text": "Défini par la CIP-13. Le montant est exprimé en ADA décimaux, avec jusqu'à 6 décimales.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.0"
+  },
+  "6e27720303a4": {
+    "source": "CIP-13 defines only the amount, so there's no label or message.",
+    "text": "La CIP-13 ne définit que le montant : il n'y a donc ni libellé ni message.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.1"
+  },
+  "899005da8290": {
+    "source": "QRdx takes mainnet Shelley payment addresses (addr1…) and checks their Bech32 checksum. Stake addresses and testnet addresses are refused, and older Byron addresses aren't accepted.",
+    "text": "QRdx accepte les adresses de paiement Shelley mainnet (addr1…) et vérifie leur somme de contrôle Bech32. Les adresses de staking et les adresses testnet sont refusées, et les anciennes adresses Byron ne sont pas acceptées.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.payload.notes.2"
+  },
+  "61421398a492": {
+    "source": "Which wallets read it?",
+    "text": "Quels portefeuilles le lisent ?",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.0.question"
+  },
+  "d6ee36d68c1f": {
+    "source": "CIP-13 lists Yoroi and Begin as implementing payment URIs. Other wallets may read only plain addresses, so test with your payers' wallets.",
+    "text": "La CIP-13 cite Yoroi et Begin comme prenant en charge les URI de paiement. D'autres portefeuilles peuvent ne lire que les adresses simples : testez avec les portefeuilles de vos payeurs.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.0.answer"
+  },
+  "475fb46585a1": {
+    "source": "Why is my address refused?",
+    "text": "Pourquoi mon adresse est-elle refusée ?",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.1.question"
+  },
+  "962c2a8064ea": {
+    "source": "QRdx takes mainnet Shelley payment addresses starting with addr1. A stake address, a testnet address or an older Byron address isn't accepted.",
+    "text": "QRdx accepte les adresses de paiement Shelley mainnet commençant par addr1. Une adresse de staking, une adresse testnet ou une ancienne adresse Byron n'est pas acceptée.",
+    "status": "machine",
+    "context": "qrTypes.types.cardano.faqs.1.answer"
+  },
+  "7cfadbe6a7a3": {
+    "source": "Share a Tron address for TRX or USDT (TRC-20).",
+    "text": "Partagez une adresse Tron pour recevoir des TRX ou des USDT (TRC-20).",
+    "status": "machine",
+    "context": "qrTypes.types.tron.summary"
+  },
+  "fae1c6bfb4f5": {
+    "source": "Make a Tron QR code with your T… address for TRX or USDT on TRC-20, checked with its Base58Check checksum. Print the coin and network beside it. Free.",
+    "text": "Créez un QR code Tron avec votre adresse en T… pour des TRX ou des USDT sur TRC-20, vérifiée grâce à son checksum Base58Check. Imprimez la crypto et le réseau à côté. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.metaDescription"
+  },
+  "91c7de63b71d": {
+    "source": "A Tron QR code holds your Tron address, the T… address your wallet shows on its own receive screen. No static payment URI is documented for Tron wallets: the documented transfer deep link needs the payer's own address and a callback, so it can't be printed.",
+    "text": "Un QR code Tron contient votre adresse Tron, l'adresse en T… affichée par votre portefeuille sur son écran de réception. Aucun URI de paiement statique n'est documenté pour les portefeuilles Tron : le lien profond de transfert documenté exige l'adresse du payeur et un callback, il ne peut donc pas être imprimé.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.intro.0"
+  },
+  "acb202e6262f": {
+    "source": "TRX, TRC-10 tokens and TRC-20 tokens such as USDT all use the same address, so the code can't say which coin or network you expect. Print it next to the code: \"USDT (TRC-20, Tron network)\" or \"TRX\".",
+    "text": "Les TRX, les jetons TRC-10 et les jetons TRC-20 comme l'USDT utilisent tous la même adresse : le code ne peut donc pas indiquer quelle crypto ni quel réseau vous attendez. Indiquez-le à côté du code : « USDT (TRC-20, réseau Tron) » ou « TRX ».",
+    "status": "machine",
+    "context": "qrTypes.types.tron.intro.1"
+  },
+  "196085cd88ec": {
+    "source": "Copy the address from your wallet's receive screen and paste it in.",
+    "text": "Copiez l'adresse depuis l'écran de réception de votre portefeuille et collez-la.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.0"
+  },
+  "a3db84ddbd5f": {
+    "source": "QRdx checks its checksum, and refuses Tether's USDT contract address if it's pasted by mistake.",
+    "text": "QRdx vérifie son checksum et refuse l'adresse du contrat USDT de Tether si elle est collée par erreur.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.1"
+  },
+  "2b3b4bc0d981": {
+    "source": "Download the code and print the coin and network beside it.",
+    "text": "Téléchargez le code et imprimez la crypto et le réseau à côté.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.steps.3"
+  },
+  "89948a6b276f": {
+    "source": "The address is checked with its Base58Check checksum and its 0x41 prefix byte.",
+    "text": "L'adresse est vérifiée grâce à son checksum Base58Check et à son octet de préfixe 0x41.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.0"
+  },
+  "0f5cd7670a47": {
+    "source": "Tether's USDT contract (TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t) is refused as a recipient: it's the token's contract, not a wallet.",
+    "text": "Le contrat USDT de Tether (TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t) est refusé comme destinataire : c'est le contrat du jeton, pas un portefeuille.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.1"
+  },
+  "2371d64a8f81": {
+    "source": "There's no amount: no static request format is documented for Tron wallets.",
+    "text": "Il n'y a pas de montant : aucun format de demande statique n'est documenté pour les portefeuilles Tron.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.payload.notes.2"
+  },
+  "c8ff8a9709d8": {
+    "source": "Can I ask for USDT?",
+    "text": "Puis-je demander des USDT ?",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.0.question"
+  },
+  "752d8e7dd646": {
+    "source": "The same address receives TRX and TRC-20 USDT, and the code can't say which. Print \"USDT (TRC-20, Tron network)\" next to it so payers send on the right network.",
+    "text": "La même adresse reçoit des TRX et des USDT TRC-20, et le code ne peut pas indiquer lesquels. Imprimez « USDT (TRC-20, réseau Tron) » à côté pour que les payeurs envoient sur le bon réseau.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.0.answer"
+  },
+  "21ff3a8d2f73": {
+    "source": "Can I add an amount?",
+    "text": "Puis-je ajouter un montant ?",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.1.question"
+  },
+  "bc7ed8c3d426": {
+    "source": "No. Tron wallets document no static request format with an amount, so the payer enters it.",
+    "text": "Non. Les portefeuilles Tron ne documentent aucun format de demande statique avec montant : c'est donc le payeur qui le saisit.",
+    "status": "machine",
+    "context": "qrTypes.types.tron.faqs.1.answer"
+  },
+  "1ed2997d6e49": {
+    "source": "Request TON or USDT with a ton://transfer link.",
+    "text": "Demandez des TON ou des USDT avec un lien ton://transfer.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.summary"
+  },
+  "18453f5eef0f": {
+    "source": "Make a TON QR code with a ton://transfer link: your address, an amount in TON or USDT and a comment. Address checked with its CRC-16 checksum. Free.",
+    "text": "Créez un QR code TON avec un lien ton://transfer : votre adresse, un montant en TON ou en USDT et un commentaire. Adresse vérifiée grâce à son checksum CRC-16. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.metaDescription"
+  },
+  "cd9104ba5b6e": {
+    "source": "A TON QR code holds a ton://transfer link from TON's deep link docs: your address and, if you like, an amount and a comment. It can ask for TON or for USDT, Tether's own jetton on TON.",
+    "text": "Un QR code TON contient un lien ton://transfer issu de la documentation de TON sur les liens profonds : votre adresse et, si vous le souhaitez, un montant et un commentaire. Il peut demander des TON ou des USDT, le jetton propre à Tether sur TON.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.intro.0"
+  },
+  "23f4a1d0fbda": {
+    "source": "TON's docs note that the ton:// link works across TON wallets, but whether a wallet honours the USDT jetton parameter is up to the wallet. Scan a USDT code with the wallets your payers use before you print it.",
+    "text": "La documentation de TON indique que le lien ton:// fonctionne avec les portefeuilles TON, mais c'est à chaque portefeuille de décider s'il prend en compte le paramètre du jetton USDT. Faites un scan d'un code USDT avec les portefeuilles de vos payeurs avant de l'imprimer.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.intro.1"
+  },
+  "0adc1f6b84ae": {
+    "source": "Paste the address your wallet shows (UQ… or EQ…).",
+    "text": "Collez l'adresse affichée par votre portefeuille (UQ… ou EQ…).",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.0"
+  },
+  "31efb3d9cae4": {
+    "source": "Pick TON or USDT and, if you like, an amount.",
+    "text": "Choisissez TON ou USDT et, si vous le souhaitez, un montant.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.1"
+  },
+  "3a88fa85c549": {
+    "source": "Optionally add a comment, such as an order number.",
+    "text": "Ajoutez éventuellement un commentaire, comme un numéro de commande.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.2"
+  },
+  "c7a81ad47a41": {
+    "source": "Scan the preview with a TON wallet to check it, then download the code.",
+    "text": "Faites un scan de l'aperçu avec un portefeuille TON pour le vérifier, puis téléchargez le code.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.steps.3"
+  },
+  "470e2147ed23": {
+    "source": "Amounts are typed in TON (up to 9 decimals) or USDT (up to 6) and written in base units: amount=5000000 in the example is 0.005 TON.",
+    "text": "Les montants se saisissent en TON (jusqu'à 9 décimales) ou en USDT (jusqu'à 6) et s'écrivent en unités de base : amount=5000000 dans l'exemple correspond à 0,005 TON.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.0"
+  },
+  "7d1c71573759": {
+    "source": "For USDT the link adds jetton= with Tether's USDT on TON, and the amount is in millionths: ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=5000&text=hello is 0.005 USDT.",
+    "text": "Pour l'USDT, le lien ajoute jetton= avec l'USDT de Tether sur TON, et le montant est en millionièmes : ton://transfer/UQDYzZmfsrGzhObKJUw4gzdeIxEai3jAFbiGKGwxvxHinf4K?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs&amount=5000&text=hello correspond à 0,005 USDT.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.1"
+  },
+  "3059f661e1ed": {
+    "source": "The address must be a user-friendly mainnet address, UQ… (non-bounceable, recommended for wallets) or EQ…, and is checked with its CRC-16. Raw 0:… addresses have no checksum, so QRdx asks for the form your wallet shows.",
+    "text": "L'adresse doit être une adresse mainnet conviviale, UQ… (non rebondissable, recommandée pour les portefeuilles) ou EQ…, et elle est vérifiée grâce à son CRC-16. Les adresses brutes 0:… n'ont pas de checksum : QRdx demande donc la forme affichée par votre portefeuille.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.2"
+  },
+  "fbb13bfe8c28": {
+    "source": "text is the transfer's comment, percent-encoded.",
+    "text": "text est le commentaire du transfert, encodé en pourcentage.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.payload.notes.3"
+  },
+  "0d5e0f89b214": {
+    "source": "Do all TON wallets pay USDT from the code?",
+    "text": "Tous les portefeuilles TON paient-ils en USDT depuis le code ?",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.0.question"
+  },
+  "9963235976b8": {
+    "source": "TON's docs leave the jetton parameter to each wallet, so test a USDT code with the wallets your payers use. A code for TON works across TON wallets.",
+    "text": "La documentation de TON laisse le paramètre du jetton à chaque portefeuille : testez donc un code USDT avec les portefeuilles de vos payeurs. Un code pour des TON fonctionne avec tous les portefeuilles TON.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.0.answer"
+  },
+  "50d64d793123": {
+    "source": "UQ or EQ address?",
+    "text": "Adresse UQ ou EQ ?",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.1.question"
+  },
+  "50967eb308c7": {
+    "source": "Both work. UQ… is the non-bounceable form, which is recommended for wallets; EQ… is the bounceable one. Paste the one your wallet shows.",
+    "text": "Les deux fonctionnent. UQ… est la forme non rebondissable, recommandée pour les portefeuilles ; EQ… est la forme rebondissable. Collez celle que votre portefeuille affiche.",
+    "status": "machine",
+    "context": "qrTypes.types.ton.faqs.1.answer"
+  },
+  "8f7296730753": {
+    "source": "Request XLM or USDC with a SEP-0007 Stellar link.",
+    "text": "Demandez des XLM ou des USDC avec un lien Stellar SEP-0007.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.summary"
+  },
+  "a0c8bd2a6b27": {
+    "source": "Make a Stellar QR code in the SEP-0007 web+stellar:pay format for XLM or Circle's USDC, with an optional amount and a text memo for exchanges. Free.",
+    "text": "Créez un QR code Stellar au format SEP-0007 web+stellar:pay pour des XLM ou des USDC de Circle, avec un montant facultatif et un mémo texte pour les plateformes d'échange. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.metaDescription"
+  },
+  "72dc868dc688": {
+    "source": "A Stellar QR code holds a SEP-0007 payment request: your account and, if you like, an amount, the asset and a memo. It can ask for XLM or for USDC from the issuer Circle lists.",
+    "text": "Un QR code Stellar contient une demande de paiement SEP-0007 : votre compte et, si vous le souhaitez, un montant, l'actif et un mémo. Il peut demander des XLM ou des USDC de l'émetteur indiqué par Circle.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.intro.0"
+  },
+  "68320de87231": {
+    "source": "Exchanges often need a memo to match a deposit to your account, so the code can carry one. Wallet support for SEP-7 varies, so scan the preview with the wallets your payers use before you print.",
+    "text": "Les plateformes d'échange exigent souvent un mémo pour associer un dépôt à votre compte, le code peut donc en contenir un. La prise en charge de SEP-7 varie selon les portefeuilles : faites un scan de l'aperçu avec les portefeuilles qu'utilisent vos payeurs avant d'imprimer.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.intro.1"
+  },
+  "903a63c78ec1": {
+    "source": "Paste your Stellar address (G…).",
+    "text": "Collez votre adresse Stellar (G…).",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.0"
+  },
+  "6c063e9c2b5b": {
+    "source": "Pick XLM or USDC and, if you like, an amount.",
+    "text": "Choisissez XLM ou USDC et, si vous le souhaitez, un montant.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.1"
+  },
+  "79717628bbe3": {
+    "source": "Add a text memo if your exchange or service gave you one.",
+    "text": "Ajoutez un mémo texte si votre plateforme d'échange ou votre service vous en a fourni un.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.2"
+  },
+  "0c90e0315096": {
+    "source": "Scan the preview with a Stellar wallet to check it, then download the code.",
+    "text": "Faites un scan de l'aperçu avec un portefeuille Stellar pour le vérifier, puis téléchargez le code.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.steps.3"
+  },
+  "fd1585fbd449": {
+    "source": "Defined by SEP-0007, which is active. Amounts have up to 7 decimals.",
+    "text": "Défini par SEP-0007, qui est actif. Les montants comptent jusqu'à 7 décimales.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.0"
+  },
+  "300904ea50bd": {
+    "source": "For USDC the link names asset_code=USDC and the issuer Circle lists. The receiving account needs a USDC trustline to receive it.",
+    "text": "Pour l'USDC, le lien indique asset_code=USDC et l'émetteur indiqué par Circle. Le compte destinataire doit avoir une trustline USDC pour en recevoir.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.1"
+  },
+  "785baf528367": {
+    "source": "Memos are text (MEMO_TEXT) of up to 28 bytes, percent-encoded.",
+    "text": "Les mémos sont du texte (MEMO_TEXT) de 28 octets maximum, encodé en pourcentage.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.2"
+  },
+  "b3dcb7c3ae00": {
+    "source": "The address is checked as a StrKey: Base32 with a CRC-16 checksum.",
+    "text": "L'adresse est vérifiée comme une StrKey : Base32 avec une somme de contrôle CRC-16.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.payload.notes.3"
+  },
+  "a05966b114fd": {
+    "source": "Can I receive USDC?",
+    "text": "Puis-je recevoir des USDC ?",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.0.question"
+  },
+  "326020a817c9": {
+    "source": "Yes, if your account has a USDC trustline for Circle's issuer. Without one the account can't receive USDC, so add the trustline in your wallet first.",
+    "text": "Oui, si votre compte a une trustline USDC pour l'émetteur de Circle. Sans elle, le compte ne peut pas recevoir d'USDC : ajoutez d'abord la trustline dans votre portefeuille.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.0.answer"
+  },
+  "f9438f4a8553": {
+    "source": "Do I need a memo?",
+    "text": "Ai-je besoin d'un mémo ?",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.1.question"
+  },
+  "2e2dd93a7195": {
+    "source": "Add one when your exchange or service gives you one, exactly as given. Text memos are up to 28 bytes.",
+    "text": "Ajoutez-en un lorsque votre plateforme d'échange ou votre service vous en donne un, exactement tel quel. Les mémos texte font 28 octets maximum.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.1.answer"
+  },
+  "056ecc71a8ff": {
+    "source": "Wallet support for SEP-7 varies. Test with the wallets your payers use.",
+    "text": "La prise en charge de SEP-7 varie selon les portefeuilles. Testez avec les portefeuilles qu'utilisent vos payeurs.",
+    "status": "machine",
+    "context": "qrTypes.types.stellar.faqs.2.answer"
   },
   "1d393b0081b6": {
     "source": "PDF",
@@ -23087,6 +24389,24 @@
     "status": "machine",
     "context": "pageCodes.on-tickets-4.label"
   },
+  "3d33dc0484e1": {
+    "source": "Name badge",
+    "text": "Badge nominatif",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-1.label"
+  },
+  "7e2d81cbed8a": {
+    "source": "Sticker",
+    "text": "Autocollant",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-3.label"
+  },
+  "9dce86898f29": {
+    "source": "Flyer",
+    "text": "Flyer",
+    "status": "machine",
+    "context": "pageCodes.type-mecard-4.label"
+  },
   "0432f20a0f65": {
     "source": "Table menu",
     "text": "Menu de table",
@@ -31883,6 +33203,18 @@
     "status": "machine",
     "context": "mcp.tools.10.description"
   },
+  "e22e80134ee4": {
+    "source": "Contact card (MeCard)",
+    "text": "Carte de contact (MeCard)",
+    "status": "machine",
+    "context": "mcp.tools.14.title"
+  },
+  "5ec08b9f5893": {
+    "source": "A MeCard contact: the same basics as a vCard in fewer characters, so the code is smaller.",
+    "text": "Un contact MeCard : les mêmes informations de base qu'une vCard, en moins de caractères, pour un code plus petit.",
+    "status": "machine",
+    "context": "mcp.tools.14.description"
+  },
   "61964d1b5f82": {
     "source": "A mailto: link with optional cc, bcc, subject and body.",
     "text": "Un lien mailto: avec cc, cci, objet et corps facultatifs.",
@@ -31913,17 +33245,17 @@
     "status": "machine",
     "context": "mcp.tools.13.description"
   },
-  "7b20ff0c7661": {
-    "source": "Bank payment",
-    "text": "Paiement bancaire",
+  "7048f38b33f1": {
+    "source": "Payment",
+    "text": "Paiement",
     "status": "machine",
-    "context": "mcp.tools.14.title"
+    "context": "mcp.tools.18.title"
   },
-  "d56984fa2345": {
-    "source": "A Pix, SEPA transfer, PayNow, PromptPay or VietQR payment code, checked like the playground's forms.",
-    "text": "Un code de paiement Pix, virement SEPA, PayNow, PromptPay ou VietQR, vérifié comme les formulaires du Playground.",
+  "e9eb33d195b5": {
+    "source": "A Pix, SEPA, Swiss QR-bill, QR Platba, Swish, PayNow, PromptPay, VietQR or KHQR payment code, or a Lightning, XRP, Cardano, Tron, TON or Stellar request, checked like the playground's forms.",
+    "text": "Un code de paiement Pix, SEPA, Swiss QR-bill, QR Platba, Swish, PayNow, PromptPay, VietQR ou KHQR, ou une demande Lightning, XRP, Cardano, Tron, TON ou Stellar, vérifié comme les formulaires du Playground.",
     "status": "machine",
-    "context": "mcp.tools.14.description"
+    "context": "mcp.tools.18.description"
   },
   "f963ece25fc7": {
     "source": "Can Claude make a QR code?",
@@ -32711,11 +34043,167 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
+  "0135740ce7f9": {
+    "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
+    "text": "Créez un QR code Wi-Fi pour que vos invités rejoignent votre réseau en un seul scan. Réseaux WPA/WPA2, WEP et ouverts, SSID masqués, échappement correct. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.metaDescription"
+  },
+  "31d04d55ac35": {
+    "source": "Choose the security type: WPA/WPA2 for almost every modern router, WEP for very old ones, or No password for open networks.",
+    "text": "Choisissez le type de sécurité : WPA/WPA2 pour presque tous les routeurs récents, WEP pour les très anciens, ou Aucun mot de passe pour les réseaux ouverts.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.steps.1"
+  },
+  "bc95db81d2cd": {
+    "source": "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. Enterprise networks that need a username or certificate (WPA2-Enterprise) aren't supported by this format.",
+    "text": "Vérifiez que le nom du réseau correspond exactement (il est sensible à la casse), que le type de sécurité est correct et que vous êtes à portée. Les réseaux d'entreprise qui exigent un nom d'utilisateur ou un certificat (WPA2-Enterprise) ne sont pas pris en charge par ce format.",
+    "status": "machine",
+    "context": "qrTypes.types.wifi.faqs.1.answer"
+  },
   "5c11d4be5401": {
     "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
     "text": "Téléchargez un PNG, WebP ou SVG, ou personnalisez le code dans l'éditeur complet.",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
+  },
+  "da2ccbd9fdc4": {
+    "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",
+    "text": "Il s'agit d'une demande on-chain : le portefeuille paie votre adresse sur la blockchain Bitcoin. Les portefeuilles uniquement Lightning ne peuvent pas la payer, et ce générateur n'ajoute pas de facture lightning= à l'URI. Pour un paiement Lightning, partagez plutôt une facture ou une adresse Lightning depuis votre portefeuille.",
+    "status": "machine",
+    "context": "qrTypes.types.bitcoin.details.paragraphs.0"
+  },
+  "80cfbcc768ef": {
+    "source": "Share an EIP-681 Ethereum payment request.",
+    "text": "Partagez une demande de paiement Ethereum EIP-681.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.summary"
+  },
+  "7f57cac75ab7": {
+    "source": "Make an Ethereum QR code in the EIP-681 ethereum: format with an optional ETH amount (in wei) and gas limit. Free PNG and SVG, no signup.",
+    "text": "Créez un QR code Ethereum au format EIP-681 ethereum: avec un montant en ETH (en wei) et une limite de gas facultatifs. PNG et SVG gratuits, sans inscription.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.metaDescription"
+  },
+  "e6df241fc5d0": {
+    "source": "An Ethereum QR code holds your wallet address in the EIP-681 ethereum: format, optionally with an amount of ETH and a gas limit. Scanning it with a compatible wallet opens a transfer to your address with those values filled in.",
+    "text": "Un QR code Ethereum contient l'adresse de votre portefeuille au format EIP-681 ethereum:, avec en option un montant en ETH et une limite de gas. Le scan avec un portefeuille compatible ouvre un transfert vers votre adresse, avec ces valeurs déjà renseignées.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.intro.0"
+  },
+  "4cd43eafd110": {
+    "source": "Ethereum addresses are 42-character hexadecimal strings that are easy to mistype, which makes a QR code the safest way to share one at events, on invoices or on donation pages. The code contains only your public address; private keys and recovery phrases must never go into a QR code.",
+    "text": "Les adresses Ethereum sont des chaînes hexadécimales de 42 caractères, faciles à mal saisir : un QR code est donc le moyen le plus sûr d'en partager une lors d'événements, sur des factures ou sur des pages de dons. Le code ne contient que votre adresse publique ; les clés privées et les phrases de récupération ne doivent jamais figurer dans un QR code.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.intro.1"
+  },
+  "4f1b1c80f3e8": {
+    "source": "Optionally enter an amount in ETH and a gas limit.",
+    "text": "Saisissez si vous le souhaitez un montant en ETH et une limite de gas.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.1"
+  },
+  "c54d35521f5a": {
+    "source": "Scan the preview with your wallet and check the address and amount.",
+    "text": "Faites un scan de l'aperçu avec votre portefeuille et vérifiez l'adresse et le montant.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.2"
+  },
+  "155c506bf183": {
+    "source": "EIP-681 amounts (value) are in wei, the smallest unit: 1 ETH is 10^18 wei. This page converts the ETH amount you type by adding the e18 exponent, so 0.05 ETH is written as value=0.05e18.",
+    "text": "Les montants EIP-681 (value) sont exprimés en wei, la plus petite unité : 1 ETH vaut 10^18 wei. Cette page convertit le montant en ETH que vous saisissez en ajoutant l'exposant e18 ; ainsi, 0.05 ETH s'écrit value=0.05e18.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.0"
+  },
+  "6134aa693235": {
+    "source": "EIP-681 can name a network with @chainId (for example @137), but this generator doesn't add one, so wallets use their current network.",
+    "text": "EIP-681 permet de désigner un réseau avec @chainId (par exemple @137), mais ce générateur n'en ajoute pas : les portefeuilles utilisent donc leur réseau actuel.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.payload.notes.2"
+  },
+  "644fd366eca2": {
+    "source": "Can I request USDC or another token?",
+    "text": "Puis-je demander des USDC ou un autre jeton ?",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.0.question"
+  },
+  "2047498516c6": {
+    "source": "This generator creates native ETH transfers. Token requests need the token contract and a transfer function call in the URI, which this form doesn't build.",
+    "text": "Ce générateur crée des transferts d'ETH natif. Les demandes de jetons nécessitent le contrat du jeton et un appel de fonction transfer dans l'URI, ce que ce formulaire ne construit pas.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.0.answer"
+  },
+  "a921a84b6c82": {
+    "source": "Does it work on other EVM networks?",
+    "text": "Cela fonctionne-t-il sur d'autres réseaux EVM ?",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.1.question"
+  },
+  "302941b105ef": {
+    "source": "The address format is the same on networks like Polygon or Arbitrum, but no chain ID is added, so the payer must pick the right network in their wallet.",
+    "text": "Le format d'adresse est le même sur des réseaux comme Polygon ou Arbitrum, mais aucun identifiant de chaîne n'est ajouté : le payeur doit donc choisir le bon réseau dans son portefeuille.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.faqs.1.answer"
+  },
+  "d434b3350c1d": {
+    "source": "Address checks and ENS names",
+    "text": "Vérification des adresses et noms ENS",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.details.title"
+  },
+  "51f7bdf5aaa1": {
+    "source": "Receive SOL with a Solana Pay request.",
+    "text": "Recevez des SOL avec une demande Solana Pay.",
+    "status": "machine",
+    "context": "qrTypes.types.solana.summary"
+  },
+  "a3b47984a6df": {
+    "source": "Create a Solana Pay QR code for SOL payments to your wallet, with an optional amount, label and message. Solana Pay transfer request format. Free.",
+    "text": "Créez un QR code Solana Pay pour recevoir des paiements en SOL sur votre portefeuille, avec un montant, un libellé et un message facultatifs. Format de demande de transfert Solana Pay. Gratuit.",
+    "status": "machine",
+    "context": "qrTypes.types.solana.metaDescription"
+  },
+  "df85b6d18511": {
+    "source": "A Solana QR code holds a Solana Pay transfer request: your wallet address and, if you like, an amount in SOL, a label and a message. Wallets that support Solana Pay fill in the payment.",
+    "text": "Un QR code Solana contient une demande de transfert Solana Pay : l'adresse de votre portefeuille et, si vous le souhaitez, un montant en SOL, un libellé et un message. Les portefeuilles compatibles avec Solana Pay renseignent le paiement.",
+    "status": "machine",
+    "context": "qrTypes.types.solana.intro.0"
+  },
+  "cdcf66a5f861": {
+    "source": "Optionally add an amount in SOL, a label and a message.",
+    "text": "Ajoutez si vous le souhaitez un montant en SOL, un libellé et un message.",
+    "status": "machine",
+    "context": "qrTypes.types.solana.steps.1"
+  },
+  "74b80bb969ce": {
+    "source": "Amounts are in SOL with up to 9 decimals.",
+    "text": "Les montants sont en SOL, avec jusqu'à 9 décimales.",
+    "status": "machine",
+    "context": "qrTypes.types.solana.payload.notes.0"
+  },
+  "c260bf4dabce": {
+    "source": "This code requests SOL. Token payments (USDC and others) need the token's mint address, which this generator doesn't add.",
+    "text": "Ce code demande des SOL. Les paiements en jetons (USDC et autres) nécessitent l'adresse mint du jeton, que ce générateur n'ajoute pas.",
+    "status": "machine",
+    "context": "qrTypes.types.solana.payload.notes.1"
+  },
+  "36ed60b12391": {
+    "source": "It's a Solana Pay transfer request: the recipient, an amount in SOL, a label and a message. Solana Pay also defines spl-token for token payments and reference for matching a payment to an order; this generator adds neither, so use your point-of-sale tool when you need them.",
+    "text": "Il s'agit d'une demande de transfert Solana Pay : le destinataire, un montant en SOL, un libellé et un message. Solana Pay définit aussi spl-token pour les paiements en jetons et reference pour associer un paiement à une commande ; ce générateur n'ajoute ni l'un ni l'autre, utilisez donc votre outil de point de vente si vous en avez besoin.",
+    "status": "machine",
+    "context": "qrTypes.types.solana.details.paragraphs.0"
+  },
+  "7b20ff0c7661": {
+    "source": "Bank payment",
+    "text": "Paiement bancaire",
+    "status": "machine",
+    "context": "mcp.tools.14.title"
+  },
+  "d56984fa2345": {
+    "source": "A Pix, SEPA transfer, PayNow, PromptPay or VietQR payment code, checked like the playground's forms.",
+    "text": "Un code de paiement Pix, virement SEPA, PayNow, PromptPay ou VietQR, vérifié comme les formulaires du Playground.",
+    "status": "machine",
+    "context": "mcp.tools.14.description"
   },
   "291d41cbf4b9": {
     "source": "Books, with the ISBN printed above the bars",

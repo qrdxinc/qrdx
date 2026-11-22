@@ -2,6 +2,12 @@
 // Pure (no DOM), so it runs in tests and on the server alike.
 
 import { vietQrBank } from "@/lib/vietqr-banks";
+import { base58CheckDecode, XRPL_ALPHABET } from "@/utils/crypto-checksums";
+import {
+  evmNetwork,
+  isTronAddress,
+  lightningRequest,
+} from "@/utils/crypto-payments";
 import { emvTemplate, parseEmvPayload } from "@/utils/emv-qr";
 
 export interface Field {
@@ -18,6 +24,12 @@ export interface Contact {
   urls: string[];
   address?: string;
   note?: string;
+  // Added 2026-11-22 (payments): MeCard fields
+  nickname?: string;
+  /** YYYY-MM-DD */
+  birthday?: string;
+  /** How the name is read (MeCard SOUND) */
+  reading?: string;
 }
 
 export interface CalendarEvent {
@@ -47,7 +59,18 @@ export type PaymentScheme =
   | "dogecoin"
   | "bitcoincash"
   | "solana"
-  | "monero";
+  | "monero"
+  // Added 2026-11-22 (payments)
+  | "swiss-qr-bill"
+  | "czech-spd"
+  | "swish"
+  | "khqr"
+  | "lightning"
+  | "xrp"
+  | "cardano"
+  | "tron"
+  | "ton"
+  | "stellar";
 
 export interface Gs1Data {
   /** Human-readable application identifiers, in the order they appeared. */
@@ -63,6 +86,13 @@ export type ParsedScan =
       password: string;
       security: string;
       hidden: boolean;
+      /** WPA2/WPA3-Enterprise sign-in (T:WPA2-EAP), when the code has one */
+      enterprise?: {
+        method?: string;
+        phase2?: string;
+        identity?: string;
+        anonymousIdentity?: string;
+      };
     }
   | {
       kind: "contact";
@@ -151,6 +181,21 @@ export function parseScan(raw: string, format?: string): ParsedScan {
   if (lower.startsWith("ethereum:")) return parseEthereum(value) ?? text(raw);
   if (lower.startsWith("venmo:")) return parseVenmoApp(value) ?? text(raw);
   if (/^bcd\r?\n/i.test(value)) return parseEpc(value) ?? text(raw);
+  // Added 2026-11-22 (payments)
+  if (/^SPC\r?\n0200\r?\n/.test(value)) {
+    return parseSwissQrBill(value) ?? text(raw);
+  }
+  if (/^SPD\*\d+\.\d+\*/i.test(value)) return parseSpd(value) ?? text(raw);
+  if (/^lightning:|^lnurl1|^lnbc/i.test(value)) {
+    return parseLightning(value) ?? text(raw);
+  }
+  if (lower.startsWith("web+cardano:")) return parseCardano(value) ?? text(raw);
+  if (lower.startsWith("ton://transfer/")) return parseTon(value) ?? text(raw);
+  if (lower.startsWith("web+stellar:pay")) {
+    return parseStellar(value) ?? text(raw);
+  }
+  const address = parsePlainAddress(value);
+  if (address) return address;
   const crypto = /^(litecoin|dogecoin|bitcoincash|solana|monero):/i.exec(value);
   if (crypto) {
     return (
@@ -206,6 +251,27 @@ function parseWebLink(value: string): ParsedScan | null {
   }
   const host = url.hostname.replace(/^www\./, "");
   const segments = url.pathname.split("/").filter(Boolean).map(decodeSafe);
+
+  // Added 2026-11-22 (payments): Swish payment links
+  if (host === "app.swish.nu" && url.pathname.startsWith("/1/p/sw")) {
+    const payee = param(url.searchParams, "sw");
+    if (payee) {
+      const amount = param(url.searchParams, "amt");
+      return {
+        kind: "payment",
+        scheme: "swish",
+        payee,
+        amount: amount ? `SEK ${amount}` : undefined,
+        fields: compactFields([
+          ["Swish number", payee],
+          ["Amount", amount ? `SEK ${amount}` : undefined],
+          ["Message", param(url.searchParams, "msg")],
+        ]),
+        openUrl: url.toString(),
+        copyValue: payee,
+      };
+    }
+  }
 
   if (
     host === "paypal.me" ||
@@ -293,17 +359,45 @@ function keyValues(body: string): Map<string, string[]> {
   return map;
 }
 
+/** Security types as people know them: T:SAE is WPA3, T:WPA2-EAP enterprise. */
+const WIFI_SECURITY_NAMES: Record<string, string> = {
+  SAE: "WPA3",
+  "WPA2-EAP": "WPA2/WPA3-Enterprise",
+};
+
 function parseWifi(value: string): ParsedScan | null {
   const fields = keyValues(value.slice(5));
   const ssid = fields.get("S")?.[0];
   if (!ssid) return null;
   const type = (fields.get("T")?.[0] ?? "").trim().toUpperCase();
+  const field = (key: string) => fields.get(key)?.[0]?.trim() || undefined;
+  const phase2 = field("PH2");
+  // ZXing reads a non-boolean H: as the phase 2 method in older codes.
+  const rawHidden = (field("H") ?? "").toLowerCase();
+  const legacyPhase2 =
+    type === "WPA2-EAP" &&
+    !phase2 &&
+    rawHidden &&
+    !/^(true|false)$/.test(rawHidden)
+      ? field("H")
+      : undefined;
   return {
     kind: "wifi",
     ssid,
     password: fields.get("P")?.[0] ?? "",
-    security: type === "" || type === "NOPASS" ? "None" : type,
-    hidden: (fields.get("H")?.[0] ?? "").trim().toLowerCase() === "true",
+    security:
+      type === "" || type === "NOPASS"
+        ? "None"
+        : (WIFI_SECURITY_NAMES[type] ?? type),
+    hidden: rawHidden === "true",
+    ...(type === "WPA2-EAP" && {
+      enterprise: {
+        method: field("E"),
+        phase2: phase2 ?? legacyPhase2,
+        identity: field("I"),
+        anonymousIdentity: field("A"),
+      },
+    }),
   };
 }
 
@@ -408,26 +502,81 @@ function parseVcard(value: string): ParsedScan | null {
   return { kind: "contact", format: "vcard", contact, vcard: `${vcard}\r\n` };
 }
 
+/**
+ * MeCard fields with their escapes kept: "N:Doe\\,Jr,John" stays one value,
+ * so the name can be split on its unescaped comma before unescaping.
+ */
+function rawMeCardFields(body: string): Map<string, string[]> {
+  const map = new Map<string, string[]>();
+  let current = "";
+  const push = () => {
+    const colon = current.indexOf(":");
+    if (colon > 0) {
+      const key = current.slice(0, colon).trim().toUpperCase();
+      map.set(key, [...(map.get(key) ?? []), current.slice(colon + 1)]);
+    }
+    current = "";
+  };
+  for (let i = 0; i < body.length; i++) {
+    const char = body[i] as string;
+    if (char === "\\" && i + 1 < body.length) {
+      current += char + body[i + 1];
+      i++;
+    } else if (char === ";") {
+      push();
+    } else {
+      current += char;
+    }
+  }
+  push();
+  return map;
+}
+
+/** Splits on unescaped commas, then unescapes each part. */
+function meCardParts(raw: string): string[] {
+  return splitEscaped(raw, ",").map((part) => part.trim());
+}
+
+const unescapeMeCard = (raw: string) => raw.replace(/\\(.)/gs, "$1");
+
 function parseMecard(value: string): ParsedScan | null {
-  const fields = keyValues(value.slice(7));
-  const rawName = fields.get("N")?.[0] ?? "";
+  const raw = rawMeCardFields(value.slice(7));
+  const one = (key: string) => {
+    const found = raw.get(key)?.[0];
+    return found === undefined
+      ? undefined
+      : unescapeMeCard(found).trim() || undefined;
+  };
+  const all = (key: string) =>
+    (raw.get(key) ?? [])
+      .map((item) => unescapeMeCard(item).trim())
+      .filter(Boolean);
   // MeCard names are "Last,First".
-  const [last = "", firstName = ""] = rawName
-    .split(",")
-    .map((part) => part.trim());
-  const name = [firstName, last].filter(Boolean).join(" ") || rawName.trim();
-  if (!name && !fields.get("TEL") && !fields.get("EMAIL")) return null;
+  const rawName = raw.get("N")?.[0] ?? "";
+  const nameParts = rawName.includes(",") ? meCardParts(rawName) : [];
+  const [last = "", firstName = ""] = nameParts.length
+    ? nameParts
+    : [unescapeMeCard(rawName).trim(), ""];
+  const name = (nameParts.length ? [firstName, last] : [last])
+    .filter(Boolean)
+    .join(" ");
+  if (!name && !raw.get("TEL") && !raw.get("EMAIL")) return null;
+  const birthday = one("BDAY");
 
   const contact: Contact = {
     name: name || "Unnamed contact",
-    organization: fields.get("ORG")?.[0]?.trim() || undefined,
-    phones: (fields.get("TEL") ?? []).map((tel) => tel.trim()).filter(Boolean),
-    emails: (fields.get("EMAIL") ?? [])
-      .map((mail) => mail.trim())
-      .filter(Boolean),
-    urls: (fields.get("URL") ?? []).map((url) => url.trim()).filter(Boolean),
-    address: fields.get("ADR")?.[0]?.trim() || undefined,
-    note: fields.get("NOTE")?.[0]?.trim() || undefined,
+    organization: one("ORG"),
+    phones: all("TEL"),
+    emails: all("EMAIL"),
+    urls: all("URL"),
+    address: one("ADR"),
+    note: one("NOTE"),
+    nickname: one("NICKNAME"),
+    birthday:
+      birthday && /^\d{8}$/.test(birthday)
+        ? `${birthday.slice(0, 4)}-${birthday.slice(4, 6)}-${birthday.slice(6)}`
+        : birthday,
+    reading: one("SOUND"),
   };
   return {
     kind: "contact",
@@ -462,6 +611,8 @@ export function contactToVcard(
     ...contact.urls.map((url) => `URL:${escapeVcardText(url)}`),
     contact.address && `ADR:;;${escapeVcardText(contact.address)};;;;`,
     contact.note && `NOTE:${escapeVcardText(contact.note)}`,
+    contact.nickname && `NICKNAME:${escapeVcardText(contact.nickname)}`,
+    contact.birthday && `BDAY:${contact.birthday}`,
     "END:VCARD",
   ].filter((line): line is string => Boolean(line));
   return `${lines.join("\r\n")}\r\n`;
@@ -696,6 +847,10 @@ function parseEthereum(value: string): ParsedScan | null {
       ["Token contract", isTokenTransfer ? target : undefined],
       ["Amount", amount],
       ["Chain ID", chainId],
+      [
+        "Network",
+        chainId ? (evmNetwork(chainId)?.name ?? `Chain ${chainId}`) : undefined,
+      ],
     ]),
     openUrl: value,
     copyValue: recipient,
@@ -858,6 +1013,15 @@ function parseEmvPayment(value: string): ParsedScan | null {
         ["Expires", isoDate(template.get("04"))],
       ]);
     }
+    if (id === 29 && fields.get("58") === "KH" && gui.includes("@")) {
+      return result("khqr", name ?? gui, gui, [
+        ["Name", name],
+        ["Bakong ID", gui],
+        ["City", city],
+        ["Amount", amount],
+        ["Bill number", extra.get("01")],
+      ]);
+    }
     if (gui.toUpperCase() === PROMPTPAY_AID) {
       const mobile = template.get("01");
       const id = template.get("02");
@@ -946,6 +1110,257 @@ function parseCryptoUri(
     openUrl: value,
     copyValue: address,
   };
+}
+
+// ─── Payment standards added 2026-11-22 ─────────────────────────────────────
+
+/** "1949.75" with the currency, as the bill shows it. */
+const withCurrency = (currency: string | undefined, amount: string) =>
+  [currency, amount].filter(Boolean).join(" ");
+
+/**
+ * A Swiss QR-bill (SIX Swiss Payments Code): 31 lines up to EPD, then
+ * optional billing information. A trailing line break is tolerated, as the
+ * guidelines' own example images have one.
+ */
+function parseSwissQrBill(value: string): ParsedScan | null {
+  const lines = value.replace(/(\r?\n)+$/, "").split(/\r?\n/);
+  if (lines.length < 31 || lines[30]?.trim() !== "EPD") return null;
+  const line = (index: number) => lines[index]?.trim() || undefined;
+  const iban = line(3);
+  const name = line(5);
+  if (!iban || !name) return null;
+  const address = (start: number) =>
+    [
+      [line(start + 2), line(start + 3)].filter(Boolean).join(" "),
+      [line(start + 4), line(start + 5)].filter(Boolean).join(" "),
+      line(start + 6),
+    ]
+      .filter(Boolean)
+      .join(", ") || undefined;
+  const currency = line(19);
+  const rawAmount = line(18);
+  const amount = rawAmount ? withCurrency(currency, rawAmount) : undefined;
+  const debtor = line(21);
+  const type = line(27);
+  const reference = type === "NON" ? undefined : line(28);
+  return {
+    kind: "payment",
+    scheme: "swiss-qr-bill",
+    payee: name,
+    amount,
+    fields: compactFields([
+      ["Creditor", name],
+      ["Address", address(4)],
+      ["IBAN", iban],
+      [
+        "Amount",
+        amount ??
+          (currency ? `${currency}, payer enters the amount` : undefined),
+      ],
+      [type === "QRR" ? "QR reference" : "Reference", reference],
+      ["Message", line(29)],
+      [
+        "Payable by",
+        debtor ? [debtor, address(20)].filter(Boolean).join(", ") : undefined,
+      ],
+      ["Billing information", line(31)],
+    ]),
+    copyValue: iban,
+  };
+}
+
+/** A Czech QR Platba (SPD): KEY:value pairs after the header, "*"-separated. */
+function parseSpd(value: string): ParsedScan | null {
+  const pairs = new Map<string, string>();
+  for (const part of value.split("*").slice(2)) {
+    const colon = part.indexOf(":");
+    if (colon > 0)
+      pairs.set(
+        part.slice(0, colon).toUpperCase(),
+        decodeSafe(part.slice(colon + 1)),
+      );
+  }
+  const account = pairs.get("ACC")?.split("+")[0];
+  if (!account) return null;
+  const rawAmount = pairs.get("AM");
+  const amount = rawAmount
+    ? withCurrency(pairs.get("CC") ?? "CZK", rawAmount)
+    : undefined;
+  const due = pairs.get("DT");
+  return {
+    kind: "payment",
+    scheme: "czech-spd",
+    payee: pairs.get("RN") ?? account,
+    amount,
+    fields: compactFields([
+      ["Recipient", pairs.get("RN")],
+      ["IBAN", account],
+      ["Amount", amount],
+      ["Variable symbol", pairs.get("X-VS")],
+      ["Specific symbol", pairs.get("X-SS")],
+      ["Constant symbol", pairs.get("X-KS")],
+      ["Message", pairs.get("MSG")],
+      ["Due", due && /^\d{8}$/.test(due) ? isoDate(due) : due],
+      ["Instant payment", pairs.get("PT") === "IP" ? "Requested" : undefined],
+    ]),
+    copyValue: account,
+  };
+}
+
+function parseLightning(value: string): ParsedScan | null {
+  const request = lightningRequest(value);
+  if ("message" in request) return null;
+  const sats =
+    request.kind === "invoice" && request.msat !== undefined
+      ? `${(Number(request.msat) / 1000).toLocaleString("en-US")} sats`
+      : undefined;
+  return {
+    kind: "payment",
+    scheme: "lightning",
+    payee:
+      request.kind === "address"
+        ? request.address
+        : request.kind === "lnurl"
+          ? new URL(request.url).hostname
+          : "Lightning invoice",
+    amount: sats,
+    fields: compactFields([
+      [
+        "Request",
+        request.kind === "invoice"
+          ? "Invoice (BOLT 11)"
+          : request.kind === "lnurl"
+            ? "LNURL"
+            : "Lightning Address",
+      ],
+      [
+        "Lightning Address",
+        request.kind === "address" ? request.address : undefined,
+      ],
+      [
+        "Service",
+        request.kind === "lnurl" ? new URL(request.url).hostname : undefined,
+      ],
+      ["Amount", sats],
+    ]),
+    openUrl:
+      request.kind === "invoice"
+        ? `lightning:${request.invoice}`
+        : `lightning:${request.lnurl}`,
+    copyValue: request.kind === "invoice" ? request.invoice : request.lnurl,
+  };
+}
+
+function cryptoPayment(
+  scheme: PaymentScheme,
+  address: string,
+  amount: string | undefined,
+  entries: [string, string | undefined][],
+  openUrl?: string,
+): ParsedScan {
+  return {
+    kind: "payment",
+    scheme,
+    payee: address,
+    amount,
+    fields: compactFields([
+      ["Address", address],
+      ["Amount", amount],
+      ...entries,
+    ]),
+    ...(openUrl && { openUrl }),
+    copyValue: address,
+  };
+}
+
+function parseCardano(value: string): ParsedScan | null {
+  const [path = "", query = ""] = value.slice("web+cardano:".length).split("?");
+  if (!/^[a-z0-9_]{20,}$/i.test(path)) return null;
+  const amount = param(params(query), "amount");
+  return cryptoPayment(
+    "cardano",
+    path,
+    amount ? `${amount} ADA` : undefined,
+    [],
+    value,
+  );
+}
+
+function parseTon(value: string): ParsedScan | null {
+  const [path = "", query = ""] = value
+    .slice("ton://transfer/".length)
+    .split("?");
+  if (!path) return null;
+  const search = params(query);
+  const jetton = param(search, "jetton");
+  const raw = param(search, "amount");
+  const usdt = jetton === "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs";
+  const decimals = jetton ? (usdt ? 6 : null) : 9;
+  const amount =
+    raw && /^\d+$/.test(raw) && decimals !== null
+      ? `${formatUnits(raw, decimals)} ${usdt ? "USDT" : "TON"}`
+      : raw
+        ? `${raw} (token units)`
+        : undefined;
+  return cryptoPayment(
+    "ton",
+    decodeSafe(path),
+    amount,
+    [
+      ["Token", jetton ? (usdt ? "USDT" : jetton) : undefined],
+      ["Comment", param(search, "text")],
+    ],
+    value,
+  );
+}
+
+function parseStellar(value: string): ParsedScan | null {
+  const search = params(value.slice(value.indexOf("?") + 1));
+  const destination = param(search, "destination");
+  if (!value.includes("?") || !destination) return null;
+  const asset = param(search, "asset_code") ?? "XLM";
+  const amount = param(search, "amount");
+  return cryptoPayment(
+    "stellar",
+    destination,
+    amount ? `${amount} ${asset}` : undefined,
+    [
+      ["Asset issuer", param(search, "asset_issuer")],
+      ["Memo", param(search, "memo")],
+    ],
+    value,
+  );
+}
+
+/** Base units as a decimal ("5000", 6 → "0.005"). */
+function formatUnits(raw: string, decimals: number): string {
+  const padded = raw.padStart(decimals + 1, "0");
+  const whole = padded.slice(0, -decimals).replace(/^0+(?=\d)/, "");
+  const fraction = padded.slice(-decimals).replace(/0+$/, "");
+  return fraction ? `${whole}.${fraction}` : whole;
+}
+
+/** A bare XRP Ledger (r…, X…) or Tron (T…) address, checksum and all. */
+function parsePlainAddress(value: string): ParsedScan | null {
+  if (/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(value)) {
+    const payload = base58CheckDecode(value, XRPL_ALPHABET);
+    if (payload?.length === 21 && payload[0] === 0) {
+      return cryptoPayment("xrp", value, undefined, []);
+    }
+  }
+  if (/^X[1-9A-HJ-NP-Za-km-z]{46}$/.test(value)) {
+    const payload = base58CheckDecode(value, XRPL_ALPHABET);
+    if (payload?.length === 31 && payload[0] === 0x05 && payload[1] === 0x44) {
+      const tag =
+        payload[22] === 1
+          ? String(new DataView(payload.buffer).getUint32(23, true))
+          : undefined;
+      return cryptoPayment("xrp", value, undefined, [["Destination tag", tag]]);
+    }
+  }
+  if (isTronAddress(value)) return cryptoPayment("tron", value, undefined, []);
+  return null;
 }
 
 // ─── GS1 ─────────────────────────────────────────────────────────────────────
