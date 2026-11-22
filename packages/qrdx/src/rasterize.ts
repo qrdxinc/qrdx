@@ -203,8 +203,21 @@ export async function rasterizeSvgToPng(
   }
   // fitTo "original" (the default) renders at the SVG's own width and
   // height, so the PNG is exactly as large as the SVG markup says.
-  const rendered = new Resvg(svg).render();
+  const rendered = new Resvg(svg, {
+    font: { loadSystemFonts: svgNeedsFonts(svg) },
+  }).render();
   return new Uint8Array(rendered.asPng());
+}
+
+/**
+ * Whether drawing `svg` can need a font: it has text (a frame's label) or
+ * embeds an SVG image (a logo, which may have text of its own). resvg reads
+ * every system font each time it's created when asked to (about 50 ms on a
+ * Mac, the most of a plain code's render), and nothing else in a code needs
+ * them.
+ */
+export function svgNeedsFonts(svg: string): boolean {
+  return svg.includes("<text") || svg.includes("image/svg+xml");
 }
 
 const describeError = (error: unknown) =>
