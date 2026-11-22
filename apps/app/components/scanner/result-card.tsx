@@ -72,6 +72,17 @@ const PAYMENT_NAMES: Record<PaymentScheme, string> = {
   bitcoincash: "Bitcoin Cash",
   solana: "Solana Pay",
   monero: "Monero",
+  // Added 2026-11-22 (payments)
+  "swiss-qr-bill": "Swiss QR-bill",
+  "czech-spd": "QR Platba",
+  swish: "Swish",
+  khqr: "KHQR",
+  lightning: "Lightning",
+  xrp: "XRP",
+  cardano: "Cardano",
+  tron: "Tron",
+  ton: "TON",
+  stellar: "Stellar",
 };
 
 /** The copy button's label: scanner.result.<key>. */
@@ -92,6 +103,17 @@ const COPY_LABELS = {
   bitcoincash: "copyAddress",
   solana: "copyAddress",
   monero: "copyAddress",
+  // Added 2026-11-22 (payments)
+  "swiss-qr-bill": "copyIban",
+  "czech-spd": "copyIban",
+  swish: "copyNumber",
+  khqr: "copyAccount",
+  lightning: "copyText",
+  xrp: "copyAddress",
+  cardano: "copyAddress",
+  tron: "copyAddress",
+  ton: "copyAddress",
+  stellar: "copyAddress",
 } as const satisfies Record<PaymentScheme, string>;
 
 type Translate = ReturnType<typeof useTranslations<"scanner.result">>;
@@ -103,6 +125,10 @@ const BANK_APP_SCHEMES = new Set<PaymentScheme>([
   "promptpay",
   "vietqr",
   "emv",
+  // Added 2026-11-22 (payments)
+  "swiss-qr-bill",
+  "czech-spd",
+  "khqr",
 ]);
 
 /**

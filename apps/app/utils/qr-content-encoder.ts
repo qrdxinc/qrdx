@@ -54,20 +54,45 @@ import type {
   YouTubeContent,
   ZoomContent,
 } from "@/types/qr-content";
+import {
+  baseUnits,
+  cardanoIssue,
+  cryptoAmount,
+  encodeCardano,
+  encodeLightning,
+  encodeStellar,
+  encodeTon,
+  encodeTron,
+  encodeXrp,
+  evmNetwork,
+  isTokenContract,
+  lightningIssue,
+  SOLANA_TOKEN_MINTS,
+  STABLECOIN_DECIMALS,
+  stellarIssue,
+  tonIssue,
+  tronIssue,
+  xrpIssue,
+} from "./crypto-payments";
+import { czechSpdIssue, encodeCzechSpd } from "./czech-spd";
 // Added 2026-11-22 (payments)
 import { encodeMeCard, meCardIssue } from "./mecard";
 import {
+  encodeKhqr,
   encodePayNow,
   encodePix,
   encodePromptPay,
   encodeSepa,
   encodeVietQr,
+  khqrIssue,
   payNowIssue,
   pixIssue,
   promptPayIssue,
   sepaIssue,
   vietQrIssue,
 } from "./payment-qr-codes";
+import { encodeSwish, swishIssue } from "./swish";
+import { encodeSwissQrBill, swissQrBillContentIssue } from "./swiss-qr-bill";
 
 /** Largest payload a QR code holds (version 40-L, byte mode). */
 export const MAX_QR_PAYLOAD_BYTES = 2953;
@@ -677,6 +702,23 @@ export function encodeBitcoin(content: BitcoinContent): string {
 export function encodeEthereum(content: EthereumContent): string {
   const address = content.address?.trim();
   if (!address) return "";
+  // Added 2026-11-22 (payments): other EVM networks (@chainId) and
+  // stablecoins (/transfer to the token contract, amount in base units).
+  const network = evmNetwork(content.network);
+  if (!network) return "";
+  if (content.token) {
+    const contract = network.tokens[content.token];
+    if (!contract) return "";
+    const amount = content.amount?.trim()
+      ? cryptoAmount(content.amount, STABLECOIN_DECIMALS)
+      : null;
+    const tokenParams = [`address=${address}`];
+    if (amount) {
+      tokenParams.push(`uint256=${baseUnits(amount, STABLECOIN_DECIMALS)}`);
+    }
+    return `ethereum:${contract}@${network.chainId}/transfer?${tokenParams.join("&")}`;
+  }
+  const chain = network.chainId === "1" ? "" : `@${network.chainId}`;
 
   const params: string[] = [];
   if (content.amount?.trim()) {
@@ -691,7 +733,7 @@ export function encodeEthereum(content: EthereumContent): string {
   }
 
   const queryString = params.length > 0 ? `?${params.join("&")}` : "";
-  return `ethereum:${address}${queryString}`;
+  return `ethereum:${address}${chain}${queryString}`;
 }
 
 /**
@@ -1310,7 +1352,16 @@ export function cryptoIssue(
   if (!spec.address.test(cryptoAddress(content.type, content.address))) {
     return problem("address", `Enter a valid ${spec.name} address`);
   }
-  const amount = validateAmount(content.amount, spec.decimals, "Amount");
+  const picked = content.type === "solana" ? content.token : undefined;
+  const token = picked === "SOL" ? undefined : picked;
+  if (token && !(token in SOLANA_TOKEN_MINTS)) {
+    return problem("token", "Pick SOL, USDC or USDT");
+  }
+  const amount = validateAmount(
+    content.amount,
+    token ? STABLECOIN_DECIMALS : spec.decimals,
+    "Amount",
+  );
   return amount.valid
     ? null
     : problem("amount", amount.error ?? "Invalid amount");
@@ -1322,6 +1373,10 @@ export function encodeCrypto(content: CryptoContent): string {
   const params: string[] = [];
   if (content.amount?.trim()) {
     params.push(`${spec.params.amount}=${content.amount.trim()}`);
+  }
+  // Added 2026-11-22 (payments): Solana Pay's spl-token for USDC and USDT
+  if (content.type === "solana" && content.token && content.token !== "SOL") {
+    params.push(`spl-token=${SOLANA_TOKEN_MINTS[content.token]}`);
   }
   if (content.label?.trim()) {
     params.push(
@@ -1462,6 +1517,26 @@ export function encodeQRContent(content: QRContentConfig | null): string {
     // Added 2026-11-22 (payments)
     case "mecard":
       return encodeMeCard(content);
+    case "swiss-qr-bill":
+      return encodeSwissQrBill(content);
+    case "czech-spd":
+      return encodeCzechSpd(content);
+    case "swish":
+      return encodeSwish(content);
+    case "khqr":
+      return encodeKhqr(content);
+    case "lightning":
+      return encodeLightning(content);
+    case "xrp":
+      return encodeXrp(content);
+    case "cardano":
+      return encodeCardano(content);
+    case "tron":
+      return encodeTron(content);
+    case "ton":
+      return encodeTon(content);
+    case "stellar":
+      return encodeStellar(content);
     default:
       return "";
   }
@@ -1715,6 +1790,27 @@ function validateFields(content: QRContentConfig): Validation {
       if (!/^0x[a-fA-F0-9]{40}$/.test(content.address.trim())) {
         return { valid: false, error: "Invalid Ethereum address format" };
       }
+      // Added 2026-11-22 (payments)
+      {
+        const network = evmNetwork(content.network);
+        if (!network) return { valid: false, error: "Pick a network" };
+        if (isTokenContract(content.address)) {
+          return {
+            valid: false,
+            error:
+              "This is a token contract, not a wallet. Paste the address that receives the payment.",
+          };
+        }
+        if (content.token) {
+          if (!network.tokens[content.token]) {
+            return {
+              valid: false,
+              error: `${content.token} isn't issued on ${network.name} by its issuer. Pick another network.`,
+            };
+          }
+          return validateAmount(content.amount, STABLECOIN_DECIMALS, "Amount");
+        }
+      }
       // Wei in EIP-681 scientific notation ("1.5e18") is passed through.
       if (/^\d+(\.\d+)?e\d+$/i.test(content.amount?.trim() ?? "")) {
         return { valid: true };
@@ -1810,6 +1906,26 @@ function validateFields(content: QRContentConfig): Validation {
     // Added 2026-11-22 (payments)
     case "mecard":
       return fromIssue(meCardIssue(content));
+    case "swiss-qr-bill":
+      return fromIssue(swissQrBillContentIssue(content));
+    case "czech-spd":
+      return fromIssue(czechSpdIssue(content));
+    case "swish":
+      return fromIssue(swishIssue(content));
+    case "khqr":
+      return fromIssue(khqrIssue(content));
+    case "lightning":
+      return fromIssue(lightningIssue(content));
+    case "xrp":
+      return fromIssue(xrpIssue(content));
+    case "cardano":
+      return fromIssue(cardanoIssue(content));
+    case "tron":
+      return fromIssue(tronIssue(content));
+    case "ton":
+      return fromIssue(tonIssue(content));
+    case "stellar":
+      return fromIssue(stellarIssue(content));
 
     default:
       return { valid: false, error: "Unknown content type" };

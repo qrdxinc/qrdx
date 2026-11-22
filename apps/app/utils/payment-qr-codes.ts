@@ -6,6 +6,7 @@
 
 import { vietQrBank } from "@/lib/vietqr-banks";
 import type {
+  KhqrContent,
   PayNowContent,
   PixContent,
   PromptPayContent,
@@ -476,4 +477,131 @@ export function sepaIssue(content: Partial<SepaContent>): PaymentIssue | null {
 export function encodeSepa(content: SepaContent): string {
   if (sepaIssue(content)) return "";
   return buildEpcPayload(content);
+}
+
+// ─── Added 2026-11-22 (payments) ────────────────────────────────────────────
+
+// ─── KHQR (Cambodia, National Bank of Cambodia / Bakong), tag 29 ────────────
+// An individual's code: the person's own Bakong account ID in tag 29, as
+// NBC's KHQR Content Guideline (FAQ Q4) and its KHQR SDK describe. A code
+// with an amount is a dynamic KHQR: point of initiation 12 and tag 99 with
+// the creation time and an expiry, in milliseconds; Bakong refuses it once
+// it has expired, and refuses an amount without tag 99.
+
+/** NBC SDK limits: Bakong ID 32, name 25, city 15, additional data 25. */
+const KHQR_LIMITS = { bakongId: 32, name: 25, city: 15, extra: 25 } as const;
+
+/** NBC's default city for tag 60. */
+export const KHQR_DEFAULT_CITY = "Phnom Penh";
+
+const KHQR_CURRENCIES = { KHR: "116", USD: "840" } as const;
+
+/** The end of `raw` (YYYY-MM-DD) in Cambodia (UTC+7), in milliseconds. */
+function khqrExpiry(raw: string): number | null {
+  if (!compactDate(raw)) return null;
+  const [year, month, day] = raw.trim().split("-").map(Number) as [
+    number,
+    number,
+    number,
+  ];
+  return Date.UTC(year, month - 1, day, 23, 59, 59, 999) - 7 * 3_600_000;
+}
+
+export function khqrIssue(
+  content: Partial<KhqrContent>,
+  now = new Date(),
+): PaymentIssue | null {
+  const id = content.bakongId?.trim() ?? "";
+  if (!id) return issue("bakongId", "Bakong account ID is required");
+  if (!/^[^\s@]+@[^\s@]+$/.test(id) || id.length > KHQR_LIMITS.bakongId) {
+    return issue(
+      "bakongId",
+      "Bakong IDs look like name@bank, up to 32 characters",
+    );
+  }
+  const name = toEmvText(content.name ?? "");
+  if (!name) return issue("name", "Name is required");
+  if (name.length > KHQR_LIMITS.name) {
+    return issue("name", `Names are at most ${KHQR_LIMITS.name} characters`);
+  }
+  if (toEmvText(content.city ?? "").length > KHQR_LIMITS.city) {
+    return issue("city", `Cities are at most ${KHQR_LIMITS.city} characters`);
+  }
+  const usd = content.currency === "USD";
+  const amount = amountIssue(
+    content.amount,
+    usd ? 2 : 0,
+    usd ? "dollars" : "riel",
+  );
+  if (amount) return amount;
+  if (content.amount?.trim()) {
+    if (!content.expiry?.trim()) {
+      return issue(
+        "expiry",
+        "A KHQR code with an amount needs a day it expires",
+      );
+    }
+    const expiry = khqrExpiry(content.expiry);
+    if (expiry === null) return issue("expiry", "Pick the day it expires");
+    if (expiry <= now.getTime()) {
+      return issue("expiry", "The expiry date is in the past");
+    }
+  }
+  for (const field of ["billNumber", "mobile"] as const) {
+    if (toEmvText(content[field] ?? "").length > KHQR_LIMITS.extra) {
+      return issue(field, `At most ${KHQR_LIMITS.extra} characters`);
+    }
+  }
+  if (
+    content.mobile?.trim() &&
+    !/^\d{8,15}$/.test(content.mobile.replace(/[\s+-]/g, ""))
+  ) {
+    return issue(
+      "mobile",
+      "Enter the number with its country code, like 855 12 345 678",
+    );
+  }
+  return null;
+}
+
+/**
+ * A KHQR code to a Bakong account. With an amount, tag 99 holds the
+ * creation time (to the minute, so the code holds still while you type)
+ * and the end of the expiry day.
+ */
+export function encodeKhqr(content: KhqrContent, now = new Date()): string {
+  if (khqrIssue(content, now)) return "";
+  const usd = content.currency === "USD";
+  const amount = content.amount?.trim()
+    ? emvAmount(content.amount, usd ? 2 : 0)
+    : null;
+  const created = Math.floor(now.getTime() / 60_000) * 60_000;
+  const expiry = amount && content.expiry ? khqrExpiry(content.expiry) : null;
+  return buildEmvPayload([
+    FORMAT,
+    amount ? ONE_TIME_CODE : STATIC_CODE,
+    ["29", [["00", content.bakongId.trim()]]],
+    ["52", "5999"],
+    ["53", KHQR_CURRENCIES[usd ? "USD" : "KHR"]],
+    ["54", amount ?? ""],
+    ["58", "KH"],
+    ["59", toEmvText(content.name)],
+    ["60", toEmvText(content.city ?? "") || KHQR_DEFAULT_CITY],
+    [
+      "62",
+      [
+        ["01", toEmvText(content.billNumber ?? "")],
+        ["02", (content.mobile ?? "").replace(/[\s+-]/g, "")],
+      ],
+    ],
+    [
+      "99",
+      expiry
+        ? [
+            ["00", String(created)],
+            ["01", String(expiry)],
+          ]
+        : [],
+    ],
+  ]);
 }

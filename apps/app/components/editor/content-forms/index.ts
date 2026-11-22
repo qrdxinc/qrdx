@@ -39,12 +39,21 @@ export { MapsForm } from "./maps-form";
 // Added 2026-11-22 (payments)
 export { MeCardForm } from "./mecard-form";
 export {
+  CardanoForm,
+  LightningForm,
+  StellarForm,
+  TonForm,
+  TronForm,
+  XrpForm,
+} from "./more-crypto-forms";
+export {
   PayNowForm,
   PixForm,
   PromptPayForm,
   SepaForm,
   VietQrForm,
 } from "./payment-forms";
+export { CzechSpdForm, KhqrForm, SwishForm } from "./payment-standards-forms";
 export { PayPalForm } from "./paypal-form";
 export { PhoneForm } from "./phone-form";
 export { PinterestForm } from "./pinterest-form";
@@ -52,6 +61,7 @@ export { RedditForm } from "./reddit-form";
 export { SmsForm } from "./sms-form";
 export { SnapchatForm } from "./snapchat-form";
 export { SpotifyForm } from "./spotify-form";
+export { SwissQrBillForm } from "./swiss-qr-bill-form";
 export { TextForm } from "./text-form";
 export { ThreadsForm } from "./threads-form";
 export { TikTokForm } from "./tiktok-form";

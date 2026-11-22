@@ -49,6 +49,8 @@ export const DYNAMIC_CONTENT_TYPES = [
   "waze",
   "cashapp",
   "revolut",
+  // Added 2026-11-22 (payments): a Swish code is an app.swish.nu link
+  "swish",
 ] as const satisfies readonly ContentType[];
 
 export type DynamicContentType = (typeof DYNAMIC_CONTENT_TYPES)[number];
@@ -84,6 +86,15 @@ export const STATIC_ONLY_TYPES = [
   "monero",
   // Added 2026-11-22 (payments)
   "mecard",
+  "swiss-qr-bill",
+  "czech-spd",
+  "khqr",
+  "lightning",
+  "xrp",
+  "cardano",
+  "tron",
+  "ton",
+  "stellar",
 ] as const satisfies readonly ContentType[];
 
 /**

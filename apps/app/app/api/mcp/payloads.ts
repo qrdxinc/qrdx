@@ -372,6 +372,17 @@ export const PAYMENT_SCHEMES = [
   "paynow",
   "promptpay",
   "vietqr",
+  // Added 2026-11-22 (payments)
+  "swiss-qr-bill",
+  "czech-spd",
+  "swish",
+  "khqr",
+  "lightning",
+  "xrp",
+  "cardano",
+  "tron",
+  "ton",
+  "stellar",
 ] as const;
 
 const optionalField = (description: string) =>
@@ -381,22 +392,24 @@ export const paymentPayloadSchema = z.object({
   scheme: z
     .enum(PAYMENT_SCHEMES)
     .describe(
-      "pix (Brazil), sepa (euro credit transfer, EPC069-12), paynow (Singapore), promptpay (Thailand) or vietqr (Vietnam)",
+      "pix (Brazil), sepa (euro credit transfer, EPC069-12), paynow (Singapore), promptpay (Thailand), vietqr (Vietnam), swiss-qr-bill (Swiss QR-bill, SPC 0200), czech-spd (Czech QR Platba), swish (Sweden), khqr (Cambodia, Bakong), or a crypto request: lightning (BOLT 11 invoice, LNURL or Lightning Address), xrp, cardano (CIP-13), tron (plain address), ton, stellar (SEP-0007)",
     ),
   name: optionalField(
-    "pix: receiver name (required, up to 25 characters); sepa: beneficiary name (required); paynow: name shown to the payer",
+    "pix: receiver name (required, up to 25 characters); sepa: beneficiary name (required); paynow: name shown to the payer; swiss-qr-bill: creditor name (required); czech-spd: recipient name; khqr: account holder's name (required)",
   ),
   amount: optionalField(
-    "Amount in the scheme's currency (BRL, EUR, SGD, THB, or whole VND). Leave out to let the payer choose.",
+    "Amount in the scheme's currency (BRL, EUR, SGD, THB, whole VND, CHF/EUR, CZK, SEK, KHR/USD) or coin (ADA, TON or USDT, XLM or USDC). Leave out to let the payer choose.",
   ),
   pixKey: optionalField("pix: CPF, CNPJ, +55 phone, email or random key"),
-  city: optionalField("pix: receiver city, up to 15 characters"),
+  city: optionalField(
+    "pix: receiver city, up to 15 characters; khqr: city (default Phnom Penh)",
+  ),
   txid: optionalField("pix: transaction ID, up to 25 letters and digits"),
   message: optionalField("pix or vietqr: message for the payer"),
-  iban: optionalField("sepa: IBAN"),
+  iban: optionalField("sepa: IBAN; swiss-qr-bill: CH or LI IBAN or QR-IBAN"),
   bic: optionalField("sepa: BIC, optional inside the EEA"),
   reference: optionalField(
-    "sepa: structured RF creditor reference; paynow: bill reference",
+    "sepa: structured RF creditor reference; paynow: bill reference; swiss-qr-bill: QR reference (QR-IBAN) or RF creditor reference (IBAN)",
   ),
   remittance: optionalField(
     "sepa: payment reference text, up to 140 characters (not with reference)",
@@ -412,13 +425,79 @@ export const paymentPayloadSchema = z.object({
     .boolean()
     .optional()
     .describe("paynow: whether the payer may change the amount (default true)"),
-  expiry: optionalField("paynow: last day the code works, YYYY-MM-DD"),
+  expiry: optionalField(
+    "paynow: last day the code works; khqr: required with an amount. YYYY-MM-DD",
+  ),
   bankBin: optionalField("vietqr: the bank's 6-digit BIN"),
   accountType: z
     .enum(["account", "card"])
     .optional()
     .describe("vietqr: account (default) or card"),
   accountNumber: optionalField("vietqr: account or card number"),
+  // Added 2026-11-22 (payments)
+  street: optionalField("swiss-qr-bill: creditor street"),
+  buildingNumber: optionalField("swiss-qr-bill: creditor building number"),
+  postalCode: optionalField("swiss-qr-bill: creditor postcode (required)"),
+  town: optionalField("swiss-qr-bill: creditor town (required)"),
+  country: optionalField(
+    "swiss-qr-bill: creditor 2-letter country code, e.g. CH (required)",
+  ),
+  currency: z
+    .enum(["CHF", "EUR", "KHR", "USD"])
+    .optional()
+    .describe(
+      "swiss-qr-bill: CHF (default) or EUR; khqr: KHR (default) or USD",
+    ),
+  billingInfo: optionalField(
+    "swiss-qr-bill: structured billing information, //S1/…",
+  ),
+  payableBy: z
+    .boolean()
+    .optional()
+    .describe("swiss-qr-bill: true to name the payer in the debtor* fields"),
+  debtorName: optionalField("swiss-qr-bill: payer's name"),
+  debtorStreet: optionalField("swiss-qr-bill: payer's street"),
+  debtorBuildingNumber: optionalField("swiss-qr-bill: payer's building number"),
+  debtorPostalCode: optionalField("swiss-qr-bill: payer's postcode"),
+  debtorTown: optionalField("swiss-qr-bill: payer's town"),
+  debtorCountry: optionalField("swiss-qr-bill: payer's 2-letter country code"),
+  account: optionalField(
+    "czech-spd: Czech IBAN or account number like 19-2000145399/0800",
+  ),
+  variableSymbol: optionalField("czech-spd: variable symbol, up to 10 digits"),
+  specificSymbol: optionalField("czech-spd: specific symbol, up to 10 digits"),
+  constantSymbol: optionalField("czech-spd: constant symbol, up to 10 digits"),
+  dueDate: optionalField("czech-spd: due date, YYYY-MM-DD"),
+  instant: z
+    .boolean()
+    .optional()
+    .describe("czech-spd: ask for an instant payment (PT:IP)"),
+  payee: optionalField("swish: Swedish mobile number or 123 business number"),
+  amountEditable: z
+    .boolean()
+    .optional()
+    .describe("swish: whether the payer may change the amount"),
+  messageEditable: z
+    .boolean()
+    .optional()
+    .describe("swish: whether the payer may change the message"),
+  bakongId: optionalField("khqr: Bakong account ID, name@bank"),
+  billNumber: optionalField("khqr: bill number"),
+  mobile: optionalField("khqr: mobile number with country code"),
+  request: optionalField(
+    "lightning: a BOLT 11 invoice (lnbc…), an LNURL (lnurl1…) or a Lightning Address (name@domain)",
+  ),
+  address: optionalField(
+    "xrp, cardano, tron, ton, stellar: the wallet address",
+  ),
+  destinationTag: optionalField(
+    "xrp: destination tag (the code then holds an X-address)",
+  ),
+  memo: optionalField("stellar: text memo, up to 28 bytes"),
+  token: z
+    .enum(["TON", "USDT", "XLM", "USDC"])
+    .optional()
+    .describe("ton: TON (default) or USDT; stellar: XLM (default) or USDC"),
 });
 
 export type PaymentPayloadResult =

@@ -188,9 +188,9 @@ export const MCP_TOOLS: {
   },
   {
     name: "qr_payload_payment",
-    title: "Bank payment",
+    title: "Payment",
     description:
-      "A Pix, SEPA transfer, PayNow, PromptPay or VietQR payment code, checked like the playground's forms.",
+      "A Pix, SEPA, Swiss QR-bill, QR Platba, Swish, PayNow, PromptPay, VietQR or KHQR payment code, or a Lightning, XRP, Cardano, Tron, TON or Stellar request, checked like the playground's forms.",
     icon: Bank,
   },
 ];
