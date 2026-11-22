@@ -29,6 +29,13 @@ export const POPULAR_BRAND_GROUPS: readonly BrandGroup[] = [
       "mastodon",
       "tumblr",
       "github",
+      // Added 2026-11-22 (links)
+      "vk",
+      "sinaweibo",
+      "medium",
+      "substack",
+      "linktree",
+      "patreon",
     ],
   },
   {
@@ -68,7 +75,14 @@ export const POPULAR_BRAND_GROUPS: readonly BrandGroup[] = [
   {
     id: "maps",
     label: "Maps and travel",
-    slugs: ["googlemaps", "waze", "openstreetmap", "uber", "airbnb"],
+    slugs: [
+      "googlemaps",
+      "waze",
+      "openstreetmap",
+      "uber",
+      "airbnb",
+      "bookingdotcom",
+    ],
   },
   {
     id: "music",

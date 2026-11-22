@@ -33,6 +33,7 @@ import {
   InstagramForm,
   KhqrForm,
   LightningForm,
+  LINK_TYPE_FORM_COMPONENTS,
   LineForm,
   LinkedInForm,
   LitecoinForm,
@@ -159,6 +160,8 @@ export const FORMS: Record<ContentType, React.ComponentType> = {
   tron: TronForm,
   ton: TonForm,
   stellar: StellarForm,
+  // Added 2026-11-22 (links)
+  ...LINK_TYPE_FORM_COMPONENTS,
 };
 
 const QUICK_STYLE_COUNT = 8;

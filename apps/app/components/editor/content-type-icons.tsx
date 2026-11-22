@@ -5,6 +5,7 @@ import { cn } from "@repo/design-system/lib/utils";
 import {
   Bag2,
   Bank,
+  Brush2,
   Call,
   CardReceive,
   CardSend,
@@ -21,15 +22,20 @@ import {
   Mobile,
   MoneyRecive,
   MoneySend,
+  MusicPlay,
+  MusicSquare,
+  People,
   Personalcard,
   ReceiptText,
   Shop,
   ShoppingCart,
   Sms,
+  Task,
   TaskSquare,
   Text,
   UserSquare,
   Wallet2,
+  Video,
   WalletMoney,
   Wifi,
 } from "iconsax-reactjs";
@@ -82,6 +88,13 @@ const ICONS: Record<string, AnyIcon> = {
   Flash,
   Coin,
   Diamonds,
+  // Added 2026-11-22 (links)
+  Brush2,
+  MusicPlay,
+  MusicSquare,
+  People,
+  Task,
+  Video,
   ...Object.fromEntries(
     Object.entries(CONTENT_TYPE_BRANDS).map(([type, slug]) => [
       `brand:${type}`,
