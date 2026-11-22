@@ -12,6 +12,7 @@ import {
   type UIMessageStreamWriter,
 } from "ai";
 import type { ScanGrade } from "qrdx";
+import { customFrameSchema } from "qrdx/types";
 import z from "zod";
 import { textProviderOptions } from "@/lib/ai/models";
 import { languageModel } from "@/lib/ai/providers";
@@ -206,11 +207,20 @@ export class DesignRegistry {
             )
           : null;
         if (content && !content.ok) continue;
+        // A design that keeps the user's own frame keeps the one it was
+        // drawn and scored with, even if the editor's frame changed since
+        const drawn =
+          style.data.frame.style === "keep"
+            ? customFrameSchema.safeParse(output.themeStyles?.frame)
+            : null;
         registry.add({
           ...output,
           designId: part.toolCallId,
           style: style.data,
-          themeStyles: toThemeStyles(style.data, sources),
+          themeStyles: toThemeStyles(
+            style.data,
+            drawn?.success ? { ...sources, ownFrame: drawn.data } : sources,
+          ),
           content: content?.ok
             ? {
                 config: content.content,

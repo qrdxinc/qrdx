@@ -484,3 +484,57 @@ describe("the editor context the chat starts from", () => {
     expect(told).toContain('"halo"');
   });
 });
+
+describe("designs from earlier in the chat", () => {
+  it("keep the user's own frame they were drawn with", async () => {
+    const { DesignRegistry } = await import("@/lib/ai/agent/tools");
+    const drawnFrame = {
+      style: "custom" as const,
+      spec: CUP.spec,
+      text: "Then",
+    };
+    const nowFrame = {
+      style: "custom" as const,
+      spec: { ...CUP.spec, name: "Changed since" },
+      text: "Now",
+    };
+    const style: DesignStyle = { ...CLASSIC_STYLE, frame: { style: "keep" } };
+    const output = {
+      ok: true,
+      designId: "call_design",
+      content: null,
+      value: "https://qrdx.dev",
+      scoredWithSample: false,
+      style,
+      themeStyles: { ...toThemeStyles(style), frame: drawnFrame },
+      logo: { showLogo: false },
+      score: 92,
+      grade: "great",
+      failed: [],
+      repairs: 0,
+      fellBack: false,
+      changes: [],
+      attempts: [],
+      replacesArt: false,
+    };
+    const registry = DesignRegistry.fromMessages(
+      [
+        {
+          id: "a1",
+          role: "assistant",
+          parts: [
+            {
+              type: "tool-design_qr",
+              toolCallId: "call_design",
+              state: "output-available",
+              input: {},
+              output,
+            },
+          ],
+        },
+      ] as never,
+      { ...OFFICIAL_FRAME_SOURCES, ownFrame: nowFrame as never },
+    );
+    expect(registry.get("call_design")?.themeStyles.frame).toEqual(drawnFrame);
+  });
+});
