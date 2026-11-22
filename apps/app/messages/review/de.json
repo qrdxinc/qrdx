@@ -2383,6 +2383,14 @@
     "source": "9eb7c5a18750",
     "status": "machine"
   },
+  "common.newTag": {
+    "source": "18fdd549b2ed",
+    "status": "machine"
+  },
+  "common.nameIsNew": {
+    "source": "5e8fa69db88d",
+    "status": "machine"
+  },
   "pageCodes.sampleNote": {
     "source": "8782e3777191",
     "status": "machine"
@@ -3317,6 +3325,10 @@
   },
   "tools.bulk.generator.formatWebp": {
     "source": "26c45e0d2238",
+    "status": "machine"
+  },
+  "tools.bulk.generator.formatGif": {
+    "source": "476c5c42e559",
     "status": "machine"
   },
   "tools.bulk.generator.formatBmp": {
@@ -10135,6 +10147,10 @@
     "source": "40df8db3f859",
     "status": "machine"
   },
+  "editor.actionBar.downloadDialog.gifWouldNotScan": {
+    "source": "33cdc0a0a3d2",
+    "status": "machine"
+  },
   "editor.actionBar.downloadDialog.moreFormats": {
     "source": "b83931930ce6",
     "status": "machine"
@@ -10217,6 +10233,10 @@
   },
   "editor.actionBar.downloadDialog.formatHints.webp": {
     "source": "4e898f2a82cf",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.formatHints.gif": {
+    "source": "ac8dc90826f1",
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.bmp": {
@@ -13491,6 +13511,14 @@
     "source": "f5a57b969150",
     "status": "machine"
   },
+  "editor.controlSections.eyeColorsSection.eyesContinueTheCodes": {
+    "source": "b09801e9bf96",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeColorsSection.offEachEyeSweeps": {
+    "source": "38436b7b1001",
+    "status": "machine"
+  },
   "editor.controlSections.frameControls.uploadSvg": {
     "source": "25be4dcf4b6f",
     "status": "machine"
@@ -13709,6 +13737,26 @@
   },
   "editor.controlSections.logoControls.failedToReadLogoFile": {
     "source": "ff84c0e7b80c",
+    "status": "machine"
+  },
+  "editor.controlSections.logoControls.brandCount": {
+    "source": "8094ffe0398d",
+    "status": "machine"
+  },
+  "editor.controlSections.logoControls.iconName": {
+    "source": "73fc0acf6fdf",
+    "status": "machine"
+  },
+  "editor.controlSections.logoControls.brandName": {
+    "source": "f555df26a5ec",
+    "status": "machine"
+  },
+  "editor.controlSections.logoControls.yourLogo": {
+    "source": "4258df88ded1",
+    "status": "machine"
+  },
+  "editor.controlSections.logoControls.qrdxLogo": {
+    "source": "f1ad58e5b03b",
     "status": "machine"
   },
   "editor.controlSections.logoCropControls.shape": {
@@ -14019,6 +14067,174 @@
     "source": "6301612e18a5",
     "status": "machine"
   },
+  "editor.controlSections.eyeShapesSection.eyeShapes": {
+    "source": "e1730844a558",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.sameForAll": {
+    "source": "6bd067dacf3c",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.giveEachCornerEyeIts": {
+    "source": "5dc1d23bd8f6",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.whichEye": {
+    "source": "04ee87f75842",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.frame": {
+    "source": "d0b50e064a4f",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.center": {
+    "source": "d946067427e9",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.frameShapes": {
+    "source": "082af67c294a",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.centerShapes": {
+    "source": "d71333620b9c",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.useTheSameShapesFor": {
+    "source": "aac7281e4905",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.positions.topLeft": {
+    "source": "a0eda50fb155",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.positions.topRight": {
+    "source": "d83cbef9db1b",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeShapesSection.positions.bottomLeft": {
+    "source": "f5a57b969150",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.roundedCorners": {
+    "source": "80ed131a45e4",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.square": {
+    "source": "c11092bc0861",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.cornerRadius": {
+    "source": "76a6d9f3d7a7",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.roundTheBackgroundsCorners": {
+    "source": "042d93c37957",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.upToMaxpercentWithThis": {
+    "source": "26c3e5e20c21",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.addPaddingToRound": {
+    "source": "acc22211e24e",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.aShapedCodeHasIts": {
+    "source": "7aa169e52c72",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.colorAroundIt": {
+    "source": "389f44b848de",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.backdrop": {
+    "source": "79ecdd79912a",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.seeThroughOutsideThe": {
+    "source": "a33829e8d7de",
+    "status": "machine"
+  },
+  "editor.controlSections.cornersSection.inAFrameTheFrame": {
+    "source": "15d6845a630a",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.halo": {
+    "source": "4e86512d9a0a",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.off": {
+    "source": "ca7981b46ecf",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.showAHalo": {
+    "source": "590a50c0c950",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.aLightRimAround": {
+    "source": "c6b837a5f44a",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.width": {
+    "source": "3019947b6daf",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.color": {
+    "source": "6b73191a0a4b",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.drawnAs": {
+    "source": "b47bd76a2abb",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.tintsOfYourDots": {
+    "source": "27288eaa1114",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.seeThroughBackground": {
+    "source": "21a1a7bc0361",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.pictureBackground": {
+    "source": "35a36dc30bcd",
+    "status": "machine"
+  },
+  "editor.controlSections.haloSection.darkBackground": {
+    "source": "0402d9d5a311",
+    "status": "machine"
+  },
+  "editor.controlSections.shadowSection.shadow": {
+    "source": "4c764cb6248e",
+    "status": "machine"
+  },
+  "editor.controlSections.shadowSection.off": {
+    "source": "ca7981b46ecf",
+    "status": "machine"
+  },
+  "editor.controlSections.shadowSection.showAShadow": {
+    "source": "a0d5352a676c",
+    "status": "machine"
+  },
+  "editor.controlSections.shadowSection.aSeeThroughCopy": {
+    "source": "59569e38038b",
+    "status": "machine"
+  },
+  "editor.controlSections.shadowSection.across": {
+    "source": "fb3b7e31308a",
+    "status": "machine"
+  },
+  "editor.controlSections.shadowSection.down": {
+    "source": "b86d11af7918",
+    "status": "machine"
+  },
+  "editor.controlSections.shadowSection.opacity": {
+    "source": "6062652e10dd",
+    "status": "machine"
+  },
+  "editor.controlSections.shadowSection.color": {
+    "source": "6b73191a0a4b",
+    "status": "machine"
+  },
   "editor.customTextarea.thePastedContentWouldExceed": {
     "source": "ad578683469b",
     "status": "machine"
@@ -14251,6 +14467,10 @@
     "source": "84853fb7f0ef",
     "status": "machine"
   },
+  "editor.partInline.parts.eyes.name": {
+    "source": "a39e9d9816a9",
+    "status": "machine"
+  },
   "editor.partInline.parts.eyes.edit": {
     "source": "691e8fbf5f47",
     "status": "machine"
@@ -14265,6 +14485,10 @@
   },
   "editor.partInline.parts.eyes.more": {
     "source": "2cfe63824ded",
+    "status": "machine"
+  },
+  "editor.partInline.parts.dots.name": {
+    "source": "6de335fa213a",
     "status": "machine"
   },
   "editor.partInline.parts.dots.edit": {
@@ -14283,6 +14507,10 @@
     "source": "fdb192df70c2",
     "status": "machine"
   },
+  "editor.partInline.parts.logo.name": {
+    "source": "d707dc2f1936",
+    "status": "machine"
+  },
   "editor.partInline.parts.logo.edit": {
     "source": "134a1450f00b",
     "status": "machine"
@@ -14297,6 +14525,10 @@
   },
   "editor.partInline.parts.logo.more": {
     "source": "530b7838757e",
+    "status": "machine"
+  },
+  "editor.partInline.parts.background.name": {
+    "source": "ea2b8a878841",
     "status": "machine"
   },
   "editor.partInline.parts.background.edit": {
@@ -14319,6 +14551,10 @@
     "source": "0f6d760059b8",
     "status": "machine"
   },
+  "editor.partInline.parts.frame.name": {
+    "source": "d0b50e064a4f",
+    "status": "machine"
+  },
   "editor.partInline.parts.frame.edit": {
     "source": "83af8e9e4bf6",
     "status": "machine"
@@ -14333,6 +14569,14 @@
   },
   "editor.partInline.parts.frame.more": {
     "source": "84853fb7f0ef",
+    "status": "machine"
+  },
+  "editor.partInline.items.eyeShape": {
+    "source": "91fdde7855f2",
+    "status": "machine"
+  },
+  "editor.partInline.items.thisEyesShape": {
+    "source": "534aee3a1158",
     "status": "machine"
   },
   "editor.partInline.items.eyeColor": {
@@ -14355,6 +14599,14 @@
     "source": "97c5bc43ff30",
     "status": "machine"
   },
+  "editor.partInline.items.halo": {
+    "source": "4e86512d9a0a",
+    "status": "machine"
+  },
+  "editor.partInline.items.shadow": {
+    "source": "4c764cb6248e",
+    "status": "machine"
+  },
   "editor.partInline.items.logo": {
     "source": "d707dc2f1936",
     "status": "machine"
@@ -14367,6 +14619,10 @@
     "source": "1483ec4e73dc",
     "status": "machine"
   },
+  "editor.partInline.items.logoPosition": {
+    "source": "c9d7eaaaa0ed",
+    "status": "machine"
+  },
   "editor.partInline.items.hideLogo": {
     "source": "4b2d07b23ba4",
     "status": "machine"
@@ -14375,8 +14631,28 @@
     "source": "3e314dafdf7c",
     "status": "machine"
   },
+  "editor.partInline.items.palettes": {
+    "source": "bb4958e76710",
+    "status": "machine"
+  },
+  "editor.partInline.items.paddingAndCorners": {
+    "source": "aa5659d41199",
+    "status": "machine"
+  },
+  "editor.partInline.items.roundedCorners": {
+    "source": "80ed131a45e4",
+    "status": "machine"
+  },
   "editor.partInline.items.frameStyle": {
     "source": "84b161a43043",
+    "status": "machine"
+  },
+  "editor.partInline.items.frameTextAndColors": {
+    "source": "4f2b7cc781e6",
+    "status": "machine"
+  },
+  "editor.partInline.items.frame": {
+    "source": "d0b50e064a4f",
     "status": "machine"
   },
   "editor.partInline.items.whichEyes": {
@@ -14407,6 +14683,10 @@
     "source": "a4e225b42367",
     "status": "machine"
   },
+  "editor.partInline.items.eyesWithTheirOwnShape": {
+    "source": "09d82e010c54",
+    "status": "machine"
+  },
   "editor.partInline.items.logoShapeAndPlate": {
     "source": "848f74c90181",
     "status": "machine"
@@ -14435,8 +14715,12 @@
     "source": "bc79cdffbaa8",
     "status": "machine"
   },
+  "editor.partInline.labelWontScanHere": {
+    "source": "ee6297fec668",
+    "status": "machine"
+  },
   "editor.partInline.sheet.changesShowOnTheCode": {
-    "source": "83ba360b3742",
+    "source": "4cce31fc797f",
     "status": "machine"
   },
   "editor.partInline.sheet.done": {
@@ -14479,6 +14763,10 @@
     "source": "c11092bc0861",
     "status": "machine"
   },
+  "editor.partInline.codeShape.aShapeTakesThePlace": {
+    "source": "a93dd13a91ed",
+    "status": "machine"
+  },
   "editor.partInline.errorCorrection.theLogoRaisesItToLevel": {
     "source": "b84208d7c5bf",
     "status": "machine"
@@ -14513,6 +14801,10 @@
   },
   "editor.partInline.drop.dropToUseAsLogo": {
     "source": "18b3a562cd9e",
+    "status": "machine"
+  },
+  "editor.partInline.labelWithValue": {
+    "source": "d8f774d5db12",
     "status": "machine"
   },
   "editor.gradientPicker.pickASolidColorA": {
@@ -22547,6 +22839,10 @@
     "source": "91aec62280a3",
     "status": "machine"
   },
+  "app.dashboard.codes.codeActionsMenu.downloadGif": {
+    "source": "73eab5c4bde9",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeActionsMenu.downloadBmp": {
     "source": "26b25903a21b",
     "status": "machine"
@@ -22651,6 +22947,10 @@
     "source": "9c439f0b9166",
     "status": "machine"
   },
+  "app.dashboard.codes.codeActionsMenu.gifWouldNotScan": {
+    "source": "33cdc0a0a3d2",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeActionsMenu.downloadFailedPleaseTryAgain": {
     "source": "d2bde7afd757",
     "status": "machine"
@@ -22753,6 +23053,10 @@
   },
   "app.dashboard.codes.codeQr.moreFormats": {
     "source": "d47d7cb0e4f8",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codeQr.gifWouldNotScan": {
+    "source": "33cdc0a0a3d2",
     "status": "machine"
   },
   "app.dashboard.codes.codeQr.downloadFailedPleaseTryAgain": {
@@ -22889,6 +23193,10 @@
   },
   "app.dashboard.codes.codesList.webpImagesZip": {
     "source": "1c37287e8efb",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codesList.gifImagesZip": {
+    "source": "862a7168ea1b",
     "status": "machine"
   },
   "app.dashboard.codes.codesList.bmpImagesZip": {

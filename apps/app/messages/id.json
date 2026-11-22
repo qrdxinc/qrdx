@@ -889,7 +889,9 @@
     "seeAll": "Lihat semua",
     "faq": "FAQ",
     "designFree": "Desain kode QR gratis",
-    "createDynamic": "Buat kode QR dinamis"
+    "createDynamic": "Buat kode QR dinamis",
+    "newTag": "Baru",
+    "nameIsNew": "{name}, baru"
   },
   "pageCodes": {
     "sampleNote": "Contoh dalam tema bawaan. Setiap kode dapat dipindai, dan tidak ada yang mengarah ke akun sungguhan.",
@@ -1188,6 +1190,7 @@
         "format": "Format",
         "formatPng": "PNG (gambar)",
         "formatWebp": "WebP (gambar, lebih kecil)",
+        "formatGif": "GIF (gambar, 256 warna)",
         "formatBmp": "BMP (gambar, tidak terkompresi)",
         "formatIco": "ICO (favicon, 16 hingga 256 px)",
         "formatSvg": "SVG (vektor, untuk cetak)",
@@ -3430,6 +3433,7 @@
         "pdfAndEpsDrawEvery": "PDF dan EPS menggambar setiap titik sebagai bentuk vektor dan mempertahankan gradasi linear dan radial sebagai shading vektor yang halus.",
         "jpgCantBeTransparent": "JPG tidak bisa transparan",
         "bmpCantBeTransparent": "BMP tidak mendukung transparansi: latar belakang akan menjadi putih",
+        "gifWouldNotScan": "GIF hanya mendukung 256 warna, sedangkan desain ini membutuhkan lebih banyak: jika dikurangi menjadi 256, kode tidak akan bisa dipindai lagi. Unduh PNG sebagai gantinya.",
         "moreFormats": "Format lainnya",
         "vector": " · vektor",
         "anySize": "Ukuran bebas",
@@ -3452,6 +3456,7 @@
           "png": "Terbaik untuk web, dokumen, dan slide.",
           "jpg": "Terbaik untuk email dan file berukuran kecil.",
           "webp": "Terbaik untuk situs web yang cepat dimuat · lossless, biasanya lebih kecil dari PNG.",
+          "gif": "Paling cocok untuk alat lama dan pembuat email yang hanya menerima GIF · maksimal 256 warna, salah satunya bisa transparan.",
           "bmp": "Cocok untuk sistem lama dan alat tertanam yang hanya menerima BMP · 24-bit tanpa kompresi, latar belakang transparan akan menjadi putih.",
           "ico": "Terbaik untuk favicon · satu file berisi gambar 16, 32, 48, dan 256 px. Ukuran kecil untuk ikon, bukan untuk pemindaian.",
           "svg": "Terbaik untuk Figma, Illustrator, dan situs web · tetap tajam di ukuran berapa pun.",
@@ -4490,7 +4495,9 @@
           "topLeft": "Kiri atas",
           "topRight": "Kanan atas",
           "bottomLeft": "Kiri bawah"
-        }
+        },
+        "eyesContinueTheCodes": "Mata melanjutkan gradasi kode",
+        "offEachEyeSweeps": "Jika nonaktif, setiap mata memiliki gradasi sendiri. Jika aktif, gradasi mata membentang di seluruh kode, sehingga mata yang diwarnai seperti titik akan menyambung dengannya."
       },
       "frameControls": {
         "uploadSvg": "Unggah SVG",
@@ -4561,7 +4568,12 @@
         "logosMustBeValueMb": "Ukuran logo maksimal {value, number}MB.",
         "unsupportedLogoFormat": "Format logo tidak didukung",
         "logoIsTooLarge": "Logo terlalu besar",
-        "failedToReadLogoFile": "Gagal membaca file logo"
+        "failedToReadLogoFile": "Gagal membaca file logo",
+        "brandCount": "{count, number} merek",
+        "iconName": "Ikon {name}",
+        "brandName": "Logo {name}",
+        "yourLogo": "Logo Anda",
+        "qrdxLogo": "Logo QRdx"
       },
       "logoCropControls": {
         "shape": "Bentuk",
@@ -4659,6 +4671,58 @@
       },
       "sidePanel": {
         "closeTitle": "Tutup {title}"
+      },
+      "eyeShapesSection": {
+        "eyeShapes": "Bentuk mata",
+        "sameForAll": "Sama untuk semua",
+        "giveEachCornerEyeIts": "Beri setiap mata sudut bingkai dan bentuk tengahnya sendiri. Mata yang tidak diubah memakai bentuk mata umum.",
+        "whichEye": "Pilih mata",
+        "frame": "Bingkai",
+        "center": "Tengah",
+        "frameShapes": "bentuk bingkai",
+        "centerShapes": "bentuk tengah",
+        "useTheSameShapesFor": "Gunakan bentuk yang sama untuk semua mata",
+        "positions": {
+          "topLeft": "Kiri atas",
+          "topRight": "Kanan atas",
+          "bottomLeft": "Kiri bawah"
+        }
+      },
+      "cornersSection": {
+        "roundedCorners": "Sudut membulat",
+        "square": "Persegi",
+        "cornerRadius": "Radius sudut",
+        "roundTheBackgroundsCorners": "Bulatkan sudut latar belakang. Kode tetap mempertahankan padding di dalamnya.",
+        "upToMaxpercentWithThis": "Hingga {maxPercent, number}% dengan padding ini: tambahkan padding agar sudut lebih membulat.",
+        "addPaddingToRound": "Tambahkan padding untuk membulatkan sudut: sudut kode membutuhkan zona tenang.",
+        "aShapedCodeHasIts": "Kode berbentuk khusus memiliki kontur sendiri.",
+        "colorAroundIt": "Warna di sekelilingnya",
+        "backdrop": "Latar",
+        "seeThroughOutsideThe": "Tembus pandang di luar sudut: apa pun yang ada di belakang kode akan terlihat di sana.",
+        "inAFrameTheFrame": "Pada bingkai, bingkai mengisi ruang di sekitar kode: aktifkan Warna di sekelilingnya untuk melihat sudutnya."
+      },
+      "haloSection": {
+        "halo": "Halo",
+        "off": "Mati",
+        "showAHalo": "Tampilkan halo",
+        "aLightRimAround": "Tepi terang di sekeliling setiap titik dan mata. Pilih warna apa pun: warnanya digambar cukup terang agar kode tetap bisa dipindai.",
+        "width": "Lebar",
+        "color": "Warna",
+        "drawnAs": "Digambar sebagai {color} agar kode tetap terpindai",
+        "tintsOfYourDots": "Corak warna titik Anda",
+        "seeThroughBackground": "Halo memerlukan latar belakang yang tidak tembus pandang. Pilih warna latar belakang solid untuk menampilkannya.",
+        "pictureBackground": "Halo tidak dapat dipasang pada gambar. Pilih warna latar belakang untuk menampilkannya.",
+        "darkBackground": "Halo memerlukan latar belakang terang, setidaknya abu-abu muda. Pilih latar belakang yang lebih terang untuk menampilkannya."
+      },
+      "shadowSection": {
+        "shadow": "Bayangan",
+        "off": "Mati",
+        "showAShadow": "Tampilkan bayangan",
+        "aSeeThroughCopy": "Salinan tembus pandang dari titik dan mata, digeser di bawahnya.",
+        "across": "Mendatar",
+        "down": "Menurun",
+        "opacity": "Opasitas",
+        "color": "Warna"
       }
     },
     "customTextarea": {
@@ -4738,24 +4802,28 @@
     "partInline": {
       "parts": {
         "eyes": {
+          "name": "Mata",
           "edit": "Edit mata",
           "options": "Opsi mata",
           "random": "Mata acak",
           "more": "Opsi mata lainnya"
         },
         "dots": {
+          "name": "Titik",
           "edit": "Edit titik",
           "options": "Opsi titik",
           "random": "Titik acak",
           "more": "Opsi titik lainnya"
         },
         "logo": {
+          "name": "Logo",
           "edit": "Edit logo",
           "options": "Opsi logo",
           "random": "Logo acak",
           "more": "Opsi logo lainnya"
         },
         "background": {
+          "name": "Latar belakang",
           "edit": "Edit latar",
           "options": "Opsi latar",
           "random": "Latar acak",
@@ -4763,6 +4831,7 @@
           "editShape": "Ubah bentuk kode"
         },
         "frame": {
+          "name": "Bingkai",
           "edit": "Edit bingkai",
           "options": "Opsi bingkai",
           "random": "Bingkai acak",
@@ -4770,17 +4839,27 @@
         }
       },
       "items": {
+        "eyeShape": "Bentuk mata",
+        "thisEyesShape": "Bentuk mata ini",
         "eyeColor": "Warna mata",
         "centerColor": "Warna tengah",
         "pattern": "Pola",
         "dotColor": "Warna titik",
         "dotSize": "Ukuran titik",
+        "halo": "Halo",
+        "shadow": "Bayangan",
         "logo": "Logo",
         "quickIcons": "Ikon cepat",
         "logoSize": "Ukuran logo",
+        "logoPosition": "Posisi logo",
         "hideLogo": "Sembunyikan logo",
         "backgroundColor": "Warna latar",
+        "palettes": "Palet",
+        "paddingAndCorners": "Padding dan sudut",
+        "roundedCorners": "Sudut membulat",
         "frameStyle": "Gaya bingkai",
+        "frameTextAndColors": "Teks dan warna bingkai",
+        "frame": "Bingkai",
         "whichEyes": "Mata yang mana",
         "allEyes": "Semua mata",
         "thisEye": "Mata ini",
@@ -4788,6 +4867,7 @@
         "thisEyesCenterColor": "Warna tengah mata ini",
         "sameAsTheOthers": "Sama seperti lainnya",
         "eyesWithTheirOwnColor": "Mata dengan warna sendiri tetap mempertahankannya. Pilih Mata ini untuk mengubah salah satunya.",
+        "eyesWithTheirOwnShape": "Mata dengan bentuk sendiri tetap mempertahankannya. Pilih Mata ini untuk mengubah salah satunya.",
         "logoShapeAndPlate": "Bentuk dan alas logo",
         "clearSpace": "Ruang kosong",
         "content": "Konten",
@@ -4796,8 +4876,9 @@
       },
       "random": "Acak",
       "moreOptions": "Opsi lainnya",
+      "labelWontScanHere": "{label}: tidak bisa dipindai di sini",
       "sheet": {
-        "changesShowOnTheCode": "Perubahan langsung tampil pada kode saat Anda membuatnya. Selesai akan menyimpannya.",
+        "changesShowOnTheCode": "Perubahan langsung tampil di kode saat Anda membuatnya. Urungkan membatalkan setiap perubahan desain, dan Escape mengembalikan konten kode seperti semula.",
         "done": "Selesai"
       },
       "content": {
@@ -4813,7 +4894,8 @@
         "codeShape": "Bentuk kode",
         "names": {
           "square": "Persegi"
-        }
+        },
+        "aShapeTakesThePlace": "Kode berbentuk menggantikan bingkai."
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "Untuk saat ini, logo menaikkannya ke level {level}."
@@ -4829,7 +4911,8 @@
       },
       "drop": {
         "dropToUseAsLogo": "Lepas untuk dipakai sebagai logo"
-      }
+      },
+      "labelWithValue": "{label} ({value})"
     },
     "gradientPicker": {
       "pickASolidColorA": "Pilih warna solid, gradien, atau sampel warna untuk {label}."
@@ -7258,6 +7341,7 @@
           "downloadPng": "Unduh PNG",
           "downloadWebp": "Unduh WebP",
           "downloadSvg": "Unduh SVG",
+          "downloadGif": "Unduh GIF",
           "downloadBmp": "Unduh BMP",
           "downloadIco": "Unduh ICO",
           "moreFormats": "Format lainnya",
@@ -7284,6 +7368,7 @@
           "scansShowANoLonger2": "Pemindaian menampilkan halaman “tidak lagi aktif”. Pulihkan dari sampah kapan saja.",
           "itsBackInArchived": "Kode kembali ada di Diarsipkan.",
           "onlyTeamOwnersAndAdmins": "Hanya pemilik dan admin tim yang dapat menghapus kode yang dibuat orang lain.",
+          "gifWouldNotScan": "GIF hanya mendukung 256 warna, sedangkan desain ini membutuhkan lebih banyak: jika dikurangi menjadi 256, kode tidak akan bisa dipindai lagi. Unduh PNG sebagai gantinya.",
           "downloadFailedPleaseTryAgain": "Unduhan gagal. Silakan coba lagi.",
           "shortLinkCopied": "Tautan pendek disalin",
           "couldntCopyTheShortLink": "Tidak dapat menyalin tautan pendek",
@@ -7316,6 +7401,7 @@
         },
         "codeQr": {
           "moreFormats": "Lainnya",
+          "gifWouldNotScan": "GIF hanya mendukung 256 warna, sedangkan desain ini membutuhkan lebih banyak: jika dikurangi menjadi 256, kode tidak akan bisa dipindai lagi. Unduh PNG sebagai gantinya.",
           "downloadFailedPleaseTryAgain": "Unduhan gagal. Silakan coba lagi."
         },
         "codesCards": {
@@ -7356,6 +7442,7 @@
           "download": "Unduh",
           "pngImagesZip": "Gambar PNG (ZIP)",
           "webpImagesZip": "Gambar WebP (ZIP)",
+          "gifImagesZip": "Gambar GIF (ZIP)",
           "bmpImagesZip": "Gambar BMP (ZIP)",
           "icoImagesZip": "Favicon ICO (ZIP)",
           "svgImagesZip": "Gambar SVG (ZIP)",

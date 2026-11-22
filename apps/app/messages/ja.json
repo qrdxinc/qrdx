@@ -889,7 +889,9 @@
     "seeAll": "すべて見る",
     "faq": "よくある質問",
     "designFree": "無料のQRコードを作成",
-    "createDynamic": "動的QRコードを作成"
+    "createDynamic": "動的QRコードを作成",
+    "newTag": "新着",
+    "nameIsNew": "{name}、新着"
   },
   "pageCodes": {
     "sampleNote": "内蔵テーマのサンプルです。どれもスキャンできますが、実在のアカウントにはつながりません。",
@@ -1188,6 +1190,7 @@
         "format": "形式",
         "formatPng": "PNG（画像）",
         "formatWebp": "WebP（画像、軽量）",
+        "formatGif": "GIF(画像、256色)",
         "formatBmp": "BMP(非圧縮の画像)",
         "formatIco": "ICO(ファビコン、16〜256 px)",
         "formatSvg": "SVG（ベクター、印刷用）",
@@ -3430,6 +3433,7 @@
         "pdfAndEpsDrawEvery": "PDFとEPSではすべてのドットをベクター図形として描画し、線形グラデーションと放射状グラデーションもなめらかなベクターシェーディングとして保持します。",
         "jpgCantBeTransparent": "JPGは透過に対応していません",
         "bmpCantBeTransparent": "BMPは透過に対応していません。背景は白になります",
+        "gifWouldNotScan": "GIFは256色までしか扱えませんが、このデザインにはそれ以上の色が必要です。256色に減色するとスキャンできなくなります。代わりにPNGでダウンロードしてください。",
         "moreFormats": "その他の形式",
         "vector": " ・ベクター",
         "anySize": "自由なサイズ",
@@ -3452,6 +3456,7 @@
           "png": "Web、ドキュメント、スライド向けです。",
           "jpg": "メールや小さなファイル向けです。",
           "webp": "高速に表示したいWebサイト向け・可逆圧縮で、通常はPNGより小さくなります。",
+          "gif": "GIFしか使えない古いツールやメールビルダー向けです · 最大256色で、そのうち1色を透明にできます。",
           "bmp": "BMPのみ対応している古いシステムや組み込みツールに最適です · 非圧縮の24ビットで、透明な背景は白になります。",
           "ico": "ファビコンに最適です · 16、32、48、256 pxの画像を1つのファイルにまとめます。小さいサイズはアイコン用で、スキャン用ではありません。",
           "svg": "Figma、Illustrator、Webサイト向け・どんなサイズでも鮮明なままです。",
@@ -4490,7 +4495,9 @@
           "topLeft": "左上",
           "topRight": "右上",
           "bottomLeft": "左下"
-        }
+        },
+        "eyesContinueTheCodes": "アイをコードのグラデーションに連続させる",
+        "offEachEyeSweeps": "オフの場合、各アイはそれぞれ独自のグラデーションになります。オンの場合、アイのグラデーションがコード全体にわたって適用されるため、ドットと同じ塗りのアイはドットから連続します。"
       },
       "frameControls": {
         "uploadSvg": "SVGをアップロード",
@@ -4561,7 +4568,12 @@
         "logosMustBeValueMb": "ロゴは{value, number}MB以下にしてください。",
         "unsupportedLogoFormat": "未対応のロゴ形式です",
         "logoIsTooLarge": "ロゴが大きすぎます",
-        "failedToReadLogoFile": "ロゴファイルを読み込めませんでした"
+        "failedToReadLogoFile": "ロゴファイルを読み込めませんでした",
+        "brandCount": "{count, number}ブランド",
+        "iconName": "{name}のアイコン",
+        "brandName": "{name}のロゴ",
+        "yourLogo": "あなたのロゴ",
+        "qrdxLogo": "QRdxのロゴ"
       },
       "logoCropControls": {
         "shape": "形状",
@@ -4659,6 +4671,58 @@
       },
       "sidePanel": {
         "closeTitle": "{title}を閉じる"
+      },
+      "eyeShapesSection": {
+        "eyeShapes": "アイの形",
+        "sameForAll": "すべて同じ",
+        "giveEachCornerEyeIts": "コーナーのアイごとに、フレームと中心の形を個別に設定できます。設定しないアイにはアイの形が使われます。",
+        "whichEye": "対象のアイ",
+        "frame": "フレーム",
+        "center": "中心",
+        "frameShapes": "フレームの形",
+        "centerShapes": "中心の形",
+        "useTheSameShapesFor": "すべてのアイに同じ形を使う",
+        "positions": {
+          "topLeft": "左上",
+          "topRight": "右上",
+          "bottomLeft": "左下"
+        }
+      },
+      "cornersSection": {
+        "roundedCorners": "角を丸くする",
+        "square": "四角",
+        "cornerRadius": "角の丸み",
+        "roundTheBackgroundsCorners": "背景の角を丸くします。コードの余白は丸みの内側に保たれます。",
+        "upToMaxpercentWithThis": "この余白では最大{maxPercent, number}%までです。角をもっと丸くするには余白を増やしてください。",
+        "addPaddingToRound": "角を丸くするには余白を追加してください。コードの角にはクワイエットゾーンが必要です。",
+        "aShapedCodeHasIts": "形を変えたコードには、独自の輪郭があります。",
+        "colorAroundIt": "周囲の色",
+        "backdrop": "背景",
+        "seeThroughOutsideThe": "コーナーの外側は透過します。コードの背後にあるものがそこに表示されます。",
+        "inAFrameTheFrame": "フレームを使う場合、フレームがコードの周囲を埋めます。コーナーを表示するには「周囲の色」をオンにしてください。"
+      },
+      "haloSection": {
+        "halo": "ハロー",
+        "off": "オフ",
+        "showAHalo": "ハローを表示",
+        "aLightRimAround": "すべてのドットとアイアイの周囲に付く明るい縁取りです。色は自由に選べます。コードをスキャンできるよう、十分に明るい色で描画されます。",
+        "width": "幅",
+        "color": "色",
+        "drawnAs": "コードをスキャンできるよう{color}で描画しています",
+        "tintsOfYourDots": "ドットの色の濃淡",
+        "seeThroughBackground": "ハローには不透明な背景が必要です。表示するには単色の背景色を選んでください。",
+        "pictureBackground": "画像の上にはハローを付けられません。表示するには背景色を選んでください。",
+        "darkBackground": "ハローには明るい背景が必要です。少なくとも明るいグレー以上の明るさが必要です。表示するには、より明るい背景を選んでください。"
+      },
+      "shadowSection": {
+        "shadow": "シャドウ",
+        "off": "オフ",
+        "showAShadow": "シャドウを表示",
+        "aSeeThroughCopy": "ドットとアイの透過コピーを、その下にずらして重ねます。",
+        "across": "横",
+        "down": "縦",
+        "opacity": "不透明度",
+        "color": "色"
       }
     },
     "customTextarea": {
@@ -4738,24 +4802,28 @@
     "partInline": {
       "parts": {
         "eyes": {
+          "name": "アイ",
           "edit": "目を編集",
           "options": "目のオプション",
           "random": "目をランダム",
           "more": "目のその他の設定"
         },
         "dots": {
+          "name": "ドット",
           "edit": "ドットを編集",
           "options": "ドットのオプション",
           "random": "ドットをランダム",
           "more": "ドットのその他の設定"
         },
         "logo": {
+          "name": "ロゴ",
           "edit": "ロゴを編集",
           "options": "ロゴのオプション",
           "random": "ロゴをランダム",
           "more": "ロゴのその他の設定"
         },
         "background": {
+          "name": "背景",
           "edit": "背景を編集",
           "options": "背景のオプション",
           "random": "背景をランダム",
@@ -4763,6 +4831,7 @@
           "editShape": "コードの形を編集"
         },
         "frame": {
+          "name": "フレーム",
           "edit": "フレームを編集",
           "options": "フレームのオプション",
           "random": "フレームをランダム",
@@ -4770,17 +4839,27 @@
         }
       },
       "items": {
+        "eyeShape": "アイの形",
+        "thisEyesShape": "このアイの形",
         "eyeColor": "目の色",
         "centerColor": "中心の色",
         "pattern": "パターン",
         "dotColor": "ドットの色",
         "dotSize": "ドットのサイズ",
+        "halo": "ハロー",
+        "shadow": "シャドウ",
         "logo": "ロゴ",
         "quickIcons": "クイックアイコン",
         "logoSize": "ロゴのサイズ",
+        "logoPosition": "ロゴの位置",
         "hideLogo": "ロゴを非表示",
         "backgroundColor": "背景色",
+        "palettes": "パレット",
+        "paddingAndCorners": "余白と角",
+        "roundedCorners": "角を丸くする",
         "frameStyle": "フレームのスタイル",
+        "frameTextAndColors": "フレームの文字と色",
+        "frame": "フレーム",
         "whichEyes": "対象のアイ",
         "allEyes": "すべてのアイ",
         "thisEye": "このアイ",
@@ -4788,6 +4867,7 @@
         "thisEyesCenterColor": "このアイの中心の色",
         "sameAsTheOthers": "他と同じ",
         "eyesWithTheirOwnColor": "独自の色を設定したアイはその色のままです。変更するには「このアイ」を選択してください。",
+        "eyesWithTheirOwnShape": "独自の形を持つアイは、その形が維持されます。変更するには「このアイ」を選択してください。",
         "logoShapeAndPlate": "ロゴの形とプレート",
         "clearSpace": "余白",
         "content": "内容",
@@ -4796,8 +4876,9 @@
       },
       "random": "ランダム",
       "moreOptions": "その他の設定",
+      "labelWontScanHere": "{label}：ここではスキャンできません",
       "sheet": {
-        "changesShowOnTheCode": "変更は操作するとすぐにコードへ反映されます。「完了」を押すと変更が保持されます。",
+        "changesShowOnTheCode": "変更は操作するたびにコードへ反映されます。「元に戻す」でデザインの変更を1つずつ取り消せ、Escapeキーを押すとコードの内容が元の状態に戻ります。",
         "done": "完了"
       },
       "content": {
@@ -4813,7 +4894,8 @@
         "codeShape": "コードの形",
         "names": {
           "square": "四角"
-        }
+        },
+        "aShapeTakesThePlace": "形状付きのコードは、フレームの代わりになります。"
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "現在はロゴの影響でレベル{level}に引き上げられています。"
@@ -4829,7 +4911,8 @@
       },
       "drop": {
         "dropToUseAsLogo": "ドロップしてロゴとして使用します"
-      }
+      },
+      "labelWithValue": "{label}（{value}）"
     },
     "gradientPicker": {
       "pickASolidColorA": "{label}の単色、グラデーション、またはスウォッチを選択します。"
@@ -7258,6 +7341,7 @@
           "downloadPng": "PNGをダウンロード",
           "downloadWebp": "WebPをダウンロード",
           "downloadSvg": "SVGをダウンロード",
+          "downloadGif": "GIFをダウンロード",
           "downloadBmp": "BMPをダウンロード",
           "downloadIco": "ICOをダウンロード",
           "moreFormats": "その他の形式",
@@ -7284,6 +7368,7 @@
           "scansShowANoLonger2": "スキャンすると「現在は無効です」というページが表示されます。ゴミ箱からいつでも復元できます。",
           "itsBackInArchived": "アーカイブ済みに戻りました。",
           "onlyTeamOwnersAndAdmins": "他のユーザーが作成したコードを削除できるのは、チームのオーナーと管理者のみです。",
+          "gifWouldNotScan": "GIFで使える色は256色までですが、このデザインにはそれ以上の色が必要です。256色に減らすとスキャンできなくなります。代わりにPNGをダウンロードしてください。",
           "downloadFailedPleaseTryAgain": "ダウンロードに失敗しました。もう一度お試しください。",
           "shortLinkCopied": "短縮リンクをコピーしました",
           "couldntCopyTheShortLink": "短縮リンクをコピーできませんでした",
@@ -7316,6 +7401,7 @@
         },
         "codeQr": {
           "moreFormats": "その他",
+          "gifWouldNotScan": "GIFで使える色は256色までですが、このデザインにはそれ以上の色が必要です。256色に減らすとスキャンできなくなります。代わりにPNGをダウンロードしてください。",
           "downloadFailedPleaseTryAgain": "ダウンロードに失敗しました。もう一度お試しください。"
         },
         "codesCards": {
@@ -7356,6 +7442,7 @@
           "download": "ダウンロード",
           "pngImagesZip": "PNG画像（ZIP）",
           "webpImagesZip": "WebP画像（ZIP）",
+          "gifImagesZip": "GIF画像（ZIP）",
           "bmpImagesZip": "BMP画像（ZIP）",
           "icoImagesZip": "ICOファビコン(ZIP)",
           "svgImagesZip": "SVG画像（ZIP）",

@@ -889,7 +889,9 @@
     "seeAll": "전체 보기",
     "faq": "자주 묻는 질문",
     "designFree": "무료 QR 코드 디자인하기",
-    "createDynamic": "동적 QR 코드 만들기"
+    "createDynamic": "동적 QR 코드 만들기",
+    "newTag": "신규",
+    "nameIsNew": "{name}, 신규"
   },
   "pageCodes": {
     "sampleNote": "기본 제공 테마로 만든 샘플이에요. 모두 스캔되며, 실제 계정으로 연결되는 코드는 없어요.",
@@ -1188,6 +1190,7 @@
         "format": "형식",
         "formatPng": "PNG(이미지)",
         "formatWebp": "WebP(이미지, 더 작음)",
+        "formatGif": "GIF(이미지, 256색)",
         "formatBmp": "BMP(이미지, 비압축)",
         "formatIco": "ICO (파비콘, 16~256px)",
         "formatSvg": "SVG(벡터, 인쇄용)",
@@ -3430,6 +3433,7 @@
         "pdfAndEpsDrawEvery": "PDF와 EPS는 모든 점을 벡터 도형으로 그리며, 선형 및 방사형 그라데이션도 부드러운 벡터 셰이딩으로 유지해요.",
         "jpgCantBeTransparent": "JPG는 투명하게 만들 수 없어요",
         "bmpCantBeTransparent": "BMP는 투명하게 저장할 수 없어요. 배경은 흰색으로 저장돼요",
+        "gifWouldNotScan": "GIF는 256색까지만 담을 수 있는데, 이 디자인은 더 많은 색이 필요해요. 256색으로 줄이면 더 이상 스캔되지 않아요. 대신 PNG로 다운로드하세요.",
         "moreFormats": "다른 형식 더 보기",
         "vector": " · 벡터",
         "anySize": "원하는 크기",
@@ -3452,6 +3456,7 @@
           "png": "웹, 문서, 슬라이드에 가장 좋아요.",
           "jpg": "이메일과 작은 파일에 가장 좋아요.",
           "webp": "빠르게 로딩되는 웹사이트에 가장 좋아요 · 무손실이며 보통 PNG보다 작아요.",
+          "gif": "GIF만 지원하는 오래된 도구나 이메일 빌더에 적합해요 · 최대 256색이며, 그중 하나는 투명하게 쓸 수 있어요.",
           "bmp": "BMP만 지원하는 오래된 시스템이나 임베디드 도구에 적합합니다 · 비압축 24비트, 투명 배경은 흰색으로 저장됩니다.",
           "ico": "파비콘에 가장 적합해요 · 16, 32, 48, 256px 이미지가 들어 있는 파일 하나예요. 작은 크기는 아이콘용이며 스캔용이 아니에요.",
           "svg": "Figma, Illustrator, 웹사이트에 가장 좋아요 · 어떤 크기에서도 선명해요.",
@@ -4490,7 +4495,9 @@
           "topLeft": "왼쪽 위",
           "topRight": "오른쪽 위",
           "bottomLeft": "왼쪽 아래"
-        }
+        },
+        "eyesContinueTheCodes": "눈 모양이 코드의 그라데이션을 이어가요",
+        "offEachEyeSweeps": "끄면 각 눈이 자체 그라데이션을 그려요. 켜면 눈의 그라데이션이 코드 전체에 걸쳐 적용되어, 점과 같은 색으로 칠한 눈이 그 색을 이어받아요."
       },
       "frameControls": {
         "uploadSvg": "SVG 업로드",
@@ -4561,7 +4568,12 @@
         "logosMustBeValueMb": "로고는 {value, number}MB 이하여야 해요.",
         "unsupportedLogoFormat": "지원하지 않는 로고 형식",
         "logoIsTooLarge": "로고가 너무 커요",
-        "failedToReadLogoFile": "로고 파일을 읽지 못했어요"
+        "failedToReadLogoFile": "로고 파일을 읽지 못했어요",
+        "brandCount": "브랜드 {count, number}개",
+        "iconName": "{name} 아이콘",
+        "brandName": "{name} 로고",
+        "yourLogo": "내 로고",
+        "qrdxLogo": "QRdx 로고"
       },
       "logoCropControls": {
         "shape": "모양",
@@ -4659,6 +4671,58 @@
       },
       "sidePanel": {
         "closeTitle": "{title} 닫기"
+      },
+      "eyeShapesSection": {
+        "eyeShapes": "눈 모양",
+        "sameForAll": "모두 동일",
+        "giveEachCornerEyeIts": "모서리 눈마다 프레임과 중앙 모양을 따로 지정해요. 그대로 둔 눈은 눈 모양 설정을 따라요.",
+        "whichEye": "눈 선택",
+        "frame": "프레임",
+        "center": "중앙",
+        "frameShapes": "프레임 모양",
+        "centerShapes": "중앙 모양",
+        "useTheSameShapesFor": "모든 눈에 같은 모양 사용",
+        "positions": {
+          "topLeft": "왼쪽 위",
+          "topRight": "오른쪽 위",
+          "bottomLeft": "왼쪽 아래"
+        }
+      },
+      "cornersSection": {
+        "roundedCorners": "둥근 모서리",
+        "square": "사각형",
+        "cornerRadius": "모서리 반경",
+        "roundTheBackgroundsCorners": "배경의 모서리를 둥글게 해요. 코드는 그 안쪽에서 여백을 유지해요.",
+        "upToMaxpercentWithThis": "현재 여백에서는 최대 {maxPercent, number}%까지 가능해요. 모서리를 더 둥글게 하려면 여백을 늘려 주세요.",
+        "addPaddingToRound": "모서리를 둥글게 하려면 여백을 늘려 주세요. 코드 모서리에는 여백 영역이 필요해요.",
+        "aShapedCodeHasIts": "모양을 지정한 코드에는 자체 윤곽선이 있어요.",
+        "colorAroundIt": "주변 색상",
+        "backdrop": "배경막",
+        "seeThroughOutsideThe": "모서리 바깥은 투명해요. 코드 뒤에 있는 것이 그대로 보여요.",
+        "inAFrameTheFrame": "프레임을 쓰면 코드 주변 공간을 프레임이 채워요. 모서리를 보려면 주변 색상을 켜세요."
+      },
+      "haloSection": {
+        "halo": "후광",
+        "off": "끄기",
+        "showAHalo": "후광 표시",
+        "aLightRimAround": "모든 점과 눈 주위에 밝은 테두리를 둘러요. 색상은 자유롭게 고르세요. 코드가 스캔될 만큼 밝게 그려져요.",
+        "width": "너비",
+        "color": "색상",
+        "drawnAs": "코드가 계속 스캔되도록 {color}(으)로 그려져요",
+        "tintsOfYourDots": "점 색상의 밝은 톤",
+        "seeThroughBackground": "후광을 쓰려면 불투명한 배경이 필요해요. 후광을 보려면 단색 배경을 고르세요.",
+        "pictureBackground": "사진 위에는 후광을 넣을 수 없어요. 후광을 보려면 배경 색상을 고르세요.",
+        "darkBackground": "후광을 쓰려면 최소한 밝은 회색 이상의 밝은 배경이 필요해요. 후광을 보려면 더 밝은 배경을 고르세요."
+      },
+      "shadowSection": {
+        "shadow": "그림자",
+        "off": "끄기",
+        "showAShadow": "그림자 표시",
+        "aSeeThroughCopy": "점과 눈의 투명한 복사본을 그 아래로 어긋나게 둬요.",
+        "across": "가로",
+        "down": "세로",
+        "opacity": "불투명도",
+        "color": "색상"
       }
     },
     "customTextarea": {
@@ -4738,24 +4802,28 @@
     "partInline": {
       "parts": {
         "eyes": {
+          "name": "눈",
           "edit": "눈 편집",
           "options": "눈 옵션",
           "random": "눈 무작위",
           "more": "눈 옵션 더 보기"
         },
         "dots": {
+          "name": "점",
           "edit": "점 편집",
           "options": "점 옵션",
           "random": "점 무작위",
           "more": "점 옵션 더 보기"
         },
         "logo": {
+          "name": "로고",
           "edit": "로고 편집",
           "options": "로고 옵션",
           "random": "로고 무작위",
           "more": "로고 옵션 더 보기"
         },
         "background": {
+          "name": "배경",
           "edit": "배경 편집",
           "options": "배경 옵션",
           "random": "배경 무작위",
@@ -4763,6 +4831,7 @@
           "editShape": "코드 모양 편집"
         },
         "frame": {
+          "name": "프레임",
           "edit": "프레임 편집",
           "options": "프레임 옵션",
           "random": "프레임 무작위",
@@ -4770,17 +4839,27 @@
         }
       },
       "items": {
+        "eyeShape": "눈 모양",
+        "thisEyesShape": "이 눈의 모양",
         "eyeColor": "눈 색상",
         "centerColor": "중앙 색상",
         "pattern": "패턴",
         "dotColor": "점 색상",
         "dotSize": "점 크기",
+        "halo": "후광",
+        "shadow": "그림자",
         "logo": "로고",
         "quickIcons": "빠른 아이콘",
         "logoSize": "로고 크기",
+        "logoPosition": "로고 위치",
         "hideLogo": "로고 숨기기",
         "backgroundColor": "배경 색상",
+        "palettes": "팔레트",
+        "paddingAndCorners": "여백과 모서리",
+        "roundedCorners": "둥근 모서리",
         "frameStyle": "프레임 스타일",
+        "frameTextAndColors": "프레임 문구와 색상",
+        "frame": "프레임",
         "whichEyes": "적용할 눈 선택",
         "allEyes": "모든 눈",
         "thisEye": "이 눈만",
@@ -4788,6 +4867,7 @@
         "thisEyesCenterColor": "이 눈의 중앙 색상",
         "sameAsTheOthers": "다른 눈과 동일",
         "eyesWithTheirOwnColor": "고유한 색상이 있는 눈은 그 색상을 유지해요. 하나만 바꾸려면 '이 눈만'을 선택하세요.",
+        "eyesWithTheirOwnShape": "고유한 모양이 있는 눈은 그 모양을 유지해요. 바꾸려면 ‘이 눈’을 선택하세요.",
         "logoShapeAndPlate": "로고 모양 및 배경판",
         "clearSpace": "여백",
         "content": "콘텐츠",
@@ -4796,8 +4876,9 @@
       },
       "random": "무작위",
       "moreOptions": "옵션 더 보기",
+      "labelWontScanHere": "{label}: 여기서는 스캔되지 않아요",
       "sheet": {
-        "changesShowOnTheCode": "변경 사항은 적용하는 즉시 코드에 표시돼요. 완료를 누르면 그대로 유지돼요.",
+        "changesShowOnTheCode": "변경 사항은 적용하는 즉시 코드에 표시돼요. 실행 취소는 디자인 변경을 하나씩 되돌리고, Escape는 코드의 콘텐츠를 원래대로 되돌려요.",
         "done": "완료"
       },
       "content": {
@@ -4813,7 +4894,8 @@
         "codeShape": "코드 모양",
         "names": {
           "square": "사각형"
-        }
+        },
+        "aShapeTakesThePlace": "모양이 있는 코드는 프레임을 대신해요."
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "로고 때문에 지금은 레벨 {level}(으)로 높아져요."
@@ -4829,7 +4911,8 @@
       },
       "drop": {
         "dropToUseAsLogo": "여기에 놓아 로고로 사용"
-      }
+      },
+      "labelWithValue": "{label} ({value})"
     },
     "gradientPicker": {
       "pickASolidColorA": "{label}에 사용할 단색, 그라데이션 또는 견본을 선택하세요."
@@ -7258,6 +7341,7 @@
           "downloadPng": "PNG 다운로드",
           "downloadWebp": "WebP 다운로드",
           "downloadSvg": "SVG 다운로드",
+          "downloadGif": "GIF 다운로드",
           "downloadBmp": "BMP 다운로드",
           "downloadIco": "ICO 다운로드",
           "moreFormats": "다른 형식",
@@ -7284,6 +7368,7 @@
           "scansShowANoLonger2": "스캔하면 ‘더 이상 활성 상태가 아님’ 페이지가 표시돼요. 휴지통에서 언제든 복원할 수 있어요.",
           "itsBackInArchived": "보관됨으로 돌아왔어요.",
           "onlyTeamOwnersAndAdmins": "팀 소유자와 관리자만 다른 사람이 만든 코드를 삭제할 수 있어요.",
+          "gifWouldNotScan": "GIF는 256가지 색상만 담을 수 있는데, 이 디자인은 더 많은 색상이 필요해요. 256색으로 줄이면 더 이상 스캔되지 않아요. 대신 PNG로 다운로드하세요.",
           "downloadFailedPleaseTryAgain": "다운로드하지 못했어요. 다시 시도해 주세요.",
           "shortLinkCopied": "짧은 링크를 복사했어요",
           "couldntCopyTheShortLink": "짧은 링크를 복사하지 못했어요",
@@ -7316,6 +7401,7 @@
         },
         "codeQr": {
           "moreFormats": "더보기",
+          "gifWouldNotScan": "GIF는 256가지 색상만 담을 수 있는데, 이 디자인은 더 많은 색상이 필요해요. 256색으로 줄이면 더 이상 스캔되지 않아요. 대신 PNG로 다운로드하세요.",
           "downloadFailedPleaseTryAgain": "다운로드하지 못했어요. 다시 시도해 주세요."
         },
         "codesCards": {
@@ -7356,6 +7442,7 @@
           "download": "다운로드",
           "pngImagesZip": "PNG 이미지 (ZIP)",
           "webpImagesZip": "WebP 이미지 (ZIP)",
+          "gifImagesZip": "GIF 이미지(ZIP)",
           "bmpImagesZip": "BMP 이미지(ZIP)",
           "icoImagesZip": "ICO 파비콘 (ZIP)",
           "svgImagesZip": "SVG 이미지 (ZIP)",
