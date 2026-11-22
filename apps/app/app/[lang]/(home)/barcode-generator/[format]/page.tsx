@@ -101,6 +101,15 @@ const GS1_NUMBERS = new Set<BarcodeFormatId>([
   "ismn",
   "itf14",
   "gs1-128",
+  "gs1-databar",
+  "gs1-databar-expanded",
+]);
+
+/** Formats written as (AI)value, whose fields the page lists. */
+const GS1_AI_FORMATS = new Set<BarcodeFormatId>([
+  "gs1-128",
+  "gs1-databar",
+  "gs1-databar-expanded",
 ]);
 
 /**
@@ -122,6 +131,8 @@ function checkBody(id: BarcodeFormatId, value: string): string | null {
     case "ismn":
       return publicationEan13(id, value)?.slice(0, 12) ?? null;
     case "gs1-128":
+    case "gs1-databar":
+    case "gs1-databar-expanded":
       return /\(01\)(\d{13})\d/.exec(value)?.[1] ?? null;
     default:
       return null;
@@ -163,7 +174,7 @@ export default async function BarcodeFormatPage({ params }: PageProps) {
   const digits = body ? weighted(body) : [];
   const sum = digits.reduce((total, item) => total + item.product, 0);
   const check = body ? gs1CheckDigit(body) : null;
-  const fields = id === "gs1-128" ? gs1Fields(value) : [];
+  const fields = GS1_AI_FORMATS.has(id) ? gs1Fields(value) : [];
 
   const style = defaultBarcodeStyle(id);
   const size = DOWNLOAD_SIZES_MM[id];

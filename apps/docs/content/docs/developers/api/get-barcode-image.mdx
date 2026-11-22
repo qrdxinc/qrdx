@@ -23,21 +23,22 @@ _openapi:
           requests a minute per IP address, like `GET /qr`.
 
 
-          **Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and
-          SSCC fields) take the number with or without its check digit: one
-          digit short and it's added, the full length and it's checked. A wrong
-          check digit, a wrong length or a character the format can't hold is a
-          `400` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the
-          number printed above the bars: an ISBN-13 or a whole ISBN-10
-          (converted to 978), an ISSN (`0317-8471`) or its 13-digit 977 number,
-          an ISMN (979-0) or its old M form, each with or without its check
-          digit; a 2- or 5-digit add-on follows after a space
-          (`978-1-873671-00-9 52250`), and an ISSN's 2-digit sequence variant
-          comes before it (`0317-8471 00 05`, 00 when left out). Code 128 takes
-          printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / +
-          %` (Code 93's two check characters are added for you), Codabar a start
-          and stop letter (A to D) around digits and `- $ : / . +`, and Data
-          Matrix, PDF417 and Aztec any text up to 1,000 characters.
+          **Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128 and GS1
+          DataBar Expanded (GTIN and SSCC fields) and GS1 DataBar (its GTIN)
+          take the number with or without its check digit: one digit short and
+          it's added, the full length and it's checked. A wrong check digit, a
+          wrong length or a character the format can't hold is a `400` that says
+          what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed
+          above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an
+          ISSN (`0317-8471`) or its 13-digit 977 number, an ISMN (979-0) or its
+          old M form, each with or without its check digit; a 2- or 5-digit
+          add-on follows after a space (`978-1-873671-00-9 52250`), and an
+          ISSN's 2-digit sequence variant comes before it (`0317-8471 00 05`, 00
+          when left out). Code 128 takes printable ASCII, Code 39 and Code 93
+          capitals, digits and `- . $ / + %` (Code 93's two check characters are
+          added for you), Codabar a start and stop letter (A to D) around digits
+          and `- $ : / . +`, and Data Matrix, PDF417 and Aztec any text up to
+          1,000 characters.
 
 
           **Sizes.** Raster images are `scale` pixels per module (a linear bar
@@ -59,7 +60,7 @@ _openapi:
 
 **No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.
 
-**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and SSCC fields) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an ISSN (`0317-8471`) or its 13-digit 977 number, an ISMN (979-0) or its old M form, each with or without its check digit; a 2- or 5-digit add-on follows after a space (`978-1-873671-00-9 52250`), and an ISSN's 2-digit sequence variant comes before it (`0317-8471 00 05`, 00 when left out). Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.
+**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128 and GS1 DataBar Expanded (GTIN and SSCC fields) and GS1 DataBar (its GTIN) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an ISSN (`0317-8471`) or its 13-digit 977 number, an ISMN (979-0) or its old M form, each with or without its check digit; a 2- or 5-digit add-on follows after a space (`978-1-873671-00-9 52250`), and an ISSN's 2-digit sequence variant comes before it (`0317-8471 00 05`, 00 when left out). Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.
 
 **Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall.
 

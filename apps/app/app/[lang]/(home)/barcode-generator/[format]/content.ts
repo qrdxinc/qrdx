@@ -51,6 +51,8 @@ export const DOWNLOAD_SIZES_MM: Record<
   codabar: { width: 37.7, height: 19.2 },
   itf14: { width: 60.4, height: 31.7 },
   "gs1-128": { width: 100.9, height: 19.2 },
+  "gs1-databar": { width: 46.6, height: 19.2 },
+  "gs1-databar-expanded": { width: 105.8, height: 19.2 },
   datamatrix: { width: 15.5, height: 15.5 },
   pdf417: { width: 43.7, height: 8.8 },
   aztec: { width: 19, height: 19 },
@@ -305,6 +307,93 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
         question: "Why does my scanner show no brackets?",
         answer:
           "The brackets are only for people. Readers report the data with a symbology identifier (]C1) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+      },
+    ],
+  },
+  {
+    id: "gs1-databar",
+    slug: "gs1-databar",
+    title: "Free GS1 DataBar Barcode Generator (Omnidirectional)",
+    metaDescription:
+      "Make a GS1 DataBar Omnidirectional barcode from a GTIN, with the check digit added or checked. Scan-checked in your browser. SVG, PDF, EPS and PNG. Free.",
+    intro:
+      "GS1 DataBar Omnidirectional holds one thing: a product's 14-digit GTIN, the number an EAN-13 or UPC-A carries. Type it after (01), check that it scans and download it.",
+    usedFor: [
+      "Retail items too small for an EAN-13 or UPC-A: its bars are as wide as an EAN-13's but much shorter. Checkout scanners read it from any angle, like an EAN-13.",
+      "Not every scanner has GS1 DataBar switched on. Ask the retailer that will scan it before you print, and use EAN-13 or UPC-A when in doubt.",
+    ],
+    numbers: {
+      title: "Do I need GS1 numbers for GS1 DataBar?",
+      paragraphs: [
+        "Yes. The GTIN it holds is built from a GS1 company prefix, like the number in an EAN-13 or UPC-A.",
+        GS1_NUMBERS,
+      ],
+    },
+    rules: [
+      "Write the GTIN after (01), as 14 digits: (01)09501101530003. A 13-digit EAN-13 number becomes a GTIN with a 0 in front, and a 12-digit UPC-A number with two.",
+      "Leave off the last digit and the check digit is added; enter all 14 and it's checked. The brackets aren't encoded; they show that (01), the GTIN, follows.",
+      "GS1 DataBar holds nothing but the GTIN. For a weight, a price, a batch or a date, use GS1 DataBar Expanded, which takes the same (AI)value input.",
+    ],
+    sizing: [
+      "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 33 modules high, 11.6 mm at this module.",
+      "The bars are 96 modules wide, 33.5 mm here: about the width of an EAN-13's bars at the same module. The printed GTIN is a little wider than the bars, so the file is wider too.",
+    ],
+    faqs: [
+      {
+        question: "What does a scanner return?",
+        answer:
+          "The digits 01 and the GTIN, 16 in all, sometimes after a symbology identifier (]e0), and with no brackets. The scan check here accepts both forms.",
+      },
+      {
+        question: "My scanner reads EAN-13 but not this. Why?",
+        answer:
+          "Most likely GS1 DataBar is switched off in its settings. Many scanners let you turn each symbology on or off; check the manual for GS1 DataBar, which older documents call RSS-14.",
+      },
+      {
+        question: "Can it hold a weight or an expiry date?",
+        answer:
+          "No, only the GTIN. GS1 DataBar Expanded holds the GTIN with other Application Identifiers, such as (3103) for a weight or (17) for an expiry date.",
+      },
+    ],
+  },
+  {
+    id: "gs1-databar-expanded",
+    slug: "gs1-databar-expanded",
+    title: "Free GS1 DataBar Expanded Barcode Generator",
+    metaDescription:
+      "Make a GS1 DataBar Expanded barcode: a GTIN with weight, price, batch or expiry in one retail barcode. Check digits added. Scan-checked. SVG, PDF, PNG.",
+    intro:
+      "GS1 DataBar Expanded carries a GTIN and more data in one barcode a checkout scanner reads, each piece marked by an Application Identifier (AI) in brackets: (01) for the GTIN, (17) for an expiry date, (10) for a batch. Type the AIs and values; check digits are added or checked for you.",
+    usedFor: [
+      "Fresh food sold by weight, such as meat, cheese and deli counters, where the weight or the price travels with the GTIN so the checkout can read it from the barcode.",
+      "North American coupons use its stacked form, GS1 DataBar Expanded Stacked, which this generator doesn't draw.",
+    ],
+    numbers: {
+      title: "Do I need GS1 numbers for GS1 DataBar Expanded?",
+      paragraphs: [
+        "For the GTIN in (01), yes: it's built from a GS1 company prefix. Weights, prices, batches and dates are your own data.",
+        GS1_NUMBERS,
+      ],
+    },
+    rules: [
+      "Write each AI in brackets followed by its value: (01)09501101530003(17)261231(10)AB-123. The brackets aren't encoded; they show where each field starts.",
+      "GTINs in (01) and (02) and SSCCs in (00) get their check digit added when you leave it off, or checked when you don't. The encoder also checks the data against GS1's rules: a batch (10) without a GTIN, for example, is refused.",
+      "It holds up to 74 digits of AIs and data, and fewer when there are letters. Put variable-length fields such as (10) batch last, so no separator is needed after them.",
+    ],
+    sizing: [
+      "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 34 modules high, 12 mm at this module.",
+      "It's long, not tall: the example's bars are 98.8 mm long, a little more than the same data as GS1-128 (93.8 mm). More data makes it longer still.",
+    ],
+    faqs: [
+      {
+        question: "Why does my scanner show no brackets?",
+        answer:
+          "The brackets are only for people. Readers report the data with a symbology identifier (]e0) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+      },
+      {
+        question: "GS1 DataBar Expanded or GS1-128?",
+        answer:
+          "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
       },
     ],
   },

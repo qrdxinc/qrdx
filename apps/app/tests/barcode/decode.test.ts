@@ -99,6 +99,15 @@ const EXTRA_VALUES: Partial<Record<BarcodeFormatId, string[]>> = {
     "(01)09501101530003(10)LOT-7(17)261231",
     "(01)09501101530003(3103)000123",
   ],
+  "gs1-databar": ["(01)0950110153000", "(01)05901234123457"],
+  "gs1-databar-expanded": [
+    "(01)09501101530003(3103)000123",
+    "(01)09501101530003(10)abc-def",
+    // 66 digits: more than GS1-128 holds
+    "(01)09501101530003(3103)000123(11)261231(13)261231(15)261231(17)261231(16)261231",
+    // 49 characters with letters: the most that fits
+    "(01)09501101530003(10)ABCDEFGHIJKLMNOPQRST(21)ABCDEFGHI",
+  ],
   datamatrix: ["héllo ✓ 日本", "A".repeat(300)],
   pdf417: ["Line one\nLine two", "1234567890".repeat(20)],
   aztec: ["héllo ✓", "https://qrdx.dev/barcode-generator?x=1"],

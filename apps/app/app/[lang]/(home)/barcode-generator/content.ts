@@ -24,6 +24,10 @@ export const BARCODE_USES: Record<BarcodeFormatId, string> = {
     "Printed on corrugated cartons that hold retail products. It carries the 14-digit GTIN of the case, and its thick frame (bearer bars) evens out printing pressure and stops scanners reading only part of it.",
   "gs1-128":
     "Several pieces of supply chain data in one barcode, each marked by an Application Identifier: (01) GTIN, (10) batch, (17) expiry date, (00) SSCC for a pallet. Used on cases, pallets and logistics labels.",
+  "gs1-databar":
+    "A retail GTIN in a smaller barcode than an EAN-13 or UPC-A, for items too small for those. Not every checkout scanner has it switched on, so check with the retailer before printing.",
+  "gs1-databar-expanded":
+    "A GTIN plus more data, such as a weight, a price or an expiry date, marked by the same Application Identifiers as GS1-128. Used on fresh food sold by weight, so the checkout reads the price or weight from the barcode.",
   datamatrix:
     "A small square 2D code that holds a lot in little space, used to mark parts, electronics and labels. This is plain Data Matrix; the GS1 version required on some regulated packaging isn't offered here.",
   pdf417:
@@ -42,12 +46,12 @@ export const BARCODE_FAQS: { question: string; answer: string }[] = [
   {
     question: "Do I need to register my barcode number?",
     answer:
-      "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+      "For products sold in shops, yes. EAN, UPC, ITF-14, GS1-128 and GS1 DataBar carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
   },
   {
     question: "Does it add the check digit?",
     answer:
-      "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN and the GTIN and SSCC fields of GS1-128: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+      "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, the GTIN of GS1 DataBar and the GTIN and SSCC fields of GS1-128 and GS1 DataBar Expanded: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
   },
   {
     question: "Will my barcode scan?",

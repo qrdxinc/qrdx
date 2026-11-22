@@ -149,7 +149,7 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | `search_community` | Finds published [community](/community) frames, themes and collections by words, type or tag |
 | `get_community_item` | One community item with the style it applies, ready for `design_qr` or `generate_qr_code` |
 | `save_template` | Saves a design as a theme in your workspace. Needs an [API key](#use-an-api-key) |
-| `generate_barcode` | Draws an EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec barcode after checking the value (check digits, lengths, characters). Returns a PNG and public [barcode API](/docs/developers/barcode-api) URLs |
+| `generate_barcode` | Draws an EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec barcode after checking the value (check digits, lengths, characters). Returns a PNG and public [barcode API](/docs/developers/barcode-api) URLs |
 | `save_barcode` | Saves a barcode to your workspace's Barcodes. Needs an [API key](#use-an-api-key) |
 | `generate_ai_art` | Paints a QR code into AI artwork and checks that it scans. Uses one of the workspace's monthly AI art images and takes up to a minute. Needs an [API key](#use-an-api-key). See [AI art API](/docs/developers/ai-art-api) |
 | `qr_payload_wifi` | Builds a `WIFI:` network payload (WPA, WEP or open, optionally hidden) with special characters escaped |
