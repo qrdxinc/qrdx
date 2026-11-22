@@ -38794,5 +38794,11 @@
     "text": "支持 EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、USPS Intelligent Mail、Data Matrix、PDF417、Aztec 或 DotCode。会检查内容（校验位、长度、字符），并返回一张 PNG 图片，以及公开的 SVG、PNG、PDF 等图片链接。",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "a68faeef9b21": {
+    "source": "Roughly, unless the finder shares more. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network. On Pro and Business you can switch on precise location for the tag's code: right after a scan, the finder's browser asks whether to share their location, and if they allow it you see where it was scanned, rounded to about 100 m. The found-it form lets the finder tell you where the item is.",
+    "text": "大致位置可以知道，除非拾到者提供更多信息。和所有动态二维码一样，标签的分析数据会显示它被扫描的时间，以及根据网络判断的国家、地区和城市。在 Pro 和 Business 上，你可以为标签的二维码开启精确定位：扫描后，拾到者的浏览器会询问是否分享其位置，如果对方允许，你就能看到扫描位置，精确到约 100 m。拾到者也可以通过“找到了”表单告诉你物品在哪里。",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
   }
 }

@@ -38794,5 +38794,11 @@
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec o DotCode. Comprueba el valor (dígitos de control, longitudes, caracteres) y devuelve un PNG junto con URLs públicas de SVG, PNG, PDF y otros formatos de imagen.",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "a68faeef9b21": {
+    "source": "Roughly, unless the finder shares more. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network. On Pro and Business you can switch on precise location for the tag's code: right after a scan, the finder's browser asks whether to share their location, and if they allow it you see where it was scanned, rounded to about 100 m. The found-it form lets the finder tell you where the item is.",
+    "text": "Más o menos, a menos que quien lo encuentre comparta más datos. Como todo código dinámico, las analíticas de la etiqueta muestran cuándo se escaneó y el país, la región y la ciudad según la red. En Pro y Business puedes activar la ubicación precisa para el código de la etiqueta: justo después de un escaneo, el navegador de quien lo encontró le pregunta si quiere compartir su ubicación y, si lo permite, ves dónde se escaneó, redondeado a unos 100 m. El formulario de «lo encontré» permite a quien lo encuentre decirte dónde está el objeto.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
   }
 }

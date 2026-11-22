@@ -773,7 +773,7 @@ export const HOSTED_QR_TYPES: readonly HostedQrTypeContent[] = [
       {
         question: "Can I see where my item was found?",
         answer:
-          "Roughly. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network, never an exact spot. The found-it form lets the finder tell you where the item is.",
+          "Roughly, unless the finder shares more. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network. On Pro and Business you can switch on precise location for the tag's code: right after a scan, the finder's browser asks whether to share their location, and if they allow it you see where it was scanned, rounded to about 100 m. The found-it form lets the finder tell you where the item is.",
       },
       {
         question: "Can I change my number later?",
