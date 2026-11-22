@@ -140,7 +140,12 @@ describe("glyph colour", () => {
     const dark = allMarks
       .filter(([, entry]) => entry.ink === "dark")
       .map(([id]) => id);
-    expect(dark).toEqual(["type snapchat", "type spotify", "type waze"]);
+    expect(dark).toEqual([
+      "type snapchat",
+      "type spotify",
+      "type waze",
+      "type stellar",
+    ]);
   });
 
   it("of the tint variant reads on the light and the dark card", () => {

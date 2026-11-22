@@ -55,6 +55,8 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   telegram: { fill: "#26A5E4", glyph: "brand:telegram" },
   signal: { fill: "#3B45FD", glyph: "brand:signal" },
   line: { fill: "#00C300", glyph: "brand:line" },
+  // A person on a card, not the Contact type's teal Personalcard.
+  mecard: { fill: "#F26B21", glyph: "UserSquare" },
 
   // Social & media
   instagram: { fill: "#FF0069", glyph: "brand:instagram" },
@@ -97,6 +99,13 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   venmo: { fill: "#008CFF", glyph: "brand:venmo" },
   cashapp: { fill: "#00C244", glyph: "brand:cashapp" },
   revolut: { fill: "#191C1F", glyph: "brand:revolut" },
+  // No Simple Icons marks for these four schemes. QR Platba and KHQR don't
+  // use their metadata icons (MoneyRecive, CardReceive): those mirror UPI's
+  // MoneySend and PayNow's CardSend in the same list.
+  "swiss-qr-bill": { fill: "#F04438", glyph: "ReceiptText" },
+  "czech-spd": { fill: "#1B4F9C", glyph: "ArrangeHorizontalSquare" },
+  swish: { fill: "#0BA790", glyph: "Wallet2" },
+  khqr: { fill: "#5B5BD6", glyph: "ScanBarcode" },
 
   // Crypto
   bitcoin: { fill: "#F7931A", glyph: "brand:bitcoin" },
@@ -106,6 +115,14 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   dogecoin: { fill: "#C2A633", glyph: "brand:dogecoin" },
   bitcoincash: { fill: "#0AC18E", glyph: "brand:bitcoincash" },
   monero: { fill: "#FF6600", glyph: "brand:monero" },
+  // Simple Icons' "lightning" is another product; Tron isn't there.
+  lightning: { fill: "#7B3FA0", glyph: "Flash" },
+  xrp: { fill: "#25A768", glyph: "brand:xrp" },
+  cardano: { fill: "#0133AD", glyph: "brand:cardano" },
+  tron: { fill: "#D7263D", glyph: "Coin" },
+  ton: { fill: "#0098EA", glyph: "brand:ton" },
+  // Stellar's guidelines draw its mark in black on Stellar gold.
+  stellar: { fill: "#FDDA24", glyph: "brand:stellar", ink: "dark" },
 
   // Shopping (Amazon and Flipkart have no Simple Icons mark)
   amazon: { fill: "#D48102", glyph: "ShoppingCart" },

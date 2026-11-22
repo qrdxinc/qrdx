@@ -23,7 +23,6 @@ import {
   Coffee,
   Coin,
   Courthouse,
-  Diamonds,
   DirectInbox,
   DirectSend,
   DocumentCopy,
@@ -135,7 +134,6 @@ export const QR_TYPE_ICONS: Record<ContentType, CardIcon> = {
   khqr: CardReceive,
   lightning: Flash,
   tron: Coin,
-  ton: Diamonds,
 };
 
 export const QR_TYPE_GROUP_ICONS: Record<QrTypeGroup, CardIcon> = {

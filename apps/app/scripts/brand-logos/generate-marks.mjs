@@ -59,6 +59,7 @@ export const UI_SLUGS = [
   "telegram",
   "threads",
   "tiktok",
+  "ton",
   "twitch",
   "venmo",
   "vuedotjs",

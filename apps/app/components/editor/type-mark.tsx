@@ -8,6 +8,7 @@
 import { LinkedinLogo } from "@repo/design-system/components/icons";
 import { cn } from "@repo/design-system/lib/utils";
 import {
+  ArrangeHorizontalSquare,
   Bag2,
   Bank,
   Box,
@@ -16,8 +17,10 @@ import {
   CalendarEdit,
   Call,
   CardSend,
+  Coin,
   DocumentText,
   Element4,
+  Flash,
   Gallery,
   Health,
   House,
@@ -37,7 +40,9 @@ import {
   Personalcard,
   Pet,
   Profile2User,
+  ReceiptText,
   Reserve,
+  ScanBarcode,
   Shop,
   ShoppingCart,
   Sms,
@@ -47,8 +52,10 @@ import {
   Text,
   TicketDiscount,
   UserEdit,
+  UserSquare,
   UserTag,
   Video,
+  Wallet2,
   Wifi,
   WifiSquare,
 } from "iconsax-reactjs";
@@ -74,6 +81,7 @@ type AnyIcon = Icon | ComponentType<{ className?: string }>;
  * Add the import here when a new entry names another icon.
  */
 export const TYPE_MARK_GLYPHS: Record<string, Icon> = {
+  ArrangeHorizontalSquare,
   Bag2,
   Bank,
   Box,
@@ -82,8 +90,10 @@ export const TYPE_MARK_GLYPHS: Record<string, Icon> = {
   CalendarEdit,
   Call,
   CardSend,
+  Coin,
   DocumentText,
   Element4,
+  Flash,
   Gallery,
   Health,
   House,
@@ -102,7 +112,9 @@ export const TYPE_MARK_GLYPHS: Record<string, Icon> = {
   Personalcard,
   Pet,
   Profile2User,
+  ReceiptText,
   Reserve,
+  ScanBarcode,
   Shop,
   ShoppingCart,
   Sms,
@@ -112,8 +124,10 @@ export const TYPE_MARK_GLYPHS: Record<string, Icon> = {
   Text,
   TicketDiscount,
   UserEdit,
+  UserSquare,
   UserTag,
   Video,
+  Wallet2,
   Wifi,
   WifiSquare,
 };

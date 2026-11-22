@@ -9,7 +9,6 @@ import {
   CardSend,
   Coin,
   Coin1,
-  Diamonds,
   Flash,
   Hashtag,
   type Icon,
@@ -76,7 +75,6 @@ const ICONS: Record<string, AnyIcon> = {
   CardReceive,
   Flash,
   Coin,
-  Diamonds,
   ...Object.fromEntries(
     Object.entries(CONTENT_TYPE_BRANDS).map(([type, slug]) => [
       `brand:${type}`,
