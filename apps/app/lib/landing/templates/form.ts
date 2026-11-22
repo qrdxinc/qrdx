@@ -58,7 +58,7 @@ registerTemplate({
               {
                 id: "message",
                 type: "text",
-                label: "Message",
+                label: "Your message",
                 required: true,
                 multiline: true,
                 maxLength: 2000,
