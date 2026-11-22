@@ -889,7 +889,9 @@
     "seeAll": "Tout voir",
     "faq": "FAQ",
     "designFree": "Créer un QR code gratuit",
-    "createDynamic": "Créer un QR code dynamique"
+    "createDynamic": "Créer un QR code dynamique",
+    "newTag": "Nouveau",
+    "nameIsNew": "{name}, nouveau"
   },
   "pageCodes": {
     "sampleNote": "Exemples dans les thèmes intégrés. Chacun se scanne, et aucun ne mène à un vrai compte.",
@@ -1188,6 +1190,7 @@
         "format": "Format",
         "formatPng": "PNG (image)",
         "formatWebp": "WebP (image, plus léger)",
+        "formatGif": "GIF (image, 256 couleurs)",
         "formatBmp": "BMP (image, non compressée)",
         "formatIco": "ICO (favicon, de 16 à 256 px)",
         "formatSvg": "SVG (vectoriel, pour l’impression)",
@@ -3430,6 +3433,7 @@
         "pdfAndEpsDrawEvery": "PDF et EPS dessinent chaque point comme une forme vectorielle et conservent les dégradés linéaires et radiaux sous forme de dégradés vectoriels fluides.",
         "jpgCantBeTransparent": "Le JPG ne gère pas la transparence",
         "bmpCantBeTransparent": "Le BMP ne gère pas la transparence : l’arrière-plan sera blanc",
+        "gifWouldNotScan": "Un GIF contient 256 couleurs, et ce design en demande plus : réduit à 256, il ne serait plus scannable. Téléchargez plutôt un PNG.",
         "moreFormats": "Plus de formats",
         "vector": " · vectoriel",
         "anySize": "Toute taille",
@@ -3452,6 +3456,7 @@
           "png": "Idéal pour le web, les documents et les diapositives.",
           "jpg": "Idéal pour les e-mails et les fichiers légers.",
           "webp": "Idéal pour les sites web à chargement rapide · sans perte, généralement plus léger que le PNG.",
+          "gif": "Idéal pour les anciens outils et les éditeurs d’e-mails qui n’acceptent que le GIF · 256 couleurs au maximum, dont une peut être transparente.",
           "bmp": "Idéal pour les systèmes anciens et les outils embarqués qui n’acceptent que le BMP · 24 bits non compressé, un arrière-plan transparent devient blanc.",
           "ico": "Idéal pour les favicons · un seul fichier avec des images de 16, 32, 48 et 256 px. Les petites tailles sont prévues pour les icônes, pas pour le scan.",
           "svg": "Idéal pour Figma, Illustrator, les sites web · reste net à toute taille.",
@@ -4490,7 +4495,9 @@
           "topLeft": "Haut gauche",
           "topRight": "Haut droit",
           "bottomLeft": "Bas gauche"
-        }
+        },
+        "eyesContinueTheCodes": "Les yeux suivent le dégradé du code",
+        "offEachEyeSweeps": "Désactivé, chaque œil applique son propre dégradé. Activé, les yeux étendent leur dégradé sur tout le code : des yeux peints comme les points prolongent ces derniers."
       },
       "frameControls": {
         "uploadSvg": "Importer un SVG",
@@ -4561,7 +4568,12 @@
         "logosMustBeValueMb": "Les logos ne doivent pas dépasser {value, number} Mo.",
         "unsupportedLogoFormat": "Format de logo non pris en charge",
         "logoIsTooLarge": "Le logo est trop volumineux",
-        "failedToReadLogoFile": "Échec de lecture du fichier du logo"
+        "failedToReadLogoFile": "Échec de lecture du fichier du logo",
+        "brandCount": "{count, number} marques",
+        "iconName": "Icône {name}",
+        "brandName": "Logo {name}",
+        "yourLogo": "Votre logo",
+        "qrdxLogo": "Logo QRdx"
       },
       "logoCropControls": {
         "shape": "Forme",
@@ -4659,6 +4671,58 @@
       },
       "sidePanel": {
         "closeTitle": "Fermer {title}"
+      },
+      "eyeShapesSection": {
+        "eyeShapes": "Formes des yeux",
+        "sameForAll": "Identiques",
+        "giveEachCornerEyeIts": "Donnez à chaque œil d’angle son propre cadre et sa propre forme de centre. Les yeux que vous ne modifiez pas utilisent les formes des yeux.",
+        "whichEye": "Quel œil",
+        "frame": "Cadre",
+        "center": "Centre",
+        "frameShapes": "formes de cadre",
+        "centerShapes": "formes de centre",
+        "useTheSameShapesFor": "Utiliser les mêmes formes pour tous les yeux",
+        "positions": {
+          "topLeft": "En haut à gauche",
+          "topRight": "En haut à droite",
+          "bottomLeft": "En bas à gauche"
+        }
+      },
+      "cornersSection": {
+        "roundedCorners": "Coins arrondis",
+        "square": "Carré",
+        "cornerRadius": "Rayon des coins",
+        "roundTheBackgroundsCorners": "Arrondissez les coins de l’arrière-plan. Le code garde sa marge à l’intérieur.",
+        "upToMaxpercentWithThis": "Jusqu’à {maxPercent, number} % avec cette marge : ajoutez de la marge pour arrondir davantage les coins.",
+        "addPaddingToRound": "Ajoutez de la marge pour arrondir les coins : les coins du code ont besoin de la zone de silence.",
+        "aShapedCodeHasIts": "Un code en forme a son propre contour.",
+        "colorAroundIt": "Couleur autour",
+        "backdrop": "Fond",
+        "seeThroughOutsideThe": "Transparent à l’extérieur des coins : ce qui se trouve derrière le code y apparaît.",
+        "inAFrameTheFrame": "Dans un cadre, le cadre remplit l’espace autour du code : activez Couleur autour pour voir les coins."
+      },
+      "haloSection": {
+        "halo": "Halo",
+        "off": "Désactivé",
+        "showAHalo": "Afficher un halo",
+        "aLightRimAround": "Un liseré clair autour de chaque point et de chaque œil. Choisissez la couleur de votre choix : elle est éclaircie pour que le code reste scannable.",
+        "width": "Largeur",
+        "color": "Couleur",
+        "drawnAs": "Dessiné en {color} pour que le code reste scannable",
+        "tintsOfYourDots": "Teintes de vos points",
+        "seeThroughBackground": "Un halo nécessite un arrière-plan opaque. Choisissez une couleur d’arrière-plan unie pour l’afficher.",
+        "pictureBackground": "Un halo ne peut pas être placé sur une image. Choisissez une couleur d’arrière-plan pour l’afficher.",
+        "darkBackground": "Un halo nécessite un arrière-plan clair, au moins gris clair. Choisissez un arrière-plan plus clair pour l’afficher."
+      },
+      "shadowSection": {
+        "shadow": "Ombre",
+        "off": "Désactivée",
+        "showAShadow": "Afficher une ombre",
+        "aSeeThroughCopy": "Une copie transparente des points et des yeux, décalée en dessous.",
+        "across": "Horizontal",
+        "down": "Vertical",
+        "opacity": "Opacité",
+        "color": "Couleur"
       }
     },
     "customTextarea": {
@@ -4738,24 +4802,28 @@
     "partInline": {
       "parts": {
         "eyes": {
+          "name": "Yeux",
           "edit": "Éditer les yeux",
           "options": "Options des yeux",
           "random": "Yeux aléatoires",
           "more": "Autres options des yeux"
         },
         "dots": {
+          "name": "Points",
           "edit": "Éditer les points",
           "options": "Options des points",
           "random": "Points aléatoires",
           "more": "Autres options de points"
         },
         "logo": {
+          "name": "Logo",
           "edit": "Éditer le logo",
           "options": "Options du logo",
           "random": "Logo aléatoire",
           "more": "Autres options du logo"
         },
         "background": {
+          "name": "Arrière-plan",
           "edit": "Éditer l’arrière-plan",
           "options": "Options d’arrière-plan",
           "random": "Arrière-plan aléatoire",
@@ -4763,6 +4831,7 @@
           "editShape": "Modifier la forme"
         },
         "frame": {
+          "name": "Cadre",
           "edit": "Éditer le cadre",
           "options": "Options du cadre",
           "random": "Cadre aléatoire",
@@ -4770,17 +4839,27 @@
         }
       },
       "items": {
+        "eyeShape": "Forme des yeux",
+        "thisEyesShape": "Forme de cet œil",
         "eyeColor": "Couleur des yeux",
         "centerColor": "Couleur du centre",
         "pattern": "Motif",
         "dotColor": "Couleur des points",
         "dotSize": "Taille des points",
+        "halo": "Halo",
+        "shadow": "Ombre",
         "logo": "Logo",
         "quickIcons": "Icônes rapides",
         "logoSize": "Taille du logo",
+        "logoPosition": "Position du logo",
         "hideLogo": "Masquer le logo",
         "backgroundColor": "Couleur d’arrière-plan",
+        "palettes": "Palettes",
+        "paddingAndCorners": "Marges et coins",
+        "roundedCorners": "Coins arrondis",
         "frameStyle": "Style de cadre",
+        "frameTextAndColors": "Texte et couleurs du cadre",
+        "frame": "Cadre",
         "whichEyes": "Quels yeux",
         "allEyes": "Tous les yeux",
         "thisEye": "Cet œil",
@@ -4788,6 +4867,7 @@
         "thisEyesCenterColor": "Couleur du centre de cet œil",
         "sameAsTheOthers": "Comme les autres",
         "eyesWithTheirOwnColor": "Les yeux dotés de leur propre couleur la conservent. Choisissez Cet œil pour en modifier un.",
+        "eyesWithTheirOwnShape": "Les yeux dotés de leur propre forme la conservent. Choisissez Cet œil pour en modifier un.",
         "logoShapeAndPlate": "Forme et fond du logo",
         "clearSpace": "Espace libre",
         "content": "Contenu",
@@ -4796,8 +4876,9 @@
       },
       "random": "Aléatoire",
       "moreOptions": "Plus d’options",
+      "labelWontScanHere": "{label} : non scannable ici",
       "sheet": {
-        "changesShowOnTheCode": "Les modifications s’affichent sur le code au fur et à mesure. « Terminé » les conserve.",
+        "changesShowOnTheCode": "Les modifications s’affichent sur le code au fur et à mesure. Annuler reprend chaque modification de design, et Échap rétablit le contenu du code tel qu’il était.",
         "done": "Terminé"
       },
       "content": {
@@ -4813,7 +4894,8 @@
         "codeShape": "Forme du code",
         "names": {
           "square": "Carré"
-        }
+        },
+        "aShapeTakesThePlace": "Un code avec forme remplace le cadre."
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "Pour l’instant, le logo le porte au niveau {level}."
@@ -4829,7 +4911,8 @@
       },
       "drop": {
         "dropToUseAsLogo": "Déposez pour utiliser comme logo"
-      }
+      },
+      "labelWithValue": "{label} ({value})"
     },
     "gradientPicker": {
       "pickASolidColorA": "Choisissez une couleur unie, un dégradé ou un échantillon pour {label}."
@@ -7258,6 +7341,7 @@
           "downloadPng": "Télécharger en PNG",
           "downloadWebp": "Télécharger en WebP",
           "downloadSvg": "Télécharger en SVG",
+          "downloadGif": "Télécharger le GIF",
           "downloadBmp": "Télécharger en BMP",
           "downloadIco": "Télécharger l’ICO",
           "moreFormats": "Autres formats",
@@ -7284,6 +7368,7 @@
           "scansShowANoLonger2": "Les scans affichent une page « n’est plus actif ». Restaurez-le depuis la corbeille à tout moment.",
           "itsBackInArchived": "Il est de retour dans Archivés.",
           "onlyTeamOwnersAndAdmins": "Seuls les propriétaires et les administrateurs de l’équipe peuvent supprimer les codes créés par d’autres.",
+          "gifWouldNotScan": "Un GIF contient 256 couleurs et ce design en demande davantage : réduit à 256, il ne serait plus scannable. Téléchargez plutôt un PNG.",
           "downloadFailedPleaseTryAgain": "Échec du téléchargement. Veuillez réessayer.",
           "shortLinkCopied": "Lien court copié",
           "couldntCopyTheShortLink": "Impossible de copier le lien court",
@@ -7316,6 +7401,7 @@
         },
         "codeQr": {
           "moreFormats": "Plus",
+          "gifWouldNotScan": "Un GIF contient 256 couleurs et ce design en demande davantage : réduit à 256, il ne serait plus scannable. Téléchargez plutôt un PNG.",
           "downloadFailedPleaseTryAgain": "Échec du téléchargement. Veuillez réessayer."
         },
         "codesCards": {
@@ -7356,6 +7442,7 @@
           "download": "Télécharger",
           "pngImagesZip": "Images PNG (ZIP)",
           "webpImagesZip": "Images WebP (ZIP)",
+          "gifImagesZip": "Images GIF (ZIP)",
           "bmpImagesZip": "Images BMP (ZIP)",
           "icoImagesZip": "Favicons ICO (ZIP)",
           "svgImagesZip": "Images SVG (ZIP)",
