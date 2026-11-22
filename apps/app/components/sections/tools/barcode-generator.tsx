@@ -701,6 +701,11 @@ export function BarcodeContentFields({
   const tc = useContentText();
   const issueText = useBarcodeIssueText();
   const { inputId, format, formatId, linear, input, checked, error } = state;
+  // A problem with the add-on or variant marks that field, not the number.
+  const partIssue =
+    !checked.ok &&
+    (ADD_ON_ISSUES.has(checked.issue.code) ||
+      VARIANT_ISSUES.has(checked.issue.code));
   return (
     <>
       <div className="flex flex-col gap-1.5">
@@ -748,7 +753,7 @@ export function BarcodeContentFields({
           <Input
             id={inputId}
             aria-describedby={`${inputId}-help`}
-            aria-invalid={!checked.ok}
+            aria-invalid={!checked.ok && !partIssue}
             autoComplete="off"
             autoFocus={autoFocus}
             className="font-mono"
