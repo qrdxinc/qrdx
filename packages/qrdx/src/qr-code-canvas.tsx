@@ -21,20 +21,19 @@ import {
   useState,
 } from "react";
 import type { QRPropsCanvas, ReactQRElement } from "../types/react";
-import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_FGCOLOR,
   DEFAULT_LEVEL,
   DEFAULT_MARGIN,
   DEFAULT_SIZE,
-  ERROR_LEVEL_MAP,
 } from "./constants";
 import { drawFrameOnCanvas, getFrameLayout, isFrameActive } from "./frame";
 import { logoImageBox, traceLogoShape } from "./logo";
 import { capImageSettings } from "./logo-budget";
 import { clampBgRadius } from "./looks";
 import { getLayoutMargin, shapeBackground, shapeDecoration } from "./qr-shape";
+import { encodeSymbol } from "./symbol";
 import {
   excavateModules,
   generatePath,
@@ -74,6 +73,7 @@ export function QRCodeCanvas(props: QRPropsCanvas): ReactQRElement {
     halo: _halo,
     shadow: _shadow,
     autoLevel,
+    exactLevel,
     shape,
     bgRadius,
     backdrop,
@@ -83,7 +83,7 @@ export function QRCodeCanvas(props: QRPropsCanvas): ReactQRElement {
   } = props;
   // A logo no bigger than the code can repair (logo-budget.ts)
   const imageSettings = capImageSettings(
-    { value, size, margin, level, shape, autoLevel },
+    { value, size, margin, level, shape, autoLevel, exactLevel },
     requestedImageSettings
   );
   const effectiveLevel = resolveErrorLevel({
@@ -93,6 +93,7 @@ export function QRCodeCanvas(props: QRPropsCanvas): ReactQRElement {
     margin,
     imageSettings,
     autoLevel,
+    exactLevel,
     shape,
   });
   const imgSrc = imageSettings?.src;
@@ -121,10 +122,7 @@ export function QRCodeCanvas(props: QRPropsCanvas): ReactQRElement {
         return;
       }
 
-      let cells = qrcodegen.QrCode.encodeText(
-        value,
-        ERROR_LEVEL_MAP[effectiveLevel]
-      ).getModules();
+      let cells = encodeSymbol(value, effectiveLevel, exactLevel).getModules();
 
       // A shaped code (circle, heart, silhouette) sits further in, inside
       // its outline, with decorative modules around its quiet ring

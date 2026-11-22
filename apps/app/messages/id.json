@@ -4660,8 +4660,14 @@
         "meCardNote": "Ponsel Android membaca kontak MeCard dan menawarkan untuk menyimpannya. Apple tidak mendokumentasikan MeCard untuk Kamera iPhone, jadi uji di iPhone, atau gunakan vCard jika kontak harus bisa dibaca semua orang."
       },
       "swissQrBill": {
-        "designApplied": "QR-bill dicetak dengan koreksi kesalahan M dan salib Swiss di tengah, jadi kode ini memakai keduanya. Cetak minimal 46 × 46 mm, hitam di atas putih, dengan ruang putih 5 mm di sekelilingnya.",
-        "designChanged": "Desain ini telah mengubah tingkat koreksi kesalahan M atau salib Swiss yang dibutuhkan QR-bill.",
+        "designApplied": "Pedoman QR-bill dari SIX mensyaratkan koreksi kesalahan M, titik hitam di atas latar putih, tanpa cetakan apa pun di sekeliling kode, dan salib Swiss di tengah, sehingga desain ini menggunakannya. Titik dan mata sudut boleh berbentuk apa saja; jika desain mengubah sisanya, catatan ini menawarkan untuk mengembalikannya. Cetak kodenya saja, tanpa margin, dengan ukuran 46 × 46 mm dan ruang putih 5 mm di sekelilingnya.",
+        "designChanged": "Desain ini tidak lagi memiliki {parts}, yang disyaratkan oleh pedoman QR-bill dari SIX.",
+        "styleParts": {
+          "level": "koreksi kesalahan M",
+          "cross": "salib Swiss di tengah",
+          "colors": "titik hitam di atas putih",
+          "border": "batas yang jelas (tanpa bingkai, bentuk kontur, atau sudut membulat)"
+        },
         "putBack": "Kembalikan",
         "note": "Pemindaian dengan pemindai QR di aplikasi perbankan Swiss atau Liechtenstein akan mengisi pembayaran secara otomatis. Aplikasi kamera ponsel hanya menampilkan teks."
       },

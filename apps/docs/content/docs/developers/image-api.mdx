@@ -186,6 +186,7 @@ Enum values (`level`, `format`, `template`, `frame`) are case-insensitive. With 
 - **Brand logos.** `logoIcon` also takes any of the {facts.brandLogos} brands from [Simple Icons](https://simpleicons.org) by slug: `spotify`, `paypal`, `googlemaps`, `appstore`. The mark is drawn bare in its brand color; add `:black` or `:white` for those colors (`whatsapp:white`), and `logoOptions.plate` in `style` for a plate behind it. [`GET /api/brand-logos`](https://qrdx.dev/api/brand-logos) lists every slug. A slug QRdx doesn't have gets a `400` that suggests the right form.
 - **The QRdx mark** that the editor shows by default isn't drawn here: `showLogo: true` alone adds no logo.
 - **Error correction rises for a logo.** When a logo covers more than 7% of the code, the code is drawn at level `H`, whatever `level` says, so it still scans.
+- **A Swiss QR-bill keeps its level.** For `data` that is a Swiss QR-bill payload (it starts with `SPC` and version `0200`), the code is encoded at exactly `level`, which the guidelines want at `M`: pass `level=M`.
 
 ```bash title="Terminal"
 curl -o spotify.png "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png&logoIcon=spotify"

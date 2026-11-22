@@ -32,16 +32,11 @@ import {
   WITHDRAWN_CORNER_EYE_PATTERNS,
   withdrawnFallback,
 } from "../types/constants";
-import qrcodegen from "./codegen";
-import {
-  DEFAULT_BGCOLOR,
-  DEFAULT_MARGIN,
-  DEFAULT_SIZE,
-  ERROR_LEVEL_MAP,
-} from "./constants";
+import { DEFAULT_BGCOLOR, DEFAULT_MARGIN, DEFAULT_SIZE } from "./constants";
 import { capImageSettings } from "./logo-budget";
 import { isShapedCode } from "./qr-shape";
 import { getStylePairRisk, type StylePairRisk } from "./scan-risk";
+import { encodeSymbol } from "./symbol";
 import { resolveErrorLevel } from "./utils";
 import { oklchToRgb, rgbToOklch } from "./utils/oklab";
 import { parseColor, type RGBAColor } from "./utils/parse-color";
@@ -175,7 +170,7 @@ export function clampBgRadius(
  * The largest `bgRadius` (share of the code's width) this code keeps its
  * quiet zone with, for an editor's slider: 0 when the code has no margin
  * or is shaped. The level is the one the renderer draws at: given the
- * logo (`imageSettings`) and `autoLevel`, the logo is held to its budget
+ * logo (`imageSettings`), `autoLevel` and `exactLevel`, the logo is held to its budget
  * first and the level resolved with it after, as createQRCodeTree does.
  */
 export function getBgRadiusLimit(
@@ -187,14 +182,24 @@ export function getBgRadiusLimit(
     | "shape"
     | "size"
     | "autoLevel"
+    | "exactLevel"
     | "imageSettings"
   > & { isOGContext?: boolean }
 ): number {
-  const { value, level, shape, autoLevel, isOGContext } = props;
+  const { value, level, shape, autoLevel, exactLevel, isOGContext } = props;
   const size = props.size ?? DEFAULT_SIZE;
   const margin = props.margin ?? DEFAULT_MARGIN;
   const imageSettings = capImageSettings(
-    { value: `${value}`, size, margin, level, shape, autoLevel, isOGContext },
+    {
+      value: `${value}`,
+      size,
+      margin,
+      level,
+      shape,
+      autoLevel,
+      exactLevel,
+      isOGContext,
+    },
     props.imageSettings
   );
   const drawn = resolveErrorLevel({
@@ -205,12 +210,10 @@ export function getBgRadiusLimit(
     imageSettings,
     isOGContext,
     autoLevel,
+    exactLevel,
     shape,
   });
-  const modules = qrcodegen.QrCode.encodeText(
-    `${value}`,
-    ERROR_LEVEL_MAP[drawn]
-  ).size;
+  const modules = encodeSymbol(`${value}`, drawn, exactLevel).size;
   return clampBgRadius(BG_RADIUS_MAX, modules, margin, shape);
 }
 

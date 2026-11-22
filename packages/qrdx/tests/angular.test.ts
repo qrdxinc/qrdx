@@ -141,6 +141,7 @@ describe.skipIf(!existsSync(built))("qrdx/angular", () => {
         "logoOptions",
         "hideLogo",
         "autoLevel",
+        "exactLevel",
         "scale",
         "templateId",
         "customTemplate",

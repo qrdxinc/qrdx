@@ -139,6 +139,12 @@ With both set, the frame is drawn around the template's artwork.
 
 A higher level adds modules, so the code gets denser at the same size. `autoLevel` raises the level to `H` on its own when a logo covers more than 7% of the code; it is off by default so existing codes keep their look.
 
+The level is a minimum: when the data still fits the same version at a higher level, the encoder uses the higher one, which costs nothing in size. `exactLevel` turns that off, so the code is encoded at exactly the level it is drawn at. A Swiss QR-bill needs this: SIX's guidelines ask for error correction `M` (Swiss Implementation Guidelines for the QR-bill, section 6.1), and QRdx's editor, API and MCP server set `exactLevel` for every Swiss QR-bill payload.
+
+```tsx title="components/bill-code.tsx"
+<QRCode value={swissQrBillPayload} level="M" exactLevel />
+```
+
 ## Related
 
 <Cards>

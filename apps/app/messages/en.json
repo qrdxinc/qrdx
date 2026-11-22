@@ -5059,8 +5059,14 @@
         "meCardNote": "Android phones read MeCard contacts and offer to save them. Apple doesn't document MeCard for the iPhone Camera, so test on an iPhone, or use a vCard when the contact has to reach everyone."
       },
       "swissQrBill": {
-        "designApplied": "QR-bills are printed at error correction M with the Swiss cross in the middle, so this code uses both. Print it at least 46 × 46 mm, black on white, with 5 mm of white around it.",
-        "designChanged": "This design has changed the error correction level M or the Swiss cross that QR-bills need.",
+        "designApplied": "SIX’s QR-bill guidelines ask for error correction M, black dots on white, nothing printed around the code and the Swiss cross in the middle, so this design uses them. Dots and eyes can take any shape; if the design changes the rest, this note offers to put it back. Print the code itself, without its margin, at 46 × 46 mm with 5 mm of white around it.",
+        "designChanged": "This design no longer has {parts}, which SIX’s QR-bill guidelines ask for.",
+        "styleParts": {
+          "level": "error correction M",
+          "cross": "the Swiss cross in the middle",
+          "colors": "black dots on white",
+          "border": "a clear border (no frame, outline shape or rounded corners)"
+        },
         "putBack": "Put them back",
         "note": "Scanning with the QR scanner in a Swiss or Liechtenstein banking app fills in the payment. A phone’s camera app only shows the text."
       },

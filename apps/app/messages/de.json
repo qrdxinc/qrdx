@@ -4660,8 +4660,14 @@
         "meCardNote": "Android-Handys lesen MeCard-Kontakte und bieten an, sie zu speichern. Apple dokumentiert MeCard für die iPhone-Kamera nicht, also teste auf einem iPhone oder nimm eine vCard, wenn der Kontakt alle erreichen muss."
       },
       "swissQrBill": {
-        "designApplied": "QR-Rechnungen werden mit Fehlerkorrektur M und dem Schweizer Kreuz in der Mitte gedruckt, deshalb nutzt dieser Code beides. Drucke ihn mindestens 46 × 46 mm groß, schwarz auf weiß, mit 5 mm weißem Rand.",
-        "designChanged": "Dieses Design hat die Fehlerkorrektur M oder das Schweizer Kreuz geändert, die QR-Rechnungen brauchen.",
+        "designApplied": "Die QR-Rechnung-Richtlinien von SIX verlangen Fehlerkorrektur M, schwarze Punkte auf Weiß, nichts rund um den Code gedruckt und das Schweizer Kreuz in der Mitte, deshalb nutzt dieses Design sie. Punkte und Augen können jede Form haben; wenn das Design den Rest ändert, bietet dieser Hinweis an, ihn zurückzusetzen. Drucke den Code selbst, ohne seinen Rand, in 46 × 46 mm mit 5 mm Weißraum drumherum.",
+        "designChanged": "Diesem Design fehlt jetzt {parts}, was die QR-Rechnung-Richtlinien von SIX verlangen.",
+        "styleParts": {
+          "level": "Fehlerkorrektur M",
+          "cross": "das Schweizer Kreuz in der Mitte",
+          "colors": "schwarze Punkte auf Weiß",
+          "border": "ein freier Rand (kein Rahmen, keine Umrissform, keine abgerundeten Ecken)"
+        },
         "putBack": "Zurücksetzen",
         "note": "Beim Scannen mit dem QR-Scanner in einer Schweizer oder liechtensteinischen Banking-App wird die Zahlung ausgefüllt. Die Kamera-App des Handys zeigt nur den Text an."
       },

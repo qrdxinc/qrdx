@@ -14272,11 +14272,27 @@
     "status": "machine"
   },
   "editor.contentForms.swissQrBill.designApplied": {
-    "source": "09a20dd760b4",
+    "source": "6be99c0ff4d3",
     "status": "machine"
   },
   "editor.contentForms.swissQrBill.designChanged": {
-    "source": "0b6b04b2b7e4",
+    "source": "20803bc20ac2",
+    "status": "machine"
+  },
+  "editor.contentForms.swissQrBill.styleParts.level": {
+    "source": "8bcf28bcec7c",
+    "status": "machine"
+  },
+  "editor.contentForms.swissQrBill.styleParts.cross": {
+    "source": "c83e17779434",
+    "status": "machine"
+  },
+  "editor.contentForms.swissQrBill.styleParts.colors": {
+    "source": "021a716f9e0a",
+    "status": "machine"
+  },
+  "editor.contentForms.swissQrBill.styleParts.border": {
+    "source": "8b1e65c355f2",
     "status": "machine"
   },
   "editor.contentForms.swissQrBill.putBack": {

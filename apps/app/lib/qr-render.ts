@@ -17,6 +17,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import { payloadEngineOptions } from "@/lib/qr-design/engine-options";
 import {
   type ConvertedFormat,
   convertPng,
@@ -200,6 +201,8 @@ function toQrProps(options: QrOptions) {
     cornerEyeDotPattern: options.dot,
     margin: options.margin,
     templateId: options.template,
+    // A Swiss QR-bill is encoded at exactly its level (IG §6.1)
+    ...payloadEngineOptions(options.data),
   };
 }
 

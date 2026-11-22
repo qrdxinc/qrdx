@@ -300,7 +300,7 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
         // Logo clear space and position are in modules
         level: themeState.styles.level,
         margin: themeState.styles.margin,
-        ...styleEngineOptions(themeState.styles),
+        ...styleEngineOptions(themeState.styles, value),
       }),
       level: themeState.styles.level,
       cornerEyePattern: themeState.styles.cornerEyePattern,

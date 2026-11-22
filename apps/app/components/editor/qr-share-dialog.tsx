@@ -175,7 +175,7 @@ export function QRShareDialog({
                   size={220}
                   templateId={style.templateId}
                   value={value || SAMPLE_VALUE}
-                  {...styleSvgOptions(style)}
+                  {...styleSvgOptions(style, value || SAMPLE_VALUE)}
                 />
               </div>
               <figcaption className="space-y-0.5">

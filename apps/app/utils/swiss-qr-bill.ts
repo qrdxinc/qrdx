@@ -10,7 +10,8 @@
 //
 // The 31 lines up to EPD are always there, empty ones included, and there
 // is no line break after the last one (IG §4.1.4). Codes are drawn at error
-// correction M, 46 × 46 mm, with the Swiss cross in the middle (§6).
+// correction M, 46 × 46 mm, with the Swiss cross in the middle (§6); the
+// design side of that is lib/qr-design/swiss-qr-bill-style.ts.
 
 import type { SwissQrBillContent } from "@/types/qr-content";
 import { checkIban, isCreditorReference } from "./epc-qr";
@@ -395,6 +396,14 @@ export function buildSwissQrPayload(bill: SwissQrBill): string {
   const billing = swissQrText(bill.billingInfo);
   if (billing) lines.push(billing);
   return lines.join("\n");
+}
+
+/**
+ * `value` is a Swiss QR-bill payload: QR type SPC, version 0200 (IG §4.2).
+ * Such a code is encoded at exactly its level (lib/qr-design/engine-options.ts).
+ */
+export function isSwissQrPayload(value: string): boolean {
+  return /^SPC\r?\n0200\r?\n/.test(value);
 }
 
 // ─── The Swiss cross (IG §6.4.2) ────────────────────────────────────────────

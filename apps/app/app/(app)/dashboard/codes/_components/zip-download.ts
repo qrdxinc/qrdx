@@ -79,7 +79,7 @@ export async function renderCodeImage(
           logo: logo ?? undefined,
           margin: s.margin,
           level: s.level,
-          ...styleEngineOptions(s),
+          ...styleEngineOptions(s, code.shortLink),
         }),
         level: s.level,
         cornerEyePattern: s.cornerEyePattern,
