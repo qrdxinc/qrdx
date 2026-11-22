@@ -110,21 +110,75 @@ function matches(result: JsQRResult | null, value: string): boolean {
 
 /**
  * Camera-like degradation, in place: contrast loss plus a blur of about a
- * quarter module (two box-blur passes approximate a Gaussian).
+ * quarter module (two box-blur passes approximate a Gaussian). Each channel
+ * is rounded to a byte after every step, as drawing would.
  */
 function simulateCamera(image: ImageData, modulePx: number, contrast = 0.7) {
   const { data, width, height } = image;
-  for (let i = 0; i < data.length; i += 4) {
-    for (let c = 0; c < 3; c++) {
-      data[i + c] = 128 + ((data[i + c] as number) - 128) * contrast;
+  const count = width * height;
+  const radius = Math.max(1, Math.round(modulePx * 0.25));
+  // Grey artwork (black on white, anti-aliased to greys) has one channel's
+  // worth of values: blur it once and copy it out, a third of the work. The
+  // bytes are exactly those blurring red, green and blue gives.
+  const grey = greyChannel(data, count);
+  if (grey) {
+    for (let p = 0; p < count; p++) {
+      grey[p] = 128 + ((grey[p] as number) - 128) * contrast;
+    }
+    boxBlur(grey, width, height, radius);
+    for (let p = 0, i = 0; p < count; p++, i += 4) {
+      const value = grey[p] as number;
+      data[i] = value;
+      data[i + 1] = value;
+      data[i + 2] = value;
+    }
+    return;
+  }
+  // Colours: each channel on its own plane (the same arithmetic, read and
+  // written in order rather than every fourth byte).
+  const plane = new Uint8ClampedArray(count);
+  for (let c = 0; c < 3; c++) {
+    for (let p = 0, i = c; p < count; p++, i += 4) {
+      plane[p] = 128 + ((data[i] as number) - 128) * contrast;
+    }
+    boxBlur(plane, width, height, radius);
+    for (let p = 0, i = c; p < count; p++, i += 4) {
+      data[i] = plane[p] as number;
     }
   }
-  const radius = Math.max(1, Math.round(modulePx * 0.25));
+}
+
+/** The red channel when every pixel is grey (red = green = blue), else null. */
+function greyChannel(
+  data: Uint8ClampedArray,
+  count: number
+): Uint8ClampedArray | null {
+  const grey = new Uint8ClampedArray(count);
+  for (let p = 0, i = 0; p < count; p++, i += 4) {
+    const red = data[i] as number;
+    if (red !== data[i + 1] || red !== data[i + 2]) {
+      return null;
+    }
+    grey[p] = red;
+  }
+  return grey;
+}
+
+/**
+ * Two passes of a box blur `2 * radius + 1` wide, across then down, on one
+ * channel in place, rounding to a byte after each. Sliding window with
+ * clamped edges: pixel (line, position) is `line * lineStep + position *
+ * step`, and the sum is a plain local (this runs up to nine times a score,
+ * on every pixel).
+ */
+function boxBlur(
+  channel: Uint8ClampedArray,
+  width: number,
+  height: number,
+  radius: number
+) {
   const span = 2 * radius + 1;
-  const buffer = new Float32Array(width * height * 3);
-  // Sliding window with clamped edges. Pixel (line, position) is
-  // `line * lineStep + position * step`; the sums are plain locals (this
-  // runs nine times a score, on every pixel).
+  const buffer = new Float32Array(width * height);
   const blur = (horizontal: boolean) => {
     const lines = horizontal ? height : width;
     const length = horizontal ? width : height;
@@ -132,33 +186,24 @@ function simulateCamera(image: ImageData, modulePx: number, contrast = 0.7) {
     const step = horizontal ? 1 : width;
     for (let line = 0; line < lines; line++) {
       const start = line * lineStep;
-      let red = 0;
-      let green = 0;
-      let blue = 0;
+      let sum = 0;
       for (let k = -radius; k <= radius; k++) {
-        const p = (start + Math.min(Math.max(k, 0), length - 1) * step) * 4;
-        red += data[p] as number;
-        green += data[p + 1] as number;
-        blue += data[p + 2] as number;
+        sum += channel[
+          start + Math.min(Math.max(k, 0), length - 1) * step
+        ] as number;
       }
       for (let position = 0; position < length; position++) {
-        const target = (start + position * step) * 3;
-        buffer[target] = red / span;
-        buffer[target + 1] = green / span;
-        buffer[target + 2] = blue / span;
-        const out = (start + Math.max(position - radius, 0) * step) * 4;
-        const into =
-          (start + Math.min(position + radius + 1, length - 1) * step) * 4;
-        red = red - (data[out] as number) + (data[into] as number);
-        green = green - (data[out + 1] as number) + (data[into + 1] as number);
-        blue = blue - (data[out + 2] as number) + (data[into + 2] as number);
+        buffer[start + position * step] = sum / span;
+        sum =
+          sum -
+          (channel[start + Math.max(position - radius, 0) * step] as number) +
+          (channel[
+            start + Math.min(position + radius + 1, length - 1) * step
+          ] as number);
       }
     }
-    for (let i = 0, o = 0; i < width * height * 3; i += 3, o += 4) {
-      data[o] = buffer[i] as number;
-      data[o + 1] = buffer[i + 1] as number;
-      data[o + 2] = buffer[i + 2] as number;
-    }
+    // Rounds and clamps each value to a byte, as assigning one does
+    channel.set(buffer);
   };
   for (let pass = 0; pass < 2; pass++) {
     blur(true);
@@ -182,10 +227,16 @@ function createCanvas(width: number, height: number) {
 // A phone tries many frames at slightly different distances.
 const ATTEMPT_SCALES = [0.9, 1, 1.1];
 
+/** Code widths (px) `decodeAtSize` draws for `size`, in the order it tries them. */
+function attemptWidths(size: number): number[] {
+  return ATTEMPT_SCALES.map((scale) => size * scale);
+}
+
 /**
  * Decodes the code at `size` px wide a few times at slightly different
  * scales through the camera simulation. `draw` returns the pixels with the
- * code `codeWidth` px wide.
+ * code `codeWidth` px wide. Two hits are a pass whatever the rest would
+ * read, so it stops there.
  */
 function decodeAtSize(
   jsQR: Decoder,
@@ -195,12 +246,14 @@ function decodeAtSize(
   expected: (result: JsQRResult | null) => boolean
 ): DecodeState {
   let hits = 0;
-  for (const scale of ATTEMPT_SCALES) {
-    const codeWidth = size * scale;
+  for (const codeWidth of attemptWidths(size)) {
     const image = draw(codeWidth);
     simulateCamera(image, codeWidth / moduleCount);
     if (expected(jsQR(image.data, image.width, image.height))) {
       hits++;
+      if (hits >= 2) {
+        break;
+      }
     }
   }
   if (hits >= 2) {
@@ -1053,6 +1106,97 @@ export async function getScanScore(
   options: ScanScoreOptions = {}
 ): Promise<ScanScoreResult> {
   assertBrowser();
+  const { draw, sizes, imageTones } = await prepareScan(props, options);
+  return await scoreArtwork(props, draw, sizes, options.signal, imageTones);
+}
+
+/**
+ * One frame `getScanScore` decodes: the artwork on white with the code
+ * `codeWidth` px wide, before the camera model.
+ */
+export interface ScanFrame {
+  codeWidth: number;
+  width: number;
+  height: number;
+  /** RGBA bytes, `width × height × 4` */
+  data: Uint8ClampedArray;
+}
+
+export interface ScanFrames {
+  /** The test sizes, smallest first */
+  sizes: number[];
+  /** Every frame the score may decode, smallest code first */
+  frames: ScanFrame[];
+  /** Tones of the images the design paints with, for the contrast checks */
+  imageTones: ImageToneMap;
+}
+
+/**
+ * The frames `getScanScore` decodes, drawn on the page's canvas (browser
+ * only), for `getScanScoreFromFrames` to score somewhere else, such as a Web
+ * Worker: drawing is quick native work, and the camera model and decoding
+ * are what keep the page busy. It can be posted as it is (transfer each
+ * frame's `data.buffer` to skip the copy).
+ */
+export async function drawScanFrames(
+  props: QRProps,
+  options: ScanScoreOptions = {}
+): Promise<ScanFrames> {
+  assertBrowser();
+  const { draw, sizes, imageTones } = await prepareScan(props, options);
+  const frames = sizes.flatMap((size) =>
+    attemptWidths(size).map((codeWidth) => {
+      const { data, width, height } = draw(codeWidth);
+      return { codeWidth, width, height, data };
+    })
+  );
+  return { sizes, frames, imageTones };
+}
+
+/**
+ * `getScanScore`'s result from the frames `drawScanFrames` drew for the same
+ * props. Needs no DOM, so it runs in a Web Worker. The frames aren't changed
+ * (each is copied before the camera model blurs it), so they can be scored
+ * again.
+ */
+export async function getScanScoreFromFrames(
+  props: QRProps,
+  scan: ScanFrames,
+  options: Pick<ScanScoreOptions, "signal"> = {}
+): Promise<ScanScoreResult> {
+  const byWidth = new Map(scan.frames.map((frame) => [frame.codeWidth, frame]));
+  const draw = (codeWidth: number) => {
+    const frame = byWidth.get(codeWidth);
+    if (!frame || frame.data.length < frame.width * frame.height * 4) {
+      throw new Error(
+        `No scan frame with the code ${codeWidth} px wide: draw the frames with drawScanFrames for these props and sizes`
+      );
+    }
+    return {
+      data: new Uint8ClampedArray(frame.data),
+      width: frame.width,
+      height: frame.height,
+      colorSpace: "srgb",
+    } as ImageData;
+  };
+  return await scoreArtwork(
+    props,
+    draw,
+    scan.sizes,
+    options.signal,
+    scan.imageTones
+  );
+}
+
+/**
+ * What `getScanScore` does on the page before decoding: logos and image
+ * fills inlined, the images' tones read and the artwork loaded, with a
+ * `draw` that puts it on white at any code width.
+ */
+async function prepareScan(
+  props: QRProps,
+  options: ScanScoreOptions
+): Promise<{ draw: DrawArtwork; sizes: number[]; imageTones: ImageToneMap }> {
   const { signal } = options;
   const sizes = testSizes(options);
 
@@ -1096,7 +1240,7 @@ export async function getScanScore(
     canvas.remove();
     return image;
   };
-  return await scoreArtwork(props, drawArtwork, sizes, signal, imageTones);
+  return { draw: drawArtwork, sizes, imageTones };
 }
 
 /**
@@ -1134,9 +1278,10 @@ export async function getScanScoreFromPixels(
   const sourceCodeWidth =
     (width * size * getTemplateCodeShare(props)) / artwork.width;
   const source = { data: onWhite(pixels), width, height };
+  const grey = isGrey(source.data);
 
   const drawArtwork = (codeWidth: number) => {
-    const art = resizePixels(source, codeWidth / sourceCodeWidth);
+    const art = resizePixels(source, codeWidth / sourceCodeWidth, grey);
     const pad = Math.max(8, Math.round(codeWidth * 0.12));
     return padWhite(art, pad);
   };
@@ -1569,10 +1714,26 @@ export interface PixelScanResult {
 /** Code widths (px) `scanQRPixels` checks through the camera model. */
 export const PIXEL_SCAN_SIZES = [320] as const;
 
-/** Area-average resize of RGBA pixels by `scale` (at most 1). */
+/** True when every pixel is grey (red = green = blue). */
+function isGrey(data: Uint8ClampedArray): boolean {
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i] !== data[i + 1] || data[i] !== data[i + 2]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * Area-average resize of RGBA pixels by `scale` (at most 1), for decoding:
+ * the result is opaque (alpha isn't averaged; jsQR doesn't read it). With
+ * `grey` (every source pixel grey, see `isGrey`) only red is averaged and
+ * copied to green and blue, which is what averaging each gives.
+ */
 function resizePixels(
   source: { data: Uint8ClampedArray; width: number; height: number },
-  scale: number
+  scale: number,
+  grey = false
 ): ImageData {
   const factor = Math.min(1, scale);
   const width = Math.max(1, Math.round(source.width * factor));
@@ -1580,6 +1741,7 @@ function resizePixels(
   const out = new Uint8ClampedArray(width * height * 4);
   const stepX = source.width / width;
   const stepY = source.height / height;
+  const { data } = source;
   for (let y = 0; y < height; y++) {
     const y0 = Math.floor(y * stepY);
     const y1 = Math.max(
@@ -1592,26 +1754,36 @@ function resizePixels(
         x0 + 1,
         Math.min(source.width, Math.floor((x + 1) * stepX))
       );
+      const count = (y1 - y0) * (x1 - x0);
+      const o = (y * width + x) * 4;
       // Plain locals, not an array: this runs on every output pixel
       let red = 0;
+      if (grey) {
+        for (let sy = y0; sy < y1; sy++) {
+          for (let sx = x0; sx < x1; sx++) {
+            red += data[(sy * source.width + sx) * 4] as number;
+          }
+        }
+        out[o] = red / count;
+        out[o + 1] = out[o] as number;
+        out[o + 2] = out[o] as number;
+        out[o + 3] = 255;
+        continue;
+      }
       let green = 0;
       let blue = 0;
-      let alpha = 0;
       for (let sy = y0; sy < y1; sy++) {
         for (let sx = x0; sx < x1; sx++) {
           const i = (sy * source.width + sx) * 4;
-          red += source.data[i] as number;
-          green += source.data[i + 1] as number;
-          blue += source.data[i + 2] as number;
-          alpha += source.data[i + 3] as number;
+          red += data[i] as number;
+          green += data[i + 1] as number;
+          blue += data[i + 2] as number;
         }
       }
-      const count = (y1 - y0) * (x1 - x0);
-      const o = (y * width + x) * 4;
       out[o] = red / count;
       out[o + 1] = green / count;
       out[o + 2] = blue / count;
-      out[o + 3] = alpha / count;
+      out[o + 3] = 255;
     }
   }
   return { data: out, width, height, colorSpace: "srgb" } as ImageData;
@@ -1670,10 +1842,11 @@ export async function scanQRPixels(
       distance(location.topLeftCorner, location.bottomLeftCorner) +
       distance(location.topRightCorner, location.bottomRightCorner)) /
     4;
+  const grey = isGrey(source.data);
   for (const size of options.sizes ?? PIXEL_SCAN_SIZES) {
     const state = decodeAtSize(
       jsQR,
-      (target) => resizePixels(source, target / codeWidth),
+      (target) => resizePixels(source, target / codeWidth, grey),
       size,
       dimension,
       (result) => matches(result, expected)

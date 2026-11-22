@@ -150,7 +150,9 @@ Constants: `DownloadFormat` is `"png" \| "jpg" \| "webp" \| "bmp" \| "ico" \| "g
 | --- | --- | --- |
 | `getScanScore(props, { sizes?, signal? })` | `Promise<ScanScoreResult>` | `{ score, grade, checks }`. Browser only; loads jsQR on demand. Default sizes 96, 160 and 320 px (`SCAN_TEST_SIZES`) |
 | `getImageScanScore(imageOrBlob, options?)` | `Promise<ImageScanScoreResult>` | The same for an existing image, plus `data` and `version`. Browser only |
-| `getScanScoreFromPixels(pixels, options?)` | `Promise<ImageScanScoreResult>` | The image score on RGBA pixels, in Node |
+| `getScanScoreFromPixels(props, pixels, { sizes?, signal? })` | `Promise<ScanScoreResult>` | `getScanScore` for a design you rasterized yourself (RGBA pixels with the code at least `PIXEL_SCORE_MIN_CODE_WIDTH`, 640 px, wide), in Node |
+| `drawScanFrames(props, { sizes?, signal? })` | `Promise<ScanFrames>` | Draws the frames `getScanScore` decodes, on the page's canvas. Browser only |
+| `getScanScoreFromFrames(props, frames, { signal? })` | `Promise<ScanScoreResult>` | `getScanScore`'s result from those frames. No DOM, so it runs in a Web Worker. See [Scoring in a Web Worker](/docs/features/frames#scoring-in-a-web-worker) |
 | `scanQRPixels(pixels, expected, { sizes? })` | `Promise<PixelScanResult>` | Checks that pixels decode to `expected`, as they are and through the camera model. Node |
 | `getScanContrast(props)` | `{ ratio, required, inverted }` | The contrast check on its own |
 | `getStylePairRisk(props)` | `StylePairRisk \| null` | A shape pair some scanners miss, with a `fix` |

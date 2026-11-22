@@ -166,6 +166,45 @@ What it checks:
   The score is a heuristic built on one open-source decoder. Phone camera apps are often more forgiving, so treat it as a guide and test-scan important prints.
 </Callout>
 
+### Scoring in a Web Worker
+
+A score decodes up to nine frames through the camera model, which keeps the page busy for tens of milliseconds on a laptop and longer on slower phones. To keep typing and dragging smooth, draw the frames on the page with `drawScanFrames` and score them in a worker with `getScanScoreFromFrames`. The result is the same as `getScanScore`'s.
+
+```ts title="scan-score.worker.ts"
+import { getScanScoreFromFrames } from "qrdx/core";
+
+addEventListener("message", async ({ data: { id, props, frames } }) => {
+  postMessage({ id, result: await getScanScoreFromFrames(props, frames) });
+});
+```
+
+```ts title="lib/scan-score.ts"
+import { drawScanFrames, type QRProps, type ScanScoreResult } from "qrdx";
+
+const worker = new Worker(new URL("./scan-score.worker.ts", import.meta.url), {
+  type: "module",
+});
+const waiting = new Map<number, (result: ScanScoreResult) => void>();
+worker.addEventListener("message", ({ data }) => {
+  waiting.get(data.id)?.(data.result);
+  waiting.delete(data.id);
+});
+let nextId = 0;
+
+export async function scoreInWorker(props: QRProps) {
+  const frames = await drawScanFrames(props);
+  const id = nextId++;
+  return await new Promise<ScanScoreResult>((resolve) => {
+    waiting.set(id, resolve);
+    // Hands the pixels over instead of copying them
+    worker.postMessage(
+      { id, props, frames },
+      frames.frames.map((frame) => frame.data.buffer)
+    );
+  });
+}
+```
+
 ## Print-ready export
 
 `downloadPrintPDF` writes a vector PDF at an exact physical size. Modules, eyes and frames are vector paths; a logo stays a raster image.

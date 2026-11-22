@@ -2,12 +2,13 @@
 // use_image: scaled into a logo or an image fill the editor can save, or
 // sampled for Logo QR / Image QR art, and scored with the editor's own scan
 // score. Nothing here leaves the browser.
-import { getImageTones, getScanScore, loadQRArtImage } from "qrdx";
+import { getImageTones, loadQRArtImage } from "qrdx";
 import type { ImagePlacement } from "@/lib/ai/agent/image-uses";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { IMAGE_FILL_MAX_LENGTH } from "@/lib/paint/saved-paint";
 import { designQRProps } from "@/lib/qr-design/props";
 import type { ScoreFn } from "@/lib/qr-design/repair";
+import { getScanScoreOffPage } from "@/lib/scan-score/off-page";
 import type { ChatMessage } from "@/types/ai";
 import type { PlacementAssets } from "./image-placement";
 
@@ -124,6 +125,6 @@ export async function prepareAssets(
 
 /** The editor's scan score (the preview badge's) for `value` in `style`. */
 export const browserScore: ScoreFn = (value, style) =>
-  getScanScore(
+  getScanScoreOffPage(
     designQRProps(value, style, style.customLogo ?? DEFAULT_QR_LOGO),
   );

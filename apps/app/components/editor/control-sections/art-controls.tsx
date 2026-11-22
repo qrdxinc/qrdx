@@ -26,7 +26,6 @@ import { useTranslations } from "next-intl";
 import {
   DEFAULT_ART_INTENSITY,
   getQRData,
-  getScanScore,
   loadQRArtImage,
   QRCodeSVG,
   type ScanScoreResult,
@@ -41,6 +40,7 @@ import {
 } from "@/components/editor/scan-score";
 import { useEditorValue } from "@/components/editor/style-scope";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
+import { getScanScoreOffPage } from "@/lib/scan-score/off-page";
 import { soundEvent } from "@/lib/sound/emit";
 import { useArtSessionStore } from "@/store/art-session-store";
 import type { QRStyle } from "@/types/theme";
@@ -606,7 +606,7 @@ function ArtScanScore({ art, style }: { art: QRArt; style: QRStyle }) {
     const controller = new AbortController();
     setChecking(true);
     const timer = setTimeout(() => {
-      getScanScore(qrProps, { signal: controller.signal })
+      getScanScoreOffPage(qrProps, { signal: controller.signal })
         .then(setResult)
         .catch((error: unknown) => {
           if (!controller.signal.aborted) {

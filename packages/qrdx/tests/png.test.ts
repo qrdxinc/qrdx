@@ -16,9 +16,10 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { getQRAsSVGDataUri } from "../src/export";
 import { getFrameDimensions } from "../src/frame";
 import { getQRAsPNG } from "../src/node";
-import { loadLogoForRasterizer } from "../src/rasterize";
+import { loadLogoForRasterizer, svgNeedsFonts } from "../src/rasterize";
 import { decodePng } from "../src/utils/png";
 import type { QRProps } from "../types";
 import {
@@ -227,6 +228,58 @@ describe("getQRAsPNG in Node", () => {
 
 const mainEntry = new URL("../dist/index.mjs", import.meta.url);
 const nodeEntry = new URL("../dist/node.mjs", import.meta.url);
+
+// resvg reads every system font each time when asked to (most of a plain
+// code's render time), so it's asked only when the SVG can need one.
+describe("system fonts for the rasterizer", () => {
+  const svgOf = async (props: QRProps) =>
+    decodeURIComponent(
+      (await getQRAsSVGDataUri(props)).replace("data:image/svg+xml,", "")
+    );
+  const logo = (src: string): QRProps["imageSettings"] => ({
+    src,
+    width: 52,
+    height: 52,
+    excavate: true,
+  });
+
+  it("skips them for a code with no text", async () => {
+    expect(svgNeedsFonts(await svgOf({ value: VALUE, size: 256 }))).toBe(false);
+    const png = await toPng(createImage(8, 8, "#ff0000"));
+    expect(
+      svgNeedsFonts(
+        await svgOf({
+          value: VALUE,
+          size: 256,
+          level: "H",
+          imageSettings: logo(`data:image/png;base64,${base64Of(png)}`),
+        })
+      )
+    ).toBe(false);
+  });
+
+  it("loads them for a frame's label", async () => {
+    const framed = await svgOf({
+      value: VALUE,
+      size: 256,
+      frame: { style: "banner-bottom", text: "Scan me" },
+    });
+    expect(framed).toContain("<text");
+    expect(svgNeedsFonts(framed)).toBe(true);
+  });
+
+  it("loads them for an SVG logo, which may have text of its own", async () => {
+    const svgLogo = await svgOf({
+      value: VALUE,
+      size: 256,
+      level: "H",
+      imageSettings: logo(
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Ctext y='8'%3EA%3C/text%3E%3C/svg%3E"
+      ),
+    });
+    expect(svgNeedsFonts(svgLogo)).toBe(true);
+  });
+});
 
 describe("bundles", () => {
   // The engine is built before the tests in CI and before pushing; without a
