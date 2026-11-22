@@ -569,9 +569,10 @@ export function ContentTypeModal({
         type="button"
       >
         <TypeMarkArt
-          className="aspect-[16/10] w-full"
+          className="aspect-[16/10] w-full max-sm:aspect-auto max-sm:h-28"
           fallbackIcon={getTypeIcon(item.icon)}
           markClassName={TYPE_MARK_LIFT}
+          phoneSize={56}
           size={64}
           type={item.type}
         />

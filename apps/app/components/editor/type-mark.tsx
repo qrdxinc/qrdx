@@ -1,8 +1,9 @@
 // The type mark: one app-icon tile per QR content type and hosted page type,
 // so a type reads at a glance (WhatsApp green, Wi-Fi blue). Colours and
-// glyphs live in lib/type-marks/data.ts; the glyph's colour is computed from
-// the fill (lib/type-marks/ink.ts). Plain markup, no hooks: server pages (the
-// /qr-code-generator hub) and client components (the type picker) share it.
+// glyphs live in lib/type-marks/data.ts; the glyph is white unless a brand
+// draws its mark dark (lib/type-marks/ink.ts). Plain markup, no hooks:
+// server pages (the /qr-code-generator hub) and client components (the type
+// picker) share it.
 
 import { LinkedinLogo } from "@repo/design-system/components/icons";
 import { cn } from "@repo/design-system/lib/utils";
@@ -103,7 +104,7 @@ export const TYPE_MARK_GLYPHS: Record<string, Icon> = {
   Wifi,
 };
 
-export type TypeMarkSize = 28 | 36 | 44 | 64 | 80;
+export type TypeMarkSize = 28 | 36 | 44 | 56 | 64 | 80;
 
 /** "fill" (the default): the type's colour with a light glyph. "tint": the glyph in that colour on a pale wash of it. */
 export type TypeMarkVariant = "fill" | "tint";
@@ -190,7 +191,7 @@ export function TypeMark({
   const glyph = resolveGlyph(entry, fallbackIcon);
   const tint = variant === "tint";
   const inks = tintInks(fill);
-  const ink = glyphInk(fill);
+  const ink = glyphInk(entry);
 
   const style = (
     tint
@@ -287,12 +288,15 @@ export function TypeMark({
  */
 export function TypeMarkArt({
   size = 64,
+  phoneSize,
   className,
   markClassName,
   variant,
   ...target
 }: TypeMarkTarget & {
   size?: TypeMarkSize;
+  /** The mark's size below 640 px wide, where the art is shorter. */
+  phoneSize?: TypeMarkSize;
   variant?: TypeMarkVariant;
   className?: string;
   /** Extra classes for the mark (a hover lift). */
@@ -314,12 +318,24 @@ export function TypeMarkArt({
         className="absolute top-0 left-1/2 aspect-[16/10] h-full -translate-x-1/2 bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--mark-wash)_22%,transparent),transparent)] dark:bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--mark-wash)_16%,transparent),transparent)]"
         style={{ "--mark-wash": wash } as CSSProperties}
       />
-      <TypeMark
-        {...target}
-        className={cn("relative", markClassName)}
-        size={size}
-        variant={variant}
-      />
+      <span
+        className={cn(
+          "relative grid",
+          phoneSize && "max-sm:[scale:var(--mark-phone-scale)]",
+        )}
+        style={
+          phoneSize
+            ? ({ "--mark-phone-scale": phoneSize / size } as CSSProperties)
+            : undefined
+        }
+      >
+        <TypeMark
+          {...target}
+          className={markClassName}
+          size={size}
+          variant={variant}
+        />
+      </span>
     </span>
   );
 }

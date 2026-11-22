@@ -1,7 +1,8 @@
 // The type marks (components/editor/type-mark.tsx, colours and glyphs in
 // lib/type-marks/data.ts): every QR content type and hosted page type has
-// one, each glyph resolves and reads on its fill (3:1, WCAG non-text), and
-// no two types in a picker category look the same.
+// one, each glyph resolves, generic glyphs are white at 3:1 or more on their
+// fill (WCAG non-text; brand logos are exempt and draw as the brand does),
+// and no two types in a picker category look the same.
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { TYPE_MARK_GLYPHS, TypeMark } from "@/components/editor/type-mark";
@@ -18,6 +19,7 @@ import {
 import {
   DARK_INK,
   glyphInk,
+  isBrandGlyph,
   MIN_GLYPH_CONTRAST,
   tintInks,
   WHITE_INK,
@@ -111,24 +113,34 @@ describe("type mark entries", () => {
 });
 
 describe("glyph colour", () => {
-  it("is white when white reaches 3:1 on the fill, else near-black", () => {
-    expect(glyphInk("#0A84FF")).toBe(WHITE_INK);
-    expect(glyphInk("#000000")).toBe(WHITE_INK);
-    expect(glyphInk("#FFFC00")).toBe(DARK_INK);
-    expect(glyphInk("#25D366")).toBe(DARK_INK);
+  it("is white unless the entry says the brand draws it dark", () => {
+    expect(glyphInk(undefined)).toBe(WHITE_INK);
+    expect(glyphInk(CONTENT_TYPE_MARKS.whatsapp)).toBe(WHITE_INK);
+    expect(glyphInk(CONTENT_TYPE_MARKS.snapchat)).toBe(DARK_INK);
   });
 
-  it("reads on its fill for every mark (and the fallback tile)", () => {
-    for (const [id, { fill }] of [
-      ...allMarks,
-      ["fallback", { fill: FALLBACK_FILL }] as const,
+  it("is white at 3:1 or more on every generic fill (and the fallback tile)", () => {
+    for (const [id, entry] of [
+      ...allMarks.filter(([, { glyph }]) => !isBrandGlyph(glyph)),
+      ["fallback", { fill: FALLBACK_FILL, glyph: "" }] as const,
     ]) {
-      const ratio = contrastRatio(glyphInk(fill), fill);
+      expect(
+        entry.ink,
+        `${id}: only brands set ink; darken the fill instead`,
+      ).toBeUndefined();
+      const ratio = contrastRatio(WHITE_INK, entry.fill);
       expect(
         ratio,
-        `${id}: ${fill} gives ${ratio.toFixed(2)}:1`,
+        `${id}: white on ${entry.fill} is ${ratio.toFixed(2)}:1; lower the fill's OKLCH lightness in ${DATA_FILE} until it reaches 3:1`,
       ).toBeGreaterThanOrEqual(MIN_GLYPH_CONTRAST);
     }
+  });
+
+  it("is set dark only for the brands whose own icon draws a dark mark", () => {
+    const dark = allMarks
+      .filter(([, entry]) => entry.ink === "dark")
+      .map(([id]) => id);
+    expect(dark).toEqual(["type snapchat", "type spotify", "type waze"]);
   });
 
   it("of the tint variant reads on the light and the dark card", () => {
@@ -173,7 +185,7 @@ describe("TypeMark", () => {
   it("draws the fill, the computed glyph colour and the real brand mark", () => {
     const html = renderToStaticMarkup(<TypeMark type="whatsapp" />);
     expect(html).toContain("background-color:#25D366");
-    expect(html).toContain(`color:${DARK_INK}`);
+    expect(html).toContain(`color:${WHITE_INK}`);
     expect(html).toContain('data-brand="whatsapp"');
     expect(html).toContain("width:36px");
   });
@@ -185,6 +197,11 @@ describe("TypeMark", () => {
     expect(html).toContain(`background-color:${FALLBACK_FILL}`);
     expect(html).toContain("data-own");
     expect(html).toContain("width:44px");
+  });
+
+  it("draws a dark glyph where the brand does", () => {
+    const html = renderToStaticMarkup(<TypeMark type="snapchat" />);
+    expect(html).toContain(`color:${DARK_INK}`);
   });
 
   it("draws page types and the tint variant", () => {

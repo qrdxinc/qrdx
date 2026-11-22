@@ -1,6 +1,6 @@
-// Colours computed from a type mark's fill (lib/type-marks/data.ts): the
-// glyph on the filled tile, and the glyph of the `tint` variant, which sits
-// on a light wash of the fill in either theme.
+// A type mark's colours beyond its fill (lib/type-marks/data.ts): the glyph
+// on the filled tile, and the glyph of the `tint` variant, which sits on a
+// light wash of the fill in either theme and is computed from it.
 
 import { contrastRatio, luminance } from "@/lib/themes/color";
 import {
@@ -20,11 +20,22 @@ export const MIN_GLYPH_CONTRAST = 3;
 const LIGHT_SURFACE = "#FFFFFF";
 const DARK_SURFACE = "#151618";
 
-/** The glyph on a filled tile: white when it reaches 3:1, else near-black. */
-export function glyphInk(fill: string): string {
-  return contrastRatio(WHITE_INK, fill) >= MIN_GLYPH_CONTRAST
-    ? WHITE_INK
-    : DARK_INK;
+/**
+ * The glyph on a filled tile: white, or near-black where a brand's own icon
+ * draws a dark mark on its colour (the entry's `ink`). Generic fills are
+ * chosen so white reaches 3:1 on them.
+ */
+export function glyphInk(entry: TypeMarkEntry | undefined): string {
+  return entry?.ink === "dark" ? DARK_INK : WHITE_INK;
+}
+
+/** True for marks drawn with a brand's own logo, which set their own ink. */
+export function isBrandGlyph(glyph: string): boolean {
+  return (
+    glyph.startsWith("brand:") ||
+    glyph.startsWith("integration:") ||
+    glyph === "LinkedinLogo"
+  );
 }
 
 function mix(hex: string, toward: string, amount: number): string {

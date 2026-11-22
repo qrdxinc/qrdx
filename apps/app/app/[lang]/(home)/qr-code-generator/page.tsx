@@ -22,8 +22,8 @@ import { HOSTED_QR_TYPES, hostedTypePath } from "@/lib/qr-types-content-hosted";
 
 const count = QR_TYPES.length;
 
-/** Each type card's header: its mark on a soft wash of its colour. */
-const MARK_ART = "h-32 w-full";
+/** Each type card's header: its mark on a soft wash of its colour (shorter on phones). */
+const MARK_ART = "h-32 w-full max-sm:h-28";
 
 // "QR code types": the home page owns "QR code generator".
 export async function generateMetadata(): Promise<Metadata> {
@@ -111,6 +111,7 @@ export default async function QrTypesHubPage() {
                         className={MARK_ART}
                         fallbackIcon={QR_TYPE_ICONS[item.type]}
                         markClassName={TYPE_MARK_LIFT}
+                        phoneSize={56}
                         size={80}
                         type={item.type}
                       />
@@ -152,6 +153,7 @@ export default async function QrTypesHubPage() {
                     fallbackIcon={PAGE_TYPE_ICONS[item.page]}
                     markClassName={TYPE_MARK_LIFT}
                     pageType={item.page}
+                    phoneSize={56}
                     size={80}
                   />
                 }
@@ -167,6 +169,7 @@ export default async function QrTypesHubPage() {
                   fallbackIcon={PAGE_TYPE_ICONS.menu}
                   markClassName={TYPE_MARK_LIFT}
                   pageType="menu"
+                  phoneSize={56}
                   size={80}
                 />
               }

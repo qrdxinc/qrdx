@@ -3,16 +3,21 @@
 // in the type picker, the editor's type row and the /qr-code-generator hub.
 //
 // Adding a type: add one entry here, keyed by its id.
-// - fill: the tile's colour as #RRGGBB. Brands use their official Simple
-//   Icons colour (BRAND_MARKS[slug].hex in lib/brand-logos/marks.generated.ts).
+// - fill: the tile's colour as #RRGGBB.
 // - glyph: "brand:<simple-icons slug>" for a brand's real mark (the slug must
 //   be in UI_SLUGS, scripts/brand-logos/generate-marks.mjs), an iconsax icon
 //   name the mark knows (TYPE_MARK_GLYPHS in the component), or
 //   "integration:<slug>" for an editor integration's own logo.
-// The glyph's colour is computed (white when white on the fill reaches 3:1,
-// else near-black), so any fill works; tests/editor/type-marks.test.ts checks
-// every type has an entry. A type without one draws a neutral slate tile with
-// its own icon, so a new type never breaks the UI.
+// - ink (brands only): the glyph's colour, "white" unless the brand's own
+//   icon draws a dark mark on that colour ("dark": Snapchat's ghost).
+//
+// Brands use their official Simple Icons colour (BRAND_MARKS[slug].hex) and
+// draw their mark the way the brand does: logos are exempt from contrast
+// rules. Every other glyph is white, so a generic fill must be dark enough
+// for white to reach 3:1 (WCAG non-text): keep the hue, lower its OKLCH
+// lightness until it does. tests/editor/type-marks.test.tsx checks both, and
+// that every type has an entry. A type without one draws a neutral slate tile
+// with its own icon, so a new type never breaks the UI.
 //
 // Colour lives only inside the marks (and the soft washes behind big ones);
 // everything around them stays monochrome.
@@ -25,6 +30,8 @@ export interface TypeMarkEntry {
   fill: string;
   /** "brand:<slug>", "integration:<slug>" or an iconsax icon name. */
   glyph: string;
+  /** Brands only: the glyph's colour as the brand draws it (white by default). */
+  ink?: "white" | "dark";
 }
 
 /** The tile of a type with no entry: neutral slate. */
@@ -40,9 +47,9 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
 
   // Contact & connect
   vcard: { fill: "#14A3B8", glyph: "Personalcard" },
-  phone: { fill: "#30B95A", glyph: "Call" },
-  email: { fill: "#F2950B", glyph: "Sms" },
-  sms: { fill: "#2FB8A0", glyph: "MessageText1" },
+  phone: { fill: "#18AB4D", glyph: "Call" },
+  email: { fill: "#D48209", glyph: "Sms" },
+  sms: { fill: "#0BA790", glyph: "MessageText1" },
   whatsapp: { fill: "#25D366", glyph: "brand:whatsapp" },
   wifi: { fill: "#0A84FF", glyph: "Wifi" },
   telegram: { fill: "#26A5E4", glyph: "brand:telegram" },
@@ -57,10 +64,11 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   tiktok: { fill: "#000000", glyph: "brand:tiktok" },
   youtube: { fill: "#FF0000", glyph: "brand:youtube" },
   threads: { fill: "#000000", glyph: "brand:threads" },
-  snapchat: { fill: "#FFFC00", glyph: "brand:snapchat" },
+  snapchat: { fill: "#FFFC00", glyph: "brand:snapchat", ink: "dark" },
   pinterest: { fill: "#BD081C", glyph: "brand:pinterest" },
   reddit: { fill: "#FF4500", glyph: "brand:reddit" },
-  spotify: { fill: "#1ED760", glyph: "brand:spotify" },
+  // Spotify's guidelines: the black logo on light colours like its green.
+  spotify: { fill: "#1ED760", glyph: "brand:spotify", ink: "dark" },
   discord: { fill: "#5865F2", glyph: "brand:discord" },
   bluesky: { fill: "#1185FE", glyph: "brand:bluesky" },
   mastodon: { fill: "#6364FF", glyph: "brand:mastodon" },
@@ -72,7 +80,8 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   calcom: { fill: "#292929", glyph: "brand:caldotcom" },
   attendance: { fill: "#8E5CF0", glyph: "TaskSquare" },
   maps: { fill: "#F04438", glyph: "Location" },
-  waze: { fill: "#33CCFF", glyph: "brand:waze" },
+  // Waze's own icon draws its character in black lines on this blue.
+  waze: { fill: "#33CCFF", glyph: "brand:waze", ink: "dark" },
   zoom: { fill: "#0B5CFF", glyph: "brand:zoom" },
   "google-meet": { fill: "#00897B", glyph: "brand:googlemeet" },
 
@@ -99,7 +108,7 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   monero: { fill: "#FF6600", glyph: "brand:monero" },
 
   // Shopping (Amazon and Flipkart have no Simple Icons mark)
-  amazon: { fill: "#FF9F1C", glyph: "ShoppingCart" },
+  amazon: { fill: "#D48102", glyph: "ShoppingCart" },
   flipkart: { fill: "#2874F0", glyph: "Bag2" },
   etsy: { fill: "#F16521", glyph: "brand:etsy" },
 };
@@ -113,17 +122,17 @@ export const PAGE_TYPE_MARKS: Partial<
   business: { fill: "#14A3B8", glyph: "Shop" },
   vcard: { fill: "#0A84FF", glyph: "UserTag" },
   pdf: { fill: "#E5484D", glyph: "DocumentText" },
-  images: { fill: "#2FB8A0", glyph: "Gallery" },
+  images: { fill: "#0BA790", glyph: "Gallery" },
   mp3: { fill: "#EE46BC", glyph: "Music" },
   video: { fill: "#7B3FA0", glyph: "Video" },
-  menu: { fill: "#F2950B", glyph: "Reserve" },
+  menu: { fill: "#D48209", glyph: "Reserve" },
   coupon: { fill: "#E5407A", glyph: "TicketDiscount" },
   event: { fill: "#F0603C", glyph: "Calendar1" },
-  apps: { fill: "#30B95A", glyph: "Mobile" },
+  apps: { fill: "#18AB4D", glyph: "Mobile" },
   feedback: { fill: "#8E5CF0", glyph: "MessageFavorite" },
   product: { fill: "#1B4F9C", glyph: "Box" },
   booking: { fill: "#0A84FF", glyph: "CalendarEdit" },
-  payment: { fill: "#30B95A", glyph: "Moneys" },
+  payment: { fill: "#18AB4D", glyph: "Moneys" },
   "real-estate": { fill: "#14A3B8", glyph: "House" },
   pet: { fill: "#F26B21", glyph: "Pet" },
   medical: { fill: "#F04438", glyph: "Health" },
