@@ -38800,5 +38800,23 @@
     "text": "Más o menos, a menos que quien lo encuentre comparta más datos. Como todo código dinámico, las analíticas de la etiqueta muestran cuándo se escaneó y el país, la región y la ciudad según la red. En Pro y Business puedes activar la ubicación precisa para el código de la etiqueta: justo después de un escaneo, el navegador de quien lo encontró le pregunta si quiere compartir su ubicación y, si lo permite, ves dónde se escaneó, redondeado a unos 100 m. El formulario de «lo encontré» permite a quien lo encuentre decirte dónde está el objeto.",
     "status": "machine",
     "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "dc0eabcf8882": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, portfolio or creator page.",
+    "text": "Lleva a las personas a un perfil, un canal, un servidor de Discord, una newsletter, un portafolio o una página de creador.",
+    "status": "machine",
+    "context": "qrTypes.groups.social.description"
+  },
+  "f6614584199c": {
+    "source": "Music and podcasts",
+    "text": "Música y pódcasts",
+    "status": "machine",
+    "context": "qrTypes.groups.music.title"
+  },
+  "73d839cde7ab": {
+    "source": "Songs, albums, playlists, artist pages and podcasts on Spotify, Apple Music, SoundCloud, Bandcamp and other services.",
+    "text": "Canciones, álbumes, listas de reproducción, páginas de artistas y pódcasts en Spotify, Apple Music, SoundCloud, Bandcamp y otros servicios.",
+    "status": "machine",
+    "context": "qrTypes.groups.music.description"
   }
 }

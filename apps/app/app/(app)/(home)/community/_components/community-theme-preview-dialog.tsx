@@ -267,7 +267,7 @@ export function CommunityThemePreviewDialog({
                     margin={styles.margin}
                     templateId={styles.templateId}
                     value={PREVIEW_VALUE}
-                    {...styleEngineOptions(styles)}
+                    {...styleEngineOptions(styles, PREVIEW_VALUE)}
                   />
                 </div>
               </ExamplesPreviewContainer>

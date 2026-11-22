@@ -100,10 +100,17 @@ describe("the saved design", () => {
 
 describe("drawing", () => {
   it("draws the silhouette in place of the named shape, heart too", () => {
-    expect(styleEngineOptions(STYLE).shape).toBe(BLOB);
-    expect(styleEngineOptions({ ...STYLE, shape: "circle" }).shape).toBe(BLOB);
-    expect(styleEngineOptions({ shape: "heart" })).toEqual({ shape: "heart" });
-    expect(styleSvgOptions({ shape: "heart" })).toEqual({ shape: "heart" });
+    const value = "https://qrdx.dev";
+    expect(styleEngineOptions(STYLE, value).shape).toBe(BLOB);
+    expect(styleEngineOptions({ ...STYLE, shape: "circle" }, value).shape).toBe(
+      BLOB,
+    );
+    expect(styleEngineOptions({ shape: "heart" }, value)).toEqual({
+      shape: "heart",
+    });
+    expect(styleSvgOptions({ shape: "heart" }, value)).toEqual({
+      shape: "heart",
+    });
   });
 });
 

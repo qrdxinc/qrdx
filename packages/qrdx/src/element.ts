@@ -36,6 +36,7 @@ export interface QRdxCodeProperties {
   templateId?: QRProps["templateId"];
   moduleScale?: QRProps["moduleScale"];
   autoLevel?: QRProps["autoLevel"];
+  exactLevel?: QRProps["exactLevel"];
   shape?: QRProps["shape"];
   eyeGradient?: QRProps["eyeGradient"];
   bgRadius?: QRProps["bgRadius"];
@@ -113,6 +114,7 @@ const ATTRIBUTES: Record<string, [OptionKey, AttributeKind]> = {
   "template-id": ["templateId", "string"],
   "module-scale": ["moduleScale", "number"],
   "auto-level": ["autoLevel", "boolean"],
+  "exact-level": ["exactLevel", "boolean"],
   shape: ["shape", "string"],
   "eye-gradient": ["eyeGradient", "string"],
   "bg-radius": ["bgRadius", "number"],
@@ -239,6 +241,7 @@ export class QRdxCodeElement extends BaseElement {
   declare templateId: QRdxCodeProperties["templateId"];
   declare moduleScale: QRdxCodeProperties["moduleScale"];
   declare autoLevel: QRdxCodeProperties["autoLevel"];
+  declare exactLevel: QRdxCodeProperties["exactLevel"];
   declare shape: QRdxCodeProperties["shape"];
   declare frame: QRdxCodeProperties["frame"];
   declare imageSettings: QRdxCodeProperties["imageSettings"];

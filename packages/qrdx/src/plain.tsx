@@ -3,19 +3,18 @@
 // background rect, an optional logo and frame, and no styling. Split in two
 // so the React entry can draw the same tree with React's elements.
 import type { ImageSettings, QRSVGOptions } from "../types";
-import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_FGCOLOR,
   DEFAULT_LEVEL,
   DEFAULT_MARGIN,
   DEFAULT_SIZE,
-  ERROR_LEVEL_MAP,
 } from "./constants";
 import { isFrameActive, wrapWithFrame } from "./frame";
 import type { QRNode } from "./jsx/runtime";
 import { renderLogo } from "./logo";
 import { capImageSettings } from "./logo-budget";
+import { encodeSymbol } from "./symbol";
 import {
   excavateModules,
   generatePath,
@@ -76,11 +75,12 @@ export async function preparePlainQRCode(
     frameLabelMarkers: _frameLabelMarkers,
     partMarkers: _partMarkers,
     autoLevel,
+    exactLevel,
     ...otherProps
   } = props;
   // A logo no bigger than the code can repair (logo-budget.ts)
   const imageSettings = capImageSettings(
-    { value, size, margin, level, autoLevel },
+    { value, size, margin, level, autoLevel, exactLevel },
     requestedImageSettings
   );
   const effectiveLevel = resolveErrorLevel({
@@ -90,12 +90,10 @@ export async function preparePlainQRCode(
     margin,
     imageSettings,
     autoLevel,
+    exactLevel,
   });
 
-  let cells = qrcodegen.QrCode.encodeText(
-    value,
-    ERROR_LEVEL_MAP[effectiveLevel]
-  ).getModules();
+  let cells = encodeSymbol(value, effectiveLevel, exactLevel).getModules();
 
   const numCells = cells.length + margin * 2;
   const calculatedImageSettings = getImageSettings(

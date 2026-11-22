@@ -1,20 +1,21 @@
 "use client";
 
 // The payment code of a Swiss QR-bill (SIX Swiss Payments Code). The
-// guidelines want error correction M and the Swiss cross in the middle, so
-// the form puts both on the design when it opens, and offers to put them
-// back if the design changes them. What people type stays in this browser.
+// guidelines want error correction M, the Swiss cross in the middle, black
+// on white and nothing printed around the code, so the form puts that
+// QR-bill style on the design when it opens, and offers to put it back if
+// the design changes it. What people type stays in this browser.
 
 import { Button } from "@repo/design-system/components/ui/button";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import * as React from "react";
+import {
+  swissQrStyleIssues,
+  withSwissQrStyle,
+} from "@/lib/qr-design/swiss-qr-bill-style";
 import { swissQrBillSchema } from "@/lib/validations/qr-content";
 import { useQREditorStore } from "@/store/editor-store";
-import {
-  SWISS_CROSS_LOGO,
-  SWISS_QR_ERROR_CORRECTION,
-  swissCrossShare,
-} from "@/utils/swiss-qr-bill";
+import { SWISS_CROSS_LOGO, swissCrossShare } from "@/utils/swiss-qr-bill";
 import { type FormField, SchemaForm } from "./schema-form";
 
 const payer = (values: Record<string, string | boolean>) =>
@@ -151,45 +152,36 @@ const SWISS_QR_BILL_FIELDS: FormField[] = [
 ];
 
 /**
- * Error correction M and the Swiss cross at 7/46 of the symbol: set when
- * the form opens, kept in step with the payload's size, and offered back
- * when the design drops them.
+ * The QR-bill style (lib/qr-design/swiss-qr-bill-style.ts): error correction
+ * M, the Swiss cross at 7/46 of the symbol, black on white and a clear
+ * border. Set when the form opens, the cross kept in step with the
+ * payload's size, and offered back when the design drops any of it. Dot and
+ * eye shapes stay the design's: the guidelines don't fix them.
  */
 function SwissQrDesign() {
   const t = useTranslations("editor.contentForms.swissQrBill");
+  const format = useFormatter();
   const value = useQREditorStore((state) => state.value);
   const styles = useQREditorStore((state) => state.themeState.styles);
-  const share = swissCrossShare(value, styles.margin ?? 0);
+  const changed = swissQrStyleIssues(styles, value);
+  const compliant = changed.length === 0;
   const hasCross =
     styles.showLogo === true && styles.customLogo === SWISS_CROSS_LOGO;
-  const compliant =
-    hasCross &&
-    styles.level === SWISS_QR_ERROR_CORRECTION &&
-    !styles.autoLevel &&
-    styles.logoOptions?.size === share;
+  const share = swissCrossShare(value, styles.margin ?? 0);
 
   const apply = React.useCallback(() => {
-    const { themeState, setThemeState } = useQREditorStore.getState();
-    const current = themeState.styles;
+    const {
+      themeState,
+      setThemeState,
+      value: payload,
+    } = useQREditorStore.getState();
     setThemeState({
       ...themeState,
-      styles: {
-        ...current,
-        level: SWISS_QR_ERROR_CORRECTION,
-        autoLevel: undefined,
-        showLogo: true,
-        customLogo: SWISS_CROSS_LOGO,
-        logoOptions: {
-          size: swissCrossShare(
-            useQREditorStore.getState().value,
-            current.margin ?? 0,
-          ),
-        },
-      },
+      styles: withSwissQrStyle(themeState.styles, payload),
     });
   }, []);
 
-  // Once, when the type is picked: QR-bills always carry both.
+  // Once, when the type is picked: QR-bills always carry the style.
   const opened = React.useRef(false);
   React.useEffect(() => {
     if (opened.current) return;
@@ -199,13 +191,28 @@ function SwissQrDesign() {
 
   // A longer bill can need a bigger symbol: the cross follows.
   React.useEffect(() => {
-    if (hasCross && styles.logoOptions?.size !== share) apply();
-  }, [hasCross, share, styles.logoOptions?.size, apply]);
+    if (!hasCross || styles.logoOptions?.size === share) return;
+    const { themeState, setThemeState } = useQREditorStore.getState();
+    setThemeState({
+      ...themeState,
+      styles: {
+        ...themeState.styles,
+        logoOptions: { ...themeState.styles.logoOptions, size: share },
+      },
+    });
+  }, [hasCross, share, styles.logoOptions?.size]);
 
   return (
     <div className="bg-muted/40 flex flex-col gap-2 rounded-lg border px-3 py-2">
       <p className="text-muted-foreground text-[11px] leading-relaxed text-pretty">
-        {compliant ? t("designApplied") : t("designChanged")}
+        {compliant
+          ? t("designApplied")
+          : t("designChanged", {
+              parts: format.list(
+                changed.map((part) => t(`styleParts.${part}`)),
+                { type: "disjunction" },
+              ),
+            })}
       </p>
       {!compliant && (
         <Button

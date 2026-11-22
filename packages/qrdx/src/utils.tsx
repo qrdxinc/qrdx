@@ -34,7 +34,6 @@ import {
   isShapedBodyPattern,
   renderShapedBody,
 } from "./body-patterns";
-import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_FGCOLOR,
@@ -42,7 +41,6 @@ import {
   DEFAULT_LEVEL,
   DEFAULT_MARGIN,
   DEFAULT_SIZE,
-  ERROR_LEVEL_MAP,
 } from "./constants";
 import { generateCornerDotPath } from "./corner-dot";
 import { generateCornerSquarePath } from "./corner-eye";
@@ -54,6 +52,7 @@ import { clampBgRadius, eyeShapeOf, resolveHalo, resolveShadow } from "./looks";
 import { partMarker, type QRPart, type QRPartEye } from "./part-markers";
 import { getLayoutMargin, shapeBackground, shapeDecoration } from "./qr-shape";
 import { hashString } from "./shapes";
+import { encodeSymbol } from "./symbol";
 import { getTemplate } from "./templates";
 import { getSolidColor } from "./utils/color";
 import { compact, fmt, SCALE_DECIMALS } from "./utils/fmt";
@@ -888,6 +887,7 @@ export function resolveErrorLevel(props: {
   imageSettings?: ImageSettings;
   isOGContext?: boolean;
   autoLevel?: boolean;
+  exactLevel?: boolean;
   shape?: QRCodeShape;
 }): ErrorLevel {
   const level = props.level ?? DEFAULT_LEVEL;
@@ -899,9 +899,10 @@ export function resolveErrorLevel(props: {
       ? "Q"
       : level;
   if (props.autoLevel && imageSettings && effective !== "H") {
-    const cells = qrcodegen.QrCode.encodeText(
+    const cells = encodeSymbol(
       props.value,
-      ERROR_LEVEL_MAP[effective]
+      effective,
+      props.exactLevel
     ).getModules();
     const settings = getImageSettings(
       cells,
@@ -974,6 +975,7 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     eyeColors,
     moduleScale,
     autoLevel,
+    exactLevel,
     shape,
     eyeShapes,
     eyeGradient,
@@ -997,7 +999,7 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
   );
   // A logo no bigger than the code can repair (logo-budget.ts)
   const imageSettings = capImageSettings(
-    { value, size, margin, level, shape, autoLevel, isOGContext },
+    { value, size, margin, level, shape, autoLevel, exactLevel, isOGContext },
     requestedImageSettings
   );
 
@@ -1025,13 +1027,11 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     imageSettings,
     isOGContext,
     autoLevel,
+    exactLevel,
     shape,
   });
 
-  const qrCode = qrcodegen.QrCode.encodeText(
-    value,
-    ERROR_LEVEL_MAP[effectiveLevel]
-  );
+  const qrCode = encodeSymbol(value, effectiveLevel, exactLevel);
   let cells = qrCode.getModules();
   // A shaped code draws the symbol further in, inside its disc, heart or
   // silhouette (a silhouette that can't hold the code draws square)

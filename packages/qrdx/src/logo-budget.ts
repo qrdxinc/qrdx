@@ -8,10 +8,10 @@
 // The budget is the one the Logo QR badge uses (art.tsx): 60% of each
 // block's repair capacity, which leaves room for print and camera errors.
 import type { ErrorLevel, ImageSettings, QRCodeShape } from "../types";
-import qrcodegen from "./codegen";
 import { damagedCodewords, getCodewordMap } from "./codeword-map";
-import { DEFAULT_IMG_SCALE, DEFAULT_LEVEL, ERROR_LEVEL_MAP } from "./constants";
+import { DEFAULT_IMG_SCALE, DEFAULT_LEVEL } from "./constants";
 import { getLayoutMargin } from "./qr-shape";
+import { encodeSymbol } from "./symbol";
 import { getImageSettings, resolveErrorLevel } from "./utils";
 
 /** Share of each block's repair capacity a logo may use (as the badge). */
@@ -26,7 +26,7 @@ export interface LogoBlockDamage {
   correctable: number;
   /** Most the logo may spoil per block: correctable × LOGO_EC_SAFETY */
   budget: number;
-  /** The level the symbol is really drawn at (qrcodegen may boost it) */
+  /** The level the symbol is really drawn at (qrcodegen may boost it, unless exactLevel) */
   level: ErrorLevel;
   version: number;
 }
@@ -38,6 +38,8 @@ export interface LogoCode {
   margin: number;
   level: ErrorLevel;
   shape?: QRCodeShape;
+  /** Encoded at exactly `level`, not boosted (see QRProps.exactLevel) */
+  exactLevel?: boolean;
 }
 
 interface BudgetContext {
@@ -51,11 +53,9 @@ interface BudgetContext {
 
 /** The symbol and its codeword map, encoded once per code and level. */
 function budgetContext(code: LogoCode): BudgetContext {
-  const qr = qrcodegen.QrCode.encodeText(
-    code.value,
-    ERROR_LEVEL_MAP[code.level]
-  );
-  // qrcodegen raises the level when the data fits anyway: count with that
+  const qr = encodeSymbol(code.value, code.level, code.exactLevel);
+  // qrcodegen raises the level when the data fits anyway (unless
+  // exactLevel): count with the level the symbol really has
   const level = LEVELS[qr.errorCorrectionLevel.ordinal] ?? code.level;
   return {
     code,
@@ -205,6 +205,7 @@ export function capImageSettings(
     size: code.size,
     margin: code.margin,
     shape: code.shape,
+    exactLevel: code.exactLevel,
   };
   const drawnAt = (settings: ImageSettings) =>
     resolveErrorLevel({ ...code, level: requested, imageSettings: settings });

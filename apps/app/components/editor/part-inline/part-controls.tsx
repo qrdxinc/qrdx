@@ -248,7 +248,7 @@ const percent = (share: number) => Math.round(share * 100);
 
 /** The level the code is drawn at: a big logo can raise it (autoLevel). */
 function drawnErrorLevel(style: QRStyle, value: string) {
-  const options = styleEngineOptions(style);
+  const options = styleEngineOptions(style, value);
   const data = getQRData({
     value,
     level: style.level,

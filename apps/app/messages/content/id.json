@@ -38800,5 +38800,23 @@
     "text": "Secara kasar saja, kecuali penemu membagikan lebih banyak. Seperti setiap kode dinamis, analitik tag menunjukkan kapan tag dipindai serta negara, wilayah, dan kota dari jaringan. Di Pro dan Business, Anda dapat mengaktifkan lokasi presisi untuk kode tag: tepat setelah pemindaian, browser penemu akan menanyakan apakah mereka mau membagikan lokasinya, dan jika mereka mengizinkan, Anda bisa melihat di mana kode dipindai, dibulatkan hingga sekitar 100 m. Formulir \"ditemukan\" memungkinkan penemu memberi tahu Anda di mana barang tersebut berada.",
     "status": "machine",
     "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "dc0eabcf8882": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, portfolio or creator page.",
+    "text": "Arahkan orang ke profil, kanal, server Discord, buletin, portofolio, atau halaman kreator.",
+    "status": "machine",
+    "context": "qrTypes.groups.social.description"
+  },
+  "f6614584199c": {
+    "source": "Music and podcasts",
+    "text": "Musik dan podcast",
+    "status": "machine",
+    "context": "qrTypes.groups.music.title"
+  },
+  "73d839cde7ab": {
+    "source": "Songs, albums, playlists, artist pages and podcasts on Spotify, Apple Music, SoundCloud, Bandcamp and other services.",
+    "text": "Lagu, album, playlist, halaman artis, dan podcast di Spotify, Apple Music, SoundCloud, Bandcamp, dan layanan lainnya.",
+    "status": "machine",
+    "context": "qrTypes.groups.music.description"
   }
 }

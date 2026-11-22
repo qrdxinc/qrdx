@@ -2,8 +2,9 @@
 // so a type reads at a glance (WhatsApp green, Wi-Fi blue). Colours and
 // glyphs live in lib/type-marks/data.ts; the glyph is white unless a brand
 // draws its mark dark (lib/type-marks/ink.ts). Plain markup, no hooks:
-// server pages (the /qr-code-generator hub) and client components (the type
-// picker) share it.
+// server pages (the /qr-code-generator hub and its per-type pages) and client
+// components (the type picker) share it. Open Graph images draw the same tile
+// with type-mark-og.tsx.
 
 import { LinkedinLogo } from "@repo/design-system/components/icons";
 import { cn } from "@repo/design-system/lib/utils";
@@ -13,6 +14,7 @@ import {
   Bank,
   Box,
   Briefcase,
+  Brush2,
   Calendar1,
   CalendarEdit,
   Call,
@@ -37,6 +39,8 @@ import {
   Moneys,
   Music,
   MusicPlaylist,
+  MusicSquare,
+  People,
   Personalcard,
   Pet,
   Profile2User,
@@ -47,7 +51,8 @@ import {
   ShoppingCart,
   Sms,
   SmsStar,
-  TagUser,
+  Tag2,
+  Task,
   TaskSquare,
   Text,
   TicketDiscount,
@@ -85,6 +90,7 @@ export const TYPE_MARK_GLYPHS: Record<string, Icon> = {
   Bag2,
   Bank,
   Box,
+  Brush2,
   Briefcase,
   Calendar1,
   CalendarEdit,
@@ -109,6 +115,8 @@ export const TYPE_MARK_GLYPHS: Record<string, Icon> = {
   MoneySend,
   Music,
   MusicPlaylist,
+  MusicSquare,
+  People,
   Personalcard,
   Pet,
   Profile2User,
@@ -119,7 +127,8 @@ export const TYPE_MARK_GLYPHS: Record<string, Icon> = {
   ShoppingCart,
   Sms,
   SmsStar,
-  TagUser,
+  Tag2,
+  Task,
   TaskSquare,
   Text,
   TicketDiscount,
@@ -152,19 +161,21 @@ export interface TypeMarkProps extends TypeMarkTarget {
   className?: string;
 }
 
-function entryFor({ type, pageType }: TypeMarkTarget) {
+/** A type's entry in lib/type-marks/data.ts, or undefined when it has none yet. */
+export function typeMarkEntry({ type, pageType }: TypeMarkTarget) {
   return pageType ? pageTypeMark(pageType) : contentTypeMark(type);
 }
 
-type Glyph =
+export type TypeMarkGlyph =
   | { kind: "brand"; slug: BrandMarkSlug }
   | { kind: "integration"; light: string; dark: string }
   | { kind: "icon"; Icon: AnyIcon; bold: boolean };
 
-function resolveGlyph(
+/** What an entry's glyph draws: a brand's mark, an integration's logo files or an icon. */
+export function resolveGlyph(
   entry: TypeMarkEntry | undefined,
   fallbackIcon: AnyIcon | undefined,
-): Glyph {
+): TypeMarkGlyph {
   const glyph = entry?.glyph ?? "";
   if (glyph.startsWith("brand:")) {
     const slug = glyph.slice("brand:".length);
@@ -193,13 +204,24 @@ function resolveGlyph(
  */
 const WORDMARKS = new Set<string>(["caldotcom", "sepa", "venmo", "zoom"]);
 
+/**
+ * The glyph's box on a tile of `size`: iconsax glyphs at 62% (their art has
+ * its own air), brand marks and logos at 52%, wide wordmarks at 74%.
+ */
+export function glyphBox(size: number, glyph: TypeMarkGlyph): number {
+  if (glyph.kind === "icon" && glyph.bold) return Math.round(size * 0.62);
+  const wide = glyph.kind === "brand" && WORDMARKS.has(glyph.slug);
+  return Math.round(size * (wide ? 0.74 : 0.52));
+}
+
 const RING =
   "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.06)] dark:shadow-[inset_0_0_0_1px_rgb(255_255_255/0.14)]";
 // From 44 px: the same ring plus a very soft drop shadow.
 const RING_LIFTED =
   "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.06),0_1px_2px_rgb(0_0_0/0.06),0_6px_14px_-8px_rgb(0_0_0/0.25)] dark:shadow-[inset_0_0_0_1px_rgb(255_255_255/0.14),0_1px_2px_rgb(0_0_0/0.5),0_6px_14px_-8px_rgb(0_0_0/0.7)]";
 
-const HIGHLIGHT =
+/** The tile's soft top highlight. */
+export const TYPE_MARK_HIGHLIGHT =
   "linear-gradient(to bottom, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0) 50%)";
 
 const tintOf = (color: string, percent: number) =>
@@ -214,7 +236,7 @@ export function TypeMark({
   variant = "fill",
   className,
 }: TypeMarkProps) {
-  const entry = entryFor({ type, pageType });
+  const entry = typeMarkEntry({ type, pageType });
   const fill = markFill(entry);
   const glyph = resolveGlyph(entry, fallbackIcon);
   const tint = variant === "tint";
@@ -237,15 +259,12 @@ export function TypeMark({
           height: size,
           borderRadius: Math.round(size * 0.28),
           backgroundColor: fill,
-          backgroundImage: HIGHLIGHT,
+          backgroundImage: TYPE_MARK_HIGHLIGHT,
           color: ink,
         }
   ) as CSSProperties;
 
-  const markSize = Math.round(
-    size * (glyph.kind === "brand" && WORDMARKS.has(glyph.slug) ? 0.74 : 0.52),
-  );
-  const iconSize = Math.round(size * 0.62);
+  const markSize = glyphBox(size, glyph);
 
   let content: ReactNode;
   if (glyph.kind === "brand") {
@@ -275,13 +294,12 @@ export function TypeMark({
   } else {
     // A sized box with the svg filling it, so any icon component (iconsax,
     // a brandIcon() fallback, the LinkedIn mark) follows the tile's size.
-    const box = glyph.bold ? iconSize : markSize;
     const GlyphIcon = glyph.Icon as ComponentType<{
       className?: string;
       variant?: "Bold";
     }>;
     content = (
-      <span className="grid" style={{ width: box, height: box }}>
+      <span className="grid" style={{ width: markSize, height: markSize }}>
         {glyph.bold ? (
           <GlyphIcon className="size-full" variant="Bold" />
         ) : (
@@ -310,6 +328,26 @@ export function TypeMark({
 }
 
 /**
+ * A big mark's soft wash: 22% of its colour at the centre (16% on the dark
+ * theme, where colour glows more), fading out.
+ */
+const WASH =
+  "bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--mark-wash)_22%,transparent),transparent)] dark:bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--mark-wash)_16%,transparent),transparent)]";
+
+/**
+ * The colour a wash is mixed from. Black fills (X, TikTok) would smudge
+ * grey, or vanish on the dark theme: they wash with half-strength text
+ * colour instead.
+ */
+function washStyle(target: TypeMarkTarget): CSSProperties {
+  const fill = markFill(typeMarkEntry(target));
+  const wash = isNearBlack(fill)
+    ? "color-mix(in srgb, var(--foreground) 45%, transparent)"
+    : fill;
+  return { "--mark-wash": wash } as CSSProperties;
+}
+
+/**
  * A big mark on a soft wash of its colour (the picker's Popular cards, the
  * hub's cards). The wash is a 16:10 ellipse as tall as the area, centred,
  * so wide cards get the same soft shape rather than a long streak.
@@ -330,21 +368,17 @@ export function TypeMarkArt({
   /** Extra classes for the mark (a hover lift). */
   markClassName?: string;
 }) {
-  const fill = markFill(entryFor(target));
-  // 22% at the centre (16% on the dark theme, where colour glows more).
-  // Black fills (X, TikTok) would smudge grey, or vanish on the dark theme:
-  // they wash with half-strength text colour instead.
-  const wash = isNearBlack(fill)
-    ? "color-mix(in srgb, var(--foreground) 45%, transparent)"
-    : fill;
   return (
     <span
       aria-hidden
       className={cn("relative grid place-items-center", className)}
     >
       <span
-        className="absolute top-0 left-1/2 aspect-[16/10] h-full -translate-x-1/2 bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--mark-wash)_22%,transparent),transparent)] dark:bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--mark-wash)_16%,transparent),transparent)]"
-        style={{ "--mark-wash": wash } as CSSProperties}
+        className={cn(
+          "absolute top-0 left-1/2 aspect-[16/10] h-full -translate-x-1/2",
+          WASH,
+        )}
+        style={washStyle(target)}
       />
       <span
         className={cn(
@@ -371,3 +405,65 @@ export function TypeMarkArt({
 /** The hover lift big marks may do (1 px, none with reduced motion). */
 export const TYPE_MARK_LIFT =
   "transition-transform duration-200 ease-out group-hover:-translate-y-px group-focus-visible:-translate-y-px motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-focus-visible:translate-y-0";
+
+/**
+ * A type card's header (the /qr-code-generator hub, the Related grids of its
+ * per-type pages): the 80 px mark on its wash, 128 px tall; on phones 112 px
+ * with a 56 px mark.
+ */
+export function TypeMarkCardArt(target: TypeMarkTarget) {
+  return (
+    <TypeMarkArt
+      {...target}
+      className="h-32 w-full max-sm:h-28"
+      markClassName={TYPE_MARK_LIFT}
+      phoneSize={56}
+      size={80}
+    />
+  );
+}
+
+/**
+ * A page's mark above its title (the per-type generator pages): the mark on
+ * a round wash of its colour, 160 px across. Only the mark takes up room;
+ * the wash spills past it, under the text around it.
+ */
+export function TypeMarkHero({
+  size = 64,
+  phoneSize = 56,
+  className,
+  ...target
+}: TypeMarkTarget & {
+  size?: TypeMarkSize;
+  /** The mark's size below 640 px wide. */
+  phoneSize?: TypeMarkSize;
+  className?: string;
+}) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "relative size-[var(--mark-box)] shrink-0 max-sm:size-[var(--mark-box-phone)]",
+        className,
+      )}
+      style={
+        {
+          "--mark-box": `${size}px`,
+          "--mark-box-phone": `${phoneSize}px`,
+          "--mark-phone-scale": phoneSize / size,
+        } as CSSProperties
+      }
+    >
+      <span
+        className={cn(
+          "pointer-events-none absolute top-1/2 left-1/2 -z-10 size-40 -translate-x-1/2 -translate-y-1/2",
+          WASH,
+        )}
+        style={washStyle(target)}
+      />
+      <span className="absolute top-1/2 left-1/2 grid -translate-x-1/2 -translate-y-1/2 max-sm:[scale:var(--mark-phone-scale)]">
+        <TypeMark {...target} size={size} />
+      </span>
+    </span>
+  );
+}

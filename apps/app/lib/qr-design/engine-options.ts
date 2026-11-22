@@ -9,12 +9,18 @@ import type {
   QRShadow,
 } from "qrdx/types";
 import type { ThemeStyles } from "@/types/theme";
+import {
+  isSwissQrPayload,
+  SWISS_CROSS_LOGO,
+  swissCrossShare,
+} from "@/utils/swiss-qr-bill";
 
 /** Engine options a style can carry beyond colors, shapes and the frame. */
 export interface StyleEngineOptions {
   eyeColors?: EyeColors;
   moduleScale?: number;
   autoLevel?: boolean;
+  exactLevel?: boolean;
   logoOptions?: LogoOptions;
   shape?: QRCodeShape;
   // The looks around the shapes (qrdx looks.ts)
@@ -61,14 +67,53 @@ function codeShape(style: Partial<ThemeStyles>): QRCodeShape | undefined {
 }
 
 /**
+ * What the payload itself asks of the engine. A Swiss QR-bill is encoded at
+ * exactly its level: SIX's guidelines want M (IG §6.1), and the encoder
+ * would otherwise raise it when the data fits the same version anyway.
+ * Spread it wherever `value` is drawn without `styleEngineOptions`.
+ */
+export function payloadEngineOptions(
+  value: string,
+): Pick<StyleEngineOptions, "exactLevel"> {
+  return isSwissQrPayload(value) ? { exactLevel: true } : {};
+}
+
+/**
+ * A Swiss QR-bill's cross stays 7/46 of the symbol (7 × 7 mm on the 46 mm
+ * code, IG §6.4.2) at the margin it is drawn with, which can be more than
+ * the style's (the generator pages' quiet zone).
+ */
+function swissCrossOptions(
+  style: Partial<ThemeStyles>,
+  value: string,
+  margin: number,
+): Pick<StyleEngineOptions, "logoOptions"> {
+  const cross =
+    style.showLogo === true &&
+    style.customLogo === SWISS_CROSS_LOGO &&
+    isSwissQrPayload(value);
+  return cross
+    ? {
+        logoOptions: {
+          ...style.logoOptions,
+          size: swissCrossShare(value, margin),
+        },
+      }
+    : {};
+}
+
+/**
  * Per-eye colors, module size, auto error correction and the logo layout of
- * `style`, ready to spread into `getQRData(...)` or `<QRCode>`. Only set
- * values are returned, so a style without them renders exactly as before.
- * Pass `level` and `margin` to `getQRData` too: logo clear space and
- * position are laid out in modules.
+ * `style`, ready to spread into `getQRData(...)` or `<QRCode>` for `value`.
+ * Only set values are returned, so a style without them renders exactly as
+ * before. Pass `level` and `margin` to `getQRData` too: logo clear space and
+ * position are laid out in modules. `margin` is the one drawn, when it isn't
+ * the style's. `value` adds what the payload asks for (payloadEngineOptions).
  */
 export function styleEngineOptions(
   style: Partial<ThemeStyles>,
+  value: string,
+  margin = style.margin ?? 0,
 ): StyleEngineOptions {
   const eyeColors = style.eyeColors;
   const hasEyeColors =
@@ -79,10 +124,12 @@ export function styleEngineOptions(
     ...(style.moduleScale !== undefined &&
       style.moduleScale < 1 && { moduleScale: style.moduleScale }),
     ...(style.autoLevel && { autoLevel: true }),
+    ...payloadEngineOptions(value),
     ...(style.logoOptions &&
       Object.keys(style.logoOptions).length > 0 && {
         logoOptions: style.logoOptions,
       }),
+    ...swissCrossOptions(style, value, margin),
     ...(codeShape(style) && { shape: codeShape(style) }),
     ...styleLooks(style),
   };
@@ -90,16 +137,17 @@ export function styleEngineOptions(
 
 /**
  * The options `<QRCodeSVG>` takes directly (per-eye colors, module size,
- * the code shape and the looks around the shapes), for previews without a
- * logo. Logo layout goes through `getQRData`.
+ * the code shape, the looks around the shapes and what the payload asks
+ * for), for previews without a logo. Logo layout goes through `getQRData`.
  */
 export function styleSvgOptions(
   style: Partial<ThemeStyles>,
+  value: string,
 ): Omit<StyleEngineOptions, "autoLevel" | "logoOptions"> {
   const {
     autoLevel: _autoLevel,
     logoOptions: _logoOptions,
     ...rest
-  } = styleEngineOptions(style);
+  } = styleEngineOptions(style, value);
   return rest;
 }

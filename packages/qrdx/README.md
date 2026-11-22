@@ -256,7 +256,7 @@ await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico"
 await qr.download({ format: "svg", filename: "menu.svg" });
 ```
 
-- **Attributes:** `value`, `size`, `level`, `fg-color`, `bg-color`, `eye-color`, `dot-color`, `body-pattern`, `corner-eye-pattern`, `corner-eye-dot-pattern`, `margin`, `template-id`, `module-scale`, `auto-level`, `shape`, `label`, and `props` (any other option as JSON). Each is also a property with the option's name (`qr.bodyPattern`). Object options (`frame`, gradients, `imageSettings`, `eyeColors`, `art`, `customTemplate`, `customProps`) are properties only.
+- **Attributes:** `value`, `size`, `level`, `fg-color`, `bg-color`, `eye-color`, `dot-color`, `body-pattern`, `corner-eye-pattern`, `corner-eye-dot-pattern`, `margin`, `template-id`, `module-scale`, `auto-level`, `exact-level`, `shape`, `label`, and `props` (any other option as JSON). Each is also a property with the option's name (`qr.bodyPattern`). Object options (`frame`, gradients, `imageSettings`, `eyeColors`, `art`, `customTemplate`, `customProps`) are properties only.
 - **Updates** are batched: however many changes you make in a row, the code is redrawn once, in a microtask, and only if its markup changed. Properties set before the element is defined are picked up when it is.
 - **Shadow DOM:** the code is drawn in an open shadow root, so page CSS can't restyle its paths by accident. Style it from outside with `qrdx-code::part(svg)`.
 - **Accessibility:** the `<svg>` has `role="img"` and an `aria-label` from `label`, or "QR code". It never falls back to the value, which can hold a Wi-Fi password or contact details.
@@ -342,6 +342,7 @@ The same lists are exported as `BODY_PATTERN`, `CORNER_EYE_PATTERNS` and `CORNER
 | `eyeColors` | Per-eye `{ outer, inner }` colors (or gradients) for `topLeft`, `topRight`, `bottomLeft`; each overrides `eyeColor` / `dotColor` |
 | `moduleScale` | 0.5–1 (default 1): smaller modules for a spaced look; each pattern stops at the smallest size that still scans (`MODULE_SCALE_FLOOR`) |
 | `autoLevel` | Raise `level` to H when a logo covers more than 7% of the code (off by default) |
+| `exactLevel` | Encode at exactly the level the code is drawn at (off by default). Without it the encoder raises `level` to Q or H whenever the data still fits the same version; a Swiss QR-bill must be M, so set it there. Every renderer, the logo budget, the scan score and the print layout use the same symbol |
 | `eyeShapes` | Per-eye `{ outer, inner }` shapes (an eye frame and an eye center) for `topLeft`, `topRight`, `bottomLeft`; each overrides `cornerEyePattern` / `cornerEyeDotPattern`. The scan score judges each eye on its own (`getEyeStyleRisk`, `weakestEyePattern`) |
 | `eyeGradient` | `"corner"` (default: each eye sweeps its own gradient) or `"code"`: the eyes' gradients run across the whole code, so eyes painted with the dots' gradient continue it |
 | `bgRadius` | Corner radius of the background, 0 (default) to `BG_RADIUS_MAX` (0.5) of the code's width; capped at `BG_RADIUS_QUIET_RATIO` (2) × `margin` modules so the quiet zone keeps the code's corners (`getBgRadiusLimit` gives the cap). Square codes only |

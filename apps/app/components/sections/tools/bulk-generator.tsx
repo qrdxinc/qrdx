@@ -901,7 +901,11 @@ export function BulkGenerator({
               size={256}
               templateId={selectedStyle.templateId}
               value={previewValue}
-              {...styleEngineOptions(selectedStyle)}
+              {...styleEngineOptions(
+                selectedStyle,
+                previewValue,
+                quietZone ? QUIET_ZONE_MODULES : 0,
+              )}
             />
           ) : (
             <div className="flex flex-col items-center gap-3 px-4 text-center">

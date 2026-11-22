@@ -155,7 +155,7 @@ export function ScanScoreBadge({
         logo: style.customLogo ?? DEFAULT_QR_LOGO,
         level: style.level,
         margin: style.margin,
-        ...styleEngineOptions(style),
+        ...styleEngineOptions(style, value),
       }),
       level: style.level,
       cornerEyePattern: style.cornerEyePattern,

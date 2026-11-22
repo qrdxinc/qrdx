@@ -17,6 +17,7 @@ import {
 } from "qrdx/types";
 import * as React from "react";
 import ControlSection from "@/components/editor/control-section";
+import { payloadEngineOptions } from "@/lib/qr-design/engine-options";
 import { useQREditorStore } from "@/store/editor-store";
 import type { QRStyle } from "@/types/theme";
 import { LogoCropControls, useLogoShapeNames } from "./logo-crop-controls";
@@ -92,6 +93,7 @@ export function useLogoSize(style: QRStyle) {
             margin: style.margin,
             shape: style.shape,
             autoLevel: style.autoLevel,
+            ...payloadEngineOptions(value),
             logoOptions: { padding, x, y },
           })
         : LOGO_SIZE_MAX,

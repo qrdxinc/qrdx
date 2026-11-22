@@ -41,7 +41,7 @@ export function DesignQr({
         margin={style.margin}
         templateId={style.templateId}
         value={value || " "}
-        {...styleEngineOptions(style)}
+        {...styleEngineOptions(style, value || " ")}
       />
     </div>
   );

@@ -64,6 +64,7 @@ import { QRCode } from "qrdx";
 | `logoOptions` | `LogoOptions` | none | The logo's `size` (0.1 to 0.3, default 0.25), `padding` (0 to 2 modules), `x` and `y` (0 to 1), `shape` and `plate` |
 | `hideLogo` | `boolean` | `false` | Hides the logo even when `logo` is set |
 | `autoLevel` | `boolean` | `false` | Raises `level` to `H` when the logo covers more than 7% of the code (`AUTO_LEVEL_LOGO_COVERAGE`) |
+| `exactLevel` | `boolean` | `false` | Encodes at exactly the level the code is drawn at. Without it the encoder raises `level` to `Q` or `H` whenever the data still fits the same version. A Swiss QR-bill must be `M`, so QRdx sets it for those |
 | `frame` | `AnyQRFrame` | none | A call-to-action frame: `{ style, text, color, textColor, secondaryText, secondaryColor, fontScale }`, or `{ style: "custom", spec }`. The output grows to fit it |
 | `templateId` | `string` | none | A template drawn at `size` with the code inside: `"Arrow"`, `"StandardBox"`, `"SquareBorder"`, `"StrikedBox"`, `"Halloween"`, `"DotRing"` or `"default"` |
 | `customTemplate` | `TemplateDefinition` | none | A template you draw in code. Wins over `templateId` |
@@ -167,7 +168,7 @@ Grades are `"great"`, `"ok"`, `"risky"` and `"fails"`. Each check is `{ id, pass
 | --- | --- | --- |
 | `getQRData(props)` | the props with `imageSettings` | Lays `logo` and `logoOptions` out for a 1024 px code, capped to the error-correction budget |
 | `resolveQRCodeProps(props)` | `QRSVGOptions` | `QRCode`'s props as what the renderer draws, `scale` applied |
-| `getLogoSizeLimit({ value, level, margin, shape, autoLevel, logoOptions })` | `number` | The largest `logoOptions.size` that fits, or 0 |
+| `getLogoSizeLimit({ value, level, margin, shape, autoLevel, exactLevel, logoOptions })` | `number` | The largest `logoOptions.size` that fits, or 0 |
 | `getLogoBlockDamage(...)`, `logoFitsBudget(...)`, `getCodewordMap(...)`, `damagedCodewords(...)` | | The budget's parts. `LOGO_EC_SAFETY` is 0.6 |
 | `removeLogoBackground(src)` | `Promise<string \| null>` | The logo with its solid background removed, as a PNG data URL. Browser |
 | `removeLogoBackdrop(pixels)` | `LogoPixels \| null` | The same on RGBA pixels, anywhere |

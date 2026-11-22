@@ -1,9 +1,9 @@
 import type { ErrorLevel, ImageSettings, LogoOptions, QRProps } from "../types";
 import { LOGO_SIZE_DEFAULT, LOGO_SIZE_MAX } from "../types/constants";
-import qrcodegen from "./codegen";
-import { DEFAULT_LEVEL, DEFAULT_MARGIN, ERROR_LEVEL_MAP } from "./constants";
+import { DEFAULT_LEVEL, DEFAULT_MARGIN } from "./constants";
 import { fitLogoWidth } from "./logo-budget";
 import { getLayoutMargin } from "./qr-shape";
+import { encodeSymbol } from "./symbol";
 import { resolveErrorLevel } from "./utils";
 
 interface QRDataProps extends QRProps {
@@ -21,11 +21,12 @@ interface QRDataResult extends QRProps {
 }
 
 /** Modules across the symbol (no margin) for `value` at `level`. */
-function symbolModules(value: string, level: QRProps["level"]): number {
-  return qrcodegen.QrCode.encodeText(
-    value,
-    ERROR_LEVEL_MAP[level ?? DEFAULT_LEVEL]
-  ).size;
+function symbolModules(
+  value: string,
+  level: QRProps["level"],
+  exactLevel: boolean | undefined
+): number {
+  return encodeSymbol(value, level ?? DEFAULT_LEVEL, exactLevel).size;
 }
 
 /**
@@ -42,6 +43,7 @@ function logoImageSettings(
     margin: number;
     level?: QRProps["level"];
     shape?: QRProps["shape"];
+    exactLevel?: boolean;
   },
   width = code.size * (options?.size ?? LOGO_SIZE_DEFAULT)
 ): ImageSettings {
@@ -58,7 +60,7 @@ function logoImageSettings(
   if (!(options?.padding || positioned)) {
     return settings;
   }
-  const modules = symbolModules(code.value, code.level);
+  const modules = symbolModules(code.value, code.level, code.exactLevel);
   // A circle code draws its symbol further in (see qr-shape.ts)
   const margin = getLayoutMargin(modules, code.margin, code.shape);
   const modulePx = code.size / (modules + 2 * margin);
@@ -93,6 +95,7 @@ function capLogo(
     margin: number;
     level?: QRProps["level"];
     shape?: QRProps["shape"];
+    exactLevel?: boolean;
   },
   autoLevel: boolean | undefined
 ): ImageSettings | undefined {
@@ -139,15 +142,26 @@ export function getLogoSizeLimit({
   margin,
   shape,
   autoLevel,
+  exactLevel,
   logoOptions,
-}: Pick<QRProps, "value" | "level" | "margin" | "shape" | "autoLevel"> & {
+}: Pick<
+  QRProps,
+  "value" | "level" | "margin" | "shape" | "autoLevel" | "exactLevel"
+> & {
   logoOptions?: LogoOptions;
 }): number {
   const size = 1024;
   const settings = capLogo(
     "data:,",
     { ...logoOptions, size: LOGO_SIZE_MAX },
-    { value: `${value}`, size, margin: margin ?? DEFAULT_MARGIN, level, shape },
+    {
+      value: `${value}`,
+      size,
+      margin: margin ?? DEFAULT_MARGIN,
+      level,
+      shape,
+      exactLevel,
+    },
     autoLevel
   );
   return settings ? settings.width / size : 0;
@@ -173,6 +187,7 @@ export function getQRData({
   eyeColors,
   moduleScale,
   autoLevel,
+  exactLevel,
   shape,
   eyeShapes,
   eyeGradient,
@@ -187,6 +202,7 @@ export function getQRData({
     margin: margin ?? DEFAULT_MARGIN,
     level,
     shape,
+    exactLevel,
   };
   // No default logo: only render (and excavate for) one the caller passes.
   const imageSettings =
@@ -208,6 +224,7 @@ export function getQRData({
     ...(eyeColors && { eyeColors }),
     ...(moduleScale !== undefined && { moduleScale }),
     ...(autoLevel && { autoLevel }),
+    ...(exactLevel && { exactLevel }),
     ...(shape && shape !== "square" && { shape }),
     ...(eyeShapes && { eyeShapes }),
     ...(eyeGradient && eyeGradient !== "corner" && { eyeGradient }),

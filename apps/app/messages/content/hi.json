@@ -38800,5 +38800,23 @@
     "text": "मोटे तौर पर, जब तक पाने वाला और जानकारी साझा न करे। हर डायनेमिक QR कोड की तरह, टैग के analytics में दिखता है कि उसे कब स्कैन किया गया, और नेटवर्क से देश, राज्य और शहर की जानकारी मिलती है। Pro और Business में आप टैग के कोड के लिए सटीक लोकेशन चालू कर सकते हैं: स्कैन के तुरंत बाद पाने वाले का ब्राउज़र पूछता है कि वे अपनी लोकेशन साझा करना चाहते हैं या नहीं, और अगर वे अनुमति दें तो आप देख सकते हैं कि स्कैन कहाँ हुआ, लगभग 100 मीटर तक के अनुमान के साथ। \"मिल गया\" फ़ॉर्म से पाने वाला आपको बता सकता है कि सामान कहाँ है।",
     "status": "machine",
     "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "dc0eabcf8882": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, portfolio or creator page.",
+    "text": "लोगों को किसी प्रोफ़ाइल, चैनल, Discord सर्वर, न्यूज़लेटर, पोर्टफ़ोलियो या क्रिएटर पेज पर भेजें।",
+    "status": "machine",
+    "context": "qrTypes.groups.social.description"
+  },
+  "f6614584199c": {
+    "source": "Music and podcasts",
+    "text": "म्यूज़िक और पॉडकास्ट",
+    "status": "machine",
+    "context": "qrTypes.groups.music.title"
+  },
+  "73d839cde7ab": {
+    "source": "Songs, albums, playlists, artist pages and podcasts on Spotify, Apple Music, SoundCloud, Bandcamp and other services.",
+    "text": "Spotify, Apple Music, SoundCloud, Bandcamp और दूसरी सर्विस पर गाने, एल्बम, प्लेलिस्ट, आर्टिस्ट पेज और पॉडकास्ट।",
+    "status": "machine",
+    "context": "qrTypes.groups.music.description"
   }
 }

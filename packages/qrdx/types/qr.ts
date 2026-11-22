@@ -236,6 +236,7 @@ export const qrPropsSchema = z.object({
     .max(MODULE_SCALE_MAX)
     .optional(),
   autoLevel: z.boolean().optional(),
+  exactLevel: z.boolean().optional(),
   shape: qrCodeShapeSchema.optional(),
   eyeShapes: eyeShapesSchema.optional(),
   eyeGradient: eyeGradientSpanSchema.optional(),
@@ -290,6 +291,11 @@ export interface QRProps {
   // Raise error correction to H when the logo covers more than 7% of the
   // code (off by default, so existing output never changes)
   autoLevel?: boolean;
+  // Encode at exactly the level the code is drawn at. By default the encoder
+  // raises it to Q or H when the data still fits the same version (more
+  // error correction for free); a Swiss QR-bill must be M, so it sets this.
+  // Off by default, so existing output never changes.
+  exactLevel?: boolean;
   // Outline: "circle" or "heart" puts the symbol in a disc or a heart of
   // decorative modules (see QR_SHAPES); a QRSilhouette fills an outline of
   // your own. Ignored with a template.

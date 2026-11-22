@@ -11,6 +11,7 @@ import { LINK_QR_TYPES } from "./qr-types-content-links";
 
 export type QrTypeGroup =
   | "social"
+  | "music"
   | "contact"
   | "payments"
   | "business"
@@ -64,9 +65,15 @@ export const QR_TYPE_GROUPS: {
   },
   {
     id: "social",
-    title: "Social media and music",
+    title: "Social media",
     description:
-      "Send people to a profile, channel, Discord server, newsletter, album or podcast.",
+      "Send people to a profile, channel, Discord server, newsletter, portfolio or creator page.",
+  },
+  {
+    id: "music",
+    title: "Music and podcasts",
+    description:
+      "Songs, albums, playlists, artist pages and podcasts on Spotify, Apple Music, SoundCloud, Bandcamp and other services.",
   },
   {
     id: "payments",
@@ -1043,7 +1050,7 @@ export const QR_TYPES: QrTypeContent[] = [
   {
     type: "spotify",
     name: "Spotify",
-    group: "social",
+    group: "music",
     summary: "Open a song, album, playlist or podcast.",
     metaDescription:
       "Create a Spotify QR code for a song, album, playlist, artist or podcast. Works with any camera, unlike Spotify Codes. Free PNG and SVG.",
@@ -1084,7 +1091,7 @@ export const QR_TYPES: QrTypeContent[] = [
           "Yes. Copy the link from your artist page with Share, then Copy link, and paste it here.",
       },
     ],
-    related: ["youtube", "instagram", "tiktok", "url"],
+    related: ["apple-music", "youtube-music", "soundcloud", "apple-podcasts"],
   },
   {
     type: "upi",
@@ -2322,7 +2329,7 @@ export const QR_TYPES: QrTypeContent[] = [
   {
     type: "soundcloud",
     name: "SoundCloud",
-    group: "social",
+    group: "music",
     summary: "Play a SoundCloud profile, track or playlist.",
     metaDescription:
       "Make a SoundCloud QR code for your profile, a track or a playlist. For flyers, merch, demo CDs and gig posters. Free, no signup.",
@@ -2355,7 +2362,7 @@ export const QR_TYPES: QrTypeContent[] = [
           "SoundCloud links open the app when it's installed, or the page in the browser.",
       },
     ],
-    related: ["spotify", "youtube", "twitch", "instagram"],
+    related: ["spotify", "bandcamp", "apple-music", "youtube"],
   },
   {
     type: "zoom",

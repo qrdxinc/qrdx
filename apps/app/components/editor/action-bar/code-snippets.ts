@@ -306,8 +306,8 @@ function noteArt(style: ThemeStyles, notes: Notes) {
 }
 
 /** Engine options newer than npm qrdx 0.0.46, the image API and MCP. */
-function noteEngineOptions(style: ThemeStyles, notes: Notes) {
-  const options = styleEngineOptions(style);
+function noteEngineOptions(style: ThemeStyles, value: string, notes: Notes) {
+  const options = styleEngineOptions(style, value);
   if (options.eyeColors) notes.add(LEFT_OUT.eyeColors);
   if (options.moduleScale !== undefined) notes.add(LEFT_OUT.moduleScale);
   const logo = logoOf(style).kind !== "none";
@@ -344,10 +344,11 @@ function logoIconOf(style: ThemeStyles): string | null {
  */
 function apiEngineOptions(
   style: ThemeStyles,
+  value: string,
   drawsLogo: boolean,
   color: (value: ColorConfig) => ColorConfig | undefined,
 ): Record<string, unknown> {
-  const options = styleEngineOptions(style);
+  const options = styleEngineOptions(style, value);
   const out: Record<string, unknown> = {};
   if (options.eyeColors) {
     const eyes: Record<string, Record<string, ColorConfig>> = {};
@@ -512,7 +513,7 @@ export function shadcnSnippet(input: SnippetInput): ShadcnSnippet {
   // Without `logo` the item draws none, as the editor does with the logo off.
   else if (logo.kind === "uploaded") notes.add(LEFT_OUT.uploadedLogo);
   noteArt(style, notes);
-  noteEngineOptions(style, notes);
+  noteEngineOptions(style, payloadOf(input.value), notes);
 
   return {
     install: SHADCN_INSTALL,
@@ -715,7 +716,7 @@ export function imageSnippet(input: SnippetInput): ImageSnippet {
   noteSilhouette(style, notes);
   Object.assign(
     styleParam,
-    apiEngineOptions(style, Boolean(icon), (color) => {
+    apiEngineOptions(style, payloadOf(input.value), Boolean(icon), (color) => {
       const paint = imagePaint(color, notes);
       return paint && "flat" in paint ? `#${paint.flat}` : paint?.style;
     }),
@@ -1019,7 +1020,7 @@ export function mcpSnippet(input: SnippetInput): Snippet {
   noteSilhouette(style, notes);
   Object.assign(
     design,
-    apiEngineOptions(style, Boolean(icon), (color) => {
+    apiEngineOptions(style, payloadOf(input.value), Boolean(icon), (color) => {
       const paint = publishedNormalized(color, notes);
       if (paint.type !== "solid") notes.add(LEFT_OUT.eyeGradients);
       const solid =
@@ -1137,7 +1138,7 @@ export function cliSnippet(input: SnippetInput): Snippet {
   else frameFlags.push("--no-logo");
   if (logo.kind === "uploaded") notes.add(LEFT_OUT.uploadedLogo);
   noteArt(style, notes);
-  noteEngineOptions(style, notes);
+  noteEngineOptions(style, payloadOf(input.value), notes);
 
   const lines = [
     `npx @qrdx/cli generate ${shellArg(payloadOf(input.value))} -o qr.svg`,
@@ -1168,7 +1169,10 @@ function libraryProps(
 ): Record<string, LibraryValue> {
   // Image fills and a traced silhouette are uploads: noted, never carried.
   const style = snippetStyle(input.style, notes);
-  const engine = styleEngineOptions(style);
+  // exactLevel (qrdx 0.0.62) isn't passed: npm QRDX_NPM_VERSION doesn't
+  // know it, and the encoder never raises the level of a Swiss QR-bill
+  // (74 bytes or more), so the symbol is the same without it.
+  const engine = styleEngineOptions(style, payloadOf(input.value));
   const props: Record<string, LibraryValue> = {
     value: payloadOf(input.value),
   };

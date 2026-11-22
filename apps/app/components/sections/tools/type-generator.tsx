@@ -373,7 +373,11 @@ function GeneratorPanel({
               size={288}
               templateId={styles.templateId}
               value={payload}
-              {...styleEngineOptions(styles)}
+              {...styleEngineOptions(
+                styles,
+                payload,
+                quietZone ? QUIET_ZONE_MODULES : (styles.margin ?? 0),
+              )}
             />
           ) : (
             <div className="flex flex-col items-center gap-3 px-6 text-center">
