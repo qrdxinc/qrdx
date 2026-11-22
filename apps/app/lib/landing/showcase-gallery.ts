@@ -179,6 +179,46 @@ export const SAMPLE_HOSTS = [
   "waze.com",
   "cash.app",
   "revolut.me",
+  // Added 2026-11-22 (links)
+  "m.me",
+  "viber.me",
+  "pf.kakao.com",
+  "zalo.me",
+  "teams.microsoft.com",
+  "example.webex.com",
+  "calendly.com",
+  "classroom.google.com",
+  "vk.com",
+  "weibo.com",
+  "www.tumblr.com",
+  "medium.com",
+  "on.substack.com",
+  "github.com",
+  "www.behance.net",
+  "dribbble.com",
+  "linktr.ee",
+  "www.patreon.com",
+  "ko-fi.com",
+  "buymeacoffee.com",
+  "music.apple.com",
+  "music.youtube.com",
+  "podcasts.apple.com",
+  "music.amazon.com",
+  "www.deezer.com",
+  "tidal.com",
+  "daily.bandcamp.com",
+  "docs.google.com",
+  "forms.gle",
+  "forms.office.com",
+  "yourname.notion.site",
+  "www.canva.com",
+  "apps.apple.com",
+  "play.google.com",
+  "www.tripadvisor.com",
+  "www.trustpilot.com",
+  "www.yelp.com",
+  "www.airbnb.com",
+  "www.booking.com",
 ] as const;
 
 const encode = (content: QRContentConfig) => encodeQRContent(content);
@@ -984,6 +1024,207 @@ const CONTENT: Record<ContentType, ContentSpec> = {
       address: "GCALNQQBXAPZ2WIRSDDBMSTAKCUH5SG6U76YBFLQLIXJTF7FE5AX7AOO",
     },
     preset: "graphite",
+  // Added 2026-11-22 (links): the platform's own account or a placeholder
+  messenger: {
+    config: { type: "messenger", username: "yourname" },
+    preset: "gradientBlue",
+  },
+  viber: {
+    config: { type: "viber", phoneNumber: SAMPLE_PHONE },
+    preset: "amethystHaze",
+  },
+  kakaotalk: {
+    config: { type: "kakaotalk", url: "https://pf.kakao.com/_yourchannel" },
+    preset: "butter",
+  },
+  zalo: {
+    config: { type: "zalo", url: "https://zalo.me/yourname" },
+    preset: "cobalt",
+  },
+  facetime: {
+    config: { type: "facetime", contact: SAMPLE_PHONE },
+    preset: "mint",
+  },
+  "microsoft-teams": {
+    config: { type: "microsoft-teams", users: "hello@example.com" },
+    preset: "folio",
+  },
+  webex: {
+    config: { type: "webex", url: "https://example.webex.com/meet/yourname" },
+    preset: "glacier",
+  },
+  calendly: {
+    config: { type: "calendly", username: "yourname" },
+    preset: "harbor",
+  },
+  "google-classroom": {
+    config: {
+      type: "google-classroom",
+      url: "https://classroom.google.com/c/yourclass",
+    },
+    preset: "nature",
+  },
+  vk: {
+    config: { type: "vk", url: "https://vk.com/vk" },
+    preset: "ultramarine",
+  },
+  weibo: {
+    config: { type: "weibo", url: "https://weibo.com/yourname" },
+    preset: "fire",
+  },
+  tumblr: {
+    config: { type: "tumblr", username: "staff" },
+    preset: "slate",
+  },
+  medium: {
+    config: { type: "medium", username: "@Medium" },
+    preset: "ink",
+  },
+  substack: {
+    config: { type: "substack", username: "on" },
+    preset: "tangerine",
+  },
+  github: {
+    config: { type: "github", username: "github" },
+    preset: "graphite",
+  },
+  behance: {
+    config: { type: "behance", username: "yourname" },
+    preset: "electric",
+  },
+  dribbble: {
+    config: { type: "dribbble", username: "dribbble" },
+    preset: "bubblegum",
+  },
+  linktree: {
+    config: { type: "linktree", username: "linktree" },
+    preset: "pistachio",
+  },
+  patreon: {
+    config: { type: "patreon", username: "yourname" },
+    preset: "bordeaux",
+  },
+  kofi: {
+    config: { type: "kofi", username: "yourname" },
+    preset: "caffeine",
+  },
+  buymeacoffee: {
+    config: { type: "buymeacoffee", username: "yourname" },
+    preset: "amberMinimal",
+  },
+  "apple-music": {
+    config: { type: "apple-music", url: "https://music.apple.com/us/browse" },
+    preset: "rose",
+  },
+  "youtube-music": {
+    config: { type: "youtube-music", url: "https://music.youtube.com/explore" },
+    preset: "blaze",
+  },
+  "apple-podcasts": {
+    config: {
+      type: "apple-podcasts",
+      url: "https://podcasts.apple.com/us/podcast/your-show/id1234567890",
+    },
+    preset: "harbor",
+  },
+  "amazon-music": {
+    config: {
+      type: "amazon-music",
+      url: "https://music.amazon.com/albums/B0EXAMPLE1",
+    },
+    preset: "gradientOcean",
+  },
+  deezer: {
+    config: {
+      type: "deezer",
+      url: "https://www.deezer.com/en/album/123456789",
+    },
+    preset: "dusk",
+  },
+  tidal: {
+    config: { type: "tidal", url: "https://tidal.com/browse/album/123456789" },
+    preset: "obsidian",
+  },
+  bandcamp: {
+    config: { type: "bandcamp", username: "daily" },
+    preset: "seafoam",
+  },
+  "google-docs": {
+    config: {
+      type: "google-docs",
+      url: "https://docs.google.com/document/d/sample-file-id/edit",
+    },
+    preset: "fog",
+  },
+  "google-sheets": {
+    config: {
+      type: "google-sheets",
+      url: "https://docs.google.com/spreadsheets/d/sample-file-id/edit",
+    },
+    preset: "emerald",
+  },
+  "google-slides": {
+    config: {
+      type: "google-slides",
+      url: "https://docs.google.com/presentation/d/sample-file-id/edit",
+    },
+    preset: "sunset",
+  },
+  "google-forms": {
+    config: { type: "google-forms", url: "https://forms.gle/yourform" },
+    preset: "lavender",
+  },
+  "microsoft-forms": {
+    config: {
+      type: "microsoft-forms",
+      url: "https://forms.office.com/r/yourform",
+    },
+    preset: "moss",
+  },
+  notion: {
+    config: { type: "notion", url: "https://yourname.notion.site/Your-page" },
+    preset: "minimal",
+  },
+  canva: {
+    config: {
+      type: "canva",
+      url: "https://www.canva.com/design/your-design/view",
+    },
+    preset: "terracotta",
+  },
+  "app-store": {
+    config: { type: "app-store", app: "id1234567890" },
+    preset: "modern",
+  },
+  "google-play": {
+    config: { type: "google-play", app: "com.google.android.apps.maps" },
+    preset: "nature",
+  },
+  tripadvisor: {
+    config: {
+      type: "tripadvisor",
+      url: "https://www.tripadvisor.com/Restaurant_Review-Your_Restaurant",
+    },
+    preset: "jade",
+  },
+  trustpilot: {
+    config: { type: "trustpilot", website: "example.com" },
+    preset: "fern",
+  },
+  yelp: {
+    config: { type: "yelp", url: "https://www.yelp.com/biz/your-business" },
+    preset: "retro",
+  },
+  airbnb: {
+    config: { type: "airbnb", url: "https://www.airbnb.com/rooms/12345678" },
+    preset: "blossom",
+  },
+  "booking-com": {
+    config: {
+      type: "booking-com",
+      url: "https://www.booking.com/hotel/us/your-property.html",
+    },
+    preset: "royal",
   },
 };
 

@@ -39,6 +39,18 @@ const SCHEMA: Partial<Record<ContentType, z.ZodType>> = {
   twitch: schemas.twitchSchema,
   soundcloud: schemas.soundcloudSchema,
   waze: schemas.wazeSchema,
+  // Added 2026-11-22 (links)
+  vk: schemas.LINK_TYPE_SCHEMAS.vk,
+  tumblr: schemas.LINK_TYPE_SCHEMAS.tumblr,
+  medium: schemas.LINK_TYPE_SCHEMAS.medium,
+  substack: schemas.LINK_TYPE_SCHEMAS.substack,
+  github: schemas.LINK_TYPE_SCHEMAS.github,
+  dribbble: schemas.LINK_TYPE_SCHEMAS.dribbble,
+  linktree: schemas.LINK_TYPE_SCHEMAS.linktree,
+  "apple-music": schemas.LINK_TYPE_SCHEMAS["apple-music"],
+  "youtube-music": schemas.LINK_TYPE_SCHEMAS["youtube-music"],
+  bandcamp: schemas.LINK_TYPE_SCHEMAS.bandcamp,
+  "google-play": schemas.LINK_TYPE_SCHEMAS["google-play"],
 };
 
 /** Types whose content is contact or payment details, or a stranger's handle. */
@@ -88,6 +100,39 @@ const NEVER_SAMPLED: ContentType[] = [
   "tron",
   "ton",
   "stellar",
+  // Added 2026-11-22 (links): chats, calls, meetings, classes, personal
+  // pages, documents and listings, which only their owner has
+  "messenger",
+  "viber",
+  "kakaotalk",
+  "zalo",
+  "facetime",
+  "microsoft-teams",
+  "webex",
+  "calendly",
+  "google-classroom",
+  "weibo",
+  "behance",
+  "patreon",
+  "kofi",
+  "buymeacoffee",
+  "apple-podcasts",
+  "amazon-music",
+  "deezer",
+  "tidal",
+  "google-docs",
+  "google-sheets",
+  "google-slides",
+  "google-forms",
+  "microsoft-forms",
+  "notion",
+  "canva",
+  "app-store",
+  "tripadvisor",
+  "trustpilot",
+  "yelp",
+  "airbnb",
+  "booking-com",
 ];
 
 const sampled = Object.entries(PLAYGROUND_SAMPLES) as [
@@ -129,7 +174,7 @@ describe("playground samples", () => {
     for (const [address] of text.matchAll(/https?:\/\/[^"]+/g)) {
       const host = new URL(address).hostname;
       expect(host, address).toMatch(
-        /^(example\.com|www\.(facebook|linkedin|youtube|amazon|flipkart)\.com|open\.spotify\.com|mastodon\.social)$/,
+        /^(example\.com|www\.(facebook|linkedin|youtube|amazon|flipkart)\.com|open\.spotify\.com|mastodon\.social|vk\.com|music\.(apple|youtube)\.com)$/,
       );
     }
   });
