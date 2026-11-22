@@ -1,6 +1,7 @@
 import { Routing2, Ruler, TableDocument } from "iconsax-reactjs";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { TYPE_MARK_LIFT, TypeMarkArt } from "@/components/editor/type-mark";
 import { MockupImage } from "@/components/mockups/mockup-image";
 import { qrTypeGroupImages } from "@/components/mockups/visuals";
 import { GeneratorHubStrip } from "@/components/sections/page-codes/page-code-sections";
@@ -20,6 +21,9 @@ import { QR_TYPE_GROUPS, QR_TYPES } from "@/lib/qr-types-content";
 import { HOSTED_QR_TYPES, hostedTypePath } from "@/lib/qr-types-content-hosted";
 
 const count = QR_TYPES.length;
+
+/** Each type card's header: its mark on a soft wash of its colour (shorter on phones). */
+const MARK_ART = "h-32 w-full max-sm:h-28";
 
 // "QR code types": the home page owns "QR code generator".
 export async function generateMetadata(): Promise<Metadata> {
@@ -102,7 +106,16 @@ export default async function QrTypesHubPage() {
                   <LinkCard
                     key={item.type}
                     href={`/qr-code-generator/${item.type}`}
-                    icon={QR_TYPE_ICONS[item.type]}
+                    art={
+                      <TypeMarkArt
+                        className={MARK_ART}
+                        fallbackIcon={QR_TYPE_ICONS[item.type]}
+                        markClassName={TYPE_MARK_LIFT}
+                        phoneSize={56}
+                        size={80}
+                        type={item.type}
+                      />
+                    }
                     title={t("hub.cardTitle", { name: item.name })}
                     description={item.summary}
                   />
@@ -134,14 +147,32 @@ export default async function QrTypesHubPage() {
               <LinkCard
                 key={item.slug}
                 href={hostedTypePath(item.slug)}
-                icon={PAGE_TYPE_ICONS[item.page]}
+                art={
+                  <TypeMarkArt
+                    className={MARK_ART}
+                    fallbackIcon={PAGE_TYPE_ICONS[item.page]}
+                    markClassName={TYPE_MARK_LIFT}
+                    pageType={item.page}
+                    phoneSize={56}
+                    size={80}
+                  />
+                }
                 title={t("hub.cardTitle", { name: item.name })}
                 description={item.summary}
               />
             ))}
             <LinkCard
               href="/qr-codes-on/menus"
-              icon={PAGE_TYPE_ICONS.menu}
+              art={
+                <TypeMarkArt
+                  className={MARK_ART}
+                  fallbackIcon={PAGE_TYPE_ICONS.menu}
+                  markClassName={TYPE_MARK_LIFT}
+                  pageType="menu"
+                  phoneSize={56}
+                  size={80}
+                />
+              }
               title={t("hub.menuTitle")}
               description={t("hub.menuDescription")}
             />

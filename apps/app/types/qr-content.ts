@@ -1396,7 +1396,7 @@ export const CONTENT_TYPES_METADATA: ContentTypeMetadata[] = [
   {
     type: "ton",
     label: "TON",
-    icon: "Diamonds",
+    icon: "brand:ton",
     description: "Receive TON or USDT on TON",
     keywords: ["toncoin", "gram", "telegram", "usdt", "jetton", "crypto"],
   },

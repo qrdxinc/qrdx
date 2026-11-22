@@ -50,9 +50,10 @@ export const CONTENT_TYPE_BRANDS = {
   solana: "solana",
   monero: "monero",
   // Added 2026-11-22 (payments). Lightning (Simple Icons' "lightning" is
-  // another product), Tron, TON, Swish, QR Platba, KHQR and the Swiss
-  // QR-bill aren't in Simple Icons, so they keep generic glyphs.
+  // another product), Tron, Swish, QR Platba, KHQR and the Swiss QR-bill
+  // aren't in Simple Icons, so they keep generic glyphs.
   xrp: "xrp",
   cardano: "cardano",
   stellar: "stellar",
+  ton: "ton",
 } as const satisfies Partial<Record<ContentType, BrandMarkSlug>>;
