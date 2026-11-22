@@ -17,7 +17,6 @@ import {
 import { useTranslations } from "next-intl";
 import {
   getQRData,
-  getScanScore,
   type ScanCheck,
   type ScanGrade,
   type ScanScoreResult,
@@ -27,6 +26,7 @@ import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
+import { getScanScoreOffPage } from "@/lib/scan-score/off-page";
 import { soundEvent } from "@/lib/sound/emit";
 import type { QRStyle } from "@/types/theme";
 
@@ -180,7 +180,7 @@ export function ScanScoreBadge({
     const controller = new AbortController();
     setFailed(false);
     const timer = setTimeout(() => {
-      getScanScore(JSON.parse(propsKey), { signal: controller.signal })
+      getScanScoreOffPage(JSON.parse(propsKey), { signal: controller.signal })
         .then((score) => {
           if (!controller.signal.aborted) {
             setScored({ key: propsKey, value, result: score });

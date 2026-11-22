@@ -2,11 +2,12 @@
 
 import { cn } from "@repo/design-system/lib/utils";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { getScanScore, QRCodeSVG, type ScanScoreResult } from "qrdx";
+import { QRCodeSVG, type ScanScoreResult } from "qrdx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { GRADE_COLORS, useGradeLabels } from "@/components/editor/scan-score";
 import { EASE } from "@/components/mockups/motion";
 import { SegmentedControl } from "@/components/mockups/segmented-control";
+import { getScanScoreOffPage } from "@/lib/scan-score/off-page";
 import { HOME_CODES } from "./codes";
 import { ControlBar, QrTile, Readout } from "./demo-ui";
 import { scanRows } from "./scan-rows";
@@ -55,7 +56,7 @@ export function ScanScoreDemo() {
     const controller = new AbortController();
     setChecking(true);
     const timer = window.setTimeout(() => {
-      getScanScore(props, { signal: controller.signal })
+      getScanScoreOffPage(props, { signal: controller.signal })
         .then((score) => {
           setResult(score);
           setFailed(false);
