@@ -3,7 +3,11 @@
 // camera simulation and jsQR decoding all run. Expectations come from what a
 // user needs from a "will it scan" check, not from the current weights.
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { getScanScore } from "../src/scan-score";
+import {
+  drawScanFrames,
+  getScanScore,
+  getScanScoreFromFrames,
+} from "../src/scan-score";
 import { getTemplateCodeShare } from "../src/template-placement";
 import type { QRProps } from "../types";
 import { installFakeDom } from "./support/fake-dom";
@@ -22,6 +26,7 @@ const PLAIN: QRProps = {
 describe("getScanScore outside a browser", () => {
   it("rejects with a clear error when there is no DOM", async () => {
     await expect(getScanScore(PLAIN)).rejects.toThrow(/needs a browser/);
+    await expect(drawScanFrames(PLAIN)).rejects.toThrow(/needs a browser/);
   });
 });
 
@@ -185,6 +190,90 @@ describe("getScanScore", () => {
     controller.abort();
     await expect(
       getScanScore(PLAIN, { signal: controller.signal })
+    ).rejects.toThrow(/aborted/i);
+  });
+});
+
+// The editor draws the frames on the page and scores them in a Web Worker
+// (apps/app/components/editor/scan-score-worker.ts): the result must be
+// getScanScore's, check for check.
+describe("drawScanFrames and getScanScoreFromFrames", () => {
+  let uninstall: () => void;
+  beforeAll(() => {
+    uninstall = installFakeDom();
+  });
+  afterAll(() => uninstall());
+
+  const DESIGNS: [string, QRProps][] = [
+    ["plain", PLAIN],
+    [
+      "coloured dots",
+      {
+        ...PLAIN,
+        bodyPattern: "circle",
+        cornerEyePattern: "rounded",
+        cornerEyeDotPattern: "circle",
+        fgColor: "#1e3a8a",
+      },
+    ],
+    ["low contrast", { ...PLAIN, fgColor: "#9a9a9a", bgColor: "#b0b0b0" }],
+    ["light on dark", { ...PLAIN, fgColor: "#ffffff", bgColor: "#111111" }],
+    ["no quiet zone", { ...PLAIN, margin: 0 }],
+    ["in a template", { ...PLAIN, templateId: "Arrow" }],
+    [
+      "framed",
+      { ...PLAIN, frame: { style: "banner-bottom", text: "Scan me" } },
+    ],
+  ];
+
+  for (const [name, props] of DESIGNS) {
+    it(`scores ${name} exactly as getScanScore does`, async () => {
+      const frames = await drawScanFrames(props);
+      expect(await getScanScoreFromFrames(props, frames)).toEqual(
+        await getScanScore(props)
+      );
+    });
+  }
+
+  it("draws every frame the score may decode, at the sizes asked for", async () => {
+    const frames = await drawScanFrames(PLAIN, { sizes: [320, 96] });
+    expect(frames.sizes).toEqual([96, 320]);
+    expect(frames.frames.map((frame) => frame.codeWidth)).toEqual([
+      96 * 0.9,
+      96,
+      96 * 1.1,
+      320 * 0.9,
+      320,
+      320 * 1.1,
+    ]);
+    for (const frame of frames.frames) {
+      expect(frame.data).toHaveLength(frame.width * frame.height * 4);
+    }
+  });
+
+  it("scores frames that crossed to a worker, and leaves them as they were", async () => {
+    const props = DESIGNS[1]?.[1] as QRProps;
+    // postMessage hands a worker a structured clone
+    const posted = structuredClone(await drawScanFrames(props));
+    const before = posted.frames.map((frame) => frame.data.slice());
+    const first = await getScanScoreFromFrames(props, posted);
+    expect(posted.frames.map((frame) => frame.data)).toEqual(before);
+    expect(await getScanScoreFromFrames(props, posted)).toEqual(first);
+  });
+
+  it("says which frame is missing when the sizes don't match", async () => {
+    const frames = await drawScanFrames(PLAIN, { sizes: [96] });
+    await expect(
+      getScanScoreFromFrames(PLAIN, { ...frames, sizes: [96, 160] })
+    ).rejects.toThrow(/No scan frame with the code 144 px wide/);
+  });
+
+  it("honors an aborted signal", async () => {
+    const controller = new AbortController();
+    controller.abort();
+    const frames = await drawScanFrames(PLAIN);
+    await expect(
+      getScanScoreFromFrames(PLAIN, frames, { signal: controller.signal })
     ).rejects.toThrow(/aborted/i);
   });
 });
