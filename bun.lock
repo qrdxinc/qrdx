@@ -664,7 +664,7 @@
       "dependencies": {
         "@raycast/api": "^2.10.1",
         "@raycast/utils": "^2.3.3",
-        "qrdx": "^0.0.47",
+        "qrdx": "^0.0.60",
         "react": "19.3.1",
         "react-dom": "19.3.1",
       },
@@ -5314,7 +5314,7 @@
 
     "qrdx-raycast/@types/node": ["@types/node@26.6.5", "", { "dependencies": { "undici-types": "8.9.0" } }, "sha512-uMzsv9stDdofIZBx4UGh4Z9ZgXnGC9seRDscilBcTHAeOFk67MZg/k9bWVfO+bk4qZmG+l52hRnLwUiH2LnJTg=="],
 
-    "qrdx-raycast/qrdx": ["qrdx@0.0.47", "", { "dependencies": { "jsqr": "1.4.0", "zod": "4.6.7" }, "peerDependencies": { "jspdf": "^4.2.1", "react": "19.3.1", "react-dom": "19.3.1" }, "optionalPeers": ["jspdf"] }, "sha512-U0v11Hi7QR+LHhogKIEUAdBYtktGAVTrZIJP4WCh1OAxE1Rjq4iFUiTIy8EVfBwffSo8nqP3OkZYTz37czPVxQ=="],
+    "qrdx-raycast/qrdx": ["qrdx@0.0.60", "", { "dependencies": { "csstype": "^3.2.3", "jsqr": "^1.4.0", "zod": "^4.6.7" }, "peerDependencies": { "@angular/core": ">=20.0.0", "@resvg/resvg-js": "^2.6.2", "jspdf": "^2.5.0 || ^3.0.0 || ^4.0.0", "preact": ">=10.0.0", "react": ">=18.0.0", "react-dom": ">=18.0.0", "sharp": ">=0.34.0", "solid-js": "^1.8.0", "vue": ">=3.3.0" }, "optionalPeers": ["@angular/core", "@resvg/resvg-js", "jspdf", "preact", "react", "react-dom", "sharp", "solid-js", "vue"] }, "sha512-KE35Z024zraPaptd9l3Mi0a0W+DDFoD6RvW8H6AllOdLQYy24Qnih5UXA+nJh5zLVNQ1MoQmtDO6AnUeTc7OoQ=="],
 
     "qrdx-raycast/typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
 
