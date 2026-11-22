@@ -25,6 +25,7 @@ import {
   getAllTemplates,
   getFrameDimensions,
   getTemplateIds,
+  ICO_SIZES,
 } from "qrdx";
 import { idOptions } from "../lib/id-options";
 import {
@@ -471,6 +472,24 @@ function handleCancel(): never {
     `${DIM}Tip:${RESET} ${TEXT}qrdx generate "https://…" -o qr.svg${RESET} — local dev: ${TEXT}bun run qrdx generate …${RESET}`
   );
   process.exit(0);
+}
+
+/**
+ * The size the saved line reports. An ICO holds the code alone at each of
+ * the icon's sizes, whatever --size and --frame say; every other format is
+ * --size plus any frame.
+ */
+function savedSize(
+  format: OutputFormat,
+  size: number,
+  frame: QRFrame | undefined
+): string {
+  if (format === "ico") {
+    const sizes = ICO_SIZES.map(String);
+    return `${sizes.slice(0, -1).join(", ")} and ${sizes.at(-1)} px`;
+  }
+  const { width, height } = getFrameDimensions(size, frame);
+  return `${Math.round(width)}×${Math.round(height)}`;
 }
 
 function inferFormat(
@@ -943,10 +962,12 @@ export async function runGenerate(
     if (outputPath) {
       const format = inferFormat(outputPath, flags.format);
       await saveOutput({ ...qrProps, outputPath, format });
-      const dimensions = getFrameDimensions(size, frame);
       spinner.stop(
-        `${GREEN}✔${RESET}  Saved to ${TEXT}${outputPath}${RESET} ${DIM}(${Math.round(dimensions.width)}×${Math.round(dimensions.height)})${RESET}`
+        `${GREEN}✔${RESET}  Saved to ${TEXT}${outputPath}${RESET} ${DIM}(${savedSize(format, size, frame)})${RESET}`
       );
+      if (format === "ico" && frame) {
+        p.log.warn("An ICO holds the code alone, so the frame was left out.");
+      }
     } else {
       spinner.stop("QR code ready");
     }
