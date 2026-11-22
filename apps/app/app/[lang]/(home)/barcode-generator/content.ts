@@ -5,10 +5,13 @@ import type { BarcodeFormatId } from "@/lib/barcode/formats";
 /** When to use each symbology, in the generator's order. */
 export const BARCODE_USES: Record<BarcodeFormatId, string> = {
   ean13:
-    "The barcode on retail products almost everywhere outside North America. It holds a 13-digit GTIN: a company prefix from GS1, an item number and a check digit. Books use it too, for an ISBN starting 978 or 979.",
+    "The barcode on retail products almost everywhere outside North America. It holds a 13-digit GTIN: a company prefix from GS1, an item number and a check digit. Books, magazines and printed music use it too; their types below print the ISBN, ISSN or ISMN above the bars.",
   ean8: "For packs too small for an EAN-13, such as a lipstick or a pack of gum. EAN-8 numbers are issued separately by GS1; you can't shorten an EAN-13 into one.",
   upca: "The 12-digit retail barcode of the US and Canada. Its number is the same as an EAN-13 that starts with 0, and checkout scanners read both.",
   upce: "A UPC-A squeezed to six digits for small packs. Only UPC-A numbers with zeros in the right places can be shortened; enter a 12-digit UPC-A and the generator tells you whether yours can.",
+  isbn: "Books. The ISBN-13 is drawn as an EAN-13 starting 978 or 979, with the hyphenated ISBN printed above the bars. ISBN-10s are converted, and a 5-digit price add-on can go beside it for the US and Canadian book trade.",
+  issn: "Magazines, journals and newspapers. The ISSN goes into an EAN-13 starting 977 with 2 digits for price or edition changes, and a 2-digit add-on usually carries the issue number.",
+  ismn: "Printed music: scores, parts and songbooks. The ISMN is drawn as an EAN-13 starting 979-0 with the ISMN printed above it, and old numbers starting with M are converted.",
   code128:
     "The general-purpose barcode: letters, digits and symbols for asset tags, stock labels, tickets and shipping labels. It's compact and needs no registration, so use it whenever no retail standard applies.",
   code39:
@@ -39,12 +42,12 @@ export const BARCODE_FAQS: { question: string; answer: string }[] = [
   {
     question: "Do I need to register my barcode number?",
     answer:
-      "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+      "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
   },
   {
     question: "Does it add the check digit?",
     answer:
-      "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and the GTIN and SSCC fields of GS1-128: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+      "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN and the GTIN and SSCC fields of GS1-128: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
   },
   {
     question: "Will my barcode scan?",

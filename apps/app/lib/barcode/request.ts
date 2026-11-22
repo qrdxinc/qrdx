@@ -31,7 +31,7 @@ export const BARCODE_DATA_MAX = Math.max(
 
 const squash = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-/** Spellings people write: "EAN-13", "code-128", "UPC-A", "azteccode". */
+/** Spellings people write: "EAN-13", "code-128", "UPC-A", "azteccode", "ISBN-13". */
 const FORMAT_ALIASES = new Map<string, BarcodeFormatId>([
   ...BARCODE_FORMATS.map((format) => [squash(format.id), format.id] as const),
   ...BARCODE_FORMATS.map(
@@ -43,6 +43,10 @@ const FORMAT_ALIASES = new Map<string, BarcodeFormatId>([
   ["ean128", "gs1-128"],
   ["itf", "itf14"],
   ["pdf", "pdf417"],
+  ["isbn13", "isbn"],
+  ["isbn10", "isbn"],
+  ["bookland", "isbn"],
+  ["ismn13", "ismn"],
 ]);
 
 /** A format id from how a URL or a person writes it; null when unknown. */
@@ -61,7 +65,7 @@ const dataField = z
   .min(1, "Required: the number or text to encode")
   .max(BARCODE_DATA_MAX, `Must be at most ${BARCODE_DATA_MAX} characters`)
   .describe(
-    "The number or text to encode. Retail numbers (EAN, UPC, ITF-14, GS1 GTINs and SSCCs) can leave the check digit off and it's added; a wrong one is an error.",
+    "The number or text to encode. Retail numbers (EAN, UPC, ITF-14, GS1 GTINs and SSCCs, ISBN, ISSN, ISMN) can leave the check digit off and it's added; a wrong one is an error. ISBN, ISSN and ISMN take a 2- or 5-digit add-on after a space (978-1-873671-00-9 52250); an ISSN takes its 2-digit sequence variant before the add-on (0317-8471 00 05).",
   );
 
 const typeField = z

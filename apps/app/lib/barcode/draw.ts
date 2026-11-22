@@ -27,6 +27,8 @@ export interface DrawOptions {
   textxalign?: "center";
   /** Add the symbology's check characters (Code 93's C and K) */
   includecheck?: boolean;
+  /** Modules between an EAN-13 and its add-on (ISBN, ISSN, ISMN) */
+  addongap?: number;
 }
 
 /** One bwip-js build: its encoder per format and its SVG drawing. */
@@ -44,6 +46,9 @@ export const BCID: Record<BarcodeFormatId, string> = {
   ean8: "ean8",
   upca: "upca",
   upce: "upce",
+  isbn: "isbn",
+  issn: "issn",
+  ismn: "ismn",
   code128: "code128",
   code39: "code39",
   code93: "code93",
@@ -64,6 +69,9 @@ export const MODULE_UNITS: Record<BarcodeFormatId, number> = {
   ean8: 1,
   upca: 1,
   upce: 1,
+  isbn: 1,
+  issn: 1,
+  ismn: 1,
   code128: 1,
   code39: 1,
   code93: 1,
@@ -136,6 +144,11 @@ export function drawOptions(
     // Code 93's two check characters are part of the symbology, and readers
     // reject a symbol without them; bwip-js leaves them out unless asked.
     if (id === "code93") options.includecheck = true;
+    // GS1 puts an EAN-13's add-on 7 to 12 modules right of the bars. BWIPP
+    // uses 12, where ZXing-based readers (most phone scanner apps) stop
+    // looking for one; 9 is inside both. The value is the drawing's own: no
+    // add-on, no gap.
+    if (id === "isbn" || id === "issn" || id === "ismn") options.addongap = 9;
   }
   return options;
 }
