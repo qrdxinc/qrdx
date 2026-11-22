@@ -25,6 +25,8 @@ export type BarcodeFormatId =
   | "codabar"
   | "itf14"
   | "gs1-128"
+  | "gs1-databar"
+  | "gs1-databar-expanded"
   | "datamatrix"
   | "pdf417"
   | "aztec";
@@ -246,6 +248,34 @@ export const BARCODE_FORMATS: readonly BarcodeFormat[] = [
     detectorFormats: ["code_128"],
   },
   {
+    id: "gs1-databar",
+    label: "GS1 DataBar",
+    kind: "linear",
+    summary: "A GTIN in a short barcode for small retail items",
+    example: "(01)09501101530003",
+    inputHint:
+      "A GTIN as (01) and its 14 digits, e.g. (01)09501101530003. Leave off the last digit and the check digit is added.",
+    // GS1 DataBar needs no quiet zone; the default keeps the printed GTIN,
+    // which is wider than the bars, inside the image.
+    quietZone: { min: 0, default: 10 },
+    barHeightMm: 15,
+    maxLength: 24,
+    detectorFormats: ["databar_omni"],
+  },
+  {
+    id: "gs1-databar-expanded",
+    label: "GS1 DataBar Expanded",
+    kind: "linear",
+    summary: "GTIN plus weight, price or dates for fresh food",
+    example: "(01)09501101530003(17)261231(10)AB-123",
+    inputHint:
+      "Application Identifiers in brackets, each followed by its value, e.g. (01)09501101530003(17)261231(10)AB-123.",
+    quietZone: { min: 0, default: 10 },
+    barHeightMm: 15,
+    maxLength: 120,
+    detectorFormats: ["databar_expanded"],
+  },
+  {
     id: "datamatrix",
     label: "Data Matrix",
     kind: "2d",
@@ -327,6 +357,8 @@ export const BARCODE_ISSUE_CODES = [
   "gs1BadChars",
   "gs1Ai",
   "gs1TooLong",
+  "databarGtinOnly",
+  "databarTooLong",
   "isbnChars",
   "isbnLength",
   "isbnPrefix",
@@ -448,6 +480,10 @@ export function barcodeIssueText(issue: BarcodeIssue): string {
       return `AI (${v.ai}): ${issue.inner ? barcodeIssueText(issue.inner) : ""}`;
     case "gs1TooLong":
       return `GS1-128 holds up to ${v.max} characters of AIs and data; this has ${v.count}. Split it over two barcodes.`;
+    case "databarGtinOnly":
+      return "GS1 DataBar holds only a GTIN: (01) and its 14 digits. For dates, a batch or a weight, use GS1 DataBar Expanded or GS1-128.";
+    case "databarTooLong":
+      return `GS1 DataBar Expanded holds up to ${v.max} digits of AIs and data, and fewer when there are letters; this has ${v.count} characters. Remove an AI or shorten a value.`;
     case "isbnChars":
       return "An ISBN takes digits, hyphens and spaces; an ISBN-10 can end in X.";
     case "isbnLength":
@@ -740,7 +776,21 @@ const GS = String.fromCharCode(0x1d);
 /** A GS1-128 symbol holds at most 48 data characters. */
 export const GS1_128_MAX_DATA = 48;
 
-function gs1Input(raw: string): BarcodeInput {
+/**
+ * A GS1 DataBar Expanded holds at most 74 digits, and fewer when the data
+ * has letters; the encoder finds the exact limit (lib/barcode/draw.ts).
+ */
+export const DATABAR_EXPANDED_MAX_DATA = 74;
+
+/** The most AI and data characters a symbology holds, and its issue. */
+interface Gs1Limit {
+  max: number;
+  code: "gs1TooLong" | "databarTooLong";
+}
+
+const GS1_128_LIMIT: Gs1Limit = { max: GS1_128_MAX_DATA, code: "gs1TooLong" };
+
+function gs1Input(raw: string, limit: Gs1Limit = GS1_128_LIMIT): BarcodeInput {
   const text = raw.replace(/\s+/g, "");
   if (!text) {
     return fail({ code: "gs1Enter" });
@@ -792,13 +842,30 @@ function gs1Input(raw: string): BarcodeInput {
     parts.push(`(${ai})${value}`);
     dataLength += ai.length + value.length;
   }
-  if (dataLength > GS1_128_MAX_DATA) {
+  if (dataLength > limit.max) {
     return fail({
-      code: "gs1TooLong",
-      values: { max: GS1_128_MAX_DATA, count: dataLength },
+      code: limit.code,
+      values: { max: limit.max, count: dataLength },
     });
   }
   return done(parts.join(""), notes);
+}
+
+/**
+ * GS1 DataBar (Omnidirectional) holds a GTIN and nothing else: (01) and 14
+ * digits. Checked here because bwip-js only says the data "must be 13 or
+ * 14 digits", which reads wrong for (01)…(10)….
+ */
+function databarInput(raw: string): BarcodeInput {
+  const checked = gs1Input(raw, {
+    max: Number.POSITIVE_INFINITY,
+    code: "gs1TooLong",
+  });
+  if (!checked.ok) return checked;
+  if (!/^\(01\)\d{14}$/.test(checked.value)) {
+    return fail({ code: "databarGtinOnly" });
+  }
+  return checked;
 }
 
 /** What may follow an ISBN, ISSN or ISMN in its own field. */
@@ -1205,6 +1272,13 @@ export function validateBarcodeInput(
       return codabarInput(format, raw);
     case "gs1-128":
       return gs1Input(raw);
+    case "gs1-databar":
+      return databarInput(raw);
+    case "gs1-databar-expanded":
+      return gs1Input(raw, {
+        max: DATABAR_EXPANDED_MAX_DATA,
+        code: "databarTooLong",
+      });
     case "datamatrix":
     case "pdf417":
     case "aztec":
@@ -1246,9 +1320,15 @@ export function decodedMatches(
       const upca = expandUpce(value);
       return decoded === value || decoded === upca || decoded === `0${upca}`;
     }
-    case "gs1-128": {
+    case "gs1-128":
+    case "gs1-databar":
+    case "gs1-databar-expanded": {
+      // Readers may prefix a symbology identifier: ]C1 (GS1-128), ]e0 (DataBar).
       const plain = (text: string) =>
-        text.replace(/^\]C1/, "").replace(/[()]/g, "").replaceAll(GS, "");
+        text
+          .replace(/^\](?:C1|e0)/, "")
+          .replace(/[()]/g, "")
+          .replaceAll(GS, "");
       return plain(decoded) === plain(value);
     }
     default:

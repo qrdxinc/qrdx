@@ -154,6 +154,8 @@ export const BARCODE_FORMATS = [
   "codabar",
   "itf14",
   "gs1-128",
+  "gs1-databar",
+  "gs1-databar-expanded",
   "datamatrix",
   "pdf417",
   "aztec",
