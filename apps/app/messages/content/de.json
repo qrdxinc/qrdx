@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "Lade den Code als PNG, WebP oder SVG herunter.",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "Lade den Code als PNG, SVG, WebP, GIF, BMP oder ICO herunter.",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "Lade eine PNG-, WebP- oder SVG-Datei herunter oder gestalte den Code im vollständigen Editor.",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "Lade den Code als PNG, SVG, WebP, GIF, BMP oder ICO herunter oder gestalte ihn im vollständigen Editor.",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -30850,5 +30850,17 @@
     "text": "QRdx speichert weder deinen Prompt noch dein Referenzbild oder die generierten Bilder; es zählt nur deine Credits. Der Prompt, das QR-Code-Bild und ein eventuelles Referenzbild werden über Vercel AI Gateway an GPT Image 2 von OpenAI gesendet, um das Artwork zu erstellen. Das Ergebnis kommt direkt zurück in deinen Browser, lade also die Bilder herunter, die du behalten möchtest.",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "Lade den Code als PNG, WebP oder SVG herunter.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "Lade eine PNG-, WebP- oder SVG-Datei herunter oder gestalte den Code im vollständigen Editor.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   }
 }

@@ -233,6 +233,7 @@ describe("POST /api/generate-qr-theme", () => {
         "design_qr",
         "check_scan_score",
         "ask_user",
+        "find_frames",
         "apply_design",
         "save_template",
         "use_image",

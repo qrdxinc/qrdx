@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "コードをPNG、WebP、SVGでダウンロードします。",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "コードをPNG、SVG、WebP、GIF、BMP、ICOのいずれかの形式でダウンロードします。",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "PNG、WebP、SVGのいずれかをダウンロードするか、フルエディタでコードをデザインします。",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "PNG、SVG、WebP、GIF、BMP、ICOのいずれかをダウンロードするか、フルエディターでコードのスタイルを整えます。",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -30850,5 +30850,17 @@
     "text": "QRdxは、プロンプト、参照画像、生成された画像を保存せず、クレジットの消費数だけを記録します。プロンプト、QRコード画像、参照画像は、アートワークを作成するためにVercel AI Gateway経由でOpenAIのGPT Image 2に送信され、結果はそのままブラウザに返されます。残したい画像はダウンロードしてください。",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "コードをPNG、WebP、SVGでダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "PNG、WebP、SVGのいずれかをダウンロードするか、フルエディタでコードをデザインします。",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   }
 }

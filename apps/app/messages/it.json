@@ -3603,7 +3603,10 @@
         "showLess": "Mostra meno",
         "showValueMore": "Mostrane altri {value, number}",
         "applyThisDesign": "Applica questo design",
-        "notAppliedYourEditorIs": "Non applicato. Il tuo editor è invariato."
+        "notAppliedYourEditorIs": "Non applicato. Il tuo editor è invariato.",
+        "searchingTheFrames": "Sto cercando tra le cornici ufficiali…",
+        "couldntSearchTheFrames": "Impossibile cercare tra le cornici",
+        "foundFramesForQuery": "{count, plural, =0 {Nessuna cornice ufficiale per “{query}”} one {Trovata # cornice ufficiale per “{query}”:} other {Trovate # cornici ufficiali per “{query}”:}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

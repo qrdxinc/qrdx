@@ -78,12 +78,11 @@ export function editorContext(): EditorContextInput {
     | (QRContentConfig & Record<string, unknown>)
     | undefined;
   const { type: _type, ...content } = config ?? { type: contentType };
-  // Image fills stay in the browser: the chat sees their underlay colors.
-  const { customLogo, art, frame, ...rest } = withoutImageFills(
-    themeState.styles,
-  );
-  // The chat designs built-in frames; a custom frame stays out of its context.
-  const style = frame && frame.style !== "custom" ? { ...rest, frame } : rest;
+  // Image fills and a traced silhouette stay in the browser: the chat sees
+  // the fills' underlay colors and only whether there is a silhouette. A
+  // custom frame goes along (the server tells an official one from the
+  // user's own, which designs keep).
+  const { customLogo, art, ...style } = withoutImageFills(themeState.styles);
   return {
     contentType,
     ...(config ? { content } : {}),
@@ -95,6 +94,7 @@ export function editorContext(): EditorContextInput {
       ? { customLogo }
       : {}),
     hasArt: Boolean(art),
+    hasSilhouette: Boolean(themeState.styles.silhouette),
   };
 }
 

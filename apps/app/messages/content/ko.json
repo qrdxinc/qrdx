@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "코드를 PNG, WebP 또는 SVG로 다운로드하세요.",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "코드를 PNG, SVG, WebP, GIF, BMP 또는 ICO로 다운로드하세요.",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "PNG, WebP 또는 SVG로 다운로드하거나, 전체 편집기에서 코드를 꾸며 보세요.",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "PNG, SVG, WebP, GIF, BMP 또는 ICO로 다운로드하거나 전체 편집기에서 코드를 꾸며 보세요.",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -30850,5 +30850,17 @@
     "text": "QRdx는 프롬프트, 참조 이미지, 생성된 이미지를 저장하지 않으며 크레딧 사용량만 집계해요. 아트워크를 만들기 위해 프롬프트, QR 코드 이미지, 참조 이미지는 Vercel AI Gateway를 거쳐 OpenAI의 GPT Image 2로 전송되고, 결과는 곧바로 브라우저로 돌아와요. 보관하고 싶은 이미지는 꼭 다운로드하세요.",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "코드를 PNG, WebP 또는 SVG로 다운로드하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "PNG, WebP 또는 SVG로 다운로드하거나, 전체 편집기에서 코드를 꾸며 보세요.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   }
 }

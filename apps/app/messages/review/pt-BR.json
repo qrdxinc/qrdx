@@ -10719,6 +10719,18 @@
     "source": "72abd9953a02",
     "status": "machine"
   },
+  "editor.ai.agentParts.searchingTheFrames": {
+    "source": "2e7906f6e36c",
+    "status": "machine"
+  },
+  "editor.ai.agentParts.couldntSearchTheFrames": {
+    "source": "ad896466816b",
+    "status": "machine"
+  },
+  "editor.ai.agentParts.foundFramesForQuery": {
+    "source": "8f32ef111b69",
+    "status": "machine"
+  },
   "editor.ai.aiBotBadge.qrdxAi": {
     "source": "64ae4f0723f4",
     "status": "machine"

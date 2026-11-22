@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "Descarga el código en PNG, WebP o SVG.",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "Descarga el código en PNG, SVG, WebP, GIF, BMP o ICO.",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "Descarga un PNG, WebP o SVG, o personaliza el código en el editor completo.",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "Descarga un PNG, SVG, WebP, GIF, BMP o ICO, o personaliza el estilo del código en el editor completo.",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -30850,5 +30850,17 @@
     "text": "QRdx no guarda tu prompt, tu imagen de referencia ni las imágenes generadas; solo cuenta tus créditos. El prompt, la imagen del código QR y cualquier imagen de referencia se envían a través de Vercel AI Gateway a GPT Image 2 de OpenAI para crear la ilustración, y el resultado vuelve directamente a tu navegador, así que descarga las que quieras conservar.",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "Descarga el código en PNG, WebP o SVG.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "Descarga un PNG, WebP o SVG, o personaliza el código en el editor completo.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   }
 }

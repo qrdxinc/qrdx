@@ -3603,7 +3603,10 @@
         "showLess": "접기",
         "showValueMore": "{value, number}개 더 보기",
         "applyThisDesign": "이 디자인 적용",
-        "notAppliedYourEditorIs": "적용하지 않았어요. 에디터는 그대로예요."
+        "notAppliedYourEditorIs": "적용하지 않았어요. 에디터는 그대로예요.",
+        "searchingTheFrames": "공식 프레임을 살펴보는 중이에요…",
+        "couldntSearchTheFrames": "프레임을 검색하지 못했어요",
+        "foundFramesForQuery": "{count, plural, =0 {“{query}”에 해당하는 공식 프레임이 없어요} other {“{query}”에 해당하는 공식 프레임 #개를 찾았어요:}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

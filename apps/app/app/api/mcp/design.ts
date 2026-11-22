@@ -6,7 +6,6 @@ import {
   OFFICIAL_FRAME_COLLECTIONS,
   OFFICIAL_FRAMES,
 } from "qrdx";
-import type { EyeShapes } from "qrdx/types";
 import {
   BODY_PATTERN,
   CORNER_EYE_DOT_PATTERNS,
@@ -62,6 +61,7 @@ import {
   fromThemeStyles,
   HEX_COLOR,
   LOGO_ICON_IDS,
+  LOOK_KEYS,
   type LogoIconId,
   MARGIN_MAX,
   TEMPLATE_IDS,
@@ -116,9 +116,11 @@ const eyeInput = z
 /**
  * Engine options design_qr draws as they are: per-eye colours (#RRGGBB,
  * like the rest of design_qr), dot size, auto error correction, the circle
- * shape, the logo's layout and the looks around the shapes. Repairs never
- * change them, except that a repair of the eyes clears the per-eye shapes
- * (eyeShapes) it replaces (repair.ts).
+ * shape, the logo's layout and the looks around the shapes. They go through
+ * the loop in the style, so what a repair changes (repair.ts: a repair of
+ * the eyes clears the per-eye shapes it replaces, a code that won't decode
+ * gets full-size dots and loses its shadow, the classic fallback drops them
+ * all) is what is drawn.
  */
 const engineInputFields = {
   eyeColors: z
@@ -153,6 +155,13 @@ type EngineInput = {
   >;
 };
 const ENGINE_KEYS = Object.keys(engineInputFields) as (keyof EngineInput)[];
+
+/** A design without its looks (they come from the engine options). */
+function withoutLooks(style: DesignStyle): DesignStyle {
+  const rest: Record<string, unknown> = { ...style };
+  for (const key of LOOK_KEYS) delete rest[key];
+  return rest as DesignStyle;
+}
 
 /** The engine options a style or a base sets. */
 function engineOptionsOf(source: object | null | undefined): EngineInput {
@@ -520,41 +529,29 @@ export async function designQr(
     }
     initial.logo = logoFile ? "keep" : (logoIcon ?? "none");
 
-    // Engine options from the base, then the ones the caller set.
+    // Engine options from the base, then the ones the caller set, as they
+    // are (the loop never re-validates them): in the style, so a repair
+    // that changes one changes what is drawn.
     const engine: EngineInput = {
       ...engineOptionsOf(base),
       ...engineOptionsOf(input.style),
     };
-    // Per-eye shapes travel beside the loop: a repair of the eyes clears
-    // the weak ones (repair.ts), so the result keeps only those that scan.
-    // Always the loop's shapes, none included: a default here would put the
-    // cleared ones back
-    const withFrame = (
-      style: ThemeStyles,
-      eyeShapes: EyeShapes | undefined,
-    ): ThemeStyles => {
-      const { eyeShapes: _eyes, ...rest } = engine;
-      return {
-        ...style,
-        ...(rest as ThemeStyles),
-        ...(eyeShapes ? { eyeShapes } : {}),
-        ...(customFrame ? { frame: customFrame } : {}),
-      };
-    };
+    const start = {
+      ...withoutLooks(initial),
+      ...(engine as Partial<DesignStyle>),
+    } as DesignStyle;
+    // A custom frame is drawn as it is, beside the loop
+    const withFrame = (style: ThemeStyles): ThemeStyles =>
+      customFrame ? { ...style, frame: customFrame } : style;
 
     const result = await runDesignLoop({
       value: content.value,
-      initial,
+      initial: start,
       hasLogo: Boolean(logoFile),
-      eyeShapes: engine.eyeShapes,
-      score: (value, style, eyeShapes) =>
-        scoreDesign(value, withFrame(style, eyeShapes)),
+      score: (value, style) => scoreDesign(value, withFrame(style)),
     });
 
-    const themeStyles = withFrame(
-      toThemeStyles(result.style),
-      result.eyeShapes,
-    );
+    const themeStyles = withFrame(toThemeStyles(result.style));
     const drawnLogo =
       result.style.logo === "keep" && logoFile
         ? logoFile
@@ -728,7 +725,7 @@ export function designOptions() {
       })),
       margin: { min: 0, max: MARGIN_MAX, ideal: 4 },
       engineOptions:
-        "eyeColors { topLeft, topRight, bottomLeft: { outer, inner } } (#RRGGBB), moduleScale 0.5-1 (dot size), autoLevel, shape (square or circle), logoOptions { size 0.1-0.3, padding 0-2 modules, x and y 0-1, shape square|rounded|circle (crop), plate (color) }, eyeShapes { topLeft, topRight, bottomLeft: { outer (an eye frame), inner (an eye center) } }, eyeGradient (corner or code: the eyes continue the dots' gradient), bgRadius 0-0.5 (rounded background corners; needs a margin), backdrop (a color outside the rounded background), halo { color, width 0.1-0.5 modules } (a light rim around the dark shapes, drawn opaque, only on an opaque bgColor at least as light as #d1d5db; any color is taken and drawn in the closest one that stays scannable, at least as light as #d1d5db and no lighter than the background), shadow { color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 modules }. Drawn and scored as given; repairs never change them, except that a repair of the eyes clears the eyeShapes it replaces (qrdxStyle in the result holds what was drawn).",
+        "eyeColors { topLeft, topRight, bottomLeft: { outer, inner } } (#RRGGBB), moduleScale 0.5-1 (dot size), autoLevel, shape (square or circle), logoOptions { size 0.1-0.3, padding 0-2 modules, x and y 0-1, shape square|rounded|circle (crop), plate (color) }, eyeShapes { topLeft, topRight, bottomLeft: { outer (an eye frame), inner (an eye center) } }, eyeGradient (corner or code: the eyes continue the dots' gradient), bgRadius 0-0.5 (rounded background corners; needs a margin), backdrop (a color outside the rounded background), halo { color, width 0.1-0.5 modules } (a light rim around the dark shapes, drawn opaque, only on an opaque bgColor at least as light as #d1d5db; any color is taken and drawn in the closest one that stays scannable, at least as light as #d1d5db and no lighter than the background), shadow { color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 modules }. Drawn and scored as given. Repairs keep them, except that a repair of the eyes clears the eyeShapes it replaces, a code that won't decode small gets full-size dots (and, as a last step, loses its shadow), and the classic fallback drops them all (qrdxStyle in the result holds what was drawn).",
       logos: {
         icons: LOGO_ICON_IDS,
         brands: brandLogoOptions(),

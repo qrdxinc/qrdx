@@ -3603,7 +3603,10 @@
         "showLess": "Tampilkan lebih sedikit",
         "showValueMore": "Tampilkan {value, number} lagi",
         "applyThisDesign": "Terapkan desain ini",
-        "notAppliedYourEditorIs": "Tidak diterapkan. Editor Anda tidak berubah."
+        "notAppliedYourEditorIs": "Tidak diterapkan. Editor Anda tidak berubah.",
+        "searchingTheFrames": "Menelusuri bingkai resmi…",
+        "couldntSearchTheFrames": "Tidak dapat mencari bingkai",
+        "foundFramesForQuery": "{count, plural, =0 {Tidak ada bingkai resmi untuk “{query}”} other {Ditemukan # bingkai resmi untuk “{query}”:}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

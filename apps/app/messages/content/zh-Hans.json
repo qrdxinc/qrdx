@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "将二维码下载为 PNG、WebP 或 SVG 格式。",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "将二维码下载为 PNG、SVG、WebP、GIF、BMP 或 ICO 格式。",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "下载 PNG、WebP 或 SVG，也可以在完整编辑器中设计二维码样式。",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "下载 PNG、SVG、WebP、GIF、BMP 或 ICO 文件，也可以在完整编辑器中设计二维码样式。",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -30850,5 +30850,17 @@
     "text": "QRdx 不会保存你的提示词、参考图片或生成的图片，只会统计你的额度用量。提示词、二维码图片和所有参考图片会通过 Vercel AI Gateway 发送给 OpenAI 的 GPT Image 2 以生成作品，结果会直接返回到你的浏览器，因此请下载你想保留的图片。",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "将二维码下载为 PNG、WebP 或 SVG 格式。",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "下载 PNG、WebP 或 SVG，也可以在完整编辑器中设计二维码样式。",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   }
 }
