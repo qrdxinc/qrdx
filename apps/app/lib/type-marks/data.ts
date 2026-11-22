@@ -223,7 +223,8 @@ export const PAGE_TYPE_MARKS: Partial<
   pet: { fill: "#F26B21", glyph: "Pet" },
   // Blue, not red: red sat between the pet page's orange and the PDF page.
   medical: { fill: "#0A84FF", glyph: "Health" },
-  "asset-tag": { fill: "#5B5BD6", glyph: "TagUser" },
+  // A tag with writing on it, not the vCard page's person in a tag.
+  "asset-tag": { fill: "#5B5BD6", glyph: "Tag2" },
   pdf: { fill: "#E5484D", glyph: "DocumentText" },
   images: { fill: "#0BA790", glyph: "Gallery" },
   mp3: { fill: "#EE46BC", glyph: "Music" },

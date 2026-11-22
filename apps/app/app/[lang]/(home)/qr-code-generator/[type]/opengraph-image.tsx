@@ -1,5 +1,6 @@
 import { ogSize, renderPageOgImage } from "@repo/design-system/og/brand";
 import { notFound } from "next/navigation";
+import { typeMarkOgImage } from "@/components/editor/type-mark-og";
 import { requireLocaleParam } from "@/lib/i18n/static-params";
 import { getQrType, getQrTypeTitle } from "@/lib/qr-types-content";
 import { getHostedQrType } from "@/lib/qr-types-content-hosted";
@@ -27,6 +28,7 @@ export default async function Image({
       title: hosted.title,
       description: hosted.summary,
       footer: "Free account · Edit after printing",
+      mark: typeMarkOgImage({ pageType: hosted.page }),
     });
   }
   const content = getQrType(type);
@@ -36,5 +38,6 @@ export default async function Image({
     label: "QR code types",
     title: getQrTypeTitle(content),
     description: content.summary,
+    mark: typeMarkOgImage({ type: content.type }),
   });
 }

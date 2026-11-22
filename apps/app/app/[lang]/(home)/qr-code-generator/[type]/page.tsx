@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
+import { TypeMarkCardArt, TypeMarkHero } from "@/components/editor/type-mark";
 import { ClientMessages } from "@/components/i18n/client-messages";
 import { MockupImage } from "@/components/mockups/mockup-image";
 import { qrTypeGroupImages } from "@/components/mockups/visuals";
@@ -116,6 +117,12 @@ export default async function QrTypePage({ params }: PageProps) {
           { name: t("crumb"), path: "/qr-code-generator" },
           { name, path: `/qr-code-generator/${content.type}` },
         ]}
+        mark={
+          <TypeMarkHero
+            fallbackIcon={QR_TYPE_ICONS[content.type]}
+            type={content.type}
+          />
+        }
         title={t("type.title", { name })}
         intro={[content.intro[0]]}
       />
@@ -226,7 +233,12 @@ export default async function QrTypePage({ params }: PageProps) {
           {hosted && (
             <LinkCard
               href={hostedTypePath(hosted.slug)}
-              icon={PAGE_TYPE_ICONS[hosted.page]}
+              art={
+                <TypeMarkCardArt
+                  fallbackIcon={PAGE_TYPE_ICONS[hosted.page]}
+                  pageType={hosted.page}
+                />
+              }
               title={t("type.hostedCard", { name: hosted.name })}
               description={hosted.summary}
             />
@@ -235,7 +247,12 @@ export default async function QrTypePage({ params }: PageProps) {
             <LinkCard
               key={item.type}
               href={`/qr-code-generator/${item.type}`}
-              icon={QR_TYPE_ICONS[item.type]}
+              art={
+                <TypeMarkCardArt
+                  fallbackIcon={QR_TYPE_ICONS[item.type]}
+                  type={item.type}
+                />
+              }
               title={t("type.relatedCard", { name: item.name })}
               description={item.summary}
             />

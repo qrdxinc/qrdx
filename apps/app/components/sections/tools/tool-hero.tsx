@@ -15,6 +15,11 @@ interface ToolHeroProps {
   pattern?: AsciiVariant;
   /** Focal point for "halo" and "ramp", as fractions [x, y]. */
   focus?: readonly [number, number];
+  /**
+   * A decorative picture between the breadcrumbs and the title (a QR type's
+   * mark, TypeMarkHero); the title stays the page's name.
+   */
+  mark?: ReactNode;
   children?: ReactNode;
 }
 
@@ -31,6 +36,7 @@ export function ToolHero({
   intro,
   pattern = "topo",
   focus,
+  mark,
   children,
 }: ToolHeroProps) {
   // The structured data names this language's URLs; the visible trail
@@ -58,6 +64,7 @@ export function ToolHero({
       <div className="relative z-10 pt-28 pb-14 md:pb-16 px-10 mx-auto flex flex-col items-center gap-5">
         <div className="max-w-3xl flex flex-col items-center gap-5">
           <Breadcrumbs items={crumbs} />
+          {mark}
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tighter text-balance text-center text-secondary-foreground">
             {title}
           </h1>

@@ -2,10 +2,17 @@
 // lib/type-marks/data.ts): every QR content type and hosted page type has
 // one, each glyph resolves, generic glyphs are white at 3:1 or more on their
 // fill (WCAG non-text; brand logos are exempt and draw as the brand does),
-// and no two types in a picker category look the same.
+// and no two types in a picker category look the same. The Open Graph copy
+// (type-mark-og.tsx) holds only what Satori can draw.
+import { Fragment, isValidElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { TYPE_MARK_GLYPHS, TypeMark } from "@/components/editor/type-mark";
+import {
+  TYPE_MARK_GLYPHS,
+  TypeMark,
+  TypeMarkHero,
+} from "@/components/editor/type-mark";
+import { typeMarkOgImage } from "@/components/editor/type-mark-og";
 import { BRAND_MARKS } from "@/lib/brand-logos/marks.generated";
 import { EDITOR_INTEGRATIONS } from "@/lib/integration-catalog";
 import { PAGE_TYPE_IDS } from "@/lib/landing/page-type-ids";
@@ -219,5 +226,50 @@ describe("TypeMark", () => {
     const tint = renderToStaticMarkup(<TypeMark type="wifi" variant="tint" />);
     expect(tint).not.toContain("background-color:#0A84FF");
     expect(tint).toContain("--mark-ink:");
+  });
+
+  it("draws the hero mark at its desktop and phone sizes", () => {
+    const html = renderToStaticMarkup(<TypeMarkHero type="wifi" />);
+    expect(html).toContain('aria-hidden="true"');
+    expect(html).toContain("--mark-box:64px");
+    expect(html).toContain("--mark-box-phone:56px");
+    expect(html).toContain("--mark-wash:#0A84FF");
+    expect(html).toContain("width:64px");
+  });
+});
+
+/** Element types anywhere in a tree that aren't plain elements. */
+function componentsIn(node: ReactNode): unknown[] {
+  if (Array.isArray(node)) return node.flatMap(componentsIn);
+  if (!isValidElement(node)) return [];
+  const { type } = node;
+  const own = typeof type === "string" || type === Fragment ? [] : [type];
+  const { children } = node.props as { children?: ReactNode };
+  return [...own, ...componentsIn(children)];
+}
+
+describe("typeMarkOgImage", () => {
+  // Satori throws on anything but plain elements inside an <svg>.
+  it.each(allMarks)("draws %s with plain elements only", (label, entry) => {
+    const [kind, id] = label.split(" ");
+    const mark = typeMarkOgImage(
+      kind === "page" ? { pageType: id } : { type: id },
+    );
+    if (entry.glyph.startsWith("integration:")) {
+      // An integration's logo is a file in public/: no mark, the image is unchanged.
+      expect(mark).toBeNull();
+      return;
+    }
+    expect(componentsIn(mark)).toEqual([]);
+    const html = renderToStaticMarkup(mark);
+    expect(html).toContain("<svg");
+    expect(html).toContain("<path");
+  });
+
+  it("draws the fill and glyph colour at 96 px", () => {
+    const html = renderToStaticMarkup(typeMarkOgImage({ type: "whatsapp" }));
+    expect(html).toContain("background-color:#25D366");
+    expect(html).toContain(`color:${WHITE_INK}`);
+    expect(html).toContain("width:96px");
   });
 });
