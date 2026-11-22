@@ -899,6 +899,492 @@
     "status": "machine",
     "context": "contentTypes.list.monero.description"
   },
+  "9a523eddafc6": {
+    "source": "Messenger",
+    "text": "Messenger",
+    "status": "machine",
+    "context": "contentTypes.list.messenger.label"
+  },
+  "8bc2e9451ce0": {
+    "source": "Start a Messenger chat with you",
+    "text": "发起与你的 Messenger 聊天",
+    "status": "machine",
+    "context": "contentTypes.list.messenger.description"
+  },
+  "2db2c27ad99b": {
+    "source": "Viber",
+    "text": "Viber",
+    "status": "machine",
+    "context": "contentTypes.list.viber.label"
+  },
+  "127559d99e2e": {
+    "source": "Open a Viber business chat or community",
+    "text": "打开 Viber 商务聊天或社群",
+    "status": "machine",
+    "context": "contentTypes.list.viber.description"
+  },
+  "216924fd2e69": {
+    "source": "KakaoTalk",
+    "text": "KakaoTalk",
+    "status": "machine",
+    "context": "contentTypes.list.kakaotalk.label"
+  },
+  "b39f1ec3ccd1": {
+    "source": "Open a KakaoTalk open chat or channel",
+    "text": "打开 KakaoTalk 开放聊天或频道",
+    "status": "machine",
+    "context": "contentTypes.list.kakaotalk.description"
+  },
+  "8f9500d52394": {
+    "source": "Zalo",
+    "text": "Zalo",
+    "status": "machine",
+    "context": "contentTypes.list.zalo.label"
+  },
+  "4847482adcf9": {
+    "source": "Open a Zalo Official Account or group",
+    "text": "打开 Zalo 官方账号或群组",
+    "status": "machine",
+    "context": "contentTypes.list.zalo.description"
+  },
+  "465047c17854": {
+    "source": "FaceTime",
+    "text": "FaceTime",
+    "status": "machine",
+    "context": "contentTypes.list.facetime.label"
+  },
+  "4f153691a034": {
+    "source": "Start a FaceTime call",
+    "text": "发起 FaceTime 通话",
+    "status": "machine",
+    "context": "contentTypes.list.facetime.description"
+  },
+  "a7b52b269a23": {
+    "source": "Microsoft Teams",
+    "text": "Microsoft Teams",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-teams.label"
+  },
+  "3d13b14cfef7": {
+    "source": "Join a Teams meeting or start a chat",
+    "text": "加入 Teams 会议或发起聊天",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-teams.description"
+  },
+  "382c1b2987d4": {
+    "source": "Webex",
+    "text": "Webex",
+    "status": "machine",
+    "context": "contentTypes.list.webex.label"
+  },
+  "651115a0e158": {
+    "source": "Join a Webex meeting",
+    "text": "加入 Webex 会议",
+    "status": "machine",
+    "context": "contentTypes.list.webex.description"
+  },
+  "f7b8dd5ece88": {
+    "source": "Calendly",
+    "text": "Calendly",
+    "status": "machine",
+    "context": "contentTypes.list.calendly.label"
+  },
+  "b51ffd6c5b56": {
+    "source": "Let people book time with you",
+    "text": "让他人预约你的时间",
+    "status": "machine",
+    "context": "contentTypes.list.calendly.description"
+  },
+  "343856a7c4d7": {
+    "source": "Google Classroom",
+    "text": "Google Classroom",
+    "status": "machine",
+    "context": "contentTypes.list.google-classroom.label"
+  },
+  "a0b88730be29": {
+    "source": "Invite students to a class",
+    "text": "邀请学生加入课堂",
+    "status": "machine",
+    "context": "contentTypes.list.google-classroom.description"
+  },
+  "7f607b65bde0": {
+    "source": "VK",
+    "text": "VK",
+    "status": "machine",
+    "context": "contentTypes.list.vk.label"
+  },
+  "4eb6770af4f6": {
+    "source": "Open a VK profile, page or group",
+    "text": "打开 VK 个人主页、公共主页或群组",
+    "status": "machine",
+    "context": "contentTypes.list.vk.description"
+  },
+  "5b16689ed91a": {
+    "source": "Weibo",
+    "text": "Weibo",
+    "status": "machine",
+    "context": "contentTypes.list.weibo.label"
+  },
+  "5f9443faa00a": {
+    "source": "Open a Weibo profile",
+    "text": "打开 Weibo 个人主页",
+    "status": "machine",
+    "context": "contentTypes.list.weibo.description"
+  },
+  "3ce8b7c75edc": {
+    "source": "Tumblr",
+    "text": "Tumblr",
+    "status": "machine",
+    "context": "contentTypes.list.tumblr.label"
+  },
+  "4e5c671bbb96": {
+    "source": "Open a Tumblr blog",
+    "text": "打开 Tumblr 博客",
+    "status": "machine",
+    "context": "contentTypes.list.tumblr.description"
+  },
+  "8e588cd18774": {
+    "source": "Medium",
+    "text": "Medium",
+    "status": "machine",
+    "context": "contentTypes.list.medium.label"
+  },
+  "34700bc18214": {
+    "source": "Open a Medium profile or story",
+    "text": "打开 Medium 个人主页或文章",
+    "status": "machine",
+    "context": "contentTypes.list.medium.description"
+  },
+  "8c339ec81c3e": {
+    "source": "Substack",
+    "text": "Substack",
+    "status": "machine",
+    "context": "contentTypes.list.substack.label"
+  },
+  "5c84a14e63b0": {
+    "source": "Open a Substack newsletter",
+    "text": "打开 Substack 电子报",
+    "status": "machine",
+    "context": "contentTypes.list.substack.description"
+  },
+  "f911e414cf6b": {
+    "source": "GitHub",
+    "text": "GitHub",
+    "status": "machine",
+    "context": "contentTypes.list.github.label"
+  },
+  "d61a83c4cae9": {
+    "source": "Open a GitHub profile or repository",
+    "text": "打开 GitHub 个人主页或仓库",
+    "status": "machine",
+    "context": "contentTypes.list.github.description"
+  },
+  "ad21424a84d7": {
+    "source": "Behance",
+    "text": "Behance",
+    "status": "machine",
+    "context": "contentTypes.list.behance.label"
+  },
+  "6246bf5d9570": {
+    "source": "Open a Behance portfolio",
+    "text": "打开 Behance 作品集",
+    "status": "machine",
+    "context": "contentTypes.list.behance.description"
+  },
+  "61bce589e672": {
+    "source": "Dribbble",
+    "text": "Dribbble",
+    "status": "machine",
+    "context": "contentTypes.list.dribbble.label"
+  },
+  "ee0902dedd27": {
+    "source": "Open a Dribbble portfolio",
+    "text": "打开 Dribbble 作品集",
+    "status": "machine",
+    "context": "contentTypes.list.dribbble.description"
+  },
+  "2339a2623267": {
+    "source": "Linktree",
+    "text": "Linktree",
+    "status": "machine",
+    "context": "contentTypes.list.linktree.label"
+  },
+  "c36a62ec05ac": {
+    "source": "Open your Linktree page",
+    "text": "打开你的 Linktree 页面",
+    "status": "machine",
+    "context": "contentTypes.list.linktree.description"
+  },
+  "eec736f63bbb": {
+    "source": "Patreon",
+    "text": "Patreon",
+    "status": "machine",
+    "context": "contentTypes.list.patreon.label"
+  },
+  "d990a359dba9": {
+    "source": "Open a Patreon creator page",
+    "text": "打开 Patreon 创作者页面",
+    "status": "machine",
+    "context": "contentTypes.list.patreon.description"
+  },
+  "76c38e42cf40": {
+    "source": "Ko-fi",
+    "text": "Ko-fi",
+    "status": "machine",
+    "context": "contentTypes.list.kofi.label"
+  },
+  "03f20f7907bc": {
+    "source": "Get tips on your Ko-fi page",
+    "text": "在你的 Ko-fi 页面获得打赏",
+    "status": "machine",
+    "context": "contentTypes.list.kofi.description"
+  },
+  "50a0dd1c115d": {
+    "source": "Buy Me a Coffee",
+    "text": "Buy Me a Coffee",
+    "status": "machine",
+    "context": "contentTypes.list.buymeacoffee.label"
+  },
+  "cb2d6fb0e8f2": {
+    "source": "Get tips on your Buy Me a Coffee page",
+    "text": "在你的 Buy Me a Coffee 页面获得打赏",
+    "status": "machine",
+    "context": "contentTypes.list.buymeacoffee.description"
+  },
+  "3b00b32d64af": {
+    "source": "Apple Music",
+    "text": "Apple Music",
+    "status": "machine",
+    "context": "contentTypes.list.apple-music.label"
+  },
+  "d12f244b2b95": {
+    "source": "Play a song, album or playlist",
+    "text": "播放歌曲、专辑或播放列表",
+    "status": "machine",
+    "context": "contentTypes.list.apple-music.description"
+  },
+  "6921a7cac539": {
+    "source": "YouTube Music",
+    "text": "YouTube Music",
+    "status": "machine",
+    "context": "contentTypes.list.youtube-music.label"
+  },
+  "40dd3b330ddf": {
+    "source": "Apple Podcasts",
+    "text": "Apple Podcasts",
+    "status": "machine",
+    "context": "contentTypes.list.apple-podcasts.label"
+  },
+  "37ad409c6b53": {
+    "source": "Open a podcast or episode",
+    "text": "打开播客或单集",
+    "status": "machine",
+    "context": "contentTypes.list.apple-podcasts.description"
+  },
+  "2faf9cfdecef": {
+    "source": "Amazon Music",
+    "text": "Amazon Music",
+    "status": "machine",
+    "context": "contentTypes.list.amazon-music.label"
+  },
+  "4997d093758b": {
+    "source": "Deezer",
+    "text": "Deezer",
+    "status": "machine",
+    "context": "contentTypes.list.deezer.label"
+  },
+  "01bec391e74c": {
+    "source": "Play a track, album or playlist",
+    "text": "播放单曲、专辑或播放列表",
+    "status": "machine",
+    "context": "contentTypes.list.deezer.description"
+  },
+  "0f622ac0d050": {
+    "source": "TIDAL",
+    "text": "TIDAL",
+    "status": "machine",
+    "context": "contentTypes.list.tidal.label"
+  },
+  "088f5f25925f": {
+    "source": "Bandcamp",
+    "text": "Bandcamp",
+    "status": "machine",
+    "context": "contentTypes.list.bandcamp.label"
+  },
+  "892c3420832c": {
+    "source": "Open an artist, album or track",
+    "text": "打开艺术家、专辑或单曲",
+    "status": "machine",
+    "context": "contentTypes.list.bandcamp.description"
+  },
+  "507e98c562e1": {
+    "source": "Google Docs",
+    "text": "Google Docs",
+    "status": "machine",
+    "context": "contentTypes.list.google-docs.label"
+  },
+  "5be83e1c47ff": {
+    "source": "Open a shared Google Doc",
+    "text": "打开共享的 Google 文档",
+    "status": "machine",
+    "context": "contentTypes.list.google-docs.description"
+  },
+  "f109802a741f": {
+    "source": "Google Sheets",
+    "text": "Google Sheets",
+    "status": "machine",
+    "context": "contentTypes.list.google-sheets.label"
+  },
+  "2be210d8ffba": {
+    "source": "Open a shared spreadsheet",
+    "text": "打开共享的电子表格",
+    "status": "machine",
+    "context": "contentTypes.list.google-sheets.description"
+  },
+  "6da41d861102": {
+    "source": "Google Slides",
+    "text": "Google Slides",
+    "status": "machine",
+    "context": "contentTypes.list.google-slides.label"
+  },
+  "bfcf6a4e1f4f": {
+    "source": "Open a shared presentation",
+    "text": "打开共享的演示文稿",
+    "status": "machine",
+    "context": "contentTypes.list.google-slides.description"
+  },
+  "805259086913": {
+    "source": "Google Forms",
+    "text": "Google Forms",
+    "status": "machine",
+    "context": "contentTypes.list.google-forms.label"
+  },
+  "f151e09bdf83": {
+    "source": "Open a Google Form",
+    "text": "打开 Google 表单",
+    "status": "machine",
+    "context": "contentTypes.list.google-forms.description"
+  },
+  "7645f2073fc8": {
+    "source": "Microsoft Forms",
+    "text": "Microsoft Forms",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-forms.label"
+  },
+  "715275c8faa6": {
+    "source": "Open a Microsoft Form",
+    "text": "打开 Microsoft 表单",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-forms.description"
+  },
+  "73bcfe98830b": {
+    "source": "Notion",
+    "text": "Notion",
+    "status": "machine",
+    "context": "contentTypes.list.notion.label"
+  },
+  "66b41a05a1ff": {
+    "source": "Open a public Notion page",
+    "text": "打开公开的 Notion 页面",
+    "status": "machine",
+    "context": "contentTypes.list.notion.description"
+  },
+  "2f73335c712c": {
+    "source": "Canva",
+    "text": "Canva",
+    "status": "machine",
+    "context": "contentTypes.list.canva.label"
+  },
+  "9b7356ae852d": {
+    "source": "Open a shared Canva design",
+    "text": "打开共享的 Canva 设计",
+    "status": "machine",
+    "context": "contentTypes.list.canva.description"
+  },
+  "c4424d160bca": {
+    "source": "App Store",
+    "text": "App Store",
+    "status": "machine",
+    "context": "contentTypes.list.app-store.label"
+  },
+  "ea863e47112e": {
+    "source": "Open an iPhone app's App Store page",
+    "text": "打开 iPhone 应用的 App Store 页面",
+    "status": "machine",
+    "context": "contentTypes.list.app-store.description"
+  },
+  "027b1684683a": {
+    "source": "Google Play",
+    "text": "Google Play",
+    "status": "machine",
+    "context": "contentTypes.list.google-play.label"
+  },
+  "4e12b2035297": {
+    "source": "Open an Android app's Google Play page",
+    "text": "打开 Android 应用的 Google Play 页面",
+    "status": "machine",
+    "context": "contentTypes.list.google-play.description"
+  },
+  "d384fa236a1f": {
+    "source": "Tripadvisor",
+    "text": "Tripadvisor",
+    "status": "machine",
+    "context": "contentTypes.list.tripadvisor.label"
+  },
+  "5251ecd50939": {
+    "source": "Open your Tripadvisor listing",
+    "text": "打开你的 Tripadvisor 商家页面",
+    "status": "machine",
+    "context": "contentTypes.list.tripadvisor.description"
+  },
+  "26abcb97dbdd": {
+    "source": "Trustpilot",
+    "text": "Trustpilot",
+    "status": "machine",
+    "context": "contentTypes.list.trustpilot.label"
+  },
+  "cc1c9c901110": {
+    "source": "Ask customers for a Trustpilot review",
+    "text": "邀请客户撰写 Trustpilot 评价",
+    "status": "machine",
+    "context": "contentTypes.list.trustpilot.description"
+  },
+  "893919d40bac": {
+    "source": "Yelp",
+    "text": "Yelp",
+    "status": "machine",
+    "context": "contentTypes.list.yelp.label"
+  },
+  "6c9fe4ad62aa": {
+    "source": "Open your Yelp business page",
+    "text": "打开你的 Yelp 商家页面",
+    "status": "machine",
+    "context": "contentTypes.list.yelp.description"
+  },
+  "1d927621f532": {
+    "source": "Airbnb",
+    "text": "Airbnb",
+    "status": "machine",
+    "context": "contentTypes.list.airbnb.label"
+  },
+  "a33bb31179a5": {
+    "source": "Open an Airbnb listing or experience",
+    "text": "打开 Airbnb 房源或体验",
+    "status": "machine",
+    "context": "contentTypes.list.airbnb.description"
+  },
+  "14bb3cc7d001": {
+    "source": "Booking.com",
+    "text": "Booking.com",
+    "status": "machine",
+    "context": "contentTypes.list.booking-com.label"
+  },
+  "4ffbeae0492e": {
+    "source": "Open your Booking.com property page",
+    "text": "打开你的 Booking.com 住宿页面",
+    "status": "machine",
+    "context": "contentTypes.list.booking-com.description"
+  },
   "ca7e3d788516": {
     "source": "MeCard",
     "text": "MeCard",
@@ -1055,6 +1541,12 @@
     "status": "machine",
     "context": "contentTypes.groups.social.label"
   },
+  "b61fa44e6c70": {
+    "source": "Music & podcasts",
+    "text": "音乐与播客",
+    "status": "machine",
+    "context": "contentTypes.groups.music.label"
+  },
   "76f68a75f01e": {
     "source": "Business",
     "text": "商家",
@@ -1085,9 +1577,9 @@
     "status": "machine",
     "context": "qrTypes.groups.utilities.title"
   },
-  "a271af9bf106": {
-    "source": "Websites, plain text, Wi-Fi logins and links to files or short links.",
-    "text": "网站、纯文本、Wi-Fi 登录信息，以及文件链接或短链接。",
+  "52aef28f5f92": {
+    "source": "Websites, plain text, Wi-Fi logins, shared documents and forms, app store pages and short links.",
+    "text": "网站、纯文本、Wi-Fi 登录信息、共享文档和表单、应用商店页面以及短链接。",
     "status": "machine",
     "context": "qrTypes.groups.utilities.description"
   },
@@ -1097,9 +1589,9 @@
     "status": "machine",
     "context": "qrTypes.groups.contact.title"
   },
-  "1771803787ab": {
-    "source": "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Signal or LINE.",
-    "text": "保存联系人、拨打电话、发送短信或邮件，也可以打开 WhatsApp、Telegram、Signal 或 LINE 的聊天。",
+  "70f1152fb7bd": {
+    "source": "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Messenger, LINE or KakaoTalk.",
+    "text": "保存联系人、拨打电话、发送短信或邮件，或在 WhatsApp、Telegram、Messenger、LINE 或 KakaoTalk 中打开聊天。",
     "status": "machine",
     "context": "qrTypes.groups.contact.description"
   },
@@ -1109,9 +1601,9 @@
     "status": "machine",
     "context": "qrTypes.groups.social.title"
   },
-  "c5bddd3ef7b6": {
-    "source": "Send people to a profile, channel, Discord server or playlist.",
-    "text": "引导用户前往个人主页、频道、Discord 服务器或播放列表。",
+  "677940560013": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, album or podcast.",
+    "text": "把人们引导到个人主页、频道、Discord 服务器、新闻通讯、专辑或播客。",
     "status": "machine",
     "context": "qrTypes.groups.social.description"
   },
@@ -1127,9 +1619,9 @@
     "status": "machine",
     "context": "qrTypes.groups.business.title"
   },
-  "40ae6347e760": {
-    "source": "Reviews, directions, bookings, meetings and attendance check-ins.",
-    "text": "评价、路线指引、预约、会议和签到。",
+  "5c9a02d00b51": {
+    "source": "Reviews, listings, directions, bookings, meetings, classes and attendance check-ins.",
+    "text": "评价、商家信息、路线指引、预订、会议、课程和出勤签到。",
     "status": "machine",
     "context": "qrTypes.groups.business.description"
   },
@@ -6700,6 +7192,2622 @@
     "text": "Monero 已弃用单独的付款 ID，因此生成器不会添加。请为每位客户或每个二维码使用一个子地址，或使用交易所或商店提供给你的集成地址。",
     "status": "machine",
     "context": "qrTypes.types.monero.details.paragraphs.1"
+  },
+  "87cb1f50205c": {
+    "source": "Open a Messenger chat with you or your Page.",
+    "text": "打开与你或你的主页的 Messenger 聊天。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.summary"
+  },
+  "b7b98dca2c76": {
+    "source": "Make a Messenger QR code from your Facebook username. People scan to start a chat with you or your Page. m.me link, free, no signup.",
+    "text": "用你的 Facebook 用户名生成 Messenger 二维码。扫描后即可与你或你的主页开始聊天。m.me 链接，免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.metaDescription"
+  },
+  "8d2f18c58c28": {
+    "source": "A Messenger QR code opens a chat with you, or with your business's Facebook Page, so customers can ask a question from a shop window, a flyer or a receipt.",
+    "text": "Messenger 二维码可以打开与你或你企业 Facebook 主页的聊天，顾客在店铺橱窗、传单或小票上就能提问。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.intro.0"
+  },
+  "500e6c017cda": {
+    "source": "Type the username of your Facebook profile or Page and QRdx builds the m.me link Meta gives every username, or paste the m.me link itself.",
+    "text": "输入你的 Facebook 个人账号或主页的用户名，QRdx 就会生成 Meta 为每个用户名提供的 m.me 链接，也可以直接粘贴 m.me 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.intro.1"
+  },
+  "ddd574b28a22": {
+    "source": "Enter your Facebook username, or paste your m.me link.",
+    "text": "输入你的 Facebook 用户名，或粘贴你的 m.me 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.steps.0"
+  },
+  "46bd204ff500": {
+    "source": "Scan the preview to check the chat opens.",
+    "text": "扫描预览，确认聊天能够打开。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.steps.1"
+  },
+  "a0c86702d095": {
+    "source": "Facebook usernames are letters, digits and dots.",
+    "text": "Facebook 用户名由字母、数字和点组成。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.payload.notes.0"
+  },
+  "84cca9616632": {
+    "source": "m.me links open the Messenger app when it's installed, or Messenger in the browser.",
+    "text": "已安装 Messenger 应用时，m.me 链接会打开该应用，否则在浏览器中打开 Messenger。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.payload.notes.1"
+  },
+  "d68dad346d27": {
+    "source": "It's the last part of your profile's or Page's address on Facebook, after facebook.com/. A Page without a username can set one in its settings.",
+    "text": "它是你的个人主页或公共主页在 Facebook 上地址的最后一部分，即 facebook.com/ 之后的内容。没有用户名的公共主页可以在设置中设定一个。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.0.answer"
+  },
+  "05a5da7f487f": {
+    "source": "Does it work for a business Page?",
+    "text": "适用于企业主页吗？",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.1.question"
+  },
+  "a78e0fb4ffec": {
+    "source": "Yes. A Page's m.me link opens a chat with the Page, and the messages arrive in the Page's inbox.",
+    "text": "适用。主页的 m.me 链接会打开与该主页的聊天，消息会发送到主页的收件箱。",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.1.answer"
+  },
+  "c4ba95ee6d7e": {
+    "source": "Open a Viber business chat, community or channel.",
+    "text": "打开 Viber 企业聊天、社群或频道。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.summary"
+  },
+  "a71489e78f3c": {
+    "source": "Create a Viber QR code for a business chat by number, or to invite people to your community or channel. viber.me and invite links. Free.",
+    "text": "通过号码为企业聊天创建 Viber 二维码，或邀请人们加入你的社群或频道。支持 viber.me 和邀请链接。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.metaDescription"
+  },
+  "6ef9674b9362": {
+    "source": "A Viber QR code opens a chat with your business, or invites people to your Viber community or channel, from a shop counter, a menu or a poster.",
+    "text": "Viber 二维码可以打开与你企业的聊天，或邀请人们加入你的 Viber 社群或频道，适合放在店铺柜台、菜单或海报上。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.intro.0"
+  },
+  "da02c8d4d928": {
+    "source": "For a chat, enter your Viber Business account's number and an optional first message; QRdx builds the viber.me link Viber gives business accounts. For a community or channel, paste its Invite URL from the app.",
+    "text": "如果是聊天，请输入你的 Viber Business 账号号码和可选的第一条消息，QRdx 会生成 Viber 为企业账号提供的 viber.me 链接。如果是社群或频道，请粘贴应用中的邀请链接。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.intro.1"
+  },
+  "f261dd7a71b7": {
+    "source": "Choose a business chat, or a community or channel.",
+    "text": "选择企业聊天，或社群、频道。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.0"
+  },
+  "86882b4b1434": {
+    "source": "Enter the business number with its country code, or paste the Invite URL.",
+    "text": "输入带国家区号的企业号码，或粘贴邀请链接。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.1"
+  },
+  "9c45559e6431": {
+    "source": "Scan the preview with Viber installed to check it opens.",
+    "text": "在已安装 Viber 的设备上扫描预览，确认能够打开。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.2"
+  },
+  "9cb54423b2a8": {
+    "source": "The number is written in full international format, digits only, as Viber asks.",
+    "text": "号码按 Viber 的要求以完整国际格式书写，只含数字。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.payload.notes.0"
+  },
+  "f3530eff7c88": {
+    "source": "Invite URLs are kept exactly as Viber gives them.",
+    "text": "邀请链接会与 Viber 提供的内容保持完全一致。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.payload.notes.1"
+  },
+  "17a39bc9be1d": {
+    "source": "Can I make a chat code for a personal number?",
+    "text": "可以为个人号码制作聊天二维码吗？",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.0.question"
+  },
+  "9d314104cc35": {
+    "source": "Viber's chat links by number are for Viber Business accounts. For a personal number, share a community or channel, or use a WhatsApp or Telegram code.",
+    "text": "Viber 通过号码打开聊天的链接仅适用于 Viber Business 账号。个人号码可以分享社群或频道，或使用 WhatsApp 或 Telegram 二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.0.answer"
+  },
+  "cf6610208dfd": {
+    "source": "Will the community link keep working?",
+    "text": "社群链接会一直有效吗？",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.1.question"
+  },
+  "2c8b4037a973": {
+    "source": "As long as the Invite URL does. If an admin resets the link in Viber, make a new code.",
+    "text": "只要邀请链接有效，二维码就有效。如果管理员在 Viber 中重置了链接，请重新制作二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.1.answer"
+  },
+  "08e60ec1c791": {
+    "source": "Open a KakaoTalk open chat or channel.",
+    "text": "打开 KakaoTalk 开放聊天或频道。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.summary"
+  },
+  "5f323e3b6819": {
+    "source": "Make a KakaoTalk QR code that opens your open chat room or Kakao Talk Channel. Paste the link from the app or enter your channel ID. Free.",
+    "text": "制作 KakaoTalk 二维码，打开你的开放聊天室或 Kakao Talk 频道。粘贴应用中的链接或输入频道 ID 即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.metaDescription"
+  },
+  "60fd2b87e617": {
+    "source": "A KakaoTalk QR code opens your open chat room, or your business's Kakao Talk Channel where people can add you and send a message.",
+    "text": "KakaoTalk 二维码可打开你的开放聊天室，或你企业的 Kakao Talk 频道，人们可以在那里添加你并发送消息。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.intro.0"
+  },
+  "d9f5c057dd32": {
+    "source": "Paste the open chat link (open.kakao.com/o/…) or the channel link (pf.kakao.com/_…), or type the channel ID that starts with an underscore.",
+    "text": "粘贴开放聊天链接（open.kakao.com/o/…）或频道链接（pf.kakao.com/_…），也可以输入以下划线开头的频道 ID。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.intro.1"
+  },
+  "ad9a8bb30a65": {
+    "source": "Copy the open chat's share link, or your channel's link from the Kakao Talk Channel partner center.",
+    "text": "复制开放聊天的分享链接，或从 Kakao Talk 频道合作伙伴中心复制你的频道链接。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.0"
+  },
+  "98bf05380163": {
+    "source": "Paste it here, or type the channel ID, like _AbCdEf.",
+    "text": "粘贴到这里，或输入频道 ID，例如 _AbCdEf。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.1"
+  },
+  "e8aece3347c7": {
+    "source": "Scan the preview to check KakaoTalk opens.",
+    "text": "扫描预览，检查是否能打开 KakaoTalk。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.2"
+  },
+  "7409dae6d535": {
+    "source": "A typed channel ID becomes its pf.kakao.com link.",
+    "text": "输入的频道 ID 会转换为对应的 pf.kakao.com 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.payload.notes.0"
+  },
+  "70374e959bec": {
+    "source": "Pasted links are kept as they are.",
+    "text": "粘贴的链接将保持原样。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.payload.notes.1"
+  },
+  "fa97fa556c79": {
+    "source": "Where is my channel ID?",
+    "text": "我的频道 ID 在哪里？",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.0.question"
+  },
+  "ecf630ee7617": {
+    "source": "In the Kakao Talk Channel partner center, with your channel's details. It starts with an underscore.",
+    "text": "在 Kakao Talk 频道合作伙伴中心，你的频道详情里。它以下划线开头。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.0.answer"
+  },
+  "2c28296169be": {
+    "source": "Can people join an open chat without the app?",
+    "text": "不用应用也能加入开放聊天吗？",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.1.question"
+  },
+  "6d4a137b35bb": {
+    "source": "No. The link opens KakaoTalk, which people need to join the room.",
+    "text": "不能。该链接会打开 KakaoTalk，人们需要通过它才能加入聊天室。",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.1.answer"
+  },
+  "bbaf8c78fa3e": {
+    "source": "Open a Zalo Official Account or group.",
+    "text": "打开 Zalo 官方账号或群组。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.summary"
+  },
+  "d9d33227c0a4": {
+    "source": "Create a Zalo QR code for your Official Account or group. Paste the zalo.me link or enter the account's numeric ID. Free, no signup.",
+    "text": "为你的官方账号或群组创建 Zalo 二维码。粘贴 zalo.me 链接或输入账号的数字 ID 即可。免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.metaDescription"
+  },
+  "e723cc18a188": {
+    "source": "A Zalo QR code opens your business's Zalo Official Account, where people can follow you and send a message, or a Zalo group.",
+    "text": "Zalo 二维码可打开你企业的 Zalo 官方账号，人们可以在那里关注你并发送消息，也可以打开 Zalo 群组。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.intro.0"
+  },
+  "fe519b5483ae": {
+    "source": "Paste the zalo.me link from your Official Account or group, or type the account's numeric ID, and QRdx writes the zalo.me link.",
+    "text": "粘贴官方账号或群组的 zalo.me 链接，或输入账号的数字 ID，QRdx 会生成对应的 zalo.me 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.intro.1"
+  },
+  "a10894e355ef": {
+    "source": "Copy your Official Account's or group's zalo.me link.",
+    "text": "复制你的官方账号或群组的 zalo.me 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.0"
+  },
+  "30bfe2e7e37b": {
+    "source": "Paste it here, or type the account's ID.",
+    "text": "粘贴到这里，或输入账号 ID。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.1"
+  },
+  "f7ea295b1e15": {
+    "source": "Scan the preview with Zalo installed to check it opens.",
+    "text": "在已安装 Zalo 的设备上扫描预览，检查是否能打开。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.2"
+  },
+  "71a718bd4a29": {
+    "source": "A typed numeric ID becomes its zalo.me link.",
+    "text": "输入的数字 ID 会转换为对应的 zalo.me 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.payload.notes.0"
+  },
+  "e3a2a32fde7f": {
+    "source": "Custom names (zalo.me/yourname) and group links are kept as pasted.",
+    "text": "自定义名称（zalo.me/yourname）和群组链接将按粘贴的内容保持原样。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.payload.notes.1"
+  },
+  "f582219ddebb": {
+    "source": "Can group links stop working?",
+    "text": "群组链接会失效吗？",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.0.question"
+  },
+  "5ed01d72a918": {
+    "source": "Yes. A group admin can turn off or reset the join link, and then the code needs the new one.",
+    "text": "会。群组管理员可以关闭或重置加入链接，之后二维码需要换成新的链接。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.0.answer"
+  },
+  "732b44090081": {
+    "source": "Can I use a custom name instead of the ID?",
+    "text": "可以用自定义名称代替 ID 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.1.question"
+  },
+  "fa714eebb972": {
+    "source": "Yes, once Zalo approves a custom link for your Official Account. Paste the zalo.me link with the name.",
+    "text": "可以，前提是 Zalo 已为你的官方账号批准自定义链接。粘贴带有该名称的 zalo.me 链接即可。",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.1.answer"
+  },
+  "8292f1d90083": {
+    "source": "Start a FaceTime call, or join a FaceTime link.",
+    "text": "发起 FaceTime 通话，或加入 FaceTime 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.summary"
+  },
+  "f14db888ae14": {
+    "source": "Make a FaceTime QR code that calls a phone number or Apple Account email, or opens a FaceTime link anyone can join. Video or audio. Free.",
+    "text": "制作 FaceTime 二维码，可呼叫电话号码或 Apple 账户邮箱，也可打开任何人都能加入的 FaceTime 链接。视频或音频均可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.metaDescription"
+  },
+  "2dbda160707d": {
+    "source": "A FaceTime QR code starts a FaceTime call to a phone number or the email of an Apple Account. It works on iPhone, iPad and Mac; other phones can't open it.",
+    "text": "FaceTime 二维码会向某个电话号码或 Apple 账户的邮箱发起 FaceTime 通话。它适用于 iPhone、iPad 和 Mac，其他手机无法打开。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.intro.0"
+  },
+  "f6c8e3e5ded7": {
+    "source": "For a call anyone can join, including people on Android and Windows in their browser, make a link in FaceTime with Create Link and paste it instead.",
+    "text": "如果想要任何人都能加入的通话，包括使用 Android 和 Windows、通过浏览器加入的用户，请在 FaceTime 中用“创建链接”生成链接，再粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.intro.1"
+  },
+  "8b5d591b248b": {
+    "source": "Choose a call to a number or email, or a FaceTime link.",
+    "text": "选择呼叫号码或邮箱，或选择 FaceTime 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.0"
+  },
+  "09fd479c886e": {
+    "source": "Enter the number or email (and turn on audio only if you like), or paste the link.",
+    "text": "输入号码或邮箱（需要的话可开启仅音频），或粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.1"
+  },
+  "867b42180a2d": {
+    "source": "Scan the preview on an iPhone to check FaceTime opens.",
+    "text": "用 iPhone 扫描预览，确认能打开 FaceTime。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.2"
+  },
+  "d2ad4d5aab1a": {
+    "source": "facetime: and facetime-audio: are Apple's URL schemes for FaceTime calls; Apple devices ask before they call.",
+    "text": "facetime: 和 facetime-audio: 是 Apple 用于 FaceTime 通话的 URL 协议；Apple 设备在拨打前会先询问。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.payload.notes.0"
+  },
+  "2e5ce83a25c2": {
+    "source": "FaceTime links can't be built from a number: make one in the FaceTime app.",
+    "text": "FaceTime 链接无法通过号码生成：请在 FaceTime App 中创建。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.payload.notes.1"
+  },
+  "b8e808fecf0d": {
+    "source": "Can Android phones scan it?",
+    "text": "Android 手机能扫描吗？",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.0.question"
+  },
+  "d096757b3d02": {
+    "source": "A call code only works on Apple devices. A FaceTime link opens on Android and Windows too, where people join from Chrome or Edge.",
+    "text": "通话二维码只能在 Apple 设备上使用。FaceTime 链接在 Android 和 Windows 上也能打开，用户可通过 Chrome 或 Edge 加入。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.0.answer"
+  },
+  "be6a27e5e7a2": {
+    "source": "Does the code call right away?",
+    "text": "扫描后会立即拨打吗？",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.1.question"
+  },
+  "900c1860bf08": {
+    "source": "No. The device shows who it's about to call and waits for a tap.",
+    "text": "不会。设备会显示即将呼叫的对象，并等待点按确认。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.1.answer"
+  },
+  "2a727bfe6e05": {
+    "source": "Which devices open a FaceTime code",
+    "text": "哪些设备能打开 FaceTime 二维码",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.title"
+  },
+  "a442097fd994": {
+    "source": "facetime: and facetime-audio: links open FaceTime on iPhone, iPad and Mac. Android phones and Windows PCs have no FaceTime app, so they can't use them; Apple documents the audio scheme for iPhone and iPad.",
+    "text": "facetime: 和 facetime-audio: 链接会在 iPhone、iPad 和 Mac 上打开 FaceTime。Android 手机和 Windows 电脑没有 FaceTime 应用，因此无法使用；Apple 的文档中，音频协议适用于 iPhone 和 iPad。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.paragraphs.0"
+  },
+  "3e3f96efb8a8": {
+    "source": "A FaceTime link (facetime.apple.com/join…) is made in the FaceTime app with Create Link. People on Apple devices join in FaceTime, and others join from a current Chrome or Edge browser, but they can't start calls. FaceTime links aren't available in mainland China.",
+    "text": "FaceTime 链接（facetime.apple.com/join…）需在 FaceTime App 中通过“创建链接”生成。Apple 设备上的用户可在 FaceTime 中加入，其他用户可通过较新版本的 Chrome 或 Edge 浏览器加入，但无法发起通话。FaceTime 链接在中国大陆不可用。",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.paragraphs.1"
+  },
+  "2c015e053f5e": {
+    "source": "Join a Teams meeting or start a Teams chat.",
+    "text": "加入 Teams 会议或发起 Teams 聊天。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.summary"
+  },
+  "6b41a98dac03": {
+    "source": "Create a Microsoft Teams QR code that joins a meeting from its link, or starts a chat with people by work email. For rooms and slides. Free.",
+    "text": "创建 Microsoft Teams 二维码，可通过链接加入会议，或用工作邮箱与他人发起聊天。适用于会议室和幻灯片。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.metaDescription"
+  },
+  "33bc247b1744": {
+    "source": "A Microsoft Teams QR code opens a meeting, so people join from a room sign, a slide or a printed agenda, or starts a chat with colleagues by their work email.",
+    "text": "Microsoft Teams 二维码可以打开会议，让大家通过会议室标牌、幻灯片或打印的议程加入，也可以用同事的工作邮箱发起聊天。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.intro.0"
+  },
+  "a78ea8ed2e5d": {
+    "source": "Paste the meeting's join link from the invite, or enter one or more work or school email addresses and an optional message. QRdx builds the chat link from Microsoft's deep link format.",
+    "text": "粘贴邀请中的会议加入链接，或输入一个或多个工作或学校邮箱地址，并可附上一条消息。QRdx 会按照 Microsoft 的深度链接格式生成聊天链接。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.intro.1"
+  },
+  "cf863d521a7b": {
+    "source": "Choose a meeting or a chat.",
+    "text": "选择会议或聊天。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.0"
+  },
+  "1edecee263b9": {
+    "source": "Paste the join link, or enter the email addresses and a message.",
+    "text": "粘贴加入链接，或输入邮箱地址和消息。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.1"
+  },
+  "553e5ddd14fc": {
+    "source": "Scan the preview to check Teams opens.",
+    "text": "扫描预览，确认能打开 Teams。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.2"
+  },
+  "667b8ef3c8b2": {
+    "source": "Chat links take work or school accounts, separated by commas.",
+    "text": "聊天链接使用工作或学校账户，多个账户之间用逗号分隔。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.payload.notes.0"
+  },
+  "719788589f30": {
+    "source": "Meeting links are kept as pasted, with their passcode.",
+    "text": "会议链接会按粘贴时的原样保留，包括其中的密码。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.payload.notes.1"
+  },
+  "db768bd7023b": {
+    "source": "Do meeting links expire?",
+    "text": "会议链接会过期吗？",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.0.question"
+  },
+  "7448b7eadcd3": {
+    "source": "Newer Teams meeting links can expire some time after the meeting. Use a recurring or scheduled meeting for a printed code, and test it before an event.",
+    "text": "较新的 Teams 会议链接可能在会议结束一段时间后失效。打印的二维码请使用定期或已预约的会议，并在活动前测试。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.0.answer"
+  },
+  "f426990a2dc2": {
+    "source": "Can guests outside my organization join?",
+    "text": "组织外部的访客可以加入吗？",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.1.question"
+  },
+  "fd8aff9dbbab": {
+    "source": "They can join meetings that allow guests, from the Teams app or the browser. Chats need a work or school account.",
+    "text": "他们可以通过 Teams 应用或浏览器加入允许访客的会议。聊天则需要工作或学校账户。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.1.answer"
+  },
+  "fc571860e0e9": {
+    "source": "Join a Webex meeting with one scan.",
+    "text": "扫描一下，即可加入 Webex 会议。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.summary"
+  },
+  "8d5962a2397f": {
+    "source": "Make a Webex QR code from your Personal Room or meeting link. People join from room signs, slides and agendas. Free, no signup.",
+    "text": "用你的个人会议室或会议链接生成 Webex 二维码。大家可在会议室门牌、幻灯片和议程上加入会议。免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.metaDescription"
+  },
+  "970296a4f26b": {
+    "source": "A Webex QR code opens a meeting in Webex, so people join from a slide, a room sign or a printed agenda without typing a meeting number.",
+    "text": "Webex 二维码会在 Webex 中打开会议，大家无需输入会议号，就能从幻灯片、会议室门牌或打印的议程上加入。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.intro.0"
+  },
+  "9f5f476c7a50": {
+    "source": "Paste your Personal Room link (yoursite.webex.com/meet/yourname) or the link in a meeting invite. QRdx keeps it as it is.",
+    "text": "粘贴你的个人会议室链接（yoursite.webex.com/meet/yourname）或会议邀请中的链接。QRdx 会原样保留。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.intro.1"
+  },
+  "0e1b9c3d49d6": {
+    "source": "Copy your Personal Room link or the meeting's link.",
+    "text": "复制你的个人会议室链接或会议链接。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.steps.0"
+  },
+  "aed1448d9c9c": {
+    "source": "Paste it here.",
+    "text": "在此粘贴。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.steps.1"
+  },
+  "a37041679b12": {
+    "source": "A Personal Room link stays the same for every meeting you host there.",
+    "text": "个人会议室链接对你在其中主持的每场会议都保持不变。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.payload.notes.0"
+  },
+  "86b045721383": {
+    "source": "Invite links for scheduled meetings can differ per person, so use a Personal Room for a printed code.",
+    "text": "已安排会议的邀请链接可能因人而异，所以打印的二维码请使用个人会议室。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.payload.notes.1"
+  },
+  "511a7b7819b7": {
+    "source": "Which link is best for a room sign?",
+    "text": "会议室门牌用哪种链接最合适？",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.0.question"
+  },
+  "b2ee0ed99b3a": {
+    "source": "Your Personal Room link. It never changes, so one code works for every meeting you hold there.",
+    "text": "你的个人会议室链接。它不会变化，所以一个二维码适用于你在那里召开的每场会议。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.0.answer"
+  },
+  "90cbdbd3d43c": {
+    "source": "Do people need the Webex app?",
+    "text": "用户需要安装 Webex 应用吗？",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.1.question"
+  },
+  "194c7a004086": {
+    "source": "No. The link offers to open the app, or to join from the browser.",
+    "text": "不需要。链接会提示打开应用，也可以在浏览器中加入。",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.1.answer"
+  },
+  "3ad9cf5ff75c": {
+    "source": "Let people book time with you on Calendly.",
+    "text": "让大家在 Calendly 上预约你的时间。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.summary"
+  },
+  "c305eb8fcfea": {
+    "source": "Create a Calendly QR code for your scheduling page or one event type. People scan to book a meeting from cards, signs and slides. Free.",
+    "text": "为你的预约页面或某个活动类型创建 Calendly 二维码。大家扫描即可预约会议，适用于名片、标牌和幻灯片。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.metaDescription"
+  },
+  "d5239d9a4320": {
+    "source": "A Calendly QR code opens your scheduling page, or one event type, so people book a call or an appointment from a business card, a sign or a slide.",
+    "text": "Calendly 二维码会打开你的预约页面或某个活动类型，让大家从名片、标牌或幻灯片上预约通话或会面。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.intro.0"
+  },
+  "0d730891775e": {
+    "source": "Type your Calendly name, like yourname or yourname/30min, or paste any calendly.com booking link.",
+    "text": "输入你的 Calendly 名称，例如 yourname 或 yourname/30min，或粘贴任意 calendly.com 预约链接。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.intro.1"
+  },
+  "e4fe150cc04b": {
+    "source": "Enter your Calendly name, or paste a booking link.",
+    "text": "输入你的 Calendly 名称，或粘贴预约链接。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.steps.0"
+  },
+  "832fedbb39d5": {
+    "source": "Scan the preview to check your booking page opens.",
+    "text": "扫描预览，检查预约页面能否打开。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.steps.1"
+  },
+  "935adb8be11d": {
+    "source": "Pasted links, including shared event links (calendly.com/d/…), are kept as they are.",
+    "text": "粘贴的链接（包括共享的活动链接 calendly.com/d/…）会原样保留。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.payload.notes.0"
+  },
+  "9226c2a03c6c": {
+    "source": "If you rename your Calendly link, the old one stops working, so print a new code.",
+    "text": "如果你重命名了 Calendly 链接，旧链接将失效，所以需要打印新的二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.payload.notes.1"
+  },
+  "36d777c1bf79": {
+    "source": "Can the code open one meeting type?",
+    "text": "二维码可以打开某个会议类型吗？",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.0.question"
+  },
+  "5b42120ea5af": {
+    "source": "Yes. Add the event's part after your name, like yourname/30min, or paste the event's own link.",
+    "text": "可以。在你的名称后加上活动部分，例如 yourname/30min，或直接粘贴该活动自己的链接。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.0.answer"
+  },
+  "606111f3c11c": {
+    "source": "Can I change the booking page later?",
+    "text": "之后可以更改预约页面吗？",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.1.question"
+  },
+  "38b3a1dd98ef": {
+    "source": "The event settings, yes. The link itself is in the code, so make the code dynamic if the link might change.",
+    "text": "活动设置可以更改。链接本身包含在二维码中，所以如果链接可能变化，请使用动态二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.1.answer"
+  },
+  "506010a11195": {
+    "source": "Invite students to a Google Classroom class.",
+    "text": "邀请学生加入 Google Classroom 课堂。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.summary"
+  },
+  "45245778966b": {
+    "source": "Make a Google Classroom QR code from your class invite link. Students scan to join from a slide, a handout or the classroom door. Free.",
+    "text": "用课堂邀请链接制作 Google Classroom 二维码。学生可在幻灯片、讲义或教室门口扫描加入。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.metaDescription"
+  },
+  "ef3fce3d5ae5": {
+    "source": "A Google Classroom QR code opens your class's invite link, so students join from a slide on the first day, a handout or a sign on the door.",
+    "text": "Google Classroom 二维码会打开你的课堂邀请链接，学生可以在开学第一天的幻灯片、讲义或门口的标牌上扫描加入。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.intro.0"
+  },
+  "6cad99945229": {
+    "source": "Copy the class invite link in Classroom and paste it here. Students still sign in with the Google account your school allows.",
+    "text": "在 Classroom 中复制课堂邀请链接，然后粘贴到这里。学生仍需使用学校允许的 Google 账号登录。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.intro.1"
+  },
+  "150a91d20446": {
+    "source": "In your class, use Copy invite link.",
+    "text": "在你的课堂中，点击“复制邀请链接”。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.0"
+  },
+  "39dcead0fab2": {
+    "source": "Scan the preview to check the class opens.",
+    "text": "扫描预览，检查课堂能否打开。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.2"
+  },
+  "e9292f8cee21": {
+    "source": "Download the code, as SVG for posters.",
+    "text": "下载二维码，海报请选择 SVG 格式。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.3"
+  },
+  "904b2dce77d6": {
+    "source": "QRdx keeps the invite link exactly as Classroom gives it.",
+    "text": "QRdx 会原样保留 Classroom 提供的邀请链接。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.payload.notes.0"
+  },
+  "ba62a3800e75": {
+    "source": "Turning the class code off or resetting it in Classroom stops the old link.",
+    "text": "在 Classroom 中关闭或重置课堂代码后，旧链接就会失效。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.payload.notes.1"
+  },
+  "9cdae0d6136c": {
+    "source": "Can students join with a personal Google account?",
+    "text": "学生可以用个人 Google 账号加入吗？",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.0.question"
+  },
+  "85fdee00db23": {
+    "source": "That depends on your school's settings. Classes in a school's Google Workspace often allow only school accounts.",
+    "text": "这取决于学校的设置。学校 Google Workspace 中的课堂通常只允许使用学校账号。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.0.answer"
+  },
+  "6824f71f44d4": {
+    "source": "Can the code hold just the class code?",
+    "text": "二维码可以只包含课堂代码吗？",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.1.question"
+  },
+  "beda22897f42": {
+    "source": "Google doesn't publish a link for a class code alone, so the code holds the invite link. Students can still type the class code in Classroom.",
+    "text": "Google 没有提供仅含课堂代码的链接，所以二维码中保存的是邀请链接。学生仍然可以在 Classroom 中手动输入课堂代码。",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.1.answer"
+  },
+  "2766a0f43e9a": {
+    "source": "Open your listing on Tripadvisor.",
+    "text": "打开你在 Tripadvisor 上的页面。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.summary"
+  },
+  "188388f0e945": {
+    "source": "Create a Tripadvisor QR code that opens your hotel, restaurant or attraction listing, where guests can read and write reviews. Free.",
+    "text": "创建 Tripadvisor 二维码，打开你的酒店、餐厅或景点页面，住客和游客可在此阅读并撰写评价。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.metaDescription"
+  },
+  "ccb9fa61b9b0": {
+    "source": "A Tripadvisor QR code opens your hotel's, restaurant's or attraction's listing, where guests can read reviews and write one.",
+    "text": "Tripadvisor 二维码会打开你的酒店、餐厅或景点页面，客人可以在这里阅读评价，也可以写下自己的评价。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.intro.0"
+  },
+  "34eb9dea3f27": {
+    "source": "Open your listing on Tripadvisor, copy its address and paste it here. Links on Tripadvisor's country sites work too.",
+    "text": "在 Tripadvisor 上打开你的页面，复制网址并粘贴到这里。Tripadvisor 各国家站点的链接同样可用。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.intro.1"
+  },
+  "9a03f41cc634": {
+    "source": "Open your listing on Tripadvisor and copy its address.",
+    "text": "在 Tripadvisor 上打开你的页面，并复制其网址。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.steps.0"
+  },
+  "7642f384e14d": {
+    "source": "Scan the preview to check the listing opens.",
+    "text": "扫描预览，检查页面能否打开。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.steps.2"
+  },
+  "7fe7e1994114": {
+    "source": "QRdx keeps the listing link as pasted.",
+    "text": "QRdx 会原样保留你粘贴的页面链接。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.payload.notes.0"
+  },
+  "bc0427a04ffd": {
+    "source": "Tripadvisor also offers free review tools for businesses in its Management Center.",
+    "text": "Tripadvisor 还在其 Management Center 中为商家提供免费的评价工具。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.payload.notes.1"
+  },
+  "8b7bd9aaab58": {
+    "source": "Can I offer a discount for a review?",
+    "text": "我可以为评价提供折扣吗？",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.0.question"
+  },
+  "22259e73a63b": {
+    "source": "No. Tripadvisor doesn't allow incentives for reviews. Ask guests to share their experience, good or bad.",
+    "text": "不可以。Tripadvisor 不允许以奖励换取评价。请邀请客人分享他们的体验，无论好坏。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.0.answer"
+  },
+  "5dc7af520a6f": {
+    "source": "Does it open the review form?",
+    "text": "它会打开评价表单吗？",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.1.question"
+  },
+  "1efb7723a52c": {
+    "source": "It opens your listing, which has a button to write a review.",
+    "text": "它会打开你的页面，页面上有撰写评价的按钮。",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.1.answer"
+  },
+  "cfded6153f62": {
+    "source": "Ask customers for a Trustpilot review.",
+    "text": "邀请客户在 Trustpilot 上留下评价。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.summary"
+  },
+  "f4fd64bf44c1": {
+    "source": "Make a Trustpilot QR code that opens your write-a-review page, or your reviews. Enter your website's domain. For receipts and packaging. Free.",
+    "text": "制作 Trustpilot 二维码，打开您的撰写评价页面或评价列表。输入您网站的域名即可，适用于小票和包装。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.metaDescription"
+  },
+  "64ece527dcfd": {
+    "source": "A Trustpilot QR code opens the page where customers write a review of your business, or your Trustpilot reviews page. Print it on receipts, packing slips and counters.",
+    "text": "Trustpilot 二维码可打开客户为您的业务撰写评价的页面，或您的 Trustpilot 评价页面。可印在小票、装箱单和柜台上。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.intro.0"
+  },
+  "71d681d2ba01": {
+    "source": "Enter the website domain your Trustpilot page is for, like example.com, or paste your Trustpilot link. QRdx builds Trustpilot's evaluate link for reviews.",
+    "text": "输入您的 Trustpilot 页面所对应的网站域名，例如 example.com，或粘贴您的 Trustpilot 链接。QRdx 会为评价生成 Trustpilot 的 evaluate 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.intro.1"
+  },
+  "4fbb0347c564": {
+    "source": "Enter your website's domain.",
+    "text": "输入您网站的域名。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.0"
+  },
+  "bcf190bd1a7b": {
+    "source": "Keep 'Open the review form' on to collect reviews, or turn it off to show your reviews.",
+    "text": "保持开启“Open the review form”以收集评价，关闭则显示您的评价。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.1"
+  },
+  "86a39b62542f": {
+    "source": "Scan the preview to check your page opens.",
+    "text": "扫描预览，确认页面能够正常打开。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.2"
+  },
+  "236945419cff": {
+    "source": "evaluate opens the review form; review opens your reviews page.",
+    "text": "evaluate 会打开评价表单；review 会打开您的评价页面。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.payload.notes.0"
+  },
+  "235a3ece1b74": {
+    "source": "www. is dropped from the domain, as Trustpilot names pages.",
+    "text": "域名中的 www. 会被去掉，与 Trustpilot 为页面命名的方式一致。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.payload.notes.1"
+  },
+  "e1d0fabfb885": {
+    "source": "Do customers need an account?",
+    "text": "客户需要账号吗？",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.0.question"
+  },
+  "bbb61bcd8385": {
+    "source": "Trustpilot asks reviewers to sign in or sign up before they post.",
+    "text": "Trustpilot 要求评价者在发布前先登录或注册。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.0.answer"
+  },
+  "c8ef04c590f4": {
+    "source": "What if my business isn't on Trustpilot yet?",
+    "text": "如果我的业务还没有入驻 Trustpilot 怎么办？",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.1.question"
+  },
+  "df43d70c1b6a": {
+    "source": "Claim your page on Trustpilot first, so the domain has a page to open.",
+    "text": "请先在 Trustpilot 上认领您的页面，这样该域名才有可打开的页面。",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.1.answer"
+  },
+  "0a627e729c0f": {
+    "source": "Open your business page on Yelp.",
+    "text": "打开您在 Yelp 上的商家页面。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.summary"
+  },
+  "cf8204c0eebc": {
+    "source": "Create a Yelp QR code that opens your business page, with your hours, photos and reviews. For windows, menus and counters. Free.",
+    "text": "创建 Yelp 二维码，打开您的商家页面，展示营业时间、照片和评价。适用于橱窗、菜单和柜台。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.metaDescription"
+  },
+  "5d70018ada5a": {
+    "source": "A Yelp QR code opens your business page on Yelp, with your hours, photos and reviews, from a window sticker, a menu or a counter card.",
+    "text": "Yelp 二维码可打开您在 Yelp 上的商家页面，展示营业时间、照片和评价，可放在橱窗贴纸、菜单或柜台卡片上。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.intro.0"
+  },
+  "9d1de0c48737": {
+    "source": "Paste your page's link (yelp.com/biz/…). Yelp asks businesses not to ask for reviews, so the code opens your page and leaves the rest to your customers.",
+    "text": "粘贴您的页面链接（yelp.com/biz/…）。Yelp 要求商家不要索取评价，因此该二维码只打开您的页面，其余交给您的客户。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.intro.1"
+  },
+  "38b97420cca7": {
+    "source": "Open your business page on Yelp and copy its address.",
+    "text": "在 Yelp 上打开您的商家页面并复制其地址。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.steps.0"
+  },
+  "b38f2fa6c40b": {
+    "source": "Links on Yelp's country sites (yelp.ca, yelp.co.uk…) work too.",
+    "text": "Yelp 各国家站点的链接（yelp.ca、yelp.co.uk 等）同样适用。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.payload.notes.0"
+  },
+  "8fa2055787f2": {
+    "source": "QRdx keeps the link as pasted.",
+    "text": "QRdx 会保持链接与粘贴时一致。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.payload.notes.1"
+  },
+  "351c8ccc7edc": {
+    "source": "Can I use the code to ask for reviews?",
+    "text": "我可以用这个二维码来索取评价吗？",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.0.question"
+  },
+  "93e7a2cf5e48": {
+    "source": "Yelp's guidelines ask businesses not to ask anyone for reviews. Use wording like 'Find us on Yelp' next to the code.",
+    "text": "Yelp 的指南要求商家不要向任何人索取评价。请在二维码旁使用“在 Yelp 上找到我们”之类的文字。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.0.answer"
+  },
+  "97528cecac2c": {
+    "source": "Does it open the Yelp app?",
+    "text": "它会打开 Yelp 应用吗？",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.1.question"
+  },
+  "2fa0b5380152": {
+    "source": "Yelp links open the app when it's installed, or the page in the browser.",
+    "text": "如果已安装 Yelp 应用，链接会打开应用，否则在浏览器中打开该页面。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.1.answer"
+  },
+  "63e740e99848": {
+    "source": "Yelp and review requests",
+    "text": "Yelp 与评价请求",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.title"
+  },
+  "ad213b8a5ead": {
+    "source": "Yelp's policy is 'Don't ask for reviews': reviews it thinks were solicited can be filtered, and a business that pushes for them can get a notice on its page. That's why this code opens your business page, not a review form.",
+    "text": "Yelp 的政策是“不要索取评价”：它认为是诱导而来的评价可能会被过滤，积极催促评价的商家，页面上还可能出现提示。因此这个二维码打开的是您的商家页面，而不是评价表单。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.paragraphs.0"
+  },
+  "bac903724ae6": {
+    "source": "A sign that says 'Find us on Yelp', with Yelp's own branding guidelines, is fine.",
+    "text": "写着“在 Yelp 上找到我们”并遵循 Yelp 自身品牌指南的标牌是可以使用的。",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.paragraphs.1"
+  },
+  "d4a359d3ab59": {
+    "source": "Open an Airbnb listing or experience.",
+    "text": "打开 Airbnb 房源或体验。",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.summary"
+  },
+  "cc27bec817bc": {
+    "source": "Make an Airbnb QR code that opens your listing or experience. For welcome books, flyers and repeat guests. Paste the link. Free.",
+    "text": "制作 Airbnb 二维码，一扫即可打开你的房源或体验。适用于欢迎手册、传单和回头客。粘贴链接即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.metaDescription"
+  },
+  "46f05a7e3512": {
+    "source": "An Airbnb QR code opens your listing or experience, so guests can book again from your welcome book, a fridge magnet or a flyer.",
+    "text": "Airbnb 二维码可打开你的房源或体验，让住客能从欢迎手册、冰箱贴或传单再次预订。",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.intro.0"
+  },
+  "fdc0f105097e": {
+    "source": "Use Share on the listing and copy the link, or copy its address (airbnb.com/rooms/…), and paste it here.",
+    "text": "在房源页面使用“分享”并复制链接，或复制其地址（airbnb.com/rooms/…），然后粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.intro.1"
+  },
+  "c6e324dfc8ac": {
+    "source": "Copy your listing's link from Airbnb.",
+    "text": "从 Airbnb 复制你的房源链接。",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.steps.0"
+  },
+  "d0f5c58096ea": {
+    "source": "Share links from the Airbnb app (abnb.me) and Airbnb's country sites work too.",
+    "text": "Airbnb 应用中的分享链接（abnb.me）以及 Airbnb 各国家站点的链接同样可用。",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.payload.notes.0"
+  },
+  "735286a197bc": {
+    "source": "Does it open the Airbnb app?",
+    "text": "会打开 Airbnb 应用吗？",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.0.question"
+  },
+  "12b0799809ec": {
+    "source": "Airbnb links open the app when it's installed, or the listing in the browser.",
+    "text": "如果已安装 Airbnb 应用，链接会在应用中打开；否则会在浏览器中打开该房源。",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.0.answer"
+  },
+  "cc77753b3a5b": {
+    "source": "Can I link the Wi-Fi or house rules too?",
+    "text": "还能链接 Wi-Fi 或房屋守则吗？",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.1.question"
+  },
+  "c026fdc284bb": {
+    "source": "Use a separate Wi-Fi code for the network, and a hosted page for house rules you may want to change.",
+    "text": "网络请使用单独的 Wi-Fi 二维码；可能需要修改的房屋守则，则可使用托管页面。",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.1.answer"
+  },
+  "643c4e09d6dd": {
+    "source": "Open your property's page on Booking.com.",
+    "text": "打开你在 Booking.com 上的房源页面。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.summary"
+  },
+  "f355b03e2485": {
+    "source": "Create a Booking.com QR code that opens your hotel's or rental's property page. For flyers, front desks and partners. Free, no signup.",
+    "text": "创建 Booking.com 二维码，打开你的酒店或出租房源页面。适用于传单、前台和合作伙伴。免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.metaDescription"
+  },
+  "f560cf60fdbd": {
+    "source": "A Booking.com QR code opens your hotel's or rental's property page, with rooms, prices and guest reviews.",
+    "text": "Booking.com 二维码可打开你的酒店或出租房源页面，页面中包含房型、价格和住客评价。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.intro.0"
+  },
+  "77ca29fe35a0": {
+    "source": "Open your property on Booking.com, copy its address (booking.com/hotel/…) and paste it here.",
+    "text": "在 Booking.com 上打开你的房源，复制其地址（booking.com/hotel/…），然后粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.intro.1"
+  },
+  "c87cf5f1e895": {
+    "source": "Copy your property page's address from Booking.com.",
+    "text": "从 Booking.com 复制你的房源页面地址。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.steps.0"
+  },
+  "9786991c4c7f": {
+    "source": "Scan the preview to check the page opens.",
+    "text": "扫描预览，确认页面能够打开。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.steps.2"
+  },
+  "542898e0f90a": {
+    "source": "Search and date parameters in a pasted link are kept, so remove them for a code that always shows today's prices.",
+    "text": "粘贴的链接中的搜索和日期参数会被保留，如需二维码始终显示当天价格，请将其删除。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.payload.notes.0"
+  },
+  "266685ad6300": {
+    "source": "Booking.com share links work too.",
+    "text": "Booking.com 的分享链接同样可用。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.payload.notes.1"
+  },
+  "2edc5ad83e08": {
+    "source": "Can guests leave a review from the code?",
+    "text": "住客可以通过二维码留下评价吗？",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.0.question"
+  },
+  "f19c6cbdff57": {
+    "source": "Booking.com collects reviews only from guests who booked through it, by email after the stay.",
+    "text": "Booking.com 只会在住客入住后通过电子邮件，向通过该平台预订的住客收集评价。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.0.answer"
+  },
+  "1a011de41155": {
+    "source": "Does it open the Booking.com app?",
+    "text": "会打开 Booking.com 应用吗？",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.1.question"
+  },
+  "887f4407e5da": {
+    "source": "When it's installed, usually; otherwise the page opens in the browser.",
+    "text": "通常会在已安装应用时打开；否则页面会在浏览器中打开。",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.1.answer"
+  },
+  "dce24b80ec7d": {
+    "source": "Open a VK profile, community or group.",
+    "text": "打开 VK 个人主页、社区或群组。",
+    "status": "machine",
+    "context": "qrTypes.types.vk.summary"
+  },
+  "6b33a84cb434": {
+    "source": "Make a VK QR code that opens your profile, community or group on vk.com. Paste the link. For posters, packaging and events. Free.",
+    "text": "制作 VK 二维码，打开你在 vk.com 上的个人主页、社区或群组。粘贴链接即可，适用于海报、包装和活动。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.vk.metaDescription"
+  },
+  "5349947e5da2": {
+    "source": "A VK QR code opens your profile, community or group, so people can follow you from a poster, a shop window or a product box.",
+    "text": "VK 二维码可以打开你的个人主页、社区或群组，让人们在海报、店铺橱窗或产品包装盒上就能关注你。",
+    "status": "machine",
+    "context": "qrTypes.types.vk.intro.0"
+  },
+  "72653a80e11e": {
+    "source": "Copy the address of your page on vk.com, or use Share in the VK app, and paste it here.",
+    "text": "复制你在 vk.com 上的主页地址，或使用 VK 应用中的“分享”，然后粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.vk.intro.1"
+  },
+  "2fb6c58382f4": {
+    "source": "Copy your page's link from VK.",
+    "text": "从 VK 复制你的主页链接。",
+    "status": "machine",
+    "context": "qrTypes.types.vk.steps.0"
+  },
+  "ca9b805d0cf3": {
+    "source": "QRdx keeps the link as pasted; vk.ru links work too.",
+    "text": "QRdx 会保留你粘贴的链接原样；vk.ru 链接同样可用。",
+    "status": "machine",
+    "context": "qrTypes.types.vk.payload.notes.0"
+  },
+  "0544ecb41073": {
+    "source": "A link with your numeric ID (vk.com/id…) stays the same if you change your page's short name.",
+    "text": "使用数字 ID 的链接（vk.com/id…）在你更改主页短名称后依然不变。",
+    "status": "machine",
+    "context": "qrTypes.types.vk.payload.notes.1"
+  },
+  "e976b523d66c": {
+    "source": "Does it open the VK app?",
+    "text": "会打开 VK 应用吗？",
+    "status": "machine",
+    "context": "qrTypes.types.vk.faqs.0.question"
+  },
+  "97b5ffb953bc": {
+    "source": "VK links open the app when it's installed, or the page in the browser.",
+    "text": "如果已安装 VK 应用，VK 链接会打开应用；否则在浏览器中打开该页面。",
+    "status": "machine",
+    "context": "qrTypes.types.vk.faqs.0.answer"
+  },
+  "6fd056b64157": {
+    "source": "Open a Weibo profile.",
+    "text": "打开微博个人主页。",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.summary"
+  },
+  "60703e24236d": {
+    "source": "Create a Weibo QR code that opens your Weibo profile, for packaging, events and posters aimed at audiences in China. Paste the link. Free.",
+    "text": "制作微博二维码，打开你的微博主页，适用于面向中国受众的包装、活动和海报。粘贴链接即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.metaDescription"
+  },
+  "202991335780": {
+    "source": "A Weibo QR code opens your Weibo profile, so people can follow you from packaging, a trade fair stand or a poster.",
+    "text": "微博二维码可以打开你的微博主页，让人们在包装、展会展位或海报上就能关注你。",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.intro.0"
+  },
+  "bad54233f23a": {
+    "source": "Copy your profile's link (weibo.com/u/… or your custom weibo.com address) and paste it here.",
+    "text": "复制你的主页链接（weibo.com/u/… 或你自定义的 weibo.com 地址），然后粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.intro.1"
+  },
+  "2257354518d2": {
+    "source": "Copy your Weibo profile's link.",
+    "text": "复制你的微博主页链接。",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.steps.0"
+  },
+  "1a80c77bc193": {
+    "source": "Scan the preview to check the profile opens.",
+    "text": "扫描预览，确认主页能正常打开。",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.steps.2"
+  },
+  "0a8c288ad17c": {
+    "source": "QRdx keeps the link as pasted; m.weibo.cn links work too.",
+    "text": "QRdx 会保留你粘贴的链接原样；m.weibo.cn 链接同样可用。",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.payload.notes.0"
+  },
+  "50353c12bbb4": {
+    "source": "The numeric UID link keeps working if you change your nickname.",
+    "text": "即使你更改昵称，带数字 UID 的链接仍然有效。",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.payload.notes.1"
+  },
+  "88890e6e08b2": {
+    "source": "Which link should I use?",
+    "text": "我该用哪种链接？",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.faqs.0.question"
+  },
+  "5b4268790355": {
+    "source": "The weibo.com/u/ link with your numeric UID never changes, so it's the safest for print.",
+    "text": "带有你数字 UID 的 weibo.com/u/ 链接永远不会变，因此最适合用于印刷。",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.faqs.0.answer"
+  },
+  "25eaf6cf78cf": {
+    "source": "Open a Tumblr blog or post.",
+    "text": "打开 Tumblr 博客或帖子。",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.summary"
+  },
+  "9364b42efe08": {
+    "source": "Make a Tumblr QR code that opens your blog or one post. Type your blog name or paste a link. For zines, stickers and art prints. Free.",
+    "text": "制作 Tumblr 二维码，打开你的博客或某一篇帖子。输入博客名称或粘贴链接即可，适用于独立杂志、贴纸和艺术印刷品。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.metaDescription"
+  },
+  "e4b62aae3696": {
+    "source": "A Tumblr QR code opens your blog, or one post, from a zine, a sticker or the back of an art print.",
+    "text": "Tumblr 二维码可以在独立杂志、贴纸或艺术印刷品的背面打开你的博客或某一篇帖子。",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.intro.0"
+  },
+  "1de2a8cda6a7": {
+    "source": "Type your blog's name and QRdx builds the tumblr.com link, or paste a blog or post link.",
+    "text": "输入你的博客名称，QRdx 会生成 tumblr.com 链接；你也可以粘贴博客或帖子的链接。",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.intro.1"
+  },
+  "2285b2d28638": {
+    "source": "Enter your blog name, or paste a link.",
+    "text": "输入博客名称，或粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.steps.0"
+  },
+  "36e6fab54cfc": {
+    "source": "Scan the preview to check your blog opens.",
+    "text": "扫描预览，确认博客能正常打开。",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.steps.1"
+  },
+  "1f8a49acdb04": {
+    "source": "Blog names are up to 32 letters, digits and hyphens.",
+    "text": "博客名称最多 32 个字符，可包含字母、数字和连字符。",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.payload.notes.0"
+  },
+  "5df3cdd7595f": {
+    "source": "Pasted links, including yourblog.tumblr.com, are kept as they are.",
+    "text": "粘贴的链接（包括 yourblog.tumblr.com）会保持原样。",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.payload.notes.1"
+  },
+  "b895e5b2ac6e": {
+    "source": "What happens if I rename my blog?",
+    "text": "如果我重命名博客会怎样？",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.faqs.0.question"
+  },
+  "10092e099cf3": {
+    "source": "The old name stops pointing to you, and someone else can take it, so print a new code.",
+    "text": "旧名称将不再指向你，还可能被其他人占用，所以请重新打印新的二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.faqs.0.answer"
+  },
+  "861eae52bfe9": {
+    "source": "Open a Medium profile, publication or story.",
+    "text": "打开 Medium 个人主页、专栏或文章。",
+    "status": "machine",
+    "context": "qrTypes.types.medium.summary"
+  },
+  "870a60730d6a": {
+    "source": "Create a Medium QR code for your profile, a publication or one story. For talk slides, books and handouts. Type your @username. Free.",
+    "text": "为你的个人主页、专栏或单篇文章创建 Medium 二维码，适用于演讲幻灯片、书籍和资料单页。输入你的 @username 即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.medium.metaDescription"
+  },
+  "197159a87add": {
+    "source": "A Medium QR code opens your profile, a publication or one story, so readers find your writing from a talk slide, a book or a handout.",
+    "text": "Medium 二维码可打开你的个人主页、专栏或单篇文章，让读者从演讲幻灯片、书籍或资料单页上找到你的文章。",
+    "status": "machine",
+    "context": "qrTypes.types.medium.intro.0"
+  },
+  "8fe1d8bf11a0": {
+    "source": "Type your @username and QRdx builds the medium.com link, or paste any Medium link.",
+    "text": "输入你的 @username，QRdx 会生成 medium.com 链接，也可以粘贴任意 Medium 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.medium.intro.1"
+  },
+  "cb8de4bcf090": {
+    "source": "Enter your @username, or paste a story or publication link.",
+    "text": "输入你的 @username，或粘贴文章或专栏链接。",
+    "status": "machine",
+    "context": "qrTypes.types.medium.steps.0"
+  },
+  "cee4f1efc398": {
+    "source": "Scan the preview to check it opens.",
+    "text": "扫描预览，确认能正常打开。",
+    "status": "machine",
+    "context": "qrTypes.types.medium.steps.1"
+  },
+  "b7839785cbbd": {
+    "source": "Pasted links, including publications on their own subdomains, are kept as they are.",
+    "text": "粘贴的链接会原样保留，包括使用独立子域名的专栏。",
+    "status": "machine",
+    "context": "qrTypes.types.medium.payload.notes.0"
+  },
+  "41c3ce6e8589": {
+    "source": "If you change your username, the old profile link breaks.",
+    "text": "如果你更改了用户名，旧的个人主页链接将失效。",
+    "status": "machine",
+    "context": "qrTypes.types.medium.payload.notes.1"
+  },
+  "4bd0091ade49": {
+    "source": "Can the code open one article?",
+    "text": "二维码可以打开单篇文章吗？",
+    "status": "machine",
+    "context": "qrTypes.types.medium.faqs.0.question"
+  },
+  "cc8811d20a14": {
+    "source": "Yes. Paste the story's link instead of your username.",
+    "text": "可以。粘贴文章链接，而不是你的用户名即可。",
+    "status": "machine",
+    "context": "qrTypes.types.medium.faqs.0.answer"
+  },
+  "eef789fce42b": {
+    "source": "Open a Substack newsletter or profile.",
+    "text": "打开 Substack 通讯或个人主页。",
+    "status": "machine",
+    "context": "qrTypes.types.substack.summary"
+  },
+  "2edab5b2ca55": {
+    "source": "Make a Substack QR code that opens your newsletter so readers can subscribe. For talks, books, zines and events. Free, no signup.",
+    "text": "制作可打开你的通讯的 Substack 二维码，方便读者订阅，适用于演讲、书籍、独立杂志和活动。免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.substack.metaDescription"
+  },
+  "493f55909cb8": {
+    "source": "A Substack QR code opens your newsletter, where people can subscribe, from a talk, a book, a zine or an event table.",
+    "text": "Substack 二维码可打开你的通讯，人们可以在演讲、书籍、独立杂志或活动摊位上订阅。",
+    "status": "machine",
+    "context": "qrTypes.types.substack.intro.0"
+  },
+  "4d5f82ad939e": {
+    "source": "Type your publication's name (the part before .substack.com) and QRdx builds the link. Type @handle for your Substack profile, or paste any substack.com link.",
+    "text": "输入你的刊物名称（.substack.com 前面的部分），QRdx 会生成链接。输入 @handle 可打开你的 Substack 个人主页，也可以粘贴任意 substack.com 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.substack.intro.1"
+  },
+  "c9360f36e059": {
+    "source": "Enter your publication name or @handle, or paste a link.",
+    "text": "输入你的刊物名称或 @handle，或粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.substack.steps.0"
+  },
+  "0f700d32925a": {
+    "source": "A publication on its own domain works in the URL generator.",
+    "text": "使用自有域名的刊物，可通过网址生成器来制作。",
+    "status": "machine",
+    "context": "qrTypes.types.substack.payload.notes.0"
+  },
+  "57cb28bb1a71": {
+    "source": "Pasted substack.com links are kept as they are.",
+    "text": "粘贴的 substack.com 链接会原样保留。",
+    "status": "machine",
+    "context": "qrTypes.types.substack.payload.notes.1"
+  },
+  "530282801894": {
+    "source": "Can the code open the subscribe page?",
+    "text": "二维码可以打开订阅页面吗？",
+    "status": "machine",
+    "context": "qrTypes.types.substack.faqs.0.question"
+  },
+  "d2c1a6012887": {
+    "source": "Paste your publication's /subscribe link, and the code opens that page.",
+    "text": "粘贴你的刊物的 /subscribe 链接，二维码就会打开该页面。",
+    "status": "machine",
+    "context": "qrTypes.types.substack.faqs.0.answer"
+  },
+  "9614244e0677": {
+    "source": "Open a GitHub profile, organization or repository.",
+    "text": "打开 GitHub 个人主页、组织或仓库。",
+    "status": "machine",
+    "context": "qrTypes.types.github.summary"
+  },
+  "08011d4d9e2b": {
+    "source": "Create a GitHub QR code for your profile, organization or a repository. For talk slides, stickers, READMEs and conference badges. Free.",
+    "text": "为你的个人主页、组织或某个仓库创建 GitHub 二维码，适用于演讲幻灯片、贴纸、README 和会议胸牌。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.github.metaDescription"
+  },
+  "0394f0719bbe": {
+    "source": "A GitHub QR code opens a profile, an organization or a repository, so people find your code from a talk slide, a laptop sticker or a conference badge.",
+    "text": "GitHub 二维码可打开个人主页、组织或仓库，让人们从演讲幻灯片、笔记本电脑贴纸或会议胸牌上找到你的代码。",
+    "status": "machine",
+    "context": "qrTypes.types.github.intro.0"
+  },
+  "a85d80ce468d": {
+    "source": "Type a username, or owner/repository, and QRdx builds the github.com link. Or paste any GitHub link.",
+    "text": "输入用户名或 owner/repository，QRdx 会生成 github.com 链接，也可以粘贴任意 GitHub 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.github.intro.1"
+  },
+  "7cfd0c32e005": {
+    "source": "Enter a username or owner/repository, or paste a link.",
+    "text": "输入用户名或 owner/repository，或粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.github.steps.0"
+  },
+  "31fd671847d1": {
+    "source": "Download the code, as SVG for stickers.",
+    "text": "下载二维码，贴纸请选择 SVG 格式。",
+    "status": "machine",
+    "context": "qrTypes.types.github.steps.2"
+  },
+  "41f7a5ba234f": {
+    "source": "Usernames are up to 39 letters, digits and single hyphens.",
+    "text": "用户名最多 39 个字符，可包含字母、数字和单个连字符。",
+    "status": "machine",
+    "context": "qrTypes.types.github.payload.notes.0"
+  },
+  "1d8128fd85f0": {
+    "source": "Pasted links to issues, releases and files are kept as they are.",
+    "text": "粘贴的议题、发布版本和文件链接会原样保留。",
+    "status": "machine",
+    "context": "qrTypes.types.github.payload.notes.1"
+  },
+  "c170a7e36a1f": {
+    "source": "Can it link a private repository?",
+    "text": "可以链接到私有仓库吗？",
+    "status": "machine",
+    "context": "qrTypes.types.github.faqs.0.question"
+  },
+  "c879528cd735": {
+    "source": "Yes, but only people with access can see it; others get a page that isn't found.",
+    "text": "可以，但只有拥有访问权限的人才能看到，其他人会看到页面不存在的提示。",
+    "status": "machine",
+    "context": "qrTypes.types.github.faqs.0.answer"
+  },
+  "06ad029cc487": {
+    "source": "Open a Behance portfolio or project.",
+    "text": "打开 Behance 作品集或项目。",
+    "status": "machine",
+    "context": "qrTypes.types.behance.summary"
+  },
+  "8d601aefb946": {
+    "source": "Make a Behance QR code that opens your portfolio or one project. For business cards, CVs and exhibitions. Type your username. Free.",
+    "text": "生成 Behance 二维码，可打开你的作品集或某个项目，适用于名片、简历和展览。输入用户名即可，免费。",
+    "status": "machine",
+    "context": "qrTypes.types.behance.metaDescription"
+  },
+  "ca0a321ea469": {
+    "source": "A Behance QR code opens your portfolio, or one project, from a business card, a printed CV or an exhibition label.",
+    "text": "Behance 二维码可从名片、纸质简历或展览标签上打开你的作品集或某个项目。",
+    "status": "machine",
+    "context": "qrTypes.types.behance.intro.0"
+  },
+  "1781487376f6": {
+    "source": "Type your Behance username and QRdx builds the behance.net link, or paste a project link.",
+    "text": "输入你的 Behance 用户名，QRdx 会生成 behance.net 链接，也可以粘贴项目链接。",
+    "status": "machine",
+    "context": "qrTypes.types.behance.intro.1"
+  },
+  "646c93bdc091": {
+    "source": "Enter your Behance username, or paste a link.",
+    "text": "输入你的 Behance 用户名，或粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.behance.steps.0"
+  },
+  "4006684e2ae6": {
+    "source": "Scan the preview to check your portfolio opens.",
+    "text": "扫描预览，确认你的作品集能够打开。",
+    "status": "machine",
+    "context": "qrTypes.types.behance.steps.1"
+  },
+  "e0aea8a42cbd": {
+    "source": "Usernames are 3 to 40 letters, digits, underscores and hyphens.",
+    "text": "用户名为 3 到 40 个字符，可包含字母、数字、下划线和连字符。",
+    "status": "machine",
+    "context": "qrTypes.types.behance.payload.notes.0"
+  },
+  "efaf9b2c5728": {
+    "source": "Behance doesn't redirect an old username, so print a new code if you change it.",
+    "text": "Behance 不会重定向旧用户名，所以更改用户名后需要重新打印新的二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.behance.payload.notes.1"
+  },
+  "9c7fdeea4661": {
+    "source": "Can the code open one project?",
+    "text": "二维码可以打开单个项目吗？",
+    "status": "machine",
+    "context": "qrTypes.types.behance.faqs.0.question"
+  },
+  "a8a11a01fd49": {
+    "source": "Yes. Paste the project's link instead of your username.",
+    "text": "可以。粘贴项目链接，而不是用户名即可。",
+    "status": "machine",
+    "context": "qrTypes.types.behance.faqs.0.answer"
+  },
+  "5bfd7427ea7d": {
+    "source": "Open a Dribbble profile or shot.",
+    "text": "打开 Dribbble 主页或作品。",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.summary"
+  },
+  "c38d2b08b815": {
+    "source": "Create a Dribbble QR code for your design profile or one shot. For business cards, CVs and portfolio prints. Type your username. Free.",
+    "text": "生成 Dribbble 二维码，指向你的设计主页或某个作品，适用于名片、简历和作品集印刷品。输入用户名即可，免费。",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.metaDescription"
+  },
+  "2c912504e2c2": {
+    "source": "A Dribbble QR code opens your design profile, or one shot, from a business card, a CV or a printed portfolio.",
+    "text": "Dribbble 二维码可从名片、简历或纸质作品集上打开你的设计主页或某个作品。",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.intro.0"
+  },
+  "a34aeccd8c4d": {
+    "source": "Type your Dribbble username and QRdx builds the dribbble.com link, or paste a shot link.",
+    "text": "输入你的 Dribbble 用户名，QRdx 会生成 dribbble.com 链接，也可以粘贴作品链接。",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.intro.1"
+  },
+  "e1cfc854a8bf": {
+    "source": "Enter your Dribbble username, or paste a link.",
+    "text": "输入你的 Dribbble 用户名，或粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.steps.0"
+  },
+  "2a1dd45b104f": {
+    "source": "Pasted dribbble.com links are kept as they are.",
+    "text": "粘贴的 dribbble.com 链接会保持原样。",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.payload.notes.0"
+  },
+  "e993d9a0e552": {
+    "source": "If you change your username, print a new code.",
+    "text": "如果更改了用户名，请重新打印新的二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.payload.notes.1"
+  },
+  "693f7e7ecc58": {
+    "source": "Can I link a specific shot?",
+    "text": "可以链接到某个具体作品吗？",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.faqs.0.question"
+  },
+  "af8bf0177175": {
+    "source": "Yes. Paste the shot's link instead of your username.",
+    "text": "可以。粘贴该作品的链接，而不是用户名即可。",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.faqs.0.answer"
+  },
+  "7ce9ca31ee43": {
+    "source": "Open your Linktree page.",
+    "text": "打开你的 Linktree 页面。",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.summary"
+  },
+  "68a1c5f49e41": {
+    "source": "Make a QR code for your Linktree page, with all your links in one scan. For merch, posters, cards and stream overlays. Free, no signup.",
+    "text": "为你的 Linktree 页面生成二维码，一次扫描即可访问所有链接。适用于周边、海报、名片和直播叠加画面。免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.metaDescription"
+  },
+  "acff1eba1572": {
+    "source": "A Linktree QR code opens your Linktree page, so one scan reaches every link you keep there, from merch, a poster or a business card.",
+    "text": "Linktree 二维码可从周边、海报或名片上打开你的 Linktree 页面，一次扫描就能访问你放在那里的所有链接。",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.intro.0"
+  },
+  "1e3e691c6031": {
+    "source": "Type your Linktree username and QRdx builds the linktr.ee link, or paste it.",
+    "text": "输入你的 Linktree 用户名，QRdx 会生成 linktr.ee 链接，也可以直接粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.intro.1"
+  },
+  "f3fe4ed5dffd": {
+    "source": "Enter your Linktree username, or paste your link.",
+    "text": "输入你的 Linktree 用户名，或粘贴你的链接。",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.steps.0"
+  },
+  "1582ea8cd6d3": {
+    "source": "Linktree lets you change your username, which changes the link; print a new code if you do.",
+    "text": "Linktree 允许更改用户名，这会改变链接；如果更改了，请重新打印新的二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.payload.notes.0"
+  },
+  "775236268c04": {
+    "source": "Your page's links can change any time without a new code.",
+    "text": "你页面上的链接可以随时更改，无需更换二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.payload.notes.1"
+  },
+  "f45cf7454549": {
+    "source": "Can QRdx host a links page instead?",
+    "text": "QRdx 可以改为托管链接页面吗？",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.faqs.0.question"
+  },
+  "4ca0788f138d": {
+    "source": "Yes. A QRdx links page is a hosted page you edit in your dashboard, with a dynamic code you can repoint.",
+    "text": "可以。QRdx 链接页面是你在控制台中编辑的托管页面，搭配可重新指向的动态二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.faqs.0.answer"
+  },
+  "7d9e443f462e": {
+    "source": "Open your Patreon creator page.",
+    "text": "打开你的 Patreon 创作者页面。",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.summary"
+  },
+  "8598df8a214f": {
+    "source": "Create a Patreon QR code that opens your creator page, so fans can become members. For streams, merch, books and podcasts. Free.",
+    "text": "创建 Patreon 二维码，打开你的创作者页面，让粉丝成为会员。适用于直播、周边、图书和播客。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.metaDescription"
+  },
+  "15920a92c854": {
+    "source": "A Patreon QR code opens your creator page, where fans can become members, from a stream overlay, merch, the back of a book or a podcast cover.",
+    "text": "Patreon 二维码可打开你的创作者页面，粉丝可在这里成为会员。它可以放在直播画面、周边商品、图书封底或播客封面上。",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.intro.0"
+  },
+  "aeef7ae1906e": {
+    "source": "Type your page name (the part after patreon.com/) and QRdx builds the link, or paste it.",
+    "text": "输入你的页面名称（patreon.com/ 之后的部分），QRdx 会生成链接，也可以直接粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.intro.1"
+  },
+  "43c8bdc2c551": {
+    "source": "Enter your Patreon page name, or paste your link.",
+    "text": "输入你的 Patreon 页面名称，或粘贴你的链接。",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.steps.0"
+  },
+  "20bcffdd8407": {
+    "source": "Pasted patreon.com links are kept as they are.",
+    "text": "粘贴的 patreon.com 链接会保持原样。",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.payload.notes.0"
+  },
+  "3c04a76555e9": {
+    "source": "Patreon doesn't redirect an old page name, so print a new code if you change it.",
+    "text": "Patreon 不会重定向旧的页面名称，所以更改名称后需要重新印制二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.payload.notes.1"
+  },
+  "0028e58fa302": {
+    "source": "Can the code open a tier or post?",
+    "text": "二维码可以打开某个会员等级或帖子吗？",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.faqs.0.question"
+  },
+  "bad418eb3d10": {
+    "source": "Yes. Paste that page's link instead of your name.",
+    "text": "可以。粘贴该页面的链接，而不是你的名称即可。",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.faqs.0.answer"
+  },
+  "ae1a99df8ac7": {
+    "source": "Get tips and support on your Ko-fi page.",
+    "text": "在你的 Ko-fi 页面获得打赏和支持。",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.summary"
+  },
+  "3709c5345c0e": {
+    "source": "Make a Ko-fi QR code that opens your page for tips, memberships and commissions. For streams, stalls and zines. Free, no signup.",
+    "text": "制作 Ko-fi 二维码，打开你的页面接收打赏、会员订阅和委托创作。适用于直播、摊位和独立杂志。免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.metaDescription"
+  },
+  "ff3328940c06": {
+    "source": "A Ko-fi QR code opens your Ko-fi page, where people can leave a tip, join a membership or order a commission, from a stream, a market stall or a zine.",
+    "text": "Ko-fi 二维码可打开你的 Ko-fi 页面，人们可以在这里打赏、加入会员或下单委托创作。它可以用在直播、市集摊位或独立杂志上。",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.intro.0"
+  },
+  "999124ff98d0": {
+    "source": "Type your Ko-fi page name and QRdx builds the ko-fi.com link, or paste it.",
+    "text": "输入你的 Ko-fi 页面名称，QRdx 会生成 ko-fi.com 链接，也可以直接粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.intro.1"
+  },
+  "fd75d8a45b7b": {
+    "source": "Enter your Ko-fi page name, or paste your link.",
+    "text": "输入你的 Ko-fi 页面名称，或粘贴你的链接。",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.steps.0"
+  },
+  "266c163ca30f": {
+    "source": "Payments happen on Ko-fi; the code only opens your page.",
+    "text": "付款在 Ko-fi 上完成；二维码只负责打开你的页面。",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.payload.notes.0"
+  },
+  "df547abd1c40": {
+    "source": "Pasted ko-fi.com links are kept as they are.",
+    "text": "粘贴的 ko-fi.com 链接会保持原样。",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.payload.notes.1"
+  },
+  "406b321ff687": {
+    "source": "Can the code take a payment by itself?",
+    "text": "二维码本身可以收款吗？",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.faqs.0.question"
+  },
+  "8bd23835f8bf": {
+    "source": "No. It opens your page, and people pay there with the methods you set up in Ko-fi.",
+    "text": "不可以。它只会打开你的页面，人们通过你在 Ko-fi 中设置的付款方式在那里付款。",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.faqs.0.answer"
+  },
+  "5a295f00063b": {
+    "source": "Get tips on your Buy Me a Coffee page.",
+    "text": "在你的 Buy Me a Coffee 页面获得打赏。",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.summary"
+  },
+  "d6aa7af61d70": {
+    "source": "Create a Buy Me a Coffee QR code that opens your page for tips and memberships. For podcasts, blogs, streams and stalls. Free.",
+    "text": "创建 Buy Me a Coffee 二维码，打开你的页面接收打赏和会员订阅。适用于播客、博客、直播和摊位。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.metaDescription"
+  },
+  "c3fe3a4dacfc": {
+    "source": "A Buy Me a Coffee QR code opens your page, where fans can leave a tip or join a membership, from a podcast cover, a blog post, a stream or a stall.",
+    "text": "Buy Me a Coffee 二维码可打开你的页面，粉丝可以在这里打赏或加入会员。它可以用在播客封面、博客文章、直播或摊位上。",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.intro.0"
+  },
+  "4afe52d75f82": {
+    "source": "Type your page name and QRdx builds the buymeacoffee.com link, or paste it.",
+    "text": "输入你的页面名称，QRdx 会生成 buymeacoffee.com 链接，也可以直接粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.intro.1"
+  },
+  "48aa0f25da66": {
+    "source": "Enter your page name, or paste your link.",
+    "text": "输入你的页面名称，或粘贴你的链接。",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.steps.0"
+  },
+  "eb193609f3e1": {
+    "source": "Payments happen on Buy Me a Coffee; the code only opens your page.",
+    "text": "付款在 Buy Me a Coffee 上完成；二维码只负责打开你的页面。",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.payload.notes.0"
+  },
+  "a7e40df94813": {
+    "source": "Pasted links, with or without www., are kept as they are.",
+    "text": "粘贴的链接无论带不带 www.，都会保持原样。",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.payload.notes.1"
+  },
+  "586403bd52de": {
+    "source": "Do supporters need an account?",
+    "text": "支持者需要账号吗？",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.faqs.0.question"
+  },
+  "700cb405a3eb": {
+    "source": "No. Supporters can pay on your page without making an account.",
+    "text": "不需要。支持者无需注册账号，就可以在你的页面付款。",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.faqs.0.answer"
+  },
+  "da3d835f66a5": {
+    "source": "Play a song, album, artist or playlist on Apple Music.",
+    "text": "在 Apple Music 上播放歌曲、专辑、艺术家或播放列表。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.summary"
+  },
+  "5b70a21eb8d9": {
+    "source": "Make an Apple Music QR code that plays a song, album or playlist, or opens an artist. For posters, merch and record sleeves. Free.",
+    "text": "制作 Apple Music 二维码，可播放歌曲、专辑或播放列表，也可打开艺术家页面。适用于海报、周边和唱片封套。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.metaDescription"
+  },
+  "e9a832ada552": {
+    "source": "An Apple Music QR code opens a song, an album, a playlist or an artist page, from a gig poster, merch or a record sleeve.",
+    "text": "Apple Music 二维码可在演出海报、周边或唱片封套上打开一首歌曲、一张专辑、一个播放列表或艺术家页面。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.intro.0"
+  },
+  "1d0b2b8091ce": {
+    "source": "In Apple Music, use Share and Copy Link, then paste the music.apple.com link here.",
+    "text": "在 Apple Music 中依次点按“分享”和“拷贝链接”，然后把 music.apple.com 链接粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.intro.1"
+  },
+  "7e32239c6841": {
+    "source": "Copy the link in Apple Music (Share, Copy Link).",
+    "text": "在 Apple Music 中拷贝链接（分享，拷贝链接）。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.steps.0"
+  },
+  "53df6ad14df4": {
+    "source": "People without Apple Music get a preview page in the browser.",
+    "text": "没有 Apple Music 的用户会在浏览器中看到预览页面。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.payload.notes.1"
+  },
+  "c47d9f67a6ea": {
+    "source": "Does it work on Android?",
+    "text": "安卓手机能用吗？",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.faqs.0.question"
+  },
+  "3daafbdced55": {
+    "source": "It opens the Apple Music app for Android when it's installed, or the web player.",
+    "text": "如果已安装 Apple Music 安卓版，会打开该应用，否则打开网页播放器。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.faqs.0.answer"
+  },
+  "b610e1c84b86": {
+    "source": "Play a song, album or playlist on YouTube Music.",
+    "text": "在 YouTube Music 上播放歌曲、专辑或播放列表。",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.summary"
+  },
+  "d2d274c8542d": {
+    "source": "Create a YouTube Music QR code that plays a song, album or playlist. For gig posters, merch and flyers. Paste the share link. Free.",
+    "text": "创建 YouTube Music 二维码，可播放歌曲、专辑或播放列表。适用于演出海报、周边和传单。粘贴分享链接即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.metaDescription"
+  },
+  "1014322eb424": {
+    "source": "A YouTube Music QR code opens a song, an album, a playlist or an artist in YouTube Music, from a gig poster, merch or a flyer.",
+    "text": "YouTube Music 二维码可在演出海报、周边或传单上，在 YouTube Music 中打开一首歌曲、一张专辑、一个播放列表或一位艺术家。",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.intro.0"
+  },
+  "35397c56f0a7": {
+    "source": "Use Share and Copy link in YouTube Music, then paste the music.youtube.com link here.",
+    "text": "在 YouTube Music 中使用“分享”和“复制链接”，然后把 music.youtube.com 链接粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.intro.1"
+  },
+  "2f2534b61b11": {
+    "source": "Copy the link in YouTube Music (Share, Copy link).",
+    "text": "在 YouTube Music 中复制链接（分享，复制链接）。",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.steps.0"
+  },
+  "ad44814db5c7": {
+    "source": "Scan the preview to check it plays.",
+    "text": "扫描预览，确认可以正常播放。",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.steps.2"
+  },
+  "af0b24450654": {
+    "source": "A youtube.com video link works in the YouTube generator.",
+    "text": "youtube.com 的视频链接可在 YouTube 生成器中使用。",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.payload.notes.1"
+  },
+  "44962c424a22": {
+    "source": "Does it need a subscription?",
+    "text": "需要订阅吗？",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.faqs.0.question"
+  },
+  "b43ff9fc4ae9": {
+    "source": "No. People can listen free with ads; a subscription removes them.",
+    "text": "不需要。用户可以免费收听，但会有广告；订阅后可去除广告。",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.faqs.0.answer"
+  },
+  "9b18868b7c45": {
+    "source": "Open a podcast or episode on Apple Podcasts.",
+    "text": "在 Apple Podcasts 上打开播客或单集。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.summary"
+  },
+  "42288f9aecdc": {
+    "source": "Make an Apple Podcasts QR code that opens your show or one episode, so listeners follow it. For posters, merch and live shows. Free.",
+    "text": "制作 Apple Podcasts 二维码，可打开你的节目或某一集，方便听众关注。适用于海报、周边和现场节目。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.metaDescription"
+  },
+  "72c460d2c7fa": {
+    "source": "An Apple Podcasts QR code opens your show, or one episode, so listeners can follow it from a poster, a sticker or a live taping.",
+    "text": "Apple Podcasts 二维码可打开你的节目或某一集，让听众通过海报、贴纸或现场录制现场来关注。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.intro.0"
+  },
+  "658f5ad2103c": {
+    "source": "Use Share and Copy Link in Apple Podcasts, then paste the podcasts.apple.com link here.",
+    "text": "在 Apple Podcasts 中使用“分享”和“拷贝链接”，然后把 podcasts.apple.com 链接粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.intro.1"
+  },
+  "7adcd95f5dc7": {
+    "source": "Copy the show's or episode's link in Apple Podcasts.",
+    "text": "在 Apple Podcasts 中拷贝节目或单集的链接。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.steps.0"
+  },
+  "b8ad6d2d675b": {
+    "source": "The link holds your show's number (id…), which never changes.",
+    "text": "链接中包含你节目的编号（id…），该编号永远不会改变。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.payload.notes.0"
+  },
+  "91c48f777a93": {
+    "source": "QRdx keeps the link as pasted, with an episode's ?i= part.",
+    "text": "QRdx 会保留粘贴时的原始链接，包括单集链接中的 ?i= 部分。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.payload.notes.1"
+  },
+  "afdea790bda1": {
+    "source": "What do Android listeners see?",
+    "text": "安卓听众会看到什么？",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.faqs.0.question"
+  },
+  "f15116148361": {
+    "source": "The show's page in the browser, where they can play episodes.",
+    "text": "他们会在浏览器中看到节目页面，可以在那里播放各集内容。",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.faqs.0.answer"
+  },
+  "9c5e381fe815": {
+    "source": "Play music or a podcast on Amazon Music.",
+    "text": "在 Amazon Music 上播放音乐或播客。",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.summary"
+  },
+  "8910c76fe64e": {
+    "source": "Create an Amazon Music QR code for a song, album, playlist or podcast. For posters, merch and flyers. Paste the link. Free.",
+    "text": "为歌曲、专辑、歌单或播客创建 Amazon Music 二维码，适用于海报、周边和传单。粘贴链接即可，免费。",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.metaDescription"
+  },
+  "01a0acbc683e": {
+    "source": "An Amazon Music QR code opens a song, an album, a playlist, an artist or a podcast in Amazon Music.",
+    "text": "Amazon Music 二维码可在 Amazon Music 中打开一首歌曲、一张专辑、一个歌单、一位艺人或一档播客。",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.intro.0"
+  },
+  "67378c116905": {
+    "source": "Copy the link in Amazon Music and paste it here. Links on Amazon's country music sites work too.",
+    "text": "在 Amazon Music 中复制链接，然后粘贴到这里。Amazon 各国家或地区音乐网站的链接同样可用。",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.intro.1"
+  },
+  "597acb41d7ec": {
+    "source": "Copy the link in Amazon Music.",
+    "text": "在 Amazon Music 中复制链接。",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.steps.0"
+  },
+  "8f25bac036a5": {
+    "source": "Each country site opens the catalog of that country.",
+    "text": "每个国家或地区的网站会打开该国家或地区的曲库。",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.payload.notes.1"
+  },
+  "1dea42070dc6": {
+    "source": "Can people listen without Prime?",
+    "text": "没有 Prime 也能收听吗？",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.faqs.0.question"
+  },
+  "7712a5de13be": {
+    "source": "Amazon Music has a free tier with ads in many countries, so many links play for everyone.",
+    "text": "Amazon Music 在许多国家提供含广告的免费版，因此很多链接对所有人都能播放。",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.faqs.0.answer"
+  },
+  "aef168ec765f": {
+    "source": "Play a track, album or playlist on Deezer.",
+    "text": "在 Deezer 上播放单曲、专辑或歌单。",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.summary"
+  },
+  "57983725eeb5": {
+    "source": "Make a Deezer QR code that plays a track, album, playlist or podcast. For gig posters, merch and record sleeves. Free, no signup.",
+    "text": "制作可播放单曲、专辑、歌单或播客的 Deezer 二维码，适用于演出海报、周边和唱片封套。免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.metaDescription"
+  },
+  "28b553d09c48": {
+    "source": "A Deezer QR code opens a track, an album, a playlist, an artist or a podcast in Deezer.",
+    "text": "Deezer 二维码可在 Deezer 中打开一首单曲、一张专辑、一个歌单、一位艺人或一档播客。",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.intro.0"
+  },
+  "7aded233e7ce": {
+    "source": "Paste a deezer.com link, or a share link (link.deezer.com) from the app.",
+    "text": "粘贴 deezer.com 链接，或从应用中获取的分享链接（link.deezer.com）。",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.intro.1"
+  },
+  "05ad748a8331": {
+    "source": "Copy the link in Deezer.",
+    "text": "在 Deezer 中复制链接。",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.steps.0"
+  },
+  "b00069d2993f": {
+    "source": "Old deezer.page.link share links stopped working in 2025; copy a new link from the app.",
+    "text": "旧的 deezer.page.link 分享链接已于 2025 年失效，请从应用中复制新链接。",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.payload.notes.1"
+  },
+  "519390394439": {
+    "source": "Does it work without the app?",
+    "text": "没有应用也能用吗？",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.faqs.0.question"
+  },
+  "9d2d6e915c3d": {
+    "source": "Yes. The link opens Deezer in the browser.",
+    "text": "可以。该链接会在浏览器中打开 Deezer。",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.faqs.0.answer"
+  },
+  "a8ae03710a12": {
+    "source": "Play a track, album or playlist on TIDAL.",
+    "text": "在 TIDAL 上播放单曲、专辑或歌单。",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.summary"
+  },
+  "ba39758079e2": {
+    "source": "Create a TIDAL QR code that plays a track, album or playlist, or opens an artist. For merch, sleeves and posters. Free, no signup.",
+    "text": "创建 TIDAL 二维码，可播放单曲、专辑或歌单，也可打开艺人页面，适用于周边、唱片封套和海报。免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.metaDescription"
+  },
+  "a9b8feb0aff5": {
+    "source": "A TIDAL QR code opens a track, an album, a playlist or an artist on TIDAL.",
+    "text": "TIDAL 二维码可在 TIDAL 上打开一首单曲、一张专辑、一个歌单或一位艺人。",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.intro.0"
+  },
+  "6f2bc1cbf85d": {
+    "source": "Copy the link in TIDAL and paste it here.",
+    "text": "在 TIDAL 中复制链接，然后粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.intro.1"
+  },
+  "cc818e29db94": {
+    "source": "Copy the link in TIDAL.",
+    "text": "在 TIDAL 中复制链接。",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.steps.0"
+  },
+  "5118e6bd40d6": {
+    "source": "QRdx keeps the link as pasted; listen.tidal.com links work too.",
+    "text": "QRdx 会保持链接与粘贴时一致；listen.tidal.com 链接同样可用。",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.payload.notes.0"
+  },
+  "48533995f23e": {
+    "source": "TIDAL's share page also offers the music on other services.",
+    "text": "TIDAL 的分享页面还会提供其他服务上的这首音乐。",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.payload.notes.1"
+  },
+  "d3bbb5482de1": {
+    "source": "What do people without TIDAL see?",
+    "text": "没有 TIDAL 的人会看到什么？",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.faqs.0.question"
+  },
+  "1cc927baa22d": {
+    "source": "A page for the music, which can point them to other streaming services.",
+    "text": "会看到一个音乐页面，其中可以引导他们前往其他流媒体服务。",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.faqs.0.answer"
+  },
+  "6c70947ff657": {
+    "source": "Open an artist, album or track on Bandcamp.",
+    "text": "打开 Bandcamp 上的艺人、专辑或单曲。",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.summary"
+  },
+  "b680d265c3ff": {
+    "source": "Make a Bandcamp QR code for your artist page, an album or a track, so fans listen and buy. For merch tables and posters. Free.",
+    "text": "为你的艺人主页、专辑或单曲制作 Bandcamp 二维码，让乐迷边听边买。适用于周边摊位和海报。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.metaDescription"
+  },
+  "832131758fa2": {
+    "source": "A Bandcamp QR code opens your artist page, an album or a track, where fans can listen and buy, from a merch table, a gig poster or a record sleeve.",
+    "text": "Bandcamp 二维码可打开你的艺人主页、专辑或单曲，乐迷可以在这里试听和购买。放在周边摊位、演出海报或唱片封套上都合适。",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.intro.0"
+  },
+  "b9fc4fa34c28": {
+    "source": "Type the part before .bandcamp.com and QRdx builds the link, or paste an album or track link.",
+    "text": "输入 .bandcamp.com 前面的部分，QRdx 就会生成链接，也可以直接粘贴专辑或单曲链接。",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.intro.1"
+  },
+  "f991b252f953": {
+    "source": "Enter your Bandcamp name, or paste a link.",
+    "text": "输入你的 Bandcamp 名称，或粘贴链接。",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.steps.0"
+  },
+  "21c9d5aa856f": {
+    "source": "Pasted bandcamp.com links are kept as they are.",
+    "text": "粘贴的 bandcamp.com 链接会保持原样。",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.payload.notes.0"
+  },
+  "bae82abdd77d": {
+    "source": "If you change your Bandcamp address, the old one stops working.",
+    "text": "如果你更改了 Bandcamp 地址，旧地址将失效。",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.payload.notes.1"
+  },
+  "cb68bdc9df2e": {
+    "source": "Can I use it for download codes?",
+    "text": "可以用于下载码吗？",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.faqs.0.question"
+  },
+  "fb613c41bf6c": {
+    "source": "Print each Bandcamp download code next to the QR code, or link to your redeem page.",
+    "text": "把每个 Bandcamp 下载码印在二维码旁边，或者链接到你的兑换页面。",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.faqs.0.answer"
+  },
+  "72b1c5315981": {
+    "source": "Open a shared Google Doc.",
+    "text": "打开共享的 Google 文档。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.summary"
+  },
+  "c113deabd771": {
+    "source": "Create a Google Docs QR code that opens a shared document. For handouts, notes, instructions and menus. Paste the link. Free.",
+    "text": "创建可打开共享文档的 Google Docs 二维码。适用于讲义、笔记、说明和菜单。粘贴链接即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.metaDescription"
+  },
+  "f783149a342b": {
+    "source": "A Google Docs QR code opens a shared document, so people read handouts, meeting notes or instructions on their phone.",
+    "text": "Google Docs 二维码可打开共享文档，让人们在手机上阅读讲义、会议记录或说明。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.intro.0"
+  },
+  "e4ea823215ee": {
+    "source": "Paste the document's link. Under Share, set General access to Anyone with the link first, or people without access are asked to sign in and request it.",
+    "text": "粘贴文档链接。请先在“共享”中把“常规访问权限”设为“知道链接的任何人”，否则没有权限的人会被要求登录并申请访问。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.intro.1"
+  },
+  "edbad1b20e42": {
+    "source": "Share the document with Anyone with the link.",
+    "text": "将文档共享给“知道链接的任何人”。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.0"
+  },
+  "ea0635c25a18": {
+    "source": "Copy its link and paste it here.",
+    "text": "复制文档链接，粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.1"
+  },
+  "0214b1cc594e": {
+    "source": "Scan the preview on a phone that isn't signed in to check it opens.",
+    "text": "用未登录账号的手机扫描预览，检查能否打开。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.2"
+  },
+  "3d137828f9e0": {
+    "source": "QRdx keeps the link as pasted, including /edit or /view.",
+    "text": "QRdx 会保持你粘贴的链接原样，包括 /edit 或 /view。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.payload.notes.0"
+  },
+  "cf772cde7b13": {
+    "source": "Editing the document changes what people see, without a new code.",
+    "text": "编辑文档会改变人们看到的内容，无需更换二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.payload.notes.1"
+  },
+  "141c80b0bb75": {
+    "source": "Can people edit the document?",
+    "text": "别人可以编辑文档吗？",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.faqs.0.question"
+  },
+  "9b2eb6c7485e": {
+    "source": "Only if you share it with edit access. Choose Viewer in the sharing settings for a read-only document.",
+    "text": "只有在你授予编辑权限时才可以。若想让文档只读，请在共享设置中选择“查看者”。",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.faqs.0.answer"
+  },
+  "2623efa8a3ce": {
+    "source": "Open a shared Google Sheets spreadsheet.",
+    "text": "打开共享的 Google Sheets 表格。",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.summary"
+  },
+  "abe675c72775": {
+    "source": "Make a Google Sheets QR code that opens a shared spreadsheet: a schedule, a price list or a sign-up sheet. Paste the link. Free.",
+    "text": "制作可打开共享表格的 Google Sheets 二维码，如日程表、价目表或报名表。粘贴链接即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.metaDescription"
+  },
+  "9fb0c5aa66c5": {
+    "source": "A Google Sheets QR code opens a shared spreadsheet: a schedule on a door, a price list in a shop, or a sign-up sheet at an event.",
+    "text": "Google Sheets 二维码可打开共享表格：门上的日程表、店里的价目表，或活动现场的报名表。",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.intro.0"
+  },
+  "e0fd9ee854cb": {
+    "source": "Paste the spreadsheet's link, shared with Anyone with the link, so people who scan don't have to request access.",
+    "text": "粘贴表格链接，并将其共享给“知道链接的任何人”，这样扫描的人就不必申请访问权限。",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.intro.1"
+  },
+  "caa2767cb7a3": {
+    "source": "Share the spreadsheet with Anyone with the link.",
+    "text": "将表格共享给“知道链接的任何人”。",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.steps.0"
+  },
+  "46ce6ee7bb8c": {
+    "source": "QRdx keeps the link as pasted, including a #gid= tab.",
+    "text": "QRdx 会保持你粘贴的链接原样，包括 #gid= 标签页参数。",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.payload.notes.0"
+  },
+  "c968adc99f2c": {
+    "source": "Updates to the sheet show up for everyone who scans.",
+    "text": "表格更新后，每个扫描的人都能看到最新内容。",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.payload.notes.1"
+  },
+  "ebbe05b2b774": {
+    "source": "Can the code open one tab?",
+    "text": "二维码能打开指定标签页吗？",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.faqs.0.question"
+  },
+  "ad34102f16d4": {
+    "source": "Yes. Open that tab and copy the link; it ends with #gid= and the tab's number.",
+    "text": "可以。打开该标签页并复制链接，链接末尾是 #gid= 加上标签页编号。",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.faqs.0.answer"
+  },
+  "6f6d3026b204": {
+    "source": "Open a shared Google Slides presentation.",
+    "text": "打开共享的 Google Slides 演示文稿。",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.summary"
+  },
+  "8a7d4b2bc8c3": {
+    "source": "Create a Google Slides QR code so people get your deck from the screen: talks, classes and pitches. Paste the link. Free.",
+    "text": "创建 Google Slides 二维码，让观众直接从屏幕获取你的演示文稿，适用于演讲、课堂和路演。粘贴链接即可，免费。",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.metaDescription"
+  },
+  "0b7623505595": {
+    "source": "A Google Slides QR code opens a shared presentation, so the audience gets your slides from the screen at a talk, a class or a pitch.",
+    "text": "Google Slides 二维码可打开共享的演示文稿，让观众在演讲、课堂或路演现场直接从屏幕获取你的幻灯片。",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.intro.0"
+  },
+  "e5a0385c9973": {
+    "source": "Paste the presentation's link, shared with Anyone with the link.",
+    "text": "粘贴演示文稿的链接，并将其共享权限设为“知道链接的任何人”。",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.intro.1"
+  },
+  "b398a3481d00": {
+    "source": "Share the presentation with Anyone with the link.",
+    "text": "将演示文稿共享给“知道链接的任何人”。",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.steps.0"
+  },
+  "7d62cf784747": {
+    "source": "Download the code and add it to your last slide.",
+    "text": "下载二维码，并添加到最后一页幻灯片上。",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.steps.3"
+  },
+  "ae7ebb564e93": {
+    "source": "A link ending in /present opens the slideshow instead of the editor.",
+    "text": "以 /present 结尾的链接会直接打开幻灯片放映，而不是编辑器。",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.payload.notes.1"
+  },
+  "94c9300b0c42": {
+    "source": "How big should the code be on a slide?",
+    "text": "二维码在幻灯片上应该多大？",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.faqs.0.question"
+  },
+  "6b9e44420110": {
+    "source": "Big enough to scan from the back of the room: about a fifth of the slide's height works in most rooms.",
+    "text": "要大到坐在会场后排也能扫描：大约占幻灯片高度的五分之一，多数场地都适用。",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.faqs.0.answer"
+  },
+  "4e63edb837eb": {
+    "source": "Open a Google Form: a survey, quiz or sign-up.",
+    "text": "打开 Google Form：问卷、测验或报名表。",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.summary"
+  },
+  "ea1259be43c6": {
+    "source": "Make a Google Forms QR code that opens your survey, quiz, sign-up or order form. Paste the form link or forms.gle short link. Free.",
+    "text": "制作 Google Forms 二维码，打开你的问卷、测验、报名表或订单表单。粘贴表单链接或 forms.gle 短链接即可，免费。",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.metaDescription"
+  },
+  "5e8c22806066": {
+    "source": "A Google Forms QR code opens your form, so people answer a survey, take a quiz or sign up from a poster, a table card or a slide.",
+    "text": "Google Forms 二维码可打开你的表单，让人们在海报、桌卡或幻灯片上填写问卷、参加测验或报名。",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.intro.0"
+  },
+  "5172691beb36": {
+    "source": "In your form, use Send and the link tab, then paste the link here. The short forms.gle link makes a simpler code.",
+    "text": "在表单中点击“发送”和链接标签页，然后将链接粘贴到这里。较短的 forms.gle 链接可以生成更简洁的二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.intro.1"
+  },
+  "5dd4db45c69a": {
+    "source": "In the form, use Send, then the link tab, and shorten the URL.",
+    "text": "在表单中点击“发送”，进入链接标签页，然后缩短网址。",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.0"
+  },
+  "9a30e71d599c": {
+    "source": "Paste the link here.",
+    "text": "将链接粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.1"
+  },
+  "0466946bbb70": {
+    "source": "Scan the preview to check the form opens.",
+    "text": "扫描预览，检查表单能否正常打开。",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.2"
+  },
+  "b8c006df66fb": {
+    "source": "A form limited to your organization asks people to sign in.",
+    "text": "仅限你所在组织的表单会要求用户先登录。",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.payload.notes.1"
+  },
+  "8914961903e9": {
+    "source": "What's the difference from the Attendance generator?",
+    "text": "与考勤生成器有什么区别？",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.faqs.0.question"
+  },
+  "4e7ea7cf6157": {
+    "source": "Attendance is set up for checking people in. This one opens any Google Form.",
+    "text": "考勤生成器专为签到而设置，而这个可以打开任何 Google Form。",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.faqs.0.answer"
+  },
+  "981fe2e677ce": {
+    "source": "Open a Microsoft Form: a survey, quiz or registration.",
+    "text": "打开 Microsoft Form：问卷、测验或登记表。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.summary"
+  },
+  "1762405418e2": {
+    "source": "Create a Microsoft Forms QR code that opens your survey, quiz or registration form. Paste the share link from Forms. Free, no signup.",
+    "text": "创建 Microsoft Forms 二维码，打开你的问卷、测验或登记表单。粘贴 Forms 的分享链接即可，免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.metaDescription"
+  },
+  "abd10b8db2e6": {
+    "source": "A Microsoft Forms QR code opens your form, so people answer a survey, a quiz or a registration from a poster, a slide or a handout.",
+    "text": "Microsoft Forms 二维码可打开你的表单，让人们在海报、幻灯片或宣传资料上填写问卷、参加测验或登记。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.intro.0"
+  },
+  "144913e2ee68": {
+    "source": "In your form, use Collect responses and Copy link, then paste it here. A shortened forms.office.com/r/ link makes a simpler code.",
+    "text": "在表单中点击“收集回复”和“复制链接”，然后粘贴到这里。缩短后的 forms.office.com/r/ 链接可以生成更简洁的二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.intro.1"
+  },
+  "7ff8efeca689": {
+    "source": "In the form, use Collect responses, then Copy link.",
+    "text": "在表单中点击“收集回复”，然后点击“复制链接”。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.steps.0"
+  },
+  "6573b2aff00e": {
+    "source": "QRdx keeps the link as pasted. Older forms.office.com links keep working.",
+    "text": "QRdx 会保持链接与你粘贴时一致。较早的 forms.office.com 链接仍然有效。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.payload.notes.0"
+  },
+  "1cc44d4e28a5": {
+    "source": "Can anyone answer the form?",
+    "text": "任何人都可以填写表单吗？",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.faqs.0.question"
+  },
+  "9d5dc9d1c527": {
+    "source": "If you set it so anyone can respond. Forms limited to your organization need a work or school sign-in.",
+    "text": "只要你设置为任何人都可以回复就可以。仅限你所在组织的表单需要使用工作或学校账号登录。",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.faqs.0.answer"
+  },
+  "427da29d54c2": {
+    "source": "Open a public Notion page.",
+    "text": "打开公开的 Notion 页面。",
+    "status": "machine",
+    "context": "qrTypes.types.notion.summary"
+  },
+  "09f6d3c89aaa": {
+    "source": "Make a Notion QR code that opens a page you've published to the web: a wiki, guide, menu or portfolio. Paste the link. Free.",
+    "text": "制作 Notion 二维码，打开你发布到网络的页面：知识库、指南、菜单或作品集。粘贴链接即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.notion.metaDescription"
+  },
+  "5e0f1ce17815": {
+    "source": "A Notion QR code opens a page you've published to the web, like an event guide, a team wiki, a menu or a portfolio.",
+    "text": "Notion 二维码可打开你发布到网络的页面，例如活动指南、团队知识库、菜单或作品集。",
+    "status": "machine",
+    "context": "qrTypes.types.notion.intro.0"
+  },
+  "9500a3951f9f": {
+    "source": "In Notion, publish the page to the web, copy its link (yourname.notion.site/…) and paste it here.",
+    "text": "在 Notion 中将页面发布到网络，复制其链接（yourname.notion.site/…），然后粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.notion.intro.1"
+  },
+  "fcd8ee3ad9e3": {
+    "source": "Publish the page to the web in Notion.",
+    "text": "在 Notion 中将页面发布到网络。",
+    "status": "machine",
+    "context": "qrTypes.types.notion.steps.0"
+  },
+  "cb792aca552f": {
+    "source": "QRdx keeps the link as pasted; older notion.so public links redirect.",
+    "text": "QRdx 会原样保留你粘贴的链接；旧版 notion.so 公开链接会自动跳转。",
+    "status": "machine",
+    "context": "qrTypes.types.notion.payload.notes.0"
+  },
+  "a8c393324b51": {
+    "source": "If you change your notion.site domain, old links stop working.",
+    "text": "如果你更改 notion.site 域名，旧链接将失效。",
+    "status": "machine",
+    "context": "qrTypes.types.notion.payload.notes.1"
+  },
+  "3ab085d8d82b": {
+    "source": "Do people need a Notion account?",
+    "text": "访问者需要 Notion 账号吗？",
+    "status": "machine",
+    "context": "qrTypes.types.notion.faqs.0.question"
+  },
+  "d182d02daca2": {
+    "source": "No. Published pages open in any browser.",
+    "text": "不需要。已发布的页面可在任何浏览器中打开。",
+    "status": "machine",
+    "context": "qrTypes.types.notion.faqs.0.answer"
+  },
+  "31b9728d3360": {
+    "source": "Open a shared Canva design.",
+    "text": "打开已分享的 Canva 设计。",
+    "status": "machine",
+    "context": "qrTypes.types.canva.summary"
+  },
+  "7b0e91b6f0d0": {
+    "source": "Create a Canva QR code that opens a design's public view link: a flyer, menu, presentation or portfolio. Paste the link. Free.",
+    "text": "创建 Canva 二维码，打开设计的公开查看链接：传单、菜单、演示文稿或作品集。粘贴链接即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.canva.metaDescription"
+  },
+  "8b56b4db842f": {
+    "source": "A Canva QR code opens a design you've shared, like a flyer, a menu, a presentation or a portfolio.",
+    "text": "Canva 二维码可打开你分享的设计，例如传单、菜单、演示文稿或作品集。",
+    "status": "machine",
+    "context": "qrTypes.types.canva.intro.0"
+  },
+  "d550aab7bdc8": {
+    "source": "In Canva, use Share and Public view link, copy it and paste it here.",
+    "text": "在 Canva 中依次选择“分享”和“公开查看链接”，复制后粘贴到这里。",
+    "status": "machine",
+    "context": "qrTypes.types.canva.intro.1"
+  },
+  "926d7d1d022d": {
+    "source": "In Canva, use Share, then Public view link, and copy it.",
+    "text": "在 Canva 中点击“分享”，再选择“公开查看链接”并复制。",
+    "status": "machine",
+    "context": "qrTypes.types.canva.steps.0"
+  },
+  "ed5ad7a15560": {
+    "source": "Scan the preview to check the design opens.",
+    "text": "扫描预览，确认设计能正常打开。",
+    "status": "machine",
+    "context": "qrTypes.types.canva.steps.2"
+  },
+  "8a2d2bdd034c": {
+    "source": "Deleting the public view link in Canva stops the code from opening the design.",
+    "text": "在 Canva 中删除公开查看链接后，二维码将无法再打开该设计。",
+    "status": "machine",
+    "context": "qrTypes.types.canva.payload.notes.1"
+  },
+  "ae341d3d278d": {
+    "source": "Will edits to the design show?",
+    "text": "修改设计后，内容会同步显示吗？",
+    "status": "machine",
+    "context": "qrTypes.types.canva.faqs.0.question"
+  },
+  "57048de1a621": {
+    "source": "Yes. The view link shows the current version of the design.",
+    "text": "会。查看链接显示的是设计的当前版本。",
+    "status": "machine",
+    "context": "qrTypes.types.canva.faqs.0.answer"
+  },
+  "0058588a8380": {
+    "source": "Open an app's page on the App Store.",
+    "text": "在 App Store 中打开应用页面。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.summary"
+  },
+  "3e67b23ec510": {
+    "source": "Make an App Store QR code that opens your iPhone or iPad app's page, or its review form. Paste the link or app ID. Free.",
+    "text": "制作 App Store 二维码，打开你的 iPhone 或 iPad 应用页面，或其评价表单。粘贴链接或应用 ID 即可。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.metaDescription"
+  },
+  "1f02960e7dd4": {
+    "source": "An App Store QR code opens your app's page, so people download it from a poster, packaging or your shop counter.",
+    "text": "App Store 二维码会打开你的应用页面，人们可以在海报、包装或店铺柜台前直接下载。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.intro.0"
+  },
+  "a70e140dbbc0": {
+    "source": "Paste the app's apps.apple.com link, or type its ID (the number after id). Turn on 'Open the review form' to add Apple's write-review action to the link.",
+    "text": "粘贴应用的 apps.apple.com 链接，或输入其 ID（id 后面的数字）。开启'打开评价表单'，即可在链接中加入 Apple 的撰写评价操作。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.intro.1"
+  },
+  "4fd8122bbe24": {
+    "source": "Copy your app's link from the App Store, or find its ID in App Store Connect.",
+    "text": "从 App Store 复制应用链接，或在 App Store Connect 中查找其 ID。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.0"
+  },
+  "3c441fcc1e32": {
+    "source": "Paste it here; turn on the review form if you're asking for ratings.",
+    "text": "粘贴到这里；如果想收集评分，请开启评价表单。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.1"
+  },
+  "ac0b8a0a86af": {
+    "source": "Scan the preview on an iPhone to check it opens.",
+    "text": "用 iPhone 扫描预览，确认能正常打开。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.2"
+  },
+  "e8605d57a3db": {
+    "source": "action=write-review is Apple's documented link to an app's review form.",
+    "text": "action=write-review 是 Apple 官方文档中指向应用评价表单的链接参数。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.payload.notes.0"
+  },
+  "8cc9ee625d41": {
+    "source": "For one code that offers both stores, make a hosted app page instead.",
+    "text": "如果想用一个二维码同时提供两个应用商店，请改为制作托管的应用页面。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.payload.notes.1"
+  },
+  "a59f41936141": {
+    "source": "What happens on Android?",
+    "text": "在 Android 上会怎样？",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.faqs.0.question"
+  },
+  "eae8e131215d": {
+    "source": "The App Store page opens in the browser. Print a Google Play code next to it for Android.",
+    "text": "App Store 页面会在浏览器中打开。如需面向 Android，请在旁边再印一个 Google Play 二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.faqs.0.answer"
+  },
+  "53118d3f8b57": {
+    "source": "Open an Android app's page on Google Play.",
+    "text": "打开 Android 应用在 Google Play 上的页面。",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.summary"
+  },
+  "3da7b88ce937": {
+    "source": "Create a Google Play QR code that opens your Android app's store page. Paste the link or type the package name. Free, no signup.",
+    "text": "创建 Google Play 二维码，打开你的 Android 应用商店页面。粘贴链接或输入包名即可。免费，无需注册。",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.metaDescription"
+  },
+  "6bed22f3b1f7": {
+    "source": "A Google Play QR code opens your Android app's page in the Play Store, so people install it from a poster, packaging or a shop counter.",
+    "text": "Google Play 二维码可打开你的 Android 应用在 Play 商店中的页面，让人们在海报、包装或店铺柜台前就能安装。",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.intro.0"
+  },
+  "ac8cb03b5c94": {
+    "source": "Type the app's package name (like com.example.app) and QRdx builds Google's documented store link, or paste the play.google.com link.",
+    "text": "输入应用的包名（如 com.example.app），QRdx 会生成 Google 官方文档中的商店链接；也可以直接粘贴 play.google.com 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.intro.1"
+  },
+  "768dfa2ceb09": {
+    "source": "Enter the package name, or paste the app's Google Play link.",
+    "text": "输入包名，或粘贴应用的 Google Play 链接。",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.steps.0"
+  },
+  "e7410f3caeb2": {
+    "source": "Scan the preview on an Android phone to check it opens.",
+    "text": "用 Android 手机扫描预览，确认能正常打开。",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.steps.1"
+  },
+  "4377d1fc2323": {
+    "source": "Package names have two or more parts separated by dots, each starting with a letter.",
+    "text": "包名由两段或更多段组成，段与段之间用点分隔，每段以字母开头。",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.payload.notes.0"
+  },
+  "aef02ca8a480": {
+    "source": "A developer page link (store/apps/dev?id=…) works too.",
+    "text": "开发者页面链接（store/apps/dev?id=…）同样可用。",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.payload.notes.1"
+  },
+  "5832dc22413b": {
+    "source": "Can the code open the review form?",
+    "text": "二维码能打开评价表单吗？",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.faqs.0.question"
+  },
+  "52db9b599b5d": {
+    "source": "Google Play has no link to its review form; people rate an app from its store page or inside the app.",
+    "text": "Google Play 没有指向评价表单的链接；用户可以在应用的商店页面或应用内部为应用评分。",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.faqs.0.answer"
   },
   "74da95f9087d": {
     "source": "Share a contact in a smaller code than a vCard.",
@@ -23969,6 +27077,120 @@
     "status": "machine",
     "context": "pageCodes.on-tickets-4.label"
   },
+  "6e5c991e833a": {
+    "source": "Shop help",
+    "text": "店铺客服",
+    "status": "machine",
+    "context": "pageCodes.type-messenger-2.label"
+  },
+  "0a30a815d67d": {
+    "source": "Page",
+    "text": "主页",
+    "status": "machine",
+    "context": "pageCodes.type-messenger-4.label"
+  },
+  "97368f46f6c6": {
+    "source": "Customer help",
+    "text": "客户支持",
+    "status": "machine",
+    "context": "pageCodes.type-viber-1.label"
+  },
+  "b7e8acdd522e": {
+    "source": "Orders",
+    "text": "订单",
+    "status": "machine",
+    "context": "pageCodes.type-viber-3.label"
+  },
+  "0600175af842": {
+    "source": "Open chat",
+    "text": "开放聊天",
+    "status": "machine",
+    "context": "pageCodes.type-kakaotalk-1.label"
+  },
+  "9c298662a4d6": {
+    "source": "Event chat",
+    "text": "活动聊天",
+    "status": "machine",
+    "context": "pageCodes.type-kakaotalk-3.label"
+  },
+  "25696507596f": {
+    "source": "Official Account",
+    "text": "官方账号",
+    "status": "machine",
+    "context": "pageCodes.type-zalo-1.label"
+  },
+  "4bec608656df": {
+    "source": "Call me",
+    "text": "呼叫我",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-1.label"
+  },
+  "a8bf69b80f2b": {
+    "source": "Studio call",
+    "text": "工作室通话",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-2.label"
+  },
+  "847814d9f5f9": {
+    "source": "Family call",
+    "text": "家人通话",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-3.label"
+  },
+  "3689f6ebdd46": {
+    "source": "Team meeting",
+    "text": "团队会议",
+    "status": "machine",
+    "context": "pageCodes.type-microsoft-teams-1.label"
+  },
+  "36a798e3f392": {
+    "source": "Training",
+    "text": "培训",
+    "status": "machine",
+    "context": "pageCodes.type-microsoft-teams-4.label"
+  },
+  "e50569ed429c": {
+    "source": "Personal room",
+    "text": "个人会议室",
+    "status": "machine",
+    "context": "pageCodes.type-webex-2.label"
+  },
+  "3751e73247f6": {
+    "source": "All-hands",
+    "text": "全员大会",
+    "status": "machine",
+    "context": "pageCodes.type-webex-3.label"
+  },
+  "8b8b8871bbfb": {
+    "source": "Meeting",
+    "text": "会议",
+    "status": "machine",
+    "context": "pageCodes.type-webex-4.label"
+  },
+  "948e03e7054b": {
+    "source": "Booking",
+    "text": "预约",
+    "status": "machine",
+    "context": "pageCodes.type-calendly-4.label"
+  },
+  "6c0f6d250287": {
+    "source": "First day",
+    "text": "开学第一天",
+    "status": "machine",
+    "context": "pageCodes.type-google-classroom-1.label"
+  },
+  "642d071893ea": {
+    "source": "Classroom door",
+    "text": "教室门口",
+    "status": "machine",
+    "context": "pageCodes.type-google-classroom-2.label"
+  },
+  "00ea63f88347": {
+    "source": "Shop page",
+    "text": "店铺主页",
+    "status": "machine",
+    "context": "pageCodes.type-vk-2.label"
+  },
   "3d33dc0484e1": {
     "source": "Name badge",
     "text": "姓名牌",
@@ -23986,6 +27208,36 @@
     "text": "传单",
     "status": "machine",
     "context": "pageCodes.type-mecard-4.label"
+  },
+  "0072e6b93494": {
+    "source": "Design",
+    "text": "设计作品",
+    "status": "machine",
+    "context": "pageCodes.type-canva-4.label"
+  },
+  "d6eafe823591": {
+    "source": "Download",
+    "text": "下载",
+    "status": "machine",
+    "context": "pageCodes.type-app-store-1.label"
+  },
+  "190a69421640": {
+    "source": "Rate us",
+    "text": "给我们评分",
+    "status": "machine",
+    "context": "pageCodes.type-app-store-2.label"
+  },
+  "960618202242": {
+    "source": "Store counter",
+    "text": "店内柜台",
+    "status": "machine",
+    "context": "pageCodes.type-google-play-3.label"
+  },
+  "174c7bd1b3f7": {
+    "source": "Hotel desk",
+    "text": "酒店前台",
+    "status": "machine",
+    "context": "pageCodes.type-tripadvisor-2.label"
   },
   "0432f20a0f65": {
     "source": "Table menu",
@@ -24473,6 +27725,42 @@
     "status": "machine",
     "context": "pageCodes.for-salons-4.label"
   },
+  "f4830a1dae29": {
+    "source": "Schedule",
+    "text": "日程表",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-3.label"
+  },
+  "f3befcc6b14e": {
+    "source": "Spreadsheet",
+    "text": "电子表格",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-4.label"
+  },
+  "1799ee8d33d6": {
+    "source": "Class deck",
+    "text": "课堂课件",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-2.label"
+  },
+  "6af11cc59404": {
+    "source": "Pitch",
+    "text": "路演",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-3.label"
+  },
+  "5d5ee1577500": {
+    "source": "Presentation",
+    "text": "演示文稿",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-4.label"
+  },
+  "3cc08ebe9d5f": {
+    "source": "Sign-up",
+    "text": "报名",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-1.label"
+  },
   "3a08dec415e7": {
     "source": "Class timetable",
     "text": "课程表",
@@ -24623,6 +27911,18 @@
     "status": "machine",
     "context": "pageCodes.on-business-cards-2.label"
   },
+  "cb98674f4d96": {
+    "source": "Exhibition",
+    "text": "展览",
+    "status": "machine",
+    "context": "pageCodes.type-behance-3.label"
+  },
+  "04e2a9728af7": {
+    "source": "Projects",
+    "text": "项目作品",
+    "status": "machine",
+    "context": "pageCodes.type-behance-4.label"
+  },
   "14a6d239da60": {
     "source": "2-for-1",
     "text": "买一送一 2-for-1",
@@ -24664,6 +27964,60 @@
     "text": "参观导览",
     "status": "machine",
     "context": "pageCodes.on-brochures-2.label"
+  },
+  "fc7f1aa2054c": {
+    "source": "Listing",
+    "text": "商家页面",
+    "status": "machine",
+    "context": "pageCodes.type-tripadvisor-4.label"
+  },
+  "6846c19a5714": {
+    "source": "Packing slip",
+    "text": "装箱单",
+    "status": "machine",
+    "context": "pageCodes.type-trustpilot-3.label"
+  },
+  "19734a1b58ca": {
+    "source": "Window",
+    "text": "橱窗",
+    "status": "machine",
+    "context": "pageCodes.type-yelp-3.label"
+  },
+  "99cf4b5719d6": {
+    "source": "Welcome book",
+    "text": "入住手册",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-1.label"
+  },
+  "29f3df617cba": {
+    "source": "Book again",
+    "text": "再次预订",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-2.label"
+  },
+  "8eab0f09df01": {
+    "source": "Experience",
+    "text": "体验活动",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-3.label"
+  },
+  "e6aa9b5b8581": {
+    "source": "Front desk",
+    "text": "前台",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-1.label"
+  },
+  "a12b6221b64a": {
+    "source": "Guest book",
+    "text": "访客留言簿",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-2.label"
+  },
+  "40040cb181f7": {
+    "source": "Property",
+    "text": "房源",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-4.label"
   },
   "015b4e0a76e5": {
     "source": "Specifications",
@@ -24827,6 +28181,30 @@
     "status": "machine",
     "context": "pageCodes.on-receipts-4.label"
   },
+  "03aa7dc16797": {
+    "source": "Quiz",
+    "text": "测验",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-3.label"
+  },
+  "2e0e960ab320": {
+    "source": "Form",
+    "text": "表单",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-4.label"
+  },
+  "63ec69fde300": {
+    "source": "Wiki",
+    "text": "知识库",
+    "status": "machine",
+    "context": "pageCodes.type-notion-1.label"
+  },
+  "5e3e3c190185": {
+    "source": "Event guide",
+    "text": "活动指南",
+    "status": "machine",
+    "context": "pageCodes.type-notion-2.label"
+  },
   "e888155d8c7d": {
     "source": "Compare",
     "text": "比一比",
@@ -24970,6 +28348,42 @@
     "text": "简历",
     "status": "machine",
     "context": "hostedTypes.resume.name"
+  },
+  "2bce1f4a654f": {
+    "source": "Shots",
+    "text": "作品",
+    "status": "machine",
+    "context": "pageCodes.type-dribbble-4.label"
+  },
+  "c74a09f295d9": {
+    "source": "Band poster",
+    "text": "乐队海报",
+    "status": "machine",
+    "context": "pageCodes.type-linktree-3.label"
+  },
+  "9feceb9333b5": {
+    "source": "Membership",
+    "text": "会员计划",
+    "status": "machine",
+    "context": "pageCodes.type-patreon-1.label"
+  },
+  "1eec3071dd26": {
+    "source": "Stream",
+    "text": "直播",
+    "status": "machine",
+    "context": "pageCodes.type-kofi-2.label"
+  },
+  "faa075c3a741": {
+    "source": "Commissions",
+    "text": "约稿委托",
+    "status": "machine",
+    "context": "pageCodes.type-kofi-3.label"
+  },
+  "74e8801e4926": {
+    "source": "New single",
+    "text": "新单曲",
+    "status": "machine",
+    "context": "pageCodes.type-apple-music-1.label"
   },
   "7d41961e2188": {
     "source": "Resume and CV QR Code Generator",
@@ -27659,6 +31073,90 @@
     "status": "machine",
     "context": "templates.event.label"
   },
+  "c3a7b99442dc": {
+    "source": "Brand page",
+    "text": "品牌主页",
+    "status": "machine",
+    "context": "pageCodes.type-weibo-2.label"
+  },
+  "ccf56ef5db0b": {
+    "source": "Launch",
+    "text": "新品发布",
+    "status": "machine",
+    "context": "pageCodes.type-weibo-3.label"
+  },
+  "8c6bc099534a": {
+    "source": "Blog",
+    "text": "博客",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-1.label"
+  },
+  "62bfe02804a0": {
+    "source": "Zine",
+    "text": "独立杂志",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-2.label"
+  },
+  "0cea784f9901": {
+    "source": "Art blog",
+    "text": "艺术博客",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-3.label"
+  },
+  "a80811cf6889": {
+    "source": "Posts",
+    "text": "帖子",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-4.label"
+  },
+  "29d94922512b": {
+    "source": "Article",
+    "text": "文章",
+    "status": "machine",
+    "context": "pageCodes.type-medium-1.label"
+  },
+  "d95082a2ee57": {
+    "source": "Author",
+    "text": "作者",
+    "status": "machine",
+    "context": "pageCodes.type-medium-3.label"
+  },
+  "6d09cf574882": {
+    "source": "Stories",
+    "text": "故事",
+    "status": "machine",
+    "context": "pageCodes.type-medium-4.label"
+  },
+  "f84ca2e7716b": {
+    "source": "Newsletter",
+    "text": "电子报",
+    "status": "machine",
+    "context": "pageCodes.type-substack-1.label"
+  },
+  "560401f3f20f": {
+    "source": "Book table",
+    "text": "订桌",
+    "status": "machine",
+    "context": "pageCodes.type-substack-3.label"
+  },
+  "15fc65b69327": {
+    "source": "Publication",
+    "text": "订阅刊物",
+    "status": "machine",
+    "context": "pageCodes.type-substack-4.label"
+  },
+  "13d6ff07b8a5": {
+    "source": "Repository",
+    "text": "代码仓库",
+    "status": "machine",
+    "context": "pageCodes.type-github-1.label"
+  },
+  "419a866e5bf3": {
+    "source": "Talk slide",
+    "text": "演讲幻灯片",
+    "status": "machine",
+    "context": "pageCodes.type-github-2.label"
+  },
   "a66124dde0e9": {
     "source": "Date, venue, tickets and add-to-calendar for an event",
     "text": "活动的日期、场地、门票和添加到日历",
@@ -28211,6 +31709,12 @@
     "status": "machine",
     "context": "templates.pdf.variants.document.name"
   },
+  "d92bcca77171": {
+    "source": "Sign-up sheet",
+    "text": "报名表",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-1.label"
+  },
   "9cb55ffd93d1": {
     "source": "A guide or manual, front and center",
     "text": "指南或手册，一目了然",
@@ -28313,6 +31817,12 @@
     "status": "machine",
     "context": "templates.mp3.variants.album.name"
   },
+  "051f01f095a2": {
+    "source": "Track",
+    "text": "单曲",
+    "status": "machine",
+    "context": "pageCodes.type-apple-music-4.label"
+  },
   "f10cf3d63108": {
     "source": "Cover art, a playlist and your profiles",
     "text": "封面图、播放列表和你的主页",
@@ -28396,6 +31906,84 @@
     "text": "混音带",
     "status": "machine",
     "context": "templates.playlist.variants.mixtape.name"
+  },
+  "b19c450b47d6": {
+    "source": "Episode",
+    "text": "单集",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-2.label"
+  },
+  "dd40d8d1bff8": {
+    "source": "Live taping",
+    "text": "现场录制",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-3.label"
+  },
+  "0df6f1cad36c": {
+    "source": "Show",
+    "text": "节目",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-4.label"
+  },
+  "74203ab8388c": {
+    "source": "Merch tag",
+    "text": "周边吊牌",
+    "status": "machine",
+    "context": "pageCodes.type-amazon-music-3.label"
+  },
+  "79ac1952b567": {
+    "source": "New release",
+    "text": "新发行",
+    "status": "machine",
+    "context": "pageCodes.type-deezer-1.label"
+  },
+  "dfa82f21b3f3": {
+    "source": "Party",
+    "text": "派对",
+    "status": "machine",
+    "context": "pageCodes.type-deezer-2.label"
+  },
+  "71ab02f6fd29": {
+    "source": "Listening bar",
+    "text": "聆听吧",
+    "status": "machine",
+    "context": "pageCodes.type-tidal-2.label"
+  },
+  "8888a029aaf6": {
+    "source": "Single",
+    "text": "单曲",
+    "status": "machine",
+    "context": "pageCodes.type-tidal-3.label"
+  },
+  "bfdd510698ef": {
+    "source": "Record",
+    "text": "唱片",
+    "status": "machine",
+    "context": "pageCodes.type-bandcamp-3.label"
+  },
+  "1d3981ba1e18": {
+    "source": "Artist",
+    "text": "艺人",
+    "status": "machine",
+    "context": "pageCodes.type-bandcamp-4.label"
+  },
+  "f84806199588": {
+    "source": "Handout",
+    "text": "讲义",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-1.label"
+  },
+  "9e6c24f51918": {
+    "source": "Meeting notes",
+    "text": "会议记录",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-2.label"
+  },
+  "934652dce41d": {
+    "source": "Instructions",
+    "text": "使用说明",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-3.label"
   },
   "fae3b174bf21": {
     "source": "Cover art, the tracklist and where else to listen",
@@ -34037,12 +37625,6 @@
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "将二维码下载为 PNG、WebP 或 SVG 格式。",
-    "status": "machine",
-    "context": "qrTypes.types.text.steps.3"
-  },
   "0135740ce7f9": {
     "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
     "text": "生成 Wi-Fi 二维码，访客扫描一次即可加入网络。支持 WPA/WPA2、WEP 和开放网络，支持隐藏 SSID，转义正确。免费。",
@@ -34060,12 +37642,6 @@
     "text": "请检查网络名称是否完全一致（区分大小写）、加密类型是否正确，以及你是否在信号范围内。需要用户名或证书的企业网络（WPA2-Enterprise）不受这种格式支持。",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.answer"
-  },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "下载 PNG、WebP 或 SVG，也可以在完整编辑器中设计二维码样式。",
-    "status": "machine",
-    "context": "qrTypes.types.instagram.steps.3"
   },
   "da2ccbd9fdc4": {
     "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",

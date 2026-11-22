@@ -899,6 +899,492 @@
     "status": "machine",
     "context": "contentTypes.list.monero.description"
   },
+  "9a523eddafc6": {
+    "source": "Messenger",
+    "text": "Messenger",
+    "status": "machine",
+    "context": "contentTypes.list.messenger.label"
+  },
+  "8bc2e9451ce0": {
+    "source": "Start a Messenger chat with you",
+    "text": "आपके साथ Messenger चैट शुरू करें",
+    "status": "machine",
+    "context": "contentTypes.list.messenger.description"
+  },
+  "2db2c27ad99b": {
+    "source": "Viber",
+    "text": "Viber",
+    "status": "machine",
+    "context": "contentTypes.list.viber.label"
+  },
+  "127559d99e2e": {
+    "source": "Open a Viber business chat or community",
+    "text": "Viber बिज़नेस चैट या कम्युनिटी खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.viber.description"
+  },
+  "216924fd2e69": {
+    "source": "KakaoTalk",
+    "text": "KakaoTalk",
+    "status": "machine",
+    "context": "contentTypes.list.kakaotalk.label"
+  },
+  "b39f1ec3ccd1": {
+    "source": "Open a KakaoTalk open chat or channel",
+    "text": "KakaoTalk ओपन चैट या चैनल खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.kakaotalk.description"
+  },
+  "8f9500d52394": {
+    "source": "Zalo",
+    "text": "Zalo",
+    "status": "machine",
+    "context": "contentTypes.list.zalo.label"
+  },
+  "4847482adcf9": {
+    "source": "Open a Zalo Official Account or group",
+    "text": "Zalo Official Account या ग्रुप खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.zalo.description"
+  },
+  "465047c17854": {
+    "source": "FaceTime",
+    "text": "FaceTime",
+    "status": "machine",
+    "context": "contentTypes.list.facetime.label"
+  },
+  "4f153691a034": {
+    "source": "Start a FaceTime call",
+    "text": "FaceTime कॉल शुरू करें",
+    "status": "machine",
+    "context": "contentTypes.list.facetime.description"
+  },
+  "a7b52b269a23": {
+    "source": "Microsoft Teams",
+    "text": "Microsoft Teams",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-teams.label"
+  },
+  "3d13b14cfef7": {
+    "source": "Join a Teams meeting or start a chat",
+    "text": "Teams मीटिंग में जुड़ें या चैट शुरू करें",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-teams.description"
+  },
+  "382c1b2987d4": {
+    "source": "Webex",
+    "text": "Webex",
+    "status": "machine",
+    "context": "contentTypes.list.webex.label"
+  },
+  "651115a0e158": {
+    "source": "Join a Webex meeting",
+    "text": "Webex मीटिंग में जुड़ें",
+    "status": "machine",
+    "context": "contentTypes.list.webex.description"
+  },
+  "f7b8dd5ece88": {
+    "source": "Calendly",
+    "text": "Calendly",
+    "status": "machine",
+    "context": "contentTypes.list.calendly.label"
+  },
+  "b51ffd6c5b56": {
+    "source": "Let people book time with you",
+    "text": "लोग आपके साथ समय बुक कर सकें",
+    "status": "machine",
+    "context": "contentTypes.list.calendly.description"
+  },
+  "343856a7c4d7": {
+    "source": "Google Classroom",
+    "text": "Google Classroom",
+    "status": "machine",
+    "context": "contentTypes.list.google-classroom.label"
+  },
+  "a0b88730be29": {
+    "source": "Invite students to a class",
+    "text": "छात्रों को क्लास में बुलाएँ",
+    "status": "machine",
+    "context": "contentTypes.list.google-classroom.description"
+  },
+  "7f607b65bde0": {
+    "source": "VK",
+    "text": "VK",
+    "status": "machine",
+    "context": "contentTypes.list.vk.label"
+  },
+  "4eb6770af4f6": {
+    "source": "Open a VK profile, page or group",
+    "text": "VK प्रोफ़ाइल, पेज या ग्रुप खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.vk.description"
+  },
+  "5b16689ed91a": {
+    "source": "Weibo",
+    "text": "Weibo",
+    "status": "machine",
+    "context": "contentTypes.list.weibo.label"
+  },
+  "5f9443faa00a": {
+    "source": "Open a Weibo profile",
+    "text": "Weibo प्रोफ़ाइल खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.weibo.description"
+  },
+  "3ce8b7c75edc": {
+    "source": "Tumblr",
+    "text": "Tumblr",
+    "status": "machine",
+    "context": "contentTypes.list.tumblr.label"
+  },
+  "4e5c671bbb96": {
+    "source": "Open a Tumblr blog",
+    "text": "Tumblr ब्लॉग खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.tumblr.description"
+  },
+  "8e588cd18774": {
+    "source": "Medium",
+    "text": "Medium",
+    "status": "machine",
+    "context": "contentTypes.list.medium.label"
+  },
+  "34700bc18214": {
+    "source": "Open a Medium profile or story",
+    "text": "Medium प्रोफ़ाइल या स्टोरी खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.medium.description"
+  },
+  "8c339ec81c3e": {
+    "source": "Substack",
+    "text": "Substack",
+    "status": "machine",
+    "context": "contentTypes.list.substack.label"
+  },
+  "5c84a14e63b0": {
+    "source": "Open a Substack newsletter",
+    "text": "Substack न्यूज़लेटर खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.substack.description"
+  },
+  "f911e414cf6b": {
+    "source": "GitHub",
+    "text": "GitHub",
+    "status": "machine",
+    "context": "contentTypes.list.github.label"
+  },
+  "d61a83c4cae9": {
+    "source": "Open a GitHub profile or repository",
+    "text": "GitHub प्रोफ़ाइल या रिपॉज़िटरी खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.github.description"
+  },
+  "ad21424a84d7": {
+    "source": "Behance",
+    "text": "Behance",
+    "status": "machine",
+    "context": "contentTypes.list.behance.label"
+  },
+  "6246bf5d9570": {
+    "source": "Open a Behance portfolio",
+    "text": "Behance पोर्टफ़ोलियो खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.behance.description"
+  },
+  "61bce589e672": {
+    "source": "Dribbble",
+    "text": "Dribbble",
+    "status": "machine",
+    "context": "contentTypes.list.dribbble.label"
+  },
+  "ee0902dedd27": {
+    "source": "Open a Dribbble portfolio",
+    "text": "Dribbble पोर्टफ़ोलियो खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.dribbble.description"
+  },
+  "2339a2623267": {
+    "source": "Linktree",
+    "text": "Linktree",
+    "status": "machine",
+    "context": "contentTypes.list.linktree.label"
+  },
+  "c36a62ec05ac": {
+    "source": "Open your Linktree page",
+    "text": "अपना Linktree पेज खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.linktree.description"
+  },
+  "eec736f63bbb": {
+    "source": "Patreon",
+    "text": "Patreon",
+    "status": "machine",
+    "context": "contentTypes.list.patreon.label"
+  },
+  "d990a359dba9": {
+    "source": "Open a Patreon creator page",
+    "text": "Patreon क्रिएटर पेज खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.patreon.description"
+  },
+  "76c38e42cf40": {
+    "source": "Ko-fi",
+    "text": "Ko-fi",
+    "status": "machine",
+    "context": "contentTypes.list.kofi.label"
+  },
+  "03f20f7907bc": {
+    "source": "Get tips on your Ko-fi page",
+    "text": "अपने Ko-fi पेज पर टिप पाएं",
+    "status": "machine",
+    "context": "contentTypes.list.kofi.description"
+  },
+  "50a0dd1c115d": {
+    "source": "Buy Me a Coffee",
+    "text": "Buy Me a Coffee",
+    "status": "machine",
+    "context": "contentTypes.list.buymeacoffee.label"
+  },
+  "cb2d6fb0e8f2": {
+    "source": "Get tips on your Buy Me a Coffee page",
+    "text": "अपने Buy Me a Coffee पेज पर टिप पाएं",
+    "status": "machine",
+    "context": "contentTypes.list.buymeacoffee.description"
+  },
+  "3b00b32d64af": {
+    "source": "Apple Music",
+    "text": "Apple Music",
+    "status": "machine",
+    "context": "contentTypes.list.apple-music.label"
+  },
+  "d12f244b2b95": {
+    "source": "Play a song, album or playlist",
+    "text": "गाना, एल्बम या प्लेलिस्ट चलाएं",
+    "status": "machine",
+    "context": "contentTypes.list.apple-music.description"
+  },
+  "6921a7cac539": {
+    "source": "YouTube Music",
+    "text": "YouTube Music",
+    "status": "machine",
+    "context": "contentTypes.list.youtube-music.label"
+  },
+  "40dd3b330ddf": {
+    "source": "Apple Podcasts",
+    "text": "Apple Podcasts",
+    "status": "machine",
+    "context": "contentTypes.list.apple-podcasts.label"
+  },
+  "37ad409c6b53": {
+    "source": "Open a podcast or episode",
+    "text": "पॉडकास्ट या एपिसोड खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.apple-podcasts.description"
+  },
+  "2faf9cfdecef": {
+    "source": "Amazon Music",
+    "text": "Amazon Music",
+    "status": "machine",
+    "context": "contentTypes.list.amazon-music.label"
+  },
+  "4997d093758b": {
+    "source": "Deezer",
+    "text": "Deezer",
+    "status": "machine",
+    "context": "contentTypes.list.deezer.label"
+  },
+  "01bec391e74c": {
+    "source": "Play a track, album or playlist",
+    "text": "ट्रैक, एल्बम या प्लेलिस्ट चलाएं",
+    "status": "machine",
+    "context": "contentTypes.list.deezer.description"
+  },
+  "0f622ac0d050": {
+    "source": "TIDAL",
+    "text": "TIDAL",
+    "status": "machine",
+    "context": "contentTypes.list.tidal.label"
+  },
+  "088f5f25925f": {
+    "source": "Bandcamp",
+    "text": "Bandcamp",
+    "status": "machine",
+    "context": "contentTypes.list.bandcamp.label"
+  },
+  "892c3420832c": {
+    "source": "Open an artist, album or track",
+    "text": "आर्टिस्ट, एल्बम या ट्रैक खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.bandcamp.description"
+  },
+  "507e98c562e1": {
+    "source": "Google Docs",
+    "text": "Google Docs",
+    "status": "machine",
+    "context": "contentTypes.list.google-docs.label"
+  },
+  "5be83e1c47ff": {
+    "source": "Open a shared Google Doc",
+    "text": "शेयर किया गया Google Doc खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.google-docs.description"
+  },
+  "f109802a741f": {
+    "source": "Google Sheets",
+    "text": "Google Sheets",
+    "status": "machine",
+    "context": "contentTypes.list.google-sheets.label"
+  },
+  "2be210d8ffba": {
+    "source": "Open a shared spreadsheet",
+    "text": "शेयर की गई स्प्रेडशीट खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.google-sheets.description"
+  },
+  "6da41d861102": {
+    "source": "Google Slides",
+    "text": "Google Slides",
+    "status": "machine",
+    "context": "contentTypes.list.google-slides.label"
+  },
+  "bfcf6a4e1f4f": {
+    "source": "Open a shared presentation",
+    "text": "शेयर की गई प्रेज़ेंटेशन खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.google-slides.description"
+  },
+  "805259086913": {
+    "source": "Google Forms",
+    "text": "Google Forms",
+    "status": "machine",
+    "context": "contentTypes.list.google-forms.label"
+  },
+  "f151e09bdf83": {
+    "source": "Open a Google Form",
+    "text": "Google Form खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.google-forms.description"
+  },
+  "7645f2073fc8": {
+    "source": "Microsoft Forms",
+    "text": "Microsoft Forms",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-forms.label"
+  },
+  "715275c8faa6": {
+    "source": "Open a Microsoft Form",
+    "text": "Microsoft Form खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-forms.description"
+  },
+  "73bcfe98830b": {
+    "source": "Notion",
+    "text": "Notion",
+    "status": "machine",
+    "context": "contentTypes.list.notion.label"
+  },
+  "66b41a05a1ff": {
+    "source": "Open a public Notion page",
+    "text": "पब्लिक Notion पेज खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.notion.description"
+  },
+  "2f73335c712c": {
+    "source": "Canva",
+    "text": "Canva",
+    "status": "machine",
+    "context": "contentTypes.list.canva.label"
+  },
+  "9b7356ae852d": {
+    "source": "Open a shared Canva design",
+    "text": "शेयर किया गया Canva डिज़ाइन खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.canva.description"
+  },
+  "c4424d160bca": {
+    "source": "App Store",
+    "text": "App Store",
+    "status": "machine",
+    "context": "contentTypes.list.app-store.label"
+  },
+  "ea863e47112e": {
+    "source": "Open an iPhone app's App Store page",
+    "text": "iPhone ऐप का App Store पेज खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.app-store.description"
+  },
+  "027b1684683a": {
+    "source": "Google Play",
+    "text": "Google Play",
+    "status": "machine",
+    "context": "contentTypes.list.google-play.label"
+  },
+  "4e12b2035297": {
+    "source": "Open an Android app's Google Play page",
+    "text": "Android ऐप का Google Play पेज खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.google-play.description"
+  },
+  "d384fa236a1f": {
+    "source": "Tripadvisor",
+    "text": "Tripadvisor",
+    "status": "machine",
+    "context": "contentTypes.list.tripadvisor.label"
+  },
+  "5251ecd50939": {
+    "source": "Open your Tripadvisor listing",
+    "text": "अपनी Tripadvisor लिस्टिंग खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.tripadvisor.description"
+  },
+  "26abcb97dbdd": {
+    "source": "Trustpilot",
+    "text": "Trustpilot",
+    "status": "machine",
+    "context": "contentTypes.list.trustpilot.label"
+  },
+  "cc1c9c901110": {
+    "source": "Ask customers for a Trustpilot review",
+    "text": "ग्राहकों से Trustpilot रिव्यू मांगें",
+    "status": "machine",
+    "context": "contentTypes.list.trustpilot.description"
+  },
+  "893919d40bac": {
+    "source": "Yelp",
+    "text": "Yelp",
+    "status": "machine",
+    "context": "contentTypes.list.yelp.label"
+  },
+  "6c9fe4ad62aa": {
+    "source": "Open your Yelp business page",
+    "text": "अपना Yelp बिज़नेस पेज खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.yelp.description"
+  },
+  "1d927621f532": {
+    "source": "Airbnb",
+    "text": "Airbnb",
+    "status": "machine",
+    "context": "contentTypes.list.airbnb.label"
+  },
+  "a33bb31179a5": {
+    "source": "Open an Airbnb listing or experience",
+    "text": "Airbnb लिस्टिंग या एक्सपीरियंस खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.airbnb.description"
+  },
+  "14bb3cc7d001": {
+    "source": "Booking.com",
+    "text": "Booking.com",
+    "status": "machine",
+    "context": "contentTypes.list.booking-com.label"
+  },
+  "4ffbeae0492e": {
+    "source": "Open your Booking.com property page",
+    "text": "अपना Booking.com प्रॉपर्टी पेज खोलें",
+    "status": "machine",
+    "context": "contentTypes.list.booking-com.description"
+  },
   "ca7e3d788516": {
     "source": "MeCard",
     "text": "MeCard",
@@ -1055,6 +1541,12 @@
     "status": "machine",
     "context": "contentTypes.groups.social.label"
   },
+  "b61fa44e6c70": {
+    "source": "Music & podcasts",
+    "text": "संगीत और पॉडकास्ट",
+    "status": "machine",
+    "context": "contentTypes.groups.music.label"
+  },
   "76f68a75f01e": {
     "source": "Business",
     "text": "Business",
@@ -1085,9 +1577,9 @@
     "status": "machine",
     "context": "qrTypes.groups.utilities.title"
   },
-  "a271af9bf106": {
-    "source": "Websites, plain text, Wi-Fi logins and links to files or short links.",
-    "text": "वेबसाइट, सादा टेक्स्ट, Wi-Fi लॉगिन और फ़ाइलों या छोटे लिंक के लिंक।",
+  "52aef28f5f92": {
+    "source": "Websites, plain text, Wi-Fi logins, shared documents and forms, app store pages and short links.",
+    "text": "वेबसाइट, सादा टेक्स्ट, Wi-Fi लॉगिन, शेयर किए गए डॉक्युमेंट और फ़ॉर्म, ऐप स्टोर पेज और शॉर्ट लिंक।",
     "status": "machine",
     "context": "qrTypes.groups.utilities.description"
   },
@@ -1097,9 +1589,9 @@
     "status": "machine",
     "context": "qrTypes.groups.contact.title"
   },
-  "1771803787ab": {
-    "source": "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Signal or LINE.",
-    "text": "कॉन्टैक्ट सेव करें, कॉल, टेक्स्ट या ईमेल करें, या WhatsApp, Telegram, Signal या LINE में चैट खोलें।",
+  "70f1152fb7bd": {
+    "source": "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Messenger, LINE or KakaoTalk.",
+    "text": "कोई कॉन्टैक्ट सेव करें, कॉल, टेक्स्ट या ईमेल करें, या WhatsApp, Telegram, Messenger, LINE या KakaoTalk में चैट खोलें।",
     "status": "machine",
     "context": "qrTypes.groups.contact.description"
   },
@@ -1109,9 +1601,9 @@
     "status": "machine",
     "context": "qrTypes.groups.social.title"
   },
-  "c5bddd3ef7b6": {
-    "source": "Send people to a profile, channel, Discord server or playlist.",
-    "text": "लोगों को किसी प्रोफ़ाइल, चैनल, Discord सर्वर या प्लेलिस्ट तक पहुँचाएँ।",
+  "677940560013": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, album or podcast.",
+    "text": "लोगों को किसी प्रोफ़ाइल, चैनल, Discord सर्वर, न्यूज़लेटर, एल्बम या पॉडकास्ट पर भेजें।",
     "status": "machine",
     "context": "qrTypes.groups.social.description"
   },
@@ -1127,9 +1619,9 @@
     "status": "machine",
     "context": "qrTypes.groups.business.title"
   },
-  "40ae6347e760": {
-    "source": "Reviews, directions, bookings, meetings and attendance check-ins.",
-    "text": "रिव्यू, दिशा-निर्देश, बुकिंग, मीटिंग और अटेंडेंस चेक-इन।",
+  "5c9a02d00b51": {
+    "source": "Reviews, listings, directions, bookings, meetings, classes and attendance check-ins.",
+    "text": "रिव्यू, लिस्टिंग, रास्ता, बुकिंग, मीटिंग, क्लास और अटेंडेंस चेक-इन।",
     "status": "machine",
     "context": "qrTypes.groups.business.description"
   },
@@ -6701,6 +7193,2622 @@
     "status": "machine",
     "context": "qrTypes.types.monero.details.paragraphs.1"
   },
+  "87cb1f50205c": {
+    "source": "Open a Messenger chat with you or your Page.",
+    "text": "आपके या आपके Page के साथ Messenger चैट खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.summary"
+  },
+  "b7b98dca2c76": {
+    "source": "Make a Messenger QR code from your Facebook username. People scan to start a chat with you or your Page. m.me link, free, no signup.",
+    "text": "अपने Facebook यूज़रनेम से Messenger QR कोड बनाएं। लोग स्कैन करके आपके या आपके Page के साथ चैट शुरू करते हैं। m.me लिंक, फ़्री, साइनअप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.metaDescription"
+  },
+  "8d2f18c58c28": {
+    "source": "A Messenger QR code opens a chat with you, or with your business's Facebook Page, so customers can ask a question from a shop window, a flyer or a receipt.",
+    "text": "Messenger QR कोड आपके साथ, या आपके बिज़नेस के Facebook Page के साथ चैट खोलता है, ताकि ग्राहक दुकान की खिड़की, फ़्लायर या रसीद से सवाल पूछ सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.intro.0"
+  },
+  "500e6c017cda": {
+    "source": "Type the username of your Facebook profile or Page and QRdx builds the m.me link Meta gives every username, or paste the m.me link itself.",
+    "text": "अपने Facebook प्रोफ़ाइल या Page का यूज़रनेम लिखें और QRdx वह m.me लिंक बना देता है जो Meta हर यूज़रनेम को देता है, या सीधे m.me लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.intro.1"
+  },
+  "ddd574b28a22": {
+    "source": "Enter your Facebook username, or paste your m.me link.",
+    "text": "अपना Facebook यूज़रनेम लिखें, या अपना m.me लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.steps.0"
+  },
+  "46bd204ff500": {
+    "source": "Scan the preview to check the chat opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि चैट खुलती है।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.steps.1"
+  },
+  "a0c86702d095": {
+    "source": "Facebook usernames are letters, digits and dots.",
+    "text": "Facebook यूज़रनेम में अक्षर, अंक और डॉट होते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.payload.notes.0"
+  },
+  "84cca9616632": {
+    "source": "m.me links open the Messenger app when it's installed, or Messenger in the browser.",
+    "text": "m.me लिंक Messenger ऐप इंस्टॉल होने पर उसमें खुलते हैं, नहीं तो ब्राउज़र में Messenger खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.payload.notes.1"
+  },
+  "d68dad346d27": {
+    "source": "It's the last part of your profile's or Page's address on Facebook, after facebook.com/. A Page without a username can set one in its settings.",
+    "text": "यह Facebook पर आपकी प्रोफ़ाइल या Page के पते का आख़िरी हिस्सा है, facebook.com/ के बाद वाला। बिना यूज़रनेम वाला Page अपनी सेटिंग में यूज़रनेम सेट कर सकता है।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.0.answer"
+  },
+  "05a5da7f487f": {
+    "source": "Does it work for a business Page?",
+    "text": "क्या यह बिज़नेस Page के लिए काम करता है?",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.1.question"
+  },
+  "a78e0fb4ffec": {
+    "source": "Yes. A Page's m.me link opens a chat with the Page, and the messages arrive in the Page's inbox.",
+    "text": "हाँ। Page का m.me लिंक उस Page के साथ चैट खोलता है, और मैसेज Page के इनबॉक्स में आते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.1.answer"
+  },
+  "c4ba95ee6d7e": {
+    "source": "Open a Viber business chat, community or channel.",
+    "text": "Viber बिज़नेस चैट, कम्युनिटी या चैनल खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.summary"
+  },
+  "a71489e78f3c": {
+    "source": "Create a Viber QR code for a business chat by number, or to invite people to your community or channel. viber.me and invite links. Free.",
+    "text": "नंबर से बिज़नेस चैट के लिए Viber QR कोड बनाएं, या लोगों को अपनी कम्युनिटी या चैनल में बुलाएं। viber.me और इन्विटेशन लिंक। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.metaDescription"
+  },
+  "6ef9674b9362": {
+    "source": "A Viber QR code opens a chat with your business, or invites people to your Viber community or channel, from a shop counter, a menu or a poster.",
+    "text": "Viber QR कोड दुकान के काउंटर, मेन्यू या पोस्टर से आपके बिज़नेस के साथ चैट खोलता है, या लोगों को आपकी Viber कम्युनिटी या चैनल में बुलाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.intro.0"
+  },
+  "da02c8d4d928": {
+    "source": "For a chat, enter your Viber Business account's number and an optional first message; QRdx builds the viber.me link Viber gives business accounts. For a community or channel, paste its Invite URL from the app.",
+    "text": "चैट के लिए अपने Viber Business अकाउंट का नंबर और चाहें तो पहला मैसेज लिखें; QRdx वह viber.me लिंक बना देता है जो Viber बिज़नेस अकाउंट को देता है। कम्युनिटी या चैनल के लिए ऐप से उसका Invite URL पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.intro.1"
+  },
+  "f261dd7a71b7": {
+    "source": "Choose a business chat, or a community or channel.",
+    "text": "बिज़नेस चैट चुनें, या कम्युनिटी या चैनल चुनें।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.0"
+  },
+  "86882b4b1434": {
+    "source": "Enter the business number with its country code, or paste the Invite URL.",
+    "text": "बिज़नेस नंबर देश कोड के साथ लिखें, या Invite URL पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.1"
+  },
+  "9c45559e6431": {
+    "source": "Scan the preview with Viber installed to check it opens.",
+    "text": "Viber इंस्टॉल वाले फ़ोन से प्रीव्यू को स्कैन करके देखें कि वह खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.2"
+  },
+  "9cb54423b2a8": {
+    "source": "The number is written in full international format, digits only, as Viber asks.",
+    "text": "नंबर पूरे अंतरराष्ट्रीय फ़ॉर्मैट में, सिर्फ़ अंकों में लिखा जाता है, जैसा Viber माँगता है।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.payload.notes.0"
+  },
+  "f3530eff7c88": {
+    "source": "Invite URLs are kept exactly as Viber gives them.",
+    "text": "Invite URL वैसे ही रखे जाते हैं जैसे Viber देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.payload.notes.1"
+  },
+  "17a39bc9be1d": {
+    "source": "Can I make a chat code for a personal number?",
+    "text": "क्या मैं पर्सनल नंबर के लिए चैट कोड बना सकता हूँ?",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.0.question"
+  },
+  "9d314104cc35": {
+    "source": "Viber's chat links by number are for Viber Business accounts. For a personal number, share a community or channel, or use a WhatsApp or Telegram code.",
+    "text": "नंबर से Viber के चैट लिंक Viber Business अकाउंट के लिए होते हैं। पर्सनल नंबर के लिए कम्युनिटी या चैनल शेयर करें, या WhatsApp या Telegram कोड इस्तेमाल करें।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.0.answer"
+  },
+  "cf6610208dfd": {
+    "source": "Will the community link keep working?",
+    "text": "क्या कम्युनिटी लिंक चलता रहेगा?",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.1.question"
+  },
+  "2c8b4037a973": {
+    "source": "As long as the Invite URL does. If an admin resets the link in Viber, make a new code.",
+    "text": "जब तक Invite URL चलता है, तब तक। अगर कोई एडमिन Viber में लिंक रीसेट कर दे, तो नया कोड बनाएं।",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.1.answer"
+  },
+  "08e60ec1c791": {
+    "source": "Open a KakaoTalk open chat or channel.",
+    "text": "KakaoTalk का ओपन चैट या चैनल खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.summary"
+  },
+  "5f323e3b6819": {
+    "source": "Make a KakaoTalk QR code that opens your open chat room or Kakao Talk Channel. Paste the link from the app or enter your channel ID. Free.",
+    "text": "ऐसा KakaoTalk QR कोड बनाएँ जो आपका ओपन चैट रूम या Kakao Talk Channel खोले। ऐप से लिंक पेस्ट करें या अपना चैनल ID डालें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.metaDescription"
+  },
+  "60fd2b87e617": {
+    "source": "A KakaoTalk QR code opens your open chat room, or your business's Kakao Talk Channel where people can add you and send a message.",
+    "text": "KakaoTalk QR कोड आपका ओपन चैट रूम खोलता है, या आपके बिज़नेस का Kakao Talk Channel, जहाँ लोग आपको जोड़ सकते हैं और मैसेज भेज सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.intro.0"
+  },
+  "d9f5c057dd32": {
+    "source": "Paste the open chat link (open.kakao.com/o/…) or the channel link (pf.kakao.com/_…), or type the channel ID that starts with an underscore.",
+    "text": "ओपन चैट का लिंक (open.kakao.com/o/…) या चैनल का लिंक (pf.kakao.com/_…) पेस्ट करें, या अंडरस्कोर से शुरू होने वाला चैनल ID टाइप करें।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.intro.1"
+  },
+  "ad9a8bb30a65": {
+    "source": "Copy the open chat's share link, or your channel's link from the Kakao Talk Channel partner center.",
+    "text": "ओपन चैट का शेयर लिंक कॉपी करें, या Kakao Talk Channel पार्टनर सेंटर से अपने चैनल का लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.0"
+  },
+  "98bf05380163": {
+    "source": "Paste it here, or type the channel ID, like _AbCdEf.",
+    "text": "इसे यहाँ पेस्ट करें, या चैनल ID टाइप करें, जैसे _AbCdEf।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.1"
+  },
+  "e8aece3347c7": {
+    "source": "Scan the preview to check KakaoTalk opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि KakaoTalk खुलता है या नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.2"
+  },
+  "7409dae6d535": {
+    "source": "A typed channel ID becomes its pf.kakao.com link.",
+    "text": "टाइप किया गया चैनल ID उसके pf.kakao.com लिंक में बदल जाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.payload.notes.0"
+  },
+  "70374e959bec": {
+    "source": "Pasted links are kept as they are.",
+    "text": "पेस्ट किए गए लिंक जैसे हैं वैसे ही रहते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.payload.notes.1"
+  },
+  "fa97fa556c79": {
+    "source": "Where is my channel ID?",
+    "text": "मेरा चैनल ID कहाँ मिलेगा?",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.0.question"
+  },
+  "ecf630ee7617": {
+    "source": "In the Kakao Talk Channel partner center, with your channel's details. It starts with an underscore.",
+    "text": "Kakao Talk Channel पार्टनर सेंटर में, आपके चैनल की जानकारी के साथ। यह अंडरस्कोर से शुरू होता है।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.0.answer"
+  },
+  "2c28296169be": {
+    "source": "Can people join an open chat without the app?",
+    "text": "क्या लोग ऐप के बिना ओपन चैट से जुड़ सकते हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.1.question"
+  },
+  "6d4a137b35bb": {
+    "source": "No. The link opens KakaoTalk, which people need to join the room.",
+    "text": "नहीं। लिंक KakaoTalk खोलता है, और रूम से जुड़ने के लिए लोगों को यह ऐप चाहिए।",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.1.answer"
+  },
+  "bbaf8c78fa3e": {
+    "source": "Open a Zalo Official Account or group.",
+    "text": "Zalo Official Account या ग्रुप खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.summary"
+  },
+  "d9d33227c0a4": {
+    "source": "Create a Zalo QR code for your Official Account or group. Paste the zalo.me link or enter the account's numeric ID. Free, no signup.",
+    "text": "अपने Official Account या ग्रुप के लिए Zalo QR कोड बनाएँ। zalo.me लिंक पेस्ट करें या अकाउंट का न्यूमेरिक ID डालें। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.metaDescription"
+  },
+  "e723cc18a188": {
+    "source": "A Zalo QR code opens your business's Zalo Official Account, where people can follow you and send a message, or a Zalo group.",
+    "text": "Zalo QR कोड आपके बिज़नेस का Zalo Official Account खोलता है, जहाँ लोग आपको फ़ॉलो कर सकते हैं और मैसेज भेज सकते हैं, या कोई Zalo ग्रुप खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.intro.0"
+  },
+  "fe519b5483ae": {
+    "source": "Paste the zalo.me link from your Official Account or group, or type the account's numeric ID, and QRdx writes the zalo.me link.",
+    "text": "अपने Official Account या ग्रुप का zalo.me लिंक पेस्ट करें, या अकाउंट का न्यूमेरिक ID टाइप करें, और QRdx zalo.me लिंक बना देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.intro.1"
+  },
+  "a10894e355ef": {
+    "source": "Copy your Official Account's or group's zalo.me link.",
+    "text": "अपने Official Account या ग्रुप का zalo.me लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.0"
+  },
+  "30bfe2e7e37b": {
+    "source": "Paste it here, or type the account's ID.",
+    "text": "इसे यहाँ पेस्ट करें, या अकाउंट का ID टाइप करें।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.1"
+  },
+  "f7ea295b1e15": {
+    "source": "Scan the preview with Zalo installed to check it opens.",
+    "text": "Zalo इंस्टॉल वाले फ़ोन से प्रीव्यू को स्कैन करके देखें कि वह खुलता है या नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.2"
+  },
+  "71a718bd4a29": {
+    "source": "A typed numeric ID becomes its zalo.me link.",
+    "text": "टाइप किया गया न्यूमेरिक ID उसके zalo.me लिंक में बदल जाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.payload.notes.0"
+  },
+  "e3a2a32fde7f": {
+    "source": "Custom names (zalo.me/yourname) and group links are kept as pasted.",
+    "text": "कस्टम नाम (zalo.me/yourname) और ग्रुप लिंक वैसे ही रहते हैं जैसे पेस्ट किए गए हों।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.payload.notes.1"
+  },
+  "f582219ddebb": {
+    "source": "Can group links stop working?",
+    "text": "क्या ग्रुप लिंक काम करना बंद कर सकते हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.0.question"
+  },
+  "5ed01d72a918": {
+    "source": "Yes. A group admin can turn off or reset the join link, and then the code needs the new one.",
+    "text": "हाँ। ग्रुप एडमिन जॉइन लिंक बंद या रीसेट कर सकता है, और तब कोड के लिए नया लिंक चाहिए होता है।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.0.answer"
+  },
+  "732b44090081": {
+    "source": "Can I use a custom name instead of the ID?",
+    "text": "क्या मैं ID की जगह कस्टम नाम इस्तेमाल कर सकता हूँ?",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.1.question"
+  },
+  "fa714eebb972": {
+    "source": "Yes, once Zalo approves a custom link for your Official Account. Paste the zalo.me link with the name.",
+    "text": "हाँ, जब Zalo आपके Official Account के लिए कस्टम लिंक मंज़ूर कर दे। नाम वाला zalo.me लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.1.answer"
+  },
+  "8292f1d90083": {
+    "source": "Start a FaceTime call, or join a FaceTime link.",
+    "text": "FaceTime कॉल शुरू करें, या किसी FaceTime लिंक से जुड़ें।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.summary"
+  },
+  "f14db888ae14": {
+    "source": "Make a FaceTime QR code that calls a phone number or Apple Account email, or opens a FaceTime link anyone can join. Video or audio. Free.",
+    "text": "ऐसा FaceTime QR कोड बनाएं जो किसी फ़ोन नंबर या Apple Account ईमेल पर कॉल करे, या ऐसा FaceTime लिंक खोले जिससे कोई भी जुड़ सके। वीडियो या ऑडियो। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.metaDescription"
+  },
+  "2dbda160707d": {
+    "source": "A FaceTime QR code starts a FaceTime call to a phone number or the email of an Apple Account. It works on iPhone, iPad and Mac; other phones can't open it.",
+    "text": "FaceTime QR कोड किसी फ़ोन नंबर या Apple Account के ईमेल पर FaceTime कॉल शुरू करता है। यह iPhone, iPad और Mac पर काम करता है; दूसरे फ़ोन इसे नहीं खोल सकते।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.intro.0"
+  },
+  "f6c8e3e5ded7": {
+    "source": "For a call anyone can join, including people on Android and Windows in their browser, make a link in FaceTime with Create Link and paste it instead.",
+    "text": "ऐसी कॉल के लिए जिसमें कोई भी जुड़ सके, यहाँ तक कि Android और Windows वाले लोग भी अपने ब्राउज़र में, FaceTime में Create Link से लिंक बनाएं और उसे यहाँ पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.intro.1"
+  },
+  "8b5d591b248b": {
+    "source": "Choose a call to a number or email, or a FaceTime link.",
+    "text": "किसी नंबर या ईमेल पर कॉल चुनें, या FaceTime लिंक चुनें।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.0"
+  },
+  "09fd479c886e": {
+    "source": "Enter the number or email (and turn on audio only if you like), or paste the link.",
+    "text": "नंबर या ईमेल डालें (और चाहें तो सिर्फ़ ऑडियो चालू करें), या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.1"
+  },
+  "867b42180a2d": {
+    "source": "Scan the preview on an iPhone to check FaceTime opens.",
+    "text": "iPhone पर प्रीव्यू स्कैन करके देखें कि FaceTime खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.2"
+  },
+  "d2ad4d5aab1a": {
+    "source": "facetime: and facetime-audio: are Apple's URL schemes for FaceTime calls; Apple devices ask before they call.",
+    "text": "facetime: और facetime-audio: FaceTime कॉल के लिए Apple की URL स्कीम हैं; Apple डिवाइस कॉल करने से पहले पूछते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.payload.notes.0"
+  },
+  "2e5ce83a25c2": {
+    "source": "FaceTime links can't be built from a number: make one in the FaceTime app.",
+    "text": "FaceTime लिंक किसी नंबर से नहीं बनाए जा सकते: इसे FaceTime ऐप में बनाएं।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.payload.notes.1"
+  },
+  "b8e808fecf0d": {
+    "source": "Can Android phones scan it?",
+    "text": "क्या Android फ़ोन इसे स्कैन कर सकते हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.0.question"
+  },
+  "d096757b3d02": {
+    "source": "A call code only works on Apple devices. A FaceTime link opens on Android and Windows too, where people join from Chrome or Edge.",
+    "text": "कॉल कोड सिर्फ़ Apple डिवाइस पर काम करता है। FaceTime लिंक Android और Windows पर भी खुलता है, जहाँ लोग Chrome या Edge से जुड़ते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.0.answer"
+  },
+  "be6a27e5e7a2": {
+    "source": "Does the code call right away?",
+    "text": "क्या कोड तुरंत कॉल कर देता है?",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.1.question"
+  },
+  "900c1860bf08": {
+    "source": "No. The device shows who it's about to call and waits for a tap.",
+    "text": "नहीं। डिवाइस दिखाता है कि वह किसे कॉल करने वाला है और टैप का इंतज़ार करता है।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.1.answer"
+  },
+  "2a727bfe6e05": {
+    "source": "Which devices open a FaceTime code",
+    "text": "FaceTime कोड कौन-से डिवाइस खोलते हैं",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.title"
+  },
+  "a442097fd994": {
+    "source": "facetime: and facetime-audio: links open FaceTime on iPhone, iPad and Mac. Android phones and Windows PCs have no FaceTime app, so they can't use them; Apple documents the audio scheme for iPhone and iPad.",
+    "text": "facetime: और facetime-audio: लिंक iPhone, iPad और Mac पर FaceTime खोलते हैं। Android फ़ोन और Windows PC में FaceTime ऐप नहीं होता, इसलिए वे इनका इस्तेमाल नहीं कर सकते; Apple ने ऑडियो स्कीम को iPhone और iPad के लिए बताया है।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.paragraphs.0"
+  },
+  "3e3f96efb8a8": {
+    "source": "A FaceTime link (facetime.apple.com/join…) is made in the FaceTime app with Create Link. People on Apple devices join in FaceTime, and others join from a current Chrome or Edge browser, but they can't start calls. FaceTime links aren't available in mainland China.",
+    "text": "FaceTime लिंक (facetime.apple.com/join…) FaceTime ऐप में Create Link से बनता है। Apple डिवाइस वाले लोग FaceTime में जुड़ते हैं, और बाकी लोग Chrome या Edge के नए ब्राउज़र से जुड़ सकते हैं, लेकिन वे कॉल शुरू नहीं कर सकते। FaceTime लिंक मेनलैंड चीन में उपलब्ध नहीं हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.paragraphs.1"
+  },
+  "2c015e053f5e": {
+    "source": "Join a Teams meeting or start a Teams chat.",
+    "text": "Teams मीटिंग से जुड़ें या Teams चैट शुरू करें।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.summary"
+  },
+  "6b41a98dac03": {
+    "source": "Create a Microsoft Teams QR code that joins a meeting from its link, or starts a chat with people by work email. For rooms and slides. Free.",
+    "text": "ऐसा Microsoft Teams QR कोड बनाएं जो लिंक से मीटिंग में जोड़े, या वर्क ईमेल से लोगों के साथ चैट शुरू करे। कमरों और स्लाइड के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.metaDescription"
+  },
+  "33bc247b1744": {
+    "source": "A Microsoft Teams QR code opens a meeting, so people join from a room sign, a slide or a printed agenda, or starts a chat with colleagues by their work email.",
+    "text": "Microsoft Teams QR कोड मीटिंग खोलता है, ताकि लोग कमरे के साइन, स्लाइड या प्रिंट किए एजेंडा से जुड़ सकें, या सहकर्मियों के वर्क ईमेल से उनके साथ चैट शुरू करता है।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.intro.0"
+  },
+  "a78ea8ed2e5d": {
+    "source": "Paste the meeting's join link from the invite, or enter one or more work or school email addresses and an optional message. QRdx builds the chat link from Microsoft's deep link format.",
+    "text": "इन्वाइट से मीटिंग का जॉइन लिंक पेस्ट करें, या एक या ज़्यादा वर्क या स्कूल ईमेल पते और चाहें तो एक संदेश डालें। QRdx चैट लिंक Microsoft के डीप लिंक फ़ॉर्मैट से बनाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.intro.1"
+  },
+  "cf863d521a7b": {
+    "source": "Choose a meeting or a chat.",
+    "text": "मीटिंग या चैट चुनें।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.0"
+  },
+  "1edecee263b9": {
+    "source": "Paste the join link, or enter the email addresses and a message.",
+    "text": "जॉइन लिंक पेस्ट करें, या ईमेल पते और संदेश डालें।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.1"
+  },
+  "553e5ddd14fc": {
+    "source": "Scan the preview to check Teams opens.",
+    "text": "प्रीव्यू स्कैन करके देखें कि Teams खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.2"
+  },
+  "667b8ef3c8b2": {
+    "source": "Chat links take work or school accounts, separated by commas.",
+    "text": "चैट लिंक में वर्क या स्कूल अकाउंट कॉमा से अलग करके दिए जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.payload.notes.0"
+  },
+  "719788589f30": {
+    "source": "Meeting links are kept as pasted, with their passcode.",
+    "text": "मीटिंग लिंक पासकोड के साथ, जैसे पेस्ट किए गए थे वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.payload.notes.1"
+  },
+  "db768bd7023b": {
+    "source": "Do meeting links expire?",
+    "text": "क्या मीटिंग लिंक की समय-सीमा खत्म होती है?",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.0.question"
+  },
+  "7448b7eadcd3": {
+    "source": "Newer Teams meeting links can expire some time after the meeting. Use a recurring or scheduled meeting for a printed code, and test it before an event.",
+    "text": "नए Teams मीटिंग लिंक मीटिंग के कुछ समय बाद एक्सपायर हो सकते हैं। प्रिंट किए गए कोड के लिए रिकरिंग या शेड्यूल की गई मीटिंग इस्तेमाल करें, और इवेंट से पहले उसे टेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.0.answer"
+  },
+  "f426990a2dc2": {
+    "source": "Can guests outside my organization join?",
+    "text": "क्या मेरे संगठन के बाहर के मेहमान जुड़ सकते हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.1.question"
+  },
+  "fd8aff9dbbab": {
+    "source": "They can join meetings that allow guests, from the Teams app or the browser. Chats need a work or school account.",
+    "text": "वे उन मीटिंग में जुड़ सकते हैं जो मेहमानों को अनुमति देती हैं, Teams ऐप या ब्राउज़र से। चैट के लिए वर्क या स्कूल अकाउंट चाहिए।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.1.answer"
+  },
+  "fc571860e0e9": {
+    "source": "Join a Webex meeting with one scan.",
+    "text": "एक स्कैन में Webex मीटिंग जॉइन करें।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.summary"
+  },
+  "8d5962a2397f": {
+    "source": "Make a Webex QR code from your Personal Room or meeting link. People join from room signs, slides and agendas. Free, no signup.",
+    "text": "अपने Personal Room या मीटिंग लिंक से Webex QR कोड बनाएँ। लोग रूम साइन, स्लाइड और एजेंडा से मीटिंग जॉइन करते हैं। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.metaDescription"
+  },
+  "970296a4f26b": {
+    "source": "A Webex QR code opens a meeting in Webex, so people join from a slide, a room sign or a printed agenda without typing a meeting number.",
+    "text": "Webex QR कोड Webex में मीटिंग खोलता है, इसलिए लोग मीटिंग नंबर टाइप किए बिना स्लाइड, रूम साइन या प्रिंट किए एजेंडा से जॉइन कर सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.intro.0"
+  },
+  "9f5f476c7a50": {
+    "source": "Paste your Personal Room link (yoursite.webex.com/meet/yourname) or the link in a meeting invite. QRdx keeps it as it is.",
+    "text": "अपना Personal Room लिंक (yoursite.webex.com/meet/yourname) या मीटिंग इनवाइट का लिंक पेस्ट करें। QRdx उसे जैसा है वैसा ही रखता है।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.intro.1"
+  },
+  "0e1b9c3d49d6": {
+    "source": "Copy your Personal Room link or the meeting's link.",
+    "text": "अपना Personal Room लिंक या मीटिंग का लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.steps.0"
+  },
+  "aed1448d9c9c": {
+    "source": "Paste it here.",
+    "text": "इसे यहाँ पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.steps.1"
+  },
+  "a37041679b12": {
+    "source": "A Personal Room link stays the same for every meeting you host there.",
+    "text": "Personal Room लिंक हर उस मीटिंग के लिए एक ही रहता है जो आप वहाँ होस्ट करते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.payload.notes.0"
+  },
+  "86b045721383": {
+    "source": "Invite links for scheduled meetings can differ per person, so use a Personal Room for a printed code.",
+    "text": "शेड्यूल की गई मीटिंग के इनवाइट लिंक हर व्यक्ति के लिए अलग हो सकते हैं, इसलिए प्रिंट किए जाने वाले कोड के लिए Personal Room इस्तेमाल करें।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.payload.notes.1"
+  },
+  "511a7b7819b7": {
+    "source": "Which link is best for a room sign?",
+    "text": "रूम साइन के लिए कौन-सा लिंक सबसे अच्छा है?",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.0.question"
+  },
+  "b2ee0ed99b3a": {
+    "source": "Your Personal Room link. It never changes, so one code works for every meeting you hold there.",
+    "text": "आपका Personal Room लिंक। यह कभी नहीं बदलता, इसलिए एक ही कोड वहाँ होने वाली हर मीटिंग के लिए काम करता है।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.0.answer"
+  },
+  "90cbdbd3d43c": {
+    "source": "Do people need the Webex app?",
+    "text": "क्या लोगों को Webex app चाहिए?",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.1.question"
+  },
+  "194c7a004086": {
+    "source": "No. The link offers to open the app, or to join from the browser.",
+    "text": "नहीं। लिंक app खोलने का या ब्राउज़र से जॉइन करने का विकल्प देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.1.answer"
+  },
+  "3ad9cf5ff75c": {
+    "source": "Let people book time with you on Calendly.",
+    "text": "लोग Calendly पर आपके साथ समय बुक कर सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.summary"
+  },
+  "c305eb8fcfea": {
+    "source": "Create a Calendly QR code for your scheduling page or one event type. People scan to book a meeting from cards, signs and slides. Free.",
+    "text": "अपने शेड्यूलिंग पेज या किसी एक इवेंट टाइप के लिए Calendly QR कोड बनाएँ। लोग कार्ड, साइन और स्लाइड से स्कैन करके मीटिंग बुक करते हैं। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.metaDescription"
+  },
+  "d5239d9a4320": {
+    "source": "A Calendly QR code opens your scheduling page, or one event type, so people book a call or an appointment from a business card, a sign or a slide.",
+    "text": "Calendly QR कोड आपका शेड्यूलिंग पेज या कोई एक इवेंट टाइप खोलता है, ताकि लोग बिज़नेस कार्ड, साइन या स्लाइड से कॉल या अपॉइंटमेंट बुक कर सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.intro.0"
+  },
+  "0d730891775e": {
+    "source": "Type your Calendly name, like yourname or yourname/30min, or paste any calendly.com booking link.",
+    "text": "अपना Calendly नाम टाइप करें, जैसे yourname या yourname/30min, या कोई भी calendly.com बुकिंग लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.intro.1"
+  },
+  "e4fe150cc04b": {
+    "source": "Enter your Calendly name, or paste a booking link.",
+    "text": "अपना Calendly नाम डालें, या बुकिंग लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.steps.0"
+  },
+  "832fedbb39d5": {
+    "source": "Scan the preview to check your booking page opens.",
+    "text": "प्रीव्यू स्कैन करके जाँचें कि आपका बुकिंग पेज खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.steps.1"
+  },
+  "935adb8be11d": {
+    "source": "Pasted links, including shared event links (calendly.com/d/…), are kept as they are.",
+    "text": "पेस्ट किए गए लिंक, शेयर किए गए इवेंट लिंक (calendly.com/d/…) सहित, जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.payload.notes.0"
+  },
+  "9226c2a03c6c": {
+    "source": "If you rename your Calendly link, the old one stops working, so print a new code.",
+    "text": "अगर आप अपना Calendly लिंक बदलते हैं, तो पुराना लिंक काम करना बंद कर देता है, इसलिए नया कोड प्रिंट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.payload.notes.1"
+  },
+  "36d777c1bf79": {
+    "source": "Can the code open one meeting type?",
+    "text": "क्या कोड एक ही मीटिंग टाइप खोल सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.0.question"
+  },
+  "5b42120ea5af": {
+    "source": "Yes. Add the event's part after your name, like yourname/30min, or paste the event's own link.",
+    "text": "हाँ। अपने नाम के बाद इवेंट वाला हिस्सा जोड़ें, जैसे yourname/30min, या इवेंट का अपना लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.0.answer"
+  },
+  "606111f3c11c": {
+    "source": "Can I change the booking page later?",
+    "text": "क्या मैं बाद में बुकिंग पेज बदल सकता हूँ?",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.1.question"
+  },
+  "38b3a1dd98ef": {
+    "source": "The event settings, yes. The link itself is in the code, so make the code dynamic if the link might change.",
+    "text": "इवेंट सेटिंग्स बदल सकते हैं, हाँ। लिंक खुद कोड में होता है, इसलिए अगर लिंक बदल सकता है तो कोड को डायनेमिक बनाएँ।",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.1.answer"
+  },
+  "506010a11195": {
+    "source": "Invite students to a Google Classroom class.",
+    "text": "Google Classroom क्लास में छात्रों को आमंत्रित करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.summary"
+  },
+  "45245778966b": {
+    "source": "Make a Google Classroom QR code from your class invite link. Students scan to join from a slide, a handout or the classroom door. Free.",
+    "text": "अपने क्लास के इन्वाइट लिंक से Google Classroom QR कोड बनाएं। छात्र स्लाइड, हैंडआउट या क्लासरूम के दरवाज़े से स्कैन करके जुड़ सकते हैं। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.metaDescription"
+  },
+  "ef3fce3d5ae5": {
+    "source": "A Google Classroom QR code opens your class's invite link, so students join from a slide on the first day, a handout or a sign on the door.",
+    "text": "Google Classroom QR कोड आपकी क्लास का इन्वाइट लिंक खोलता है, इसलिए छात्र पहले दिन स्लाइड से, हैंडआउट से या दरवाज़े पर लगे साइन से जुड़ सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.intro.0"
+  },
+  "6cad99945229": {
+    "source": "Copy the class invite link in Classroom and paste it here. Students still sign in with the Google account your school allows.",
+    "text": "Classroom में क्लास का इन्वाइट लिंक कॉपी करें और यहां पेस्ट करें। छात्र फिर भी उसी Google अकाउंट से साइन इन करेंगे जिसकी आपके स्कूल में अनुमति है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.intro.1"
+  },
+  "150a91d20446": {
+    "source": "In your class, use Copy invite link.",
+    "text": "अपनी क्लास में \"Copy invite link\" का उपयोग करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.0"
+  },
+  "39dcead0fab2": {
+    "source": "Scan the preview to check the class opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि क्लास खुल रही है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.2"
+  },
+  "e9292f8cee21": {
+    "source": "Download the code, as SVG for posters.",
+    "text": "कोड डाउनलोड करें, पोस्टर के लिए SVG में।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.3"
+  },
+  "904b2dce77d6": {
+    "source": "QRdx keeps the invite link exactly as Classroom gives it.",
+    "text": "QRdx इन्वाइट लिंक को वैसे ही रखता है जैसा Classroom देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.payload.notes.0"
+  },
+  "ba62a3800e75": {
+    "source": "Turning the class code off or resetting it in Classroom stops the old link.",
+    "text": "Classroom में क्लास कोड बंद करने या रीसेट करने पर पुराना लिंक काम करना बंद कर देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.payload.notes.1"
+  },
+  "9cdae0d6136c": {
+    "source": "Can students join with a personal Google account?",
+    "text": "क्या छात्र पर्सनल Google अकाउंट से जुड़ सकते हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.0.question"
+  },
+  "85fdee00db23": {
+    "source": "That depends on your school's settings. Classes in a school's Google Workspace often allow only school accounts.",
+    "text": "यह आपके स्कूल की सेटिंग पर निर्भर करता है। स्कूल के Google Workspace की क्लास में अक्सर सिर्फ़ स्कूल अकाउंट की अनुमति होती है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.0.answer"
+  },
+  "6824f71f44d4": {
+    "source": "Can the code hold just the class code?",
+    "text": "क्या कोड में सिर्फ़ क्लास कोड रखा जा सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.1.question"
+  },
+  "beda22897f42": {
+    "source": "Google doesn't publish a link for a class code alone, so the code holds the invite link. Students can still type the class code in Classroom.",
+    "text": "Google सिर्फ़ क्लास कोड के लिए कोई लिंक नहीं देता, इसलिए कोड में इन्वाइट लिंक रहता है। छात्र फिर भी Classroom में क्लास कोड टाइप कर सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.1.answer"
+  },
+  "2766a0f43e9a": {
+    "source": "Open your listing on Tripadvisor.",
+    "text": "Tripadvisor पर अपनी लिस्टिंग खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.summary"
+  },
+  "188388f0e945": {
+    "source": "Create a Tripadvisor QR code that opens your hotel, restaurant or attraction listing, where guests can read and write reviews. Free.",
+    "text": "ऐसा Tripadvisor QR कोड बनाएं जो आपके होटल, रेस्टोरेंट या घूमने की जगह की लिस्टिंग खोले, जहां मेहमान रिव्यू पढ़ और लिख सकते हैं। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.metaDescription"
+  },
+  "ccb9fa61b9b0": {
+    "source": "A Tripadvisor QR code opens your hotel's, restaurant's or attraction's listing, where guests can read reviews and write one.",
+    "text": "Tripadvisor QR कोड आपके होटल, रेस्टोरेंट या घूमने की जगह की लिस्टिंग खोलता है, जहां मेहमान रिव्यू पढ़ सकते हैं और लिख भी सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.intro.0"
+  },
+  "34eb9dea3f27": {
+    "source": "Open your listing on Tripadvisor, copy its address and paste it here. Links on Tripadvisor's country sites work too.",
+    "text": "Tripadvisor पर अपनी लिस्टिंग खोलें, उसका पता कॉपी करें और यहां पेस्ट करें। Tripadvisor की अलग-अलग देशों की साइट के लिंक भी चलते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.intro.1"
+  },
+  "9a03f41cc634": {
+    "source": "Open your listing on Tripadvisor and copy its address.",
+    "text": "Tripadvisor पर अपनी लिस्टिंग खोलें और उसका पता कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.steps.0"
+  },
+  "7642f384e14d": {
+    "source": "Scan the preview to check the listing opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि लिस्टिंग खुल रही है।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.steps.2"
+  },
+  "7fe7e1994114": {
+    "source": "QRdx keeps the listing link as pasted.",
+    "text": "QRdx लिस्टिंग का लिंक वैसे ही रखता है जैसा आपने पेस्ट किया।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.payload.notes.0"
+  },
+  "bc0427a04ffd": {
+    "source": "Tripadvisor also offers free review tools for businesses in its Management Center.",
+    "text": "Tripadvisor अपने Management Center में बिज़नेस के लिए फ़्री रिव्यू टूल भी देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.payload.notes.1"
+  },
+  "8b7bd9aaab58": {
+    "source": "Can I offer a discount for a review?",
+    "text": "क्या मैं रिव्यू के बदले डिस्काउंट दे सकता हूं?",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.0.question"
+  },
+  "22259e73a63b": {
+    "source": "No. Tripadvisor doesn't allow incentives for reviews. Ask guests to share their experience, good or bad.",
+    "text": "नहीं। Tripadvisor रिव्यू के बदले कोई इंसेंटिव देने की अनुमति नहीं देता। मेहमानों से कहें कि वे अपना अनुभव बताएं, अच्छा हो या बुरा।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.0.answer"
+  },
+  "5dc7af520a6f": {
+    "source": "Does it open the review form?",
+    "text": "क्या यह रिव्यू फ़ॉर्म खोलता है?",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.1.question"
+  },
+  "1efb7723a52c": {
+    "source": "It opens your listing, which has a button to write a review.",
+    "text": "यह आपकी लिस्टिंग खोलता है, जिसमें रिव्यू लिखने का एक बटन होता है।",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.1.answer"
+  },
+  "cfded6153f62": {
+    "source": "Ask customers for a Trustpilot review.",
+    "text": "ग्राहकों से Trustpilot रिव्यू माँगें।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.summary"
+  },
+  "f4fd64bf44c1": {
+    "source": "Make a Trustpilot QR code that opens your write-a-review page, or your reviews. Enter your website's domain. For receipts and packaging. Free.",
+    "text": "ऐसा Trustpilot QR कोड बनाएँ जो आपका रिव्यू लिखने का पेज या आपके रिव्यू खोले। बस अपनी वेबसाइट का डोमेन डालें। रसीद और पैकेजिंग के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.metaDescription"
+  },
+  "64ece527dcfd": {
+    "source": "A Trustpilot QR code opens the page where customers write a review of your business, or your Trustpilot reviews page. Print it on receipts, packing slips and counters.",
+    "text": "Trustpilot QR कोड वह पेज खोलता है जहाँ ग्राहक आपके बिज़नेस का रिव्यू लिखते हैं, या आपका Trustpilot रिव्यू पेज। इसे रसीद, पैकिंग स्लिप और काउंटर पर प्रिंट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.intro.0"
+  },
+  "71d681d2ba01": {
+    "source": "Enter the website domain your Trustpilot page is for, like example.com, or paste your Trustpilot link. QRdx builds Trustpilot's evaluate link for reviews.",
+    "text": "वह वेबसाइट डोमेन डालें जिसके लिए आपका Trustpilot पेज है, जैसे example.com, या अपना Trustpilot लिंक पेस्ट करें। रिव्यू के लिए QRdx Trustpilot का evaluate लिंक बना देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.intro.1"
+  },
+  "4fbb0347c564": {
+    "source": "Enter your website's domain.",
+    "text": "अपनी वेबसाइट का डोमेन डालें।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.0"
+  },
+  "bcf190bd1a7b": {
+    "source": "Keep 'Open the review form' on to collect reviews, or turn it off to show your reviews.",
+    "text": "रिव्यू इकट्ठा करने के लिए 'Open the review form' चालू रखें, या अपने रिव्यू दिखाने के लिए इसे बंद करें।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.1"
+  },
+  "86a39b62542f": {
+    "source": "Scan the preview to check your page opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि आपका पेज खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.2"
+  },
+  "236945419cff": {
+    "source": "evaluate opens the review form; review opens your reviews page.",
+    "text": "evaluate रिव्यू फ़ॉर्म खोलता है; review आपका रिव्यू पेज खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.payload.notes.0"
+  },
+  "235a3ece1b74": {
+    "source": "www. is dropped from the domain, as Trustpilot names pages.",
+    "text": "डोमेन से www. हटा दिया जाता है, क्योंकि Trustpilot पेजों के नाम इसी तरह रखता है।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.payload.notes.1"
+  },
+  "e1d0fabfb885": {
+    "source": "Do customers need an account?",
+    "text": "क्या ग्राहकों को अकाउंट चाहिए?",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.0.question"
+  },
+  "bbb61bcd8385": {
+    "source": "Trustpilot asks reviewers to sign in or sign up before they post.",
+    "text": "Trustpilot रिव्यू देने वालों से पोस्ट करने से पहले साइन इन या साइन अप करने को कहता है।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.0.answer"
+  },
+  "c8ef04c590f4": {
+    "source": "What if my business isn't on Trustpilot yet?",
+    "text": "अगर मेरा बिज़नेस अभी Trustpilot पर नहीं है तो?",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.1.question"
+  },
+  "df43d70c1b6a": {
+    "source": "Claim your page on Trustpilot first, so the domain has a page to open.",
+    "text": "पहले Trustpilot पर अपना पेज क्लेम करें, ताकि डोमेन के लिए खोलने को कोई पेज हो।",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.1.answer"
+  },
+  "0a627e729c0f": {
+    "source": "Open your business page on Yelp.",
+    "text": "Yelp पर अपना बिज़नेस पेज खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.summary"
+  },
+  "cf8204c0eebc": {
+    "source": "Create a Yelp QR code that opens your business page, with your hours, photos and reviews. For windows, menus and counters. Free.",
+    "text": "ऐसा Yelp QR कोड बनाएँ जो आपका बिज़नेस पेज खोले, जिसमें आपके समय, फ़ोटो और रिव्यू हों। खिड़कियों, मेन्यू और काउंटर के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.metaDescription"
+  },
+  "5d70018ada5a": {
+    "source": "A Yelp QR code opens your business page on Yelp, with your hours, photos and reviews, from a window sticker, a menu or a counter card.",
+    "text": "Yelp QR कोड Yelp पर आपका बिज़नेस पेज खोलता है, जिसमें आपके समय, फ़ोटो और रिव्यू होते हैं। इसे विंडो स्टिकर, मेन्यू या काउंटर कार्ड पर लगाया जा सकता है।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.intro.0"
+  },
+  "9d1de0c48737": {
+    "source": "Paste your page's link (yelp.com/biz/…). Yelp asks businesses not to ask for reviews, so the code opens your page and leaves the rest to your customers.",
+    "text": "अपने पेज का लिंक (yelp.com/biz/…) पेस्ट करें। Yelp बिज़नेस से रिव्यू माँगने को मना करता है, इसलिए कोड आपका पेज खोलता है और बाकी आपके ग्राहकों पर छोड़ देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.intro.1"
+  },
+  "38b97420cca7": {
+    "source": "Open your business page on Yelp and copy its address.",
+    "text": "Yelp पर अपना बिज़नेस पेज खोलें और उसका एड्रेस कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.steps.0"
+  },
+  "b38f2fa6c40b": {
+    "source": "Links on Yelp's country sites (yelp.ca, yelp.co.uk…) work too.",
+    "text": "Yelp की अलग-अलग देशों की साइटों (yelp.ca, yelp.co.uk…) के लिंक भी काम करते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.payload.notes.0"
+  },
+  "8fa2055787f2": {
+    "source": "QRdx keeps the link as pasted.",
+    "text": "QRdx लिंक को वैसा ही रखता है जैसा पेस्ट किया।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.payload.notes.1"
+  },
+  "351c8ccc7edc": {
+    "source": "Can I use the code to ask for reviews?",
+    "text": "क्या मैं कोड से रिव्यू माँग सकता हूँ?",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.0.question"
+  },
+  "93e7a2cf5e48": {
+    "source": "Yelp's guidelines ask businesses not to ask anyone for reviews. Use wording like 'Find us on Yelp' next to the code.",
+    "text": "Yelp की गाइडलाइन बिज़नेस से किसी से भी रिव्यू माँगने को मना करती हैं। कोड के पास 'Find us on Yelp' जैसे शब्द इस्तेमाल करें।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.0.answer"
+  },
+  "97528cecac2c": {
+    "source": "Does it open the Yelp app?",
+    "text": "क्या यह Yelp app खोलता है?",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.1.question"
+  },
+  "2fa0b5380152": {
+    "source": "Yelp links open the app when it's installed, or the page in the browser.",
+    "text": "Yelp लिंक app इंस्टॉल होने पर app खोलते हैं, वरना ब्राउज़र में पेज खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.1.answer"
+  },
+  "63e740e99848": {
+    "source": "Yelp and review requests",
+    "text": "Yelp और रिव्यू माँगना",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.title"
+  },
+  "ad213b8a5ead": {
+    "source": "Yelp's policy is 'Don't ask for reviews': reviews it thinks were solicited can be filtered, and a business that pushes for them can get a notice on its page. That's why this code opens your business page, not a review form.",
+    "text": "Yelp की नीति है 'Don't ask for reviews': जो रिव्यू उसे माँगे हुए लगते हैं, उन्हें फ़िल्टर किया जा सकता है, और रिव्यू के लिए दबाव डालने वाले बिज़नेस के पेज पर नोटिस लग सकता है। इसीलिए यह कोड आपका बिज़नेस पेज खोलता है, रिव्यू फ़ॉर्म नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.paragraphs.0"
+  },
+  "bac903724ae6": {
+    "source": "A sign that says 'Find us on Yelp', with Yelp's own branding guidelines, is fine.",
+    "text": "'Find us on Yelp' लिखा साइन, Yelp की अपनी ब्रांडिंग गाइडलाइन के साथ, ठीक है।",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.paragraphs.1"
+  },
+  "d4a359d3ab59": {
+    "source": "Open an Airbnb listing or experience.",
+    "text": "Airbnb लिस्टिंग या एक्सपीरियंस खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.summary"
+  },
+  "cc27bec817bc": {
+    "source": "Make an Airbnb QR code that opens your listing or experience. For welcome books, flyers and repeat guests. Paste the link. Free.",
+    "text": "ऐसा Airbnb QR कोड बनाएं जो आपकी लिस्टिंग या एक्सपीरियंस खोले। वेलकम बुक, फ़्लायर और दोबारा आने वाले मेहमानों के लिए। बस लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.metaDescription"
+  },
+  "46f05a7e3512": {
+    "source": "An Airbnb QR code opens your listing or experience, so guests can book again from your welcome book, a fridge magnet or a flyer.",
+    "text": "Airbnb QR कोड आपकी लिस्टिंग या एक्सपीरियंस खोलता है, ताकि मेहमान आपकी वेलकम बुक, फ़्रिज मैग्नेट या फ़्लायर से दोबारा बुक कर सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.intro.0"
+  },
+  "fdc0f105097e": {
+    "source": "Use Share on the listing and copy the link, or copy its address (airbnb.com/rooms/…), and paste it here.",
+    "text": "लिस्टिंग पर Share का इस्तेमाल करके लिंक कॉपी करें, या उसका पता (airbnb.com/rooms/…) कॉपी करें, और यहां पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.intro.1"
+  },
+  "c6e324dfc8ac": {
+    "source": "Copy your listing's link from Airbnb.",
+    "text": "Airbnb से अपनी लिस्टिंग का लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.steps.0"
+  },
+  "d0f5c58096ea": {
+    "source": "Share links from the Airbnb app (abnb.me) and Airbnb's country sites work too.",
+    "text": "Airbnb ऐप के शेयर लिंक (abnb.me) और Airbnb की अलग-अलग देशों की साइट के लिंक भी चलते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.payload.notes.0"
+  },
+  "735286a197bc": {
+    "source": "Does it open the Airbnb app?",
+    "text": "क्या यह Airbnb ऐप खोलता है?",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.0.question"
+  },
+  "12b0799809ec": {
+    "source": "Airbnb links open the app when it's installed, or the listing in the browser.",
+    "text": "Airbnb लिंक ऐप इंस्टॉल होने पर ऐप में खुलते हैं, नहीं तो लिस्टिंग ब्राउज़र में खुलती है।",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.0.answer"
+  },
+  "cc77753b3a5b": {
+    "source": "Can I link the Wi-Fi or house rules too?",
+    "text": "क्या मैं Wi-Fi या हाउस रूल्स भी लिंक कर सकता हूं?",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.1.question"
+  },
+  "c026fdc284bb": {
+    "source": "Use a separate Wi-Fi code for the network, and a hosted page for house rules you may want to change.",
+    "text": "नेटवर्क के लिए अलग Wi-Fi कोड इस्तेमाल करें, और हाउस रूल्स के लिए होस्टेड पेज बनाएं, जिन्हें आप बाद में बदलना चाहें।",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.1.answer"
+  },
+  "643c4e09d6dd": {
+    "source": "Open your property's page on Booking.com.",
+    "text": "Booking.com पर अपनी प्रॉपर्टी का पेज खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.summary"
+  },
+  "f355b03e2485": {
+    "source": "Create a Booking.com QR code that opens your hotel's or rental's property page. For flyers, front desks and partners. Free, no signup.",
+    "text": "ऐसा Booking.com QR कोड बनाएं जो आपके होटल या रेंटल का प्रॉपर्टी पेज खोले। फ़्लायर, फ़्रंट डेस्क और पार्टनर के लिए। फ़्री, साइन अप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.metaDescription"
+  },
+  "f560cf60fdbd": {
+    "source": "A Booking.com QR code opens your hotel's or rental's property page, with rooms, prices and guest reviews.",
+    "text": "Booking.com QR कोड आपके होटल या रेंटल का प्रॉपर्टी पेज खोलता है, जिसमें कमरे, कीमतें और मेहमानों के रिव्यू होते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.intro.0"
+  },
+  "77ca29fe35a0": {
+    "source": "Open your property on Booking.com, copy its address (booking.com/hotel/…) and paste it here.",
+    "text": "Booking.com पर अपनी प्रॉपर्टी खोलें, उसका पता (booking.com/hotel/…) कॉपी करें और यहां पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.intro.1"
+  },
+  "c87cf5f1e895": {
+    "source": "Copy your property page's address from Booking.com.",
+    "text": "Booking.com से अपने प्रॉपर्टी पेज का पता कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.steps.0"
+  },
+  "9786991c4c7f": {
+    "source": "Scan the preview to check the page opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि पेज खुल रहा है।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.steps.2"
+  },
+  "542898e0f90a": {
+    "source": "Search and date parameters in a pasted link are kept, so remove them for a code that always shows today's prices.",
+    "text": "पेस्ट किए गए लिंक में सर्च और तारीख़ के पैरामीटर बने रहते हैं, इसलिए उन्हें हटा दें ताकि कोड हमेशा आज की कीमतें दिखाए।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.payload.notes.0"
+  },
+  "266685ad6300": {
+    "source": "Booking.com share links work too.",
+    "text": "Booking.com के शेयर लिंक भी चलते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.payload.notes.1"
+  },
+  "2edc5ad83e08": {
+    "source": "Can guests leave a review from the code?",
+    "text": "क्या मेहमान कोड से रिव्यू दे सकते हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.0.question"
+  },
+  "f19c6cbdff57": {
+    "source": "Booking.com collects reviews only from guests who booked through it, by email after the stay.",
+    "text": "Booking.com सिर्फ़ उन्हीं मेहमानों से रिव्यू लेता है जिन्होंने उसी से बुक किया हो, ठहरने के बाद ईमेल के ज़रिए।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.0.answer"
+  },
+  "1a011de41155": {
+    "source": "Does it open the Booking.com app?",
+    "text": "क्या यह Booking.com ऐप खोलता है?",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.1.question"
+  },
+  "887f4407e5da": {
+    "source": "When it's installed, usually; otherwise the page opens in the browser.",
+    "text": "ऐप इंस्टॉल होने पर आमतौर पर हां; नहीं तो पेज ब्राउज़र में खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.1.answer"
+  },
+  "dce24b80ec7d": {
+    "source": "Open a VK profile, community or group.",
+    "text": "VK प्रोफ़ाइल, कम्युनिटी या ग्रुप खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.vk.summary"
+  },
+  "6b33a84cb434": {
+    "source": "Make a VK QR code that opens your profile, community or group on vk.com. Paste the link. For posters, packaging and events. Free.",
+    "text": "ऐसा VK QR कोड बनाएँ जो vk.com पर आपकी प्रोफ़ाइल, कम्युनिटी या ग्रुप खोले। बस लिंक पेस्ट करें। पोस्टर, पैकेजिंग और इवेंट के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.vk.metaDescription"
+  },
+  "5349947e5da2": {
+    "source": "A VK QR code opens your profile, community or group, so people can follow you from a poster, a shop window or a product box.",
+    "text": "VK QR कोड आपकी प्रोफ़ाइल, कम्युनिटी या ग्रुप खोलता है, ताकि लोग पोस्टर, दुकान की खिड़की या प्रोडक्ट के डिब्बे से ही आपको फ़ॉलो कर सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.vk.intro.0"
+  },
+  "72653a80e11e": {
+    "source": "Copy the address of your page on vk.com, or use Share in the VK app, and paste it here.",
+    "text": "vk.com पर अपने पेज का पता कॉपी करें, या VK app में Share का इस्तेमाल करें, और उसे यहाँ पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.vk.intro.1"
+  },
+  "2fb6c58382f4": {
+    "source": "Copy your page's link from VK.",
+    "text": "VK से अपने पेज का लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.vk.steps.0"
+  },
+  "ca9b805d0cf3": {
+    "source": "QRdx keeps the link as pasted; vk.ru links work too.",
+    "text": "QRdx लिंक को वैसा ही रखता है जैसा आपने पेस्ट किया; vk.ru लिंक भी चलते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.vk.payload.notes.0"
+  },
+  "0544ecb41073": {
+    "source": "A link with your numeric ID (vk.com/id…) stays the same if you change your page's short name.",
+    "text": "आपकी न्यूमेरिक ID वाला लिंक (vk.com/id…) पेज का शॉर्ट नेम बदलने पर भी वही रहता है।",
+    "status": "machine",
+    "context": "qrTypes.types.vk.payload.notes.1"
+  },
+  "e976b523d66c": {
+    "source": "Does it open the VK app?",
+    "text": "क्या यह VK app खोलता है?",
+    "status": "machine",
+    "context": "qrTypes.types.vk.faqs.0.question"
+  },
+  "97b5ffb953bc": {
+    "source": "VK links open the app when it's installed, or the page in the browser.",
+    "text": "VK लिंक app इंस्टॉल होने पर app में खुलते हैं, नहीं तो ब्राउज़र में पेज खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.vk.faqs.0.answer"
+  },
+  "6fd056b64157": {
+    "source": "Open a Weibo profile.",
+    "text": "Weibo प्रोफ़ाइल खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.summary"
+  },
+  "60703e24236d": {
+    "source": "Create a Weibo QR code that opens your Weibo profile, for packaging, events and posters aimed at audiences in China. Paste the link. Free.",
+    "text": "ऐसा Weibo QR कोड बनाएँ जो आपकी Weibo प्रोफ़ाइल खोले, चीन के दर्शकों के लिए पैकेजिंग, इवेंट और पोस्टर पर। बस लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.metaDescription"
+  },
+  "202991335780": {
+    "source": "A Weibo QR code opens your Weibo profile, so people can follow you from packaging, a trade fair stand or a poster.",
+    "text": "Weibo QR कोड आपकी Weibo प्रोफ़ाइल खोलता है, ताकि लोग पैकेजिंग, ट्रेड फ़ेयर स्टैंड या पोस्टर से ही आपको फ़ॉलो कर सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.intro.0"
+  },
+  "bad54233f23a": {
+    "source": "Copy your profile's link (weibo.com/u/… or your custom weibo.com address) and paste it here.",
+    "text": "अपनी प्रोफ़ाइल का लिंक (weibo.com/u/… या आपका कस्टम weibo.com पता) कॉपी करें और यहाँ पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.intro.1"
+  },
+  "2257354518d2": {
+    "source": "Copy your Weibo profile's link.",
+    "text": "अपनी Weibo प्रोफ़ाइल का लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.steps.0"
+  },
+  "1a80c77bc193": {
+    "source": "Scan the preview to check the profile opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि प्रोफ़ाइल खुलती है।",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.steps.2"
+  },
+  "0a8c288ad17c": {
+    "source": "QRdx keeps the link as pasted; m.weibo.cn links work too.",
+    "text": "QRdx लिंक को वैसा ही रखता है जैसा आपने पेस्ट किया; m.weibo.cn लिंक भी चलते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.payload.notes.0"
+  },
+  "50353c12bbb4": {
+    "source": "The numeric UID link keeps working if you change your nickname.",
+    "text": "न्यूमेरिक UID वाला लिंक आपका निकनेम बदलने पर भी काम करता रहता है।",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.payload.notes.1"
+  },
+  "88890e6e08b2": {
+    "source": "Which link should I use?",
+    "text": "मुझे कौन सा लिंक इस्तेमाल करना चाहिए?",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.faqs.0.question"
+  },
+  "5b4268790355": {
+    "source": "The weibo.com/u/ link with your numeric UID never changes, so it's the safest for print.",
+    "text": "आपकी न्यूमेरिक UID वाला weibo.com/u/ लिंक कभी नहीं बदलता, इसलिए प्रिंट के लिए सबसे सुरक्षित है।",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.faqs.0.answer"
+  },
+  "25eaf6cf78cf": {
+    "source": "Open a Tumblr blog or post.",
+    "text": "Tumblr ब्लॉग या पोस्ट खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.summary"
+  },
+  "9364b42efe08": {
+    "source": "Make a Tumblr QR code that opens your blog or one post. Type your blog name or paste a link. For zines, stickers and art prints. Free.",
+    "text": "ऐसा Tumblr QR कोड बनाएँ जो आपका ब्लॉग या कोई एक पोस्ट खोले। ब्लॉग का नाम लिखें या लिंक पेस्ट करें। ज़ीन, स्टिकर और आर्ट प्रिंट के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.metaDescription"
+  },
+  "e4b62aae3696": {
+    "source": "A Tumblr QR code opens your blog, or one post, from a zine, a sticker or the back of an art print.",
+    "text": "Tumblr QR कोड आपका ब्लॉग, या कोई एक पोस्ट, ज़ीन, स्टिकर या आर्ट प्रिंट के पीछे से खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.intro.0"
+  },
+  "1de2a8cda6a7": {
+    "source": "Type your blog's name and QRdx builds the tumblr.com link, or paste a blog or post link.",
+    "text": "अपने ब्लॉग का नाम लिखें और QRdx tumblr.com लिंक बना देता है, या कोई ब्लॉग या पोस्ट लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.intro.1"
+  },
+  "2285b2d28638": {
+    "source": "Enter your blog name, or paste a link.",
+    "text": "अपने ब्लॉग का नाम लिखें, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.steps.0"
+  },
+  "36e6fab54cfc": {
+    "source": "Scan the preview to check your blog opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि आपका ब्लॉग खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.steps.1"
+  },
+  "1f8a49acdb04": {
+    "source": "Blog names are up to 32 letters, digits and hyphens.",
+    "text": "ब्लॉग के नाम में 32 तक अक्षर, अंक और हाइफ़न हो सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.payload.notes.0"
+  },
+  "5df3cdd7595f": {
+    "source": "Pasted links, including yourblog.tumblr.com, are kept as they are.",
+    "text": "पेस्ट किए गए लिंक, yourblog.tumblr.com समेत, जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.payload.notes.1"
+  },
+  "b895e5b2ac6e": {
+    "source": "What happens if I rename my blog?",
+    "text": "अगर मैं अपने ब्लॉग का नाम बदल दूँ तो क्या होगा?",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.faqs.0.question"
+  },
+  "10092e099cf3": {
+    "source": "The old name stops pointing to you, and someone else can take it, so print a new code.",
+    "text": "पुराना नाम आप तक नहीं पहुँचाएगा और कोई और उसे ले सकता है, इसलिए नया कोड प्रिंट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.faqs.0.answer"
+  },
+  "861eae52bfe9": {
+    "source": "Open a Medium profile, publication or story.",
+    "text": "Medium प्रोफ़ाइल, पब्लिकेशन या स्टोरी खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.medium.summary"
+  },
+  "870a60730d6a": {
+    "source": "Create a Medium QR code for your profile, a publication or one story. For talk slides, books and handouts. Type your @username. Free.",
+    "text": "अपनी प्रोफ़ाइल, किसी पब्लिकेशन या एक स्टोरी के लिए Medium QR कोड बनाएँ। टॉक स्लाइड, किताबों और हैंडआउट के लिए। अपना @username लिखें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.medium.metaDescription"
+  },
+  "197159a87add": {
+    "source": "A Medium QR code opens your profile, a publication or one story, so readers find your writing from a talk slide, a book or a handout.",
+    "text": "Medium QR कोड आपकी प्रोफ़ाइल, पब्लिकेशन या एक स्टोरी खोलता है, ताकि पाठक टॉक की स्लाइड, किताब या हैंडआउट से आपका लेखन ढूँढ सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.medium.intro.0"
+  },
+  "8fe1d8bf11a0": {
+    "source": "Type your @username and QRdx builds the medium.com link, or paste any Medium link.",
+    "text": "अपना @username लिखें और QRdx medium.com लिंक बना देगा, या कोई भी Medium लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.medium.intro.1"
+  },
+  "cb8de4bcf090": {
+    "source": "Enter your @username, or paste a story or publication link.",
+    "text": "अपना @username डालें, या स्टोरी या पब्लिकेशन का लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.medium.steps.0"
+  },
+  "cee4f1efc398": {
+    "source": "Scan the preview to check it opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि वह खुल रहा है।",
+    "status": "machine",
+    "context": "qrTypes.types.medium.steps.1"
+  },
+  "b7839785cbbd": {
+    "source": "Pasted links, including publications on their own subdomains, are kept as they are.",
+    "text": "पेस्ट किए गए लिंक, अपने सबडोमेन पर चल रहे पब्लिकेशन के लिंक सहित, जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.medium.payload.notes.0"
+  },
+  "41c3ce6e8589": {
+    "source": "If you change your username, the old profile link breaks.",
+    "text": "अगर आप अपना username बदलते हैं, तो पुराना प्रोफ़ाइल लिंक काम नहीं करेगा।",
+    "status": "machine",
+    "context": "qrTypes.types.medium.payload.notes.1"
+  },
+  "4bd0091ade49": {
+    "source": "Can the code open one article?",
+    "text": "क्या कोड एक आर्टिकल खोल सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.medium.faqs.0.question"
+  },
+  "cc8811d20a14": {
+    "source": "Yes. Paste the story's link instead of your username.",
+    "text": "हाँ। username की जगह स्टोरी का लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.medium.faqs.0.answer"
+  },
+  "eef789fce42b": {
+    "source": "Open a Substack newsletter or profile.",
+    "text": "Substack न्यूज़लेटर या प्रोफ़ाइल खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.substack.summary"
+  },
+  "2edab5b2ca55": {
+    "source": "Make a Substack QR code that opens your newsletter so readers can subscribe. For talks, books, zines and events. Free, no signup.",
+    "text": "ऐसा Substack QR कोड बनाएँ जो आपका न्यूज़लेटर खोले, ताकि पाठक सब्सक्राइब कर सकें। टॉक, किताबों, ज़ीन और इवेंट के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.substack.metaDescription"
+  },
+  "493f55909cb8": {
+    "source": "A Substack QR code opens your newsletter, where people can subscribe, from a talk, a book, a zine or an event table.",
+    "text": "Substack QR कोड आपका न्यूज़लेटर खोलता है, जहाँ लोग सब्सक्राइब कर सकते हैं। यह टॉक, किताब, ज़ीन या इवेंट टेबल पर काम आता है।",
+    "status": "machine",
+    "context": "qrTypes.types.substack.intro.0"
+  },
+  "4d5f82ad939e": {
+    "source": "Type your publication's name (the part before .substack.com) and QRdx builds the link. Type @handle for your Substack profile, or paste any substack.com link.",
+    "text": "अपने पब्लिकेशन का नाम लिखें (.substack.com से पहले वाला हिस्सा) और QRdx लिंक बना देगा। अपनी Substack प्रोफ़ाइल के लिए @handle लिखें, या कोई भी substack.com लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.substack.intro.1"
+  },
+  "c9360f36e059": {
+    "source": "Enter your publication name or @handle, or paste a link.",
+    "text": "अपने पब्लिकेशन का नाम या @handle डालें, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.substack.steps.0"
+  },
+  "0f700d32925a": {
+    "source": "A publication on its own domain works in the URL generator.",
+    "text": "अपने डोमेन पर चल रहे पब्लिकेशन के लिए URL generator इस्तेमाल करें।",
+    "status": "machine",
+    "context": "qrTypes.types.substack.payload.notes.0"
+  },
+  "57cb28bb1a71": {
+    "source": "Pasted substack.com links are kept as they are.",
+    "text": "पेस्ट किए गए substack.com लिंक जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.substack.payload.notes.1"
+  },
+  "530282801894": {
+    "source": "Can the code open the subscribe page?",
+    "text": "क्या कोड सब्सक्राइब पेज खोल सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.substack.faqs.0.question"
+  },
+  "d2c1a6012887": {
+    "source": "Paste your publication's /subscribe link, and the code opens that page.",
+    "text": "अपने पब्लिकेशन का /subscribe लिंक पेस्ट करें, और कोड वही पेज खोलेगा।",
+    "status": "machine",
+    "context": "qrTypes.types.substack.faqs.0.answer"
+  },
+  "9614244e0677": {
+    "source": "Open a GitHub profile, organization or repository.",
+    "text": "GitHub प्रोफ़ाइल, ऑर्गनाइज़ेशन या रिपॉज़िटरी खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.github.summary"
+  },
+  "08011d4d9e2b": {
+    "source": "Create a GitHub QR code for your profile, organization or a repository. For talk slides, stickers, READMEs and conference badges. Free.",
+    "text": "अपनी प्रोफ़ाइल, ऑर्गनाइज़ेशन या किसी रिपॉज़िटरी के लिए GitHub QR कोड बनाएँ। टॉक स्लाइड, स्टिकर, README और कॉन्फ़्रेंस बैज के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.github.metaDescription"
+  },
+  "0394f0719bbe": {
+    "source": "A GitHub QR code opens a profile, an organization or a repository, so people find your code from a talk slide, a laptop sticker or a conference badge.",
+    "text": "GitHub QR कोड प्रोफ़ाइल, ऑर्गनाइज़ेशन या रिपॉज़िटरी खोलता है, ताकि लोग टॉक की स्लाइड, लैपटॉप स्टिकर या कॉन्फ़्रेंस बैज से आपका कोड ढूँढ सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.github.intro.0"
+  },
+  "a85d80ce468d": {
+    "source": "Type a username, or owner/repository, and QRdx builds the github.com link. Or paste any GitHub link.",
+    "text": "username या owner/repository लिखें और QRdx github.com लिंक बना देगा। या कोई भी GitHub लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.github.intro.1"
+  },
+  "7cfd0c32e005": {
+    "source": "Enter a username or owner/repository, or paste a link.",
+    "text": "username या owner/repository डालें, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.github.steps.0"
+  },
+  "31fd671847d1": {
+    "source": "Download the code, as SVG for stickers.",
+    "text": "कोड डाउनलोड करें, स्टिकर के लिए SVG में।",
+    "status": "machine",
+    "context": "qrTypes.types.github.steps.2"
+  },
+  "41f7a5ba234f": {
+    "source": "Usernames are up to 39 letters, digits and single hyphens.",
+    "text": "Username में अधिकतम 39 अक्षर, अंक और सिंगल हाइफ़न हो सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.github.payload.notes.0"
+  },
+  "1d8128fd85f0": {
+    "source": "Pasted links to issues, releases and files are kept as they are.",
+    "text": "इशू, रिलीज़ और फ़ाइलों के पेस्ट किए गए लिंक जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.github.payload.notes.1"
+  },
+  "c170a7e36a1f": {
+    "source": "Can it link a private repository?",
+    "text": "क्या यह प्राइवेट रिपॉज़िटरी का लिंक दे सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.github.faqs.0.question"
+  },
+  "c879528cd735": {
+    "source": "Yes, but only people with access can see it; others get a page that isn't found.",
+    "text": "हाँ, लेकिन उसे सिर्फ़ वही लोग देख सकते हैं जिनके पास एक्सेस है; बाकी लोगों को \"पेज नहीं मिला\" दिखता है।",
+    "status": "machine",
+    "context": "qrTypes.types.github.faqs.0.answer"
+  },
+  "06ad029cc487": {
+    "source": "Open a Behance portfolio or project.",
+    "text": "Behance पोर्टफ़ोलियो या प्रोजेक्ट खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.behance.summary"
+  },
+  "8d601aefb946": {
+    "source": "Make a Behance QR code that opens your portfolio or one project. For business cards, CVs and exhibitions. Type your username. Free.",
+    "text": "ऐसा Behance QR कोड बनाएँ जो आपका पोर्टफ़ोलियो या कोई एक प्रोजेक्ट खोले। बिज़नेस कार्ड, CV और प्रदर्शनियों के लिए। बस अपना यूज़रनेम लिखें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.behance.metaDescription"
+  },
+  "ca0a321ea469": {
+    "source": "A Behance QR code opens your portfolio, or one project, from a business card, a printed CV or an exhibition label.",
+    "text": "Behance QR कोड बिज़नेस कार्ड, छपे हुए CV या प्रदर्शनी के लेबल से आपका पोर्टफ़ोलियो, या कोई एक प्रोजेक्ट खोल देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.behance.intro.0"
+  },
+  "1781487376f6": {
+    "source": "Type your Behance username and QRdx builds the behance.net link, or paste a project link.",
+    "text": "अपना Behance यूज़रनेम लिखें और QRdx behance.net का लिंक बना देगा, या कोई प्रोजेक्ट लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.behance.intro.1"
+  },
+  "646c93bdc091": {
+    "source": "Enter your Behance username, or paste a link.",
+    "text": "अपना Behance यूज़रनेम डालें, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.behance.steps.0"
+  },
+  "4006684e2ae6": {
+    "source": "Scan the preview to check your portfolio opens.",
+    "text": "प्रीव्यू को स्कैन करके जाँच लें कि आपका पोर्टफ़ोलियो खुल रहा है।",
+    "status": "machine",
+    "context": "qrTypes.types.behance.steps.1"
+  },
+  "e0aea8a42cbd": {
+    "source": "Usernames are 3 to 40 letters, digits, underscores and hyphens.",
+    "text": "यूज़रनेम में 3 से 40 अक्षर, अंक, अंडरस्कोर और हाइफ़न हो सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.behance.payload.notes.0"
+  },
+  "efaf9b2c5728": {
+    "source": "Behance doesn't redirect an old username, so print a new code if you change it.",
+    "text": "Behance पुराने यूज़रनेम को रीडायरेक्ट नहीं करता, इसलिए यूज़रनेम बदलने पर नया कोड प्रिंट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.behance.payload.notes.1"
+  },
+  "9c7fdeea4661": {
+    "source": "Can the code open one project?",
+    "text": "क्या कोड कोई एक प्रोजेक्ट खोल सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.behance.faqs.0.question"
+  },
+  "a8a11a01fd49": {
+    "source": "Yes. Paste the project's link instead of your username.",
+    "text": "हाँ। यूज़रनेम की जगह प्रोजेक्ट का लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.behance.faqs.0.answer"
+  },
+  "5bfd7427ea7d": {
+    "source": "Open a Dribbble profile or shot.",
+    "text": "Dribbble प्रोफ़ाइल या शॉट खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.summary"
+  },
+  "c38d2b08b815": {
+    "source": "Create a Dribbble QR code for your design profile or one shot. For business cards, CVs and portfolio prints. Type your username. Free.",
+    "text": "अपनी डिज़ाइन प्रोफ़ाइल या किसी एक शॉट के लिए Dribbble QR कोड बनाएँ। बिज़नेस कार्ड, CV और पोर्टफ़ोलियो प्रिंट के लिए। बस अपना यूज़रनेम लिखें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.metaDescription"
+  },
+  "2c912504e2c2": {
+    "source": "A Dribbble QR code opens your design profile, or one shot, from a business card, a CV or a printed portfolio.",
+    "text": "Dribbble QR कोड बिज़नेस कार्ड, CV या छपे हुए पोर्टफ़ोलियो से आपकी डिज़ाइन प्रोफ़ाइल, या कोई एक शॉट खोल देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.intro.0"
+  },
+  "a34aeccd8c4d": {
+    "source": "Type your Dribbble username and QRdx builds the dribbble.com link, or paste a shot link.",
+    "text": "अपना Dribbble यूज़रनेम लिखें और QRdx dribbble.com का लिंक बना देगा, या कोई शॉट लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.intro.1"
+  },
+  "e1cfc854a8bf": {
+    "source": "Enter your Dribbble username, or paste a link.",
+    "text": "अपना Dribbble यूज़रनेम डालें, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.steps.0"
+  },
+  "2a1dd45b104f": {
+    "source": "Pasted dribbble.com links are kept as they are.",
+    "text": "पेस्ट किए गए dribbble.com लिंक जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.payload.notes.0"
+  },
+  "e993d9a0e552": {
+    "source": "If you change your username, print a new code.",
+    "text": "अगर आप अपना यूज़रनेम बदलते हैं, तो नया कोड प्रिंट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.payload.notes.1"
+  },
+  "693f7e7ecc58": {
+    "source": "Can I link a specific shot?",
+    "text": "क्या मैं किसी खास शॉट का लिंक दे सकता हूँ?",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.faqs.0.question"
+  },
+  "af8bf0177175": {
+    "source": "Yes. Paste the shot's link instead of your username.",
+    "text": "हाँ। यूज़रनेम की जगह शॉट का लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.faqs.0.answer"
+  },
+  "7ce9ca31ee43": {
+    "source": "Open your Linktree page.",
+    "text": "अपना Linktree पेज खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.summary"
+  },
+  "68a1c5f49e41": {
+    "source": "Make a QR code for your Linktree page, with all your links in one scan. For merch, posters, cards and stream overlays. Free, no signup.",
+    "text": "अपने Linktree पेज के लिए QR कोड बनाएँ, एक ही स्कैन में आपके सारे लिंक। मर्च, पोस्टर, कार्ड और स्ट्रीम ओवरले के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.metaDescription"
+  },
+  "acff1eba1572": {
+    "source": "A Linktree QR code opens your Linktree page, so one scan reaches every link you keep there, from merch, a poster or a business card.",
+    "text": "Linktree QR कोड आपका Linktree पेज खोलता है, इसलिए मर्च, पोस्टर या बिज़नेस कार्ड से एक स्कैन में वहाँ रखे सारे लिंक तक पहुँचा जा सकता है।",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.intro.0"
+  },
+  "1e3e691c6031": {
+    "source": "Type your Linktree username and QRdx builds the linktr.ee link, or paste it.",
+    "text": "अपना Linktree यूज़रनेम लिखें और QRdx linktr.ee का लिंक बना देगा, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.intro.1"
+  },
+  "f3fe4ed5dffd": {
+    "source": "Enter your Linktree username, or paste your link.",
+    "text": "अपना Linktree यूज़रनेम डालें, या अपना लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.steps.0"
+  },
+  "1582ea8cd6d3": {
+    "source": "Linktree lets you change your username, which changes the link; print a new code if you do.",
+    "text": "Linktree में आप अपना यूज़रनेम बदल सकते हैं, जिससे लिंक भी बदल जाता है; ऐसा करें तो नया कोड प्रिंट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.payload.notes.0"
+  },
+  "775236268c04": {
+    "source": "Your page's links can change any time without a new code.",
+    "text": "आपके पेज के लिंक कभी भी बदले जा सकते हैं, नया कोड बनाने की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.payload.notes.1"
+  },
+  "f45cf7454549": {
+    "source": "Can QRdx host a links page instead?",
+    "text": "क्या QRdx इसकी जगह लिंक पेज होस्ट कर सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.faqs.0.question"
+  },
+  "4ca0788f138d": {
+    "source": "Yes. A QRdx links page is a hosted page you edit in your dashboard, with a dynamic code you can repoint.",
+    "text": "हाँ। QRdx का लिंक पेज एक होस्टेड पेज है जिसे आप अपने डैशबोर्ड में एडिट करते हैं, और उसके साथ एक डायनेमिक QR कोड होता है जिसे आप दूसरी जगह पॉइंट कर सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.faqs.0.answer"
+  },
+  "7d9e443f462e": {
+    "source": "Open your Patreon creator page.",
+    "text": "अपना Patreon क्रिएटर पेज खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.summary"
+  },
+  "8598df8a214f": {
+    "source": "Create a Patreon QR code that opens your creator page, so fans can become members. For streams, merch, books and podcasts. Free.",
+    "text": "ऐसा Patreon QR कोड बनाएँ जो आपका क्रिएटर पेज खोले, ताकि फ़ैन मेंबर बन सकें। स्ट्रीम, मर्च, किताबों और पॉडकास्ट के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.metaDescription"
+  },
+  "15920a92c854": {
+    "source": "A Patreon QR code opens your creator page, where fans can become members, from a stream overlay, merch, the back of a book or a podcast cover.",
+    "text": "Patreon QR कोड आपका क्रिएटर पेज खोलता है, जहाँ फ़ैन मेंबर बन सकते हैं। इसे स्ट्रीम ओवरले, मर्च, किताब के पिछले कवर या पॉडकास्ट कवर पर लगाया जा सकता है।",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.intro.0"
+  },
+  "aeef7ae1906e": {
+    "source": "Type your page name (the part after patreon.com/) and QRdx builds the link, or paste it.",
+    "text": "अपने पेज का नाम (patreon.com/ के बाद वाला हिस्सा) लिखें और QRdx लिंक बना देगा, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.intro.1"
+  },
+  "43c8bdc2c551": {
+    "source": "Enter your Patreon page name, or paste your link.",
+    "text": "अपने Patreon पेज का नाम डालें, या अपना लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.steps.0"
+  },
+  "20bcffdd8407": {
+    "source": "Pasted patreon.com links are kept as they are.",
+    "text": "पेस्ट किए गए patreon.com लिंक जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.payload.notes.0"
+  },
+  "3c04a76555e9": {
+    "source": "Patreon doesn't redirect an old page name, so print a new code if you change it.",
+    "text": "Patreon पुराने पेज के नाम को रीडायरेक्ट नहीं करता, इसलिए नाम बदलने पर नया कोड प्रिंट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.payload.notes.1"
+  },
+  "0028e58fa302": {
+    "source": "Can the code open a tier or post?",
+    "text": "क्या कोड किसी टियर या पोस्ट को खोल सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.faqs.0.question"
+  },
+  "bad418eb3d10": {
+    "source": "Yes. Paste that page's link instead of your name.",
+    "text": "हाँ। अपने नाम की जगह उस पेज का लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.faqs.0.answer"
+  },
+  "ae1a99df8ac7": {
+    "source": "Get tips and support on your Ko-fi page.",
+    "text": "अपने Ko-fi पेज पर टिप और सपोर्ट पाएँ।",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.summary"
+  },
+  "3709c5345c0e": {
+    "source": "Make a Ko-fi QR code that opens your page for tips, memberships and commissions. For streams, stalls and zines. Free, no signup.",
+    "text": "ऐसा Ko-fi QR कोड बनाएँ जो टिप, मेंबरशिप और कमीशन के लिए आपका पेज खोले। स्ट्रीम, स्टॉल और ज़ीन के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.metaDescription"
+  },
+  "ff3328940c06": {
+    "source": "A Ko-fi QR code opens your Ko-fi page, where people can leave a tip, join a membership or order a commission, from a stream, a market stall or a zine.",
+    "text": "Ko-fi QR कोड आपका Ko-fi पेज खोलता है, जहाँ लोग टिप दे सकते हैं, मेंबरशिप ले सकते हैं या कमीशन ऑर्डर कर सकते हैं। इसे स्ट्रीम, बाज़ार के स्टॉल या ज़ीन पर लगाया जा सकता है।",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.intro.0"
+  },
+  "999124ff98d0": {
+    "source": "Type your Ko-fi page name and QRdx builds the ko-fi.com link, or paste it.",
+    "text": "अपने Ko-fi पेज का नाम लिखें और QRdx ko-fi.com लिंक बना देगा, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.intro.1"
+  },
+  "fd75d8a45b7b": {
+    "source": "Enter your Ko-fi page name, or paste your link.",
+    "text": "अपने Ko-fi पेज का नाम डालें, या अपना लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.steps.0"
+  },
+  "266c163ca30f": {
+    "source": "Payments happen on Ko-fi; the code only opens your page.",
+    "text": "पेमेंट Ko-fi पर होता है; कोड सिर्फ़ आपका पेज खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.payload.notes.0"
+  },
+  "df547abd1c40": {
+    "source": "Pasted ko-fi.com links are kept as they are.",
+    "text": "पेस्ट किए गए ko-fi.com लिंक जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.payload.notes.1"
+  },
+  "406b321ff687": {
+    "source": "Can the code take a payment by itself?",
+    "text": "क्या कोड खुद पेमेंट ले सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.faqs.0.question"
+  },
+  "8bd23835f8bf": {
+    "source": "No. It opens your page, and people pay there with the methods you set up in Ko-fi.",
+    "text": "नहीं। यह आपका पेज खोलता है, और लोग वहाँ उन तरीकों से पेमेंट करते हैं जो आपने Ko-fi में सेट किए हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.faqs.0.answer"
+  },
+  "5a295f00063b": {
+    "source": "Get tips on your Buy Me a Coffee page.",
+    "text": "अपने Buy Me a Coffee पेज पर टिप पाएँ।",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.summary"
+  },
+  "d6aa7af61d70": {
+    "source": "Create a Buy Me a Coffee QR code that opens your page for tips and memberships. For podcasts, blogs, streams and stalls. Free.",
+    "text": "ऐसा Buy Me a Coffee QR कोड बनाएँ जो टिप और मेंबरशिप के लिए आपका पेज खोले। पॉडकास्ट, ब्लॉग, स्ट्रीम और स्टॉल के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.metaDescription"
+  },
+  "c3fe3a4dacfc": {
+    "source": "A Buy Me a Coffee QR code opens your page, where fans can leave a tip or join a membership, from a podcast cover, a blog post, a stream or a stall.",
+    "text": "Buy Me a Coffee QR कोड आपका पेज खोलता है, जहाँ फ़ैन टिप दे सकते हैं या मेंबरशिप ले सकते हैं। इसे पॉडकास्ट कवर, ब्लॉग पोस्ट, स्ट्रीम या स्टॉल पर लगाया जा सकता है।",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.intro.0"
+  },
+  "4afe52d75f82": {
+    "source": "Type your page name and QRdx builds the buymeacoffee.com link, or paste it.",
+    "text": "अपने पेज का नाम लिखें और QRdx buymeacoffee.com लिंक बना देगा, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.intro.1"
+  },
+  "48aa0f25da66": {
+    "source": "Enter your page name, or paste your link.",
+    "text": "अपने पेज का नाम डालें, या अपना लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.steps.0"
+  },
+  "eb193609f3e1": {
+    "source": "Payments happen on Buy Me a Coffee; the code only opens your page.",
+    "text": "पेमेंट Buy Me a Coffee पर होता है; कोड सिर्फ़ आपका पेज खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.payload.notes.0"
+  },
+  "a7e40df94813": {
+    "source": "Pasted links, with or without www., are kept as they are.",
+    "text": "पेस्ट किए गए लिंक, www. के साथ या उसके बिना, जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.payload.notes.1"
+  },
+  "586403bd52de": {
+    "source": "Do supporters need an account?",
+    "text": "क्या सपोर्टर के पास अकाउंट होना ज़रूरी है?",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.faqs.0.question"
+  },
+  "700cb405a3eb": {
+    "source": "No. Supporters can pay on your page without making an account.",
+    "text": "नहीं। सपोर्टर अकाउंट बनाए बिना आपके पेज पर पेमेंट कर सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.faqs.0.answer"
+  },
+  "da3d835f66a5": {
+    "source": "Play a song, album, artist or playlist on Apple Music.",
+    "text": "Apple Music पर कोई गाना, एल्बम, आर्टिस्ट या प्लेलिस्ट चलाएँ।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.summary"
+  },
+  "5b70a21eb8d9": {
+    "source": "Make an Apple Music QR code that plays a song, album or playlist, or opens an artist. For posters, merch and record sleeves. Free.",
+    "text": "ऐसा Apple Music QR कोड बनाएँ जो गाना, एल्बम या प्लेलिस्ट चलाए, या आर्टिस्ट का पेज खोले। पोस्टर, मर्च और रिकॉर्ड स्लीव के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.metaDescription"
+  },
+  "e9a832ada552": {
+    "source": "An Apple Music QR code opens a song, an album, a playlist or an artist page, from a gig poster, merch or a record sleeve.",
+    "text": "Apple Music QR कोड गिग पोस्टर, मर्च या रिकॉर्ड स्लीव से कोई गाना, एल्बम, प्लेलिस्ट या आर्टिस्ट का पेज खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.intro.0"
+  },
+  "1d0b2b8091ce": {
+    "source": "In Apple Music, use Share and Copy Link, then paste the music.apple.com link here.",
+    "text": "Apple Music में Share और Copy Link का इस्तेमाल करें, फिर music.apple.com का लिंक यहाँ पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.intro.1"
+  },
+  "7e32239c6841": {
+    "source": "Copy the link in Apple Music (Share, Copy Link).",
+    "text": "Apple Music में लिंक कॉपी करें (Share, Copy Link)।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.steps.0"
+  },
+  "53df6ad14df4": {
+    "source": "People without Apple Music get a preview page in the browser.",
+    "text": "जिन लोगों के पास Apple Music नहीं है, उन्हें ब्राउज़र में प्रीव्यू पेज दिखता है।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.payload.notes.1"
+  },
+  "c47d9f67a6ea": {
+    "source": "Does it work on Android?",
+    "text": "क्या यह Android पर चलता है?",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.faqs.0.question"
+  },
+  "3daafbdced55": {
+    "source": "It opens the Apple Music app for Android when it's installed, or the web player.",
+    "text": "अगर Android के लिए Apple Music ऐप इंस्टॉल है तो वह खुलता है, नहीं तो वेब प्लेयर खुलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.faqs.0.answer"
+  },
+  "b610e1c84b86": {
+    "source": "Play a song, album or playlist on YouTube Music.",
+    "text": "YouTube Music पर कोई गाना, एल्बम या प्लेलिस्ट चलाएँ।",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.summary"
+  },
+  "d2d274c8542d": {
+    "source": "Create a YouTube Music QR code that plays a song, album or playlist. For gig posters, merch and flyers. Paste the share link. Free.",
+    "text": "ऐसा YouTube Music QR कोड बनाएँ जो गाना, एल्बम या प्लेलिस्ट चलाए। गिग पोस्टर, मर्च और फ़्लायर के लिए। शेयर लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.metaDescription"
+  },
+  "1014322eb424": {
+    "source": "A YouTube Music QR code opens a song, an album, a playlist or an artist in YouTube Music, from a gig poster, merch or a flyer.",
+    "text": "YouTube Music QR कोड गिग पोस्टर, मर्च या फ़्लायर से YouTube Music में कोई गाना, एल्बम, प्लेलिस्ट या आर्टिस्ट खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.intro.0"
+  },
+  "35397c56f0a7": {
+    "source": "Use Share and Copy link in YouTube Music, then paste the music.youtube.com link here.",
+    "text": "YouTube Music में Share और Copy link का इस्तेमाल करें, फिर music.youtube.com का लिंक यहाँ पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.intro.1"
+  },
+  "2f2534b61b11": {
+    "source": "Copy the link in YouTube Music (Share, Copy link).",
+    "text": "YouTube Music में लिंक कॉपी करें (Share, Copy link)।",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.steps.0"
+  },
+  "ad44814db5c7": {
+    "source": "Scan the preview to check it plays.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि वह चलता है या नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.steps.2"
+  },
+  "af0b24450654": {
+    "source": "A youtube.com video link works in the YouTube generator.",
+    "text": "youtube.com वीडियो लिंक YouTube जनरेटर में काम करता है।",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.payload.notes.1"
+  },
+  "44962c424a22": {
+    "source": "Does it need a subscription?",
+    "text": "क्या इसके लिए सब्सक्रिप्शन चाहिए?",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.faqs.0.question"
+  },
+  "b43ff9fc4ae9": {
+    "source": "No. People can listen free with ads; a subscription removes them.",
+    "text": "नहीं। लोग विज्ञापनों के साथ फ़्री में सुन सकते हैं; सब्सक्रिप्शन लेने पर विज्ञापन नहीं आते।",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.faqs.0.answer"
+  },
+  "9b18868b7c45": {
+    "source": "Open a podcast or episode on Apple Podcasts.",
+    "text": "Apple Podcasts पर कोई पॉडकास्ट या एपिसोड खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.summary"
+  },
+  "42288f9aecdc": {
+    "source": "Make an Apple Podcasts QR code that opens your show or one episode, so listeners follow it. For posters, merch and live shows. Free.",
+    "text": "ऐसा Apple Podcasts QR कोड बनाएँ जो आपका शो या कोई एक एपिसोड खोले, ताकि श्रोता उसे फ़ॉलो कर सकें। पोस्टर, मर्च और लाइव शो के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.metaDescription"
+  },
+  "72c460d2c7fa": {
+    "source": "An Apple Podcasts QR code opens your show, or one episode, so listeners can follow it from a poster, a sticker or a live taping.",
+    "text": "Apple Podcasts QR कोड आपका शो या कोई एक एपिसोड खोलता है, ताकि श्रोता पोस्टर, स्टिकर या लाइव टेपिंग से उसे फ़ॉलो कर सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.intro.0"
+  },
+  "658f5ad2103c": {
+    "source": "Use Share and Copy Link in Apple Podcasts, then paste the podcasts.apple.com link here.",
+    "text": "Apple Podcasts में Share और Copy Link का इस्तेमाल करें, फिर podcasts.apple.com का लिंक यहाँ पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.intro.1"
+  },
+  "7adcd95f5dc7": {
+    "source": "Copy the show's or episode's link in Apple Podcasts.",
+    "text": "Apple Podcasts में शो या एपिसोड का लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.steps.0"
+  },
+  "b8ad6d2d675b": {
+    "source": "The link holds your show's number (id…), which never changes.",
+    "text": "लिंक में आपके शो का नंबर (id…) होता है, जो कभी नहीं बदलता।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.payload.notes.0"
+  },
+  "91c48f777a93": {
+    "source": "QRdx keeps the link as pasted, with an episode's ?i= part.",
+    "text": "QRdx लिंक को वैसा ही रखता है जैसा पेस्ट किया गया हो, एपिसोड के ?i= हिस्से के साथ।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.payload.notes.1"
+  },
+  "afdea790bda1": {
+    "source": "What do Android listeners see?",
+    "text": "Android श्रोताओं को क्या दिखता है?",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.faqs.0.question"
+  },
+  "f15116148361": {
+    "source": "The show's page in the browser, where they can play episodes.",
+    "text": "ब्राउज़र में शो का पेज, जहाँ वे एपिसोड चला सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.faqs.0.answer"
+  },
+  "9c5e381fe815": {
+    "source": "Play music or a podcast on Amazon Music.",
+    "text": "Amazon Music पर गाना या पॉडकास्ट चलाएँ।",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.summary"
+  },
+  "8910c76fe64e": {
+    "source": "Create an Amazon Music QR code for a song, album, playlist or podcast. For posters, merch and flyers. Paste the link. Free.",
+    "text": "गाने, एल्बम, प्लेलिस्ट या पॉडकास्ट के लिए Amazon Music QR code बनाएँ। पोस्टर, मर्च और फ़्लायर के लिए। बस लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.metaDescription"
+  },
+  "01a0acbc683e": {
+    "source": "An Amazon Music QR code opens a song, an album, a playlist, an artist or a podcast in Amazon Music.",
+    "text": "Amazon Music QR code Amazon Music में गाना, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.intro.0"
+  },
+  "67378c116905": {
+    "source": "Copy the link in Amazon Music and paste it here. Links on Amazon's country music sites work too.",
+    "text": "Amazon Music में लिंक कॉपी करें और यहाँ पेस्ट करें। Amazon की अलग-अलग देशों की म्यूज़िक साइटों के लिंक भी चलते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.intro.1"
+  },
+  "597acb41d7ec": {
+    "source": "Copy the link in Amazon Music.",
+    "text": "Amazon Music में लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.steps.0"
+  },
+  "8f25bac036a5": {
+    "source": "Each country site opens the catalog of that country.",
+    "text": "हर देश की साइट उसी देश का कैटलॉग खोलती है।",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.payload.notes.1"
+  },
+  "1dea42070dc6": {
+    "source": "Can people listen without Prime?",
+    "text": "क्या Prime के बिना सुन सकते हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.faqs.0.question"
+  },
+  "7712a5de13be": {
+    "source": "Amazon Music has a free tier with ads in many countries, so many links play for everyone.",
+    "text": "कई देशों में Amazon Music का विज्ञापनों वाला फ़्री टियर है, इसलिए कई लिंक सबके लिए चलते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.faqs.0.answer"
+  },
+  "aef168ec765f": {
+    "source": "Play a track, album or playlist on Deezer.",
+    "text": "Deezer पर ट्रैक, एल्बम या प्लेलिस्ट चलाएँ।",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.summary"
+  },
+  "57983725eeb5": {
+    "source": "Make a Deezer QR code that plays a track, album, playlist or podcast. For gig posters, merch and record sleeves. Free, no signup.",
+    "text": "ट्रैक, एल्बम, प्लेलिस्ट या पॉडकास्ट चलाने वाला Deezer QR code बनाएँ। गिग पोस्टर, मर्च और रिकॉर्ड स्लीव के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.metaDescription"
+  },
+  "28b553d09c48": {
+    "source": "A Deezer QR code opens a track, an album, a playlist, an artist or a podcast in Deezer.",
+    "text": "Deezer QR code Deezer में ट्रैक, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.intro.0"
+  },
+  "7aded233e7ce": {
+    "source": "Paste a deezer.com link, or a share link (link.deezer.com) from the app.",
+    "text": "deezer.com का लिंक पेस्ट करें, या app से शेयर लिंक (link.deezer.com) पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.intro.1"
+  },
+  "05ad748a8331": {
+    "source": "Copy the link in Deezer.",
+    "text": "Deezer में लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.steps.0"
+  },
+  "b00069d2993f": {
+    "source": "Old deezer.page.link share links stopped working in 2025; copy a new link from the app.",
+    "text": "पुराने deezer.page.link शेयर लिंक 2025 में चलना बंद हो गए; app से नया लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.payload.notes.1"
+  },
+  "519390394439": {
+    "source": "Does it work without the app?",
+    "text": "क्या यह app के बिना चलता है?",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.faqs.0.question"
+  },
+  "9d2d6e915c3d": {
+    "source": "Yes. The link opens Deezer in the browser.",
+    "text": "हाँ। लिंक Deezer को ब्राउज़र में खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.faqs.0.answer"
+  },
+  "a8ae03710a12": {
+    "source": "Play a track, album or playlist on TIDAL.",
+    "text": "TIDAL पर ट्रैक, एल्बम या प्लेलिस्ट चलाएँ।",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.summary"
+  },
+  "ba39758079e2": {
+    "source": "Create a TIDAL QR code that plays a track, album or playlist, or opens an artist. For merch, sleeves and posters. Free, no signup.",
+    "text": "ट्रैक, एल्बम या प्लेलिस्ट चलाने या आर्टिस्ट खोलने वाला TIDAL QR code बनाएँ। मर्च, स्लीव और पोस्टर के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.metaDescription"
+  },
+  "a9b8feb0aff5": {
+    "source": "A TIDAL QR code opens a track, an album, a playlist or an artist on TIDAL.",
+    "text": "TIDAL QR code TIDAL पर ट्रैक, एल्बम, प्लेलिस्ट या आर्टिस्ट खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.intro.0"
+  },
+  "6f2bc1cbf85d": {
+    "source": "Copy the link in TIDAL and paste it here.",
+    "text": "TIDAL में लिंक कॉपी करें और यहाँ पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.intro.1"
+  },
+  "cc818e29db94": {
+    "source": "Copy the link in TIDAL.",
+    "text": "TIDAL में लिंक कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.steps.0"
+  },
+  "5118e6bd40d6": {
+    "source": "QRdx keeps the link as pasted; listen.tidal.com links work too.",
+    "text": "QRdx लिंक को वैसा ही रखता है जैसा आपने पेस्ट किया; listen.tidal.com के लिंक भी चलते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.payload.notes.0"
+  },
+  "48533995f23e": {
+    "source": "TIDAL's share page also offers the music on other services.",
+    "text": "TIDAL का शेयर पेज वही म्यूज़िक दूसरी सेवाओं पर भी दिखाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.payload.notes.1"
+  },
+  "d3bbb5482de1": {
+    "source": "What do people without TIDAL see?",
+    "text": "जिनके पास TIDAL नहीं है, उन्हें क्या दिखता है?",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.faqs.0.question"
+  },
+  "1cc927baa22d": {
+    "source": "A page for the music, which can point them to other streaming services.",
+    "text": "म्यूज़िक का एक पेज, जो उन्हें दूसरी स्ट्रीमिंग सेवाओं तक पहुँचा सकता है।",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.faqs.0.answer"
+  },
+  "6c70947ff657": {
+    "source": "Open an artist, album or track on Bandcamp.",
+    "text": "Bandcamp पर कोई आर्टिस्ट, एल्बम या ट्रैक खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.summary"
+  },
+  "b680d265c3ff": {
+    "source": "Make a Bandcamp QR code for your artist page, an album or a track, so fans listen and buy. For merch tables and posters. Free.",
+    "text": "अपने आर्टिस्ट पेज, एल्बम या ट्रैक के लिए Bandcamp QR कोड बनाएं, ताकि फ़ैन्स सुनें और खरीदें। मर्च टेबल और पोस्टर के लिए। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.metaDescription"
+  },
+  "832131758fa2": {
+    "source": "A Bandcamp QR code opens your artist page, an album or a track, where fans can listen and buy, from a merch table, a gig poster or a record sleeve.",
+    "text": "Bandcamp QR कोड आपका आर्टिस्ट पेज, एल्बम या ट्रैक खोलता है, जहां फ़ैन्स सुन और खरीद सकते हैं। इसे मर्च टेबल, गिग पोस्टर या रिकॉर्ड स्लीव पर लगाया जा सकता है।",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.intro.0"
+  },
+  "b9fc4fa34c28": {
+    "source": "Type the part before .bandcamp.com and QRdx builds the link, or paste an album or track link.",
+    "text": ".bandcamp.com से पहले वाला हिस्सा लिखें और QRdx लिंक बना देगा, या कोई एल्बम या ट्रैक का लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.intro.1"
+  },
+  "f991b252f953": {
+    "source": "Enter your Bandcamp name, or paste a link.",
+    "text": "अपना Bandcamp नाम लिखें, या लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.steps.0"
+  },
+  "21c9d5aa856f": {
+    "source": "Pasted bandcamp.com links are kept as they are.",
+    "text": "पेस्ट किए गए bandcamp.com लिंक जैसे हैं वैसे ही रखे जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.payload.notes.0"
+  },
+  "bae82abdd77d": {
+    "source": "If you change your Bandcamp address, the old one stops working.",
+    "text": "अगर आप अपना Bandcamp एड्रेस बदलते हैं, तो पुराना एड्रेस काम करना बंद कर देता है।",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.payload.notes.1"
+  },
+  "cb68bdc9df2e": {
+    "source": "Can I use it for download codes?",
+    "text": "क्या मैं इसे डाउनलोड कोड के लिए इस्तेमाल कर सकता/सकती हूं?",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.faqs.0.question"
+  },
+  "fb613c41bf6c": {
+    "source": "Print each Bandcamp download code next to the QR code, or link to your redeem page.",
+    "text": "हर Bandcamp डाउनलोड कोड को QR कोड के पास प्रिंट करें, या अपने रीडीम पेज का लिंक दें।",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.faqs.0.answer"
+  },
+  "72b1c5315981": {
+    "source": "Open a shared Google Doc.",
+    "text": "शेयर किया गया Google Doc खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.summary"
+  },
+  "c113deabd771": {
+    "source": "Create a Google Docs QR code that opens a shared document. For handouts, notes, instructions and menus. Paste the link. Free.",
+    "text": "ऐसा Google Docs QR कोड बनाएं जो शेयर किया गया डॉक्यूमेंट खोले। हैंडआउट, नोट्स, निर्देश और मेन्यू के लिए। लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.metaDescription"
+  },
+  "f783149a342b": {
+    "source": "A Google Docs QR code opens a shared document, so people read handouts, meeting notes or instructions on their phone.",
+    "text": "Google Docs QR कोड शेयर किया गया डॉक्यूमेंट खोलता है, ताकि लोग हैंडआउट, मीटिंग नोट्स या निर्देश अपने फ़ोन पर पढ़ सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.intro.0"
+  },
+  "e4ea823215ee": {
+    "source": "Paste the document's link. Under Share, set General access to Anyone with the link first, or people without access are asked to sign in and request it.",
+    "text": "डॉक्यूमेंट का लिंक पेस्ट करें। पहले Share में General access को Anyone with the link पर सेट करें, वरना एक्सेस न होने पर लोगों से साइन इन करके अनुमति मांगने को कहा जाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.intro.1"
+  },
+  "edbad1b20e42": {
+    "source": "Share the document with Anyone with the link.",
+    "text": "डॉक्यूमेंट को Anyone with the link के साथ शेयर करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.0"
+  },
+  "ea0635c25a18": {
+    "source": "Copy its link and paste it here.",
+    "text": "उसका लिंक कॉपी करें और यहां पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.1"
+  },
+  "0214b1cc594e": {
+    "source": "Scan the preview on a phone that isn't signed in to check it opens.",
+    "text": "किसी ऐसे फ़ोन पर प्रीव्यू स्कैन करें जिसमें साइन इन नहीं है, ताकि पता चले कि वह खुल रहा है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.2"
+  },
+  "3d137828f9e0": {
+    "source": "QRdx keeps the link as pasted, including /edit or /view.",
+    "text": "QRdx लिंक को वैसे ही रखता है जैसा पेस्ट किया गया हो, /edit या /view समेत।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.payload.notes.0"
+  },
+  "cf772cde7b13": {
+    "source": "Editing the document changes what people see, without a new code.",
+    "text": "डॉक्यूमेंट एडिट करने से लोगों को दिखने वाली सामग्री बदल जाती है, नए कोड की ज़रूरत नहीं पड़ती।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.payload.notes.1"
+  },
+  "141c80b0bb75": {
+    "source": "Can people edit the document?",
+    "text": "क्या लोग डॉक्यूमेंट एडिट कर सकते हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.faqs.0.question"
+  },
+  "9b2eb6c7485e": {
+    "source": "Only if you share it with edit access. Choose Viewer in the sharing settings for a read-only document.",
+    "text": "तभी, जब आप उसे एडिट एक्सेस के साथ शेयर करें। सिर्फ़ पढ़ने वाले डॉक्यूमेंट के लिए शेयरिंग सेटिंग में Viewer चुनें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.faqs.0.answer"
+  },
+  "2623efa8a3ce": {
+    "source": "Open a shared Google Sheets spreadsheet.",
+    "text": "शेयर की गई Google Sheets स्प्रेडशीट खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.summary"
+  },
+  "abe675c72775": {
+    "source": "Make a Google Sheets QR code that opens a shared spreadsheet: a schedule, a price list or a sign-up sheet. Paste the link. Free.",
+    "text": "ऐसा Google Sheets QR कोड बनाएं जो शेयर की गई स्प्रेडशीट खोले: शेड्यूल, प्राइस लिस्ट या साइन-अप शीट। लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.metaDescription"
+  },
+  "9fb0c5aa66c5": {
+    "source": "A Google Sheets QR code opens a shared spreadsheet: a schedule on a door, a price list in a shop, or a sign-up sheet at an event.",
+    "text": "Google Sheets QR कोड शेयर की गई स्प्रेडशीट खोलता है: दरवाज़े पर शेड्यूल, दुकान में प्राइस लिस्ट, या किसी इवेंट में साइन-अप शीट।",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.intro.0"
+  },
+  "e0fd9ee854cb": {
+    "source": "Paste the spreadsheet's link, shared with Anyone with the link, so people who scan don't have to request access.",
+    "text": "स्प्रेडशीट का लिंक पेस्ट करें, जो Anyone with the link के साथ शेयर की गई हो, ताकि स्कैन करने वालों को एक्सेस मांगना न पड़े।",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.intro.1"
+  },
+  "caa2767cb7a3": {
+    "source": "Share the spreadsheet with Anyone with the link.",
+    "text": "स्प्रेडशीट को Anyone with the link के साथ शेयर करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.steps.0"
+  },
+  "46ce6ee7bb8c": {
+    "source": "QRdx keeps the link as pasted, including a #gid= tab.",
+    "text": "QRdx लिंक को वैसे ही रखता है जैसा पेस्ट किया गया हो, #gid= वाले टैब समेत।",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.payload.notes.0"
+  },
+  "c968adc99f2c": {
+    "source": "Updates to the sheet show up for everyone who scans.",
+    "text": "शीट में किए गए अपडेट स्कैन करने वाले हर व्यक्ति को दिखते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.payload.notes.1"
+  },
+  "ebbe05b2b774": {
+    "source": "Can the code open one tab?",
+    "text": "क्या कोड एक टैब खोल सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.faqs.0.question"
+  },
+  "ad34102f16d4": {
+    "source": "Yes. Open that tab and copy the link; it ends with #gid= and the tab's number.",
+    "text": "हां। वह टैब खोलें और लिंक कॉपी करें; वह #gid= और टैब के नंबर पर खत्म होता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.faqs.0.answer"
+  },
+  "6f6d3026b204": {
+    "source": "Open a shared Google Slides presentation.",
+    "text": "शेयर की गई Google Slides प्रेज़enटेशन खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.summary"
+  },
+  "8a7d4b2bc8c3": {
+    "source": "Create a Google Slides QR code so people get your deck from the screen: talks, classes and pitches. Paste the link. Free.",
+    "text": "Google Slides QR कोड बनाएं ताकि लोग स्क्रीन से ही आपकी डेक पा सकें: टॉक, क्लास और पिच के लिए। लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.metaDescription"
+  },
+  "0b7623505595": {
+    "source": "A Google Slides QR code opens a shared presentation, so the audience gets your slides from the screen at a talk, a class or a pitch.",
+    "text": "Google Slides QR कोड एक शेयर की गई प्रेज़enटेशन खोलता है, ताकि टॉक, क्लास या पिच में ऑडियंस स्क्रीन से ही आपकी स्लाइड्स पा सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.intro.0"
+  },
+  "e5a0385c9973": {
+    "source": "Paste the presentation's link, shared with Anyone with the link.",
+    "text": "प्रेज़enटेशन का लिंक पेस्ट करें, जो Anyone with the link के साथ शेयर किया गया हो।",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.intro.1"
+  },
+  "b398a3481d00": {
+    "source": "Share the presentation with Anyone with the link.",
+    "text": "प्रेज़enटेशन को Anyone with the link के साथ शेयर करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.steps.0"
+  },
+  "7d62cf784747": {
+    "source": "Download the code and add it to your last slide.",
+    "text": "कोड डाउनलोड करें और उसे अपनी आख़िरी स्लाइड में जोड़ें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.steps.3"
+  },
+  "ae7ebb564e93": {
+    "source": "A link ending in /present opens the slideshow instead of the editor.",
+    "text": "/present पर ख़त्म होने वाला लिंक एडिटर की जगह स्लाइडशो खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.payload.notes.1"
+  },
+  "94c9300b0c42": {
+    "source": "How big should the code be on a slide?",
+    "text": "स्लाइड पर कोड कितना बड़ा होना चाहिए?",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.faqs.0.question"
+  },
+  "6b9e44420110": {
+    "source": "Big enough to scan from the back of the room: about a fifth of the slide's height works in most rooms.",
+    "text": "इतना बड़ा कि कमरे के पीछे से स्कैन हो सके: ज़्यादातर कमरों में स्लाइड की ऊँचाई का लगभग पाँचवां हिस्सा ठीक रहता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.faqs.0.answer"
+  },
+  "4e63edb837eb": {
+    "source": "Open a Google Form: a survey, quiz or sign-up.",
+    "text": "Google Form खोलें: सर्वे, क्विज़ या साइन-अप।",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.summary"
+  },
+  "ea1259be43c6": {
+    "source": "Make a Google Forms QR code that opens your survey, quiz, sign-up or order form. Paste the form link or forms.gle short link. Free.",
+    "text": "Google Forms QR कोड बनाएं जो आपका सर्वे, क्विज़, साइन-अप या ऑर्डर फ़ॉर्म खोले। फ़ॉर्म लिंक या forms.gle शॉर्ट लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.metaDescription"
+  },
+  "5e8c22806066": {
+    "source": "A Google Forms QR code opens your form, so people answer a survey, take a quiz or sign up from a poster, a table card or a slide.",
+    "text": "Google Forms QR कोड आपका फ़ॉर्म खोलता है, ताकि लोग पोस्टर, टेबल कार्ड या स्लाइड से सर्वे भरें, क्विज़ दें या साइन अप करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.intro.0"
+  },
+  "5172691beb36": {
+    "source": "In your form, use Send and the link tab, then paste the link here. The short forms.gle link makes a simpler code.",
+    "text": "अपने फ़ॉर्म में Send और फिर लिंक टैब पर जाएं, फिर लिंक यहाँ पेस्ट करें। छोटा forms.gle लिंक एक सरल कोड बनाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.intro.1"
+  },
+  "5dd4db45c69a": {
+    "source": "In the form, use Send, then the link tab, and shorten the URL.",
+    "text": "फ़ॉर्म में Send पर जाएं, फिर लिंक टैब खोलें और URL को छोटा करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.0"
+  },
+  "9a30e71d599c": {
+    "source": "Paste the link here.",
+    "text": "लिंक यहाँ पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.1"
+  },
+  "0466946bbb70": {
+    "source": "Scan the preview to check the form opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि फ़ॉर्म खुल रहा है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.2"
+  },
+  "b8c006df66fb": {
+    "source": "A form limited to your organization asks people to sign in.",
+    "text": "सिर्फ़ आपके संगठन तक सीमित फ़ॉर्म में लोगों को साइन इन करने के लिए कहा जाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.payload.notes.1"
+  },
+  "8914961903e9": {
+    "source": "What's the difference from the Attendance generator?",
+    "text": "Attendance जनरेटर से इसमें क्या फ़र्क़ है?",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.faqs.0.question"
+  },
+  "4e7ea7cf6157": {
+    "source": "Attendance is set up for checking people in. This one opens any Google Form.",
+    "text": "Attendance लोगों की हाज़िरी लगाने के लिए बना है। यह किसी भी Google Form को खोलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.faqs.0.answer"
+  },
+  "981fe2e677ce": {
+    "source": "Open a Microsoft Form: a survey, quiz or registration.",
+    "text": "Microsoft Form खोलें: सर्वे, क्विज़ या रजिस्ट्रेशन।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.summary"
+  },
+  "1762405418e2": {
+    "source": "Create a Microsoft Forms QR code that opens your survey, quiz or registration form. Paste the share link from Forms. Free, no signup.",
+    "text": "Microsoft Forms QR कोड बनाएं जो आपका सर्वे, क्विज़ या रजिस्ट्रेशन फ़ॉर्म खोले। Forms से शेयर लिंक पेस्ट करें। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.metaDescription"
+  },
+  "abd10b8db2e6": {
+    "source": "A Microsoft Forms QR code opens your form, so people answer a survey, a quiz or a registration from a poster, a slide or a handout.",
+    "text": "Microsoft Forms QR कोड आपका फ़ॉर्म खोलता है, ताकि लोग पोस्टर, स्लाइड या हैंडआउट से सर्वे भरें, क्विज़ दें या रजिस्ट्रेशन करें।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.intro.0"
+  },
+  "144913e2ee68": {
+    "source": "In your form, use Collect responses and Copy link, then paste it here. A shortened forms.office.com/r/ link makes a simpler code.",
+    "text": "अपने फ़ॉर्म में Collect responses और Copy link पर जाएं, फिर उसे यहाँ पेस्ट करें। छोटा forms.office.com/r/ लिंक एक सरल कोड बनाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.intro.1"
+  },
+  "7ff8efeca689": {
+    "source": "In the form, use Collect responses, then Copy link.",
+    "text": "फ़ॉर्म में Collect responses पर जाएं, फिर Copy link चुनें।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.steps.0"
+  },
+  "6573b2aff00e": {
+    "source": "QRdx keeps the link as pasted. Older forms.office.com links keep working.",
+    "text": "QRdx लिंक को वैसा ही रखता है जैसा पेस्ट किया गया हो। पुराने forms.office.com लिंक भी काम करते रहते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.payload.notes.0"
+  },
+  "1cc44d4e28a5": {
+    "source": "Can anyone answer the form?",
+    "text": "क्या कोई भी फ़ॉर्म भर सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.faqs.0.question"
+  },
+  "9d5dc9d1c527": {
+    "source": "If you set it so anyone can respond. Forms limited to your organization need a work or school sign-in.",
+    "text": "हाँ, अगर आपने इसे ऐसे सेट किया हो कि कोई भी जवाब दे सके। सिर्फ़ आपके संगठन तक सीमित फ़ॉर्म के लिए वर्क या स्कूल अकाउंट से साइन-इन ज़रूरी है।",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.faqs.0.answer"
+  },
+  "427da29d54c2": {
+    "source": "Open a public Notion page.",
+    "text": "सार्वजनिक Notion पेज खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.notion.summary"
+  },
+  "09f6d3c89aaa": {
+    "source": "Make a Notion QR code that opens a page you've published to the web: a wiki, guide, menu or portfolio. Paste the link. Free.",
+    "text": "ऐसा Notion QR कोड बनाएं जो वेब पर पब्लिश किया गया पेज खोले: विकी, गाइड, मेन्यू या पोर्टफ़ोलियो। बस लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.notion.metaDescription"
+  },
+  "5e0f1ce17815": {
+    "source": "A Notion QR code opens a page you've published to the web, like an event guide, a team wiki, a menu or a portfolio.",
+    "text": "Notion QR कोड वह पेज खोलता है जिसे आपने वेब पर पब्लिश किया है, जैसे इवेंट गाइड, टीम विकी, मेन्यू या पोर्टफ़ोलियो।",
+    "status": "machine",
+    "context": "qrTypes.types.notion.intro.0"
+  },
+  "9500a3951f9f": {
+    "source": "In Notion, publish the page to the web, copy its link (yourname.notion.site/…) and paste it here.",
+    "text": "Notion में पेज को वेब पर पब्लिश करें, उसका लिंक (yourname.notion.site/…) कॉपी करें और यहां पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.notion.intro.1"
+  },
+  "fcd8ee3ad9e3": {
+    "source": "Publish the page to the web in Notion.",
+    "text": "Notion में पेज को वेब पर पब्लिश करें।",
+    "status": "machine",
+    "context": "qrTypes.types.notion.steps.0"
+  },
+  "cb792aca552f": {
+    "source": "QRdx keeps the link as pasted; older notion.so public links redirect.",
+    "text": "QRdx लिंक को वैसा ही रखता है जैसा आपने पेस्ट किया; notion.so के पुराने सार्वजनिक लिंक रीडायरेक्ट हो जाते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.notion.payload.notes.0"
+  },
+  "a8c393324b51": {
+    "source": "If you change your notion.site domain, old links stop working.",
+    "text": "अगर आप अपना notion.site डोमेन बदलते हैं, तो पुराने लिंक काम करना बंद कर देते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.notion.payload.notes.1"
+  },
+  "3ab085d8d82b": {
+    "source": "Do people need a Notion account?",
+    "text": "क्या लोगों को Notion अकाउंट चाहिए?",
+    "status": "machine",
+    "context": "qrTypes.types.notion.faqs.0.question"
+  },
+  "d182d02daca2": {
+    "source": "No. Published pages open in any browser.",
+    "text": "नहीं। पब्लिश किए गए पेज किसी भी ब्राउज़र में खुलते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.notion.faqs.0.answer"
+  },
+  "31b9728d3360": {
+    "source": "Open a shared Canva design.",
+    "text": "शेयर किया गया Canva डिज़ाइन खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.canva.summary"
+  },
+  "7b0e91b6f0d0": {
+    "source": "Create a Canva QR code that opens a design's public view link: a flyer, menu, presentation or portfolio. Paste the link. Free.",
+    "text": "ऐसा Canva QR कोड बनाएं जो किसी डिज़ाइन का पब्लिक व्यू लिंक खोले: फ़्लायर, मेन्यू, प्रेज़ेंटेशन या पोर्टफ़ोलियो। बस लिंक पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.canva.metaDescription"
+  },
+  "8b56b4db842f": {
+    "source": "A Canva QR code opens a design you've shared, like a flyer, a menu, a presentation or a portfolio.",
+    "text": "Canva QR कोड वह डिज़ाइन खोलता है जिसे आपने शेयर किया है, जैसे फ़्लायर, मेन्यू, प्रेज़ेंटेशन या पोर्टफ़ोलियो।",
+    "status": "machine",
+    "context": "qrTypes.types.canva.intro.0"
+  },
+  "d550aab7bdc8": {
+    "source": "In Canva, use Share and Public view link, copy it and paste it here.",
+    "text": "Canva में Share और Public view link चुनें, उसे कॉपी करें और यहां पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.canva.intro.1"
+  },
+  "926d7d1d022d": {
+    "source": "In Canva, use Share, then Public view link, and copy it.",
+    "text": "Canva में Share चुनें, फिर Public view link चुनें और उसे कॉपी करें।",
+    "status": "machine",
+    "context": "qrTypes.types.canva.steps.0"
+  },
+  "ed5ad7a15560": {
+    "source": "Scan the preview to check the design opens.",
+    "text": "प्रीव्यू को स्कैन करके देखें कि डिज़ाइन खुल रहा है।",
+    "status": "machine",
+    "context": "qrTypes.types.canva.steps.2"
+  },
+  "8a2d2bdd034c": {
+    "source": "Deleting the public view link in Canva stops the code from opening the design.",
+    "text": "Canva में पब्लिक व्यू लिंक हटाने पर कोड डिज़ाइन नहीं खोल पाएगा।",
+    "status": "machine",
+    "context": "qrTypes.types.canva.payload.notes.1"
+  },
+  "ae341d3d278d": {
+    "source": "Will edits to the design show?",
+    "text": "क्या डिज़ाइन में किए बदलाव दिखेंगे?",
+    "status": "machine",
+    "context": "qrTypes.types.canva.faqs.0.question"
+  },
+  "57048de1a621": {
+    "source": "Yes. The view link shows the current version of the design.",
+    "text": "हां। व्यू लिंक डिज़ाइन का मौजूदा वर्शन दिखाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.canva.faqs.0.answer"
+  },
+  "0058588a8380": {
+    "source": "Open an app's page on the App Store.",
+    "text": "App Store पर किसी ऐप का पेज खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.summary"
+  },
+  "3e67b23ec510": {
+    "source": "Make an App Store QR code that opens your iPhone or iPad app's page, or its review form. Paste the link or app ID. Free.",
+    "text": "ऐसा App Store QR कोड बनाएं जो आपके iPhone या iPad ऐप का पेज या उसका रिव्यू फ़ॉर्म खोले। लिंक या ऐप ID पेस्ट करें। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.metaDescription"
+  },
+  "1f02960e7dd4": {
+    "source": "An App Store QR code opens your app's page, so people download it from a poster, packaging or your shop counter.",
+    "text": "App Store QR कोड आपके ऐप का पेज खोलता है, ताकि लोग पोस्टर, पैकेजिंग या आपकी दुकान के काउंटर से ऐप डाउनलोड कर सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.intro.0"
+  },
+  "a70e140dbbc0": {
+    "source": "Paste the app's apps.apple.com link, or type its ID (the number after id). Turn on 'Open the review form' to add Apple's write-review action to the link.",
+    "text": "ऐप का apps.apple.com लिंक पेस्ट करें, या उसकी ID (id के बाद वाला नंबर) लिखें। लिंक में Apple का रिव्यू लिखने वाला एक्शन जोड़ने के लिए 'Open the review form' चालू करें।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.intro.1"
+  },
+  "4fd8122bbe24": {
+    "source": "Copy your app's link from the App Store, or find its ID in App Store Connect.",
+    "text": "App Store से अपने ऐप का लिंक कॉपी करें, या App Store Connect में उसकी ID देखें।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.0"
+  },
+  "3c441fcc1e32": {
+    "source": "Paste it here; turn on the review form if you're asking for ratings.",
+    "text": "इसे यहां पेस्ट करें; अगर आप रेटिंग मांग रहे हैं तो रिव्यू फ़ॉर्म चालू करें।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.1"
+  },
+  "ac0b8a0a86af": {
+    "source": "Scan the preview on an iPhone to check it opens.",
+    "text": "iPhone पर प्रीव्यू स्कैन करके देखें कि वह खुल रहा है।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.2"
+  },
+  "e8605d57a3db": {
+    "source": "action=write-review is Apple's documented link to an app's review form.",
+    "text": "action=write-review, Apple का बताया हुआ वह लिंक है जो ऐप के रिव्यू फ़ॉर्म तक ले जाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.payload.notes.0"
+  },
+  "8cc9ee625d41": {
+    "source": "For one code that offers both stores, make a hosted app page instead.",
+    "text": "ऐसे एक कोड के लिए जो दोनों स्टोर दिखाए, इसके बजाय होस्टेड ऐप पेज बनाएं।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.payload.notes.1"
+  },
+  "a59f41936141": {
+    "source": "What happens on Android?",
+    "text": "Android पर क्या होता है?",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.faqs.0.question"
+  },
+  "eae8e131215d": {
+    "source": "The App Store page opens in the browser. Print a Google Play code next to it for Android.",
+    "text": "App Store का पेज ब्राउज़र में खुलता है। Android के लिए उसके बगल में Google Play का कोड प्रिंट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.faqs.0.answer"
+  },
+  "53118d3f8b57": {
+    "source": "Open an Android app's page on Google Play.",
+    "text": "Google Play पर किसी Android ऐप का पेज खोलें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.summary"
+  },
+  "3da7b88ce937": {
+    "source": "Create a Google Play QR code that opens your Android app's store page. Paste the link or type the package name. Free, no signup.",
+    "text": "ऐसा Google Play QR कोड बनाएं जो आपके Android ऐप का स्टोर पेज खोले। लिंक पेस्ट करें या पैकेज नाम लिखें। फ़्री, साइन अप की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.metaDescription"
+  },
+  "6bed22f3b1f7": {
+    "source": "A Google Play QR code opens your Android app's page in the Play Store, so people install it from a poster, packaging or a shop counter.",
+    "text": "Google Play QR कोड Play Store में आपके Android ऐप का पेज खोलता है, ताकि लोग पोस्टर, पैकेजिंग या दुकान के काउंटर से ही ऐप इंस्टॉल कर सकें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.intro.0"
+  },
+  "ac8cb03b5c94": {
+    "source": "Type the app's package name (like com.example.app) and QRdx builds Google's documented store link, or paste the play.google.com link.",
+    "text": "ऐप का पैकेज नाम (जैसे com.example.app) लिखें और QRdx Google का documented स्टोर लिंक बना देगा, या play.google.com का लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.intro.1"
+  },
+  "768dfa2ceb09": {
+    "source": "Enter the package name, or paste the app's Google Play link.",
+    "text": "पैकेज नाम डालें, या ऐप का Google Play लिंक पेस्ट करें।",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.steps.0"
+  },
+  "e7410f3caeb2": {
+    "source": "Scan the preview on an Android phone to check it opens.",
+    "text": "Android फ़ोन पर प्रीव्यू को स्कैन करके देखें कि वह खुलता है या नहीं।",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.steps.1"
+  },
+  "4377d1fc2323": {
+    "source": "Package names have two or more parts separated by dots, each starting with a letter.",
+    "text": "पैकेज नाम में बिंदु (.) से अलग किए हुए दो या उससे ज़्यादा हिस्से होते हैं, और हर हिस्सा किसी अक्षर से शुरू होता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.payload.notes.0"
+  },
+  "aef02ca8a480": {
+    "source": "A developer page link (store/apps/dev?id=…) works too.",
+    "text": "डेवलपर पेज का लिंक (store/apps/dev?id=…) भी चलता है।",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.payload.notes.1"
+  },
+  "5832dc22413b": {
+    "source": "Can the code open the review form?",
+    "text": "क्या कोड रिव्यू फ़ॉर्म खोल सकता है?",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.faqs.0.question"
+  },
+  "52db9b599b5d": {
+    "source": "Google Play has no link to its review form; people rate an app from its store page or inside the app.",
+    "text": "Google Play में रिव्यू फ़ॉर्म का कोई सीधा लिंक नहीं है; लोग ऐप को उसके स्टोर पेज से या ऐप के अंदर से रेटिंग देते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.faqs.0.answer"
+  },
   "74da95f9087d": {
     "source": "Share a contact in a smaller code than a vCard.",
     "text": "vCard से छोटे कोड में कॉन्टैक्ट शेयर करें।",
@@ -8794,6 +11902,42 @@
     "text": "रिज़्यूमे",
     "status": "machine",
     "context": "hostedTypes.resume.name"
+  },
+  "2bce1f4a654f": {
+    "source": "Shots",
+    "text": "शॉट्स",
+    "status": "machine",
+    "context": "pageCodes.type-dribbble-4.label"
+  },
+  "c74a09f295d9": {
+    "source": "Band poster",
+    "text": "बैंड पोस्टर",
+    "status": "machine",
+    "context": "pageCodes.type-linktree-3.label"
+  },
+  "9feceb9333b5": {
+    "source": "Membership",
+    "text": "मेंबरशिप",
+    "status": "machine",
+    "context": "pageCodes.type-patreon-1.label"
+  },
+  "1eec3071dd26": {
+    "source": "Stream",
+    "text": "स्ट्रीम",
+    "status": "machine",
+    "context": "pageCodes.type-kofi-2.label"
+  },
+  "faa075c3a741": {
+    "source": "Commissions",
+    "text": "कमीशन वर्क",
+    "status": "machine",
+    "context": "pageCodes.type-kofi-3.label"
+  },
+  "74e8801e4926": {
+    "source": "New single",
+    "text": "नया सिंगल",
+    "status": "machine",
+    "context": "pageCodes.type-apple-music-1.label"
   },
   "7d41961e2188": {
     "source": "Resume and CV QR Code Generator",
@@ -24389,6 +27533,120 @@
     "status": "machine",
     "context": "pageCodes.on-tickets-4.label"
   },
+  "6e5c991e833a": {
+    "source": "Shop help",
+    "text": "शॉप हेल्प",
+    "status": "machine",
+    "context": "pageCodes.type-messenger-2.label"
+  },
+  "0a30a815d67d": {
+    "source": "Page",
+    "text": "पेज",
+    "status": "machine",
+    "context": "pageCodes.type-messenger-4.label"
+  },
+  "97368f46f6c6": {
+    "source": "Customer help",
+    "text": "कस्टमर हेल्प",
+    "status": "machine",
+    "context": "pageCodes.type-viber-1.label"
+  },
+  "b7e8acdd522e": {
+    "source": "Orders",
+    "text": "ऑर्डर",
+    "status": "machine",
+    "context": "pageCodes.type-viber-3.label"
+  },
+  "0600175af842": {
+    "source": "Open chat",
+    "text": "ओपन चैट",
+    "status": "machine",
+    "context": "pageCodes.type-kakaotalk-1.label"
+  },
+  "9c298662a4d6": {
+    "source": "Event chat",
+    "text": "इवेंट चैट",
+    "status": "machine",
+    "context": "pageCodes.type-kakaotalk-3.label"
+  },
+  "25696507596f": {
+    "source": "Official Account",
+    "text": "ऑफ़िशियल अकाउंट",
+    "status": "machine",
+    "context": "pageCodes.type-zalo-1.label"
+  },
+  "4bec608656df": {
+    "source": "Call me",
+    "text": "मुझे कॉल करें",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-1.label"
+  },
+  "a8bf69b80f2b": {
+    "source": "Studio call",
+    "text": "स्टूडियो कॉल",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-2.label"
+  },
+  "847814d9f5f9": {
+    "source": "Family call",
+    "text": "फ़ैमिली कॉल",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-3.label"
+  },
+  "3689f6ebdd46": {
+    "source": "Team meeting",
+    "text": "टीम मीटिंग",
+    "status": "machine",
+    "context": "pageCodes.type-microsoft-teams-1.label"
+  },
+  "36a798e3f392": {
+    "source": "Training",
+    "text": "ट्रेनिंग",
+    "status": "machine",
+    "context": "pageCodes.type-microsoft-teams-4.label"
+  },
+  "e50569ed429c": {
+    "source": "Personal room",
+    "text": "पर्सनल रूम",
+    "status": "machine",
+    "context": "pageCodes.type-webex-2.label"
+  },
+  "3751e73247f6": {
+    "source": "All-hands",
+    "text": "ऑल-हैंड्स",
+    "status": "machine",
+    "context": "pageCodes.type-webex-3.label"
+  },
+  "8b8b8871bbfb": {
+    "source": "Meeting",
+    "text": "मीटिंग",
+    "status": "machine",
+    "context": "pageCodes.type-webex-4.label"
+  },
+  "948e03e7054b": {
+    "source": "Booking",
+    "text": "बुकिंग",
+    "status": "machine",
+    "context": "pageCodes.type-calendly-4.label"
+  },
+  "6c0f6d250287": {
+    "source": "First day",
+    "text": "पहला दिन",
+    "status": "machine",
+    "context": "pageCodes.type-google-classroom-1.label"
+  },
+  "642d071893ea": {
+    "source": "Classroom door",
+    "text": "क्लासरूम का दरवाज़ा",
+    "status": "machine",
+    "context": "pageCodes.type-google-classroom-2.label"
+  },
+  "00ea63f88347": {
+    "source": "Shop page",
+    "text": "शॉप पेज",
+    "status": "machine",
+    "context": "pageCodes.type-vk-2.label"
+  },
   "3d33dc0484e1": {
     "source": "Name badge",
     "text": "नेम बैज",
@@ -24406,6 +27664,36 @@
     "text": "फ़्लायर",
     "status": "machine",
     "context": "pageCodes.type-mecard-4.label"
+  },
+  "0072e6b93494": {
+    "source": "Design",
+    "text": "डिज़ाइन",
+    "status": "machine",
+    "context": "pageCodes.type-canva-4.label"
+  },
+  "d6eafe823591": {
+    "source": "Download",
+    "text": "डाउनलोड",
+    "status": "machine",
+    "context": "pageCodes.type-app-store-1.label"
+  },
+  "190a69421640": {
+    "source": "Rate us",
+    "text": "रेट करें",
+    "status": "machine",
+    "context": "pageCodes.type-app-store-2.label"
+  },
+  "960618202242": {
+    "source": "Store counter",
+    "text": "स्टोर काउंटर",
+    "status": "machine",
+    "context": "pageCodes.type-google-play-3.label"
+  },
+  "174c7bd1b3f7": {
+    "source": "Hotel desk",
+    "text": "होटल डेस्क",
+    "status": "machine",
+    "context": "pageCodes.type-tripadvisor-2.label"
   },
   "0432f20a0f65": {
     "source": "Table menu",
@@ -24893,6 +28181,42 @@
     "status": "machine",
     "context": "pageCodes.for-salons-4.label"
   },
+  "f4830a1dae29": {
+    "source": "Schedule",
+    "text": "शेड्यूल",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-3.label"
+  },
+  "f3befcc6b14e": {
+    "source": "Spreadsheet",
+    "text": "स्प्रेडशीट",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-4.label"
+  },
+  "1799ee8d33d6": {
+    "source": "Class deck",
+    "text": "क्लास डेक",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-2.label"
+  },
+  "6af11cc59404": {
+    "source": "Pitch",
+    "text": "पिच",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-3.label"
+  },
+  "5d5ee1577500": {
+    "source": "Presentation",
+    "text": "प्रेज़ेंटेशन",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-4.label"
+  },
+  "3cc08ebe9d5f": {
+    "source": "Sign-up",
+    "text": "साइन-अप",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-1.label"
+  },
   "3a08dec415e7": {
     "source": "Class timetable",
     "text": "क्लास टाइमटेबल",
@@ -25043,6 +28367,18 @@
     "status": "machine",
     "context": "pageCodes.on-business-cards-2.label"
   },
+  "cb98674f4d96": {
+    "source": "Exhibition",
+    "text": "प्रदर्शनी",
+    "status": "machine",
+    "context": "pageCodes.type-behance-3.label"
+  },
+  "04e2a9728af7": {
+    "source": "Projects",
+    "text": "प्रोजेक्ट",
+    "status": "machine",
+    "context": "pageCodes.type-behance-4.label"
+  },
   "14a6d239da60": {
     "source": "2-for-1",
     "text": "2 के साथ 1",
@@ -25084,6 +28420,60 @@
     "text": "टूर",
     "status": "machine",
     "context": "pageCodes.on-brochures-2.label"
+  },
+  "fc7f1aa2054c": {
+    "source": "Listing",
+    "text": "लिस्टिंग",
+    "status": "machine",
+    "context": "pageCodes.type-tripadvisor-4.label"
+  },
+  "6846c19a5714": {
+    "source": "Packing slip",
+    "text": "पैकिंग स्लिप",
+    "status": "machine",
+    "context": "pageCodes.type-trustpilot-3.label"
+  },
+  "19734a1b58ca": {
+    "source": "Window",
+    "text": "विंडो",
+    "status": "machine",
+    "context": "pageCodes.type-yelp-3.label"
+  },
+  "99cf4b5719d6": {
+    "source": "Welcome book",
+    "text": "वेलकम बुक",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-1.label"
+  },
+  "29f3df617cba": {
+    "source": "Book again",
+    "text": "दोबारा बुक करें",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-2.label"
+  },
+  "8eab0f09df01": {
+    "source": "Experience",
+    "text": "एक्सपीरियंस",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-3.label"
+  },
+  "e6aa9b5b8581": {
+    "source": "Front desk",
+    "text": "फ़्रंट डेस्क",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-1.label"
+  },
+  "a12b6221b64a": {
+    "source": "Guest book",
+    "text": "गेस्ट बुक",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-2.label"
+  },
+  "40040cb181f7": {
+    "source": "Property",
+    "text": "प्रॉपर्टी",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-4.label"
   },
   "015b4e0a76e5": {
     "source": "Specifications",
@@ -25246,6 +28636,30 @@
     "text": "सर्वे",
     "status": "machine",
     "context": "pageCodes.on-receipts-4.label"
+  },
+  "03aa7dc16797": {
+    "source": "Quiz",
+    "text": "क्विज़",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-3.label"
+  },
+  "2e0e960ab320": {
+    "source": "Form",
+    "text": "फ़ॉर्म",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-4.label"
+  },
+  "63ec69fde300": {
+    "source": "Wiki",
+    "text": "विकी",
+    "status": "machine",
+    "context": "pageCodes.type-notion-1.label"
+  },
+  "5e3e3c190185": {
+    "source": "Event guide",
+    "text": "इवेंट गाइड",
+    "status": "machine",
+    "context": "pageCodes.type-notion-2.label"
   },
   "e888155d8c7d": {
     "source": "Compare",
@@ -27659,6 +31073,90 @@
     "status": "machine",
     "context": "templates.event.label"
   },
+  "c3a7b99442dc": {
+    "source": "Brand page",
+    "text": "ब्रांड पेज",
+    "status": "machine",
+    "context": "pageCodes.type-weibo-2.label"
+  },
+  "ccf56ef5db0b": {
+    "source": "Launch",
+    "text": "लॉन्च",
+    "status": "machine",
+    "context": "pageCodes.type-weibo-3.label"
+  },
+  "8c6bc099534a": {
+    "source": "Blog",
+    "text": "ब्लॉग",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-1.label"
+  },
+  "62bfe02804a0": {
+    "source": "Zine",
+    "text": "ज़ीन",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-2.label"
+  },
+  "0cea784f9901": {
+    "source": "Art blog",
+    "text": "आर्ट ब्लॉग",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-3.label"
+  },
+  "a80811cf6889": {
+    "source": "Posts",
+    "text": "पोस्ट",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-4.label"
+  },
+  "29d94922512b": {
+    "source": "Article",
+    "text": "लेख",
+    "status": "machine",
+    "context": "pageCodes.type-medium-1.label"
+  },
+  "d95082a2ee57": {
+    "source": "Author",
+    "text": "लेखक",
+    "status": "machine",
+    "context": "pageCodes.type-medium-3.label"
+  },
+  "6d09cf574882": {
+    "source": "Stories",
+    "text": "कहानियाँ",
+    "status": "machine",
+    "context": "pageCodes.type-medium-4.label"
+  },
+  "f84ca2e7716b": {
+    "source": "Newsletter",
+    "text": "न्यूज़लेटर",
+    "status": "machine",
+    "context": "pageCodes.type-substack-1.label"
+  },
+  "560401f3f20f": {
+    "source": "Book table",
+    "text": "टेबल बुक करें",
+    "status": "machine",
+    "context": "pageCodes.type-substack-3.label"
+  },
+  "15fc65b69327": {
+    "source": "Publication",
+    "text": "पब्लिकेशन",
+    "status": "machine",
+    "context": "pageCodes.type-substack-4.label"
+  },
+  "13d6ff07b8a5": {
+    "source": "Repository",
+    "text": "रिपॉज़िटरी",
+    "status": "machine",
+    "context": "pageCodes.type-github-1.label"
+  },
+  "419a866e5bf3": {
+    "source": "Talk slide",
+    "text": "टॉक स्लाइड",
+    "status": "machine",
+    "context": "pageCodes.type-github-2.label"
+  },
   "a66124dde0e9": {
     "source": "Date, venue, tickets and add-to-calendar for an event",
     "text": "किसी इवेंट के लिए तारीख़, स्थान, टिकट और कैलेंडर में जोड़ने की सुविधा",
@@ -28211,6 +31709,12 @@
     "status": "machine",
     "context": "templates.pdf.variants.document.name"
   },
+  "d92bcca77171": {
+    "source": "Sign-up sheet",
+    "text": "साइन-अप शीट",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-1.label"
+  },
   "9cb55ffd93d1": {
     "source": "A guide or manual, front and center",
     "text": "कोई गाइड या मैनुअल, सबसे आगे",
@@ -28313,6 +31817,12 @@
     "status": "machine",
     "context": "templates.mp3.variants.album.name"
   },
+  "051f01f095a2": {
+    "source": "Track",
+    "text": "ट्रैक",
+    "status": "machine",
+    "context": "pageCodes.type-apple-music-4.label"
+  },
   "f10cf3d63108": {
     "source": "Cover art, a playlist and your profiles",
     "text": "कवर आर्ट, प्लेलिस्ट और आपकी प्रोफ़ाइल",
@@ -28396,6 +31906,84 @@
     "text": "मिक्सटेप",
     "status": "machine",
     "context": "templates.playlist.variants.mixtape.name"
+  },
+  "b19c450b47d6": {
+    "source": "Episode",
+    "text": "एपिसोड",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-2.label"
+  },
+  "dd40d8d1bff8": {
+    "source": "Live taping",
+    "text": "लाइव रिकॉर्डिंग",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-3.label"
+  },
+  "0df6f1cad36c": {
+    "source": "Show",
+    "text": "शो",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-4.label"
+  },
+  "74203ab8388c": {
+    "source": "Merch tag",
+    "text": "मर्च टैग",
+    "status": "machine",
+    "context": "pageCodes.type-amazon-music-3.label"
+  },
+  "79ac1952b567": {
+    "source": "New release",
+    "text": "नई रिलीज़",
+    "status": "machine",
+    "context": "pageCodes.type-deezer-1.label"
+  },
+  "dfa82f21b3f3": {
+    "source": "Party",
+    "text": "पार्टी",
+    "status": "machine",
+    "context": "pageCodes.type-deezer-2.label"
+  },
+  "71ab02f6fd29": {
+    "source": "Listening bar",
+    "text": "लिसनिंग बार",
+    "status": "machine",
+    "context": "pageCodes.type-tidal-2.label"
+  },
+  "8888a029aaf6": {
+    "source": "Single",
+    "text": "सिंगल",
+    "status": "machine",
+    "context": "pageCodes.type-tidal-3.label"
+  },
+  "bfdd510698ef": {
+    "source": "Record",
+    "text": "रिकॉर्ड",
+    "status": "machine",
+    "context": "pageCodes.type-bandcamp-3.label"
+  },
+  "1d3981ba1e18": {
+    "source": "Artist",
+    "text": "आर्टिस्ट",
+    "status": "machine",
+    "context": "pageCodes.type-bandcamp-4.label"
+  },
+  "f84806199588": {
+    "source": "Handout",
+    "text": "हैंडआउट",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-1.label"
+  },
+  "9e6c24f51918": {
+    "source": "Meeting notes",
+    "text": "मीटिंग नोट्स",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-2.label"
+  },
+  "934652dce41d": {
+    "source": "Instructions",
+    "text": "निर्देश",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-3.label"
   },
   "fae3b174bf21": {
     "source": "Cover art, the tracklist and where else to listen",
@@ -34037,12 +37625,6 @@
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "कोड को PNG, WebP या SVG में डाउनलोड करें।",
-    "status": "machine",
-    "context": "qrTypes.types.text.steps.3"
-  },
   "0135740ce7f9": {
     "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
     "text": "Wi-Fi QR code बनाएं, ताकि मेहमान एक स्कैन में आपके नेटवर्क से जुड़ जाएं। WPA/WPA2, WEP और ओपन नेटवर्क, छिपे SSID, सही एस्केपिंग। फ़्री।",
@@ -34060,12 +37642,6 @@
     "text": "जांचें कि नेटवर्क का नाम बिल्कुल सही है (यह छोटे-बड़े अक्षरों में फ़र्क करता है), सिक्योरिटी टाइप सही है और आप रेंज में हैं। यूज़रनेम या सर्टिफ़िकेट वाले एंटरप्राइज़ नेटवर्क (WPA2-Enterprise) इस फ़ॉर्मैट में सपोर्ट नहीं होते।",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.answer"
-  },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "PNG, WebP या SVG डाउनलोड करें, या पूरे एडिटर में कोड को स्टाइल करें।",
-    "status": "machine",
-    "context": "qrTypes.types.instagram.steps.3"
   },
   "da2ccbd9fdc4": {
     "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",

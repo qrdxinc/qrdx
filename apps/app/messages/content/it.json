@@ -899,6 +899,492 @@
     "status": "machine",
     "context": "contentTypes.list.monero.description"
   },
+  "9a523eddafc6": {
+    "source": "Messenger",
+    "text": "Messenger",
+    "status": "machine",
+    "context": "contentTypes.list.messenger.label"
+  },
+  "8bc2e9451ce0": {
+    "source": "Start a Messenger chat with you",
+    "text": "Avvia una chat Messenger con te",
+    "status": "machine",
+    "context": "contentTypes.list.messenger.description"
+  },
+  "2db2c27ad99b": {
+    "source": "Viber",
+    "text": "Viber",
+    "status": "machine",
+    "context": "contentTypes.list.viber.label"
+  },
+  "127559d99e2e": {
+    "source": "Open a Viber business chat or community",
+    "text": "Apri una chat aziendale o una community su Viber",
+    "status": "machine",
+    "context": "contentTypes.list.viber.description"
+  },
+  "216924fd2e69": {
+    "source": "KakaoTalk",
+    "text": "KakaoTalk",
+    "status": "machine",
+    "context": "contentTypes.list.kakaotalk.label"
+  },
+  "b39f1ec3ccd1": {
+    "source": "Open a KakaoTalk open chat or channel",
+    "text": "Apri una chat aperta o un canale KakaoTalk",
+    "status": "machine",
+    "context": "contentTypes.list.kakaotalk.description"
+  },
+  "8f9500d52394": {
+    "source": "Zalo",
+    "text": "Zalo",
+    "status": "machine",
+    "context": "contentTypes.list.zalo.label"
+  },
+  "4847482adcf9": {
+    "source": "Open a Zalo Official Account or group",
+    "text": "Apri un Official Account o un gruppo Zalo",
+    "status": "machine",
+    "context": "contentTypes.list.zalo.description"
+  },
+  "465047c17854": {
+    "source": "FaceTime",
+    "text": "FaceTime",
+    "status": "machine",
+    "context": "contentTypes.list.facetime.label"
+  },
+  "4f153691a034": {
+    "source": "Start a FaceTime call",
+    "text": "Avvia una chiamata FaceTime",
+    "status": "machine",
+    "context": "contentTypes.list.facetime.description"
+  },
+  "a7b52b269a23": {
+    "source": "Microsoft Teams",
+    "text": "Microsoft Teams",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-teams.label"
+  },
+  "3d13b14cfef7": {
+    "source": "Join a Teams meeting or start a chat",
+    "text": "Partecipa a una riunione Teams o avvia una chat",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-teams.description"
+  },
+  "382c1b2987d4": {
+    "source": "Webex",
+    "text": "Webex",
+    "status": "machine",
+    "context": "contentTypes.list.webex.label"
+  },
+  "651115a0e158": {
+    "source": "Join a Webex meeting",
+    "text": "Partecipa a una riunione Webex",
+    "status": "machine",
+    "context": "contentTypes.list.webex.description"
+  },
+  "f7b8dd5ece88": {
+    "source": "Calendly",
+    "text": "Calendly",
+    "status": "machine",
+    "context": "contentTypes.list.calendly.label"
+  },
+  "b51ffd6c5b56": {
+    "source": "Let people book time with you",
+    "text": "Fai prenotare un appuntamento con te",
+    "status": "machine",
+    "context": "contentTypes.list.calendly.description"
+  },
+  "343856a7c4d7": {
+    "source": "Google Classroom",
+    "text": "Google Classroom",
+    "status": "machine",
+    "context": "contentTypes.list.google-classroom.label"
+  },
+  "a0b88730be29": {
+    "source": "Invite students to a class",
+    "text": "Invita gli studenti a una classe",
+    "status": "machine",
+    "context": "contentTypes.list.google-classroom.description"
+  },
+  "7f607b65bde0": {
+    "source": "VK",
+    "text": "VK",
+    "status": "machine",
+    "context": "contentTypes.list.vk.label"
+  },
+  "4eb6770af4f6": {
+    "source": "Open a VK profile, page or group",
+    "text": "Apri un profilo, una pagina o un gruppo VK",
+    "status": "machine",
+    "context": "contentTypes.list.vk.description"
+  },
+  "5b16689ed91a": {
+    "source": "Weibo",
+    "text": "Weibo",
+    "status": "machine",
+    "context": "contentTypes.list.weibo.label"
+  },
+  "5f9443faa00a": {
+    "source": "Open a Weibo profile",
+    "text": "Apri un profilo Weibo",
+    "status": "machine",
+    "context": "contentTypes.list.weibo.description"
+  },
+  "3ce8b7c75edc": {
+    "source": "Tumblr",
+    "text": "Tumblr",
+    "status": "machine",
+    "context": "contentTypes.list.tumblr.label"
+  },
+  "4e5c671bbb96": {
+    "source": "Open a Tumblr blog",
+    "text": "Apri un blog Tumblr",
+    "status": "machine",
+    "context": "contentTypes.list.tumblr.description"
+  },
+  "8e588cd18774": {
+    "source": "Medium",
+    "text": "Medium",
+    "status": "machine",
+    "context": "contentTypes.list.medium.label"
+  },
+  "34700bc18214": {
+    "source": "Open a Medium profile or story",
+    "text": "Apri un profilo o una storia su Medium",
+    "status": "machine",
+    "context": "contentTypes.list.medium.description"
+  },
+  "8c339ec81c3e": {
+    "source": "Substack",
+    "text": "Substack",
+    "status": "machine",
+    "context": "contentTypes.list.substack.label"
+  },
+  "5c84a14e63b0": {
+    "source": "Open a Substack newsletter",
+    "text": "Apri una newsletter Substack",
+    "status": "machine",
+    "context": "contentTypes.list.substack.description"
+  },
+  "f911e414cf6b": {
+    "source": "GitHub",
+    "text": "GitHub",
+    "status": "machine",
+    "context": "contentTypes.list.github.label"
+  },
+  "d61a83c4cae9": {
+    "source": "Open a GitHub profile or repository",
+    "text": "Apri un profilo o un repository GitHub",
+    "status": "machine",
+    "context": "contentTypes.list.github.description"
+  },
+  "ad21424a84d7": {
+    "source": "Behance",
+    "text": "Behance",
+    "status": "machine",
+    "context": "contentTypes.list.behance.label"
+  },
+  "6246bf5d9570": {
+    "source": "Open a Behance portfolio",
+    "text": "Apri un portfolio Behance",
+    "status": "machine",
+    "context": "contentTypes.list.behance.description"
+  },
+  "61bce589e672": {
+    "source": "Dribbble",
+    "text": "Dribbble",
+    "status": "machine",
+    "context": "contentTypes.list.dribbble.label"
+  },
+  "ee0902dedd27": {
+    "source": "Open a Dribbble portfolio",
+    "text": "Apri un portfolio Dribbble",
+    "status": "machine",
+    "context": "contentTypes.list.dribbble.description"
+  },
+  "2339a2623267": {
+    "source": "Linktree",
+    "text": "Linktree",
+    "status": "machine",
+    "context": "contentTypes.list.linktree.label"
+  },
+  "c36a62ec05ac": {
+    "source": "Open your Linktree page",
+    "text": "Apri la tua pagina Linktree",
+    "status": "machine",
+    "context": "contentTypes.list.linktree.description"
+  },
+  "eec736f63bbb": {
+    "source": "Patreon",
+    "text": "Patreon",
+    "status": "machine",
+    "context": "contentTypes.list.patreon.label"
+  },
+  "d990a359dba9": {
+    "source": "Open a Patreon creator page",
+    "text": "Apri la pagina di un creator su Patreon",
+    "status": "machine",
+    "context": "contentTypes.list.patreon.description"
+  },
+  "76c38e42cf40": {
+    "source": "Ko-fi",
+    "text": "Ko-fi",
+    "status": "machine",
+    "context": "contentTypes.list.kofi.label"
+  },
+  "03f20f7907bc": {
+    "source": "Get tips on your Ko-fi page",
+    "text": "Ricevi mance sulla tua pagina Ko-fi",
+    "status": "machine",
+    "context": "contentTypes.list.kofi.description"
+  },
+  "50a0dd1c115d": {
+    "source": "Buy Me a Coffee",
+    "text": "Buy Me a Coffee",
+    "status": "machine",
+    "context": "contentTypes.list.buymeacoffee.label"
+  },
+  "cb2d6fb0e8f2": {
+    "source": "Get tips on your Buy Me a Coffee page",
+    "text": "Ricevi mance sulla tua pagina Buy Me a Coffee",
+    "status": "machine",
+    "context": "contentTypes.list.buymeacoffee.description"
+  },
+  "3b00b32d64af": {
+    "source": "Apple Music",
+    "text": "Apple Music",
+    "status": "machine",
+    "context": "contentTypes.list.apple-music.label"
+  },
+  "d12f244b2b95": {
+    "source": "Play a song, album or playlist",
+    "text": "Riproduci un brano, album o playlist",
+    "status": "machine",
+    "context": "contentTypes.list.apple-music.description"
+  },
+  "6921a7cac539": {
+    "source": "YouTube Music",
+    "text": "YouTube Music",
+    "status": "machine",
+    "context": "contentTypes.list.youtube-music.label"
+  },
+  "40dd3b330ddf": {
+    "source": "Apple Podcasts",
+    "text": "Apple Podcasts",
+    "status": "machine",
+    "context": "contentTypes.list.apple-podcasts.label"
+  },
+  "37ad409c6b53": {
+    "source": "Open a podcast or episode",
+    "text": "Apri un podcast o un episodio",
+    "status": "machine",
+    "context": "contentTypes.list.apple-podcasts.description"
+  },
+  "2faf9cfdecef": {
+    "source": "Amazon Music",
+    "text": "Amazon Music",
+    "status": "machine",
+    "context": "contentTypes.list.amazon-music.label"
+  },
+  "4997d093758b": {
+    "source": "Deezer",
+    "text": "Deezer",
+    "status": "machine",
+    "context": "contentTypes.list.deezer.label"
+  },
+  "01bec391e74c": {
+    "source": "Play a track, album or playlist",
+    "text": "Riproduci un brano, album o playlist",
+    "status": "machine",
+    "context": "contentTypes.list.deezer.description"
+  },
+  "0f622ac0d050": {
+    "source": "TIDAL",
+    "text": "TIDAL",
+    "status": "machine",
+    "context": "contentTypes.list.tidal.label"
+  },
+  "088f5f25925f": {
+    "source": "Bandcamp",
+    "text": "Bandcamp",
+    "status": "machine",
+    "context": "contentTypes.list.bandcamp.label"
+  },
+  "892c3420832c": {
+    "source": "Open an artist, album or track",
+    "text": "Apri un artista, album o brano",
+    "status": "machine",
+    "context": "contentTypes.list.bandcamp.description"
+  },
+  "507e98c562e1": {
+    "source": "Google Docs",
+    "text": "Google Docs",
+    "status": "machine",
+    "context": "contentTypes.list.google-docs.label"
+  },
+  "5be83e1c47ff": {
+    "source": "Open a shared Google Doc",
+    "text": "Apri un Google Doc condiviso",
+    "status": "machine",
+    "context": "contentTypes.list.google-docs.description"
+  },
+  "f109802a741f": {
+    "source": "Google Sheets",
+    "text": "Google Sheets",
+    "status": "machine",
+    "context": "contentTypes.list.google-sheets.label"
+  },
+  "2be210d8ffba": {
+    "source": "Open a shared spreadsheet",
+    "text": "Apri un foglio di calcolo condiviso",
+    "status": "machine",
+    "context": "contentTypes.list.google-sheets.description"
+  },
+  "6da41d861102": {
+    "source": "Google Slides",
+    "text": "Google Slides",
+    "status": "machine",
+    "context": "contentTypes.list.google-slides.label"
+  },
+  "bfcf6a4e1f4f": {
+    "source": "Open a shared presentation",
+    "text": "Apri una presentazione condivisa",
+    "status": "machine",
+    "context": "contentTypes.list.google-slides.description"
+  },
+  "805259086913": {
+    "source": "Google Forms",
+    "text": "Google Forms",
+    "status": "machine",
+    "context": "contentTypes.list.google-forms.label"
+  },
+  "f151e09bdf83": {
+    "source": "Open a Google Form",
+    "text": "Apri un Google Form",
+    "status": "machine",
+    "context": "contentTypes.list.google-forms.description"
+  },
+  "7645f2073fc8": {
+    "source": "Microsoft Forms",
+    "text": "Microsoft Forms",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-forms.label"
+  },
+  "715275c8faa6": {
+    "source": "Open a Microsoft Form",
+    "text": "Apri un Microsoft Form",
+    "status": "machine",
+    "context": "contentTypes.list.microsoft-forms.description"
+  },
+  "73bcfe98830b": {
+    "source": "Notion",
+    "text": "Notion",
+    "status": "machine",
+    "context": "contentTypes.list.notion.label"
+  },
+  "66b41a05a1ff": {
+    "source": "Open a public Notion page",
+    "text": "Apri una pagina Notion pubblica",
+    "status": "machine",
+    "context": "contentTypes.list.notion.description"
+  },
+  "2f73335c712c": {
+    "source": "Canva",
+    "text": "Canva",
+    "status": "machine",
+    "context": "contentTypes.list.canva.label"
+  },
+  "9b7356ae852d": {
+    "source": "Open a shared Canva design",
+    "text": "Apri un design Canva condiviso",
+    "status": "machine",
+    "context": "contentTypes.list.canva.description"
+  },
+  "c4424d160bca": {
+    "source": "App Store",
+    "text": "App Store",
+    "status": "machine",
+    "context": "contentTypes.list.app-store.label"
+  },
+  "ea863e47112e": {
+    "source": "Open an iPhone app's App Store page",
+    "text": "Apri la pagina App Store di un'app per iPhone",
+    "status": "machine",
+    "context": "contentTypes.list.app-store.description"
+  },
+  "027b1684683a": {
+    "source": "Google Play",
+    "text": "Google Play",
+    "status": "machine",
+    "context": "contentTypes.list.google-play.label"
+  },
+  "4e12b2035297": {
+    "source": "Open an Android app's Google Play page",
+    "text": "Apri la pagina Google Play di un'app Android",
+    "status": "machine",
+    "context": "contentTypes.list.google-play.description"
+  },
+  "d384fa236a1f": {
+    "source": "Tripadvisor",
+    "text": "Tripadvisor",
+    "status": "machine",
+    "context": "contentTypes.list.tripadvisor.label"
+  },
+  "5251ecd50939": {
+    "source": "Open your Tripadvisor listing",
+    "text": "Apri la tua scheda Tripadvisor",
+    "status": "machine",
+    "context": "contentTypes.list.tripadvisor.description"
+  },
+  "26abcb97dbdd": {
+    "source": "Trustpilot",
+    "text": "Trustpilot",
+    "status": "machine",
+    "context": "contentTypes.list.trustpilot.label"
+  },
+  "cc1c9c901110": {
+    "source": "Ask customers for a Trustpilot review",
+    "text": "Chiedi ai clienti una recensione su Trustpilot",
+    "status": "machine",
+    "context": "contentTypes.list.trustpilot.description"
+  },
+  "893919d40bac": {
+    "source": "Yelp",
+    "text": "Yelp",
+    "status": "machine",
+    "context": "contentTypes.list.yelp.label"
+  },
+  "6c9fe4ad62aa": {
+    "source": "Open your Yelp business page",
+    "text": "Apri la tua pagina attività su Yelp",
+    "status": "machine",
+    "context": "contentTypes.list.yelp.description"
+  },
+  "1d927621f532": {
+    "source": "Airbnb",
+    "text": "Airbnb",
+    "status": "machine",
+    "context": "contentTypes.list.airbnb.label"
+  },
+  "a33bb31179a5": {
+    "source": "Open an Airbnb listing or experience",
+    "text": "Apri un annuncio o un'esperienza Airbnb",
+    "status": "machine",
+    "context": "contentTypes.list.airbnb.description"
+  },
+  "14bb3cc7d001": {
+    "source": "Booking.com",
+    "text": "Booking.com",
+    "status": "machine",
+    "context": "contentTypes.list.booking-com.label"
+  },
+  "4ffbeae0492e": {
+    "source": "Open your Booking.com property page",
+    "text": "Apri la pagina della tua struttura su Booking.com",
+    "status": "machine",
+    "context": "contentTypes.list.booking-com.description"
+  },
   "ca7e3d788516": {
     "source": "MeCard",
     "text": "MeCard",
@@ -1055,6 +1541,12 @@
     "status": "machine",
     "context": "contentTypes.groups.social.label"
   },
+  "b61fa44e6c70": {
+    "source": "Music & podcasts",
+    "text": "Musica e podcast",
+    "status": "machine",
+    "context": "contentTypes.groups.music.label"
+  },
   "76f68a75f01e": {
     "source": "Business",
     "text": "Attività",
@@ -1085,9 +1577,9 @@
     "status": "machine",
     "context": "qrTypes.groups.utilities.title"
   },
-  "a271af9bf106": {
-    "source": "Websites, plain text, Wi-Fi logins and links to files or short links.",
-    "text": "Siti web, testo semplice, accessi Wi-Fi e link a file o link brevi.",
+  "52aef28f5f92": {
+    "source": "Websites, plain text, Wi-Fi logins, shared documents and forms, app store pages and short links.",
+    "text": "Siti web, testo semplice, accessi Wi-Fi, documenti e moduli condivisi, pagine degli store di app e link brevi.",
     "status": "machine",
     "context": "qrTypes.groups.utilities.description"
   },
@@ -1097,9 +1589,9 @@
     "status": "machine",
     "context": "qrTypes.groups.contact.title"
   },
-  "1771803787ab": {
-    "source": "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Signal or LINE.",
-    "text": "Salva un contatto, chiama, scrivi un SMS o un'email, oppure apri una chat su WhatsApp, Telegram, Signal o LINE.",
+  "70f1152fb7bd": {
+    "source": "Save a contact, call, text or email, or open a chat in WhatsApp, Telegram, Messenger, LINE or KakaoTalk.",
+    "text": "Salva un contatto, chiama, invia un SMS o un'email, oppure apri una chat su WhatsApp, Telegram, Messenger, LINE o KakaoTalk.",
     "status": "machine",
     "context": "qrTypes.groups.contact.description"
   },
@@ -1109,9 +1601,9 @@
     "status": "machine",
     "context": "qrTypes.groups.social.title"
   },
-  "c5bddd3ef7b6": {
-    "source": "Send people to a profile, channel, Discord server or playlist.",
-    "text": "Porta le persone su un profilo, un canale, un server Discord o una playlist.",
+  "677940560013": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, album or podcast.",
+    "text": "Porta le persone a un profilo, un canale, un server Discord, una newsletter, un album o un podcast.",
     "status": "machine",
     "context": "qrTypes.groups.social.description"
   },
@@ -1127,9 +1619,9 @@
     "status": "machine",
     "context": "qrTypes.groups.business.title"
   },
-  "40ae6347e760": {
-    "source": "Reviews, directions, bookings, meetings and attendance check-ins.",
-    "text": "Recensioni, indicazioni stradali, prenotazioni, riunioni e check-in di presenza.",
+  "5c9a02d00b51": {
+    "source": "Reviews, listings, directions, bookings, meetings, classes and attendance check-ins.",
+    "text": "Recensioni, schede attività, indicazioni stradali, prenotazioni, riunioni, corsi e check-in per le presenze.",
     "status": "machine",
     "context": "qrTypes.groups.business.description"
   },
@@ -6701,6 +7193,2622 @@
     "status": "machine",
     "context": "qrTypes.types.monero.details.paragraphs.1"
   },
+  "87cb1f50205c": {
+    "source": "Open a Messenger chat with you or your Page.",
+    "text": "Apri una chat di Messenger con te o con la tua Pagina.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.summary"
+  },
+  "b7b98dca2c76": {
+    "source": "Make a Messenger QR code from your Facebook username. People scan to start a chat with you or your Page. m.me link, free, no signup.",
+    "text": "Crea un QR code per Messenger a partire dal tuo nome utente Facebook. Con la scansione, le persone avviano una chat con te o con la tua Pagina. Link m.me, gratis, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.metaDescription"
+  },
+  "8d2f18c58c28": {
+    "source": "A Messenger QR code opens a chat with you, or with your business's Facebook Page, so customers can ask a question from a shop window, a flyer or a receipt.",
+    "text": "Un QR code per Messenger apre una chat con te o con la Pagina Facebook della tua attività, così i clienti possono fare una domanda da una vetrina, un volantino o uno scontrino.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.intro.0"
+  },
+  "500e6c017cda": {
+    "source": "Type the username of your Facebook profile or Page and QRdx builds the m.me link Meta gives every username, or paste the m.me link itself.",
+    "text": "Scrivi il nome utente del tuo profilo o della tua Pagina Facebook e QRdx crea il link m.me che Meta assegna a ogni nome utente, oppure incolla direttamente il link m.me.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.intro.1"
+  },
+  "ddd574b28a22": {
+    "source": "Enter your Facebook username, or paste your m.me link.",
+    "text": "Inserisci il tuo nome utente Facebook, oppure incolla il tuo link m.me.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.steps.0"
+  },
+  "46bd204ff500": {
+    "source": "Scan the preview to check the chat opens.",
+    "text": "Fai la scansione dell'anteprima per verificare che la chat si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.steps.1"
+  },
+  "a0c86702d095": {
+    "source": "Facebook usernames are letters, digits and dots.",
+    "text": "I nomi utente di Facebook sono composti da lettere, cifre e punti.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.payload.notes.0"
+  },
+  "84cca9616632": {
+    "source": "m.me links open the Messenger app when it's installed, or Messenger in the browser.",
+    "text": "I link m.me aprono l'app Messenger se è installata, altrimenti Messenger nel browser.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.payload.notes.1"
+  },
+  "d68dad346d27": {
+    "source": "It's the last part of your profile's or Page's address on Facebook, after facebook.com/. A Page without a username can set one in its settings.",
+    "text": "È l'ultima parte dell'indirizzo del tuo profilo o della tua Pagina su Facebook, dopo facebook.com/. Una Pagina senza nome utente può impostarne uno nelle sue impostazioni.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.0.answer"
+  },
+  "05a5da7f487f": {
+    "source": "Does it work for a business Page?",
+    "text": "Funziona con la Pagina di un'attività?",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.1.question"
+  },
+  "a78e0fb4ffec": {
+    "source": "Yes. A Page's m.me link opens a chat with the Page, and the messages arrive in the Page's inbox.",
+    "text": "Sì. Il link m.me di una Pagina apre una chat con la Pagina e i messaggi arrivano nella posta in arrivo della Pagina.",
+    "status": "machine",
+    "context": "qrTypes.types.messenger.faqs.1.answer"
+  },
+  "c4ba95ee6d7e": {
+    "source": "Open a Viber business chat, community or channel.",
+    "text": "Apri una chat aziendale, una community o un canale su Viber.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.summary"
+  },
+  "a71489e78f3c": {
+    "source": "Create a Viber QR code for a business chat by number, or to invite people to your community or channel. viber.me and invite links. Free.",
+    "text": "Crea un QR code per Viber per una chat aziendale tramite numero, oppure per invitare le persone alla tua community o al tuo canale. Link viber.me e link di invito. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.metaDescription"
+  },
+  "6ef9674b9362": {
+    "source": "A Viber QR code opens a chat with your business, or invites people to your Viber community or channel, from a shop counter, a menu or a poster.",
+    "text": "Un QR code per Viber apre una chat con la tua attività, oppure invita le persone alla tua community o al tuo canale Viber, da un bancone, un menu o un poster.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.intro.0"
+  },
+  "da02c8d4d928": {
+    "source": "For a chat, enter your Viber Business account's number and an optional first message; QRdx builds the viber.me link Viber gives business accounts. For a community or channel, paste its Invite URL from the app.",
+    "text": "Per una chat, inserisci il numero del tuo account Viber Business e, se vuoi, un primo messaggio: QRdx crea il link viber.me che Viber assegna agli account aziendali. Per una community o un canale, incolla il relativo URL di invito dall'app.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.intro.1"
+  },
+  "f261dd7a71b7": {
+    "source": "Choose a business chat, or a community or channel.",
+    "text": "Scegli una chat aziendale, oppure una community o un canale.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.0"
+  },
+  "86882b4b1434": {
+    "source": "Enter the business number with its country code, or paste the Invite URL.",
+    "text": "Inserisci il numero aziendale con il prefisso internazionale, oppure incolla l'URL di invito.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.1"
+  },
+  "9c45559e6431": {
+    "source": "Scan the preview with Viber installed to check it opens.",
+    "text": "Fai la scansione dell'anteprima con Viber installato per verificare che si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.steps.2"
+  },
+  "9cb54423b2a8": {
+    "source": "The number is written in full international format, digits only, as Viber asks.",
+    "text": "Il numero viene scritto nel formato internazionale completo, solo con cifre, come richiede Viber.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.payload.notes.0"
+  },
+  "f3530eff7c88": {
+    "source": "Invite URLs are kept exactly as Viber gives them.",
+    "text": "Gli URL di invito vengono mantenuti esattamente come li fornisce Viber.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.payload.notes.1"
+  },
+  "17a39bc9be1d": {
+    "source": "Can I make a chat code for a personal number?",
+    "text": "Posso creare un codice per la chat di un numero personale?",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.0.question"
+  },
+  "9d314104cc35": {
+    "source": "Viber's chat links by number are for Viber Business accounts. For a personal number, share a community or channel, or use a WhatsApp or Telegram code.",
+    "text": "I link di chat tramite numero di Viber sono pensati per gli account Viber Business. Per un numero personale, condividi una community o un canale, oppure usa un codice per WhatsApp o Telegram.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.0.answer"
+  },
+  "cf6610208dfd": {
+    "source": "Will the community link keep working?",
+    "text": "Il link della community continuerà a funzionare?",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.1.question"
+  },
+  "2c8b4037a973": {
+    "source": "As long as the Invite URL does. If an admin resets the link in Viber, make a new code.",
+    "text": "Finché funziona l'URL di invito. Se un amministratore reimposta il link in Viber, crea un nuovo codice.",
+    "status": "machine",
+    "context": "qrTypes.types.viber.faqs.1.answer"
+  },
+  "08e60ec1c791": {
+    "source": "Open a KakaoTalk open chat or channel.",
+    "text": "Apri una open chat o un canale di KakaoTalk.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.summary"
+  },
+  "5f323e3b6819": {
+    "source": "Make a KakaoTalk QR code that opens your open chat room or Kakao Talk Channel. Paste the link from the app or enter your channel ID. Free.",
+    "text": "Crea un QR code di KakaoTalk che apre la tua open chat o il tuo Kakao Talk Channel. Incolla il link dall'app o inserisci l'ID del canale. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.metaDescription"
+  },
+  "60fd2b87e617": {
+    "source": "A KakaoTalk QR code opens your open chat room, or your business's Kakao Talk Channel where people can add you and send a message.",
+    "text": "Un QR code di KakaoTalk apre la tua open chat, oppure il Kakao Talk Channel della tua attività, dove le persone possono aggiungerti e mandarti un messaggio.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.intro.0"
+  },
+  "d9f5c057dd32": {
+    "source": "Paste the open chat link (open.kakao.com/o/…) or the channel link (pf.kakao.com/_…), or type the channel ID that starts with an underscore.",
+    "text": "Incolla il link della open chat (open.kakao.com/o/…) o del canale (pf.kakao.com/_…), oppure scrivi l'ID del canale, che inizia con un trattino basso.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.intro.1"
+  },
+  "ad9a8bb30a65": {
+    "source": "Copy the open chat's share link, or your channel's link from the Kakao Talk Channel partner center.",
+    "text": "Copia il link di condivisione della open chat, oppure il link del tuo canale dal partner center di Kakao Talk Channel.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.0"
+  },
+  "98bf05380163": {
+    "source": "Paste it here, or type the channel ID, like _AbCdEf.",
+    "text": "Incollalo qui, oppure scrivi l'ID del canale, ad esempio _AbCdEf.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.1"
+  },
+  "e8aece3347c7": {
+    "source": "Scan the preview to check KakaoTalk opens.",
+    "text": "Fai una scansione dell'anteprima per controllare che KakaoTalk si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.steps.2"
+  },
+  "7409dae6d535": {
+    "source": "A typed channel ID becomes its pf.kakao.com link.",
+    "text": "Un ID del canale scritto a mano diventa il suo link pf.kakao.com.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.payload.notes.0"
+  },
+  "70374e959bec": {
+    "source": "Pasted links are kept as they are.",
+    "text": "I link incollati restano così come sono.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.payload.notes.1"
+  },
+  "fa97fa556c79": {
+    "source": "Where is my channel ID?",
+    "text": "Dov'è l'ID del mio canale?",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.0.question"
+  },
+  "ecf630ee7617": {
+    "source": "In the Kakao Talk Channel partner center, with your channel's details. It starts with an underscore.",
+    "text": "Nel partner center di Kakao Talk Channel, tra i dettagli del tuo canale. Inizia con un trattino basso.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.0.answer"
+  },
+  "2c28296169be": {
+    "source": "Can people join an open chat without the app?",
+    "text": "Si può entrare in una open chat senza l'app?",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.1.question"
+  },
+  "6d4a137b35bb": {
+    "source": "No. The link opens KakaoTalk, which people need to join the room.",
+    "text": "No. Il link apre KakaoTalk, che serve per entrare nella chat.",
+    "status": "machine",
+    "context": "qrTypes.types.kakaotalk.faqs.1.answer"
+  },
+  "bbaf8c78fa3e": {
+    "source": "Open a Zalo Official Account or group.",
+    "text": "Apri un Official Account o un gruppo Zalo.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.summary"
+  },
+  "d9d33227c0a4": {
+    "source": "Create a Zalo QR code for your Official Account or group. Paste the zalo.me link or enter the account's numeric ID. Free, no signup.",
+    "text": "Crea un QR code di Zalo per il tuo Official Account o per un gruppo. Incolla il link zalo.me o inserisci l'ID numerico dell'account. Gratuito, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.metaDescription"
+  },
+  "e723cc18a188": {
+    "source": "A Zalo QR code opens your business's Zalo Official Account, where people can follow you and send a message, or a Zalo group.",
+    "text": "Un QR code di Zalo apre lo Zalo Official Account della tua attività, dove le persone possono seguirti e mandarti un messaggio, oppure un gruppo Zalo.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.intro.0"
+  },
+  "fe519b5483ae": {
+    "source": "Paste the zalo.me link from your Official Account or group, or type the account's numeric ID, and QRdx writes the zalo.me link.",
+    "text": "Incolla il link zalo.me del tuo Official Account o del gruppo, oppure scrivi l'ID numerico dell'account, e QRdx scrive il link zalo.me.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.intro.1"
+  },
+  "a10894e355ef": {
+    "source": "Copy your Official Account's or group's zalo.me link.",
+    "text": "Copia il link zalo.me del tuo Official Account o del gruppo.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.0"
+  },
+  "30bfe2e7e37b": {
+    "source": "Paste it here, or type the account's ID.",
+    "text": "Incollalo qui, oppure scrivi l'ID dell'account.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.1"
+  },
+  "f7ea295b1e15": {
+    "source": "Scan the preview with Zalo installed to check it opens.",
+    "text": "Fai una scansione dell'anteprima con Zalo installato per controllare che si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.steps.2"
+  },
+  "71a718bd4a29": {
+    "source": "A typed numeric ID becomes its zalo.me link.",
+    "text": "Un ID numerico scritto a mano diventa il suo link zalo.me.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.payload.notes.0"
+  },
+  "e3a2a32fde7f": {
+    "source": "Custom names (zalo.me/yourname) and group links are kept as pasted.",
+    "text": "I nomi personalizzati (zalo.me/yourname) e i link dei gruppi restano così come li incolli.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.payload.notes.1"
+  },
+  "f582219ddebb": {
+    "source": "Can group links stop working?",
+    "text": "I link dei gruppi possono smettere di funzionare?",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.0.question"
+  },
+  "5ed01d72a918": {
+    "source": "Yes. A group admin can turn off or reset the join link, and then the code needs the new one.",
+    "text": "Sì. L'admin di un gruppo può disattivare o reimpostare il link di accesso, e a quel punto il codice richiede quello nuovo.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.0.answer"
+  },
+  "732b44090081": {
+    "source": "Can I use a custom name instead of the ID?",
+    "text": "Posso usare un nome personalizzato al posto dell'ID?",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.1.question"
+  },
+  "fa714eebb972": {
+    "source": "Yes, once Zalo approves a custom link for your Official Account. Paste the zalo.me link with the name.",
+    "text": "Sì, una volta che Zalo approva un link personalizzato per il tuo Official Account. Incolla il link zalo.me con il nome.",
+    "status": "machine",
+    "context": "qrTypes.types.zalo.faqs.1.answer"
+  },
+  "8292f1d90083": {
+    "source": "Start a FaceTime call, or join a FaceTime link.",
+    "text": "Avvia una chiamata FaceTime o partecipa a un link FaceTime.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.summary"
+  },
+  "f14db888ae14": {
+    "source": "Make a FaceTime QR code that calls a phone number or Apple Account email, or opens a FaceTime link anyone can join. Video or audio. Free.",
+    "text": "Crea un QR code FaceTime che chiama un numero di telefono o l'email di un Apple Account, oppure apre un link FaceTime a cui chiunque può partecipare. Video o audio. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.metaDescription"
+  },
+  "2dbda160707d": {
+    "source": "A FaceTime QR code starts a FaceTime call to a phone number or the email of an Apple Account. It works on iPhone, iPad and Mac; other phones can't open it.",
+    "text": "Un QR code FaceTime avvia una chiamata FaceTime a un numero di telefono o all'email di un Apple Account. Funziona su iPhone, iPad e Mac; gli altri telefoni non possono aprirlo.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.intro.0"
+  },
+  "f6c8e3e5ded7": {
+    "source": "For a call anyone can join, including people on Android and Windows in their browser, make a link in FaceTime with Create Link and paste it instead.",
+    "text": "Per una chiamata a cui chiunque può partecipare, anche chi usa Android e Windows nel browser, crea un link in FaceTime con Crea link e incollalo al suo posto.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.intro.1"
+  },
+  "8b5d591b248b": {
+    "source": "Choose a call to a number or email, or a FaceTime link.",
+    "text": "Scegli una chiamata a un numero o a un'email, oppure un link FaceTime.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.0"
+  },
+  "09fd479c886e": {
+    "source": "Enter the number or email (and turn on audio only if you like), or paste the link.",
+    "text": "Inserisci il numero o l'email (e attiva solo audio, se vuoi), oppure incolla il link.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.1"
+  },
+  "867b42180a2d": {
+    "source": "Scan the preview on an iPhone to check FaceTime opens.",
+    "text": "Fai la scansione dell'anteprima con un iPhone per verificare che FaceTime si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.steps.2"
+  },
+  "d2ad4d5aab1a": {
+    "source": "facetime: and facetime-audio: are Apple's URL schemes for FaceTime calls; Apple devices ask before they call.",
+    "text": "facetime: e facetime-audio: sono gli schemi URL di Apple per le chiamate FaceTime; i dispositivi Apple chiedono conferma prima di chiamare.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.payload.notes.0"
+  },
+  "2e5ce83a25c2": {
+    "source": "FaceTime links can't be built from a number: make one in the FaceTime app.",
+    "text": "I link FaceTime non si possono creare a partire da un numero: creane uno nell'app FaceTime.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.payload.notes.1"
+  },
+  "b8e808fecf0d": {
+    "source": "Can Android phones scan it?",
+    "text": "I telefoni Android possono scansionarlo?",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.0.question"
+  },
+  "d096757b3d02": {
+    "source": "A call code only works on Apple devices. A FaceTime link opens on Android and Windows too, where people join from Chrome or Edge.",
+    "text": "Un codice per chiamare funziona solo sui dispositivi Apple. Un link FaceTime si apre anche su Android e Windows, dove si partecipa da Chrome o Edge.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.0.answer"
+  },
+  "be6a27e5e7a2": {
+    "source": "Does the code call right away?",
+    "text": "Il codice chiama subito?",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.1.question"
+  },
+  "900c1860bf08": {
+    "source": "No. The device shows who it's about to call and waits for a tap.",
+    "text": "No. Il dispositivo mostra chi sta per chiamare e aspetta un tocco.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.faqs.1.answer"
+  },
+  "2a727bfe6e05": {
+    "source": "Which devices open a FaceTime code",
+    "text": "Quali dispositivi aprono un codice FaceTime",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.title"
+  },
+  "a442097fd994": {
+    "source": "facetime: and facetime-audio: links open FaceTime on iPhone, iPad and Mac. Android phones and Windows PCs have no FaceTime app, so they can't use them; Apple documents the audio scheme for iPhone and iPad.",
+    "text": "I link facetime: e facetime-audio: aprono FaceTime su iPhone, iPad e Mac. I telefoni Android e i PC Windows non hanno l'app FaceTime, quindi non possono usarli; Apple documenta lo schema audio per iPhone e iPad.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.paragraphs.0"
+  },
+  "3e3f96efb8a8": {
+    "source": "A FaceTime link (facetime.apple.com/join…) is made in the FaceTime app with Create Link. People on Apple devices join in FaceTime, and others join from a current Chrome or Edge browser, but they can't start calls. FaceTime links aren't available in mainland China.",
+    "text": "Un link FaceTime (facetime.apple.com/join…) si crea nell'app FaceTime con Crea link. Chi usa dispositivi Apple partecipa in FaceTime, gli altri partecipano da un browser Chrome o Edge aggiornato, ma non possono avviare chiamate. I link FaceTime non sono disponibili nella Cina continentale.",
+    "status": "machine",
+    "context": "qrTypes.types.facetime.details.paragraphs.1"
+  },
+  "2c015e053f5e": {
+    "source": "Join a Teams meeting or start a Teams chat.",
+    "text": "Partecipa a una riunione Teams o avvia una chat Teams.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.summary"
+  },
+  "6b41a98dac03": {
+    "source": "Create a Microsoft Teams QR code that joins a meeting from its link, or starts a chat with people by work email. For rooms and slides. Free.",
+    "text": "Crea un QR code Microsoft Teams che fa partecipare a una riunione dal suo link, oppure avvia una chat con altre persone tramite l'email di lavoro. Per sale e slide. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.metaDescription"
+  },
+  "33bc247b1744": {
+    "source": "A Microsoft Teams QR code opens a meeting, so people join from a room sign, a slide or a printed agenda, or starts a chat with colleagues by their work email.",
+    "text": "Un QR code Microsoft Teams apre una riunione, così le persone partecipano da un cartello in sala, da una slide o da un'agenda stampata, oppure avvia una chat con i colleghi tramite la loro email di lavoro.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.intro.0"
+  },
+  "a78ea8ed2e5d": {
+    "source": "Paste the meeting's join link from the invite, or enter one or more work or school email addresses and an optional message. QRdx builds the chat link from Microsoft's deep link format.",
+    "text": "Incolla il link di partecipazione alla riunione dall'invito, oppure inserisci uno o più indirizzi email di lavoro o scuola e un messaggio facoltativo. QRdx crea il link della chat dal formato di deep link di Microsoft.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.intro.1"
+  },
+  "cf863d521a7b": {
+    "source": "Choose a meeting or a chat.",
+    "text": "Scegli una riunione o una chat.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.0"
+  },
+  "1edecee263b9": {
+    "source": "Paste the join link, or enter the email addresses and a message.",
+    "text": "Incolla il link di partecipazione, oppure inserisci gli indirizzi email e un messaggio.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.1"
+  },
+  "553e5ddd14fc": {
+    "source": "Scan the preview to check Teams opens.",
+    "text": "Fai la scansione dell'anteprima per verificare che Teams si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.steps.2"
+  },
+  "667b8ef3c8b2": {
+    "source": "Chat links take work or school accounts, separated by commas.",
+    "text": "I link delle chat accettano account di lavoro o scuola, separati da virgole.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.payload.notes.0"
+  },
+  "719788589f30": {
+    "source": "Meeting links are kept as pasted, with their passcode.",
+    "text": "I link delle riunioni restano come sono stati incollati, con il loro passcode.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.payload.notes.1"
+  },
+  "db768bd7023b": {
+    "source": "Do meeting links expire?",
+    "text": "I link delle riunioni scadono?",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.0.question"
+  },
+  "7448b7eadcd3": {
+    "source": "Newer Teams meeting links can expire some time after the meeting. Use a recurring or scheduled meeting for a printed code, and test it before an event.",
+    "text": "I link più recenti delle riunioni Teams possono scadere dopo un po' di tempo dalla riunione. Per un codice stampato usa una riunione ricorrente o pianificata e provalo prima di un evento.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.0.answer"
+  },
+  "f426990a2dc2": {
+    "source": "Can guests outside my organization join?",
+    "text": "Gli ospiti esterni alla mia organizzazione possono partecipare?",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.1.question"
+  },
+  "fd8aff9dbbab": {
+    "source": "They can join meetings that allow guests, from the Teams app or the browser. Chats need a work or school account.",
+    "text": "Possono partecipare alle riunioni che consentono gli ospiti, dall'app Teams o dal browser. Le chat richiedono un account di lavoro o scuola.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-teams.faqs.1.answer"
+  },
+  "fc571860e0e9": {
+    "source": "Join a Webex meeting with one scan.",
+    "text": "Partecipa a una riunione Webex con una scansione.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.summary"
+  },
+  "8d5962a2397f": {
+    "source": "Make a Webex QR code from your Personal Room or meeting link. People join from room signs, slides and agendas. Free, no signup.",
+    "text": "Crea un QR code Webex dal tuo Personal Room o dal link di una riunione. Le persone entrano da cartelli di sala, slide e programmi. Gratis, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.metaDescription"
+  },
+  "970296a4f26b": {
+    "source": "A Webex QR code opens a meeting in Webex, so people join from a slide, a room sign or a printed agenda without typing a meeting number.",
+    "text": "Un QR code Webex apre una riunione in Webex, così le persone entrano da una slide, da un cartello di sala o da un programma stampato senza digitare il numero della riunione.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.intro.0"
+  },
+  "9f5f476c7a50": {
+    "source": "Paste your Personal Room link (yoursite.webex.com/meet/yourname) or the link in a meeting invite. QRdx keeps it as it is.",
+    "text": "Incolla il link del tuo Personal Room (yoursite.webex.com/meet/yourname) o il link di un invito a una riunione. QRdx lo mantiene così com'è.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.intro.1"
+  },
+  "0e1b9c3d49d6": {
+    "source": "Copy your Personal Room link or the meeting's link.",
+    "text": "Copia il link del tuo Personal Room o quello della riunione.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.steps.0"
+  },
+  "aed1448d9c9c": {
+    "source": "Paste it here.",
+    "text": "Incollalo qui.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.steps.1"
+  },
+  "a37041679b12": {
+    "source": "A Personal Room link stays the same for every meeting you host there.",
+    "text": "Il link di un Personal Room resta lo stesso per ogni riunione che organizzi lì.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.payload.notes.0"
+  },
+  "86b045721383": {
+    "source": "Invite links for scheduled meetings can differ per person, so use a Personal Room for a printed code.",
+    "text": "I link di invito alle riunioni programmate possono essere diversi per ogni persona, quindi per un codice stampato usa un Personal Room.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.payload.notes.1"
+  },
+  "511a7b7819b7": {
+    "source": "Which link is best for a room sign?",
+    "text": "Quale link è meglio per un cartello di sala?",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.0.question"
+  },
+  "b2ee0ed99b3a": {
+    "source": "Your Personal Room link. It never changes, so one code works for every meeting you hold there.",
+    "text": "Il link del tuo Personal Room. Non cambia mai, quindi un solo codice funziona per tutte le riunioni che tieni lì.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.0.answer"
+  },
+  "90cbdbd3d43c": {
+    "source": "Do people need the Webex app?",
+    "text": "Serve l'app Webex per partecipare?",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.1.question"
+  },
+  "194c7a004086": {
+    "source": "No. The link offers to open the app, or to join from the browser.",
+    "text": "No. Il link propone di aprire l'app oppure di partecipare dal browser.",
+    "status": "machine",
+    "context": "qrTypes.types.webex.faqs.1.answer"
+  },
+  "3ad9cf5ff75c": {
+    "source": "Let people book time with you on Calendly.",
+    "text": "Fai prenotare del tempo con te su Calendly.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.summary"
+  },
+  "c305eb8fcfea": {
+    "source": "Create a Calendly QR code for your scheduling page or one event type. People scan to book a meeting from cards, signs and slides. Free.",
+    "text": "Crea un QR code Calendly per la tua pagina di prenotazione o per un singolo tipo di evento. Basta una scansione per prenotare un incontro da biglietti, cartelli e slide. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.metaDescription"
+  },
+  "d5239d9a4320": {
+    "source": "A Calendly QR code opens your scheduling page, or one event type, so people book a call or an appointment from a business card, a sign or a slide.",
+    "text": "Un QR code Calendly apre la tua pagina di prenotazione, o un singolo tipo di evento, così le persone prenotano una chiamata o un appuntamento da un biglietto da visita, un cartello o una slide.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.intro.0"
+  },
+  "0d730891775e": {
+    "source": "Type your Calendly name, like yourname or yourname/30min, or paste any calendly.com booking link.",
+    "text": "Scrivi il tuo nome Calendly, come yourname o yourname/30min, oppure incolla un qualsiasi link di prenotazione calendly.com.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.intro.1"
+  },
+  "e4fe150cc04b": {
+    "source": "Enter your Calendly name, or paste a booking link.",
+    "text": "Inserisci il tuo nome Calendly o incolla un link di prenotazione.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.steps.0"
+  },
+  "832fedbb39d5": {
+    "source": "Scan the preview to check your booking page opens.",
+    "text": "Fai la scansione dell'anteprima per controllare che la tua pagina di prenotazione si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.steps.1"
+  },
+  "935adb8be11d": {
+    "source": "Pasted links, including shared event links (calendly.com/d/…), are kept as they are.",
+    "text": "I link incollati, compresi i link condivisi degli eventi (calendly.com/d/…), vengono mantenuti così come sono.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.payload.notes.0"
+  },
+  "9226c2a03c6c": {
+    "source": "If you rename your Calendly link, the old one stops working, so print a new code.",
+    "text": "Se rinomini il tuo link Calendly, quello vecchio smette di funzionare, quindi stampa un nuovo codice.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.payload.notes.1"
+  },
+  "36d777c1bf79": {
+    "source": "Can the code open one meeting type?",
+    "text": "Il codice può aprire un solo tipo di incontro?",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.0.question"
+  },
+  "5b42120ea5af": {
+    "source": "Yes. Add the event's part after your name, like yourname/30min, or paste the event's own link.",
+    "text": "Sì. Aggiungi la parte dell'evento dopo il tuo nome, come yourname/30min, oppure incolla il link dell'evento stesso.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.0.answer"
+  },
+  "606111f3c11c": {
+    "source": "Can I change the booking page later?",
+    "text": "Posso cambiare la pagina di prenotazione in seguito?",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.1.question"
+  },
+  "38b3a1dd98ef": {
+    "source": "The event settings, yes. The link itself is in the code, so make the code dynamic if the link might change.",
+    "text": "Le impostazioni dell'evento sì. Il link invece è dentro il codice, quindi rendi il codice dinamico se il link potrebbe cambiare.",
+    "status": "machine",
+    "context": "qrTypes.types.calendly.faqs.1.answer"
+  },
+  "506010a11195": {
+    "source": "Invite students to a Google Classroom class.",
+    "text": "Invita gli studenti a una classe di Google Classroom.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.summary"
+  },
+  "45245778966b": {
+    "source": "Make a Google Classroom QR code from your class invite link. Students scan to join from a slide, a handout or the classroom door. Free.",
+    "text": "Crea un QR code di Google Classroom dal link di invito alla tua classe. Gli studenti fanno la scansione per iscriversi da una slide, da una dispensa o dalla porta dell'aula. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.metaDescription"
+  },
+  "ef3fce3d5ae5": {
+    "source": "A Google Classroom QR code opens your class's invite link, so students join from a slide on the first day, a handout or a sign on the door.",
+    "text": "Un QR code di Google Classroom apre il link di invito alla tua classe, così gli studenti si iscrivono da una slide il primo giorno, da una dispensa o da un cartello sulla porta.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.intro.0"
+  },
+  "6cad99945229": {
+    "source": "Copy the class invite link in Classroom and paste it here. Students still sign in with the Google account your school allows.",
+    "text": "Copia il link di invito alla classe in Classroom e incollalo qui. Gli studenti accedono comunque con l'account Google che la tua scuola consente.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.intro.1"
+  },
+  "150a91d20446": {
+    "source": "In your class, use Copy invite link.",
+    "text": "Nella tua classe, usa Copia link di invito.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.0"
+  },
+  "39dcead0fab2": {
+    "source": "Scan the preview to check the class opens.",
+    "text": "Fai la scansione dell'anteprima per controllare che la classe si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.2"
+  },
+  "e9292f8cee21": {
+    "source": "Download the code, as SVG for posters.",
+    "text": "Scarica il codice, in SVG per i poster.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.steps.3"
+  },
+  "904b2dce77d6": {
+    "source": "QRdx keeps the invite link exactly as Classroom gives it.",
+    "text": "QRdx mantiene il link di invito esattamente come lo fornisce Classroom.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.payload.notes.0"
+  },
+  "ba62a3800e75": {
+    "source": "Turning the class code off or resetting it in Classroom stops the old link.",
+    "text": "Se disattivi o reimposti il codice del corso in Classroom, il vecchio link smette di funzionare.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.payload.notes.1"
+  },
+  "9cdae0d6136c": {
+    "source": "Can students join with a personal Google account?",
+    "text": "Gli studenti possono iscriversi con un account Google personale?",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.0.question"
+  },
+  "85fdee00db23": {
+    "source": "That depends on your school's settings. Classes in a school's Google Workspace often allow only school accounts.",
+    "text": "Dipende dalle impostazioni della tua scuola. Le classi nel Google Workspace di una scuola spesso consentono solo gli account scolastici.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.0.answer"
+  },
+  "6824f71f44d4": {
+    "source": "Can the code hold just the class code?",
+    "text": "Il codice può contenere solo il codice del corso?",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.1.question"
+  },
+  "beda22897f42": {
+    "source": "Google doesn't publish a link for a class code alone, so the code holds the invite link. Students can still type the class code in Classroom.",
+    "text": "Google non pubblica un link per il solo codice del corso, quindi il codice contiene il link di invito. Gli studenti possono comunque digitare il codice del corso in Classroom.",
+    "status": "machine",
+    "context": "qrTypes.types.google-classroom.faqs.1.answer"
+  },
+  "2766a0f43e9a": {
+    "source": "Open your listing on Tripadvisor.",
+    "text": "Apri la tua scheda su Tripadvisor.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.summary"
+  },
+  "188388f0e945": {
+    "source": "Create a Tripadvisor QR code that opens your hotel, restaurant or attraction listing, where guests can read and write reviews. Free.",
+    "text": "Crea un QR code di Tripadvisor che apre la scheda del tuo hotel, ristorante o attrazione, dove gli ospiti possono leggere e scrivere recensioni. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.metaDescription"
+  },
+  "ccb9fa61b9b0": {
+    "source": "A Tripadvisor QR code opens your hotel's, restaurant's or attraction's listing, where guests can read reviews and write one.",
+    "text": "Un QR code di Tripadvisor apre la scheda del tuo hotel, ristorante o attrazione, dove gli ospiti possono leggere le recensioni e scriverne una.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.intro.0"
+  },
+  "34eb9dea3f27": {
+    "source": "Open your listing on Tripadvisor, copy its address and paste it here. Links on Tripadvisor's country sites work too.",
+    "text": "Apri la tua scheda su Tripadvisor, copia il suo indirizzo e incollalo qui. Funzionano anche i link dei siti nazionali di Tripadvisor.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.intro.1"
+  },
+  "9a03f41cc634": {
+    "source": "Open your listing on Tripadvisor and copy its address.",
+    "text": "Apri la tua scheda su Tripadvisor e copia il suo indirizzo.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.steps.0"
+  },
+  "7642f384e14d": {
+    "source": "Scan the preview to check the listing opens.",
+    "text": "Fai la scansione dell'anteprima per controllare che la scheda si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.steps.2"
+  },
+  "7fe7e1994114": {
+    "source": "QRdx keeps the listing link as pasted.",
+    "text": "QRdx mantiene il link della scheda così come lo incolli.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.payload.notes.0"
+  },
+  "bc0427a04ffd": {
+    "source": "Tripadvisor also offers free review tools for businesses in its Management Center.",
+    "text": "Tripadvisor offre anche strumenti gratuiti per le recensioni alle attività, nel suo Management Center.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.payload.notes.1"
+  },
+  "8b7bd9aaab58": {
+    "source": "Can I offer a discount for a review?",
+    "text": "Posso offrire uno sconto in cambio di una recensione?",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.0.question"
+  },
+  "22259e73a63b": {
+    "source": "No. Tripadvisor doesn't allow incentives for reviews. Ask guests to share their experience, good or bad.",
+    "text": "No. Tripadvisor non consente incentivi per le recensioni. Chiedi agli ospiti di raccontare la loro esperienza, nel bene o nel male.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.0.answer"
+  },
+  "5dc7af520a6f": {
+    "source": "Does it open the review form?",
+    "text": "Apre il modulo di recensione?",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.1.question"
+  },
+  "1efb7723a52c": {
+    "source": "It opens your listing, which has a button to write a review.",
+    "text": "Apre la tua scheda, che ha un pulsante per scrivere una recensione.",
+    "status": "machine",
+    "context": "qrTypes.types.tripadvisor.faqs.1.answer"
+  },
+  "cfded6153f62": {
+    "source": "Ask customers for a Trustpilot review.",
+    "text": "Chiedi ai clienti una recensione su Trustpilot.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.summary"
+  },
+  "f4fd64bf44c1": {
+    "source": "Make a Trustpilot QR code that opens your write-a-review page, or your reviews. Enter your website's domain. For receipts and packaging. Free.",
+    "text": "Crea un QR code Trustpilot che apre la pagina per scrivere una recensione o quella con le tue recensioni. Inserisci il dominio del tuo sito. Per scontrini e confezioni. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.metaDescription"
+  },
+  "64ece527dcfd": {
+    "source": "A Trustpilot QR code opens the page where customers write a review of your business, or your Trustpilot reviews page. Print it on receipts, packing slips and counters.",
+    "text": "Un QR code Trustpilot apre la pagina in cui i clienti scrivono una recensione sulla tua attività, oppure la tua pagina di recensioni su Trustpilot. Stampalo su scontrini, bolle di accompagnamento e banconi.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.intro.0"
+  },
+  "71d681d2ba01": {
+    "source": "Enter the website domain your Trustpilot page is for, like example.com, or paste your Trustpilot link. QRdx builds Trustpilot's evaluate link for reviews.",
+    "text": "Inserisci il dominio del sito a cui si riferisce la tua pagina Trustpilot, come example.com, oppure incolla il tuo link Trustpilot. QRdx crea il link evaluate di Trustpilot per le recensioni.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.intro.1"
+  },
+  "4fbb0347c564": {
+    "source": "Enter your website's domain.",
+    "text": "Inserisci il dominio del tuo sito.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.0"
+  },
+  "bcf190bd1a7b": {
+    "source": "Keep 'Open the review form' on to collect reviews, or turn it off to show your reviews.",
+    "text": "Lascia attivo 'Open the review form' per raccogliere recensioni, oppure disattivalo per mostrare le tue recensioni.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.1"
+  },
+  "86a39b62542f": {
+    "source": "Scan the preview to check your page opens.",
+    "text": "Fai la scansione dell'anteprima per controllare che la pagina si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.steps.2"
+  },
+  "236945419cff": {
+    "source": "evaluate opens the review form; review opens your reviews page.",
+    "text": "evaluate apre il modulo di recensione; review apre la pagina con le tue recensioni.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.payload.notes.0"
+  },
+  "235a3ece1b74": {
+    "source": "www. is dropped from the domain, as Trustpilot names pages.",
+    "text": "www. viene tolto dal dominio, come fa Trustpilot nel dare il nome alle pagine.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.payload.notes.1"
+  },
+  "e1d0fabfb885": {
+    "source": "Do customers need an account?",
+    "text": "I clienti hanno bisogno di un account?",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.0.question"
+  },
+  "bbb61bcd8385": {
+    "source": "Trustpilot asks reviewers to sign in or sign up before they post.",
+    "text": "Trustpilot chiede a chi scrive una recensione di accedere o registrarsi prima di pubblicarla.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.0.answer"
+  },
+  "c8ef04c590f4": {
+    "source": "What if my business isn't on Trustpilot yet?",
+    "text": "E se la mia attività non è ancora su Trustpilot?",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.1.question"
+  },
+  "df43d70c1b6a": {
+    "source": "Claim your page on Trustpilot first, so the domain has a page to open.",
+    "text": "Rivendica prima la tua pagina su Trustpilot, così il dominio ha una pagina da aprire.",
+    "status": "machine",
+    "context": "qrTypes.types.trustpilot.faqs.1.answer"
+  },
+  "0a627e729c0f": {
+    "source": "Open your business page on Yelp.",
+    "text": "Apri la pagina della tua attività su Yelp.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.summary"
+  },
+  "cf8204c0eebc": {
+    "source": "Create a Yelp QR code that opens your business page, with your hours, photos and reviews. For windows, menus and counters. Free.",
+    "text": "Crea un QR code Yelp che apre la pagina della tua attività, con orari, foto e recensioni. Per vetrine, menu e banconi. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.metaDescription"
+  },
+  "5d70018ada5a": {
+    "source": "A Yelp QR code opens your business page on Yelp, with your hours, photos and reviews, from a window sticker, a menu or a counter card.",
+    "text": "Un QR code Yelp apre la pagina della tua attività su Yelp, con orari, foto e recensioni, da un adesivo in vetrina, da un menu o da un cartoncino sul bancone.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.intro.0"
+  },
+  "9d1de0c48737": {
+    "source": "Paste your page's link (yelp.com/biz/…). Yelp asks businesses not to ask for reviews, so the code opens your page and leaves the rest to your customers.",
+    "text": "Incolla il link della tua pagina (yelp.com/biz/…). Yelp chiede alle attività di non sollecitare recensioni, quindi il codice apre la tua pagina e il resto lo lascia ai tuoi clienti.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.intro.1"
+  },
+  "38b97420cca7": {
+    "source": "Open your business page on Yelp and copy its address.",
+    "text": "Apri la pagina della tua attività su Yelp e copia il suo indirizzo.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.steps.0"
+  },
+  "b38f2fa6c40b": {
+    "source": "Links on Yelp's country sites (yelp.ca, yelp.co.uk…) work too.",
+    "text": "Funzionano anche i link dei siti nazionali di Yelp (yelp.ca, yelp.co.uk…).",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.payload.notes.0"
+  },
+  "8fa2055787f2": {
+    "source": "QRdx keeps the link as pasted.",
+    "text": "QRdx mantiene il link com'è stato incollato.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.payload.notes.1"
+  },
+  "351c8ccc7edc": {
+    "source": "Can I use the code to ask for reviews?",
+    "text": "Posso usare il codice per chiedere recensioni?",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.0.question"
+  },
+  "93e7a2cf5e48": {
+    "source": "Yelp's guidelines ask businesses not to ask anyone for reviews. Use wording like 'Find us on Yelp' next to the code.",
+    "text": "Le linee guida di Yelp chiedono alle attività di non chiedere recensioni a nessuno. Accanto al codice usa una frase come 'Trovaci su Yelp'.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.0.answer"
+  },
+  "97528cecac2c": {
+    "source": "Does it open the Yelp app?",
+    "text": "Apre l'app di Yelp?",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.1.question"
+  },
+  "2fa0b5380152": {
+    "source": "Yelp links open the app when it's installed, or the page in the browser.",
+    "text": "I link di Yelp aprono l'app se è installata, altrimenti la pagina nel browser.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.faqs.1.answer"
+  },
+  "63e740e99848": {
+    "source": "Yelp and review requests",
+    "text": "Yelp e richieste di recensioni",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.title"
+  },
+  "ad213b8a5ead": {
+    "source": "Yelp's policy is 'Don't ask for reviews': reviews it thinks were solicited can be filtered, and a business that pushes for them can get a notice on its page. That's why this code opens your business page, not a review form.",
+    "text": "La politica di Yelp è 'Non chiedere recensioni': le recensioni che ritiene sollecitate possono essere filtrate, e un'attività che le insiste può ricevere un avviso sulla propria pagina. Per questo il codice apre la pagina della tua attività, non un modulo di recensione.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.paragraphs.0"
+  },
+  "bac903724ae6": {
+    "source": "A sign that says 'Find us on Yelp', with Yelp's own branding guidelines, is fine.",
+    "text": "Un cartello con la scritta 'Trovaci su Yelp', nel rispetto delle linee guida di Yelp sul proprio marchio, va bene.",
+    "status": "machine",
+    "context": "qrTypes.types.yelp.details.paragraphs.1"
+  },
+  "d4a359d3ab59": {
+    "source": "Open an Airbnb listing or experience.",
+    "text": "Apri un annuncio o un'esperienza su Airbnb.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.summary"
+  },
+  "cc27bec817bc": {
+    "source": "Make an Airbnb QR code that opens your listing or experience. For welcome books, flyers and repeat guests. Paste the link. Free.",
+    "text": "Crea un QR code Airbnb che apre il tuo annuncio o la tua esperienza. Per guide di benvenuto, volantini e ospiti che tornano. Incolla il link. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.metaDescription"
+  },
+  "46f05a7e3512": {
+    "source": "An Airbnb QR code opens your listing or experience, so guests can book again from your welcome book, a fridge magnet or a flyer.",
+    "text": "Un QR code Airbnb apre il tuo annuncio o la tua esperienza, così gli ospiti possono prenotare di nuovo dalla guida di benvenuto, da una calamita sul frigo o da un volantino.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.intro.0"
+  },
+  "fdc0f105097e": {
+    "source": "Use Share on the listing and copy the link, or copy its address (airbnb.com/rooms/…), and paste it here.",
+    "text": "Usa Condividi sull'annuncio e copia il link, oppure copia il suo indirizzo (airbnb.com/rooms/…), e incollalo qui.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.intro.1"
+  },
+  "c6e324dfc8ac": {
+    "source": "Copy your listing's link from Airbnb.",
+    "text": "Copia il link del tuo annuncio da Airbnb.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.steps.0"
+  },
+  "d0f5c58096ea": {
+    "source": "Share links from the Airbnb app (abnb.me) and Airbnb's country sites work too.",
+    "text": "Funzionano anche i link condivisi dall'app Airbnb (abnb.me) e i siti nazionali di Airbnb.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.payload.notes.0"
+  },
+  "735286a197bc": {
+    "source": "Does it open the Airbnb app?",
+    "text": "Apre l'app di Airbnb?",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.0.question"
+  },
+  "12b0799809ec": {
+    "source": "Airbnb links open the app when it's installed, or the listing in the browser.",
+    "text": "I link di Airbnb aprono l'app se è installata, altrimenti l'annuncio nel browser.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.0.answer"
+  },
+  "cc77753b3a5b": {
+    "source": "Can I link the Wi-Fi or house rules too?",
+    "text": "Posso collegare anche il Wi-Fi o il regolamento della casa?",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.1.question"
+  },
+  "c026fdc284bb": {
+    "source": "Use a separate Wi-Fi code for the network, and a hosted page for house rules you may want to change.",
+    "text": "Usa un QR code Wi-Fi separato per la rete e una pagina ospitata per il regolamento della casa, se pensi di doverlo modificare.",
+    "status": "machine",
+    "context": "qrTypes.types.airbnb.faqs.1.answer"
+  },
+  "643c4e09d6dd": {
+    "source": "Open your property's page on Booking.com.",
+    "text": "Apri la pagina della tua struttura su Booking.com.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.summary"
+  },
+  "f355b03e2485": {
+    "source": "Create a Booking.com QR code that opens your hotel's or rental's property page. For flyers, front desks and partners. Free, no signup.",
+    "text": "Crea un QR code Booking.com che apre la pagina della tua struttura, hotel o alloggio in affitto. Per volantini, reception e partner. Gratuito, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.metaDescription"
+  },
+  "f560cf60fdbd": {
+    "source": "A Booking.com QR code opens your hotel's or rental's property page, with rooms, prices and guest reviews.",
+    "text": "Un QR code Booking.com apre la pagina della tua struttura, hotel o alloggio in affitto, con camere, prezzi e recensioni degli ospiti.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.intro.0"
+  },
+  "77ca29fe35a0": {
+    "source": "Open your property on Booking.com, copy its address (booking.com/hotel/…) and paste it here.",
+    "text": "Apri la tua struttura su Booking.com, copia il suo indirizzo (booking.com/hotel/…) e incollalo qui.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.intro.1"
+  },
+  "c87cf5f1e895": {
+    "source": "Copy your property page's address from Booking.com.",
+    "text": "Copia da Booking.com l'indirizzo della pagina della tua struttura.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.steps.0"
+  },
+  "9786991c4c7f": {
+    "source": "Scan the preview to check the page opens.",
+    "text": "Fai la scansione dell'anteprima per controllare che la pagina si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.steps.2"
+  },
+  "542898e0f90a": {
+    "source": "Search and date parameters in a pasted link are kept, so remove them for a code that always shows today's prices.",
+    "text": "I parametri di ricerca e di data in un link incollato vengono mantenuti: rimuovili per avere un codice che mostra sempre i prezzi di oggi.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.payload.notes.0"
+  },
+  "266685ad6300": {
+    "source": "Booking.com share links work too.",
+    "text": "Funzionano anche i link di condivisione di Booking.com.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.payload.notes.1"
+  },
+  "2edc5ad83e08": {
+    "source": "Can guests leave a review from the code?",
+    "text": "Gli ospiti possono lasciare una recensione dal codice?",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.0.question"
+  },
+  "f19c6cbdff57": {
+    "source": "Booking.com collects reviews only from guests who booked through it, by email after the stay.",
+    "text": "Booking.com raccoglie recensioni solo dagli ospiti che hanno prenotato tramite il sito, via email dopo il soggiorno.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.0.answer"
+  },
+  "1a011de41155": {
+    "source": "Does it open the Booking.com app?",
+    "text": "Apre l'app di Booking.com?",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.1.question"
+  },
+  "887f4407e5da": {
+    "source": "When it's installed, usually; otherwise the page opens in the browser.",
+    "text": "Di solito sì, se è installata; altrimenti la pagina si apre nel browser.",
+    "status": "machine",
+    "context": "qrTypes.types.booking-com.faqs.1.answer"
+  },
+  "dce24b80ec7d": {
+    "source": "Open a VK profile, community or group.",
+    "text": "Apri un profilo, una community o un gruppo VK.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.summary"
+  },
+  "6b33a84cb434": {
+    "source": "Make a VK QR code that opens your profile, community or group on vk.com. Paste the link. For posters, packaging and events. Free.",
+    "text": "Crea un QR code VK che apre il tuo profilo, la tua community o il tuo gruppo su vk.com. Incolla il link. Per poster, confezioni ed eventi. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.metaDescription"
+  },
+  "5349947e5da2": {
+    "source": "A VK QR code opens your profile, community or group, so people can follow you from a poster, a shop window or a product box.",
+    "text": "Un QR code VK apre il tuo profilo, la tua community o il tuo gruppo, così le persone possono seguirti da un poster, una vetrina o una confezione di prodotto.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.intro.0"
+  },
+  "72653a80e11e": {
+    "source": "Copy the address of your page on vk.com, or use Share in the VK app, and paste it here.",
+    "text": "Copia l'indirizzo della tua pagina su vk.com, oppure usa Condividi nell'app VK, e incollalo qui.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.intro.1"
+  },
+  "2fb6c58382f4": {
+    "source": "Copy your page's link from VK.",
+    "text": "Copia il link della tua pagina da VK.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.steps.0"
+  },
+  "ca9b805d0cf3": {
+    "source": "QRdx keeps the link as pasted; vk.ru links work too.",
+    "text": "QRdx mantiene il link così come lo incolli; funzionano anche i link vk.ru.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.payload.notes.0"
+  },
+  "0544ecb41073": {
+    "source": "A link with your numeric ID (vk.com/id…) stays the same if you change your page's short name.",
+    "text": "Un link con il tuo ID numerico (vk.com/id…) resta lo stesso anche se cambi il nome breve della tua pagina.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.payload.notes.1"
+  },
+  "e976b523d66c": {
+    "source": "Does it open the VK app?",
+    "text": "Apre l'app di VK?",
+    "status": "machine",
+    "context": "qrTypes.types.vk.faqs.0.question"
+  },
+  "97b5ffb953bc": {
+    "source": "VK links open the app when it's installed, or the page in the browser.",
+    "text": "I link VK aprono l'app se è installata, altrimenti la pagina nel browser.",
+    "status": "machine",
+    "context": "qrTypes.types.vk.faqs.0.answer"
+  },
+  "6fd056b64157": {
+    "source": "Open a Weibo profile.",
+    "text": "Apri un profilo Weibo.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.summary"
+  },
+  "60703e24236d": {
+    "source": "Create a Weibo QR code that opens your Weibo profile, for packaging, events and posters aimed at audiences in China. Paste the link. Free.",
+    "text": "Crea un QR code Weibo che apre il tuo profilo Weibo, per confezioni, eventi e poster rivolti al pubblico in Cina. Incolla il link. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.metaDescription"
+  },
+  "202991335780": {
+    "source": "A Weibo QR code opens your Weibo profile, so people can follow you from packaging, a trade fair stand or a poster.",
+    "text": "Un QR code Weibo apre il tuo profilo Weibo, così le persone possono seguirti da una confezione, da uno stand in fiera o da un poster.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.intro.0"
+  },
+  "bad54233f23a": {
+    "source": "Copy your profile's link (weibo.com/u/… or your custom weibo.com address) and paste it here.",
+    "text": "Copia il link del tuo profilo (weibo.com/u/… o il tuo indirizzo weibo.com personalizzato) e incollalo qui.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.intro.1"
+  },
+  "2257354518d2": {
+    "source": "Copy your Weibo profile's link.",
+    "text": "Copia il link del tuo profilo Weibo.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.steps.0"
+  },
+  "1a80c77bc193": {
+    "source": "Scan the preview to check the profile opens.",
+    "text": "Esegui la scansione dell'anteprima per verificare che il profilo si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.steps.2"
+  },
+  "0a8c288ad17c": {
+    "source": "QRdx keeps the link as pasted; m.weibo.cn links work too.",
+    "text": "QRdx mantiene il link così come lo incolli; funzionano anche i link m.weibo.cn.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.payload.notes.0"
+  },
+  "50353c12bbb4": {
+    "source": "The numeric UID link keeps working if you change your nickname.",
+    "text": "Il link con l'UID numerico continua a funzionare anche se cambi il tuo nickname.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.payload.notes.1"
+  },
+  "88890e6e08b2": {
+    "source": "Which link should I use?",
+    "text": "Quale link devo usare?",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.faqs.0.question"
+  },
+  "5b4268790355": {
+    "source": "The weibo.com/u/ link with your numeric UID never changes, so it's the safest for print.",
+    "text": "Il link weibo.com/u/ con il tuo UID numerico non cambia mai, quindi è il più sicuro per la stampa.",
+    "status": "machine",
+    "context": "qrTypes.types.weibo.faqs.0.answer"
+  },
+  "25eaf6cf78cf": {
+    "source": "Open a Tumblr blog or post.",
+    "text": "Apri un blog o un post Tumblr.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.summary"
+  },
+  "9364b42efe08": {
+    "source": "Make a Tumblr QR code that opens your blog or one post. Type your blog name or paste a link. For zines, stickers and art prints. Free.",
+    "text": "Crea un QR code Tumblr che apre il tuo blog o un singolo post. Scrivi il nome del tuo blog o incolla un link. Per zine, adesivi e stampe d'arte. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.metaDescription"
+  },
+  "e4b62aae3696": {
+    "source": "A Tumblr QR code opens your blog, or one post, from a zine, a sticker or the back of an art print.",
+    "text": "Un QR code Tumblr apre il tuo blog, o un singolo post, da una zine, un adesivo o il retro di una stampa d'arte.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.intro.0"
+  },
+  "1de2a8cda6a7": {
+    "source": "Type your blog's name and QRdx builds the tumblr.com link, or paste a blog or post link.",
+    "text": "Scrivi il nome del tuo blog e QRdx crea il link tumblr.com, oppure incolla il link di un blog o di un post.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.intro.1"
+  },
+  "2285b2d28638": {
+    "source": "Enter your blog name, or paste a link.",
+    "text": "Inserisci il nome del tuo blog o incolla un link.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.steps.0"
+  },
+  "36e6fab54cfc": {
+    "source": "Scan the preview to check your blog opens.",
+    "text": "Esegui la scansione dell'anteprima per verificare che il tuo blog si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.steps.1"
+  },
+  "1f8a49acdb04": {
+    "source": "Blog names are up to 32 letters, digits and hyphens.",
+    "text": "I nomi dei blog possono avere fino a 32 tra lettere, cifre e trattini.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.payload.notes.0"
+  },
+  "5df3cdd7595f": {
+    "source": "Pasted links, including yourblog.tumblr.com, are kept as they are.",
+    "text": "I link incollati, compreso yourblog.tumblr.com, vengono mantenuti così come sono.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.payload.notes.1"
+  },
+  "b895e5b2ac6e": {
+    "source": "What happens if I rename my blog?",
+    "text": "Cosa succede se rinomino il mio blog?",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.faqs.0.question"
+  },
+  "10092e099cf3": {
+    "source": "The old name stops pointing to you, and someone else can take it, so print a new code.",
+    "text": "Il vecchio nome non porta più a te e qualcun altro può prenderlo, quindi stampa un nuovo codice.",
+    "status": "machine",
+    "context": "qrTypes.types.tumblr.faqs.0.answer"
+  },
+  "861eae52bfe9": {
+    "source": "Open a Medium profile, publication or story.",
+    "text": "Apri un profilo, una pubblicazione o una storia di Medium.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.summary"
+  },
+  "870a60730d6a": {
+    "source": "Create a Medium QR code for your profile, a publication or one story. For talk slides, books and handouts. Type your @username. Free.",
+    "text": "Crea un QR code Medium per il tuo profilo, una pubblicazione o una singola storia. Per slide, libri e materiali stampati. Scrivi il tuo @username. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.metaDescription"
+  },
+  "197159a87add": {
+    "source": "A Medium QR code opens your profile, a publication or one story, so readers find your writing from a talk slide, a book or a handout.",
+    "text": "Un QR code Medium apre il tuo profilo, una pubblicazione o una singola storia, così i lettori trovano i tuoi scritti da una slide, da un libro o da un volantino.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.intro.0"
+  },
+  "8fe1d8bf11a0": {
+    "source": "Type your @username and QRdx builds the medium.com link, or paste any Medium link.",
+    "text": "Scrivi il tuo @username e QRdx crea il link medium.com, oppure incolla un qualsiasi link di Medium.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.intro.1"
+  },
+  "cb8de4bcf090": {
+    "source": "Enter your @username, or paste a story or publication link.",
+    "text": "Inserisci il tuo @username, oppure incolla il link di una storia o di una pubblicazione.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.steps.0"
+  },
+  "cee4f1efc398": {
+    "source": "Scan the preview to check it opens.",
+    "text": "Fai la scansione dell'anteprima per controllare che si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.steps.1"
+  },
+  "b7839785cbbd": {
+    "source": "Pasted links, including publications on their own subdomains, are kept as they are.",
+    "text": "I link incollati, comprese le pubblicazioni sui loro sottodomini, vengono mantenuti così come sono.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.payload.notes.0"
+  },
+  "41c3ce6e8589": {
+    "source": "If you change your username, the old profile link breaks.",
+    "text": "Se cambi username, il vecchio link del profilo smette di funzionare.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.payload.notes.1"
+  },
+  "4bd0091ade49": {
+    "source": "Can the code open one article?",
+    "text": "Il codice può aprire un singolo articolo?",
+    "status": "machine",
+    "context": "qrTypes.types.medium.faqs.0.question"
+  },
+  "cc8811d20a14": {
+    "source": "Yes. Paste the story's link instead of your username.",
+    "text": "Sì. Incolla il link della storia al posto del tuo username.",
+    "status": "machine",
+    "context": "qrTypes.types.medium.faqs.0.answer"
+  },
+  "eef789fce42b": {
+    "source": "Open a Substack newsletter or profile.",
+    "text": "Apri una newsletter o un profilo Substack.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.summary"
+  },
+  "2edab5b2ca55": {
+    "source": "Make a Substack QR code that opens your newsletter so readers can subscribe. For talks, books, zines and events. Free, no signup.",
+    "text": "Crea un QR code Substack che apre la tua newsletter, così i lettori possono iscriversi. Per eventi, libri, zine e presentazioni. Gratis, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.metaDescription"
+  },
+  "493f55909cb8": {
+    "source": "A Substack QR code opens your newsletter, where people can subscribe, from a talk, a book, a zine or an event table.",
+    "text": "Un QR code Substack apre la tua newsletter, dove le persone possono iscriversi, da una presentazione, un libro, una zine o un tavolo a un evento.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.intro.0"
+  },
+  "4d5f82ad939e": {
+    "source": "Type your publication's name (the part before .substack.com) and QRdx builds the link. Type @handle for your Substack profile, or paste any substack.com link.",
+    "text": "Scrivi il nome della tua pubblicazione (la parte prima di .substack.com) e QRdx crea il link. Scrivi @handle per il tuo profilo Substack, oppure incolla un qualsiasi link substack.com.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.intro.1"
+  },
+  "c9360f36e059": {
+    "source": "Enter your publication name or @handle, or paste a link.",
+    "text": "Inserisci il nome della pubblicazione o @handle, oppure incolla un link.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.steps.0"
+  },
+  "0f700d32925a": {
+    "source": "A publication on its own domain works in the URL generator.",
+    "text": "Una pubblicazione su un dominio personalizzato funziona nel generatore di URL.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.payload.notes.0"
+  },
+  "57cb28bb1a71": {
+    "source": "Pasted substack.com links are kept as they are.",
+    "text": "I link substack.com incollati vengono mantenuti così come sono.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.payload.notes.1"
+  },
+  "530282801894": {
+    "source": "Can the code open the subscribe page?",
+    "text": "Il codice può aprire la pagina di iscrizione?",
+    "status": "machine",
+    "context": "qrTypes.types.substack.faqs.0.question"
+  },
+  "d2c1a6012887": {
+    "source": "Paste your publication's /subscribe link, and the code opens that page.",
+    "text": "Incolla il link /subscribe della tua pubblicazione e il codice aprirà quella pagina.",
+    "status": "machine",
+    "context": "qrTypes.types.substack.faqs.0.answer"
+  },
+  "9614244e0677": {
+    "source": "Open a GitHub profile, organization or repository.",
+    "text": "Apri un profilo, un'organizzazione o un repository GitHub.",
+    "status": "machine",
+    "context": "qrTypes.types.github.summary"
+  },
+  "08011d4d9e2b": {
+    "source": "Create a GitHub QR code for your profile, organization or a repository. For talk slides, stickers, READMEs and conference badges. Free.",
+    "text": "Crea un QR code GitHub per il tuo profilo, la tua organizzazione o un repository. Per slide, adesivi, README e badge di conferenze. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.github.metaDescription"
+  },
+  "0394f0719bbe": {
+    "source": "A GitHub QR code opens a profile, an organization or a repository, so people find your code from a talk slide, a laptop sticker or a conference badge.",
+    "text": "Un QR code GitHub apre un profilo, un'organizzazione o un repository, così le persone trovano il tuo codice da una slide, da un adesivo sul laptop o da un badge di conferenza.",
+    "status": "machine",
+    "context": "qrTypes.types.github.intro.0"
+  },
+  "a85d80ce468d": {
+    "source": "Type a username, or owner/repository, and QRdx builds the github.com link. Or paste any GitHub link.",
+    "text": "Scrivi un nome utente, oppure proprietario/repository, e QRdx crea il link github.com. Oppure incolla un qualsiasi link GitHub.",
+    "status": "machine",
+    "context": "qrTypes.types.github.intro.1"
+  },
+  "7cfd0c32e005": {
+    "source": "Enter a username or owner/repository, or paste a link.",
+    "text": "Inserisci un nome utente o proprietario/repository, oppure incolla un link.",
+    "status": "machine",
+    "context": "qrTypes.types.github.steps.0"
+  },
+  "31fd671847d1": {
+    "source": "Download the code, as SVG for stickers.",
+    "text": "Scarica il codice, in SVG per gli adesivi.",
+    "status": "machine",
+    "context": "qrTypes.types.github.steps.2"
+  },
+  "41f7a5ba234f": {
+    "source": "Usernames are up to 39 letters, digits and single hyphens.",
+    "text": "I nomi utente hanno al massimo 39 caratteri tra lettere, cifre e trattini singoli.",
+    "status": "machine",
+    "context": "qrTypes.types.github.payload.notes.0"
+  },
+  "1d8128fd85f0": {
+    "source": "Pasted links to issues, releases and files are kept as they are.",
+    "text": "I link incollati a issue, release e file vengono mantenuti così come sono.",
+    "status": "machine",
+    "context": "qrTypes.types.github.payload.notes.1"
+  },
+  "c170a7e36a1f": {
+    "source": "Can it link a private repository?",
+    "text": "Può collegare a un repository privato?",
+    "status": "machine",
+    "context": "qrTypes.types.github.faqs.0.question"
+  },
+  "c879528cd735": {
+    "source": "Yes, but only people with access can see it; others get a page that isn't found.",
+    "text": "Sì, ma lo possono vedere solo le persone con accesso; gli altri vedono una pagina non trovata.",
+    "status": "machine",
+    "context": "qrTypes.types.github.faqs.0.answer"
+  },
+  "06ad029cc487": {
+    "source": "Open a Behance portfolio or project.",
+    "text": "Apri un portfolio o progetto Behance.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.summary"
+  },
+  "8d601aefb946": {
+    "source": "Make a Behance QR code that opens your portfolio or one project. For business cards, CVs and exhibitions. Type your username. Free.",
+    "text": "Crea un QR code Behance che apre il tuo portfolio o un singolo progetto. Per biglietti da visita, CV e mostre. Scrivi il tuo nome utente. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.metaDescription"
+  },
+  "ca0a321ea469": {
+    "source": "A Behance QR code opens your portfolio, or one project, from a business card, a printed CV or an exhibition label.",
+    "text": "Un QR code Behance apre il tuo portfolio, o un singolo progetto, da un biglietto da visita, un CV stampato o il cartellino di una mostra.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.intro.0"
+  },
+  "1781487376f6": {
+    "source": "Type your Behance username and QRdx builds the behance.net link, or paste a project link.",
+    "text": "Scrivi il tuo nome utente Behance e QRdx crea il link behance.net, oppure incolla il link di un progetto.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.intro.1"
+  },
+  "646c93bdc091": {
+    "source": "Enter your Behance username, or paste a link.",
+    "text": "Inserisci il tuo nome utente Behance, oppure incolla un link.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.steps.0"
+  },
+  "4006684e2ae6": {
+    "source": "Scan the preview to check your portfolio opens.",
+    "text": "Fai la scansione dell'anteprima per controllare che il tuo portfolio si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.steps.1"
+  },
+  "e0aea8a42cbd": {
+    "source": "Usernames are 3 to 40 letters, digits, underscores and hyphens.",
+    "text": "I nomi utente hanno da 3 a 40 caratteri tra lettere, cifre, trattini bassi e trattini.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.payload.notes.0"
+  },
+  "efaf9b2c5728": {
+    "source": "Behance doesn't redirect an old username, so print a new code if you change it.",
+    "text": "Behance non reindirizza un vecchio nome utente, quindi se lo cambi stampa un nuovo codice.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.payload.notes.1"
+  },
+  "9c7fdeea4661": {
+    "source": "Can the code open one project?",
+    "text": "Il codice può aprire un solo progetto?",
+    "status": "machine",
+    "context": "qrTypes.types.behance.faqs.0.question"
+  },
+  "a8a11a01fd49": {
+    "source": "Yes. Paste the project's link instead of your username.",
+    "text": "Sì. Incolla il link del progetto al posto del tuo nome utente.",
+    "status": "machine",
+    "context": "qrTypes.types.behance.faqs.0.answer"
+  },
+  "5bfd7427ea7d": {
+    "source": "Open a Dribbble profile or shot.",
+    "text": "Apri un profilo o uno shot Dribbble.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.summary"
+  },
+  "c38d2b08b815": {
+    "source": "Create a Dribbble QR code for your design profile or one shot. For business cards, CVs and portfolio prints. Type your username. Free.",
+    "text": "Crea un QR code Dribbble per il tuo profilo di design o per un singolo shot. Per biglietti da visita, CV e portfolio stampati. Scrivi il tuo nome utente. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.metaDescription"
+  },
+  "2c912504e2c2": {
+    "source": "A Dribbble QR code opens your design profile, or one shot, from a business card, a CV or a printed portfolio.",
+    "text": "Un QR code Dribbble apre il tuo profilo di design, o un singolo shot, da un biglietto da visita, un CV o un portfolio stampato.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.intro.0"
+  },
+  "a34aeccd8c4d": {
+    "source": "Type your Dribbble username and QRdx builds the dribbble.com link, or paste a shot link.",
+    "text": "Scrivi il tuo nome utente Dribbble e QRdx crea il link dribbble.com, oppure incolla il link di uno shot.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.intro.1"
+  },
+  "e1cfc854a8bf": {
+    "source": "Enter your Dribbble username, or paste a link.",
+    "text": "Inserisci il tuo nome utente Dribbble, oppure incolla un link.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.steps.0"
+  },
+  "2a1dd45b104f": {
+    "source": "Pasted dribbble.com links are kept as they are.",
+    "text": "I link dribbble.com incollati vengono lasciati così come sono.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.payload.notes.0"
+  },
+  "e993d9a0e552": {
+    "source": "If you change your username, print a new code.",
+    "text": "Se cambi il nome utente, stampa un nuovo codice.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.payload.notes.1"
+  },
+  "693f7e7ecc58": {
+    "source": "Can I link a specific shot?",
+    "text": "Posso collegare uno shot specifico?",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.faqs.0.question"
+  },
+  "af8bf0177175": {
+    "source": "Yes. Paste the shot's link instead of your username.",
+    "text": "Sì. Incolla il link dello shot al posto del tuo nome utente.",
+    "status": "machine",
+    "context": "qrTypes.types.dribbble.faqs.0.answer"
+  },
+  "7ce9ca31ee43": {
+    "source": "Open your Linktree page.",
+    "text": "Apri la tua pagina Linktree.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.summary"
+  },
+  "68a1c5f49e41": {
+    "source": "Make a QR code for your Linktree page, with all your links in one scan. For merch, posters, cards and stream overlays. Free, no signup.",
+    "text": "Crea un QR code per la tua pagina Linktree, con tutti i tuoi link in una sola scansione. Per merch, poster, biglietti e overlay per stream. Gratuito, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.metaDescription"
+  },
+  "acff1eba1572": {
+    "source": "A Linktree QR code opens your Linktree page, so one scan reaches every link you keep there, from merch, a poster or a business card.",
+    "text": "Un QR code Linktree apre la tua pagina Linktree, così con una sola scansione si raggiungono tutti i link che hai messo lì, da merch, un poster o un biglietto da visita.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.intro.0"
+  },
+  "1e3e691c6031": {
+    "source": "Type your Linktree username and QRdx builds the linktr.ee link, or paste it.",
+    "text": "Scrivi il tuo nome utente Linktree e QRdx crea il link linktr.ee, oppure incollalo.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.intro.1"
+  },
+  "f3fe4ed5dffd": {
+    "source": "Enter your Linktree username, or paste your link.",
+    "text": "Inserisci il tuo nome utente Linktree, oppure incolla il tuo link.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.steps.0"
+  },
+  "1582ea8cd6d3": {
+    "source": "Linktree lets you change your username, which changes the link; print a new code if you do.",
+    "text": "Linktree ti permette di cambiare nome utente, e questo cambia il link: se lo fai, stampa un nuovo codice.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.payload.notes.0"
+  },
+  "775236268c04": {
+    "source": "Your page's links can change any time without a new code.",
+    "text": "I link della tua pagina possono cambiare in qualsiasi momento senza bisogno di un nuovo codice.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.payload.notes.1"
+  },
+  "f45cf7454549": {
+    "source": "Can QRdx host a links page instead?",
+    "text": "QRdx può ospitare una pagina di link al suo posto?",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.faqs.0.question"
+  },
+  "4ca0788f138d": {
+    "source": "Yes. A QRdx links page is a hosted page you edit in your dashboard, with a dynamic code you can repoint.",
+    "text": "Sì. Una pagina di link QRdx è una pagina ospitata che modifichi dalla tua dashboard, con un QR code dinamico che puoi reindirizzare.",
+    "status": "machine",
+    "context": "qrTypes.types.linktree.faqs.0.answer"
+  },
+  "7d9e443f462e": {
+    "source": "Open your Patreon creator page.",
+    "text": "Apri la tua pagina creator su Patreon.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.summary"
+  },
+  "8598df8a214f": {
+    "source": "Create a Patreon QR code that opens your creator page, so fans can become members. For streams, merch, books and podcasts. Free.",
+    "text": "Crea un QR code Patreon che apre la tua pagina creator, così i fan possono diventare membri. Per live, merch, libri e podcast. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.metaDescription"
+  },
+  "15920a92c854": {
+    "source": "A Patreon QR code opens your creator page, where fans can become members, from a stream overlay, merch, the back of a book or a podcast cover.",
+    "text": "Un QR code Patreon apre la tua pagina creator, dove i fan possono diventare membri, da un overlay di una live, dal merch, dal retro di un libro o dalla copertina di un podcast.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.intro.0"
+  },
+  "aeef7ae1906e": {
+    "source": "Type your page name (the part after patreon.com/) and QRdx builds the link, or paste it.",
+    "text": "Scrivi il nome della tua pagina (la parte dopo patreon.com/) e QRdx crea il link, oppure incollalo.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.intro.1"
+  },
+  "43c8bdc2c551": {
+    "source": "Enter your Patreon page name, or paste your link.",
+    "text": "Inserisci il nome della tua pagina Patreon o incolla il tuo link.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.steps.0"
+  },
+  "20bcffdd8407": {
+    "source": "Pasted patreon.com links are kept as they are.",
+    "text": "I link patreon.com incollati restano com'è.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.payload.notes.0"
+  },
+  "3c04a76555e9": {
+    "source": "Patreon doesn't redirect an old page name, so print a new code if you change it.",
+    "text": "Patreon non reindirizza un vecchio nome di pagina, quindi stampa un nuovo codice se lo cambi.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.payload.notes.1"
+  },
+  "0028e58fa302": {
+    "source": "Can the code open a tier or post?",
+    "text": "Il codice può aprire un livello o un post?",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.faqs.0.question"
+  },
+  "bad418eb3d10": {
+    "source": "Yes. Paste that page's link instead of your name.",
+    "text": "Sì. Incolla il link di quella pagina al posto del tuo nome.",
+    "status": "machine",
+    "context": "qrTypes.types.patreon.faqs.0.answer"
+  },
+  "ae1a99df8ac7": {
+    "source": "Get tips and support on your Ko-fi page.",
+    "text": "Ricevi mance e supporto sulla tua pagina Ko-fi.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.summary"
+  },
+  "3709c5345c0e": {
+    "source": "Make a Ko-fi QR code that opens your page for tips, memberships and commissions. For streams, stalls and zines. Free, no signup.",
+    "text": "Crea un QR code Ko-fi che apre la tua pagina per mance, abbonamenti e commissioni. Per live, bancarelle e zine. Gratis, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.metaDescription"
+  },
+  "ff3328940c06": {
+    "source": "A Ko-fi QR code opens your Ko-fi page, where people can leave a tip, join a membership or order a commission, from a stream, a market stall or a zine.",
+    "text": "Un QR code Ko-fi apre la tua pagina Ko-fi, dove le persone possono lasciare una mancia, abbonarsi o ordinare una commissione, da una live, una bancarella al mercato o una zine.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.intro.0"
+  },
+  "999124ff98d0": {
+    "source": "Type your Ko-fi page name and QRdx builds the ko-fi.com link, or paste it.",
+    "text": "Scrivi il nome della tua pagina Ko-fi e QRdx crea il link ko-fi.com, oppure incollalo.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.intro.1"
+  },
+  "fd75d8a45b7b": {
+    "source": "Enter your Ko-fi page name, or paste your link.",
+    "text": "Inserisci il nome della tua pagina Ko-fi o incolla il tuo link.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.steps.0"
+  },
+  "266c163ca30f": {
+    "source": "Payments happen on Ko-fi; the code only opens your page.",
+    "text": "I pagamenti avvengono su Ko-fi; il codice apre solo la tua pagina.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.payload.notes.0"
+  },
+  "df547abd1c40": {
+    "source": "Pasted ko-fi.com links are kept as they are.",
+    "text": "I link ko-fi.com incollati restano com'è.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.payload.notes.1"
+  },
+  "406b321ff687": {
+    "source": "Can the code take a payment by itself?",
+    "text": "Il codice può ricevere un pagamento da solo?",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.faqs.0.question"
+  },
+  "8bd23835f8bf": {
+    "source": "No. It opens your page, and people pay there with the methods you set up in Ko-fi.",
+    "text": "No. Apre la tua pagina e le persone pagano lì, con i metodi che hai impostato su Ko-fi.",
+    "status": "machine",
+    "context": "qrTypes.types.kofi.faqs.0.answer"
+  },
+  "5a295f00063b": {
+    "source": "Get tips on your Buy Me a Coffee page.",
+    "text": "Ricevi mance sulla tua pagina Buy Me a Coffee.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.summary"
+  },
+  "d6aa7af61d70": {
+    "source": "Create a Buy Me a Coffee QR code that opens your page for tips and memberships. For podcasts, blogs, streams and stalls. Free.",
+    "text": "Crea un QR code Buy Me a Coffee che apre la tua pagina per mance e abbonamenti. Per podcast, blog, live e bancarelle. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.metaDescription"
+  },
+  "c3fe3a4dacfc": {
+    "source": "A Buy Me a Coffee QR code opens your page, where fans can leave a tip or join a membership, from a podcast cover, a blog post, a stream or a stall.",
+    "text": "Un QR code Buy Me a Coffee apre la tua pagina, dove i fan possono lasciare una mancia o abbonarsi, dalla copertina di un podcast, da un articolo del blog, da una live o da una bancarella.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.intro.0"
+  },
+  "4afe52d75f82": {
+    "source": "Type your page name and QRdx builds the buymeacoffee.com link, or paste it.",
+    "text": "Scrivi il nome della tua pagina e QRdx crea il link buymeacoffee.com, oppure incollalo.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.intro.1"
+  },
+  "48aa0f25da66": {
+    "source": "Enter your page name, or paste your link.",
+    "text": "Inserisci il nome della tua pagina o incolla il tuo link.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.steps.0"
+  },
+  "eb193609f3e1": {
+    "source": "Payments happen on Buy Me a Coffee; the code only opens your page.",
+    "text": "I pagamenti avvengono su Buy Me a Coffee; il codice apre solo la tua pagina.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.payload.notes.0"
+  },
+  "a7e40df94813": {
+    "source": "Pasted links, with or without www., are kept as they are.",
+    "text": "I link incollati, con o senza www., restano com'è.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.payload.notes.1"
+  },
+  "586403bd52de": {
+    "source": "Do supporters need an account?",
+    "text": "Chi ti supporta ha bisogno di un account?",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.faqs.0.question"
+  },
+  "700cb405a3eb": {
+    "source": "No. Supporters can pay on your page without making an account.",
+    "text": "No. Chi ti supporta può pagare sulla tua pagina senza creare un account.",
+    "status": "machine",
+    "context": "qrTypes.types.buymeacoffee.faqs.0.answer"
+  },
+  "da3d835f66a5": {
+    "source": "Play a song, album, artist or playlist on Apple Music.",
+    "text": "Riproduci un brano, un album, un artista o una playlist su Apple Music.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.summary"
+  },
+  "5b70a21eb8d9": {
+    "source": "Make an Apple Music QR code that plays a song, album or playlist, or opens an artist. For posters, merch and record sleeves. Free.",
+    "text": "Crea un QR code di Apple Music che riproduce un brano, un album o una playlist, oppure apre un artista. Per poster, merch e copertine dei dischi. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.metaDescription"
+  },
+  "e9a832ada552": {
+    "source": "An Apple Music QR code opens a song, an album, a playlist or an artist page, from a gig poster, merch or a record sleeve.",
+    "text": "Un QR code di Apple Music apre un brano, un album, una playlist o la pagina di un artista, da un poster di un concerto, dal merch o da una copertina di un disco.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.intro.0"
+  },
+  "1d0b2b8091ce": {
+    "source": "In Apple Music, use Share and Copy Link, then paste the music.apple.com link here.",
+    "text": "In Apple Music usa Condividi e Copia link, poi incolla qui il link music.apple.com.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.intro.1"
+  },
+  "7e32239c6841": {
+    "source": "Copy the link in Apple Music (Share, Copy Link).",
+    "text": "Copia il link in Apple Music (Condividi, Copia link).",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.steps.0"
+  },
+  "53df6ad14df4": {
+    "source": "People without Apple Music get a preview page in the browser.",
+    "text": "Chi non ha Apple Music vede una pagina di anteprima nel browser.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.payload.notes.1"
+  },
+  "c47d9f67a6ea": {
+    "source": "Does it work on Android?",
+    "text": "Funziona su Android?",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.faqs.0.question"
+  },
+  "3daafbdced55": {
+    "source": "It opens the Apple Music app for Android when it's installed, or the web player.",
+    "text": "Apre l'app Apple Music per Android se è installata, altrimenti il player web.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-music.faqs.0.answer"
+  },
+  "b610e1c84b86": {
+    "source": "Play a song, album or playlist on YouTube Music.",
+    "text": "Riproduci un brano, un album o una playlist su YouTube Music.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.summary"
+  },
+  "d2d274c8542d": {
+    "source": "Create a YouTube Music QR code that plays a song, album or playlist. For gig posters, merch and flyers. Paste the share link. Free.",
+    "text": "Crea un QR code di YouTube Music che riproduce un brano, un album o una playlist. Per poster di concerti, merch e volantini. Incolla il link di condivisione. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.metaDescription"
+  },
+  "1014322eb424": {
+    "source": "A YouTube Music QR code opens a song, an album, a playlist or an artist in YouTube Music, from a gig poster, merch or a flyer.",
+    "text": "Un QR code di YouTube Music apre un brano, un album, una playlist o un artista in YouTube Music, da un poster di un concerto, dal merch o da un volantino.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.intro.0"
+  },
+  "35397c56f0a7": {
+    "source": "Use Share and Copy link in YouTube Music, then paste the music.youtube.com link here.",
+    "text": "Usa Condividi e Copia link in YouTube Music, poi incolla qui il link music.youtube.com.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.intro.1"
+  },
+  "2f2534b61b11": {
+    "source": "Copy the link in YouTube Music (Share, Copy link).",
+    "text": "Copia il link in YouTube Music (Condividi, Copia link).",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.steps.0"
+  },
+  "ad44814db5c7": {
+    "source": "Scan the preview to check it plays.",
+    "text": "Fai la scansione dell'anteprima per verificare che si riproduca.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.steps.2"
+  },
+  "af0b24450654": {
+    "source": "A youtube.com video link works in the YouTube generator.",
+    "text": "Un link di un video youtube.com funziona nel generatore YouTube.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.payload.notes.1"
+  },
+  "44962c424a22": {
+    "source": "Does it need a subscription?",
+    "text": "Serve un abbonamento?",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.faqs.0.question"
+  },
+  "b43ff9fc4ae9": {
+    "source": "No. People can listen free with ads; a subscription removes them.",
+    "text": "No. Si può ascoltare gratis con la pubblicità; con un abbonamento sparisce.",
+    "status": "machine",
+    "context": "qrTypes.types.youtube-music.faqs.0.answer"
+  },
+  "9b18868b7c45": {
+    "source": "Open a podcast or episode on Apple Podcasts.",
+    "text": "Apri un podcast o un episodio su Apple Podcasts.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.summary"
+  },
+  "42288f9aecdc": {
+    "source": "Make an Apple Podcasts QR code that opens your show or one episode, so listeners follow it. For posters, merch and live shows. Free.",
+    "text": "Crea un QR code di Apple Podcasts che apre il tuo programma o un singolo episodio, così chi ascolta può seguirlo. Per poster, merch e spettacoli dal vivo. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.metaDescription"
+  },
+  "72c460d2c7fa": {
+    "source": "An Apple Podcasts QR code opens your show, or one episode, so listeners can follow it from a poster, a sticker or a live taping.",
+    "text": "Un QR code di Apple Podcasts apre il tuo programma, o un singolo episodio, così chi ascolta può seguirlo da un poster, un adesivo o una registrazione dal vivo.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.intro.0"
+  },
+  "658f5ad2103c": {
+    "source": "Use Share and Copy Link in Apple Podcasts, then paste the podcasts.apple.com link here.",
+    "text": "Usa Condividi e Copia link in Apple Podcasts, poi incolla qui il link podcasts.apple.com.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.intro.1"
+  },
+  "7adcd95f5dc7": {
+    "source": "Copy the show's or episode's link in Apple Podcasts.",
+    "text": "Copia il link del programma o dell'episodio in Apple Podcasts.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.steps.0"
+  },
+  "b8ad6d2d675b": {
+    "source": "The link holds your show's number (id…), which never changes.",
+    "text": "Il link contiene il numero del tuo programma (id…), che non cambia mai.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.payload.notes.0"
+  },
+  "91c48f777a93": {
+    "source": "QRdx keeps the link as pasted, with an episode's ?i= part.",
+    "text": "QRdx conserva il link così come lo incolli, con la parte ?i= di un episodio.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.payload.notes.1"
+  },
+  "afdea790bda1": {
+    "source": "What do Android listeners see?",
+    "text": "Cosa vede chi ascolta da Android?",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.faqs.0.question"
+  },
+  "f15116148361": {
+    "source": "The show's page in the browser, where they can play episodes.",
+    "text": "La pagina del programma nel browser, dove può riprodurre gli episodi.",
+    "status": "machine",
+    "context": "qrTypes.types.apple-podcasts.faqs.0.answer"
+  },
+  "9c5e381fe815": {
+    "source": "Play music or a podcast on Amazon Music.",
+    "text": "Ascolta musica o un podcast su Amazon Music.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.summary"
+  },
+  "8910c76fe64e": {
+    "source": "Create an Amazon Music QR code for a song, album, playlist or podcast. For posters, merch and flyers. Paste the link. Free.",
+    "text": "Crea un QR code Amazon Music per un brano, un album, una playlist o un podcast. Per poster, merch e volantini. Incolla il link. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.metaDescription"
+  },
+  "01a0acbc683e": {
+    "source": "An Amazon Music QR code opens a song, an album, a playlist, an artist or a podcast in Amazon Music.",
+    "text": "Un QR code Amazon Music apre un brano, un album, una playlist, un artista o un podcast in Amazon Music.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.intro.0"
+  },
+  "67378c116905": {
+    "source": "Copy the link in Amazon Music and paste it here. Links on Amazon's country music sites work too.",
+    "text": "Copia il link in Amazon Music e incollalo qui. Funzionano anche i link dei siti musicali nazionali di Amazon.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.intro.1"
+  },
+  "597acb41d7ec": {
+    "source": "Copy the link in Amazon Music.",
+    "text": "Copia il link in Amazon Music.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.steps.0"
+  },
+  "8f25bac036a5": {
+    "source": "Each country site opens the catalog of that country.",
+    "text": "Ogni sito nazionale apre il catalogo di quel paese.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.payload.notes.1"
+  },
+  "1dea42070dc6": {
+    "source": "Can people listen without Prime?",
+    "text": "Si può ascoltare senza Prime?",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.faqs.0.question"
+  },
+  "7712a5de13be": {
+    "source": "Amazon Music has a free tier with ads in many countries, so many links play for everyone.",
+    "text": "In molti paesi Amazon Music ha un piano gratuito con pubblicità, quindi molti link si possono ascoltare da tutti.",
+    "status": "machine",
+    "context": "qrTypes.types.amazon-music.faqs.0.answer"
+  },
+  "aef168ec765f": {
+    "source": "Play a track, album or playlist on Deezer.",
+    "text": "Ascolta un brano, un album o una playlist su Deezer.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.summary"
+  },
+  "57983725eeb5": {
+    "source": "Make a Deezer QR code that plays a track, album, playlist or podcast. For gig posters, merch and record sleeves. Free, no signup.",
+    "text": "Crea un QR code Deezer che riproduce un brano, un album, una playlist o un podcast. Per locandine di concerti, merch e copertine dei dischi. Gratuito, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.metaDescription"
+  },
+  "28b553d09c48": {
+    "source": "A Deezer QR code opens a track, an album, a playlist, an artist or a podcast in Deezer.",
+    "text": "Un QR code Deezer apre un brano, un album, una playlist, un artista o un podcast in Deezer.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.intro.0"
+  },
+  "7aded233e7ce": {
+    "source": "Paste a deezer.com link, or a share link (link.deezer.com) from the app.",
+    "text": "Incolla un link deezer.com, oppure un link di condivisione (link.deezer.com) dall'app.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.intro.1"
+  },
+  "05ad748a8331": {
+    "source": "Copy the link in Deezer.",
+    "text": "Copia il link in Deezer.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.steps.0"
+  },
+  "b00069d2993f": {
+    "source": "Old deezer.page.link share links stopped working in 2025; copy a new link from the app.",
+    "text": "I vecchi link di condivisione deezer.page.link hanno smesso di funzionare nel 2025; copia un nuovo link dall'app.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.payload.notes.1"
+  },
+  "519390394439": {
+    "source": "Does it work without the app?",
+    "text": "Funziona senza l'app?",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.faqs.0.question"
+  },
+  "9d2d6e915c3d": {
+    "source": "Yes. The link opens Deezer in the browser.",
+    "text": "Sì. Il link apre Deezer nel browser.",
+    "status": "machine",
+    "context": "qrTypes.types.deezer.faqs.0.answer"
+  },
+  "a8ae03710a12": {
+    "source": "Play a track, album or playlist on TIDAL.",
+    "text": "Ascolta un brano, un album o una playlist su TIDAL.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.summary"
+  },
+  "ba39758079e2": {
+    "source": "Create a TIDAL QR code that plays a track, album or playlist, or opens an artist. For merch, sleeves and posters. Free, no signup.",
+    "text": "Crea un QR code TIDAL che riproduce un brano, un album o una playlist, oppure apre un artista. Per merch, copertine e poster. Gratuito, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.metaDescription"
+  },
+  "a9b8feb0aff5": {
+    "source": "A TIDAL QR code opens a track, an album, a playlist or an artist on TIDAL.",
+    "text": "Un QR code TIDAL apre un brano, un album, una playlist o un artista su TIDAL.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.intro.0"
+  },
+  "6f2bc1cbf85d": {
+    "source": "Copy the link in TIDAL and paste it here.",
+    "text": "Copia il link in TIDAL e incollalo qui.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.intro.1"
+  },
+  "cc818e29db94": {
+    "source": "Copy the link in TIDAL.",
+    "text": "Copia il link in TIDAL.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.steps.0"
+  },
+  "5118e6bd40d6": {
+    "source": "QRdx keeps the link as pasted; listen.tidal.com links work too.",
+    "text": "QRdx mantiene il link così come l'hai incollato; funzionano anche i link listen.tidal.com.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.payload.notes.0"
+  },
+  "48533995f23e": {
+    "source": "TIDAL's share page also offers the music on other services.",
+    "text": "La pagina di condivisione di TIDAL offre la musica anche su altri servizi.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.payload.notes.1"
+  },
+  "d3bbb5482de1": {
+    "source": "What do people without TIDAL see?",
+    "text": "Cosa vede chi non ha TIDAL?",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.faqs.0.question"
+  },
+  "1cc927baa22d": {
+    "source": "A page for the music, which can point them to other streaming services.",
+    "text": "Una pagina dedicata alla musica, che può indirizzarlo verso altri servizi di streaming.",
+    "status": "machine",
+    "context": "qrTypes.types.tidal.faqs.0.answer"
+  },
+  "6c70947ff657": {
+    "source": "Open an artist, album or track on Bandcamp.",
+    "text": "Apri un artista, un album o un brano su Bandcamp.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.summary"
+  },
+  "b680d265c3ff": {
+    "source": "Make a Bandcamp QR code for your artist page, an album or a track, so fans listen and buy. For merch tables and posters. Free.",
+    "text": "Crea un QR code Bandcamp per la tua pagina artista, un album o un brano, così i fan ascoltano e comprano. Per banchetti del merch e poster. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.metaDescription"
+  },
+  "832131758fa2": {
+    "source": "A Bandcamp QR code opens your artist page, an album or a track, where fans can listen and buy, from a merch table, a gig poster or a record sleeve.",
+    "text": "Un QR code Bandcamp apre la tua pagina artista, un album o un brano, dove i fan possono ascoltare e comprare, da un banchetto del merch, un poster di un concerto o la copertina di un disco.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.intro.0"
+  },
+  "b9fc4fa34c28": {
+    "source": "Type the part before .bandcamp.com and QRdx builds the link, or paste an album or track link.",
+    "text": "Scrivi la parte prima di .bandcamp.com e QRdx crea il link, oppure incolla il link di un album o di un brano.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.intro.1"
+  },
+  "f991b252f953": {
+    "source": "Enter your Bandcamp name, or paste a link.",
+    "text": "Inserisci il tuo nome su Bandcamp o incolla un link.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.steps.0"
+  },
+  "21c9d5aa856f": {
+    "source": "Pasted bandcamp.com links are kept as they are.",
+    "text": "I link bandcamp.com incollati restano così come sono.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.payload.notes.0"
+  },
+  "bae82abdd77d": {
+    "source": "If you change your Bandcamp address, the old one stops working.",
+    "text": "Se cambi il tuo indirizzo Bandcamp, quello vecchio smette di funzionare.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.payload.notes.1"
+  },
+  "cb68bdc9df2e": {
+    "source": "Can I use it for download codes?",
+    "text": "Posso usarlo per i codici di download?",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.faqs.0.question"
+  },
+  "fb613c41bf6c": {
+    "source": "Print each Bandcamp download code next to the QR code, or link to your redeem page.",
+    "text": "Stampa ogni codice di download di Bandcamp accanto al QR code, oppure collega la tua pagina di riscatto.",
+    "status": "machine",
+    "context": "qrTypes.types.bandcamp.faqs.0.answer"
+  },
+  "72b1c5315981": {
+    "source": "Open a shared Google Doc.",
+    "text": "Apri un Google Docs condiviso.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.summary"
+  },
+  "c113deabd771": {
+    "source": "Create a Google Docs QR code that opens a shared document. For handouts, notes, instructions and menus. Paste the link. Free.",
+    "text": "Crea un QR code Google Docs che apre un documento condiviso. Per dispense, appunti, istruzioni e menu. Incolla il link. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.metaDescription"
+  },
+  "f783149a342b": {
+    "source": "A Google Docs QR code opens a shared document, so people read handouts, meeting notes or instructions on their phone.",
+    "text": "Un QR code Google Docs apre un documento condiviso, così le persone leggono dispense, appunti di riunione o istruzioni sul telefono.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.intro.0"
+  },
+  "e4ea823215ee": {
+    "source": "Paste the document's link. Under Share, set General access to Anyone with the link first, or people without access are asked to sign in and request it.",
+    "text": "Incolla il link del documento. In Condividi, imposta prima l'accesso generale su Chiunque abbia il link, altrimenti chi non ha accesso deve accedere e richiederlo.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.intro.1"
+  },
+  "edbad1b20e42": {
+    "source": "Share the document with Anyone with the link.",
+    "text": "Condividi il documento con Chiunque abbia il link.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.0"
+  },
+  "ea0635c25a18": {
+    "source": "Copy its link and paste it here.",
+    "text": "Copia il link e incollalo qui.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.1"
+  },
+  "0214b1cc594e": {
+    "source": "Scan the preview on a phone that isn't signed in to check it opens.",
+    "text": "Fai la scansione dell'anteprima con un telefono senza account connesso per verificare che si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.steps.2"
+  },
+  "3d137828f9e0": {
+    "source": "QRdx keeps the link as pasted, including /edit or /view.",
+    "text": "QRdx conserva il link così come lo incolli, compreso /edit o /view.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.payload.notes.0"
+  },
+  "cf772cde7b13": {
+    "source": "Editing the document changes what people see, without a new code.",
+    "text": "Se modifichi il documento, cambia ciò che vedono le persone, senza bisogno di un nuovo codice.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.payload.notes.1"
+  },
+  "141c80b0bb75": {
+    "source": "Can people edit the document?",
+    "text": "Le persone possono modificare il documento?",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.faqs.0.question"
+  },
+  "9b2eb6c7485e": {
+    "source": "Only if you share it with edit access. Choose Viewer in the sharing settings for a read-only document.",
+    "text": "Solo se lo condividi con accesso in modifica. Scegli Visualizzatore nelle impostazioni di condivisione per avere un documento di sola lettura.",
+    "status": "machine",
+    "context": "qrTypes.types.google-docs.faqs.0.answer"
+  },
+  "2623efa8a3ce": {
+    "source": "Open a shared Google Sheets spreadsheet.",
+    "text": "Apri un foglio Google Sheets condiviso.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.summary"
+  },
+  "abe675c72775": {
+    "source": "Make a Google Sheets QR code that opens a shared spreadsheet: a schedule, a price list or a sign-up sheet. Paste the link. Free.",
+    "text": "Crea un QR code Google Sheets che apre un foglio di calcolo condiviso: un orario, un listino prezzi o un foglio di iscrizione. Incolla il link. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.metaDescription"
+  },
+  "9fb0c5aa66c5": {
+    "source": "A Google Sheets QR code opens a shared spreadsheet: a schedule on a door, a price list in a shop, or a sign-up sheet at an event.",
+    "text": "Un QR code Google Sheets apre un foglio di calcolo condiviso: un orario su una porta, un listino prezzi in un negozio o un foglio di iscrizione a un evento.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.intro.0"
+  },
+  "e0fd9ee854cb": {
+    "source": "Paste the spreadsheet's link, shared with Anyone with the link, so people who scan don't have to request access.",
+    "text": "Incolla il link del foglio di calcolo, condiviso con Chiunque abbia il link, così chi fa la scansione non deve richiedere l'accesso.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.intro.1"
+  },
+  "caa2767cb7a3": {
+    "source": "Share the spreadsheet with Anyone with the link.",
+    "text": "Condividi il foglio di calcolo con Chiunque abbia il link.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.steps.0"
+  },
+  "46ce6ee7bb8c": {
+    "source": "QRdx keeps the link as pasted, including a #gid= tab.",
+    "text": "QRdx conserva il link così come lo incolli, compresa una scheda #gid=.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.payload.notes.0"
+  },
+  "c968adc99f2c": {
+    "source": "Updates to the sheet show up for everyone who scans.",
+    "text": "Gli aggiornamenti al foglio si vedono per tutti quelli che fanno la scansione.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.payload.notes.1"
+  },
+  "ebbe05b2b774": {
+    "source": "Can the code open one tab?",
+    "text": "Il codice può aprire una sola scheda?",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.faqs.0.question"
+  },
+  "ad34102f16d4": {
+    "source": "Yes. Open that tab and copy the link; it ends with #gid= and the tab's number.",
+    "text": "Sì. Apri quella scheda e copia il link: finisce con #gid= e il numero della scheda.",
+    "status": "machine",
+    "context": "qrTypes.types.google-sheets.faqs.0.answer"
+  },
+  "6f6d3026b204": {
+    "source": "Open a shared Google Slides presentation.",
+    "text": "Apri una presentazione Google Slides condivisa.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.summary"
+  },
+  "8a7d4b2bc8c3": {
+    "source": "Create a Google Slides QR code so people get your deck from the screen: talks, classes and pitches. Paste the link. Free.",
+    "text": "Crea un QR code per Google Slides e fai arrivare le tue slide dallo schermo: interventi, lezioni e pitch. Incolla il link. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.metaDescription"
+  },
+  "0b7623505595": {
+    "source": "A Google Slides QR code opens a shared presentation, so the audience gets your slides from the screen at a talk, a class or a pitch.",
+    "text": "Un QR code per Google Slides apre una presentazione condivisa, così il pubblico riceve le tue slide dallo schermo durante un intervento, una lezione o un pitch.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.intro.0"
+  },
+  "e5a0385c9973": {
+    "source": "Paste the presentation's link, shared with Anyone with the link.",
+    "text": "Incolla il link della presentazione, condivisa con Chiunque abbia il link.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.intro.1"
+  },
+  "b398a3481d00": {
+    "source": "Share the presentation with Anyone with the link.",
+    "text": "Condividi la presentazione con Chiunque abbia il link.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.steps.0"
+  },
+  "7d62cf784747": {
+    "source": "Download the code and add it to your last slide.",
+    "text": "Scarica il codice e aggiungilo all'ultima slide.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.steps.3"
+  },
+  "ae7ebb564e93": {
+    "source": "A link ending in /present opens the slideshow instead of the editor.",
+    "text": "Un link che termina con /present apre la presentazione a schermo intero invece dell'editor.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.payload.notes.1"
+  },
+  "94c9300b0c42": {
+    "source": "How big should the code be on a slide?",
+    "text": "Quanto deve essere grande il codice su una slide?",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.faqs.0.question"
+  },
+  "6b9e44420110": {
+    "source": "Big enough to scan from the back of the room: about a fifth of the slide's height works in most rooms.",
+    "text": "Abbastanza grande da poterlo inquadrare dal fondo della sala: circa un quinto dell'altezza della slide va bene nella maggior parte delle sale.",
+    "status": "machine",
+    "context": "qrTypes.types.google-slides.faqs.0.answer"
+  },
+  "4e63edb837eb": {
+    "source": "Open a Google Form: a survey, quiz or sign-up.",
+    "text": "Apri un Google Form: sondaggio, quiz o iscrizione.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.summary"
+  },
+  "ea1259be43c6": {
+    "source": "Make a Google Forms QR code that opens your survey, quiz, sign-up or order form. Paste the form link or forms.gle short link. Free.",
+    "text": "Crea un QR code per Google Forms che apre il tuo sondaggio, quiz, iscrizione o modulo d'ordine. Incolla il link del modulo o il link breve forms.gle. Gratuito.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.metaDescription"
+  },
+  "5e8c22806066": {
+    "source": "A Google Forms QR code opens your form, so people answer a survey, take a quiz or sign up from a poster, a table card or a slide.",
+    "text": "Un QR code per Google Forms apre il tuo modulo, così le persone rispondono a un sondaggio, fanno un quiz o si iscrivono da un poster, un segnaposto da tavolo o una slide.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.intro.0"
+  },
+  "5172691beb36": {
+    "source": "In your form, use Send and the link tab, then paste the link here. The short forms.gle link makes a simpler code.",
+    "text": "Nel tuo modulo usa Invia e la scheda del link, poi incolla qui il link. Il link breve forms.gle genera un codice più semplice.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.intro.1"
+  },
+  "5dd4db45c69a": {
+    "source": "In the form, use Send, then the link tab, and shorten the URL.",
+    "text": "Nel modulo usa Invia, poi la scheda del link, e accorcia l'URL.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.0"
+  },
+  "9a30e71d599c": {
+    "source": "Paste the link here.",
+    "text": "Incolla qui il link.','maxLength':30}",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.1"
+  },
+  "0466946bbb70": {
+    "source": "Scan the preview to check the form opens.",
+    "text": "Fai la scansione dell'anteprima per verificare che il modulo si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.steps.2"
+  },
+  "b8c006df66fb": {
+    "source": "A form limited to your organization asks people to sign in.",
+    "text": "Un modulo limitato alla tua organizzazione chiede alle persone di accedere.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.payload.notes.1"
+  },
+  "8914961903e9": {
+    "source": "What's the difference from the Attendance generator?",
+    "text": "Che differenza c'è con il generatore Attendance?",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.faqs.0.question"
+  },
+  "4e7ea7cf6157": {
+    "source": "Attendance is set up for checking people in. This one opens any Google Form.",
+    "text": "Attendance è pensato per registrare le presenze. Questo apre qualsiasi Google Form.",
+    "status": "machine",
+    "context": "qrTypes.types.google-forms.faqs.0.answer"
+  },
+  "981fe2e677ce": {
+    "source": "Open a Microsoft Form: a survey, quiz or registration.",
+    "text": "Apri un Microsoft Form: sondaggio, quiz o registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.summary"
+  },
+  "1762405418e2": {
+    "source": "Create a Microsoft Forms QR code that opens your survey, quiz or registration form. Paste the share link from Forms. Free, no signup.",
+    "text": "Crea un QR code per Microsoft Forms che apre il tuo sondaggio, quiz o modulo di registrazione. Incolla il link di condivisione da Forms. Gratuito, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.metaDescription"
+  },
+  "abd10b8db2e6": {
+    "source": "A Microsoft Forms QR code opens your form, so people answer a survey, a quiz or a registration from a poster, a slide or a handout.",
+    "text": "Un QR code per Microsoft Forms apre il tuo modulo, così le persone rispondono a un sondaggio, fanno un quiz o si registrano da un poster, una slide o un volantino.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.intro.0"
+  },
+  "144913e2ee68": {
+    "source": "In your form, use Collect responses and Copy link, then paste it here. A shortened forms.office.com/r/ link makes a simpler code.",
+    "text": "Nel tuo modulo usa Raccogli risposte e Copia collegamento, poi incollalo qui. Un link accorciato forms.office.com/r/ genera un codice più semplice.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.intro.1"
+  },
+  "7ff8efeca689": {
+    "source": "In the form, use Collect responses, then Copy link.",
+    "text": "Nel modulo usa Raccogli risposte, poi Copia collegamento.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.steps.0"
+  },
+  "6573b2aff00e": {
+    "source": "QRdx keeps the link as pasted. Older forms.office.com links keep working.",
+    "text": "QRdx mantiene il link così come lo incolli. I vecchi link forms.office.com continuano a funzionare.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.payload.notes.0"
+  },
+  "1cc44d4e28a5": {
+    "source": "Can anyone answer the form?",
+    "text": "Chiunque può rispondere al modulo?",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.faqs.0.question"
+  },
+  "9d5dc9d1c527": {
+    "source": "If you set it so anyone can respond. Forms limited to your organization need a work or school sign-in.",
+    "text": "Sì, se lo imposti in modo che chiunque possa rispondere. I moduli limitati alla tua organizzazione richiedono un accesso con account di lavoro o scuola.",
+    "status": "machine",
+    "context": "qrTypes.types.microsoft-forms.faqs.0.answer"
+  },
+  "427da29d54c2": {
+    "source": "Open a public Notion page.",
+    "text": "Apri una pagina Notion pubblica.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.summary"
+  },
+  "09f6d3c89aaa": {
+    "source": "Make a Notion QR code that opens a page you've published to the web: a wiki, guide, menu or portfolio. Paste the link. Free.",
+    "text": "Crea un QR code Notion che apre una pagina pubblicata sul web: un wiki, una guida, un menu o un portfolio. Incolla il link. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.metaDescription"
+  },
+  "5e0f1ce17815": {
+    "source": "A Notion QR code opens a page you've published to the web, like an event guide, a team wiki, a menu or a portfolio.",
+    "text": "Un QR code Notion apre una pagina che hai pubblicato sul web, come una guida per un evento, un wiki del team, un menu o un portfolio.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.intro.0"
+  },
+  "9500a3951f9f": {
+    "source": "In Notion, publish the page to the web, copy its link (yourname.notion.site/…) and paste it here.",
+    "text": "In Notion pubblica la pagina sul web, copia il suo link (yourname.notion.site/…) e incollalo qui.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.intro.1"
+  },
+  "fcd8ee3ad9e3": {
+    "source": "Publish the page to the web in Notion.",
+    "text": "Pubblica la pagina sul web in Notion.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.steps.0"
+  },
+  "cb792aca552f": {
+    "source": "QRdx keeps the link as pasted; older notion.so public links redirect.",
+    "text": "QRdx mantiene il link così come l'hai incollato; i vecchi link pubblici notion.so vengono reindirizzati.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.payload.notes.0"
+  },
+  "a8c393324b51": {
+    "source": "If you change your notion.site domain, old links stop working.",
+    "text": "Se cambi il dominio notion.site, i vecchi link smettono di funzionare.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.payload.notes.1"
+  },
+  "3ab085d8d82b": {
+    "source": "Do people need a Notion account?",
+    "text": "Serve un account Notion per aprirla?",
+    "status": "machine",
+    "context": "qrTypes.types.notion.faqs.0.question"
+  },
+  "d182d02daca2": {
+    "source": "No. Published pages open in any browser.",
+    "text": "No. Le pagine pubblicate si aprono in qualsiasi browser.",
+    "status": "machine",
+    "context": "qrTypes.types.notion.faqs.0.answer"
+  },
+  "31b9728d3360": {
+    "source": "Open a shared Canva design.",
+    "text": "Apri un design Canva condiviso.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.summary"
+  },
+  "7b0e91b6f0d0": {
+    "source": "Create a Canva QR code that opens a design's public view link: a flyer, menu, presentation or portfolio. Paste the link. Free.",
+    "text": "Crea un QR code Canva che apre il link di visualizzazione pubblica di un design: un volantino, un menu, una presentazione o un portfolio. Incolla il link. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.metaDescription"
+  },
+  "8b56b4db842f": {
+    "source": "A Canva QR code opens a design you've shared, like a flyer, a menu, a presentation or a portfolio.",
+    "text": "Un QR code Canva apre un design che hai condiviso, come un volantino, un menu, una presentazione o un portfolio.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.intro.0"
+  },
+  "d550aab7bdc8": {
+    "source": "In Canva, use Share and Public view link, copy it and paste it here.",
+    "text": "In Canva usa Condividi e Link di visualizzazione pubblica, copialo e incollalo qui.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.intro.1"
+  },
+  "926d7d1d022d": {
+    "source": "In Canva, use Share, then Public view link, and copy it.",
+    "text": "In Canva usa Condividi, poi Link di visualizzazione pubblica, e copialo.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.steps.0"
+  },
+  "ed5ad7a15560": {
+    "source": "Scan the preview to check the design opens.",
+    "text": "Fai la scansione dell'anteprima per verificare che il design si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.steps.2"
+  },
+  "8a2d2bdd034c": {
+    "source": "Deleting the public view link in Canva stops the code from opening the design.",
+    "text": "Se elimini il link di visualizzazione pubblica in Canva, il codice non apre più il design.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.payload.notes.1"
+  },
+  "ae341d3d278d": {
+    "source": "Will edits to the design show?",
+    "text": "Le modifiche al design si vedranno?",
+    "status": "machine",
+    "context": "qrTypes.types.canva.faqs.0.question"
+  },
+  "57048de1a621": {
+    "source": "Yes. The view link shows the current version of the design.",
+    "text": "Sì. Il link di visualizzazione mostra la versione attuale del design.",
+    "status": "machine",
+    "context": "qrTypes.types.canva.faqs.0.answer"
+  },
+  "0058588a8380": {
+    "source": "Open an app's page on the App Store.",
+    "text": "Apri la pagina di un'app sull'App Store.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.summary"
+  },
+  "3e67b23ec510": {
+    "source": "Make an App Store QR code that opens your iPhone or iPad app's page, or its review form. Paste the link or app ID. Free.",
+    "text": "Crea un QR code App Store che apre la pagina della tua app per iPhone o iPad, oppure il suo modulo di recensione. Incolla il link o l'ID dell'app. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.metaDescription"
+  },
+  "1f02960e7dd4": {
+    "source": "An App Store QR code opens your app's page, so people download it from a poster, packaging or your shop counter.",
+    "text": "Un QR code App Store apre la pagina della tua app, così le persone la scaricano da un poster, da una confezione o dal bancone del tuo negozio.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.intro.0"
+  },
+  "a70e140dbbc0": {
+    "source": "Paste the app's apps.apple.com link, or type its ID (the number after id). Turn on 'Open the review form' to add Apple's write-review action to the link.",
+    "text": "Incolla il link apps.apple.com dell'app, oppure scrivi il suo ID (il numero dopo id). Attiva 'Open the review form' per aggiungere al link l'azione di Apple per scrivere una recensione.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.intro.1"
+  },
+  "4fd8122bbe24": {
+    "source": "Copy your app's link from the App Store, or find its ID in App Store Connect.",
+    "text": "Copia il link della tua app dall'App Store, oppure trova il suo ID in App Store Connect.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.0"
+  },
+  "3c441fcc1e32": {
+    "source": "Paste it here; turn on the review form if you're asking for ratings.",
+    "text": "Incollalo qui; attiva il modulo di recensione se vuoi chiedere valutazioni.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.1"
+  },
+  "ac0b8a0a86af": {
+    "source": "Scan the preview on an iPhone to check it opens.",
+    "text": "Fai la scansione dell'anteprima con un iPhone per verificare che si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.steps.2"
+  },
+  "e8605d57a3db": {
+    "source": "action=write-review is Apple's documented link to an app's review form.",
+    "text": "action=write-review è il link documentato da Apple per il modulo di recensione di un'app.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.payload.notes.0"
+  },
+  "8cc9ee625d41": {
+    "source": "For one code that offers both stores, make a hosted app page instead.",
+    "text": "Per un unico codice che offra entrambi gli store, crea invece una pagina app ospitata.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.payload.notes.1"
+  },
+  "a59f41936141": {
+    "source": "What happens on Android?",
+    "text": "Cosa succede su Android?",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.faqs.0.question"
+  },
+  "eae8e131215d": {
+    "source": "The App Store page opens in the browser. Print a Google Play code next to it for Android.",
+    "text": "La pagina dell'App Store si apre nel browser. Stampa accanto un codice Google Play per Android.",
+    "status": "machine",
+    "context": "qrTypes.types.app-store.faqs.0.answer"
+  },
+  "53118d3f8b57": {
+    "source": "Open an Android app's page on Google Play.",
+    "text": "Apri la pagina di un'app Android su Google Play.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.summary"
+  },
+  "3da7b88ce937": {
+    "source": "Create a Google Play QR code that opens your Android app's store page. Paste the link or type the package name. Free, no signup.",
+    "text": "Crea un QR code di Google Play che apre la pagina dell'app Android nello store. Incolla il link o digita il nome del pacchetto. Gratuito, senza registrazione.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.metaDescription"
+  },
+  "6bed22f3b1f7": {
+    "source": "A Google Play QR code opens your Android app's page in the Play Store, so people install it from a poster, packaging or a shop counter.",
+    "text": "Un QR code di Google Play apre la pagina della tua app Android nel Play Store, così le persone la installano da un poster, da una confezione o dal bancone di un negozio.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.intro.0"
+  },
+  "ac8cb03b5c94": {
+    "source": "Type the app's package name (like com.example.app) and QRdx builds Google's documented store link, or paste the play.google.com link.",
+    "text": "Digita il nome del pacchetto dell'app (come com.example.app) e QRdx crea il link allo store documentato da Google, oppure incolla il link di play.google.com.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.intro.1"
+  },
+  "768dfa2ceb09": {
+    "source": "Enter the package name, or paste the app's Google Play link.",
+    "text": "Inserisci il nome del pacchetto oppure incolla il link dell'app su Google Play.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.steps.0"
+  },
+  "e7410f3caeb2": {
+    "source": "Scan the preview on an Android phone to check it opens.",
+    "text": "Fai la scansione dell'anteprima con uno smartphone Android per verificare che si apra.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.steps.1"
+  },
+  "4377d1fc2323": {
+    "source": "Package names have two or more parts separated by dots, each starting with a letter.",
+    "text": "I nomi dei pacchetti hanno due o più parti separate da punti, ognuna con una lettera iniziale.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.payload.notes.0"
+  },
+  "aef02ca8a480": {
+    "source": "A developer page link (store/apps/dev?id=…) works too.",
+    "text": "Funziona anche il link alla pagina di uno sviluppatore (store/apps/dev?id=…).",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.payload.notes.1"
+  },
+  "5832dc22413b": {
+    "source": "Can the code open the review form?",
+    "text": "Il codice può aprire il modulo di recensione?",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.faqs.0.question"
+  },
+  "52db9b599b5d": {
+    "source": "Google Play has no link to its review form; people rate an app from its store page or inside the app.",
+    "text": "Google Play non ha un link al modulo di recensione: le persone valutano un'app dalla sua pagina nello store o dall'interno dell'app.",
+    "status": "machine",
+    "context": "qrTypes.types.google-play.faqs.0.answer"
+  },
   "74da95f9087d": {
     "source": "Share a contact in a smaller code than a vCard.",
     "text": "Condividi un contatto in un codice più piccolo di una vCard.",
@@ -8794,6 +11902,42 @@
     "text": "Curriculum",
     "status": "machine",
     "context": "hostedTypes.resume.name"
+  },
+  "2bce1f4a654f": {
+    "source": "Shots",
+    "text": "Shot",
+    "status": "machine",
+    "context": "pageCodes.type-dribbble-4.label"
+  },
+  "c74a09f295d9": {
+    "source": "Band poster",
+    "text": "Poster band",
+    "status": "machine",
+    "context": "pageCodes.type-linktree-3.label"
+  },
+  "9feceb9333b5": {
+    "source": "Membership",
+    "text": "Abbonamento",
+    "status": "machine",
+    "context": "pageCodes.type-patreon-1.label"
+  },
+  "1eec3071dd26": {
+    "source": "Stream",
+    "text": "Streaming",
+    "status": "machine",
+    "context": "pageCodes.type-kofi-2.label"
+  },
+  "faa075c3a741": {
+    "source": "Commissions",
+    "text": "Su commissione",
+    "status": "machine",
+    "context": "pageCodes.type-kofi-3.label"
+  },
+  "74e8801e4926": {
+    "source": "New single",
+    "text": "Nuovo singolo",
+    "status": "machine",
+    "context": "pageCodes.type-apple-music-1.label"
   },
   "7d41961e2188": {
     "source": "Resume and CV QR Code Generator",
@@ -24389,6 +27533,120 @@
     "status": "machine",
     "context": "pageCodes.on-tickets-4.label"
   },
+  "6e5c991e833a": {
+    "source": "Shop help",
+    "text": "Aiuto negozio",
+    "status": "machine",
+    "context": "pageCodes.type-messenger-2.label"
+  },
+  "0a30a815d67d": {
+    "source": "Page",
+    "text": "Pagina",
+    "status": "machine",
+    "context": "pageCodes.type-messenger-4.label"
+  },
+  "97368f46f6c6": {
+    "source": "Customer help",
+    "text": "Aiuto clienti",
+    "status": "machine",
+    "context": "pageCodes.type-viber-1.label"
+  },
+  "b7e8acdd522e": {
+    "source": "Orders",
+    "text": "Ordini",
+    "status": "machine",
+    "context": "pageCodes.type-viber-3.label"
+  },
+  "0600175af842": {
+    "source": "Open chat",
+    "text": "Chat aperta",
+    "status": "machine",
+    "context": "pageCodes.type-kakaotalk-1.label"
+  },
+  "9c298662a4d6": {
+    "source": "Event chat",
+    "text": "Chat evento",
+    "status": "machine",
+    "context": "pageCodes.type-kakaotalk-3.label"
+  },
+  "25696507596f": {
+    "source": "Official Account",
+    "text": "Account ufficiale",
+    "status": "machine",
+    "context": "pageCodes.type-zalo-1.label"
+  },
+  "4bec608656df": {
+    "source": "Call me",
+    "text": "Chiamami",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-1.label"
+  },
+  "a8bf69b80f2b": {
+    "source": "Studio call",
+    "text": "Chiamata studio",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-2.label"
+  },
+  "847814d9f5f9": {
+    "source": "Family call",
+    "text": "Chiamata famiglia",
+    "status": "machine",
+    "context": "pageCodes.type-facetime-3.label"
+  },
+  "3689f6ebdd46": {
+    "source": "Team meeting",
+    "text": "Riunione team",
+    "status": "machine",
+    "context": "pageCodes.type-microsoft-teams-1.label"
+  },
+  "36a798e3f392": {
+    "source": "Training",
+    "text": "Formazione",
+    "status": "machine",
+    "context": "pageCodes.type-microsoft-teams-4.label"
+  },
+  "e50569ed429c": {
+    "source": "Personal room",
+    "text": "Stanza personale",
+    "status": "machine",
+    "context": "pageCodes.type-webex-2.label"
+  },
+  "3751e73247f6": {
+    "source": "All-hands",
+    "text": "Riunione plenaria",
+    "status": "machine",
+    "context": "pageCodes.type-webex-3.label"
+  },
+  "8b8b8871bbfb": {
+    "source": "Meeting",
+    "text": "Riunione",
+    "status": "machine",
+    "context": "pageCodes.type-webex-4.label"
+  },
+  "948e03e7054b": {
+    "source": "Booking",
+    "text": "Prenotazione",
+    "status": "machine",
+    "context": "pageCodes.type-calendly-4.label"
+  },
+  "6c0f6d250287": {
+    "source": "First day",
+    "text": "Primo giorno",
+    "status": "machine",
+    "context": "pageCodes.type-google-classroom-1.label"
+  },
+  "642d071893ea": {
+    "source": "Classroom door",
+    "text": "Porta dell'aula",
+    "status": "machine",
+    "context": "pageCodes.type-google-classroom-2.label"
+  },
+  "00ea63f88347": {
+    "source": "Shop page",
+    "text": "Pagina negozio",
+    "status": "machine",
+    "context": "pageCodes.type-vk-2.label"
+  },
   "3d33dc0484e1": {
     "source": "Name badge",
     "text": "Badge nominativo",
@@ -24406,6 +27664,36 @@
     "text": "Volantino",
     "status": "machine",
     "context": "pageCodes.type-mecard-4.label"
+  },
+  "0072e6b93494": {
+    "source": "Design",
+    "text": "Design",
+    "status": "machine",
+    "context": "pageCodes.type-canva-4.label"
+  },
+  "d6eafe823591": {
+    "source": "Download",
+    "text": "Scarica",
+    "status": "machine",
+    "context": "pageCodes.type-app-store-1.label"
+  },
+  "190a69421640": {
+    "source": "Rate us",
+    "text": "Valutaci",
+    "status": "machine",
+    "context": "pageCodes.type-app-store-2.label"
+  },
+  "960618202242": {
+    "source": "Store counter",
+    "text": "Bancone negozio",
+    "status": "machine",
+    "context": "pageCodes.type-google-play-3.label"
+  },
+  "174c7bd1b3f7": {
+    "source": "Hotel desk",
+    "text": "Reception hotel",
+    "status": "machine",
+    "context": "pageCodes.type-tripadvisor-2.label"
   },
   "0432f20a0f65": {
     "source": "Table menu",
@@ -24893,6 +28181,42 @@
     "status": "machine",
     "context": "pageCodes.for-salons-4.label"
   },
+  "f4830a1dae29": {
+    "source": "Schedule",
+    "text": "Programma",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-3.label"
+  },
+  "f3befcc6b14e": {
+    "source": "Spreadsheet",
+    "text": "Foglio di calcolo",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-4.label"
+  },
+  "1799ee8d33d6": {
+    "source": "Class deck",
+    "text": "Slide di classe",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-2.label"
+  },
+  "6af11cc59404": {
+    "source": "Pitch",
+    "text": "Pitch",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-3.label"
+  },
+  "5d5ee1577500": {
+    "source": "Presentation",
+    "text": "Presentazione",
+    "status": "machine",
+    "context": "pageCodes.type-google-slides-4.label"
+  },
+  "3cc08ebe9d5f": {
+    "source": "Sign-up",
+    "text": "Iscrizione",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-1.label"
+  },
   "3a08dec415e7": {
     "source": "Class timetable",
     "text": "Orario corsi",
@@ -25043,6 +28367,18 @@
     "status": "machine",
     "context": "pageCodes.on-business-cards-2.label"
   },
+  "cb98674f4d96": {
+    "source": "Exhibition",
+    "text": "Mostra",
+    "status": "machine",
+    "context": "pageCodes.type-behance-3.label"
+  },
+  "04e2a9728af7": {
+    "source": "Projects",
+    "text": "Progetti",
+    "status": "machine",
+    "context": "pageCodes.type-behance-4.label"
+  },
   "14a6d239da60": {
     "source": "2-for-1",
     "text": "2x1",
@@ -25084,6 +28420,60 @@
     "text": "Tour",
     "status": "machine",
     "context": "pageCodes.on-brochures-2.label"
+  },
+  "fc7f1aa2054c": {
+    "source": "Listing",
+    "text": "Scheda",
+    "status": "machine",
+    "context": "pageCodes.type-tripadvisor-4.label"
+  },
+  "6846c19a5714": {
+    "source": "Packing slip",
+    "text": "Bolla pacco",
+    "status": "machine",
+    "context": "pageCodes.type-trustpilot-3.label"
+  },
+  "19734a1b58ca": {
+    "source": "Window",
+    "text": "Vetrina",
+    "status": "machine",
+    "context": "pageCodes.type-yelp-3.label"
+  },
+  "99cf4b5719d6": {
+    "source": "Welcome book",
+    "text": "Guida ospiti",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-1.label"
+  },
+  "29f3df617cba": {
+    "source": "Book again",
+    "text": "Prenota ancora",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-2.label"
+  },
+  "8eab0f09df01": {
+    "source": "Experience",
+    "text": "Esperienza",
+    "status": "machine",
+    "context": "pageCodes.type-airbnb-3.label"
+  },
+  "e6aa9b5b8581": {
+    "source": "Front desk",
+    "text": "Reception",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-1.label"
+  },
+  "a12b6221b64a": {
+    "source": "Guest book",
+    "text": "Libro ospiti",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-2.label"
+  },
+  "40040cb181f7": {
+    "source": "Property",
+    "text": "Struttura",
+    "status": "machine",
+    "context": "pageCodes.type-booking-com-4.label"
   },
   "015b4e0a76e5": {
     "source": "Specifications",
@@ -25246,6 +28636,30 @@
     "text": "Sondaggio",
     "status": "machine",
     "context": "pageCodes.on-receipts-4.label"
+  },
+  "03aa7dc16797": {
+    "source": "Quiz",
+    "text": "Quiz",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-3.label"
+  },
+  "2e0e960ab320": {
+    "source": "Form",
+    "text": "Modulo",
+    "status": "machine",
+    "context": "pageCodes.type-google-forms-4.label"
+  },
+  "63ec69fde300": {
+    "source": "Wiki",
+    "text": "Wiki",
+    "status": "machine",
+    "context": "pageCodes.type-notion-1.label"
+  },
+  "5e3e3c190185": {
+    "source": "Event guide",
+    "text": "Guida evento",
+    "status": "machine",
+    "context": "pageCodes.type-notion-2.label"
   },
   "e888155d8c7d": {
     "source": "Compare",
@@ -27659,6 +31073,90 @@
     "status": "machine",
     "context": "templates.event.label"
   },
+  "c3a7b99442dc": {
+    "source": "Brand page",
+    "text": "Pagina brand",
+    "status": "machine",
+    "context": "pageCodes.type-weibo-2.label"
+  },
+  "ccf56ef5db0b": {
+    "source": "Launch",
+    "text": "Lancio",
+    "status": "machine",
+    "context": "pageCodes.type-weibo-3.label"
+  },
+  "8c6bc099534a": {
+    "source": "Blog",
+    "text": "Blog",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-1.label"
+  },
+  "62bfe02804a0": {
+    "source": "Zine",
+    "text": "Zine",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-2.label"
+  },
+  "0cea784f9901": {
+    "source": "Art blog",
+    "text": "Blog d'arte",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-3.label"
+  },
+  "a80811cf6889": {
+    "source": "Posts",
+    "text": "Post",
+    "status": "machine",
+    "context": "pageCodes.type-tumblr-4.label"
+  },
+  "29d94922512b": {
+    "source": "Article",
+    "text": "Articolo",
+    "status": "machine",
+    "context": "pageCodes.type-medium-1.label"
+  },
+  "d95082a2ee57": {
+    "source": "Author",
+    "text": "Autore",
+    "status": "machine",
+    "context": "pageCodes.type-medium-3.label"
+  },
+  "6d09cf574882": {
+    "source": "Stories",
+    "text": "Storie",
+    "status": "machine",
+    "context": "pageCodes.type-medium-4.label"
+  },
+  "f84ca2e7716b": {
+    "source": "Newsletter",
+    "text": "Newsletter",
+    "status": "machine",
+    "context": "pageCodes.type-substack-1.label"
+  },
+  "560401f3f20f": {
+    "source": "Book table",
+    "text": "Prenota tavolo",
+    "status": "machine",
+    "context": "pageCodes.type-substack-3.label"
+  },
+  "15fc65b69327": {
+    "source": "Publication",
+    "text": "Pubblicazione",
+    "status": "machine",
+    "context": "pageCodes.type-substack-4.label"
+  },
+  "13d6ff07b8a5": {
+    "source": "Repository",
+    "text": "Repository",
+    "status": "machine",
+    "context": "pageCodes.type-github-1.label"
+  },
+  "419a866e5bf3": {
+    "source": "Talk slide",
+    "text": "Slide del talk",
+    "status": "machine",
+    "context": "pageCodes.type-github-2.label"
+  },
   "a66124dde0e9": {
     "source": "Date, venue, tickets and add-to-calendar for an event",
     "text": "Data, luogo, biglietti e aggiunta al calendario per un evento",
@@ -28211,6 +31709,12 @@
     "status": "machine",
     "context": "templates.pdf.variants.document.name"
   },
+  "d92bcca77171": {
+    "source": "Sign-up sheet",
+    "text": "Foglio iscrizioni",
+    "status": "machine",
+    "context": "pageCodes.type-google-sheets-1.label"
+  },
   "9cb55ffd93d1": {
     "source": "A guide or manual, front and center",
     "text": "Una guida o un manuale in primo piano",
@@ -28313,6 +31817,12 @@
     "status": "machine",
     "context": "templates.mp3.variants.album.name"
   },
+  "051f01f095a2": {
+    "source": "Track",
+    "text": "Brano",
+    "status": "machine",
+    "context": "pageCodes.type-apple-music-4.label"
+  },
   "f10cf3d63108": {
     "source": "Cover art, a playlist and your profiles",
     "text": "Copertina, una playlist e i tuoi profili",
@@ -28396,6 +31906,84 @@
     "text": "Mixtape",
     "status": "machine",
     "context": "templates.playlist.variants.mixtape.name"
+  },
+  "b19c450b47d6": {
+    "source": "Episode",
+    "text": "Episodio",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-2.label"
+  },
+  "dd40d8d1bff8": {
+    "source": "Live taping",
+    "text": "Registrazione live",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-3.label"
+  },
+  "0df6f1cad36c": {
+    "source": "Show",
+    "text": "Programma",
+    "status": "machine",
+    "context": "pageCodes.type-apple-podcasts-4.label"
+  },
+  "74203ab8388c": {
+    "source": "Merch tag",
+    "text": "Tag merch",
+    "status": "machine",
+    "context": "pageCodes.type-amazon-music-3.label"
+  },
+  "79ac1952b567": {
+    "source": "New release",
+    "text": "Nuova uscita",
+    "status": "machine",
+    "context": "pageCodes.type-deezer-1.label"
+  },
+  "dfa82f21b3f3": {
+    "source": "Party",
+    "text": "Festa",
+    "status": "machine",
+    "context": "pageCodes.type-deezer-2.label"
+  },
+  "71ab02f6fd29": {
+    "source": "Listening bar",
+    "text": "Listening bar",
+    "status": "machine",
+    "context": "pageCodes.type-tidal-2.label"
+  },
+  "8888a029aaf6": {
+    "source": "Single",
+    "text": "Singolo",
+    "status": "machine",
+    "context": "pageCodes.type-tidal-3.label"
+  },
+  "bfdd510698ef": {
+    "source": "Record",
+    "text": "Disco",
+    "status": "machine",
+    "context": "pageCodes.type-bandcamp-3.label"
+  },
+  "1d3981ba1e18": {
+    "source": "Artist",
+    "text": "Artista",
+    "status": "machine",
+    "context": "pageCodes.type-bandcamp-4.label"
+  },
+  "f84806199588": {
+    "source": "Handout",
+    "text": "Dispensa",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-1.label"
+  },
+  "9e6c24f51918": {
+    "source": "Meeting notes",
+    "text": "Note riunione",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-2.label"
+  },
+  "934652dce41d": {
+    "source": "Instructions",
+    "text": "Istruzioni",
+    "status": "machine",
+    "context": "pageCodes.type-google-docs-3.label"
   },
   "fae3b174bf21": {
     "source": "Cover art, the tracklist and where else to listen",
@@ -34037,12 +37625,6 @@
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "Scarica il codice in PNG, WebP o SVG.",
-    "status": "machine",
-    "context": "qrTypes.types.text.steps.3"
-  },
   "0135740ce7f9": {
     "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
     "text": "Crea un QR code Wi-Fi così gli ospiti si collegano alla tua rete con una scansione. Reti WPA/WPA2, WEP e aperte, SSID nascosti, escape corretto. Gratuito.",
@@ -34060,12 +37642,6 @@
     "text": "Controlla che il nome della rete corrisponda esattamente (distingue tra maiuscole e minuscole), che il tipo di sicurezza sia giusto e che tu sia nel raggio di copertura. Le reti aziendali che richiedono nome utente o certificato (WPA2-Enterprise) non sono supportate da questo formato.",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.1.answer"
-  },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "Scarica un PNG, WebP o SVG, oppure personalizza lo stile del codice nell'editor completo.",
-    "status": "machine",
-    "context": "qrTypes.types.instagram.steps.3"
   },
   "da2ccbd9fdc4": {
     "source": "This is an on-chain request: the wallet pays your address on the Bitcoin blockchain. Lightning-only wallets can't pay it, and this generator doesn't add a lightning= invoice to the URI, so for Lightning payments share an invoice or Lightning address from your wallet instead.",
