@@ -51,6 +51,48 @@ export const DYNAMIC_CONTENT_TYPES = [
   "revolut",
   // Added 2026-11-22 (payments): a Swish code is an app.swish.nu link
   "swish",
+  // Added 2026-11-22 (links)
+  "messenger",
+  "viber",
+  "kakaotalk",
+  "zalo",
+  "microsoft-teams",
+  "webex",
+  "calendly",
+  "google-classroom",
+  "vk",
+  "weibo",
+  "tumblr",
+  "medium",
+  "substack",
+  "github",
+  "behance",
+  "dribbble",
+  "linktree",
+  "patreon",
+  "kofi",
+  "buymeacoffee",
+  "apple-music",
+  "youtube-music",
+  "apple-podcasts",
+  "amazon-music",
+  "deezer",
+  "tidal",
+  "bandcamp",
+  "google-docs",
+  "google-sheets",
+  "google-slides",
+  "google-forms",
+  "microsoft-forms",
+  "notion",
+  "canva",
+  "app-store",
+  "google-play",
+  "tripadvisor",
+  "trustpilot",
+  "yelp",
+  "airbnb",
+  "booking-com",
 ] as const satisfies readonly ContentType[];
 
 export type DynamicContentType = (typeof DYNAMIC_CONTENT_TYPES)[number];
@@ -95,6 +137,8 @@ export const STATIC_ONLY_TYPES = [
   "tron",
   "ton",
   "stellar",
+  // Added 2026-11-22 (links): calls by number or email (facetime:)
+  "facetime",
 ] as const satisfies readonly ContentType[];
 
 /**

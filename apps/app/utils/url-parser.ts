@@ -4,6 +4,7 @@
  */
 
 import type { ContentType, QRContentConfig } from "@/types/qr-content";
+import { linkTypeFromUrl } from "@/utils/link-types";
 import {
   isAmazonUrl,
   isGoogleDriveFileUrl,
@@ -28,6 +29,12 @@ export function parseURL(url: string): ParsedURL | null {
   // Content types added 2026-11-11, by the link's host
   const linked = linkedContent(web, trimmedUrl);
   if (linked) return linked;
+
+  // Added 2026-11-22 (links): before YouTube, Amazon, Drive and Forms below,
+  // so music.youtube.com, music.amazon.com, Docs and Forms links get their
+  // own types.
+  const service = web ? linkTypeFromUrl(web, trimmedUrl) : null;
+  if (service) return { type: service.type, config: service };
 
   // Instagram
   if (on("instagram.com", "instagr.am")) {
