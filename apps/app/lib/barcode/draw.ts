@@ -145,9 +145,9 @@ export function drawOptions(
     // reject a symbol without them; bwip-js leaves them out unless asked.
     if (id === "code93") options.includecheck = true;
     // GS1 puts an EAN-13's add-on 7 to 12 modules right of the bars. BWIPP
-    // uses 12, where ZXing-based readers (most phone scanner apps) stop
-    // looking for one; 9 is inside both. The value is the drawing's own: no
-    // add-on, no gap.
+    // uses 12, where ZXing (the reader /scan falls back to, and many scanner
+    // apps) no longer finds it; 9 is inside both. Without an add-on the
+    // option draws nothing.
     if (id === "isbn" || id === "issn" || id === "ismn") options.addongap = 9;
   }
   return options;
