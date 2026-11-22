@@ -1,9 +1,16 @@
 import { z } from "zod";
 import { validateDesignContent } from "@/lib/qr-design/content";
+import {
+  encodeWifi,
+  WIFI_EAP_METHODS,
+  WIFI_PHASE2_METHODS,
+  wifiIssue,
+} from "@/utils/qr-content-encoder";
 
 // QR payload builders for structured content. Each follows the format that
 // scanner apps (iOS Camera, Google Lens, ZXing) recognize:
-// - Wi-Fi: "WIFI:" URI (Wi-Fi Alliance WPA3 spec §7 / ZXing)
+// - Wi-Fi: "WIFI:" URI (Wi-Fi Alliance WPA3 spec §7 / ZXing), with ZXing's
+//   WPA2-EAP fields for enterprise networks
 // - vCard 3.0: RFC 2426
 // - Email: mailto: URI, RFC 6068
 // - SMS: sms: URI, RFC 5724 (or the common SMSTO: form)
@@ -38,17 +45,53 @@ export const wifiPayloadSchema = z
       .optional()
       .describe("Network password. Leave out for open networks."),
     security: z
-      .enum(["WPA", "WEP", "nopass"])
+      .enum(["WPA", "WEP", "nopass", "SAE", "WPA2-EAP"])
       .default("WPA")
       .describe(
-        "WPA covers WPA, WPA2 and WPA3 personal networks; nopass is an open network",
+        "WPA covers WPA and WPA2 personal networks and WPA2/WPA3 transition networks (every phone joins those); SAE is a WPA3-only network; WPA2-EAP is WPA2/WPA3-Enterprise (802.1X), which phone camera apps don't join (only ZXing-based scanner apps read it); nopass is an open network",
       ),
     hidden: z
       .boolean()
       .default(false)
       .describe("True when the network does not broadcast its SSID"),
+    // Added 2026-11-22 (payments): WPA2-EAP only
+    eapMethod: z
+      .enum(WIFI_EAP_METHODS)
+      .optional()
+      .describe("WPA2-EAP: EAP method, PEAP (default), TTLS or PWD"),
+    phase2: z
+      .enum(WIFI_PHASE2_METHODS)
+      .optional()
+      .describe(
+        "WPA2-EAP with PEAP or TTLS: inner authentication, MSCHAPV2 (default), GTC, PAP or MSCHAP",
+      ),
+    identity: z
+      .string()
+      .max(253)
+      .optional()
+      .describe("WPA2-EAP: the person's identity (username), required"),
+    anonymousIdentity: z
+      .string()
+      .max(253)
+      .optional()
+      .describe("WPA2-EAP: anonymous (outer) identity, if the network uses one"),
   })
   .superRefine((value, ctx) => {
+    if (value.security === "SAE" || value.security === "WPA2-EAP") {
+      const found = wifiIssue({
+        ...value,
+        encryption: value.security,
+        password: value.password ?? "",
+      });
+      if (found) {
+        ctx.addIssue({
+          code: "custom",
+          path: found.field ? [found.field] : [],
+          message: found.message,
+        });
+      }
+      return;
+    }
     const length = value.password?.length ?? 0;
     if (value.security === "WPA" && (length < 8 || length > 63)) {
       if (!(length === 64 && /^[0-9a-f]+$/i.test(value.password ?? ""))) {
@@ -74,6 +117,20 @@ const escapeWifi = (value: string) => value.replace(/([\\;,":])/g, "\\$1");
 export function buildWifiPayload(
   input: z.output<typeof wifiPayloadSchema>,
 ): string {
+  // Enterprise networks: the editor's own encoder (E:, PH2:, A:, I:).
+  if (input.security === "WPA2-EAP") {
+    return encodeWifi({
+      type: "wifi",
+      ssid: input.ssid,
+      password: input.password ?? "",
+      encryption: "WPA2-EAP",
+      hidden: input.hidden,
+      eapMethod: input.eapMethod,
+      phase2: input.phase2,
+      identity: input.identity,
+      anonymousIdentity: input.anonymousIdentity,
+    });
+  }
   const fields = [`T:${input.security}`, `S:${escapeWifi(input.ssid)}`];
   if (input.hidden) fields.push("H:true");
   if (input.security !== "nopass" && input.password) {

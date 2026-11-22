@@ -1995,7 +1995,12 @@
       "searchWeb": "Search the web",
       "copyText": "Copy text",
       "raw": "Raw content",
-      "copyRaw": "Copy raw content"
+      "copyRaw": "Copy raw content",
+      "eapMethod": "Sign-in method (EAP)",
+      "phase2": "Phase 2",
+      "identity": "Identity",
+      "anonymousIdentity": "Anonymous identity",
+      "wifiEnterpriseNote": "This is an enterprise network: phones join it with a username and password, not from this page. Open your Wi-Fi settings, choose “{ssid}” and enter these details. Copy the password from here."
     },
     "link": {
       "verdicts": {
@@ -4613,7 +4618,18 @@
         "hiddenNetwork": "Hidden network",
         "scanningWillOfferToJoin": "Scanning will offer to join this Wi-Fi network",
         "myWiFiNetwork": "My Wi-Fi network",
-        "networkPassword": "Network password"
+        "networkPassword": "Network password",
+        "wpa3Only": "WPA3 only",
+        "enterprise": "WPA2/WPA3-Enterprise",
+        "wpaHint": "Also right for networks in WPA2/WPA3 mode: they accept WPA2, which every phone can join.",
+        "wpa3Hint": "Only for networks that accept WPA3 alone. Android reads these codes from its Wi-Fi settings scanner (Android 10 and later); Apple doesn't document them for the iPhone Camera, so test with an iPhone first.",
+        "eapMethod": "Sign-in method (EAP)",
+        "phase2": "Phase 2 authentication",
+        "identity": "Identity *",
+        "identityPlaceholder": "Username or email",
+        "anonymousIdentity": "Anonymous identity",
+        "anonymousIdentityHint": "Optional. Some networks ask for one, like anonymous@your-domain.",
+        "enterpriseNote": "Phone camera apps don't join enterprise networks from a code: Android's built-in Wi-Fi scanner reads only personal and open networks, and iPhones set up enterprise Wi-Fi with a configuration profile. Scanner apps built on the open-source ZXing library fill in these details. Anyone who scans the code can read the password."
       },
       "youtubeForm": {
         "videoUrl": "Video URL",

@@ -777,7 +777,7 @@ export function registerQrTools(server: McpServer) {
     {
       title: "Wi-Fi QR payload",
       description:
-        "Build a Wi-Fi network payload (WIFI:T:WPA;S:...;P:...;;) that phones join when scanned. Pass the result as `data` to generate_qr_code.",
+        "Build a Wi-Fi network payload (WIFI:T:WPA;S:...;P:...;;) that phones join when scanned: WPA/WPA2 (and WPA2/WPA3 transition) networks, WPA3-only (T:SAE), WEP or open ones. WPA2/WPA3-Enterprise networks (T:WPA2-EAP with the EAP method and identity) are read by ZXing-based scanner apps, not by phone camera apps. Pass the result as `data` to generate_qr_code.",
       inputSchema: wifiPayloadSchema,
       annotations: { ...readOnly, title: "Wi-Fi QR payload" },
     },

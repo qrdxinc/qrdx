@@ -113,9 +113,28 @@ export interface WifiContent {
   type: "wifi";
   ssid: string;
   password: string;
-  encryption: "WPA" | "WEP" | "nopass";
+  /**
+   * WPA: WPA/WPA2 personal, and WPA2/WPA3 transition networks. SAE: WPA3
+   * personal only. WPA2-EAP: WPA2/WPA3-Enterprise (802.1X).
+   */
+  encryption: "WPA" | "WEP" | "nopass" | "SAE" | "WPA2-EAP";
   hidden?: boolean;
+  // Added 2026-11-22 (payments): WPA2-EAP only
+  /** EAP method (E:) */
+  eapMethod?: WifiEapMethod;
+  /** Phase 2 (inner) authentication (PH2:), for PEAP and TTLS */
+  phase2?: WifiPhase2Method;
+  /** The person's sign-in name (I:) */
+  identity?: string;
+  /** Outer identity sent before the tunnel is up (A:) */
+  anonymousIdentity?: string;
 }
+
+/** EAP methods a Wi-Fi QR code can name; TLS needs a certificate, so it's left out. */
+export type WifiEapMethod = "PEAP" | "TTLS" | "PWD";
+
+/** Inner authentication for PEAP and TTLS. */
+export type WifiPhase2Method = "MSCHAPV2" | "GTC" | "PAP" | "MSCHAP";
 
 /**
  * vCard Contact Content

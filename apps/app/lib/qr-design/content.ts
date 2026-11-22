@@ -210,7 +210,7 @@ export function contentCatalog() {
   }));
 }
 
-/** One line per type: `wifi (WiFi): ssid*, password, encryption=WPA|WEP|nopass, hidden` */
+/** One line per type: `wifi (WiFi): ssid*, password, encryption=WPA|WEP|nopass|SAE|WPA2-EAP, hidden, …` */
 export function contentFieldGuide(): string {
   return CONTENT_TYPE_IDS.map((type) => {
     const fields = CONTENT_FIELDS[type]
@@ -253,8 +253,16 @@ const FIELD_DESCRIPTIONS: Record<string, string> = {
     "Prefilled message (sms, whatsapp) or payment message (bitcoin, crypto, pix, vietqr)",
   ssid: "Wi-Fi network name",
   password: "Wi-Fi password (8-63 characters for WPA)",
-  encryption: "Wi-Fi security: WPA (WPA/WPA2/WPA3), WEP or nopass (open)",
+  encryption:
+    "Wi-Fi security: WPA (WPA/WPA2, and WPA2/WPA3 transition), SAE (WPA3 only), WPA2-EAP (WPA2/WPA3-Enterprise), WEP or nopass (open)",
   hidden: "Wi-Fi network is hidden",
+  // Added 2026-11-22 (payments)
+  eapMethod: "Enterprise Wi-Fi EAP method: PEAP, TTLS or PWD (wifi, WPA2-EAP)",
+  phase2:
+    "Enterprise Wi-Fi inner authentication: MSCHAPV2, GTC, PAP or MSCHAP (wifi, WPA2-EAP with PEAP or TTLS)",
+  identity: "Enterprise Wi-Fi identity (username) (wifi, WPA2-EAP)",
+  anonymousIdentity:
+    "Enterprise Wi-Fi anonymous outer identity, optional (wifi, WPA2-EAP)",
   firstName: "Contact first name",
   lastName: "Contact last name",
   organization: "Contact company",

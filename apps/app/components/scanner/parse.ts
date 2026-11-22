@@ -63,6 +63,13 @@ export type ParsedScan =
       password: string;
       security: string;
       hidden: boolean;
+      /** WPA2/WPA3-Enterprise sign-in (T:WPA2-EAP), when the code has one */
+      enterprise?: {
+        method?: string;
+        phase2?: string;
+        identity?: string;
+        anonymousIdentity?: string;
+      };
     }
   | {
       kind: "contact";
@@ -293,17 +300,42 @@ function keyValues(body: string): Map<string, string[]> {
   return map;
 }
 
+/** Security types as people know them: T:SAE is WPA3, T:WPA2-EAP enterprise. */
+const WIFI_SECURITY_NAMES: Record<string, string> = {
+  SAE: "WPA3",
+  "WPA2-EAP": "WPA2/WPA3-Enterprise",
+};
+
 function parseWifi(value: string): ParsedScan | null {
   const fields = keyValues(value.slice(5));
   const ssid = fields.get("S")?.[0];
   if (!ssid) return null;
   const type = (fields.get("T")?.[0] ?? "").trim().toUpperCase();
+  const field = (key: string) => fields.get(key)?.[0]?.trim() || undefined;
+  const phase2 = field("PH2");
+  // ZXing reads a non-boolean H: as the phase 2 method in older codes.
+  const rawHidden = (field("H") ?? "").toLowerCase();
+  const legacyPhase2 =
+    type === "WPA2-EAP" && !phase2 && rawHidden && !/^(true|false)$/.test(rawHidden)
+      ? field("H")
+      : undefined;
   return {
     kind: "wifi",
     ssid,
     password: fields.get("P")?.[0] ?? "",
-    security: type === "" || type === "NOPASS" ? "None" : type,
-    hidden: (fields.get("H")?.[0] ?? "").trim().toLowerCase() === "true",
+    security:
+      type === "" || type === "NOPASS"
+        ? "None"
+        : (WIFI_SECURITY_NAMES[type] ?? type),
+    hidden: rawHidden === "true",
+    ...(type === "WPA2-EAP" && {
+      enterprise: {
+        method: field("E"),
+        phase2: phase2 ?? legacyPhase2,
+        identity: field("I"),
+        anonymousIdentity: field("A"),
+      },
+    }),
   };
 }
 

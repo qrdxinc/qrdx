@@ -158,6 +158,30 @@ function WifiDetails({
         fields={[
           { label: t("ssid"), value: parsed.ssid },
           { label: t("security"), value: parsed.security },
+          ...(parsed.enterprise?.method
+            ? [{ label: t("eapMethod"), value: parsed.enterprise.method }]
+            : []),
+          ...(parsed.enterprise?.phase2
+            ? [{ label: t("phase2"), value: parsed.enterprise.phase2 }]
+            : []),
+          ...(parsed.enterprise?.identity
+            ? [
+                {
+                  label: t("identity"),
+                  value: parsed.enterprise.identity,
+                  mono: true,
+                },
+              ]
+            : []),
+          ...(parsed.enterprise?.anonymousIdentity
+            ? [
+                {
+                  label: t("anonymousIdentity"),
+                  value: parsed.enterprise.anonymousIdentity,
+                  mono: true,
+                },
+              ]
+            : []),
           ...(parsed.hidden ? [{ label: t("hidden"), value: t("yes") }] : []),
           ...(parsed.password
             ? [
@@ -199,7 +223,9 @@ function WifiDetails({
         <CopyButton label={t("copyNetwork")} value={parsed.ssid} />
       </div>
       <p className="text-muted-foreground text-xs leading-relaxed">
-        {t("wifiNote", { ssid: parsed.ssid })}
+        {parsed.enterprise
+          ? t("wifiEnterpriseNote", { ssid: parsed.ssid })
+          : t("wifiNote", { ssid: parsed.ssid })}
       </p>
     </div>
   );

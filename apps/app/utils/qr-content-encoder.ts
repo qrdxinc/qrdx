@@ -49,6 +49,8 @@ import type {
   WazeContent,
   WhatsAppContent,
   WifiContent,
+  WifiEapMethod,
+  WifiPhase2Method,
   YouTubeContent,
   ZoomContent,
 } from "@/types/qr-content";
@@ -241,7 +243,92 @@ export function encodeWifi(content: WifiContent): string {
     return `WIFI:T:nopass;S:${escapedSsid};${content.hidden ? "H:true;" : ""};`;
   }
 
+  if (encryption === "WPA2-EAP") return encodeWifiEnterprise(content);
+
+  // WPA, WEP and SAE (WPA3) share one layout.
   return `WIFI:T:${encryption};S:${escapedSsid};P:${escapedPassword};H:${hidden};;`;
+}
+
+// Added 2026-11-22 (payments): WPA3 and WPA2/WPA3-Enterprise networks.
+
+export const WIFI_EAP_METHODS = [
+  "PEAP",
+  "TTLS",
+  "PWD",
+] as const satisfies readonly WifiEapMethod[];
+
+export const WIFI_PHASE2_METHODS = [
+  "MSCHAPV2",
+  "GTC",
+  "PAP",
+  "MSCHAP",
+] as const satisfies readonly WifiPhase2Method[];
+
+/**
+ * An enterprise network in the fields ZXing's Wi-Fi format adds for
+ * WPA2-EAP (github.com/zxing/zxing/wiki/Barcode-Contents): E: the EAP
+ * method, PH2: the inner method, A: the anonymous identity, I: the
+ * identity. PWD has no inner method, so PH2 is left out for it. "" while
+ * the identity or password is missing.
+ */
+function encodeWifiEnterprise(content: WifiContent): string {
+  const identity = content.identity?.trim() ?? "";
+  if (!identity || !content.password) return "";
+  const method = content.eapMethod ?? "PEAP";
+  const fields = [
+    "T:WPA2-EAP",
+    `S:${escapeWifiString(content.ssid)}`,
+    `E:${method}`,
+  ];
+  if (method !== "PWD") fields.push(`PH2:${content.phase2 ?? "MSCHAPV2"}`);
+  const anonymous = content.anonymousIdentity?.trim();
+  if (anonymous) fields.push(`A:${escapeWifiString(anonymous)}`);
+  fields.push(
+    `I:${escapeWifiString(identity)}`,
+    `P:${escapeWifiString(content.password)}`,
+  );
+  if (content.hidden) fields.push("H:true");
+  return `WIFI:${fields.join(";")};;`;
+}
+
+/** The first problem with a Wi-Fi network's fields, or null. */
+export function wifiIssue(content: Partial<WifiContent>): ContentIssue | null {
+  if (!content.ssid || content.ssid.trim() === "") {
+    return problem("ssid", "WiFi SSID is required");
+  }
+  // IEEE 802.11: an SSID is at most 32 bytes.
+  if (utf8.encode(content.ssid).length > 32) {
+    return problem("ssid", "Network names are at most 32 bytes");
+  }
+  const encryption = content.encryption ?? "WPA";
+  const password = content.password ?? "";
+  if (encryption !== "nopass" && !password) {
+    return problem("password", "Password is required for secured networks");
+  }
+  // WPA/WPA2 passphrases are 8-63 characters, or a 64-digit hex key.
+  if (
+    encryption === "WPA" &&
+    (password.length < 8 || password.length > 63) &&
+    !/^[0-9a-f]{64}$/i.test(password)
+  ) {
+    return problem("password", "WPA passwords are 8-63 characters long");
+  }
+  // WPA3 (SAE) passwords have no minimum; phones take up to 63 characters.
+  if (encryption === "SAE" && password.length > 63) {
+    return problem("password", "WPA3 passwords are at most 63 characters");
+  }
+  if (encryption === "WPA2-EAP") {
+    if (content.eapMethod && !WIFI_EAP_METHODS.includes(content.eapMethod)) {
+      return problem("eapMethod", "Pick PEAP, TTLS or PWD");
+    }
+    if (content.phase2 && !WIFI_PHASE2_METHODS.includes(content.phase2)) {
+      return problem("phase2", "Pick MSCHAPV2, GTC, PAP or MSCHAP");
+    }
+    if (!content.identity?.trim()) {
+      return problem("identity", "Identity (username) is required");
+    }
+  }
+  return null;
 }
 
 /**
@@ -1469,34 +1556,8 @@ function validateFields(content: QRContentConfig): Validation {
     case "whatsapp":
       return validatePhone(content.phoneNumber);
 
-    case "wifi": {
-      if (!content.ssid || content.ssid.trim() === "") {
-        return { valid: false, error: "WiFi SSID is required" };
-      }
-      // IEEE 802.11: an SSID is at most 32 bytes.
-      if (utf8.encode(content.ssid).length > 32) {
-        return { valid: false, error: "Network names are at most 32 bytes" };
-      }
-      const password = content.password ?? "";
-      if (content.encryption !== "nopass" && !password) {
-        return {
-          valid: false,
-          error: "Password is required for secured networks",
-        };
-      }
-      // WPA/WPA2 passphrases are 8-63 characters, or a 64-digit hex key.
-      if (
-        content.encryption === "WPA" &&
-        (password.length < 8 || password.length > 63) &&
-        !/^[0-9a-f]{64}$/i.test(password)
-      ) {
-        return {
-          valid: false,
-          error: "WPA passwords are 8-63 characters long",
-        };
-      }
-      return { valid: true };
-    }
+    case "wifi":
+      return fromIssue(wifiIssue(content));
 
     case "vcard":
       if (!content.firstName || content.firstName.trim() === "") {

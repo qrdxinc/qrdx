@@ -24,7 +24,10 @@ import {
   soundCloudIssue,
   telegramIssue,
   twitchIssue,
+  WIFI_EAP_METHODS,
+  WIFI_PHASE2_METHODS,
   wazeIssue,
+  wifiIssue,
   zoomIssue,
 } from "@/utils/qr-content-encoder";
 import {
@@ -79,12 +82,19 @@ export const whatsappSchema = z.object({
 });
 
 // WiFi
-export const wifiSchema = z.object({
-  ssid: z.string().min(1, "WiFi SSID is required"),
-  password: z.string(),
-  encryption: z.enum(["WPA", "WEP", "nopass"]),
-  hidden: z.boolean().optional(),
-});
+export const wifiSchema = z
+  .object({
+    ssid: z.string().min(1, "WiFi SSID is required"),
+    password: z.string(),
+    encryption: z.enum(["WPA", "WEP", "nopass", "SAE", "WPA2-EAP"]),
+    hidden: z.boolean().optional(),
+    // Added 2026-11-22 (payments): WPA2/WPA3-Enterprise sign-in
+    eapMethod: z.enum(WIFI_EAP_METHODS).optional(),
+    phase2: z.enum(WIFI_PHASE2_METHODS).optional(),
+    identity: z.string().optional(),
+    anonymousIdentity: z.string().optional(),
+  })
+  .superRefine(checkedBy(wifiIssue));
 
 // vCard
 export const vcardSchema = z.object({

@@ -385,25 +385,28 @@ export const QR_TYPES: QrTypeContent[] = [
     group: "utilities",
     summary: "Join a Wi-Fi network without typing the password.",
     metaDescription:
-      "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
+      "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WPA3, WEP and open networks, hidden SSIDs, correct escaping. Free.",
     intro: [
       "A Wi-Fi QR code lets guests join your network by pointing their camera at it, instead of reading out a 20-character password. The camera apps on iPhone and on most Android phones (or Google Lens) recognize the format and offer to join the network.",
       "It's popular in homes, cafés, holiday rentals, offices and event venues. The network name and password are stored in the code itself, so it works without an internet connection. Anyone who can photograph the code can read the password, so put guest-network codes where only guests can see them.",
     ],
     steps: [
       "Enter the network name (SSID) exactly as it appears, including capital letters and spaces.",
-      "Choose the security type: WPA/WPA2 for almost every modern router, WEP for very old ones, or No password for open networks.",
+      "Choose the security type: WPA/WPA2 for almost every modern router (including ones in WPA2/WPA3 mode), WPA3 only for networks that refuse WPA2, WEP for very old ones, or No password for open networks.",
       "Enter the password, and switch on Hidden network only if your router doesn't broadcast its name.",
       "Scan the preview with your phone to test that it joins, then download and print.",
     ],
     payload: {
-      format: "WIFI:T:<WPA|WEP|nopass>;S:<ssid>;P:<password>;H:<true|false>;;",
+      format:
+        "WIFI:T:<WPA|SAE|WEP|nopass>;S:<ssid>;P:<password>;H:<true|false>;;",
       example: "WIFI:T:WPA;S:Cafe Guest;P:latte\\;art;H:false;;",
       notes: [
         "This is the de-facto Wi-Fi format documented by the ZXing project. Fields can appear in any order, each ends with a semicolon, and the record ends with an extra semicolon.",
         'The characters \\ ; , : and " in the network name or password must be escaped with a backslash. QRdx does it for you, so a password of latte;art is stored as latte\\;art.',
         "T:nopass marks an open network and the password field is left out.",
         "H:true tells the phone the network is hidden, so it connects even though the name isn't broadcast.",
+        "T:SAE marks a network that accepts only WPA3, as the Wi-Fi Alliance's WPA3 specification writes it. Android's Wi-Fi settings scanner reads it from Android 10; Apple doesn't document it for the iPhone Camera, so a network that also accepts WPA2 is better written as T:WPA.",
+        "T:WPA2-EAP marks a WPA2/WPA3-Enterprise network, with ZXing's E: (EAP method), PH2: (phase 2), A: (anonymous identity) and I: (identity) fields. Scanner apps built on ZXing read them; phone camera apps don't join enterprise networks from a code.",
       ],
     },
     faqs: [
@@ -415,7 +418,7 @@ export const QR_TYPES: QrTypeContent[] = [
       {
         question: "Why won't my phone connect?",
         answer:
-          "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. Enterprise networks that need a username or certificate (WPA2-Enterprise) aren't supported by this format.",
+          "Check that the network name matches exactly (it is case-sensitive), that the security type is right and that you're in range. For enterprise networks that need a username (WPA2/WPA3-Enterprise), QRdx can write the sign-in details, but phone camera apps don't join from them: Android's Wi-Fi scanner reads only personal and open networks, and iPhones set up enterprise Wi-Fi with a configuration profile. Networks that need a certificate can't be put in a code at all.",
       },
       {
         question: "Does the code still work if I change the password?",
