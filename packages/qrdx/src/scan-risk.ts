@@ -1,4 +1,10 @@
 import type { QRProps } from "../types";
+import {
+  WITHDRAWN_BODY_PATTERNS,
+  WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+  WITHDRAWN_CORNER_EYE_PATTERNS,
+  withdrawnFallback,
+} from "../types/constants";
 import type { CornerEyeDotPattern } from "../types/corner-dot";
 import type { CornerEyePattern } from "../types/corner-eye";
 import type { BodyPattern } from "../types/image-pattern";
@@ -155,9 +161,19 @@ export function getStylePairRisk(
     "bodyPattern" | "cornerEyePattern" | "cornerEyeDotPattern"
   >
 ): StylePairRisk | null {
-  const body = props.bodyPattern ?? "circle";
-  const eye = props.cornerEyePattern ?? "gear";
-  const dot = props.cornerEyeDotPattern ?? "circle";
+  // A withdrawn shape is judged as the one it draws as
+  const body = withdrawnFallback(
+    WITHDRAWN_BODY_PATTERNS,
+    props.bodyPattern ?? "circle"
+  );
+  const eye = withdrawnFallback(
+    WITHDRAWN_CORNER_EYE_PATTERNS,
+    props.cornerEyePattern ?? "gear"
+  );
+  const dot = withdrawnFallback(
+    WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+    props.cornerEyeDotPattern ?? "circle"
+  );
   if (WEAK_DOT_EYES[dot]?.includes(eye)) {
     return {
       kind: "dot-eye",

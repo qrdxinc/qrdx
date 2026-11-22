@@ -6,6 +6,20 @@ Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/
 
 - **The looks redraw in React.** A mounted `QRCode` now redraws when `eyeShapes`, `eyeGradient`, `bgRadius`, `backdrop`, `halo` or `shadow` changes. In 0.0.58 its layout was kept until another prop changed, so turning one of these on showed nothing.
 
+### Patterns: new eye frames and an eye centre
+
+- **5 new eye frames** (`cornerEyePattern`): `porthole`, `notch`, `plus`, `bud` and `bowl`. `bud` turns to face its corner of the code. Each keeps the finder's 1:1:3:1:1 runs on its rows and columns and cuts or rounds every corner; with the default body a `circle` or `rounded` centre reads inside it in sharp renders (tests/decode-sharp-centre.test.ts), and none joins `WEAK_SHARP_DOT_EYES`. `square`, `diya` and `rounded-triangle` centres are missed by jsQR in many sharp renders inside them and `heart` in some, as in `gear` and `octagon` eyes (tests/decode-new-eyes.test.ts checks the square case).
+- **A new eye centre** (`cornerEyeDotPattern`): `cushion`, a square with gently pinched sides.
+- Each new shape reads every render its reference shapes read (gear and octagon eyes; square and rounded centres) with a fixed sample of partners from the catalogue, in sharp renders (resvg, 4 to 20 px per module) and through the phone-camera model (4, 6 and 9 px), decoded by jsQR and by ZXing (tests/decode-new-*.test.ts). Through the camera model, jsQR also reads each one next to every eye or body and centre, at every error correction level, light-on-dark, with brand colors and with a centre logo (tests/catalog-*.test.ts).
+- `WITHDRAWN_BODY_PATTERNS`, `WITHDRAWN_CORNER_EYE_PATTERNS` and `WITHDRAWN_CORNER_EYE_DOT_PATTERNS` map the shapes that preview builds offered and that were dropped before this release (bodies `x`, `flower`, `pebble`, `beads`, `bubble`, `chain`, `petal`, `drop` and `squircle`; eyes `pebble`, `tag`, `crest`, `doodle` and `stamp`; centres `bevel` and `notch`) to existing ones: the schemas parse such an id as its replacement and the renderer draws it, so no design that names one fails (tests/withdrawn-shapes.test.ts).
+- New geometry helpers in `shapes.ts` (`scoopedRectPath`, `notchedRectPath`, `cushionPath`, `shieldPath`, `octagonPoints`). These are internal.
+
+### Frame library: shapes, everyday objects and playful scenes
+
+- **101 more official frames**, 1,114 in all. 29 join `call-to-action`: hexagons, octagons, hearts, a scroll, swallowtail flags, pattern borders, raised cards, corner tabs, a text frame, bottom badges, top ribbons, plain borders in three weights, a circle viewfinder, a sketched circle, starbursts and spinning rays. Each decodes at phone distances, scores Great and reads with zbar, like every official frame.
+- **Two new collections:** `objects` ("Everyday objects", 28 frames: tablets, laptops, monitors, mugs, parcels, bottles, billboards, open books, map pins, a globe and more) and `playful` ("Playful & surprising", 44 frames: a TV set, a record sleeve, a fish tank, a robot, a cat holding the code, a snow globe, a flying saucer and more). `OfficialFrameCollection` and `OFFICIAL_FRAME_COLLECTIONS` include them, so code with a case or a `Record` for every collection needs the new ids.
+- The generator now also writes `src/frames/catalogue/batches.ts`, the official frame ids by the round that added them, so the app can mark the latest ones as new. It isn't exported.
+
 ## 0.0.58
 
 - **GIF export.** `"gif"` is a new `DownloadFormat`, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write a GIF, for older tools and email builders that only take it. No browser encodes GIF from a canvas (`toBlob("image/gif")` returns a PNG), so the engine writes the file itself, the same way in every browser.

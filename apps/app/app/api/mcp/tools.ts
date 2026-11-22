@@ -2,9 +2,10 @@ import type { McpServer } from "@modelcontextprotocol/server";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { BUILT_IN_FRAMES, getTemplateIds } from "qrdx";
 import {
-  CORNER_EYE_DOT_PATTERNS,
-  CORNER_EYE_PATTERNS,
+  bodyPatternSchema,
   FRAME_TEXT_MAX_LENGTH,
+  pickableCornerEyeDotPatternSchema,
+  pickableCornerEyePatternSchema,
 } from "qrdx/types";
 import { z } from "zod";
 import {
@@ -169,16 +170,13 @@ const flatOptional = {
   dotColor: hexColor
     .optional()
     .describe("Color of the dot inside each corner eye (defaults to fg)"),
-  body: qrOptionsSchema.shape.body
-    .unwrap()
+  body: bodyPatternSchema
     .optional()
     .describe("Shape of the data modules (default square)"),
-  eye: z
-    .enum(CORNER_EYE_PATTERNS)
+  eye: pickableCornerEyePatternSchema
     .optional()
     .describe("Shape of the corner eye frames (default square)"),
-  dot: z
-    .enum(CORNER_EYE_DOT_PATTERNS)
+  dot: pickableCornerEyeDotPatternSchema
     .optional()
     .describe("Shape of the dot inside each corner eye (default square)"),
   level: qrOptionsSchema.shape.level

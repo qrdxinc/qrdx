@@ -11,7 +11,7 @@ import type {
   CornerEyePattern,
   ErrorLevel,
 } from "qrdx/types";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useEditableStyle } from "@/components/editor/style-scope";
 import { BodyPatterns } from "@/components/icons/body-patterns";
 import { EyePatterns } from "@/components/icons/eye-patterns";
@@ -20,6 +20,12 @@ import { patterns as eyeDotPatterns } from "@/components/playground/corner-eye-d
 import { patterns as eyePatterns } from "@/components/playground/corner-eye-pattern-selector";
 import { patterns as bodyPatterns } from "@/components/playground/pattern-selector";
 import { soundEvent } from "@/lib/sound/emit";
+import { isNewIn, type NewBatch } from "@/lib/whats-new";
+import {
+  NEW_BODY_PATTERNS,
+  NEW_EYE_CENTRES,
+  NEW_EYE_FRAMES,
+} from "@/lib/whats-new/patterns";
 import type { QRStyle } from "@/types/theme";
 import { OptionGrid, OptionTile, ShapePicker } from "./option-tiles";
 import { pairBlocked, pairRisk } from "./pair-rules";
@@ -67,6 +73,17 @@ function EyePairSwatch({
 }
 
 const fill = "size-full text-black [&>svg]:size-full";
+
+/**
+ * Whether an option is new, decided after mount: the server render and the
+ * first client render then agree (no tag), and the tags appear with the
+ * date the visitor's clock gives.
+ */
+function useNewOf(batches: readonly NewBatch[]) {
+  const [today, setToday] = useState<Date | null>(null);
+  useEffect(() => setToday(new Date()), []);
+  return (id: string) => (today ? isNewIn(batches, id, today) : false);
+}
 
 /** The design being edited (the playground's, or a scope's; see style-scope.tsx). */
 function useStyleSetter() {
@@ -117,6 +134,7 @@ export function DotPatternControl() {
   const t = useTranslations("editor.controlSections.patternControls");
   const { style, set } = useStyleSetter();
   const selected = (style.bodyPattern || "circle") as BodyPattern;
+  const newBody = useNewOf(NEW_BODY_PATTERNS);
   return (
     <ShapePicker
       category={(id) => BODY_CATEGORY[id] ?? "decorative"}
@@ -131,6 +149,7 @@ export function DotPatternControl() {
         </span>
       )}
       blockedOf={(id) => pairBlocked(style, { bodyPattern: id })}
+      newOf={newBody}
       riskOf={(id) => pairRisk(style, { bodyPattern: id })}
       value={selected}
     />
@@ -156,6 +175,7 @@ export function EyeControls({
   );
   const [custom, setCustom] = useState(customOpen);
   const customId = useId();
+  const newEye = useNewOf(NEW_EYE_FRAMES);
 
   return (
     <div className="space-y-4">
@@ -192,6 +212,10 @@ export function EyeControls({
                 cornerEyeDotPattern: item.centre,
               })
             : false;
+        }}
+        newOf={(id) => {
+          const item = EYE_PRESETS.find((entry) => entry.id === id);
+          return item ? newEye(item.outer) : false;
         }}
         riskOf={(id) => {
           const item = EYE_PRESETS.find((entry) => entry.id === id);
@@ -246,6 +270,7 @@ export function EyeOuterShapeControl() {
   const t = useTranslations("editor.controlSections.patternControls");
   const { style, set } = useStyleSetter();
   const outer = (style.cornerEyePattern || "square") as CornerEyePattern;
+  const newEye = useNewOf(NEW_EYE_FRAMES);
   return (
     <ShapePicker
       category={(id) => EYE_CATEGORY[id] ?? "decorative"}
@@ -260,6 +285,7 @@ export function EyeOuterShapeControl() {
         </span>
       )}
       blockedOf={(id) => pairBlocked(style, { cornerEyePattern: id })}
+      newOf={newEye}
       riskOf={(id) => pairRisk(style, { cornerEyePattern: id })}
       value={outer}
     />
@@ -271,6 +297,7 @@ export function EyeCentreShapeControl() {
   const t = useTranslations("editor.controlSections.patternControls");
   const { style, set } = useStyleSetter();
   const centre = (style.cornerEyeDotPattern || "circle") as CornerEyeDotPattern;
+  const newCentre = useNewOf(NEW_EYE_CENTRES);
   return (
     <ShapePicker
       category={(id) => EYE_DOT_CATEGORY[id] ?? "decorative"}
@@ -285,6 +312,7 @@ export function EyeCentreShapeControl() {
         </span>
       )}
       blockedOf={(id) => pairBlocked(style, { cornerEyeDotPattern: id })}
+      newOf={newCentre}
       riskOf={(id) => pairRisk(style, { cornerEyeDotPattern: id })}
       value={centre}
     />

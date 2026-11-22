@@ -9,6 +9,7 @@
 import { getTemplateIds } from "qrdx";
 import {
   BODY_PATTERN,
+  bodyPatternSchema,
   CORNER_EYE_DOT_PATTERNS,
   CORNER_EYE_PATTERNS,
   type ColorConfig,
@@ -17,6 +18,8 @@ import {
   FRAME_TEXT_MAX_LENGTH,
   getSolidColor,
   isGradient,
+  pickableCornerEyeDotPatternSchema,
+  pickableCornerEyePatternSchema,
   type QRFrame,
 } from "qrdx/types";
 import { z } from "zod";
@@ -118,13 +121,13 @@ const styleSchemaOf = (
     fgColor: hex("Color of the dots (data modules)"),
     eyeColor: hex("Color of the three corner eye frames"),
     dotColor: hex("Color of the corner eye centers"),
-    bodyPattern: z.enum(BODY_PATTERN).describe("Shape of the dots"),
-    cornerEyePattern: z
-      .enum(CORNER_EYE_PATTERNS)
-      .describe("Shape of the corner eye frames"),
-    cornerEyeDotPattern: z
-      .enum(CORNER_EYE_DOT_PATTERNS)
-      .describe("Shape of the corner eye centers"),
+    bodyPattern: bodyPatternSchema.describe("Shape of the dots"),
+    cornerEyePattern: pickableCornerEyePatternSchema.describe(
+      "Shape of the corner eye frames",
+    ),
+    cornerEyeDotPattern: pickableCornerEyeDotPatternSchema.describe(
+      "Shape of the corner eye centers",
+    ),
     gradients: z
       .object({
         body: gradientSchema.optional(),

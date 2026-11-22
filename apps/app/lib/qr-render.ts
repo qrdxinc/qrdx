@@ -48,6 +48,7 @@ export {
   type QrOptions,
   qrImageFormats,
   qrOptionsSchema,
+  readingWithdrawn,
 } from "@/lib/qr-image-url";
 
 // Server-side QR rendering shared by the public image API (/api/v1/qr) and the
@@ -109,6 +110,11 @@ const EYE_DESCRIPTIONS: Record<PickableCornerEyePattern, string> = {
   squircle: "Superellipse (squircle) frame",
   cushion: "Rounded frame with gently pinched sides",
   shield: "Shield-shaped frame",
+  porthole: "Soft round frame around a square hole with cut corners",
+  notch: "Square frame with a round bite out of each corner",
+  plus: "Plus-shaped frame",
+  bud: "Frame with round corners facing the code's corner and its center, cut corners elsewhere",
+  bowl: "Frame with cut corners at the top and a round bottom",
 };
 
 const DOT_DESCRIPTIONS: Record<PickableCornerEyeDotPattern, string> = {
@@ -133,6 +139,7 @@ const DOT_DESCRIPTIONS: Record<PickableCornerEyeDotPattern, string> = {
   squircle: "Superellipse (squircle) dot",
   dots: "Grid of nine small dots",
   "extra-rounded": "Square dot with very round corners",
+  cushion: "Square dot with gently pinched sides",
 };
 
 /**

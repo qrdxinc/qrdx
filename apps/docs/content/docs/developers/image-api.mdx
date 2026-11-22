@@ -164,7 +164,7 @@ Enum values (`level`, `format`, `template`, `frame`) are case-insensitive. With 
 | `eyeGradient` | `corner` (default: each eye sweeps its own gradient) or `code` (the eyes continue the dots' gradient across the code) |
 | `bgRadius` | Corner radius of the background, `0` to `0.5` of the code's width; needs a `margin` (the engine caps it at twice the margin, in modules) |
 | `backdrop` | A color outside the rounded corners (see-through without it) |
-| `halo` | A light rim around the dots and eyes: `{ "color": "#fde68a", "width": 0.25 }`, `width` in modules from `0.1` to `0.5`, `color` default `#e5e7eb`. The rim is drawn opaque (a color's alpha is dropped). It is drawn only on an opaque `bgColor` (no picture), in a color at least as light as `#d1d5db` and no lighter than any background color; otherwise the code is drawn without it and the scan score's `halo` check says why |
+| `halo` | A light rim around the dots and eyes: `{ "color": "#fde68a", "width": 0.25 }`, `width` in modules from `0.1` to `0.5`, `color` default `#e5e7eb`. The rim is drawn opaque (a color's alpha is dropped). It is drawn only on an opaque `bgColor` (no picture) at least as light as `#d1d5db`; otherwise the code is drawn without it and the scan score's `halo` check says why. Any `color` is taken and adjusted to stay scannable, not refused: one darker than `#d1d5db` or lighter than the background is drawn in the closest color inside that range, its hue kept and its lightness moved, and the scan score's `halo` check names the color drawn |
 | `shadow` | A see-through copy of the dots and eyes under them: `{ "color": "#000000", "opacity": 0.3, "dx": 0.2, "dy": 0.2 }`, shifts from `-0.3` to `0.3` modules, opacity `0.1` to `0.4` |
 | `autoLevel` | Raise error correction to `H` when the logo covers more than 7% of the code (always on here when there's a logo) |
 | `logoOptions` | The logo's layout: `size` (`0.1` to `0.3` of the code's width; QRdx shrinks it when the code can't spare the modules), `padding` (`0` to `2` modules), `x` and `y` (`0` to `1`), `shape` (`square`, `rounded` or `circle` crop) and `plate` (a color behind it) |
@@ -209,8 +209,8 @@ The response is private (`Cache-Control: private, no-store`) and counts toward t
 ### Pattern values
 
 - `body`: `circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`
-- `eye`: `square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`
-- `dot`: `square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`
+- `eye`: `square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`, `porthole`, `notch`, `plus`, `bud`, `bowl`
+- `dot`: `square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`, `cushion`
 - `template`: `default`, `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing`
 
 These are the same styles as the [`qrdx` React library](/docs/features/patterns). The [MCP server](/docs/developers/mcp) can also list them with short descriptions.

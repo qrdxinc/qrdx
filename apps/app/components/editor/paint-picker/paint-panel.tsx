@@ -463,7 +463,8 @@ function useStoredSwatches() {
 }
 
 /** Swatch buttons; arrow keys move between them, Delete removes a saved one. */
-function SwatchGrid({
+/** A row of color swatches to pick from, arrow keys moving between them. */
+export function SwatchGrid({
   colors,
   current,
   onPick,

@@ -3,25 +3,33 @@
 import { Label } from "@repo/design-system/components/ui/label";
 import { Slider } from "@repo/design-system/components/ui/slider";
 import { Switch } from "@repo/design-system/components/ui/switch";
+import { ArrowRight } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { getSolidColor, type HaloRisk, resolveHalo } from "qrdx";
+import { getSolidColor, type HaloRefusal, resolveHalo } from "qrdx";
 import { HALO_COLOR_DEFAULT, HALO_WIDTH_MAX, HALO_WIDTH_MIN } from "qrdx/types";
 import { useId } from "react";
 import ControlSection from "@/components/editor/control-section";
 import { GradientPicker } from "@/components/editor/gradient-picker";
+import { SwatchDot } from "@/components/editor/paint-picker/controls";
+import { SwatchGrid } from "@/components/editor/paint-picker/paint-panel";
 import type { QRStyle } from "@/types/theme";
-import { haloRisk, haloSwitch, haloToTurnOn } from "./halo-rules";
+import {
+  haloDotTints,
+  haloDrawnAs,
+  haloRisk,
+  haloSwitch,
+  haloToTurnOn,
+} from "./halo-rules";
 import { NewLookTag } from "./new-look-tag";
 
 const percent = (share: number) => Math.round(share * 100);
 
-/** The copy that says why the engine draws no halo (qrdx HaloRisk reason). */
+/** The copy that says why the engine draws no halo (qrdx HaloRefusal reason). */
 const REASON_COPY = {
   "see-through": "seeThroughBackground",
   picture: "pictureBackground",
   "dark-background": "darkBackground",
-  rim: "rimColor",
-} as const satisfies Record<HaloRisk["reason"], string>;
+} as const satisfies Record<HaloRefusal["reason"], string>;
 
 interface HaloSectionProps {
   /** The style with defaults filled in */
@@ -48,10 +56,10 @@ export function haloSummary(
 /**
  * A halo: a light rim around every dot and eye (qrdx `halo`). Its width is
  * a share of a dot, between HALO_WIDTH_MIN and HALO_WIDTH_MAX. The engine
- * draws it only on an opaque background, in a rim at least as light as
- * HALO_LIGHT_MIN and no lighter than the background (qrdx getHaloRisk);
- * where it doesn't, this section says why, and the switch still turns it
- * off.
+ * draws it only on an opaque, light background, where any color can be
+ * picked: one decoders would misread is drawn in the closest color they
+ * read (qrdx fitHaloColor), shown next to the picked one. Where no halo is
+ * drawn, this section says why, and the switch still turns it off.
  */
 export function HaloSection({ style, onChange, expanded }: HaloSectionProps) {
   const t = useTranslations("editor.controlSections.haloSection");
@@ -74,8 +82,9 @@ export function HaloSection({ style, onChange, expanded }: HaloSectionProps) {
 }
 
 /**
- * The halo's switch, why it isn't drawn here, its width and color: the
- * Halo section, and the preview's dots toolbar.
+ * The halo's switch, why it isn't drawn here, its width and color (with
+ * the color drawn when the engine moved it, and tints of the dots' color
+ * drawn as they are): the Halo section, and the preview's dots toolbar.
  */
 export function HaloControl({
   style,
@@ -90,6 +99,10 @@ export function HaloControl({
   // The values shown: the style's, with the defaults filled in
   const halo = on ? resolveHalo(style.halo) : null;
   const reason = risk && REASON_COPY[risk.reason];
+  // The color the engine draws instead of the picked one, if it moved it
+  const drawn = halo ? haloDrawnAs(style) : null;
+  const tints = halo ? haloDotTints(style) : [];
+  const pick = (color: string) => onChange({ ...style.halo, color });
 
   return (
     <>
@@ -137,20 +150,47 @@ export function HaloControl({
               value={[percent(halo.width)]}
             />
           </div>
-          {/* The engine draws the rim opaque (qrdx resolveHalo) */}
-          <GradientPicker
-            alpha={false}
-            kinds={["solid"]}
-            label={t("color")}
-            name="halo.color"
-            onChange={(color) =>
-              onChange({
-                ...style.halo,
-                color: getSolidColor(color, HALO_COLOR_DEFAULT),
-              })
-            }
-            value={halo.color}
-          />
+          <div className="space-y-2">
+            {/* The engine draws the rim opaque (qrdx resolveHalo) */}
+            <GradientPicker
+              alpha={false}
+              kinds={["solid"]}
+              label={t("color")}
+              name="halo.color"
+              onChange={(color) =>
+                pick(getSolidColor(color, HALO_COLOR_DEFAULT))
+              }
+              value={halo.color}
+            />
+            {drawn && (
+              <p
+                className="flex items-center gap-2 text-xs"
+                data-halo-drawn={drawn}
+              >
+                <span aria-hidden="true" className="flex items-center gap-1">
+                  <SwatchDot background={halo.color} className="size-4" />
+                  <ArrowRight className="text-muted-foreground size-3" />
+                  <SwatchDot background={drawn} className="size-4" />
+                </span>
+                <span className="text-muted-foreground text-pretty">
+                  {t("drawnAs", { color: drawn.toUpperCase() })}
+                </span>
+              </p>
+            )}
+          </div>
+          {tints.length > 0 && (
+            <div className="space-y-1.5">
+              <p className="text-muted-foreground text-xs">
+                {t("tintsOfYourDots")}
+              </p>
+              <SwatchGrid
+                colors={tints}
+                current={halo.color}
+                empty=""
+                onPick={pick}
+              />
+            </div>
+          )}
         </>
       )}
     </>

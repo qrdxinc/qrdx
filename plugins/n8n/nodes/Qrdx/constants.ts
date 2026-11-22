@@ -63,6 +63,11 @@ export const EYE_SHAPES = [
   "shield",
   "petal",
   "leaf-reverse",
+  "porthole",
+  "notch",
+  "plus",
+  "bud",
+  "bowl",
 ] as const;
 
 /** `dot`: shape of the dot inside each corner eye */
@@ -88,6 +93,7 @@ export const EYE_DOT_SHAPES = [
   "extra-rounded",
   "leaf-reverse",
   "drop-reverse",
+  "cushion",
 ] as const;
 
 /** `frame`: built-in call-to-action frames */

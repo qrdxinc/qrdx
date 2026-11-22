@@ -141,7 +141,7 @@ export const themeStylePropsSchema = z.object({
   halo: haloSchema
     .optional()
     .describe(
-      "A light rim around the dark modules and eyes: { color, width } with width in modules, 0.1 to 0.5",
+      "A light rim around the dark modules and eyes: { color, width } with width in modules, 0.1 to 0.5. Drawn on an opaque background at least as light as #d1d5db; any color is taken, and one darker than #d1d5db or lighter than the background is drawn in the closest color between the two so the code stays scannable",
     ),
   shadow: shadowSchema
     .optional()
