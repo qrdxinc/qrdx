@@ -6,6 +6,7 @@ import { localizeHref } from "@repo/i18n/paths";
 import { ArrowRight, Eye, ShieldTick } from "iconsax-reactjs";
 import { getTranslations } from "next-intl/server";
 import { SignInLink } from "@/components/auth/sign-in-link";
+import { TypeMarkCardArt, TypeMarkHero } from "@/components/editor/type-mark";
 import { LocaleLink } from "@/components/i18n/locale-link";
 import {
   CardGrid,
@@ -131,6 +132,12 @@ export async function HostedTypePage({
           { name: t("crumb"), path: "/qr-code-generator" },
           { name: content.name, path },
         ]}
+        mark={
+          <TypeMarkHero
+            fallbackIcon={PAGE_TYPE_ICONS[content.page]}
+            pageType={content.page}
+          />
+        }
         title={content.title}
         intro={[content.intro[0]]}
       >
@@ -358,7 +365,12 @@ export async function HostedTypePage({
             <LinkCard
               key={item.slug}
               href={hostedTypePath(item.slug)}
-              icon={PAGE_TYPE_ICONS[item.page]}
+              art={
+                <TypeMarkCardArt
+                  fallbackIcon={PAGE_TYPE_ICONS[item.page]}
+                  pageType={item.page}
+                />
+              }
               title={t("type.relatedCard", { name: item.name })}
               description={item.summary}
             />
@@ -367,7 +379,12 @@ export async function HostedTypePage({
             <LinkCard
               key={item.type}
               href={`/qr-code-generator/${item.type}`}
-              icon={QR_TYPE_ICONS[item.type]}
+              art={
+                <TypeMarkCardArt
+                  fallbackIcon={QR_TYPE_ICONS[item.type]}
+                  type={item.type}
+                />
+              }
               title={t("type.relatedCard", { name: item.name })}
               description={item.summary}
             />

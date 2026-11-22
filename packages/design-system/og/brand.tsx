@@ -40,6 +40,11 @@ interface BrandOgImageProps {
   /** Small pill next to the wordmark, e.g. "Docs" */
   label?: string;
   footer?: ReactNode;
+  /**
+   * A picture in the top right corner, level with the wordmark (a QR type's
+   * mark, about 96 px). Images without one are drawn exactly as before.
+   */
+  mark?: ReactNode;
 }
 
 export function BrandOgImage({
@@ -47,6 +52,7 @@ export function BrandOgImage({
   description,
   label,
   footer = "Free · Open source · No signup",
+  mark,
 }: BrandOgImageProps) {
   return (
     <div
@@ -122,6 +128,14 @@ export function BrandOgImage({
       >
         {footer}
       </div>
+
+      {mark ? (
+        <div
+          style={{ display: "flex", position: "absolute", top: 44, right: 72 }}
+        >
+          {mark}
+        </div>
+      ) : null}
     </div>
   );
 }
