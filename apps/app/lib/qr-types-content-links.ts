@@ -572,7 +572,7 @@ export const LINK_QR_TYPES: QrTypeContent[] = [
     ],
     related: ["airbnb", "tripadvisor", "maps", "google-review"],
   },
-  // ── Social, creators and music ──
+  // ── Social and creators ──
   {
     type: "vk",
     name: "VK",
@@ -968,10 +968,11 @@ export const LINK_QR_TYPES: QrTypeContent[] = [
     ],
     related: ["kofi", "patreon", "paypal", "linktree"],
   },
+  // ── Music and podcasts ──
   {
     type: "apple-music",
     name: "Apple Music",
-    group: "social",
+    group: "music",
     summary: "Play a song, album, artist or playlist on Apple Music.",
     metaDescription:
       "Make an Apple Music QR code that plays a song, album or playlist, or opens an artist. For posters, merch and record sleeves. Free.",
@@ -1006,7 +1007,7 @@ export const LINK_QR_TYPES: QrTypeContent[] = [
   {
     type: "youtube-music",
     name: "YouTube Music",
-    group: "social",
+    group: "music",
     summary: "Play a song, album or playlist on YouTube Music.",
     metaDescription:
       "Create a YouTube Music QR code that plays a song, album or playlist. For gig posters, merch and flyers. Paste the share link. Free.",
@@ -1040,7 +1041,7 @@ export const LINK_QR_TYPES: QrTypeContent[] = [
   {
     type: "apple-podcasts",
     name: "Apple Podcasts",
-    group: "social",
+    group: "music",
     summary: "Open a podcast or episode on Apple Podcasts.",
     metaDescription:
       "Make an Apple Podcasts QR code that opens your show or one episode, so listeners follow it. For posters, merch and live shows. Free.",
@@ -1074,7 +1075,7 @@ export const LINK_QR_TYPES: QrTypeContent[] = [
   {
     type: "amazon-music",
     name: "Amazon Music",
-    group: "social",
+    group: "music",
     summary: "Play music or a podcast on Amazon Music.",
     metaDescription:
       "Create an Amazon Music QR code for a song, album, playlist or podcast. For posters, merch and flyers. Paste the link. Free.",
@@ -1109,7 +1110,7 @@ export const LINK_QR_TYPES: QrTypeContent[] = [
   {
     type: "deezer",
     name: "Deezer",
-    group: "social",
+    group: "music",
     summary: "Play a track, album or playlist on Deezer.",
     metaDescription:
       "Make a Deezer QR code that plays a track, album, playlist or podcast. For gig posters, merch and record sleeves. Free, no signup.",
@@ -1142,7 +1143,7 @@ export const LINK_QR_TYPES: QrTypeContent[] = [
   {
     type: "tidal",
     name: "TIDAL",
-    group: "social",
+    group: "music",
     summary: "Play a track, album or playlist on TIDAL.",
     metaDescription:
       "Create a TIDAL QR code that plays a track, album or playlist, or opens an artist. For merch, sleeves and posters. Free, no signup.",
@@ -1176,7 +1177,7 @@ export const LINK_QR_TYPES: QrTypeContent[] = [
   {
     type: "bandcamp",
     name: "Bandcamp",
-    group: "social",
+    group: "music",
     summary: "Open an artist, album or track on Bandcamp.",
     metaDescription:
       "Make a Bandcamp QR code for your artist page, an album or a track, so fans listen and buy. For merch tables and posters. Free.",

@@ -38794,5 +38794,29 @@
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec o DotCode. Controlla il valore (cifre di controllo, lunghezze, caratteri) e restituisce un PNG più URL pubblici di immagini in SVG, PNG, PDF e altri formati.",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "a68faeef9b21": {
+    "source": "Roughly, unless the finder shares more. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network. On Pro and Business you can switch on precise location for the tag's code: right after a scan, the finder's browser asks whether to share their location, and if they allow it you see where it was scanned, rounded to about 100 m. The found-it form lets the finder tell you where the item is.",
+    "text": "Più o meno, a meno che chi trova l'oggetto non condivida di più. Come ogni QR code dinamico, le analisi del tag mostrano quando è stato scansionato e il paese, la regione e la città in base alla rete. Con Pro e Business puoi attivare la posizione precisa per il codice del tag: subito dopo una scansione, il browser di chi lo ha trovato chiede se condividere la propria posizione e, se acconsente, vedi dove è stato scansionato, arrotondato a circa 100 m. Il modulo \"trovato\" permette a chi trova l'oggetto di dirti dove si trova.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
+  },
+  "dc0eabcf8882": {
+    "source": "Send people to a profile, channel, Discord server, newsletter, portfolio or creator page.",
+    "text": "Porta le persone a un profilo, un canale, un server Discord, una newsletter, un portfolio o una pagina creator.",
+    "status": "machine",
+    "context": "qrTypes.groups.social.description"
+  },
+  "f6614584199c": {
+    "source": "Music and podcasts",
+    "text": "Musica e podcast",
+    "status": "machine",
+    "context": "qrTypes.groups.music.title"
+  },
+  "73d839cde7ab": {
+    "source": "Songs, albums, playlists, artist pages and podcasts on Spotify, Apple Music, SoundCloud, Bandcamp and other services.",
+    "text": "Brani, album, playlist, pagine degli artisti e podcast su Spotify, Apple Music, SoundCloud, Bandcamp e altri servizi.",
+    "status": "machine",
+    "context": "qrTypes.groups.music.description"
   }
 }
