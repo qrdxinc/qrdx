@@ -38794,5 +38794,11 @@
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec ou DotCode. Vérifie la valeur (chiffres de contrôle, longueurs, caractères) et renvoie un PNG ainsi que des URL publiques d'images SVG, PNG, PDF et autres formats.",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "a68faeef9b21": {
+    "source": "Roughly, unless the finder shares more. Like every dynamic code, the tag's analytics show when it was scanned and the country, region and city from the network. On Pro and Business you can switch on precise location for the tag's code: right after a scan, the finder's browser asks whether to share their location, and if they allow it you see where it was scanned, rounded to about 100 m. The found-it form lets the finder tell you where the item is.",
+    "text": "Approximativement, sauf si la personne qui l'a trouvé en partage davantage. Comme tout QR code dynamique, les statistiques de l'étiquette indiquent quand elle a été scannée, ainsi que le pays, la région et la ville d'après le réseau. Avec Pro et Business, vous pouvez activer la localisation précise pour le code de l'étiquette : juste après un scan, le navigateur de la personne lui demande si elle souhaite partager sa position, et si elle accepte, vous voyez où le scan a eu lieu, arrondi à environ 100 m. Le formulaire « objet trouvé » permet à la personne de vous indiquer où se trouve l'objet.",
+    "status": "machine",
+    "context": "hostedTypes.lost-and-found.faqs.1.answer"
   }
 }
