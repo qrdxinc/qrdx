@@ -13,9 +13,11 @@ import {
   clampBgRadius,
   colorAlpha,
   eyeShapeOf,
+  fitHaloColor,
   getBgRadiusLimit,
   getEyeStyleRisk,
   getHaloRisk,
+  haloTints,
   isSeeThroughBackground,
   resolveHalo,
   resolveShadow,
@@ -24,6 +26,8 @@ import {
 import { getQRAsPrintPDFBuffer } from "../src/print";
 import { getQRCodeSVGProps, resolveQRCodeProps } from "../src/qr-code-props";
 import { getScanContrast, getScanScore } from "../src/scan-score";
+import { rgbToOklch } from "../src/utils/oklab";
+import { parseColor, type RGBAColor } from "../src/utils/parse-color";
 import type { QRProps } from "../types";
 import {
   BG_RADIUS_MAX,
@@ -535,13 +539,15 @@ describe("the strongest shadow and the widest halo decode with every dot shape",
   }
 });
 
-// The halo rule (looks.ts getHaloRisk): drawn only on an opaque background,
-// in a rim at least as light as HALO_LIGHT_MIN and no lighter than the
-// background. A rim lighter than what's around the dots makes decoders
-// misread light modules (measured 21 Nov 2026: on a grey page under a
-// see-through code at every width, and with grey or blue dots as a white
-// rim on #d1d5db), so everywhere outside the rule the code is drawn exactly
-// as without a halo.
+// The halo rule (looks.ts getHaloRisk): drawn only on an opaque background
+// at least as light as HALO_LIGHT_MIN, in a rim every decoder reads at
+// least as light as HALO_LIGHT_MIN and no lighter than the background. A
+// rim lighter than what's around the dots makes decoders misread light
+// modules (measured 21 Nov 2026: on a grey page under a see-through code at
+// every width, and with grey or blue dots as a white rim on #d1d5db). On a
+// background that can't take one the code is drawn exactly as without a
+// halo; any picked color is drawn in the closest one inside the range
+// (fitHaloColor), which halo-colors-decode.test.ts reads.
 describe("the halo rule", () => {
   const photo =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
@@ -679,7 +685,7 @@ describe("the halo rule", () => {
     }
   });
 
-  it("draws no halo on a picture, on a dark background, or in a rim outside its range", () => {
+  it("draws no halo on a picture or on a dark background", () => {
     const refused: [string, QRProps, string][] = [
       [
         "a picture over an opaque underlay",
@@ -707,44 +713,189 @@ describe("the halo rule", () => {
         "dark-background",
       ],
       ["a dark CSS color name", withHalo("slategray"), "dark-background"],
-      // lightgray (#d3d3d3) reads just darker than #d1d5db to decoders
+      // Light to jsQR's grey (Rec. 709) but darker than HALO_LIGHT_MIN to
+      // ZXing's (Rec. 601)
       [
-        "a named rim just darker than HALO_LIGHT_MIN",
-        withHalo("whitesmoke", { color: "lightgray" }),
-        "rim",
-      ],
-      [
-        "a rim lighter than a named background",
-        withHalo("gainsboro", { color: "white" }),
-        "rim",
-      ],
-      [
-        "a white rim on light grey",
-        withHalo("#e5e7eb", { color: "#ffffff" }),
-        "rim",
-      ],
-      [
-        "a rim lighter than one gradient stop",
-        withHalo(stops("#ffffff", "#e5e7eb"), { color: "#f3f4f6" }),
-        "rim",
-      ],
-      [
-        "a rim just darker than HALO_LIGHT_MIN",
-        withHalo("#ffffff", { color: "#d0d4da" }),
-        "rim",
-      ],
-      ["a dark rim", withHalo("#ffffff", { color: "#333333" }), "rim"],
-      [
-        "a dark hsl() rim",
-        withHalo("#ffffff", { color: "hsl(0, 0%, 50%)" }),
-        "rim",
+        "a green background one decoder reads darker than HALO_LIGHT_MIN",
+        withHalo("#a0f0a0"),
+        "dark-background",
       ],
     ];
     for (const [name, props, reason] of refused) {
       expect(getHaloRisk(props)?.reason, name).toBe(reason);
       expect(getHaloRisk(props)?.fix, name).toContain("turn the halo off");
+      expect(fitHaloColor(props.halo?.color, props.bgColor), name).toBeNull();
+      expect(haloTints("#881337", props.bgColor), name).toEqual([]);
       expect(notDrawn(props), name).toBe(true);
     }
+  });
+
+  /** How light each decoder reads a color: Rec. 709 (jsQR), Rec. 601 (ZXing). */
+  const lumas = (color: string) => {
+    const { r, g, b } = parseColor(color) as RGBAColor;
+    return [
+      0.2126 * r + 0.7152 * g + 0.0722 * b,
+      0.299 * r + 0.587 * g + 0.114 * b,
+    ];
+  };
+  /** True when every decoder reads `rim` between HALO_LIGHT_MIN and each of `grounds`. */
+  const inRange = (rim: string, grounds: string[]) =>
+    lumas(rim).every(
+      (luma, decoder) =>
+        luma >= (lumas(HALO_LIGHT_MIN)[decoder] as number) - 1e-9 &&
+        grounds.every(
+          (ground) => luma <= (lumas(ground)[decoder] as number) + 1e-9
+        )
+    );
+  /** The angle between two OKLab hues, in degrees. */
+  const hueShift = (a: string, b: string) => {
+    const turn =
+      Math.abs(
+        rgbToOklch(parseColor(a) as RGBAColor).h -
+          rgbToOklch(parseColor(b) as RGBAColor).h
+      ) %
+      (2 * Math.PI);
+    return (Math.min(turn, 2 * Math.PI - turn) * 180) / Math.PI;
+  };
+
+  it("draws a rim outside its range in the closest color inside it", () => {
+    const adjusted: [string, QRProps, string[]][] = [
+      // lightgray (#d3d3d3) reads just darker than #d1d5db to decoders
+      [
+        "a named rim just darker than HALO_LIGHT_MIN",
+        withHalo("whitesmoke", { color: "lightgray" }),
+        ["#f5f5f5"],
+      ],
+      [
+        "a rim lighter than a named background",
+        withHalo("gainsboro", { color: "white" }),
+        ["#dcdcdc"],
+      ],
+      [
+        "a white rim on light grey",
+        withHalo("#e5e7eb", { color: "#ffffff" }),
+        ["#e5e7eb"],
+      ],
+      [
+        "a rim lighter than one gradient stop",
+        withHalo(stops("#ffffff", "#e5e7eb"), { color: "#f3f4f6" }),
+        ["#ffffff", "#e5e7eb"],
+      ],
+      [
+        "a rim just darker than HALO_LIGHT_MIN",
+        withHalo("#ffffff", { color: "#d0d4da" }),
+        ["#ffffff"],
+      ],
+      ["a dark rim", withHalo("#ffffff", { color: "#333333" }), ["#ffffff"]],
+      [
+        "a dark hsl() rim",
+        withHalo("#ffffff", { color: "hsl(0, 0%, 50%)" }),
+        ["#ffffff"],
+      ],
+      // The owner's report (22 Nov 2026): a dark red, refused before
+      [
+        "a dark red on white",
+        withHalo("#ffffff", { color: "#881337" }),
+        ["#ffffff"],
+      ],
+      [
+        "a dark red on light grey",
+        withHalo("#e5e7eb", { color: "#881337" }),
+        ["#e5e7eb"],
+      ],
+      ["a pure blue", withHalo("#ffffff", { color: "#0000ff" }), ["#ffffff"]],
+      // One decoder reads a saturated green much lighter than the other
+      ["a pure green", withHalo("#e5e7eb", { color: "#00ff00" }), ["#e5e7eb"]],
+      [
+        "a yellow lighter than light grey",
+        withHalo("#e5e7eb", { color: "#ffff00" }),
+        ["#e5e7eb"],
+      ],
+      ["a named red", withHalo("#ffffff", { color: "red" }), ["#ffffff"]],
+      [
+        "the default rim on a background darker than it",
+        withHalo("#dcdfe3"),
+        ["#dcdfe3"],
+      ],
+    ];
+    for (const [name, props, grounds] of adjusted) {
+      const risk = getHaloRisk(props);
+      expect(risk?.reason, name).toBe("adjusted");
+      const drawn = risk?.reason === "adjusted" ? risk.color : "";
+      expect(drawn, name).toMatch(/^#[0-9a-f]{6}$/);
+      expect(fitHaloColor(props.halo?.color, props.bgColor), name).toBe(drawn);
+      expect(resolveHalo(props.halo, props)?.color, name).toBe(drawn);
+      expect(inRange(drawn, grounds), `${name}: ${drawn}`).toBe(true);
+      expect(risk?.message, name).toContain(drawn);
+      expect(renderSvg(props), name).toContain(
+        `data-qrdx-look="halo" fill="${drawn}" stroke="${drawn}"`
+      );
+    }
+  });
+
+  it("keeps the picked hue and moves only its lightness", () => {
+    // A grey stays a grey, at the nearest lightness inside the range
+    expect(fitHaloColor("#000000", "#ffffff")).toBe("#d5d5d5");
+    expect(fitHaloColor("#ffffff", "#e5e7eb")).toBe("#e6e6e6");
+    // The only rim on the darkest background is HALO_LIGHT_MIN
+    expect(fitHaloColor("#881337", HALO_LIGHT_MIN)).toBe(HALO_LIGHT_MIN);
+    // A colored rim keeps its hue, on white and on light grey
+    for (const picked of [
+      "#881337",
+      "#dc2626",
+      "#2563eb",
+      "#16a34a",
+      "#1d4ed8",
+      "#7c3aed",
+      "#ea580c",
+      "#00ffff",
+    ]) {
+      for (const ground of ["#ffffff", "#e5e7eb"]) {
+        const drawn = fitHaloColor(picked, ground) as string;
+        expect(inRange(drawn, [ground]), `${picked} on ${ground}`).toBe(true);
+        expect(
+          hueShift(picked, drawn),
+          `${picked} on ${ground}: ${drawn}`
+        ).toBeLessThan(3);
+      }
+    }
+  });
+
+  it("offers tints of a color the halo draws as they are", () => {
+    // Four on a light background; fewer distinct ones where the range is
+    // narrow (#d3d5db reads just lighter than HALO_LIGHT_MIN)
+    const counts: [string, number[]][] = [
+      ["#ffffff", [4, 4, 4, 4]],
+      ["#e5e7eb", [4, 4, 4, 4]],
+      ["#dcdfe3", [4, 4, 4, 4]],
+      ["#d3d5db", [1, 3, 3, 3]],
+    ];
+    for (const [ground, expected] of counts) {
+      for (const [index, color] of [
+        "#000000",
+        "#881337",
+        "#1d4ed8",
+        "#16a34a",
+      ].entries()) {
+        const tints = haloTints(color, ground);
+        expect(tints.length, `${color} on ${ground}`).toBe(expected[index]);
+        expect(new Set(tints).size, `${color} on ${ground}`).toBe(tints.length);
+        for (const tint of tints) {
+          expect(inRange(tint, [ground]), `${tint} on ${ground}`).toBe(true);
+          expect(fitHaloColor(tint, ground), tint).toBe(tint);
+          expect(
+            getHaloRisk({ halo: { color: tint }, bgColor: ground }),
+            tint
+          ).toBeNull();
+        }
+      }
+    }
+    // Darkest first, then lighter, on white: four steps
+    const tints = haloTints("#881337", "#ffffff");
+    expect(tints).toHaveLength(4);
+    expect(tints[0]).toBe(fitHaloColor("#881337", "#ffffff"));
+    const light = tints.map((tint) => Math.min(...lumas(tint)));
+    expect([...light].sort((a, b) => a - b)).toEqual(light);
   });
 
   it("draws it in a rim between HALO_LIGHT_MIN and the background", () => {
@@ -929,13 +1080,41 @@ describe("the scan score accounts for them", () => {
       editorProps({ value: VALUE, level: "M", bgColor: HALO_LIGHT_MIN })
     );
     expect(rim.ratio).toBeCloseTo(onGrey.ratio);
-    // A dark rim isn't drawn, so it costs no contrast
+    // A dark rim is drawn in a grey inside the range, judged as that grey
     const dark = getScanContrast(
       editorProps({ value: VALUE, level: "M", halo: { color: "#333333" } })
     );
+    expect(fitHaloColor("#333333", undefined)).toBe("#d5d5d5");
     expect(dark.ratio).toBeCloseTo(
-      getScanContrast(editorProps({ value: VALUE, level: "M" })).ratio
+      getScanContrast(
+        editorProps({ value: VALUE, level: "M", bgColor: "#d5d5d5" })
+      ).ratio
     );
+  });
+
+  it("passes the halo check with the color it drew where it moved the picked one", async () => {
+    for (const [bgColor, color] of [
+      ["#ffffff", "#881337"],
+      ["#e5e7eb", "#881337"],
+      ["#ffffff", "#000000"],
+      ["#e5e7eb", "#ffffff"],
+    ] as const) {
+      const props = editorProps({
+        value: VALUE,
+        level: "M",
+        bodyPattern: "rounded",
+        bgColor,
+        halo: { color },
+      });
+      const risk = getHaloRisk(props);
+      expect(risk?.reason, `${color} on ${bgColor}`).toBe("adjusted");
+      const result = await getScanScore(props);
+      expect(
+        result.checks.find((check) => check.id === "halo"),
+        `${color} on ${bgColor}`
+      ).toEqual({ id: "halo", passed: true, message: risk?.message });
+      expect(result.grade, `${color} on ${bgColor}`).toBe("great");
+    }
   });
 
   it("fails the halo check where the halo isn't drawn", async () => {

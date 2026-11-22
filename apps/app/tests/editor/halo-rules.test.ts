@@ -1,10 +1,15 @@
 // The halo rule in the editor (control-sections/halo-rules.ts): whether a
-// halo is drawn depends on the background and the rim only (qrdx
-// getHaloRisk), so no shape picker blocks for it, the Halo switch always
-// turns a halo off, and the background picker offers no see-through or
-// picture fill while a halo is on. Review finding 1: a halo on diamond dots
-// over an opaque background, then a see-through background, left the switch
-// off and disabled and every eye preset blocked.
+// halo is drawn depends on the background only (qrdx getHaloRisk), and any
+// rim color is drawn, moved into the range decoders read where it isn't
+// (qrdx fitHaloColor), so no shape picker blocks for it, the Halo switch
+// always turns a halo off, and the background picker offers no see-through
+// or picture fill while a halo is on. Review finding 1: a halo on diamond
+// dots over an opaque background, then a see-through background, left the
+// switch off and disabled and every eye preset blocked. The owner's report
+// (22 Nov 2026): a dark red rim on white was refused, so the color control
+// looked dead.
+
+import { fitHaloColor, getHaloRisk } from "qrdx";
 import {
   CORNER_EYE_DOT_PATTERNS,
   CORNER_EYE_PATTERNS,
@@ -13,6 +18,8 @@ import {
 import { describe, expect, it } from "vitest";
 import {
   backgroundPickerFor,
+  haloDotTints,
+  haloDrawnAs,
   haloRisk,
   haloSwitch,
   haloToTurnOn,
@@ -107,11 +114,59 @@ describe("halo rules", () => {
     expect(picker.kinds).toContain("solid");
   });
 
+  it("draws any picked color, and says which color it drew", () => {
+    // The owner's pick: a dark red on white
+    const red = { bgColor: "#ffffff", halo: { color: "#881337" } };
+    expect(haloRisk(red)).toBeNull();
+    expect(haloDrawnAs(red)).toBe(fitHaloColor("#881337", "#ffffff"));
+    expect(haloDrawnAs(red)).not.toBe("#881337");
+    // A white rim on light grey is drawn darker
+    const white = { bgColor: "#e5e7eb", halo: { color: "#ffffff" } };
+    expect(haloRisk(white)).toBeNull();
+    expect(haloDrawnAs(white)).toBe("#e6e6e6");
+    // Drawn as picked: nothing to say
+    expect(
+      haloDrawnAs({ bgColor: "#ffffff", halo: { color: "#fde68a" } }),
+    ).toBeNull();
+    // No halo, or none drawn here: nothing drawn instead
+    expect(haloDrawnAs({ bgColor: "#ffffff" })).toBeNull();
+    expect(haloDrawnAs({ bgColor: "#9ca3af", halo: {} })).toBeNull();
+  });
+
+  it("offers tints of the dots' color the halo draws as they are", () => {
+    for (const style of [
+      { bgColor: "#ffffff", fgColor: "#1d4ed8" },
+      { bgColor: "#e5e7eb", fgColor: "#881337" },
+      { bgColor: "#ffffff" },
+    ]) {
+      const tints = haloDotTints(style);
+      expect(tints, JSON.stringify(style)).toHaveLength(4);
+      for (const color of tints) {
+        expect(
+          getHaloRisk({ halo: { color }, bgColor: style.bgColor }),
+          color,
+        ).toBeNull();
+      }
+    }
+    // A gradient's dots: tints of its first color
+    expect(
+      haloDotTints({
+        bgColor: "#ffffff",
+        fgColor: {
+          type: "linear",
+          angle: 0,
+          stops: [
+            { color: "#1d4ed8", offset: 0 },
+            { color: "#db2777", offset: 100 },
+          ],
+        },
+      }),
+    ).toEqual(haloDotTints({ bgColor: "#ffffff", fgColor: "#1d4ed8" }));
+    expect(haloDotTints({ bgColor: "#9ca3af" })).toEqual([]);
+  });
+
   it("says why for each refusal", () => {
     expect(haloRisk({ bgColor: "#9ca3af" })?.reason).toBe("dark-background");
-    expect(
-      haloRisk({ bgColor: "#e5e7eb", halo: { color: "#ffffff" } })?.reason,
-    ).toBe("rim");
     const picture = {
       type: "image" as const,
       src: "data:image/png;base64,AA",

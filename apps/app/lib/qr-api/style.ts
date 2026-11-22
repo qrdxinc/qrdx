@@ -218,7 +218,7 @@ const haloSchema = z
     color: colorString
       .optional()
       .describe(
-        `The rim's color (default ${HALO_COLOR_DEFAULT}): at least as light as ${HALO_LIGHT_MIN} and no lighter than the background; drawn opaque (alpha is dropped)`,
+        `The rim's color (default ${HALO_COLOR_DEFAULT}), any solid color: one darker than ${HALO_LIGHT_MIN} or lighter than the background is drawn in the closest color that stays scannable, its hue kept and its lightness moved (the scan score's halo check names the color drawn); drawn opaque (alpha is dropped)`,
       ),
     width: z
       .number()
@@ -231,7 +231,7 @@ const haloSchema = z
   })
   .strict()
   .describe(
-    `A light rim around the dark modules and eyes. Drawn only on an opaque bgColor (no picture), in a color at least as light as ${HALO_LIGHT_MIN} and no lighter than any background color; otherwise the code is drawn without it (the scan score's halo check says why)`,
+    `A light rim around the dark modules and eyes. Drawn only on an opaque bgColor (no picture) at least as light as ${HALO_LIGHT_MIN}; otherwise the code is drawn without it (the scan score's halo check says why). Its color is adjusted to stay scannable, never refused: a rim must read at least as light as ${HALO_LIGHT_MIN} and no lighter than any background color, so a color outside that range is drawn in the closest one inside it`,
   );
 
 /** A shadow: a see-through copy of the dark shapes, shifted. */

@@ -4,7 +4,8 @@
 // eye's effective shapes (per-eye shapes included, qrdx getEyeStyleRisk).
 //
 // A halo never blocks a shape: whether it is drawn depends on the
-// background and the rim only (qrdx getHaloRisk, halo-rules.ts).
+// background only, and its rim color is moved to one that scans (qrdx
+// getHaloRisk, halo-rules.ts).
 import { getEyeStyleRisk } from "qrdx";
 import type { QRStyle } from "@/types/theme";
 
