@@ -24,7 +24,6 @@ import {
   Coffee,
   Coin,
   Courthouse,
-  Diamonds,
   DirectInbox,
   DirectSend,
   DocumentCopy,
@@ -139,7 +138,6 @@ export const QR_TYPE_ICONS: Record<ContentType, CardIcon> = {
   khqr: CardReceive,
   lightning: Flash,
   tron: Coin,
-  ton: Diamonds,
   // Added 2026-11-22 (links): no Simple Icons mark for these
   facetime: Video,
   "microsoft-teams": People,

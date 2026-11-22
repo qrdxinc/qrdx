@@ -83,6 +83,7 @@ export const UI_SLUGS = [
   "threads",
   "tidal",
   "tiktok",
+  "ton",
   "tripadvisor",
   "trustpilot",
   "tumblr",
