@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
         const context: AgentContext = {
           userId,
           base,
-          designs: DesignRegistry.fromMessages(messages),
+          designs: DesignRegistry.fromMessages(messages, base.sources),
           writer,
           templates: accountTemplateStore,
           community: accountCommunityStore,
@@ -114,6 +114,7 @@ export async function POST(req: NextRequest) {
           stopWhen: isStepCount(MAX_STEPS),
           toolsContext: {
             design_qr: context,
+            find_frames: context,
             check_scan_score: context,
             apply_design: context,
             save_template: context,

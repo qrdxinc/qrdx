@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "Baixe o código em PNG, WebP ou SVG.",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "Baixe o código em PNG, SVG, WebP, GIF, BMP ou ICO.",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "Baixe um PNG, WebP ou SVG, ou personalize o código no editor completo.",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "Baixe um PNG, SVG, WebP, GIF, BMP ou ICO, ou personalize o visual do código no editor completo.",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -30850,5 +30850,17 @@
     "text": "O QRdx não salva seu prompt, sua imagem de referência nem as imagens geradas; ele só conta seus créditos. O prompt, a imagem do QR code e qualquer imagem de referência são enviados pelo Vercel AI Gateway ao GPT Image 2 da OpenAI para criar a arte, e o resultado volta direto para o seu navegador, então baixe as que quiser guardar.",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "Baixe o código em PNG, WebP ou SVG.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "Baixe um PNG, WebP ou SVG, ou personalize o código no editor completo.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   }
 }

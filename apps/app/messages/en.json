@@ -4002,7 +4002,10 @@
         "showLess": "Show less",
         "showValueMore": "Show {value, number} more",
         "applyThisDesign": "Apply this design",
-        "notAppliedYourEditorIs": "Not applied. Your editor is unchanged."
+        "notAppliedYourEditorIs": "Not applied. Your editor is unchanged.",
+        "searchingTheFrames": "Looking through the official frames…",
+        "couldntSearchTheFrames": "Couldn't search the frames",
+        "foundFramesForQuery": "{count, plural, =0 {No official frames for “{query}”} one {Found # official frame for “{query}”:} other {Found # official frames for “{query}”:}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

@@ -17,8 +17,10 @@ import { contrastRatio, luminance } from "@/lib/themes/color";
 import type { ThemeStyles } from "@/types/theme";
 import {
   CLASSIC_STYLE,
+  type DesignFrame,
   type DesignStyle,
   HEX_COLOR,
+  type StyleSources,
   styleDiff,
   toThemeStyles,
 } from "./style";
@@ -57,15 +59,11 @@ export interface DesignLoopResult {
   fellBack: boolean;
   /** Every change from the first candidate to the result, for the user */
   changes: string[];
-  /** The per-eye shapes left after the repairs (see DesignLoopOptions) */
-  eyeShapes?: EyeShapes;
 }
 
 export type ScoreFn = (
   value: string,
   style: ThemeStyles,
-  /** Per-eye shapes the loop carries (repairs can clear a weak one) */
-  eyeShapes?: EyeShapes,
 ) => Promise<ScanScoreResult>;
 
 /**
@@ -73,10 +71,10 @@ export type ScoreFn = (
  * changes the code's eye frames or centres reaches each eye), or undefined
  * when none is left.
  */
-export function withoutEyeOverrides(
-  eyeShapes: EyeShapes | undefined,
+export function withoutEyeOverrides<T extends EyeShapes>(
+  eyeShapes: T | undefined,
   part: "outer" | "inner",
-): EyeShapes | undefined {
+): T | undefined {
   if (!eyeShapes) return undefined;
   const next: EyeShapes = {};
   for (const [position, eye] of Object.entries(eyeShapes)) {
@@ -84,17 +82,27 @@ export function withoutEyeOverrides(
     const { [part]: _dropped, ...rest } = eye;
     if (Object.keys(rest).length > 0) next[position as keyof EyeShapes] = rest;
   }
-  return Object.keys(next).length > 0 ? next : undefined;
+  // Only fields were dropped: the values are still `T`'s
+  return Object.keys(next).length > 0 ? (next as T) : undefined;
 }
 
 /** The known-weak pair of a design, judged on every eye's effective shapes. */
-const eyeRisk = (style: DesignStyle, eyeShapes: EyeShapes | undefined) =>
+const eyeRisk = (style: DesignStyle) =>
   getEyeStyleRisk({
     bodyPattern: style.bodyPattern,
     cornerEyePattern: style.cornerEyePattern,
     cornerEyeDotPattern: style.cornerEyeDotPattern,
-    eyeShapes,
+    eyeShapes: style.eyeShapes,
   });
+
+/** `style` with its per-eye shapes set to `eyeShapes` (none: left out). */
+function withEyeShapes(
+  style: DesignStyle,
+  eyeShapes: DesignStyle["eyeShapes"],
+): DesignStyle {
+  const { eyeShapes: _previous, ...rest } = style;
+  return eyeShapes ? { ...rest, eyeShapes } : rest;
+}
 
 /** Asks a model for a revised style that fixes `failed` (the chat's Gemini). */
 export type ReviseFn = (
@@ -114,13 +122,9 @@ const failedChecks = (result: ScanScoreResult): FailedCheck[] =>
 const sameEyes = (a: EyeShapes | undefined, b: EyeShapes | undefined) =>
   JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
 
-/** The same design: the style and the per-eye shapes drawn with it. */
-const same = (
-  a: DesignStyle,
-  aEyes: EyeShapes | undefined,
-  b: DesignStyle,
-  bEyes: EyeShapes | undefined,
-) => JSON.stringify(a) === JSON.stringify(b) && sameEyes(aEyes, bEyes);
+/** The same design (its per-eye shapes are part of the style). */
+const same = (a: DesignStyle, b: DesignStyle) =>
+  JSON.stringify(a) === JSON.stringify(b);
 
 // ── Normalising ────────────────────────────────────────────────────────────
 
@@ -131,10 +135,10 @@ const same = (
  */
 export function normalizeDesign(
   style: DesignStyle,
-  { hasLogo, eyeShapes }: { hasLogo: boolean; eyeShapes?: EyeShapes },
-): { style: DesignStyle; changes: string[]; eyeShapes?: EyeShapes } {
+  { hasLogo }: { hasLogo: boolean },
+): { style: DesignStyle; changes: string[] } {
   const changes: string[] = [];
-  const next: DesignStyle = {
+  let next: DesignStyle = {
     ...style,
     bgColor: style.bgColor.toUpperCase(),
     fgColor: style.fgColor.toUpperCase(),
@@ -151,22 +155,25 @@ export function normalizeDesign(
           },
   };
   if (next.logo === "keep" && !hasLogo) next.logo = "none";
-  let eyes = eyeShapes;
-  const risk = eyeRisk(next, eyes);
+  const risk = eyeRisk(next);
   if (risk?.kind === "dot-eye") {
     changes.push(
       `Changed the eye centers from ${next.cornerEyeDotPattern} to rounded: ${risk.message}`,
     );
-    next.cornerEyeDotPattern = "rounded";
-    eyes = withoutEyeOverrides(eyes, "inner");
+    next = withEyeShapes(
+      { ...next, cornerEyeDotPattern: "rounded" },
+      withoutEyeOverrides(next.eyeShapes, "inner"),
+    );
   } else if (risk?.kind === "body-eye") {
     changes.push(
       `Changed the eyes from ${next.cornerEyePattern} to extra-rounded: ${risk.message}`,
     );
-    next.cornerEyePattern = "extra-rounded";
-    eyes = withoutEyeOverrides(eyes, "outer");
+    next = withEyeShapes(
+      { ...next, cornerEyePattern: "extra-rounded" },
+      withoutEyeOverrides(next.eyeShapes, "outer"),
+    );
   }
-  return { style: next, changes, ...(eyes && { eyeShapes: eyes }) };
+  return { style: next, changes };
 }
 
 // ── Targeted repairs ───────────────────────────────────────────────────────
@@ -272,6 +279,26 @@ function fixContrast(
       }
     }
   }
+  // A single eye's own colors need the same contrast
+  if (next.eyeColors) {
+    let adjusted = false;
+    const eyeColors = Object.fromEntries(
+      Object.entries(next.eyeColors).map(([position, eye]) => {
+        if (!eye) return [position, eye];
+        const outer = eye.outer && readable(eye.outer, next, min);
+        const inner = eye.inner && readable(eye.inner, next, min);
+        if (outer !== eye.outer || inner !== eye.inner) adjusted = true;
+        return [
+          position,
+          { ...(outer ? { outer } : {}), ...(inner ? { inner } : {}) },
+        ];
+      }),
+    ) as NonNullable<DesignStyle["eyeColors"]>;
+    if (adjusted) {
+      next.eyeColors = eyeColors;
+      changes.push(`Adjusted the colors of single eyes ${reason}`);
+    }
+  }
   return next;
 }
 
@@ -285,12 +312,11 @@ const SOLID_BODIES = new Set(["square", "rounded", "classy", "classy-rounded"]);
 export function repairDesign(
   style: DesignStyle,
   failed: FailedCheck[],
-  { final = false, eyeShapes }: { final?: boolean; eyeShapes?: EyeShapes } = {},
-): { style: DesignStyle; changes: string[]; eyeShapes?: EyeShapes } {
+  { final = false }: { final?: boolean } = {},
+): { style: DesignStyle; changes: string[] } {
   const ids = new Set(failed.map((check) => check.id));
   const changes: string[] = [];
   let next: DesignStyle = { ...style };
-  let eyes = eyeShapes;
 
   if (ids.has("polarity") && final) {
     const dark = [next.fgColor, next.eyeColor, next.dotColor];
@@ -332,18 +358,20 @@ export function repairDesign(
   }
   if (ids.has("eye-shape")) {
     // The weakest frame drawn, a single eye's own included
-    const weak = weakestEyePattern({ ...next, eyeShapes: eyes });
-    const cleared = withoutEyeOverrides(eyes, "outer");
-    if (next.cornerEyePattern !== "rounded" || !sameEyes(cleared, eyes)) {
+    const weak = weakestEyePattern(next);
+    const cleared = withoutEyeOverrides(next.eyeShapes, "outer");
+    if (
+      next.cornerEyePattern !== "rounded" ||
+      !sameEyes(cleared, next.eyeShapes)
+    ) {
       changes.push(
         `Changed the eyes from ${weak} to rounded: strict scanners miss them`,
       );
-      next.cornerEyePattern = "rounded";
-      eyes = cleared;
+      next = withEyeShapes({ ...next, cornerEyePattern: "rounded" }, cleared);
     }
   }
   if (ids.has("style-pair")) {
-    const risk = eyeRisk(next, eyes);
+    const risk = eyeRisk(next);
     if (
       risk?.kind === "dot" ||
       risk?.kind === "dot-eye" ||
@@ -352,8 +380,10 @@ export function repairDesign(
       changes.push(
         `Changed the eye centers from ${next.cornerEyeDotPattern} to rounded: ${risk.message}`,
       );
-      next.cornerEyeDotPattern = "rounded";
-      eyes = withoutEyeOverrides(eyes, "inner");
+      next = withEyeShapes(
+        { ...next, cornerEyeDotPattern: "rounded" },
+        withoutEyeOverrides(next.eyeShapes, "inner"),
+      );
     } else if (risk?.kind === "body-eye") {
       changes.push(
         `Changed the dots from ${next.bodyPattern} to rounded: ${risk.message}`,
@@ -368,6 +398,34 @@ export function repairDesign(
       min: STRONG_CONTRAST,
       reason: "so it reads at small sizes",
     });
+    // The code sits small inside a heart (a plain heart code scores 65): a
+    // circle keeps it round and reads at phone distance; a circle that
+    // still fails becomes a square code last.
+    if (next.shape === "heart") {
+      changes.push(
+        "Changed the outline from a heart to a circle: the code sits too small inside a heart to read at a distance",
+      );
+      next = { ...next, shape: "circle" };
+    } else if (final && next.shape === "circle") {
+      changes.push(
+        "Made the code square instead of a circle so it reads when it's small",
+      );
+      const { shape: _shape, ...rest } = next;
+      next = rest;
+    }
+    // Smaller dots leave gaps that blur away first
+    if (next.moduleScale !== undefined) {
+      changes.push(
+        `Made the dots full size (from ${Math.round(next.moduleScale * 100)}%) so the code reads when it's small`,
+      );
+      const { moduleScale: _scale, ...rest } = next;
+      next = rest;
+    }
+    if (final && next.shadow) {
+      changes.push("Removed the shadow so the dots stay crisp when small");
+      const { shadow: _shadow, ...rest } = next;
+      next = rest;
+    }
     // Long content means many small modules: less error correction holds it
     // in fewer, bigger ones, which helps most. A logo needs the correction.
     if (next.logo === "none" && (next.level === "Q" || next.level === "H")) {
@@ -400,8 +458,19 @@ export function repairDesign(
       next.cornerEyeDotPattern = "square";
     }
   }
-  return { style: next, changes, ...(eyes && { eyeShapes: eyes }) };
+  return { style: next, changes };
 }
+
+/** A frame without its colors: what a fallback keeps of it. */
+const plainFrame = (frame: DesignFrame): DesignFrame =>
+  frame.style === "none"
+    ? { style: "none" }
+    : {
+        style: frame.style,
+        ...(frame.id ? { id: frame.id } : {}),
+        ...(frame.text ? { text: frame.text } : {}),
+        ...(frame.secondaryText ? { secondaryText: frame.secondaryText } : {}),
+      };
 
 /**
  * Classic variants to fall back to, best first: black on white with square
@@ -409,16 +478,7 @@ export function repairDesign(
  * bigger modules.
  */
 function fallbacks(style: DesignStyle): DesignStyle[] {
-  const frame: DesignStyle["frame"] =
-    style.frame.style === "none"
-      ? { style: "none" }
-      : {
-          style: style.frame.style,
-          ...(style.frame.text ? { text: style.frame.text } : {}),
-          ...(style.frame.secondaryText
-            ? { secondaryText: style.frame.secondaryText }
-            : {}),
-        };
+  const frame = plainFrame(style.frame);
   return (["Q", "M", "L"] as const).map((level) => ({
     ...CLASSIC_STYLE,
     level,
@@ -440,8 +500,8 @@ export interface DesignLoopOptions {
   maxRepairs?: number;
   /** Called after every scored attempt (for progress in the chat) */
   onAttempt?: (attempt: DesignAttempt, index: number) => void;
-  /** Per-eye shapes drawn with every attempt; a repair of the eyes clears the weak ones */
-  eyeShapes?: EyeShapes;
+  /** Official and kept frames and silhouettes, for drawing (toThemeStyles) */
+  sources?: StyleSources;
 }
 
 /**
@@ -457,23 +517,20 @@ export async function runDesignLoop({
   revise,
   maxRepairs = MAX_REPAIRS,
   onAttempt,
-  eyeShapes: initialEyeShapes,
+  sources,
 }: DesignLoopOptions): Promise<DesignLoopResult> {
   const attempts: DesignAttempt[] = [];
   const results: ScanScoreResult[] = [];
-  /** The per-eye shapes drawn with each attempt (scored with it). */
-  const shapes: (EyeShapes | undefined)[] = [];
   /** The attempt each one was made from (-1 for the first). */
   const parents: number[] = [];
 
   const record = async (
     style: DesignStyle,
-    eyeShapes: EyeShapes | undefined,
     changes: string[],
     by: DesignAttempt["by"],
     parent: number,
   ) => {
-    const result = await score(value, toThemeStyles(style), eyeShapes);
+    const result = await score(value, toThemeStyles(style, sources));
     const attempt: DesignAttempt = {
       style,
       score: result.score,
@@ -484,17 +541,13 @@ export async function runDesignLoop({
     };
     attempts.push(attempt);
     results.push(result);
-    shapes.push(eyeShapes);
     parents.push(parent);
     onAttempt?.(attempt, attempts.length - 1);
     return attempt;
   };
 
-  const first = normalizeDesign(initial, {
-    hasLogo,
-    eyeShapes: initialEyeShapes,
-  });
-  await record(first.style, first.eyeShapes, first.changes, "initial", -1);
+  const first = normalizeDesign(initial, { hasLogo });
+  await record(first.style, first.changes, "initial", -1);
 
   /**
    * The best attempt so far. Repairs build on the latest of equal scores, so
@@ -514,11 +567,8 @@ export async function runDesignLoop({
     repairs++;
     const parent = best({ latest: true });
     const base = attempts[parent] as DesignAttempt;
-    // A repair builds on the shapes its parent was drawn with
-    const baseEyes = shapes[parent];
     const final = repairs === maxRepairs;
     let next: DesignStyle | null = null;
-    let nextEyes = baseEyes;
     let changes: string[] = [];
     let by: DesignAttempt["by"] = "repair";
 
@@ -526,11 +576,10 @@ export async function runDesignLoop({
       try {
         const revised = normalizeDesign(
           await revise(base.style, base.failed, base.score),
-          { hasLogo, eyeShapes: baseEyes },
+          { hasLogo },
         );
-        if (!same(revised.style, revised.eyeShapes, base.style, baseEyes)) {
+        if (!same(revised.style, base.style)) {
           next = revised.style;
-          nextEyes = revised.eyeShapes;
           changes = [
             ...styleDiff(base.style, revised.style).map((change) =>
               change.from
@@ -546,38 +595,25 @@ export async function runDesignLoop({
       }
     }
     if (!next) {
-      let repaired = repairDesign(base.style, base.failed, {
-        final,
-        eyeShapes: baseEyes,
-      });
+      let repaired = repairDesign(base.style, base.failed, { final });
       // Nothing small left to try: make the bigger changes now.
-      if (
-        !final &&
-        same(repaired.style, repaired.eyeShapes, base.style, baseEyes)
-      ) {
-        repaired = repairDesign(base.style, base.failed, {
-          final: true,
-          eyeShapes: baseEyes,
-        });
+      if (!final && same(repaired.style, base.style)) {
+        repaired = repairDesign(base.style, base.failed, { final: true });
       }
-      if (same(repaired.style, repaired.eyeShapes, base.style, baseEyes)) {
-        break;
-      }
+      if (same(repaired.style, base.style)) break;
       next = repaired.style;
-      nextEyes = repaired.eyeShapes;
       changes = repaired.changes;
     }
-    await record(next, nextEyes, changes, by, parent);
+    await record(next, changes, by, parent);
   }
 
   if (!isGreat(attempts[best()] as DesignAttempt)) {
     const parent = best();
     const base = attempts[parent] as DesignAttempt;
     for (const fallback of fallbacks(base.style)) {
-      // Classic means classic: no per-eye shapes either
+      // Classic means classic: no looks either
       const attempt = await record(
         fallback,
-        undefined,
         [
           `Fell back to a classic black-on-white code (error correction ${fallback.level}): the design couldn't reach Great`,
         ],
@@ -598,8 +634,6 @@ export async function runDesignLoop({
   const changes = fellBack
     ? result.changes
     : path.flatMap((at) => (attempts[at] as DesignAttempt).changes);
-  // The result's style, score and per-eye shapes are one attempt's
-  const eyeShapes = shapes[index];
   return {
     style: result.style,
     score: result.score,
@@ -609,7 +643,6 @@ export async function runDesignLoop({
     repairs,
     fellBack,
     changes,
-    ...(eyeShapes && { eyeShapes }),
   };
 }
 

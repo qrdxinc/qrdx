@@ -3603,7 +3603,10 @@
         "showLess": "Afficher moins",
         "showValueMore": "Afficher {value, number} de plus",
         "applyThisDesign": "Appliquer ce design",
-        "notAppliedYourEditorIs": "Non appliqué. Votre éditeur reste inchangé."
+        "notAppliedYourEditorIs": "Non appliqué. Votre éditeur reste inchangé.",
+        "searchingTheFrames": "Recherche dans les cadres officiels…",
+        "couldntSearchTheFrames": "Impossible de rechercher les cadres",
+        "foundFramesForQuery": "{count, plural, =0 {Aucun cadre officiel pour « {query} »} one {# cadre officiel trouvé pour « {query} » :} other {# cadres officiels trouvés pour « {query} » :}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

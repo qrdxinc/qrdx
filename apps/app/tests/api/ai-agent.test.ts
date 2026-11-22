@@ -8,6 +8,7 @@
 // template store are fakes: nothing touches a database or the network.
 import { readUIMessageStream, type UIMessageChunk } from "ai";
 import { NextRequest } from "next/server";
+import { getOfficialFrame } from "qrdx";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { DesignQrOutput } from "@/lib/ai/agent/tools";
 import type { ChatMessage } from "@/types/ai";
@@ -349,6 +350,7 @@ describe("the QR agent", () => {
       "design_qr",
       "check_scan_score",
       "ask_user",
+      "find_frames",
       "apply_design",
       "save_template",
       "use_image",
@@ -528,6 +530,64 @@ describe("the QR agent", () => {
     );
     // Progress partials are clipped, never the runaway string.
     expect(JSON.stringify(chunks)).not.toContain(" Ready. OK.".repeat(5));
+  });
+
+  it("reads a designer answer cut off at the token cap as far as it goes", async () => {
+    // Seen live: the designer looped inside a frame's label color until it
+    // hit the cap, so its JSON never closed.
+    const cut = JSON.stringify({
+      ...REVISED,
+      frame: { style: "badge", text: "Free Wi-Fi", textColor: "#FFFFFF" },
+    }).replace('"#FFFFFF"', `"#FFFFFF+M10243${"0".repeat(400)}`);
+    const cutOff = cut.slice(0, cut.indexOf("0".repeat(400)) + 400);
+    const truncated = () =>
+      new Response(
+        [
+          { type: "stream-start", warnings: [] },
+          ...text("j", cutOff),
+          {
+            type: "finish",
+            finishReason: { unified: "length", raw: "MAX_TOKENS" },
+            usage: USAGE,
+          },
+        ]
+          .map((part) => `data: ${JSON.stringify(part)}\n\n`)
+          .join(""),
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    let designs = 0;
+    const chat = [
+      stream([
+        toolCall("call_design", "design_qr", {
+          brief: "Navy with a badge frame",
+          start_from: "new",
+          content: WIFI_CONTENT,
+        }),
+      ]),
+      stream(text("t1", "Scan score is Great.")),
+    ];
+    let turn = 0;
+    gateway.respondWith((call) => {
+      if (isDesigner(call)) {
+        designs++;
+        return designs === 1 ? truncated() : json(REVISED);
+      }
+      return chat[turn++] as Response;
+    });
+    const { chunks } = await post([userMessage("navy wifi badge")]);
+    const assistant = await assistantFrom(chunks);
+    const design = toolPart(assistant, "tool-design_qr");
+    const output = design?.state === "output-available" ? design.output : null;
+    expect(output).toMatchObject({
+      ok: true,
+      style: {
+        frame: { style: "badge", text: "Free Wi-Fi", textColor: "#FFFFFF" },
+      },
+    });
+    // The first answer was used, not thrown away for a second try
+    expect((output as { attempts: { by: string }[] }).attempts[0]?.by).toBe(
+      "initial",
+    );
   });
 
   it("asks the designer again when its first answer is unusable", async () => {
@@ -736,6 +796,243 @@ function addOutput(
 }
 
 const PROMPT_PICTURE = "Put my photo behind the code";
+
+describe("every option the editor draws", () => {
+  const CUP = getOfficialFrame("cafe-cup");
+  if (!CUP) throw new Error("The cafe-cup official frame is missing");
+
+  /** A dark, scannable style the designer answers with. */
+  const DARK = {
+    bgColor: "#FFFFFF",
+    fgColor: "#1C1917",
+    eyeColor: "#1C1917",
+    dotColor: "#1C1917",
+    bodyPattern: "rounded",
+    cornerEyePattern: "rounded",
+    cornerEyeDotPattern: "rounded",
+    margin: 4,
+    level: "H",
+    frame: { style: "none" },
+    templateId: "default",
+    logo: "none",
+  };
+
+  const designOutput = (message: ChatMessage) => {
+    const part = toolPart(message, "tool-design_qr");
+    const output = (
+      part?.state === "output-available" ? part.output : null
+    ) as DesignQrOutput | null;
+    if (!output?.ok) throw new Error(`no design: ${JSON.stringify(output)}`);
+    return output;
+  };
+
+  it("finds an official frame and designs with it, a brand logo and single-eye looks", async () => {
+    script(
+      [
+        stream([toolCall("call_find", "find_frames", { query: "coffee cup" })]),
+        stream([
+          toolCall("call_design", "design_qr", {
+            brief:
+              "Dark brown on white in the takeaway cup frame saying Coffee time, the Spotify logo, a rounded top-left eye in brown, a soft halo and shadow, rounded corners",
+            start_from: "new",
+            frame_id: "cafe-cup",
+          }),
+        ]),
+        stream([
+          ...text("t1", "Scan score is Great."),
+          toolCall("call_apply", "apply_design", {
+            design_id: "call_design",
+            summary: "Coffee cup frame",
+          }),
+        ]),
+      ],
+      [
+        {
+          ...DARK,
+          frame: { style: "banner-bottom", text: "Coffee time" },
+          logo: "spotify",
+          // The designer writes per-eye looks in flat fields, look numbers
+          // as whole percents
+          eyeColorTopLeft: "#7C2D12",
+          eyeCenterColorTopLeft: "#7C2D12",
+          eyeShapeTopRight: "squircle",
+          halo: { color: "#E5E7EB", width: 25 },
+          shadow: { color: "#000000", opacity: 20, dx: 10, dy: 10 },
+          bgRadius: 10,
+          backdrop: "#F5F5F4",
+        },
+      ],
+    );
+    const { chunks } = await post([userMessage("A coffee shop code")]);
+    const assistant = await assistantFrom(chunks);
+
+    const find = toolPart(assistant, "tool-find_frames");
+    const frames =
+      find?.state === "output-available"
+        ? (find.output as { frames: { id: string }[] }).frames
+        : [];
+    expect(frames.map((frame) => frame.id)).toContain("cafe-cup");
+
+    const output = designOutput(assistant);
+    expect(output.grade).toBe("great");
+    // The frame the agent picked, with the designer's label
+    expect(output.style.frame).toEqual({
+      style: "official",
+      id: "cafe-cup",
+      text: "Coffee time",
+    });
+    expect(output.themeStyles.frame).toMatchObject({
+      style: "custom",
+      spec: CUP.spec,
+      text: "Coffee time",
+    });
+    // Every look reaches the editor's style
+    expect(output.themeStyles).toMatchObject({
+      eyeColors: { topLeft: { outer: "#7C2D12", inner: "#7C2D12" } },
+      eyeShapes: { topRight: { outer: "squircle" } },
+      halo: { color: "#E5E7EB", width: 0.25 },
+      shadow: { color: "#000000", opacity: 0.2, dx: 0.1, dy: 0.1 },
+      bgRadius: 0.1,
+      backdrop: "#F5F5F4",
+    });
+    // The brand logo is drawn on the server, like a quick icon
+    expect(output.logo).toMatchObject({ showLogo: true });
+    expect(
+      typeof output.logo === "object" &&
+        decodeURIComponent(output.logo.customLogo ?? ""),
+    ).toContain("Spotify");
+    // The designer was told which frame to use
+    const designer = gateway.calls.find(isDesigner) as GatewayCall;
+    expect(promptText(designer)).toContain("official frame cafe-cup");
+  });
+
+  it("keeps the looks a change leaves out, and the user's own frame", async () => {
+    const own = {
+      ...CUP.spec,
+      labels: CUP.spec.labels.map((label) =>
+        label.type === "text" ? { ...label, text: "Our menu" } : label,
+      ),
+    };
+    const editor = {
+      ...EDITOR,
+      style: {
+        ...EDITOR.style,
+        bodyPattern: "rounded",
+        cornerEyePattern: "rounded",
+        cornerEyeDotPattern: "rounded",
+        halo: { width: 0.3 },
+        shadow: { opacity: 0.25 },
+        bgRadius: 0.12,
+        shape: "circle",
+        eyeShapes: { bottomLeft: { outer: "squircle" } },
+        frame: { style: "custom", spec: own },
+      },
+    };
+    script(
+      [
+        stream([
+          toolCall("call_design", "design_qr", {
+            brief: "Make it navy and drop the shadow",
+            start_from: "current",
+          }),
+        ]),
+        stream(text("t1", "Scan score is Great.")),
+      ],
+      [
+        {
+          ...DARK,
+          fgColor: "#1E3A8A",
+          eyeColor: "#1E3A8A",
+          dotColor: "#1E3A8A",
+          frame: { style: "keep" },
+          shadow: null,
+        },
+      ],
+    );
+    const { chunks } = await post([userMessage("Make it navy")], editor);
+    const assistant = await assistantFrom(chunks);
+
+    // The chat and the designer see the looks and the kept frame
+    const chat = gateway.calls[0] as GatewayCall;
+    expect(JSON.stringify(chat.body)).toContain(
+      "The frame is one of the user's own",
+    );
+    const designer = gateway.calls.find(isDesigner) as GatewayCall;
+    // In the designer's units: whole percents
+    expect(promptText(designer)).toContain('\\"halo\\":{\\"width\\":30}');
+
+    const output = designOutput(assistant);
+    expect(output.style).toMatchObject({
+      fgColor: "#1E3A8A",
+      frame: { style: "keep" },
+      halo: { width: 0.3 },
+      bgRadius: 0.12,
+      shape: "circle",
+      eyeShapes: { bottomLeft: { outer: "squircle" } },
+    });
+    expect(output.style.shadow).toBeUndefined();
+    expect(output.themeStyles.frame).toEqual({ style: "custom", spec: own });
+    expect(output.themeStyles).toMatchObject({ shape: "circle" });
+    expect(output.themeStyles.shadow).toBeUndefined();
+  });
+
+  it("adds a look the user named that the designer left out", async () => {
+    script(
+      [
+        stream([
+          toolCall("call_design", "design_qr", {
+            brief: "Navy with a halo and rounded corners",
+            start_from: "new",
+            looks: ["halo", "rounded_corners"],
+          }),
+        ]),
+        stream(text("t1", "Scan score is Great.")),
+      ],
+      // The designer forgets both
+      [
+        {
+          ...DARK,
+          fgColor: "#1E3A8A",
+          eyeColor: "#1E3A8A",
+          dotColor: "#1E3A8A",
+        },
+      ],
+    );
+    const { chunks } = await post([userMessage("Navy, halo, rounded")]);
+    const output = designOutput(await assistantFrom(chunks));
+    expect(output.style.halo).toEqual({});
+    expect(output.style.bgRadius).toBe(0.08);
+    expect(output.themeStyles).toMatchObject({ halo: {}, bgRadius: 0.08 });
+    const designer = gateway.calls.find(isDesigner) as GatewayCall;
+    expect(promptText(designer)).toContain(
+      "The user asked for a halo, rounded background corners",
+    );
+  });
+
+  it("tells the model about a frame id find_frames never returned", async () => {
+    script(
+      [
+        stream([
+          toolCall("call_design", "design_qr", {
+            brief: "A frame",
+            start_from: "current",
+            frame_id: "made-up-frame",
+          }),
+        ]),
+        stream(text("t1", "That frame doesn't exist.")),
+      ],
+      [DARK],
+    );
+    const { chunks } = await post([userMessage("Add a frame")]);
+    const assistant = await assistantFrom(chunks);
+    const part = toolPart(assistant, "tool-design_qr");
+    const output = part?.state === "output-available" ? part.output : null;
+    expect(output).toMatchObject({ ok: false });
+    expect(JSON.stringify(output)).toContain("find_frames");
+    // No designer call was spent on it
+    expect(gateway.calls.some(isDesigner)).toBe(false);
+  });
+});
 
 describe("pictures and missing content", () => {
   it("asks for content in a dialog, then continues with the same prompt and picture", async () => {

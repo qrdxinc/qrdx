@@ -3603,7 +3603,10 @@
         "showLess": "收起",
         "showValueMore": "再显示 {value, number} 项",
         "applyThisDesign": "应用此设计",
-        "notAppliedYourEditorIs": "未应用。编辑器保持不变。"
+        "notAppliedYourEditorIs": "未应用。编辑器保持不变。",
+        "searchingTheFrames": "正在查找官方边框…",
+        "couldntSearchTheFrames": "无法搜索边框",
+        "foundFramesForQuery": "{count, plural, =0 {没有找到与“{query}”相关的官方边框} one {找到 # 个与“{query}”相关的官方边框：} other {找到 # 个与“{query}”相关的官方边框：}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"
