@@ -61,6 +61,10 @@ export function defaultBarcodeStyle(id: BarcodeFormatId): BarcodeStyle {
   };
 }
 
+/** The smallest scale `id` is drawn at (Intelligent Mail and DotCode: 2). */
+export const minScale = (id: BarcodeFormatId) =>
+  getBarcodeFormat(id).minScale ?? BARCODE_LIMITS.scale.min;
+
 /** The largest quiet zone `id` takes, in modules. */
 export const maxQuietZone = (id: BarcodeFormatId) =>
   getBarcodeFormat(id).kind === "linear"
@@ -108,7 +112,7 @@ export const barcodeStyleInputSchema = z.object({
     .max(BARCODE_LIMITS.barHeightMm.max)
     .optional()
     .describe(
-      "Bar height of linear barcodes in millimetres at the vector size (default depends on the format)",
+      "Bar height of linear barcodes in millimetres at the vector size (default depends on the format; Intelligent Mail is always 3.96 mm, the height USPS sets)",
     ),
   quietZone: z
     .number()
@@ -125,7 +129,9 @@ export const barcodeStyleInputSchema = z.object({
     .min(BARCODE_LIMITS.scale.min)
     .max(BARCODE_LIMITS.scale.max)
     .optional()
-    .describe("Pixels per module in raster images (1-10, default 4)"),
+    .describe(
+      "Pixels per module in raster images (1-10, default 4; 2-10 for Intelligent Mail and DotCode)",
+    ),
   rotation: z
     .union(BARCODE_ROTATIONS.map((angle) => z.literal(angle)))
     .optional()
@@ -141,7 +147,7 @@ export type ResolvedStyle =
 /**
  * A full style for `id`: the fields given (already parsed by
  * barcodeStyleInputSchema), the format's defaults for the rest. Fails on a
- * quiet zone above what the format takes.
+ * quiet zone above what the format takes, or a scale below it.
  */
 export function resolveBarcodeStyle(
   id: BarcodeFormatId,
@@ -159,6 +165,14 @@ export function resolveBarcodeStyle(
       ok: false,
       field: "quietZone",
       message: `${getBarcodeFormat(id).label} takes a quiet zone of up to ${max} modules`,
+    };
+  }
+  const min = minScale(id);
+  if (style.scale < min) {
+    return {
+      ok: false,
+      field: "scale",
+      message: `${getBarcodeFormat(id).label} takes a scale of ${min} to ${BARCODE_LIMITS.scale.max}`,
     };
   }
   return { ok: true, style };
@@ -195,11 +209,14 @@ export function styleChanges(
   style: BarcodeStyle,
 ): Partial<BarcodeStyle> {
   const base = defaultBarcodeStyle(id);
-  const linear = getBarcodeFormat(id).kind === "linear";
+  const format = getBarcodeFormat(id);
+  const linear = format.kind === "linear";
   const changes: Partial<BarcodeStyle> = {};
   for (const key of Object.keys(base) as (keyof BarcodeStyle)[]) {
-    // Bar height and text don't apply to 2D codes.
+    // Bar height and text don't apply to 2D codes, nor bar height to a
+    // format whose height is fixed.
     if (!linear && (key === "barHeightMm" || key === "showText")) continue;
+    if (key === "barHeightMm" && format.fixedBarHeightMm) continue;
     const value = style[key] ?? base[key];
     if (value !== base[key]) {
       (changes as Record<string, unknown>)[key] = value;

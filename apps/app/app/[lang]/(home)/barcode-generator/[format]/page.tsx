@@ -25,6 +25,7 @@ import {
   expandUpce,
   getBarcodeFormat,
   gs1CheckDigit,
+  isScanCheckable,
   publicationEan13,
   validateBarcodeInput,
 } from "@/lib/barcode/formats";
@@ -204,7 +205,10 @@ export default async function BarcodeFormatPage({ params }: PageProps) {
             ...(GS1_NUMBERS.has(id)
               ? ["Check digits calculated and verified"]
               : []),
-            "Scan check with an open-source decoder",
+            // DotCode and Intelligent Mail: no reader here decodes them.
+            ...(isScanCheckable(id)
+              ? ["Scan check with an open-source decoder"]
+              : []),
             "PNG, JPG, WebP, AVIF, BMP, SVG, PDF and EPS downloads",
             "Barcode image API with no key",
           ],
@@ -421,7 +425,9 @@ export default async function BarcodeFormatPage({ params }: PageProps) {
                       {t("sizeBarHeight")}
                     </th>
                     <td className="px-3 py-2 text-muted-foreground">
-                      {t("sizeModuleValue", { size: style.barHeightMm })}
+                      {t("sizeModuleValue", {
+                        size: format.fixedBarHeightMm ?? style.barHeightMm,
+                      })}
                     </td>
                   </tr>
                 )}

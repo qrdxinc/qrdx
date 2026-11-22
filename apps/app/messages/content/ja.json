@@ -38236,5 +38236,563 @@
     "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417、Aztecに対応しています。値（チェックデジット、桁数、使用文字）を検証し、PNGに加えて、SVG、PNG、PDFなどの公開画像URLを返します。",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "15c6793537de": {
+    "source": "A GTIN in a short barcode for small retail items",
+    "text": "小さな商品向けの短いバーコードに収めたGTIN",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.summary"
+  },
+  "b5cc716296fb": {
+    "source": "A GTIN as (01) and its 14 digits, e.g. (01)09501101530003. Leave off the last digit and the check digit is added.",
+    "text": "GTINを(01)と14桁の数字で入力します。例:(01)09501101530003。最後の1桁を省くとチェックディジットが追加されます。",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar.inputHint"
+  },
+  "e9f24dfc8256": {
+    "source": "GTIN plus weight, price or dates for fresh food",
+    "text": "生鮮食品向けに、GTINに重量、価格、日付を加えたバーコード",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.summary"
+  },
+  "9ba22a61f006": {
+    "source": "Application Identifiers in brackets, each followed by its value, e.g. (01)09501101530003(17)261231(10)AB-123.",
+    "text": "アプリケーション識別子を括弧で囲み、その後ろに値を続けて入力します。例:(01)09501101530003(17)261231(10)AB-123。",
+    "status": "machine",
+    "context": "barcodes.formats.gs1-databar-expanded.inputHint"
+  },
+  "05b46ef73281": {
+    "source": "The 4-state barcode USPS sorts and tracks US mail by",
+    "text": "USPSが米国の郵便物の仕分けと追跡に使う4ステートバーコード",
+    "status": "machine",
+    "context": "barcodes.formats.intelligent-mail.summary"
+  },
+  "17d83963b8ce": {
+    "source": "20 digits of tracking code: barcode ID (2), service type (3), mailer ID and serial number (15). Then the routing ZIP Code, if any: 5, 9 or 11 digits. Spaces and hyphens are ignored.",
+    "text": "追跡コードの20桁:バーコードID(2桁)、サービスタイプ(3桁)、メーラーIDとシリアル番号(15桁)。続けて、配達先のZIPコードがある場合は5桁、9桁、または11桁で入力します。スペースとハイフンは無視されます。",
+    "status": "machine",
+    "context": "barcodes.formats.intelligent-mail.inputHint"
+  },
+  "dea590368a35": {
+    "source": "Dots for high-speed inkjet: cigarette packs and medicines",
+    "text": "高速インクジェット向けのドットコード:たばこの箱や医薬品に",
+    "status": "machine",
+    "context": "barcodes.formats.dotcode.summary"
+  },
+  "2368b06cffad": {
+    "source": "Any text, up to about 390 letters or 780 digits; less with accents or other scripts.",
+    "text": "任意のテキストを入力できます。最大で英字約390文字または数字780桁です。アクセント付き文字や他の文字体系では、これより少なくなります。",
+    "status": "machine",
+    "context": "barcodes.formats.dotcode.inputHint"
+  },
+  "baa23c86f1fc": {
+    "source": "A retail GTIN in a smaller barcode than an EAN-13 or UPC-A, for items too small for those. Not every checkout scanner has it switched on, so check with the retailer before printing.",
+    "text": "EAN-13やUPC-Aでは大きすぎる小さな商品向けに、より小さなバーコードで小売用のGTINを表せます。すべてのレジのスキャナーで読み取りが有効になっているわけではないため、印刷前に小売店へ確認してください。",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar"
+  },
+  "5092dbf6ba77": {
+    "source": "A GTIN plus more data, such as a weight, a price or an expiry date, marked by the same Application Identifiers as GS1-128. Used on fresh food sold by weight, so the checkout reads the price or weight from the barcode.",
+    "text": "GTINに、重量、価格、賞味期限などのデータを加えたバーコードです。GS1-128と同じアプリケーション識別子で区別します。重量で販売する生鮮食品に使われ、レジがバーコードから価格や重量を読み取れます。",
+    "status": "machine",
+    "context": "barcodes.uses.gs1-databar-expanded"
+  },
+  "6b90e94726c6": {
+    "source": "US mail: the 4-state barcode USPS sorts letters and flats by and tracks them with. It holds a mailer ID from USPS, a service type, a serial number and the delivery ZIP Code. Mailers print it to get automation prices and track their mail.",
+    "text": "米国の郵便向けです。USPSが手紙やフラットサイズの郵便物の仕分けと追跡に使う4ステートバーコードで、USPSが発行するメーラーID、サービスタイプ、シリアル番号、配達先のZIPコードを格納します。差出人は自動化料金の適用と郵便物の追跡のために印刷します。",
+    "status": "machine",
+    "context": "barcodes.uses.intelligent-mail"
+  },
+  "165c46930f26": {
+    "source": "A 2D code of separate dots, made for inkjet printers marking packs at line speed: cigarette and tobacco packs for EU traceability, medicines and drinks. Its dots needn't touch, so rough, fast printing still reads.",
+    "text": "独立したドットで構成される2Dコードで、生産ラインの速度で包装に印字するインクジェットプリンター向けに作られています。EUのトレーサビリティ対応のたばこ製品の箱、医薬品、飲料などに使われます。ドット同士が接していなくてもよいため、粗く高速な印刷でも読み取れます。",
+    "status": "machine",
+    "context": "barcodes.uses.dotcode"
+  },
+  "db0826917a45": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14, GS1-128 and GS1 DataBar carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. Books, serials and printed music use an ISBN, ISSN or ISMN from their national agency instead. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "店舗で販売する商品なら、必要です。EAN、UPC、ITF-14、GS1-128、GS1 DataBarはGTINを扱い、GTINはGS1(またはお住まいの国のGS1機関)から事業者に割り当てられます。小売店のシステムは、適当に作った番号を認識しません。書籍、逐次刊行物、楽譜には、各国の機関が発行するISBN、ISSN、ISMNを使います。このジェネレーターは有効な番号であれば生成できますが、番号の発行や登録は行いません。自社の在庫、資産、チケットの管理には、Code 128、Code 39、Code 93を登録なしで使えます。",
+    "status": "machine",
+    "context": "barcodes.faqs.1.answer"
+  },
+  "5d57866e493c": {
+    "source": "Yes, for EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, ISBN, ISSN, ISMN, the GTIN of GS1 DataBar and the GTIN and SSCC fields of GS1-128 and GS1 DataBar Expanded: leave the last digit off and it's worked out. Enter the full number and the check digit is verified; a wrong one shows an error instead of a barcode.",
+    "text": "はい。EAN-13、EAN-8、UPC-A、UPC-E、ITF-14、ISBN、ISSN、ISMN、GS1 DataBarのGTIN、GS1-128とGS1 DataBar ExpandedのGTINおよびSSCCフィールドが対象です。最後の1桁を省くと自動で計算されます。番号をすべて入力した場合はチェックディジットが検証され、誤りがあるとバーコードではなくエラーが表示されます。",
+    "status": "machine",
+    "context": "barcodes.faqs.2.answer"
+  },
+  "384846f3f60d": {
+    "source": "As you edit, the generator decodes the PNG it would download with ZXing, an open-source barcode reader, and tells you whether it reads back the value you entered. It also warns about low contrast, light bars on a dark background, red bars and a quiet zone below the minimum. ZXing doesn't read DotCode or USPS Intelligent Mail, so those two aren't checked; test them with a reader that supports them. It can't see your printer, label stock or lighting, so print a test and scan it with the scanners that will read it.",
+    "text": "編集中に、ダウンロードされるPNGをオープンソースのバーコードリーダーであるZXingでデコードし、入力した値と同じ内容が読み取れるかをお知らせします。コントラストが低い場合、暗い背景に明るいバーを使った場合、赤いバーの場合、クワイエットゾーンが最小値を下回る場合も警告します。ZXingはDotCodeとUSPS Intelligent Mailを読み取れないため、この2つは確認されません。対応するリーダーでテストしてください。お使いのプリンター、ラベル用紙、照明の状態まではわかりません。試しに印刷して、実際に読み取るスキャナーでスキャンしてください。",
+    "status": "machine",
+    "context": "barcodes.faqs.3.answer"
+  },
+  "c2d9a57f6443": {
+    "source": "Free GS1 DataBar Barcode Generator (Omnidirectional)",
+    "text": "無料のGS1 DataBarバーコードジェネレーター（Omnidirectional）",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.title"
+  },
+  "418eae1158ca": {
+    "source": "Make a GS1 DataBar Omnidirectional barcode from a GTIN, with the check digit added or checked. Scan-checked in your browser. SVG, PDF, EPS and PNG. Free.",
+    "text": "GTINからGS1 DataBar Omnidirectionalバーコードを作成できます。チェックデジットの追加や確認にも対応。ブラウザー上でスキャン確認済み。SVG、PDF、EPS、PNG形式。無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.metaDescription"
+  },
+  "4a41d40d111a": {
+    "source": "GS1 DataBar Omnidirectional holds one thing: a product's 14-digit GTIN, the number an EAN-13 or UPC-A carries. Type it after (01), check that it scans and download it.",
+    "text": "GS1 DataBar Omnidirectionalに入れられるのは、商品の14桁のGTINだけです。EAN-13やUPC-Aに入っている番号と同じものです。(01)の後に入力し、スキャンできることを確認してダウンロードしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.intro"
+  },
+  "c74d27dff93f": {
+    "source": "Retail items too small for an EAN-13 or UPC-A: its bars are as wide as an EAN-13's but much shorter. Checkout scanners read it from any angle, like an EAN-13.",
+    "text": "EAN-13やUPC-Aでは大きすぎる小さな小売商品向けです。バーの幅はEAN-13と同じですが、高さはかなり低くなります。レジのスキャナーなら、EAN-13と同様にどの角度からでも読み取れます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.0"
+  },
+  "53ad38e77560": {
+    "source": "Not every scanner has GS1 DataBar switched on. Ask the retailer that will scan it before you print, and use EAN-13 or UPC-A when in doubt.",
+    "text": "すべてのスキャナーでGS1 DataBarが有効になっているとは限りません。印刷する前に、スキャンする小売店へ確認してください。迷う場合はEAN-13かUPC-Aを使ってください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.usedFor.1"
+  },
+  "0a7f916a956b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar?",
+    "text": "GS1 DataBarにGS1の番号は必要ですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.title"
+  },
+  "aaa22f8cfea2": {
+    "source": "Yes. The GTIN it holds is built from a GS1 company prefix, like the number in an EAN-13 or UPC-A.",
+    "text": "はい。含まれるGTINは、EAN-13やUPC-Aの番号と同じく、GS1事業者コードをもとに作られます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.numbers.paragraphs.0"
+  },
+  "14553ad995d0": {
+    "source": "Write the GTIN after (01), as 14 digits: (01)09501101530003. A 13-digit EAN-13 number becomes a GTIN with a 0 in front, and a 12-digit UPC-A number with two.",
+    "text": "GTINは(01)の後に14桁で入力します。例：(01)09501101530003。13桁のEAN-13の番号は先頭に0を付けるとGTINになり、12桁のUPC-Aの番号は先頭に0を2つ付けるとGTINになります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.0"
+  },
+  "847870e5f20f": {
+    "source": "Leave off the last digit and the check digit is added; enter all 14 and it's checked. The brackets aren't encoded; they show that (01), the GTIN, follows.",
+    "text": "最後の1桁を除いて入力するとチェックデジットが追加され、14桁すべてを入力すると確認されます。かっこはエンコードされません。(01)に続くのがGTINであることを示すためのものです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.1"
+  },
+  "7c9ca8195d32": {
+    "source": "GS1 DataBar holds nothing but the GTIN. For a weight, a price, a batch or a date, use GS1 DataBar Expanded, which takes the same (AI)value input.",
+    "text": "GS1 DataBarに入れられるのはGTINだけです。重量、価格、バッチ、日付を入れたい場合は、同じ(AI)値の形式で入力できるGS1 DataBar Expandedを使ってください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.rules.2"
+  },
+  "ee3674a025e6": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 33 modules high, 11.6 mm at this module.",
+    "text": "ダウンロードされるファイルは、モジュール0.353 mm、バーの高さ15 mmで作られます。GS1では、バーの高さを33モジュール以上とするよう求めており、このモジュールでは11.6 mmです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.0"
+  },
+  "052b836a39de": {
+    "source": "The bars are 96 modules wide, 33.5 mm here: about the width of an EAN-13's bars at the same module. The printed GTIN is a little wider than the bars, so the file is wider too.",
+    "text": "バーの幅は96モジュールで、ここでは33.5 mmです。同じモジュールでのEAN-13のバーの幅とほぼ同じです。印字されるGTINはバーより少し幅が広いため、ファイルの幅もそれに合わせて広くなります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.sizing.1"
+  },
+  "395264c48174": {
+    "source": "What does a scanner return?",
+    "text": "スキャナーは何を返しますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.question"
+  },
+  "07d9e012bffd": {
+    "source": "The digits 01 and the GTIN, 16 in all, sometimes after a symbology identifier (]e0), and with no brackets. The scan check here accepts both forms.",
+    "text": "数字の01とGTINの合計16桁が、かっこなしで返されます。先頭にシンボロジー識別子（]e0）が付くこともあります。ここでのスキャン確認は、どちらの形式にも対応しています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.0.answer"
+  },
+  "76f18e2501c2": {
+    "source": "My scanner reads EAN-13 but not this. Why?",
+    "text": "スキャナーでEAN-13は読めるのに、これは読めません。なぜですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.question"
+  },
+  "6b564f4ef227": {
+    "source": "Most likely GS1 DataBar is switched off in its settings. Many scanners let you turn each symbology on or off; check the manual for GS1 DataBar, which older documents call RSS-14.",
+    "text": "スキャナーの設定でGS1 DataBarが無効になっている可能性が高いです。多くのスキャナーでは、シンボロジーごとにオンとオフを切り替えられます。マニュアルで、古い資料ではRSS-14と呼ばれているGS1 DataBarの項目を確認してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.1.answer"
+  },
+  "6a37ed0e9a98": {
+    "source": "Can it hold a weight or an expiry date?",
+    "text": "重量や賞味期限を入れられますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.question"
+  },
+  "e888aaaf74e2": {
+    "source": "No, only the GTIN. GS1 DataBar Expanded holds the GTIN with other Application Identifiers, such as (3103) for a weight or (17) for an expiry date.",
+    "text": "いいえ、入れられるのはGTINだけです。GS1 DataBar Expandedなら、GTINに加えて、重量の(3103)や賞味期限の(17)など、ほかのApplication Identifierも入れられます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar.faqs.2.answer"
+  },
+  "e17f7a55d5c6": {
+    "source": "Free GS1 DataBar Expanded Barcode Generator",
+    "text": "無料のGS1 DataBar Expandedバーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.title"
+  },
+  "14f0f00fb5e9": {
+    "source": "Make a GS1 DataBar Expanded barcode: a GTIN with weight, price, batch or expiry in one retail barcode. Check digits added. Scan-checked. SVG, PDF, PNG.",
+    "text": "GS1 DataBar Expandedバーコードを作成。重量、価格、バッチ、使用期限とGTINを1つの小売用バーコードにまとめられます。チェックデジットを自動追加し、スキャン確認も行います。SVG、PDF、PNGに対応。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.metaDescription"
+  },
+  "ac78f2470ebf": {
+    "source": "GS1 DataBar Expanded carries a GTIN and more data in one barcode a checkout scanner reads, each piece marked by an Application Identifier (AI) in brackets: (01) for the GTIN, (17) for an expiry date, (10) for a batch. Type the AIs and values; check digits are added or checked for you.",
+    "text": "GS1 DataBar Expandedは、レジのスキャナーが読み取れる1つのバーコードにGTINとその他のデータを収められます。各データは括弧付きのアプリケーション識別子(AI)で区別します。GTINは(01)、使用期限は(17)、バッチは(10)です。AIと値を入力すれば、チェックデジットは自動で追加または確認されます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.intro"
+  },
+  "f15374e67a3a": {
+    "source": "Fresh food sold by weight, such as meat, cheese and deli counters, where the weight or the price travels with the GTIN so the checkout can read it from the barcode.",
+    "text": "肉、チーズ、惣菜売り場など量り売りの生鮮食品。重量や価格がGTINとともにバーコードに含まれるため、レジで読み取れます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.0"
+  },
+  "a2c9d9d7f3f1": {
+    "source": "North American coupons use its stacked form, GS1 DataBar Expanded Stacked, which this generator doesn't draw.",
+    "text": "北米のクーポンには、積層形式のGS1 DataBar Expanded Stackedが使われます。このジェネレーターでは作成できません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.usedFor.1"
+  },
+  "fc1be266ea8b": {
+    "source": "Do I need GS1 numbers for GS1 DataBar Expanded?",
+    "text": "GS1 DataBar ExpandedにはGS1の番号が必要ですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.title"
+  },
+  "b1afd422b8bf": {
+    "source": "For the GTIN in (01), yes: it's built from a GS1 company prefix. Weights, prices, batches and dates are your own data.",
+    "text": "(01)のGTINには必要です。GTINはGS1事業者コードをもとに作られます。重量、価格、バッチ、日付はご自身のデータです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.numbers.paragraphs.0"
+  },
+  "f06c2fc00957": {
+    "source": "GTINs in (01) and (02) and SSCCs in (00) get their check digit added when you leave it off, or checked when you don't. The encoder also checks the data against GS1's rules: a batch (10) without a GTIN, for example, is refused.",
+    "text": "(01)と(02)のGTIN、(00)のSSCCは、チェックデジットを省くと自動で追加され、入力すると確認されます。エンコーダーはGS1の規則に沿ってデータも検証します。たとえば、GTINのないバッチ(10)は受け付けられません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.1"
+  },
+  "d2722491f265": {
+    "source": "It holds up to 74 digits of AIs and data, and fewer when there are letters. Put variable-length fields such as (10) batch last, so no separator is needed after them.",
+    "text": "AIとデータは最大74桁まで入れられます。文字が含まれる場合はそれより少なくなります。(10)のバッチなど可変長のフィールドは最後に置くと、後ろに区切り文字が不要になります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.rules.2"
+  },
+  "71bcd6597001": {
+    "source": "The downloads use a 0.353 mm module and 15 mm bars. GS1 asks for bars at least 34 modules high, 12 mm at this module.",
+    "text": "ダウンロードでは、モジュール幅0.353 mm、バーの高さ15 mmを使用します。GS1ではバーの高さを34モジュール以上とするよう定めており、このモジュール幅では12 mmです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.0"
+  },
+  "f7a219456cad": {
+    "source": "It's long, not tall: the example's bars are 98.8 mm long, a little more than the same data as GS1-128 (93.8 mm). More data makes it longer still.",
+    "text": "縦ではなく横に長いバーコードです。例のバーの長さは98.8 mmで、同じデータのGS1-128(93.8 mm)より少し長くなります。データが増えると、さらに長くなります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.sizing.1"
+  },
+  "5c3434d2ba5d": {
+    "source": "The brackets are only for people. Readers report the data with a symbology identifier (]e0) or none, and separate variable-length fields with an invisible GS character. The scan check here accepts all of these forms.",
+    "text": "括弧は人が読むためのものです。リーダーはシンボル識別子(]e0)付き、または識別子なしでデータを返し、可変長のフィールドは見えないGS文字で区切ります。ここでのスキャン確認は、これらすべての形式に対応しています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.0.answer"
+  },
+  "99a9136f6b20": {
+    "source": "GS1 DataBar Expanded or GS1-128?",
+    "text": "GS1 DataBar ExpandedとGS1-128の違いは?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.question"
+  },
+  "08d1a93af707": {
+    "source": "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
+    "text": "小売業者や取引先が指定するほうを使ってください。GS1 DataBar Expandedは小売向けで、生鮮食品などの商品をレジで読み取ります。GS1-128は、ケース、パレット、配送ラベルに使われる物流向けのバーコードです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.gs1-databar-expanded.faqs.1.answer"
+  },
+  "08800fa0826e": {
+    "source": "Free USPS Intelligent Mail Barcode Generator (IMb)",
+    "text": "無料のUSPS Intelligent Mailバーコードジェネレーター（IMb）",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.title"
+  },
+  "e1f3e12a5dfb": {
+    "source": "Make a USPS Intelligent Mail barcode (IMb) from its 20-digit tracking code and ZIP Code, drawn to the USPS-B-3200 sizes. SVG, PDF, EPS and PNG. Free.",
+    "text": "20桁のトラッキングコードとZIP Codeから、USPS-B-3200のサイズに沿ったUSPS Intelligent Mailバーコード（IMb）を作成できます。SVG、PDF、EPS、PNGに対応。無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.metaDescription"
+  },
+  "08927b65f433": {
+    "source": "The Intelligent Mail barcode (IMb) is the row of 65 short and tall bars on US letters and flats. It holds a 20-digit tracking code and the delivery ZIP Code, and USPS sorting machines read it to route and track each piece. Type the digits and download it, drawn to the sizes in the USPS specification, USPS-B-3200.",
+    "text": "Intelligent Mailバーコード（IMb）は、米国の封書やフラットメールに印刷される、短いバーと長いバー65本の列です。20桁のトラッキングコードと配達先のZIP Codeを保持しており、USPSの区分機がこれを読み取って郵便物ごとに配送の振り分けと追跡を行います。数字を入力してダウンロードするだけで、USPS仕様書USPS-B-3200のサイズに沿って描画されます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.intro"
+  },
+  "27a0ea79ffac": {
+    "source": "Letters, postcards and flats mailed in the US. Mailers print it in the address block to get automation prices, and with a serial number of its own on each piece, to see where their mail is in the USPS network.",
+    "text": "米国内で発送される封書、はがき、フラットメールに使います。差出人は宛名ブロックに印刷して自動化料金を受けられます。また、郵便物ごとに固有のシリアル番号を付ければ、自分の郵便物がUSPSのネットワークのどこにあるかを確認できます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.0"
+  },
+  "d3d72da9381d": {
+    "source": "Parcels use a different barcode, the Intelligent Mail package barcode (IMpb).",
+    "text": "小包には別のバーコード、Intelligent Mailパッケージバーコード（IMpb）を使います。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.1"
+  },
+  "426bfaa60a9c": {
+    "source": "The scan check on this page can't read Intelligent Mail: the reader it uses doesn't decode it, so the generator says the barcode wasn't checked. Test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+    "text": "このページのスキャンチェックではIntelligent Mailを読み取れません。使用しているリーダーがデコードに対応していないため、ジェネレーターは「チェックしていません」と表示します。郵送の前に、Intelligent Mailに対応したリーダーで印刷した郵便物をテストしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.usedFor.2"
+  },
+  "cadc93f1c51d": {
+    "source": "Where do the numbers come from?",
+    "text": "番号はどこから入手しますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.title"
+  },
+  "8d2e9549ce6f": {
+    "source": "From USPS and from you. USPS assigns the mailer ID (request one in its Business Customer Gateway), the barcode ID, which marks the presort level, and the service type ID, which names the mail class and services such as address correction. Its tables of valid IDs are on PostalPro.",
+    "text": "USPSとご自身からです。USPSが割り当てるのは、メーラーID（Business Customer Gatewayで申請します）、事前区分のレベルを示すバーコードID、そして郵便区分と住所訂正などのサービスを示すサービスタイプIDです。有効なIDの一覧表はPostalProにあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.paragraphs.0"
+  },
+  "def6e8bc633e": {
+    "source": "The serial number is yours: give each mailpiece its own, so its scans can be told apart. The routing code is the delivery ZIP Code: 5 digits, ZIP+4 (9) or ZIP+4 and the 2-digit delivery point (11), keeping leading zeros: 02768, not 2768.",
+    "text": "シリアル番号はご自身で決めます。スキャン結果を区別できるよう、郵便物ごとに固有の番号を付けてください。ルーティングコードは配達先のZIP Codeで、5桁、ZIP+4（9桁）、またはZIP+4に2桁の配達ポイントを加えた形式（11桁）です。先頭のゼロは省略しません（2768ではなく02768）。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.numbers.paragraphs.1"
+  },
+  "48445032cd31": {
+    "source": "Type the 20-digit tracking code, then the routing code: 20, 25, 29 or 31 digits in all. Spaces and hyphens are ignored, so you can write it the way it's printed.",
+    "text": "20桁のトラッキングコードに続けてルーティングコードを入力します。合計は20、25、29、31桁のいずれかです。スペースとハイフンは無視されるため、印刷されている形のまま入力できます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.0"
+  },
+  "9249299dc3fa": {
+    "source": "The tracking code is the barcode ID (2 digits, the second 0 to 4), the service type ID (3), then the mailer ID and serial number (15). A mailer ID starting with 9 has 9 digits and leaves 6 for the serial; any other has 6 and leaves 9. The line under the field shows how your digits were split.",
+    "text": "トラッキングコードは、バーコードID（2桁、2桁目は0〜4）、サービスタイプID（3桁）、続いてメーラーIDとシリアル番号（15桁）で構成されます。9で始まるメーラーIDは9桁で、シリアル番号は6桁になります。それ以外は6桁で、シリアル番号は9桁になります。入力欄の下の行に、入力した数字がどのように分割されたかが表示されます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.1"
+  },
+  "c20c0431f8d3": {
+    "source": "There's no check digit to type: the barcode carries its own 11-bit error check, worked out from the digits. Tests here draw the four worked examples in USPS-B-3200 and compare all 65 bars of each.",
+    "text": "チェックディジットを入力する必要はありません。バーコード自体が、数字から算出される11ビットのエラーチェックを持っています。ここでのテストでは、USPS-B-3200にある4つの計算例を描画し、それぞれの65本のバーすべてを照合しています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.rules.2"
+  },
+  "43856aa2ddd3": {
+    "source": "The bars follow USPS-B-3200: 0.02 in (0.51 mm) wide, about 22 to the inch, and the full bars 0.156 in (3.96 mm) tall, inside the 0.125 to 0.165 in USPS allows. The bar height has no slider for this reason. Print the SVG, PDF or EPS at 100%.",
+    "text": "バーはUSPS-B-3200に従い、幅0.02 in（0.51 mm）、1インチあたり約22本で、フルバーの高さは0.156 in（3.96 mm）です。これはUSPSが認める0.125〜0.165 inの範囲内です。このため、バーの高さを調整するスライダーはありません。SVG、PDF、EPSは100%で印刷してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.0"
+  },
+  "683d4d63e73f": {
+    "source": "USPS asks for 0.125 in (3.2 mm) clear on each side and 0.028 in above and below. The quiet zone starts at 7 bar widths (0.14 in) each side, and the image keeps 0.042 in above and below.",
+    "text": "USPSは、左右にそれぞれ0.125 in（3.2 mm）、上下に0.028 inの余白を求めています。クワイエットゾーンは左右とも、バー幅7本分（0.14 in）から始まり、画像は上下に0.042 inの余白を確保します。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.1"
+  },
+  "41b44b5537ef": {
+    "source": "Image size starts at 2×: at 1× the bars round to whole pixels that are wider than USPS allows.",
+    "text": "画像サイズは2×から選べます。1×ではバーが整数ピクセルに丸められ、USPSが認める幅を超えてしまうためです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.sizing.2"
+  },
+  "1afb70ae817f": {
+    "source": "Can this page check that it scans?",
+    "text": "このページでスキャンできるか確認できますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.0.question"
+  },
+  "496ff47f7448": {
+    "source": "No. The scan check uses ZXing, which doesn't read Intelligent Mail, so it says the barcode wasn't checked instead of guessing. The encoding is tested against the specification's worked examples, but test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+    "text": "いいえ。スキャンチェックにはZXingを使っていますが、ZXingはIntelligent Mailを読み取れないため、推測はせず「チェックしていません」と表示します。エンコードは仕様書の計算例に対してテスト済みですが、郵送の前に、Intelligent Mailに対応したリーダーで印刷した郵便物をテストしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.0.answer"
+  },
+  "4ded19de7497": {
+    "source": "Should I print the digits?",
+    "text": "数字も印刷すべきですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.1.question"
+  },
+  "4e1235e563b0": {
+    "source": "Some USPS services require the digits printed with the barcode; most mail doesn't. When they're printed, USPS-B-3200 wants each field separated by a space, in a 10- to 12-point sans serif starting at the first bar, 0.028 to 0.5 in from the bars. The generator prints them that way, 10-point, under the bars; turn them off with the switch under the colors.",
+    "text": "USPSのサービスによっては、バーコードと一緒に数字を印刷する必要があります。ほとんどの郵便物では不要です。印刷する場合、USPS-B-3200では、各フィールドをスペースで区切り、10〜12ポイントのサンセリフ体で、最初のバーの位置から始め、バーから0.028〜0.5 in離すよう定められています。ジェネレーターはその形式で、10ポイントの数字をバーの下に印刷します。色の設定の下にあるスイッチでオフにできます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.1.answer"
+  },
+  "a88f6abebd5a": {
+    "source": "Where does it go on the envelope?",
+    "text": "封筒のどこに配置しますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.2.question"
+  },
+  "41dfe627f5f3": {
+    "source": "Usually in the address block, above the name or below the city line. USPS Publication 25 and the Domestic Mail Manual set the exact areas, and the clear space each side.",
+    "text": "通常は宛名ブロック内の、名前の上か市区町村の行の下に配置します。正確な領域と左右の余白は、USPS Publication 25とDomestic Mail Manualで定められています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.2.answer"
+  },
+  "fed4deb9261e": {
+    "source": "Does it replace POSTNET?",
+    "text": "POSTNETに代わるものですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.3.question"
+  },
+  "1a22b24585c1": {
+    "source": "Yes. Intelligent Mail carries the ZIP Code the old POSTNET barcode did, plus the tracking code, and USPS no longer gives automation prices for POSTNET.",
+    "text": "はい。Intelligent Mailは、従来のPOSTNETバーコードが持っていたZIP Codeに加えて、トラッキングコードも保持します。また、USPSはPOSTNETに対する自動化料金をすでに適用していません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.intelligent-mail.faqs.3.answer"
+  },
+  "809a20da4279": {
+    "source": "Free DotCode Generator",
+    "text": "無料のDotCodeジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.title"
+  },
+  "b4832c2f8588": {
+    "source": "Make a DotCode, the dot-based 2D code printed by high-speed inkjet on tobacco packs and medicines. Up to about 390 letters or 780 digits. SVG, PDF, PNG.",
+    "text": "たばこのパッケージや医薬品に高速インクジェットで印字される、ドットで構成された2Dコード「DotCode」を作成できます。最大約390文字または780桁に対応。SVG、PDF、PNGで保存できます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.metaDescription"
+  },
+  "a0787e9911ce": {
+    "source": "DotCode is a 2D code made of separate dots instead of squares, designed for the inkjet and laser printers that mark products on fast production lines. Type any text, up to about 390 letters or 780 digits here, and download it as a vector or an image.",
+    "text": "DotCodeは、正方形ではなく独立したドットで構成される2Dコードで、高速の生産ラインで製品に印字するインクジェットプリンターやレーザープリンター向けに設計されています。ここでは最大約390文字または780桁までの任意のテキストを入力して、ベクター形式または画像でダウンロードできます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.intro"
+  },
+  "77c3d396cc26": {
+    "source": "Cigarette and tobacco packs sold in the EU: the traceability system of the Tobacco Products Directive accepts DotCode, as well as Data Matrix and QR codes, for the unique identifier on each pack.",
+    "text": "EUで販売される紙巻きたばこやたばこ製品のパッケージ:たばこ製品指令のトレーサビリティシステムでは、各パッケージの固有識別子として、Data MatrixやQRコードのほか、DotCodeも使用できます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.0"
+  },
+  "6f7a3cf5e9a0": {
+    "source": "Medicines, drinks and other goods coded on the line. The dots don't have to touch, so a fast inkjet printer can mark each item as it passes, on cartons, cans or labels.",
+    "text": "ライン上でコードを印字する医薬品、飲料、その他の商品。ドット同士が接している必要がないため、高速インクジェットプリンターで、カートン、缶、ラベルなどに、通過する商品へ1つずつ印字できます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.1"
+  },
+  "b487e6726e21": {
+    "source": "Readers need a camera-based scanner with DotCode switched on; many phone apps and older scanners don't read it. The scan check on this page can't read it either, so it says the code wasn't checked: test a print with a reader that supports DotCode.",
+    "text": "読み取りには、DotCodeを有効にしたカメラ式のスキャナーが必要です。多くのスマートフォンアプリや従来のスキャナーでは読み取れません。このページのスキャンチェックでも読み取れないため、コードは未確認と表示されます。DotCodeに対応したリーダーで印刷物をテストしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.usedFor.2"
+  },
+  "d10de8916710": {
+    "source": "Plain DotCode or GS1 DotCode?",
+    "text": "通常のDotCodeとGS1 DotCodeの違い",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.title"
+  },
+  "e14dc8e2518c": {
+    "source": "This page makes plain DotCode: it holds whatever text you type, with no registration.",
+    "text": "このページでは通常のDotCodeを作成します。入力したテキストをそのまま格納でき、登録は不要です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.paragraphs.0"
+  },
+  "bf0eb652072c": {
+    "source": "GS1 DotCode, which carries GS1 Application Identifiers after a special first character, isn't offered here. For GS1 data in a barcode from this generator, use GS1-128.",
+    "text": "特別な先頭文字の後にGS1 Application Identifierを含むGS1 DotCodeは、ここでは作成できません。このジェネレーターでGS1データをバーコードにするには、GS1-128を使用してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.numbers.paragraphs.1"
+  },
+  "8bf6cbe5b87d": {
+    "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Accents and other scripts are stored as UTF-8 bytes, which take more room, and some readers show them wrongly.",
+    "text": "任意のテキスト:文字、数字、記号、改行、アクセント付き文字、他の言語の文字が使えます。アクセント付き文字や他の言語の文字はUTF-8のバイトとして格納されるため、より多くの容量を使い、読み取るリーダーによっては正しく表示されないことがあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.0"
+  },
+  "931ac20be28a": {
+    "source": "A DotCode here holds up to about 390 letters or 780 digits. Larger ones were tested with an outside DotCode reader, which didn't read them, so the generator stops there.",
+    "text": "ここで作成できるDotCodeは、最大約390文字または780桁までです。それより大きいものは外部のDotCodeリーダーでテストしたところ読み取れなかったため、ジェネレーターではここで上限としています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.1"
+  },
+  "15862cdb1e4f": {
+    "source": "Text that starts with two digits gets a marker in front saying it isn't GS1 data, as the DotCode specification asks; some readers show that marker as an invisible character before the text.",
+    "text": "先頭が2桁の数字で始まるテキストには、DotCodeの仕様に従い、GS1データではないことを示すマーカーが前に付きます。リーダーによっては、このマーカーがテキストの前に見えない文字として表示されることがあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.2"
+  },
+  "44135469d48f": {
+    "source": "The code grows as you add text, keeping a wide rectangle. Dots sit on every other square of a checkerboard grid, so no two dots touch.",
+    "text": "テキストを追加するとコードは大きくなり、横長の長方形を保ちます。ドットは市松模様のグリッドの1マスおきに配置されるため、ドット同士が接することはありません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.rules.3"
+  },
+  "f6ea4a41ebfa": {
+    "source": "The vector downloads use a 0.71 mm module: each dot is that wide, on a grid of that pitch. Scale it to the dot size of the printer that will mark it.",
+    "text": "ベクターのダウンロードでは0.71 mmのモジュールを使用します。各ドットはその幅で、同じピッチのグリッド上に並びます。印字するプリンターのドットサイズに合わせて拡大縮小してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.0"
+  },
+  "391f0966e32a": {
+    "source": "DotCode needs 3 modules of blank space all round, which the generator starts with.",
+    "text": "DotCodeには、周囲すべてに3モジュール分の余白が必要です。ジェネレーターでは、最初からこの余白が設定されています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.1"
+  },
+  "b5f1309ddb3c": {
+    "source": "Image size starts at 2×: at 1× each dot is 2 pixels across, which the outside reader it was tested with didn't read.",
+    "text": "画像サイズは2×から始まります。1×では各ドットの幅が2ピクセルになり、テストに使用した外部リーダーでは読み取れませんでした。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.2"
+  },
+  "b06cb65dac76": {
+    "source": "Test with the reader that will read it, at the size and on the material you'll print.",
+    "text": "実際に読み取りに使うリーダーで、印刷するサイズと素材でテストしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.sizing.3"
+  },
+  "485ea440b904": {
+    "source": "No. The scan check uses ZXing, which doesn't read DotCode, so it says the code wasn't checked instead of guessing. Test a print with a reader that supports DotCode.",
+    "text": "いいえ。スキャンチェックにはZXingを使用しており、DotCodeは読み取れないため、推測せずにコードは未確認と表示します。DotCodeに対応したリーダーで印刷物をテストしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.0.answer"
+  },
+  "a134c4d1ed2a": {
+    "source": "DotCode or Data Matrix?",
+    "text": "DotCodeとData Matrixの違いは?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.1.question"
+  },
+  "28f500feaa97": {
+    "source": "Use the one your printer and the readers on your line support. Data Matrix is read by more scanners; DotCode suits fast inkjet printers, whose round dots don't have to join up into squares.",
+    "text": "お使いのプリンターと、ラインのリーダーが対応している方を使ってください。Data Matrixはより多くのスキャナーで読み取れます。DotCodeは高速インクジェットプリンターに向いており、丸いドットを正方形につなげる必要がありません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.1.answer"
+  },
+  "2a96012f1a58": {
+    "source": "Can a phone read DotCode?",
+    "text": "スマートフォンでDotCodeを読み取れますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.2.question"
+  },
+  "24b4e41f8a31": {
+    "source": "Some barcode scanner apps can, but most phone camera apps can't. For codes people scan with a phone, use a QR code.",
+    "text": "一部のバーコードスキャナーアプリでは読み取れますが、ほとんどのスマートフォンのカメラアプリでは読み取れません。スマートフォンでスキャンしてもらうコードには、QRコードを使用してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.dotcode.faqs.2.answer"
+  },
+  "f4792c25be3c": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、USPS Intelligent Mail、Data Matrix、PDF417、Aztec、DotCodeに対応しています。値（チェックディジット、桁数、使用文字）を検証し、PNGと、公開されているSVG、PNG、PDFなどの画像URLを返します。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

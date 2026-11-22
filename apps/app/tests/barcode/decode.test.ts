@@ -5,6 +5,14 @@
 // compiled to WebAssembly), loaded here from the local package instead of
 // the CDN. The coupon block's own encoder (lib/landing/blocks/coupon-barcode.tsx)
 // is decoded the same way.
+//
+// DotCode and USPS Intelligent Mail are skipped on purpose: neither this
+// reader nor zbar decodes them, so the catalogue gives them no reader names
+// and the generator's scan check says it can't check them. The last block
+// here pins that: the reader finds nothing in them, and the check comes back
+// "unchecked", never "fail". Their bars are checked another way: Intelligent
+// Mail against USPS-B-3200's worked examples (intelligent-mail.test.ts),
+// DotCode's dots against its grid (dotcode.test.ts).
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import {
@@ -22,10 +30,11 @@ import {
   type BarcodeFormatId,
   decodedMatches,
   getBarcodeFormat,
+  isScanCheckable,
   validateBarcodeInput,
 } from "@/lib/barcode/formats";
 import { type BarcodeStyle, renderBarcodeSVG } from "@/lib/barcode/render";
-import { SCAN_CHECK_FORMATS } from "@/lib/barcode/scan-check";
+import { checkBarcodeScan, SCAN_CHECK_FORMATS } from "@/lib/barcode/scan-check";
 import { Barcode as CouponBarcode } from "@/lib/landing/blocks/coupon-barcode";
 
 // The ponyfill builds a DOMRectReadOnly for each result's bounding box; Node
@@ -113,7 +122,13 @@ const EXTRA_VALUES: Partial<Record<BarcodeFormatId, string[]>> = {
   aztec: ["héllo ✓", "https://qrdx.dev/barcode-generator?x=1"],
 };
 
-const cases = BARCODE_FORMATS.flatMap((format) =>
+/** Every format a reader here decodes: all but DotCode and Intelligent Mail. */
+const CHECKED = BARCODE_FORMATS.filter((format) => isScanCheckable(format.id));
+const UNCHECKED = BARCODE_FORMATS.filter(
+  (format) => !isScanCheckable(format.id),
+);
+
+const cases = CHECKED.flatMap((format) =>
   [format.example, ...(EXTRA_VALUES[format.id] ?? [])].map(
     (raw) => [format.label, raw, format.id] as const,
   ),
@@ -137,7 +152,7 @@ describe("generated barcodes decode with the scanner's reader", () => {
     ).toBeDefined();
   });
 
-  it.each(BARCODE_FORMATS.map((format) => [format.label, format.id] as const))(
+  it.each(CHECKED.map((format) => [format.label, format.id] as const))(
     "%s with the options changed: no text, minimum quiet zone, dark blue on cream, small PNG",
     async (_, id) => {
       const format = getBarcodeFormat(id);
@@ -237,7 +252,7 @@ describe("/scan reads every format the generator draws", () => {
     });
   });
 
-  it.each(BARCODE_FORMATS.map((format) => [format.label, format.id] as const))(
+  it.each(CHECKED.map((format) => [format.label, format.id] as const))(
     "%s",
     async (_, id) => {
       const format = getBarcodeFormat(id);
@@ -273,4 +288,41 @@ describe("SCAN_CHECK_FORMATS", () => {
       }
     }
   });
+});
+
+describe("formats no reader here decodes", () => {
+  // The exception above, pinned: if a reader update starts decoding one of
+  // these, the first test fails and the format can get its scan check.
+  const all = [...SCAN_CHECK_FORMATS, ...SCAN_FORMATS] as DetectorFormat[];
+  let everything: BarcodeDetector;
+  beforeAll(() => {
+    everything = new BarcodeDetector({ formats: [...new Set(all)] });
+  });
+
+  it("are exactly DotCode and USPS Intelligent Mail", () => {
+    expect(UNCHECKED.map((format) => format.label)).toEqual([
+      "USPS Intelligent Mail",
+      "DotCode",
+    ]);
+  });
+
+  it.each(UNCHECKED.map((format) => [format.label, format.id] as const))(
+    "%s: the reader finds nothing, and the scan check says unchecked",
+    async (_, id) => {
+      const checked = validateBarcodeInput(id, getBarcodeFormat(id).example);
+      if (!checked.ok) throw new Error(checked.error);
+      const { svg } = renderBarcodeSVG(id, checked.value, BASE);
+      const png = await sharp(Buffer.from(svg), { density: 72 })
+        .flatten({ background: "#ffffff" })
+        .png()
+        .toBuffer();
+      const image = new Blob([new Uint8Array(png)], { type: "image/png" });
+      expect(await everything.detect(image)).toEqual([]);
+      // Not "fail": the generator shows "not scan-checked" and still offers
+      // every download and Save.
+      expect(await checkBarcodeScan(image, id, checked.value)).toEqual({
+        status: "unchecked",
+      });
+    },
+  );
 });

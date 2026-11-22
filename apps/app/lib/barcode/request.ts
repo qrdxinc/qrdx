@@ -47,6 +47,12 @@ const FORMAT_ALIASES = new Map<string, BarcodeFormatId>([
   ["rss14", "gs1-databar"],
   ["databarexpanded", "gs1-databar-expanded"],
   ["rssexpanded", "gs1-databar-expanded"],
+  ["imb", "intelligent-mail"],
+  ["uspsimb", "intelligent-mail"],
+  ["intelligentmailbarcode", "intelligent-mail"],
+  ["onecode", "intelligent-mail"],
+  ["usps4cb", "intelligent-mail"],
+  ["usps4state", "intelligent-mail"],
   ["itf", "itf14"],
   ["pdf", "pdf417"],
   ["isbn13", "isbn"],
@@ -71,7 +77,7 @@ const dataField = z
   .min(1, "Required: the number or text to encode")
   .max(BARCODE_DATA_MAX, `Must be at most ${BARCODE_DATA_MAX} characters`)
   .describe(
-    "The number or text to encode. Retail numbers (EAN, UPC, ITF-14, GS1 GTINs and SSCCs, ISBN, ISSN, ISMN) can leave the check digit off and it's added; a wrong one is an error. ISBN, ISSN and ISMN take a 2- or 5-digit add-on after a space (978-1-873671-00-9 52250); an ISSN takes its 2-digit sequence variant before the add-on (0317-8471 00 05).",
+    "The number or text to encode. Retail numbers (EAN, UPC, ITF-14, GS1 GTINs and SSCCs, ISBN, ISSN, ISMN) can leave the check digit off and it's added; a wrong one is an error. ISBN, ISSN and ISMN take a 2- or 5-digit add-on after a space (978-1-873671-00-9 52250); an ISSN takes its 2-digit sequence variant before the add-on (0317-8471 00 05). Intelligent Mail takes the 20-digit tracking code and a 0-, 5-, 9- or 11-digit routing ZIP Code, with or without spaces and hyphens.",
   );
 
 const typeField = z
@@ -103,14 +109,16 @@ export const barcodeImageQuerySchema = z.object({
     .min(BARCODE_LIMITS.scale.min)
     .max(BARCODE_LIMITS.scale.max)
     .optional()
-    .describe("Pixels per module in raster images (1-10, default 4)"),
+    .describe(
+      "Pixels per module in raster images (1-10, default 4; 2-10 for Intelligent Mail and DotCode)",
+    ),
   height: z.coerce
     .number()
     .min(BARCODE_LIMITS.barHeightMm.min)
     .max(BARCODE_LIMITS.barHeightMm.max)
     .optional()
     .describe(
-      "Bar height of linear barcodes in millimetres at the vector size (5-60; default depends on the format, 23 for EAN-13)",
+      "Bar height of linear barcodes in millimetres at the vector size (5-60; default depends on the format, 23 for EAN-13). Intelligent Mail is always 3.96 mm, the height USPS sets.",
     ),
   quietZone: z.coerce
     .number()
@@ -145,7 +153,7 @@ export const barcodeImageBodySchema = z.object({
     .max(BARCODE_LIMITS.barHeightMm.max)
     .optional()
     .describe(
-      "Bar height of linear barcodes in millimetres at the vector size (5-60; default depends on the format)",
+      "Bar height of linear barcodes in millimetres at the vector size (5-60; default depends on the format). Intelligent Mail is always 3.96 mm, the height USPS sets.",
     ),
   quietZone: barcodeStyleInputSchema.shape.quietZone,
   text: z

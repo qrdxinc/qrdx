@@ -30,6 +30,11 @@ describe("parseBarcodeFormat", () => {
     expect(parseBarcodeFormat("RSS-14")).toBe("gs1-databar");
     expect(parseBarcodeFormat("databar_expanded")).toBe("gs1-databar-expanded");
     expect(parseBarcodeFormat("RSS Expanded")).toBe("gs1-databar-expanded");
+    expect(parseBarcodeFormat("IMb")).toBe("intelligent-mail");
+    expect(parseBarcodeFormat("OneCode")).toBe("intelligent-mail");
+    expect(parseBarcodeFormat("USPS-4CB")).toBe("intelligent-mail");
+    expect(parseBarcodeFormat("Intelligent Mail")).toBe("intelligent-mail");
+    expect(parseBarcodeFormat("DotCode")).toBe("dotcode");
     expect(parseBarcodeFormat("azteccode")).toBe("aztec");
     expect(parseBarcodeFormat("Codabar")).toBe("codabar");
     expect(parseBarcodeFormat("ISBN-13")).toBe("isbn");

@@ -31,6 +31,8 @@ export interface DrawOptions {
   addongap?: number;
   /** Text printed under the bars when the encoder prints none of its own */
   alttext?: string;
+  /** Points between the bars and the text under them (negative: lower) */
+  textyoffset?: number;
 }
 
 /** One bwip-js build: its encoder per format and its SVG drawing. */
@@ -59,14 +61,18 @@ export const BCID: Record<BarcodeFormatId, string> = {
   "gs1-128": "gs1-128",
   "gs1-databar": "databaromni",
   "gs1-databar-expanded": "databarexpanded",
+  "intelligent-mail": "onecode",
   datamatrix: "datamatrix",
   pdf417: "pdf417",
   aztec: "azteccode",
+  dotcode: "dotcode",
 };
 
 /**
  * bwip-js drawing units per module: linear bars and PDF417 columns are one
- * unit wide, Data Matrix and Aztec cells two. Padding is given in units.
+ * unit wide, Data Matrix and Aztec cells two, DotCode's dot pitch two.
+ * Intelligent Mail's bars are 1.44 units (0.02 in) wide on a 3.312-unit
+ * pitch; its module is the bar's width. Padding is given in units.
  */
 export const MODULE_UNITS: Record<BarcodeFormatId, number> = {
   ean13: 1,
@@ -84,10 +90,24 @@ export const MODULE_UNITS: Record<BarcodeFormatId, number> = {
   "gs1-128": 1,
   "gs1-databar": 1,
   "gs1-databar-expanded": 1,
+  "intelligent-mail": 1.44,
   datamatrix: 2,
   pdf417: 1,
   aztec: 2,
+  dotcode: 2,
 };
+
+/**
+ * The largest DotCode drawn, in dot positions (columns × rows): 126 × 85 at
+ * bwip-js's default shape. An outside DotCode reader decoded every symbol
+ * up to this size and none from the next size bwip-js draws (128 × 85),
+ * for letters, digits, URLs, accents, other scripts and control characters
+ * alike, in any shape: about 390 letters or 780 digits.
+ */
+export const DOTCODE_MAX_DOTS = 10_710;
+
+const DOTCODE_FULL =
+  "Too much data for one DotCode here: it holds up to about 390 letters or 780 digits, and less with accents or other scripts. Shorten the text.";
 
 /** One drawing unit is one PostScript point: 25.4 / 72 mm. */
 export const MM_PER_UNIT = 25.4 / 72;
@@ -118,7 +138,8 @@ export function drawOptions(
   value: string,
   style: BarcodeStyle,
 ): DrawOptions {
-  const linear = getBarcodeFormat(id).kind === "linear";
+  const format = getBarcodeFormat(id);
+  const linear = format.kind === "linear";
   const padding = Math.max(0, style.quietZone) * MODULE_UNITS[id];
   const color = hex(style.foreground);
   const options: DrawOptions = {
@@ -136,7 +157,7 @@ export function drawOptions(
     rotate: ROTATE[style.rotation ?? 0] ?? "N",
   };
   if (linear) {
-    options.height = style.barHeightMm;
+    options.height = format.fixedBarHeightMm ?? style.barHeightMm;
     options.includetext = style.showText;
     if (
       id === "code128" ||
@@ -153,6 +174,13 @@ export function drawOptions(
     // values the way GS1-128 prints them.
     if (id === "gs1-databar-expanded" && style.showText) {
       options.alttext = value;
+    }
+    if (id === "intelligent-mail") {
+      // USPS-B-3200 wants 0.028 in (2.02 points) clear above and below the
+      // bars, and any human-readable text at least as far from them;
+      // bwip-js prints the digits 1.8 points below.
+      options.paddingheight = Math.min(padding, 3);
+      options.textyoffset = -2;
     }
     // Code 93's two check characters are part of the symbology, and readers
     // reject a symbol without them; bwip-js leaves them out unless asked.
@@ -190,6 +218,10 @@ export function drawBarcode<Drawing>(
         "Too much data for one GS1 DataBar Expanded: it holds up to 74 digits, and fewer when there are letters. Remove an AI or shorten a value.",
       );
     }
+    // Past 2,000 bytes bwip-js refuses DotCode itself; say what fits here.
+    if (id === "dotcode" && /dotcodeinputTooLong/.test(String(error))) {
+      throw new Error(DOTCODE_FULL);
+    }
     throw new Error(encoderMessage(format.label, error));
   }
 
@@ -197,6 +229,12 @@ export function drawBarcode<Drawing>(
   if (!viewBox) throw new Error(`Couldn't draw this ${format.label}.`);
   const width = Number(viewBox[1]);
   const height = Number(viewBox[2]);
+  if (
+    id === "dotcode" &&
+    dotcodeDots(width, height, style) > DOTCODE_MAX_DOTS
+  ) {
+    throw new Error(DOTCODE_FULL);
+  }
   return {
     svg: svg.replace(
       "<svg ",
@@ -207,6 +245,22 @@ export function drawBarcode<Drawing>(
     widthUnits: width / style.scale,
     heightUnits: height / style.scale,
   };
+}
+
+/**
+ * A DotCode drawing's dot positions, columns × rows, from its size in
+ * pixels: dots are 2 units apart and 2 across, inside the quiet zone on
+ * every side, and bwip-js adds one pixel to each side's length.
+ */
+export function dotcodeDots(
+  width: number,
+  height: number,
+  style: BarcodeStyle,
+): number {
+  const margins = 2 * Math.max(0, style.quietZone) * MODULE_UNITS.dotcode;
+  const dots = (pixels: number) =>
+    Math.round(((pixels - 1) / style.scale - margins) / 2);
+  return dots(width) * dots(height);
 }
 
 /** bwip-js errors read "bwipp.ean13badLength#6878: EAN-13 must be …". */

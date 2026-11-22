@@ -107,8 +107,8 @@ In JSON, `text` is a boolean and `scale`, `height`, `quietZone` and `rotate` are
 | `format` | required | The barcode type; see [Formats](#formats). Case and dashes don't matter: `EAN-13` works too |
 | `data` | required | The number or text to encode, up to 1,000 characters (less for most linear formats) |
 | `type` | `svg` | `svg`, `png`, `jpg`, `webp`, `avif`, `bmp`, `pdf` or `eps` |
-| `scale` | `4` | Pixels per module in PNG, JPG, WebP, AVIF and BMP, `1` to `10` |
-| `height` | depends on the format | Bar height of linear barcodes in millimeters at the vector size, `5` to `60` (23 for EAN-13) |
+| `scale` | `4` | Pixels per module in PNG, JPG, WebP, AVIF and BMP, `1` to `10` (`2` to `10` for USPS Intelligent Mail and DotCode) |
+| `height` | depends on the format | Bar height of linear barcodes in millimeters at the vector size, `5` to `60` (23 for EAN-13). USPS Intelligent Mail is always 3.96 mm, the height USPS sets |
 | `quietZone` | the format's minimum | Blank margin in modules: each side of linear barcodes (`0` to `20`), all round 2D codes (`0` to `10`) |
 | `text` | `true` | Print the digits or text under linear barcodes |
 | `fg` | `000000` | Bars and text, as hex |
@@ -132,6 +132,7 @@ Write colors without the `#`, or encode it as `%23`.
 | `gs1-128` | GS1-128 | Application Identifiers in brackets with their values; GTIN and SSCC check digits added or checked; up to 48 characters of data |
 | `gs1-databar` | GS1 DataBar | A GTIN only: `(01)` and 14 digits, or 13 and the check digit is added |
 | `gs1-databar-expanded` | GS1 DataBar Expanded | Application Identifiers in brackets with their values, as for `gs1-128`; up to 74 digits of data, fewer with letters |
+| `intelligent-mail` | USPS Intelligent Mail | The 20-digit tracking code (barcode ID, whose second digit is 0 to 4, service type ID, mailer ID and serial number), then a routing ZIP Code of 0, 5, 9 or 11 digits; spaces and hyphens are ignored: `01 234 567094 987654321 01234-5678-91` |
 | `code128` | Code 128 | Up to 80 printable ASCII characters |
 | `code39` | Code 39 | Up to 40 capitals, digits, spaces and `- . $ / + %` |
 | `code93` | Code 93 | Up to 40 capitals, digits, spaces and `- . $ / + %`; its two check characters are added |
@@ -139,6 +140,7 @@ Write colors without the `#`, or encode it as `%23`.
 | `datamatrix` | Data Matrix | Any text up to 1,000 characters |
 | `pdf417` | PDF417 | Any text up to 1,000 characters |
 | `aztec` | Aztec | Any text up to 1,000 characters |
+| `dotcode` | DotCode | Any text, up to about 390 letters or 780 digits (less with accents or other scripts) |
 
 Retail numbers (EAN, UPC, ITF-14, GS1-128's GTIN) are licensed to companies by GS1, and ISBNs, ISSNs and ISMNs come from each country's ISBN, ISSN and ISMN agencies. The API draws any valid number; it doesn't issue or register them.
 
@@ -151,6 +153,8 @@ PNG, JPG, WebP, AVIF and BMP are `scale` pixels per module, the narrowest bar's 
 BMP is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel; the background is always a solid color, so it has the same pixels as the PNG.
 
 SVG, PDF and EPS are vectors at one point per module (0.353 mm), so an EAN-13 at the defaults comes out at about 45 × 28 mm, about 107% of its nominal size. Scale vector files in your layout; for retail barcodes, keep between 80% and 200% and don't cut the bar height.
+
+USPS Intelligent Mail is drawn at the size USPS-B-3200 sets, so print it at 100%: bars 0.02 in wide, about 22 to the inch and 3.96 mm (0.156 in) tall, with 0.042 in clear above and below (USPS asks for 0.028 in). Its `scale` is pixels per point (a bar is 1.44 points wide), and its `quietZone` counts bar widths: the default of 7 gives the 0.125 in USPS asks for at each end. The digits, when `text` is on, follow the specification's layout: fields separated by spaces, starting at the first bar. A DotCode dot is a 2D cell, two modules (0.71 mm) across.
 
 ## Responses
 
@@ -241,7 +245,7 @@ Over {facts.imageApiPerMinute} requests a minute from one IP address, for `GET` 
 
 - **Rate limit:** {facts.imageApiPerMinute} requests a minute per IP address for `GET` and `POST /v1/barcode`, as for the [QR image API](/docs/developers/image-api). Saved barcodes follow the REST API's per-minute limits and daily quota.
 - **Image size:** raster images are at most 6,000 pixels on a side.
-- **No scan check here.** The [barcode generator](/barcode-generator) decodes what it draws before you download; the API draws what you ask for. Print a test and scan it with the scanners that will read it.
+- **No scan check here.** The [barcode generator](/barcode-generator) decodes what it draws before you download; the API draws what you ask for. Print a test and scan it with the scanners that will read it. The generator can't check DotCode or USPS Intelligent Mail either: its reader doesn't decode them.
 
 ## MCP
 
