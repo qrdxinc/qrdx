@@ -9,7 +9,7 @@ instructions: |
     - "classic", "standard", "plain" → bodyPattern: square
     - Color descriptions → convert to hex (e.g. "blue" → "#0000ff", "orange" → "#f97316")
     - "dark mode" or "inverted" → fgColor: "#ffffff", bgColor: "#000000"
-  - For logos or icons in the centre, set level to "H" automatically
+  - For logos or icons in the center, set level to "H" automatically
 
   When the user asks to list, show, or find saved QR codes:
   - Use the list-saved tool

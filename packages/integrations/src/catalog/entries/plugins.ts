@@ -156,11 +156,11 @@ export const plugins: IntegrationCatalogEntry[] = [
     steps: [
       {
         title: "Install it as a development extension",
-        body: "With Raycast installed, run this and Raycast imports the extension.",
+        body: "With Raycast, Node.js 22 and Bun installed, run this and Raycast imports the extension.",
         snippet: {
           label: "Terminal",
           language: "bash",
-          code: `git clone ${REPO}.git\ncd qrdx/plugins/raycast\nnpm install && npm run dev`,
+          code: `${CLONE}\nbun run --filter qrdx-raycast dev`,
         },
       },
       {

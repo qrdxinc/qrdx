@@ -28,6 +28,7 @@
     "knip:fix": "knip --fix",
     "clean": "git clean -xdf node_modules",
     "raycast:publish": "cd plugins/raycast && bunx @raycast/api@latest publish",
+    "raycast:lock": "node scripts/raycast-lock.mjs",
     "raycast:dev": "cd plugins/raycast && bun run dev",
     "raycast:build": "cd plugins/raycast && bun run build",
     "prepare": "husky"

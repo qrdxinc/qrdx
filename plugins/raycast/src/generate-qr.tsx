@@ -9,6 +9,7 @@ import {
   Form,
   Grid,
   Icon,
+  Keyboard,
   showHUD,
   showToast,
   Toast,
@@ -312,14 +313,14 @@ export function QRPreview({
             <Action
               icon={Icon.Clipboard}
               onAction={copySVG}
-              shortcut={{ modifiers: ["cmd", "shift"], key: "c" }}
+              shortcut={Keyboard.Shortcut.Common.Copy}
               title="Copy SVG to Clipboard"
             />
           </ActionPanel.Section>
           <ActionPanel.Section title="Save">
             <Action.Push
               icon={Icon.Star}
-              shortcut={{ modifiers: ["cmd"], key: "s" }}
+              shortcut={Keyboard.Shortcut.Common.Save}
               target={
                 <SaveQRForm
                   existingId={savedId}
@@ -334,7 +335,7 @@ export function QRPreview({
             <Action
               icon={Icon.Download}
               onAction={savePNG}
-              shortcut={{ modifiers: ["cmd", "shift"], key: "s" }}
+              shortcut={Keyboard.Shortcut.Common.Duplicate}
               title="Save PNG to Downloads"
             />
             <Action
@@ -347,7 +348,7 @@ export function QRPreview({
           <ActionPanel.Section title="QRdx">
             <Action.OpenInBrowser
               icon={Icon.Globe}
-              shortcut={{ modifiers: ["cmd"], key: "o" }}
+              shortcut={Keyboard.Shortcut.Common.Open}
               title="Open in QRdx Playground"
               url={playgroundLink(url)}
             />
@@ -357,7 +358,7 @@ export function QRPreview({
               <Action
                 icon={Icon.Pencil}
                 onAction={onEdit}
-                shortcut={{ modifiers: ["cmd"], key: "e" }}
+                shortcut={Keyboard.Shortcut.Common.Edit}
                 title="Edit"
               />
             </ActionPanel.Section>
@@ -606,7 +607,7 @@ export function QRForm({
 
       <Form.TextField
         id="logo"
-        info="Logo is auto-excavated from the QR centre. Use Error Correction Q or H."
+        info="Logo is auto-excavated from the QR center. Use Error Correction Q or H."
         onChange={(v) => set("logo", v)}
         placeholder="https://example.com/logo.png"
         title="Logo URL"

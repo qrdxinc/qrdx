@@ -43,7 +43,7 @@ interface Input {
    * L = 7%, M = 15%, Q = 25%, H = 30% damage tolerance.
    */
   level?: Settings["level"];
-  /** URL of a logo/image to place in the centre of the QR. Requires level Q or H. */
+  /** URL of a logo/image to place in the center of the QR. Requires level Q or H. */
   logo?: string;
   /** Output size in pixels. Defaults to 512. Minimum 64. */
   size?: number;
