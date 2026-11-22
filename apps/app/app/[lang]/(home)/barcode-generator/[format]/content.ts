@@ -53,9 +53,11 @@ export const DOWNLOAD_SIZES_MM: Record<
   "gs1-128": { width: 100.9, height: 19.2 },
   "gs1-databar": { width: 46.6, height: 19.2 },
   "gs1-databar-expanded": { width: 105.8, height: 19.2 },
+  "intelligent-mail": { width: 88.4, height: 9.6 },
   datamatrix: { width: 15.5, height: 15.5 },
   pdf417: { width: 43.7, height: 8.8 },
   aztec: { width: 19, height: 19 },
+  dotcode: { width: 25.5, height: 19.1 },
 };
 
 /** Names of the GS1 Application Identifiers the GS1-128 page's example uses, and a few more. */
@@ -394,6 +396,59 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
         question: "GS1 DataBar Expanded or GS1-128?",
         answer:
           "Use the one your retailer or trading partner asks for. GS1 DataBar Expanded is the retail one, read at the checkout on items such as fresh food; GS1-128 is the logistics barcode on cases, pallets and shipping labels.",
+      },
+    ],
+  },
+  {
+    id: "intelligent-mail",
+    slug: "intelligent-mail",
+    title: "Free USPS Intelligent Mail Barcode Generator (IMb)",
+    metaDescription:
+      "Make a USPS Intelligent Mail barcode (IMb) from its 20-digit tracking code and ZIP Code, drawn to the USPS-B-3200 sizes. SVG, PDF, EPS and PNG. Free.",
+    intro:
+      "The Intelligent Mail barcode (IMb) is the row of 65 short and tall bars on US letters and flats. It holds a 20-digit tracking code and the delivery ZIP Code, and USPS sorting machines read it to route and track each piece. Type the digits and download it, drawn to the sizes in the USPS specification, USPS-B-3200.",
+    usedFor: [
+      "Letters, postcards and flats mailed in the US. Mailers print it in the address block to get automation prices, and with a serial number of its own on each piece, to see where their mail is in the USPS network.",
+      "Parcels use a different barcode, the Intelligent Mail package barcode (IMpb).",
+      "The scan check on this page can't read Intelligent Mail: the reader it uses doesn't decode it, so the generator says the barcode wasn't checked. Test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+    ],
+    numbers: {
+      title: "Where do the numbers come from?",
+      paragraphs: [
+        "From USPS and from you. USPS assigns the mailer ID (request one in its Business Customer Gateway), the barcode ID, which marks the presort level, and the service type ID, which names the mail class and services such as address correction. Its tables of valid IDs are on PostalPro.",
+        "The serial number is yours: give each mailpiece its own, so its scans can be told apart. The routing code is the delivery ZIP Code: 5 digits, ZIP+4 (9) or ZIP+4 and the 2-digit delivery point (11), keeping leading zeros: 02768, not 2768.",
+      ],
+    },
+    rules: [
+      "Type the 20-digit tracking code, then the routing code: 20, 25, 29 or 31 digits in all. Spaces and hyphens are ignored, so you can write it the way it's printed.",
+      "The tracking code is the barcode ID (2 digits, the second 0 to 4), the service type ID (3), then the mailer ID and serial number (15). A mailer ID starting with 9 has 9 digits and leaves 6 for the serial; any other has 6 and leaves 9. The line under the field shows how your digits were split.",
+      "There's no check digit to type: the barcode carries its own 11-bit error check, worked out from the digits. Tests here draw the four worked examples in USPS-B-3200 and compare all 65 bars of each.",
+    ],
+    sizing: [
+      "The bars follow USPS-B-3200: 0.02 in (0.51 mm) wide, about 22 to the inch, and the full bars 0.156 in (3.96 mm) tall, inside the 0.125 to 0.165 in USPS allows. The bar height has no slider for this reason. Print the SVG, PDF or EPS at 100%.",
+      "USPS asks for 0.125 in (3.2 mm) clear on each side and 0.028 in above and below. The quiet zone starts at 7 bar widths (0.14 in) each side, and the image keeps 0.042 in above and below.",
+      "Image size starts at 2×: at 1× the bars round to whole pixels that are wider than USPS allows.",
+    ],
+    faqs: [
+      {
+        question: "Can this page check that it scans?",
+        answer:
+          "No. The scan check uses ZXing, which doesn't read Intelligent Mail, so it says the barcode wasn't checked instead of guessing. The encoding is tested against the specification's worked examples, but test a printed piece with a reader that supports Intelligent Mail before a mailing.",
+      },
+      {
+        question: "Should I print the digits?",
+        answer:
+          "Some USPS services require the digits printed with the barcode; most mail doesn't. When they're printed, USPS-B-3200 wants each field separated by a space, in a 10- to 12-point sans serif starting at the first bar, 0.028 to 0.5 in from the bars. The generator prints them that way, 10-point, under the bars; turn them off with the switch under the colors.",
+      },
+      {
+        question: "Where does it go on the envelope?",
+        answer:
+          "Usually in the address block, above the name or below the city line. USPS Publication 25 and the Domestic Mail Manual set the exact areas, and the clear space each side.",
+      },
+      {
+        question: "Does it replace POSTNET?",
+        answer:
+          "Yes. Intelligent Mail carries the ZIP Code the old POSTNET barcode did, plus the tracking code, and USPS no longer gives automation prices for POSTNET.",
       },
     ],
   },
@@ -861,6 +916,56 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
         question: "Can phones read Aztec codes?",
         answer:
           "Many scanner apps and ticket gates can. Some built-in camera apps only open QR codes.",
+      },
+    ],
+  },
+  {
+    id: "dotcode",
+    slug: "dotcode",
+    title: "Free DotCode Generator",
+    metaDescription:
+      "Make a DotCode, the dot-based 2D code printed by high-speed inkjet on tobacco packs and medicines. Up to about 390 letters or 780 digits. SVG, PDF, PNG.",
+    intro:
+      "DotCode is a 2D code made of separate dots instead of squares, designed for the inkjet and laser printers that mark products on fast production lines. Type any text, up to about 390 letters or 780 digits here, and download it as a vector or an image.",
+    usedFor: [
+      "Cigarette and tobacco packs sold in the EU: the traceability system of the Tobacco Products Directive accepts DotCode, as well as Data Matrix and QR codes, for the unique identifier on each pack.",
+      "Medicines, drinks and other goods coded on the line. The dots don't have to touch, so a fast inkjet printer can mark each item as it passes, on cartons, cans or labels.",
+      "Readers need a camera-based scanner with DotCode switched on; many phone apps and older scanners don't read it. The scan check on this page can't read it either, so it says the code wasn't checked: test a print with a reader that supports DotCode.",
+    ],
+    numbers: {
+      title: "Plain DotCode or GS1 DotCode?",
+      paragraphs: [
+        "This page makes plain DotCode: it holds whatever text you type, with no registration.",
+        "GS1 DotCode, which carries GS1 Application Identifiers after a special first character, isn't offered here. For GS1 data in a barcode from this generator, use GS1-128.",
+      ],
+    },
+    rules: [
+      "Any text: letters, digits, symbols, line breaks, accents and other scripts. Accents and other scripts are stored as UTF-8 bytes, which take more room, and some readers show them wrongly.",
+      "A DotCode here holds up to about 390 letters or 780 digits. Larger ones were tested with an outside DotCode reader, which didn't read them, so the generator stops there.",
+      "Text that starts with two digits gets a marker in front saying it isn't GS1 data, as the DotCode specification asks; some readers show that marker as an invisible character before the text.",
+      "The code grows as you add text, keeping a wide rectangle. Dots sit on every other square of a checkerboard grid, so no two dots touch.",
+    ],
+    sizing: [
+      "The vector downloads use a 0.71 mm module: each dot is that wide, on a grid of that pitch. Scale it to the dot size of the printer that will mark it.",
+      "DotCode needs 3 modules of blank space all round, which the generator starts with.",
+      "Image size starts at 2×: at 1× each dot is 2 pixels across, which the outside reader it was tested with didn't read.",
+      "Test with the reader that will read it, at the size and on the material you'll print.",
+    ],
+    faqs: [
+      {
+        question: "Can this page check that it scans?",
+        answer:
+          "No. The scan check uses ZXing, which doesn't read DotCode, so it says the code wasn't checked instead of guessing. Test a print with a reader that supports DotCode.",
+      },
+      {
+        question: "DotCode or Data Matrix?",
+        answer:
+          "Use the one your printer and the readers on your line support. Data Matrix is read by more scanners; DotCode suits fast inkjet printers, whose round dots don't have to join up into squares.",
+      },
+      {
+        question: "Can a phone read DotCode?",
+        answer:
+          "Some barcode scanner apps can, but most phone camera apps can't. For codes people scan with a phone, use a QR code.",
       },
     ],
   },

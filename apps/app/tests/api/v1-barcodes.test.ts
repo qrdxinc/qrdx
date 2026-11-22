@@ -334,6 +334,16 @@ describe("GET /v1/barcode", () => {
       "(01)09501101530003(10)AB 12(21)é",
       /GS1 doesn't allow: é/,
     ],
+    ["intelligent-mail", "01 234 567094 987654321 01234-5678-91", undefined],
+    ["imb", "01234567094987654321", undefined],
+    [
+      "intelligent-mail",
+      "05234567094987654321",
+      /barcode ID \(the first 2 digits\) ends in 0 to 4; this one is 05/,
+    ],
+    ["intelligent-mail", "012345670949876543210", /This has 1 digit after/],
+    ["dotcode", "QRdx DotCode sample", undefined],
+    ["dotcode", "A".repeat(396), /Too much data for one DotCode here/],
     ["code128", "café", /plain ASCII.*Not allowed: é/],
     ["code128", "A".repeat(81), /up to 80 characters; this has 81/],
     ["code39", "qrdx", /no lowercase letters/],
@@ -382,6 +392,8 @@ describe("GET /v1/barcode", () => {
       ["format=ean13&data=590123412345&rotate=45", "rotate"],
       ["format=ean13&data=590123412345&fg=blue", "fg"],
       ["format=datamatrix&data=x&quietZone=12", "quietZone"],
+      ["format=intelligent-mail&data=01234567094987654321&scale=1", "scale"],
+      ["format=dotcode&data=x&scale=1", "scale"],
       [`format=code128&data=${"A".repeat(80)}&scale=10&type=png`, "scale"],
     ];
     for (const [query, param] of cases) {
@@ -550,6 +562,32 @@ describe("/v1/barcodes", () => {
         target: expect.objectContaining({ id: data.id, label: "Spring box" }),
       }),
     ]);
+  });
+
+  it("saves DotCode and Intelligent Mail, which no reader here checks", async () => {
+    const imb = await create({
+      format: "intelligent-mail",
+      value: "01 234 567094 987654321 01234-5678-91",
+    });
+    expect(imb.status).toBe(201);
+    const { data } = (await imb.json()) as { data: BarcodeJson };
+    expect(data).toMatchObject({
+      format: "intelligent-mail",
+      value: "0123456709498765432101234567891",
+    });
+    expect(
+      (await createOne({ format: "dotcode", value: "LOT 42" })).format,
+    ).toBe("dotcode");
+    const coarse = await create({
+      format: "dotcode",
+      value: "LOT 42",
+      options: { scale: 1 },
+    });
+    expect(coarse.status).toBe(400);
+    expect(((await coarse.json()) as ErrorBody).message).toMatch(
+      /DotCode takes a scale of 2 to 10/,
+    );
+    expect(fakeDb.rows("barcode")).toHaveLength(2);
   });
 
   it("checks the value and options like the image API", async () => {

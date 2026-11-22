@@ -36,6 +36,7 @@ import {
   TickCircle as CircleCheck,
   CloseCircle as CircleX,
   Import as Download,
+  InfoCircle,
   Warning2,
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
@@ -72,6 +73,7 @@ import {
   DEFAULT_BARCODE_FORMAT,
   getBarcodeFormat,
   isBarcodeFormatId,
+  isScanCheckable,
   publicationEan13,
   splitBarcodeValue,
   validateBarcodeInput,
@@ -86,6 +88,7 @@ import {
   type BarcodeStyle,
   defaultBarcodeStyle,
   maxQuietZone,
+  minScale,
 } from "@/lib/barcode/style";
 import { soundEvent } from "@/lib/sound/emit";
 
@@ -295,6 +298,15 @@ function ScanStatus({
       </p>
     );
   }
+  // No reader here decodes this format: say so, never "failed".
+  if (result.status === "unchecked") {
+    return (
+      <p className="flex gap-2 text-xs text-muted-foreground">
+        <InfoCircle aria-hidden className="mt-px size-4 shrink-0" />
+        {t("unchecked", { label })}
+      </p>
+    );
+  }
   if (result.status === "pass") {
     return (
       <p className="flex gap-2 text-xs">
@@ -483,6 +495,12 @@ export function useBarcodeGenerator({
       setChecking(false);
       return;
     }
+    // A format no reader here decodes: nothing to load or wait for.
+    if (!isScanCheckable(formatId)) {
+      setScan({ status: "unchecked" });
+      setChecking(false);
+      return;
+    }
     let cancelled = false;
     setChecking(true);
     const timer = setTimeout(async () => {
@@ -525,6 +543,7 @@ export function useBarcodeGenerator({
     }
     setQuietZone(nextFormat.quietZone.default);
     if (nextFormat.barHeightMm) setBarHeightMm(nextFormat.barHeightMm);
+    setScale((current) => Math.max(current, minScale(next)));
   };
 
   /** Back to where it started (the modal's "Create another"). */
@@ -901,7 +920,8 @@ export function BarcodeStyleFields({
         />
       </div>
 
-      {linear && (
+      {/* Intelligent Mail's height is set by USPS, so it has no control. */}
+      {linear && !format.fixedBarHeightMm && (
         <RangeField
           label={t("barHeight")}
           max={60}
@@ -943,7 +963,7 @@ export function BarcodeStyleFields({
       <RangeField
         label={t("imageSize")}
         max={BARCODE_LIMITS.scale.max}
-        min={BARCODE_LIMITS.scale.min}
+        min={minScale(formatId)}
         readout={
           rendered
             ? `${Math.round(rendered.width)} × ${Math.round(rendered.height)} px`

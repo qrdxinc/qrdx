@@ -27,9 +27,11 @@ export type BarcodeFormatId =
   | "gs1-128"
   | "gs1-databar"
   | "gs1-databar-expanded"
+  | "intelligent-mail"
   | "datamatrix"
   | "pdf417"
-  | "aztec";
+  | "aztec"
+  | "dotcode";
 
 export interface BarcodeFormat {
   id: BarcodeFormatId;
@@ -49,9 +51,28 @@ export interface BarcodeFormat {
   quietZone: { min: number; default: number };
   /** Default bar height in millimetres (linear codes) */
   barHeightMm?: number;
+  /**
+   * The bar height its specification fixes, in millimetres: drawn at this
+   * height whatever the style says, and the generator has no bar-height
+   * control for it (Intelligent Mail).
+   */
+  fixedBarHeightMm?: number;
+  /**
+   * The smallest scale (pixels per unit) it's drawn at, when 1 is too
+   * coarse: bwip-js rounds to whole pixels, and the vector downloads keep
+   * that drawing. Intelligent Mail's bars come out wider than USPS allows,
+   * and DotCode's dots 2 pixels across, which the outside reader it was
+   * checked with didn't read.
+   */
+  minScale?: number;
   /** Longest input the field takes, in characters */
   maxLength: number;
-  /** BarcodeDetector format names a reader reports for this symbology */
+  /**
+   * BarcodeDetector format names a reader reports for this symbology. Empty
+   * when no reader here decodes it (neither the scanner's ZXing build nor
+   * zbar): the generator's scan check then says it can't check the format,
+   * rather than reporting a failed scan (isScanCheckable).
+   */
   detectorFormats: readonly string[];
   /**
    * Takes a 2- or 5-digit add-on (EAN-2 or EAN-5) printed right of the bars,
@@ -276,6 +297,25 @@ export const BARCODE_FORMATS: readonly BarcodeFormat[] = [
     detectorFormats: ["databar_expanded"],
   },
   {
+    id: "intelligent-mail",
+    label: "USPS Intelligent Mail",
+    kind: "linear",
+    summary: "The 4-state barcode USPS sorts and tracks US mail by",
+    example: "01 234 567094 987654321 01234-5678-91",
+    inputHint:
+      "20 digits of tracking code: barcode ID (2), service type (3), mailer ID and serial number (15). Then the routing ZIP Code, if any: 5, 9 or 11 digits. Spaces and hyphens are ignored.",
+    // USPS-B-3200: 0.125 in clear each side, 7 bars' widths (0.14 in) here.
+    quietZone: { min: 7, default: 7 },
+    // BWIPP draws trackers a quarter of the full height and ascenders five
+    // eighths. At 3.96 mm (0.156 in), scales 2 to 10 round every bar into
+    // USPS-B-3200's limits (tests/barcode/render.test.ts); at scale 1 the
+    // bars come out too wide.
+    fixedBarHeightMm: 3.96,
+    minScale: 2,
+    maxLength: 48,
+    detectorFormats: [],
+  },
+  {
     id: "datamatrix",
     label: "Data Matrix",
     kind: "2d",
@@ -308,6 +348,22 @@ export const BARCODE_FORMATS: readonly BarcodeFormat[] = [
     maxLength: 1000,
     detectorFormats: ["aztec"],
   },
+  {
+    id: "dotcode",
+    label: "DotCode",
+    kind: "2d",
+    summary: "Dots for high-speed inkjet: cigarette packs and medicines",
+    example: "QRdx DotCode sample",
+    inputHint:
+      "Any text, up to about 390 letters or 780 digits; less with accents or other scripts.",
+    // A 3-dot quiet zone all round (AIM's DotCode specification).
+    quietZone: { min: 3, default: 3 },
+    minScale: 2,
+    // The drawn size sets the real limit (DOTCODE_MAX_DOTS in draw.ts);
+    // 784 digits is the most that fits.
+    maxLength: 800,
+    detectorFormats: [],
+  },
 ];
 
 export const DEFAULT_BARCODE_FORMAT: BarcodeFormatId = "ean13";
@@ -320,6 +376,15 @@ export function getBarcodeFormat(id: BarcodeFormatId): BarcodeFormat {
 
 export function isBarcodeFormatId(value: string): value is BarcodeFormatId {
   return BARCODE_FORMATS.some((format) => format.id === value);
+}
+
+/**
+ * Whether a reader here decodes `id`, so the generator can scan-check it.
+ * DotCode and Intelligent Mail are drawn by bwip-js, but neither the
+ * scanner's reader (ZXing through `barcode-detector`) nor zbar reads them.
+ */
+export function isScanCheckable(id: BarcodeFormatId): boolean {
+  return getBarcodeFormat(id).detectorFormats.length > 0;
 }
 
 /**
@@ -359,6 +424,11 @@ export const BARCODE_ISSUE_CODES = [
   "gs1TooLong",
   "databarGtinOnly",
   "databarTooLong",
+  "imbEnter",
+  "imbTrackingLength",
+  "imbRoutingLength",
+  "imbBarcodeId",
+  "imbFields",
   "isbnChars",
   "isbnLength",
   "isbnPrefix",
@@ -484,6 +554,16 @@ export function barcodeIssueText(issue: BarcodeIssue): string {
       return "GS1 DataBar holds only a GTIN: (01) and its 14 digits. For dates, a batch or a weight, use GS1 DataBar Expanded or GS1-128.";
     case "databarTooLong":
       return `GS1 DataBar Expanded holds up to ${v.max} digits of AIs and data, and fewer when there are letters; this has ${v.count} characters. Remove an AI or shorten a value.`;
+    case "imbEnter":
+      return "Enter the 20-digit tracking code, then the routing ZIP Code if there is one.";
+    case "imbTrackingLength":
+      return `The tracking code has 20 digits: barcode ID (2), service type (3), mailer ID and serial number (15). This has ${digitCount(v.count ?? 0)}.`;
+    case "imbRoutingLength":
+      return `After the 20-digit tracking code comes the routing ZIP Code: 5 digits, 9 (ZIP+4) or 11 (ZIP+4 and delivery point). This has ${digitCount(v.count ?? 0)} after the tracking code.`;
+    case "imbBarcodeId":
+      return `The barcode ID (the first 2 digits) ends in 0 to 4; this one is ${v.id}.`;
+    case "imbFields":
+      return `Barcode ID ${v.barcodeId}, service type ${v.serviceType}, mailer ID ${v.mailerId}, serial number ${v.serial}, ${v.routing === "none" ? "no routing code" : `routing code ${v.routing}`}.`;
     case "isbnChars":
       return "An ISBN takes digits, hyphens and spaces; an ISBN-10 can end in X.";
     case "isbnLength":
@@ -866,6 +946,61 @@ function databarInput(raw: string): BarcodeInput {
     return fail({ code: "databarGtinOnly" });
   }
   return checked;
+}
+
+/**
+ * USPS Intelligent Mail (USPS-B-3200): a 20-digit tracking code, then a
+ * routing code of 0, 5, 9 or 11 digits, typed with or without spaces and
+ * hyphens. The tracking code is a barcode ID (2 digits, the second 0 to 4),
+ * a service type ID (3), and a mailer ID and serial number (15 together: a
+ * mailer ID starting with 9 has 9 digits and its serial 6, any other 6 and
+ * 9). bwip-js checks only the length, so the barcode ID is checked here, and
+ * the note names each field so a misplaced digit shows. The encoder takes
+ * the digits alone.
+ */
+function intelligentMailInput(raw: string): BarcodeInput {
+  const digits = raw.replace(/[\s-]/g, "");
+  if (!digits) return fail({ code: "imbEnter" });
+  if (!/^\d+$/.test(digits)) {
+    return fail({
+      code: "digitsOnly",
+      values: { label: "USPS Intelligent Mail" },
+    });
+  }
+  if (digits.length < 20) {
+    return fail({
+      code: "imbTrackingLength",
+      values: { count: digits.length },
+    });
+  }
+  const routing = digits.slice(20);
+  if (![0, 5, 9, 11].includes(routing.length)) {
+    return fail({
+      code: "imbRoutingLength",
+      values: { count: routing.length },
+    });
+  }
+  const barcodeId = digits.slice(0, 2);
+  if (Number(barcodeId[1]) > 4) {
+    return fail({ code: "imbBarcodeId", values: { id: barcodeId } });
+  }
+  const mailerLength = digits[5] === "9" ? 9 : 6;
+  return done(digits, [
+    {
+      code: "imbFields",
+      values: {
+        barcodeId,
+        serviceType: digits.slice(2, 5),
+        mailerId: digits.slice(5, 5 + mailerLength),
+        serial: digits.slice(5 + mailerLength, 20),
+        routing: routing
+          ? [routing.slice(0, 5), routing.slice(5, 9), routing.slice(9)]
+              .filter(Boolean)
+              .join("-")
+          : "none",
+      },
+    },
+  ]);
 }
 
 /** What may follow an ISBN, ISSN or ISMN in its own field. */
@@ -1279,9 +1414,12 @@ export function validateBarcodeInput(
         max: DATABAR_EXPANDED_MAX_DATA,
         code: "databarTooLong",
       });
+    case "intelligent-mail":
+      return intelligentMailInput(raw);
     case "datamatrix":
     case "pdf417":
     case "aztec":
+    case "dotcode":
       return textInput(format, raw, null);
     default:
       return fail({ code: "unknownFormat" });

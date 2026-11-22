@@ -1974,7 +1974,7 @@
     "crumb": "Barcode-Generator",
     "title": "Kostenloser Barcode-Generator",
     "intro1": "Erstelle Barcodes für Handel, Versand und Inventur in {count, number} Formaten, von EAN-13 und UPC-A bis Code 128, GS1-128, ITF-14 und Data Matrix. Gib die Nummer ein, und die Prüfziffer wird für dich berechnet. Eine falsche fällt auf, bevor du druckst.",
-    "intro2": "Jeder Barcode wird in deinem Browser gezeichnet und per Scan geprüft. Danach speicherst du ihn als PNG oder JPG für Bildschirme oder als SVG, PDF und EPS für den Druck. Das ist kostenlos, ohne Konto und ohne Wasserzeichen. Melde dich an, um Barcodes in deinem Dashboard zu behalten und später zu bearbeiten.",
+    "intro2": "Jeder Barcode wird in deinem Browser gezeichnet und dort per Scan geprüft (außer DotCode und USPS Intelligent Mail, die hier kein Lesegerät dekodiert) und dann als PNG oder JPG für Bildschirme bzw. als SVG, PDF und EPS für den Druck gespeichert. Das Ganze ist kostenlos, ohne Konto und ohne Wasserzeichen. Melde dich an, um Barcodes in deinem Dashboard zu behalten und später zu bearbeiten.",
     "toolLabel": "Barcode-Generator",
     "formatsEyebrow": "Formate",
     "whichTitle": "Welchen Barcode soll ich nehmen?",
@@ -2060,7 +2060,8 @@
       "passed": "Scan-Check bestanden: Ein Barcode-Leser entschlüsselt die PNG als {label} <mono>{value}</mono>",
       "addOnNotChecked": "Diese Prüfung liest nur den EAN-13, nicht das Zusatzcode {addOn}: Scanne einen Testdruck mit einem Scanner, der Zusatzcodes liest.",
       "mismatch": "Scan-Check fehlgeschlagen: Der Leser hat „{decoded}“ statt dieses Codes ({label}) erkannt.",
-      "failed": "Scan-Check fehlgeschlagen: Der Leser konnte diesen Code ({label}) nicht entschlüsseln. Erhöhe den Kontrast, die Größe oder die Ruhezone."
+      "failed": "Scan-Check fehlgeschlagen: Der Leser konnte diesen Code ({label}) nicht entschlüsseln. Erhöhe den Kontrast, die Größe oder die Ruhezone.",
+      "unchecked": "Nicht per Scan geprüft: Der Reader, den diese Prüfung verwendet, dekodiert {label} nicht. Teste den Barcode vor dem Drucken mit einem Reader, der {label} unterstützt."
     },
     "save": {
       "signIn": "<link>Melde dich an</link>, um Barcodes in deinem Dashboard zu speichern und später zu bearbeiten.",
@@ -2100,8 +2101,13 @@
       "gs1BadChars": "AI ({ai}) enthält Zeichen, die GS1 nicht erlaubt: {chars}",
       "gs1Ai": "AI ({ai}): {inner}",
       "gs1TooLong": "GS1-128 fasst bis zu {max} Zeichen für AIs und Daten; hier sind es {count}. Teile die Daten auf zwei Barcodes auf.",
-      "databarGtinOnly": "GS1 DataBar enthält nur eine GTIN: (01) und deren 14 Ziffern. Für Datumsangaben, eine Charge oder ein Gewicht nutze GS1 DataBar Expanded oder GS1-128.",
+      "databarGtinOnly": "GS1 DataBar enthält nur eine GTIN: (01) und ihre 14 Ziffern. Für Datumsangaben, eine Charge oder ein Gewicht nutze GS1 DataBar Expanded oder GS1-128.",
       "databarTooLong": "GS1 DataBar Expanded fasst bis zu {max} Ziffern an AIs und Daten, bei Buchstaben weniger; hier sind es {count} Zeichen. Entferne eine AI oder kürze einen Wert.",
+      "imbEnter": "Gib den 20-stelligen Tracking-Code ein, danach die Routing-Postleitzahl, falls vorhanden.",
+      "imbTrackingLength": "Der Tracking-Code hat 20 Ziffern: Barcode-ID (2), Service-Typ (3), Mailer-ID und Seriennummer (15). Hier {count, plural, one {ist # Ziffer} other {sind # Ziffern}} angegeben.",
+      "imbRoutingLength": "Nach dem 20-stelligen Tracking-Code folgt die Routing-Postleitzahl: 5 Ziffern, 9 (ZIP+4) oder 11 (ZIP+4 und Zustellpunkt). Hier {count, plural, one {folgt # Ziffer} other {folgen # Ziffern}} nach dem Tracking-Code.",
+      "imbBarcodeId": "Die Barcode-ID (die ersten 2 Ziffern) endet auf 0 bis 4; hier ist es {id}.",
+      "imbFields": "Barcode-ID {barcodeId}, Service-Typ {serviceType}, Mailer-ID {mailerId}, Seriennummer {serial}, {routing, select, none {kein Routing-Code} other {Routing-Code {routing}}}.",
       "isbnChars": "Eine ISBN besteht aus Ziffern, Bindestrichen und Leerzeichen; eine ISBN-10 kann auf X enden.",
       "isbnLength": "Eine ISBN hat 13 Ziffern, in der alten ISBN-10-Form 10. Diese hat {count, plural, one {# Ziffer} other {# Ziffern}}.",
       "isbnPrefix": "Eine ISBN-13 beginnt mit 978 oder 979.",
