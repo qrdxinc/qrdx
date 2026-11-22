@@ -3603,7 +3603,10 @@
         "showLess": "Mostrar menos",
         "showValueMore": "Mostrar mais {value, number}",
         "applyThisDesign": "Aplicar este design",
-        "notAppliedYourEditorIs": "Não aplicado. Seu editor não mudou."
+        "notAppliedYourEditorIs": "Não aplicado. Seu editor não mudou.",
+        "searchingTheFrames": "Procurando nos frames oficiais…",
+        "couldntSearchTheFrames": "Não foi possível pesquisar os frames",
+        "foundFramesForQuery": "{count, plural, =0 {Nenhum frame oficial para “{query}”} one {Encontrado # frame oficial para “{query}”:} other {Encontrados # frames oficiais para “{query}”:}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

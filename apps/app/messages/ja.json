@@ -3603,7 +3603,10 @@
         "showLess": "表示を減らす",
         "showValueMore": "さらに{value, number}件を表示",
         "applyThisDesign": "このデザインを適用",
-        "notAppliedYourEditorIs": "適用されませんでした。エディターは変更されていません。"
+        "notAppliedYourEditorIs": "適用されませんでした。エディターは変更されていません。",
+        "searchingTheFrames": "公式フレームを検索しています…",
+        "couldntSearchTheFrames": "フレームを検索できませんでした",
+        "foundFramesForQuery": "{count, plural, =0 {「{query}」に該当する公式フレームはありません} other {「{query}」の公式フレームが # 件見つかりました：}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

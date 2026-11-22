@@ -17,10 +17,10 @@ import {
   logoMarkerOf,
   parseBrandLogoRef,
 } from "@/lib/brand-logos/svg";
-import { LOGO_ICON_IDS, type LogoIconId } from "./style";
+import { LOGO_ICON_IDS, LOGO_ICON_PATTERN, type LogoIconId } from "./style";
 
-/** A quick icon id, or `<slug>` / `<slug>:<brand|black|white>`. */
-export const LOGO_ICON_PATTERN = /^[a-z0-9]{1,64}(?::(?:brand|black|white))?$/;
+/** A quick icon id, or `<slug>` / `<slug>:<brand|black|white>` (./style.ts). */
+export { LOGO_ICON_PATTERN } from "./style";
 
 export type ParsedLogoIcon =
   | { kind: "quick"; id: LogoIconId }

@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "Unduh kode dalam format PNG, WebP, atau SVG.",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "Unduh kode dalam format PNG, SVG, WebP, GIF, BMP, atau ICO.",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "Unduh PNG, WebP, atau SVG, atau atur gaya kode di editor lengkap.",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "Unduh PNG, SVG, WebP, GIF, BMP, atau ICO, atau atur gaya kode di editor lengkap.",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -30850,5 +30850,17 @@
     "text": "QRdx tidak menyimpan prompt, gambar referensi, maupun gambar yang dihasilkan; QRdx hanya menghitung kredit Anda. Prompt, gambar kode QR, dan gambar referensi apa pun dikirim melalui Vercel AI Gateway ke GPT Image 2 dari OpenAI untuk membuat karya seninya, dan hasilnya langsung dikirim kembali ke browser Anda, jadi unduh gambar yang ingin Anda simpan.",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "Unduh kode dalam format PNG, WebP, atau SVG.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "Unduh PNG, WebP, atau SVG, atau atur gaya kode di editor lengkap.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   }
 }

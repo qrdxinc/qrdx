@@ -79,6 +79,16 @@ export function logoIconDataUrl(icon: string): string {
 }
 
 /**
+ * Whether `icon` is a logoIcon QRdx can draw: a quick icon, or a brand slug
+ * Simple Icons has (logoIconDataUrl doesn't throw for it).
+ */
+export function isDrawableLogo(icon: string): boolean {
+  const parsed = parseLogoIcon(icon);
+  if (!parsed) return false;
+  return parsed.kind === "quick" || Boolean(getBrandIcon(parsed.slug));
+}
+
+/**
  * The logo fields of ThemeStyles for a design's logo choice. "keep" leaves
  * the code's current logo as it is (the browser keeps it; `current` is the
  * image when known, for saving).

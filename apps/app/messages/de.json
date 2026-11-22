@@ -3603,7 +3603,10 @@
         "showLess": "Weniger zeigen",
         "showValueMore": "{value, number} weitere anzeigen",
         "applyThisDesign": "Design anwenden",
-        "notAppliedYourEditorIs": "Nicht angewendet. Dein Editor bleibt unverändert."
+        "notAppliedYourEditorIs": "Nicht angewendet. Dein Editor bleibt unverändert.",
+        "searchingTheFrames": "Offizielle Rahmen werden durchsucht…",
+        "couldntSearchTheFrames": "Rahmen konnten nicht durchsucht werden",
+        "foundFramesForQuery": "{count, plural, =0 {Keine offiziellen Rahmen für „{query}“} one {# offiziellen Rahmen für „{query}“ gefunden:} other {# offizielle Rahmen für „{query}“ gefunden:}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx KI"

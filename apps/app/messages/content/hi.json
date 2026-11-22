@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "कोड को PNG, WebP या SVG में डाउनलोड करें।",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "कोड को PNG, SVG, WebP, GIF, BMP या ICO में डाउनलोड करें।",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "PNG, WebP या SVG डाउनलोड करें, या पूरे एडिटर में कोड को स्टाइल करें।",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "PNG, SVG, WebP, GIF, BMP या ICO डाउनलोड करें, या पूरे एडिटर में कोड को स्टाइल करें।",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -30850,5 +30850,17 @@
     "text": "QRdx आपका प्रॉम्प्ट, रेफ़रेंस इमेज या बनाई गई इमेज सेव नहीं करता; वह सिर्फ़ आपके क्रेडिट गिनता है। आर्टवर्क बनाने के लिए प्रॉम्प्ट, QR कोड इमेज और कोई भी रेफ़रेंस इमेज Vercel AI Gateway के ज़रिए OpenAI के GPT Image 2 को भेजी जाती हैं, और नतीजा सीधे आपके ब्राउज़र में लौट आता है, इसलिए जो इमेज रखनी हों उन्हें डाउनलोड कर लें।",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "कोड को PNG, WebP या SVG में डाउनलोड करें।",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "PNG, WebP या SVG डाउनलोड करें, या पूरे एडिटर में कोड को स्टाइल करें।",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   }
 }

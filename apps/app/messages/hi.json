@@ -3603,7 +3603,10 @@
         "showLess": "कम दिखाएँ",
         "showValueMore": "{value, number} और दिखाएँ",
         "applyThisDesign": "यह डिज़ाइन लागू करें",
-        "notAppliedYourEditorIs": "लागू नहीं हुआ। आपका एडिटर वैसा ही है।"
+        "notAppliedYourEditorIs": "लागू नहीं हुआ। आपका एडिटर वैसा ही है।",
+        "searchingTheFrames": "आधिकारिक फ़्रेम खोज रहे हैं…",
+        "couldntSearchTheFrames": "फ़्रेम खोज नहीं पाए",
+        "foundFramesForQuery": "{count, plural, =0 {“{query}” के लिए कोई आधिकारिक फ़्रेम नहीं मिला} one {“{query}” के लिए # आधिकारिक फ़्रेम मिला:} other {“{query}” के लिए # आधिकारिक फ़्रेम मिले:}}"
       },
       "aiBotBadge": {
         "qrdxAi": "QRdx AI"

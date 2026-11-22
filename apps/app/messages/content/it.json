@@ -1169,9 +1169,9 @@
     "status": "machine",
     "context": "qrTypes.types.text.steps.2"
   },
-  "5abb6df7a20e": {
-    "source": "Download the code as PNG, WebP or SVG.",
-    "text": "Scarica il codice in PNG, WebP o SVG.",
+  "7fe0c71abc28": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
+    "text": "Scarica il codice in formato PNG, SVG, WebP, GIF, BMP o ICO.",
     "status": "machine",
     "context": "qrTypes.types.text.steps.3"
   },
@@ -2165,9 +2165,9 @@
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.2"
   },
-  "5c11d4be5401": {
-    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
-    "text": "Scarica un PNG, WebP o SVG, oppure personalizza lo stile del codice nell'editor completo.",
+  "d046bc78405e": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
+    "text": "Scarica un file PNG, SVG, WebP, GIF, BMP o ICO, oppure personalizza lo stile del codice nell'editor completo.",
     "status": "machine",
     "context": "qrTypes.types.instagram.steps.3"
   },
@@ -30850,5 +30850,17 @@
     "text": "QRdx non salva il tuo prompt, l'immagine di riferimento né le immagini generate: conta soltanto i tuoi crediti. Il prompt, l'immagine del QR code e l'eventuale immagine di riferimento vengono inviati tramite Vercel AI Gateway a GPT Image 2 di OpenAI per creare l'opera, e il risultato torna direttamente al tuo browser, quindi scarica quelle che vuoi conservare.",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
+  },
+  "5abb6df7a20e": {
+    "source": "Download the code as PNG, WebP or SVG.",
+    "text": "Scarica il codice in PNG, WebP o SVG.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "5c11d4be5401": {
+    "source": "Download a PNG, WebP or SVG, or style the code in the full editor.",
+    "text": "Scarica un PNG, WebP o SVG, oppure personalizza lo stile del codice nell'editor completo.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
   }
 }
