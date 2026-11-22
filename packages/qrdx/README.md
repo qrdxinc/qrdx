@@ -11,7 +11,7 @@ npm install qrdx
 # or: pnpm add qrdx / yarn add qrdx
 ```
 
-`react` and `react-dom` (18 or newer) are optional peer dependencies: the React components need them, and [`qrdx/vanilla` and `qrdx/core`](#without-react-qrdxvanilla-and-qrdxcore) don't. PDF export also needs the optional `jspdf` peer, and PNG export in Node (`getQRAsPNG`, imported from `qrdx/node`) needs one of the optional rasterizer peers (`@resvg/resvg-js` draws the SVG — logos included — the way browsers do; `sharp` also works):
+`react` (16.8 or newer) is an optional peer dependency: the React components need it, and [`qrdx/vanilla` and `qrdx/core`](#without-react-qrdxvanilla-and-qrdxcore) don't. qrdx never imports `react-dom`. PDF export also needs the optional `jspdf` peer, and PNG export in Node (`getQRAsPNG`, imported from `qrdx/node`) needs one of the optional rasterizer peers (`@resvg/resvg-js` draws the SVG — logos included — the way browsers do; `sharp` also works):
 
 ```bash
 npm install jspdf

@@ -12,7 +12,7 @@ This page lists what `qrdx` exports, by entry point and by task, with each prop'
 
 | Import from | What it has | Needs |
 | --- | --- | --- |
-| `qrdx` | The React components (`QRCode`, `QRCodeSVG`, `QRCodeCanvas`, `getQRAsSVG`) plus everything in `qrdx/core` | `react`, `react-dom` |
+| `qrdx` | The React components (`QRCode`, `QRCodeSVG`, `QRCodeCanvas`, `getQRAsSVG`) plus everything in `qrdx/core` | `react` 16.8 or newer |
 | `qrdx/core` | The whole engine without React: markup, downloads, print files, the scan score, frames, templates, art and types | Nothing |
 | `qrdx/vanilla` | `createQRCode`, plus `qrdx/core` | A DOM |
 | `qrdx/element` | The `<qrdx-code>` custom element: `QRdxCodeElement`, `defineQRdxCode`, `toQRdxCodeHTML` | A DOM to draw; nothing to render markup |

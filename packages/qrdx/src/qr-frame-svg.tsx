@@ -1,5 +1,4 @@
-import type { JSX } from "react";
-import type { QRFrameSVGProps } from "../types/react";
+import type { QRFrameSVGProps, ReactQRElement } from "../types/react";
 import { createFrameTree } from "./frame";
 import { type QRNode, withElementFactory } from "./jsx/runtime";
 import { REACT_ELEMENTS } from "./react-elements";
@@ -16,11 +15,11 @@ export function QRFrameSVG({
   bgColor,
   slot,
   ...svgProps
-}: QRFrameSVGProps): JSX.Element {
+}: QRFrameSVGProps): ReactQRElement {
   // Drawn with React's elements, the tree's nodes are React elements: the
   // slot is placed with React's cloneElement.
   const node = slot as unknown as QRNode | undefined;
   return withElementFactory(REACT_ELEMENTS, () =>
     createFrameTree({ frame, size, bgColor, slot: node, svgProps })
-  ) as unknown as JSX.Element;
+  ) as unknown as ReactQRElement;
 }

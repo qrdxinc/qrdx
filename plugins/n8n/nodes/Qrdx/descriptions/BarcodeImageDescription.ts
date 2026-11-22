@@ -72,6 +72,12 @@ export const barcodeImageFields: INodeProperties[] = [
           "Small square 2D code for parts and labels; any text up to 1,000 characters",
       },
       {
+        name: "DotCode",
+        value: "dotcode",
+        description:
+          "Dot-based 2D code for high-speed inkjet on tobacco packs and medicines; up to about 390 letters or 780 digits",
+      },
+      {
         name: "EAN-13",
         value: "ean13",
         description:
@@ -141,6 +147,12 @@ export const barcodeImageFields: INodeProperties[] = [
         value: "upce",
         description:
           "A UPC-A number shortened for small packs; 6 to 8 digits, or a 12-digit UPC-A that can be shortened",
+      },
+      {
+        name: "USPS Intelligent Mail",
+        value: "intelligent-mail",
+        description:
+          "US letters and flats: the 20-digit tracking code and a 0-, 5-, 9- or 11-digit routing ZIP Code, like 01 234 567094 987654321 01234-5678-91",
       },
     ],
     default: "ean13",

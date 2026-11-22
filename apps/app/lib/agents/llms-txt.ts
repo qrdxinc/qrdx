@@ -380,7 +380,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     {
       title: "Barcode generator",
       url: "/barcode-generator",
-      description: `${PRODUCT_FACTS.barcodeFormats} static barcode formats (${BARCODE_FORMATS.map((format) => format.label).join(", ")}) with check digits and a scan check, as PNG, JPG, WebP, AVIF, BMP, SVG, PDF or EPS; no account needed, and signed in you can save barcodes to the dashboard`,
+      description: `${PRODUCT_FACTS.barcodeFormats} static barcode formats (${BARCODE_FORMATS.map((format) => format.label).join(", ")}) with check digits and a scan check (except DotCode and USPS Intelligent Mail, which no reader there decodes), as PNG, JPG, WebP, AVIF, BMP, SVG, PDF or EPS; no account needed, and signed in you can save barcodes to the dashboard`,
     },
     {
       title: "QR code generators by type",

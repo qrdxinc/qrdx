@@ -10,8 +10,17 @@
  * Copyright (c) Paul O'Shannessy
  * SPDX-License-Identifier: ISC
  */
-import { type JSX, useEffect, useRef, useState } from "react";
-import type { QRPropsCanvas } from "../types/react";
+// createElement rather than JSX: compiled JSX would import
+// react/jsx-runtime, which React has had only since 16.14.
+import {
+  createElement,
+  Fragment,
+  type ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import type { QRPropsCanvas, ReactQRElement } from "../types/react";
 import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
@@ -35,7 +44,7 @@ import {
 } from "./utils";
 import { getSolidColor } from "./utils/color";
 
-export function QRCodeCanvas(props: QRPropsCanvas) {
+export function QRCodeCanvas(props: QRPropsCanvas): ReactQRElement {
   const {
     value,
     size = DEFAULT_SIZE,
@@ -233,31 +242,29 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
   });
 
   const canvasStyle = { height: outputHeight, width: outputWidth, ...style };
-  let img: JSX.Element | null = null;
+  let img: ReactElement | null = null;
   if (imgSrc != null) {
-    img = (
-      <img
-        alt="QR code"
-        key={imgSrc}
-        onLoad={() => {
-          setIsImageLoaded(true);
-        }}
-        ref={_image}
-        src={imgSrc}
-        style={{ display: "none" }}
-      />
-    );
+    img = createElement("img", {
+      alt: "QR code",
+      key: imgSrc,
+      onLoad: () => {
+        setIsImageLoaded(true);
+      },
+      ref: _image,
+      src: imgSrc,
+      style: { display: "none" },
+    });
   }
-  return (
-    <>
-      <canvas
-        height={outputHeight}
-        ref={_canvas}
-        style={canvasStyle}
-        width={outputWidth}
-        {...otherProps}
-      />
-      {img}
-    </>
+  return createElement(
+    Fragment,
+    null,
+    createElement("canvas", {
+      height: outputHeight,
+      ref: _canvas,
+      style: canvasStyle,
+      width: outputWidth,
+      ...otherProps,
+    }),
+    img
   );
 }

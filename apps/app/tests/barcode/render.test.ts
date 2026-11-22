@@ -65,8 +65,10 @@ describe("renderBarcodeSVG", () => {
         ...STYLE,
         quietZone: 5,
       });
-      expect(five.widthUnits - none.widthUnits).toBe(
+      // Intelligent Mail's module is 1.44 units, rounded to whole pixels.
+      expect(five.widthUnits - none.widthUnits).toBeCloseTo(
         2 * 5 * MODULE_UNITS[format.id],
+        Number.isInteger(MODULE_UNITS[format.id]) ? 6 : 0,
       );
     }
   });

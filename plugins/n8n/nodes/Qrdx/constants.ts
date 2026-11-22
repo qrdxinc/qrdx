@@ -156,9 +156,11 @@ export const BARCODE_FORMATS = [
   "gs1-128",
   "gs1-databar",
   "gs1-databar-expanded",
+  "intelligent-mail",
   "datamatrix",
   "pdf417",
   "aztec",
+  "dotcode",
 ] as const;
 export type BarcodeFormat = (typeof BARCODE_FORMATS)[number];
 

@@ -246,7 +246,7 @@ export const developers: IntegrationCatalogEntry[] = [
     steps: [
       {
         title: "Install the package",
-        body: "react and react-dom 18 or newer are peer dependencies.",
+        body: "react 16.8 or newer is a peer dependency.",
         snippet: {
           label: "Terminal",
           language: "bash",

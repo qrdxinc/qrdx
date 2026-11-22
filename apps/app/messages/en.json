@@ -2373,7 +2373,7 @@
     "crumb": "Barcode generator",
     "title": "Free barcode generator",
     "intro1": "Make retail, shipping and inventory barcodes in {count, number} formats, from EAN-13 and UPC-A to Code 128, GS1-128, ITF-14 and Data Matrix. Type the number and the check digit is worked out for you; a wrong one is caught before you print.",
-    "intro2": "Each barcode is drawn and scan-checked in your browser, then saved as PNG or JPG for screens, or as SVG, PDF and EPS for print. It's free, with no account and no watermark. Sign in to keep barcodes in your dashboard and edit them later.",
+    "intro2": "Each barcode is drawn in your browser and scan-checked there (all but DotCode and USPS Intelligent Mail, which no reader here decodes), then saved as PNG or JPG for screens, or as SVG, PDF and EPS for print. It's free, with no account and no watermark. Sign in to keep barcodes in your dashboard and edit them later.",
     "toolLabel": "Barcode generator",
     "formatsEyebrow": "Formats",
     "whichTitle": "Which barcode should I use?",
@@ -2459,7 +2459,8 @@
       "passed": "Scan check passed: a barcode reader decodes the PNG as {label} <mono>{value}</mono>",
       "addOnNotChecked": "This check reads the EAN-13 only, not the add-on {addOn}: scan a test print with a scanner that reads add-ons.",
       "mismatch": "Scan check failed: the reader got \"{decoded}\" instead of this {label}.",
-      "failed": "Scan check failed: the reader couldn't decode this {label}. Raise the contrast, the size or the quiet zone."
+      "failed": "Scan check failed: the reader couldn't decode this {label}. Raise the contrast, the size or the quiet zone.",
+      "unchecked": "Not scan-checked: the reader this check uses doesn't decode {label}. Before you print, test the barcode with a reader that supports {label}."
     },
     "save": {
       "signIn": "<link>Sign in</link> to save barcodes to your dashboard and edit them later.",
@@ -2501,6 +2502,11 @@
       "gs1TooLong": "GS1-128 holds up to {max} characters of AIs and data; this has {count}. Split it over two barcodes.",
       "databarGtinOnly": "GS1 DataBar holds only a GTIN: (01) and its 14 digits. For dates, a batch or a weight, use GS1 DataBar Expanded or GS1-128.",
       "databarTooLong": "GS1 DataBar Expanded holds up to {max} digits of AIs and data, and fewer when there are letters; this has {count} characters. Remove an AI or shorten a value.",
+      "imbEnter": "Enter the 20-digit tracking code, then the routing ZIP Code if there is one.",
+      "imbTrackingLength": "The tracking code has 20 digits: barcode ID (2), service type (3), mailer ID and serial number (15). This has {count, plural, one {# digit} other {# digits}}.",
+      "imbRoutingLength": "After the 20-digit tracking code comes the routing ZIP Code: 5 digits, 9 (ZIP+4) or 11 (ZIP+4 and delivery point). This has {count, plural, one {# digit} other {# digits}} after the tracking code.",
+      "imbBarcodeId": "The barcode ID (the first 2 digits) ends in 0 to 4; this one is {id}.",
+      "imbFields": "Barcode ID {barcodeId}, service type {serviceType}, mailer ID {mailerId}, serial number {serial}, {routing, select, none {no routing code} other {routing code {routing}}}.",
       "isbnChars": "An ISBN takes digits, hyphens and spaces; an ISBN-10 can end in X.",
       "isbnLength": "An ISBN has 13 digits, or 10 in the old ISBN-10 form; this has {count, plural, one {# digit} other {# digits}}.",
       "isbnPrefix": "An ISBN-13 starts with 978 or 979.",

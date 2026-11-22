@@ -10,6 +10,7 @@ import {
   expandUpce,
   GS1_128_MAX_DATA,
   gs1CheckDigit,
+  isScanCheckable,
   publicationEan13,
   splitBarcodeValue,
   validateBarcodeInput,
@@ -46,9 +47,11 @@ describe("BARCODE_FORMATS", () => {
       "GS1-128",
       "GS1 DataBar",
       "GS1 DataBar Expanded",
+      "USPS Intelligent Mail",
       "Data Matrix",
       "PDF417",
       "Aztec",
+      "DotCode",
     ]);
     for (const format of BARCODE_FORMATS) {
       expect(validateBarcodeInput(format.id, format.example)).toMatchObject({
@@ -57,8 +60,24 @@ describe("BARCODE_FORMATS", () => {
       expect(format.quietZone.default).toBeGreaterThanOrEqual(
         format.quietZone.min,
       );
-      expect(format.detectorFormats.length).toBeGreaterThan(0);
-      expect(Boolean(format.barHeightMm)).toBe(format.kind === "linear");
+      expect(Boolean(format.barHeightMm || format.fixedBarHeightMm)).toBe(
+        format.kind === "linear",
+      );
+    }
+  });
+
+  it("names a reader format for every symbology but the two no reader here decodes", () => {
+    // DotCode and Intelligent Mail: neither the scanner's reader (ZXing in
+    // barcode-detector) nor zbar decodes them, so they have no reader names
+    // and the scan check reports them unchecked (tests/barcode/decode.test.ts).
+    const unchecked = BARCODE_FORMATS.filter(
+      (format) => !isScanCheckable(format.id),
+    ).map((format) => format.id);
+    expect(unchecked).toEqual(["intelligent-mail", "dotcode"]);
+    for (const format of BARCODE_FORMATS) {
+      expect(format.detectorFormats.length > 0).toBe(
+        !unchecked.includes(format.id),
+      );
     }
   });
 });
@@ -340,12 +359,76 @@ describe("GS1 DataBar Expanded", () => {
   });
 });
 
+describe("USPS Intelligent Mail", () => {
+  // USPS-B-3200's worked examples: one tracking code with each routing length.
+  const tracking = "01234567094987654321";
+
+  it("takes the tracking code and a 0-, 5-, 9- or 11-digit routing code", () => {
+    for (const routing of ["", "01234", "012345678", "01234567891"]) {
+      expect(ok("intelligent-mail", tracking + routing).value).toBe(
+        tracking + routing,
+      );
+    }
+    // Spaces and hyphens, as the digits are often printed, are dropped.
+    expect(
+      ok("intelligent-mail", " 01 234 567094 987654321 01234-5678-91 ").value,
+    ).toBe("0123456709498765432101234567891");
+  });
+
+  it("names each field in a note, with a 6- or 9-digit mailer ID", () => {
+    expect(ok("intelligent-mail", `${tracking}01234567891`).note).toBe(
+      "Barcode ID 01, service type 234, mailer ID 567094, serial number 987654321, routing code 01234-5678-91.",
+    );
+    expect(ok("intelligent-mail", "00700901234567000123").note).toBe(
+      "Barcode ID 00, service type 700, mailer ID 901234567, serial number 000123, no routing code.",
+    );
+    expect(ok("intelligent-mail", `${tracking}012345678`).note).toMatch(
+      /routing code 01234-5678\.$/,
+    );
+    expect(ok("intelligent-mail", `${tracking}01234`).note).toMatch(
+      /routing code 01234\.$/,
+    );
+  });
+
+  it("says which field is wrong", () => {
+    expect(error("intelligent-mail", "")).toBe(
+      "Enter the 20-digit tracking code, then the routing ZIP Code if there is one.",
+    );
+    expect(error("intelligent-mail", `${tracking}0123A`)).toBe(
+      "USPS Intelligent Mail takes digits only.",
+    );
+    expect(error("intelligent-mail", tracking.slice(0, 19))).toBe(
+      "The tracking code has 20 digits: barcode ID (2), service type (3), mailer ID and serial number (15). This has 19 digits.",
+    );
+    expect(error("intelligent-mail", `${tracking}012`)).toBe(
+      "After the 20-digit tracking code comes the routing ZIP Code: 5 digits, 9 (ZIP+4) or 11 (ZIP+4 and delivery point). This has 3 digits after the tracking code.",
+    );
+    expect(error("intelligent-mail", `${tracking}012345678901`)).toMatch(
+      /This has 12 digits after the tracking code/,
+    );
+    // The barcode ID's second digit is 0 to 4; bwip-js would draw a 05.
+    expect(error("intelligent-mail", `05${tracking.slice(2)}`)).toBe(
+      "The barcode ID (the first 2 digits) ends in 0 to 4; this one is 05.",
+    );
+    expect(ok("intelligent-mail", `94${tracking.slice(2)}`).value).toBe(
+      `94${tracking.slice(2)}`,
+    );
+  });
+});
+
 describe("2D formats", () => {
   it("take any text, including Unicode and line breaks, up to the limit", () => {
-    for (const id of ["datamatrix", "pdf417", "aztec"] as const) {
+    for (const id of ["datamatrix", "pdf417", "aztec", "dotcode"] as const) {
       expect(ok(id, "héllo ✓\nline two").value).toBe("héllo ✓\nline two");
+    }
+    for (const id of ["datamatrix", "pdf417", "aztec"] as const) {
       expect(error(id, "x".repeat(1001))).toMatch(/up to 1,000 characters/);
     }
+    // DotCode's real limit is the size drawn (tests/barcode/dotcode.test.ts);
+    // the field stops at 800 characters, past the 784 digits that fit.
+    expect(error("dotcode", "1".repeat(801))).toBe(
+      "DotCode here takes up to 800 characters; this has 801.",
+    );
   });
 });
 
@@ -677,6 +760,12 @@ describe("issue codes (the generator translates by code)", () => {
       ["gs1-128", "(01)09501101530004"],
       ["gs1-databar", "(10)AB-123"],
       ["gs1-databar", "(01)09501101530004"],
+      ["intelligent-mail", ""],
+      ["intelligent-mail", "0123456709498765432x"],
+      ["intelligent-mail", "012345"],
+      ["intelligent-mail", "01234567094987654321012"],
+      ["intelligent-mail", "07234567094987654321"],
+      ["dotcode", ""],
       [
         "gs1-databar-expanded",
         `(21)${"1".repeat(20)}(10)${"2".repeat(20)}(240)${"3".repeat(30)}`,
@@ -732,6 +821,22 @@ describe("issue codes (the generator translates by code)", () => {
     expect(issn.ok && issn.notes?.map((note) => note.code)).toEqual([
       "checkDigitAdded",
       "issnVariantAssumed",
+    ]);
+    const imb = validateBarcodeInput(
+      "intelligent-mail",
+      "01234567094987654321",
+    );
+    expect(imb.ok && imb.notes).toEqual([
+      {
+        code: "imbFields",
+        values: {
+          barcodeId: "01",
+          serviceType: "234",
+          mailerId: "567094",
+          serial: "987654321",
+          routing: "none",
+        },
+      },
     ]);
   });
 });
