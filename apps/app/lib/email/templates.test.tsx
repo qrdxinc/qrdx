@@ -78,12 +78,15 @@ function assertSecurityLinks(html: string, label: string) {
   assert.equal(review, 1, `${label} has one Review security button`);
 }
 
-/** Device, place, address and time, in the details table. */
+/**
+ * Device, place, address and time, in the details table (each row a table
+ * in the plain text: the label, three spaces, the value).
+ */
 function assertDetails(text: string, label: string) {
-  assert.match(text, /Device:\s+Chrome on macOS/, label);
-  assert.match(text, /Approximate location:\s+Mumbai, India/, label);
-  assert.match(text, /IP address:\s+203\.0\.113\.24/, label);
-  assert.match(text, /Time:\s+Nov 7, 2026, 3:04 PM GMT\+5:30/, label);
+  assert.match(text, /Device {3}Chrome on macOS/, label);
+  assert.match(text, /Approximate location {3}Mumbai, India/, label);
+  assert.match(text, /IP address {3}203\.0\.113\.24/, label);
+  assert.match(text, /Time {3}Nov 7, 2026, 3:04 PM GMT\+5:30/, label);
   assert.match(text, /Review security/, label);
 }
 
@@ -172,7 +175,10 @@ describe("email templates", () => {
         email.key ?? "",
       );
       assert.match(text, /Unsubscribe/);
-      assert.match(html, /QR<span[^>]*>dx<\/span>/);
+      assert.match(
+        html,
+        /<img alt="QRdx"[^>]* src="https:\/\/qrdx\.dev\/email\/qrdx-logo\.png"/,
+      );
     }
   });
 
@@ -329,14 +335,18 @@ describe("email templates", () => {
     // The code renders large and letter-spaced (still copyable as one word).
     assert.match(html, /letter-spacing:0\.4em[^"]*"[^>]*>402871</);
     assert.match(html, /font-size:34px/);
-    // Only the plain site links from the layout: no query strings, no pixels.
+    // Only the plain site links from the layout: no query strings, and no
+    // image but the logo (no pixels).
     const hrefs = [...html.matchAll(/href="([^"]*)"/g)].map((m) => m[1]);
     assert.ok(hrefs.length > 0);
     for (const href of hrefs) {
       assert.equal(new URL(href).search, "", href);
       assert.equal(new URL(href).pathname, "/", href);
     }
-    assert.doesNotMatch(html, /<img/i);
+    const images = [...html.matchAll(/<img[^>]*\ssrc="([^"]*)"/gi)].map(
+      (m) => m[1],
+    );
+    assert.deepEqual(images, ["https://qrdx.dev/email/qrdx-logo.png"]);
   });
 
   it("sign-in code email says roughly where the code was asked for", async () => {
@@ -482,9 +492,9 @@ describe("email templates", () => {
         kind="support-off"
       />,
     );
-    assert.match(text, /By:\s+QRdx support/);
+    assert.match(text, /By {3}QRdx support/);
     assert.match(text, /signed it out on every device/);
-    assert.match(text, /Time:\s+Nov 7, 2026/);
+    assert.match(text, /Time {3}Nov 7, 2026/);
     assert.doesNotMatch(text, /Chrome on macOS|203\.0\.113\.24|Mumbai/);
     assert.doesNotMatch(text, /If this was you/);
   });
@@ -502,8 +512,8 @@ describe("email templates", () => {
         kind="on"
       />,
     );
-    assert.match(text, /Device:\s+Unknown device/);
-    assert.match(text, /Time:\s+Nov 7, 2026, 9:34 AM UTC/);
+    assert.match(text, /Device {3}Unknown device/);
+    assert.match(text, /Time {3}Nov 7, 2026, 9:34 AM UTC/);
     assert.doesNotMatch(text, /Approximate location|IP address/);
   });
 
@@ -539,7 +549,7 @@ describe("email templates", () => {
     // Headings come out in capitals in plain text.
     assert.match(text, new RegExp(NEW_SIGN_IN_SUBJECT, "i"));
     assertDetails(text, "new sign-in");
-    assert.match(text, /Signed in with:\s+Email code, then a passkey/);
+    assert.match(text, /Signed in with {3}Email code, then a passkey/);
     assert.match(text, /If this was you, there's nothing to do/);
     assert.match(text, /Sign out everywhere else/);
     assert.match(text, /Turn on two-step verification/);
@@ -602,7 +612,7 @@ describe("email templates", () => {
     assert.match(near.text, /Acme is close to a plan limit/i);
     assert.match(near.text, /Acme has used 45 of 50 form responses\./);
     assert.match(near.text, /Resets Dec 1\./);
-    assert.match(near.text, /Form responses:\s+45 of 50/);
+    assert.match(near.text, /Form responses {3}45 of 50/);
     assert.match(
       near.html,
       /href="https:\/\/qrdx\.dev\/dashboard\/acme\/settings\/usage"/,
