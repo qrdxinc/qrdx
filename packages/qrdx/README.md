@@ -1,6 +1,6 @@
 # qrdx
 
-Customizable QR codes for React and plain JavaScript: SVG and canvas rendering, dot and eye patterns, gradients, logos, call-to-action frames, Logo QR and Image QR art, PNG/JPG/WebP/SVG/PDF/EPS export, print-ready files, a scan score and QR scanning.
+Customizable QR codes for React and plain JavaScript: SVG and canvas rendering, dot and eye patterns, gradients, logos, call-to-action frames, Logo QR and Image QR art, PNG/JPG/WebP/SVG/PDF/EPS/TIFF export, print-ready files, a scan score and QR scanning.
 
 It powers the [QRdx](https://qrdx.dev) QR code generator. Docs: [qrdx.dev/docs](https://qrdx.dev/docs) · CLI: [`@qrdx/cli`](https://www.npmjs.com/package/@qrdx/cli) · No-code: [image API](https://qrdx.dev/docs/developers/image-api) and [MCP server](https://qrdx.dev/docs/developers/mcp)
 

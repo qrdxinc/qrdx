@@ -8,6 +8,7 @@ Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/
 - **Everywhere they were:** the React components, `qrdx/core`, `qrdx/vanilla`, `<qrdx-code>` (as properties; `toQRdxCodeHTML` keeps `customProps` in `props` and leaves the function out), the Angular inputs and the Vue, Preact and Solid components. `QRCodeCanvas` ignores them, as before. A `frame` is drawn around the template's artwork, and the scan score tests the code at the size the template draws it.
 - **Exported again:** the types `TemplateDefinition`, `TemplateConfig`, `TemplateNode` and `BaseTemplateProps`, `qrPropsSchema`'s `customProps`, and the schemas `baseTemplatePropsSchema`, `templateConfigSchema` and `templateDefinitionBaseSchema`. `TemplateDefinition` has no `spec`, which only the built-in templates had.
 - **The built-in templates stay frames.** `templateId` is still ignored, also when `customTemplate` is set, and `TEMPLATES`, `getTemplate`, `getAllTemplates`, `getTemplateIds`, the built-in definitions and `DotRingProps` stay removed. See 0.0.64 for the frames they became.
+- `@qrdx/cli` 0.0.20 fixes its help: the Halloween example uses `--frame pumpkin` (0.0.19's `--frame halloween` was refused), `qrdx batch --format` lists every format it writes (svg, png, webp, gif, bmp, ico, tiff, tiff-cmyk or eps; the help said svg, png or eps), and `--size` names TIFF among the pixel formats. Output is unchanged.
 
 ## 0.0.64
 

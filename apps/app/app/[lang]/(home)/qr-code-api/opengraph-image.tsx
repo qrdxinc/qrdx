@@ -21,7 +21,7 @@ export default async function Image({
     label: "Developers",
     title: "Free QR code API",
     description:
-      "One URL returns a styled QR code as SVG, PNG, WebP, GIF, BMP, ICO or EPS, with your colors and a logo.",
+      "One URL returns a styled QR code as SVG, PNG, WebP, GIF, BMP, ICO, TIFF or EPS, with your colors and a logo.",
     footer: `No key · ${PRODUCT_FACTS.imageApiPerMinute} requests a minute · Open source`,
   });
 }

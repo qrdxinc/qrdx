@@ -20,6 +20,6 @@ export default async function Image({
   return renderPageOgImage({
     label: "Tools",
     title: "Bulk QR codes from a CSV file",
-    description: `Up to ${MAX_BULK_ROWS.toLocaleString("en-US")} codes as PNG, SVG, WebP, GIF, BMP or ICO, zipped, made in your browser.`,
+    description: `Up to ${MAX_BULK_ROWS.toLocaleString("en-US")} codes as PNG, SVG, WebP, GIF, BMP, ICO or TIFF, zipped, made in your browser.`,
   });
 }
