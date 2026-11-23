@@ -79,9 +79,11 @@ import {
 import { LandingRender } from "../render";
 import { AddBlockMenu } from "./add-block-menu";
 import { BrandingSection } from "./branding-section";
+import { LeaveGuard } from "./leave-guard";
 import { PagePlanNote } from "./page-plan-line";
 import { PageSettingsEditor } from "./page-settings-editor";
 import { type SavedThemePalette, ThemeControls } from "./theme-controls";
+import { UnpublishedBar } from "./unpublished-bar";
 
 export interface PageEditorProps {
   page: {
@@ -1168,6 +1170,23 @@ export function PageEditor({
           </div>
         </div>
       </div>
+
+      {/* Unpublished changes: said wherever the editor is scrolled, and
+          asked about before a link leaves it (uploads aren't live until
+          they're published). */}
+      <UnpublishedBar
+        detail={
+          switchCode
+            ? `Scans still open ${switchCode.opensNow} until you publish.`
+            : code
+              ? "Scans open the last published version until you publish."
+              : "Your changes are kept in this browser until you publish."
+        }
+        onPublish={requestPublish}
+        open={dirty || Boolean(switchCode)}
+        publishing={isPublishing}
+      />
+      <LeaveGuard active={dirty && !isPublishing} />
 
       {/* Publishing with samples: say what's left, never block. */}
       <AlertDialog onOpenChange={setSamplesCheck} open={samplesCheck}>
