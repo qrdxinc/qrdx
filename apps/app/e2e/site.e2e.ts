@@ -37,6 +37,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { LOCALE_INFO, type Locale } from "@repo/i18n/config";
 import {
+  ENGLISH_ONLY_OUTSIDE_PATHS,
   ENGLISH_ONLY_PATHS,
   LOCALIZED_PATHS,
   localizePath,
@@ -1321,6 +1322,11 @@ const I18N_SAMPLES: Record<string, string> = {
   "/qr-codes-for/[slug]": "/qr-codes-for/restaurants",
   "/qr-codes-on/[slug]": "/qr-codes-on/business-cards",
   "/integrations/[slug]": "/integrations/zapier",
+  "/blog/[slug]": "/blog/do-qr-codes-expire",
+  "/blog/authors/[slug]": "/blog/authors/ritesh-bucha",
+  "/blog/category/[slug]": "/blog/category/company",
+  "/compare/[slug]": "/compare/qr-code-monkey",
+  "/legal/[[...slug]]": "/legal/privacy-policy",
 };
 
 const I18N_LOCALES: Locale[] = ["es", "ja", "de", "hi"];
@@ -1370,9 +1376,12 @@ async function testI18n(page: Page) {
     siteZoneGroups(process.env.SITE_ZONE_GROUPS),
   );
   const englishOnly = [
-    ...samples(
-      ENGLISH_ONLY_PATHS.filter((path) => !siteTranslated.includes(path)),
-    ).map((path) => ({
+    // And the English-only pages outside app/[lang] (the blog, the
+    // comparisons' pages, the legal pages): /es/blog → /blog, never a 404.
+    ...samples([
+      ...ENGLISH_ONLY_PATHS.filter((path) => !siteTranslated.includes(path)),
+      ...ENGLISH_ONLY_OUTSIDE_PATHS,
+    ]).map((path) => ({
       from: path === "/" ? "/es" : `/es${path}?from=e2e`,
       to: path === "/" ? "/" : `${path}?from=e2e`,
     })),

@@ -190,17 +190,34 @@ export function shapeMismatch(
   return numberMismatch(a.text, b.text);
 }
 
+/** A comma, point or narrow space between digits, before exactly three: grouping. */
+const GROUPING = /(\d)[,.\u00a0\u202f](?=\d{3}(?!\d))/g;
+/** A plain space in the same place: grouping in some languages ("1 000"), not always. */
+const SPACE_GROUPING = /(\d) (?=\d{3}(?!\d))/g;
+
+const digitRuns = (text: string) => text.match(/\d+/g) ?? [];
+
 /**
  * Every number the English states appears in the translation: nothing
- * dropped or invented in a figure (honest copy). For plain text (no ICU),
- * such as lib/i18n/content.ts strings.
+ * dropped or invented in a figure (honest copy). Each language groups
+ * digits its own way ("1,000" is "1000" in Spanish, "10,000" is "10.000",
+ * "1 000" in French), so a number counts whole without its grouping, and a
+ * decimal whose fraction has three digits reads the same with a point or a
+ * comma ("0.495", "0,495"). A translation's numbers count as written, too:
+ * a plain space may only separate two numbers ("EAN-13 977"). For plain
+ * text (no ICU), such as lib/i18n/content.ts strings.
  */
 export function numberMismatch(
   source: string,
   translation: string,
 ): string | null {
-  const theirs = new Set(translation.match(/\d+/g) ?? []);
-  for (const number of source.match(/\d+/g) ?? []) {
+  const ungrouped = translation.replace(GROUPING, "$1");
+  const theirs = new Set([
+    ...digitRuns(translation),
+    ...digitRuns(ungrouped),
+    ...digitRuns(ungrouped.replace(SPACE_GROUPING, "$1")),
+  ]);
+  for (const number of digitRuns(source.replace(GROUPING, "$1"))) {
     if (!theirs.has(number)) return `the number ${number} is missing`;
   }
   return null;
