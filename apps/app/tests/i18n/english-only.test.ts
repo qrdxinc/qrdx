@@ -1,7 +1,9 @@
 // The marketing pages are English only (owner, 17 Nov 2026). Through the
 // real next.config.ts, as Next matches it: their translated URLs redirect
 // to the English page with the query kept (308; 307 for the generator pages
-// the site can serve in every language), on QRdx's own hosts only; the English URLs still render the pages under app/[lang]; the
+// the site can serve in every language), on QRdx's own hosts only, the
+// English-only pages outside app/[lang] too; the English URLs still render
+// the pages under app/[lang]; the
 // playground, /ai, /ai/art, /mcp and (until the owner decides) the scanner
 // stay translated. The home page cases
 // are in tests/lib/home-redirect.test.ts and home-rewrite.test.ts.
@@ -45,10 +47,6 @@ describe("next.config.ts, English-only marketing pages", () => {
     ["https://qrdx.dev/de/qr-code-api", "https://qrdx.dev/qr-code-api"],
     // Dynamic segments.
     [
-      "https://qrdx.dev/fr/barcode-generator/ean-13",
-      "https://qrdx.dev/barcode-generator/ean-13",
-    ],
-    [
       "https://qrdx.dev/it/qr-codes-for/restaurants",
       "https://qrdx.dev/qr-codes-for/restaurants",
     ],
@@ -77,6 +75,25 @@ describe("next.config.ts, English-only marketing pages", () => {
       "https://qrdx-git-x.vercel.app/pricing",
     ],
     ["http://localhost:3000/es/pricing", "http://localhost:3000/pricing"],
+    // The English-only pages outside app/[lang], never translated: the blog,
+    // the comparisons' pages, the legal pages and the rest.
+    ["https://qrdx.dev/es/compare/uniqode", "https://qrdx.dev/compare/uniqode"],
+    ["https://qrdx.dev/ja/blog?ref=x", "https://qrdx.dev/blog?ref=x"],
+    [
+      "https://qrdx.dev/de/blog/do-qr-codes-expire",
+      "https://qrdx.dev/blog/do-qr-codes-expire",
+    ],
+    ["https://qrdx.dev/fr/blog/rss.xml", "https://qrdx.dev/blog/rss.xml"],
+    ["https://qrdx.dev/hi/legal", "https://qrdx.dev/legal"],
+    [
+      "https://qrdx.dev/it/legal/privacy-policy",
+      "https://qrdx.dev/legal/privacy-policy",
+    ],
+    ["https://qrdx.dev/ko/changelogs", "https://qrdx.dev/changelogs"],
+    [
+      "https://qrdx.dev/id/qr-code-tracking",
+      "https://qrdx.dev/qr-code-tracking",
+    ],
   ])("redirects %s to %s with a 308", async (url, location) => {
     const response = await respond(url);
     expect(response.status).toBe(308);
@@ -84,8 +101,9 @@ describe("next.config.ts, English-only marketing pages", () => {
   });
 
   // The generator pages the site serves in every language while its group
-  // is on (none is here): their redirect to English stays a 307, which
-  // nobody keeps, so switching the group back on is never stuck behind it.
+  // is on (none is here): the QR code generators and the barcode
+  // generators. Their redirect to English stays a 307, which nobody keeps,
+  // so switching the group back on is never stuck behind it.
   it.each([
     [
       "https://qrdx.dev/ja/qr-code-generator",
@@ -98,6 +116,18 @@ describe("next.config.ts, English-only marketing pages", () => {
     [
       "https://qrdx.dev/ja/qr-code-generator/wifi?x=1",
       "https://qrdx.dev/qr-code-generator/wifi?x=1",
+    ],
+    [
+      "https://qrdx.dev/ja/barcode-generator",
+      "https://qrdx.dev/barcode-generator",
+    ],
+    [
+      "https://qrdx.dev/ja/barcode-generator/ean-13",
+      "https://qrdx.dev/barcode-generator/ean-13",
+    ],
+    [
+      "https://qrdx.dev/fr/barcode-generator/ean-13?x=1",
+      "https://qrdx.dev/barcode-generator/ean-13?x=1",
     ],
   ])("redirects %s to %s with a 307 only", async (url, location) => {
     const response = await respond(url);

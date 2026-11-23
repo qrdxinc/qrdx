@@ -638,29 +638,42 @@ describe("next.config.ts routing", () => {
     }
     const permanent = (path: string) =>
       rules.find((rule) => matches(rule.source, path))?.permanent;
-    // 308: nobody asks for these URLs back.
+    // 308: nobody asks for these URLs back, the pages outside app/[lang]
+    // (never translated) included.
     for (const path of [
       "/es",
       "/es/home",
       "/es/pricing",
-      "/ja/barcode-generator/ean-13",
       "/it/qr-codes-for/restaurants",
       "/fr/compare",
+      "/es/compare/uniqode",
+      "/ja/blog",
+      "/de/blog/rss.xml",
+      "/hi/legal/privacy-policy",
+      "/ko/qr-code-tracking",
     ]) {
       expect(permanent(path), path).toBe(true);
     }
     // 307: the site serves these in every language while its group is on,
-    // so a redirect to English is only ever temporary.
+    // so a redirect to English is only ever temporary: the QR code
+    // generators and the barcode generators (barcodes-i18n).
     for (const path of [
       "/es/qr-code-generator",
       "/ja/qr-code-generator/wifi",
+      "/es/barcode-generator",
+      "/ja/barcode-generator/ean-13",
     ]) {
       expect(permanent(path), path).toBe(false);
     }
     expect(
-      rules.filter((rule) => !rule.permanent).map((rule) => rule.destination),
+      rules
+        .filter((rule) => !rule.permanent)
+        .map((rule) => rule.destination)
+        .sort(),
     ).toEqual(
-      SITE_TRANSLATED_PATHS.map((path) => path.replace("[type]", ":type")),
+      SITE_TRANSLATED_PATHS.map((path) =>
+        path.replace("[type]", ":type").replace("[format]", ":format"),
+      ).sort(),
     );
     const target = (path: string) =>
       rules.find((rule) => matches(rule.source, path))?.destination;

@@ -39,6 +39,7 @@ import { LOCALE_INFO, type Locale } from "@repo/i18n/config";
 import {
   ENGLISH_ONLY_OUTSIDE_PATHS,
   ENGLISH_ONLY_PATHS,
+  isSiteTranslatedPath,
   LOCALIZED_PATHS,
   localizePath,
 } from "@repo/i18n/paths";
@@ -1367,32 +1368,33 @@ async function testI18n(page: Page) {
     ];
   });
   // The marketing pages are English only: their old translated URLs
-  // redirect to the English page, query kept (307 until the 7-day watch).
-  // But the generators, while the site serves them in every language (its
-  // generators-i18n group, named in SITE_ZONE_GROUPS with SITE_ORIGIN set
-  // for this run as for the server): those URLs are the site's pages then.
+  // redirect to the English page, query kept, permanently (308), as do the
+  // English-only pages outside app/[lang] (the blog, the comparisons' pages,
+  // the legal pages): /es/blog → /blog, never a 404. The generator pages
+  // the site can serve in every language redirect with a 307 while their
+  // group is off; while it's on (named in SITE_ZONE_GROUPS with SITE_ORIGIN
+  // set for this run as for the server), those URLs are the site's pages.
   const siteTranslated = siteTranslatedPaths(
     process.env.SITE_ORIGIN,
     siteZoneGroups(process.env.SITE_ZONE_GROUPS),
   );
   const englishOnly = [
-    // And the English-only pages outside app/[lang] (the blog, the
-    // comparisons' pages, the legal pages): /es/blog → /blog, never a 404.
     ...samples([
       ...ENGLISH_ONLY_PATHS.filter((path) => !siteTranslated.includes(path)),
       ...ENGLISH_ONLY_OUTSIDE_PATHS,
     ]).map((path) => ({
       from: path === "/" ? "/es" : `/es${path}?from=e2e`,
       to: path === "/" ? "/" : `${path}?from=e2e`,
+      status: isSiteTranslatedPath(path) ? 307 : 308,
     })),
-    { from: "/ja/home", to: "/home" },
+    { from: "/ja/home", to: "/home", status: 308 },
   ];
-  await pool(englishOnly, HTTP_CONCURRENCY, async ({ from, to }) => {
+  await pool(englishOnly, HTTP_CONCURRENCY, async ({ from, to, status }) => {
     await check("i18n", `${from} redirects to ${to}`, async () => {
       const response = await get(from);
       const location = response.headers.get("location");
       return [
-        response.status === 307 && location === to,
+        response.status === status && location === to,
         `${response.status} ${location}`,
       ];
     });
