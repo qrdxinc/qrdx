@@ -29,7 +29,8 @@ import { INVITE_MAX_REWARDED_FRIENDS } from "./terms";
 //   Dynamic toggle resumes right after signing in) can already be there;
 // - a code's safety checks clear: the Web Risk look-up that was still
 //   pending when it was made (lib/safety/recheck.ts), or an admin switching
-//   a held code back on.
+//   a held code back on (here, or in the back-office console, which asks
+//   through settleInviteForCode).
 //
 // What counts: a code of the friend's that is switched on (a code held for a
 // safety check is saved switched off) and not waiting for its Web Risk
@@ -235,6 +236,41 @@ export async function settleInvite(
     logError(error as Error, { action: "invites.settle" });
   }
   return result;
+}
+
+/** What settling a code's owner found (settleInviteForCode). */
+export type CodeSettleOutcome =
+  | { outcome: "no_code" }
+  | (QualifyOutcome & { ownerId?: string });
+
+/**
+ * After the back-office console switched a code back on (its restore of a
+ * held or reported code, or its Enable): settles the code's owner's invite
+ * now, as this app's own admin action does after the response, rather than
+ * on the worker's next pass. The console sends the code's id only; its owner
+ * comes from the database, and whether anything counts is settleInvite's
+ * own reading of the database, so calling it again changes nothing. Never
+ * throws.
+ */
+export async function settleInviteForCode(
+  codeId: string,
+  now: Date = new Date(),
+): Promise<CodeSettleOutcome> {
+  if (!isFeatureAvailable("inviteRewards")) return { outcome: "unavailable" };
+  let ownerId: string;
+  try {
+    const [code] = await db
+      .select({ userId: qrCode.userId })
+      .from(qrCode)
+      .where(eq(qrCode.id, codeId))
+      .limit(1);
+    if (!code) return { outcome: "no_code" };
+    ownerId = code.userId;
+  } catch (error) {
+    logError(error as Error, { action: "invites.settle_code" });
+    return { outcome: "error" };
+  }
+  return { ...(await settleInvite(ownerId, now)), ownerId };
 }
 
 /**
