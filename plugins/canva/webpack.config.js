@@ -1,6 +1,12 @@
 const path = require("node:path");
+const { transform } = require("@formatjs/ts-transformer");
 const { DefinePlugin, optimize } = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
+
+// The message IDs the bundle uses. `formatjs extract` (package.json) writes
+// dist/messages_en.json with the same pattern, so the IDs Canva's
+// translations are keyed by match the ones in app.js.
+const MESSAGE_ID_PATTERN = "[sha512:contenthash:base64:6]";
 
 /** @type {(env: Record<string, string>, argv: { mode?: string }) => import("webpack").Configuration & import("webpack-dev-server").Configuration} */
 function buildConfig(_env, argv) {
@@ -36,6 +42,13 @@ function buildConfig(_env, argv) {
               options: {
                 transpileOnly: true,
                 configFile: path.resolve(__dirname, "tsconfig.json"),
+                // Gives each react-intl message its ID, as Canva's
+                // localization requires (no hand-written IDs).
+                getCustomTransformers() {
+                  return {
+                    before: [transform({ overrideIdFn: MESSAGE_ID_PATTERN })],
+                  };
+                },
               },
             },
           ],
