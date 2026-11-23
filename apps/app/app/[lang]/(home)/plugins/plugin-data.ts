@@ -138,11 +138,9 @@ export const PLUGINS: PluginInfo[] = [
     sourceUrl: `${REPO}/tree/main/plugins/canva`,
     shots: [
       {
-        // This capture still shows the app's Templates row: replace the file
-        // (and its size here) once templates are gone from the app.
         src: `${SHOTS}/canva-editor.webp`,
         width: 1600,
-        height: 888,
+        height: 854,
         alt: "The QRdx app in Canva's side panel, with the URL, a preview and pattern thumbnails, next to a design with the code on its page.",
         caption: "Style the code in the side panel and add it to your page.",
       },

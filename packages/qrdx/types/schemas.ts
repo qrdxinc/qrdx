@@ -60,3 +60,8 @@ export {
   qrSilhouetteSchema,
   shadowSchema,
 } from "./qr";
+export {
+  baseTemplatePropsSchema,
+  templateConfigSchema,
+  templateDefinitionBaseSchema,
+} from "./template";

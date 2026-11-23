@@ -47,6 +47,8 @@ export interface QRdxCodeProperties {
   halo?: QRProps["halo"];
   shadow?: QRProps["shadow"];
   art?: QRProps["art"];
+  customTemplate?: QRProps["customTemplate"];
+  customProps?: QRProps["customProps"];
   /** Every option at once; the named properties and attributes win over it */
   props?: QRdxCodeOptions;
   /** What screen readers announce (default "QR code") */
@@ -126,15 +128,13 @@ const OPTION_KEYS: readonly OptionKey[] = [
   "halo",
   "shadow",
   "art",
+  "customTemplate",
+  "customProps",
 ];
 
 const LEVELS = new Set(["L", "M", "Q", "H"]);
-/** Template props the engine no longer reads (src/withdrawn-props.ts). */
-const WITHDRAWN_PROPS = new Set([
-  "templateId",
-  "customTemplate",
-  "customProps",
-]);
+/** The template prop the engine no longer reads (src/withdrawn-props.ts). */
+const WITHDRAWN_PROPS = new Set(["templateId"]);
 const DEFAULT_LABEL = "QR code";
 const ELEMENT_MARK: unique symbol = Symbol.for("qrdx.code-element");
 // Lowercase letter first and at least one hyphen. Written as dash-led
@@ -245,6 +245,8 @@ export class QRdxCodeElement extends BaseElement {
   declare imageSettings: QRdxCodeProperties["imageSettings"];
   declare eyeColors: QRdxCodeProperties["eyeColors"];
   declare art: QRdxCodeProperties["art"];
+  declare customTemplate: QRdxCodeProperties["customTemplate"];
+  declare customProps: QRdxCodeProperties["customProps"];
 
   readonly #root: ShadowRoot;
   readonly #values: Partial<Record<OptionKey, unknown>> = {};
@@ -582,6 +584,8 @@ export interface QRdxCodeHTMLOptions {
  * attributes (object options as JSON in `props`) and the drawn code in a
  * declarative shadow root, so it shows before any script runs and the
  * element takes over when it's defined. Works without a DOM.
+ * `customTemplate` can't be written as markup: set it as a property on the
+ * client.
  */
 export function toQRdxCodeHTML(
   options: QRSVGOptions,
@@ -592,10 +596,13 @@ export function toQRdxCodeHTML(
   }
   const current = compact(options as Record<string, unknown>);
   const { attributes, rest } = toAttributes(current);
-  // The template props qrdx 0.0.64 withdrew: the core drops them when it
-  // draws, so the markup leaves them out too
+  // A template's wrapper is a function, which JSON can't carry; templateId,
+  // withdrawn in qrdx 0.0.64, is dropped when the core draws, so the markup
+  // leaves it out too
   const serializable = Object.fromEntries(
-    Object.entries(rest).filter(([key]) => !WITHDRAWN_PROPS.has(key))
+    Object.entries(rest).filter(
+      ([key]) => key !== "customTemplate" && !WITHDRAWN_PROPS.has(key)
+    )
   );
   if (label !== undefined) {
     attributes.push(["label", label]);

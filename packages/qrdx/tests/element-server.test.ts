@@ -3,7 +3,7 @@
 // core's markup in a declarative shadow root.
 import { existsSync } from "node:fs";
 import { describe, expect, it as test } from "vitest";
-import { toSVGString } from "../src/core";
+import { h, toSVGString } from "../src/core";
 import * as source from "../src/element";
 import { getOfficialFrame } from "../src/frames/official";
 import type { QRSVGOptions } from "../types";
@@ -61,7 +61,7 @@ describe.each([
     expect(decodeQR(image)).toBe(VALUE);
   });
 
-  test("escapes attributes, leaves out withdrawn template props and checks the tag name", async () => {
+  test("escapes attributes, leaves out customTemplate and templateId, and checks the tag name", async () => {
     const api = await load();
     if (!api) return;
     const html = api.toQRdxCodeHTML(
@@ -70,12 +70,12 @@ describe.each([
         autoLevel: false,
         // Withdrawn in qrdx 0.0.64 (templates are frames): dropped
         templateId: "Arrow",
+        // A function, which JSON can't carry: set it as a property instead
         customTemplate: {
           id: "Mine",
           name: "Mine",
           wrapper: (children: unknown) => children,
         },
-        customProps: { label: "x" },
       } as Parameters<typeof api.toQRdxCodeHTML>[0],
       { tagName: "my-qr" }
     );
@@ -91,5 +91,43 @@ describe.each([
     expect(
       api.toQRdxCodeHTML({ value: "" }, { tagName: "my-qr" })
     ).not.toContain("<svg");
+  });
+
+  test("draws a custom template in the shadow root and keeps customProps in props", async () => {
+    const api = await load();
+    if (!api) return;
+    const options: QRSVGOptions = {
+      value: VALUE,
+      customTemplate: {
+        id: "Labelled",
+        name: "Labelled",
+        wrapper: (children, props) =>
+          h(
+            "svg",
+            { viewBox: "0 0 300 340", xmlns: "http://www.w3.org/2000/svg" },
+            h("g", { transform: "translate(20, 20) scale(0.87)" }, children),
+            h(
+              "text",
+              { x: "150", y: "325", textAnchor: "middle" },
+              props?.label
+            )
+          ),
+      },
+      customProps: { label: "Scan & go" },
+    };
+    const html = api.toQRdxCodeHTML(options);
+    const svg = toSVGString({
+      ...options,
+      part: "svg",
+      role: "img",
+      "aria-label": "QR code",
+    });
+    expect(html).toContain(svg);
+    expect(html).toContain("Scan &amp; go</text>");
+    const props = JSON.stringify({ customProps: options.customProps })
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;");
+    expect(html).toContain(` props="${props}">`);
+    expect(html).not.toContain("Labelled");
   });
 });
