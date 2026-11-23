@@ -11,7 +11,11 @@ import { type ReactNode, useRef, useState } from "react";
 import { ensureConfirmed } from "@/components/confirm-identity/actions";
 import { useConfirmation } from "@/components/confirm-identity/provider";
 import { OAuthAppLogo } from "@/components/oauth/oauth-app-logo";
-import { OAUTH_SCOPE_INFO, type OAuthScope } from "@/lib/oauth-scopes";
+import {
+  MCP_SCOPE_INFO,
+  OAUTH_SCOPE_INFO,
+  type OAuthScope,
+} from "@/lib/oauth-scopes";
 
 export function AuthorizeShell({ children }: { children: ReactNode }) {
   return (
@@ -41,11 +45,16 @@ export function OAuthRequestError({ description }: { description: string }) {
 export function ScopeList({
   appName,
   scopes,
+  mcpOnly = false,
 }: {
   appName: string;
   scopes: readonly OAuthScope[];
+  /** An app that registered itself: its token works on the MCP server only. */
+  mcpOnly?: boolean;
 }) {
   const t = useTranslations("app.oauth.authorize.oauthConsent");
+  const info = (scope: OAuthScope) =>
+    (mcpOnly ? MCP_SCOPE_INFO[scope] : undefined) ?? OAUTH_SCOPE_INFO[scope];
   return (
     <section aria-label={t("requestedPermissions")} className="space-y-2.5">
       <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
@@ -54,20 +63,25 @@ export function ScopeList({
       <ul className="divide-y rounded-lg border">
         {scopes.map((scope) => (
           <li className="space-y-0.5 px-3 py-2.5" key={scope}>
-            <p className="text-sm font-medium">
-              {OAUTH_SCOPE_INFO[scope].label}
-            </p>
+            <p className="text-sm font-medium">{info(scope).label}</p>
             <p className="text-muted-foreground text-xs">
-              {OAUTH_SCOPE_INFO[scope].consent}
+              {info(scope).consent}
             </p>
           </li>
         ))}
       </ul>
+      {mcpOnly && (
+        <p className="text-muted-foreground text-xs text-pretty">
+          {t("mcpOnlyNote", { appName })}
+        </p>
+      )}
     </section>
   );
 }
 
 export interface ConsentApp {
+  /** Registered itself through the MCP server: MCP tools only */
+  mcpOnly?: boolean;
   name: string;
   description: string | null;
   logoUrl: string | null;
@@ -209,7 +223,7 @@ export function OAuthConsent({
       )}
 
       <div className="mt-6">
-        <ScopeList appName={app.name} scopes={scopes} />
+        <ScopeList appName={app.name} mcpOnly={app.mcpOnly} scopes={scopes} />
       </div>
 
       <div className="mt-6 flex items-center gap-3 rounded-lg border p-3">

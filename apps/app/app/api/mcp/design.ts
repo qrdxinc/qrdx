@@ -223,7 +223,7 @@ export const designQrInputSchema = z.object({
     .regex(FILE_ID, "Must be an uploaded file id")
     .optional()
     .describe(
-      "Your own logo: an image you uploaded to QRdx (PNG or JPEG, up to 1 MB), by file id. Needs the workspace's API key on this connection (Authorization: Bearer qrdx_…).",
+      "Your own logo: an image you uploaded to QRdx (PNG or JPEG, up to 1 MB), by file id. Needs the workspace's API key on this connection (Authorization: Bearer qrdx_…), or the person signed in to QRdx (their own workspace's files).",
     ),
   size: z
     .number()
@@ -395,7 +395,7 @@ export function playgroundLink(
 }
 
 export interface DesignContext {
-  /** The API key's workspace, for logo_file_id; null without a key */
+  /** The credential's workspace (API key or sign-in), for logo_file_id; null without one */
   scope: () => Promise<ActiveScope | null>;
 }
 
@@ -506,7 +506,7 @@ export async function designQr(
         throw new HttpError(
           401,
           "UNAUTHORIZED",
-          "logo_file_id needs the API key of the workspace that owns the file on this MCP connection: add the header Authorization: Bearer qrdx_… in your client's settings for this server.",
+          "logo_file_id needs the API key of the workspace that owns the file on this MCP connection (add the header Authorization: Bearer qrdx_… in your client's settings for this server), or the person signed in to QRdx, for their own workspace's files.",
         );
       }
       logoFile = await readLogoDataUrl(scope, input.logo_file_id);
@@ -721,7 +721,7 @@ export function designOptions() {
       logos: {
         icons: LOGO_ICON_IDS,
         brands: brandLogoOptions(),
-        how: "style.logo picks a quick icon QRdx draws on a white tile, or a brand logo by its Simple Icons slug (brands.popular; add :black or :white). logo_file_id uses an image you uploaded to QRdx (PNG or JPEG, up to 1 MB) and needs the workspace's API key on the MCP connection. Logos are scored by the modules they cover; a repair may raise error correction to H or remove the logo.",
+        how: "style.logo picks a quick icon QRdx draws on a white tile, or a brand logo by its Simple Icons slug (brands.popular; add :black or :white). logo_file_id uses an image you uploaded to QRdx (PNG or JPEG, up to 1 MB) and needs the workspace's API key on the MCP connection, or the person signed in to QRdx. Logos are scored by the modules they cover; a repair may raise error correction to H or remove the logo.",
       },
     },
     presets: Object.entries(defaultPresets).map(([id, preset]) => ({

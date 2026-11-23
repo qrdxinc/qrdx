@@ -911,7 +911,7 @@
     "crumb": "Generator kode QR",
     "hub": {
       "metaTitle": "Jenis Kode QR: {count, number} Generator Gratis (Wi-Fi, vCard, UPI)",
-      "metaDescription": "{count, number} jenis kode QR, masing-masing dengan generator gratis: Wi-Fi, vCard, WhatsApp, UPI, email, profil sosial, dan pembayaran. Setiap halaman menampilkan format payload yang tepat.",
+      "metaDescription": "{count, number} jenis kode QR dengan generator gratis: Wi-Fi, vCard, WhatsApp, UPI, email, profil sosial, dan pembayaran, lengkap dengan format payload-nya.",
       "title": "Generator kode QR untuk setiap jenis konten",
       "intro1": "Kode QR bisa melakukan lebih dari sekadar membuka situs web. Bergantung pada teks di dalamnya, ponsel dapat terhubung ke jaringan Wi-Fi, menyimpan kontak, memulai pembayaran, atau membuka obrolan. Pilih salah satu dari {count, number} jenis di bawah untuk mendapatkan generator dengan kolom yang sesuai, pratinjau langsung, dan unduhan PNG, WebP, atau SVG.",
       "intro2": "Secara default, kode yang dibuat di halaman ini bersifat statis: konten disandikan langsung di dalam polanya, sehingga berfungsi secara offline, tidak pernah kedaluwarsa, dan tidak memiliki batas pemindaian. Setiap halaman juga menjelaskan format persis yang dihasilkan, sehingga Anda tahu apa yang akan dibaca oleh pemindai.",
@@ -1241,7 +1241,8 @@
         "logoQuestion": "Apakah logo atau koreksi kesalahan yang lebih tinggi mengubah ukuran?",
         "logoAnswer": "Koreksi kesalahan yang lebih tinggi menambah redundansi, sehingga konten yang sama membutuhkan versi lebih tinggi dengan lebih banyak modul, dan karena itu hasil cetaknya lebih besar. Logo tidak mengubah jumlah modul, tetapi menutupi sebagian modul, jadi gunakan level Q atau H saat menambahkannya.",
         "quietQuestion": "Apakah quiet zone dihitung dalam ukuran?",
-        "quietAnswer": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx tidak memiliki margin kecuali Anda mengaktifkan quiet zone, jadi sisakan ruang tersebut di sekitar kode pada tata letak Anda.",
+        "quietAnswer": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx memiliki margin sesuai pengaturan desainnya, sedangkan generator dan alat massal menambahkan {quiet, number} kecuali Anda menonaktifkannya. Sisakan ruang yang kurang di sekitar kode pada tata letak Anda.",
+        "quietAnswerNewDesigns": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx memiliki margin sesuai pengaturan desainnya: desain baru di editor dimulai dengan {start, number} modul, sedangkan generator dan alat massal menambahkan {quiet, number} kecuali Anda menonaktifkannya. Sisakan ruang yang kurang di sekitar kode pada tata letak Anda.",
         "resolutionQuestion": "Resolusi berapa yang sebaiknya saya ekspor untuk cetak?",
         "resolutionAnswer": "Gunakan SVG jika memungkinkan: formatnya vektor dan tetap tajam di ukuran apa pun. Untuk PNG, ekspor minimal dengan lebar piksel yang ditampilkan untuk 300 DPI, yang merupakan standar minimum untuk cetak."
       },
@@ -5447,6 +5448,9 @@
       "checkingScan": "Memeriksa pemindaian…",
       "fullScanChecker": "Pemeriksa pemindaian lengkap",
       "checkAPrintedCode": "Periksa kode yang dicetak",
+      "warning": "Peringatan",
+      "scanScoreScoreValueWarningShow": "Skor pemindaian {score, number}, {value}, dengan peringatan. Tampilkan pemeriksaan",
+      "addAMargin": "Tambahkan margin {modules, number} modul",
       "grades": {
         "great": "Bagus",
         "ok": "OK",

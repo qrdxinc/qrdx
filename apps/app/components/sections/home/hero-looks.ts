@@ -1,3 +1,4 @@
+import { NEW_DESIGN_MARGIN } from "@/config/qr";
 import { parseLinkUrl, playgroundHref } from "@/lib/playground-links";
 import { packStyleParam } from "@/lib/playground-style-pack";
 import type { QRStyle } from "@/types/theme";
@@ -49,11 +50,15 @@ export const HERO_FRAMES = {
 export type HeroStyleKey = keyof typeof HERO_STYLES;
 export type HeroFrameKey = keyof typeof HERO_FRAMES;
 
-/** The hero code's whole look for a style and frame. */
+/**
+ * The hero code's whole look for a style and frame, with the margin a new
+ * design starts with in the playground.
+ */
 export function heroLook(styleKey: HeroStyleKey, frameKey: HeroFrameKey) {
   return {
     ...HERO_STYLES[styleKey].style,
     level: "Q",
+    margin: NEW_DESIGN_MARGIN,
     frame: HERO_FRAMES[frameKey].frame,
   } satisfies QRStyle;
 }

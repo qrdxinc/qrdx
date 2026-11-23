@@ -38,6 +38,15 @@ export interface ScanCheck {
    * the quiet zone): neither passed nor failed. Show it as "not checked".
    */
   skipped?: boolean;
+  /**
+   * "warning": a caution rather than a problem with the design. The code
+   * reads as drawn, but may not where it's placed (a thin quiet zone, on a
+   * dark or busy surface). Show it milder than a failure, with its fix. It
+   * never changes `passed` or the score: a check that passed still passes
+   * (and costs nothing), one that failed still fails. Absent on every other
+   * check.
+   */
+  severity?: "warning";
   message: string;
   /** How to fix a failed check */
   fix?: string;
@@ -65,6 +74,16 @@ export interface ScanScoreOptions {
 
 /** Widths (px) of the QR code that `getScanScore` decodes by default. */
 export const SCAN_TEST_SIZES = [96, 160, 320] as const;
+
+/**
+ * The quiet zone (light margin around the code, frame gap included), in
+ * modules, below which the score's quiet-zone check warns. QRdx's scan study
+ * (scripts/scan-study, 23 Nov 2026 run): with no margin, codes printed
+ * straight onto a dark surface were read in 0% (jsQR, ZXing-C++) and 70%
+ * (zbar) of captures, and on a busy pattern in 10%, 2% and 38%; one module of
+ * light margin brought all three to 98% or more. Two leaves room for that.
+ */
+export const QUIET_ZONE_MIN = 2;
 
 // Code width (px) the artwork is rendered at before downscaling to test sizes.
 const SOURCE_SIZE = 640;
@@ -826,7 +845,7 @@ function quietZoneCheck(props: QRProps): { check: ScanCheck; penalty: number } {
       penalty: 0,
     };
   }
-  if (modules >= 1.5) {
+  if (modules >= QUIET_ZONE_MIN) {
     return {
       check: {
         id: "quiet-zone",
@@ -836,14 +855,25 @@ function quietZoneCheck(props: QRProps): { check: ScanCheck; penalty: number } {
       penalty: 0,
     };
   }
+  // Below QUIET_ZONE_MIN a warning only: the decode tests draw the code on
+  // its own background, where it reads; on a dark or busy surface it may not
+  // (see QUIET_ZONE_MIN). `passed` and the penalty stay what they were before
+  // the warning existed (passed and free from 1.5 modules, failed and 5
+  // points below), so scores, grades and the repairs that read failed checks
+  // don't change.
+  const passed = modules >= 1.5;
   return {
     check: {
       id: "quiet-zone",
-      passed: false,
-      message: "No quiet zone around the code",
-      fix: "Leave clear space (about 10% of the code width) around it wherever you place it, or add a frame",
+      passed,
+      severity: "warning",
+      message:
+        rounded === 0
+          ? "No quiet zone around the code"
+          : `Quiet zone of only ${rounded} ${rounded === 1 ? "module" : "modules"}`,
+      fix: `Without a light border, the code may not scan on a dark or busy surface. Set the margin to ${QUIET_ZONE_MIN} modules or more, or add a frame`,
     },
-    penalty: 5,
+    penalty: passed ? 0 : 5,
   };
 }
 

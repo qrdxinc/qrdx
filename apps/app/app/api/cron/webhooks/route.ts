@@ -24,6 +24,7 @@ import {
   settleWaitingInvites,
   type WaitingInvitesSummary,
 } from "@/lib/invites/qualify";
+import { pruneUnusedDynamicClients } from "@/lib/oauth-registration";
 import { type RecheckSummary, recheckWebRisk } from "@/lib/safety/recheck";
 import { isAuthorizedCronRequest, unauthorized } from "../_lib/auth";
 
@@ -39,8 +40,9 @@ const noStore = { "Cache-Control": "no-store" };
  * created without a Web Risk answer, settles friends' invites a first code
  * already qualifies (lib/invites), prunes deliveries older
  * than 30 days and deletes expired Better Auth verification values. The daily
- * call also forgets browsers no account has seen for 400 days and completes
- * support's turn-offs of two-step verification that are due.
+ * call also forgets browsers no account has seen for 400 days, completes
+ * support's turn-offs of two-step verification that are due, and deletes
+ * self-registered OAuth clients nobody ever used.
  *
  * Callers: .github/workflows/webhook-worker.yml every 5 minutes with
  * ?source=github, and vercel.json once a day. The frequent call first checks
@@ -99,7 +101,21 @@ export async function GET(request: Request) {
   // days (lib/account/two-factor-reset-server.ts): due from the start of a
   // UTC day, so the daily run is the one that completes them.
   let twoFactorResets: DueResetsSummary | null = null;
+  // OAuth clients that registered themselves through the MCP server and
+  // were never used (lib/oauth-registration.ts): registration is open, so
+  // they're cleared once a day.
+  let oauthClientsPruned = 0;
   if (trigger === "daily") {
+    try {
+      oauthClientsPruned = await pruneUnusedDynamicClients();
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          event: "cron.webhooks.oauth_clients_prune_failed",
+          error: error instanceof Error ? error.message : String(error),
+        }),
+      );
+    }
     try {
       knownDevicesPruned = await pruneStaleKnownDevices();
     } catch (error) {
@@ -208,6 +224,7 @@ export async function GET(request: Request) {
       pruned,
       verificationsPruned,
       knownDevicesPruned,
+      oauthClientsPruned,
       twoFactorResets,
       auditEventsPurged,
       commissionsReleased,

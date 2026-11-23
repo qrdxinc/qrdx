@@ -62,25 +62,31 @@ export function sendsApiKey(req: Request): boolean {
   return Boolean(token?.startsWith(API_KEY_PREFIX));
 }
 
+/** The Bearer token, the scheme matched in any case (RFC 7235 §2.1). */
 function bearerToken(req: Request): string | null {
-  const authorization = req.headers.get("authorization");
-  if (!authorization?.startsWith("Bearer ")) return null;
-  const token = authorization.slice(7).trim();
-  return token || null;
+  const match = /^bearer\s+(.+)$/i.exec(
+    req.headers.get("authorization")?.trim() ?? "",
+  );
+  return match?.[1]?.trim() || null;
 }
 
 type AuthError = "invalid_token" | "insufficient_scope";
 
-/** RFC 6750 §3: the challenge, with where to find the authorization server. */
+/**
+ * RFC 6750 §3: the challenge, with where to find the authorization server.
+ * With no `error` (the request sent no credentials, §3.1), no error fields.
+ */
 export function bearerChallenge(
   requestUrl: string,
-  error: AuthError,
+  error: AuthError | null,
   description: string,
 ): string {
   const metadata = resourceMetadataUrl(mcpResourceFor(requestUrl));
+  const base = `Bearer resource_metadata="${metadata}", scope="${SIGN_IN_SCOPE}"`;
+  if (!error) return base;
   // Quoted-string values: no quotes or backslashes inside.
   const safe = description.replace(/["\\]/g, "'");
-  return `Bearer resource_metadata="${metadata}", scope="${SIGN_IN_SCOPE}", error="${error}", error_description="${safe}"`;
+  return `${base}, error="${error}", error_description="${safe}"`;
 }
 
 const SIGN_IN_NEEDED =
@@ -128,11 +134,11 @@ export function fromOpenAiHost(
 function challengeResponse(
   req: Request,
   status: 401 | 403,
-  error: AuthError,
+  error: AuthError | null,
   description: string,
 ): Response {
   return Response.json(
-    { error, error_description: description },
+    { error: error ?? "invalid_token", error_description: description },
     {
       status,
       headers: {
@@ -162,7 +168,8 @@ export async function signInGate(
   if (sendsApiKey(req)) return null;
   const token = bearerToken(req);
   if (!token) {
-    return challengeResponse(req, 401, "invalid_token", SIGN_IN_NEEDED);
+    // No credentials: the challenge carries no error code (RFC 6750 §3.1).
+    return challengeResponse(req, 401, null, SIGN_IN_NEEDED);
   }
   const grant = await validateAccessToken(token);
   if (!grant) {

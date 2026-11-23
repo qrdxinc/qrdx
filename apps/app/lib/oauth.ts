@@ -8,6 +8,7 @@ import {
   OAUTH_ACCESS_TOKEN_EXPIRY_SECONDS,
   OAUTH_REFRESH_TOKEN_EXPIRY_SECONDS,
 } from "@/lib/constants";
+import { DYNAMIC_REGISTRATION } from "@/lib/oauth-apps/access";
 import { isAllowedRedirectUri } from "@/lib/oauth-apps/validation";
 import { OAUTH_SCOPES, type OAuthScope } from "@/lib/oauth-scopes";
 
@@ -34,6 +35,18 @@ export function oauthError(
   status = 400,
 ): Response {
   return Response.json({ error, error_description: description }, { status });
+}
+
+/**
+ * A token of a self-registered MCP client used anywhere but the MCP server:
+ * 403, since the person approved the MCP tools and nothing else.
+ */
+export function mcpOnlyTokenError(): Response {
+  return oauthError(
+    "insufficient_scope",
+    "This token belongs to an app that registered itself to use the QRdx MCP server, and works only there. For the REST API, use an API key or an OAuth app made in Settings → API keys & apps.",
+    403,
+  );
 }
 
 export function generateSecureToken(): string {
@@ -170,6 +183,7 @@ export async function validateAccessToken(token: string) {
       userId: oauthToken.userId,
       appId: oauthToken.appId,
       appName: oauthApp.name,
+      registrationType: oauthApp.registrationType,
       scopes: oauthToken.scopes,
       accessTokenExpiresAt: oauthToken.accessTokenExpiresAt,
       banned: user.banned,
@@ -198,6 +212,12 @@ export async function validateAccessToken(token: string) {
     appName: record.appName,
     scopes: record.scopes,
     accessTokenExpiresAt: record.accessTokenExpiresAt,
+    /**
+     * Issued to a client that registered itself (an MCP client,
+     * lib/oauth-registration.ts): good on the MCP server only, never on the
+     * REST API or the userinfo endpoint.
+     */
+    mcpOnly: record.registrationType === DYNAMIC_REGISTRATION,
   };
 }
 
@@ -220,6 +240,10 @@ export async function requireAuth(req: NextRequest, requiredScope: OAuthScope) {
     return {
       error: oauthError("invalid_token", "Invalid or expired token", 401),
     };
+  }
+
+  if (tokenData.mcpOnly) {
+    return { error: mcpOnlyTokenError() };
   }
 
   if (!tokenData.scopes.includes(requiredScope)) {

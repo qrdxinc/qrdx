@@ -233,9 +233,13 @@ describe("a QR-bill drawn the strict way", () => {
           expect(props.exactLevel).toBe(true);
           expect(props.level).toBe("M");
 
-          // The cross is drawn at 7/46 of the symbol: the budget at M holds it
+          // The cross is drawn at 7/46 of the symbol (a smaller share of the
+          // whole, margin included): the budget at M holds it
           const crossShare = (props.imageSettings?.width ?? 0) / 1024;
-          expect(crossShare).toBeCloseTo(swissCrossShare(value), 6);
+          expect(crossShare).toBeCloseTo(
+            swissCrossShare(value, style.margin ?? 0),
+            6,
+          );
 
           // The smallest version at M (IG §6.4), as the form sizes the cross
           const modules = swissQrModules(value);
@@ -248,7 +252,7 @@ describe("a QR-bill drawn the strict way", () => {
 
           // The editor's scan score, run on the server. It reads the code at
           // 320 px; a bill's 61 or more modules are too dense for its 96 and
-          // 160 px reads in any style, and the editor's margin of 0 leaves the
+          // 160 px reads in any style, and a margin under 2 modules leaves the
           // quiet zone to the paper (5 mm of white, as the form says)
           const score = await scoreDesign(value, style);
           expect(score.grade).not.toBe("fails");

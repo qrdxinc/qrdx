@@ -32,6 +32,27 @@ export const OAUTH_SCOPE_INFO: Record<
   },
 };
 
+/**
+ * What an app that registered itself through the MCP server can do with each
+ * scope it may get: only the MCP server's dynamic-code tools, since its
+ * token works nowhere else (no deleting codes, webhooks, conversions or AI
+ * art). The consent screen shows these for such apps.
+ */
+export const MCP_SCOPE_INFO: Partial<
+  Record<OAuthScope, { label: string; consent: string }>
+> = {
+  "codes:read": {
+    label: "See codes",
+    consent:
+      "See your dynamic QR codes, where they go and how often they're scanned",
+  },
+  "codes:write": {
+    label: "Make and change codes",
+    consent:
+      "Create dynamic QR codes in your workspace and change where your codes go",
+  },
+};
+
 export function isOAuthScope(value: string): value is OAuthScope {
   return (OAUTH_SCOPES as readonly string[]).includes(value);
 }

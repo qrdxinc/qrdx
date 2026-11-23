@@ -10,7 +10,7 @@ import {
   GradientPicker,
   QR_IMAGE_KINDS,
 } from "@/components/editor/gradient-picker";
-import { defaultThemeState } from "@/config/qr";
+import { storedStyleDefaults } from "@/config/qr";
 import { useFrameLibrary } from "@/lib/frames/use-frame-library";
 import type { DesignSection } from "@/lib/playground-links";
 import type { QRStyle } from "@/types/theme";
@@ -87,7 +87,7 @@ export function DesignControls({
   const frameShapeNames = useFrameShapeNames();
   const t = useTranslations("editor.controlSections.designControls");
   const current = React.useMemo(
-    () => ({ ...defaultThemeState.styles, ...styles }),
+    () => ({ ...storedStyleDefaults, ...styles }),
     [styles],
   );
 

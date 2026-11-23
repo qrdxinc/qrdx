@@ -8,7 +8,9 @@
 // The marketing pages are English only too (owner decision, 17 Nov 2026):
 // they still live under app/[lang], listed as `englishOnly`, and render in
 // English at their unprefixed URLs; their old translated URLs redirect there
-// (routing.ts). Links to them never gain a prefix.
+// (routing.ts). Links to them never gain a prefix. The exception is
+// `siteTranslated` (owner decision, 23 Nov 2026): the generator pages, which
+// the site zone serves in every language once its group for them is on.
 
 import {
   DEFAULT_LOCALE,
@@ -65,6 +67,37 @@ const ENGLISH_ONLY_MATCHERS = ENGLISH_ONLY_PATHS.map(routeMatcher);
 
 export function isEnglishOnlyPath(path: string): boolean {
   return ENGLISH_ONLY_MATCHERS.some((matches) => matches(path));
+}
+
+/**
+ * English-only pages here that the site zone serves in every language, at
+ * /<segment><path> (owner decision, 23 Nov 2026: the QR code generators,
+ * for search traffic in other languages). This app's own copies of them
+ * stay English only. While the site's group for them is on
+ * (@repo/next-config/site-zone SITE_TRANSLATED_GROUPS), next.config.ts
+ * stops redirecting their translated URLs to English (routing.ts
+ * englishOnlyRedirects `except`) and proxies them to the site, which
+ * renders them with localizeSitePath() links and indexes them (review.ts
+ * INDEXED_MACHINE_PATHS). Written like ENGLISH_ONLY_PATHS, each one of them.
+ */
+export const SITE_TRANSLATED_PATHS: readonly string[] =
+  localized.siteTranslated;
+
+const SITE_TRANSLATED_MATCHERS = SITE_TRANSLATED_PATHS.map(routeMatcher);
+
+export function isSiteTranslatedPath(path: string): boolean {
+  return SITE_TRANSLATED_MATCHERS.some((matches) => matches(path));
+}
+
+/**
+ * A page the site zone serves in every language, in `locale`:
+ * "/qr-code-generator/wifi" in Spanish → "/es/qr-code-generator/wifi".
+ * English, and any other page, keep the path as it is. Only for links the
+ * site renders: this app never serves these URLs itself.
+ */
+export function localizeSitePath(path: string, locale: Locale): string {
+  if (locale === DEFAULT_LOCALE || !isSiteTranslatedPath(path)) return path;
+  return `/${LOCALE_INFO[locale].segment}${path}`;
 }
 
 /**

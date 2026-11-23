@@ -21,7 +21,12 @@ import { fakeDb } from "../support/fake-db";
 const state = vi.hoisted(() => ({
   userId: null as string | null,
   rateLimited: false,
+  /** Rate-limit keys that answer "over the limit" */
+  blocked: new Set<string>(),
+  /** Every key a limiter counted, in order */
+  limitKeys: [] as string[],
   analyticsCalls: [] as { codeId: string; days: number }[],
+  logoReads: [] as { scope: unknown; id: string }[],
 }));
 
 vi.mock(
@@ -64,15 +69,65 @@ vi.mock("@repo/rate-limit", () => ({
   slidingWindow: () => ({}),
   fixedWindow: () => ({}),
   createRateLimiter: () => ({
-    limit: async () => ({
-      success: !state.rateLimited,
-      limit: 1000,
-      remaining: state.rateLimited ? 0 : 999,
-      reset: Date.now() + 60_000,
-      pending: Promise.resolve(),
-    }),
+    limit: async (key: string) => {
+      state.limitKeys.push(key);
+      const over = state.rateLimited || state.blocked.has(key);
+      return {
+        success: !over,
+        limit: 1000,
+        remaining: over ? 0 : 999,
+        reset: Date.now() + 60_000,
+        pending: Promise.resolve(),
+      };
+    },
   }),
 }));
+// Uploaded logos: one file in Alice's own workspace.
+vi.mock("@/lib/qr-api/logo", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/qr-api/logo")>();
+  const PNG =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEklEQVR4nGMQVDL+j4wZSBcAAOAqFlEok64wAAAAAElFTkSuQmCC";
+  const read = async (
+    scope: { organizationId?: string } | null,
+    id: string,
+  ) => {
+    state.logoReads.push({ scope, id });
+    const { ownWorkspaceId: own } = await import("@repo/auth/own-workspace-id");
+    if (
+      id !== "cm5logo0brand0mark000001" ||
+      scope?.organizationId !== own("u_alice")
+    ) {
+      const { HttpError } = await import("@/lib/error-response");
+      throw new HttpError(
+        404,
+        "NOT_FOUND",
+        "No ready file with that id in this workspace.",
+      );
+    }
+    return PNG;
+  };
+  return {
+    ...actual,
+    readLogoDataUrl: read,
+    resolveLogo: async (
+      request: { logoFileId?: string; logoIcon?: string },
+      scope: { organizationId?: string } | null,
+      purpose: "render" | "save",
+    ) => {
+      if (request.logoFileId) {
+        if (!scope) throw new actual.LogoKeyRequiredError();
+        return purpose === "render"
+          ? { drawn: await read(scope, request.logoFileId) }
+          : { saved: `http://localhost:3000/api/files/${request.logoFileId}` };
+      }
+      return actual.resolveLogo(
+        request as Parameters<typeof actual.resolveLogo>[0],
+        scope as null,
+        purpose,
+      );
+    },
+  };
+});
 vi.mock("@/lib/plans", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/plans")>()),
   getPlanForScope: async () => "free",
@@ -142,6 +197,15 @@ vi.mock("@/lib/scans", async (importOriginal) => ({
 }));
 
 const register = await import("@/app/api/oauth/register/route");
+const revoke = await import("@/app/api/oauth/revoke/route");
+const userinfo = await import("@/app/api/oauth/userinfo/route");
+const v1Codes = await import("@/app/api/v1/codes/route");
+const v1Me = await import("@/app/api/v1/me/route");
+const {
+  pruneUnusedDynamicClients,
+  rateLimitAddress,
+  MAX_DYNAMIC_REDIRECT_URI_LENGTH,
+} = await import("@/lib/oauth-registration");
 const authorize = await import("@/app/api/oauth/authorize/route");
 const token = await import("@/app/api/oauth/token/route");
 const mcp = await import("@/app/api/mcp/route");
@@ -239,7 +303,10 @@ function seed() {
 beforeEach(() => {
   state.userId = null;
   state.rateLimited = false;
+  state.blocked = new Set();
+  state.limitKeys = [];
   state.analyticsCalls = [];
+  state.logoReads = [];
   seed();
 });
 
@@ -253,6 +320,7 @@ function postRegister(
   body: unknown,
   headers: Record<string, string> = { "content-type": "application/json" },
 ) {
+  headers = { "x-forwarded-for": "203.0.113.7", ...headers };
   return register.POST(
     new Request(new URL("/api/oauth/register", ORIGIN), {
       method: "POST",
@@ -872,7 +940,8 @@ describe("the MCP server with sign-in", () => {
       `resource_metadata="${ORIGIN}/.well-known/oauth-protected-resource/api/mcp"`,
     );
     expect(challenge).toContain('scope="codes:read codes:write"');
-    expect(challenge).toContain('error="invalid_token"');
+    // No credentials sent: no error code in the challenge (RFC 6750 §3.1).
+    expect(challenge).not.toContain("error=");
     expect(response.headers.get("access-control-expose-headers")).toContain(
       "WWW-Authenticate",
     );
@@ -1232,5 +1301,484 @@ describe("a sign-up that starts in an MCP client's sign-in", () => {
     );
     expect(landing).toMatchObject({ ref: "mcp", utm_source: "chatgpt" });
     expect(acquisitionChannel(landing, { affiliate: false })).toBe("mcp");
+  });
+});
+
+// ─── Security review fixes ──────────────────────────────────────────────────
+
+describe("registration limits", () => {
+  it("counts per address first, and only valid registrations against the global budget", async () => {
+    const refused = await postRegister({
+      ...CLAUDE,
+      redirect_uris: ["http://evil.example/cb"],
+    });
+    expect(refused.status).toBe(400);
+    expect(state.limitKeys).toEqual([
+      "oauth-register:ip:203.0.113.7",
+      "oauth-register:hour:ip:203.0.113.7",
+    ]);
+    state.limitKeys = [];
+    await registerClient();
+    expect(state.limitKeys).toContain("oauth-register:hour:all");
+  });
+
+  it("refuses a valid registration once the global budget is spent, but junk still gets its 400", async () => {
+    state.blocked.add("oauth-register:hour:all");
+    const valid = await postRegister(CLAUDE);
+    expect(valid.status).toBe(429);
+    const junk = await postRegister({ ...CLAUDE, redirect_uris: [] });
+    expect(junk.status).toBe(400);
+    expect(fakeDb.rows("oauthApp")).toHaveLength(0);
+  });
+
+  it("counts an IPv6 /64 as one address", async () => {
+    expect(rateLimitAddress("2001:db8:1:2:aaaa:bbbb:cccc:dddd")).toBe(
+      "2001:db8:1:2::/64",
+    );
+    expect(rateLimitAddress("2001:DB8:0001:0002::1")).toBe("2001:db8:1:2::/64");
+    expect(rateLimitAddress("2001:db8::1")).toBe("2001:db8:0:0::/64");
+    expect(rateLimitAddress("::ffff:203.0.113.9")).toBe("203.0.113.9");
+    expect(rateLimitAddress("203.0.113.9")).toBe("203.0.113.9");
+    await postRegister(CLAUDE, {
+      "content-type": "application/json",
+      "x-forwarded-for": "2001:db8:1:2:9999::7",
+    });
+    expect(state.limitKeys[0]).toBe("oauth-register:ip:2001:db8:1:2::/64");
+  });
+
+  it("caps a registered redirect URI at 512 characters", async () => {
+    const response = await postRegister({
+      ...CLAUDE,
+      redirect_uris: [
+        `https://app.example/${"a".repeat(MAX_DYNAMIC_REDIRECT_URI_LENGTH)}`,
+      ],
+    });
+    expect(response.status).toBe(400);
+    expect((await response.json()).error).toBe("invalid_redirect_uri");
+  });
+});
+
+describe("names that only look like another", () => {
+  it.each([
+    ["a soft hyphen", "QR­dx"],
+    ["a combining grapheme joiner", "QR͏dx"],
+    ["a zero-width space", "QR​dx Connector"],
+    ["Cyrillic ha for x", "QRdх"],
+    ["fullwidth letters", "ＱＲｄｘ"],
+    ["Cyrillic lookalikes only", "ԛгԁх"],
+    ["Latin mixed with Cyrillic", "Clаude"],
+  ])("refuses %s", async (_label, name) => {
+    const response = await postRegister({ ...CLAUDE, client_name: name });
+    expect(response.status).toBe(400);
+    expect((await response.json()).error).toBe("invalid_client_metadata");
+    expect(fakeDb.rows("oauthApp")).toHaveLength(0);
+  });
+
+  it("stores names without invisible characters", async () => {
+    const client = (await registerClient({
+      ...CLAUDE,
+      client_name: "Claude​ Co­de️",
+    })) as { client_name?: string };
+    expect(client.client_name).toBe("Claude Code");
+  });
+});
+
+describe("cleaning up registered clients", () => {
+  const HOUR = 3_600_000;
+  const app = (
+    id: string,
+    ageHours: number,
+    extra: Record<string, unknown> = {},
+  ) => {
+    const created = new Date(Date.now() - ageHours * HOUR);
+    return {
+      id,
+      name: id,
+      description: null,
+      clientId: `client_${id}`,
+      clientSecretHash: "public:x",
+      redirectUris: [CLAUDE_CALLBACK],
+      scopes: ["codes:read", "codes:write"],
+      isActive: true,
+      ownerUserId: null,
+      organizationId: null,
+      logoUrl: null,
+      websiteUrl: null,
+      verified: false,
+      pkceRequired: true,
+      registrationType: "dynamic",
+      tokenEndpointAuthMethod: "none",
+      createdAt: created,
+      updatedAt: created,
+      ...extra,
+    };
+  };
+
+  it("deletes only never-used clients older than a day (30 days for ChatGPT's)", async () => {
+    fakeDb.seed("oauthApp", [
+      app("old_unused", 30),
+      app("young_unused", 2),
+      app("old_with_token", 30),
+      app("old_with_code", 30),
+      app("old_marked_used", 30, { updatedAt: new Date(Date.now() - HOUR) }),
+      app("chatgpt_2d", 48, {
+        redirectUris: ["https://chatgpt.com/connector_platform_oauth_redirect"],
+      }),
+      app("chatgpt_31d", 31 * 24, {
+        redirectUris: ["https://chatgpt.com/connector_platform_oauth_redirect"],
+      }),
+      app("settings_app", 30 * 24, { registrationType: null }),
+    ]);
+    fakeDb.seed("oauthToken", [
+      {
+        id: "tok_1",
+        accessTokenHash: "a",
+        refreshTokenHash: "r",
+        appId: "old_with_token",
+        userId: ALICE,
+        scopes: ["codes:read"],
+        accessTokenExpiresAt: new Date(0),
+        refreshTokenExpiresAt: new Date(0),
+        revokedAt: new Date(0),
+        createdAt: new Date(0),
+        updatedAt: new Date(0),
+      },
+    ]);
+    fakeDb.seed("oauthAuthorizationCode", [
+      {
+        id: "code_1",
+        code: "hash",
+        appId: "old_with_code",
+        userId: ALICE,
+        scopes: ["codes:read"],
+        redirectUri: CLAUDE_CALLBACK,
+        codeChallenge: null,
+        codeChallengeMethod: null,
+        expiresAt: new Date(0),
+        usedAt: null,
+        createdAt: new Date(0),
+      },
+    ]);
+    expect(await pruneUnusedDynamicClients()).toBe(2);
+    expect(
+      fakeDb
+        .rows("oauthApp")
+        .map((row) => row.id)
+        .sort(),
+    ).toEqual(
+      [
+        "chatgpt_2d",
+        "old_marked_used",
+        "old_with_code",
+        "old_with_token",
+        "settings_app",
+        "young_unused",
+      ].sort(),
+    );
+  });
+
+  it("marks a client used at its first authorization code", async () => {
+    const { client_id: clientId } = await registerClient();
+    const before = fakeDb.find("oauthApp", { clientId });
+    expect(before?.updatedAt).toEqual(before?.createdAt);
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    await approve(authorizeQuery(clientId));
+    const after = fakeDb.find("oauthApp", { clientId });
+    expect(after?.updatedAt).not.toEqual(after?.createdAt);
+  });
+});
+
+describe("token endpoint limits", () => {
+  it("counts a public client's requests by client_id, a secret's by address", async () => {
+    const { clientId, tokens } = await signInClaude();
+    state.limitKeys = [];
+    // The address is over its secret-check budget: a public refresh is not.
+    state.blocked.add("oauth-token:ip:unknown");
+    const refresh = await postToken({
+      grant_type: "refresh_token",
+      client_id: clientId,
+      refresh_token: tokens.refresh_token,
+    });
+    expect(refresh.status).toBe(200);
+    expect(state.limitKeys).toEqual([
+      "oauth-token:ceiling:ip:unknown",
+      `oauth-token:client:${clientId}`,
+    ]);
+    const withSecret = await postToken({
+      grant_type: "refresh_token",
+      client_id: "client_legacy",
+      client_secret: "qrdx_secret_legacy",
+      refresh_token: "whatever",
+    });
+    expect(withSecret.status).toBe(429);
+  });
+});
+
+describe("tokens of self-registered clients work on the MCP server only", () => {
+  it("the REST API and userinfo answer 403, the MCP tools accept it", async () => {
+    const { tokens } = await signInClaude();
+    const restHeaders = { authorization: `Bearer ${tokens.access_token}` };
+    const list = await v1Codes.GET(
+      new NextRequest(new URL("/api/v1/codes", ORIGIN), {
+        headers: restHeaders,
+      }),
+    );
+    expect(list.status).toBe(403);
+    const body = await list.json();
+    expect(body.error?.code ?? body.code).toBe("INSUFFICIENT_SCOPE");
+    expect(JSON.stringify(body)).toContain("works only there");
+    const create = await v1Codes.POST(
+      new NextRequest(new URL("/api/v1/codes", ORIGIN), {
+        method: "POST",
+        headers: { ...restHeaders, "content-type": "application/json" },
+        body: JSON.stringify({ destinationUrl: "https://example.com" }),
+      }),
+    );
+    expect(create.status).toBe(403);
+    const me = await v1Me.GET(
+      new NextRequest(new URL("/api/v1/me", ORIGIN), { headers: restHeaders }),
+    );
+    expect(me.status).toBe(403);
+    const info = await userinfo.GET(
+      new NextRequest(new URL("/api/oauth/userinfo", ORIGIN), {
+        headers: restHeaders,
+      }),
+    );
+    expect(info.status).toBe(403);
+    expect(fakeDb.rows("qrCode")).toHaveLength(0);
+
+    const mcpList = await callTool(
+      "list_codes",
+      {},
+      { authorization: `Bearer ${tokens.access_token}` },
+    );
+    expect(mcpList.response.status).toBe(200);
+    expect(mcpList.message.result?.isError).toBeFalsy();
+  });
+
+  it("generate_ai_art isn't there for a signed-in token, only for an API key", async () => {
+    const { tokens } = await signInClaude();
+    const { message } = await callTool(
+      "generate_ai_art",
+      { prompt: "a garden", data: "https://example.com" },
+      { authorization: `Bearer ${tokens.access_token}` },
+    );
+    expect(message.result).toBeUndefined();
+    expect(message.error?.message).toContain("Tool generate_ai_art not found");
+  });
+
+  it("accepts the Bearer scheme in any case", async () => {
+    const { tokens } = await signInClaude();
+    const { response, message } = await callTool(
+      "list_codes",
+      {},
+      { authorization: `bearer ${tokens.access_token}` },
+    );
+    expect(response.status).toBe(200);
+    expect(message.result?.isError).toBeFalsy();
+  });
+
+  it("the consent screen's words for such an app match what it can do", async () => {
+    const { MCP_SCOPE_INFO } = await import("@/lib/oauth-scopes");
+    expect(Object.keys(MCP_SCOPE_INFO).sort()).toEqual([
+      "codes:read",
+      "codes:write",
+    ]);
+    const words = JSON.stringify(MCP_SCOPE_INFO).toLowerCase();
+    for (const notPossible of ["delete", "webhook", "conversion", "art"]) {
+      expect(words).not.toContain(notPossible);
+    }
+  });
+});
+
+describe("sign-in and uploaded logos", () => {
+  it("generate_qr_code draws the person's uploaded logo with an OAuth token", async () => {
+    const { tokens } = await signInClaude();
+    const { message } = await callTool(
+      "generate_qr_code",
+      { data: "https://example.com", logoFileId: "cm5logo0brand0mark000001" },
+      { authorization: `Bearer ${tokens.access_token}` },
+    );
+    expect(message.result?.isError, JSON.stringify(message)).toBeFalsy();
+    expect(state.logoReads).toEqual([
+      {
+        scope: expect.objectContaining({ organizationId: ALICE_WORKSPACE }),
+        id: "cm5logo0brand0mark000001",
+      },
+    ]);
+  });
+});
+
+describe("update_code_destination and what scans really do", () => {
+  it("refuses a code that opens a hosted page, and leaves it as it was", async () => {
+    const { tokens } = await signInClaude();
+    fakeDb.seed("qrCode", [
+      {
+        id: "code_page",
+        userId: ALICE,
+        organizationId: ALICE_WORKSPACE,
+        slug: "Page001",
+        destinationUrl: "https://example.com/old",
+        kind: "page",
+        pageId: "page_1",
+      },
+    ]);
+    const { message } = await callTool(
+      "update_code_destination",
+      { id: "code_page", destinationUrl: "https://example.com/new" },
+      { authorization: `Bearer ${tokens.access_token}` },
+    );
+    expect(message.result?.structuredContent).toMatchObject({
+      code: "HOSTED_PAGE_CODE",
+      status: 409,
+    });
+    expect(message.result?.content[0]?.text).toContain("hosted page");
+    expect(fakeDb.find("qrCode", { id: "code_page" })?.destinationUrl).toBe(
+      "https://example.com/old",
+    );
+  });
+
+  it("says when routing rules still send some scans elsewhere", async () => {
+    const { tokens } = await signInClaude();
+    fakeDb.seed("qrCode", [
+      {
+        id: "code_rules",
+        userId: ALICE,
+        organizationId: ALICE_WORKSPACE,
+        slug: "Rules01",
+        destinationUrl: "https://example.com/old",
+        routing: {
+          version: 1,
+          rules: [
+            {
+              id: "phones",
+              enabled: true,
+              conditions: [],
+              action: { type: "redirect", url: "https://example.com/app" },
+            },
+            {
+              id: "off",
+              enabled: false,
+              conditions: [],
+              action: { type: "redirect", url: "https://example.com/x" },
+            },
+          ],
+        },
+      },
+    ]);
+    const { message } = await callTool(
+      "update_code_destination",
+      { id: "code_rules", destinationUrl: "https://example.com/new" },
+      { authorization: `Bearer ${tokens.access_token}` },
+    );
+    expect(message.result?.isError, JSON.stringify(message)).toBeFalsy();
+    expect(message.result?.content[0]?.text).toContain(
+      "It also has 1 routing rule",
+    );
+  });
+});
+
+describe("existing OAuth apps keep working as before", () => {
+  const LEGACY_SECRET = "qrdx_secret_legacy";
+  const LEGACY_REDIRECT = "https://legacy.example/cb";
+
+  async function seedLegacy() {
+    const bcrypt = (await import("bcryptjs")).default;
+    fakeDb.seed("oauthApp", [
+      {
+        id: "app_legacy",
+        name: "Legacy App",
+        description: null,
+        clientId: "client_legacy",
+        clientSecretHash: bcrypt.hashSync(LEGACY_SECRET, 4),
+        redirectUris: [LEGACY_REDIRECT],
+        scopes: ["codes:read", "codes:write"],
+        isActive: true,
+        ownerUserId: ALICE,
+        organizationId: ALICE_WORKSPACE,
+        logoUrl: null,
+        websiteUrl: null,
+        verified: false,
+        pkceRequired: false,
+        createdAt: new Date(0),
+        updatedAt: new Date(0),
+      },
+    ]);
+  }
+
+  async function legacyCode(extra: Record<string, string> = {}) {
+    const redirect = await approve({
+      response_type: "code",
+      client_id: "client_legacy",
+      redirect_uri: LEGACY_REDIRECT,
+      scope: "codes:read",
+      state: "s",
+      ...extra,
+    });
+    return redirect.searchParams.get("code") as string;
+  }
+
+  it("a Basic header next to a client_secret in the body still works (the body counts)", async () => {
+    await seedLegacy();
+    const response = await postToken(
+      {
+        grant_type: "authorization_code",
+        client_id: "client_legacy",
+        client_secret: LEGACY_SECRET,
+        code: await legacyCode(),
+        redirect_uri: LEGACY_REDIRECT,
+      },
+      {
+        authorization: `Basic ${Buffer.from("client_legacy:stale").toString("base64")}`,
+      },
+    );
+    expect(response.status).toBe(200);
+  });
+
+  it("an unrelated `resource` is ignored, as before", async () => {
+    await seedLegacy();
+    const authorizeResponse = await getAuthorize({
+      response_type: "code",
+      client_id: "client_legacy",
+      redirect_uri: LEGACY_REDIRECT,
+      scope: "codes:read",
+      resource: "https://other.example/api",
+    });
+    expect(authorizeResponse.status).toBe(302);
+    const response = await postToken({
+      grant_type: "authorization_code",
+      client_id: "client_legacy",
+      client_secret: LEGACY_SECRET,
+      code: await legacyCode({ resource: "https://other.example/api" }),
+      redirect_uri: LEGACY_REDIRECT,
+      resource: "https://other.example/api",
+    });
+    expect(response.status).toBe(200);
+    // And its token works on the REST API, as before.
+    const { access_token: accessToken } = (await response.json()) as Tokens;
+    const list = await v1Codes.GET(
+      new NextRequest(new URL("/api/v1/codes", ORIGIN), {
+        headers: { authorization: `Bearer ${accessToken}` },
+      }),
+    );
+    expect(list.status).toBe(200);
+  });
+});
+
+describe("revocation from a browser", () => {
+  it("answers CORS preflight and sets CORS on the answer", async () => {
+    const preflight = revoke.OPTIONS();
+    expect(preflight.status).toBe(204);
+    expect(preflight.headers.get("access-control-allow-origin")).toBe("*");
+    const { tokens } = await signInClaude();
+    const response = await revoke.POST(
+      new NextRequest(new URL("/api/oauth/revoke", ORIGIN), {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ token: tokens.access_token }),
+      }),
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get("access-control-allow-origin")).toBe("*");
   });
 });
