@@ -1,16 +1,10 @@
-import { Column, Link, Row, Section } from "react-email";
 import type { EmailIntl } from "../intl";
-import {
-  EMAIL_ACCENT,
-  EmailButton,
-  EmailHeading,
-  EmailLayout,
-  EmailText,
-} from "./layout";
+import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
 import {
   formatCount,
   formatEmailDate,
   MutedText,
+  RankedList,
   SectionTitle,
   StatGrid,
 } from "./parts";
@@ -29,6 +23,8 @@ export interface WeeklyDigestEmailProps {
   topCountries: { country: string; scans: number }[];
   dashboardUrl: string;
   unsubscribeUrl: string;
+  /** The address it's sent to (the footer names it) */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -63,14 +59,6 @@ export function weekOverWeek(
   return t("weeklyDigest.change", { change: percent.format(change / 100) });
 }
 
-const rowStyle = {
-  borderBottom: "1px solid #f0f0f0",
-  color: "#0a0a0a",
-  fontSize: "14px",
-  lineHeight: "20px",
-  padding: "8px 0",
-} as const;
-
 export function WeeklyDigestEmail({
   workspaceName,
   periodStart,
@@ -84,6 +72,7 @@ export function WeeklyDigestEmail({
   topCountries,
   dashboardUrl,
   unsubscribeUrl,
+  recipient,
   intl,
 }: WeeklyDigestEmailProps) {
   const { t, locale } = intl;
@@ -94,6 +83,7 @@ export function WeeklyDigestEmail({
     <EmailLayout
       intl={intl}
       preview={t("weeklyDigest.preview", { scans, workspace: workspaceName })}
+      recipient={recipient}
       reason={t("weeklyDigest.reason", { workspace: workspaceName })}
       unsubscribeUrl={unsubscribeUrl}
     >
@@ -126,34 +116,29 @@ export function WeeklyDigestEmail({
       {topCodes.length > 0 ? (
         <>
           <SectionTitle>{t("weeklyDigest.topCodes")}</SectionTitle>
-          <Section>
-            {topCodes.map((code) => (
-              <Row key={code.url}>
-                <Column style={rowStyle}>
-                  <Link href={code.url} style={{ color: EMAIL_ACCENT }}>
-                    {code.label}
-                  </Link>
-                </Column>
-                <Column style={{ ...rowStyle, textAlign: "right" }}>
-                  {count(code.scans)}
-                </Column>
-              </Row>
-            ))}
-          </Section>
+          <RankedList
+            labelHeading={t("weeklyDigest.code")}
+            rows={topCodes.map((code) => ({
+              label: code.label,
+              href: code.url,
+              value: count(code.scans),
+            }))}
+            valueHeading={t("weeklyDigest.scans")}
+          />
         </>
       ) : null}
 
       {topCountries.length > 0 ? (
         <>
           <SectionTitle>{t("weeklyDigest.countries")}</SectionTitle>
-          <MutedText>
-            {topCountries
-              .map(
-                (row) =>
-                  `${countryName(row.country, locale)} ${count(row.scans)}`
-              )
-              .join(" · ")}
-          </MutedText>
+          <RankedList
+            labelHeading={t("weeklyDigest.country")}
+            rows={topCountries.map((row) => ({
+              label: countryName(row.country, locale),
+              value: count(row.scans),
+            }))}
+            valueHeading={t("weeklyDigest.scans")}
+          />
         </>
       ) : null}
 
@@ -163,9 +148,7 @@ export function WeeklyDigestEmail({
         </MutedText>
       ) : null}
 
-      <Section style={{ marginTop: "20px" }}>
-        <EmailButton href={dashboardUrl}>{t("weeklyDigest.open")}</EmailButton>
-      </Section>
+      <EmailButton href={dashboardUrl}>{t("weeklyDigest.open")}</EmailButton>
     </EmailLayout>
   );
 }
@@ -198,4 +181,5 @@ WeeklyDigestEmail.PreviewProps = {
   ],
   dashboardUrl: "https://qrdx.dev/dashboard/acme",
   unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+  recipient: "alex@example.com",
 } satisfies Omit<WeeklyDigestEmailProps, "intl">;

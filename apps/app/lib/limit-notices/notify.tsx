@@ -8,6 +8,7 @@ import {
   organization,
   user,
 } from "@repo/database";
+import { isReservedEmailAddress } from "@repo/email/reserved-address";
 import { LimitNoticeEmail } from "@repo/email/templates/limit-notice";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@repo/i18n/config";
 import cuid from "cuid";
@@ -281,6 +282,11 @@ export async function sendLimitNotice(
             noun={copy.noun}
             planName={copy.planName}
             reason={copy.reason}
+            // The owners who read this language get one email together
+            // (reserved test addresses never get it).
+            recipient={new Intl.ListFormat(intl.locale, {
+              type: "conjunction",
+            }).format(to.filter((address) => !isReservedEmailAddress(address)))}
             recipientReason={intl.t(
               perPerson ? "limitNotice.artReason" : "limitNotice.ownerReason",
               { workspace: workspace.name },

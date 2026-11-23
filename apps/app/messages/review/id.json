@@ -30868,11 +30868,7 @@
     "status": "machine"
   },
   "emails.teamInvite.expires": {
-    "source": "08b223faabcc",
-    "status": "machine"
-  },
-  "emails.teamInvite.pasteLink": {
-    "source": "d2bd54ffc3fd",
+    "source": "6d41a35bf252",
     "status": "machine"
   },
   "emails.teamInvite.someone": {
@@ -30900,11 +30896,7 @@
     "status": "machine"
   },
   "emails.portalInvite.signIn": {
-    "source": "d80bc37f7f74",
-    "status": "machine"
-  },
-  "emails.portalInvite.pasteLink": {
-    "source": "d2bd54ffc3fd",
+    "source": "77ed34f70049",
     "status": "machine"
   },
   "emails.portalInvite.yourAgency": {
@@ -31083,8 +31075,16 @@
     "source": "49e39783efc8",
     "status": "machine"
   },
+  "emails.weeklyDigest.code": {
+    "source": "340f463033e0",
+    "status": "machine"
+  },
   "emails.weeklyDigest.countries": {
     "source": "0a5a6bfb0054",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.country": {
+    "source": "701d021d08c5",
     "status": "machine"
   },
   "emails.weeklyDigest.newCodesLine": {
@@ -31137,6 +31137,10 @@
   },
   "emails.welcome.changeLink": {
     "source": "af4beb5cd4b3",
+    "status": "machine"
+  },
+  "emails.welcome.button": {
+    "source": "33fb812bf544",
     "status": "machine"
   },
   "emails.welcome.free": {

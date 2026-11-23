@@ -316,6 +316,7 @@ export async function runWeeklyDigest({
               baseUrl.origin,
             ).toString()}
             intl={intl}
+            recipient={row.email}
             unsubscribeUrl={unsubscribe}
             workspaceName={workspace}
           />

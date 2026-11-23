@@ -275,13 +275,16 @@ describe("the weekly digest", () => {
       byAddress["u_0@example.com"]?.react as ReactElement,
     );
     expect(spanish).toContain(es.emails.weeklyDigest.open);
-    expect(spanish).toContain("España 12");
+    // A row of the countries list: the name, three spaces, the count.
+    expect(spanish).toMatch(/España {3}12/);
+    expect(spanish).toContain("u_0@example.com");
     expect(spanish).toContain("9 nov – 15 nov");
     const english = await text(
       byAddress["u_1@example.com"]?.react as ReactElement,
     );
     expect(english).toContain("Open your dashboard");
-    expect(english).toContain("Spain 12");
+    expect(english).toMatch(/Spain {3}12/);
+    expect(english).toContain("This email was meant for u_1@example.com.");
     expect(english).toContain("Nov 9 – Nov 15");
   }, 10_000);
 

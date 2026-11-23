@@ -1,11 +1,5 @@
 import type { EmailIntl } from "../intl";
-import {
-  EmailButton,
-  EmailDivider,
-  EmailHeading,
-  EmailLayout,
-  EmailText,
-} from "./layout";
+import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 
 export interface InviteRewardEmailProps {
@@ -19,6 +13,8 @@ export interface InviteRewardEmailProps {
   inviteUrl: string;
   /** Turns notes from the team off in one click */
   unsubscribeUrl: string;
+  /** The address it's sent to (the footer names it) */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -42,6 +38,7 @@ export function InviteRewardEmail({
   maxFriends,
   inviteUrl,
   unsubscribeUrl,
+  recipient,
   intl,
 }: InviteRewardEmailProps) {
   const { t } = intl;
@@ -50,6 +47,7 @@ export function InviteRewardEmail({
     <EmailLayout
       intl={intl}
       preview={t("inviteReward.preview", { count: bonusCodes })}
+      recipient={recipient}
       reason={t("inviteReward.reason")}
       unsubscribeUrl={unsubscribeUrl}
     >
@@ -68,7 +66,6 @@ export function InviteRewardEmail({
       <EmailButton href={inviteUrl}>
         {last ? t("inviteReward.seeInvites") : t("inviteReward.inviteMore")}
       </EmailButton>
-      <EmailDivider />
       <MutedText>{t("inviteReward.keeps")}</MutedText>
     </EmailLayout>
   );
@@ -81,4 +78,5 @@ InviteRewardEmail.PreviewProps = {
   maxFriends: 10,
   inviteUrl: "https://qrdx.dev/settings/invite",
   unsubscribeUrl: "https://qrdx.dev/unsubscribe?token=preview",
+  recipient: "alex@example.com",
 } satisfies Omit<InviteRewardEmailProps, "intl">;

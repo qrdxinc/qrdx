@@ -9722,8 +9722,7 @@
         "viewer": "Les lecteurs consultent les codes, les pages et les statistiques de l’espace de travail sans rien modifier."
       },
       "accept": "Accepter l’invitation",
-      "expires": "Connectez-vous avec cette adresse e-mail pour accepter. L’invitation expire le {date}. Si vous ne l’attendiez pas, vous pouvez ignorer cet e-mail.",
-      "pasteLink": "Ou collez ce lien dans votre navigateur : {url}",
+      "expires": "Connectez-vous avec cette adresse e-mail pour accepter. L’invitation expire le {date}.",
       "someone": "Un collègue"
     },
     "portalInvite": {
@@ -9732,8 +9731,7 @@
       "heading": "Vos rapports de QR code",
       "body": "{hasFolders, select, yes {{inviter} vous a envoyé une invitation pour consulter les QR codes de {portal} dans {folders} : la fréquence de scan de chacun, où et sur quels appareils, et les pages qu’ils ouvrent. C’est en lecture seule.} other {{inviter} vous a envoyé une invitation pour consulter les QR codes de {portal} : la fréquence de scan de chacun, où et sur quels appareils, et les pages qu’ils ouvrent. C’est en lecture seule.}}",
       "open": "Ouvrir les rapports",
-      "signIn": "Connectez-vous avec cette adresse e-mail : nous vous enverrons un code à usage unique. Si vous ne vous y attendiez pas, vous pouvez ignorer cet e-mail.",
-      "pasteLink": "Ou collez ce lien dans votre navigateur : {url}",
+      "signIn": "Connectez-vous avec cette adresse e-mail : nous vous enverrons un code à usage unique.",
       "yourAgency": "Votre agence"
     },
     "limitNotice": {
@@ -9782,7 +9780,9 @@
       "sameAsLastWeek": "Comme la semaine dernière",
       "change": "{change} vs semaine dernière",
       "topCodes": "Top des codes",
+      "code": "Code",
       "countries": "Où les gens ont scanné",
+      "country": "Pays",
       "newCodesLine": "{count, plural, one {# nouveau code} other {# nouveaux codes}} cette semaine.",
       "open": "Ouvrir votre tableau de bord"
     },
@@ -9802,6 +9802,7 @@
       "makeCode": "<link>Créez un QR code dynamique.</link> Il ouvre un lien court qui ne change pas : vous pouvez donc l’imprimer tout de suite.",
       "seeScans": "<link>Suivez ses scans :</link> quand, où et sur quels appareils les gens le scannent.",
       "changeLink": "Changez sa destination quand vous voulez, même après l’impression. Sans réimpression.",
+      "button": "Créez votre premier code",
       "free": "Les QR codes statiques restent gratuits, et les codes que vous créez continuent de fonctionner si vous changez d’offre ou arrêtez de payer. L’offre Gratuit inclut aussi {count} QR codes dynamiques.",
       "pro": "Si vous avez besoin de plus, Pro coûte {monthly} par mois ou {yearly} par an et offre des codes dynamiques illimités, {domains} domaines personnalisés, des alertes par e-mail à chaque palier de scans, et un récapitulatif hebdomadaire si vous le souhaitez.",
       "taxes": "Des taxes locales peuvent s’ajouter lors du paiement.",

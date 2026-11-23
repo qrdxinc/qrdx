@@ -1,24 +1,32 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-email";
 import type { EmailIntl } from "../intl";
+import {
+  EMAIL_ACCENT,
+  EMAIL_TEXT,
+  EmailButton,
+  EmailHeading,
+  EmailLayout,
+  EmailText,
+} from "./layout";
 import { formatCount } from "./parts";
-import { PersonalLayout, PersonalText } from "./personal-layout";
 
 // Sent once, right after someone makes an account
 // (apps/app/lib/email/welcome.tsx): a short note from a person on the team
-// about what QRdx is for and what to try first. One of the notes from the
-// QRdx team, so its footer can turn them off.
+// about what QRdx is for and what to try first, signed by them, in the
+// frame every QRdx email shares. One of the notes from the QRdx team, so
+// its footer can turn them off.
 
 const styles = {
   list: {
-    color: "#171717",
-    fontSize: "15px",
+    color: EMAIL_TEXT,
+    fontSize: "14px",
     lineHeight: "24px",
     margin: "0 0 16px",
-    paddingLeft: "22px",
+    paddingLeft: "20px",
   },
-  item: { margin: "0 0 8px" },
-  link: { color: "#171717", textDecoration: "underline" },
+  item: { margin: "0 0 8px", paddingLeft: "4px" },
+  link: { color: EMAIL_ACCENT, fontWeight: 500, textDecoration: "none" },
 } satisfies Record<string, CSSProperties>;
 
 export interface WelcomeEmailProps {
@@ -39,6 +47,8 @@ export interface WelcomeEmailProps {
   proYearly: string;
   /** Turns notes from the team off in one click */
   unsubscribeUrl: string;
+  /** The address it's sent to (the footer names it) */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -56,6 +66,7 @@ export function WelcomeEmail({
   proMonthly,
   proYearly,
   unsubscribeUrl,
+  recipient,
   intl,
 }: WelcomeEmailProps) {
   const { t } = intl;
@@ -65,17 +76,17 @@ export function WelcomeEmail({
     </Link>
   );
   return (
-    <PersonalLayout
+    <EmailLayout
       intl={intl}
-      lang={intl.locale}
       preview={t("welcome.intro")}
       reason={t("welcome.reason")}
-      replyTo={senderName}
+      recipient={recipient}
       unsubscribeUrl={unsubscribeUrl}
     >
-      <PersonalText>{t("welcome.greeting", { name: firstName })}</PersonalText>
-      <PersonalText>{t("welcome.intro")}</PersonalText>
-      <PersonalText>{t("welcome.try")}</PersonalText>
+      <EmailHeading>{t("welcome.subject")}</EmailHeading>
+      <EmailText>{t("welcome.greeting", { name: firstName })}</EmailText>
+      <EmailText>{t("welcome.intro")}</EmailText>
+      <EmailText>{t("welcome.try")}</EmailText>
       <ol style={styles.list}>
         <li style={styles.item}>
           {t.rich("welcome.makeCode", { link: link(newCodeUrl) })}
@@ -85,22 +96,23 @@ export function WelcomeEmail({
         </li>
         <li style={styles.item}>{t("welcome.changeLink")}</li>
       </ol>
-      <PersonalText>
+      <EmailButton href={newCodeUrl}>{t("welcome.button")}</EmailButton>
+      <EmailText>
         {t("welcome.free", {
           count: formatCount(freeDynamicCodes, intl.locale),
         })}
-      </PersonalText>
-      <PersonalText>
+      </EmailText>
+      <EmailText>
         {t("welcome.pro", {
           monthly: proMonthly,
           yearly: proYearly,
           domains: formatCount(proCustomDomains, intl.locale),
         })}{" "}
         {t("welcome.taxes")}
-      </PersonalText>
-      <PersonalText>{t("welcome.reply")}</PersonalText>
-      <PersonalText>{senderName}</PersonalText>
-    </PersonalLayout>
+      </EmailText>
+      <EmailText>{t("welcome.reply")}</EmailText>
+      <EmailText>{senderName}</EmailText>
+    </EmailLayout>
   );
 }
 
@@ -115,4 +127,5 @@ WelcomeEmail.PreviewProps = {
   proMonthly: "$5",
   proYearly: "$48",
   unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+  recipient: "alex@example.com",
 } satisfies Omit<WelcomeEmailProps, "intl">;

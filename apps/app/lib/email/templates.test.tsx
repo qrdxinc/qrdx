@@ -218,7 +218,8 @@ describe("email templates", () => {
     );
     assert.match(text, /1,250/);
     assert.match(text, /Oct 26 – Nov 1/);
-    assert.match(text, /India 900/);
+    // A row of the countries list: the name, three spaces, the count.
+    assert.match(text, /India {3}900/);
     assert.equal(weekOverWeek(120, 100, ENGLISH_EMAIL), "+20% vs last week");
     assert.equal(weekOverWeek(50, 100, ENGLISH_EMAIL), "-50% vs last week");
     assert.equal(weekOverWeek(5, 0, ENGLISH_EMAIL), "New this week");
@@ -233,8 +234,16 @@ describe("email templates", () => {
         inviteUrl="https://qrdx.dev/invite/inv_1"
         inviterName="Ada"
         memberRole="admin"
+        recipient="grace@example.com"
         teamName="Acme"
       />,
+    );
+    // The footer names the invited address; the link is repeated under the
+    // button for mail apps that break buttons.
+    assert.match(invite.text, /This email was meant for grace@example\.com\./);
+    assert.match(
+      invite.html,
+      /or copy and paste this link into your browser:[\s\S]*>qrdx\.dev\/invite\/inv_1<\/a>/,
     );
     assert.match(
       invite.text,
