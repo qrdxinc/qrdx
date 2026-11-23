@@ -1,14 +1,21 @@
 // What /plugins adds to the catalog entries (packages/integrations/src/catalog/
 // entries/plugins.ts): what kind of plugin it is, where it runs, where to
 // install it and what it looks like. A plugin with a `storeUrl` installs from
-// its store; the others install from source until they're listed.
+// its store; the others install from source until they're listed. A plugin
+// with no real screenshots yet has none, and its section has no screenshot
+// column: never a mockup.
 
 import { GITHUB_REPO_URL } from "@repo/config";
 import { CHROME_WEB_STORE_URL } from "@repo/integrations/src/catalog/entries/plugins";
 
 const REPO = GITHUB_REPO_URL;
 
-export type PluginSlug = "chrome" | "figma" | "raycast" | "canva";
+export type PluginSlug =
+  | "chrome"
+  | "figma"
+  | "raycast"
+  | "canva"
+  | "google-workspace";
 
 /**
  * A real screenshot of the plugin, in public/images/plugins (WebP, at most
@@ -39,7 +46,7 @@ export interface PluginInfo {
   /** Install-from-source instructions: the README section, else the folder. */
   installUrl: string;
   sourceUrl: string;
-  /** Its screenshots, the first shown first. */
+  /** Its screenshots, the first shown first; none until there are real ones. */
   shots: PluginShot[];
 }
 
@@ -145,6 +152,17 @@ export const PLUGINS: PluginInfo[] = [
         caption: "Style the code in the side panel and add it to your page.",
       },
     ],
+  },
+  {
+    slug: "google-workspace",
+    kind: "Add-on for Docs, Sheets and Slides",
+    platforms: ["Google Docs", "Google Sheets", "Google Slides", "On the web"],
+    store: "Google Workspace Marketplace",
+    installUrl: `${REPO}/tree/main/plugins/google-workspace`,
+    sourceUrl: `${REPO}/tree/main/plugins/google-workspace`,
+    // Real screenshots come from a test deployment (plugins/google-workspace/
+    // PUBLISHING.md, step 6).
+    shots: [],
   },
 ];
 

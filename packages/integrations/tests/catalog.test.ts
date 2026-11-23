@@ -76,7 +76,13 @@ describe("catalog surfaces", () => {
     expect(slugs("developers").sort()).toEqual(
       ["cli", "image-api", "react", "rest-api", "shadcn", "webhooks"].sort()
     );
-    expect(slugs("plugins")).toEqual(["chrome", "figma", "raycast", "canva"]);
+    expect(slugs("plugins")).toEqual([
+      "chrome",
+      "figma",
+      "raycast",
+      "canva",
+      "google-workspace",
+    ]);
     expect(slugs("feature").sort()).toEqual(["custom-domains", "email-alerts"]);
   });
 

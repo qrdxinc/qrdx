@@ -118,6 +118,8 @@ function PluginSection({
   const { entry } = plugin;
   const headingId = `${plugin.slug}-heading`;
   const flip = index % 2 === 1;
+  // A plugin without real screenshots yet gets no screenshot column.
+  const hasShots = plugin.shots.length > 0;
 
   return (
     <section
@@ -129,13 +131,17 @@ function PluginSection({
         className={cn(
           "grid items-center gap-10 lg:gap-14",
           // The screenshots always get the wider column, on either side.
-          flip
-            ? "lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"
-            : "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]",
+          hasShots &&
+            (flip
+              ? "lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]"
+              : "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"),
         )}
       >
         <div
-          className={cn("flex min-w-0 flex-col gap-6", flip && "lg:order-2")}
+          className={cn(
+            "flex min-w-0 flex-col gap-6",
+            hasShots ? flip && "lg:order-2" : "max-w-3xl",
+          )}
         >
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
@@ -227,14 +233,16 @@ function PluginSection({
           </div>
         </div>
 
-        <div className={cn("min-w-0", flip && "lg:order-1")}>
-          {/* On phones the screenshots span the column, grid line to grid
-              line, so their small UI text stays legible; the copy keeps the
-              gutter. */}
-          <div className="-mx-4 rounded-2xl border bg-muted/30 p-3 sm:mx-0 sm:p-6 md:p-8">
-            <PluginShots shots={plugin.shots} />
+        {hasShots && (
+          <div className={cn("min-w-0", flip && "lg:order-1")}>
+            {/* On phones the screenshots span the column, grid line to grid
+                line, so their small UI text stays legible; the copy keeps the
+                gutter. */}
+            <div className="-mx-4 rounded-2xl border bg-muted/30 p-3 sm:mx-0 sm:p-6 md:p-8">
+              <PluginShots shots={plugin.shots} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div
