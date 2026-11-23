@@ -6,6 +6,7 @@ import { getQRAsCanvas, getQRAsSVGDataUri } from "./export";
 import { getFrameDimensions } from "./frame";
 import { canvasToGIF, GIF_MIME } from "./gif";
 import { canvasesToICO, ICO_MIME, ICO_SIZES } from "./ico";
+import { canvasToTIFF, TIFF_MIME, type TIFFOptions } from "./tiff";
 import { blobToDataUrl, canvasToWebP, type WebPOptions } from "./webp";
 
 /**
@@ -16,6 +17,9 @@ import { blobToDataUrl, canvasToWebP, type WebPOptions } from "./webp";
  * GIFScanError) when the reduced image would no longer scan. "ico" is one
  * favicon file holding the code at 16, 32, 48 and 256 px, each an embedded
  * PNG with its transparency; `size` doesn't apply, and a frame is left out.
+ * "tiff" is RGBA with its transparency, at 300 dpi; "tiff-cmyk" is the same
+ * file in CMYK for print (pure black as K only, by the conversion the print
+ * PDF and EPS use; a transparent background comes out white).
  * "eps" is vector PostScript: `size.width` becomes points (72 per inch).
  */
 export type DownloadFormat =
@@ -25,6 +29,8 @@ export type DownloadFormat =
   | "bmp"
   | "gif"
   | "ico"
+  | "tiff"
+  | "tiff-cmyk"
   | "svg"
   | "pdf"
   | "eps";
@@ -36,6 +42,8 @@ export interface DownloadFormatInfo {
   vector: boolean;
   /** The pixel sizes one file holds at once (ICO); its file name states none. */
   sizes?: readonly number[];
+  /** Added to the file name before the extension (TIFF's CMYK: "-cmyk") */
+  nameSuffix?: string;
 }
 
 /**
@@ -45,6 +53,7 @@ export interface DownloadFormatInfo {
  * encoder), BMP by canvasToBMP and GIF by canvasToGIF (the built-in encoders:
  * no browser writes either),
  * ICO by canvasesToICO (a PNG of each size inside the built-in ICO writer),
+ * TIFF by canvasToTIFF (the built-in encoder, RGBA or CMYK),
  * SVG from the markup, PDF with jspdf, EPS by getQRAsEPS. A new
  * format needs an entry here and a branch there.
  */
@@ -59,6 +68,13 @@ export const DOWNLOAD_FORMATS: Record<DownloadFormat, DownloadFormatInfo> = {
     extension: "ico",
     vector: false,
     sizes: ICO_SIZES,
+  },
+  tiff: { mimeType: TIFF_MIME, extension: "tif", vector: false },
+  "tiff-cmyk": {
+    mimeType: TIFF_MIME,
+    extension: "tif",
+    vector: false,
+    nameSuffix: "-cmyk",
   },
   svg: { mimeType: "image/svg+xml", extension: "svg", vector: true },
   // A PDF download holds the PNG, so it's named after its pixel size.
@@ -178,13 +194,18 @@ export function getDownloadFilename(
   size: DownloadSize,
   frame?: QRProps["frame"]
 ): string {
-  const { extension, vector, sizes } = DOWNLOAD_FORMATS[format];
+  const {
+    extension,
+    vector,
+    sizes,
+    nameSuffix = "",
+  } = DOWNLOAD_FORMATS[format];
   if (vector || sizes) {
-    return `qr-code.${extension}`;
+    return `qr-code${nameSuffix}.${extension}`;
   }
   // The canvas size getQRAsCanvas and getQRAsPDF draw on
   const { width, height } = getFrameDimensions(size.width, frame);
-  return `qr-code-${Math.round(width)}x${Math.round(height)}.${extension}`;
+  return `qr-code-${Math.round(width)}x${Math.round(height)}${nameSuffix}.${extension}`;
 }
 
 /**
@@ -204,6 +225,27 @@ export async function getQRAsWebP(
   )) as HTMLCanvasElement;
   try {
     return await canvasToWebP(canvas, options);
+  } finally {
+    canvas.remove();
+  }
+}
+
+/**
+ * The code as a TIFF (plus its frame, if any): RGBA with its transparency,
+ * or CMYK for print with `colorMode: "cmyk"`. 300 dpi unless `dpi` is set.
+ * Every browser gets it from QRdx's own encoder.
+ */
+export async function getQRAsTIFF(
+  qrProps: QRProps,
+  options: TIFFOptions = {}
+): Promise<Blob> {
+  const canvas = (await getQRAsCanvas(
+    qrProps,
+    "image/png",
+    true
+  )) as HTMLCanvasElement;
+  try {
+    return await canvasToTIFF(canvas, options);
   } finally {
     canvas.remove();
   }
@@ -434,6 +476,11 @@ export async function downloadQRCode(
     } else if (format === "ico") {
       const ico = await getQRAsICO(propsWithSize);
       downloadFile(await blobToDataUrl(ico), finalFilename);
+    } else if (format === "tiff" || format === "tiff-cmyk") {
+      const tiff = await getQRAsTIFF(propsWithSize, {
+        colorMode: format === "tiff-cmyk" ? "cmyk" : "rgb",
+      });
+      downloadFile(await blobToDataUrl(tiff), finalFilename);
     } else {
       // Download as PNG or JPG
       const mimeType = getMimeType(format);
@@ -494,6 +541,14 @@ export async function getQRCodeDataUrl(
 
   if (format === "ico") {
     return await blobToDataUrl(await getQRAsICO(propsWithSize));
+  }
+
+  if (format === "tiff" || format === "tiff-cmyk") {
+    return await blobToDataUrl(
+      await getQRAsTIFF(propsWithSize, {
+        colorMode: format === "tiff-cmyk" ? "cmyk" : "rgb",
+      })
+    );
   }
 
   const mimeType = getMimeType(format);

@@ -27,7 +27,7 @@ export const qrImageOperations: INodeProperties[] = [
         name: "Generate",
         value: "generate",
         description:
-          "Make a QR code image as PNG, WebP, GIF, BMP, ICO, SVG or EPS. Needs no API key.",
+          "Make a QR code image as PNG, WebP, GIF, BMP, ICO, TIFF, TIFF (CMYK), SVG or EPS. Needs no API key.",
         action: "Generate a QR code image",
       },
     ],
@@ -83,6 +83,18 @@ export const qrImageFields: INodeProperties[] = [
         name: "SVG",
         value: "svg",
         description: "Vector image for the web and design tools",
+      },
+      {
+        name: "TIFF",
+        value: "tiff",
+        description:
+          "For print shops that ask for TIFF; 300 dpi, transparency kept",
+      },
+      {
+        name: "TIFF (CMYK)",
+        value: "tiff-cmyk",
+        description:
+          "CMYK for print: black as black ink only, a transparent background white, no color profile",
       },
       {
         name: "WebP",

@@ -151,6 +151,77 @@ describe("generate command", () => {
     });
   });
 
+  describe("TIFF file output", () => {
+    it("-o file.tif and file.tiff write an RGBA TIFF", () => {
+      for (const name of ["output.tif", "output.tiff"]) {
+        const out = tmp(name);
+        cleanups.push(out);
+        const { exitCode } = runCli([
+          "generate",
+          "https://qrdx.dev",
+          "--size",
+          "300",
+          "-o",
+          out,
+        ]);
+        expect(exitCode).toBe(0);
+        const buf = readFileSync(out);
+        expect(buf.toString("latin1", 0, 4)).toBe("II*\0");
+      }
+    });
+
+    it("--format tiff-cmyk writes CMYK to a .tif file", () => {
+      const out = tmp("output-cmyk.tif");
+      cleanups.push(out);
+      const { exitCode } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--format",
+        "tiff-cmyk",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(0);
+      // PhotometricInterpretation 5 (separated): find tag 262 in the IFD
+      const buf = readFileSync(out);
+      const ifd = buf.readUInt32LE(4);
+      const photometric = Array.from(
+        { length: buf.readUInt16LE(ifd) },
+        (_, i) => ifd + 2 + i * 12
+      ).find((entry) => buf.readUInt16LE(entry) === 262);
+      expect(photometric && buf.readUInt16LE(photometric + 8)).toBe(5);
+    });
+
+    it("refuses --format tiff-cmyk with a .png file name", () => {
+      const { exitCode, stdout, stderr } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--format",
+        "tiff-cmyk",
+        "-o",
+        tmp("wrong.png"),
+      ]);
+      expect(exitCode).toBe(1);
+      expect(stdout + stderr).toContain("Use a .tif file name");
+    });
+
+    it("caps the TIFF size like PNG", () => {
+      const out = tmp("too-big.tif");
+      cleanups.push(out);
+      const { exitCode, stdout, stderr } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--size",
+        "20000",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(1);
+      expect(stdout + stderr).toContain("TIFF output is at most 10000 px");
+      expect(existsSync(out)).toBe(false);
+    });
+  });
+
   describe("BMP file output", () => {
     it("-o file.bmp writes a 24-bit BMP", () => {
       const out = tmp("output.bmp");
@@ -469,7 +540,7 @@ describe("generate command", () => {
       ["--fg", ["--fg", '{"type":"linear"'], "Invalid gradient JSON"],
       ["--bg", ["--bg", '{"type":"linear","stops":[]}'], "Invalid gradient"],
       ["-o", ["-o", "qr.jpg"], 'Unsupported output format ".jpg"'],
-      ["--format", ["--format", "tiff"], 'Invalid --format "tiff"'],
+      ["--format", ["--format", "heic"], 'Invalid --format "heic"'],
       ["--frame", ["--frame", "banner"], 'Invalid --frame "banner"'],
       [
         "--frame-text",

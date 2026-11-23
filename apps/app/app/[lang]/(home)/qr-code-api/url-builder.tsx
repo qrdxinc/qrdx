@@ -24,6 +24,7 @@ import {
   apiSnippets,
   type ImageFormat,
   LEVELS,
+  previewFormat,
   queryString,
 } from "./snippets";
 
@@ -115,10 +116,11 @@ export function UrlBuilder({
     setQuery((current) => ({ ...current, [key]: value }));
 
   const valid = query.data.length > 0 && query.data.length <= dataMax;
-  // EPS can't be shown in an <img>: preview the same code as SVG.
+  // EPS and TIFF can't be shown in an <img>: preview the same code as SVG
+  // or PNG.
   const previewQuery: ApiQuery = {
     ...query,
-    format: query.format === "eps" ? "svg" : query.format,
+    format: previewFormat(query.format),
   };
   const nextPreview = valid
     ? `${previewBase}/qr?${queryString(previewQuery)}`
@@ -162,7 +164,9 @@ export function UrlBuilder({
             onValueChange={(next) => {
               if (next) set("format", next as ImageFormat);
             }}
+            className="flex-wrap"
             size="sm"
+            spacing={1}
             type="single"
             value={query.format}
             variant="outline"
@@ -304,6 +308,9 @@ export function UrlBuilder({
         </div>
         {query.format === "eps" && (
           <p className="text-xs text-muted-foreground">{t("epsPreview")}</p>
+        )}
+        {(query.format === "tiff" || query.format === "tiff-cmyk") && (
+          <p className="text-xs text-muted-foreground">{t("tiffPreview")}</p>
         )}
         <CodeSnippet code={snippets.url} label={t("url")} wrap />
         <CodeSnippet code={snippets.html} label={t("html")} wrap />

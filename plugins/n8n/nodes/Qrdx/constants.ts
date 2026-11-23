@@ -12,6 +12,8 @@ export const QR_IMAGE_FORMATS = [
   "gif",
   "bmp",
   "ico",
+  "tiff",
+  "tiff-cmyk",
   "svg",
   "eps",
 ] as const;

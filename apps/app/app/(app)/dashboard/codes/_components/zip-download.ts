@@ -1,6 +1,6 @@
 import { strToU8 } from "fflate";
 import Papa from "papaparse";
-import { getQRCodeDataUrl, getQRData } from "qrdx";
+import { DOWNLOAD_FORMATS, getQRCodeDataUrl, getQRData } from "qrdx";
 import {
   createFilenameAllocator,
   dataUrlToBytes,
@@ -21,9 +21,18 @@ const BATCH = 6;
  * Image files a ZIP of codes can hold (WebP is lossless; BMP is an
  * uncompressed 24-bit bitmap, so the archive compresses it; an ICO is a
  * favicon of PNGs at 16, 32, 48 and 256 px; a GIF is left out of the archive,
- * and counted as failed, when its design would stop scanning in 256 colors).
+ * and counted as failed, when its design would stop scanning in 256 colors;
+ * a TIFF is at 300 dpi, RGBA or CMYK for print, both saved as .tif).
  */
-export type ZipFormat = "png" | "webp" | "gif" | "bmp" | "ico" | "svg";
+export type ZipFormat =
+  | "png"
+  | "webp"
+  | "gif"
+  | "bmp"
+  | "ico"
+  | "tiff"
+  | "tiff-cmyk"
+  | "svg";
 
 export const ZIP_FORMAT_LABELS: Record<ZipFormat, string> = {
   png: "PNG",
@@ -31,6 +40,8 @@ export const ZIP_FORMAT_LABELS: Record<ZipFormat, string> = {
   gif: "GIF",
   bmp: "BMP",
   ico: "ICO",
+  tiff: "TIFF",
+  "tiff-cmyk": "CMYK TIFF",
   svg: "SVG",
 };
 
@@ -128,7 +139,7 @@ export async function downloadCodesZip(
       }
       const name = allocate(
         sanitizeFilename(code.title ?? "") || `qrdx-${code.slug}`,
-        format,
+        DOWNLOAD_FORMATS[format].extension,
       );
       // PNG and WebP are already compressed; SVG text and raw BMP pixels
       // shrink a lot.
