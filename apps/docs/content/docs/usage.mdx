@@ -14,7 +14,7 @@ icon: FileCode
 | --- | --- | --- |
 | `QRCode` | An `<svg>` with every style option, plus `logo`, `logoOptions`, `hideLogo` and `scale`. Any other prop (`aria-label`, `className`, `role`) goes on the `<svg>` | Almost always |
 | `QRCodeSVG` | The same `<svg>`, with the logo given as raw `imageSettings` in pixels. Any other prop goes on the `<svg>` too | You lay the logo out yourself, or you port code from another renderer |
-| `QRCodeCanvas` | A `<canvas>` with plain square modules and solid colors | You need a canvas element. Patterns, eye colors, gradients and templates are ignored |
+| `QRCodeCanvas` | A `<canvas>` with plain square modules and solid colors | You need a canvas element. Patterns, eye colors and gradients are ignored |
 
 `QRCode` and `QRCodeSVG` use no browser-only hooks, so they render in React Server Components and in static HTML. `QRCodeCanvas` ships with `"use client"`.
 
@@ -38,7 +38,7 @@ export function MenuCode() {
 - `margin` is the quiet zone around the code, in modules (default 0). The QR standard asks for 4. Set it when the code sits on a photo, a pattern or a dark page; a code inside a white card with its own padding can keep 0.
 - `scale` multiplies `size` on `QRCode`.
 
-A frame or a template changes the output size. See [Frame or template](#frame-or-template).
+A frame changes the output size. See [Frame](#frame).
 
 ## Colors
 
@@ -107,7 +107,7 @@ export function LogoCode() {
 
 `logo` takes a path in your app, a URL or a data URL. The modules behind it are cleared, so the code relies on error correction to scan: use `level="H"`. `logoOptions` sets the logo's width as a share of the code (0.1 to 0.3, default 0.25), its clear space in modules, its position and its crop. The component never draws a logo bigger than the code can repair. [Add a logo in code](/docs/features/logos) has the details.
 
-## Frame or template
+## Frame
 
 ```tsx title="components/framed-code.tsx"
 import { QRCode } from "qrdx";
@@ -123,10 +123,7 @@ export function FramedCode() {
 }
 ```
 
-- `frame` draws a call-to-action frame around the code. The code stays `size` wide and the output grows to fit the frame. There are {facts.frameStyles} built-in styles, plus the official frame library and your own frame specs. See [Frames, scan score and print files](/docs/features/frames).
-- `templateId` draws a template such as `Arrow` or `StandardBox` instead. A template draws its whole artwork at `size`, with the code smaller inside it. See [Use a frame template](/docs/features/templates).
-
-With both set, the frame is drawn around the template's artwork.
+`frame` draws a call-to-action frame around the code. The code stays `size` wide and the output grows to fit the frame. There are {facts.frameStyles} built-in styles, from banners and bubbles to artwork such as `arrow` and `dot-ring`, plus the official frame library and your own frame specs. See [Frames, scan score and print files](/docs/features/frames).
 
 ## Error correction
 

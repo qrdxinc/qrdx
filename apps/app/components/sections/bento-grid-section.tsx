@@ -30,8 +30,8 @@ function BentoGridSection() {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 auto-rows-[180px]">
           <BentoCard
             gridClass="md:col-span-2 md:row-span-2"
-            title="Templates"
-            description="Pre-built templates for quick customization."
+            title="Frames"
+            description="Built-in frames drawn around the code."
             footerClassName="mt-4"
           >
             <TypeTester />

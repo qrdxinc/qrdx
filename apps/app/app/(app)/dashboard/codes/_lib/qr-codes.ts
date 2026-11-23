@@ -54,6 +54,7 @@ import {
   plansWith,
 } from "@/lib/plans";
 import { PLAN_NAMES } from "@/lib/pricing";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { signInPath } from "@/lib/safe-redirect";
 import { screenNewCodes, screenUrlChange } from "@/lib/safety/destinations";
@@ -305,7 +306,8 @@ export function toCodeView(
     pageId: row.pageId,
     title: row.title,
     contentType: row.contentType,
-    style: (row.style as ThemeStyles | null) ?? null,
+    // A design saved with a template reads as its frame
+    style: withTemplateAsFrame((row.style as ThemeStyles | null) ?? null),
     status: codeStatus(row),
     scanCount: row.scanCount,
     lastScannedAt: row.lastScannedAt,

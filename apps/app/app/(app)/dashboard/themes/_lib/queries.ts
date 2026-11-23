@@ -22,6 +22,7 @@ import {
 import { can } from "@/lib/permissions";
 import { getPlanLimits, PLANS } from "@/lib/plans";
 import { PLAN_NAMES } from "@/lib/pricing";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import type { ActiveScope } from "@/lib/scope";
 import type { ThemeStyles } from "@/types/theme";
 import type { SavedTheme } from "./theme";
@@ -161,6 +162,8 @@ export function toSavedTheme(scope: ActiveScope, row: ThemeRow): SavedTheme {
   const isTeam = !isPersonalTheme(row, scope.userId);
   return {
     ...row,
+    // A theme saved with a template reads as its frame
+    style: withTemplateAsFrame(row.style),
     isPublished: Boolean(row.isPublished),
     scope: isTeam ? "team" : "personal",
     canEdit: canEditTheme(scope, row),
@@ -190,7 +193,7 @@ export async function findThemeById(id: string) {
     .from(qrPreset)
     .where(eq(qrPreset.id, id))
     .limit(1);
-  return row ?? null;
+  return row ? { ...row, style: withTemplateAsFrame(row.style) } : null;
 }
 
 /** Makes `id` the only default theme in its scope, in one statement. */
@@ -216,5 +219,5 @@ export async function getDefaultThemeStyle(
     .where(and(themeScopeWhere(scope), eq(qrPreset.isDefault, true)))
     .orderBy(desc(qrPreset.updatedAt))
     .limit(1);
-  return row?.style ?? null;
+  return withTemplateAsFrame(row?.style ?? null);
 }

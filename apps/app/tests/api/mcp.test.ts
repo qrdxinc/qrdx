@@ -347,7 +347,7 @@ describe("MCP over Streamable HTTP", () => {
     expect(message?.result.content[0]?.text).toMatch(/8-63/);
   });
 
-  it("list_options lists every content type, shape, frame and template", async () => {
+  it("list_options lists every content type, shape and frame, the former templates' too", async () => {
     const { message } = await call("list_options", {});
     const options = JSON.parse(message?.result.content[0]?.text as string);
     expect(
@@ -355,9 +355,9 @@ describe("MCP over Streamable HTTP", () => {
     ).toContain("vcard");
     expect(options.style.frames.styles).toContain("banner-bottom");
     expect(options.style.eyes).not.toContain("curly");
-    expect(
-      options.style.templates.map((item: { id: string }) => item.id),
-    ).toContain("StandardBox");
+    expect(options.style.frames.styles).toContain("standard-box");
+    expect(options.style.frames.styles).toContain("dot-ring");
+    expect(options.style).not.toHaveProperty("templates");
     expect(options.scanScore).toMatchObject({ great: 85, maxRepairs: 3 });
   });
 

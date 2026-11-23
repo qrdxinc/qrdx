@@ -86,7 +86,7 @@ export const developers: IntegrationCatalogEntry[] = [
       "Turn any URL into a QR code image for Markdown, HTML or email. No account or key.",
     description: [
       "GET /api/v1/qr returns an SVG, PNG or print-ready EPS. Everything is in the query string, so the URL itself is the image: paste it into a README, an <img> tag or an email template.",
-      "Choose size, colors, module and corner shapes, error correction, margin and frame templates.",
+      "Choose size, colors, module and corner shapes, error correction, margin and a frame.",
     ],
     kind: "native",
     surface: "developers",
@@ -153,7 +153,7 @@ export const developers: IntegrationCatalogEntry[] = [
     tagline:
       "Generate styled SVG or PNG QR codes from the terminal or in CI with @qrdx/cli.",
     description: [
-      "Run npx @qrdx/cli to render a QR code with the same patterns, colors, gradients, logos, templates and frames as the playground. Flags make it fully non-interactive for scripts and CI; in a terminal it can guide you with prompts.",
+      "Run npx @qrdx/cli to render a QR code with the same patterns, colors, gradients, logos and frames as the playground. Flags make it fully non-interactive for scripts and CI; in a terminal it can guide you with prompts.",
     ],
     kind: "native",
     surface: "developers",
@@ -204,7 +204,7 @@ export const developers: IntegrationCatalogEntry[] = [
       {
         title: "Full styling",
         description:
-          "Patterns, colors and gradients, logos, templates and call-to-action frames.",
+          "Patterns, colors and gradients, logos and call-to-action frames.",
       },
       {
         title: "CI-friendly",
@@ -219,9 +219,9 @@ export const developers: IntegrationCatalogEntry[] = [
     slug: "react",
     name: "React library",
     tagline:
-      "Render customizable QR codes in React with qrdx: patterns, gradients, logos and templates.",
+      "Render customizable QR codes in React with qrdx: patterns, gradients, logos and frames.",
     description: [
-      "qrdx is the open-source library behind QRdx. Render QR codes as SVG or canvas with custom body patterns, corner eyes, gradients, logos and frame templates, and export them as images.",
+      "qrdx is the open-source library behind QRdx. Render QR codes as SVG or canvas with custom body patterns, corner eyes, gradients, logos and frames, and export them as images.",
     ],
     kind: "native",
     surface: "developers",
@@ -270,7 +270,7 @@ export const developers: IntegrationCatalogEntry[] = [
       {
         title: "Design control",
         description:
-          "Body patterns, corner eyes and dots, gradients, logos and templates.",
+          "Body patterns, corner eyes and dots, gradients, logos and frames.",
       },
       {
         title: "Open source",

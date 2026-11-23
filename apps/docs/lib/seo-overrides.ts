@@ -52,9 +52,6 @@ export const SEO_OVERRIDES: Readonly<Record<string, SeoOverride>> = {
   "/docs/qr-detection": {
     title: "Decode QR codes from images in the browser with qrdx",
   },
-  "/docs/features/templates": {
-    title: "Frame templates in qrdx: built-in ones or write your own",
-  },
   "/docs/features/logos": {
     title: "Add a logo to a QR code in React with qrdx, kept scannable",
   },

@@ -12,7 +12,6 @@
 //
 // Safe to import anywhere: official frames are looked up through
 // StyleSources, so the frame catalogue stays on the server.
-import { getTemplateIds } from "qrdx";
 import {
   type AnyQRFrame,
   BG_RADIUS_MAX,
@@ -48,6 +47,7 @@ import {
   SHADOW_OPACITY_MIN,
 } from "qrdx/types";
 import { z } from "zod";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import type { ThemeStyles } from "@/types/theme";
 
 export const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
@@ -86,9 +86,6 @@ export const isLogoChoice = (
 ): value is (typeof LOGO_CHOICES)[number] =>
   typeof value === "string" &&
   (LOGO_CHOICES as readonly string[]).includes(value);
-
-/** Engine border templates; "default" is no border. */
-export const TEMPLATE_IDS = getTemplateIds() as [string, ...string[]];
 
 export const ERROR_LEVELS = ["L", "M", "Q", "H"] as const;
 
@@ -453,9 +450,6 @@ const styleSchemaOf = (builders: Builders) => {
         "Error correction: L 7%, M 15%, Q 25%, H 30% (use H with a logo)",
       ),
     frame: frameSchemaOf(builders),
-    templateId: z
-      .enum(TEMPLATE_IDS)
-      .describe('Decorative border template; "default" for none'),
     logo: z
       .union([
         z.enum(LOGO_CHOICES),
@@ -897,7 +891,6 @@ function cleanCore(
   | "cornerEyeDotPattern"
   | "margin"
   | "level"
-  | "templateId"
 > {
   return {
     bodyPattern: valid(
@@ -921,11 +914,6 @@ function cleanCore(
       fallback.margin,
     ),
     level: valid(z.enum(ERROR_LEVELS), core.level, fallback.level),
-    templateId: valid(
-      z.enum(TEMPLATE_IDS),
-      core.templateId,
-      fallback.templateId,
-    ),
   };
 }
 
@@ -941,7 +929,6 @@ export const CLASSIC_STYLE: DesignStyle = {
   margin: 4,
   level: "Q",
   frame: { style: "none" },
-  templateId: "default",
   logo: "none",
 };
 
@@ -1052,9 +1039,6 @@ export function toThemeStyles(
     margin: design.margin,
     level: design.level,
     ...(frame ? { frame } : {}),
-    ...(design.templateId !== "default"
-      ? { templateId: design.templateId }
-      : {}),
     ...looksToThemeStyles(design),
     showLogo: design.logo !== "none",
   };
@@ -1170,10 +1154,12 @@ function solidHexOrNone(color: ColorConfig | undefined) {
  * shape, an rgba color, a gradient on one eye) fall back to safe ones.
  */
 export function fromThemeStyles(
-  styles: ThemeStyles,
-  logo: { showLogo: boolean } = { showLogo: Boolean(styles.showLogo) },
+  stored: ThemeStyles,
+  logo: { showLogo: boolean } = { showLogo: Boolean(stored.showLogo) },
   options: FromThemeStylesOptions = {},
 ): DesignStyle {
+  // A saved design that names a template starts from its frame
+  const styles = withTemplateAsFrame(stored);
   const fg = solidHex(styles.fgColor, "#000000");
   const gradients = {
     body: gradientOf(styles.fgColor),
@@ -1211,7 +1197,6 @@ export function fromThemeStyles(
     ),
     level: pick(ERROR_LEVELS, styles.level, "Q"),
     frame: frameOf(styles.frame, options),
-    templateId: pick(TEMPLATE_IDS, styles.templateId, "default"),
     logo: logo.showLogo ? "keep" : "none",
     ...looksOf(styles),
   };
@@ -1228,7 +1213,6 @@ const PLAIN_NAMES: Record<string, string> = {
   margin: "margin",
   level: "error correction",
   frame: "frame",
-  templateId: "border",
   logo: "logo",
   gradients: "gradients",
   eyeColors: "colors of single eyes",
@@ -1268,7 +1252,6 @@ const describeValue = (key: string, value: unknown): string => {
           : frame.style;
     return `${name}${frame.text ? ` "${frame.text}"` : ""}`;
   }
-  if (key === "templateId") return value === "default" ? "none" : String(value);
   if (key === "gradients") {
     const entries = Object.entries((value ?? {}) as object);
     return entries.length ? entries.map(([part]) => part).join(", ") : "none";

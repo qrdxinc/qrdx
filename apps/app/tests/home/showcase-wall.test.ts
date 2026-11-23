@@ -10,7 +10,6 @@ import {
   CORNER_EYE_DOT_PATTERNS,
   CORNER_EYE_PATTERNS,
   FRAME_STYLES,
-  getTemplateIds,
   isFrameActive,
   OFFICIAL_FRAMES,
   QR_ART_VARIANTS,
@@ -62,7 +61,6 @@ const rowTiles = (row: WallRow) => row.halves.flat();
 function treatment(tile: WallTile): string {
   const styles = tileStyles(tile);
   if (tile.art) return "art";
-  if (styles.templateId) return "border";
   if (styles.frame && isFrameActive(styles.frame)) return "frame";
   return "plain";
 }
@@ -427,7 +425,8 @@ describe("the home wall", () => {
     expect(tiles.some((t) => t.art?.mode === "halftone")).toBe(true);
     expect(tiles.some((t) => tileLogo(t) === "qrdx")).toBe(true);
     expect(tiles.some((t) => t.officialFrame)).toBe(true);
-    expect(styles.some((s) => s.templateId)).toBe(true);
+    // The former templates, frames now
+    expect(styles.some((s) => s.frame?.style === "dot-ring")).toBe(true);
     expect(tiles.some((t) => t.pageType)).toBe(true);
     // Neon: dark modules on a neon ground.
     expect(
@@ -523,7 +522,7 @@ describe("the community wall", () => {
     }
   });
 
-  it("uses every frame style, the wall's official frames and every border template", () => {
+  it("uses every frame style (the former templates' too) and the wall's official frames", () => {
     const frames = used((s) => s.frame?.style);
     for (const style of FRAME_STYLES) {
       if (style !== "none") expect(frames, style).toContain(style);
@@ -533,10 +532,6 @@ describe("the community wall", () => {
     for (const id of WALL_FRAME_IDS) {
       expect(ids, id).toContain(id);
       expect(official, id).toContain(id);
-    }
-    const templates = used((s) => s.templateId);
-    for (const id of getTemplateIds()) {
-      if (id !== "default") expect(templates, id).toContain(id);
     }
   });
 

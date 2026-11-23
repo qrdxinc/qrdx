@@ -36767,9 +36767,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "Patrones del cuerpo, formas de los ojos de las esquinas y de los puntos del ojo, plantillas de marco, niveles de corrección de errores, valores predeterminados y límites.",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "Patrones del cuerpo, formas de los ojos de las esquinas y de los puntos del ojo, marcos integrados, niveles de corrección de errores, valores predeterminados y límites.",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },

@@ -311,7 +311,6 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
       level: themeState.styles.level,
       cornerEyePattern: themeState.styles.cornerEyePattern,
       cornerEyeDotPattern: themeState.styles.cornerEyeDotPattern,
-      templateId: themeState.styles.templateId,
       margin: themeState.styles.margin,
       frame: themeState.styles.frame,
       art: (themeState.styles as { art?: QRArt }).art,

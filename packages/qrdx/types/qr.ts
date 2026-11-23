@@ -28,7 +28,6 @@ import {
 import { type CornerEyePattern, cornerEyePatternSchema } from "./corner-eye";
 import { type AnyQRFrame, anyFrameSchema } from "./frame-spec";
 import { type BodyPattern, bodyPatternSchema } from "./image-pattern";
-import type { TemplateDefinition } from "./template";
 
 export {
   AUTO_LEVEL_LOGO_COVERAGE,
@@ -225,8 +224,6 @@ export const qrPropsSchema = z.object({
   margin: z.number().optional(),
   imageSettings: imageSettingsSchema.optional(),
   isOGContext: z.boolean().optional(),
-  templateId: z.string().optional(),
-  customProps: z.record(z.string(), z.any()).optional(),
   frame: anyFrameSchema.optional(),
   art: qrArtSchema.optional(),
   eyeColors: eyeColorsSchema.optional(),
@@ -272,12 +269,6 @@ export interface QRProps {
   style?: QRStyle;
   imageSettings?: ImageSettings;
   isOGContext?: boolean;
-  templateId?: string;
-  // Custom template definition - if provided, this will be used instead of looking up by templateId
-  customTemplate?: TemplateDefinition<any>;
-  // Generic custom props that can be used by any template
-  // Each template can define its own custom props type (e.g., DotRingProps)
-  customProps?: Record<string, any>;
   // Frame around the code: a built-in style, or { style: "custom", spec }
   // (see types/frame-spec.ts); the rendered output grows to fit it
   frame?: AnyQRFrame;
@@ -298,7 +289,7 @@ export interface QRProps {
   exactLevel?: boolean;
   // Outline: "circle" or "heart" puts the symbol in a disc or a heart of
   // decorative modules (see QR_SHAPES); a QRSilhouette fills an outline of
-  // your own. Ignored with a template.
+  // your own.
   shape?: QRCodeShape;
   // Per-eye shapes; each overrides cornerEyePattern (outer) /
   // cornerEyeDotPattern (inner) on that eye only

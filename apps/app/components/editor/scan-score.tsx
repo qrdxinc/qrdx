@@ -160,7 +160,6 @@ export function ScanScoreBadge({
       level: style.level,
       cornerEyePattern: style.cornerEyePattern,
       cornerEyeDotPattern: style.cornerEyeDotPattern,
-      templateId: style.templateId,
       frame: style.frame,
       margin: style.margin,
       art: style.art,

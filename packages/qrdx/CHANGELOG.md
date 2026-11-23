@@ -2,6 +2,28 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## 0.0.64
+
+### Templates are frames now
+
+- **The six templates are built-in frames.** Each one is a `FRAME_STYLES` value and a `BUILT_IN_FRAMES` entry, drawn from the frame spec the template was drawn from, so it looks the same:
+
+  | Template (`templateId`) | Frame (`frame.style`) | Name |
+  | --- | --- | --- |
+  | `Arrow` | `arrow` | Arrow |
+  | `StandardBox` | `standard-box` | Standard box |
+  | `SquareBorder` | `square-border` | Square border |
+  | `StrikedBox` | `striked-box` | Striked box |
+  | `Halloween` | `halloween` | Halloween |
+  | `DotRing` (and its earlier id `FlamQR`) | `dot-ring` | Dot ring |
+
+  `default` drew no artwork and has no frame.
+- **They draw like every other frame.** The code keeps the size you ask for and the artwork is added around it, so the image is larger than `size` (a template drew the whole artwork at `size`, with the code smaller inside it). `getFrameDimensions(size, frame)` gives the output size. A template took the code's dark color for its artwork; a frame takes `color` (default black), so pass `color: fgColor` to keep the same look. Arrow, Standard box, Square border, Striked box and Halloween are artwork without a label, so `text` doesn't show on them.
+- **Dot ring** keeps the template's ring, its 593-unit drawing and dots from its own table, with `text` over the top and `secondaryText` along the bottom (both "Scan the QR code" by default; `""` hides one). Two things a frame can't do: its dots are the same for every code (the template picked a set per link and cleared the ones next to a code over 49 modules across), and the text options of `DotRingProps` (`textFill`, `textPosition`, `textRotation`, fonts, strokes) are gone. `color` sets the ring and the dots, `textColor` the text.
+- **Removed:** the `templateId`, `customTemplate` and `customProps` props (on every component, `<qrdx-code>`'s `template-id` attribute and properties, the Angular inputs and the Vue props), `qrPropsSchema`'s `templateId` and `customProps`, and the exports `TEMPLATES`, `getTemplate`, `getAllTemplates`, `getTemplateIds`, `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing`, `defaultTemplate`, the types `TemplateDefinition`, `TemplateConfig`, `TemplateNode`, `BaseTemplateProps` and `DotRingProps`, and the schemas `baseTemplatePropsSchema`, `templateConfigSchema` and `templateDefinitionBaseSchema`.
+- **Passing one is ignored.** Code and saved props that still pass `templateId`, `customTemplate` or `customProps` keep working: the prop is dropped without an error, never reaches the `<svg>` as an attribute (so React logs no unknown-prop warning), and the code is drawn without it. To keep the artwork, pass the frame instead: `templateId="Arrow"` becomes `frame={{ style: "arrow" }}`.
+- `@qrdx/cli` 0.0.19: `--frame` takes the six new styles, and `--template` is read and ignored, with one line on stderr naming `--frame`.
+
 ## 0.0.63
 
 - **TIFF export.** `"tiff"` and `"tiff-cmyk"` are new `DownloadFormat`s, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write a TIFF for print shops that ask for one. No browser encodes TIFF from a canvas (`toBlob("image/tiff")` returns a PNG), so the engine writes the file itself, the same way in every browser and in Node: one strip of 8-bit samples, Deflate with the horizontal predictor through Compression Streams (uncompressed where those are missing), at 300 dpi.

@@ -142,7 +142,7 @@ export const MCP_TOOLS: {
     name: "list_qr_styles",
     title: "List styles",
     description:
-      "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
+      "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
     icon: ColorSwatch,
   },
   {

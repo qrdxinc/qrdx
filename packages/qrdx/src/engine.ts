@@ -14,7 +14,6 @@ export * from "../types/plain";
 export {
   angularGradientSchema,
   anyFrameSchema,
-  baseTemplatePropsSchema,
   bodyPatternSchema,
   colorConfigSchema,
   colorTypeSchema,
@@ -58,8 +57,6 @@ export {
   radialGradientSchema,
   shadowSchema,
   solidColorSchema,
-  templateConfigSchema,
-  templateDefinitionBaseSchema,
 } from "../types/schemas";
 export {
   createQRArtImage,
@@ -254,7 +251,6 @@ export {
   loadQRSilhouette,
 } from "./silhouette";
 export { toSVGElement, toSVGString } from "./svg";
-export * from "./templates";
 export * from "./tiff";
 export * from "./utils";
 /** Reads an 8-bit PNG into RGBA pixels (no DOM or sharp), or null. */

@@ -1,10 +1,25 @@
 /** @jsxImportSource ../../src/jsx */
 /** biome-ignore-all lint/style/noMagicNumbers: template artwork */
-// The built-in templates as they were hand-written up to qrdx 0.0.51
-// (src/template/*.tsx), kept here unchanged as the reference the template
-// frame specs (src/template/specs) are proven against in
-// tests/template-spec-parity.test.ts. Nothing ships this code.
-import type { TemplateDefinition } from "../../types";
+// The engine's templates as they were hand-written up to qrdx 0.0.51
+// (src/template/*.tsx), kept here unchanged as the reference the built-in
+// frames they became (src/frames/builtin: arrow, standard-box,
+// square-border, striked-box, halloween) are proven against in
+// tests/template-frames.test.ts. Nothing ships this code.
+import type { QRNode } from "../../src/jsx/runtime";
+
+/** A template as the engine took one until qrdx 0.0.63. */
+export interface LegacyTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  wrapper: (
+    children: QRNode,
+    props?: { fgColor?: string; bgColor?: string },
+    config?: { pixelSize: number; url: string }
+  ) => QRNode;
+}
+
+type TemplateDefinition = LegacyTemplate;
 
 export const LegacyDefaultTemplate: TemplateDefinition = {
   id: "default",

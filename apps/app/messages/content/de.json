@@ -36767,9 +36767,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "Körpermuster, Formen für Eckaugen und Augenpunkte, Rahmenvorlagen, Fehlerkorrekturstufen, Standardwerte und Limits.",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "Körpermuster, Formen für Eckaugen und Augenpunkte, integrierte Rahmen, Fehlerkorrekturstufen, Standardwerte und Limits.",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },

@@ -377,7 +377,7 @@
         "none": "Tanpa bingkai",
         "border": "Garis tepi"
       },
-      "more": "Playground lengkap menambahkan {bodyPatterns, number} pola badan, {eyeShapes, number} bentuk mata, {eyeCentres, number} pusat mata, warna dan gradasi sesuai keinginan, logo, templat, serta unduhan PNG, SVG, PDF, atau EPS.",
+      "more": "Playground lengkap menambahkan {bodyPatterns, number} pola badan, {eyeShapes, number} bentuk mata, {eyeCentres, number} pusat mata, warna dan gradasi sesuai keinginan, logo, bingkai, serta unduhan PNG, SVG, PDF, atau EPS.",
       "customize": "Sesuaikan di Playground",
       "qrLabel": "Kode QR untuk {value}",
       "empty": "Ketik tautan untuk melihat kode QR Anda."
@@ -4837,10 +4837,7 @@
         "theFrameIsAddedAround": "Bingkai ditambahkan di sekeliling kode, sehingga gambar yang diunduh menjadi lebih besar dan kodenya sendiri tetap dapat dipindai.",
         "label": "Label",
         "pickAFrameFirst": "Pilih bingkai terlebih dahulu",
-        "none": "Tidak ada",
-        "takesDotColor": "Warnanya mengikuti warna titik-titik kode.",
-        "alsoHasTemplate": "Desain ini juga memiliki bingkai {name} di dalam bingkai ini. Memilih bingkai lain akan mengganti keduanya.",
-        "templateKeepsSize": "Bingkai ini menyesuaikan kode di dalamnya, sehingga gambar yang diunduh tetap berukuran sesuai pilihan Anda."
+        "none": "Tidak ada"
       },
       "frameFields": {
         "textSize": "Ukuran teks"

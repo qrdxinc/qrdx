@@ -62,8 +62,8 @@ const DESIGNS = {
       halo: { width: 0.3 },
       shadow: { opacity: 0.3 },
     }),
-  "QRCodeSVG, template": () =>
-    createElement(QRCodeSVG, { value: VALUE, templateId: "DotRing" }),
+  "QRCodeSVG, dot ring frame": () =>
+    createElement(QRCodeSVG, { value: VALUE, frame: { style: "dot-ring" } }),
   "QRCode, logo": () =>
     createElement(QRCode, {
       value: VALUE,

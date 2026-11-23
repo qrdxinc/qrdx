@@ -57,7 +57,6 @@ export function toQRProps(styles: ThemeStyles, value = JUDGE_VALUE): QRProps {
     cornerEyeDotPattern: styles.cornerEyeDotPattern,
     level: styles.level,
     margin: styles.margin,
-    templateId: styles.templateId,
     ...(styles.frame && { frame: styles.frame }),
   } as QRProps;
 }

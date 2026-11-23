@@ -1,12 +1,12 @@
 import { QRCode } from "qrdx";
 
-export function ArrowCode() {
+export function ArrowFrameCode() {
   return (
     <QRCode
       value="https://example.com"
       size={256}
-      templateId="Arrow"
       fgColor="#1a56db"
+      frame={{ style: "arrow", color: "#1a56db" }}
     />
   );
 }

@@ -992,7 +992,7 @@
     "status": "machine"
   },
   "home.editor.more": {
-    "source": "15b1de5afbad",
+    "source": "45eb0fdfc41f",
     "status": "machine"
   },
   "home.editor.customize": {
@@ -14821,18 +14821,6 @@
   },
   "editor.controlSections.frameControls.none": {
     "source": "dc937b598926",
-    "status": "machine"
-  },
-  "editor.controlSections.frameControls.takesDotColor": {
-    "source": "efde7cd49587",
-    "status": "machine"
-  },
-  "editor.controlSections.frameControls.alsoHasTemplate": {
-    "source": "9f6a4b56a0b8",
-    "status": "machine"
-  },
-  "editor.controlSections.frameControls.templateKeepsSize": {
-    "source": "e4fef3437820",
     "status": "machine"
   },
   "editor.controlSections.frameFields.textSize": {

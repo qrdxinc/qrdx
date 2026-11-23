@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import { requireApiToken } from "@/app/api/v1/codes/_lib/api";
 import { withApiUsage } from "@/lib/analytics/usage";
 import { withApiQuotaHeaders } from "@/lib/api-quota";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import { themesWhere } from "./_lib/scope";
 
 const handleGET = withApiQuotaHeaders(async (req: NextRequest) => {
@@ -20,7 +21,13 @@ const handleGET = withApiQuotaHeaders(async (req: NextRequest) => {
     .from(qrPreset)
     .where(themesWhere(auth.tokenData));
 
-  return Response.json({ data: themes });
+  // A theme saved with a template reads as its frame
+  return Response.json({
+    data: themes.map((theme) => ({
+      ...theme,
+      style: withTemplateAsFrame(theme.style),
+    })),
+  });
 });
 
 // Counted with the API's requests (lib/analytics/usage.ts).

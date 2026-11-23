@@ -238,7 +238,7 @@ const BANDS: { band: WallBand; title: string; description: string }[] = [
     band: "art",
     title: "Art, logos and borders",
     description:
-      "Logo QR and Image QR in every variant, center logos, border templates, and transparent and print-ready codes.",
+      "Logo QR and Image QR in every variant, center logos, artwork frames, and transparent and print-ready codes.",
   },
   {
     band: "content",

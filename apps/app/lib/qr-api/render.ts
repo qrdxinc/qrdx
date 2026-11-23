@@ -38,7 +38,6 @@ export interface FlatStyle {
   dot?: ThemeStyles["cornerEyeDotPattern"];
   level?: ThemeStyles["level"];
   margin?: number;
-  template?: string;
 }
 
 const hex = (color: string) =>
@@ -56,7 +55,6 @@ export function flatToStyle(flat: FlatStyle): ThemeStyles {
   if (flat.dot !== undefined) style.cornerEyeDotPattern = flat.dot;
   if (flat.level !== undefined) style.level = flat.level;
   if (flat.margin !== undefined) style.margin = flat.margin;
-  if (flat.template !== undefined) style.templateId = flat.template;
   return style;
 }
 

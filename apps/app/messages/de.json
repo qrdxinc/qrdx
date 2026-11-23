@@ -377,7 +377,7 @@
         "none": "Kein Rahmen",
         "border": "Rand"
       },
-      "more": "Der volle Playground bietet zusätzlich {bodyPatterns, number} Körpermuster, {eyeShapes, number} Augenformen, {eyeCentres, number} Augenzentren, beliebige Farben und Farbverläufe, Logos, Vorlagen und Downloads als PNG, SVG, PDF oder EPS.",
+      "more": "Der volle Playground bietet zusätzlich {bodyPatterns, number} Körpermuster, {eyeShapes, number} Augenformen, {eyeCentres, number} Augenzentren, beliebige Farben und Farbverläufe, Logos, Rahmen und Downloads als PNG, SVG, PDF oder EPS.",
       "customize": "Im Playground anpassen",
       "qrLabel": "QR-Code für {value}",
       "empty": "Gib einen Link ein, um deinen QR-Code zu sehen."
@@ -4837,10 +4837,7 @@
         "theFrameIsAddedAround": "Der Rahmen wird um den Code herum hinzugefügt. Dadurch wird das heruntergeladene Bild größer und der Code selbst bleibt scanbar.",
         "label": "Text",
         "pickAFrameFirst": "Wähle zuerst einen Rahmen",
-        "none": "Keiner",
-        "takesDotColor": "Er übernimmt die Farbe der Punkte des Codes.",
-        "alsoHasTemplate": "Dieses Design enthält auch den Rahmen {name}. Wenn du einen anderen Rahmen wählst, werden beide ersetzt.",
-        "templateKeepsSize": "Dieser Rahmen passt sich dem Code darin an, sodass das heruntergeladene Bild die von dir gewählte Größe behält."
+        "none": "Keiner"
       },
       "frameFields": {
         "textSize": "Textgröße"

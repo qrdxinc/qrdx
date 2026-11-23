@@ -23,7 +23,7 @@ import {
   type QRFrame,
 } from "../types/frame";
 import { frameSpecSchema } from "../types/frame-spec";
-import { PLAIN, recordCanvas, VALUE } from "./support/catalog";
+import { PLAIN, recordCanvas, TEMPLATE_FRAMES, VALUE } from "./support/catalog";
 import { compareImages } from "./support/frames";
 import { legacyFrameLayout } from "./support/legacy-frames";
 import { rasterizeEps, rasterizePdf } from "./support/print-raster";
@@ -73,7 +73,10 @@ async function bothAsync<T>(
   }
 }
 
-const STYLES = BUILT_IN_FRAMES.map((frame) => frame.style);
+// The former templates have a parity test of their own (template-frames)
+const STYLES = BUILT_IN_FRAMES.map((frame) => frame.style).filter(
+  (style) => !(TEMPLATE_FRAMES as readonly string[]).includes(style)
+);
 
 const BRAND: Partial<QRFrame> = {
   color: "#be123c",
@@ -168,7 +171,7 @@ const props = (
 });
 
 test("every built-in style is a spec in the catalogue", () => {
-  expect([...STYLES].sort()).toEqual(
+  expect([...STYLES, ...TEMPLATE_FRAMES].sort()).toEqual(
     FRAME_STYLES.filter((style) => style !== "none").sort()
   );
   for (const { style, spec } of BUILT_IN_FRAMES) {

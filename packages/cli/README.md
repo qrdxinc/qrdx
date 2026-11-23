@@ -47,15 +47,14 @@ qrdx generate <data> [options]
 | `--logo` | | — | Center logo image URL (use with `--level H`) |
 | `--no-logo` | | — | Skip the logo prompt in interactive mode |
 | `--margin` | | `0` | Quiet zone margin (modules) |
-| `--template` | | — | A frame drawn as a template (the whole file is `--size`, the code smaller inside it): `Arrow` `StandardBox` `SquareBorder` `StrikedBox` `Halloween` `DotRing` |
-| `--frame` | | — | Call-to-action frame: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`<!-- /catalogue --> |
+| `--frame` | | — | Call-to-action frame: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`, `arrow`, `standard-box`, `square-border`, `striked-box`, `halloween`, `dot-ring`<!-- /catalogue --> |
 | `--frame-text` | | `Scan me` | Frame label, up to 24 characters (`""` hides it) |
 | `--frame-color` | | `#000000` | Frame color (hex) |
 | `--frame-text-color` | | white on banners | Frame label color (hex) |
 | `--help` | `-h` | | Show all options |
 | `--version` | `-v` | | Show the version |
 
-Invalid values (unknown pattern, template, frame, level, size, output extension, malformed gradient JSON, frame text over 24 characters or a non-hex frame color) exit with code `1` and a message listing the accepted values. `--frame-text` or a frame color without `--frame` uses `banner-bottom`. A frame adds space around the code, so the file is larger than `--size`.
+Invalid values (unknown pattern, frame, level, size, output extension, malformed gradient JSON, frame text over 24 characters or a non-hex frame color) exit with code `1` and a message listing the accepted values. `--frame-text` or a frame color without `--frame` uses `banner-bottom`. A frame adds space around the code, so the file is larger than `--size`.
 
 ## Examples
 
@@ -100,8 +99,8 @@ qrdx generate "https://qrdx.dev" \
 qrdx generate "https://qrdx.dev" -o gradient.svg \
   --fg '{"type":"linear","stops":[{"color":"#6366f1","offset":0},{"color":"#ec4899","offset":100}],"angle":135}'
 
-# A frame drawn as a template
-qrdx generate "https://qrdx.dev" --template Arrow -o arrow.svg
+# A hand-drawn arrow pointing at the code
+qrdx generate "https://qrdx.dev" --frame arrow -o arrow.svg
 
 # "Scan me" frame
 qrdx generate "https://qrdx.dev/menu" --frame banner-bottom --frame-text "Scan for the menu" -o menu.png

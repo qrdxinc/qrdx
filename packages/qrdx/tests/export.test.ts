@@ -47,7 +47,7 @@ describe("SVG", () => {
         frame: { style: "banner-bottom", text: 'Scan <me> & "go"' },
       },
     ],
-    ["templated", { value: VALUE, templateId: "Arrow" }],
+    ["a former template's frame", { value: VALUE, frame: { style: "arrow" } }],
   ])("%s export is well-formed SVG XML", async (_name, props) => {
     const svg = svgFromDataUri(await getQRAsSVGDataUri(props));
     expect(xmlProblems(svg)).toEqual([]);

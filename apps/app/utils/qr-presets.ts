@@ -1055,7 +1055,7 @@ const library: Record<string, ThemePreset> = {
  * More looks (November 2026), so the library covers every body pattern, eye
  * and eye centre the editor offers (except circle eyes, which only read in
  * lenient scanner apps), every frame style, radial gradients, the square
- * border template and the QRdx logo. Each one also scores Great (85+) on the
+ * border frame and the QRdx logo. Each one also scores Great (85+) on the
  * community publish gate (tests/themes/presets-scan.test.ts). The neon looks
  * keep dark modules on a neon ground: light-on-dark codes lose 10 points
  * for polarity and can't reach Great.
@@ -1649,7 +1649,7 @@ const looks: Record<string, ThemePreset> = {
       cornerEyeDotPattern: "square",
       level: "Q",
       margin: 4,
-      templateId: "SquareBorder",
+      frame: { style: "square-border" },
     },
   },
   logotype: {

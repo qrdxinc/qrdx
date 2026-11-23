@@ -8,6 +8,7 @@ import {
   noteChange,
   trackGestures,
 } from "@/lib/editor-gestures";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import { noteEditorVisitStart } from "@/lib/sign-up-nudges";
 import { isShuffleId } from "@/lib/themes/shuffle";
 import { isDeepEqual } from "@/lib/utils";
@@ -64,6 +65,20 @@ function withOwnPresetStyles(
   }
   const { presetStyles: _stale, ...rest } = next;
   return rest;
+}
+
+/**
+ * `state` with the template its styles name read as its frame (designs from
+ * before templates were frames; lib/qr-design/legacy-template.ts).
+ */
+function withTemplateFrame(state: ThemeEditorState): ThemeEditorState {
+  const styles = withTemplateAsFrame(state.styles);
+  const presetStyles = state.presetStyles
+    ? withTemplateAsFrame(state.presetStyles)
+    : state.presetStyles;
+  return styles === state.styles && presetStyles === state.presetStyles
+    ? state
+    : { ...state, styles, ...(presetStyles && { presetStyles }) };
 }
 
 /**
@@ -180,7 +195,10 @@ export const useQREditorStore = create<QREditorStore>()(
       },
       setThemeState: (state: ThemeEditorState) => {
         const oldThemeState = get().themeState;
-        const newState = withOwnPresetStyles(state, oldThemeState);
+        const newState = withOwnPresetStyles(
+          withTemplateFrame(state),
+          oldThemeState,
+        );
         let currentHistory = get().history;
 
         // Check if only currentMode changed
@@ -232,7 +250,7 @@ export const useQREditorStore = create<QREditorStore>()(
         const newThemeState = withPreset(
           currentThemeState,
           preset,
-          getPresetThemeStyles(preset),
+          withTemplateAsFrame(getPresetThemeStyles(preset)),
         );
 
         const newHistoryEntry = {
@@ -253,7 +271,10 @@ export const useQREditorStore = create<QREditorStore>()(
       },
       replaceThemeState: (state: ThemeEditorState) => {
         const currentThemeState = get().themeState;
-        const newThemeState = withOwnPresetStyles(state, currentThemeState);
+        const newThemeState = withOwnPresetStyles(
+          withTemplateFrame(state),
+          currentThemeState,
+        );
         // Always its own history entry (setThemeState merges the changes of one
         // gesture).
         const updatedHistory = [
@@ -617,6 +638,30 @@ export const useQREditorStore = create<QREditorStore>()(
             ...entries.map((entry) => (entry as { state?: unknown })?.state),
           ]) {
             freezeShuffleStyles(state);
+          }
+        }
+
+        // Designs kept from before templates were frames read as their frame
+        if (persistedState && typeof persistedState === "object") {
+          const persisted = persistedState as Record<string, unknown>;
+          for (const key of ["themeState", "themeCheckpoint"] as const) {
+            const state = persisted[key];
+            if (state && typeof state === "object") {
+              persisted[key] = withTemplateFrame(state as ThemeEditorState);
+            }
+          }
+          for (const key of ["history", "future"] as const) {
+            const list = persisted[key];
+            if (!Array.isArray(list)) continue;
+            persisted[key] = list.map((entry: unknown) => {
+              const state = (entry as { state?: unknown } | null)?.state;
+              return state && typeof state === "object"
+                ? {
+                    ...(entry as object),
+                    state: withTemplateFrame(state as ThemeEditorState),
+                  }
+                : entry;
+            });
           }
         }
 

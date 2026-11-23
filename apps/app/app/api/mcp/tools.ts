@@ -1,6 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/server";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
-import { BUILT_IN_FRAMES, getTemplateIds } from "qrdx";
+import { BUILT_IN_FRAMES } from "qrdx";
 import {
   bodyPatternSchema,
   FRAME_TEXT_MAX_LENGTH,
@@ -52,7 +52,6 @@ import {
   hexColor,
   QR_DEFAULTS,
   QR_MARGIN_MAX,
-  QR_TEMPLATE_IDS,
   QrDataTooLongError,
   type QrImageFormat,
   qrOptionsSchema,
@@ -192,16 +191,6 @@ const flatOptional = {
     .max(QR_MARGIN_MAX)
     .optional()
     .describe("Quiet zone around the code, in modules (default 4)"),
-  template: z
-    .enum(QR_TEMPLATE_IDS)
-    .optional()
-    .describe(
-      `A built-in frame drawn as a template (${getTemplateIds()
-        .filter((id) => id !== "default")
-        .join(
-          ", ",
-        )}; default is none). Unlike \`frame\`, the whole artwork is \`size\` wide with the code smaller inside it`,
-    ),
 };
 
 const generateInput = z.object({
@@ -211,7 +200,7 @@ const generateInput = z.object({
   style: apiStyleToolSchema
     .optional()
     .describe(
-      "The editor's whole style (the qrdxStyle design_qr returns, or a community item's style): gradients, frames (built-in, custom frame specs, or a template), eye and dot colors, logoIcon, logoFileId. The flat options above win over it.",
+      "The editor's whole style (the qrdxStyle design_qr returns, or a community item's style): gradients, frames (built-in or custom frame specs), eye and dot colors, logoIcon, logoFileId. The flat options above win over it.",
     ),
   item: z
     .string()
@@ -589,7 +578,7 @@ export function registerQrTools(server: McpServer) {
     {
       title: "List design options",
       description:
-        "List every value design_qr accepts: content types with their fields, colors and gradients, body patterns, eye and eye center shapes, frame styles and their text limit, custom frames, QRdx's official frames by id (holidays, seasons and uses), the frames drawn as templates, logo icons, built-in presets, error correction levels, margin and size limits, and how the scan score works.",
+        "List every value design_qr accepts: content types with their fields, colors and gradients, body patterns, eye and eye center shapes, frame styles and their text limit, custom frames, QRdx's official frames by id (holidays, seasons and uses), logo icons, built-in presets, error correction levels, margin and size limits, and how the scan score works.",
       annotations: { ...readOnly, title: "List design options" },
     },
     () => ({
@@ -602,7 +591,7 @@ export function registerQrTools(server: McpServer) {
     {
       title: "Generate QR code",
       description:
-        "Render a QR code with the editor's style options: colors or gradients (linear, radial), dot and eye shapes, eye and dot colors, a built-in frame with its text, a custom frame spec or a frame drawn as a template, a logo icon or your own uploaded logo (logoFileId, needs an API key), or a community item. Pass design_qr's qrdxStyle as style to render the same design again at another size. Returns a PNG image and public image URLs (SVG, PNG and lossless WebP for embedding in Markdown or HTML, plus a vector EPS for print); set include_svg to also get the SVG markup. No scan check: use design_qr for that.",
+        "Render a QR code with the editor's style options: colors or gradients (linear, radial), dot and eye shapes, eye and dot colors, a built-in frame with its text or a custom frame spec, a logo icon or your own uploaded logo (logoFileId, needs an API key), or a community item. Pass design_qr's qrdxStyle as style to render the same design again at another size. Returns a PNG image and public image URLs (SVG, PNG and lossless WebP for embedding in Markdown or HTML, plus a vector EPS for print); set include_svg to also get the SVG markup. No scan check: use design_qr for that.",
       inputSchema: generateInput,
       annotations: { ...readOnly, title: "Generate QR code" },
       _meta: QR_CARD_TOOL_META,
@@ -634,7 +623,7 @@ export function registerQrTools(server: McpServer) {
     {
       title: "List QR styles",
       description:
-        "List the body patterns, corner eye shapes, eye dot shapes, the frames (built-in styles and those drawn as templates), error correction levels, defaults and limits accepted by generate_qr_code and the image API.",
+        "List the body patterns, corner eye shapes, eye dot shapes, the built-in frames, error correction levels, defaults and limits accepted by generate_qr_code and the image API.",
       annotations: { ...readOnly, title: "List QR styles" },
     },
     () => ({

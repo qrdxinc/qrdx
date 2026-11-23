@@ -365,8 +365,6 @@ function onOfficialFrame(style: DesignStyle, frameId: string | undefined) {
     ...style,
     // The key order sanitizeDesignStyle writes, so equal frames compare equal
     frame: { style: "official" as const, id: frameId, ...labels },
-    // A frame and a border template never go together
-    templateId: "default",
   };
 }
 
@@ -875,7 +873,7 @@ export const QR_AGENT_TOOLS: QRAgentTools = {
 
   save_template: tool({
     description:
-      "Save a look (style, frame and its text, border and logo, no content) to the user's account as a reusable template. The user approves first.",
+      "Save a look (style, frame and its text, and logo, no content) to the user's account as a reusable template. The user approves first.",
     inputSchema: saveTemplateInput,
     contextSchema: agentContextSchema,
     // The outcome only: the saved style stays out of the model's context

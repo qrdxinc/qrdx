@@ -4,14 +4,14 @@ export function DotRingCode() {
   return (
     <QRCode
       value="https://example.com"
-      size={512}
-      templateId="DotRing"
+      size={256}
       bodyPattern="circle-large"
-      customProps={{
-        customText: "Scan for the menu",
-        textPosition: "bottom",
+      frame={{
+        style: "dot-ring",
+        text: "Scan for the menu",
+        secondaryText: "",
+        color: "#1e3a8a",
         textColor: "#fde047",
-        outerCircleColor: "#1e3a8a",
       }}
     />
   );

@@ -21,6 +21,23 @@ export const NEW_BODIES = newValues(BODY_PATTERN, "horizontal-line");
 export const NEW_EYES = newValues(CORNER_EYE_PATTERNS, "leaf");
 export const NEW_DOTS = newValues(CORNER_EYE_DOT_PATTERNS, "leaf");
 export const NEW_FRAMES = newValues(FRAME_STYLES, "banner-top-bottom");
+/**
+ * The built-in frames that were the engine's templates until 0.0.63
+ * (tests/template-frames.test.ts). All but Dot ring are artwork without a
+ * label.
+ */
+export const TEMPLATE_FRAMES = [
+  "arrow",
+  "standard-box",
+  "square-border",
+  "striked-box",
+  "halloween",
+  "dot-ring",
+] as const;
+/** Built-in frames that show no label (`text` has nothing to fill). */
+export const UNLABELLED_FRAMES: ReadonlySet<string> = new Set(
+  TEMPLATE_FRAMES.filter((style) => style !== "dot-ring")
+);
 
 // Existing options that fail with nearly every partner (pre-existing bugs,
 // see known-issues.ts). circle-mixed was here until its dots grew.

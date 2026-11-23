@@ -18,7 +18,6 @@ import { ColorPresets } from "./color-presets";
 import { CustomizationSections } from "./customization-sections";
 import { FrameControls, frameName } from "./frame-controls";
 import { frameShapeOf, useFrameShapeNames } from "./frame-shapes";
-import { templateOf } from "./frame-templates";
 import { backgroundPickerFor } from "./halo-rules";
 import { LogoControls } from "./logo-controls";
 import { PaddingControls } from "./padding-controls";
@@ -116,13 +115,12 @@ export function DesignControls({
   const level = ERROR_LEVELS.find((item) => item.id === (current.level || "L"));
   const frameStyle = current.frame?.style ?? "none";
   const shape = frameShapeOf(current);
-  const template = templateOf(current);
   const frameSummary =
     frameStyle !== "none"
       ? frameName(current.frame, t("none"))
       : shape
         ? frameShapeNames[shape]
-        : (template?.name ?? t("none"));
+        : t("none");
   const margin = current.margin ?? 0;
 
   return (

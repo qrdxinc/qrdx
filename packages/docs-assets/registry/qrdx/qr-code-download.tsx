@@ -23,7 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "@/registry/ui/dropdown-menu";
 
-/** qrdx style options: colors, gradients, patterns, logo, template. */
+/** qrdx style options: colors, gradients, patterns, logo, frame. */
 export type QrCodeStyle = Omit<ComponentProps<typeof QRCode>, "value" | "size">;
 
 const FORMAT_HINTS: Record<string, string> = {

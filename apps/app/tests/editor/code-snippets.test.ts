@@ -620,8 +620,12 @@ describe("imageSnippet", () => {
     expect(imageQuery(imageSnippet(urlInput(retiredShapes)).url).eye).toBe(
       "curly",
     );
-    const bordered = imageSnippet(urlInput({ ...plain, templateId: "Arrow" }));
-    expect(imageQuery(bordered.url).template).toBe("Arrow");
+    // The former templates are frames: the snippet names the frame
+    const framed = imageSnippet(
+      urlInput({ ...plain, frame: { style: "arrow" } }),
+    );
+    expect(imageQuery(framed.url).frame).toBe("arrow");
+    expect(imageQuery(framed.url).template).toBeUndefined();
   });
 });
 

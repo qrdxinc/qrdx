@@ -36767,9 +36767,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "主体图案、角码眼和码眼圆点形状、边框模板、纠错等级、默认值和限制。",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "主体图案、角码眼和码眼圆点形状、内置边框、纠错等级、默认值和限制。",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },

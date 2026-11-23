@@ -101,9 +101,8 @@ describe("the built-in library covers the editor's options", () => {
         JSON.stringify(s.dotColor ?? s.fgColor) !== JSON.stringify(s.fgColor),
     );
     expect(accented.length).toBeGreaterThanOrEqual(20);
-    // The other border templates draw the code under half the artwork's
-    // width and score below Great, so only this one is a theme.
-    expect(used((s) => s.templateId)).toContain("SquareBorder");
+    // A former template's frame (Ink's square border)
+    expect(used((s) => s.frame?.style)).toContain("square-border");
     expect(styles.filter((s) => s.showLogo).length).toBeGreaterThanOrEqual(2);
   });
 });

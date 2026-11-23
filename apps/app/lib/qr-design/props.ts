@@ -1,6 +1,7 @@
 import { getQRData, type QRCodeProps, type QRProps } from "qrdx";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import type { ThemeStyles } from "@/types/theme";
 
 /**
@@ -11,9 +12,11 @@ import type { ThemeStyles } from "@/types/theme";
  * (tests/editor/framework-snippets.test.ts).
  */
 export function editorCodeProps(
-  style: Partial<ThemeStyles>,
+  stored: Partial<ThemeStyles>,
   value: string,
 ): QRCodeProps {
+  // A design saved with a template draws its frame
+  const style = withTemplateAsFrame(stored);
   return {
     value,
     art: style.art,
@@ -26,7 +29,6 @@ export function editorCodeProps(
     cornerEyeDotPattern: style.cornerEyeDotPattern,
     level: style.level,
     margin: style.margin,
-    templateId: style.templateId,
     frame: style.frame,
     hideLogo: !style.showLogo,
     logo: style.customLogo ?? DEFAULT_QR_LOGO,
@@ -42,9 +44,11 @@ export function editorCodeProps(
  */
 export function designQRProps(
   value: string,
-  style: ThemeStyles,
+  stored: ThemeStyles,
   logo: string | undefined,
 ): QRProps {
+  // A design saved with a template draws its frame
+  const style = withTemplateAsFrame(stored);
   return {
     ...getQRData({
       value,
@@ -62,7 +66,6 @@ export function designQRProps(
     level: style.level,
     cornerEyePattern: style.cornerEyePattern,
     cornerEyeDotPattern: style.cornerEyeDotPattern,
-    templateId: style.templateId,
     frame: style.frame,
     margin: style.margin,
     art: style.art,

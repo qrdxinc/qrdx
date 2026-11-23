@@ -1,5 +1,6 @@
 import "server-only";
 
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import { logoIconDataUrl } from "@/lib/qr-design/logo";
 import type { ThemeStyles } from "@/types/theme";
 import { isLogoIconId, toPublishableStyle } from "./public-style";
@@ -26,9 +27,11 @@ function iconUrl(id: string): string | null {
  * again from QRdx's own glyph (never a stored image), nothing else added.
  */
 export function toPublicStyle(
-  style: ThemeStyles,
+  stored: ThemeStyles,
   logoIcon: unknown,
 ): ThemeStyles {
+  // An item saved with a template shows its frame
+  const style = withTemplateAsFrame(stored);
   const { customLogo: _never, art: _none, ...rest } = style;
   const url =
     isLogoIconId(logoIcon) && rest.showLogo !== false

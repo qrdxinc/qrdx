@@ -79,7 +79,7 @@ export const qrImageQuerySchema = qrOptionsSchema.extend({
     .max(STYLE_QUERY_MAX_LENGTH)
     .optional()
     .describe(
-      "The editor's whole style: URL-encoded JSON with the same fields as a saved theme (gradients, frames (built-in, custom frame specs, or a template), eye and dot colors, logoIcon, logoFileId), or the `style` value of a playground link (1.…). Flat parameters you also set win over it.",
+      "The editor's whole style: URL-encoded JSON with the same fields as a saved theme (gradients, frames (built-in or custom frame specs), eye and dot colors, logoIcon, logoFileId), or the `style` value of a playground link (1.…). Flat parameters you also set win over it.",
     ),
   item: z
     .string()

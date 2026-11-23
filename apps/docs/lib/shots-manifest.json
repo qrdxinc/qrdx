@@ -686,18 +686,6 @@
     "pages": ["/docs/getting-started"],
     "job": "lib-styled-code"
   },
-  "lib-templates": {
-    "kind": "shot",
-    "look": "window",
-    "light": "/docs-static/shots/lib-templates.light.webp",
-    "dark": "/docs-static/shots/lib-templates.dark.webp",
-    "width": 1800,
-    "height": 808,
-    "alt": "Three template codes: Arrow in blue, with an arrow pointing at the code; Standard Box, a boxed code with a logo in the middle; and Dot Ring, a round navy badge with Scan for the menu in yellow under the code.",
-    "title": "Three built-in templates",
-    "pages": ["/docs/features/templates"],
-    "job": "lib-templates"
-  },
   "new-code-dialog": {
     "kind": "shot",
     "look": "focus",
@@ -981,7 +969,7 @@
     "height": 1656,
     "alt": "The style browser of the playground: a grid of ready-made QR code styles with their names, grouped by category.",
     "title": "Browsing every style",
-    "pages": ["/docs/help/designing/save-a-design", "/docs/features/templates"],
+    "pages": ["/docs/help/designing/save-a-design"],
     "job": "playground-styles"
   },
   "playground-type-picker": {
@@ -1291,7 +1279,7 @@
     "height": 1174,
     "alt": "The Themes page of a workspace: a shared theme named Harbor Lane brand with its preview, marked as the default for new codes.",
     "title": "Saved themes",
-    "pages": ["/docs/help/designing/save-a-design", "/docs/features/templates"],
+    "pages": ["/docs/help/designing/save-a-design"],
     "job": "themes-list"
   },
   "themes-menu": {

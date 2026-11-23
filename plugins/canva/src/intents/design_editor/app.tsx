@@ -24,7 +24,6 @@ import {
   CORNER_EYE_PATTERNS,
   getQRAsCanvas,
   getQRData,
-  getTemplateIds,
   QRCode,
 } from "qrdx";
 import { useRef, useState } from "react";
@@ -34,10 +33,6 @@ import { playgroundLink } from "../../playground-link";
 
 const QRDX_LOGO = "https://qrdx.dev/logo.png";
 
-const TEMPLATE_IDS = [
-  "default",
-  ...getTemplateIds().filter((id) => id !== "default"),
-];
 const BODY_PATTERNS = [...BODY_PATTERN] as BodyPattern[];
 const EYE_PATTERNS: CornerEyePattern[] = [...CORNER_EYE_PATTERNS];
 const EYE_DOT_PATTERNS: CornerEyeDotPattern[] = [...CORNER_EYE_DOT_PATTERNS];
@@ -113,7 +108,6 @@ export const App = () => {
     useState<CornerEyePattern>("gear");
   const [cornerEyeDotPattern, setCornerEyeDotPattern] =
     useState<CornerEyeDotPattern>("circle");
-  const [templateId, setTemplateId] = useState("default");
   const [errorLevel, setErrorLevel] = useState<ErrorLevel>("Q");
   const [showLogo, setShowLogo] = useState(false);
   const [logoUrl, setLogoUrl] = useState("");
@@ -137,7 +131,6 @@ export const App = () => {
         cornerEyePattern,
         cornerEyeDotPattern,
         level: errorLevel,
-        templateId,
         hideLogo: !showLogo,
         logo: logoUrl || QRDX_LOGO,
       });
@@ -155,7 +148,6 @@ export const App = () => {
       //   cornerEyePattern,
       //   cornerEyeDotPattern,
       //   level: errorLevel,
-      //   templateId,
       //   hideLogo: true,
       // });
       // const thumbnailUrl = (await getQRAsCanvas(
@@ -221,7 +213,6 @@ export const App = () => {
               level={errorLevel}
               logo={logoUrl || QRDX_LOGO}
               size={220}
-              templateId={templateId}
               value={url}
             />
           ) : (
@@ -230,24 +221,6 @@ export const App = () => {
             </Text>
           )}
         </div>
-
-        {/* Templates */}
-        <HorizontalPicker
-          label="Templates"
-          onChange={setTemplateId}
-          options={TEMPLATE_IDS}
-          renderCard={(id) => (
-            <QRCode
-              bodyPattern="circle"
-              hideLogo
-              level="Q"
-              size={64}
-              templateId={id}
-              value={PREVIEW_VALUE}
-            />
-          )}
-          value={templateId}
-        />
 
         {/* Dot Patterns */}
         <HorizontalPicker
@@ -260,7 +233,6 @@ export const App = () => {
               hideLogo
               level="Q"
               size={64}
-              templateId="default"
               value={PREVIEW_VALUE}
             />
           )}
@@ -278,7 +250,6 @@ export const App = () => {
               hideLogo
               level="Q"
               size={64}
-              templateId="default"
               value={PREVIEW_VALUE}
             />
           )}
@@ -296,7 +267,6 @@ export const App = () => {
               hideLogo
               level="Q"
               size={64}
-              templateId="default"
               value={PREVIEW_VALUE}
             />
           )}

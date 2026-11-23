@@ -130,34 +130,6 @@ toSVGString(resolveQRCodeProps({ value: "https://example.com", logo: "/logo.png"
 
 The output has no random ids, so markup rendered on a server matches the browser's. Downloads, the scan score and print-ready PDF and EPS come from the same functions as in the React library: `downloadQRCode`, `getQRCodeDataUrl`, `getScanScore`, `downloadPrintPDF` and the rest. For PNG on a server, use `getQRAsPNG` from `qrdx/node`.
 
-## Custom templates without JSX
-
-A template's `wrapper` receives the drawn code and returns it wrapped. `h(type, props, ...children)` writes one without JSX:
-
-```js title="labelled-template.js"
-import { h, toSVGString } from "qrdx/core";
-
-const Labelled = {
-  id: "Labelled",
-  name: "Labelled",
-  wrapper: (children, props) =>
-    h(
-      "svg",
-      { viewBox: "0 0 300 340", xmlns: "http://www.w3.org/2000/svg" },
-      h("g", { transform: "translate(20, 20) scale(0.87)" }, children),
-      h("text", { x: "150", y: "325", textAnchor: "middle" }, props?.label)
-    ),
-};
-
-toSVGString({
-  value: "https://example.com",
-  customTemplate: Labelled,
-  customProps: { label: "Scan me" },
-});
-```
-
-The same wrapper works in the React components when `h` is imported from `qrdx` instead.
-
 ## If something goes wrong
 
 - **`qrdx: no element matches #qr`.** The script ran before the element existed. Put the `<script type="module">` after the element, or wait for `DOMContentLoaded`.

@@ -134,7 +134,6 @@ describe("the QR-bill style", () => {
       shape: "circle",
       bgRadius: 0.2,
       backdrop: "#0f172a",
-      templateId: "default",
       margin: 2,
     };
     expect(swissQrStyleIssues(busy, value)).toEqual([
@@ -166,7 +165,6 @@ describe("the QR-bill style", () => {
       "shape",
       "bgRadius",
       "backdrop",
-      "templateId",
     ] as const) {
       expect(styled[key]).toBeUndefined();
     }

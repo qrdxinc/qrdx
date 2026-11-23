@@ -24,7 +24,6 @@
 // `apiStyleFields`, mapped in engine-options.ts. The OpenAPI document and
 // the MCP tool descriptions are generated from this schema.
 
-import { getTemplateIds } from "qrdx";
 import {
   BG_RADIUS_MAX,
   bodyPatternSchema,
@@ -160,8 +159,6 @@ export const apiFrameSchema = z
   .describe(
     'A call-to-action frame: a built-in style with its text ({ "style": "banner-bottom", "text": "Scan me" }), or { "style": "custom", "spec": <frame spec> } from the community or a custom frame made in the playground',
   );
-
-const TEMPLATE_IDS = getTemplateIds() as [string, ...string[]];
 
 const eyeOverrideSchema = z
   .object({
@@ -325,10 +322,6 @@ export const apiStyleFields = {
     .max(API_MARGIN_MAX)
     .optional()
     .describe(`Quiet zone, in modules (0 to ${API_MARGIN_MAX}; 4 is ideal)`),
-  templateId: z
-    .enum(TEMPLATE_IDS)
-    .optional()
-    .describe('Decorative border template; "default" for none'),
   frame: apiFrameSchema.optional(),
   eyeColors: eyeColorsSchema.optional(),
   moduleScale: z
@@ -411,7 +404,7 @@ export type ApiStyle = z.output<typeof apiStyleSchema>;
 export const apiStyleToolSchema = z
   .record(z.string(), z.unknown())
   .describe(
-    'The editor\'s style JSON, as design_qr returns it in qrdxStyle and a saved theme stores it. Fields: bgColor, fgColor, eyeColor, dotColor (a color such as #155dfc, or a gradient { type: linear | radial, angle, stops: [{ color, offset 0-100 }] } with 2 to 8 stops), bodyPattern, cornerEyePattern, cornerEyeDotPattern, level (L, M, Q, H), margin (0-16), templateId, frame (a built-in style with text, or { style: "custom", spec }), eyeColors ({ topLeft, topRight, bottomLeft: { outer, inner } }), moduleScale (0.5-1), autoLevel, shape (square or circle), logoOptions ({ size 0.1-0.3, padding 0-2, x and y 0-1, shape square, rounded or circle, plate }), eyeShapes ({ topLeft, topRight, bottomLeft: { outer, inner } shapes }), eyeGradient (corner or code), bgRadius (0-0.5, needs a margin), backdrop (a color outside the rounded background), halo ({ color, width 0.1-0.5 }), shadow ({ color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 }), showLogo, logoIcon, logoFileId. Unknown fields are refused.',
+    'The editor\'s style JSON, as design_qr returns it in qrdxStyle and a saved theme stores it. Fields: bgColor, fgColor, eyeColor, dotColor (a color such as #155dfc, or a gradient { type: linear | radial, angle, stops: [{ color, offset 0-100 }] } with 2 to 8 stops), bodyPattern, cornerEyePattern, cornerEyeDotPattern, level (L, M, Q, H), margin (0-16), frame (a built-in style with text, or { style: "custom", spec }), eyeColors ({ topLeft, topRight, bottomLeft: { outer, inner } }), moduleScale (0.5-1), autoLevel, shape (square or circle), logoOptions ({ size 0.1-0.3, padding 0-2, x and y 0-1, shape square, rounded or circle, plate }), eyeShapes ({ topLeft, topRight, bottomLeft: { outer, inner } shapes }), eyeGradient (corner or code), bgRadius (0-0.5, needs a margin), backdrop (a color outside the rounded background), halo ({ color, width 0.1-0.5 }), shadow ({ color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 }), showLogo, logoIcon, logoFileId. Unknown fields are refused.',
   );
 
 export interface StyleIssue {
@@ -462,7 +455,14 @@ export function parseApiStyle(input: unknown): ParsedStyle {
       ],
     };
   }
-  const result = apiStyleSchema.safeParse(input);
+  // Templates are frames since qrdx 0.0.64: a style that still names one
+  // (`templateId`, with Dot Ring's `customProps`) is drawn without it
+  const {
+    templateId: _templateId,
+    customProps: _customProps,
+    ...current
+  } = input as Record<string, unknown>;
+  const result = apiStyleSchema.safeParse(current);
   if (!result.success) {
     return {
       ok: false,

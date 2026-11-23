@@ -20,6 +20,7 @@ import {
   contentTypeLabel,
   validateDesignContent,
 } from "@/lib/qr-design/content";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import {
   OFFICIAL_FRAME_SOURCES,
   officialFrameId,
@@ -53,7 +54,6 @@ const styleSchema = z
     cornerEyeDotPattern: z.string().max(40).optional(),
     level: z.string().max(2).optional(),
     margin: z.number().min(0).max(64).optional(),
-    templateId: z.string().max(64).optional(),
     // A built-in frame, or a custom one (an official frame, or the user's own)
     frame: lenient(anyFrameSchema),
     showLogo: z.boolean().optional(),
@@ -70,11 +70,12 @@ const styleSchema = z
     logoOptions: lenient(logoOptionsSchema),
     autoLevel: lenient(z.boolean()),
   })
-  .transform(
+  .transform((input) => {
     // Only what a design is built from: no art images or other extras, and
     // never a silhouette (traced from an upload; the client leaves it out),
-    // only whether the code has one.
-    ({
+    // only whether the code has one. An editor still holding a template
+    // (from before templates were frames) sends its frame.
+    const {
       bgColor,
       fgColor,
       eyeColor,
@@ -84,7 +85,6 @@ const styleSchema = z
       cornerEyeDotPattern,
       level,
       margin,
-      templateId,
       frame,
       showLogo,
       eyeColors,
@@ -98,35 +98,34 @@ const styleSchema = z
       shadow,
       logoOptions,
       autoLevel,
-    }) =>
-      withoutImageFills({
-        // Pictures never reach the model: an image fill counts as its
-        // underlay color (the client strips them too)
-        bgColor,
-        fgColor,
-        eyeColor,
-        dotColor,
-        bodyPattern,
-        cornerEyePattern,
-        cornerEyeDotPattern,
-        level,
-        margin,
-        templateId,
-        frame,
-        showLogo,
-        eyeColors,
-        eyeShapes,
-        eyeGradient,
-        moduleScale,
-        shape,
-        bgRadius,
-        backdrop,
-        halo,
-        shadow,
-        logoOptions,
-        autoLevel,
-      } as ThemeStyles),
-  );
+    } = withTemplateAsFrame(input);
+    return withoutImageFills({
+      // Pictures never reach the model: an image fill counts as its
+      // underlay color (the client strips them too)
+      bgColor,
+      fgColor,
+      eyeColor,
+      dotColor,
+      bodyPattern,
+      cornerEyePattern,
+      cornerEyeDotPattern,
+      level,
+      margin,
+      frame,
+      showLogo,
+      eyeColors,
+      eyeShapes,
+      eyeGradient,
+      moduleScale,
+      shape,
+      bgRadius,
+      backdrop,
+      halo,
+      shadow,
+      logoOptions,
+      autoLevel,
+    } as ThemeStyles);
+  });
 
 export const editorContextSchema = z.object({
   contentType: z.enum(CONTENT_TYPE_IDS),

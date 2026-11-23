@@ -594,7 +594,6 @@ function ArtScanScore({ art, style }: { art: QRArt; style: QRStyle }) {
       level: style.level,
       cornerEyePattern: style.cornerEyePattern,
       cornerEyeDotPattern: style.cornerEyeDotPattern,
-      templateId: style.templateId,
       frame: style.frame,
       margin: style.margin,
       art,

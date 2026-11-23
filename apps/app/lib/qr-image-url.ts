@@ -4,7 +4,6 @@
 // home page's MCP terminal, /qr-code-api) don't load the renderer
 // (lib/qr-render.ts, which re-exports all of this).
 
-import { getTemplateIds } from "qrdx";
 import {
   BODY_PATTERN,
   type BodyPattern,
@@ -45,8 +44,6 @@ export const QR_DEFAULTS = {
   level: z.infer<typeof errorLevelSchema>;
   margin: number;
 };
-
-export const QR_TEMPLATE_IDS = getTemplateIds() as [string, ...string[]];
 
 // Both cases spelled out, not /i: JSON Schema patterns (the OpenAPI document)
 // carry no flags.
@@ -119,16 +116,6 @@ export const qrOptionsSchema = z.object({
     .max(QR_MARGIN_MAX)
     .default(QR_DEFAULTS.margin)
     .describe("Quiet zone around the code, in modules"),
-  template: z
-    .enum(QR_TEMPLATE_IDS)
-    .optional()
-    .describe(
-      `A built-in frame drawn as a template (${getTemplateIds()
-        .filter((id) => id !== "default")
-        .join(
-          ", ",
-        )}; default is none). Unlike \`frame\`, the whole artwork is \`size\` wide with the code smaller inside it`,
-    ),
 });
 
 // Retired eye shapes (curly; diamond, star and banner centres) are not
@@ -180,7 +167,6 @@ export function buildQrImageUrl(
     ["dot", options.dot, QR_DEFAULTS.dot],
     ["level", options.level, QR_DEFAULTS.level],
     ["margin", options.margin, QR_DEFAULTS.margin],
-    ["template", options.template, null],
   ];
   for (const [key, value, fallback] of entries) {
     if (value !== undefined && value !== fallback) {

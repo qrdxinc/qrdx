@@ -27,7 +27,7 @@ import type { QRStyle } from "@/types/theme";
 // `silhouette`, as saved designs, links and the API already hold them. A
 // shaped code takes the place of a frame: every frame paints a light plate
 // under the code, which would hide the outline, so picking a shape clears
-// the frame (and a border template), and picking a frame clears the shape
+// the frame, and picking a frame clears the shape
 // (frame-controls.tsx). useShapedCodes gives the picker its tiles' state
 // and the panel for your own shape (upload, replace, remove).
 
@@ -88,16 +88,12 @@ export function withoutShape<T extends Partial<QRStyle>>(style: T): T {
   return rest as T;
 }
 
-/** `style` with a shaped code and no frame or border template. */
+/** `style` with a shaped code and no frame. */
 export function withShape(
   style: QRStyle,
   shape: { shape: "circle" | "heart" } | { silhouette: QRSilhouette },
 ): QRStyle {
-  const {
-    frame: _frame,
-    templateId: _templateId,
-    ...rest
-  } = withoutShape(style);
+  const { frame: _frame, ...rest } = withoutShape(style);
   return { ...rest, ...shape };
 }
 

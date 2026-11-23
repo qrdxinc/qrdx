@@ -90,8 +90,8 @@ head -2 qr.eps
 
 Flat parameters cover colors, shapes, a frame and a logo:
 
-```txt title="Rounded modules with a frame drawn as a template"
-https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&body=rounded&eye=rounded&dot=rounded&template=Arrow
+```txt title="Rounded modules with an arrow pointing at the code"
+https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&body=rounded&eye=rounded&dot=rounded&frame=arrow
 ```
 
 ```txt title="A built-in frame with its label, and a community frame by id"
@@ -138,15 +138,14 @@ Encode the `data` value when it contains `&`, `#`, `+` or spaces, for example wi
 | `dot` | `square` | Shape of the dot inside each corner eye |
 | `level` | `Q` | Error correction: `L` (about 7%), `M` (15%), `Q` (25%) or `H` (30%) |
 | `margin` | `4` | Quiet zone around the code in modules, `0` to `16` |
-| `template` | none | A [frame drawn as a template](/docs/features/templates): the whole image is `size` wide, with the code smaller inside it |
-| `frame` | none | A built-in call-to-action [frame](/docs/features/frames), such as `banner-bottom`, `speech-bubble` or `circle`: any of the {facts.frameStyles} built-in frames |
+| `frame` | none | A built-in call-to-action [frame](/docs/features/frames), such as `banner-bottom`, `speech-bubble`, `circle` or `dot-ring`: any of the {facts.frameStyles} built-in frames |
 | `frameText` | `Scan me` | The frame's label, up to 24 characters. Also relabels the frame of a `style` or `item` |
 | `style` | none | The editor's whole design as JSON; see [Styles](#style) |
 | `item` | none | A community frame or theme by id, such as `frame:wifi-card`; see [Community items](#community-items) |
 | `logoIcon` | none | A quick icon or a brand logo in the center; see [Logos](#logos) |
 | `logoFileId` | none | A logo you uploaded, by file id; needs an API key; see [Logos](#logos) |
 
-Enum values (`level`, `format`, `template`, `frame`) are case-insensitive. With a frame, `size` is the width of the code itself and the frame adds to the image, in every format. Flat parameters win over `style`, and `style` wins over `item`.
+Enum values (`level`, `format`, `frame`) are case-insensitive. With a frame, `size` is the width of the code itself and the frame adds to the image, in every format. Flat parameters win over `style`, and `style` wins over `item`.
 
 ## Styles [#style]
 
@@ -157,7 +156,6 @@ Enum values (`level`, `format`, `template`, `frame`) are case-insensitive. With 
 | `bgColor`, `fgColor`, `eyeColor`, `dotColor` | A color (hex such as `#155dfc`, `rgb()`, `hsl()` or a color name), or a gradient: `{ "type": "linear", "angle": 45, "stops": [...] }` or `{ "type": "radial", "stops": [...] }`, with 2 to 8 stops of `{ "color", "offset" }` (offset 0 to 100) |
 | `bodyPattern`, `cornerEyePattern`, `cornerEyeDotPattern` | The [pattern values](#pattern-values) |
 | `level`, `margin` | As the parameters above (`margin` 0 to 16) |
-| `templateId` | A frame drawn as a template, `default` for none |
 | `frame` | A built-in frame, `{ "style": "banner-bottom", "text": "Scan me", "color": "#155dfc", "textColor": "#ffffff" }`, or a custom one, `{ "style": "custom", "spec": { … } }`, with a frame spec from the [community](#community-items) or a custom frame made in the playground's Frame section. Specs are checked against the engine's frame-spec rules (no markup, links or images; at most 32 KB) |
 | `eyeColors` | Colors per eye, over `eyeColor` and `dotColor`: `{ "topLeft": { "outer": "#b91c1c", "inner": "#1d4ed8" }, "topRight": …, "bottomLeft": … }`, each a color or a gradient |
 | `moduleScale` | Size of each dot, `0.5` to `1` (default `1`) |
@@ -214,7 +212,6 @@ The response is private (`Cache-Control: private, no-store`) and counts toward t
 - `body`: `circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`
 - `eye`: `square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`, `porthole`, `notch`, `plus`, `bud`, `bowl`
 - `dot`: `square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`, `cushion`
-- `template`: `default`, `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing`
 
 These are the same styles as the [`qrdx` React library](/docs/features/patterns). The [MCP server](/docs/developers/mcp) can also list them with short descriptions.
 

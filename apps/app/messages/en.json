@@ -377,7 +377,7 @@
         "none": "No frame",
         "border": "Border"
       },
-      "more": "The full playground adds {bodyPatterns, number} body patterns, {eyeShapes, number} eye shapes, {eyeCentres, number} eye centers, any colors and gradients, logos, templates and PNG, SVG, PDF or EPS downloads.",
+      "more": "The full playground adds {bodyPatterns, number} body patterns, {eyeShapes, number} eye shapes, {eyeCentres, number} eye centers, any colors and gradients, logos, frames and PNG, SVG, PDF or EPS downloads.",
       "customize": "Customize in the playground",
       "qrLabel": "QR code for {value}",
       "empty": "Type a link to see your QR code."
@@ -5248,10 +5248,7 @@
         "theFrameIsAddedAround": "The frame is added around the code, so the downloaded image gets bigger and the code itself stays scannable.",
         "label": "Label",
         "pickAFrameFirst": "Pick a frame first",
-        "none": "None",
-        "takesDotColor": "It takes the color of the code's dots.",
-        "alsoHasTemplate": "This design also has the {name} frame inside this one. Picking another frame replaces both.",
-        "templateKeepsSize": "This frame fits the code inside it, so the downloaded image keeps the size you choose."
+        "none": "None"
       },
       "frameFields": {
         "textSize": "Text size"

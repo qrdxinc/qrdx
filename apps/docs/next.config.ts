@@ -177,6 +177,19 @@ let nextConfig: NextConfig = {
         destination: "/docs/:path*",
         permanent: true,
       },
+      // The templates page went into the frames page when the engine's
+      // templates became frames (qrdx 0.0.64): its URL and its Markdown
+      // copies go there for good.
+      ...["", ".md", ".mdx"].map((suffix) => ({
+        source: `/docs/features/templates${suffix}`,
+        destination: `/docs/features/frames${suffix}`,
+        permanent: true,
+      })),
+      {
+        source: "/llms.mdx/features/templates",
+        destination: "/llms.mdx/features/frames",
+        permanent: true,
+      },
       // The docs are English only: the other languages' docs URLs
       // (/es/docs/..., their .md copies, /docs-md/es/...) go to the English
       // page (@repo/i18n/docs). The main app answers these on qrdx.dev

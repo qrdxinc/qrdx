@@ -61,19 +61,22 @@ describe.each([
     expect(decodeQR(image)).toBe(VALUE);
   });
 
-  test("escapes attributes, leaves out customTemplate and checks the tag name", async () => {
+  test("escapes attributes, leaves out withdrawn template props and checks the tag name", async () => {
     const api = await load();
     if (!api) return;
     const html = api.toQRdxCodeHTML(
       {
         value: 'a"b<c>&d',
         autoLevel: false,
+        // Withdrawn in qrdx 0.0.64 (templates are frames): dropped
+        templateId: "Arrow",
         customTemplate: {
           id: "Mine",
           name: "Mine",
-          wrapper: (children) => children,
+          wrapper: (children: unknown) => children,
         },
-      },
+        customProps: { label: "x" },
+      } as Parameters<typeof api.toQRdxCodeHTML>[0],
       { tagName: "my-qr" }
     );
     expect(html.startsWith('<my-qr value="a&quot;b&lt;c&gt;&amp;d">')).toBe(

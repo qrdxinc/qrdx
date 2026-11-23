@@ -282,7 +282,7 @@ describe("qrdx/solid in the browser", () => {
         "linear gradient",
         "logo API",
         "frame banner-bottom",
-        "template with frame and attributes",
+        "former template's frame with attributes",
         "root attributes with frame",
       ].includes(x.name)
     )) {

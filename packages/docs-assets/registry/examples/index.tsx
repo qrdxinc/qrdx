@@ -30,7 +30,6 @@ export const examples: Record<string, ComponentType> = {
     () => import("./qr-code-share-dialog-trigger"),
   ),
   "qr-code-sizes": dynamic(() => import("./qr-code-sizes")),
-  "qr-code-template": dynamic(() => import("./qr-code-template")),
   "vcard-qr-code-demo": dynamic(() => import("./vcard-qr-code-demo")),
   "vcard-qr-code-payload": dynamic(() => import("./vcard-qr-code-payload")),
   "wifi-qr-code-demo": dynamic(() => import("./wifi-qr-code-demo")),

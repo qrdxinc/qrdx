@@ -214,7 +214,7 @@ export const JOBS: Job[] = [
     look: "focus",
     title: "Browsing every style",
     alt: "The style browser of the playground: a grid of ready-made QR code styles with their names, grouped by category.",
-    pages: ["/docs/help/designing/save-a-design", "/docs/features/templates"],
+    pages: ["/docs/help/designing/save-a-design"],
     route: "/playground",
     viewport: TALL,
     steps: async (page) => {
@@ -605,7 +605,7 @@ export const JOBS: Job[] = [
     look: "window",
     title: "Saved themes",
     alt: "The Themes page of a workspace: a shared theme named Harbor Lane brand with its preview, marked as the default for new codes.",
-    pages: ["/docs/help/designing/save-a-design", "/docs/features/templates"],
+    pages: ["/docs/help/designing/save-a-design"],
     route: "{ws}/themes",
   },
   {

@@ -42,7 +42,6 @@ const LEGACY_URLS = [
   "/docs/features/frames",
   "/docs/features/logos",
   "/docs/features/patterns",
-  "/docs/features/templates",
   "/docs/files",
   "/docs/forms-and-pages",
   "/docs/getting-started",
