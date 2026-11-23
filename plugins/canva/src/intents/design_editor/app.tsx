@@ -27,7 +27,7 @@ import {
   QRCode,
 } from "qrdx";
 import type { ReactNode } from "react";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 // biome-ignore lint/correctness/noUndeclaredDependencies: "styles/" is a tsconfig/webpack path alias
 import * as styles from "styles/components.css";
@@ -43,11 +43,7 @@ const LOGO_URL_EXAMPLE = "https://example.com/logo.png";
 /** How far the arrow button scrolls a row of pattern choices, in pixels. */
 const PICKER_SCROLL_STEP = 160;
 
-/**
- * Whether `element` lays out right to left. Read from the computed style:
- * Canva's right-to-left mode doesn't set a `dir` attribute that `:dir()`
- * would match.
- */
+/** Whether `element` lays out right to left, from its computed style. */
 const isRtl = (element: Element) =>
   getComputedStyle(element).direction === "rtl";
 
@@ -74,13 +70,6 @@ function HorizontalPicker<T extends string>({
 }: HorizontalPickerProps<T>) {
   const intl = useIntl();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [rtl, setRtl] = useState(false);
-
-  // No dependency list: the direction is read again after every render, so
-  // the arrow follows a change of language. Setting the same value is a no-op.
-  useLayoutEffect(() => {
-    if (scrollRef.current) setRtl(isRtl(scrollRef.current));
-  });
 
   // Scrolls toward the end of the row: right in left-to-right languages,
   // left in right-to-left ones.
@@ -121,8 +110,10 @@ function HorizontalPicker<T extends string>({
           onClick={scrollForward}
           type="button"
         >
-          {/* Points toward the end of the row */}
-          {rtl ? "‹" : "›"}
+          {/* In right-to-left languages the browser draws "›" as "‹" (Unicode
+              bidi mirroring), so it points toward the end of the row without
+              a flip. */}
+          ›
         </button>
       </div>
     </div>
