@@ -122,6 +122,10 @@ describe("non-profit discount requests", () => {
     ]) {
       expect(email?.html).toContain(part);
     }
+    // The footer names the address it went to.
+    expect(email?.html).toMatch(
+      /This email was meant for <span[^>]*>support@qrdx\.dev<\/span>/,
+    );
   });
 
   it("needs a sign-in, valid details and a few requests a day at most", async () => {

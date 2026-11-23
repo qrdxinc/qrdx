@@ -9787,6 +9787,7 @@
       "open": "ダッシュボードを開く"
     },
     "personal": {
+      "meantFor": "このメールは <strong>{email}</strong> 宛てにお送りしています。",
       "reply": "このメールに返信すると、{name}に届きます。",
       "stop": "QRdxチームからのお知らせを停止する"
     },

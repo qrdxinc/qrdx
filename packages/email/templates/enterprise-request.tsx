@@ -1,5 +1,5 @@
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, MutedText } from "./parts";
 
 // To QRdx: someone filled in the contact form on /enterprise. Replying to
@@ -14,6 +14,8 @@ export interface EnterpriseRequestEmailProps {
   need: string;
   /** The language of the page they wrote from, e.g. "ja" */
   locale: string;
+  /** The QRdx team's address, where this goes */
+  recipient?: string;
   /** The email's language (English: it goes to the QRdx team) */
   intl: EmailIntl;
 }
@@ -35,6 +37,7 @@ export function EnterpriseRequestEmail(props: EnterpriseRequestEmailProps) {
       intl={props.intl}
       preview={enterpriseRequestSubject(props.company, props.teamSize)}
       reason="Sent by the contact form on the Enterprise page."
+      recipient={props.recipient}
     >
       <EmailHeading>Enterprise inquiry</EmailHeading>
       <EmailText>
@@ -42,7 +45,6 @@ export function EnterpriseRequestEmail(props: EnterpriseRequestEmailProps) {
         this email to reach {props.email}.
       </EmailText>
       <DetailsTable rows={rows} />
-      <EmailDivider />
       <MutedText>
         Nothing was set up or charged. Contracts, invoices and plans are
         arranged by hand.
@@ -59,4 +61,5 @@ EnterpriseRequestEmail.PreviewProps = {
   teamSize: "51 to 200 people",
   need: "Codes on every product label, with our own domain and SSO.",
   locale: "en",
+  recipient: "alex@example.com",
 } satisfies Omit<EnterpriseRequestEmailProps, "intl">;

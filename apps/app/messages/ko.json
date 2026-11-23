@@ -9787,6 +9787,7 @@
       "open": "대시보드 열기"
     },
     "personal": {
+      "meantFor": "이 이메일은 <strong>{email}</strong>님에게 보내는 메일입니다.",
       "reply": "이 이메일에 회신하면 {name}님에게 전달돼요.",
       "stop": "QRdx 팀의 안내 메일 받지 않기"
     },

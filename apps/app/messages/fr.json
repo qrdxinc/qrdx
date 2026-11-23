@@ -9787,6 +9787,7 @@
       "open": "Ouvrir votre tableau de bord"
     },
     "personal": {
+      "meantFor": "Cet e-mail était destiné à <strong>{email}</strong>.",
       "reply": "Répondez à cet e-mail et votre message parviendra à {name}.",
       "stop": "Ne plus recevoir les mots de l’équipe QRdx"
     },

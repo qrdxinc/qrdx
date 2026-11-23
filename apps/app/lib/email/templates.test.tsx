@@ -264,10 +264,16 @@ describe("email templates", () => {
         reason="Phishing"
         reportId="rep_1"
         reported="https://qrdx.dev/q/aB3dE5f"
+        recipient="reporter@example.com"
         reportedAt="2026-10-31T10:00:00Z"
       />,
     );
     assert.match(ack.text, /We received your report/i);
+    assert.match(ack.text, /This email was meant for reporter@example\.com\./);
+    assert.match(
+      ack.text,
+      /terms of service: https:\/\/qrdx\.dev\/legal\/terms-of-service/,
+    );
     assert.match(ack.text, /rep_1/);
     assert.doesNotMatch(ack.text, /Unsubscribe/);
   });

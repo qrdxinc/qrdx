@@ -91,7 +91,9 @@ vi.mock("@/lib/email/send", () => ({
   }),
 }));
 
-const { noteParagraphs } = await import("@repo/email/templates/personal-note");
+const { needsSignature, noteParagraphs } = await import(
+  "@repo/email/templates/personal-note"
+);
 const { parseSender } = await import("@/lib/email/personal-sender");
 const { fillNote, previewPersonalNote, sendPersonalNotes } = await import(
   "@/lib/email/personal-notes"
@@ -303,7 +305,7 @@ describe("the note", () => {
     expect(preview.skip).toBeNull();
     expect(preview.text).toContain("Hi Sam,");
     expect(preview.text).toContain(
-      "You're getting this because you have a QRdx account.",
+      "This email was meant for u_on@mail.example.org.uk. You're getting this because you have a QRdx account.",
     );
     expect(preview.text).toContain(
       "Reply to this email and it reaches Ritesh from QRdx.",
@@ -316,8 +318,12 @@ describe("the note", () => {
     expect(preview.html).toContain(
       "Hi Sam, Your code got 24 scans. What is it for? Ritesh",
     );
-    // No wordmark, card or buttons.
+    // Signed by hand, so not signed again.
+    expect(preview.html).not.toContain(">Ritesh from QRdx</p>");
+    // No logo, card or buttons.
     expect(preview.html).not.toContain(">QR<");
+    expect(preview.html).not.toContain("<img");
+    expect(preview.html).not.toContain("border-radius");
     expect(preview.html).not.toContain("border-top:3px solid");
     const stop = /href="([^"]*unsubscribe[^"]*)"/.exec(preview.html)?.[1];
     const token = new URL(
@@ -433,6 +439,27 @@ describe("the note", () => {
       ["d"],
     ]);
     expect(noteParagraphs("\n\n  \n")).toEqual([]);
+  });
+
+  it("is signed with the writer's name unless it already ends with it", async () => {
+    const unsigned = await html("u_on", "Hi {first_name},\n\nHow is it going?");
+    expect(unsigned.text).toMatch(
+      /How is it going\?\s+Ritesh from QRdx\s+-{10}/,
+    );
+    const signs = (body: string, name = "Ritesh from QRdx") =>
+      needsSignature(noteParagraphs(body), name);
+    expect(signs("Hi Sam,\n\nHow is it going?")).toBe(true);
+    expect(signs("Hi Sam,\n\nThanks for writing back.")).toBe(true);
+    for (const signed of [
+      "Hi Sam,\n\nHow is it going?\n\nRitesh",
+      "Hi Sam,\n\nHow is it going?\n\n— Ritesh.",
+      "Hi Sam,\n\nHow is it going?\nThanks, ritesh",
+      "Hi Sam,\n\nHow is it going?\n\nRitesh from QRdx",
+    ]) {
+      expect(signs(signed)).toBe(false);
+    }
+    // A sender with only an address doesn't sign.
+    expect(signs("Hi Sam", "support@qrdx.dev")).toBe(false);
   });
 });
 

@@ -1,5 +1,5 @@
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
   SecurityDetails,
@@ -21,6 +21,8 @@ export interface PayoutEmailNoticeProps {
   replaced: boolean;
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
+  /** The account's address, where this goes */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -36,6 +38,7 @@ export function PayoutEmailNoticeEmail({
   paypalEmail,
   replaced,
   details,
+  recipient,
   intl,
 }: PayoutEmailNoticeProps) {
   const { t } = intl;
@@ -44,6 +47,7 @@ export function PayoutEmailNoticeEmail({
       intl={intl}
       preview={t("payoutEmailNotice.preview", { paypalEmail })}
       reason={t("payoutEmailNotice.reason")}
+      recipient={recipient}
     >
       <EmailHeading>{payoutEmailNoticeSubject(intl)}</EmailHeading>
       <EmailText>
@@ -55,7 +59,6 @@ export function PayoutEmailNoticeEmail({
       </EmailText>
       <SecurityDetails details={details} intl={intl} />
       <EmailText>{t("security.nothingElse")}</EmailText>
-      <EmailDivider />
       <MutedText>
         {t.rich("payoutEmailNotice.notYou", supportLinkArgs)}
       </MutedText>
@@ -73,4 +76,5 @@ PayoutEmailNoticeEmail.PreviewProps = {
     ip: "203.0.113.24",
     time: "Nov 19, 2026, 3:04 PM GMT+5:30",
   },
+  recipient: "alex@example.com",
 } satisfies Omit<PayoutEmailNoticeProps, "intl">;

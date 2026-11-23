@@ -9787,6 +9787,7 @@
       "open": "Abre tu panel"
     },
     "personal": {
+      "meantFor": "Este correo estaba dirigido a <strong>{email}</strong>.",
       "reply": "Responde a este correo y le llegará a {name}.",
       "stop": "Dejar de recibir notas del equipo de QRdx"
     },

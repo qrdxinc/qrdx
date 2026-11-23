@@ -47,6 +47,7 @@ export async function sendPayoutEmailNotice({
                 details={details}
                 intl={intl}
                 paypalEmail={paypalEmail}
+                recipient={email}
                 replaced={replaced}
               />
             ),

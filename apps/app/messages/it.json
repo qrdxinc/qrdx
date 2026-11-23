@@ -9787,6 +9787,7 @@
       "open": "Apri la tua dashboard"
     },
     "personal": {
+      "meantFor": "Questa email era destinata a <strong>{email}</strong>.",
       "reply": "Rispondi a questa email e il messaggio arriva a {name}.",
       "stop": "Non ricevere più note dal team QRdx"
     },
