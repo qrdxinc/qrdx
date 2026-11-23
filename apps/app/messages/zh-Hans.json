@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "适用于 Figma、Canva、Raycast 和 Chrome 的插件",
         "leftOutValue": "已省略：{value}。",
         "imageUrl": "图片网址",
+        "showAll": "显示全部",
+        "showLess": "收起",
         "terminal": "终端",
         "designQrArguments": "design_qr 参数",
         "labelCopied": "已复制{label}",

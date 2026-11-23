@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Figma, Canva, Raycast, Chrome용 플러그인",
         "leftOutValue": "제외됨: {value}",
         "imageUrl": "이미지 URL",
+        "showAll": "모두 보기",
+        "showLess": "간단히 보기",
         "terminal": "터미널",
         "designQrArguments": "design_qr 인자",
         "labelCopied": "{label} 복사됨",

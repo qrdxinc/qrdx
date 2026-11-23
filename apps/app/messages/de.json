@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugins für Figma, Canva, Raycast und Chrome",
         "leftOutValue": "Weggelassen: {value}.",
         "imageUrl": "Bild-URL",
+        "showAll": "Alle anzeigen",
+        "showLess": "Weniger anzeigen",
         "terminal": "Terminal",
         "designQrArguments": "design_qr-Argumente",
         "labelCopied": "{label} kopiert",
