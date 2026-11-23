@@ -9495,9 +9495,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "Email ini ditujukan untuk <strong>{email}</strong>. Jika Anda tidak mengharapkannya, abaikan saja. Jika Anda khawatir dengan keamanan akun Anda, <link>beri tahu kami</link>.",
       "sentFor": "Dikirim untuk {name} oleh <link>{host}</link>",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "Berhenti berlangganan"
+      "unsubscribe": "Berhenti berlangganan",
+      "settings": "Ubah email yang Anda terima",
+      "copyLink": "atau salin dan tempel tautan ini ke browser Anda:"
     },
     "codes": {
       "neverAsk": "QRdx tidak akan pernah meminta kode ini melalui telepon, chat, atau email.",

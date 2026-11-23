@@ -9495,9 +9495,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "このメールは <strong>{email}</strong> 宛てにお送りしました。お心当たりがない場合は、無視していただいて構いません。アカウントの安全性が心配な場合は、<link>こちらからご連絡ください</link>。",
       "sentFor": "{name}のために <link>{host}</link> から送信",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "配信停止"
+      "unsubscribe": "配信停止",
+      "settings": "受信するメールの設定を変更する",
+      "copyLink": "または、次のリンクをコピーしてブラウザーに貼り付けてください。"
     },
     "codes": {
       "neverAsk": "QRdxが電話、チャット、メールでこのコードをお尋ねすることはありません。",

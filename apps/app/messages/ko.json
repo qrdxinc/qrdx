@@ -9495,9 +9495,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "이 이메일은 <strong>{email}</strong> 주소로 보내드렸어요. 예상하지 못한 메일이라면 무시하셔도 됩니다. 계정 보안이 걱정되신다면 <link>저희에게 알려 주세요</link>.",
       "sentFor": "{name}을(를) 위해 <link>{host}</link>에서 보냈어요",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "수신 거부"
+      "unsubscribe": "수신 거부",
+      "settings": "받을 이메일 설정 변경하기",
+      "copyLink": "또는 아래 링크를 복사해 브라우저에 붙여넣으세요:"
     },
     "codes": {
       "neverAsk": "QRdx는 전화, 채팅, 이메일로 이 코드를 절대 요구하지 않습니다.",

@@ -9495,9 +9495,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "这封邮件是发给 <strong>{email}</strong> 的。如果您并未预期收到这封邮件，可以直接忽略。如果您担心账户安全，请<link>告知我们</link>。",
       "sentFor": "由 <link>{host}</link> 代 {name} 发送",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "退订"
+      "unsubscribe": "退订",
+      "settings": "更改您接收的邮件类型",
+      "copyLink": "或复制此链接并粘贴到浏览器中："
     },
     "codes": {
       "neverAsk": "QRdx 绝不会通过电话、聊天或邮件索要此验证码。",

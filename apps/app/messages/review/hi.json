@@ -30223,6 +30223,10 @@
     "source": "3ccd9d6586ef",
     "status": "machine"
   },
+  "emails.layout.meantFor": {
+    "source": "062f5f22b936",
+    "status": "machine"
+  },
   "emails.layout.sentFor": {
     "source": "84116b259e8e",
     "status": "machine"
@@ -30233,6 +30237,14 @@
   },
   "emails.layout.unsubscribe": {
     "source": "3e92efb7664f",
+    "status": "machine"
+  },
+  "emails.layout.settings": {
+    "source": "a9142bd5e33d",
+    "status": "machine"
+  },
+  "emails.layout.copyLink": {
+    "source": "c758405f3144",
     "status": "machine"
   },
   "emails.codes.neverAsk": {

@@ -2,7 +2,9 @@ import type { CSSProperties, ReactNode } from "react";
 import { Column, Hr, Link, Row, Section, Text } from "react-email";
 import { EMAIL_ACCENT, EMAIL_LINE, EMAIL_MUTED, EMAIL_TEXT } from "./layout";
 
-// Building blocks shared by the event and digest templates.
+// Building blocks shared by the event and digest templates. Their rows are
+// formatted as tables in the plain-text body (data-text-format="dataTable"),
+// so a label and its value don't run together there.
 
 const numberFormat = new Intl.NumberFormat("en-US");
 const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
@@ -157,7 +159,7 @@ export function DetailsTable({
       {rows.map((row, index) => {
         const line = index > 0 ? styles.rowLine : null;
         return (
-          <Row key={index}>
+          <Row data-text-format="dataTable" key={index}>
             <Column style={{ ...styles.label, ...line }}>{row.label}</Column>
             <Column style={{ ...styles.value, ...line }}>{row.value}</Column>
           </Row>
@@ -181,7 +183,7 @@ export function StatGrid({
 }) {
   return (
     <Section style={styles.stats}>
-      <Row>
+      <Row data-text-format="dataTable">
         {stats.map((stat) => (
           <Column
             key={stat.label}
@@ -229,7 +231,7 @@ export function RankedList({
   if (rows.length === 0) return null;
   return (
     <Section style={styles.ranked}>
-      <Row>
+      <Row data-text-format="dataTable">
         <Column style={styles.rankedHeading}>{labelHeading}</Column>
         <Column style={{ ...styles.rankedHeading, textAlign: "right" }}>
           {valueHeading}
@@ -237,7 +239,7 @@ export function RankedList({
       </Row>
       {rows.map((row, index) => (
         <Section key={`${index}-${row.label}`}>
-          <Row>
+          <Row data-text-format="dataTable">
             <Column style={styles.rankedLabel}>
               {row.href ? (
                 <Link href={row.href} style={styles.rankedLink}>

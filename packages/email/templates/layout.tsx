@@ -302,7 +302,8 @@ export function EmailButton({
 
 /**
  * After a button: "or copy and paste this link into your browser:" and the
- * URL (shown without https://), for mail apps that break buttons.
+ * URL (shown without https://), for mail apps that break buttons. Pass
+ * the button's own URL.
  */
 export function EmailLinkFallback({
   url,
@@ -312,14 +313,16 @@ export function EmailLinkFallback({
   intl: EmailIntl;
 }) {
   return (
-    <>
+    // Skipped in the plain-text body, where the button's line already
+    // carries the URL.
+    <Section data-skip-in-text="true">
       <Text style={styles.fallbackLabel}>{intl.t("layout.copyLink")}</Text>
       <Text style={styles.fallbackText}>
         <Link href={url} style={styles.fallbackLink}>
           {url.replace(/^https?:\/\//, "")}
         </Link>
       </Text>
-    </>
+    </Section>
   );
 }
 

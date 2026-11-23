@@ -9495,9 +9495,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "Este e-mail era para <strong>{email}</strong>. Se você não estava esperando por ele, pode ignorá-lo. Se está preocupado com a segurança da sua conta, <link>fale com a gente</link>.",
       "sentFor": "Enviado para {name} por <link>{host}</link>",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "Cancelar inscrição"
+      "unsubscribe": "Cancelar inscrição",
+      "settings": "Mude quais e-mails você recebe",
+      "copyLink": "ou copie e cole este link no seu navegador:"
     },
     "codes": {
       "neverAsk": "O QRdx nunca pede este código por telefone, chat ou e-mail.",
