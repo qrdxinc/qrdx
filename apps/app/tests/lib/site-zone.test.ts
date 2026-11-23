@@ -994,7 +994,7 @@ describe("next.config.ts", () => {
     it("keeps every other English-only page's redirect, and English as it was", async () => {
       for (const url of ["/es/pricing", "/ja/barcode-generator/ean-13"]) {
         const response = await resolve(every, `https://qrdx.dev${url}`);
-        expect(response.status, url).toBe(307);
+        expect(response.status, url).toBe(308);
       }
       expect(
         getRedirectUrl(
@@ -1179,13 +1179,13 @@ describe("next.config.ts", () => {
       async (segment) => {
         for (const nextConfig of [on, home]) {
           const root = await resolve(nextConfig, `https://qrdx.dev/${segment}`);
-          expect(root.status).toBe(307);
+          expect(root.status).toBe(308);
           expect(getRedirectUrl(root)).toBe("https://qrdx.dev/");
           const atHome = await resolve(
             nextConfig,
             `https://qrdx.dev/${segment}/home`,
           );
-          expect(atHome.status).toBe(307);
+          expect(atHome.status).toBe(308);
           expect(getRedirectUrl(atHome)).toBe("https://qrdx.dev/home");
         }
       },
@@ -1193,7 +1193,7 @@ describe("next.config.ts", () => {
 
     it("keeps the query through the language redirect", async () => {
       const response = await resolve(home, "https://qrdx.dev/es?ref=x");
-      expect(response.status).toBe(307);
+      expect(response.status).toBe(308);
       expect(getRedirectUrl(response)).toBe("https://qrdx.dev/?ref=x");
     });
 

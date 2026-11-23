@@ -599,14 +599,39 @@ describe("next.config.ts routing", () => {
     ).toThrow("/qr-code-generator/wifi");
   });
 
-  it("redirects the English-only pages' translated URLs, for now as 307", () => {
+  it("redirects the English-only pages' translated URLs permanently, but the site-translated pages only for now", () => {
     const rules = englishOnlyRedirects("(?:qrdx\\.dev)");
     // One per page, and /<language>/home.
     expect(rules).toHaveLength(ENGLISH_ONLY_PATHS.length + 1);
     for (const rule of rules) {
-      expect(rule.permanent, rule.source).toBe(false);
       expect(rule.has).toEqual([{ type: "host", value: "(?:qrdx\\.dev)" }]);
     }
+    const permanent = (path: string) =>
+      rules.find((rule) => matches(rule.source, path))?.permanent;
+    // 308: nobody asks for these URLs back.
+    for (const path of [
+      "/es",
+      "/es/home",
+      "/es/pricing",
+      "/ja/barcode-generator/ean-13",
+      "/it/qr-codes-for/restaurants",
+      "/fr/compare",
+    ]) {
+      expect(permanent(path), path).toBe(true);
+    }
+    // 307: the site serves these in every language while its group is on,
+    // so a redirect to English is only ever temporary.
+    for (const path of [
+      "/es/qr-code-generator",
+      "/ja/qr-code-generator/wifi",
+    ]) {
+      expect(permanent(path), path).toBe(false);
+    }
+    expect(
+      rules.filter((rule) => !rule.permanent).map((rule) => rule.destination),
+    ).toEqual(
+      SITE_TRANSLATED_PATHS.map((path) => path.replace("[type]", ":type")),
+    );
     const target = (path: string) =>
       rules.find((rule) => matches(rule.source, path))?.destination;
     expect(target("/es")).toBe("/");
