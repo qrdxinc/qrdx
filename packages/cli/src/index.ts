@@ -155,7 +155,7 @@ ${BOLD}Examples:${RESET}
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --fg "#ff0000" --bg "#ffffff" --size 1024
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --logo "https://qrdx.dev/logo.png" --level H -o branded.svg
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --frame arrow -o arrow.svg
-  ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --frame halloween --body circle --eye gear -o halloween.svg
+  ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --frame pumpkin --body circle --eye gear -o pumpkin.svg
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --frame banner-bottom --frame-text "Scan for the menu" -o menu.png
   ${DIM}$${RESET} qrdx batch products.csv -o codes --format png --size 1024 --body circle
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --fg '{"type":"linear","stops":[{"color":"#6366f1","offset":0},{"color":"#ec4899","offset":100}],"angle":135}' -o gradient.svg
