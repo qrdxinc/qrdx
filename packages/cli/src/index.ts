@@ -114,7 +114,7 @@ ${BOLD}Generate Options:${RESET}
   --logo              Logo URL for center image (use with --level H)
   --no-logo           Skip the logo prompt in interactive mode
   --margin            Quiet zone margin in modules  ${DIM}(default: 0)${RESET}
-  --size              Output pixel size for SVG/PNG/WebP/GIF/BMP  ${DIM}(default: 512)${RESET}
+  --size              Output pixel size for SVG/PNG/WebP/GIF/BMP/TIFF  ${DIM}(default: 512)${RESET}
   --frame             Call-to-action frame (adds space around the code), e.g.:
                         ${DIM}none, banner-bottom, banner-top, rounded-border,${RESET}
                         ${DIM}speech-bubble, polaroid, phone, ticket, sticker${RESET}
@@ -126,7 +126,8 @@ ${BOLD}Generate Options:${RESET}
 
 ${BOLD}Batch Options:${RESET}  ${DIM}qrdx batch <file.csv> [options]${RESET}
   -o, --out           Folder for the codes  ${DIM}(default: qr-codes)${RESET}
-  --format            svg, png or eps  ${DIM}(default: svg; PNG needs sharp)${RESET}
+  --format            svg, png, webp, gif, bmp, ico, tiff, tiff-cmyk or eps
+                        ${DIM}(default: svg; all but SVG and EPS need sharp)${RESET}
   --value-column      Column with each code's content, by name or number
                         ${DIM}(default: value, url, link, data, content, text or qr; else the first)${RESET}
   --name-column       Column with file names, by name or number

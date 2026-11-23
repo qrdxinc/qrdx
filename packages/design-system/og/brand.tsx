@@ -157,7 +157,7 @@ export async function renderSiteOgImage() {
   return new ImageResponse(
     <BrandOgImage
       title="Free QR codes, plus dynamic codes that keep working"
-      description="Logos, gradients and patterns. PNG, SVG, PDF or EPS. Editable short links, hosted pages and scan analytics."
+      description="Logos, gradients and patterns. PNG, SVG, PDF, EPS or TIFF. Editable short links, hosted pages and scan analytics."
     />,
     { ...ogSize, fonts: await loadOgFonts() }
   );
