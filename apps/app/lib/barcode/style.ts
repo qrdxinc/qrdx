@@ -61,7 +61,7 @@ export function defaultBarcodeStyle(id: BarcodeFormatId): BarcodeStyle {
   };
 }
 
-/** The smallest scale `id` is drawn at (Intelligent Mail and DotCode: 2). */
+/** The smallest scale `id` is drawn at (Intelligent Mail and DotCode: 2, MaxiCode: 4). */
 export const minScale = (id: BarcodeFormatId) =>
   getBarcodeFormat(id).minScale ?? BARCODE_LIMITS.scale.min;
 
@@ -130,7 +130,7 @@ export const barcodeStyleInputSchema = z.object({
     .max(BARCODE_LIMITS.scale.max)
     .optional()
     .describe(
-      "Pixels per module in raster images (1-10, default 4; 2-10 for Intelligent Mail and DotCode)",
+      "Pixels per module in raster images (1-10, default 4; 2-10 for Intelligent Mail and DotCode, 4-10 for MaxiCode)",
     ),
   rotation: z
     .union(BARCODE_ROTATIONS.map((angle) => z.literal(angle)))

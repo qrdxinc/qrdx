@@ -36,6 +36,8 @@ export const BARCODE_USES: Record<BarcodeFormatId, string> = {
     "A stacked 2D code that holds up to about a kilobyte of text. You'll find it on driver's licenses, ID cards and boarding passes.",
   aztec:
     "A square 2D code found from its center, so it needs no blank margin. Transport operators use it for tickets shown on phone screens and printed at home.",
+  maxicode:
+    "The fixed-size 2D code with a bullseye that UPS prints on parcel labels. A carrier message puts the destination postcode, country and service class where sorting machines look for them; it can also hold plain text.",
   dotcode:
     "A 2D code of separate dots, made for inkjet printers marking packs at line speed: cigarette and tobacco packs for EU traceability, medicines and drinks. Its dots needn't touch, so rough, fast printing still reads.",
 };

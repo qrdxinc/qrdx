@@ -42,13 +42,13 @@ JSON schema (all fields optional except "url"):
   "dotColor": string,        // optional hex override for corner inner dots
   "templateId": string,      // decorative frame: "" (none) | ${options(TEMPLATE_IDS)}
   "level": string,           // error correction: L | M | Q | H
-  "logo": string             // optional logo URL to place in the centre
+  "logo": string             // optional logo URL to place in the center
 }
 
 Rules:
 - "url" is required; if you cannot identify one, use "" and the user will correct it
 - Only include fields that are clearly described
-- For colours, convert descriptive names to hex (e.g. "blue" → "#0000ff", "red" → "#e00000")
+- For colors, convert descriptive names to hex (e.g. "blue" → "#0000ff", "red" → "#e00000")
 - If the description implies a "cool" or "modern" look, use circle or rounded patterns
 - If the description says "classic" or "standard", use square patterns
 
