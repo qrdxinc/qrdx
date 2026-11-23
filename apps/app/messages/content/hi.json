@@ -38818,5 +38818,17 @@
     "text": "Spotify, Apple Music, SoundCloud, Bandcamp और दूसरी सर्विस पर गाने, एल्बम, प्लेलिस्ट, आर्टिस्ट पेज और पॉडकास्ट।",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "कुछ देशों के अपने इनवॉइस QR फ़ॉर्मैट होते हैं। QRdx बैंक-ट्रांसफ़र वाले कोड बनाता है, जैसे Swiss QR-bill का पेमेंट कोड, SEPA ट्रांसफ़र कोड और Czech QR Platba कोड। टैक्स अथॉरिटी के लिए ज़रूरी e-invoicing QR कोड आपके अकाउंटिंग सॉफ़्टवेयर से आते हैं। QRdx इनवॉइस पर लगने वाले बाकी कोड भी बनाता है: पेमेंट लिंक, ऑनलाइन कॉपी और आपकी संपर्क जानकारी।",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "Swiss QR-bill के लिए हाँ: QRdx QR-bill के पेमेंट पार्ट का QR कोड बनाता है, यानी error correction M वाला Swiss Payments Code, जिसमें Swiss cross होता है और जिसे भुगतान करने वाला अपने बैंकिंग ऐप में स्कैन करता है। बिल का बाकी हिस्सा, यानी रसीद और पेमेंट पार्ट का प्रिंट लेआउट, आपके इनवॉइसिंग सॉफ़्टवेयर से आता है। टैक्स अथॉरिटी के लिए ज़रूरी e-invoice QR कोड के लिए नहीं: वे अकाउंटिंग या e-invoicing सॉफ़्टवेयर से आते हैं।",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }

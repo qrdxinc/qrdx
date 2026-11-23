@@ -38818,5 +38818,17 @@
     "text": "Spotify, Apple Music, SoundCloud, Bandcamp 등 여러 서비스의 노래, 앨범, 플레이리스트, 아티스트 페이지, 팟캐스트를 연결해요.",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "일부 국가에는 자체 청구서 QR 형식이 있어요. QRdx는 스위스 QR-bill의 결제 코드, SEPA 이체 코드, 체코 QR Platba 코드처럼 은행 이체용 코드를 만들어요. 세무 당국에서 요구하는 전자 청구서 QR 코드는 회계 소프트웨어에서 만들어져요. QRdx는 청구서에 들어가는 다른 코드도 만들어요. 결제 링크, 온라인 사본, 연락처 정보를 담은 코드가 그 예예요.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "스위스 QR-bill은 가능해요. QRdx는 QR-bill 결제부의 QR 코드, 즉 스위스 십자 로고가 들어가고 오류 정정 수준이 M인 Swiss Payments Code를 만들어요. 결제자는 이 코드를 뱅킹 앱으로 스캔해요. 영수증과 결제부의 인쇄 레이아웃 등 청구서의 나머지 부분은 청구서 발행 소프트웨어에서 만들어져요. 세무 당국에서 요구하는 전자 청구서 QR 코드는 만들 수 없어요. 이 코드는 회계 소프트웨어나 전자 청구서 소프트웨어에서 만들어져요.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }

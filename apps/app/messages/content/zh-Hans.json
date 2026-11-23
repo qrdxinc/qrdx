@@ -38818,5 +38818,17 @@
     "text": "Spotify、Apple Music、SoundCloud、Bandcamp 等服务上的歌曲、专辑、歌单、艺人主页和播客。",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "一些国家有自己的发票二维码格式。QRdx 可以生成其中的银行转账类二维码，例如瑞士 QR-bill 的付款码、SEPA 转账码和捷克 QR Platba 码。税务机关要求的电子发票二维码由您的会计软件生成。QRdx 还可以生成发票上的其他二维码：付款链接、在线副本和您的联系方式。",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "瑞士 QR-bill 可以：QRdx 能生成 QR-bill 付款部分的二维码，即纠错等级为 M、带瑞士十字标志的 Swiss Payments Code，付款人可用银行应用扫描。账单的其余部分，包括收据和付款部分的打印版式，则由您的开票软件生成。税务机关要求的电子发票二维码不可以：这类二维码来自会计软件或电子发票软件。",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }

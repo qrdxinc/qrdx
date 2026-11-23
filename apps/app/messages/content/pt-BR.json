@@ -38818,5 +38818,17 @@
     "text": "Músicas, álbuns, playlists, páginas de artistas e podcasts no Spotify, Apple Music, SoundCloud, Bandcamp e outros serviços.",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "Alguns países têm seus próprios formatos de QR code para faturas. O QRdx gera os de transferência bancária, como o código de pagamento do QR-bill suíço, os códigos de transferência SEPA e os códigos tchecos QR Platba. Os QR codes de nota fiscal eletrônica exigidos pelas autoridades fiscais vêm do seu software de contabilidade. O QRdx também gera os outros códigos de uma fatura: links de pagamento, a cópia online e seus dados de contato.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "QR-bills suíços, sim: o QRdx gera o QR code da parte de pagamento de um QR-bill, o Swiss Payments Code com correção de erros M e a cruz suíça, que o pagador lê no app do banco. O restante da fatura, o recibo e o layout impresso da parte de pagamento, vem do seu software de faturamento. QR codes de nota fiscal eletrônica exigidos pelas autoridades fiscais, não: esses vêm do software de contabilidade ou de emissão de notas fiscais eletrônicas.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }

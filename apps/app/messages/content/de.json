@@ -38818,5 +38818,17 @@
     "text": "Songs, Alben, Playlists, Künstlerseiten und Podcasts auf Spotify, Apple Music, SoundCloud, Bandcamp und anderen Diensten.",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "Einige Länder haben eigene QR-Formate für Rechnungen. QRdx erstellt die Codes für Banküberweisungen, etwa den Zahlungscode der Schweizer QR-Rechnung, SEPA-Überweisungscodes und tschechische QR-Platba-Codes. QR-Codes für E-Rechnungen, die Steuerbehörden vorschreiben, kommen aus deiner Buchhaltungssoftware. QRdx erstellt außerdem die anderen Codes auf einer Rechnung: Zahlungslinks, die Online-Kopie und deine Kontaktdaten.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "Schweizer QR-Rechnungen: ja. QRdx erstellt den QR-Code für den Zahlteil einer QR-Rechnung, den Swiss Payments Code mit Fehlerkorrektur M und Schweizer Kreuz, den die zahlende Person in ihrer Banking-App scannt. Der Rest der Rechnung, also der Empfangsschein und das gedruckte Layout des Zahlteils, kommt aus deiner Rechnungssoftware. QR-Codes für E-Rechnungen, die Steuerbehörden vorschreiben: nein. Die kommen aus Buchhaltungs- oder E-Rechnungssoftware.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }
