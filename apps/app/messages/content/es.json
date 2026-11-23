@@ -38818,5 +38818,17 @@
     "text": "Canciones, álbumes, listas de reproducción, páginas de artistas y pódcasts en Spotify, Apple Music, SoundCloud, Bandcamp y otros servicios.",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "Algunos países tienen sus propios formatos de QR para facturas. QRdx genera los de transferencia bancaria, como el código de pago de la QR-bill suiza, los códigos de transferencia SEPA y los códigos QR Platba checos. Los códigos QR de facturación electrónica que exigen las autoridades fiscales los genera tu software de contabilidad. QRdx también crea los demás códigos de una factura: enlaces de pago, la copia en línea y tus datos de contacto.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "Las QR-bill suizas, sí: QRdx genera el código QR de la parte de pago de una QR-bill, el Swiss Payments Code con corrección de errores M y la cruz suiza, que el pagador escanea en su app bancaria. El resto de la factura, el recibo y el diseño impreso de la parte de pago, lo genera tu software de facturación. Los códigos QR de facturas electrónicas que exigen las autoridades fiscales, no: esos los generan el software de contabilidad o de facturación electrónica.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }

@@ -38818,5 +38818,17 @@
     "text": "Lagu, album, playlist, halaman artis, dan podcast di Spotify, Apple Music, SoundCloud, Bandcamp, dan layanan lainnya.",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "Beberapa negara memiliki format kode QR faktur sendiri. QRdx membuat kode untuk transfer bank, seperti kode pembayaran Swiss QR-bill, kode transfer SEPA, dan kode QR Platba dari Ceko. Kode QR e-faktur yang diwajibkan otoritas pajak berasal dari perangkat lunak akuntansi Anda. QRdx juga membuat kode lain pada faktur: tautan pembayaran, salinan online, dan detail kontak Anda.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "Untuk Swiss QR-bill, bisa: QRdx membuat kode QR untuk bagian pembayaran QR-bill, yaitu Swiss Payments Code dengan koreksi kesalahan M dan salib Swiss, yang dipindai pembayar di aplikasi perbankannya. Bagian tagihan lainnya, yaitu tanda terima dan tata letak cetak bagian pembayaran, berasal dari perangkat lunak penagihan Anda. Untuk kode QR e-faktur yang diwajibkan otoritas pajak, tidak bisa: kode tersebut berasal dari perangkat lunak akuntansi atau e-faktur.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }

@@ -38818,5 +38818,17 @@
     "text": "Brani, album, playlist, pagine degli artisti e podcast su Spotify, Apple Music, SoundCloud, Bandcamp e altri servizi.",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "Alcuni paesi hanno i propri formati di QR code per le fatture. QRdx crea quelli per i bonifici bancari, come il codice di pagamento della QR-bill svizzera, i codici per i bonifici SEPA e i codici QR Platba cechi. I QR code per la fatturazione elettronica richiesti dalle autorità fiscali provengono invece dal tuo software di contabilità. QRdx crea anche gli altri codici presenti su una fattura: link di pagamento, copia online e i tuoi dati di contatto.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "QR-bill svizzere, sì: QRdx crea il QR code per la sezione di pagamento di una QR-bill, cioè lo Swiss Payments Code con correzione degli errori M e croce svizzera, che chi paga inquadra con la sua app bancaria. Il resto della fattura, la ricevuta e il layout di stampa della sezione di pagamento, arriva dal tuo software di fatturazione. QR code per la fatturazione elettronica richiesti dalle autorità fiscali, no: quelli provengono dal software di contabilità o di fatturazione elettronica.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }
