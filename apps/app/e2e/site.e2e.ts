@@ -42,6 +42,10 @@ import {
   localizePath,
 } from "@repo/i18n/paths";
 import { REVIEW } from "@repo/i18n/review";
+import {
+  siteTranslatedPaths,
+  siteZoneGroups,
+} from "@repo/next-config/site-zone";
 import { decodePng } from "../../../packages/qrdx/src/utils/png";
 import {
   createImage,
@@ -1358,8 +1362,17 @@ async function testI18n(page: Page) {
   });
   // The marketing pages are English only: their old translated URLs
   // redirect to the English page, query kept (307 until the 7-day watch).
+  // But the generators, while the site serves them in every language (its
+  // generators-i18n group, named in SITE_ZONE_GROUPS with SITE_ORIGIN set
+  // for this run as for the server): those URLs are the site's pages then.
+  const siteTranslated = siteTranslatedPaths(
+    process.env.SITE_ORIGIN,
+    siteZoneGroups(process.env.SITE_ZONE_GROUPS),
+  );
   const englishOnly = [
-    ...samples(ENGLISH_ONLY_PATHS).map((path) => ({
+    ...samples(
+      ENGLISH_ONLY_PATHS.filter((path) => !siteTranslated.includes(path)),
+    ).map((path) => ({
       from: path === "/" ? "/es" : `/es${path}?from=e2e`,
       to: path === "/" ? "/" : `${path}?from=e2e`,
     })),

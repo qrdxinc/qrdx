@@ -10,6 +10,11 @@ import path from "node:path";
 import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
 import { docsZoneRewrites } from "@repo/i18n/docs";
 import {
+  ENGLISH_ONLY_PATHS,
+  isSiteTranslatedPath,
+  SITE_TRANSLATED_PATHS,
+} from "@repo/i18n/paths";
+import {
   CONSOLE_ASSET_PREFIX,
   CONSOLE_KEY_HEADER,
 } from "@repo/next-config/console-zone";
@@ -27,9 +32,12 @@ import {
   SITE_GROUP_NAMES,
   SITE_GROUPS,
   SITE_KEY_HEADER,
+  SITE_OPT_IN_GROUPS,
+  SITE_TRANSLATED_GROUPS,
   type SitePath,
   siteGroup,
   siteMatcherPrefixes,
+  siteTranslatedPaths,
   siteZoneGroups,
   siteZoneRewrites,
 } from "@repo/next-config/site-zone";
@@ -204,6 +212,11 @@ describe("siteZoneRewrites", () => {
       "/templates/:p1(twitter-image[^/.]*)",
       "/",
       "/home",
+      // generators-i18n, when it's on: every translated language.
+      ...TRANSLATED_LOCALES.flatMap((locale) => [
+        `/${LOCALE_INFO[locale].segment}/qr-code-generator`,
+        `/${LOCALE_INFO[locale].segment}/qr-code-generator/:path+`,
+      ]),
       "/site-static/:path*",
     ]);
     // A path's parameters go on as they came, without their patterns.
@@ -335,15 +348,24 @@ describe("isSiteOrigin (what env.ts accepts as SITE_ORIGIN)", () => {
 });
 
 describe("SITE_ZONE_GROUPS", () => {
-  it("means every group while unset or blank", () => {
+  it("means every group but the opt-in ones while unset or blank", () => {
+    const byDefault = SITE_GROUP_NAMES.filter(
+      (group) => !SITE_OPT_IN_GROUPS.includes(group),
+    );
+    expect(byDefault).not.toContain("generators-i18n");
+    expect(byDefault.length).toBe(SITE_GROUP_NAMES.length - 1);
     for (const value of [undefined, "", "  "]) {
-      expect(parseSiteZoneGroups(value), String(value)).toEqual([
-        ...SITE_GROUP_NAMES,
-      ]);
-      expect(siteZoneGroups(value), String(value)).toEqual([
-        ...SITE_GROUP_NAMES,
-      ]);
+      expect(parseSiteZoneGroups(value), String(value)).toEqual(byDefault);
+      expect(siteZoneGroups(value), String(value)).toEqual(byDefault);
     }
+  });
+
+  it("turns an opt-in group on only by name", () => {
+    expect(SITE_OPT_IN_GROUPS).toEqual(["generators-i18n"]);
+    expect(parseSiteZoneGroups("generators-i18n")).toEqual(["generators-i18n"]);
+    expect(parseSiteZoneGroups(`${SITE_GROUP_NAMES.join(",")}`)?.length).toBe(
+      SITE_GROUP_NAMES.length,
+    );
   });
 
   it("names groups, each once, in list order", () => {
@@ -722,6 +744,8 @@ describe("next.config.ts", () => {
   let on: NextConfig;
   let all: NextConfig;
   let home: NextConfig;
+  /** Every group named, the opt-in generators-i18n included. */
+  let every: NextConfig;
   let warned: string[];
 
   beforeAll(async () => {
@@ -733,6 +757,11 @@ describe("next.config.ts", () => {
       SITE_ORIGIN: ORIGIN,
       SITE_ZONE_KEY: KEY,
       SITE_ZONE_GROUPS: "home",
+    });
+    every = await loadConfig({
+      SITE_ORIGIN: ORIGIN,
+      SITE_ZONE_KEY: KEY,
+      SITE_ZONE_GROUPS: SITE_GROUP_NAMES.join(","),
     });
     all = await loadConfig({
       SITE_ORIGIN: ORIGIN,
@@ -879,6 +908,122 @@ describe("next.config.ts", () => {
     expect(await siteTarget(on, "https://links.customer.com/blog")).toBeNull();
   });
 
+  // The generators in the other languages (owner decision, 23 Nov 2026):
+  // an opt-in group. Off (the default), /es/qr-code-generator/wifi still
+  // redirects to the English page as every English-only page's translated
+  // URL does; on, the redirect is gone and the site answers.
+  describe("the generators in other languages (generators-i18n)", () => {
+    const LOCALIZED = [
+      "/es/qr-code-generator",
+      "/es/qr-code-generator/wifi",
+      "/pt-br/qr-code-generator/vcard?utm_source=x",
+      "/zh-hans/qr-code-generator/wifi",
+      "/hi/qr-code-generator",
+      "/ja/qr-code-generator/wifi/opengraph-image-1a2b3c",
+    ];
+
+    it("covers every translated language's generator pages, and nothing else", () => {
+      expect(SITE_GROUPS["generators-i18n"]).toEqual(
+        TRANSLATED_LOCALES.map(
+          (locale) => `/${LOCALE_INFO[locale].segment}/qr-code-generator`,
+        ),
+      );
+      for (const locale of TRANSLATED_LOCALES) {
+        const segment = LOCALE_INFO[locale].segment;
+        for (const path of ["/qr-code-generator", "/qr-code-generator/wifi"]) {
+          expect(siteGroup(`/${segment}${path}`), segment).toBe(
+            "generators-i18n",
+          );
+        }
+        expect(siteGroup(`/${segment}/pricing`), segment).toBeNull();
+        expect(siteGroup(`/${segment}/playground`), segment).toBeNull();
+      }
+      expect(siteGroup("/en/qr-code-generator")).toBeNull();
+      expect(siteGroup("/qr-code-generator/wifi")).toBe("generators");
+    });
+
+    it("names the English-only pages it translates, as @repo/i18n lists them", () => {
+      const named = Object.values(SITE_TRANSLATED_GROUPS).flat();
+      expect([...named].sort()).toEqual([...SITE_TRANSLATED_PATHS].sort());
+      for (const path of named) {
+        expect(ENGLISH_ONLY_PATHS, path).toContain(path);
+      }
+      expect(isSiteTranslatedPath("/qr-code-generator/wifi")).toBe(true);
+      expect(isSiteTranslatedPath("/barcode-generator/ean-13")).toBe(false);
+      expect(Object.keys(SITE_TRANSLATED_GROUPS)).toEqual(["generators-i18n"]);
+    });
+
+    it("leaves the redirects alone unless the site and the group are on", () => {
+      expect(siteTranslatedPaths(undefined, [...SITE_GROUP_NAMES])).toEqual([]);
+      expect(siteTranslatedPaths("", [...SITE_GROUP_NAMES])).toEqual([]);
+      expect(siteTranslatedPaths(ORIGIN, siteZoneGroups(undefined))).toEqual(
+        [],
+      );
+      expect(siteTranslatedPaths(ORIGIN, ["generators-i18n"])).toEqual([
+        "/qr-code-generator",
+        "/qr-code-generator/[type]",
+      ]);
+    });
+
+    it.each(LOCALIZED)(
+      "redirects %s to English while the group is off",
+      async (url) => {
+        for (const nextConfig of [off, on, all, home]) {
+          expect(await siteTarget(nextConfig, `https://qrdx.dev${url}`)).toBe(
+            null,
+          );
+        }
+        if (url.includes("opengraph-image")) return;
+        const response = await resolve(on, `https://qrdx.dev${url}`);
+        expect(response.status, url).toBe(307);
+        const english = url.replace(/^\/[^/]+/, "");
+        expect(getRedirectUrl(response), url).toBe(
+          `https://qrdx.dev${english}`,
+        );
+      },
+    );
+
+    it.each(LOCALIZED)("sends %s to the site while it's on", async (url) => {
+      const response = await resolve(every, `https://qrdx.dev${url}`);
+      expect(getRedirectUrl(response), url).toBeNull();
+      expect(await siteTarget(every, `https://qrdx.dev${url}`)).toBe(
+        `${ORIGIN}${url}`,
+      );
+    });
+
+    it("keeps every other English-only page's redirect, and English as it was", async () => {
+      for (const url of ["/es/pricing", "/ja/barcode-generator/ean-13"]) {
+        const response = await resolve(every, `https://qrdx.dev${url}`);
+        expect(response.status, url).toBe(307);
+      }
+      expect(
+        getRedirectUrl(
+          await resolve(every, "https://qrdx.dev/en/qr-code-generator/wifi"),
+        ),
+      ).toBe("https://qrdx.dev/qr-code-generator/wifi");
+      for (const nextConfig of [on, every]) {
+        expect(
+          await siteTarget(
+            nextConfig,
+            "https://qrdx.dev/qr-code-generator/wifi",
+          ),
+        ).toBe(`${ORIGIN}/qr-code-generator/wifi`);
+      }
+      expect(
+        await siteTarget(every, "https://qrdx.dev/es/playground"),
+      ).toBeNull();
+    });
+
+    it("only on QRdx's own hosts", async () => {
+      expect(
+        await siteTarget(
+          every,
+          "https://links.customer.com/es/qr-code-generator/wifi",
+        ),
+      ).toBeNull();
+    });
+  });
+
   it.each(["/blog", "/blog/rss.xml", "/site-static/_next/static/x.js"])(
     "sends nothing to the site while it's unset: %s",
     async (pathname) => {
@@ -914,9 +1059,12 @@ describe("next.config.ts", () => {
     return phases?.beforeFiles ?? [];
   };
 
-  it("adds exactly the zone's rules (every group on)", async () => {
+  it("adds exactly the zone's rules (every group on by default)", async () => {
     const rules = await beforeFiles(on);
-    const expected = siteZoneRewrites(ORIGIN, { hosts: HOSTS }).length;
+    const expected = siteZoneRewrites(ORIGIN, {
+      hosts: HOSTS,
+      groups: siteZoneGroups(undefined),
+    }).length;
     expect(rules.filter((rule) => onSite(rule.destination))).toHaveLength(
       expected,
     );
@@ -1129,7 +1277,7 @@ describe("next.config.ts", () => {
   describe("in any case, with Next's own matching", () => {
     const req = { headers: { host: "qrdx.dev" } } as never;
     const rewriteMatches = async (pathname: string) =>
-      (await beforeFiles(on))
+      (await beforeFiles(every))
         .filter((rule) => onSite(rule.destination))
         .some((rule) => {
           const match = getPathMatch(rule.source, {
@@ -1174,6 +1322,9 @@ describe("next.config.ts", () => {
       "/home",
       "/HOME",
       "/Home",
+      "/ES/qr-code-generator/wifi",
+      "/es/QR-Code-Generator",
+      "/Zh-Hans/qr-code-generator/vcard",
     ];
 
     it.each(CASINGS)(
@@ -1203,9 +1354,11 @@ describe("next.config.ts", () => {
       // The root has no prefix to list: proxy.ts matches "/" itself.
       expect(prefixes).not.toContain("/");
       for (const entry of SITE_ENTRIES) {
-        const first = `/${entryPath(entry).split("/")[1]}`;
-        if (first === "/") continue;
-        expect(prefixes, entryPath(entry)).toContain(first);
+        // A prefix whole (/es/qr-code-generator), a path's first segment.
+        const listed =
+          typeof entry === "string" ? entry : `/${entry.path.split("/")[1]}`;
+        if (listed === "/") continue;
+        expect(prefixes, entryPath(entry)).toContain(listed);
       }
       // A prefix's page and everything under it.
       for (const prefix of [
@@ -1251,6 +1404,11 @@ describe("next.config.ts", () => {
         "/INTEGRATIONS/slack/link",
         "/Integrations/Slack.svg",
         "/integrations/a/b",
+        "/ES/qr-code-generatorx",
+        "/esx/qr-code-generator",
+        "/en/qr-code-generator",
+        "/es/playground",
+        "/ES/Pricing",
       ]) {
         expect(await rewriteMatches(pathname), pathname).toBe(false);
       }
@@ -1326,9 +1484,16 @@ describe("proxy.ts", () => {
   let off: (request: NextRequest) => Promise<Response>;
   let both: (request: NextRequest) => Promise<Response>;
   let home: (request: NextRequest) => Promise<Response>;
+  /** Every group named, the opt-in generators-i18n included. */
+  let every: (request: NextRequest) => Promise<Response>;
 
   beforeAll(async () => {
     off = await loadProxy({});
+    every = await loadProxy({
+      SITE_ORIGIN: ORIGIN,
+      SITE_ZONE_KEY: KEY,
+      SITE_ZONE_GROUPS: SITE_GROUP_NAMES.join(","),
+    });
     onWithoutKey = await loadProxy({ SITE_ORIGIN: ORIGIN });
     home = await loadProxy({
       SITE_ORIGIN: ORIGIN,
@@ -1384,6 +1549,47 @@ describe("proxy.ts", () => {
       expect(sent("content-security-policy")).toBeUndefined();
     },
   );
+
+  it("gives the generators in other languages the key only while generators-i18n is on", async () => {
+    for (const pathname of [
+      "/es/qr-code-generator",
+      "/es/qr-code-generator/wifi",
+      "/zh-hans/qr-code-generator/vcard/opengraph-image-1a",
+    ]) {
+      const sent = forwarded(
+        await every(
+          request(`https://qrdx.dev${pathname}`, {
+            [SITE_KEY_HEADER]: "forged",
+          }),
+        ),
+      );
+      expect(sent(SITE_KEY_HEADER), pathname).toBe(KEY);
+      // Off by default (opt-in): no key, and the forged one is dropped.
+      const offSent = forwarded(
+        await on(
+          request(`https://qrdx.dev${pathname}`, {
+            [SITE_KEY_HEADER]: "forged",
+          }),
+        ),
+      );
+      expect(offSent(SITE_KEY_HEADER), pathname).not.toBe(KEY);
+      expect(offSent(SITE_KEY_HEADER), pathname).not.toBe("forged");
+    }
+    // Any other casing goes to the lower-case URL first.
+    const upper = await every(
+      request("https://qrdx.dev/ES/QR-Code-Generator/wifi"),
+    );
+    expect(upper.status).toBe(308);
+    expect(upper.headers.get("location")).toBe(
+      "https://qrdx.dev/es/qr-code-generator/wifi",
+    );
+    // The translated pages that aren't the site's keep no key.
+    expect(
+      forwarded(await every(request("https://qrdx.dev/es/playground")))(
+        SITE_KEY_HEADER,
+      ),
+    ).not.toBe(KEY);
+  });
 
   it("passes the visitor's country on to the site, from this app's geo headers only", async () => {
     const country = async (headers: Record<string, string>, url?: string) =>

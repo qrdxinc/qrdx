@@ -911,7 +911,7 @@
     "crumb": "Generator kode QR",
     "hub": {
       "metaTitle": "Jenis Kode QR: {count, number} Generator Gratis (Wi-Fi, vCard, UPI)",
-      "metaDescription": "{count, number} jenis kode QR, masing-masing dengan generator gratis: Wi-Fi, vCard, WhatsApp, UPI, email, profil sosial, dan pembayaran. Setiap halaman menampilkan format payload yang tepat.",
+      "metaDescription": "{count, number} jenis kode QR dengan generator gratis: Wi-Fi, vCard, WhatsApp, UPI, email, profil sosial, dan pembayaran, lengkap dengan format payload-nya.",
       "title": "Generator kode QR untuk setiap jenis konten",
       "intro1": "Kode QR bisa melakukan lebih dari sekadar membuka situs web. Bergantung pada teks di dalamnya, ponsel dapat terhubung ke jaringan Wi-Fi, menyimpan kontak, memulai pembayaran, atau membuka obrolan. Pilih salah satu dari {count, number} jenis di bawah untuk mendapatkan generator dengan kolom yang sesuai, pratinjau langsung, dan unduhan PNG, WebP, atau SVG.",
       "intro2": "Secara default, kode yang dibuat di halaman ini bersifat statis: konten disandikan langsung di dalam polanya, sehingga berfungsi secara offline, tidak pernah kedaluwarsa, dan tidak memiliki batas pemindaian. Setiap halaman juga menjelaskan format persis yang dihasilkan, sehingga Anda tahu apa yang akan dibaca oleh pemindai.",

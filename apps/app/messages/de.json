@@ -911,7 +911,7 @@
     "crumb": "QR-Code-Generatoren",
     "hub": {
       "metaTitle": "QR-Code-Typen: {count, number} kostenlose Generatoren (Wi-Fi, vCard, UPI)",
-      "metaDescription": "{count, number} QR-Code-Typen, jeweils mit kostenlosem Generator: Wi-Fi, vCard, WhatsApp, UPI, E-Mail, Social-Media-Profile und Zahlungen. Jede Seite zeigt das genaue Payload-Format.",
+      "metaDescription": "{count, number} QR-Code-Typen mit kostenlosem Generator: Wi-Fi, vCard, WhatsApp, UPI, E-Mail, Social Media und Zahlungen, jeweils mit genauem Payload-Format.",
       "title": "QR-Code-Generatoren für jede Art von Inhalt",
       "intro1": "Ein QR-Code kann mehr, als nur eine Website zu öffnen. Je nach Text im Code kann ein Smartphone einem Wi-Fi-Netzwerk beitreten, einen Kontakt speichern, eine Zahlung starten oder einen Chat öffnen. Wähle unten einen der {count, number} Typen und nutze einen Generator mit den passenden Feldern, Live-Vorschau und Download als PNG, WebP oder SVG.",
       "intro2": "Standardmäßig sind die Codes von diesen Seiten statisch: Der Inhalt ist direkt im Muster codiert, deshalb funktionieren sie offline, laufen nie ab und haben kein Scan-Limit. Jede Seite dokumentiert außerdem das genaue Format, das sie schreibt, damit du weißt, was ein Scanner liest.",

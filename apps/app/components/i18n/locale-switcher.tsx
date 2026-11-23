@@ -22,21 +22,53 @@ import { PLAYGROUND_PATH } from "@/lib/playground-links";
 export const remember = (locale: Locale) => rememberLocale(locale);
 
 /**
+ * Where each language's link goes from `pathname` in `locale`, and whether
+ * the page exists in every language (else the menu says it's English
+ * only): see LocaleSwitcher.
+ */
+export function switcherLinks(
+  pathname: string,
+  locale: Locale,
+  hrefs?: Readonly<Record<Locale, string>>,
+): { translated: boolean; hrefFor: (target: Locale) => string } {
+  const { path } = splitLocale(pathname);
+  const translated = hrefs !== undefined || isLocalizedPath(path);
+  const hrefFor = (target: Locale) => {
+    if (hrefs) return hrefs[target];
+    return translated || target === locale
+      ? localizePath(path, target)
+      : localizePath(PLAYGROUND_PATH, target);
+  };
+  return { translated, hrefFor };
+}
+
+/**
  * The only way to change language (no detection, no banner): each language
  * in its own script, as a plain link to the same page in that language. The
  * marketing pages are English only (packages/i18n/paths.ts), so on a page
  * that isn't translated the other languages open the QR code designer in
  * that language, and the menu says so. Never a link that redirects back.
+ *
+ * `hrefs` is the page's own address in every language, for a page whose
+ * translations this app's paths don't describe: the generator pages the
+ * site zone serves in every language (paths.ts SITE_TRANSLATED_PATHS,
+ * localizeSitePath). With it, each language opens that page, and the menu
+ * says nothing about English only.
  */
-export function LocaleSwitcher({ className }: { className?: string }) {
+export function LocaleSwitcher({
+  className,
+  hrefs,
+}: {
+  className?: string;
+  hrefs?: Readonly<Record<Locale, string>>;
+}) {
   const locale = useLocale();
   const t = useTranslations("localeSwitcher");
-  const { path } = splitLocale(usePathname() ?? "/");
-  const translated = isLocalizedPath(path);
-  const hrefFor = (target: Locale) =>
-    translated || target === locale
-      ? localizePath(path, target)
-      : localizePath(PLAYGROUND_PATH, target);
+  const { translated, hrefFor } = switcherLinks(
+    usePathname() ?? "/",
+    locale,
+    hrefs,
+  );
 
   return (
     <DropdownMenu modal={false}>

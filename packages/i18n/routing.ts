@@ -6,7 +6,8 @@
 //
 // The marketing pages under app/[lang] that are English only (paths.ts
 // ENGLISH_ONLY_PATHS) keep their English rewrites, and their translated URLs
-// redirect to the English page (englishOnlyRedirects).
+// redirect to the English page (englishOnlyRedirects), except the pages the
+// site zone serves in every language while its group for them is on.
 //
 // next.config.ts imports this module (and docs.ts) from the package itself:
 // Next compiles the config with the app's tsconfig paths, and a file in a
@@ -81,10 +82,28 @@ const TRANSLATED_SEGMENT = `:locale(${TRANSLATED_LOCALES.map(
  *
  * 307 for now: after a 7-day watch with no surprises, switch `permanent`
  * to true (308), as englishRedirects are.
+ *
+ * `except` leaves out pages whose translated URLs another app answers: the
+ * site zone serves the generator pages in every language while its group
+ * for them is on (paths.ts SITE_TRANSLATED_PATHS, owner decision, 23 Nov
+ * 2026), so /es/qr-code-generator/wifi goes on to the site's rewrite
+ * instead. Each must be one of ENGLISH_ONLY_PATHS, written the same way.
  */
-export function englishOnlyRedirects(platformHosts: string) {
+export function englishOnlyRedirects(
+  platformHosts: string,
+  { except = [] }: { except?: readonly string[] } = {}
+) {
+  const unknown = except.filter((path) => !ENGLISH_ONLY_PATHS.includes(path));
+  if (unknown.length > 0) {
+    throw new Error(
+      `englishOnlyRedirects: not English-only pages: ${unknown.join(", ")}`
+    );
+  }
   const has = [{ type: "host" as const, value: platformHosts }];
-  const pages = ENGLISH_ONLY_PATHS.map((path) => {
+  const redirected = ENGLISH_ONLY_PATHS.filter(
+    (path) => !except.includes(path)
+  );
+  const pages = redirected.map((path) => {
     const source = rewriteSource(path);
     return {
       source:
