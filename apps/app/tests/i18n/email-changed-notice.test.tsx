@@ -186,6 +186,8 @@ describe("the email-changed notice", () => {
     expect(state.sent).toHaveLength(1);
     const [email] = state.sent;
     expect(email.to).toBe("old@example.com");
+    // The footer names the old address, the one it went to.
+    expect(email.html).toContain(">old@example.com</span>");
     expect(email.subject).toBe(es.emails.emailChanged.subject);
     // The device and place in the email's language too.
     expect(email.html).toContain("Chrome en macOS");

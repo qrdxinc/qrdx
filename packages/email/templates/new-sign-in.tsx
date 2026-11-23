@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EMAIL_MUTED, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
   ReviewSecurityButton,
@@ -17,9 +17,9 @@ export const newSignInSubject = (intl: EmailIntl) =>
 
 const styles = {
   list: {
-    color: "#737373",
+    color: EMAIL_MUTED,
     fontSize: "13px",
-    lineHeight: "20px",
+    lineHeight: "22px",
     margin: "0 0 16px",
     paddingLeft: "20px",
   },
@@ -30,6 +30,8 @@ export interface NewSignInEmailProps {
   details: SecurityEventDetails;
   /** How they signed in: "Google", "Email code, then a passkey" */
   method: string | null;
+  /** The address it's sent to */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -39,7 +41,12 @@ export interface NewSignInEmailProps {
  * for the first time. The only links go to the security settings and
  * support; nothing in it changes the account.
  */
-export function NewSignInEmail({ details, method, intl }: NewSignInEmailProps) {
+export function NewSignInEmail({
+  details,
+  method,
+  recipient,
+  intl,
+}: NewSignInEmailProps) {
   const { t } = intl;
   return (
     <EmailLayout
@@ -50,6 +57,7 @@ export function NewSignInEmail({ details, method, intl }: NewSignInEmailProps) {
         location: details.location ?? "",
       })}
       reason={t("newSignIn.reason")}
+      recipient={recipient}
     >
       <EmailHeading>{t("newSignIn.subject")}</EmailHeading>
       <EmailText>{t("newSignIn.body")}</EmailText>
@@ -62,7 +70,6 @@ export function NewSignInEmail({ details, method, intl }: NewSignInEmailProps) {
       />
       <EmailText>{t("newSignIn.nothingToDo")}</EmailText>
       <ReviewSecurityButton intl={intl} />
-      <EmailDivider />
       <MutedText>{t("newSignIn.notYou")}</MutedText>
       <ol style={styles.list}>
         <li style={styles.item}>{t("newSignIn.signOut")}</li>
@@ -84,4 +91,5 @@ NewSignInEmail.PreviewProps = {
     time: "Nov 19, 2026, 3:04 PM GMT+5:30",
   },
   method: "Google",
+  recipient: "alex@example.com",
 } satisfies Omit<NewSignInEmailProps, "intl">;

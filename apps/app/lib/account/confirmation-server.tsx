@@ -806,6 +806,7 @@ export async function sendConfirmationCode(): Promise<ConfirmResult> {
                   details={details}
                   expiresInMinutes={CONFIRMATION_CODE_MINUTES}
                   intl={intl}
+                  recipient={session.email}
                 />
               ),
               tags: [{ name: "category", value: "confirmation_code" }],

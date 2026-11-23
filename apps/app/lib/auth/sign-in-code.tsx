@@ -61,7 +61,14 @@ export const sendSignInCode: SignInCodeSender = async ({ email, otp }) => {
         sendEmail({
           to: email,
           subject: signInCodeSubject(intl),
-          react: <SignInCodeEmail code={otp} intl={intl} location={location} />,
+          react: (
+            <SignInCodeEmail
+              code={otp}
+              intl={intl}
+              location={location}
+              recipient={email}
+            />
+          ),
           tags: [{ name: "category", value: "sign_in_code" }],
         }),
     },

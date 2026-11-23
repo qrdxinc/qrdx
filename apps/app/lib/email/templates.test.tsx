@@ -322,7 +322,11 @@ describe("email templates", () => {
 
   it("sign-in code email shows the code and has no tracking links", async () => {
     const { html, text } = await both(
-      <SignInCodeEmail intl={ENGLISH_EMAIL} code="402871" />,
+      <SignInCodeEmail
+        intl={ENGLISH_EMAIL}
+        code="402871"
+        recipient="ada@qrdx.test"
+      />,
     );
     assert.match(text, /Your QRdx sign-in code/i);
     assert.match(text, /402871/);
@@ -332,14 +336,17 @@ describe("email templates", () => {
     assert.doesNotMatch(text, /Unsubscribe/);
     // No place known: no line about it.
     assert.doesNotMatch(text, /Someone asked to sign in from/);
+    // Who it was meant for, in the footer.
+    assert.match(text, /This email was meant for ada@qrdx\.test\./);
     // The code renders large and letter-spaced (still copyable as one word).
-    assert.match(html, /letter-spacing:0\.4em[^"]*"[^>]*>402871</);
-    assert.match(html, /font-size:34px/);
-    // Only the plain site links from the layout: no query strings, and no
-    // image but the logo (no pixels).
+    assert.match(html, /letter-spacing:0\.25em[^"]*"[^>]*>402871</);
+    assert.match(html, /font-size:28px/);
+    // Only the plain site links from the layout and the footer's support
+    // address: no query strings, and no image but the logo (no pixels).
     const hrefs = [...html.matchAll(/href="([^"]*)"/g)].map((m) => m[1]);
     assert.ok(hrefs.length > 0);
     for (const href of hrefs) {
+      if (href === "mailto:support@qrdx.dev") continue;
       assert.equal(new URL(href).search, "", href);
       assert.equal(new URL(href).pathname, "/", href);
     }
@@ -372,7 +379,7 @@ describe("email templates", () => {
     assert.match(text, /expires in 5 minutes/);
     assert.ok(text.includes(NEVER_ASK));
     assert.match(text, /Nothing changes without the code/);
-    assert.match(html, /letter-spacing:0\.4em[^"]*"[^>]*>915273</);
+    assert.match(html, /letter-spacing:0\.25em[^"]*"[^>]*>915273</);
     const hrefs = [...html.matchAll(/href="([^"]*)"/g)].map((m) => m[1]);
     for (const href of hrefs) {
       assert.equal(new URL(href).pathname, "/", href);
@@ -589,7 +596,7 @@ describe("email templates", () => {
     assert.ok(text.includes(NEVER_ASK));
     assertDetails(text, "confirmation code");
     assert.match(text, /If you didn't ask for this, don't enter the code/);
-    assert.match(html, /letter-spacing:0\.4em[^"]*"[^>]*>503118</);
+    assert.match(html, /letter-spacing:0\.25em[^"]*"[^>]*>503118</);
     assertSecurityLinks(html, "confirmation code");
   });
 

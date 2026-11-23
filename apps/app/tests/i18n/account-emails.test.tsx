@@ -362,6 +362,13 @@ describe("which language each email goes out in", () => {
       expect(email.to).toBe(EMAIL);
       expect(email.html).toContain('lang="es"');
     }
+    // The footer names the address each was sent to (the payout notice's
+    // sender isn't this file's).
+    for (const email of state.sent.filter(
+      ({ subject }) => subject !== es.emails.payoutEmailNotice.subject,
+    )) {
+      expect(email.html).toContain(`>${EMAIL}</span>`);
+    }
   });
 
   it("a security notice for an account without one: English, whatever the request's language", async () => {
@@ -379,6 +386,7 @@ describe("which language each email goes out in", () => {
       es.emails.confirmationCode.subject,
     ]);
     expect(state.sent[0].html).toContain(es.emails.confirmationCode.enter);
+    expect(state.sent[0].html).toContain(`>${EMAIL}</span>`);
   });
 
   it("the confirmation code: the account's language before the request's", async () => {

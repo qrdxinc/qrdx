@@ -46,6 +46,7 @@ export async function sendPasskeyNotice({
               details={details}
               intl={intl}
               passkeyName={passkeyName}
+              recipient={email}
             />
           ),
           tags: [{ name: "category", value: `passkey_${change}` }],

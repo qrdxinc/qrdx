@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import { Link } from "react-email";
 import type { EmailIntl } from "../intl";
 import { baseUrl } from "../origin";
-import { EmailButton, EmailText } from "./layout";
-import { DetailsTable } from "./parts";
+import { EMAIL_ACCENT, EmailButton } from "./layout";
+import { DetailsTable, MutedText } from "./parts";
 
 // Shared by every security email (two-step verification, passkeys, email
 // changes, new sign-ins, confirmation codes): where and when it happened,
@@ -80,15 +80,20 @@ export function ReviewSecurityButton({ intl }: { intl: EmailIntl }) {
   );
 }
 
-/** On every email that carries a code. */
+/** On every email that carries a code, after the expiry line. */
 export function NeverAskForCode({ intl }: { intl: EmailIntl }) {
-  return <EmailText>{intl.t("codes.neverAsk")}</EmailText>;
+  return <MutedText>{intl.t("codes.neverAsk")}</MutedText>;
 }
 
 /** The arguments of "…contact support at <support>{email}</support>…". */
 export const supportLinkArgs = {
   email: SUPPORT_EMAIL,
   support: (chunks: ReactNode) => (
-    <Link href={`mailto:${SUPPORT_EMAIL}`}>{chunks}</Link>
+    <Link
+      href={`mailto:${SUPPORT_EMAIL}`}
+      style={{ color: EMAIL_ACCENT, textDecoration: "none" }}
+    >
+      {chunks}
+    </Link>
   ),
 };
