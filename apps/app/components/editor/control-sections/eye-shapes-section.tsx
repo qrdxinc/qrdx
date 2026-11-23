@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@repo/design-system/components/ui/button";
-import { cn } from "@repo/design-system/lib/utils";
 import { RefreshLeftSquare } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { EYE_POSITIONS, type EyePosition } from "qrdx/types";
@@ -19,6 +18,7 @@ import {
   hasEyeShapes,
   withEyeShape,
 } from "./eye-shapes";
+import { EyeTabs } from "./eye-tabs";
 import { NewLookTag } from "./new-look-tag";
 import { ShapePicker } from "./option-tiles";
 import { eyeDotName, eyeName } from "./pattern-controls";
@@ -110,9 +110,10 @@ export function SameEyeShapesButton({ onClick }: { onClick: () => void }) {
 
 /**
  * Per-eye shapes: each corner eye's frame and centre can differ from the
- * Eyes shapes. One eye at a time (a row of three), with the same pickers
- * the Eyes section uses; a pick is judged for that eye alone, so a shape
- * that scans badly with the dots or with the eye's other part says so.
+ * Eyes shapes. One eye at a time (EyeTabs, as in Eye colors), with the
+ * same pickers the Eyes section uses; a pick is judged for that eye alone,
+ * so a shape that scans badly with the dots or with the eye's other part
+ * says so.
  */
 export function EyeShapesSection({
   style,
@@ -143,37 +144,19 @@ export function EyeShapesSection({
       title={t("eyeShapes")}
     >
       <p className="text-muted-foreground text-xs text-pretty">
-        {t("giveEachCornerEyeIts")}
+        {t("eyesYouLeaveAlone")}
       </p>
-      <div
-        aria-label={t("whichEye")}
-        className="grid grid-cols-3 gap-1 rounded-lg border p-1"
-        role="tablist"
+      <EyeTabs
+        marked={(eye) => Boolean(style.eyeShapes?.[eye])}
+        onChange={setPosition}
+        value={position}
       >
-        {EYE_POSITIONS.map((eye) => (
-          <button
-            aria-selected={eye === position}
-            className={cn(
-              "rounded-md px-2 py-1.5 text-xs transition-colors",
-              eye === position
-                ? "bg-foreground text-background"
-                : "text-muted-foreground hover:bg-accent/40",
-            )}
-            key={eye}
-            onClick={() => setPosition(eye)}
-            role="tab"
-            type="button"
-          >
-            {t(`positions.${eye}`)}
-            {style.eyeShapes?.[eye] && (
-              <span aria-hidden className="ml-1 opacity-70">
-                •
-              </span>
-            )}
-          </button>
-        ))}
-      </div>
-      <EyeShapeControls onChange={onChange} position={position} style={style} />
+        <EyeShapeControls
+          onChange={onChange}
+          position={position}
+          style={style}
+        />
+      </EyeTabs>
       {custom && <SameEyeShapesButton onClick={() => onChange(undefined)} />}
     </ControlSection>
   );
