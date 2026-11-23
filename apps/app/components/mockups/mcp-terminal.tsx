@@ -111,8 +111,8 @@ export function McpTerminal({ mcpUrl, className }: McpTerminalProps) {
       </div>
       <figcaption className="sr-only">
         Example chat: with the QRdx MCP server at {mcpUrl}, the assistant calls
-        generate_qr_code and replies with the QR code image and SVG, PNG, WebP
-        and EPS links.
+        generate_qr_code and replies with the QR code image and SVG, PNG, WebP,
+        TIFF and EPS links.
       </figcaption>
     </figure>
   );

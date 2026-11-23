@@ -1,0 +1,52 @@
+{
+  "timeZone": "Etc/UTC",
+  "runtimeVersion": "V8",
+  "exceptionLogging": "NONE",
+  "dependencies": {},
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/documents.currentonly",
+    "https://www.googleapis.com/auth/presentations.currentonly",
+    "https://www.googleapis.com/auth/spreadsheets.currentonly",
+    "https://www.googleapis.com/auth/script.external_request"
+  ],
+  "urlFetchWhitelist": ["https://api.qrdx.dev/v1/qr"],
+  "addOns": {
+    "common": {
+      "name": "QRdx – QR Code Generator",
+      "logoUrl": "https://qrdx.dev/web-app-manifest-192x192.png",
+      "layoutProperties": {
+        "primaryColor": "#0051ff",
+        "secondaryColor": "#0051ff"
+      },
+      "homepageTrigger": {
+        "runFunction": "onHomepage"
+      },
+      "openLinkUrlPrefixes": ["https://qrdx.dev/"],
+      "universalActions": [
+        {
+          "label": "Privacy policy",
+          "openLink": "https://qrdx.dev/legal/privacy-policy"
+        },
+        {
+          "label": "Get help",
+          "openLink": "https://qrdx.dev/docs/help/contact"
+        }
+      ]
+    },
+    "docs": {
+      "homepageTrigger": {
+        "runFunction": "onHomepage"
+      }
+    },
+    "sheets": {
+      "homepageTrigger": {
+        "runFunction": "onHomepage"
+      }
+    },
+    "slides": {
+      "homepageTrigger": {
+        "runFunction": "onHomepage"
+      }
+    }
+  }
+}

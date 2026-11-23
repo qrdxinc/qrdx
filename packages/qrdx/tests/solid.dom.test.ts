@@ -283,6 +283,7 @@ describe("qrdx/solid in the browser", () => {
         "logo API",
         "frame banner-bottom",
         "former template's frame with attributes",
+        "custom template with a frame, attributes and a logo",
         "root attributes with frame",
       ].includes(x.name)
     )) {
@@ -300,7 +301,7 @@ describe("qrdx/solid in the browser", () => {
       expect(after).toHaveLength(nodes.length);
       expect(after.every((node, index) => node === nodes[index])).toBe(true);
     }
-    expect(document.body.children.length).toBe(6);
+    expect(document.body.children.length).toBe(7);
   });
 
   it("updates a hydrated code like any other", () => {

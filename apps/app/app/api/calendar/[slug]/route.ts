@@ -10,6 +10,7 @@ import {
   toCalendarEvent,
 } from "@/lib/landing/blocks/event-schema";
 import { withoutSampleLinks } from "@/lib/landing/samples";
+import { isUnpublishedTemplate } from "@/lib/landing/template-samples";
 import { baseUrl } from "@/lib/metadata";
 import { checkPageLifecycle } from "@/lib/redirect/lifecycle";
 import { getClientIp } from "@/lib/request-guards";
@@ -60,6 +61,8 @@ export async function GET(request: NextRequest, { params }: Context) {
     const [row] = await db
       .select({
         pageId: landingPage.id,
+        pageType: landingPage.type,
+        pageVersion: landingPage.version,
         content: landingPage.content,
         domainId: qrCode.domainId,
         isActive: qrCode.isActive,
@@ -99,15 +102,22 @@ export async function GET(request: NextRequest, { params }: Context) {
 
     const parsed = parseLandingPageContent(row.content, { mode: "read" });
     // As on the page: a template's sample links (example.com tickets,
-    // hello@example.com) never reach the calendar file.
-    const block = parsed.success
-      ? withoutSampleLinks(parsed.data).blocks.find(
-          (candidate) =>
-            candidate.id === blockId &&
-            candidate.type === "event" &&
-            !candidate.hidden,
-        )
-      : undefined;
+    // hello@example.com) never reach the calendar file, and a page that was
+    // never published (still the template's sample event) has none.
+    const block =
+      parsed.success &&
+      !isUnpublishedTemplate({
+        type: row.pageType,
+        version: row.pageVersion,
+        content: parsed.data,
+      })
+        ? withoutSampleLinks(parsed.data).blocks.find(
+            (candidate) =>
+              candidate.id === blockId &&
+              candidate.type === "event" &&
+              !candidate.hidden,
+          )
+        : undefined;
     if (!block) return notFound();
 
     const props = block.props as EventProps;

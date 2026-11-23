@@ -24,6 +24,7 @@ describe("sign-up channels", () => {
       "figma-plugin",
       "canva-app",
       "raycast-extension",
+      "google-workspace-addon",
     ]) {
       expect(channel({ ref }), ref).toBe("plugin");
     }

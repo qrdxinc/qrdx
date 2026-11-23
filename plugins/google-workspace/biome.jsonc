@@ -1,0 +1,23 @@
+{
+  "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
+  "root": false,
+  "extends": "//",
+  "overrides": [
+    {
+      // Apps Script runs every file of the project in one global scope, with
+      // its services (CardService, DocumentApp…) as globals: a name from
+      // another file looks undeclared, and an entry point named only in
+      // appsscript.json looks unused. test/addon.test.mjs loads the files the
+      // same way and calls every entry point, which catches a misspelt name.
+      "includes": ["src/**/*.js"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUndeclaredVariables": "off",
+            "noUnusedVariables": "off"
+          }
+        }
+      }
+    }
+  ]
+}

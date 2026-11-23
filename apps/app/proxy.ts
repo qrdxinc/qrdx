@@ -335,6 +335,10 @@ export const config = {
     "/:prefix([iI][nN][tT][eE][gG][rR][aA][tT][iI][oO][nN][sS])/:path*",
     "/:prefix([tT][eE][mM][pP][lL][aA][tT][eE][sS])/:path*",
     "/:prefix([sS][iI][tT][eE]-[sS][tT][aA][tT][iI][cC])/:path*",
+    // The generators in the other languages (generators-i18n): each
+    // translated language's segment, then /qr-code-generator. Off, next.config
+    // redirects them to English before this runs.
+    "/:lang([eE][sS]|[pP][tT]-[bB][rR]|[fF][rR]|[dD][eE]|[iI][tT]|[jJ][aA]|[kK][oO]|[zZ][hH]-[hH][aA][nN][sS]|[iI][dD]|[hH][iI])/:prefix([qQ][rR]-[cC][oO][dD][eE]-[gG][eE][nN][eE][rR][aA][tT][oO][rR])/:path*",
     // The home group's /home: that path alone, as the site serves it
     // (/home/x stays this app's 404).
     "/:prefix([hH][oO][mM][eE])",

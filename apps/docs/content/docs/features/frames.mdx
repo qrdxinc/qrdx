@@ -156,6 +156,54 @@ Optional fields the built-in frames use (specs without them draw as before):
 
 A text label's row may also reach into the plate's padding, as long as it stays off the code and its capitals stay out of the padding at the largest text size (`fontScale` 1.5). The border frames set their label right under the code this way.
 
+### Artwork drawn in code
+
+A frame spec is fixed artwork. When the artwork has to be worked out in code, such as dots that change from link to link, write a template (`TemplateDefinition`) and pass it as `customTemplate`, with any props of its own in `customProps`. This is for the qrdx library only: the playground, the API, the MCP server and the CLI don't take templates. qrdx 0.0.64 left `customTemplate` out, so use 0.0.65 or later.
+
+The template's `wrapper` gets the drawn code as `children`, a 300 by 300 drawing, and returns the whole picture. Its second argument has the code's `fgColor` and `bgColor` with `customProps` spread over them, and the third the code's `url` and `pixelSize` (one module's width in the 300 by 300 drawing). Unlike a frame, a template draws its whole artwork at `size`, so scale the code down to leave room for yours:
+
+```tsx title="components/ring-template-code.tsx"
+import { QRCode, type TemplateDefinition } from "qrdx";
+
+const ringTemplate: TemplateDefinition<{ ringColor?: string }> = {
+  id: "ring",
+  name: "Ring",
+  wrapper: (children, props) => (
+    <svg
+      viewBox="0 0 300 300"
+      width="300"
+      height="300"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="150"
+        cy="150"
+        r="140"
+        fill="none"
+        stroke={props?.ringColor ?? props?.fgColor ?? "#000000"}
+        strokeWidth="8"
+      />
+      {/* The code at half size, centered */}
+      <g transform="translate(75, 75) scale(0.5)">{children}</g>
+    </svg>
+  ),
+};
+
+export function RingTemplateCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor="#1a56db"
+      customTemplate={ringTemplate}
+      customProps={{ ringColor: "#f59e0b" }}
+    />
+  );
+}
+```
+
+Keep the code large enough to scan and leave a light gap between it and your artwork. The [scan score](#will-it-scan) tests the code at the size the template draws it. A `frame` still goes around the template's artwork. A JSX wrapper without hooks also draws in `qrdx/core`, `qrdx/vanilla` and the other frameworks' components; where there's no JSX, write it with `h(type, props, ...children)` from the entry that draws the code. `<qrdx-code>` takes a template as its `customTemplate` property, since markup can't carry a function.
+
 ## Official frames
 
 On top of the built-in frames, QRdx has {facts.officialFrames} official frames: ready-made designs for calls to action (banners, tabs, ribbons, bubbles, hexagons, hearts, pattern borders and more), restaurants and cafes, shops and packaging, beauty and wellness, events and weddings, hotels and travel, real estate, cars and parking, health and education, sports and fitness, business and social, nonprofits and community groups, everyday objects that hold the code (tablets, laptops, mugs, parcels, bottles, billboards, map pins) and playful scenes (a TV set, a fish tank, a cat holding the code, a flying saucer). {facts.seasonalFrames} of them are for holidays and seasons, from Lunar New Year, Holi, Eid and Diwali to Hanukkah, Easter, Thanksgiving and Christmas. Each one is a frame spec with labels and colors you can change, released under CC0, and each is tested to scan at phone distances. In the [community](/community/frames) they are published by @qrdx.

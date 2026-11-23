@@ -2,6 +2,14 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## 0.0.65: customTemplate and customProps are back
+
+- **`customTemplate` and `customProps` are back**, as they worked in 0.0.63: draw your own artwork around the code, in code. 0.0.64 removed them along with the built-in templates. A template is a `TemplateDefinition` whose `wrapper` gets the drawn code (a 300 × 300 drawing), `{ fgColor, bgColor, ...customProps }` and `{ url, pixelSize }`, and returns the whole picture, drawn at `size` with the code inside it. Use one for artwork a frame can't draw, such as dots that change from link to link; fixed artwork is simpler as a frame.
+- **Everywhere they were:** the React components, `qrdx/core`, `qrdx/vanilla`, `<qrdx-code>` (as properties; `toQRdxCodeHTML` keeps `customProps` in `props` and leaves the function out), the Angular inputs and the Vue, Preact and Solid components. `QRCodeCanvas` ignores them, as before. A `frame` is drawn around the template's artwork, and the scan score tests the code at the size the template draws it.
+- **Exported again:** the types `TemplateDefinition`, `TemplateConfig`, `TemplateNode` and `BaseTemplateProps`, `qrPropsSchema`'s `customProps`, and the schemas `baseTemplatePropsSchema`, `templateConfigSchema` and `templateDefinitionBaseSchema`. `TemplateDefinition` has no `spec`, which only the built-in templates had.
+- **The built-in templates stay frames.** `templateId` is still ignored, also when `customTemplate` is set, and `TEMPLATES`, `getTemplate`, `getAllTemplates`, `getTemplateIds`, the built-in definitions and `DotRingProps` stay removed. See 0.0.64 for the frames they became.
+- `@qrdx/cli` 0.0.20 fixes its help: the Halloween example uses `--frame pumpkin` (0.0.19's `--frame halloween` was refused), `qrdx batch --format` lists every format it writes (svg, png, webp, gif, bmp, ico, tiff, tiff-cmyk or eps; the help said svg, png or eps), and `--size` names TIFF among the pixel formats. Output is unchanged.
+
 ## 0.0.64
 
 ### Templates are frames now

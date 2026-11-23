@@ -145,7 +145,7 @@ Numbers and levels that cannot be read are ignored. [Shapes, eyes and frames](/d
 
 ## Properties
 
-Each attribute is also a property, with the option's name: `qr.fgColor`, `qr.bodyPattern`, `qr.margin`. Options that are objects are properties only: gradients and image fills, `frame`, `imageSettings`, `eyeColors`, `eyeShapes`, `halo`, `shadow` and `art`. `props` takes every option at once.
+Each attribute is also a property, with the option's name: `qr.fgColor`, `qr.bodyPattern`, `qr.margin`. Options that are objects are properties only: gradients and image fills, `frame`, `imageSettings`, `eyeColors`, `eyeShapes`, `halo`, `shadow`, `art`, `customTemplate` and `customProps`. `props` takes every option at once.
 
 - An attribute or a named property wins over the same option in `props`. Between an attribute and its property, the one set last wins. Set a property to `undefined` to drop it.
 - Properties do not write attributes back.
@@ -194,7 +194,7 @@ const html = toQRdxCodeHTML(
 //   props="{…}"><template shadowrootmode="open">…</template></qrdx-code>
 ```
 
-Simple options become attributes and the rest go in `props` as JSON, so the element reads back the same options. Pass `tagName` if you registered another name.
+Simple options become attributes and the rest go in `props` as JSON, so the element reads back the same options. `customTemplate` can't be written as markup: set it as a property in the browser. Pass `tagName` if you registered another name.
 
 ## React 19
 

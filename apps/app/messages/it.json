@@ -911,7 +911,7 @@
     "crumb": "Generatori di QR code",
     "hub": {
       "metaTitle": "Tipi di QR code: {count, number} generatori gratuiti (Wi-Fi, vCard, UPI)",
-      "metaDescription": "{count, number} tipi di QR code, ognuno con un generatore gratuito: Wi-Fi, vCard, WhatsApp, UPI, email, profili social e pagamenti. Ogni pagina mostra il formato esatto del contenuto.",
+      "metaDescription": "{count, number} tipi di QR code, ognuno con un generatore gratuito: Wi-Fi, vCard, WhatsApp, UPI, email, social e pagamenti, con il formato esatto dei dati.",
       "title": "Generatori di QR code per ogni tipo di contenuto",
       "intro1": "Un QR code può fare più che aprire un sito web. A seconda del testo che contiene, uno smartphone può collegarsi a una rete Wi-Fi, salvare un contatto, avviare un pagamento o aprire una chat. Scegli uno dei {count, number} tipi qui sotto per trovare un generatore con i campi giusti, un'anteprima in tempo reale e il download in PNG, WebP o SVG.",
       "intro2": "Per impostazione predefinita, i codici creati in queste pagine sono statici: il contenuto è codificato nel disegno stesso, quindi funzionano offline, non scadono mai e non hanno limiti di scansione. Ogni pagina descrive anche il formato esatto che scrive, così sai cosa leggerà uno scanner.",
@@ -1740,6 +1740,9 @@
     "hosted": {
       "notFoundTitle": "Pagina non trovata",
       "notFoundMessage": "Questo link non porta a nessuna pagina. Il proprietario potrebbe averla rimossa, oppure il link è stato digitato in modo errato.",
+      "notReadyTitle": "Questa pagina non è ancora pronta",
+      "notReadyMessage": "Chi ha creato questo QR code sta ancora configurando la pagina che si apre. Riprova tra un po’.",
+      "notReadyOwner": "Hai creato tu questo codice? Pubblica la sua pagina in QRdx e le scansioni la apriranno.",
       "passwordProtected": "Protetta da password",
       "madeWithQrdx": "Creato con QRdx",
       "share": "Condividi",

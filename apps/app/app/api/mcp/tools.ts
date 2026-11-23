@@ -679,7 +679,7 @@ export function registerQrTools(
     {
       title: "Generate QR code",
       description:
-        "Render a QR code with the editor's style options: colors or gradients (linear, radial), dot and eye shapes, eye and dot colors, a built-in frame with its text or a custom frame spec, a logo icon or your own uploaded logo (logoFileId, needs an API key or sign-in), or a community item. Pass design_qr's qrdxStyle as style to render the same design again at another size. Returns a PNG image and public image URLs (SVG, PNG and lossless WebP for embedding in Markdown or HTML, plus a vector EPS for print); set include_svg to also get the SVG markup. No scan check: use design_qr for that.",
+        "Render a QR code with the editor's style options: colors or gradients (linear, radial), dot and eye shapes, eye and dot colors, a built-in frame with its text or a custom frame spec, a logo icon or your own uploaded logo (logoFileId, needs an API key or sign-in), or a community item. Pass design_qr's qrdxStyle as style to render the same design again at another size. Returns a PNG image and public image URLs (SVG, PNG and lossless WebP for embedding in Markdown or HTML, plus a 300 dpi TIFF, RGB or CMYK, and a vector EPS for print); set include_svg to also get the SVG markup. No scan check: use design_qr for that.",
       inputSchema: generateInput,
       annotations: { ...readOnly, title: "Generate QR code" },
       _meta: QR_CARD_TOOL_META,

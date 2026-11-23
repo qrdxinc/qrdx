@@ -5099,6 +5099,18 @@
     "source": "e3751b57a096",
     "status": "machine"
   },
+  "scanPages.hosted.notReadyTitle": {
+    "source": "99911333cb22",
+    "status": "machine"
+  },
+  "scanPages.hosted.notReadyMessage": {
+    "source": "643d5f0fbdfe",
+    "status": "machine"
+  },
+  "scanPages.hosted.notReadyOwner": {
+    "source": "7425f2eff611",
+    "status": "machine"
+  },
   "scanPages.hosted.passwordProtected": {
     "source": "fa874efb3140",
     "status": "machine"

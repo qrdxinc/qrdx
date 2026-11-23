@@ -1,6 +1,6 @@
 # qrdx
 
-Customizable QR codes for React and plain JavaScript: SVG and canvas rendering, dot and eye patterns, gradients, logos, call-to-action frames, Logo QR and Image QR art, PNG/JPG/WebP/SVG/PDF/EPS export, print-ready files, a scan score and QR scanning.
+Customizable QR codes for React and plain JavaScript: SVG and canvas rendering, dot and eye patterns, gradients, logos, call-to-action frames, Logo QR and Image QR art, PNG/JPG/WebP/SVG/PDF/EPS/TIFF export, print-ready files, a scan score and QR scanning.
 
 It powers the [QRdx](https://qrdx.dev) QR code generator. Docs: [qrdx.dev/docs](https://qrdx.dev/docs) · CLI: [`@qrdx/cli`](https://www.npmjs.com/package/@qrdx/cli) · No-code: [image API](https://qrdx.dev/docs/developers/image-api) and [MCP server](https://qrdx.dev/docs/developers/mcp)
 
@@ -74,6 +74,8 @@ import { QRCodeSVG } from "qrdx";
 | `cornerEyeDotPattern` | `CornerEyeDotPattern` | `"circle"` | Shape of the corner eye dots |
 | `margin` | `number` | `0` | Quiet zone in modules. The QR spec recommends 4 when the code sits on a busy or dark background |
 | `imageSettings` | `ImageSettings` | — | Center image; see below |
+| `customTemplate` | `TemplateDefinition` | — | Your own artwork around the code, drawn in code; see [Custom templates](#custom-templates) |
+| `customProps` | `Record<string, any>` | — | Extra props passed to the template wrapper |
 | `isOGContext` | `boolean` | `false` | Render the logo as an absolutely positioned `<img>` for OG image renderers |
 | `frame` | `QRFrame` | — | "Scan me" style frame; see [Frames](#frames-call-to-action) |
 | `art` | `QRArt` | — | Blend a logo or photo into the modules; see [Art QR](#art-qr-logo-qr-and-image-qr) |
@@ -93,7 +95,7 @@ import { QRCode } from "qrdx";
 <QRCode value="https://example.com" size={256} logo="https://example.com/logo.png" level="H" />;
 ```
 
-It accepts the `QRCodeSVG` styling props above (`value`, `size`, `level`, colors, patterns, `margin`, `frame`, `style`), forwards any other prop (`className`, `aria-label`, `role`, `data-*`…) to the root `<svg>` like `QRCodeSVG`, and adds:
+It accepts the `QRCodeSVG` styling props above (`value`, `size`, `level`, colors, patterns, `margin`, `frame`, `customTemplate`, `customProps`, `style`), forwards any other prop (`className`, `aria-label`, `role`, `data-*`…) to the root `<svg>` like `QRCodeSVG`, and adds:
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -106,7 +108,7 @@ The logo is drawn at 25% of the code's width with the modules behind it excavate
 
 ### `QRCodeCanvas`
 
-Renders to a `<canvas>` (device-pixel-ratio aware). It draws plain square modules with solid colors only — gradients fall back to their first stop, and the pattern, eye/dot color, `eyeColors`, `eyeShapes`, `moduleScale`, `halo` and `shadow` are ignored (`bgRadius` and `backdrop` are drawn). Use `QRCodeSVG` for styled codes.
+Renders to a `<canvas>` (device-pixel-ratio aware). It draws plain square modules with solid colors only — gradients fall back to their first stop, and the pattern, eye/dot color, `eyeColors`, `eyeShapes`, `moduleScale`, `halo`, `shadow` and template props are ignored (`bgRadius` and `backdrop` are drawn). Use `QRCodeSVG` for styled codes.
 
 ```tsx
 "use client";
@@ -226,7 +228,7 @@ const { download } = useQRCode(() => ({ value: url.value, size: 256 }));
 - When a prop changes, Vue updates the `<svg>` in place.
 - Both components render on the server with `vue/server-renderer` and hydrate without a mismatch. In Nuxt they work in server-rendered pages and inside `<ClientOnly>`.
 - `useQRCode(props)` takes `QRCode`'s props as an object, a ref, a reactive object or a getter. It returns `svg` (the markup as a computed ref, which works in SSR too), `options`, `toDataURL(format, { size, quality })` and `download({ format, filename, size, quality })`.
-- Everything in `qrdx/core` is re-exported. Its `h` is the core's, not Vue's.
+- Everything in `qrdx/core` is re-exported. Its `h`, for custom templates, is the core's, not Vue's.
 
 ## Web component (`qrdx/element`)
 
@@ -253,7 +255,7 @@ await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico"
 await qr.download({ format: "svg", filename: "menu.svg" });
 ```
 
-- **Attributes:** `value`, `size`, `level`, `fg-color`, `bg-color`, `eye-color`, `dot-color`, `body-pattern`, `corner-eye-pattern`, `corner-eye-dot-pattern`, `margin`, `module-scale`, `auto-level`, `exact-level`, `shape`, `label`, and `props` (any other option as JSON). Each is also a property with the option's name (`qr.bodyPattern`). Object options (`frame`, gradients, `imageSettings`, `eyeColors`, `art`) are properties only.
+- **Attributes:** `value`, `size`, `level`, `fg-color`, `bg-color`, `eye-color`, `dot-color`, `body-pattern`, `corner-eye-pattern`, `corner-eye-dot-pattern`, `margin`, `module-scale`, `auto-level`, `exact-level`, `shape`, `label`, and `props` (any other option as JSON). Each is also a property with the option's name (`qr.bodyPattern`). Object options (`frame`, gradients, `imageSettings`, `eyeColors`, `art`, `customTemplate`, `customProps`) are properties only.
 - **Updates** are batched: however many changes you make in a row, the code is redrawn once, in a microtask, and only if its markup changed. Properties set before the element is defined are picked up when it is.
 - **Shadow DOM:** the code is drawn in an open shadow root, so page CSS can't restyle its paths by accident. Style it from outside with `qrdx-code::part(svg)`.
 - **Accessibility:** the `<svg>` has `role="img"` and an `aria-label` from `label`, or "QR code". It never falls back to the value, which can hold a Wi-Fi password or contact details.
@@ -394,6 +396,33 @@ Gradients need at least 2 stops; `offset` is a percentage (0–100).
 ```
 
 SVG draws an image fill as a `<pattern>`, and PDF embeds the picture once. EPS refuses image fills: `getQRAsEPS` throws `EPS_IMAGE_FILL_REASON`, and `hasImageFill(props)` tells you beforehand. The contrast check judges a picture by its lightest and darkest tones and asks more of it (`SCAN_IMAGE_CONTRAST_MIN`), since its detail reads as noise.
+
+## Custom templates
+
+A custom template draws your own artwork around the code, in code: for what a frame can't hold, such as dots that change from link to link. It wraps the QR content (a 300×300 SVG) in your own SVG, drawn at `size`:
+
+```tsx
+import { QRCodeSVG, type TemplateDefinition } from "qrdx";
+
+const Framed: TemplateDefinition<{ label?: string }> = {
+  id: "Framed",
+  name: "Framed",
+  wrapper: (children, props) => (
+    <svg viewBox="0 0 300 340" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(20, 20) scale(0.87)">{children}</g>
+      <text x="150" y="325" textAnchor="middle" fill={props?.fgColor}>
+        {props?.label}
+      </text>
+    </svg>
+  ),
+};
+
+<QRCodeSVG value="https://example.com" customTemplate={Framed} customProps={{ label: "Scan me" }} />;
+```
+
+The wrapper's `props` are the code's `fgColor` and `bgColor` with `customProps` spread over them, and its third argument is `{ url, pixelSize }` (`TemplateConfig`): the code's value and one module's width in the 300×300 drawing. A wrapper gets React elements and returns them when a React component draws the code. With `qrdx/core` or `qrdx/vanilla` it gets the core's plain nodes instead, and a wrapper written with JSX still works as long as it uses no hooks. `h(type, props, ...children)` writes a wrapper without JSX that works in both; import it from the entry that draws the code (`qrdx` for the React components).
+
+`customTemplate` and `customProps` need 0.0.65 or later: 0.0.64 left them out when the built-in templates (`templateId`) became frames. `templateId="Arrow"` is now `frame={{ style: "arrow" }}`, and a `templateId` still passed is ignored.
 
 ## Frames (call to action)
 

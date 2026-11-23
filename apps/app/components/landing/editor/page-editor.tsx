@@ -79,9 +79,11 @@ import {
 import { LandingRender } from "../render";
 import { AddBlockMenu } from "./add-block-menu";
 import { BrandingSection } from "./branding-section";
+import { LeaveGuard } from "./leave-guard";
 import { PagePlanNote } from "./page-plan-line";
 import { PageSettingsEditor } from "./page-settings-editor";
 import { type SavedThemePalette, ThemeControls } from "./theme-controls";
+import { UnpublishedBar } from "./unpublished-bar";
 
 export interface PageEditorProps {
   page: {
@@ -123,6 +125,12 @@ export interface PageEditorProps {
    * (lib/landing/template-samples.ts): unchanged, it's marked as a sample.
    */
   sampleTexts?: string[];
+  /**
+   * Never published: still its template exactly as it was made
+   * (lib/landing/template-samples.ts isUnpublishedTemplate), so scans get
+   * "This page isn't ready yet" until the first publish.
+   */
+  neverPublished?: boolean;
 }
 
 export interface PageEditorSwitch {
@@ -260,6 +268,7 @@ export function PageEditor({
   readOnly = false,
   switchCode,
   sampleTexts,
+  neverPublished = false,
 }: PageEditorProps) {
   const inWorkspace = useWorkspaceHref();
   const router = useRouter();
@@ -283,6 +292,8 @@ export function PageEditor({
   const listRef = useRef<HTMLDivElement>(null);
 
   const dirty = snapshot(title, content) !== published;
+  // Publishing (a new version) ends it, even with the template unchanged.
+  const awaitingFirstPublish = neverPublished && version === page.version;
   // Custom CSS (ee/white-label): the preview's styles, and its problem among
   // the page settings' issues.
   const previewCss = usePreviewCss(
@@ -560,14 +571,25 @@ export function PageEditor({
     const onKey = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
-        if (!readOnly && (dirty || switchCode) && !isPublishing) {
+        if (
+          !readOnly &&
+          (dirty || switchCode || awaitingFirstPublish) &&
+          !isPublishing
+        ) {
           requestPublish();
         }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [dirty, isPublishing, requestPublish, readOnly, switchCode]);
+  }, [
+    dirty,
+    isPublishing,
+    requestPublish,
+    readOnly,
+    switchCode,
+    awaitingFirstPublish,
+  ]);
 
   const editorContext: BlockEditorContext = {
     theme: content.theme,
@@ -757,7 +779,7 @@ export function PageEditor({
             aria-live="polite"
             className="text-muted-foreground hidden text-xs whitespace-nowrap sm:inline"
           >
-            {switchCode
+            {switchCode || awaitingFirstPublish
               ? "Not published yet"
               : dirty
                 ? "Unpublished changes"
@@ -767,7 +789,9 @@ export function PageEditor({
         <div className="flex flex-wrap items-center gap-2">
           {codeLinks}
           <Button
-            disabled={(!dirty && !switchCode) || isPublishing}
+            disabled={
+              !(dirty || switchCode || awaitingFirstPublish) || isPublishing
+            }
             onClick={requestPublish}
             size="sm"
             title="Publish (⌘S)"
@@ -778,7 +802,7 @@ export function PageEditor({
         </div>
       </div>
 
-      {!(readOnly || switchCode || dirty) && (
+      {!(readOnly || switchCode || dirty || awaitingFirstPublish) && (
         <PagePlanNote variant="published" />
       )}
       {switchCode && (
@@ -1168,6 +1192,27 @@ export function PageEditor({
           </div>
         </div>
       </div>
+
+      {/* Unpublished changes: said wherever the editor is scrolled, and
+          asked about before a link leaves it (uploads aren't live until
+          they're published). */}
+      <UnpublishedBar
+        detail={
+          switchCode
+            ? `Scans still open ${switchCode.opensNow} until you publish.`
+            : awaitingFirstPublish
+              ? code
+                ? "Until you publish, scans show “This page isn't ready yet”."
+                : "Publish to put your content on this page."
+              : code
+                ? "Scans open the last published version until you publish."
+                : "Your changes are kept in this browser until you publish."
+        }
+        onPublish={requestPublish}
+        open={dirty || Boolean(switchCode) || awaitingFirstPublish}
+        publishing={isPublishing}
+      />
+      <LeaveGuard active={dirty && !isPublishing} />
 
       {/* Publishing with samples: say what's left, never block. */}
       <AlertDialog onOpenChange={setSamplesCheck} open={samplesCheck}>
