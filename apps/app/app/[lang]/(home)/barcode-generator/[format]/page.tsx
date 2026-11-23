@@ -179,7 +179,10 @@ export default async function BarcodeFormatPage({ params }: PageProps) {
 
   const style = defaultBarcodeStyle(id);
   const size = DOWNLOAD_SIZES_MM[id];
-  const moduleMm = mm(MODULE_UNITS[id] * MM_PER_UNIT);
+  // MaxiCode's vector downloads are scaled to its fixed size (vectorScale).
+  const moduleMm = mm(
+    MODULE_UNITS[id] * MM_PER_UNIT * (getBarcodeFormat(id).vectorScale ?? 1),
+  );
   const api = `${apiBaseUrl(baseUrl)}/barcode?format=${id}&data=${encodeURIComponent(value)}`;
 
   const others = await localizeContent(

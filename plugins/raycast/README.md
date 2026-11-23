@@ -7,7 +7,7 @@ A [Raycast](https://www.raycast.com) extension that makes styled QR codes, built
 - **Generate QR with AI:** describe the code you want and Raycast AI fills in the settings. This command and the AI tools in `ai.yaml` need access to Raycast AI.
 - **Open in QRdx Playground** (⌘O) opens the full editor at qrdx.dev with the code's web address. Other content, colors and patterns stay in Raycast.
 
-It depends on `qrdx` 0.0.60 from npm and offers every body pattern, eye frame, eye centre and template that version offers, taken from `qrdx` itself, so updating `qrdx` brings its new shapes along.
+It depends on `qrdx` 0.0.60 from npm and offers every body pattern, eye frame, eye center and template that version offers, taken from `qrdx` itself, so updating `qrdx` brings its new shapes along.
 
 ## Install from source
 
@@ -18,7 +18,13 @@ bun install
 bun run --filter qrdx-raycast dev     # ray develop: loads the extension into Raycast
 ```
 
-The commands then show up in Raycast's root search. `bun run --filter qrdx-raycast build` builds the extension without opening Raycast, and `bun run --filter qrdx-raycast lint` runs Raycast's linter.
+The commands then show up in Raycast's root search. `bun run --filter qrdx-raycast build` builds the extension without opening Raycast, and `bun run --filter qrdx-raycast lint` runs Raycast's linter (ESLint and Prettier).
+
+## Publishing to the Raycast Store
+
+The Raycast Store builds the extension with npm, so this folder keeps a `package-lock.json` beside `package.json`. npm can't run inside this repository, so after changing a dependency, rewrite the lockfile from the root with `bun run raycast:lock` (it resolves the extension in a temporary folder). A repository test fails while the lockfile and `package.json` disagree.
+
+Store screenshots go in `metadata/` (2000 × 1250 PNG, up to six; Raycast's Window Capture can save them there). Then `bun run raycast:publish` from the root opens the pull request to `raycast/extensions`.
 
 See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
 

@@ -10,6 +10,7 @@ import {
   Clipboard,
   confirmAlert,
   Icon,
+  Keyboard,
   List,
   showHUD,
   showToast,
@@ -137,7 +138,7 @@ function SavedQRActions({
         />
         <Action.Push
           icon={Icon.Pencil}
-          shortcut={{ modifiers: ["cmd"], key: "e" }}
+          shortcut={Keyboard.Shortcut.Common.Edit}
           target={
             <QRForm
               initialSettings={saved.settings}
@@ -162,7 +163,7 @@ function SavedQRActions({
         <Action
           icon={Icon.Clipboard}
           onAction={copySVG}
-          shortcut={{ modifiers: ["cmd", "shift"], key: "c" }}
+          shortcut={Keyboard.Shortcut.Common.Copy}
           title="Copy SVG to Clipboard"
         />
       </ActionPanel.Section>
@@ -170,20 +171,20 @@ function SavedQRActions({
         <Action
           icon={Icon.Download}
           onAction={savePNG}
-          shortcut={{ modifiers: ["cmd"], key: "s" }}
+          shortcut={Keyboard.Shortcut.Common.Save}
           title="Save PNG to Downloads"
         />
         <Action
           icon={Icon.Download}
           onAction={saveSVG}
-          shortcut={{ modifiers: ["cmd", "shift"], key: "s" }}
+          shortcut={Keyboard.Shortcut.Common.Duplicate}
           title="Save SVG to Downloads"
         />
       </ActionPanel.Section>
       <ActionPanel.Section title="QRdx">
         <Action.OpenInBrowser
           icon={Icon.Globe}
-          shortcut={{ modifiers: ["cmd"], key: "o" }}
+          shortcut={Keyboard.Shortcut.Common.Open}
           title="Open in QRdx Playground"
           url={playgroundLink(saved.url)}
         />
