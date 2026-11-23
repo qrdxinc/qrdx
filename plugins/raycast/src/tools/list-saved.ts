@@ -1,5 +1,19 @@
+import { getFrameText } from "qrdx";
+import { buildFrame, frameName } from "../frames";
 import { loadSavedQRs } from "../storage";
-import { toLabel } from "../types";
+import { type Settings, templateName, toLabel } from "../types";
+
+/** A saved code's frame and its label, or the template it was saved with. */
+function frameParts(settings: Settings): string[] {
+  const frame = buildFrame(settings);
+  if (frame) {
+    const label = getFrameText(frame);
+    return [`Frame: ${frameName(frame.style)}${label ? ` ("${label}")` : ""}`];
+  }
+  return settings.templateId
+    ? [`Template: ${templateName(settings.templateId)}`]
+    : [];
+}
 
 /**
  * List all saved QR code configurations from the qrdx library.
@@ -33,9 +47,7 @@ export default async function listSaved(input: Input): Promise<string> {
       `**${q.name}**`,
       `URL: ${q.url}`,
       `Body: ${toLabel(q.settings.bodyPattern)}`,
-      ...(q.settings.templateId
-        ? [`Template: ${toLabel(q.settings.templateId)}`]
-        : []),
+      ...frameParts(q.settings),
       ...(q.settings.fgColor === "#000000"
         ? []
         : [`Color: ${q.settings.fgColor}`]),
