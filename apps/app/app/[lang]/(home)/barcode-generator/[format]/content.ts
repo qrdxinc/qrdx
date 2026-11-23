@@ -58,6 +58,7 @@ export const DOWNLOAD_SIZES_MM: Record<
   pdf417: { width: 43.7, height: 8.8 },
   aztec: { width: 19, height: 19 },
   rmqr: { width: 44.4, height: 7.8 },
+  maxicode: { width: 31.9, height: 30.6 },
   dotcode: { width: 25.5, height: 19.1 },
 };
 
@@ -957,6 +958,54 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
         question: "Can this page check that it scans?",
         answer:
           "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports rMQR, and tells you whether it reads back your text.",
+      },
+    ],
+  },
+  {
+    id: "maxicode",
+    slug: "maxicode",
+    title: "Free MaxiCode Generator",
+    metaDescription:
+      "Make a MaxiCode, the fixed-size 2D code UPS sorts parcels by, as a carrier message (modes 2 and 3) or text (mode 4). SVG, PDF and PNG. Free.",
+    intro:
+      "MaxiCode is the fixed-size 2D code with a bullseye in the middle that UPS prints on parcel labels, so sorting machines can read where a parcel goes at speed. Type a carrier message or any text, check that it scans and download it.",
+    usedFor: [
+      "UPS parcel labels: the code carries the destination postcode, country and service class where a sorter expects them, followed by the shipment details.",
+      "The layout of a real shipping label and what goes in the rest of the message are set by UPS. Use their label guide for parcels you ship; the example here is a sample, not a shipment.",
+    ],
+    numbers: {
+      title: "Carrier message or text?",
+      paragraphs: [
+        "A carrier message starts with the postcode, the 3-digit ISO country code (840 for the US) and the 3-digit service class, separated by GS characters. Type them as <GS>: 152382802<GS>840<GS>001<GS>then the rest. A message starting with the [)><RS>01<GS>96 header works too.",
+        "An all-digit postcode of up to 9 digits makes it mode 2 (US ZIP Codes); up to 6 capital letters, digits and spaces make it mode 3 (other countries). Anything else is drawn as text, mode 4.",
+      ],
+    },
+    rules: [
+      "Latin-1 characters only: letters, digits, symbols and Western European accents.",
+      "As text it holds up to 93 capital letters or 138 digits, fewer with lowercase or symbols. A carrier message leaves about 84 characters after the postcode, country and service class.",
+      "A 5-digit ZIP Code is drawn with 0000 for the +4, and a mode 3 postcode is padded with spaces to 6 characters; readers return them that way.",
+      "Every MaxiCode is the same size: 33 rows of 30 hexagons around the bullseye. More data doesn't make it bigger, so there's a limit instead.",
+    ],
+    sizing: [
+      "The vector downloads are MaxiCode's nominal size, about 28.1 × 26.9 mm without the quiet zone. Print it at that size: readers look for a symbol of that size.",
+      "The generator starts with 2 modules of blank space all round; MaxiCode needs at least 1.",
+      "Image size starts at 4×: below that, the hexagons are rounded to whole pixels and lose their shape.",
+    ],
+    faqs: [
+      {
+        question: "Can this page check that it scans?",
+        answer:
+          "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports MaxiCode, and tells you whether it reads back your message.",
+      },
+      {
+        question: "Which modes does it make?",
+        answer:
+          "Modes 2 and 3 for carrier messages and mode 4 for text. Mode 5 (text with stronger error correction) and mode 6 (reader programming) aren't offered.",
+      },
+      {
+        question: "MaxiCode or a QR code?",
+        answer:
+          "MaxiCode where a carrier's system asks for it, as UPS's does. For anything people scan with a phone, a QR code.",
       },
     ],
   },

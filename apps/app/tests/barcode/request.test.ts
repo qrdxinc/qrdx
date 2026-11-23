@@ -39,6 +39,8 @@ describe("parseBarcodeFormat", () => {
     expect(parseBarcodeFormat("rMQR")).toBe("rmqr");
     expect(parseBarcodeFormat("rMQR Code")).toBe("rmqr");
     expect(parseBarcodeFormat("Rectangular Micro QR")).toBe("rmqr");
+    expect(parseBarcodeFormat("MaxiCode")).toBe("maxicode");
+    expect(parseBarcodeFormat("UPS MaxiCode")).toBe("maxicode");
     expect(parseBarcodeFormat("Codabar")).toBe("codabar");
     expect(parseBarcodeFormat("ISBN-13")).toBe("isbn");
     expect(parseBarcodeFormat("isbn10")).toBe("isbn");

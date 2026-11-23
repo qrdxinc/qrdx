@@ -11,6 +11,7 @@ import {
   GS1_128_MAX_DATA,
   gs1CheckDigit,
   isScanCheckable,
+  maxicodeMessage,
   publicationEan13,
   splitBarcodeValue,
   validateBarcodeInput,
@@ -52,6 +53,7 @@ describe("BARCODE_FORMATS", () => {
       "PDF417",
       "Aztec",
       "rMQR",
+      "MaxiCode",
       "DotCode",
     ]);
     for (const format of BARCODE_FORMATS) {
@@ -440,6 +442,126 @@ describe("2D formats", () => {
     // refused when it's drawn (render.test.ts).
     expect(error("rmqr", "1".repeat(362))).toBe(
       "rMQR here takes up to 361 characters; this has 362.",
+    );
+  });
+});
+
+describe("MaxiCode", () => {
+  const CARRIER = "152382802<GS>840<GS>001<GS>QRDX SAMPLE PARCEL";
+
+  it("draws a carrier message with a numeric postcode as mode 2", () => {
+    const result = ok("maxicode", CARRIER);
+    expect(result.value).toBe(CARRIER);
+    expect(result.note).toBe(
+      "Carrier message (mode 2): postcode 152382802, country 840, service class 001.",
+    );
+    expect(maxicodeMessage(CARRIER)).toMatchObject({
+      mode: 2,
+      text: "152382802\x1d840\x1d001\x1dQRDX SAMPLE PARCEL",
+    });
+  });
+
+  it("takes the separators typed in any case, or as the characters", () => {
+    expect(ok("maxicode", "152382802<gs>840<Gs>001<GS>X").value).toBe(
+      "152382802<GS>840<GS>001<GS>X",
+    );
+    expect(ok("maxicode", "152382802\x1d840\x1d001\x1dX").value).toBe(
+      "152382802<GS>840<GS>001<GS>X",
+    );
+  });
+
+  it("draws other postcodes as mode 3, and the [)> header as a carrier message", () => {
+    expect(maxicodeMessage("B1050<GS>056<GS>999<GS>X").mode).toBe(3);
+    expect(ok("maxicode", "B1 05<GS>056<GS>999<GS>X").note).toMatch(
+      /^Carrier message \(mode 3\): postcode B1 05,/,
+    );
+    const header =
+      "[)><RS>01<GS>96152382802<GS>840<GS>001<GS>1Z00004951<GS>UPSN<RS><EOT>";
+    expect(maxicodeMessage(header).mode).toBe(2);
+    expect(ok("maxicode", header).value).toBe(header);
+  });
+
+  it("says a 5-digit ZIP Code is padded with 0000", () => {
+    expect(ok("maxicode", "15238<GS>840<GS>001<GS>X").note).toBe(
+      "Carrier message (mode 2): postcode 15238, country 840, service class 001. A 5-digit ZIP Code is drawn as 15238 with 0000 for the +4, and readers return it that way.",
+    );
+  });
+
+  it("draws anything else as text (mode 4), Latin-1 included", () => {
+    expect(maxicodeMessage("Caf\u00e9 cr\u00e8me 42").mode).toBe(4);
+    expect(ok("maxicode", "Caf\u00e9 cr\u00e8me 42").note).toBeUndefined();
+    // Fewer than four fields isn't a carrier message.
+    expect(maxicodeMessage("A<GS>B<GS>C").mode).toBe(4);
+  });
+
+  it("names what's wrong in a carrier message", () => {
+    expect(error("maxicode", "b1050<GS>056<GS>999<GS>X")).toMatch(
+      /starts with the postcode: up to 9 digits/,
+    );
+    expect(error("maxicode", "ABCDEFG<GS>056<GS>999<GS>X")).toMatch(
+      /starts with the postcode/,
+    );
+    expect(error("maxicode", "15238<GS>84<GS>001<GS>X")).toBe(
+      'After the postcode comes the 3-digit ISO country code (840 for the US); this is "84".',
+    );
+    expect(error("maxicode", "15238<GS>840<GS>01<GS>X")).toBe(
+      'After the country code comes the 3-digit service class; this is "01".',
+    );
+  });
+
+  it("refuses characters outside Latin-1", () => {
+    expect(error("maxicode", "h\u00e9llo \u2713")).toBe(
+      "MaxiCode holds Latin-1 characters: letters, digits, symbols and Western European accents. Not allowed: \u2713",
+    );
+  });
+
+  it("matches what readers return: <GS>, control pictures and padded postcodes", () => {
+    const GS = "\x1d";
+    expect(
+      decodedMatches(
+        "maxicode",
+        CARRIER,
+        `152382802<GS>840<GS>001<GS>QRDX SAMPLE PARCEL`,
+      ),
+    ).toBe(true);
+    expect(
+      decodedMatches(
+        "maxicode",
+        CARRIER,
+        `152382802${GS}840${GS}001${GS}QRDX SAMPLE PARCEL`,
+      ),
+    ).toBe(true);
+    expect(
+      decodedMatches(
+        "maxicode",
+        "15238<GS>840<GS>001<GS>X",
+        "152380000<GS>840<GS>001<GS>X",
+      ),
+    ).toBe(true);
+    expect(
+      decodedMatches(
+        "maxicode",
+        "15238<GS>840<GS>001<GS>X",
+        "15238<GS>840<GS>001<GS>X",
+      ),
+    ).toBe(false);
+    expect(
+      decodedMatches(
+        "maxicode",
+        "B1050<GS>056<GS>999<GS>X",
+        "B1050 <GS>056<GS>999<GS>X",
+      ),
+    ).toBe(true);
+    expect(
+      decodedMatches(
+        "maxicode",
+        "[)><RS>01<GS>96152382802<GS>840<GS>001<GS>A B<RS><EOT>",
+        "[)>\u241e01\u241d96152382802\u241d840\u241d001\u241dA\u2420B\u241e\u2404",
+      ),
+    ).toBe(true);
+    expect(decodedMatches("maxicode", "Caf\u00e9", "Caf\u00e9")).toBe(true);
+    expect(decodedMatches("maxicode", "Caf\u00e9", "Caf\u00c3\u00a9")).toBe(
+      false,
     );
   });
 });

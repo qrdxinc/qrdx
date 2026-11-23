@@ -1143,7 +1143,11 @@ export function BarcodePreview({
             height: Math.round(rendered.height),
             widthMm: mm(rendered.widthUnits),
             heightMm: mm(rendered.heightUnits),
-            moduleMm: mm(renderer.MODULE_UNITS[formatId], 2),
+            moduleMm: mm(
+              renderer.MODULE_UNITS[formatId] *
+                (getBarcodeFormat(formatId).vectorScale ?? 1),
+              2,
+            ),
           })}
         </p>
       )}

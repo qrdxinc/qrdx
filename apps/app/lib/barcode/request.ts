@@ -41,6 +41,7 @@ const FORMAT_ALIASES = new Map<string, BarcodeFormatId>([
   ["rmqrcode", "rmqr"],
   ["rectangularmicroqr", "rmqr"],
   ["rectangularmicroqrcode", "rmqr"],
+  ["upsmaxicode", "maxicode"],
   ["gs1128", "gs1-128"],
   ["ucc128", "gs1-128"],
   ["ean128", "gs1-128"],
@@ -113,7 +114,7 @@ export const barcodeImageQuerySchema = z.object({
     .max(BARCODE_LIMITS.scale.max)
     .optional()
     .describe(
-      "Pixels per module in raster images (1-10, default 4; 2-10 for Intelligent Mail and DotCode)",
+      "Pixels per module in raster images (1-10, default 4; 2-10 for Intelligent Mail and DotCode, 4-10 for MaxiCode)",
     ),
   height: z.coerce
     .number()

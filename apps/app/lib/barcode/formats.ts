@@ -32,6 +32,7 @@ export type BarcodeFormatId =
   | "pdf417"
   | "aztec"
   | "rmqr"
+  | "maxicode"
   | "dotcode";
 
 export interface BarcodeFormat {
@@ -66,6 +67,12 @@ export interface BarcodeFormat {
    * checked with didn't read.
    */
   minScale?: number;
+  /**
+   * The vector downloads' size against one point per drawing unit, for a
+   * symbology with a fixed physical size: MaxiCode is 28.14 mm wide, and
+   * bwip-js draws it 36.9 mm wide at one point per unit.
+   */
+  vectorScale?: number;
   /** Longest input the field takes, in characters */
   maxLength: number;
   /**
@@ -365,6 +372,26 @@ export const BARCODE_FORMATS: readonly BarcodeFormat[] = [
     detectorFormats: ["rm_qr_code"],
   },
   {
+    id: "maxicode",
+    label: "MaxiCode",
+    kind: "2d",
+    summary: "UPS's fixed-size 2D code for sorting parcels",
+    example: "152382802<GS>840<GS>001<GS>QRDX SAMPLE PARCEL",
+    inputHint:
+      "A UPS carrier message, postcode<GS>country<GS>service class<GS>then the rest, or any text. Type <GS> between fields. Latin-1 characters only: up to 93 capital letters or 138 digits.",
+    // One module (a hexagon's width) all round; MaxiCode's bullseye finds
+    // it, so it needs little.
+    quietZone: { min: 1, default: 2 },
+    // bwip-js rounds the hexagons to whole pixels, which squashes them below
+    // 4 pixels a unit (draw.ts).
+    minScale: 4,
+    // 28.14 mm (MaxiCode's nominal width) over the 36.9 mm bwip-js draws.
+    vectorScale: 0.7626,
+    // <GS> takes four characters to type; the drawing reports what fits.
+    maxLength: 400,
+    detectorFormats: ["maxi_code"],
+  },
+  {
     id: "dotcode",
     label: "DotCode",
     kind: "2d",
@@ -440,6 +467,12 @@ export const BARCODE_ISSUE_CODES = [
   "gs1TooLong",
   "databarGtinOnly",
   "databarTooLong",
+  "maxicodeChars",
+  "maxicodePostcode",
+  "maxicodeCountry",
+  "maxicodeService",
+  "maxicodeCarrier",
+  "maxicodeZipPadded",
   "imbEnter",
   "imbTrackingLength",
   "imbRoutingLength",
@@ -570,6 +603,18 @@ export function barcodeIssueText(issue: BarcodeIssue): string {
       return "GS1 DataBar holds only a GTIN: (01) and its 14 digits. For dates, a batch or a weight, use GS1 DataBar Expanded or GS1-128.";
     case "databarTooLong":
       return `GS1 DataBar Expanded holds up to ${v.max} digits of AIs and data, and fewer when there are letters; this has ${v.count} characters. Remove an AI or shorten a value.`;
+    case "maxicodeChars":
+      return `MaxiCode holds Latin-1 characters: letters, digits, symbols and Western European accents. Not allowed: ${englishChars(issue.chars)}`;
+    case "maxicodePostcode":
+      return "A carrier message starts with the postcode: up to 9 digits (a US ZIP Code), or up to 6 capital letters, digits and spaces elsewhere.";
+    case "maxicodeCountry":
+      return `After the postcode comes the 3-digit ISO country code (840 for the US); this is "${v.country}".`;
+    case "maxicodeService":
+      return `After the country code comes the 3-digit service class; this is "${v.service}".`;
+    case "maxicodeCarrier":
+      return `Carrier message (mode ${v.mode}): postcode ${v.postcode}, country ${v.country}, service class ${v.service}.`;
+    case "maxicodeZipPadded":
+      return `A 5-digit ZIP Code is drawn as ${v.zip} with 0000 for the +4, and readers return it that way.`;
     case "imbEnter":
       return "Enter the 20-digit tracking code, then the routing ZIP Code if there is one.";
     case "imbTrackingLength":
@@ -820,6 +865,115 @@ function textInput(
     return fail({ code: allowed.code, chars: offending(raw, allowed.chars) });
   }
   return done(raw);
+}
+
+/** MaxiCode's separators as typed (any case) and the characters they stand for. */
+const MAXICODE_TOKENS: Record<string, string> = {
+  // GS (0x1D) is declared further down, so spelled out here.
+  GS: "\x1d",
+  RS: "\x1e",
+  EOT: "\x04",
+};
+const MAXICODE_TOKEN = /<(GS|RS|EOT)>/gi;
+/** The "[)>" RS "01" GS a UPS message may start with, before 2 digits. */
+const MAXICODE_HEADER = "[)>\x1e01\x1d";
+/** One character MaxiCode holds: Latin-1, U+0000 to U+00FF. */
+const LATIN1 = /^[^\u{100}-\u{10FFFF}]$/u;
+
+/** The header and its 2-digit year at the start of `text`, or "". */
+function maxicodeHeader(text: string): string {
+  const end = MAXICODE_HEADER.length + 2;
+  return text.startsWith(MAXICODE_HEADER) &&
+    /^\d{2}$/.test(text.slice(MAXICODE_HEADER.length, end))
+    ? text.slice(0, end)
+    : "";
+}
+
+/** `<GS>`, `<RS>` and `<EOT>` as the control characters they stand for. */
+export function maxicodeControls(text: string): string {
+  return text.replace(
+    MAXICODE_TOKEN,
+    (_, name: string) => MAXICODE_TOKENS[name.toUpperCase()] ?? "",
+  );
+}
+
+export interface MaxicodeMessage {
+  /** What the encoder gets: separators as control characters */
+  text: string;
+  /** 2: carrier message, numeric postcode; 3: alphanumeric; 4: text */
+  mode: 2 | 3 | 4;
+  /** Carrier messages: the header, if any, and the GS-separated fields */
+  header?: string;
+  fields?: string[];
+}
+
+/**
+ * How a MaxiCode value is drawn. A carrier message (modes 2 and 3) starts
+ * with the "[)>" header, or with a postcode and at least three more
+ * GS-separated fields (country, service class, the rest); anything else is
+ * text (mode 4). Mode 2 takes an all-digit postcode, mode 3 any other.
+ */
+export function maxicodeMessage(value: string): MaxicodeMessage {
+  const text = maxicodeControls(value);
+  const header = maxicodeHeader(text);
+  const fields = text.slice(header.length).split(GS);
+  const carrier =
+    header !== "" ||
+    (fields.length >= 4 && /^[0-9A-Za-z ]{1,9}$/.test(fields[0] ?? ""));
+  if (!carrier) return { text, mode: 4 };
+  return {
+    text,
+    mode: /^\d{1,9}$/.test(fields[0] ?? "") ? 2 : 3,
+    header,
+    fields,
+  };
+}
+
+/** Control characters back as the tokens people type. */
+const maxicodeTokens = (text: string) =>
+  text
+    .replaceAll(GS, "<GS>")
+    .replaceAll("\x1e", "<RS>")
+    .replaceAll("\x04", "<EOT>");
+
+function maxicodeInput(format: BarcodeFormat, raw: string): BarcodeInput {
+  if (!raw) return fail({ code: "enterText" });
+  const length = [...raw].length;
+  if (length > format.maxLength) {
+    return fail({
+      code: "tooLong",
+      values: { label: format.label, max: format.maxLength, count: length },
+    });
+  }
+  const message = maxicodeMessage(raw);
+  if ([...message.text].some((char) => !LATIN1.test(char))) {
+    return fail({
+      code: "maxicodeChars",
+      chars: offending(message.text, LATIN1),
+    });
+  }
+  const value = maxicodeTokens(message.text);
+  if (message.mode === 4) return done(value);
+  const [postcode = "", country = "", service = ""] = message.fields ?? [];
+  if (message.mode === 3 && !/^[0-9A-Z ]{1,6}$/.test(postcode)) {
+    return fail({ code: "maxicodePostcode" });
+  }
+  if (!/^\d{3}$/.test(country)) {
+    return fail({ code: "maxicodeCountry", values: { country } });
+  }
+  if (!/^\d{3}$/.test(service)) {
+    return fail({ code: "maxicodeService", values: { service } });
+  }
+  const notes: BarcodeIssue[] = [
+    {
+      code: "maxicodeCarrier",
+      values: { mode: message.mode, postcode, country, service },
+    },
+  ];
+  if (message.mode === 2 && postcode.length === 5) {
+    notes.push({ code: "maxicodeZipPadded", values: { zip: postcode } });
+  }
+  return done(value, notes);
 }
 
 /**
@@ -1438,6 +1592,8 @@ export function validateBarcodeInput(
     case "rmqr":
     case "dotcode":
       return textInput(format, raw, null);
+    case "maxicode":
+      return maxicodeInput(format, raw);
     default:
       return fail({ code: "unknownFormat" });
   }
@@ -1486,7 +1642,41 @@ export function decodedMatches(
           .replaceAll(GS, "");
       return plain(decoded) === plain(value);
     }
+    case "maxicode":
+      return maxicodeDecoded(decoded) === maxicodeDrawn(value);
     default:
       return decoded === value;
   }
+}
+
+/**
+ * A MaxiCode as a reader returns it. ZXing writes the separators of a
+ * message without the header as "<GS>", and with the header as the control
+ * pictures ␝ ␞ ␄ (and a space as ␠).
+ */
+function maxicodeDecoded(decoded: string): string {
+  return maxicodeControls(
+    decoded
+      .replaceAll("\u241d", GS)
+      .replaceAll("\u241e", "\x1e")
+      .replaceAll("\u2404", "\x04")
+      .replaceAll("\u2420", " "),
+  );
+}
+
+/**
+ * A MaxiCode's text as drawn: bwip-js pads a 5-digit ZIP Code with 0000
+ * (mode 2) and a mode 3 postcode with spaces to 6 characters.
+ */
+function maxicodeDrawn(value: string): string {
+  const message = maxicodeMessage(value);
+  if (message.mode === 4 || !message.fields) return message.text;
+  const [postcode = "", ...rest] = message.fields;
+  const padded =
+    message.mode === 2
+      ? postcode.length === 5
+        ? `${postcode}0000`
+        : postcode
+      : postcode.padEnd(6, " ");
+  return `${message.header ?? ""}${[padded, ...rest].join(GS)}`;
 }

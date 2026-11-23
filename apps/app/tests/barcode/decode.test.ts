@@ -129,6 +129,16 @@ const EXTRA_VALUES: Partial<Record<BarcodeFormatId, string[]>> = {
     "A".repeat(219),
     "x".repeat(150),
   ],
+  // Text (mode 4) at its limits, both carrier modes, a 5-digit ZIP Code
+  // (padded) and the [)> header.
+  maxicode: [
+    "Caf\u00e9 cr\u00e8me 42",
+    "1".repeat(138),
+    "A".repeat(93),
+    "15238<GS>840<GS>001<GS>X",
+    "B1050<GS>056<GS>999<GS>CANADA PARCEL",
+    "[)><RS>01<GS>96152382802<GS>840<GS>001<GS>1Z00004951<GS>UPSN<RS><EOT>",
+  ],
 };
 
 /** Every format a reader here decodes: all but DotCode and Intelligent Mail. */

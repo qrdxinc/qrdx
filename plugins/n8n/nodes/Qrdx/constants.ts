@@ -161,6 +161,7 @@ export const BARCODE_FORMATS = [
   "pdf417",
   "aztec",
   "rmqr",
+  "maxicode",
   "dotcode",
 ] as const;
 export type BarcodeFormat = (typeof BARCODE_FORMATS)[number];

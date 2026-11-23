@@ -347,6 +347,13 @@ describe("GET /v1/barcode", () => {
     ["rmqr", "QRdx rMQR", undefined],
     ["rectangular-micro-qr", "CABLE-0042", undefined],
     ["rmqr", "x".repeat(151), /Too much data for one rMQR: it holds up to 361/],
+    ["maxicode", "152382802<GS>840<GS>001<GS>QRDX SAMPLE PARCEL", undefined],
+    [
+      "maxicode",
+      "A".repeat(94),
+      /Too much data for one MaxiCode: it holds up to 93/,
+    ],
+    ["maxicode", "15238<GS>84<GS>001<GS>X", /3-digit ISO country code/],
     ["code128", "café", /plain ASCII.*Not allowed: é/],
     ["code128", "A".repeat(81), /up to 80 characters; this has 81/],
     ["code39", "qrdx", /no lowercase letters/],
@@ -397,6 +404,7 @@ describe("GET /v1/barcode", () => {
       ["format=datamatrix&data=x&quietZone=12", "quietZone"],
       ["format=intelligent-mail&data=01234567094987654321&scale=1", "scale"],
       ["format=dotcode&data=x&scale=1", "scale"],
+      ["format=maxicode&data=x&scale=3", "scale"],
       [`format=code128&data=${"A".repeat(80)}&scale=10&type=png`, "scale"],
     ];
     for (const [query, param] of cases) {
