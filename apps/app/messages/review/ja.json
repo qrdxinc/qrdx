@@ -10703,6 +10703,14 @@
     "source": "e55026675e45",
     "status": "machine"
   },
+  "editor.actionBar.qrCodeDialog.showAll": {
+    "source": "2150d8df37e4",
+    "status": "machine"
+  },
+  "editor.actionBar.qrCodeDialog.showLess": {
+    "source": "94ea9b1d33a0",
+    "status": "machine"
+  },
   "editor.actionBar.qrCodeDialog.terminal": {
     "source": "e0926fdac700",
     "status": "machine"
@@ -14755,8 +14763,8 @@
     "source": "8c7779dc7bf8",
     "status": "machine"
   },
-  "editor.controlSections.eyeColorsSection.giveEachCornerEyeIts": {
-    "source": "5eee541b6f15",
+  "editor.controlSections.eyeColorsSection.eyesYouLeaveAlone": {
+    "source": "f9923b6e075f",
     "status": "machine"
   },
   "editor.controlSections.eyeColorsSection.useTheSameColorsFor": {
@@ -14779,24 +14787,28 @@
     "source": "d946067427e9",
     "status": "machine"
   },
-  "editor.controlSections.eyeColorsSection.positions.topLeft": {
-    "source": "a0eda50fb155",
-    "status": "machine"
-  },
-  "editor.controlSections.eyeColorsSection.positions.topRight": {
-    "source": "d83cbef9db1b",
-    "status": "machine"
-  },
-  "editor.controlSections.eyeColorsSection.positions.bottomLeft": {
-    "source": "f5a57b969150",
-    "status": "machine"
-  },
   "editor.controlSections.eyeColorsSection.eyesContinueTheCodes": {
     "source": "b09801e9bf96",
     "status": "machine"
   },
   "editor.controlSections.eyeColorsSection.offEachEyeSweeps": {
     "source": "38436b7b1001",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeTabs.whichEye": {
+    "source": "04ee87f75842",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeTabs.positions.topLeft": {
+    "source": "a0eda50fb155",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeTabs.positions.topRight": {
+    "source": "d83cbef9db1b",
+    "status": "machine"
+  },
+  "editor.controlSections.eyeTabs.positions.bottomLeft": {
+    "source": "f5a57b969150",
     "status": "machine"
   },
   "editor.controlSections.frameControls.uploadSvg": {
@@ -15343,12 +15355,8 @@
     "source": "6bd067dacf3c",
     "status": "machine"
   },
-  "editor.controlSections.eyeShapesSection.giveEachCornerEyeIts": {
-    "source": "5dc1d23bd8f6",
-    "status": "machine"
-  },
-  "editor.controlSections.eyeShapesSection.whichEye": {
-    "source": "04ee87f75842",
+  "editor.controlSections.eyeShapesSection.eyesYouLeaveAlone": {
+    "source": "20852f3fa23d",
     "status": "machine"
   },
   "editor.controlSections.eyeShapesSection.frame": {
@@ -15369,18 +15377,6 @@
   },
   "editor.controlSections.eyeShapesSection.useTheSameShapesFor": {
     "source": "aac7281e4905",
-    "status": "machine"
-  },
-  "editor.controlSections.eyeShapesSection.positions.topLeft": {
-    "source": "a0eda50fb155",
-    "status": "machine"
-  },
-  "editor.controlSections.eyeShapesSection.positions.topRight": {
-    "source": "d83cbef9db1b",
-    "status": "machine"
-  },
-  "editor.controlSections.eyeShapesSection.positions.bottomLeft": {
-    "source": "f5a57b969150",
     "status": "machine"
   },
   "editor.controlSections.cornersSection.roundedCorners": {

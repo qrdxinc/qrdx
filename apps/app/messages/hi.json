@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Figma, Canva, Raycast और Chrome के लिए प्लगइन",
         "leftOutValue": "छोड़ा गया: {value}।",
         "imageUrl": "इमेज URL",
+        "showAll": "सभी दिखाएँ",
+        "showLess": "कम दिखाएँ",
         "terminal": "टर्मिनल",
         "designQrArguments": "design_qr arguments",
         "labelCopied": "{label} कॉपी हो गया",
@@ -4817,19 +4819,22 @@
         "smallerDotsGiveALighter": "छोटे डॉट से लुक हल्का दिखता है। {value} डॉट घटकर {floor, number}% तक जाते हैं, जो सबसे छोटा साइज़ है जो अब भी स्कैन होता है।"
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "हर कॉर्नर आई के फ़्रेम और सेंटर को अलग रंग दें। जिन आई को आप नहीं बदलते, वे आई और डॉट के रंग इस्तेमाल करती हैं।",
+        "eyesYouLeaveAlone": "जिन आइज़ को आप नहीं बदलते, वे Eyes और Dots के रंग ही रखती हैं।",
         "useTheSameColorsFor": "सभी आई के लिए एक ही रंग इस्तेमाल करें",
         "sameForAll": "सबके लिए एक जैसा",
         "eyeColors": "आई के रंग",
         "frame": "फ़्रेम",
         "center": "बीच का",
+        "eyesContinueTheCodes": "आँखें कोड के ग्रेडिएंट को आगे बढ़ाएँ",
+        "offEachEyeSweeps": "बंद होने पर हर आँख अपना अलग ग्रेडिएंट दिखाती है। चालू होने पर आँखें अपना ग्रेडिएंट पूरे कोड पर फैलाती हैं, इसलिए डॉट्स की तरह रंगी आँखें उन्हीं का सिलसिला बन जाती हैं।"
+      },
+      "eyeTabs": {
+        "whichEye": "कौन-सी आँख",
         "positions": {
           "topLeft": "ऊपर बाएँ",
           "topRight": "ऊपर दाएँ",
           "bottomLeft": "नीचे बाएँ"
-        },
-        "eyesContinueTheCodes": "आँखें कोड के ग्रेडिएंट को आगे बढ़ाएँ",
-        "offEachEyeSweeps": "बंद होने पर हर आँख अपना अलग ग्रेडिएंट दिखाती है। चालू होने पर आँखें अपना ग्रेडिएंट पूरे कोड पर फैलाती हैं, इसलिए डॉट्स की तरह रंगी आँखें उन्हीं का सिलसिला बन जाती हैं।"
+        }
       },
       "frameControls": {
         "uploadSvg": "SVG अपलोड करें",
@@ -5004,18 +5009,12 @@
       "eyeShapesSection": {
         "eyeShapes": "आँखों के आकार",
         "sameForAll": "सबके लिए एक जैसा",
-        "giveEachCornerEyeIts": "हर कॉर्नर आई को उसका अपना फ़्रेम और सेंटर आकार दें। जिन आँखों को आप नहीं बदलते, वे आँखों के आकार वाली सेटिंग इस्तेमाल करती हैं।",
-        "whichEye": "कौन-सी आँख",
+        "eyesYouLeaveAlone": "जिन आइज़ को आप नहीं बदलते, वे Eyes के आकार ही रखती हैं।",
         "frame": "फ़्रेम",
         "center": "सेंटर",
         "frameShapes": "फ़्रेम आकार",
         "centerShapes": "सेंटर आकार",
-        "useTheSameShapesFor": "सभी आँखों के लिए एक जैसे आकार इस्तेमाल करें",
-        "positions": {
-          "topLeft": "ऊपर बाएँ",
-          "topRight": "ऊपर दाएँ",
-          "bottomLeft": "नीचे बाएँ"
-        }
+        "useTheSameShapesFor": "सभी आँखों के लिए एक जैसे आकार इस्तेमाल करें"
       },
       "cornersSection": {
         "roundedCorners": "गोल कोने",

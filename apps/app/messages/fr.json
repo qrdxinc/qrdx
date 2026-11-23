@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugins pour Figma, Canva, Raycast et Chrome",
         "leftOutValue": "Omis : {value}.",
         "imageUrl": "URL de l’image",
+        "showAll": "Tout afficher",
+        "showLess": "Afficher moins",
         "terminal": "Terminal",
         "designQrArguments": "Arguments design_qr",
         "labelCopied": "{label} copié",
@@ -4817,19 +4819,22 @@
         "smallerDotsGiveALighter": "Des points plus petits donnent un rendu plus léger. Les points {value} descendent jusqu’à {floor, number} %, la plus petite taille qui reste scannable."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "Donnez à chaque œil d’angle sa propre couleur de cadre et de centre. Les yeux que vous ne modifiez pas utilisent les couleurs Yeux et Points.",
+        "eyesYouLeaveAlone": "Les yeux que vous ne modifiez pas gardent les couleurs des yeux et des points.",
         "useTheSameColorsFor": "Utiliser les mêmes couleurs pour tous les yeux",
         "sameForAll": "Identique partout",
         "eyeColors": "Couleurs yeux",
         "frame": "Cadre",
         "center": "Centre",
-        "positions": {
-          "topLeft": "Haut gauche",
-          "topRight": "Haut droit",
-          "bottomLeft": "Bas gauche"
-        },
         "eyesContinueTheCodes": "Les yeux suivent le dégradé du code",
         "offEachEyeSweeps": "Désactivé, chaque œil applique son propre dégradé. Activé, les yeux étendent leur dégradé sur tout le code : des yeux peints comme les points prolongent ces derniers."
+      },
+      "eyeTabs": {
+        "whichEye": "Quel œil",
+        "positions": {
+          "topLeft": "En haut à gauche",
+          "topRight": "En haut à droite",
+          "bottomLeft": "En bas à gauche"
+        }
       },
       "frameControls": {
         "uploadSvg": "Importer un SVG",
@@ -5004,18 +5009,12 @@
       "eyeShapesSection": {
         "eyeShapes": "Formes des yeux",
         "sameForAll": "Identiques",
-        "giveEachCornerEyeIts": "Donnez à chaque œil d’angle son propre cadre et sa propre forme de centre. Les yeux que vous ne modifiez pas utilisent les formes des yeux.",
-        "whichEye": "Quel œil",
+        "eyesYouLeaveAlone": "Les yeux que vous ne modifiez pas gardent les formes des yeux.",
         "frame": "Cadre",
         "center": "Centre",
         "frameShapes": "formes de cadre",
         "centerShapes": "formes de centre",
-        "useTheSameShapesFor": "Utiliser les mêmes formes pour tous les yeux",
-        "positions": {
-          "topLeft": "En haut à gauche",
-          "topRight": "En haut à droite",
-          "bottomLeft": "En bas à gauche"
-        }
+        "useTheSameShapesFor": "Utiliser les mêmes formes pour tous les yeux"
       },
       "cornersSection": {
         "roundedCorners": "Coins arrondis",

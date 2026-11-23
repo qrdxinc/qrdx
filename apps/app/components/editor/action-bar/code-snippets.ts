@@ -11,7 +11,8 @@
 //   installs the current npm `qrdx` and passes them to its QRCode as given.
 // - Image URL: GET https://api.qrdx.dev/v1/qr (app/api/v1/qr/_lib/query.ts):
 //   flat parameters where they say it, and `style` (lib/qr-api/style.ts) for
-//   gradients, other colors and frames with more than a label.
+//   gradients, other colors and frames with more than a label. An official
+//   frame goes by its id, never its spec.
 // - REST API: POST https://api.qrdx.dev/v1/codes (createCodeSchema in
 //   app/(app)/dashboard/codes/_lib/qr-codes.ts, logo fields in
 //   app/api/v1/codes/_lib/style.ts).
@@ -43,13 +44,27 @@ import {
 } from "qrdx/types";
 import { presetLogoIcon } from "@/lib/community/public-style";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
+import { LOADED_OFFICIAL_FRAMES } from "@/lib/frames/library";
 import {
   hasImageFills,
   hasSilhouette,
   withoutImageFills,
 } from "@/lib/paint/image-fills";
-import { type CodeLang, parseLinkUrl } from "@/lib/playground-links";
-import { GRADIENT_STOPS_MAX, isSafeColor } from "@/lib/qr-api/style";
+import {
+  type CodeLang,
+  MAX_STYLE_PARAM_LENGTH,
+  parseLinkUrl,
+} from "@/lib/playground-links";
+import type { OfficialFrameResolver } from "@/lib/playground-style";
+import {
+  type LinkableStyle,
+  packStyleParam,
+} from "@/lib/playground-style-pack";
+import {
+  GRADIENT_STOPS_MAX,
+  isSafeColor,
+  parseStyleQuery,
+} from "@/lib/qr-api/style";
 import { CONTENT_FIELDS } from "@/lib/qr-design/content";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
 import type { ContentType, QRContentConfig } from "@/types/qr-content";
@@ -137,6 +152,12 @@ export interface SnippetInput {
   contentType: ContentType;
   /** The content form's fields for contentType, when known */
   content?: QRContentConfig;
+  /**
+   * Finds the official frame a custom frame is an unchanged copy of, so the
+   * image URL names it by id: by default, what the browser has loaded of
+   * the frame library (its index is enough)
+   */
+  officialFrames?: OfficialFrameResolver;
 }
 
 export interface Snippet {
@@ -543,6 +564,36 @@ function hexKey(hex: string): string {
 const IMAGE_STYLE_MAX_LENGTH = 8192;
 
 /**
+ * How much shorter, in the URL, a playground link's compact `style` value
+ * must be than the JSON to be used instead: JSON reads, so it wins unless
+ * the compact value saves a fifth or more.
+ */
+const COMPACT_STYLE_SHARE = 0.8;
+
+/**
+ * The `style` value for the image API: readable JSON, or, for a frame drawn
+ * from its own spec, a playground link's compact value ("1." + base64url,
+ * lib/playground-style-pack.ts) when it's clearly shorter in the URL and
+ * the API reads it back. The flat parameters stay as they are either way.
+ */
+function imageStyleValue(
+  styleParam: Record<string, unknown>,
+  ownSpec: boolean,
+): string {
+  const json = JSON.stringify(styleParam);
+  if (!ownSpec) return json;
+  const compact = packStyleParam(styleParam as LinkableStyle);
+  // URL-encoded, JSON grows (each quote, brace and colon takes three
+  // characters); the compact value is URL-safe as it is.
+  const jsonInUrl = new URLSearchParams({ s: json }).toString().length - 2;
+  return compact.length <= MAX_STYLE_PARAM_LENGTH &&
+    compact.length <= jsonInUrl * COMPACT_STYLE_SHARE &&
+    parseStyleQuery(compact).ok
+    ? compact
+    : json;
+}
+
+/**
  * A color for the image API: a flat hex value when it is one, else for
  * `style` (gradients up to GRADIENT_STOPS_MAX stops, rgb()/hsl(), names).
  * Undefined when the API can't take it.
@@ -670,23 +721,39 @@ export function imageSnippet(input: SnippetInput): ImageSnippet {
   const margin = roundMargin(style.margin);
   if (margin !== IMAGE_DEFAULTS.margin) params.set("margin", String(margin));
   const frame = style.frame;
+  // A frame drawn from its own spec (not an official one's), which only
+  // `style` can carry.
+  let ownSpec = false;
   if (frame && frame.style !== "none") {
+    // An official frame goes by its id, which the API knows, so its spec
+    // (most of a frame's size) stays out of the URL.
+    const official =
+      frame.style === "custom"
+        ? (input.officialFrames ?? LOADED_OFFICIAL_FRAMES).idOfSpec(frame.spec)
+        : undefined;
+    ownSpec = frame.style === "custom" && !official;
+    // An empty second line hides the spec's own, so "" is a change too.
     const extras =
-      frame.style === "custom" ||
+      ownSpec ||
       frame.color ||
       frame.textColor ||
       frame.secondaryColor ||
-      frame.secondaryText ||
+      frame.secondaryText !== undefined ||
       frame.fontScale !== undefined;
     if (!extras) {
-      params.set("frame", frame.style);
+      params.set("frame", official ?? frame.style);
       if (frame.text !== undefined) params.set("frameText", frame.text);
     } else {
       const { color, textColor, secondaryColor, ...rest } = frame;
       const colors = Object.entries({ color, textColor, secondaryColor })
         .map(([key, value]) => [key, frameColor(value, notes)] as const)
         .filter(([, value]) => value);
-      styleParam.frame = { ...rest, ...Object.fromEntries(colors) };
+      const labels: Record<string, unknown> = { ...rest };
+      if (official) {
+        labels.style = official;
+        delete labels.spec;
+      }
+      styleParam.frame = { ...labels, ...Object.fromEntries(colors) };
     }
   }
 
@@ -706,17 +773,17 @@ export function imageSnippet(input: SnippetInput): ImageSnippet {
   );
 
   if (Object.keys(styleParam).length > 0) {
-    let json = JSON.stringify(styleParam);
-    if (json.length > IMAGE_STYLE_MAX_LENGTH && styleParam.frame) {
+    let value = imageStyleValue(styleParam, ownSpec);
+    if (value.length > IMAGE_STYLE_MAX_LENGTH && styleParam.frame) {
       delete styleParam.frame;
       notes.add(
         frame?.style === "custom"
           ? LEFT_OUT.customFrameTooLarge
           : LEFT_OUT.frame,
       );
-      json = JSON.stringify(styleParam);
+      value = JSON.stringify(styleParam);
     }
-    if (Object.keys(styleParam).length > 0) params.set("style", json);
+    if (Object.keys(styleParam).length > 0) params.set("style", value);
   }
 
   const url = `${IMAGE_API_URL}?${params.toString()}`;

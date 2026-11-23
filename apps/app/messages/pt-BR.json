@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugins para Figma, Canva, Raycast e Chrome",
         "leftOutValue": "Ignorado: {value}.",
         "imageUrl": "URL da imagem",
+        "showAll": "Ver tudo",
+        "showLess": "Ver menos",
         "terminal": "Terminal",
         "designQrArguments": "Argumentos do design_qr",
         "labelCopied": "{label} copiado",
@@ -4817,19 +4819,22 @@
         "smallerDotsGiveALighter": "Pontos menores deixam o visual mais leve. Pontos {value} chegam a {floor, number}%, o menor tamanho que ainda é lido."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "Dê a cada olho de canto uma cor própria para a moldura e o centro. Os olhos que você não alterar usam as cores de Olhos e Pontos.",
+        "eyesYouLeaveAlone": "Os olhos que você não alterar mantêm as cores de Olhos e Pontos.",
         "useTheSameColorsFor": "Usar as mesmas cores em todos os olhos",
         "sameForAll": "Igual para todos",
         "eyeColors": "Cores dos olhos",
         "frame": "Moldura",
         "center": "Centro",
-        "positions": {
-          "topLeft": "Superior esquerdo",
-          "topRight": "Superior direito",
-          "bottomLeft": "Inferior esquerdo"
-        },
         "eyesContinueTheCodes": "Olhos seguem o degradê do código",
         "offEachEyeSweeps": "Desativado, cada olho aplica o próprio degradê. Ativado, os olhos estendem o degradê por todo o código, e os olhos pintados como os pontos continuam o degradê deles."
+      },
+      "eyeTabs": {
+        "whichEye": "Qual olho",
+        "positions": {
+          "topLeft": "Superior esq.",
+          "topRight": "Superior dir.",
+          "bottomLeft": "Inferior esq."
+        }
       },
       "frameControls": {
         "uploadSvg": "Enviar SVG",
@@ -5004,18 +5009,12 @@
       "eyeShapesSection": {
         "eyeShapes": "Formas dos olhos",
         "sameForAll": "Igual para todos",
-        "giveEachCornerEyeIts": "Dê a cada olho de canto sua própria forma de moldura e de centro. Os olhos que você não alterar usam as formas de Olhos.",
-        "whichEye": "Qual olho",
+        "eyesYouLeaveAlone": "Os olhos que você não alterar mantêm os formatos de Olhos.",
         "frame": "Moldura",
         "center": "Centro",
         "frameShapes": "formas de moldura",
         "centerShapes": "formas de centro",
-        "useTheSameShapesFor": "Usar as mesmas formas em todos os olhos",
-        "positions": {
-          "topLeft": "Superior esq.",
-          "topRight": "Superior dir.",
-          "bottomLeft": "Inferior esq."
-        }
+        "useTheSameShapesFor": "Usar as mesmas formas em todos os olhos"
       },
       "cornersSection": {
         "roundedCorners": "Cantos arredondados",

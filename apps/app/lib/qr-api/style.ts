@@ -8,7 +8,8 @@
 //   value can't point a renderer at a remote resource.
 // - Frames are a built-in style, or `{ style: "custom", spec }` validated
 //   by the engine's frame-spec schema (types/frame-spec.ts: no markup, no
-//   URL, no image, hard limits).
+//   URL, no image, hard limits). The image API's `style` (parseStyleQuery)
+//   also takes an official frame's id as the style, and puts its spec in.
 // - Logos: `logoIcon` (one of the editor's quick icons, drawn by QRdx) or
 //   `logoFileId` (an image the caller uploaded, resolved by lib/qr-api/
 //   logo.ts against the caller's workspace). A logo address (`customLogo`)
@@ -33,6 +34,7 @@ import {
   EYE_POSITIONS,
   errorLevelSchema,
   eyeGradientSpanSchema,
+  FRAME_STYLES,
   frameSchema,
   HALO_COLOR_DEFAULT,
   HALO_LIGHT_MIN,
@@ -159,6 +161,30 @@ export const apiFrameSchema = z
   .describe(
     'A call-to-action frame: a built-in style with its text ({ "style": "banner-bottom", "text": "Scan me" }), or { "style": "custom", "spec": <frame spec> } from the community or a custom frame made in the playground',
   );
+
+/**
+ * The shape of an official frame's id (qrdx OFFICIAL_FRAMES, such as
+ * autumn-maple). The image API takes one wherever it takes a frame style.
+ */
+export const OFFICIAL_FRAME_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+/** Longest official frame id the image API reads. */
+export const OFFICIAL_FRAME_ID_MAX_LENGTH = 80;
+
+const SPEC_FREE_FRAME_STYLES = new Set<string>([...FRAME_STYLES, "custom"]);
+
+/**
+ * Whether `style` could name an official frame: id-shaped, and not a
+ * built-in frame style or "custom" (no official id is one of those).
+ */
+export const isOfficialFrameName = (style: string) =>
+  style.length <= OFFICIAL_FRAME_ID_MAX_LENGTH &&
+  OFFICIAL_FRAME_ID.test(style) &&
+  !SPEC_FREE_FRAME_STYLES.has(style);
+
+/** What the image API says about a frame name it has no frame for. */
+export const unknownOfficialFrame = (id: string) =>
+  `No frame "${id}": use a built-in frame such as banner-bottom, or one of QRdx's official frames by id, such as autumn-maple (its page is /community/frames/<id>)`;
 
 const eyeOverrideSchema = z
   .object({
@@ -476,11 +502,53 @@ export function parseApiStyle(input: unknown): ParsedStyle {
 }
 
 /**
+ * `json` with a frame that names an official frame by id as its style
+ * (`{ "frame": { "style": "autumn-maple", "text": "Hello" } }`) turned into
+ * the custom frame it names: the spec from `officialFrames`, the labels,
+ * colors and label size as given. Anything else is returned as it is, for
+ * the schema to check; an id with no frame is an issue.
+ */
+function withOfficialFrame(
+  json: unknown,
+  officialFrames: OfficialFrameResolver | undefined,
+): { ok: true; json: unknown } | { ok: false; issues: StyleIssue[] } {
+  if (!(officialFrames && json && typeof json === "object")) {
+    return { ok: true, json };
+  }
+  const frame = (json as { frame?: unknown }).frame;
+  if (!frame || typeof frame !== "object" || Array.isArray(frame)) {
+    return { ok: true, json };
+  }
+  const { style } = frame as { style?: unknown };
+  if (
+    typeof style !== "string" ||
+    !isOfficialFrameName(style) ||
+    Object.hasOwn(frame, "spec")
+  ) {
+    return { ok: true, json };
+  }
+  const spec = officialFrames.specOf(style);
+  if (!spec) {
+    return {
+      ok: false,
+      issues: [
+        { path: "style.frame.style", message: unknownOfficialFrame(style) },
+      ],
+    };
+  }
+  return {
+    ok: true,
+    json: { ...json, frame: { ...frame, style: "custom", spec } },
+  };
+}
+
+/**
  * A `style` query value: URL-decoded JSON (`{"fgColor":"#155dfc",…}`), or
  * the `style` value of a playground link ("1." + base64url, see
- * lib/playground-style.ts). Either way the strict schema checks it. A link
- * names an official frame by id: `officialFrames` finds its spec (the image
- * API passes the full catalogue, OFFICIAL_FRAME_RESOLVER).
+ * lib/playground-style.ts). Either way the strict schema checks it. Both
+ * can name an official frame by id (JSON as the frame's style, a link under
+ * its own key): `officialFrames` finds its spec (the image API passes the
+ * full catalogue, OFFICIAL_FRAME_RESOLVER).
  */
 export function parseStyleQuery(
   raw: string,
@@ -503,7 +571,8 @@ export function parseStyleQuery(
         ],
       };
     }
-    return parseApiStyle(json);
+    const named = withOfficialFrame(json, officialFrames);
+    return named.ok ? parseApiStyle(named.json) : named;
   }
   const decoded = decodeStyleParam(value, officialFrames);
   if (!decoded) {

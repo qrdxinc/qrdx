@@ -3999,6 +3999,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugins for Figma, Canva, Raycast and Chrome",
         "leftOutValue": "Left out: {value}.",
         "imageUrl": "Image URL",
+        "showAll": "Show all",
+        "showLess": "Show less",
         "terminal": "Terminal",
         "designQrArguments": "design_qr arguments",
         "labelCopied": "{label} copied",
@@ -5228,19 +5230,22 @@
         "smallerDotsGiveALighter": "Smaller dots give a lighter look. {value} dots go down to {floor, number}%, the smallest size that still scans."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "Give each corner eye its own frame and center color. Eyes you leave alone use the Eyes and Dots colors.",
+        "eyesYouLeaveAlone": "Eyes you leave alone keep the Eyes and Dots colors.",
         "useTheSameColorsFor": "Use the same colors for all eyes",
         "sameForAll": "Same for all",
         "eyeColors": "Eye colors",
         "frame": "Frame",
         "center": "Center",
+        "eyesContinueTheCodes": "Eyes continue the code's gradient",
+        "offEachEyeSweeps": "Off, each eye sweeps its own gradient. On, the eyes lay their gradient across the whole code, so eyes painted like the dots continue them."
+      },
+      "eyeTabs": {
+        "whichEye": "Which eye",
         "positions": {
           "topLeft": "Top left",
           "topRight": "Top right",
           "bottomLeft": "Bottom left"
-        },
-        "eyesContinueTheCodes": "Eyes continue the code's gradient",
-        "offEachEyeSweeps": "Off, each eye sweeps its own gradient. On, the eyes lay their gradient across the whole code, so eyes painted like the dots continue them."
+        }
       },
       "frameControls": {
         "uploadSvg": "Upload SVG",
@@ -5415,18 +5420,12 @@
       "eyeShapesSection": {
         "eyeShapes": "Eye shapes",
         "sameForAll": "Same for all",
-        "giveEachCornerEyeIts": "Give each corner eye its own frame and center shape. Eyes you leave alone use the Eyes shapes.",
-        "whichEye": "Which eye",
+        "eyesYouLeaveAlone": "Eyes you leave alone keep the Eyes shapes.",
         "frame": "Frame",
         "center": "Center",
         "frameShapes": "frame shapes",
         "centerShapes": "center shapes",
-        "useTheSameShapesFor": "Use the same shapes for all eyes",
-        "positions": {
-          "topLeft": "Top left",
-          "topRight": "Top right",
-          "bottomLeft": "Bottom left"
-        }
+        "useTheSameShapesFor": "Use the same shapes for all eyes"
       },
       "cornersSection": {
         "roundedCorners": "Rounded corners",
