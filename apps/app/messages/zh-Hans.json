@@ -4817,19 +4817,22 @@
         "smallerDotsGiveALighter": "较小的圆点外观更轻盈。{value}圆点最小可缩至 {floor, number}%，这是仍可扫描的最小尺寸。"
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "为每个码眼单独设置外框和中心颜色。未调整的码眼将使用“码眼”和“圆点”的颜色。",
+        "eyesYouLeaveAlone": "未单独设置的定位点会沿用“定位点”和“圆点”的颜色。",
         "useTheSameColorsFor": "所有码眼使用相同颜色",
         "sameForAll": "全部相同",
         "eyeColors": "码眼颜色",
         "frame": "外框",
         "center": "中心",
+        "eyesContinueTheCodes": "定位点延续二维码渐变",
+        "offEachEyeSweeps": "关闭时，每个定位点使用各自的渐变。开启后，定位点的渐变会铺满整个二维码，因此与圆点颜色相同的定位点会与圆点连成一体。"
+      },
+      "eyeTabs": {
+        "whichEye": "选择定位点",
         "positions": {
           "topLeft": "左上",
           "topRight": "右上",
           "bottomLeft": "左下"
-        },
-        "eyesContinueTheCodes": "定位点延续二维码渐变",
-        "offEachEyeSweeps": "关闭时，每个定位点使用各自的渐变。开启后，定位点的渐变会铺满整个二维码，因此与圆点颜色相同的定位点会与圆点连成一体。"
+        }
       },
       "frameControls": {
         "uploadSvg": "上传 SVG",
@@ -5007,18 +5010,12 @@
       "eyeShapesSection": {
         "eyeShapes": "定位点形状",
         "sameForAll": "全部相同",
-        "giveEachCornerEyeIts": "为每个角上的定位点单独设置外框和中心形状。未设置的定位点将使用“定位点形状”。",
-        "whichEye": "选择定位点",
+        "eyesYouLeaveAlone": "未单独设置的定位点会沿用“定位点”的形状。",
         "frame": "外框",
         "center": "中心",
         "frameShapes": "外框形状",
         "centerShapes": "中心形状",
-        "useTheSameShapesFor": "所有定位点使用相同形状",
-        "positions": {
-          "topLeft": "左上",
-          "topRight": "右上",
-          "bottomLeft": "左下"
-        }
+        "useTheSameShapesFor": "所有定位点使用相同形状"
       },
       "cornersSection": {
         "roundedCorners": "圆角",
