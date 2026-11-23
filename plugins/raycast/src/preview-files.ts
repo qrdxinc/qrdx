@@ -31,14 +31,19 @@ import {
 const execFileAsync = promisify(execFile);
 
 /**
- * A cache folder in the support folder, one per qrdx version and preview
- * size, so an update or a new size redraws every preview. Whatever else
- * `name` holds (the folders of earlier versions and sizes, older files) is
+ * A cache folder in the support folder, one per qrdx version, preview size
+ * and `drawing` (a name for how the previews are drawn), so an update, a new
+ * size or a new drawing redraws every preview. Whatever else `name` holds
+ * (the folders of earlier versions, sizes and drawings, older files) is
  * removed when the folder is made.
  */
-export function cacheDir(name: string, pixels: number): string {
+export function cacheDir(
+  name: string,
+  pixels: number,
+  drawing?: string
+): string {
   const root = join(environment.supportPath, name);
-  const folder = `${QRDX_VERSION}-${pixels}px`;
+  const folder = `${QRDX_VERSION}-${pixels}px${drawing ? `-${drawing}` : ""}`;
   const dir = join(root, folder);
   if (!existsSync(dir)) {
     if (existsSync(root)) {
