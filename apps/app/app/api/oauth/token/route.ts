@@ -20,13 +20,31 @@ import {
   verifyCodeChallenge,
   verifySecret,
 } from "@/lib/oauth";
+import { DYNAMIC_REGISTRATION } from "@/lib/oauth-apps/access";
 import { isOwnResource } from "@/lib/oauth-metadata";
 import { getClientIp } from "@/lib/request-guards";
 
-// bcrypt client-secret checks are CPU-heavy: cap attempts per IP.
-const tokenRateLimiter = createRateLimiter({
+// Requests that send a client secret (a bcrypt check, CPU-heavy) are capped
+// per IP address, as before. Public clients send none: ChatGPT and Claude
+// refresh many people's tokens from a few server addresses, so theirs count
+// per client_id instead, under a generous ceiling per address that every
+// request counts against first.
+const secretLimiter = createRateLimiter({
   limiter: slidingWindow(30, "60 s"),
 });
+const publicClientLimiter = createRateLimiter({
+  limiter: slidingWindow(300, "60 s"),
+});
+const addressCeiling = createRateLimiter({
+  limiter: slidingWindow(600, "60 s"),
+});
+
+const tooMany = () =>
+  oauthError(
+    "temporarily_unavailable",
+    "Too many requests. Please try again later.",
+    429,
+  );
 
 /**
  * Public clients (MCP apps in a browser) exchange codes from their own
@@ -53,15 +71,9 @@ export async function POST(req: NextRequest) {
 }
 
 async function handleToken(req: NextRequest): Promise<Response> {
-  const { success } = await tokenRateLimiter.limit(
-    `oauth-token:ip:${getClientIp(req)}`,
-  );
-  if (!success) {
-    return oauthError(
-      "temporarily_unavailable",
-      "Too many requests. Please try again later.",
-      429,
-    );
+  const ip = getClientIp(req);
+  if (!(await addressCeiling.limit(`oauth-token:ceiling:ip:${ip}`)).success) {
+    return tooMany();
   }
 
   const body = await req.formData().catch(() => null);
@@ -70,22 +82,23 @@ async function handleToken(req: NextRequest): Promise<Response> {
   }
 
   // The back-office console: a first-party client defined by environment,
-  // with its own one-time codes (lib/admin-console).
+  // with its own one-time codes (lib/admin-console). Its secret is checked
+  // like an app's: per IP.
   if (isAdminConsoleClientId(body.get("client_id") as string | null)) {
+    if (!(await secretLimiter.limit(`oauth-token:ip:${ip}`)).success) {
+      return tooMany();
+    }
     return exchangeAdminConsoleCode(body);
   }
 
   const credentials = readClientCredentials(req, body);
   if (!credentials.ok) return credentials.error;
-
-  // RFC 8707: a token for another server is never issued here.
-  const resource = body.get("resource");
-  if (typeof resource === "string" && !isOwnResource(resource)) {
-    return oauthError(
-      "invalid_target",
-      "resource must be this QRdx server's MCP endpoint or REST API",
-    );
-  }
+  const limited = credentials.clientSecret
+    ? await secretLimiter.limit(`oauth-token:ip:${ip}`)
+    : await publicClientLimiter.limit(
+        `oauth-token:client:${(credentials.clientId ?? "").slice(0, 100)}`,
+      );
+  if (!limited.success) return tooMany();
 
   const grantType = body.get("grant_type") as string | null;
 
@@ -107,12 +120,18 @@ interface ClientCredentials {
   ok: true;
   clientId: string | null;
   clientSecret: string | null;
+  /**
+   * A Basic header and a client_secret in the body both came. Apps made in
+   * Settings always sent the body and had the header ignored, so they still
+   * do; a self-registered client must pick one (RFC 6749 §2.3).
+   */
+  twoMethods: boolean;
 }
 
 /**
- * The client's id and secret, from HTTP Basic (client_secret_basic, RFC 6749
- * §2.3.1: each part form-urlencoded) or the body (client_secret_post, and a
- * public client's bare client_id). One method per request.
+ * The client's id and secret: from the body (client_secret_post, and a
+ * public client's bare client_id) when it has a secret, else from HTTP
+ * Basic (client_secret_basic, RFC 6749 §2.3.1: each part form-urlencoded).
  */
 function readClientCredentials(
   req: NextRequest,
@@ -124,26 +143,44 @@ function readClientCredentials(
   const clientSecret =
     typeof bodySecret === "string" && bodySecret ? bodySecret : null;
   const header = req.headers.get("authorization");
-  if (!header?.toLowerCase().startsWith("basic ")) {
-    return { ok: true, clientId, clientSecret };
+  const sentBasic = Boolean(header?.toLowerCase().startsWith("basic "));
+  if (clientSecret) {
+    // As before: the body's credentials, whatever the header says.
+    const basic = sentBasic
+      ? parseBasic((header as string).slice(6).trim())
+      : null;
+    return {
+      ok: true,
+      clientId: clientId ?? basic?.id ?? null,
+      clientSecret,
+      twoMethods: sentBasic,
+    };
   }
-  const basic = parseBasic(header.slice(6).trim());
+  if (!sentBasic) {
+    return { ok: true, clientId, clientSecret: null, twoMethods: false };
+  }
+  const basic = parseBasic((header as string).slice(6).trim());
   if (!basic) {
     return {
       ok: false,
       error: oauthError("invalid_client", "Malformed Basic credentials", 401),
     };
   }
-  if (clientSecret || (clientId && clientId !== basic.id)) {
+  if (clientId && clientId !== basic.id) {
     return {
       ok: false,
       error: oauthError(
         "invalid_request",
-        "Send the client's credentials one way: the Authorization header or the body",
+        "client_id in the body doesn't match the Authorization header",
       ),
     };
   }
-  return { ok: true, clientId: basic.id, clientSecret: basic.secret };
+  return {
+    ok: true,
+    clientId: basic.id,
+    clientSecret: basic.secret,
+    twoMethods: false,
+  };
 }
 
 function parseBasic(value: string): { id: string; secret: string } | null {
@@ -165,6 +202,8 @@ interface TokenClient {
   id: string;
   /** token_endpoint_auth_method "none": no secret, PKCE instead */
   publicClient: boolean;
+  /** Registered itself (an MCP client): the strict rules below apply */
+  dynamic: boolean;
 }
 
 /**
@@ -175,6 +214,7 @@ interface TokenClient {
 async function authenticateTokenClient(
   credentials: ClientCredentials,
   required: string,
+  body: FormData,
 ): Promise<TokenClient | Response> {
   const { clientId, clientSecret } = credentials;
   if (!clientId) {
@@ -188,15 +228,34 @@ async function authenticateTokenClient(
       id: oauthApp.id,
       clientSecretHash: oauthApp.clientSecretHash,
       tokenEndpointAuthMethod: oauthApp.tokenEndpointAuthMethod,
+      registrationType: oauthApp.registrationType,
     })
     .from(oauthApp)
     .where(and(eq(oauthApp.clientId, clientId), eq(oauthApp.isActive, true)))
     .limit(1);
+  const dynamic = app?.registrationType === DYNAMIC_REGISTRATION;
+  if (dynamic) {
+    if (credentials.twoMethods) {
+      return oauthError(
+        "invalid_request",
+        "Send the client's credentials one way: the Authorization header or the body",
+      );
+    }
+    // RFC 8707: a token only for this QRdx's own MCP server or REST API.
+    // Other apps' `resource` is ignored, as it always was.
+    const resource = body.get("resource");
+    if (typeof resource === "string" && !isOwnResource(resource)) {
+      return oauthError(
+        "invalid_target",
+        "resource must be this QRdx server's MCP endpoint or REST API",
+      );
+    }
+  }
   if (app?.tokenEndpointAuthMethod === "none") {
     // A secret from a public client means it's confused or someone guesses.
     return clientSecret
       ? oauthError("invalid_client", "Invalid client credentials", 401)
-      : { id: app.id, publicClient: true };
+      : { id: app.id, publicClient: true, dynamic };
   }
   if (!clientSecret) {
     return oauthError(
@@ -207,7 +266,7 @@ async function authenticateTokenClient(
   if (!(app && (await verifySecret(clientSecret, app.clientSecretHash)))) {
     return oauthError("invalid_client", "Invalid client credentials", 401);
   }
-  return { id: app.id, publicClient: false };
+  return { id: app.id, publicClient: false, dynamic };
 }
 
 async function handleAuthorizationCode(
@@ -226,7 +285,7 @@ async function handleAuthorizationCode(
     );
   }
 
-  const app = await authenticateTokenClient(credentials, required);
+  const app = await authenticateTokenClient(credentials, required, body);
   if (app instanceof Response) return app;
 
   const now = new Date();
@@ -320,7 +379,7 @@ async function handleRefreshToken(
     );
   }
 
-  const app = await authenticateTokenClient(credentials, required);
+  const app = await authenticateTokenClient(credentials, required, body);
   if (app instanceof Response) return app;
 
   const now = new Date();

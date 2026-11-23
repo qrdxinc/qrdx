@@ -220,22 +220,36 @@ describe("authorization request", () => {
     ).toContainEqual(["code_challenge_method", "S256"]);
   });
 
-  it("refuses a resource that isn't this server's (RFC 8707)", () => {
+  it("checks `resource` (RFC 8707) only for self-registered clients", () => {
+    const foreign = query({ ...base, resource: "https://evil.example/mcp" });
+    // Apps made in Settings: ignored, as it always was.
+    expect(checkAuthorizeParams(foreign)).toBeNull();
+    expect(checkAuthorizeApp(app, foreign)).toMatchObject({ ok: true });
+    const mcpApp = {
+      ...app,
+      scopes: ["codes:read", "codes:write"],
+      dynamic: true,
+      pkceRequired: true,
+    };
+    const asMcp = (resource: string) =>
+      query({
+        ...base,
+        scope: "codes:read",
+        code_challenge: challenge,
+        code_challenge_method: "S256",
+        resource,
+      });
     expect(
-      checkAuthorizeParams(
-        query({ ...base, resource: "https://evil.example/mcp" }),
-      )?.error,
-    ).toBe("invalid_target");
-    expect(
-      checkAuthorizeParams(
-        query({ ...base, resource: "https://mcp.qrdx.dev/mcp" }),
-      ),
-    ).toBeNull();
-    expect(
-      checkAuthorizeParams(
-        query({ ...base, resource: "http://localhost:3000/api/mcp" }),
-      ),
-    ).toBeNull();
+      checkAuthorizeApp(mcpApp, asMcp("https://evil.example/mcp")),
+    ).toMatchObject({ ok: false, error: "invalid_target" });
+    for (const own of [
+      "https://mcp.qrdx.dev/mcp",
+      "http://localhost:3000/api/mcp",
+    ]) {
+      expect(checkAuthorizeApp(mcpApp, asMcp(own)), own).toMatchObject({
+        ok: true,
+      });
+    }
   });
 
   describe("a self-registered client", () => {

@@ -3,7 +3,11 @@ import { eq } from "drizzle-orm";
 import type { NextRequest } from "next/server";
 import { isAdminConsoleToken } from "@/lib/admin-console/client";
 import { adminConsoleUserinfo } from "@/lib/admin-console/userinfo";
-import { oauthError, validateAccessToken } from "@/lib/oauth";
+import {
+  mcpOnlyTokenError,
+  oauthError,
+  validateAccessToken,
+} from "@/lib/oauth";
 
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
@@ -23,6 +27,9 @@ export async function GET(req: NextRequest) {
   if (!tokenData) {
     return oauthError("invalid_token", "Invalid or expired token", 401);
   }
+
+  // A self-registered MCP client's token: the MCP server only.
+  if (tokenData.mcpOnly) return mcpOnlyTokenError();
 
   if (!tokenData.scopes.includes("profile:read")) {
     return oauthError(

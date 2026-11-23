@@ -11,6 +11,7 @@ import { z } from "zod";
 import {
   apiKeyRequiredError,
   optionalApiKeyCaller,
+  optionalBearerCaller,
 } from "@/app/api/v1/codes/_lib/api";
 import { MCP_REF } from "@/lib/analytics/handoff-tags";
 import { brandLogoOptions } from "@/lib/brand-logos/options";
@@ -188,15 +189,16 @@ const designLimiter = createRateLimiter({
 type ToolContext = { http?: { req?: Request } };
 const requestOf = (ctx: ToolContext): Request | null => ctx.http?.req ?? null;
 
-/** The API key's workspace on this connection, or null without one. */
-async function keyScope(
-  ctx: ToolContext,
-  access: "read" | "write",
-  feature: string,
-) {
+/**
+ * The workspace of the connection's credential, for reading an uploaded
+ * logo: an API key's, or a signed-in person's (an OAuth token, ./auth.ts),
+ * with the read access GET /v1/qr asks a logo by file id for. Null without
+ * one.
+ */
+async function credentialScope(ctx: ToolContext) {
   const req = requestOf(ctx);
   if (!req) return null;
-  return (await optionalApiKeyCaller(req, access, feature))?.scope ?? null;
+  return (await optionalBearerCaller(req, "read"))?.scope ?? null;
 }
 
 // generate_qr_code: the image API's parameters. The flat style ones have no
@@ -265,7 +267,7 @@ const generateInput = z.object({
     .regex(FILE_ID, "Must be an uploaded file id")
     .optional()
     .describe(
-      "Your own uploaded logo (PNG or JPEG, up to 1 MB) by file id; needs the workspace's API key on this connection. The code then has no public image URL.",
+      "Your own uploaded logo (PNG or JPEG, up to 1 MB) by file id; needs the workspace's API key on this connection, or the person signed in to QRdx. The code then has no public image URL.",
     ),
   include_svg: z
     .boolean()
@@ -453,9 +455,7 @@ async function generateQrCode(input: GenerateInput, ctx: ToolContext) {
   if (input.logoIcon) style = { ...style, logoIcon: input.logoIcon };
   if (input.logoFileId) style = { ...style, logoFileId: input.logoFileId };
 
-  const scope = style?.logoFileId
-    ? await keyScope(ctx, "read", "logoFileId")
-    : null;
+  const scope = style?.logoFileId ? await credentialScope(ctx) : null;
   const flat: FlatStyle = Object.fromEntries(
     FLAT_KEYS.filter((key) => input[key] !== undefined).map((key) => [
       key,
@@ -580,7 +580,7 @@ export function registerQrTools(
     "design_qr",
     {
       title: "Design a QR code",
-      description: `Design a QR code for any content type (link, Wi-Fi, contact, email, SMS, WhatsApp, payments, social profiles and more) with the style you choose: colors and gradients, dot, eye and eye center shapes, a built-in call-to-action frame with its text or a custom frame spec, a border, a logo icon or your own uploaded logo (logo_file_id, with an API key), margin and error correction. Can start from a built-in preset or a community item. Validates the content like the QRdx editor, checks the scan score with the editor's scan check and repairs the style until it is Great (at most 3 repairs, then a classic black-on-white code). Returns the score, what was changed and why, the style JSON (qrdxStyle, ready for ${keyed ? "save_template and generate_qr_code" : "generate_qr_code"}), a playground_url that opens the design in the QRdx editor, a PNG and the SVG. Call list_options first for the accepted values.`,
+      description: `Design a QR code for any content type (link, Wi-Fi, contact, email, SMS, WhatsApp, payments, social profiles and more) with the style you choose: colors and gradients, dot, eye and eye center shapes, a built-in call-to-action frame with its text or a custom frame spec, a border, a logo icon or your own uploaded logo (logo_file_id, with an API key or sign-in), margin and error correction. Can start from a built-in preset or a community item. Validates the content like the QRdx editor, checks the scan score with the editor's scan check and repairs the style until it is Great (at most 3 repairs, then a classic black-on-white code). Returns the score, what was changed and why, the style JSON (qrdxStyle, ready for ${keyed ? "save_template and generate_qr_code" : "generate_qr_code"}), a playground_url that opens the design in the QRdx editor, a PNG and the SVG. Call list_options first for the accepted values.`,
       inputSchema: designQrInputSchema,
       annotations: { ...readOnly, title: "Design a QR code" },
       _meta: QR_CARD_TOOL_META,
@@ -608,7 +608,7 @@ export function registerQrTools(
       let result: Awaited<ReturnType<typeof designQr>>;
       try {
         result = await designQr(input, {
-          scope: () => keyScope(ctx, "read", "logo_file_id"),
+          scope: () => credentialScope(ctx),
         });
       } catch (error) {
         const failed = toolError(error);
@@ -679,7 +679,7 @@ export function registerQrTools(
     {
       title: "Generate QR code",
       description:
-        "Render a QR code with the editor's style options: colors or gradients (linear, radial), dot and eye shapes, eye and dot colors, a built-in frame with its text or a custom frame spec, a logo icon or your own uploaded logo (logoFileId, needs an API key), or a community item. Pass design_qr's qrdxStyle as style to render the same design again at another size. Returns a PNG image and public image URLs (SVG, PNG and lossless WebP for embedding in Markdown or HTML, plus a 300 dpi TIFF, RGB or CMYK, and a vector EPS for print); set include_svg to also get the SVG markup. No scan check: use design_qr for that.",
+        "Render a QR code with the editor's style options: colors or gradients (linear, radial), dot and eye shapes, eye and dot colors, a built-in frame with its text or a custom frame spec, a logo icon or your own uploaded logo (logoFileId, needs an API key or sign-in), or a community item. Pass design_qr's qrdxStyle as style to render the same design again at another size. Returns a PNG image and public image URLs (SVG, PNG and lossless WebP for embedding in Markdown or HTML, plus a 300 dpi TIFF, RGB or CMYK, and a vector EPS for print); set include_svg to also get the SVG markup. No scan check: use design_qr for that.",
       inputSchema: generateInput,
       annotations: { ...readOnly, title: "Generate QR code" },
       _meta: QR_CARD_TOOL_META,

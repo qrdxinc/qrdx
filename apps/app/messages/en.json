@@ -9684,6 +9684,7 @@
           "thisLinkCantBeUsed": "This link can't be used",
           "theAppThatSentYou": "The app that sent you here made an invalid request: <span>{description}</span>. Go back to the app and try again, or contact its developer.",
           "appnameWillBeAbleTo": "{appName} will be able to",
+          "mcpOnlyNote": "{appName} can use your account only through the QRdx MCP server's code tools: it can't delete codes, manage webhooks or use AI art.",
           "nameWantsToAccessYour": "{name} wants to access your QRdx account",
           "builtByName": "Built by <strong>{name}</strong>",
           "unverifiedApp": "Unverified app.",

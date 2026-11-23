@@ -57,7 +57,11 @@ export default async function OAuthAuthorizePage({
     const { google, github } = getSignInOptions();
     return (
       <OAuthSignIn
-        app={{ name: appName, logoUrl: check.app.logoUrl }}
+        app={{
+          name: appName,
+          logoUrl: check.app.logoUrl,
+          mcpOnly: check.app.dynamic,
+        }}
         callbackURL={callbackURL}
         providers={{ google, github }}
         scopes={check.scopes}
@@ -76,6 +80,7 @@ export default async function OAuthAuthorizePage({
           image: session.user.image ?? null,
         }}
         app={{
+          mcpOnly: check.app.dynamic,
           name: appName,
           description: check.app.description,
           logoUrl: check.app.logoUrl,

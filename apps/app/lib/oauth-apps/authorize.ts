@@ -20,6 +20,7 @@ import {
   validateScopes,
 } from "@/lib/oauth";
 import { isOwnResource, oauthIssuer } from "@/lib/oauth-metadata";
+import { markDynamicClientUsed } from "@/lib/oauth-registration";
 import { OAUTH_SCOPES, type OAuthScope } from "@/lib/oauth-scopes";
 import { isDynamicApp, isTrustedApp } from "./access";
 import { appBuilderName } from "./builder";
@@ -169,13 +170,6 @@ export function checkAuthorizeParams(
       };
     }
   }
-  if (params.resource !== null && !isOwnResource(params.resource)) {
-    return {
-      error: "invalid_target",
-      description:
-        "resource must be this QRdx server's MCP endpoint or REST API",
-    };
-  }
   return null;
 }
 
@@ -196,6 +190,15 @@ export function checkAuthorizeApp(
     )
   ) {
     return reject("invalid_request", "redirect_uri not registered");
+  }
+  // RFC 8707, for clients that registered themselves: a token only for this
+  // QRdx's own MCP server or REST API. Other apps' `resource` is ignored,
+  // as it always was.
+  if (dynamic && params.resource !== null && !isOwnResource(params.resource)) {
+    return reject(
+      "invalid_target",
+      "resource must be this QRdx server's MCP endpoint or REST API",
+    );
   }
   let requested = parseScopes(params.scope ?? "");
   if (dynamic) {
@@ -320,9 +323,12 @@ export async function issueAuthorizationCode(
   userId: string,
   params: AuthorizeParams,
   scopes: readonly OAuthScope[],
+  { dynamic = false }: { dynamic?: boolean } = {},
 ): Promise<string> {
   const code = generateSecureToken();
   const now = new Date();
+  // A self-registered client that got this far is in use: never pruned.
+  if (dynamic) await markDynamicClientUsed(appId, now);
   await db.insert(oauthAuthorizationCode).values({
     id: cuid(),
     // Only the hash is stored; the plaintext code goes to the client once.
