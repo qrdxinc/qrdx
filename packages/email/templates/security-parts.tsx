@@ -1,6 +1,6 @@
 import { SUPPORT_EMAIL } from "@repo/config";
 import type { ReactNode } from "react";
-import { Link, Section } from "react-email";
+import { Link } from "react-email";
 import type { EmailIntl } from "../intl";
 import { baseUrl } from "../origin";
 import { EmailButton, EmailText } from "./layout";
@@ -74,11 +74,9 @@ export function SecurityDetails({
 
 export function ReviewSecurityButton({ intl }: { intl: EmailIntl }) {
   return (
-    <Section style={{ margin: "4px 0 8px" }}>
-      <EmailButton href={reviewSecurityUrl()}>
-        {intl.t("security.review")}
-      </EmailButton>
-    </Section>
+    <EmailButton href={reviewSecurityUrl()}>
+      {intl.t("security.review")}
+    </EmailButton>
   );
 }
 

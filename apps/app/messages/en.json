@@ -9894,9 +9894,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "This email was meant for <strong>{email}</strong>. If you weren't expecting it, you can ignore it. If you're worried about your account's safety, <link>let us know</link>.",
       "sentFor": "Sent for {name} by <link>{host}</link>",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "Unsubscribe"
+      "unsubscribe": "Unsubscribe",
+      "settings": "Change which emails you get",
+      "copyLink": "or copy and paste this link into your browser:"
     },
     "codes": {
       "neverAsk": "QRdx will never ask for this code by phone, chat or email.",
