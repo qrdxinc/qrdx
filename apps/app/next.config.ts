@@ -485,7 +485,8 @@ let nextConfig: NextConfig = {
       // English has one address: /en/pricing → /pricing (packages/i18n/routing.ts).
       ...englishRedirects(`(?:${PLATFORM_HOSTS})`),
       // The marketing pages are English only: /es/pricing → /pricing, /es →
-      // /, /es/home → /home, query kept (307 for now; packages/i18n/routing.ts).
+      // /, /es/home → /home, query kept (308; the generator pages the site
+      // can translate get a 307: packages/i18n/routing.ts).
       // But the pages the site serves in every language while its group for
       // them is on (siteTranslated, above).
       ...englishOnlyRedirects(`(?:${PLATFORM_HOSTS})`, {

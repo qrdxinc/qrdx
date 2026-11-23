@@ -13,7 +13,11 @@
 // Next compiles the config with the app's tsconfig paths, and a file in a
 // subfolder of the app that imports @repo/* can't be resolved there.
 import { LOCALE_INFO, TRANSLATED_LOCALES } from "./config";
-import { ENGLISH_ONLY_PATHS, LOCALIZED_PATHS } from "./paths";
+import {
+  ENGLISH_ONLY_PATHS,
+  LOCALIZED_PATHS,
+  SITE_TRANSLATED_PATHS,
+} from "./paths";
 
 const EN = `/${LOCALE_INFO.en.segment}`;
 
@@ -80,8 +84,12 @@ const TRANSLATED_SEGMENT = `:locale(${TRANSLATED_LOCALES.map(
  * Only the page URLs themselves; their Open Graph images under them aren't
  * linked from anywhere once the pages redirect.
  *
- * 307 for now: after a 7-day watch with no surprises, switch `permanent`
- * to true (308), as englishRedirects are.
+ * Permanent (308), as englishRedirects are: 307 for the first week after
+ * #580 went live (17 Nov 2026), 308 since that watch passed. Except the
+ * pages the site zone can serve in every language (paths.ts
+ * SITE_TRANSLATED_PATHS): while their group is off they redirect to English,
+ * but only with a 307, which browsers and search engines don't keep, so
+ * switching the group back on is never stuck behind a cached redirect.
  *
  * `except` leaves out pages whose translated URLs another app answers: the
  * site zone serves the generator pages in every language while its group
@@ -111,7 +119,7 @@ export function englishOnlyRedirects(
           ? `/${TRANSLATED_SEGMENT}`
           : `/${TRANSLATED_SEGMENT}${source}`,
       destination: destinationOf(source),
-      permanent: false,
+      permanent: !SITE_TRANSLATED_PATHS.includes(path),
       has,
     };
   });
@@ -120,7 +128,7 @@ export function englishOnlyRedirects(
     {
       source: `/${TRANSLATED_SEGMENT}/home`,
       destination: "/home",
-      permanent: false,
+      permanent: true,
       has,
     },
   ];
