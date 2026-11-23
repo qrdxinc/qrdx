@@ -1,0 +1,174 @@
+factor,group,variant,label,level,versions,retired,logo_modules,logo_width_pct,logo_area_pct,contrast_ratio,inverted,quiet_modules,page,images,jsqr,zxing,zbar,all_three,any,wrong_reads,centre_check_readable,scan_score,scan_grade,scan_failed_checks
+shape,body,body:circle,circle,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:circle-large,circle-large,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:square,square,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:diamond,diamond,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,75,ok,decode-96 style-pair
+shape,body,body:circle-mixed,circle-mixed,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,85,great,decode-96
+shape,body,body:pacman,pacman,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,85,great,decode-96
+shape,body,body:rounded,rounded,M,3,,0,,,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+shape,body,body:small-square,small-square,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,75,ok,decode-96 style-pair
+shape,body,body:vertical-line,vertical-line,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:horizontal-line,horizontal-line,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:liquid,liquid,M,3,,0,,,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+shape,body,body:liquid-horizontal,liquid-horizontal,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:liquid-vertical,liquid-vertical,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,85,great,decode-96
+shape,body,body:classy,classy,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:classy-rounded,classy-rounded,M,3,,0,,,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+shape,body,body:leaf,leaf,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:plus,plus,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:hexagon,hexagon,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:star,star,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:heart,heart,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:random-dots,random-dots,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,85,great,decode-96
+shape,body,body:mosaic,mosaic,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,body,body:octagon,octagon,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,eye,eye:square,square,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,eye,eye:rounded,rounded,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,eye,eye:gear,gear,M,3,,0,,,,,,white,60,0.85,0.8,0.9667,0.7167,1,0,12/12,65,ok,decode-96 decode-160
+shape,eye,eye:circle,circle,M,3,,0,,,,,,white,60,0.8,0.8,0.9333,0.6333,1,0,12/12,45,risky,decode-96 decode-160 eye-shape
+shape,eye,eye:diya,diya,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,eye,eye:extra-rounded,extra-rounded,M,3,,0,,,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+shape,eye,eye:message,message,M,3,,0,,,,,,white,60,0.8167,0.8,1,0.75,1,0,12/12,92,great,decode-96
+shape,eye,eye:pointy,pointy,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,eye,eye:leaf,leaf,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,eye,eye:drop,drop,M,3,,0,,,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+shape,eye,eye:octagon,octagon,M,3,,0,,,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+shape,eye,eye:bevel,bevel,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,eye,eye:squircle,squircle,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,eye,eye:cushion,cushion,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,85,great,decode-96
+shape,eye,eye:shield,shield,M,3,,0,,,,,,white,60,0.8667,0.8,0.9333,0.7167,0.9833,0,12/12,85,great,decode-96
+shape,eye,eye:petal,petal,M,3,,0,,,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+shape,eye,eye:leaf-reverse,leaf-reverse,M,3,,0,,,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+shape,eye,eye:porthole,porthole,M,3,,0,,,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+shape,eye,eye:notch,notch,M,3,,0,,,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+shape,eye,eye:plus,plus,M,3,,0,,,,,,white,60,0.95,1,1,0.95,1,0,12/12,92,great,decode-96
+shape,eye,eye:bud,bud,M,3,,0,,,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+shape,eye,eye:bowl,bowl,M,3,,0,,,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+shape,eye,eye:curly,curly,M,3,yes,0,,,,,,white,60,0.3167,0.25,0.7167,0.0667,0.9667,0,12/12,0,risky,decode-96 decode-160 decode-320 eye-shape style-pair
+shape,centre,centre:square,square,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,centre,centre:rounded,rounded,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,centre,centre:circle,circle,M,3,,0,,,,,,white,60,0.8667,1,1,0.8667,1,0,12/12,92,great,decode-96 style-pair
+shape,centre,centre:message,message,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,centre,centre:message-reverse,message-reverse,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,centre,centre:diya,diya,M,3,,0,,,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+shape,centre,centre:diya-reverse,diya-reverse,M,3,,0,,,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+shape,centre,centre:rounded-triangle,rounded-triangle,M,3,,0,,,,,,white,60,0.8,0.9333,1,0.75,1,0,12/12,42,risky,decode-96 decode-160 decode-320
+shape,centre,centre:leaf,leaf,M,3,,0,,,,,,white,60,0.95,1,1,0.95,1,0,12/12,92,great,decode-96
+shape,centre,centre:drop,drop,M,3,,0,,,,,,white,60,0.9167,1,1,0.9167,1,0,12/12,92,great,decode-96
+shape,centre,centre:plus,plus,M,3,,0,,,,,,white,60,0.95,1,1,0.95,1,0,12/12,92,great,decode-96
+shape,centre,centre:cross-rounded,cross-rounded,M,3,,0,,,,,,white,60,0.95,1,1,0.95,1,0,12/12,92,great,decode-96
+shape,centre,centre:hexagon,hexagon,M,3,,0,,,,,,white,60,0.8833,1,1,0.8833,1,0,12/12,92,great,decode-96
+shape,centre,centre:octagon,octagon,M,3,,0,,,,,,white,60,0.8667,1,1,0.8667,1,0,12/12,69,ok,decode-96 decode-320
+shape,centre,centre:flower,flower,M,3,,0,,,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+shape,centre,centre:heart,heart,M,3,,0,,,,,,white,60,0.8667,1,0.9167,0.7833,1,0,12/12,92,great,decode-96
+shape,centre,centre:squircle,squircle,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,centre,centre:dots,dots,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,centre,centre:extra-rounded,extra-rounded,M,3,,0,,,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+shape,centre,centre:leaf-reverse,leaf-reverse,M,3,,0,,,,,,white,60,0.9167,1,1,0.9167,1,0,12/12,92,great,decode-96
+shape,centre,centre:drop-reverse,drop-reverse,M,3,,0,,,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+shape,centre,centre:cushion,cushion,M,3,,0,,,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+shape,centre,centre:diamond,diamond,M,3,yes,0,,,,,,white,60,0.1667,0.0167,0.8167,0,0.9,0,12/12,17,fails,decode-96 decode-160 decode-320 style-pair
+shape,centre,centre:star,star,M,3,yes,0,,,,,,white,60,0.7167,0.8667,0.8833,0.5333,1,0,12/12,27,fails,decode-96 decode-160 decode-320 style-pair
+shape,centre,centre:banner,banner,M,3,yes,0,,,,,,white,60,0.7,1,1,0.7,1,0,12/12,59,risky,decode-96 decode-320 style-pair
+shape,qrdx-default,qrdx-default:M,"QRdx default look, level M",M,3,,0,,,,,,white,60,1,0.9333,1,0.9333,1,0,12/12,92,great,decode-96
+shape,qrdx-default,qrdx-default:Q,"QRdx default look, level Q (the default level)",Q,4,,0,,,,,,white,60,1,0.9333,0.9833,0.9167,1,0,12/12,85,great,decode-96
+logo,L,logo:L:0,"0 of 29 modules (0.0%), level L",L,3,,0,0.0,0.0,,,,white,60,1,1,0.9833,0.9833,1,0,12/12,92,great,decode-96
+logo,L,logo:L:1,"1 of 29 modules (3.4%), level L",L,3,,1,3.4,0.1,,,,white,60,1,1,0.9833,0.9833,1,0,12/12,92,great,decode-96
+logo,L,logo:L:2,"2 of 29 modules (6.9%), level L",L,3,,2,6.9,0.5,,,,white,60,0.9833,1,0.9333,0.9167,1,0,12/12,92,great,decode-96
+logo,L,logo:L:3,"3 of 29 modules (10.3%), level L",L,3,,3,10.3,1.1,,,,white,60,0.9833,1,0.9167,0.9167,1,0,12/12,92,great,decode-96
+logo,L,logo:L:4,"4 of 29 modules (13.8%), level L",L,3,,4,13.8,1.9,,,,white,60,1,1,0.9167,0.9167,1,0,12/12,82,ok,decode-96 logo
+logo,L,logo:L:5,"5 of 29 modules (17.2%), level L",L,3,,5,17.2,3.0,,,,white,60,1,1,0.8,0.8,1,0,12/12,75,ok,decode-96 logo
+logo,L,logo:L:6,"6 of 29 modules (20.7%), level L",L,3,,6,20.7,4.3,,,,white,60,0.7167,0.6833,0.3833,0.3833,0.7333,0,10/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,L,logo:L:7,"7 of 29 modules (24.1%), level L",L,3,,7,24.1,5.8,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,L,logo:L:8,"8 of 29 modules (27.6%), level L",L,3,,8,27.6,7.6,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,L,logo:L:9,"9 of 29 modules (31.0%), level L",L,3,,9,31.0,9.6,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,L,logo:L:10,"10 of 29 modules (34.5%), level L",L,3,,10,34.5,11.9,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,L,logo:L:11,"11 of 29 modules (37.9%), level L",L,3,,11,37.9,14.4,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,L,logo:L:12,"12 of 29 modules (41.4%), level L",L,3,,12,41.4,17.1,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,M,logo:M:0,"0 of 29 modules (0.0%), level M",M,3,,0,0.0,0.0,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+logo,M,logo:M:1,"1 of 29 modules (3.4%), level M",M,3,,1,3.4,0.1,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+logo,M,logo:M:2,"2 of 29 modules (6.9%), level M",M,3,,2,6.9,0.5,,,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+logo,M,logo:M:3,"3 of 29 modules (10.3%), level M",M,3,,3,10.3,1.1,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+logo,M,logo:M:4,"4 of 29 modules (13.8%), level M",M,3,,4,13.8,1.9,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,92,great,decode-96
+logo,M,logo:M:5,"5 of 29 modules (17.2%), level M",M,3,,5,17.2,3.0,,,,white,60,1,1,0.95,0.95,1,0,12/12,92,great,decode-96
+logo,M,logo:M:6,"6 of 29 modules (20.7%), level M",M,3,,6,20.7,4.3,,,,white,60,1,1,0.9333,0.9333,1,0,12/12,82,ok,decode-96 logo
+logo,M,logo:M:7,"7 of 29 modules (24.1%), level M",M,3,,7,24.1,5.8,,,,white,60,1,1,0.85,0.85,1,0,12/12,82,ok,decode-96 logo
+logo,M,logo:M:8,"8 of 29 modules (27.6%), level M",M,3,,8,27.6,7.6,,,,white,60,0.85,0.85,0.5833,0.5833,0.8833,0,10/12,60,risky,decode-96 logo
+logo,M,logo:M:9,"9 of 29 modules (31.0%), level M",M,3,,9,31.0,9.6,,,,white,60,0.2,0.1667,0.15,0.1,0.2167,0,3/12,60,risky,decode-96 logo
+logo,M,logo:M:10,"10 of 29 modules (34.5%), level M",M,3,,10,34.5,11.9,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,M,logo:M:11,"11 of 29 modules (37.9%), level M",M,3,,11,37.9,14.4,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,M,logo:M:12,"12 of 29 modules (41.4%), level M",M,3,,12,41.4,17.1,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,Q,logo:Q:0,"0 of 33 modules (0.0%), level Q",Q,4,,0,0.0,0.0,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,85,great,decode-96
+logo,Q,logo:Q:1,"1 of 33 modules (3.0%), level Q",Q,4,,1,3.0,0.1,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,85,great,decode-96
+logo,Q,logo:Q:2,"2 of 33 modules (6.1%), level Q",Q,4,,2,6.1,0.4,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,85,great,decode-96
+logo,Q,logo:Q:3,"3 of 33 modules (9.1%), level Q",Q,4,,3,9.1,0.8,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,85,great,decode-96
+logo,Q,logo:Q:4,"4 of 33 modules (12.1%), level Q",Q,4,,4,12.1,1.5,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,85,great,decode-96
+logo,Q,logo:Q:5,"5 of 33 modules (15.2%), level Q",Q,4,,5,15.2,2.3,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,85,great,decode-96
+logo,Q,logo:Q:6,"6 of 33 modules (18.2%), level Q",Q,4,,6,18.2,3.3,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,85,great,decode-96
+logo,Q,logo:Q:7,"7 of 33 modules (21.2%), level Q",Q,4,,7,21.2,4.5,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,85,great,decode-96
+logo,Q,logo:Q:8,"8 of 33 modules (24.2%), level Q",Q,4,,8,24.2,5.9,,,,white,60,0.9667,1,1,0.9667,1,0,12/12,75,ok,decode-96 logo
+logo,Q,logo:Q:9,"9 of 33 modules (27.3%), level Q",Q,4,,9,27.3,7.4,,,,white,60,0.9833,1,0.9667,0.95,1,0,12/12,75,ok,decode-96 logo
+logo,Q,logo:Q:10,"10 of 33 modules (30.3%), level Q",Q,4,,10,30.3,9.2,,,,white,60,0.95,1,0.9667,0.9167,1,0,12/12,75,ok,decode-96 logo
+logo,Q,logo:Q:11,"11 of 33 modules (33.3%), level Q",Q,4,,11,33.3,11.1,,,,white,60,0.95,1,0.8167,0.8,1,0,12/12,75,ok,decode-96 logo
+logo,Q,logo:Q:12,"12 of 33 modules (36.4%), level Q",Q,4,,12,36.4,13.2,,,,white,60,0.3667,0.3167,0.25,0.2,0.4,0,5/12,5,fails,decode-96 decode-160 decode-320 logo
+logo,Q,logo:Q:13,"13 of 33 modules (39.4%), level Q",Q,4,,13,39.4,15.5,,,,white,60,0.2,0.1667,0.0833,0.0833,0.2167,0,4/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,Q,logo:Q:14,"14 of 33 modules (42.4%), level Q",Q,4,,14,42.4,18.0,,,,white,60,0,0,0,0,0,0,0/12,0,fails,decode-96 decode-160 decode-320 logo
+logo,H,logo:H:0,"0 of 33 modules (0.0%), level H",H,4,,0,0.0,0.0,,,,white,60,1,1,1,1,1,0,12/12,85,great,decode-96
+logo,H,logo:H:1,"1 of 33 modules (3.0%), level H",H,4,,1,3.0,0.1,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,85,great,decode-96
+logo,H,logo:H:2,"2 of 33 modules (6.1%), level H",H,4,,2,6.1,0.4,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,85,great,decode-96
+logo,H,logo:H:3,"3 of 33 modules (9.1%), level H",H,4,,3,9.1,0.8,,,,white,60,0.9833,1,1,0.9833,1,0,12/12,85,great,decode-96
+logo,H,logo:H:4,"4 of 33 modules (12.1%), level H",H,4,,4,12.1,1.5,,,,white,60,1,1,0.9667,0.9667,1,0,12/12,85,great,decode-96
+logo,H,logo:H:5,"5 of 33 modules (15.2%), level H",H,4,,5,15.2,2.3,,,,white,60,0.9667,1,0.9667,0.9333,1,0,12/12,85,great,decode-96
+logo,H,logo:H:6,"6 of 33 modules (18.2%), level H",H,4,,6,18.2,3.3,,,,white,60,1,1,0.9667,0.9667,1,0,12/12,85,great,decode-96
+logo,H,logo:H:7,"7 of 33 modules (21.2%), level H",H,4,,7,21.2,4.5,,,,white,60,0.9667,1,0.9,0.8833,1,0,12/12,85,great,decode-96
+logo,H,logo:H:8,"8 of 33 modules (24.2%), level H",H,4,,8,24.2,5.9,,,,white,60,1,1,0.9,0.9,1,0,12/12,75,ok,decode-96 logo
+logo,H,logo:H:9,"9 of 33 modules (27.3%), level H",H,4,,9,27.3,7.4,,,,white,60,1,1,0.8833,0.8833,1,0,12/12,75,ok,decode-96 logo
+logo,H,logo:H:10,"10 of 33 modules (30.3%), level H",H,4,,10,30.3,9.2,,,,white,60,0.9833,1,0.85,0.85,1,0,12/12,75,ok,decode-96 logo
+logo,H,logo:H:11,"11 of 33 modules (33.3%), level H",H,4,,11,33.3,11.1,,,,white,60,0.9667,1,0.85,0.8333,1,0,12/12,75,ok,decode-96 logo
+logo,H,logo:H:12,"12 of 33 modules (36.4%), level H",H,4,,12,36.4,13.2,,,,white,60,0.9667,0.9833,0.8167,0.8167,1,0,12/12,75,ok,decode-96 logo
+logo,H,logo:H:13,"13 of 33 modules (39.4%), level H",H,4,,13,39.4,15.5,,,,white,60,0.9667,1,0.8,0.8,1,0,12/12,75,ok,decode-96 logo
+logo,H,logo:H:14,"14 of 33 modules (42.4%), level H",H,4,,14,42.4,18.0,,,,white,60,0.4667,0.45,0.3667,0.3667,0.4667,0,7/12,0,fails,decode-96 decode-160 decode-320 logo
+contrast,grey,contrast:grey:21,#000000 on white,M,3,,0,,,21.00,no,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+contrast,grey,contrast:grey:12,#363636 on white,M,3,,0,,,12.08,no,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+contrast,grey,contrast:grey:7,#595959 on white,M,3,,0,,,7.00,no,,white,60,0.9667,1,1,0.9667,1,0,12/12,85,great,decode-96
+contrast,grey,contrast:grey:4.5,#777777 on white,M,3,,0,,,4.48,no,,white,60,0.9667,1,1,0.9667,1,0,12/12,75,ok,decode-96 contrast
+contrast,grey,contrast:grey:3.5,#898989 on white,M,3,,0,,,3.50,no,,white,60,0.6167,1,1,0.6167,1,0,12/12,65,ok,decode-96 decode-160 contrast
+contrast,grey,contrast:grey:3,#959595 on white,M,3,,0,,,3.00,no,,white,60,0.3333,0.9833,1,0.3333,1,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,grey,contrast:grey:2.5,#a4a4a4 on white,M,3,,0,,,2.49,no,,white,60,0.0167,1,1,0.0167,1,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,grey,contrast:grey:2,#b7b7b7 on white,M,3,,0,,,2.01,no,,white,60,0,1,0.9833,0,1,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,grey,contrast:grey:1.75,#c4c4c4 on white,M,3,,0,,,1.74,no,,white,60,0,0.9833,0.85,0,0.9833,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,grey,contrast:grey:1.5,#d3d3d3 on white,M,3,,0,,,1.50,no,,white,60,0,0.9167,0.8167,0,0.9167,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,grey,contrast:grey:1.3,#e2e2e2 on white,M,3,,0,,,1.30,no,,white,60,0,0.2,0.4,0,0.4,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,colour,contrast:pair:navy-on-white,navy on white,M,3,,0,,,10.36,no,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+contrast,colour,contrast:pair:dark-green-on-white,dark green on white,M,3,,0,,,7.13,no,,white,60,0.9667,1,1,0.9667,1,0,12/12,92,great,decode-96
+contrast,colour,contrast:pair:red-on-white,red on white,M,3,,0,,,4.83,no,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+contrast,colour,contrast:pair:purple-on-white,purple on white,M,3,,0,,,5.70,no,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+contrast,colour,contrast:pair:orange-on-white,orange on white,M,3,,0,,,2.80,no,,white,60,0.6167,1,1,0.6167,1,0,12/12,45,risky,decode-96 decode-160 contrast
+contrast,colour,contrast:pair:sky-blue-on-white,sky blue on white,M,3,,0,,,2.14,no,,white,60,0,1,1,0,1,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,colour,contrast:pair:pink-on-white,pink on white,M,3,,0,,,2.65,no,,white,60,0.35,1,0.9667,0.35,1,0,12/12,45,risky,decode-96 decode-160 contrast
+contrast,colour,contrast:pair:yellow-on-white,yellow on white,M,3,,0,,,1.53,no,,white,60,0,0.9833,0.8667,0,1,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,colour,contrast:pair:brown-on-cream,brown on cream,M,3,,0,,,8.15,no,,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+contrast,colour,contrast:pair:black-on-yellow,black on yellow,M,3,,0,,,13.71,no,,white,60,0.9333,1,1,0.9333,1,0,12/12,85,great,decode-96
+contrast,colour,contrast:pair:red-on-green,red on green,M,3,,0,,,1.47,no,,white,60,0,0,0,0,0,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,colour,contrast:pair:blue-on-orange,blue on orange,M,3,,0,,,2.39,no,,white,60,0.1,0.6,0,0,0.7,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,colour,contrast:pair:lavender-on-pale-lilac,lavender on pale lilac,M,3,,0,,,2.48,no,,white,60,0,1,1,0,1,0,12/12,0,fails,decode-96 decode-160 decode-320 contrast
+contrast,colour,contrast:pair:white-on-black,white on black,M,3,,0,,,21.00,yes,,white,60,1,1,0,0,1,0,12/12,82,ok,decode-96 polarity
+contrast,colour,contrast:pair:white-on-navy,white on navy,M,3,,0,,,10.36,yes,,white,60,0.9833,1,0,0,1,0,12/12,82,ok,decode-96 polarity
+contrast,colour,contrast:pair:white-on-red,white on red,M,3,,0,,,4.83,yes,,white,60,1,1,0,0,1,0,12/12,82,ok,decode-96 polarity
+contrast,colour,contrast:pair:gold-on-black,gold on black,M,3,,0,,,9.99,yes,,white,60,0.9833,1,0,0,1,0,12/12,82,ok,decode-96 polarity
+contrast,colour,contrast:pair:yellow-on-dark-blue,yellow on dark blue,M,3,,0,,,6.76,yes,,white,60,0.9833,1,0,0,1,0,12/12,82,ok,decode-96 polarity
+quiet-zone,white,quiet:white:0,"0 modules, white surroundings",M,3,,0,,,,,0,white,60,0.9833,1,1,0.9833,1,0,12/12,95,great,quiet-zone
+quiet-zone,white,quiet:white:1,"1 modules, white surroundings",M,3,,0,,,,,1,white,60,0.9667,1,1,0.9667,1,0,12/12,95,great,quiet-zone
+quiet-zone,white,quiet:white:2,"2 modules, white surroundings",M,3,,0,,,,,2,white,60,1,1,1,1,1,0,12/12,100,great,
+quiet-zone,white,quiet:white:3,"3 modules, white surroundings",M,3,,0,,,,,3,white,60,1,1,1,1,1,0,12/12,100,great,
+quiet-zone,white,quiet:white:4,"4 modules, white surroundings",M,3,,0,,,,,4,white,60,1,1,1,1,1,0,12/12,92,great,decode-96
+quiet-zone,dark,quiet:dark:0,"0 modules, dark surroundings",M,3,,0,,,,,0,dark,60,0,0,0.7,0,0.7,0,12/12,95,great,quiet-zone
+quiet-zone,dark,quiet:dark:1,"1 modules, dark surroundings",M,3,,0,,,,,1,dark,60,0.9833,1,1,0.9833,1,0,12/12,95,great,quiet-zone
+quiet-zone,dark,quiet:dark:2,"2 modules, dark surroundings",M,3,,0,,,,,2,dark,60,0.9833,1,1,0.9833,1,0,12/12,100,great,
+quiet-zone,dark,quiet:dark:3,"3 modules, dark surroundings",M,3,,0,,,,,3,dark,60,1,1,1,1,1,0,12/12,100,great,
+quiet-zone,dark,quiet:dark:4,"4 modules, dark surroundings",M,3,,0,,,,,4,dark,60,1,1,1,1,1,0,12/12,92,great,decode-96
+quiet-zone,busy,quiet:busy:0,"0 modules, busy surroundings",M,3,,0,,,,,0,busy,60,0.1,0.0167,0.3833,0.0167,0.3833,0,12/12,95,great,quiet-zone
+quiet-zone,busy,quiet:busy:1,"1 modules, busy surroundings",M,3,,0,,,,,1,busy,60,0.9833,1,1,0.9833,1,0,12/12,95,great,quiet-zone
+quiet-zone,busy,quiet:busy:2,"2 modules, busy surroundings",M,3,,0,,,,,2,busy,60,0.9667,1,1,0.9667,1,0,12/12,100,great,
+quiet-zone,busy,quiet:busy:3,"3 modules, busy surroundings",M,3,,0,,,,,3,busy,60,1,1,1,1,1,0,12/12,100,great,
+quiet-zone,busy,quiet:busy:4,"4 modules, busy surroundings",M,3,,0,,,,,4,busy,60,1,1,1,1,1,0,12/12,92,great,decode-96
