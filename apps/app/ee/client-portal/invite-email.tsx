@@ -1,8 +1,8 @@
 import {
   EmailButton,
-  EmailDivider,
   EmailHeading,
   EmailLayout,
+  EmailLinkFallback,
   EmailText,
 } from "@repo/email/templates/layout";
 import { MutedText } from "@repo/email/templates/parts";
@@ -18,6 +18,8 @@ export interface PortalInviteEmailProps {
   portalUrl: string;
   /** The folders shared, by name */
   folders: string[];
+  /** The client's address (the footer names it) */
+  recipient?: string;
   /** The client's language (./manage.tsx picks it) */
   intl?: EmailIntl;
 }
@@ -45,6 +47,7 @@ export function PortalInviteEmail({
   inviterName,
   portalUrl,
   folders,
+  recipient,
   intl = ENGLISH_EMAIL,
 }: PortalInviteEmailProps) {
   const { t } = intl;
@@ -56,6 +59,7 @@ export function PortalInviteEmail({
         inviter: inviterName,
         portal: portalName,
       })}
+      recipient={recipient}
       sender={{ name: portalName }}
     >
       <EmailHeading>{t("portalInvite.heading")}</EmailHeading>
@@ -68,9 +72,8 @@ export function PortalInviteEmail({
         })}
       </EmailText>
       <EmailButton href={portalUrl}>{t("portalInvite.open")}</EmailButton>
-      <EmailDivider />
+      <EmailLinkFallback intl={intl} url={portalUrl} />
       <MutedText>{t("portalInvite.signIn")}</MutedText>
-      <MutedText>{t("portalInvite.pasteLink", { url: portalUrl })}</MutedText>
     </EmailLayout>
   );
 }

@@ -167,10 +167,14 @@ interface Alert {
   /** Chat message (plain text; links appended) */
   text: string;
   url: string;
-  /** The email, in the recipient's language (lib/i18n/email-locale.ts). */
+  /**
+   * The email, in the recipient's language (lib/i18n/email-locale.ts),
+   * naming the address it goes to in its footer.
+   */
   email: (
     unsubscribe: string,
     intl: EmailIntl,
+    recipient: string,
   ) => { subject: string; react: ReactElement };
 }
 
@@ -192,7 +196,7 @@ function milestoneAlert(
       subject: `${label} got its first scan`,
       text: `${label} got its first scan${location ? ` (${location})` : ""}.`,
       url,
-      email: (unsubscribe, intl) => ({
+      email: (unsubscribe, intl, recipient) => ({
         subject: intl.t("firstScan.subject", { code: label }),
         react: (
           <FirstScanEmail
@@ -202,6 +206,7 @@ function milestoneAlert(
             intl={intl}
             location={location}
             scannedAt={data.scan.scanned_at}
+            recipient={recipient}
             unsubscribeUrl={unsubscribe}
             workspaceName={workspaceLabel(workspace, intl)}
           />
@@ -214,7 +219,7 @@ function milestoneAlert(
     subject: `${label} reached ${count} scans`,
     text: `${label} reached ${count} scans.`,
     url,
-    email: (unsubscribe, intl) => ({
+    email: (unsubscribe, intl, recipient) => ({
       subject: intl.t("scanMilestone.reached", {
         code: label,
         count: data.milestone,
@@ -225,6 +230,7 @@ function milestoneAlert(
           code={data.code}
           intl={intl}
           milestone={data.milestone}
+          recipient={recipient}
           unsubscribeUrl={unsubscribe}
           workspaceName={workspaceLabel(workspace, intl)}
         />
@@ -252,7 +258,7 @@ function formAlert(
     subject: `New form response on ${page}`,
     text: `New form response on ${page}${preview ? `\n${preview}` : ""}`,
     url,
-    email: (unsubscribe, intl) => ({
+    email: (unsubscribe, intl, recipient) => ({
       subject: intl.t("formSubmission.subject", {
         hasTitle: data.page.title?.trim() ? "yes" : "no",
         title: data.page.title?.trim() ?? "",
@@ -264,6 +270,7 @@ function formAlert(
           pageTitle={data.page.title}
           responsesUrl={url}
           submittedAt={data.submitted_at}
+          recipient={recipient}
           unsubscribeUrl={unsubscribe}
           workspaceName={workspaceLabel(workspace, intl)}
         />
@@ -290,7 +297,7 @@ function codeAlert(
       ? `${who} created ${label} → ${data.code.destination_url}`
       : `${who} changed ${label}${changes.length ? ` (${changes.join(", ")})` : ""}.`,
     url,
-    email: (unsubscribe, intl) => ({
+    email: (unsubscribe, intl, recipient) => ({
       subject: intl.t(
         created
           ? "codeActivity.created.heading"
@@ -312,6 +319,7 @@ function codeAlert(
           codeUrl={url}
           intl={intl}
           kind={created ? "created" : "updated"}
+          recipient={recipient}
           unsubscribeUrl={unsubscribe}
           workspaceName={workspaceLabel(workspace, intl)}
         />
@@ -411,6 +419,7 @@ export async function notifyTargets<T extends AlertEvent>(
           const { subject, react } = alert.email(
             unsubscribe,
             await emailIntlForUser(target.userId),
+            target.target,
           );
           await sendEmail({
             to: target.target,

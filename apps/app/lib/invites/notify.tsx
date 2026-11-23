@@ -90,6 +90,7 @@ export async function sendInviteRewardEmail({
           intl={intl}
           inviteUrl={new URL("/settings/invite", baseUrl).toString()}
           maxFriends={INVITE_MAX_REWARDED_FRIENDS}
+          recipient={inviter.email}
           rewardedFriends={rewardedFriends}
           unsubscribeUrl={unsubscribeUrl}
         />

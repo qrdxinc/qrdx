@@ -263,6 +263,7 @@ async function sendInvite(
           inviterName={inviter?.name || inviter?.email || yourAgency}
           portalName={name}
           portalUrl={url}
+          recipient={email}
         />
       ),
       tags: [{ name: "kind", value: "portal-invite" }],

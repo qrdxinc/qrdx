@@ -10122,7 +10122,6 @@
       },
       "accept": "Accept invitation",
       "expires": "Sign in with this email address to accept. The invitation expires on {date}. If you weren't expecting it, you can ignore this email.",
-      "pasteLink": "Or paste this link into your browser: {url}",
       "someone": "A teammate"
     },
     "portalInvite": {
@@ -10132,7 +10131,6 @@
       "body": "{hasFolders, select, yes {{inviter} invited you to see {portal}'s QR codes in {folders}: how often each one is scanned, where and on which devices, and the pages they open. It's read-only.} other {{inviter} invited you to see {portal}'s QR codes: how often each one is scanned, where and on which devices, and the pages they open. It's read-only.}}",
       "open": "Open the reports",
       "signIn": "Sign in with this email address: we'll send you a one-time code. If you weren't expecting this, you can ignore it.",
-      "pasteLink": "Or paste this link into your browser: {url}",
       "yourAgency": "Your agency"
     },
     "limitNotice": {
@@ -10181,7 +10179,9 @@
       "sameAsLastWeek": "Same as last week",
       "change": "{change} vs last week",
       "topCodes": "Top codes",
+      "code": "Code",
       "countries": "Where people scanned",
+      "country": "Country",
       "newCodesLine": "{count, plural, one {# new code} other {# new codes}} this week.",
       "open": "Open your dashboard"
     },
@@ -10200,6 +10200,7 @@
       "makeCode": "<link>Make a dynamic code.</link> It opens a short link that stays the same, so you can print it right away.",
       "seeScans": "<link>Watch its scans:</link> when, where and on which devices people scan it.",
       "changeLink": "Change where it points whenever you like, even after it's printed. No reprinting.",
+      "button": "Make your first code",
       "free": "Static codes stay free, and the codes you make keep working if you change plans or stop paying. Free also includes {count} dynamic codes.",
       "pro": "If you need more, Pro is {monthly} a month or {yearly} a year and adds unlimited dynamic codes, {domains} custom domains, email alerts at every scan milestone, and a weekly summary if you want one.",
       "taxes": "Local taxes may be added at checkout.",

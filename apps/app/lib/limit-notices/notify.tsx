@@ -281,6 +281,10 @@ export async function sendLimitNotice(
             noun={copy.noun}
             planName={copy.planName}
             reason={copy.reason}
+            // The owners who read this language get one email together.
+            recipient={new Intl.ListFormat(intl.locale, {
+              type: "conjunction",
+            }).format(to)}
             recipientReason={intl.t(
               perPerson ? "limitNotice.artReason" : "limitNotice.ownerReason",
               { workspace: workspace.name },

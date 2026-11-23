@@ -9,6 +9,8 @@ export interface FormSubmissionEmailProps {
   responsesUrl: string;
   workspaceName: string;
   unsubscribeUrl: string;
+  /** The address it's sent to (the footer names it) */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -23,6 +25,7 @@ export function FormSubmissionEmail({
   responsesUrl,
   workspaceName,
   unsubscribeUrl,
+  recipient,
   intl,
 }: FormSubmissionEmailProps) {
   const { t } = intl;
@@ -42,6 +45,7 @@ export function FormSubmissionEmail({
     <EmailLayout
       intl={intl}
       preview={t("formSubmission.preview", page)}
+      recipient={recipient}
       reason={t("formSubmission.reason", { workspace: workspaceName })}
       unsubscribeUrl={unsubscribeUrl}
     >
@@ -76,4 +80,5 @@ FormSubmissionEmail.PreviewProps = {
   responsesUrl: "https://qrdx.dev/dashboard/acme/pages/workshop/responses",
   workspaceName: "Acme",
   unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+  recipient: "alex@example.com",
 } satisfies Omit<FormSubmissionEmailProps, "intl">;
