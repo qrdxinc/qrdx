@@ -236,8 +236,8 @@ describe("the account and security emails in Spanish", async () => {
     expect(plain).toContain(t.confirmationCode.enter);
     expect(plain).toContain("503118");
     expect(plain).toContain("10 minutos");
-    // Label and value are joined by a no-break space (DetailsTable).
-    expect(plain).toContain(`${t.security.device}:\u00a0Chrome on macOS`);
+    // Label and value are table columns in the plain text (DetailsTable).
+    expect(plain).toContain(`${t.security.device}   Chrome on macOS`);
     expect(plain).toContain(t.security.review);
     expect(html).toContain('href="mailto:support@qrdx.dev"');
   });
@@ -255,7 +255,7 @@ describe("the account and security emails in Spanish", async () => {
     const plain = await text(element);
     expect(plain).toContain(t.newSignIn.body);
     expect(plain).toContain(t.newSignIn.signOut);
-    expect(plain).toContain(`${t.newSignIn.signedInWith}:\u00a0${method}`);
+    expect(plain).toContain(`${t.newSignIn.signedInWith}   ${method}`);
     // The inbox preview, with the place.
     expect(await render(element)).toContain(
       "Chrome on macOS inició sesión en tu cuenta de QRdx cerca de Mumbai, India.",

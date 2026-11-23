@@ -7,7 +7,7 @@ bun run --filter email dev      # http://localhost:3003
 bun run --filter email export   # every template's HTML in out/
 ```
 
-No environment, database or Resend key is needed, and nothing is sent. Links in the emails point at http://localhost:3000.
+No environment, database or Resend key is needed, and nothing is sent. Links in the emails point at http://localhost:3000, and the logo loads from there (`apps/app/public/email/qrdx-logo.png`), so it shows while the app runs. To see it without the app, serve `apps/app/public` on another port and set `NEXT_PUBLIC_APP_URL` to it.
 
 Before each run, `scripts/prepare.mjs` writes `emails/` (not committed): one file per template that renders it in English, and `messages.json`, a copy of the `emails` namespace of `apps/app/messages/en.json` that `english.ts` reads. Restart the server after adding a template or changing that copy.
 

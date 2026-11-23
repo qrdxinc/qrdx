@@ -136,9 +136,9 @@ describe("alerts without a workspace name", () => {
     expect(english).toContain(
       "Bo changed this dynamic QR code in your workspace.",
     );
-    // The label and its value are separated by a no-break space.
+    // The label and its value are table columns in the plain text.
     expect(english).toContain(
-      "Changed:\u00a0Destination, Title, Design, Short link domain, other",
+      "Changed   Destination, Title, Design, Short link domain, other",
     );
     expect(english).toContain(
       "You get this because code change alerts are on for your workspace.",
