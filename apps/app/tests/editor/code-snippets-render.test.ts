@@ -75,7 +75,7 @@ const DESIGNS = {
     },
   },
   customFrame: { frame: { style: "custom", spec: frameSpec, text: "Join" } },
-  border: { templateId: "StandardBox", margin: 2 },
+  border: { frame: { style: "standard-box" }, margin: 2 },
   icon: {
     level: "H",
     showLogo: true,

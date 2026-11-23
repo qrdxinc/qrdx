@@ -70,7 +70,7 @@ describe("the bots' image links", () => {
       body: "circle",
       eye: "rounded",
       dot: "rounded",
-      template: "Arrow",
+      frame: "arrow",
     });
     const { design } = await checkChatDesign(DATA, asked);
     const links = chatDesignLinks(DATA, design);

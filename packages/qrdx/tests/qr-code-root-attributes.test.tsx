@@ -99,10 +99,11 @@ describe("<QRCode> root attributes", () => {
     expect(html.match(/class="qr"/g)).toHaveLength(1);
   });
 
-  it("puts them on a template's root <svg>", () => {
+  it("keeps them when a withdrawn template prop is passed, which is dropped", () => {
     const html = renderToStaticMarkup(
-      createElement(QRCode, { ...props, templateId: "Arrow" })
+      createElement(QRCode, { ...props, templateId: "Arrow" } as typeof props)
     );
+    expect(html).not.toContain("template");
     expect(rootTag(html)).toContain('class="qr"');
     expect(html.match(/class="qr"/g)).toHaveLength(1);
   });

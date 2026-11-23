@@ -36791,9 +36791,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "Padrões do corpo, formatos dos olhos e dos pontos dos cantos, modelos de moldura, níveis de correção de erro, padrões e limites.",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "Padrões do corpo, formatos dos olhos e dos pontos dos cantos, molduras integradas, níveis de correção de erro, padrões e limites.",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },

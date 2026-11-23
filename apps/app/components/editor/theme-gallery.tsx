@@ -79,7 +79,7 @@ const CATEGORIES = CATEGORY_ORDER.filter((category) =>
 
 /**
  * A theme's thumbnail as the editor draws it (lib/qr-design/props.ts): its
- * border template, frame, engine options (per-eye colors, module size,
+ * frame, engine options (per-eye colors, module size,
  * shape) and the logo it shows, capped as the editor caps it (the editor's
  * default logo when it has none of its own), scaled to the thumbnail, with
  * the quiet zone capped so small thumbnails stay readable.

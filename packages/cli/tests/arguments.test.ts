@@ -1,6 +1,7 @@
 // Argument edge cases: every bad invocation exits 1 with a message that says
 // what to do, writes nothing, and never silently drops input.
-import { existsSync, rmSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { existsSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -27,7 +28,6 @@ describe("options that need a value", () => {
     "--fg",
     "--bg",
     "--logo",
-    "--template",
     "--format",
   ])("%s followed by another option is an error, not a value", (flag) => {
     const out = tmp(`missing${flag}.svg`);
@@ -166,5 +166,49 @@ describe("output paths", () => {
     ]);
     expect(exitCode).toBe(1);
     expect(stdout + stderr).toMatch(/ENOENT|no such file/i);
+  });
+});
+
+describe("--template (templates are frames now)", () => {
+  // runCli keeps stderr only for a failure; this one succeeds
+  const run = (args: string[]) =>
+    spawnSync(
+      process.execPath,
+      [join(__dirname, "..", "dist", "index.js"), ...args],
+      { encoding: "utf8", timeout: 15_000 }
+    );
+
+  it.each([
+    ["with a template", ["--template", "Arrow"]],
+    ["with a value it never took", ["--template", "nope"]],
+    ["on its own", ["--template"]],
+  ])(
+    "is read and ignored %s: the same file, and one line on stderr",
+    (_name, flag) => {
+      const plain = tmp("plain.svg");
+      const out = tmp(`template-${flag.length}.svg`);
+      expect(run(["generate", "https://qrdx.dev", "-o", plain]).status).toBe(0);
+      const { status, stderr } = run([
+        "generate",
+        "https://qrdx.dev",
+        ...flag,
+        "-o",
+        out,
+      ]);
+      expect(status).toBe(0);
+      expect(stderr).toContain(
+        "Templates are frames now, so --template is ignored"
+      );
+      expect(readFileSync(out, "utf8")).toBe(readFileSync(plain, "utf8"));
+    }
+  );
+
+  it("draws the frame a template became with --frame", () => {
+    const out = tmp("dot-ring.svg");
+    expect(
+      run(["generate", "https://qrdx.dev", "--frame", "dot-ring", "-o", out])
+        .status
+    ).toBe(0);
+    expect(readFileSync(out, "utf8")).toContain('data-qrdx-frame="dot-ring"');
   });
 });

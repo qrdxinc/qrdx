@@ -68,7 +68,6 @@ export const themeStylePropsSchema = z.object({
     .min(0)
     .optional()
     .describe("Margin (quiet zone) around the QR code, in modules"),
-  templateId: z.string().optional().describe("Template/frame ID to use"),
   frame: anyFrameSchema
     .optional()
     .describe(

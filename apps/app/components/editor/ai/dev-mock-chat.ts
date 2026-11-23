@@ -25,7 +25,6 @@ const STYLE = {
   margin: 4,
   level: "Q",
   frame: { style: "banner-bottom", text: "Free Wi-Fi" },
-  templateId: "default",
   logo: "none",
 } as const;
 

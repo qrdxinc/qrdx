@@ -9,6 +9,7 @@ import type {
 } from "../types";
 import { DEFAULT_MARGIN, DEFAULT_SIZE } from "./constants";
 import { getQRData } from "./helpers";
+import { isWithdrawnProp } from "./withdrawn-props";
 
 /** `QRCode`'s props: `QRProps` plus the logo API. */
 export interface QRCodeProps extends QRProps {
@@ -48,9 +49,6 @@ const QR_CODE_PROP_KEYS = {
   style: true,
   imageSettings: true,
   isOGContext: true,
-  templateId: true,
-  customTemplate: true,
-  customProps: true,
   frame: true,
   art: true,
   eyeColors: true,
@@ -79,7 +77,8 @@ const QR_CODE_PROP_KEYS = {
 function rootAttributes(props: QRCodeOptions): QRSVGAttributes {
   const attributes: QRSVGAttributes = {};
   for (const key of Object.keys(props)) {
-    if (!Object.hasOwn(QR_CODE_PROP_KEYS, key)) {
+    // A withdrawn template prop is dropped, never an attribute
+    if (!(Object.hasOwn(QR_CODE_PROP_KEYS, key) || isWithdrawnProp(key))) {
       attributes[key] = props[key];
     }
   }
@@ -107,7 +106,6 @@ export const QR_CODE_DATA_KEYS = [
   "cornerEyePattern",
   "cornerEyeDotPattern",
   "level",
-  "templateId",
   "logo",
   "logoOptions",
   "margin",
@@ -144,8 +142,6 @@ export function getQRCodeSVGProps(
     scale = 1,
     level,
     style,
-    customTemplate,
-    customProps,
     frame,
     art,
     eyeColors,
@@ -190,8 +186,6 @@ export function getQRCodeSVGProps(
     bodyPattern: qrData.bodyPattern,
     cornerEyeDotPattern: qrData.cornerEyeDotPattern,
     cornerEyePattern: qrData.cornerEyePattern,
-    customProps,
-    customTemplate,
     dotColor: qrData.dotColor,
     eyeColor: qrData.eyeColor,
     fgColor: qrData.fgColor,
@@ -208,7 +202,6 @@ export function getQRCodeSVGProps(
     ...(partMarkers && { partMarkers }),
     size: renderSize,
     style,
-    templateId: qrData.templateId,
     value: qrData.value,
     ...(logoSettings && { imageSettings: logoSettings }),
     ...rootAttributes(props),

@@ -84,7 +84,7 @@
         "summary": "Render a QR code image",
         "tags": ["QR images"],
         "security": [],
-        "description": "A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO, TIFF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag (EPS and TIFF are files to download: browsers other than Safari can't show TIFF). The same query always returns the same bytes, so responses are cached for a year. Colors are hex without `#` (or with `#` encoded as `%23`). Limit: 300 requests a minute per IP address. More in the [Image API guide](https://qrdx.dev/docs/developers/image-api).\n\n**The editor's styles.** `style` takes the whole design as URL-encoded JSON, with the same fields as a saved theme: gradients (linear, radial), frames (built-in, custom frame specs, or a frame drawn as a template), eye and dot colors, and a logo icon. It also takes the `style` value of a playground link. `item` renders a community frame or theme (`/community/items`); `frame` and `frameText` add a built-in frame, or one of QRdx's official frames by id (`frame=autumn-maple`), which `style` also takes as a frame's `style`. Flat parameters you set win over `style`, and `style` wins over `item`. With a frame, `size` is the code's width and the frame adds to it.\n\n**Logos.** `logoIcon` draws one of the editor's quick icons, or a brand logo by its Simple Icons slug (`spotify`, `paypal:white`). `logoFileId` draws an image you uploaded, and needs `Authorization: Bearer qrdx_…` from the workspace that owns it; that response is private and counts toward the daily quota. QRdx never fetches a logo from an address you send. Logo QR and Image QR art aren't available here.\n\n**Caching.** Renders with `item` are cached for 5 minutes (10 at the CDN), since an item can change; renders with `logoFileId` aren't cached.\n\n**WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.\n\n**GIF** is for older tools and email builders that only take it. It holds at most 256 colors and one transparent color (a pixel under half opaque is transparent, so the soft edge of a code on a transparent background is hard-edged). A code in flat colors is written exactly. A gradient, image fill or photo logo is reduced to a palette without dithering, and if the PNG would scan and the GIF would not, the request fails with a `VALIDATION_ERROR` on `format` instead of returning a code that no longer reads: use PNG for that design.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.\n\n**ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. `size` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.\n\n**TIFF** is for print shops that ask for it, at 300 dpi, and is sent as a download (`Content-Disposition: attachment`, `qr-code.tif` or `qr-code-cmyk.tif`), as EPS is. Browsers other than Safari can't show it in an `<img>`. `tiff` keeps the PNG's pixels, transparency included. `tiff-cmyk` is CMYK by the same conversion as the editor's print PDF and EPS: pure black prints as K only, white as no ink, and a transparent background comes out white; no ICC profile is embedded, so ask your printer for a color-managed conversion when exact brand colors matter.",
+        "description": "A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO, TIFF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag (EPS and TIFF are files to download: browsers other than Safari can't show TIFF). The same query always returns the same bytes, so responses are cached for a year. Colors are hex without `#` (or with `#` encoded as `%23`). Limit: 300 requests a minute per IP address. More in the [Image API guide](https://qrdx.dev/docs/developers/image-api).\n\n**The editor's styles.** `style` takes the whole design as URL-encoded JSON, with the same fields as a saved theme: gradients (linear, radial), frames (built-in or custom frame specs), eye and dot colors, and a logo icon. It also takes the `style` value of a playground link. `item` renders a community frame or theme (`/community/items`); `frame` and `frameText` add a built-in frame, or one of QRdx's official frames by id (`frame=autumn-maple`), which `style` also takes as a frame's `style`. Flat parameters you set win over `style`, and `style` wins over `item`. With a frame, `size` is the code's width and the frame adds to it.\n\n**Logos.** `logoIcon` draws one of the editor's quick icons, or a brand logo by its Simple Icons slug (`spotify`, `paypal:white`). `logoFileId` draws an image you uploaded, and needs `Authorization: Bearer qrdx_…` from the workspace that owns it; that response is private and counts toward the daily quota. QRdx never fetches a logo from an address you send. Logo QR and Image QR art aren't available here.\n\n**Caching.** Renders with `item` are cached for 5 minutes (10 at the CDN), since an item can change; renders with `logoFileId` aren't cached.\n\n**WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.\n\n**GIF** is for older tools and email builders that only take it. It holds at most 256 colors and one transparent color (a pixel under half opaque is transparent, so the soft edge of a code on a transparent background is hard-edged). A code in flat colors is written exactly. A gradient, image fill or photo logo is reduced to a palette without dithering, and if the PNG would scan and the GIF would not, the request fails with a `VALIDATION_ERROR` on `format` instead of returning a code that no longer reads: use PNG for that design.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.\n\n**ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. `size` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.\n\n**TIFF** is for print shops that ask for it, at 300 dpi, and is sent as a download (`Content-Disposition: attachment`, `qr-code.tif` or `qr-code-cmyk.tif`), as EPS is. Browsers other than Safari can't show it in an `<img>`. `tiff` keeps the PNG's pixels, transparency included. `tiff-cmyk` is CMYK by the same conversion as the editor's print PDF and EPS: pure black prints as K only, white as no ink, and a transparent background comes out white; no ICC profile is embedded, so ask your printer for a color-managed conversion when exact brand colors matter.",
         "parameters": [
           {
             "name": "data",
@@ -279,24 +279,6 @@
             }
           },
           {
-            "name": "template",
-            "in": "query",
-            "required": false,
-            "description": "A built-in frame drawn as a template (Arrow, StandardBox, SquareBorder, StrikedBox, Halloween, DotRing; default is none). Unlike `frame`, the whole artwork is `size` wide with the code smaller inside it",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "default",
-                "Arrow",
-                "StandardBox",
-                "SquareBorder",
-                "StrikedBox",
-                "Halloween",
-                "DotRing"
-              ]
-            }
-          },
-          {
             "name": "format",
             "in": "query",
             "required": false,
@@ -322,7 +304,7 @@
             "name": "style",
             "in": "query",
             "required": false,
-            "description": "The editor's whole style: URL-encoded JSON with the same fields as a saved theme (gradients, frames (built-in, custom frame specs, an official frame by id as { \"style\": \"autumn-maple\", \"text\": \"Hello\" }, or a template), eye and dot colors, logoIcon, logoFileId), or the `style` value of a playground link (1.…). Flat parameters you also set win over it.",
+            "description": "The editor's whole style: URL-encoded JSON with the same fields as a saved theme (gradients, frames (built-in, custom frame specs, or an official frame by id as { \"style\": \"autumn-maple\", \"text\": \"Hello\" }), eye and dot colors, logoIcon, logoFileId), or the `style` value of a playground link (1.…). Flat parameters you also set win over it.",
             "schema": {
               "type": "string",
               "maxLength": 8192
@@ -366,7 +348,13 @@
                     "menu-card",
                     "sticker",
                     "gradient-border",
-                    "focus"
+                    "focus",
+                    "arrow",
+                    "standard-box",
+                    "square-border",
+                    "striked-box",
+                    "pumpkin",
+                    "dot-ring"
                   ]
                 },
                 {
@@ -7816,10 +7804,6 @@
                     "type": "number",
                     "minimum": 0
                   },
-                  "templateId": {
-                    "description": "Template/frame ID to use",
-                    "type": "string"
-                  },
                   "frame": {
                     "description": "Call-to-action frame around the QR code, e.g. a 'Scan me' banner (text up to 24 characters), or a custom frame drawn from a frame spec (style 'custom')",
                     "oneOf": [
@@ -7848,7 +7832,13 @@
                               "menu-card",
                               "sticker",
                               "gradient-border",
-                              "focus"
+                              "focus",
+                              "arrow",
+                              "standard-box",
+                              "square-border",
+                              "striked-box",
+                              "pumpkin",
+                              "dot-ring"
                             ]
                           },
                           "text": {
@@ -11538,10 +11528,6 @@
             "type": "number",
             "minimum": 0
           },
-          "templateId": {
-            "description": "Template/frame ID to use",
-            "type": "string"
-          },
           "frame": {
             "description": "Call-to-action frame around the QR code, e.g. a 'Scan me' banner (text up to 24 characters), or a custom frame drawn from a frame spec (style 'custom')",
             "oneOf": [
@@ -11570,7 +11556,13 @@
                       "menu-card",
                       "sticker",
                       "gradient-border",
-                      "focus"
+                      "focus",
+                      "arrow",
+                      "standard-box",
+                      "square-border",
+                      "striked-box",
+                      "pumpkin",
+                      "dot-ring"
                     ]
                   },
                   "text": {

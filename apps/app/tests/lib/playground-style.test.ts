@@ -36,7 +36,6 @@ const fullStyle: ThemeStyles = {
   cornerEyeDotPattern: "circle",
   level: "H",
   margin: 3,
-  templateId: "default",
   frame: { style: "banner-bottom", text: "Scan for menu", color: "#111111" },
 };
 

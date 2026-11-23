@@ -9,7 +9,7 @@
 // value when anything is off.
 
 import { MAX_GRADIENT_STOPS } from "@repo/config";
-import { type FrameSpec, getTemplateIds } from "qrdx";
+import type { FrameSpec } from "qrdx";
 import {
   anyFrameSchema,
   BG_RADIUS_MAX,
@@ -50,12 +50,14 @@ import {
   STYLE_PARAM_VERSION,
 } from "@/lib/playground-links";
 import {
+  LEGACY_TEMPLATE_KEY,
   type LinkedField,
   OFFICIAL_FRAME_KEY,
   PRESET_KEY,
   packStyleParam,
   STYLE_KEYS,
 } from "@/lib/playground-style-pack";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import type { ThemeStyles } from "@/types/theme";
 
 const KEYS = STYLE_KEYS;
@@ -88,8 +90,6 @@ function isSafeColorConfig(value: unknown): value is ColorConfig {
 
 const safeColorConfig = z.custom<ColorConfig>(isSafeColorConfig);
 const safeOptionalColor = z.string().refine(isSafeColor).optional();
-
-const templateIds = new Set(getTemplateIds());
 
 // ── Engine options: per-eye colors, module size, auto error correction and
 // the logo's size, clear space and position. Each is validated as strictly
@@ -195,10 +195,6 @@ const linkedStyleSchema = z
     cornerEyeDotPattern: cornerEyeDotPatternSchema.optional(),
     level: errorLevelSchema.optional(),
     margin: z.number().min(0).max(MARGIN_MAX).optional(),
-    templateId: z
-      .string()
-      .refine((id) => templateIds.has(id))
-      .optional(),
     frame: anyFrameSchema
       .refine((frame) =>
         [frame.color, frame.textColor, frame.secondaryColor].every(
@@ -370,10 +366,17 @@ export function decodeStyleParam(
   }
 
   const source = compact as Record<string, unknown>;
-  const expanded: Record<string, unknown> = {};
+  let expanded: Record<string, unknown> = {};
   for (const field of Object.keys(KEYS) as LinkedField[]) {
     if (source[KEYS[field]] !== undefined)
       expanded[field] = source[KEYS[field]];
+  }
+  // A link from before templates were frames opens with the template's frame
+  if (source[LEGACY_TEMPLATE_KEY] !== undefined) {
+    expanded = withTemplateAsFrame({
+      ...expanded,
+      templateId: source[LEGACY_TEMPLATE_KEY],
+    });
   }
   // An official frame by id: its spec goes back into the custom frame, which
   // must name no spec of its own. Then it's checked like any other frame.

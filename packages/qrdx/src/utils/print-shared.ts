@@ -57,7 +57,7 @@ export function getPrintBleedColor(props: QRProps): string | null {
 
 /**
  * SVG paint for the bleed area: `getPrintBleedColor`, except that a gradient
- * background (no frame or template) returns the background's own
+ * background (no frame) returns the background's own
  * `url(#…)` fill from `markup`, so the bleed continues the gradient.
  */
 export function getPrintBleedFill(
@@ -65,12 +65,7 @@ export function getPrintBleedFill(
   markup: string
 ): string | null {
   const color = getPrintBleedColor(props);
-  if (
-    !(color && isGradient(props.bgColor)) ||
-    isFrameActive(props.frame) ||
-    props.templateId ||
-    props.customTemplate
-  ) {
+  if (!(color && isGradient(props.bgColor)) || isFrameActive(props.frame)) {
     return color;
   }
   const background = parseSvgMarkup(markup)?.children.find(

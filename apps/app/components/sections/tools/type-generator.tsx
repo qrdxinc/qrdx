@@ -384,7 +384,6 @@ function GeneratorPanel({
               logo={styles.customLogo ?? DEFAULT_QR_LOGO}
               margin={quietZone ? QUIET_ZONE_MODULES : (styles.margin ?? 0)}
               size={288}
-              templateId={styles.templateId}
               value={payload}
               {...styleEngineOptions(
                 styles,

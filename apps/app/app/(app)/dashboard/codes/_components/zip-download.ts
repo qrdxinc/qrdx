@@ -95,7 +95,6 @@ export async function renderCodeImage(
         level: s.level,
         cornerEyePattern: s.cornerEyePattern,
         cornerEyeDotPattern: s.cornerEyeDotPattern,
-        templateId: s.templateId,
         frame: s.frame,
       },
       format,

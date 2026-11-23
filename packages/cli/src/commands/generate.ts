@@ -22,9 +22,7 @@ import {
   errorLevelSchema,
   FRAME_STYLES,
   FRAME_TEXT_MAX_LENGTH,
-  getAllTemplates,
   getFrameDimensions,
-  getTemplateIds,
   ICO_SIZES,
 } from "qrdx";
 import { idOptions } from "../lib/id-options";
@@ -39,9 +37,6 @@ const RESET = "\x1b[0m";
 const TEXT = "\x1b[38;5;145m";
 const GREEN = "\x1b[38;5;114m";
 const DIM = "\x1b[38;5;102m";
-
-/** Interactive frame choices that name a template. */
-const TEMPLATE_CHOICE = "template:";
 
 export interface GenerateFlags {
   value?: string;
@@ -59,7 +54,11 @@ export interface GenerateFlags {
   output?: string;
   format?: OutputFormat;
   size?: number;
-  template?: string;
+  /**
+   * `--template` was given: templates are frames since 0.0.19, so the flag
+   * is read and ignored (with a note on stderr)
+   */
+  ignoredTemplate?: boolean;
   frame?: FrameStyle;
   frameText?: string;
   frameColor?: string;
@@ -190,11 +189,6 @@ function validateFlags(flags: GenerateFlags): void {
   assertOneOf("--body", flags.body, BODY_PATTERN);
   assertOneOf("--eye", flags.eye, CORNER_EYE_PATTERNS);
   assertOneOf("--dot", flags.dot, CORNER_EYE_DOT_PATTERNS);
-  assertOneOf(
-    "--template",
-    flags.template,
-    getTemplateIds().filter((id) => id !== "default")
-  );
   assertOneOf("--frame", flags.frame, FRAME_STYLES);
   if (
     flags.frameText !== undefined &&
@@ -382,8 +376,9 @@ function parseFlags(args: string[]): GenerateFlags {
         i++;
         break;
       case "--template":
-        flags.template = requireValue(arg, next);
-        i += 2;
+        // Templates are frames now: the flag and its value are skipped
+        flags.ignoredTemplate = true;
+        i += next !== undefined && !/^--?[a-z]/i.test(next) ? 2 : 1;
         break;
       case "--frame":
         flags.frame = requireValue(arg, next) as FrameStyle;
@@ -410,8 +405,15 @@ function parseFlags(args: string[]): GenerateFlags {
 
   // Help and version win over everything else on the line, valid or not.
   if (!(flags.help || flags.version)) validateFlags(flags);
+  if (flags.ignoredTemplate) {
+    process.stderr.write(`${TEMPLATE_NOTE}\n`);
+  }
   return flags;
 }
+
+/** What `--template` prints: it's read and ignored. */
+export const TEMPLATE_NOTE =
+  "Templates are frames now, so --template is ignored. Use --frame instead (arrow, standard-box, square-border, striked-box, pumpkin or dot-ring).";
 
 /** The QR props for `value` with these settings (generate and batch). */
 export function buildQrProps(
@@ -427,12 +429,11 @@ export function buildQrProps(
     dotColor?: ColorConfig;
     margin: number;
     size: number;
-    template?: string;
     frame?: QRFrame;
     logo?: string;
   }
 ) {
-  const { size, logo, template, frame, eyeColor, dotColor } = settings;
+  const { size, logo, frame, eyeColor, dotColor } = settings;
   return {
     value,
     level: settings.level,
@@ -445,7 +446,6 @@ export function buildQrProps(
     ...(dotColor ? { dotColor } : {}),
     margin: settings.margin,
     size,
-    ...(template ? { templateId: template } : {}),
     ...(frame ? { frame } : {}),
     ...(logo
       ? {
@@ -480,7 +480,6 @@ export function styleFromArgs(args: string[]) {
       dotColor: flags.dotColor,
       margin: flags.margin ?? DEFAULT_MARGIN,
       size: flags.size ?? 512,
-      template: flags.template,
       frame: frameFromFlags(flags),
       logo: flags.logo,
     },
@@ -568,7 +567,6 @@ export async function runGenerate(
       flags.logo ||
       flags.level ||
       flags.margin !== undefined ||
-      flags.template ||
       frameFromFlags(flags)
   );
 
@@ -685,7 +683,6 @@ export async function runGenerate(
   let dotColor: ColorConfig | undefined = flags.dotColor;
   let logo = flags.logo;
   let margin = flags.margin ?? DEFAULT_MARGIN;
-  let template = flags.template;
   let frame = frameFromFlags(flags);
 
   if (wantAdvanced && !nonInteractive) {
@@ -867,9 +864,8 @@ export async function runGenerate(
     }
 
     // ── Frame ─────────────────────────────────────────────────────────
-    // One choice: a built-in frame (it adds space around the code) or a
-    // frame drawn as a template (--template: the whole artwork is --size)
-    if (flags.frame === undefined && !frame && !flags.template) {
+    // A built-in frame (it adds space around the code)
+    if (flags.frame === undefined && !frame) {
       const res = await p.select<string>({
         message: `Frame ${DIM}(around the code)${RESET}`,
         options: [
@@ -879,13 +875,6 @@ export async function runGenerate(
             label: item.style,
             hint: item.name,
           })),
-          ...getAllTemplates()
-            .filter((item) => item.id !== "default")
-            .map((item) => ({
-              value: `${TEMPLATE_CHOICE}${item.id}`,
-              label: item.id,
-              hint: `${item.name} (--template)`,
-            })),
         ],
         initialValue: "none",
       });
@@ -893,8 +882,10 @@ export async function runGenerate(
         handleCancel();
       }
       const choice = res as string;
-      if (choice.startsWith(TEMPLATE_CHOICE)) {
-        template = choice.slice(TEMPLATE_CHOICE.length);
+      const picked = BUILT_IN_FRAMES.find((item) => item.style === choice);
+      if (picked && !picked.spec.labels.some((l) => l.slot === "primary")) {
+        // Artwork without a label (arrow, pumpkin…): nothing to ask
+        frame = { style: picked.style };
       } else if (choice !== "none") {
         const text = await p.text({
           message: `Frame text ${DIM}(up to ${FRAME_TEXT_MAX_LENGTH} characters)${RESET}`,
@@ -983,7 +974,6 @@ export async function runGenerate(
       dotColor,
       margin,
       size,
-      template,
       frame,
       logo,
     });

@@ -10,7 +10,6 @@ import {
   createQRCodeTree,
   getQRAsSVGDataUri,
   getQRAsSVGNode,
-  h,
   type QRNode,
   renderToString,
   resolveQRCodeProps,
@@ -19,7 +18,7 @@ import {
 } from "../src/core";
 import { OFFICIAL_FRAMES } from "../src/frames/official";
 import { getQRAsSVG, QRCode, QRCodeSVG } from "../src/index";
-import type { QRSVGOptions, TemplateDefinition } from "../types";
+import type { QRSVGOptions } from "../types";
 import { type ParityCase, parityCases } from "./support/parity-cases";
 
 const cases = parityCases({
@@ -134,40 +133,6 @@ describe("the tree", () => {
             .join("")}</${node.type}>`;
     expect(serialize(root as El)).toBe(renderToString(tree));
     expect((root as El).attrs.class).toBe("qr");
-  });
-
-  it("draws templates written with h, with or without React", () => {
-    const template: TemplateDefinition<{ label?: string }> = {
-      id: "Neutral",
-      name: "Neutral",
-      wrapper: (children, templateProps) =>
-        h(
-          "svg",
-          { viewBox: "0 0 300 340", xmlns: "http://www.w3.org/2000/svg" },
-          h("g", { transform: "translate(20, 20) scale(0.87)" }, children),
-          h(
-            "text",
-            {
-              x: "150",
-              y: "325",
-              textAnchor: "middle",
-              fill: templateProps?.fgColor,
-            },
-            templateProps?.label
-          )
-        ),
-    };
-    const templated: QRSVGOptions = {
-      value: "https://qrdx.dev",
-      customTemplate: template,
-      customProps: { label: "Hi & bye" },
-    };
-    const markup = toSVGString(templated);
-    expect(markup).toContain('text-anchor="middle"');
-    expect(markup).toContain("Hi &amp; bye");
-    expect(renderToStaticMarkup(createElement(QRCodeSVG, templated))).toBe(
-      markup
-    );
   });
 
   it("leaves out what React leaves out", () => {

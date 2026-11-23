@@ -145,9 +145,9 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | Tool | What it does |
 | --- | --- |
 | `design_qr` | Designs a code for any content type with the style your assistant chooses, or starting from a built-in theme or a community item, checks its scan score and repairs the style until it is Great. Returns the score, what it changed, the style JSON, a playground link, a PNG and the SVG |
-| `list_options` | Lists every value `design_qr` accepts: content types and their fields, colors and gradients, shapes, frames (with the ids of QRdx's official frames), borders, logo icons and brand logos, built-in themes, error correction levels and limits |
+| `list_options` | Lists every value `design_qr` accepts: content types and their fields, colors and gradients, shapes, frames (with the ids of QRdx's official frames), logo icons and brand logos, built-in themes, error correction levels and limits |
 | `generate_qr_code` | Renders a QR code with the editor's styles. Returns a PNG image and public [image API](/docs/developers/image-api) URLs (SVG, PNG, lossless WebP, GIF, BMP, ICO, TIFF and vector EPS) ready for Markdown, HTML or print, plus the SVG markup on request |
-| `list_qr_styles` | Lists body patterns, corner eye and eye dot shapes, frames (the built-in styles and those drawn as templates), logo icons, error correction levels, defaults and limits |
+| `list_qr_styles` | Lists body patterns, corner eye and eye dot shapes, frames (the built-in styles), logo icons, error correction levels, defaults and limits |
 | `search_community` | Finds published [community](/community) frames, themes and collections by words, type or tag |
 | `get_community_item` | One community item with the style it applies, ready for `design_qr` or `generate_qr_code` |
 | `save_template` | Saves a design as a theme in your workspace. Listed when the connection has an [API key](#use-an-api-key) |

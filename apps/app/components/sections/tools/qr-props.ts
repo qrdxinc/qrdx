@@ -29,7 +29,6 @@ export function buildQrProps(
     cornerEyePattern: styles.cornerEyePattern,
     cornerEyeDotPattern: styles.cornerEyeDotPattern,
     level: styles.level,
-    templateId: styles.templateId,
     hideLogo: !styles.showLogo,
     logo: logo ?? styles.customLogo ?? DEFAULT_QR_LOGO,
     margin,

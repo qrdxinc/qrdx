@@ -60,7 +60,7 @@ const DESIGNS = {
     level: "M",
     margin: 2,
   },
-  noBorder: { templateId: "default", margin: 0, showLogo: false },
+  noBorder: { margin: 0, showLogo: false },
   cssColors: { fgColor: "rgb(30, 58, 138)", bgColor: "hsl(40 60% 96%)" },
   gradients: {
     fgColor: {
@@ -109,7 +109,7 @@ const DESIGNS = {
     },
   },
   customFrame: { frame: { style: "custom", spec: frameSpec, text: "Join" } },
-  border: { templateId: "StandardBox", margin: 2 },
+  border: { frame: { style: "standard-box" }, margin: 2 },
   qrdxLogo: { level: "H", showLogo: true },
   logoLayout: {
     level: "Q",
@@ -402,7 +402,6 @@ const source = (file: string) => readFileSync(join(qrdx, "src", file), "utf8");
 const JSX_PROPS = new Set([
   ...Object.keys(qrPropsSchema.shape),
   "style",
-  "customTemplate",
   "frameLabelMarkers",
   "partMarkers",
   "logo",

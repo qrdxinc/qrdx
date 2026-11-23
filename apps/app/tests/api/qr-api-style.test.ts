@@ -82,7 +82,6 @@ describe("the API style", () => {
       bodyPattern: "rounded",
       cornerEyePattern: "rounded",
       cornerEyeDotPattern: "circle",
-      templateId: "StandardBox",
       frame: { style: "banner-bottom", text: "Scan me", color: "#155dfc" },
       level: "H",
       margin: 4,
@@ -258,7 +257,11 @@ describe("the API style", () => {
       false,
     );
     expect(parseApiStyle({ fgColour: "#000" })).toMatchObject({ ok: false });
-    expect(parseApiStyle({ templateId: "Nope" }).ok).toBe(false);
+    // A template is ignored (templates are frames now), never refused
+    expect(parseApiStyle({ templateId: "Nope" })).toEqual({
+      ok: true,
+      style: {},
+    });
     expect(parseApiStyle({ margin: 17 }).ok).toBe(false);
     expect(parseApiStyle({ logoFileId: "../etc/passwd" }).ok).toBe(false);
     expect(

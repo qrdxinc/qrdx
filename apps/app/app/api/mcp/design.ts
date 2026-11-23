@@ -2,7 +2,6 @@ import "server-only";
 
 import {
   BUILT_IN_FRAMES,
-  getAllTemplates,
   OFFICIAL_FRAME_COLLECTIONS,
   OFFICIAL_FRAMES,
 } from "qrdx";
@@ -64,7 +63,6 @@ import {
   LOOK_KEYS,
   type LogoIconId,
   MARGIN_MAX,
-  TEMPLATE_IDS,
   toThemeStyles,
 } from "@/lib/qr-design/style";
 import type { ActiveScope } from "@/lib/scope";
@@ -713,12 +711,6 @@ export function designOptions() {
           '{ style: "custom", spec } with a frame spec, such as a community frame\'s style.frame from get_community_item. It is drawn as it is; repairs never change it.',
         official: officialFrameOptions(),
       },
-      templates: getAllTemplates()
-        .filter((template) => TEMPLATE_IDS.includes(template.id))
-        .map(({ id, name }) => ({
-          id,
-          name: id === "default" ? "None" : name,
-        })),
       levels: ERROR_LEVELS.map((id) => ({
         id,
         recovery: { L: "~7%", M: "~15%", Q: "~25%", H: "~30%" }[id],

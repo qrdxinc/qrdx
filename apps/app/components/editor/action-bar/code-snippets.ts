@@ -30,13 +30,7 @@ import {
   SHADCN_REGISTRY_NAMESPACE,
   SHADCN_REGISTRY_URL,
 } from "@repo/config";
-import {
-  DEFAULT_SIZE,
-  getTemplate,
-  getTemplateIds,
-  type QRCodeProps,
-  resolveQRCodeProps,
-} from "qrdx";
+import { DEFAULT_SIZE, type QRCodeProps, resolveQRCodeProps } from "qrdx";
 import {
   BODY_PATTERN,
   CORNER_EYE_DOT_PATTERNS,
@@ -255,8 +249,6 @@ export const LEFT_OUT = {
 
 const shapeLeftOut = (part: "dot" | "eye" | "eye center", value: string) =>
   `The "${value}" ${part} shape`;
-const borderLeftOut = (id: string) =>
-  `The "${getTemplate(id)?.name ?? id}" frame`;
 
 /** What the editor renders when a style field is unset (QRCodeSVG defaults). */
 const ENGINE_DEFAULTS = {
@@ -269,7 +261,6 @@ const ENGINE_DEFAULTS = {
   margin: 0,
 } as const;
 
-const TEMPLATE_IDS = new Set(getTemplateIds());
 const MARGIN_MAX = 16;
 const IMAGE_DATA_MAX_LENGTH = 2048;
 
@@ -490,8 +481,6 @@ function shadcnStyleProps(style: ThemeStyles, notes: Notes): string[] {
     "cornerEyePattern",
     "cornerEyeDotPattern",
     "level",
-    // "default" is a template too: it insets the code a little.
-    "templateId",
   ] as const) {
     const value = clean[key];
     if (value !== undefined && value !== "") props.push(jsxProp(key, value));
@@ -731,12 +720,6 @@ export function imageSnippet(input: SnippetInput): ImageSnippet {
   if (level !== IMAGE_DEFAULTS.level) params.set("level", level);
   const margin = roundMargin(style.margin);
   if (margin !== IMAGE_DEFAULTS.margin) params.set("margin", String(margin));
-  const template = style.templateId;
-  if (template && template !== "default") {
-    if (TEMPLATE_IDS.has(template)) params.set("template", template);
-    else notes.add(borderLeftOut(template));
-  }
-
   const frame = style.frame;
   // A frame drawn from its own spec (not an official one's), which only
   // `style` can carry.
@@ -1048,12 +1031,6 @@ export function mcpSnippet(input: SnippetInput): Snippet {
   if (Object.keys(gradients).length > 0) design.gradients = gradients;
   design.margin = roundMargin(style.margin);
   design.level = style.level ?? ENGINE_DEFAULTS.level;
-  const template = style.templateId;
-  if (template && template !== "default") {
-    if (TEMPLATE_IDS.has(template)) design.templateId = template;
-    else notes.add(borderLeftOut(template));
-  }
-
   const frame = style.frame;
   if (frame && frame.style !== "none") {
     const out: Record<string, unknown> = { style: frame.style };
@@ -1121,7 +1098,6 @@ const CLI_HEX = /^#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
 /**
  * `npx @qrdx/cli generate …`. Every option it can take is passed, because
  * in a terminal the CLI asks for any option left out. It still asks for a
- * border when the design has none (it has no `--template none`) and for a
  * shape it no longer offers.
  */
 export function cliSnippet(input: SnippetInput): Snippet {
@@ -1166,12 +1142,6 @@ export function cliSnippet(input: SnippetInput): Snippet {
     `--level ${style.level ?? ENGINE_DEFAULTS.level}`,
     `--margin ${roundMargin(style.margin)}`,
   ];
-  const template = style.templateId;
-  if (template && template !== "default") {
-    if (TEMPLATE_IDS.has(template)) otherFlags.push(`--template ${template}`);
-    else notes.add(borderLeftOut(template));
-  }
-
   const frameFlags: string[] = [];
   const frame = style.frame;
   if (frame && frame.style !== "none" && frame.style !== "custom") {
@@ -1267,8 +1237,6 @@ function libraryProps(
   if (style.level) props.level = style.level;
   // The default quiet zone is 0, as in the editor.
   if (style.margin) props.margin = style.margin;
-  // "default" is a template too: it insets the code a little.
-  if (style.templateId) props.templateId = style.templateId;
   if (style.frame && hasFrame(style)) props.frame = style.frame;
 
   // No logo unless one is passed (qrdx 0.0.47 and later).
@@ -1552,7 +1520,6 @@ const ELEMENT_ATTRIBUTES: Record<string, "string" | "number" | "boolean"> = {
   cornerEyePattern: "string",
   cornerEyeDotPattern: "string",
   margin: "number",
-  templateId: "string",
   moduleScale: "number",
   autoLevel: "boolean",
   shape: "string",

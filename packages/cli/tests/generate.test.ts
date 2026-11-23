@@ -534,7 +534,6 @@ describe("generate command", () => {
       ["--body", ["--body", "blob"], 'Invalid --body "blob"'],
       ["--eye", ["--eye", "blob"], 'Invalid --eye "blob"'],
       ["--dot", ["--dot", "blob"], 'Invalid --dot "blob"'],
-      ["--template", ["--template", "arrow"], 'Invalid --template "arrow"'],
       ["--size", ["--size", "abc"], 'Invalid --size "abc"'],
       ["--margin", ["--margin", "-1"], 'Invalid --margin "-1"'],
       ["--fg", ["--fg", '{"type":"linear"'], "Invalid gradient JSON"],

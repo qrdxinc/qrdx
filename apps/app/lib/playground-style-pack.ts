@@ -21,7 +21,6 @@ export const STYLE_KEYS = {
   cornerEyeDotPattern: "o",
   level: "l",
   margin: "m",
-  templateId: "t",
   frame: "r",
   showLogo: "g",
   // Engine options the editor exposes (see ENGINE_OPTION_FIELDS in
@@ -47,6 +46,12 @@ export type LinkableStyle = Partial<Pick<ThemeStyles, LinkedField>>;
 
 /** Key of the preset the design started from (a label and Reset base only). */
 export const PRESET_KEY = "k";
+
+/**
+ * Key links made before qrdx 0.0.64 kept a template under. Never written
+ * now; a link that has one opens with the template's frame.
+ */
+export const LEGACY_TEMPLATE_KEY = "t";
 
 function toBase64Url(text: string): string {
   let binary = "";

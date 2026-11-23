@@ -36791,9 +36791,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "본체 패턴, 모서리 눈과 눈 점 모양, 프레임 템플릿, 오류 정정 수준, 기본값, 제한 사항입니다.",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "본체 패턴, 모서리 눈과 눈 점 모양, 기본 제공 프레임, 오류 정정 수준, 기본값, 제한 사항입니다.",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },

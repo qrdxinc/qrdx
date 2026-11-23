@@ -136,7 +136,7 @@ export const plugins: IntegrationCatalogEntry[] = [
     tagline:
       "Generate, save and export customized QR codes from Raycast, or describe one to Raycast AI.",
     description: [
-      "Generate QR codes with body patterns, corner styles, colors, templates and logos from the Raycast launcher, keep a library of saved codes, and export them.",
+      "Generate QR codes with body patterns, corner styles, colors, frames and logos from the Raycast launcher, keep a library of saved codes, and export them.",
       "Generate QR with AI turns a plain-English description into settings, and Raycast AI can call the extension's tools directly.",
     ],
     kind: "guide",
@@ -171,8 +171,7 @@ export const plugins: IntegrationCatalogEntry[] = [
     capabilities: [
       {
         title: "Generate QR",
-        description:
-          "Body patterns, corner styles, colors, templates and logos.",
+        description: "Body patterns, corner styles, colors, frames and logos.",
       },
       {
         title: "Saved QR codes",
@@ -193,7 +192,7 @@ export const plugins: IntegrationCatalogEntry[] = [
     tagline:
       "Style a QR code in a Canva side panel and add it to your design in one click.",
     description: [
-      "Enter a URL or text, then pick a template, dot, eye and eye-dot patterns, colors from Canva's color picker, error correction and an optional logo. The preview updates as you go.",
+      "Enter a URL or text, then pick dot, eye and eye-dot patterns, colors from Canva's color picker, error correction and an optional logo. The preview updates as you go.",
       "Add to Design places the code on your page as a 1024 px PNG with alt text.",
     ],
     kind: "guide",
@@ -235,9 +234,8 @@ export const plugins: IntegrationCatalogEntry[] = [
         description: "The code redraws as you change its content or style.",
       },
       {
-        title: "Templates and patterns",
-        description:
-          "Frame templates and body, eye and eye-dot shapes, each shown as a thumbnail.",
+        title: "Patterns",
+        description: "Body, eye and eye-dot shapes, each shown as a thumbnail.",
       },
       {
         title: "Canva colors",

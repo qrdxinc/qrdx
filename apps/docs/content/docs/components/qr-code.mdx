@@ -1,6 +1,6 @@
 ---
 title: QR Code
-description: A styled, accessible QR code with download buttons for shadcn/ui projects. Colors, gradients, patterns, logos and frame templates come from the qrdx library.
+description: A styled, accessible QR code with download buttons for shadcn/ui projects. Colors, gradients, patterns and logos come from the qrdx library.
 icon: QrCode
 ---
 
@@ -57,12 +57,6 @@ Pass a qrdx gradient instead of a color: `linear` with an `angle`, or `radial`. 
 `logo` places an image in the center and clears the modules behind it. Use error correction level `H` so the code still scans with part of it covered. A data URL keeps the logo in downloads; a remote image needs CORS headers.
 
 <ComponentPreview name="qr-code-logo" />
-
-### Frame templates
-
-`templateId` draws one of qrdx's [frame templates](/docs/features/templates) around the code. Pair it with `caption` for a call to action under the frame.
-
-<ComponentPreview name="qr-code-template" />
 
 ### Download formats
 

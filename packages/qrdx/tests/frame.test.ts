@@ -7,7 +7,6 @@ import {
   getFrameText,
   isFrameActive,
 } from "../src/frame";
-import { getAllTemplates, getTemplate, getTemplateIds } from "../src/templates";
 import {
   FRAME_STYLES,
   FRAME_TEXT_MAX_LENGTH,
@@ -87,16 +86,5 @@ describe("frames", () => {
     expect(
       frameSchema.safeParse({ style: "border", text: "x".repeat(25) }).success
     ).toBe(false);
-  });
-});
-
-describe("templates", () => {
-  it("registers every template under its own id", () => {
-    for (const id of getTemplateIds().filter((name) => name !== "default")) {
-      expect(getTemplate(id)?.id).toBe(id);
-      expect(typeof getTemplate(id)?.wrapper).toBe("function");
-    }
-    expect(getAllTemplates()).toHaveLength(getTemplateIds().length);
-    expect(getTemplate("does-not-exist")).toBeUndefined();
   });
 });

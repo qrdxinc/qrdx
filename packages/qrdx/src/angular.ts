@@ -108,9 +108,6 @@ export class QRCode implements QRCodeInputs {
   readonly autoLevel: Prop<"autoLevel"> = input();
   readonly exactLevel: Prop<"exactLevel"> = input();
   readonly scale: Prop<"scale"> = input();
-  readonly templateId: Prop<"templateId"> = input();
-  readonly customTemplate: Prop<"customTemplate"> = input();
-  readonly customProps: Prop<"customProps"> = input();
   readonly frameLabelMarkers: Prop<"frameLabelMarkers"> = input();
   readonly partMarkers: Prop<"partMarkers"> = input();
   /** `QRProps.style`: inline styles for the `<svg>` */
@@ -151,9 +148,6 @@ export class QRCode implements QRCodeInputs {
       autoLevel: this.autoLevel(),
       exactLevel: this.exactLevel(),
       scale: this.scale(),
-      templateId: this.templateId(),
-      customTemplate: this.customTemplate(),
-      customProps: this.customProps(),
       frameLabelMarkers: this.frameLabelMarkers(),
       partMarkers: this.partMarkers(),
       style: this.svgStyle(),

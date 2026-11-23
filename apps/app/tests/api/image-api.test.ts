@@ -44,7 +44,7 @@ const decodes = (svg: string, width = 520) =>
 describe("the original parameters", () => {
   it("render byte for byte as the original renderer, cached for a year", async () => {
     const query =
-      "data=https://qrdx.dev&size=256&fg=155dfc&body=rounded&eye=rounded&dot=rounded&template=Arrow";
+      "data=https://qrdx.dev&size=256&fg=155dfc&body=rounded&eye=rounded&dot=rounded";
     const response = await get(query);
     expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toBe(IMMUTABLE);
@@ -52,6 +52,25 @@ describe("the original parameters", () => {
       qrImageQuerySchema.parse(Object.fromEntries(new URLSearchParams(query))),
     );
     expect(await response.text()).toBe(expected);
+  });
+
+  it("ignores `template` (templates are frames now), so old links still draw the code", async () => {
+    const plain =
+      "data=https://qrdx.dev&size=256&fg=155dfc&body=rounded&eye=rounded&dot=rounded";
+    const expected = await (await get(plain)).text();
+    for (const template of ["Halloween", "Arrow", "dotring", "nope", ""]) {
+      const response = await get(`${plain}&template=${template}`);
+      expect(response.status, template).toBe(200);
+      const svg = await response.text();
+      expect(svg, template).toBe(expected);
+      expect(decodes(svg), template).toBe("https://qrdx.dev");
+    }
+    // With the styled renderer too
+    const styled = await get(`${plain}&frame=banner-bottom&template=Halloween`);
+    expect(styled.status).toBe(200);
+    expect(await styled.text()).toBe(
+      await (await get(`${plain}&frame=banner-bottom`)).text(),
+    );
   });
 });
 

@@ -155,7 +155,6 @@ const MAP: Record<string, { kind: "shot" | "clip" | "diagram"; id: string }> = {
   "nextjs-server-code": { kind: "shot", id: "lib-nextjs-server-code" },
   "lib-download-png": { kind: "shot", id: "lib-download-result" },
   "lib-art-codes": { kind: "shot", id: "lib-art-codes" },
-  "lib-templates": { kind: "shot", id: "lib-templates" },
   "lib-frame-banner": { kind: "shot", id: "lib-frame-banner" },
   "lib-circle-code": { kind: "shot", id: "lib-circle-code" },
   "lib-gradient-codes": { kind: "shot", id: "lib-gradient-codes" },

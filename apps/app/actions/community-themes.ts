@@ -41,6 +41,7 @@ import {
   COMMUNITY_THEME_TAGS,
   COMMUNITY_THEMES_PAGE_SIZE,
 } from "@/lib/constants";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import { getCurrentUserId } from "@/lib/shared";
 import type {
   CommunityFilterOption,
@@ -342,7 +343,7 @@ async function publishThemeAsItem(
       theme: {
         id: theme.id,
         name: theme.name,
-        style: theme.style as ThemeStyles,
+        style: withTemplateAsFrame(theme.style as ThemeStyles),
       },
       tags,
     });

@@ -377,7 +377,7 @@
         "none": "Nessuna",
         "border": "Bordo"
       },
-      "more": "Il Playground completo aggiunge {bodyPatterns, number} pattern del corpo, {eyeShapes, number} forme degli occhi, {eyeCentres, number} centri degli occhi, colori e gradienti a scelta, loghi, modelli e download in PNG, SVG, PDF o EPS.",
+      "more": "Il Playground completo aggiunge {bodyPatterns, number} pattern del corpo, {eyeShapes, number} forme degli occhi, {eyeCentres, number} centri degli occhi, colori e gradienti a scelta, loghi, cornici e download in PNG, SVG, PDF o EPS.",
       "customize": "Personalizza nel Playground",
       "qrLabel": "QR code per {value}",
       "empty": "Scrivi un link per vedere il tuo QR code."
@@ -4842,10 +4842,7 @@
         "theFrameIsAddedAround": "La cornice viene aggiunta attorno al codice, quindi l’immagine scaricata diventa più grande e il codice resta leggibile alla scansione.",
         "label": "Etichetta",
         "pickAFrameFirst": "Scegli prima una cornice",
-        "none": "Nessuna",
-        "takesDotColor": "Prende il colore dei punti del codice.",
-        "alsoHasTemplate": "Questo design include anche la cornice {name} all’interno di questa. Scegliendo un’altra cornice, vengono sostituite entrambe.",
-        "templateKeepsSize": "Questa cornice si adatta al codice che contiene, quindi l’immagine scaricata mantiene la dimensione che scegli."
+        "none": "Nessuna"
       },
       "frameFields": {
         "textSize": "Dimensione testo"

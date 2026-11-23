@@ -377,7 +377,7 @@
         "none": "フレームなし",
         "border": "枠線"
       },
-      "more": "Playgroundのフル機能では、ボディパターン{bodyPatterns, number}種類、アイシェイプ{eyeShapes, number}種類、アイセンター{eyeCentres, number}種類、自由な色とグラデーション、ロゴ、テンプレート、PNG、SVG、PDF、EPSのダウンロードをご利用いただけます。",
+      "more": "Playgroundのフル機能では、ボディパターン{bodyPatterns, number}種類、アイシェイプ{eyeShapes, number}種類、アイセンター{eyeCentres, number}種類、自由な色とグラデーション、ロゴ、フレーム、PNG、SVG、PDF、EPSのダウンロードをご利用いただけます。",
       "customize": "Playgroundでカスタマイズ",
       "qrLabel": "{value}のQRコード",
       "empty": "リンクを入力するとQRコードが表示されます。"
@@ -4842,10 +4842,7 @@
         "theFrameIsAddedAround": "フレームはコードの周囲に追加されるため、ダウンロードする画像は大きくなりますが、コード自体はスキャンできる状態のままです。",
         "label": "ラベル",
         "pickAFrameFirst": "先にフレームを選んでください",
-        "none": "なし",
-        "takesDotColor": "コードのドットの色が適用されます。",
-        "alsoHasTemplate": "このデザインには、このフレームの内側に {name} フレームも含まれています。別のフレームを選ぶと、両方が置き換えられます。",
-        "templateKeepsSize": "このフレームはコードを内側に収めるため、ダウンロードする画像は選択したサイズのままです。"
+        "none": "なし"
       },
       "frameFields": {
         "textSize": "文字サイズ"

@@ -81,7 +81,6 @@ const DESIGNS = {
     cornerEyeDotPattern: "circle",
     level: "M",
     margin: 2,
-    templateId: "default",
   },
   gradients: {
     fgColor: {
@@ -106,7 +105,7 @@ const DESIGNS = {
     frame: { style: "banner-bottom", text: `It's "free" & <b> {{x}}` },
   },
   customFrame: { frame: { style: "custom", spec: frameSpec, text: "Join" } },
-  border: { templateId: "StandardBox", margin: 2 },
+  border: { frame: { style: "standard-box" }, margin: 2 },
   qrdxLogo: { level: "H", showLogo: true },
   logoLayout: {
     showLogo: true,

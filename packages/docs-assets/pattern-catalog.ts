@@ -353,6 +353,12 @@ const FRAME_RANKS: Record<
   tag: { category: "Playful", popularity: null },
   envelope: { category: "Playful", popularity: null },
   "menu-card": { category: "Playful", popularity: null },
+  arrow: { category: "Playful", popularity: null },
+  "standard-box": { category: "Classic", popularity: null },
+  "square-border": { category: "Classic", popularity: null },
+  "striked-box": { category: "Decorative", popularity: null },
+  pumpkin: { category: "Playful", popularity: null },
+  "dot-ring": { category: "Rounded", popularity: null },
 };
 
 const compact = (failsWith: FailsWith): FailsWith =>

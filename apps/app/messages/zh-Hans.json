@@ -377,7 +377,7 @@
         "none": "无边框",
         "border": "边线"
       },
-      "more": "完整的 Playground 还提供 {bodyPatterns, number} 种主体图案、{eyeShapes, number} 种定位点形状、{eyeCentres, number} 种定位点中心、任意颜色和渐变、徽标、模板，以及 PNG、SVG、PDF 或 EPS 下载。",
+      "more": "完整的 Playground 还提供 {bodyPatterns, number} 种主体图案、{eyeShapes, number} 种定位点形状、{eyeCentres, number} 种定位点中心、任意颜色和渐变、徽标、边框，以及 PNG、SVG、PDF 或 EPS 下载。",
       "customize": "在 Playground 中自定义",
       "qrLabel": "{value} 的二维码",
       "empty": "输入链接即可查看你的二维码。"
@@ -4842,10 +4842,7 @@
         "theFrameIsAddedAround": "边框会添加在二维码外围，因此下载的图片尺寸会变大，二维码本身仍可正常扫描。",
         "label": "标签",
         "pickAFrameFirst": "请先选择边框",
-        "none": "无",
-        "takesDotColor": "它使用二维码圆点的颜色。",
-        "alsoHasTemplate": "此设计内还包含 {name} 边框。选择其他边框会同时替换这两个边框。",
-        "templateKeepsSize": "此边框会将二维码容纳在内部，因此下载的图片会保持你所选的尺寸。"
+        "none": "无"
       },
       "frameFields": {
         "textSize": "文字大小"

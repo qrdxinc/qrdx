@@ -165,7 +165,7 @@ https://api.qrdx.dev/v1/qr?data=<encoded text>&format=svg|png|webp|gif|bmp|ico|t
 
 - **Encode `data`** with `encodeURIComponent`, or `&`, `#`, `+` and spaces split it.
 - **Pick the format for the destination.** PNG works in chat apps and email clients that don't show SVG; SVG is sharpest on the web; EPS is for print shops.
-- **Style with query parameters** (`fg`, `bg`, `body`, `eye`, `dot`, `level`, `margin`, `template`, `frame`, `frameText`, `logoIcon`), or pass the whole design as JSON in [`style`](/docs/developers/image-api#style) for gradients and custom frames. The values are listed in [Image API](/docs/developers/image-api#parameters), and the MCP tool `list_qr_styles` returns them too.
+- **Style with query parameters** (`fg`, `bg`, `body`, `eye`, `dot`, `level`, `margin`, `frame`, `frameText`, `logoIcon`), or pass the whole design as JSON in [`style`](/docs/developers/image-api#style) for gradients and custom frames. The values are listed in [Image API](/docs/developers/image-api#parameters), and the MCP tool `list_qr_styles` returns them too.
 - **The same URL always returns the same image**, so it's safe to cache and embed.
 
 ## 3. Call the REST API for a user

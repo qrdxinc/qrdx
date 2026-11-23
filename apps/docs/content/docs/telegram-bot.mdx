@@ -58,14 +58,13 @@ Everything before the first option is the content. The look is applied first and
 | `--body` | The shape of the dots | Any of the editor's {facts.bodyPatterns} dot shapes, such as `rounded`, `circle` or `classy` |
 | `--eye` | The shape of the corner eyes | Any of the {facts.eyeShapes} eye shapes, such as `square`, `rounded` or `gear` |
 | `--dot` | The shape of the eye centers | Any of the {facts.eyeCentres} center shapes, such as `square`, `rounded` or `circle` |
-| `--frame` | A frame around the code | `none` or any of the {facts.frameStyles} built-in frames, such as `banner-bottom`, `banner-top`, `speech-bubble` or `polaroid` |
+| `--frame` | A frame around the code | `none` or any of the {facts.frameStyles} built-in frames, such as `banner-bottom`, `speech-bubble`, `polaroid` or `dot-ring` |
 | `--frame-text` | The frame's label, up to 24 characters | Any text, in quotes when it has spaces. Without `--frame`, it goes on a banner under the code |
-| `--template` | A frame drawn as a template | `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `DotRing`, `Halloween` or `default`, in any case |
 | `--logo` | An icon in the middle | `link`, `wifi`, `location`, `phone`, `email`, `whatsapp`, `instagram`, `file`, `calendar` or `none` |
 
 Before the bot sends a styled code, QRdx checks it with the same scan score as the editor. When a design would be hard for phones to read, QRdx adjusts it (darker colors, plainer shapes or more error correction) and says so in the caption. If that still isn't enough, usually because the content is long, you get the code in black on white with a note.
 
-**Open in editor** opens the editor with the same design: colors, shapes, frame and border. The logo icon doesn't travel in the link, so pick it again in the editor.
+**Open in editor** opens the editor with the same design: colors, shapes and frame. The logo icon doesn't travel in the link, so pick it again in the editor.
 
 ## Inline mode in any chat
 

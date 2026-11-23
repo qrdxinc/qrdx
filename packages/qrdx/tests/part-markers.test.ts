@@ -89,7 +89,10 @@ const CASES: [string, QRProps][] = [
       eyeColors: { topRight: { outer: "#b91c1c", inner: "#1d4ed8" } },
     },
   ],
-  ["a template", { value: VALUE, size: 256, templateId: "Arrow", ...logo() }],
+  [
+    "a former template's frame",
+    { value: VALUE, size: 256, frame: { style: "arrow" }, ...logo() },
+  ],
   ["a frame", { value: VALUE, size: 256, frame: { style: "banner-bottom" } }],
   ["a circle code", { value: VALUE, size: 256, shape: "circle" }],
   ["a heart code", { value: VALUE, size: 256, shape: "heart" }],

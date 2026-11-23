@@ -128,7 +128,7 @@ const softwareApplicationSchema = {
   featureList: [
     "Unlimited free static QR codes with no signup and no watermark",
     "Dot patterns, corner-eye shapes, solid colors and linear or radial gradients",
-    "Center logos, call-to-action frames and decorative templates",
+    "Center logos and call-to-action frames",
     "Logo QR and Image QR art that blend a logo or photo into the code",
     "AI-designed QR code themes",
     // AI art is listed where it can run (lib/ai/art-availability.ts).

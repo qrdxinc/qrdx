@@ -8,7 +8,6 @@ import {
   getScanScore,
   getScanScoreFromFrames,
 } from "../src/scan-score";
-import { getTemplateCodeShare } from "../src/template-placement";
 import type { QRProps } from "../types";
 import { installFakeDom } from "./support/fake-dom";
 import { capture } from "./support/qr";
@@ -137,30 +136,15 @@ describe("getScanScore", () => {
     );
   });
 
-  it("tests a code in a template at the size the template draws it", async () => {
-    // Templates draw the code at a share of their artwork
-    expect(getTemplateCodeShare({ value: VALUE })).toBe(1);
-    expect(getTemplateCodeShare({ value: VALUE, templateId: "default" })).toBe(
-      0.95
-    );
-    expect(getTemplateCodeShare({ value: VALUE, templateId: "Arrow" })).toBe(
-      0.5
-    );
-    expect(
-      getTemplateCodeShare({ value: VALUE, templateId: "Halloween" })
-    ).toBeCloseTo(0.38, 6);
-    expect(
-      getTemplateCodeShare({ value: VALUE, templateId: "DotRing" })
-    ).toBeCloseTo(300 / 593, 6);
-    // So a code that scans well on its own scores well in a template too
-    // (it used to be tested as if it filled the artwork, and failed)
-    for (const templateId of ["Arrow", "Halloween", "DotRing"]) {
-      const result = await getScanScore({ ...PLAIN, templateId });
+  it("scores a code in a former template's frame at the code's own size", async () => {
+    // The frames add their artwork around the code, which keeps its size
+    for (const style of ["arrow", "pumpkin", "dot-ring"] as const) {
+      const result = await getScanScore({ ...PLAIN, frame: { style } });
       const passed = (id: string) =>
         result.checks.find((c) => c.id === id)?.passed;
-      expect(result.grade, templateId).toBe("great");
-      expect(passed("decode-160"), templateId).toBe(true);
-      expect(passed("decode-320"), templateId).toBe(true);
+      expect(result.grade, style).toBe("great");
+      expect(passed("decode-160"), style).toBe(true);
+      expect(passed("decode-320"), style).toBe(true);
     }
   });
 
@@ -219,7 +203,7 @@ describe("drawScanFrames and getScanScoreFromFrames", () => {
     ["low contrast", { ...PLAIN, fgColor: "#9a9a9a", bgColor: "#b0b0b0" }],
     ["light on dark", { ...PLAIN, fgColor: "#ffffff", bgColor: "#111111" }],
     ["no quiet zone", { ...PLAIN, margin: 0 }],
-    ["in a template", { ...PLAIN, templateId: "Arrow" }],
+    ["in a former template's frame", { ...PLAIN, frame: { style: "arrow" } }],
     [
       "framed",
       { ...PLAIN, frame: { style: "banner-bottom", text: "Scan me" } },

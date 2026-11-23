@@ -28,7 +28,6 @@ import {
   isConvertedFormat,
 } from "@/lib/qr-image-formats";
 import {
-  QR_TEMPLATE_IDS,
   QrDataTooLongError,
   renderQrEps,
   renderQrImage,
@@ -72,25 +71,19 @@ const FLAT_PARAMS = [
   "dot",
   "level",
   "margin",
-  "template",
 ] as const;
-
-const templateIdsByLowercase = new Map(
-  QR_TEMPLATE_IDS.map((id) => [id.toLowerCase(), id]),
-);
 
 const invalid = (param: string, message: string) =>
   new ValidationError("Invalid query parameters", [{ param, message }]);
 
 function parseQuery(searchParams: URLSearchParams) {
-  const raw: Record<string, string> = Object.fromEntries(searchParams);
+  // Templates are frames since qrdx 0.0.64: `template` is ignored, so
+  // image links that still pass one keep drawing the code
+  const { template: _template, ...raw }: Record<string, string> =
+    Object.fromEntries(searchParams);
   // Case-insensitive enums for hand-written URLs.
   if (raw.level) raw.level = raw.level.toUpperCase();
   if (raw.format) raw.format = raw.format.toLowerCase();
-  if (raw.template) {
-    raw.template =
-      templateIdsByLowercase.get(raw.template.toLowerCase()) ?? raw.template;
-  }
   if (raw.frame) raw.frame = raw.frame.toLowerCase();
   if (raw.item) raw.item = raw.item.toLowerCase();
 

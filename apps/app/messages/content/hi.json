@@ -36791,9 +36791,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "बॉडी पैटर्न, कोने की आई और आई डॉट के आकार, फ़्रेम टेम्पलेट, एरर करेक्शन लेवल, डिफ़ॉल्ट और सीमाएँ।",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "बॉडी पैटर्न, कोने की आई और आई डॉट के आकार, बिल्ट-इन फ़्रेम, एरर करेक्शन लेवल, डिफ़ॉल्ट और सीमाएँ।",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },

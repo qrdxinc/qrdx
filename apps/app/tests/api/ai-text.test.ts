@@ -158,7 +158,6 @@ describe("POST /api/generate-qr-theme", () => {
     margin: 4,
     level: "Q",
     frame: { style: "none" },
-    templateId: "default",
     logo: "none",
   };
 

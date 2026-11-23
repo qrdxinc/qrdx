@@ -36791,9 +36791,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "Pola badan, bentuk mata sudut dan titik mata, templat bingkai, tingkat koreksi kesalahan, nilai default, dan batasan.",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "Pola badan, bentuk mata sudut dan titik mata, bingkai bawaan, tingkat koreksi kesalahan, nilai default, dan batasan.",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },

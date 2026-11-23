@@ -913,7 +913,6 @@ export function BulkGenerator({
               logo={selectedStyle.customLogo ?? DEFAULT_QR_LOGO}
               margin={quietZone ? QUIET_ZONE_MODULES : 0}
               size={256}
-              templateId={selectedStyle.templateId}
               value={previewValue}
               {...styleEngineOptions(
                 selectedStyle,

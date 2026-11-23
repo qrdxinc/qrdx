@@ -4,11 +4,10 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createElement } from "react";
 import { createQRArtImage } from "../../src/art";
 import { BUILT_IN_FRAME_SPECS } from "../../src/frames/builtin";
 import { getOfficialFrame } from "../../src/frames/official";
-import type { LogoOptions, QRPropsSVG, TemplateDefinition } from "../../types";
+import type { LogoOptions, QRPropsSVG } from "../../types";
 import { CORNER_EYE_DOT_PATTERNS } from "../../types/corner-dot";
 import { CORNER_EYE_PATTERNS } from "../../types/corner-eye";
 import { FRAME_STYLES } from "../../types/frame";
@@ -64,31 +63,6 @@ function silhouette() {
   }
   return { type: "silhouette" as const, width: side, height: side, cells };
 }
-
-/** The README's custom template, written with React elements. */
-const reactTemplate: TemplateDefinition<{ label?: string }> = {
-  id: "Framed",
-  name: "Framed",
-  wrapper: (children, props) =>
-    createElement(
-      "svg",
-      {
-        style: { width: "100%" },
-        viewBox: "0 0 300 340",
-        xmlns: "http://www.w3.org/2000/svg",
-      },
-      createElement(
-        "g",
-        { transform: "translate(20, 20) scale(0.87)" },
-        children
-      ),
-      createElement(
-        "text",
-        { x: "150", y: "325", textAnchor: "middle", fill: props?.fgColor },
-        props?.label
-      )
-    ),
-};
 
 /** A colorful test picture: hue across, light down, a dark disc. */
 function syntheticPhoto(side: number) {
@@ -247,9 +221,9 @@ export function parityCases(
     halo: { width: 0.3, color: "#fde68a" },
     shadow: { dx: 0.2, dy: -0.1, opacity: 0.25, color: "#7c2d12" },
   });
-  add("halo and shadow with a template", {
+  add("halo and shadow in the dot ring frame", {
     margin: 2,
-    templateId: "dot-ring",
+    frame: { style: "dot-ring" },
     halo: { width: 0.2 },
     shadow: {},
   });
@@ -486,64 +460,52 @@ export function parityCases(
     level: "H",
     imageSettings: { src: LOGO, width: 56, height: 56, excavate: true },
   });
-  add("part markers with a template", {
+  add("part markers in a former template's frame", {
     partMarkers: true,
-    templateId: "Arrow",
+    frame: { style: "arrow" },
   });
 
-  // Templates
-  for (const templateId of [
-    "default",
-    "Arrow",
-    "StandardBox",
-    "SquareBorder",
-    "StrikedBox",
-    "Halloween",
-    "DotRing",
-  ]) {
-    add(`template ${templateId}`, {
-      templateId,
+  // The former templates, frames since 0.0.64
+  for (const style of [
+    "arrow",
+    "standard-box",
+    "square-border",
+    "striked-box",
+    "pumpkin",
+    "dot-ring",
+  ] as const) {
+    add(`frame ${style}`, {
+      frame: { style, color: "#111827" },
       fgColor: "#111827",
       bgColor: linear(0, "#ffffff", "#f1f5f9"),
     });
   }
-  add("template with frame and attributes", {
-    templateId: "Arrow",
-    frame: { style: "rounded-border" },
+  add("former template's frame with attributes", {
+    frame: { style: "arrow" },
     className: "qr",
     style: { maxWidth: 200 },
   });
-  add("template with a logo", {
-    templateId: "StandardBox",
+  add("former template's frame with a logo", {
+    frame: { style: "standard-box" },
     level: "H",
     imageSettings: { src: LOGO, width: 48, height: 48, excavate: true },
   });
-  // Dot ring: text on the ring, colors and strokes, a caller's logo
-  add("dot ring template with custom props", {
-    templateId: "DotRing",
+  // Dot ring: text on the ring, colors, a caller's logo
+  add("dot ring frame with text and colors", {
+    frame: {
+      style: "dot-ring",
+      text: "Scan <me> & see",
+      secondaryText: "",
+      color: "#1e3a8a",
+      textColor: "#fde047",
+    },
     level: "H",
     bodyPattern: "circle-large",
-    customProps: {
-      customText: "Scan <me> & see",
-      textPosition: "bottom",
-      textRotation: 12,
-      textColor: "#fde047",
-      fontSize: 28,
-      fontWeight: 700,
-      fontLetterSpacing: 2,
-      outerCircleColor: "#1e3a8a",
-      strokeWidth: 3,
-      innerStrokeColor: "#fde047",
-    },
   });
-  add("dot ring template with a logo", {
-    templateId: "DotRing",
+  add("dot ring frame with a logo", {
+    frame: { style: "dot-ring" },
     level: "H",
     imageSettings: { src: LOGO, width: 48, height: 48, excavate: true },
-  });
-  add("React custom template", {
-    customTemplate: reactTemplate,
-    customProps: { label: "Scan <me>" },
   });
 
   // Root attributes
