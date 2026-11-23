@@ -212,7 +212,7 @@ function formulaSection() {
     .setHeader("Codes for a list")
     .addWidget(
       CardService.newTextParagraph().setText(
-        `Select the cells in one column that hold the links or text (not the header), up to ${FORMULA_MAX_ROWS} rows. The next column gets an =IMAGE() formula in each row, in the style and size above. Sheets loads those codes from api.qrdx.dev instead of saving them in the file, so each cell's text travels in the image's address, and a code changes when you edit its cell.`
+        `Select the cells in one column that hold the links or text (not the header), up to ${FORMULA_MAX_ROWS} rows. The next column gets an =IMAGE() formula in each row, in the style and size above. Sheets loads those codes from api.qrdx.dev instead of saving them in the file, so each cell's text travels in the image's address, and a code changes when you edit its cell. If Sheets warns that formulas are trying to reach external parties, click Allow access; until then the cells show #REF!.`
       )
     )
     .addWidget(
@@ -364,6 +364,8 @@ function placeInSheets(loadImage, placement) {
     .setHeight(pixels)
     .setAltTextTitle("QR code")
     .setAltTextDescription(placement.description);
+  // Without it, the image appeared only after a page reload (24 Nov 2026).
+  SpreadsheetApp.flush();
   return `QR code placed over cell ${columnLetter(column)}${row}.`;
 }
 
@@ -407,7 +409,7 @@ function writeImageFormulas(range, presetId, size) {
   sheet.setColumnWidth(column + 1, pixels);
   sheet.setRowHeights(range.getRow(), rows, pixels);
   const codes = rows === 1 ? "1 code" : `${rows} codes`;
-  return `Added ${codes} in column ${letter}. Sheets loads them from api.qrdx.dev.`;
+  return `Added ${codes} in column ${letter}. If Sheets asks, click Allow access at the top so it can load them from api.qrdx.dev.`;
 }
 
 // ── Entry points ──────────────────────────────────────────────────────────

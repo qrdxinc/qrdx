@@ -92,6 +92,13 @@ describe("the sidebar", () => {
       buttonAction(sheets, "Add =IMAGE() formulas"),
       "onWriteFormulas"
     );
+    assert.ok(
+      textsOf(sheets).some((text) =>
+        text.endsWith(
+          "If Sheets warns that formulas are trying to reach external parties, click Allow access; until then the cells show #REF!."
+        )
+      )
+    );
     const slides = get("onHomepage")(actionEvent("slides"));
     assert.equal(buttonAction(slides, "Add to slide"), "onInsert");
   });
@@ -354,6 +361,7 @@ describe("Sheets", () => {
           getRow: () => 3,
         }),
       }),
+      flush: () => log.push(["SpreadsheetApp", "flush"]),
     };
     const { get } = setUp({ hosts: { SpreadsheetApp } });
     const response = get("onInsert")(
@@ -366,6 +374,8 @@ describe("Sheets", () => {
       ["image", "setHeight", 96],
       ["image", "setAltTextTitle", "QR code"],
       ["image", "setAltTextDescription", "QR code for https://qrdx.dev"],
+      // Sheets shows the image only once pending changes are applied.
+      ["SpreadsheetApp", "flush"],
     ]);
   });
 
@@ -414,7 +424,7 @@ describe("Sheets", () => {
     );
     assert.equal(
       notification(response),
-      "Added 3 codes in column B. Sheets loads them from api.qrdx.dev."
+      "Added 3 codes in column B. If Sheets asks, click Allow access at the top so it can load them from api.qrdx.dev."
     );
     assert.deepEqual(log, [
       ["getRange", 2, 2, 3, 1],
