@@ -9,6 +9,8 @@ import { describe, expect, it } from "vitest";
 // Vercel, dates every file by the clone.
 const LEGAL = join(__dirname, "..", "..", "content", "legal");
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
+/** The earliest time zone's lead on UTC: a day starts first at UTC+14. */
+const FIRST_ZONE = 14 * 60 * 60 * 1000;
 
 /** The frontmatter's `lastUpdated` value, as written. */
 function lastUpdated(file: string): string | null {
@@ -30,7 +32,10 @@ describe("the legal pages' lastUpdated", () => {
     const date = new Date(`${day}T00:00:00Z`);
     // A real calendar day (2026-02-30 would roll over to March).
     expect(date.toISOString().slice(0, 10), file).toBe(day);
-    expect(date.getTime(), file).toBeLessThanOrEqual(Date.now());
+    // Not in the future: written as the author's calendar day, so a day
+    // that has already begun somewhere counts (UTC+14 is the first). An
+    // update dated 24 Nov in India fails a plain UTC check until 05:30 IST.
+    expect(date.getTime(), file).toBeLessThanOrEqual(Date.now() + FIRST_ZONE);
     expect(date.getUTCFullYear(), file).toBeGreaterThanOrEqual(2025);
   });
 

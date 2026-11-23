@@ -140,6 +140,34 @@ function qrImageUrl(data, presetId, pixels) {
 }
 
 /**
+ * The longest address UrlFetchApp takes, in characters. Apps Script's quotas
+ * list "URL Fetch URL length: 2 kB", and a 2,084-character address failed in
+ * the add-on (24 Nov 2026) though the API answers it. Sheets fetches the
+ * =IMAGE() formulas' addresses itself, so this is for Preview and Insert.
+ */
+const FETCH_URL_MAX_LENGTH = 2000;
+
+/** 2084 → "2,084". */
+function groupDigits(count) {
+  return String(count).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+/**
+ * The PNG's address for Preview and Insert: { ok: true, url }, or
+ * { ok: false, message } when it's longer than UrlFetchApp takes. Encoding
+ * makes it longer than the content: 3 characters for a space or a symbol,
+ * 6 to 12 for a character outside ASCII ("é" is %C3%A9).
+ */
+function fetchableImageUrl(data, presetId, pixels) {
+  const url = qrImageUrl(data, presetId, pixels);
+  if (url.length <= FETCH_URL_MAX_LENGTH) return { ok: true, url };
+  return {
+    ok: false,
+    message: `This is too long for the add-on: Google limits the image's web address to ${groupDigits(FETCH_URL_MAX_LENGTH)} characters, and this content needs ${groupDigits(url.length)} once encoded. Shorten it, or make a dynamic code on qrdx.dev, which keeps long links short.`,
+  };
+}
+
+/**
  * A Sheets formula that shows the code for the cell `sourceR1C1` points at
  * (R[0]C[-1] is the cell to the left), blank while that cell is empty.
  * ENCODEURL percent-encodes the cell's text for the address.

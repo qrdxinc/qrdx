@@ -920,7 +920,7 @@
     "status": "machine"
   },
   "home.hero.description": {
-    "source": "fc4f8e858520",
+    "source": "83a9e410b575",
     "status": "machine"
   },
   "home.hero.primary": {
@@ -992,7 +992,7 @@
     "status": "machine"
   },
   "home.editor.more": {
-    "source": "45eb0fdfc41f",
+    "source": "ac485b938ad4",
     "status": "machine"
   },
   "home.editor.customize": {
@@ -1348,7 +1348,7 @@
     "status": "machine"
   },
   "home.faq.items.free.answer": {
-    "source": "9f19df673fb5",
+    "source": "000b37bd1630",
     "status": "machine"
   },
   "home.faq.items.signup.question": {
@@ -1404,7 +1404,7 @@
     "status": "machine"
   },
   "home.faq.items.api.answer": {
-    "source": "ed6aa4e0e8d5",
+    "source": "79143657a5ef",
     "status": "machine"
   },
   "home.faq.items.paidPlans.question": {
@@ -2456,7 +2456,7 @@
     "status": "machine"
   },
   "qrGenerator.hub.intro1": {
-    "source": "c4eb144ee986",
+    "source": "e0a112f9c6b3",
     "status": "machine"
   },
   "qrGenerator.hub.intro2": {
@@ -2476,7 +2476,7 @@
     "status": "machine"
   },
   "qrGenerator.hub.bulkDescription": {
-    "source": "57b8f3c7a53f",
+    "source": "672626f5571a",
     "status": "machine"
   },
   "qrGenerator.hub.printTitle": {
@@ -3044,7 +3044,7 @@
     "status": "machine"
   },
   "tools.bulk.intro1": {
-    "source": "beec676f9aeb",
+    "source": "ba492f0ff61e",
     "status": "machine"
   },
   "tools.bulk.intro2": {
@@ -7896,7 +7896,7 @@
     "status": "machine"
   },
   "mcp.promptsDescription": {
-    "source": "fae0c474f28c",
+    "source": "e3bad6e23517",
     "status": "machine"
   },
   "mcp.howEyebrow": {
@@ -8244,7 +8244,7 @@
     "status": "machine"
   },
   "qrCodeApi.metaDescription": {
-    "source": "3347834cce2b",
+    "source": "0353208fdf60",
     "status": "machine"
   },
   "qrCodeApi.crumb": {
@@ -8272,7 +8272,7 @@
     "status": "machine"
   },
   "qrCodeApi.facts.formats": {
-    "source": "0cba7cfbc50a",
+    "source": "6c10cd075c4c",
     "status": "machine"
   },
   "qrCodeApi.facts.openSource": {
@@ -8468,7 +8468,7 @@
     "status": "machine"
   },
   "qrCodeApi.params.format": {
-    "source": "8909ca7d27bb",
+    "source": "b9c2df743694",
     "status": "machine"
   },
   "qrCodeApi.params.colors": {
@@ -8580,7 +8580,7 @@
     "status": "machine"
   },
   "qrCodeApi.imageCard.formats": {
-    "source": "0cba7cfbc50a",
+    "source": "6c10cd075c4c",
     "status": "machine"
   },
   "qrCodeApi.imageCard.limit": {
@@ -8684,7 +8684,7 @@
     "status": "machine"
   },
   "qrCodeApi.faq.formatsAnswer": {
-    "source": "570c2015361b",
+    "source": "58b28a542ef0",
     "status": "machine"
   },
   "qrCodeApi.faq.expireQuestion": {
@@ -8800,7 +8800,7 @@
     "status": "machine"
   },
   "dynamicQrCode.steps.print.body": {
-    "source": "a0a15f173c36",
+    "source": "72a9d4e0c39d",
     "status": "machine"
   },
   "dynamicQrCode.steps.change.title": {
@@ -17592,7 +17592,7 @@
     "status": "machine"
   },
   "playground.intro.downloads": {
-    "source": "5f189de09bc1",
+    "source": "15867b3ea3ae",
     "status": "machine"
   },
   "playground.intro.links.allTypes": {

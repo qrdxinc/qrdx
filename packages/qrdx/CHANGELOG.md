@@ -2,6 +2,15 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## Unreleased
+
+### The scan score warns about a thin quiet zone
+
+- **`QUIET_ZONE_MIN` (2)** is a new export of `qrdx`, `qrdx/core` and `qrdx/vanilla`: the quiet zone, in modules and with a frame's gap included, below which the scan score's `quiet-zone` check warns. In QRdx's scan study, codes with no margin printed straight onto a dark surface or a busy pattern were read in 0 to 70% of captures, and one module of light margin brought every decoder to 98% or more.
+- **Checks can be warnings.** `ScanCheck` has a new optional `severity`, `"warning"` for a caution rather than a problem with the design: the code reads as drawn, but may not where it's placed. Only the `quiet-zone` check sets it, below `QUIET_ZONE_MIN`. Its message gives the margin ("Quiet zone of only 1 module", or "No quiet zone around the code" at 0) and its `fix` says to set the margin to 2 modules or more, or add a frame. Show it milder than a failure.
+- **Scores don't change.** `severity` never changes `passed` or the penalty: from 1.5 modules the check still passes and costs nothing, and below 1.5 it still fails and costs 5 points. Between 2 and 4 modules it passes as before, with "(4 is ideal)" in its message.
+- `DEFAULT_MARGIN` stays 0, so components keep filling their box. Set `margin` to 2 or more, or give the container light padding, when the code may sit on anything but a plain light background.
+
 ## 0.0.65: customTemplate and customProps are back
 
 - **`customTemplate` and `customProps` are back**, as they worked in 0.0.63: draw your own artwork around the code, in code. 0.0.64 removed them along with the built-in templates. A template is a `TemplateDefinition` whose `wrapper` gets the drawn code (a 300 × 300 drawing), `{ fgColor, bgColor, ...customProps }` and `{ url, pixelSize }`, and returns the whole picture, drawn at `size` with the code inside it. Use one for artwork a frame can't draw, such as dots that change from link to link; fixed artwork is simpler as a frame.

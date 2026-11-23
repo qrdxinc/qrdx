@@ -156,6 +156,15 @@ const polar = vi.hoisted(() => ({
   ),
 }));
 vi.mock("@/app/(app)/admin/_lib/polar", () => polar);
+const invites = vi.hoisted(() => ({
+  settleInviteForCode: vi.fn(
+    async (_codeId: string): Promise<Record<string, unknown>> => ({
+      outcome: "waiting",
+      ownerId: "u_owner",
+    }),
+  ),
+}));
+vi.mock("@/lib/invites/qualify", () => invites);
 
 vi.mock("@repo/database", () => {
   const chain = (): unknown =>
@@ -234,6 +243,8 @@ const routes = {
     import("@/app/api/internal/console/imports/cancel/route"),
   "community/revalidate": () =>
     import("@/app/api/internal/console/community/revalidate/route"),
+  "invites/settle": () =>
+    import("@/app/api/internal/console/invites/settle/route"),
   health: () => import("@/app/api/internal/console/health/route"),
   "billing/polar-customer-url": () =>
     import("@/app/api/internal/console/billing/polar-customer-url/route"),
@@ -925,6 +936,75 @@ describe("reads", () => {
   });
 });
 
+describe("a code's owner's invite, settled after the console switched it on", () => {
+  beforeEach(() => {
+    invites.settleInviteForCode.mockClear();
+  });
+
+  it("settles from the code's id alone, and records a reward", async () => {
+    invites.settleInviteForCode.mockResolvedValueOnce({
+      outcome: "rewarded",
+      ownerId: "u_owner",
+      inviterUserId: "u_inviter",
+      inviterSlot: 3,
+    });
+    expect(
+      await json(
+        await call("invites/settle", {
+          codeId: " code_1 ",
+          // Anything but the id is ignored: the owner comes from the code.
+          userId: "u_someone_else",
+        }),
+      ),
+    ).toEqual([200, { ok: true, data: { outcome: "rewarded" } }]);
+    expect(invites.settleInviteForCode.mock.calls).toEqual([["code_1"]]);
+    expect(written()).toEqual([
+      {
+        actor: ACTOR,
+        action: "invite.settle",
+        targetType: "user",
+        targetId: "u_owner",
+        metadata: {
+          qrCodeId: "code_1",
+          inviterRewarded: true,
+          reason: null,
+          subjectUserId: "u_owner",
+          via: "console",
+        },
+      },
+    ]);
+  });
+
+  it("records nothing when nothing was rewarded", async () => {
+    for (const outcome of [
+      "waiting",
+      "decided",
+      "no_invite",
+      "unavailable",
+      "missing_tables",
+    ]) {
+      invites.settleInviteForCode.mockResolvedValueOnce({ outcome });
+      expect(
+        await json(await call("invites/settle", { codeId: "code_1" })),
+      ).toEqual([200, { ok: true, data: { outcome } }]);
+    }
+    expect(written()).toEqual([]);
+  });
+
+  it("answers 404 for a code that doesn't exist", async () => {
+    invites.settleInviteForCode.mockResolvedValueOnce({ outcome: "no_code" });
+    expect(
+      await json(await call("invites/settle", { codeId: "code_gone" })),
+    ).toEqual([404, { ok: false, error: "QR code not found" }]);
+    expect(written()).toEqual([]);
+  });
+
+  it("needs a code id", async () => {
+    expect((await call("invites/settle", {})).status).toBe(400);
+    expect(invites.settleInviteForCode).not.toHaveBeenCalled();
+  });
+});
+
 describe("rate limits", () => {
   // What each endpoint counts against (per admin): its audit action, or its
   // path for the reads, and the sensitive tier (5 an hour) where the admin
@@ -954,6 +1034,7 @@ describe("rate limits", () => {
       "/api/internal/console/community/revalidate",
       "standard",
     ],
+    "invites/settle": ["invite.settle", "standard"],
     health: ["/api/internal/console/health", "standard"],
     "billing/polar-customer-url": [
       "/api/internal/console/billing/polar-customer-url",

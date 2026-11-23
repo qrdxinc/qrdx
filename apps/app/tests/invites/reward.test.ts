@@ -69,6 +69,7 @@ import {
   noteDynamicCodesCreated,
   qualifyInvite,
   settleInvite,
+  settleInviteForCode,
   settleInvites,
   settleWaitingInvites,
 } from "@/lib/invites/qualify";
@@ -548,6 +549,69 @@ describe("a code that hasn't passed its safety checks", () => {
   it("doesn't count when the look-up switched it off", async () => {
     seedCode(FRIEND.id, { isActive: false, webRiskRecheckAt: null });
     expect(await qualifyInvite(FRIEND.id)).toEqual({ outcome: "waiting" });
+  });
+});
+
+describe("the back-office console switching a code back on", () => {
+  beforeEach(() => seedPendingFriend(FRIEND.id));
+  const at = new Date(SIGNED_UP.getTime() + 2 * DAY);
+
+  it("settles the code's owner's invite from the code's id, once", async () => {
+    const held = seedCode(FRIEND.id, { isActive: false });
+    expect(await settleInviteForCode(held, at)).toEqual({
+      outcome: "waiting",
+      ownerId: FRIEND.id,
+    });
+
+    // The console switched it on.
+    (fakeDb.find("qrCode", { id: held }) as Record<string, unknown>).isActive =
+      true;
+    expect(await settleInviteForCode(held, at)).toEqual({
+      outcome: "rewarded",
+      ownerId: FRIEND.id,
+      inviterUserId: INVITER.id,
+      inviterSlot: 1,
+    });
+    expect(sendInviteRewardEmail).toHaveBeenCalledWith({
+      inviterUserId: INVITER.id,
+      rewardedFriends: 1,
+    });
+
+    // Asked again (a retry, or the worker's pass): nothing more.
+    expect(await settleInviteForCode(held, at)).toEqual({
+      outcome: "decided",
+      ownerId: FRIEND.id,
+    });
+    expect(sendInviteRewardEmail).toHaveBeenCalledTimes(1);
+    expect(invites()[0]).toMatchObject({
+      status: "rewarded",
+      inviterRewardSlot: 1,
+    });
+  });
+
+  it("finds nothing for a code that doesn't exist", async () => {
+    expect(await settleInviteForCode("code_gone", at)).toEqual({
+      outcome: "no_code",
+    });
+    expect(invites()[0]?.status).toBe("pending");
+  });
+
+  it("does nothing on a self-hosted copy, without a single lookup", async () => {
+    const code = seedCode(FRIEND.id);
+    state.invites = false;
+    fakeDb.missing("qrCode", "invite");
+    expect(await settleInviteForCode(code, at)).toEqual({
+      outcome: "unavailable",
+    });
+  });
+
+  it("never fails while the invite tables don't exist yet", async () => {
+    const code = seedCode(FRIEND.id);
+    fakeDb.missing("invite");
+    expect(await settleInviteForCode(code, at)).toEqual({
+      outcome: "missing_tables",
+      ownerId: FRIEND.id,
+    });
   });
 });
 

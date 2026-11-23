@@ -131,6 +131,11 @@ export function fromOpenAiHost(
   return /^openai-mcp\//i.test(req?.headers.get("user-agent") ?? "");
 }
 
+/**
+ * The refusal itself. Its body says what the header says: an `error` code
+ * only when a token was sent and refused; with no credentials at all, just
+ * the words (RFC 6750 §3.1: no error code or error information then).
+ */
 function challengeResponse(
   req: Request,
   status: 401 | 403,
@@ -138,7 +143,9 @@ function challengeResponse(
   description: string,
 ): Response {
   return Response.json(
-    { error: error ?? "invalid_token", error_description: description },
+    error
+      ? { error, error_description: description }
+      : { message: description },
     {
       status,
       headers: {
@@ -206,7 +213,10 @@ export function signInRequiredResult(
       ? (["insufficient_scope", SCOPE_MISSING] as const)
       : reason === "invalid"
         ? (["invalid_token", TOKEN_REFUSED] as const)
-        : // As OpenAI's own example: with no token, insufficient_scope.
+        : // ChatGPT's docs require an `error` and `error_description` in
+          // this value even with no token, and their own example for that
+          // case uses insufficient_scope. Other clients calling with no
+          // token get signInGate's 401 first, without an error code.
           (["insufficient_scope", SIGN_IN_NEEDED] as const);
   const url = req?.url ?? baseUrl.toString();
   return {

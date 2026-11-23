@@ -87,10 +87,17 @@ describe("the sidebar", () => {
   it("offers formulas in Sheets and names each app's Insert", () => {
     const { get } = setUp();
     const sheets = get("onHomepage")(actionEvent("sheets"));
-    assert.equal(buttonAction(sheets, "Insert over sheet"), "onInsert");
+    assert.equal(buttonAction(sheets, "Insert in cell"), "onInsert");
     assert.equal(
       buttonAction(sheets, "Add =IMAGE() formulas"),
       "onWriteFormulas"
+    );
+    assert.ok(
+      textsOf(sheets).some((text) =>
+        text.endsWith(
+          "If Sheets warns that formulas are trying to reach external parties, click Allow access; until then the cells show #REF!."
+        )
+      )
     );
     const slides = get("onHomepage")(actionEvent("slides"));
     assert.equal(buttonAction(slides, "Add to slide"), "onInsert");
@@ -337,14 +344,18 @@ describe("Insert in Slides", () => {
 });
 
 describe("Sheets", () => {
-  it("places one code over the sheet at the current cell", () => {
+  /** A spreadsheet whose current cell is B3, holding `value` and `formula`. */
+  function currentCell({ value = "", formula = "" } = {}) {
     const log = [];
-    const image = chain("image", log);
     const sheet = {
-      insertImage: (blob, column, row) => {
-        log.push(["sheet", "insertImage", blob.name, column, row]);
-        return image;
-      },
+      getRange: (row, column) => ({
+        getValue: () => value,
+        getFormula: () => formula,
+        setValue: (image) => log.push(["cell", "setValue", row, column, image]),
+      }),
+      setRowHeight: (row, px) => log.push(["sheet", "setRowHeight", row, px]),
+      setColumnWidth: (column, px) =>
+        log.push(["sheet", "setColumnWidth", column, px]),
     };
     const SpreadsheetApp = {
       getActiveSpreadsheet: () => ({
@@ -354,19 +365,67 @@ describe("Sheets", () => {
           getRow: () => 3,
         }),
       }),
+      // A CellImageBuilder: build() returns the calls made on it.
+      newCellImage: () => {
+        const calls = [];
+        const builder = new Proxy(
+          {},
+          {
+            get:
+              (_target, method) =>
+              (...args) => {
+                if (method === "build") return { cellImage: calls };
+                calls.push([method, ...args]);
+                return builder;
+              },
+          }
+        );
+        return builder;
+      },
     };
-    const { get } = setUp({ hosts: { SpreadsheetApp } });
+    return { ...setUp({ hosts: { SpreadsheetApp } }), log };
+  }
+
+  it("puts the code in the current cell and sizes its row and column", () => {
+    const { get, fetch, log } = currentCell();
     const response = get("onInsert")(
       actionEvent("sheets", { type: "url", url: "qrdx.dev", size: "small" })
     );
-    assert.equal(notification(response), "QR code placed over cell B3.");
+    assert.equal(notification(response), "QR code added in cell B3.");
+    assert.equal(fetch.requests.length, 1);
     assert.deepEqual(log, [
-      ["sheet", "insertImage", "qr-code.png", 2, 3],
-      ["image", "setWidth", 96],
-      ["image", "setHeight", 96],
-      ["image", "setAltTextTitle", "QR code"],
-      ["image", "setAltTextDescription", "QR code for https://qrdx.dev"],
+      [
+        "cell",
+        "setValue",
+        3,
+        2,
+        {
+          cellImage: [
+            // The PNG itself, so the file keeps it and Sheets fetches nothing.
+            ["setSourceUrl", "data:image/png;base64,iVBORw=="],
+            ["setAltTextTitle", "QR code"],
+            ["setAltTextDescription", "QR code for https://qrdx.dev"],
+          ],
+        },
+      ],
+      ["sheet", "setRowHeight", 3, 96],
+      ["sheet", "setColumnWidth", 2, 96],
     ]);
+  });
+
+  it("refuses a cell that holds a value or a formula, before fetching", () => {
+    for (const filled of [{ value: "keep me" }, { formula: "=1+1" }]) {
+      const { get, fetch, log } = currentCell(filled);
+      const response = get("onInsert")(
+        actionEvent("sheets", { type: "url", url: "qrdx.dev" })
+      );
+      assert.equal(
+        notification(response),
+        "Cell B3 isn't empty, and the code goes inside the cell. Select an empty cell, then insert again."
+      );
+      assert.equal(fetch.requests.length, 0);
+      assert.deepEqual(log, []);
+    }
   });
 
   /** A one-sheet spreadsheet whose active range is `rows` × `columns` at (row, column). */
@@ -414,7 +473,7 @@ describe("Sheets", () => {
     );
     assert.equal(
       notification(response),
-      "Added 3 codes in column B. Sheets loads them from api.qrdx.dev."
+      "Added 3 codes in column B. If Sheets asks, click Allow access at the top so it can load them from api.qrdx.dev."
     );
     assert.deepEqual(log, [
       ["getRange", 2, 2, 3, 1],
@@ -465,6 +524,76 @@ describe("Sheets", () => {
       notification(get("onWriteFormulas")(actionEvent("docs"))),
       "Formulas are for Google Sheets."
     );
+  });
+});
+
+describe("addresses too long for UrlFetchApp", () => {
+  // In the Classic look the address is 84 characters before the content.
+  const digits = (count) => "1234567890".repeat(count / 10 + 1).slice(0, count);
+  const tooLong = (needed) =>
+    `This is too long for the add-on: Google limits the image's web address to 2,000 characters, and this content needs ${needed} once encoded. Shorten it, or make a dynamic code on qrdx.dev, which keeps long links short.`;
+
+  it("refuses to preview 2,000 characters, without a request", () => {
+    const { get, fetch } = setUp();
+    const response = get("onPreview")(
+      actionEvent("docs", { type: "text", text: digits(2000) })
+    );
+    assert.equal(notification(response), tooLong("2,084"));
+    assert.equal(fetch.requests.length, 0);
+  });
+
+  it("refuses to insert them in every app before touching the file", () => {
+    // No DocumentApp, SlidesApp or SpreadsheetApp: a placer that ran would fail.
+    for (const host of ["docs", "slides", "sheets"]) {
+      const { get, fetch } = setUp();
+      const response = get("onInsert")(
+        actionEvent(host, { type: "text", text: digits(2000), size: "large" })
+      );
+      assert.equal(notification(response), tooLong("2,084"), host);
+      assert.equal(fetch.requests.length, 0, host);
+    }
+  });
+
+  it("fetches an address of exactly 2,000 characters", () => {
+    const { get, fetch } = setUp();
+    const response = get("onPreview")(
+      actionEvent("docs", { type: "text", text: digits(1916) })
+    );
+    assert.equal(fetch.requests.length, 1);
+    assert.equal(fetch.requests[0].url.length, 2000);
+    assert.ok(argsOf(response, "setNavigation").length > 0);
+    const over = setUp();
+    assert.equal(
+      notification(
+        over.get("onPreview")(
+          actionEvent("docs", { type: "text", text: digits(1917) })
+        )
+      ),
+      tooLong("2,001")
+    );
+    assert.equal(over.fetch.requests.length, 0);
+  });
+
+  it("measures the encoded address, not the characters typed", () => {
+    // 400 "é" pass the 2,048-character check but encode to 2,400 (%C3%A9 each).
+    const { get, fetch } = setUp();
+    const response = get("onPreview")(
+      actionEvent("docs", { type: "text", text: "é".repeat(400) })
+    );
+    assert.equal(notification(response), tooLong("2,484"));
+    assert.equal(fetch.requests.length, 0);
+  });
+
+  it("leaves content over 2,048 characters to the payload's own message", () => {
+    const { get, fetch } = setUp();
+    const response = get("onPreview")(
+      actionEvent("docs", { type: "text", text: digits(2100) })
+    );
+    assert.match(
+      notification(response),
+      /^That's 2100 characters; a code holds at most 2048\./
+    );
+    assert.equal(fetch.requests.length, 0);
   });
 });
 

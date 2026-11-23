@@ -2995,7 +2995,7 @@
       "mcpTitle": "Use QRdx from AI assistants",
       "mcpDescription": "Claude, ChatGPT, Cursor, VS Code and other MCP apps make styled QR codes and Wi-Fi, contact and email payloads in the chat.",
       "pluginsEyebrow": "{count, number} plugins · open source",
-      "pluginsTitle": "QRdx in Chrome, Figma, Raycast and Canva",
+      "pluginsTitle": "QRdx in Chrome, Figma, Raycast, Canva and Google Workspace",
       "pluginsDescription": "Make a code for the page you're on, insert vector codes into a design, or generate one from the launcher.",
       "buildEyebrow": "Developers",
       "buildTitle": "Build with QRdx",
@@ -3044,13 +3044,14 @@
     "metaDescription": "Styled QR codes without leaving your tools: a Chrome extension, a Figma plugin, a Raycast extension and a Canva app. Free and open source, no account.",
     "crumb": "Plugins",
     "title": "QR codes inside the apps you already use",
-    "intro": "Make a code for the page you're on in Chrome, insert vector codes into a Figma design, generate one from the Raycast launcher, or add one to a Canva design. All four are free and open source, and none needs a QRdx account.",
+    "intro": "Make a code for the page you're on in Chrome, insert vector codes into a Figma design, generate one from the Raycast launcher, add one to a Canva design, or put codes in Google Docs, Sheets and Slides. All five are free and open source, and none needs a QRdx account.",
     "badges": "Free · No account · Open source (MIT)",
     "kinds": {
       "chrome": "Browser extension",
       "figma": "Figma plugin",
       "raycast": "Raycast extension",
-      "canva": "Canva app"
+      "canva": "Canva app",
+      "google-workspace": "Add-on for Docs, Sheets and Slides"
     },
     "runsOn": "Runs on",
     "getIt": "Get it on the {store}",
@@ -3078,11 +3079,11 @@
       "storeListed": "The {names} {count, plural, one {is in the {store}} other {are in their stores}}.",
       "storeSource": "The {names} {count, plural, one {isn't} other {aren't}} listed yet. Until then, each builds from the open-source QRdx repository in a few commands; the steps are on this page and in each plugin's folder on GitHub.",
       "accountQuestion": "Do I need a QRdx account?",
-      "accountAnswer": "No. The plugins are free and work without an account. Each one links to the full editor at qrdx.dev (Open in QRdx in Chrome and Raycast, More options in Figma and Canva), where you can sign in for dynamic codes you can edit after printing.",
+      "accountAnswer": "No. The plugins are free and work without an account. Each one links to qrdx.dev, where you can sign in for dynamic codes you can edit after printing: Open in QRdx in Chrome and Raycast and More options in Figma and Canva open the full editor, and Make a dynamic code in the Google Workspace add-on opens the page about dynamic codes.",
       "dataQuestion": "Do the plugins send my data anywhere?",
-      "dataAnswer": "The Chrome extension and the Figma plugin make no network requests: codes are drawn on your device by the qrdx library. The Raycast extension keeps saved codes in Raycast's local storage, and Generate QR with AI sends your description to Raycast AI. The Canva app draws the code in its panel and adds it to your design as an image. When you open the playground from a plugin, only a web address goes along, after the # in the link, which browsers never send to a server.",
+      "dataAnswer": "The Chrome extension and the Figma plugin make no network requests: codes are drawn on your device by the qrdx library. The Raycast extension keeps saved codes in Raycast's local storage, and Generate QR with AI sends your description to Raycast AI. The Canva app draws the code in its panel and adds it to your design as an image. The Google Workspace add-on sends what you enter to the image API at api.qrdx.dev to draw the code, then saves the image in your file; with =IMAGE() formulas, Google Sheets loads each code from that API with its cell's text. Neither is kept in a database. When you open the playground from a plugin, only a web address goes along, after the # in the link, which browsers never send to a server.",
       "changeQuestion": "Can I change a code after adding it?",
-      "changeAnswer": "In Figma, select it and click Edit QR code, or use Replace selected QR to keep its size and position. In Raycast, saved codes can be edited and exported again. In Chrome and Canva, make a new code; for printed codes whose link you want to change later, use a dynamic code from the QRdx dashboard."
+      "changeAnswer": "In Figma, select it and click Edit QR code, or use Replace selected QR to keep its size and position. In Raycast, saved codes can be edited and exported again. Codes the Google Workspace add-on adds to Sheets as =IMAGE() formulas change when you edit their cells. In Chrome and Canva, or for an image the add-on inserted, make a new code; for printed codes whose link you want to change later, use a dynamic code from the QRdx dashboard."
     }
   },
   "mcp": {
