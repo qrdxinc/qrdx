@@ -24,6 +24,7 @@ import { ArrowFrameCode } from "../docs-examples/frames/arrow-frame-code";
 import { DotRingCode } from "../docs-examples/frames/dot-ring-code";
 import { MenuFrameCode } from "../docs-examples/frames/menu-frame-code";
 import { OfficialFrameCode } from "../docs-examples/frames/official-frame-code";
+import { RingTemplateCode } from "../docs-examples/frames/ring-template-code";
 import { DownloadSvgButton as MenuDownloadSvgButton } from "../docs-examples/getting-started/download-svg-button";
 import { FirstQrCode } from "../docs-examples/getting-started/first-qr-code";
 import { StyledQrCode } from "../docs-examples/getting-started/styled-qr-code";
@@ -115,6 +116,7 @@ const PAGES: Record<string, string[]> = {
     "frames/menu-frame-code.tsx",
     "frames/arrow-frame-code.tsx",
     "frames/dot-ring-code.tsx",
+    "frames/ring-template-code.tsx",
     "frames/official-frame-code.tsx",
   ],
   "utilities.mdx": ["utilities/contrast-checker.tsx"],
@@ -320,6 +322,7 @@ describe("the shape, color, logo and frame examples", () => {
     ["raw image settings", <ImageSettingsCode key="image-settings" />],
     ["a banner frame", <MenuFrameCode key="banner" />],
     ["the arrow frame", <ArrowFrameCode key="arrow-frame" />],
+    ["a template drawn in code", <RingTemplateCode key="ring" />],
     ["an official frame", <OfficialFrameCode key="official" />],
     ["the circle frame", <CircleFramedCode key="circle-frame" />],
   ])("decodes with %s", (_name, element) => {
@@ -333,6 +336,12 @@ describe("the shape, color, logo and frame examples", () => {
     expect(html).toContain("<text");
     expect(html).toContain('data-qrdx-frame="dot-ring"');
     expect(decodeRootSvg(html)).toMatch(/^https:\/\/example\.com/);
+  });
+
+  it("draws the template's ring in its customProps color", () => {
+    const html = renderToStaticMarkup(<RingTemplateCode />);
+    expect(html).toContain('stroke="#f59e0b"');
+    expect(html).toContain('viewBox="0 0 300 300"');
   });
 
   it("draws the official frame with its own label", () => {

@@ -135,6 +135,7 @@ test("covers a wide set of props", () => {
     "official frame",
     "built-in spec",
     "frame dot-ring",
+    "React custom template",
     "art ",
     "root attributes",
   ]) {
@@ -442,12 +443,45 @@ for (const [label, entry] of ENTRIES) {
       expect(typeof api.getQRAsSVGNode).toBe("function");
     });
 
-    test("drops the withdrawn template props, as attributes too", async () => {
-      // Templates are frames since qrdx 0.0.64: a template prop is ignored
+    test("draws a custom template written with its h (the core's)", async () => {
+      const labelled = {
+        id: "Labelled",
+        name: "Labelled",
+        wrapper: (children: unknown, props?: { label?: string }) =>
+          api.h(
+            "svg",
+            { viewBox: "0 0 300 340", xmlns: "http://www.w3.org/2000/svg" },
+            api.h(
+              "g",
+              { transform: "translate(20, 20) scale(0.87)" },
+              children
+            ),
+            api.h(
+              "text",
+              { x: "150", y: "325", textAnchor: "middle" },
+              props?.label
+            )
+          ),
+      };
+      const props = {
+        value: VALUE,
+        customTemplate: labelled,
+        customProps: { label: "Scan & go" },
+      };
+      const html = await renderVue(
+        createSSRApp({ render: () => h(api.QRCode, props) })
+      );
+      expect(html).toBe(toSVGString(resolveQRCodeProps(props)));
+      expect(html).toContain('text-anchor="middle"');
+      expect(html).toContain("Scan &amp; go");
+    });
+
+    test("drops the withdrawn templateId, as an attribute too", async () => {
+      // The built-in templates are frames since qrdx 0.0.64: templateId is
+      // ignored
       const props = {
         value: VALUE,
         templateId: "DotRing",
-        customProps: { label: "Scan & go" },
         "template-id": "Arrow",
       };
       const html = await renderVue(

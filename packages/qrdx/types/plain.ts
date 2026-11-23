@@ -132,3 +132,9 @@ export type {
   QRSVGAttributes,
   QRSVGOptions,
 } from "./qr";
+export type {
+  BaseTemplateProps,
+  TemplateConfig,
+  TemplateDefinition,
+  TemplateNode,
+} from "./template";

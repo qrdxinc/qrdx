@@ -49,6 +49,8 @@ const QR_CODE_PROP_KEYS = {
   style: true,
   imageSettings: true,
   isOGContext: true,
+  customTemplate: true,
+  customProps: true,
   frame: true,
   art: true,
   eyeColors: true,
@@ -77,7 +79,7 @@ const QR_CODE_PROP_KEYS = {
 function rootAttributes(props: QRCodeOptions): QRSVGAttributes {
   const attributes: QRSVGAttributes = {};
   for (const key of Object.keys(props)) {
-    // A withdrawn template prop is dropped, never an attribute
+    // templateId, withdrawn in 0.0.64, is dropped, never an attribute
     if (!(Object.hasOwn(QR_CODE_PROP_KEYS, key) || isWithdrawnProp(key))) {
       attributes[key] = props[key];
     }
@@ -142,6 +144,8 @@ export function getQRCodeSVGProps(
     scale = 1,
     level,
     style,
+    customTemplate,
+    customProps,
     frame,
     art,
     eyeColors,
@@ -186,6 +190,8 @@ export function getQRCodeSVGProps(
     bodyPattern: qrData.bodyPattern,
     cornerEyeDotPattern: qrData.cornerEyeDotPattern,
     cornerEyePattern: qrData.cornerEyePattern,
+    customProps,
+    customTemplate,
     dotColor: qrData.dotColor,
     eyeColor: qrData.eyeColor,
     fgColor: qrData.fgColor,

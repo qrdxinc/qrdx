@@ -14,6 +14,7 @@ export * from "../types/plain";
 export {
   angularGradientSchema,
   anyFrameSchema,
+  baseTemplatePropsSchema,
   bodyPatternSchema,
   colorConfigSchema,
   colorTypeSchema,
@@ -57,6 +58,8 @@ export {
   radialGradientSchema,
   shadowSchema,
   solidColorSchema,
+  templateConfigSchema,
+  templateDefinitionBaseSchema,
 } from "../types/schemas";
 export {
   createQRArtImage,

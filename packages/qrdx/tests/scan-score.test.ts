@@ -3,12 +3,14 @@
 // camera simulation and jsQR decoding all run. Expectations come from what a
 // user needs from a "will it scan" check, not from the current weights.
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { h } from "../src/core";
 import {
   drawScanFrames,
   getScanScore,
   getScanScoreFromFrames,
 } from "../src/scan-score";
-import type { QRProps } from "../types";
+import { getTemplateCodeShare } from "../src/template-placement";
+import type { QRProps, TemplateDefinition } from "../types";
 import { installFakeDom } from "./support/fake-dom";
 import { capture } from "./support/qr";
 
@@ -20,6 +22,53 @@ const PLAIN: QRProps = {
   bodyPattern: "square",
   cornerEyePattern: "square",
   cornerEyeDotPattern: "square",
+};
+
+/** A custom template that draws the code at half its artwork's width. */
+const HALF: TemplateDefinition = {
+  id: "half",
+  name: "Half",
+  wrapper: (children, props) =>
+    h(
+      "svg",
+      { viewBox: "0 0 300 300", xmlns: "http://www.w3.org/2000/svg" },
+      h("circle", {
+        cx: 150,
+        cy: 150,
+        r: 140,
+        fill: "none",
+        stroke: props?.fgColor ?? "#000000",
+        strokeWidth: 8,
+      }),
+      h("g", { transform: "translate(75, 75) scale(0.5)" }, children)
+    ),
+};
+
+/**
+ * A ring like Flam's: a 593-unit drawing with the code's 300 × 300 drawing
+ * in a nested <svg> in the middle.
+ */
+const RING: TemplateDefinition = {
+  id: "ring",
+  name: "Ring",
+  wrapper: (children) =>
+    h(
+      "svg",
+      { viewBox: "0 0 593 593", xmlns: "http://www.w3.org/2000/svg" },
+      h("circle", {
+        cx: 296.5,
+        cy: 296.5,
+        r: 270,
+        fill: "none",
+        stroke: "#111827",
+        strokeWidth: 40,
+      }),
+      h(
+        "svg",
+        { x: 146.5, y: 146.5, width: 300, height: 300, viewBox: "0 0 300 300" },
+        children
+      )
+    ),
 };
 
 describe("getScanScore outside a browser", () => {
@@ -136,6 +185,45 @@ describe("getScanScore", () => {
     );
   });
 
+  it("tests a code in a custom template at the size the template draws it", async () => {
+    // A template draws the code at a share of its artwork
+    expect(getTemplateCodeShare({ value: VALUE })).toBe(1);
+    expect(getTemplateCodeShare({ value: VALUE, customTemplate: HALF })).toBe(
+      0.5
+    );
+    expect(
+      getTemplateCodeShare({ value: VALUE, customTemplate: RING })
+    ).toBeCloseTo(300 / 593, 6);
+    // A wrapper that doesn't place the code, or throws, counts as the whole
+    const unplaced: TemplateDefinition = {
+      id: "unplaced",
+      name: "Unplaced",
+      wrapper: () => h("svg", { viewBox: "0 0 300 300" }),
+    };
+    const throwing: TemplateDefinition = {
+      id: "throwing",
+      name: "Throwing",
+      wrapper: () => {
+        throw new Error("no");
+      },
+    };
+    expect(
+      getTemplateCodeShare({ value: VALUE, customTemplate: unplaced })
+    ).toBe(1);
+    expect(
+      getTemplateCodeShare({ value: VALUE, customTemplate: throwing })
+    ).toBe(1);
+    // So a code that scans well on its own scores well in a template too
+    for (const customTemplate of [HALF, RING]) {
+      const result = await getScanScore({ ...PLAIN, customTemplate });
+      const passed = (id: string) =>
+        result.checks.find((c) => c.id === id)?.passed;
+      expect(result.grade, customTemplate.id).toBe("great");
+      expect(passed("decode-160"), customTemplate.id).toBe(true);
+      expect(passed("decode-320"), customTemplate.id).toBe(true);
+    }
+  });
+
   it("scores a code in a former template's frame at the code's own size", async () => {
     // The frames add their artwork around the code, which keeps its size
     for (const style of ["arrow", "pumpkin", "dot-ring"] as const) {
@@ -204,6 +292,7 @@ describe("drawScanFrames and getScanScoreFromFrames", () => {
     ["light on dark", { ...PLAIN, fgColor: "#ffffff", bgColor: "#111111" }],
     ["no quiet zone", { ...PLAIN, margin: 0 }],
     ["in a former template's frame", { ...PLAIN, frame: { style: "arrow" } }],
+    ["in a custom template", { ...PLAIN, customTemplate: HALF }],
     [
       "framed",
       { ...PLAIN, frame: { style: "banner-bottom", text: "Scan me" } },

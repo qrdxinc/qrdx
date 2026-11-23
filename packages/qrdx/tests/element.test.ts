@@ -7,7 +7,7 @@
 import { existsSync } from "node:fs";
 import { fileURLToPath, URL as NodeURL, pathToFileURL } from "node:url";
 import { afterEach, describe, expect, it, it as test, vi } from "vitest";
-import { getOfficialFrame, toSVGString } from "../src/core";
+import { getOfficialFrame, h, toSVGString } from "../src/core";
 import * as source from "../src/element";
 import type { QRSVGOptions } from "../types";
 import { lookToggles } from "./support/look-steps";
@@ -294,12 +294,30 @@ const CASES: [string, QRSVGOptions][] = [
   ],
   ["a former template's frame", { value: VALUE, frame: { style: "dot-ring" } }],
   [
-    "withdrawn template props, dropped",
+    "custom template written with h",
     {
       value: VALUE,
-      templateId: "DotRing",
+      customTemplate: {
+        id: "Labelled",
+        name: "Labelled",
+        wrapper: (children, props) =>
+          h(
+            "svg",
+            { viewBox: "0 0 300 340", xmlns: "http://www.w3.org/2000/svg" },
+            h("g", { transform: "translate(20, 20) scale(0.87)" }, children),
+            h(
+              "text",
+              { x: "150", y: "325", textAnchor: "middle" },
+              props?.label
+            )
+          ),
+      },
       customProps: { label: "Scan me" },
-    } as QRSVGOptions,
+    },
+  ],
+  [
+    "withdrawn templateId, dropped",
+    { value: VALUE, templateId: "DotRing" } as QRSVGOptions,
   ],
   ["circle shape", { value: VALUE, shape: "circle", margin: 3 }],
   ["module scale, level L", { value: VALUE, level: "L", moduleScale: 0.7 }],

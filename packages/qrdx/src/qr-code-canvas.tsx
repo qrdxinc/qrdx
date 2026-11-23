@@ -62,6 +62,8 @@ export function QRCodeCanvas(props: QRPropsCanvas): ReactQRElement {
     cornerEyePattern: _cornerEyePattern,
     cornerEyeDotPattern: _cornerEyeDotPattern,
     isOGContext: _isOGContext,
+    customTemplate: _customTemplate,
+    customProps: _customProps,
     frame,
     art: _art,
     eyeColors: _eyeColors,

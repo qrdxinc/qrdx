@@ -46,6 +46,10 @@ Don't use `withElementFactory`. It's internal: the React components use it to bu
 - Event handlers and other functions in the props are dropped, as React drops them from markup. Attach events to the adapter's own element.
 - With a `frame`, root attributes go on the frame's outer `<svg>`, as in React.
 
+## Templates
+
+A custom template's `wrapper` receives the drawn code and returns the wrapped one. With the core it receives `QRNode`s. A wrapper written with React's JSX still renders through the core, as long as it uses no hooks (React elements are read as nodes). `h(type, props, ...children)` writes one without JSX for both. Import `h` from the entry that draws the code: `qrdx` for the React components, `qrdx/core` otherwise.
+
 ## Known limits
 
 - The React entry (`qrdx`) bundles its own copy of the engine, because the React components use engine internals that aren't part of the public API. An app that imports both `qrdx` and `qrdx/core` (or an adapter) in one bundle loads the engine twice. Adapters and `qrdx/vanilla` share one copy.
