@@ -1976,7 +1976,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "फ़्री बारकोड जनरेटर: EAN-13, UPC, Code 128",
-    "metaDescription": "EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix और भी बहुत कुछ बनाएं: {count, number} बारकोड टाइप, चेक डिजिट अपने आप जुड़ जाते हैं। PNG, JPG, SVG, PDF, EPS। फ़्री, बिना साइनअप।",
+    "metaDescription": "EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix और भी बहुत कुछ बनाएं: {count, number} बारकोड टाइप, चेक डिजिट अपने आप। PNG, JPG, SVG, PDF, EPS। फ़्री, बिना साइनअप।",
     "crumb": "बारकोड जनरेटर",
     "title": "फ़्री बारकोड जनरेटर",
     "intro1": "रिटेल, शिपिंग और इन्वेंटरी के बारकोड {count, number} फ़ॉर्मैट में बनाएँ, EAN-13 और UPC-A से लेकर Code 128, GS1-128, ITF-14 और Data Matrix तक। बस नंबर लिखें, चेक डिजिट अपने-आप निकल आता है; गलत डिजिट प्रिंट करने से पहले ही पकड़ लिया जाता है।",

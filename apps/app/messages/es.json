@@ -1975,8 +1975,8 @@
     }
   },
   "barcodeGenerator": {
-    "metaTitle": "Generador de códigos de barras gratis: EAN-13, UPC, Code 128",
-    "metaDescription": "Crea EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix y más: {count, number} tipos de códigos de barras con los dígitos de control calculados por ti. PNG, JPG, SVG, PDF, EPS. Gratis, sin registro.",
+    "metaTitle": "Crea códigos de barras gratis: EAN-13, UPC, Code 128",
+    "metaDescription": "Crea EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix y más: {count, number} tipos de código de barras con dígito de control. PNG, JPG, SVG, PDF, EPS. Gratis.",
     "crumb": "Generador de códigos de barras",
     "title": "Generador de códigos de barras gratis",
     "intro1": "Crea códigos de barras para comercio, envíos e inventario en {count, number} formatos, desde EAN-13 y UPC-A hasta Code 128, GS1-128, ITF-14 y Data Matrix. Escribe el número y el dígito de control se calcula solo; si es incorrecto, se detecta antes de imprimir.",

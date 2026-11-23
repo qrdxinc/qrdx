@@ -1976,7 +1976,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Pembuat Barcode Gratis: EAN-13, UPC, Code 128",
-    "metaDescription": "Buat EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix, dan lainnya: {count, number} jenis barcode dengan digit pemeriksa yang dihitung otomatis. PNG, JPG, SVG, PDF, EPS. Gratis, tanpa daftar.",
+    "metaDescription": "Buat EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix, dan lainnya: {count, number} jenis barcode dengan digit pemeriksa. PNG, JPG, SVG, PDF, EPS. Gratis.",
     "crumb": "Pembuat barcode",
     "title": "Pembuat barcode gratis",
     "intro1": "Buat barcode untuk ritel, pengiriman, dan inventaris dalam {count, number} format, mulai dari EAN-13 dan UPC-A hingga Code 128, GS1-128, ITF-14, dan Data Matrix. Ketik nomornya, lalu digit pemeriksa dihitung otomatis untuk Anda; digit yang salah akan terdeteksi sebelum Anda mencetak.",
