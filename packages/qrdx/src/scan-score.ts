@@ -39,10 +39,12 @@ export interface ScanCheck {
    */
   skipped?: boolean;
   /**
-   * "warning" on a failed check that is a caution rather than a problem
-   * with the design: the code reads as drawn, but may not where it's placed
-   * (a code with no quiet zone, on a dark or busy surface). Show it milder
-   * than a failure. Absent on every other check.
+   * "warning": a caution rather than a problem with the design. The code
+   * reads as drawn, but may not where it's placed (a thin quiet zone, on a
+   * dark or busy surface). Show it milder than a failure, with its fix. It
+   * never changes `passed` or the score: a check that passed still passes
+   * (and costs nothing), one that failed still fails. Absent on every other
+   * check.
    */
   severity?: "warning";
   message: string;
@@ -853,14 +855,17 @@ function quietZoneCheck(props: QRProps): { check: ScanCheck; penalty: number } {
       penalty: 0,
     };
   }
-  // A warning, not a lower score: the decode tests draw the code on its own
-  // background, where it reads; on a dark or busy surface it may not (see
-  // QUIET_ZONE_MIN). It costs what it always has, 5 points below 1.5 modules
-  // and nothing from there, so scores and grades stay as they were.
+  // Below QUIET_ZONE_MIN a warning only: the decode tests draw the code on
+  // its own background, where it reads; on a dark or busy surface it may not
+  // (see QUIET_ZONE_MIN). `passed` and the penalty stay what they were before
+  // the warning existed (passed and free from 1.5 modules, failed and 5
+  // points below), so scores, grades and the repairs that read failed checks
+  // don't change.
+  const passed = modules >= 1.5;
   return {
     check: {
       id: "quiet-zone",
-      passed: false,
+      passed,
       severity: "warning",
       message:
         rounded === 0
@@ -868,7 +873,7 @@ function quietZoneCheck(props: QRProps): { check: ScanCheck; penalty: number } {
           : `Quiet zone of only ${rounded} ${rounded === 1 ? "module" : "modules"}`,
       fix: `Without a light border, the code may not scan on a dark or busy surface. Set the margin to ${QUIET_ZONE_MIN} modules or more, or add a frame`,
     },
-    penalty: modules >= 1.5 ? 0 : 5,
+    penalty: passed ? 0 : 5,
   };
 }
 

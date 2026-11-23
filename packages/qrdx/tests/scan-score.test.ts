@@ -10,7 +10,6 @@ import {
   getScanScoreFromFrames,
   QUIET_ZONE_MIN,
   type ScanCheck,
-  type ScanScoreResult,
 } from "../src/scan-score";
 import { getTemplateCodeShare } from "../src/template-placement";
 import type { QRProps, TemplateDefinition } from "../types";
@@ -254,7 +253,6 @@ describe("getScanScore", () => {
       expect(QUIET_ZONE_MIN).toBe(2);
       for (const margin of [0, 1, 1.5]) {
         const check = quietZone(await getScanScore({ ...PLAIN, margin }));
-        expect(check?.passed, `margin ${margin}`).toBe(false);
         expect(check?.severity, `margin ${margin}`).toBe("warning");
         expect(check?.fix).toMatch(/dark or busy surface/);
         expect(check?.fix).toMatch(/margin to 2 modules/);
@@ -287,28 +285,65 @@ describe("getScanScore", () => {
       expect(check?.severity).toBeUndefined();
     });
 
-    // The warning is about where the code is placed, not the design: the
-    // number and grade stay what they were before it existed (5 points off
-    // below 1.5 modules, nothing from 1.5 up).
-    it("keeps the score and grade the quiet zone had before", async () => {
-      const [none, one, half, two] = await Promise.all(
-        [0, 1, 1.5, 2].map((margin) => getScanScore({ ...PLAIN, margin }))
-      );
-      const decodePenalty = (result: ScanScoreResult) =>
-        result.checks.some(
-          (check) => check.id.startsWith("decode-") && !check.passed
-        );
-      for (const result of [none, one, half, two]) {
-        expect(decodePenalty(result)).toBe(false);
-      }
-      expect(two?.score).toBe(100);
-      expect(half?.score).toBe(100);
-      expect(one?.score).toBe(95);
-      expect(none?.score).toBe(95);
-      for (const result of [none, one, half, two]) {
-        expect(result?.grade).toBe("great");
-      }
-    });
+    // The warning is display-only (owner, 23 Nov 2026): for every margin the
+    // score, the grade and the check's `passed` are what staging's scorer
+    // gave before the warning existed. Expected values: origin/staging
+    // 2d73ef02a's scan-score.ts run side by side with this one on these
+    // designs (24 Nov 2026), identical for every row. `passed` drives the
+    // repairs (lib/qr-design/repair.ts) and MCP design_qr's stillFailing, so
+    // those don't change either.
+    const EDITOR_LOOK: QRProps = {
+      ...PLAIN,
+      bodyPattern: "circle",
+      cornerEyePattern: "gear",
+      cornerEyeDotPattern: "circle",
+      level: "Q",
+    };
+    const BEFORE: Record<
+      string,
+      { props: QRProps; rows: [number, number, boolean][] }
+    > = {
+      "square modules": {
+        props: PLAIN,
+        rows: [
+          [0, 95, false],
+          [0.5, 95, false],
+          [1, 95, false],
+          [1.5, 100, true],
+          [1.75, 100, true],
+          [2, 100, true],
+          [3, 100, true],
+          [4, 92, true],
+        ],
+      },
+      "the editor's default look": {
+        props: EDITOR_LOOK,
+        rows: [
+          [0, 95, false],
+          [0.5, 95, false],
+          [1, 95, false],
+          [1.5, 92, true],
+          [1.75, 100, true],
+          [2, 100, true],
+          [3, 92, true],
+          [4, 92, true],
+        ],
+      },
+    };
+    for (const [look, { props, rows }] of Object.entries(BEFORE)) {
+      it(`keeps the score, grade and pass of every margin in ${look}`, async () => {
+        for (const [margin, score, passed] of rows) {
+          const result = await getScanScore({ ...props, margin });
+          const check = quietZone(result);
+          expect(result.score, `margin ${margin}`).toBe(score);
+          expect(result.grade, `margin ${margin}`).toBe("great");
+          expect(check?.passed, `margin ${margin}`).toBe(passed);
+          expect(check?.severity, `margin ${margin}`).toBe(
+            margin < QUIET_ZONE_MIN ? "warning" : undefined
+          );
+        }
+      });
+    }
   });
 
   it("flags a logo that covers more than the error correction can recover", async () => {

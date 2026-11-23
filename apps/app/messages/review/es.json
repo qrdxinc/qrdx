@@ -3516,6 +3516,10 @@
     "status": "machine"
   },
   "tools.printSize.faq.quietAnswer": {
+    "source": "ced356966dcc",
+    "status": "machine"
+  },
+  "tools.printSize.faq.quietAnswerNewDesigns": {
     "source": "d31f1ff850e7",
     "status": "machine"
   },

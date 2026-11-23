@@ -12,6 +12,7 @@
 // - the engine's own default stays 0.
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { createTranslator } from "next-intl";
 import { DEFAULT_SIZE, QUIET_ZONE_MIN, toSVGString } from "qrdx";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -79,6 +80,7 @@ const { scoreDesign } = await import("@/lib/qr-design/score");
 
 import type { SavedTheme } from "@/app/(app)/dashboard/themes/_lib/theme";
 import type { ApplyContext } from "@/lib/playground-apply";
+import en from "@/messages/en.json";
 import type { QRStyle } from "@/types/theme";
 
 afterAll(() => {
@@ -319,6 +321,43 @@ describe("a design that already exists", () => {
         NEW_DESIGN_MARGIN,
       );
     }
+  });
+});
+
+describe("the print size FAQ's quiet zone answer", () => {
+  const translate = () => {
+    const errors: string[] = [];
+    const t = createTranslator({
+      locale: "en",
+      messages: en as never,
+      namespace: "tools.printSize.faq" as never,
+      onError: (error) => errors.push(error.message),
+    }) as unknown as (key: string, values?: Record<string, number>) => string;
+    return { t, errors };
+  };
+
+  // The site's copy of the page (qrdxinc/cloud apps/site) formats
+  // quietAnswer with `quiet` only until its next core pin bump; a missing
+  // argument would throw there (its icu() is intl-messageformat).
+  it("still formats the old way, with `quiet` only, and says nothing false", () => {
+    const { t, errors } = translate();
+    const answer = t("quietAnswer", { quiet: 4 });
+    expect(errors).toEqual([]);
+    expect(answer).not.toMatch(/[{}]/);
+    expect(answer).toContain("A QRdx download has the margin its design sets");
+    expect(answer).not.toMatch(/no margin unless/);
+  });
+
+  it("says where new designs start, from code", () => {
+    const { t, errors } = translate();
+    const answer = t("quietAnswerNewDesigns", {
+      quiet: 4,
+      start: NEW_DESIGN_MARGIN,
+    });
+    expect(errors).toEqual([]);
+    expect(answer).toContain(
+      `new designs in the editor start with ${NEW_DESIGN_MARGIN} modules`,
+    );
   });
 });
 

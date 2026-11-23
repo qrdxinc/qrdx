@@ -49,7 +49,9 @@ export default async function PrintSizePage() {
     { question: t("faq.logoQuestion"), answer: t("faq.logoAnswer") },
     {
       question: t("faq.quietQuestion"),
-      answer: t("faq.quietAnswer", {
+      // quietAnswer (no {start}) stays for the site's copy of this page,
+      // which calls it with `quiet` only until its next core pin bump.
+      answer: t("faq.quietAnswerNewDesigns", {
         quiet: QUIET_ZONE_MODULES,
         start: NEW_DESIGN_MARGIN,
       }),

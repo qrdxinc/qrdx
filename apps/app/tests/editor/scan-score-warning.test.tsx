@@ -41,6 +41,12 @@ const WARNING: ScanCheck = {
   message: "No quiet zone around the code",
   fix: "Without a light border, the code may not scan on a dark or busy surface. Set the margin to 2 modules or more, or add a frame",
 };
+/** 1.5 to 2 modules: the check passes and costs nothing, and still warns. */
+const PASSED_WARNING: ScanCheck = {
+  ...WARNING,
+  passed: true,
+  message: "Quiet zone of only 1.5 modules",
+};
 const FAILED: ScanCheck = {
   id: "eye-shape",
   passed: false,
@@ -126,6 +132,24 @@ describe("ScanCheckList", () => {
     expect(buttonNamed(addMargin)).toBeUndefined();
   });
 
+  it("shows a warning on a check that passed, with its fix and action", async () => {
+    const onClick = vi.fn();
+    await render(
+      <ScanCheckList
+        actions={{ "quiet-zone": { label: addMargin, onClick } }}
+        checks={[PASSED, PASSED_WARNING]}
+      />,
+    );
+    const first = container.querySelector("li");
+    expect(first?.querySelector("p")?.textContent).toBe(PASSED_WARNING.message);
+    expect(
+      first?.querySelector(`[aria-label="${copy.warning}"]`),
+    ).not.toBeNull();
+    expect(first?.textContent).toContain("dark or busy surface");
+    await act(async () => buttonNamed(addMargin)?.click());
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
   it("offers a check's one-click fix and runs it", async () => {
     const onClick = vi.fn();
     await render(
@@ -154,6 +178,22 @@ describe("ScanScoreBadge", () => {
       "Scan score 95, Great, with a warning. Show checks",
     );
     expect(badge?.querySelectorAll("svg")).toHaveLength(1);
+  });
+
+  it("marks a warning on a passed check too, score unchanged", async () => {
+    score.next = { ...result([PASSED_WARNING, PASSED]), score: 100 };
+    await render(
+      <ScanScoreBadge
+        style={{ ...style, margin: 1.5 }}
+        value="https://qrdx.dev"
+      />,
+    );
+    await settle();
+    const badge = container.querySelector("button[data-scan-score-badge]");
+    expect(badge?.textContent).toBe("Scan score 100 · Great");
+    expect(badge?.getAttribute("aria-label")).toBe(
+      "Scan score 100, Great, with a warning. Show checks",
+    );
   });
 
   it("shows no mark without a warning", async () => {

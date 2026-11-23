@@ -51,17 +51,20 @@ export const GRADE_COLORS: Record<ScanGrade, string> = {
   fails: "bg-red-500",
 };
 
-/** A warning: a caution about where the code goes, not a lower score. */
-export const isScanWarning = (check: ScanCheck) =>
-  !check.passed && check.severity === "warning";
+/**
+ * A warning: a caution about where the code goes, not a lower score. It may
+ * be on a check that passed (it costs nothing) or one that failed.
+ */
+export const isScanWarning = (check: ScanCheck) => check.severity === "warning";
 
 /**
  * Failed checks first (their fixes on top), then warnings, then passed, then
  * not checked.
  */
 const checkOrder = (check: ScanCheck) => {
+  if (isScanWarning(check)) return 1;
   if (check.passed) return check.skipped ? 3 : 2;
-  return isScanWarning(check) ? 1 : 0;
+  return 0;
 };
 
 /** A one-click fix shown under a check's own fix, by the check's id. */
@@ -82,10 +85,17 @@ export function ScanCheckList({
   return (
     <ul className="space-y-2.5">
       {sorted.map((check) => {
-        const action = check.passed ? undefined : actions?.[check.id];
+        const flagged = !check.passed || isScanWarning(check);
+        const action = flagged ? actions?.[check.id] : undefined;
         return (
           <li className="flex gap-2 text-sm" key={check.id}>
-            {check.skipped ? (
+            {isScanWarning(check) ? (
+              <Warning2
+                aria-label={t("warning")}
+                className="mt-0.5 size-4 shrink-0 text-amber-500"
+                variant="Bold"
+              />
+            ) : check.skipped ? (
               // Couldn't be checked: neither a pass nor a problem.
               <CircleMinus
                 aria-label={t("notChecked")}
@@ -95,12 +105,6 @@ export function ScanCheckList({
             ) : check.passed ? (
               <CircleCheck
                 className="mt-0.5 size-4 shrink-0 text-emerald-500"
-                variant="Bold"
-              />
-            ) : isScanWarning(check) ? (
-              <Warning2
-                aria-label={t("warning")}
-                className="mt-0.5 size-4 shrink-0 text-amber-500"
                 variant="Bold"
               />
             ) : (
@@ -118,7 +122,7 @@ export function ScanCheckList({
               >
                 {check.message}
               </p>
-              {!check.passed && check.fix && (
+              {flagged && check.fix && (
                 <p className="text-muted-foreground mt-0.5 text-xs leading-snug">
                   {check.fix}
                 </p>
