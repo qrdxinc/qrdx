@@ -36701,6 +36701,12 @@
     "status": "machine",
     "context": "mcp.tools.5.description"
   },
+  "6fc17acdab37": {
+    "source": "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Listed once the connection has a QRdx API key.",
+    "text": "将设计作为主题保存到你的工作区，数量受当前套餐的主题保存上限限制。连接带有 QRdx API key 后才会列出。",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
   "5059cb851dc2": {
     "source": "Generate a barcode",
     "text": "生成条形码",
@@ -36710,6 +36716,12 @@
   "26e9ed7d6f36": {
     "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
     "text": "支持 EAN-13、UPC-A、UPC-E、EAN-8、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417 或 Aztec。会校验输入的值（校验位、长度、字符），并返回 PNG 图片，以及公开的 SVG、PNG、PDF 等图片链接。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "fdfe7dc89241": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、USPS Intelligent Mail、Data Matrix、PDF417、Aztec、MaxiCode 或 DotCode。会检查数值（校验位、长度、字符），并返回一张 PNG 以及公开的 SVG、PNG、PDF 等图片链接。",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
@@ -36725,6 +36737,12 @@
     "status": "machine",
     "context": "mcp.tools.7.description"
   },
+  "09892b7b00fa": {
+    "source": "Keeps a barcode in your workspace's Barcodes to edit and download later. Listed once the connection has a QRdx API key.",
+    "text": "将条形码保存在你工作区的“条形码”中，方便之后编辑和下载。连接带有 QRdx API key 后才会列出。",
+    "status": "machine",
+    "context": "mcp.tools.7.description"
+  },
   "4c95ba85d6f1": {
     "source": "Generate AI art",
     "text": "生成 AI 艺术二维码",
@@ -36734,6 +36752,12 @@
   "9254cd62817d": {
     "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
     "text": "根据你的描述、场景或照片，将二维码绘制成 AI 艺术作品，并检查是否可以扫描。每张图片会使用工作区每月 AI 艺术图片额度中的 1 张，最长需要约 1 分钟。连接中需要提供 QRdx API 密钥。",
+    "status": "machine",
+    "context": "mcp.tools.8.description"
+  },
+  "fe114ac9b6bc": {
+    "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Listed once the connection has a QRdx API key.",
+    "text": "根据你的描述、某个场景或你的照片，把二维码绘入 AI 艺术图中，并检查它是否可以扫描。每张图片会占用你工作区每月 AI 艺术图额度中的一张，最长需要一分钟。连接带有 QRdx API key 后才会列出。",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36878,6 +36902,12 @@
   "95b27c7bcd0a": {
     "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server.",
     "text": "不需要。设计和渲染二维码以及浏览社区内容无需密钥：QRdx MCP 服务器公开免费，并且不保存任何会话状态。将设计保存到你的主题（save_template）、保存条形码（save_barcode）、制作 AI 艺术（generate_ai_art）以及使用你上传的 logo，则需要 QRdx API 密钥，请在应用中该服务器的设置里以 Authorization: Bearer qrdx_… 的形式发送。",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "57125b32502d": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "不需要，用于设计和生成二维码以及浏览社区：QRdx MCP 服务器公开免费，也不保留会话状态。但将设计保存到你的主题（save_template）、保存条形码（save_barcode）、制作 AI 艺术图（generate_ai_art）以及使用你上传的 logo，需要 QRdx API key，请在你的应用中为该服务器的设置里以 Authorization: Bearer qrdx_… 的形式发送。设置好 key 后，你的应用才会看到这三个工具。",
     "status": "machine",
     "context": "mcp.faqs.2.answer"
   },

@@ -36701,6 +36701,12 @@
     "status": "machine",
     "context": "mcp.tools.5.description"
   },
+  "6fc17acdab37": {
+    "source": "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Listed once the connection has a QRdx API key.",
+    "text": "Enregistre un design comme thème dans votre espace de travail, dans la limite de thèmes enregistrés de votre offre. Disponible dès que la connexion dispose d'une clé API QRdx.",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
   "5059cb851dc2": {
     "source": "Generate a barcode",
     "text": "Générer un code-barres",
@@ -36710,6 +36716,12 @@
   "26e9ed7d6f36": {
     "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 ou Aztec. Vérifie la valeur (chiffres de contrôle, longueurs, caractères) et renvoie un PNG ainsi que des URL publiques d'images en SVG, PNG, PDF et autres formats.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "fdfe7dc89241": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode ou DotCode. Vérifie la valeur (chiffres de contrôle, longueurs, caractères) et renvoie un PNG ainsi que des URL publiques en SVG, PNG, PDF et autres formats d'image.",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
@@ -36725,6 +36737,12 @@
     "status": "machine",
     "context": "mcp.tools.7.description"
   },
+  "09892b7b00fa": {
+    "source": "Keeps a barcode in your workspace's Barcodes to edit and download later. Listed once the connection has a QRdx API key.",
+    "text": "Conserve un code-barres dans les Codes-barres de votre espace de travail pour le modifier et le télécharger plus tard. Disponible dès que la connexion dispose d'une clé API QRdx.",
+    "status": "machine",
+    "context": "mcp.tools.7.description"
+  },
   "4c95ba85d6f1": {
     "source": "Generate AI art",
     "text": "Générer un visuel IA",
@@ -36734,6 +36752,12 @@
   "9254cd62817d": {
     "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
     "text": "Intègre un QR code dans un visuel IA à partir de votre description, d'une scène ou de votre photo, et vérifie qu'il se scanne. Chaque image utilise l'une des images d'art IA mensuelles de votre espace de travail et peut prendre jusqu'à une minute. Nécessite une clé API QRdx sur la connexion.",
+    "status": "machine",
+    "context": "mcp.tools.8.description"
+  },
+  "fe114ac9b6bc": {
+    "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Listed once the connection has a QRdx API key.",
+    "text": "Intègre un QR code dans une illustration IA à partir de votre description, d'une scène ou de votre photo, et vérifie qu'il se scanne. Chaque image utilise l'une des images d'illustration IA mensuelles de votre espace de travail et prend jusqu'à une minute. Disponible dès que la connexion dispose d'une clé API QRdx.",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36878,6 +36902,12 @@
   "95b27c7bcd0a": {
     "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server.",
     "text": "Non, pour concevoir et générer des codes et parcourir la communauté : le serveur MCP de QRdx est public et gratuit, et il ne conserve aucun état de session. Enregistrer un design dans vos thèmes (save_template), enregistrer un code-barres (save_barcode), créer un visuel IA (generate_ai_art) et utiliser un logo que vous avez importé nécessitent une clé API QRdx, envoyée sous la forme Authorization: Bearer qrdx_… dans les paramètres du serveur de votre application.",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "57125b32502d": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "Non, pour concevoir et générer des codes et parcourir la communauté : le serveur MCP de QRdx est public et gratuit, et il ne conserve aucun état de session. Enregistrer un design dans vos thèmes (save_template), enregistrer un code-barres (save_barcode), créer une illustration IA (generate_ai_art) et utiliser un logo que vous avez importé nécessitent une clé API QRdx, envoyée sous la forme Authorization: Bearer qrdx_… dans les réglages du serveur de votre application. Votre application voit ces trois outils une fois la clé définie.",
     "status": "machine",
     "context": "mcp.faqs.2.answer"
   },

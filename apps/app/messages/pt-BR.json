@@ -2698,7 +2698,7 @@
     "setupUrl": "URL do servidor",
     "toolsEyebrow": "Ferramentas",
     "toolsTitle": "O que seu assistente pode chamar",
-    "toolsDescription": "{count, number} ferramentas. Todas, exceto save_template, save_barcode e generate_ai_art, são somente leitura e não precisam de chave: elas geram imagens, formatam texto e leem a comunidade pública. Os parâmetros completos estão na <link>documentação do servidor MCP</link>.",
+    "toolsDescription": "{count, number} ferramentas. Todas, exceto save_template, save_barcode e generate_ai_art, são somente leitura e não precisam de chave: elas geram imagens, formatam texto e leem a comunidade pública. Essas três aparecem na lista quando a conexão tem uma chave de API. Os parâmetros completos estão na <link>documentação do servidor MCP</link>.",
     "toolNoKey": "Sem chave",
     "toolNeedsKey": "Requer chave de API",
     "faqTitle": "Dúvidas sobre o servidor MCP",

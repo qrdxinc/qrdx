@@ -2698,7 +2698,7 @@
     "setupUrl": "URL server",
     "toolsEyebrow": "Alat",
     "toolsTitle": "Yang dapat dipanggil asisten Anda",
-    "toolsDescription": "{count, number} alat. Semua alat kecuali save_template, save_barcode, dan generate_ai_art bersifat hanya-baca dan tidak memerlukan kunci: alat-alat ini merender gambar, memformat teks, dan membaca komunitas publik. Parameter lengkap ada di <link>dokumentasi server MCP</link>.",
+    "toolsDescription": "{count, number} alat. Semua alat kecuali save_template, save_barcode, dan generate_ai_art bersifat hanya-baca dan tidak memerlukan kunci: alat-alat ini merender gambar, memformat teks, dan membaca komunitas publik. Ketiga alat tersebut baru ditampilkan setelah koneksi memiliki kunci API. Parameter lengkap ada di <link>dokumentasi server MCP</link>.",
     "toolNoKey": "Tanpa kunci",
     "toolNeedsKey": "Perlu kunci API",
     "faqTitle": "FAQ server MCP",

@@ -2698,7 +2698,7 @@
     "setupUrl": "सर्वर URL",
     "toolsEyebrow": "टूल",
     "toolsTitle": "आपका असिस्टेंट क्या-क्या चला सकता है",
-    "toolsDescription": "{count, number} टूल। save_template, save_barcode और generate_ai_art को छोड़कर बाकी सभी रीड-ओनली हैं और इन्हें किसी key की ज़रूरत नहीं होती: ये इमेज बनाते हैं, टेक्स्ट को फ़ॉर्मैट करते हैं और पब्लिक कम्युनिटी को पढ़ते हैं। पूरे पैरामीटर <link>MCP server docs</link> में दिए गए हैं।",
+    "toolsDescription": "{count, number} टूल। save_template, save_barcode और generate_ai_art को छोड़कर बाकी सभी रीड-ओनली हैं और इनके लिए किसी key की ज़रूरत नहीं होती: ये इमेज बनाते हैं, टेक्स्ट फ़ॉर्मैट करते हैं और पब्लिक कम्युनिटी को पढ़ते हैं। ये तीनों तब दिखते हैं जब कनेक्शन में API key हो। पूरे पैरामीटर <link>MCP server docs</link> में हैं।",
     "toolNoKey": "की ज़रूरत नहीं",
     "toolNeedsKey": "API key ज़रूरी है",
     "faqTitle": "MCP सर्वर FAQ",

@@ -29,6 +29,7 @@ import { ValidationError } from "@/types/errors";
 
 // The MCP server's AI art tool: generate_ai_art makes one image, like
 // POST /v1/art, on the monthly AI art allowance of the API key's workspace.
+// Only connections with a key get it (tools.ts, route.ts).
 
 const text = (value: string) => ({ type: "text" as const, text: value });
 

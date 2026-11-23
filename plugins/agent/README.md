@@ -40,7 +40,7 @@ gemini extensions install https://github.com/qrdxinc/qrdx
 
 - **The skill runs `npx @qrdx/cli@0.0.17`.** npx downloads that exact version of the CLI from the npm registry the first time, and it needs Node.js 22 or later. The code is drawn on your machine and written to the file the agent names. The CLI sends nothing to QRdx. If the agent passes `--logo` with a URL, the CLI fetches that image.
 - **The MCP server is remote.** When the agent calls one of its tools, your client sends the tool's arguments, such as the text to encode and the style, to `mcp.qrdx.dev`, which returns the code. The [privacy policy](https://qrdx.dev/legal/privacy-policy) covers that service.
-- **No keys or headers are set.** Two tools, `save_template` and `save_barcode`, save to a QRdx workspace and need an API key, which you add in your client's MCP settings yourself ([MCP docs](https://qrdx.dev/docs/developers/mcp)). Everything else works without one.
+- **No keys or headers are set.** Three tools, `save_template`, `save_barcode` and `generate_ai_art`, act on a QRdx workspace and need an API key, which you add in your client's MCP settings yourself ([MCP docs](https://qrdx.dev/docs/developers/mcp)); the server lists them only once you do. Everything else works without one.
 
 The plugin has no hooks and no scripts of its own.
 
