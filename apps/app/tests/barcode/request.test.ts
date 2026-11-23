@@ -36,6 +36,9 @@ describe("parseBarcodeFormat", () => {
     expect(parseBarcodeFormat("Intelligent Mail")).toBe("intelligent-mail");
     expect(parseBarcodeFormat("DotCode")).toBe("dotcode");
     expect(parseBarcodeFormat("azteccode")).toBe("aztec");
+    expect(parseBarcodeFormat("rMQR")).toBe("rmqr");
+    expect(parseBarcodeFormat("rMQR Code")).toBe("rmqr");
+    expect(parseBarcodeFormat("Rectangular Micro QR")).toBe("rmqr");
     expect(parseBarcodeFormat("MaxiCode")).toBe("maxicode");
     expect(parseBarcodeFormat("UPS MaxiCode")).toBe("maxicode");
     expect(parseBarcodeFormat("Codabar")).toBe("codabar");
