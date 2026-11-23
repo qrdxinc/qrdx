@@ -2,6 +2,7 @@
 
 import { authClient } from "@repo/auth/client";
 import {
+  OAUTH_INVITE_KEY,
   OAUTH_LANDING_KEY,
   OAUTH_REFERRAL_KEY,
 } from "@repo/auth/referral-keys";
@@ -23,6 +24,7 @@ import { pendingReferralCode } from "@/lib/affiliates/referral-client";
 import { type AuthDialogMode, showsSignIn } from "@/lib/analytics/auth-prompt";
 import { signUpLanding } from "@/lib/analytics/landing";
 import { offersSignIn, type SignInOptions } from "@/lib/auth/sign-in-options";
+import { pendingInviteCode } from "@/lib/invites/invite-client";
 import { signInPath } from "@/lib/safe-redirect";
 import { socialSignInErrorPath } from "../sign-in/_lib/error-message";
 import { EmailCodeSignIn } from "./email-code-sign-in";
@@ -117,6 +119,7 @@ export function SignInPanel({
   const notSetUp = nothingOffered && confirmed;
   const askFailed = nothingOffered && failed;
   const affiliates = useAvailability().has("affiliates");
+  const invites = useAvailability().has("inviteRewards");
 
   useEffect(() => {
     if (shown) setLastLoginMethod(authClient.getLastUsedLoginMethod());
@@ -134,9 +137,13 @@ export function SignInPanel({
       // state to the new account (packages/auth/referral.ts); they only
       // count if this makes one.
       const referral = affiliates ? pendingReferralCode() : null;
+      // A friend's invite code rides along apart from the affiliate's
+      // (lib/invites): it counts only if this makes the account.
+      const invite = invites ? pendingInviteCode() : null;
       const landing = signUpLanding();
       const additionalData = {
         ...(referral ? { [OAUTH_REFERRAL_KEY]: referral } : {}),
+        ...(invite ? { [OAUTH_INVITE_KEY]: invite } : {}),
         ...(landing ? { [OAUTH_LANDING_KEY]: landing } : {}),
       };
       const { error } = await authClient.signIn.social({
@@ -145,7 +152,7 @@ export function SignInPanel({
         // A refusal (an unverified address, say) comes back to /sign-in,
         // which says why (sign-in/_lib/error-message.ts).
         errorCallbackURL: socialSignInErrorPath(next, provider),
-        ...(referral || landing ? { additionalData } : {}),
+        ...(referral || invite || landing ? { additionalData } : {}),
       });
       // e.g. the provider is not configured on this server
       if (error) throw error;

@@ -1,10 +1,12 @@
 // The channel an account came from (user_acquisition.channel), worked out on
 // the server from what its sign-up carried (lib/analytics/landing.ts, already
-// cleaned) and whether an affiliate was credited. A client never says its
-// own channel. Pure: no database, no request.
+// cleaned), whether an affiliate was credited and whether a friend's invite
+// was recorded. A client never says its own channel. Pure: no database, no
+// request.
 //
 // First match wins:
 //   affiliate     an affiliate was credited with the account
+//   invite        it signed up through a friend's invite link (lib/invites)
 //   plugin        ref is a plugin's tag (Chrome, Figma, Canva, Raycast, Google Workspace)
 //   mcp           ref=mcp (a link the MCP server returned)
 //   bot           ref is a chat bot's tag (Slack, Telegram, Discord)
@@ -103,9 +105,10 @@ const includes = (list: readonly string[], value: string | undefined) =>
 /** The channel for a sign-up, by the rules above. */
 export function acquisitionChannel(
   landing: SignUpLanding | null,
-  { affiliate }: { affiliate: boolean },
+  { affiliate, invite = false }: { affiliate: boolean; invite?: boolean },
 ): AcquisitionChannel {
   if (affiliate) return "affiliate";
+  if (invite) return "invite";
   const { ref, referrer_host: host, utm_source: source } = landing ?? {};
   if (includes(PLUGIN_REFS, ref)) return "plugin";
   if (ref === MCP_REF) return "mcp";

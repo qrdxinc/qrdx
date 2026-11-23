@@ -62,6 +62,8 @@ describe("app nav", () => {
       ["Notifications", "/settings/notifications"],
       ["Integrations", "/settings/integrations"],
       ["Authorized apps", "/settings/authorized-apps"],
+      // Hidden where invite rewards are off (feature-availability-rules.ts).
+      ["Invite friends", "/settings/invite"],
       // Hidden where the program is off (feature-availability-rules.ts).
       ["Affiliate program", "/settings/affiliate"],
     ]);

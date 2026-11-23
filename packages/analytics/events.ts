@@ -229,6 +229,18 @@ export interface AnalyticsEvents {
   /** A chat bot's landing page (/slack, /telegram, /discord): its add button. */
   chat_bot_add_clicked: { bot: "slack" | "telegram" | "discord" };
 
+  // Invite rewards (apps/app/lib/invites)
+  /** The person copied their invite link: where ("settings"). */
+  invite_link_copied: { surface: string };
+  /** The invite line beside an upgrade was followed: where ("limit_gate"). */
+  invite_offer_clicked: { surface: string };
+  /**
+   * Server side: a friend's first dynamic code rewarded an invite, and
+   * whether the inviter got codes too (false past their cap). Counts only:
+   * never who invited whom.
+   */
+  invite_reward_granted: { inviter_rewarded: boolean };
+
   // Billing
   /**
    * A plan limit stopped something and offered an upgrade: which limit
@@ -289,7 +301,8 @@ export type ServerAnalyticsEventName =
   | "import_started"
   | "import_finished"
   | "import_bridge_run"
-  | "domain_verified";
+  | "domain_verified"
+  | "invite_reward_granted";
 
 /** `track("sign_out")` for events without required properties. */
 export type AnalyticsPropsArg<E extends AnalyticsEventName> =

@@ -8,6 +8,7 @@ import {
   Code1 as CodeXml,
   FolderOpen,
   Speedometer as Gauge,
+  Gift,
   Global as Globe,
   Home2 as Home,
   KeySquare,
@@ -219,6 +220,14 @@ export function settingsNav(slug: string): AppNavGroup[] {
           label: "Authorized apps",
           icon: ShieldTick,
           keywords: ["oauth", "access", "revoke"],
+        },
+        {
+          // Only where invite rewards run (packages/availability/rules.ts
+          // hides the path elsewhere).
+          href: "/settings/invite",
+          label: "Invite friends",
+          icon: Gift,
+          keywords: ["invite", "referral", "friends", "bonus", "free codes"],
         },
         {
           // Only where the program runs (packages/availability/rules.ts

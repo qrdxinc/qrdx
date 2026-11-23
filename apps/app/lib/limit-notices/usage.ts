@@ -30,6 +30,8 @@ export interface LimitUsage {
   resetsAt?: string;
   /** AI art shared by the workspace */
   pooled?: boolean;
+  /** Of `limit`, the dynamic codes invites added (lib/code-limit.ts) */
+  bonus?: number;
 }
 
 const finite = (value: number) => (Number.isFinite(value) ? value : null);
@@ -57,6 +59,7 @@ export async function readLimitUsage(
       used: known.used,
       limit: known.limit,
       ...(known.pooled !== undefined ? { pooled: known.pooled } : {}),
+      ...(known.bonus ? { bonus: known.bonus } : {}),
       ...(id === "aiArt" || id === "formResponses"
         ? { resetsAt: nextMonth() }
         : {}),
@@ -65,7 +68,12 @@ export async function readLimitUsage(
   switch (id) {
     case "dynamicCodes": {
       const usage = await getCodeUsage(scope);
-      return { plan, used: usage.used, limit: usage.limit };
+      return {
+        plan,
+        used: usage.used,
+        limit: usage.limit,
+        bonus: usage.inviteBonus,
+      };
     }
     case "landingPages": {
       const usage = await getPageUsage(scope);

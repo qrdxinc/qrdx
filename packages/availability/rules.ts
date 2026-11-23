@@ -52,6 +52,8 @@ export const FEATURE_IDS = [
   "discordBot",
   "telegramBot",
   "affiliates",
+  // Invite rewards: friends who sign up through a person's link
+  "inviteRewards",
   // Paid plans (Polar)
   "billing",
   // Agency tools: "Pay by invoice" requests for Business yearly
@@ -380,6 +382,25 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
       "/legal/affiliate-terms",
       "/settings/affiliate",
       "/docs/help/account-and-billing/affiliate-program",
+    ],
+  },
+  inviteRewards: {
+    // Invite rewards (lib/invites): a friend who signs up through someone's
+    // invite link and makes their first dynamic code earns both of them more
+    // dynamic codes. QRdx's own offer, like the affiliate program: on
+    // wherever QRdx itself runs (qrdx.dev, its previews, local dev) and never
+    // on a self-hosted copy on its own domain, which doesn't count the bonus
+    // either. Nothing else to set up.
+    name: "Invite rewards (qrdx.dev)",
+    requires: () => ["NEXT_PUBLIC_APP_URL"],
+    usable: (ctx) =>
+      isQrdxDeployment({
+        appUrl: ctx.env.NEXT_PUBLIC_APP_URL,
+        productionUrl: ctx.env.VERCEL_PROJECT_PRODUCTION_URL,
+      }),
+    paths: [
+      "/settings/invite",
+      "/docs/help/account-and-billing/invite-rewards",
     ],
   },
   billing: {

@@ -5114,7 +5114,8 @@
       "yourQrCodeIsNow": "Il tuo QR code ora è dinamico",
       "destinationUpdated": "Destinazione aggiornata",
       "designSavedToTheCode": "Design salvato nel codice",
-      "couldntCopyTheShortLink": "Impossibile copiare il link breve"
+      "couldntCopyTheShortLink": "Impossibile copiare il link breve",
+      "inviteForMore": "Oppure <link>invita un amico</link>: quando crea il suo primo codice dinamico, ricevete entrambi {count, number} in più."
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5757,7 +5758,8 @@
     "limitCard": {
       "planUsage": "Piano e utilizzo",
       "notNow": "Non ora",
-      "labelUsed": "{label} usati"
+      "labelUsed": "{label} usati",
+      "inviteForMore": "Oppure <link>invita un amico</link>: quando crea il suo primo QR code dinamico, entrambi ricevete {count, number} in più."
     },
     "limitDialog": {
       "limitReached": "Limite raggiunto"
@@ -6942,6 +6944,39 @@
           "refreshToTryAgainYour": "Aggiorna la pagina per riprovare. Il tuo piano e i tuoi limiti non sono cambiati.",
           "unlimitedOnValue": "Illimitato con {value}",
           "labelUsed": "{label} usato"
+        }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "Il tuo link di invito:",
+          "copy": "Copia",
+          "copied": "Copiato",
+          "linkCopied": "Link copiato",
+          "couldntCopy": "Impossibile copiare. Seleziona il link e copialo tu."
+        },
+        "page": {
+          "title": "Invita amici",
+          "description": "Condividi il tuo link. Quando un amico si registra tramite il link e crea il suo primo QR code dinamico, entrambi ricevete {count, number} QR code dinamici in più.",
+          "notReady": "Gli inviti non sono ancora disponibili. Riprova più tardi.",
+          "yourInviteLink": "Il tuo link di invito",
+          "shareYourLink": "Invialo agli amici o pubblicalo dove vuoi. Ogni amico che si iscrive tramite il link e crea un QR code dinamico fa guadagnare a entrambi {count, number} QR code in più.",
+          "link": "Link",
+          "sameVisit": "Un amico viene conteggiato se crea il suo account nella stessa visita del clic. Sul suo dispositivo non viene salvato nulla.",
+          "friendsJoined": "Amici iscritti",
+          "friendsRewarded": "Amici premiati",
+          "rewardedOfMax": "{rewarded, number} su {max, number}",
+          "extraCodes": "QR code dinamici extra",
+          "waiting": "{waiting, plural, one {# amico non ha} other {# amici non hanno}} ancora creato un QR code dinamico. Hanno {days, number} giorni di tempo dalla registrazione.",
+          "atCap": "Hai ricevuto il premio per {max, number} amici, il massimo che un link di invito può fruttare. Gli amici che si iscrivono tramite il link ricevono comunque i loro {count, number}.",
+          "youWereInvited": "Ti sei iscritto tramite l’invito di un amico, quindi anche il tuo workspace ha ricevuto {count, number} QR code dinamici extra.",
+          "howItWorks": "Come funziona",
+          "ruleSignUp": "Un amico viene conteggiato se crea un nuovo account QRdx tramite il tuo link durante quella visita. Una registrazione in una visita successiva, o un account già esistente, non conta.",
+          "ruleFirstCode": "Quando crea il suo primo QR code dinamico entro {days, number} giorni dalla registrazione, entrambi ricevete {count, number} QR code dinamici in più nei vostri workspace.",
+          "ruleCap": "Puoi essere premiato per un massimo di {max, number} amici ({total, number} codici). Gli amici che si iscrivono dopo ricevono comunque i loro {count, number}.",
+          "ruleNotYourself": "Non contano i tuoi altri account, né un account che usa il tuo indirizzo email con un’altra grafia, né chi condivide un workspace con te.",
+          "ruleAllowance": "I codici extra si sommano ai QR code dinamici del tuo workspace personale, con qualsiasi piano, non a quelli di un team. Non hanno valore in denaro e non possono essere trasferiti a un altro account. I codici che crei con questi continuano a funzionare.",
+          "rulePrivate": "Non mostriamo mai chi si è iscritto tramite il tuo link, e i tuoi amici non vedono chi li ha invitati.",
+          "ruleEnd": "Possiamo interrompere i premi per i nuovi inviti; i codici che hai già ottenuto restano. I dettagli sono nei <terms>Termini di servizio</terms> e nella <help>pagina di aiuto</help>."
         }
       }
     },
@@ -9718,7 +9753,9 @@
       "makeRoom": "{limit, select, dynamicCodes {Archivia un codice per fare spazio.} landingPages {Elimina una pagina per fare spazio.} storage {Elimina i file che non ti servono più per fare spazio.} savedThemes {Elimina un tema per fare spazio.} other {}}",
       "resets": "Azzeramento: {date}.",
       "keeps": "{limit, select, dynamicCodes {I codici esistenti continuano a funzionare.} landingPages {Le pagine esistenti restano online.} formResponses {Le pagine restano online. I moduli tornano ad accettare risposte dopo l’azzeramento.} storage {I file che hai caricato restano disponibili.} other {}}",
-      "upgradeButton": "Passa a {plan}"
+      "upgradeButton": "Passa a {plan}",
+      "includesBonus": "{plan} include {amount} e gli inviti hanno aggiunto {bonus, number}.",
+      "invite": "Oppure <link>invita un amico</link>: quando creerà il suo primo QR code dinamico, entrambi ne riceverete {count, number} in più."
     },
     "weeklyDigest": {
       "subject": "La tua settimana su QRdx: {scans, plural, one {# scansione} other {# scansioni}}",
@@ -9758,6 +9795,18 @@
       "taxes": "Le imposte locali possono essere aggiunte al momento del pagamento.",
       "reply": "Se qualcosa ti blocca, o non sei sicuro di come fare, rispondi a questa email. Ogni risposta viene letta da una persona.",
       "reason": "Ricevi questa email perché hai appena creato un account QRdx."
+    },
+    "inviteReward": {
+      "subject": "Un amico che hai invitato ha creato il suo primo codice: entrambi avete ricevuto {count, number} QR code dinamici in più",
+      "preview": "Entrambi avete ricevuto {count, number} QR code dinamici in più",
+      "heading": "Entrambi avete ricevuto {count, number} QR code dinamici in più",
+      "body": "Un amico che si è registrato con il tuo link di invito ha appena creato il suo primo QR code dinamico. Il tuo workspace ora ha {count, number} QR code dinamici in più, e lo stesso vale per il suo.",
+      "progress": "Hai raggiunto {rewarded, plural, one {# amico} other {# amici}} su {max, number} per cui il tuo link può premiarti.",
+      "last": "Questo è l’ultimo dei {max, number} amici per cui il tuo link può premiarti. Gli amici che si iscrivono tramite il link ricevono comunque i loro {count, number}.",
+      "inviteMore": "Invita altri amici",
+      "seeInvites": "Vedi i tuoi inviti",
+      "keeps": "I codici extra funzionano con qualsiasi piano e non hanno valore in denaro. I codici che crei con questi continuano a funzionare.",
+      "reason": "Ricevi questa email perché un amico si è registrato tramite il tuo link di invito a QRdx e ha creato il suo primo QR code dinamico."
     }
   },
   "codeActions": {
@@ -10049,7 +10098,8 @@
       "bulkOverLimit": "I file fino a {limit, number} righe non richiedono un account. Un account gratuito ne gestisce fino a {max, number} per file e il tuo file resta caricato.",
       "keepDesigns": "Tieni i tuoi design nel tuo account, su ogni dispositivo.",
       "afterDownload": "È gratuito e il tuo codice continua a funzionare qualunque cosa succeda al tuo piano.",
-      "upgrade": "Piani e fatturazione sono legati a un account. Riprenderai esattamente da dove eri rimasto."
+      "upgrade": "Piani e fatturazione sono legati a un account. Riprenderai esattamente da dove eri rimasto.",
+      "invite": "Sei arrivato tramite l’invito di un amico. Registrati ora e riceverai {count, number} QR code dinamici in più quando ne creerai il primo."
     },
     "nudge": {
       "dismiss": "Non mostrare più questo messaggio"
@@ -10197,6 +10247,11 @@
         "failed": "Il single sign-on non ha funzionato. Riprova oppure accedi in un altro modo.",
         "rateLimited": "Troppi tentativi. Aspetta un minuto, poi riprova."
       }
+    },
+    "inviteNote": {
+      "text": "Sei stato invitato su QRdx. Registrati durante questa visita e crea un QR code dinamico entro {days, number} giorni per ottenere {count, number} QR code dinamici in più.",
+      "signUp": "Registrati",
+      "dismiss": "Chiudi"
     }
   },
   "settingsActions": {

@@ -1,5 +1,6 @@
 import "server-only";
 
+import { isOwnWorkspaceOf } from "@repo/auth/own-workspace-id";
 import { MAX_CODES_PER_REQUEST } from "@repo/config";
 import {
   type CodeCreatedVia,
@@ -35,6 +36,7 @@ import {
 import { getDefaultThemeStyle } from "@/app/(app)/dashboard/themes/_lib/queries";
 import { codeEvents, codeUpdateEvents } from "@/ee/audit-log/code-events";
 import { recordAuditEvent } from "@/ee/audit-log/record";
+import { dynamicCodeLimit } from "@/lib/code-limit";
 import { snapshotCodeVersion } from "@/lib/code-versions";
 import {
   contentTypeForDestination,
@@ -42,6 +44,8 @@ import {
 } from "@/lib/dynamic-content";
 import { HttpError } from "@/lib/error-response";
 import { formatCount } from "@/lib/format-count";
+import { canStillEarnFromInvites } from "@/lib/invites/bonus";
+import { noteDynamicCodesCreated } from "@/lib/invites/qualify";
 import { noteLimitUsage } from "@/lib/limit-notices";
 import { baseUrl } from "@/lib/metadata";
 import { can } from "@/lib/permissions";
@@ -401,8 +405,10 @@ const unlimitedCodesPlan = () =>
 
 export interface CodeUsage {
   plan: Plan;
-  /** null = unlimited */
+  /** null = unlimited; a capped plan's number plus `inviteBonus` (lib/code-limit.ts) */
   limit: number | null;
+  /** Of `limit`, the codes invites earned this workspace's owner (0 when none) */
+  inviteBonus: number;
   /** The cheapest plan with no cap on active codes (for "upgrade to …"); null = none */
   unlimitedPlan: Plan | null;
   used: number;
@@ -418,9 +424,11 @@ export async function getCodeUsage(scope: ActiveScope): Promise<CodeUsage> {
     countUnarchived(scope),
   ]);
   const limits = getPlanLimits(plan);
+  const codes = await dynamicCodeLimit(scope, plan);
   return {
     plan,
-    limit: Number.isFinite(limits.dynamicCodes) ? limits.dynamicCodes : null,
+    limit: Number.isFinite(codes.limit) ? codes.limit : null,
+    inviteBonus: codes.bonus,
     unlimitedPlan: unlimitedCodesPlan(),
     used,
     retentionDays: limits.analyticsRetentionDays,
@@ -429,12 +437,43 @@ export async function getCodeUsage(scope: ActiveScope): Promise<CodeUsage> {
   };
 }
 
-export function limitReached(limit: number): HttpError {
+/** "Your plan includes 10 active dynamic QR codes" (and the invites' share of `limit`). */
+function codesIncluded(limit: number, bonus: number): string {
+  return bonus > 0
+    ? `Your plan includes ${limit - bonus} active dynamic QR codes and invites added ${bonus}`
+    : `Your plan includes ${limit} active dynamic QR codes`;
+}
+
+/** `limit`: the workspace's (lib/code-limit.ts); `bonus`: the invites' share of it. */
+export function limitReached(limit: number, bonus = 0): HttpError {
   const upgrade = unlimitedCodesPlan();
   return new HttpError(
     402,
     "LIMIT_REACHED",
-    `Your plan includes ${limit} active dynamic QR codes. ${upgrade ? `Archive one or upgrade to ${PLAN_NAMES[upgrade]} for unlimited codes.` : "Archive one to make room."}`,
+    `${codesIncluded(limit, bonus)}. ${upgrade ? `Archive one or upgrade to ${PLAN_NAMES[upgrade]} for unlimited codes.` : "Archive one to make room."}`,
+  );
+}
+
+/**
+ * `error` (a LIMIT_REACHED), marked for the limit gate's invite line
+ * (data.invite) when inviting a friend would raise this limit: a browser
+ * session in the person's own workspace, while their invites can still earn
+ * codes (lib/invites). API keys and OAuth apps get the same answer as ever.
+ */
+async function withInviteOffer(
+  scope: ActiveScope,
+  error: HttpError,
+): Promise<HttpError> {
+  if (scope.credential) return error;
+  if (!isOwnWorkspaceOf(scope.organizationId, scope.userId)) return error;
+  if (!(await canStillEarnFromInvites(scope.userId))) return error;
+  return new HttpError(
+    error.status,
+    error.code,
+    error.message,
+    error.headers,
+    error.docs,
+    { ...error.data, invite: true },
   );
 }
 
@@ -1034,17 +1073,22 @@ export async function createCodesBatch(
   let inserted: QrCodeRow[] = [];
   let raced: QrCodeRow[] = [];
   if (todo.length > 0) {
-    const capped = Number.isFinite(limits.dynamicCodes);
+    // The plan's number plus what invites added (lib/code-limit.ts).
+    const { limit: codeLimit, bonus } = await dynamicCodeLimit(scope, plan);
+    const capped = Number.isFinite(codeLimit);
     if (capped) {
       const used = await countUnarchived(scope);
-      if (used + todo.length > limits.dynamicCodes) {
-        throw todo.length > 1
-          ? new HttpError(
-              402,
-              "LIMIT_REACHED",
-              `Your plan includes ${limits.dynamicCodes} active dynamic QR codes and has room for ${Math.max(0, limits.dynamicCodes - used)} more, so these ${todo.length} weren't created. Archive codes or upgrade for unlimited codes.`,
-            )
-          : limitReached(limits.dynamicCodes);
+      if (used + todo.length > codeLimit) {
+        throw await withInviteOffer(
+          scope,
+          todo.length > 1
+            ? new HttpError(
+                402,
+                "LIMIT_REACHED",
+                `${codesIncluded(codeLimit, bonus)} and has room for ${Math.max(0, codeLimit - used)} more, so these ${todo.length} weren't created. Archive codes or upgrade for unlimited codes.`,
+              )
+            : limitReached(codeLimit, bonus),
+        );
       }
     }
     await assertBindableDomains(
@@ -1176,14 +1220,22 @@ export async function createCodesBatch(
 
     if (capped && inserted.length > 0) {
       const used = await countUnarchived(scope);
-      if (used > limits.dynamicCodes) {
+      if (used > codeLimit) {
         await deleteRows(inserted.map((row) => row.id));
-        throw limitReached(limits.dynamicCodes);
+        throw await withInviteOffer(scope, limitReached(codeLimit, bonus));
       }
       // Owners hear about it at 90% and 100% (after the response).
       noteLimitUsage(scope, "dynamicCodes", {
         used,
-        limit: limits.dynamicCodes,
+        limit: codeLimit,
+        bonus,
+      });
+    }
+    // A friend's first dynamic code settles their invite (lib/invites),
+    // after the response. A code held for a safety check doesn't count.
+    if (inserted.length > 0) {
+      noteDynamicCodesCreated(scope.userId, {
+        counted: inserted.some((row) => row.isActive),
       });
     }
     // Before the views: a held code's answer already says "Safety check".
@@ -1390,10 +1442,10 @@ export async function setCodeArchived(
   const current = await findCodeRow(scope, id);
   if (Boolean(current.archivedAt) === archived) return toOneCodeView(current);
 
-  const limits = getPlanLimits(await getPlanForScope(scope));
-  const capped = !archived && Number.isFinite(limits.dynamicCodes);
-  if (capped && (await countUnarchived(scope)) >= limits.dynamicCodes) {
-    throw limitReached(limits.dynamicCodes);
+  const { limit: codeLimit, bonus } = await dynamicCodeLimit(scope);
+  const capped = !archived && Number.isFinite(codeLimit);
+  if (capped && (await countUnarchived(scope)) >= codeLimit) {
+    throw await withInviteOffer(scope, limitReached(codeLimit, bonus));
   }
 
   const where = and(eq(qrCode.id, id), scopeWhere(scope));
@@ -1406,16 +1458,17 @@ export async function setCodeArchived(
 
   if (capped) {
     const used = await countUnarchived(scope);
-    if (used > limits.dynamicCodes) {
+    if (used > codeLimit) {
       await db
         .update(qrCode)
         .set({ archivedAt: current.archivedAt })
         .where(where);
-      throw limitReached(limits.dynamicCodes);
+      throw limitReached(codeLimit, bonus);
     }
     noteLimitUsage(scope, "dynamicCodes", {
       used,
-      limit: limits.dynamicCodes,
+      limit: codeLimit,
+      bonus,
     });
   }
   recordAuditEvent(

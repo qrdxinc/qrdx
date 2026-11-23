@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+import { Link } from "react-email";
 import type { EmailIntl } from "../intl";
 import {
   EmailButton,
@@ -33,6 +35,11 @@ export interface LimitNoticeEmailProps {
    * Plan & usage.
    */
   upgrade?: { planName: string; url: string };
+  /**
+   * Dynamic codes in the reader's own workspace, while inviting a friend
+   * still earns more (apps/app/lib/invites): one line under the button.
+   */
+  invite?: { url: string; count: number };
   /** Why this person gets it */
   recipientReason: string;
   /** The recipients' language; the strings above come in it too */
@@ -55,6 +62,7 @@ export function LimitNoticeEmail({
   recipientReason,
   intl,
   upgrade,
+  invite,
 }: LimitNoticeEmailProps) {
   const { t } = intl;
   const words = { level, workspace: workspaceName, noun, value };
@@ -80,6 +88,16 @@ export function LimitNoticeEmail({
       ) : (
         <EmailButton href={usageUrl}>{t("limitNotice.button")}</EmailButton>
       )}
+      {invite ? (
+        <EmailText>
+          {t.rich("limitNotice.invite", {
+            count: invite.count,
+            link: (chunks: ReactNode) => (
+              <Link href={invite.url}>{chunks}</Link>
+            ),
+          })}
+        </EmailText>
+      ) : null}
       <EmailDivider />
       <MutedText>{t("limitNotice.howOften")}</MutedText>
     </EmailLayout>

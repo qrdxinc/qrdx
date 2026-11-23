@@ -1,7 +1,7 @@
 ---
 title: Privacy Policy
 description: What QRdx collects, why, who it is shared with, how long it is kept and the choices you have, for the website, accounts, dynamic codes, hosted pages, the API and the AI features.
-lastUpdated: 2026-11-21
+lastUpdated: 2026-11-23
 ---
 
 <Callout title="Summary">
@@ -138,6 +138,16 @@ If you ask to pay by invoice or for the non-profit discount on the pricing page,
 
 </IfAvailable>
 
+<IfAvailable feature="inviteRewards">
+
+### Invite rewards
+
+- **Your invite link.** The random code in it, made the first time you open **Invite friends**.
+- **If a friend signs up through it.** We record which account invited which, when your friend signed up, and whether and when their first dynamic code earned you both extra codes. We use it to give the extra codes, to keep each account to its limits and to stop people rewarding themselves. You see how many friends joined and were rewarded, never who they are, and your friends never see who invited them.
+- **Nothing stored on your device.** The code from an invite link only goes along with a sign-up made during the same visit. It's kept in the page's memory and the address bar, never in a cookie or browser storage.
+
+</IfAvailable>
+
 ### Emails
 
 We send transactional email only, through Resend: sign-in codes, team invitations, form response notifications, first-scan and milestone alerts, and weekly digests if you turn them on. Alerts and digests include a one-click unsubscribe link. We don't send marketing email to people who have an account. Separately, Ritesh Bucha sometimes writes to a business by hand (see [Business contacts we email](#business-contacts-we-email)).
@@ -186,6 +196,17 @@ For the affiliate program:
 | --- | --- | --- |
 | Affiliate program: reviewing applications, working out commissions and paying them | An affiliate's application, referral code, link visit count, PayPal email, commissions and payouts | Contract |
 | Affiliate program: crediting the affiliate who referred an account | Which affiliate referred the account and how, and the date and amount of its payments that earn a commission | Legitimate interests: paying affiliates for the customers they bring |
+
+</IfAvailable>
+
+<IfAvailable feature="inviteRewards">
+
+For invite rewards:
+
+| Purpose | Data | Legal basis |
+| --- | --- | --- |
+| Giving both accounts their extra dynamic codes and keeping to the limits | Your invite code, which account invited which, when the friend signed up and when their first dynamic code counted | Contract |
+| Stopping self-referral and abuse | The same, compared with the accounts' email addresses and shared workspaces | Legitimate interests: keeping the rewards for real friends |
 
 </IfAvailable>
 
@@ -242,6 +263,17 @@ For the affiliate program:
 | Affiliate records: application, referral code, PayPal email and commissions | Until the affiliate's account is deleted, which deletes them with it, including commissions not yet paid |
 | Affiliate payouts already sent | Kept for our accounts after the affiliate's account is deleted, without the account or the PayPal address: the amount, currencies, exchange rates, date and PayPal transaction ID |
 | Which affiliate referred an account | Until that account, or the affiliate's, is deleted. When the referred account is deleted, the commissions it earned stay on the affiliate's record with the Polar order each came from, because they're what the affiliate was or will be paid, but no longer say which account paid. |
+
+</IfAvailable>
+
+<IfAvailable feature="inviteRewards">
+
+For invite rewards:
+
+| Data | How long |
+| --- | --- |
+| Your invite code | Until you delete your account |
+| Which account invited which | Until one of the two accounts is deleted. That account is then removed from the record, and the other keeps the extra codes it earned without it saying who the other account was. |
 
 </IfAvailable>
 
@@ -306,5 +338,5 @@ Questions or requests about privacy: [support@qrdx.dev](mailto:support@qrdx.dev)
 
 ---
 
-**Changes:** 21 November 2026. Added [Business contacts we email](#business-contacts-we-email): the emails Ritesh Bucha sends to businesses by hand, what we record about them, the legal basis and how long we keep it. 18 November 2026. Our servers now also send events for imports from another provider, for re-pointing an import's old links and for a custom domain passing its check, with how your account found QRdx (a channel, and QRdx's own campaign names only), never links, domain names or code names. 13 November 2026. You can now view {facts.freeScanHistoryYears} year of scans on Free and all of them on Pro and Business; how long scans are kept hasn't changed. Earlier the same day: checkout now sends Polar your IP address and your country's currency, and the invoice and non-profit discount request forms are described under Billing. Earlier the same day: added what we record at sign-up about how you found QRdx (the referring site's host name, campaign tags, first page and sign-up page), kept with your account. 11 November 2026. Added precise location: what is collected, only when a code's owner turns it on and the scanner allows it in their browser, the rounding to about 100 m, the hosted-page cookie and how long it is kept. <IfAvailable feature="affiliates">10 November 2026. Added the affiliate program: what it records about affiliates and the accounts they refer (no cookie: a referral counts only for a sign-up in the same visit), and PayPal for payouts. </IfAvailable>3 November 2026. AI QR art now uses OpenAI's GPT Image 2, through Vercel AI Gateway, instead of Google's Gemini. Earlier the same day: AI features now run through Vercel AI Gateway, with Anthropic's Claude for the AI theme chat and prompt enhancement and Google's Gemini for theme design and AI art. 2 November 2026: AI QR art now uses Google's Gemini API; fal.ai no longer receives any data. 1 November 2026: rewritten to match how QRdx works today: scan analytics without stored IP addresses, hosted pages and forms, teams, integrations, AI features, the API and MCP server, retention periods, and DPDP Act and CCPA sections. Added Umami's cookieless visit counts; PostHog now links events to your account ID instead of your email address and name, and never records sessions.
+**Changes:** <IfAvailable feature="inviteRewards">23 November 2026. Added [Invite rewards](#invite-rewards): what we record when a friend signs up through your invite link, why, and how long we keep it. </IfAvailable>21 November 2026. Added [Business contacts we email](#business-contacts-we-email): the emails Ritesh Bucha sends to businesses by hand, what we record about them, the legal basis and how long we keep it. 18 November 2026. Our servers now also send events for imports from another provider, for re-pointing an import's old links and for a custom domain passing its check, with how your account found QRdx (a channel, and QRdx's own campaign names only), never links, domain names or code names. 13 November 2026. You can now view {facts.freeScanHistoryYears} year of scans on Free and all of them on Pro and Business; how long scans are kept hasn't changed. Earlier the same day: checkout now sends Polar your IP address and your country's currency, and the invoice and non-profit discount request forms are described under Billing. Earlier the same day: added what we record at sign-up about how you found QRdx (the referring site's host name, campaign tags, first page and sign-up page), kept with your account. 11 November 2026. Added precise location: what is collected, only when a code's owner turns it on and the scanner allows it in their browser, the rounding to about 100 m, the hosted-page cookie and how long it is kept. <IfAvailable feature="affiliates">10 November 2026. Added the affiliate program: what it records about affiliates and the accounts they refer (no cookie: a referral counts only for a sign-up in the same visit), and PayPal for payouts. </IfAvailable>3 November 2026. AI QR art now uses OpenAI's GPT Image 2, through Vercel AI Gateway, instead of Google's Gemini. Earlier the same day: AI features now run through Vercel AI Gateway, with Anthropic's Claude for the AI theme chat and prompt enhancement and Google's Gemini for theme design and AI art. 2 November 2026: AI QR art now uses Google's Gemini API; fal.ai no longer receives any data. 1 November 2026: rewritten to match how QRdx works today: scan analytics without stored IP addresses, hosted pages and forms, teams, integrations, AI features, the API and MCP server, retention periods, and DPDP Act and CCPA sections. Added Umami's cookieless visit counts; PostHog now links events to your account ID instead of your email address and name, and never records sessions.
 

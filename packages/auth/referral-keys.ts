@@ -8,6 +8,16 @@ export const REFERRAL_HEADER = "x-qrdx-referral";
 export const OAUTH_REFERRAL_KEY = "referralCode";
 
 /**
+ * The request header an email-code sign-up sends a friend's invite code in
+ * (apps/app/lib/invites). Its own header, never REFERRAL_HEADER: an invite
+ * is never read as an affiliate's code, and a sign-up can carry both.
+ */
+export const INVITE_HEADER = "x-qrdx-invite";
+
+/** The OAuth state key a Google or GitHub sign-up carries the invite code in. */
+export const OAUTH_INVITE_KEY = "inviteCode";
+
+/**
  * The request header an email-code sign-up sends how its visit started in
  * (apps/app/lib/analytics/landing.ts): URI-encoded JSON.
  */

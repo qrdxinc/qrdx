@@ -190,6 +190,11 @@ export function upgradeTo(
 export interface MeterCap {
   /** null = unlimited; 0 = not on this plan */
   limit: number | null;
+  /**
+   * Of `limit`, what invites added (dynamic codes in the owner's own
+   * workspace, lib/code-limit.ts); absent or 0 when nothing
+   */
+  bonus?: number;
   /** The cheapest higher plan with more (limit null = unlimited); null = none */
   lift: {
     plan: Plan;
@@ -258,6 +263,21 @@ export function resolveMeterCaps(
     caps[id] = { limit, lift };
   }
   return caps;
+}
+
+/**
+ * `caps` with the dynamic codes invites added (lib/code-limit.ts) on top of
+ * a capped plan's number; unchanged without a bonus or without a cap.
+ */
+export function withCodeBonus(caps: MeterCaps, bonus: number): MeterCaps {
+  const codes = caps.dynamicCodes;
+  if (!(bonus > 0 && codes && codes.limit !== null && codes.limit > 0)) {
+    return caps;
+  }
+  return {
+    ...caps,
+    dynamicCodes: { ...codes, limit: codes.limit + bonus, bonus },
+  };
 }
 
 /**

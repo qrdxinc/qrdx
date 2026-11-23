@@ -78,6 +78,10 @@ async function failure(
           ? (error.code as QrCodeErrorCode)
           : "UNKNOWN_ERROR",
         message: error.message,
+        // The limit gate's invite line (qr-codes.ts withInviteOffer).
+        ...(error.code === "LIMIT_REACHED" && error.data?.invite === true
+          ? { invite: true as const }
+          : {}),
       },
     };
   }

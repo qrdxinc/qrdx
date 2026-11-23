@@ -21,6 +21,10 @@
 // only from a page of its own origin (the referrer), so a shared link can't
 // plant one.
 //
+// A friend's invite code (apps/app lib/invites, `?invite=<code>`) travels the
+// same way, in its own field: it's never a `ref`, so an affiliate's code and
+// an invite never stand in for each other, and a visit can carry both.
+//
 // What it can't see: an earlier visit. Someone who found QRdx on Google and
 // comes back tomorrow by typing the address signs up "direct".
 import { hasPrivacySignal, safeString, sanitizePath } from "./privacy";
@@ -93,6 +97,23 @@ export function cleanRef(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const tag = value.trim().toLowerCase();
   return REF_TAG.test(tag) ? tag : null;
+}
+
+/** The query parameter an invite link's code arrives in: /playground?invite=<code>. */
+export const INVITE_PARAM = "invite";
+
+/**
+ * An invite code's shape (apps/app lib/invites makes them: 10 letters and
+ * digits). Only the shape: whether it's someone's code is the server's
+ * question.
+ */
+const INVITE_CODE = /^[a-z0-9]{10}$/;
+
+/** An invite code, lower-case, or null. */
+export function cleanInviteCode(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const code = value.trim().toLowerCase();
+  return INVITE_CODE.test(code) ? code : null;
 }
 
 /**
@@ -185,6 +206,33 @@ export function carriedVisit(page: {
   href: string;
   referrer: string;
 }): SignUpLanding | null {
+  const carried = carriedObject(page);
+  if (!carried) return null;
+  const { signup_path: _signup, ...start } =
+    cleanLanding(carried.value, carried.host) ?? {};
+  return start;
+}
+
+/**
+ * The invite code a link carried to this page with the visit (VISIT_PARAM),
+ * under the same rule as carriedVisit; null without one.
+ */
+export function carriedInvite(page: {
+  href: string;
+  referrer: string;
+}): string | null {
+  const carried = carriedObject(page);
+  if (!carried) return null;
+  return cleanInviteCode(
+    (carried.value as Record<string, unknown> | null)?.invite
+  );
+}
+
+/** VISIT_PARAM's JSON, when the page before was one of this origin's. */
+function carriedObject(page: {
+  href: string;
+  referrer: string;
+}): { value: unknown; host: string } | null {
   try {
     const url = new URL(page.href);
     const value = url.searchParams.get(VISIT_PARAM);
@@ -192,9 +240,7 @@ export function carriedVisit(page: {
     if (!page.referrer || new URL(page.referrer).origin !== url.origin) {
       return null;
     }
-    const { signup_path: _signup, ...start } =
-      cleanLanding(JSON.parse(value), url.hostname) ?? {};
-    return start;
+    return { value: JSON.parse(value), host: url.hostname };
   } catch {
     return null;
   }
@@ -228,13 +274,18 @@ export function withVisit(href: string, from: string): string {
   }
 }
 
-/** What a link carries: the visit's start, or only its `ref` under Do Not Track or Global Privacy Control. */
+/**
+ * What a link carries: the visit's start, or only its `ref` and invite code
+ * under Do Not Track or Global Privacy Control.
+ */
 function visitToCarry(): string | null {
   captureLanding();
   const { signup_path: _signup, ...start } = captured ?? {};
-  const visit: SignUpLanding = visitRefTag
-    ? { ...start, ref: visitRefTag }
-    : start;
+  const visit: SignUpLanding & { invite?: string } = {
+    ...start,
+    ...(visitRefTag ? { ref: visitRefTag } : {}),
+    ...(visitInviteCode ? { invite: visitInviteCode } : {}),
+  };
   return Object.keys(visit).length > 0 ? JSON.stringify(visit) : null;
 }
 
@@ -308,6 +359,8 @@ function dropVisitParam(): void {
 let captured: SignUpLanding | null = null;
 /** The visit's `ref`, kept under Do Not Track too (see visitRef). */
 let visitRefTag: string | null = null;
+/** The visit's invite code, kept under Do Not Track too (see visitInvite). */
+let visitInviteCode: string | null = null;
 let read = false;
 
 /**
@@ -322,13 +375,16 @@ export function captureLanding(): void {
   try {
     const page = { href: window.location.href, referrer: document.referrer };
     const carried = carriedVisit(page);
-    visitRefTag = carried
-      ? (carried.ref ?? null)
-      : cleanRef(new URL(page.href).searchParams.get("ref"));
+    const params = new URL(page.href).searchParams;
+    visitRefTag = carried ? (carried.ref ?? null) : cleanRef(params.get("ref"));
+    visitInviteCode = carried
+      ? carriedInvite(page)
+      : cleanInviteCode(params.get(INVITE_PARAM));
     captured = hasPrivacySignal() ? null : (carried ?? readLanding(page));
   } catch {
     captured = null;
     visitRefTag = null;
+    visitInviteCode = null;
   }
   dropVisitParam();
 }
@@ -344,6 +400,18 @@ export function visitRef(): string | null {
   if (typeof window === "undefined") return null;
   captureLanding();
   return visitRefTag;
+}
+
+/**
+ * The invite code the visit started with (INVITE_PARAM), from its first
+ * page's address or carried here; null without one. Like visitRef, kept
+ * under Do Not Track or Global Privacy Control: it goes nowhere but with a
+ * sign-up (apps/app lib/invites/invite-client.ts).
+ */
+export function visitInvite(): string | null {
+  if (typeof window === "undefined") return null;
+  captureLanding();
+  return visitInviteCode;
 }
 
 /**
@@ -363,6 +431,7 @@ export function signUpLanding(): SignUpLanding | null {
 export function forgetLanding(): void {
   captured = null;
   visitRefTag = null;
+  visitInviteCode = null;
   read = false;
   if (forwarding && typeof document !== "undefined") {
     document.removeEventListener("click", carryOnClick);

@@ -3,6 +3,7 @@ import "server-only";
 import { exportAffiliateData } from "@/lib/affiliates/program";
 import { isMissingSchemaError } from "@/lib/community/tables";
 import { isFeatureAvailable } from "@/lib/feature-availability";
+import { exportInviteData } from "@/lib/invites/export";
 import { listAuthorizedApps } from "@/lib/oauth-apps/authorized";
 import type { ExportEntry } from "./archive";
 import {
@@ -404,6 +405,14 @@ export function exportEntries(userId: string): ExportEntry[] {
       description:
         "If you applied to the affiliate program: your application, referral code, PayPal email, commissions and payouts. If an affiliate referred your account, how and when (not who).",
       load: () => exportAffiliateData(userId),
+    },
+    {
+      kind: "json",
+      path: "invites.json",
+      title: "Invite rewards",
+      description:
+        "Your invite code, when friends signed up through it and whether they earned you extra codes, and whether a friend's invite brought your account in (not who).",
+      load: () => exportInviteData(userId),
     },
     {
       kind: "json",

@@ -17,6 +17,7 @@ import { countThemesInScope } from "@/app/(app)/dashboard/themes/_lib/queries";
 import { getFormResponseUsage } from "@/app/api/forms/_lib/responses";
 import { getArtCredits } from "@/lib/ai/art";
 import { getCheckoutOpen } from "@/lib/checkout-availability";
+import { dynamicCodeLimit } from "@/lib/code-limit";
 import {
   getCustomDomainMode,
   isFeatureAvailable,
@@ -49,6 +50,7 @@ import {
   meterLabel,
   resolveMeterCaps,
   type SubscriptionSummary,
+  withCodeBonus,
 } from "./meters";
 
 export type { MeterResult } from "./meters";
@@ -161,7 +163,11 @@ export async function getUsageMeters(
     getPlan(scope.userId),
   ]);
   const limits = getPlanLimits(plan);
-  const caps = meterCapsFor(plan, { isTeam, personalPlan });
+  // Dynamic codes invites added to a capped plan (lib/code-limit.ts).
+  const caps = withCodeBonus(
+    meterCapsFor(plan, { isTeam, personalPlan }),
+    (await dynamicCodeLimit(scope, plan)).bonus,
+  );
 
   const loaders: Array<{
     id: MeterId;

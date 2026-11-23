@@ -49,18 +49,21 @@ let warnedMissing = false;
 /**
  * Records how the account found QRdx. Without a carried landing (a browser
  * sending Do Not Track, a sign-up from an older page) only an affiliate's
- * credit is worth a row; otherwise the account stays "unknown". Never throws.
+ * credit or a friend's invite is worth a row; otherwise the account stays
+ * "unknown". Never throws.
  */
 export async function recordAcquisition(input: {
   userId: string;
   landing: SignUpLanding | null;
   /** An affiliate was credited with this account */
   affiliate: boolean;
+  /** It signed up through a friend's invite link (lib/invites) */
+  invite?: boolean;
   now?: Date;
 }): Promise<AcquisitionResult> {
-  const { landing, affiliate } = input;
-  if (!(landing || affiliate)) return "nothing_carried";
-  const channel = acquisitionChannel(landing, { affiliate });
+  const { landing, affiliate, invite = false } = input;
+  if (!(landing || affiliate || invite)) return "nothing_carried";
+  const channel = acquisitionChannel(landing, { affiliate, invite });
   try {
     const inserted = await db
       .insert(userAcquisition)

@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@repo/analytics";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Progress } from "@repo/design-system/components/ui/progress";
 import { cn } from "@repo/design-system/lib/utils";
@@ -11,6 +12,8 @@ import {
 } from "@/app/(app)/settings/usage/_lib/meters";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import type { KnownCheckoutSurface } from "@/lib/checkout-surface";
+import { INVITE_BONUS_CODES } from "@/lib/invites/terms";
+import { usePlanLimits } from "./plan-limits-provider";
 import { UpgradeButton } from "./upgrade-button";
 
 /**
@@ -45,6 +48,10 @@ export function LimitCard({
 }) {
   const t = useTranslations("limits.limitCard");
   const upgrade = copy.upgrade;
+  // Dynamic codes in the person's own workspace: inviting a friend raises
+  // the limit too (lib/invites), said under the upgrade, never instead of it.
+  const limits = usePlanLimits();
+  const invite = meter.id === "dynamicCodes" && limits?.inviteOffer === true;
   return (
     <div className={cn("space-y-3", className)}>
       <div className="flex items-baseline justify-between gap-4">
@@ -77,6 +84,25 @@ export function LimitCard({
             upgrade={upgrade}
           />
         </div>
+      )}
+      {invite && (
+        <p className="text-muted-foreground text-xs text-pretty">
+          {t.rich("inviteForMore", {
+            count: INVITE_BONUS_CODES,
+            link: (chunks) => (
+              <Link
+                className="text-foreground underline underline-offset-2"
+                href="/settings/invite"
+                onClick={() => {
+                  track("invite_offer_clicked", { surface: source });
+                  onNavigate?.();
+                }}
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
+        </p>
       )}
       {(usageHref || onDismiss) && (
         <div className="flex flex-wrap items-center gap-2 pt-1">

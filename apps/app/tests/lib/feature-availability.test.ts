@@ -159,6 +159,7 @@ const NEEDS: Record<FeatureId, string[]> = {
     "TELEGRAM_BOT_USERNAME",
   ],
   affiliates: ["POLAR_WEBHOOK_SECRET"],
+  inviteRewards: ["NEXT_PUBLIC_APP_URL"],
   billing: ["POLAR_ACCESS_TOKEN"],
   invoiceRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
   enterpriseRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
@@ -281,6 +282,29 @@ describe("the affiliate program runs only where QRdx itself does", () => {
         ctx({ NEXT_PUBLIC_APP_URL: "https://qrdx.dev" }, vercelProd),
       ).affiliates,
     ).toBe(false);
+  });
+});
+
+describe("invite rewards run only where QRdx itself does", () => {
+  const on = (env: Record<string, string>) =>
+    computeFeatures(ctx(env, vercelProd)).inviteRewards;
+
+  it("is on for qrdx.dev, its previews and local dev, with nothing to set up", () => {
+    expect(on({ NEXT_PUBLIC_APP_URL: "https://qrdx.dev" })).toBe(true);
+    expect(on({ NEXT_PUBLIC_APP_URL: "http://localhost:3000" })).toBe(true);
+    expect(
+      on({
+        NEXT_PUBLIC_APP_URL: "https://qrdx-git-x-me.vercel.app",
+        VERCEL_PROJECT_PRODUCTION_URL: "qrdx.dev",
+      }),
+    ).toBe(true);
+  });
+
+  it("is off on a self-hosted copy", () => {
+    expect(on({ NEXT_PUBLIC_APP_URL: "https://qr.example.org" })).toBe(false);
+    expect(on({ NEXT_PUBLIC_APP_URL: "https://qrdx.dev.example.org" })).toBe(
+      false,
+    );
   });
 });
 

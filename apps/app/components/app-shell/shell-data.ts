@@ -5,6 +5,7 @@ import { countUnarchived } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import {
   attentionMeters,
   type Meter,
+  withCodeBonus,
 } from "@/app/(app)/settings/usage/_lib/meters";
 import {
   getUsageMeters,
@@ -13,6 +14,8 @@ import {
 import type { ShellLimits } from "@/components/limits/plan-limits-provider";
 import { getChangelogSeen } from "@/lib/changelog-feed-server";
 import { getCheckoutOpen } from "@/lib/checkout-availability";
+import { dynamicCodeLimit } from "@/lib/code-limit";
+import { canStillEarnFromInvites } from "@/lib/invites/bonus";
 import { can } from "@/lib/permissions";
 import {
   cheapestPlanWith,
@@ -90,7 +93,14 @@ export async function getShellData(): Promise<ShellData | null> {
     ]);
     const isTeam = !workspace.own;
     const canUpgrade = can(scope.role, "billing.manage");
-    const limit = getPlanLimits(plan).dynamicCodes;
+    // The plan's dynamic codes plus what invites added (lib/code-limit.ts).
+    const { limit, bonus } = await dynamicCodeLimit(scope, plan);
+    // Inviting a friend would raise it (lib/invites): only the person's own
+    // workspace on a capped plan, while their invites can still earn codes.
+    const inviteOffer =
+      Number.isFinite(limit) &&
+      !isTeam &&
+      (await canStillEarnFromInvites(scope.userId));
     const codes = Number.isFinite(limit)
       ? {
           used: await countUnarchived(scope),
@@ -112,9 +122,13 @@ export async function getShellData(): Promise<ShellData | null> {
         plan,
         canUpgrade,
         checkoutOpen: getCheckoutOpen(),
-        caps: meterCapsFor(plan, { isTeam, personalPlan }),
+        caps: withCodeBonus(
+          meterCapsFor(plan, { isTeam, personalPlan }),
+          bonus,
+        ),
         isTeam,
         usageHref: workspaceHref(workspace.slug, "/settings/usage"),
+        inviteOffer,
       },
       changelogSeen: seen && { viewerId: scope.userId, ...seen },
     };

@@ -5114,7 +5114,8 @@
       "yourQrCodeIsNow": "你的二维码现已成为动态二维码",
       "destinationUpdated": "目标地址已更新",
       "designSavedToTheCode": "设计已保存到二维码",
-      "couldntCopyTheShortLink": "无法复制短链接"
+      "couldntCopyTheShortLink": "无法复制短链接",
+      "inviteForMore": "或者<link>邀请一位好友</link>：当对方创建第一个动态二维码时，你们双方都能多获得 {count, number} 个。"
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5757,7 +5758,8 @@
     "limitCard": {
       "planUsage": "套餐与用量",
       "notNow": "暂不升级",
-      "labelUsed": "已使用{label}"
+      "labelUsed": "已使用{label}",
+      "inviteForMore": "或者<link>邀请一位好友</link>：好友创建第一个动态二维码后，你们各自再获得 {count, number} 个。"
     },
     "limitDialog": {
       "limitReached": "已达到上限"
@@ -6942,6 +6944,39 @@
           "refreshToTryAgainYour": "刷新后重试。你的套餐和限额均未改变。",
           "unlimitedOnValue": "{value} 不限量",
           "labelUsed": "已使用{label}"
+        }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "你的邀请链接：",
+          "copy": "复制",
+          "copied": "已复制",
+          "linkCopied": "链接已复制",
+          "couldntCopy": "无法复制，请选中链接后自行复制。"
+        },
+        "page": {
+          "title": "邀请好友",
+          "description": "分享你的链接。好友通过该链接注册并创建第一个动态二维码后，你们双方都会多获得 {count, number} 个动态二维码。",
+          "notReady": "邀请功能暂未开放，请稍后再来查看。",
+          "yourInviteLink": "你的邀请链接",
+          "shareYourLink": "把链接发给好友，或发布到任何地方。每位通过该链接加入并创建动态二维码的好友，都会让你们双方各多获得 {count, number} 个。",
+          "link": "链接",
+          "sameVisit": "好友需在点击链接的同一次访问中创建账号，才会被计入。我们不会在对方的设备上存储任何内容。",
+          "friendsJoined": "已加入的好友",
+          "friendsRewarded": "已获奖励的好友",
+          "rewardedOfMax": "{rewarded, number} / {max, number}",
+          "extraCodes": "额外动态二维码",
+          "waiting": "{waiting, plural, other {有 # 位好友尚未创建动态二维码。}}他们自注册起有 {days, number} 天时间。",
+          "atCap": "你已因 {max, number} 位好友获得奖励，这是一个邀请链接可获得奖励的上限。通过该链接加入的好友仍可获得他们的 {count, number} 个。",
+          "youWereInvited": "你是通过好友的邀请加入的，因此你自己的工作区也多获得了 {count, number} 个动态二维码。",
+          "howItWorks": "运作方式",
+          "ruleSignUp": "好友需在该次访问中通过你的链接创建新的 QRdx 账号，才会被计入。之后再次访问时注册，或使用已有账号，都不会计入。",
+          "ruleFirstCode": "当好友在注册后 {days, number} 天内创建第一个动态二维码，你们双方在各自的工作区中都会多获得 {count, number} 个动态二维码。",
+          "ruleCap": "你最多可因 {max, number} 位好友获得奖励（共 {total, number} 个二维码）。在此之后加入的好友仍可获得他们的 {count, number} 个。",
+          "ruleNotYourself": "你自己的其他账号不会计入，使用你的邮箱地址的其他写法注册的账号，以及与你共用工作区的任何人，也都不会计入。",
+          "ruleAllowance": "这些额外的二维码会叠加到你自己工作区的动态二维码数量上，适用于任何套餐，但不适用于团队。它们没有现金价值，也不能转移到其他账号。用它们创建的二维码会持续有效。",
+          "rulePrivate": "我们不会显示谁通过你的链接注册，你的好友也看不到是谁邀请了他们。",
+          "ruleEnd": "我们可以终止针对新邀请的邀请奖励，已经获得的二维码会保留。详情请见<terms>服务条款</terms>和<help>帮助页面</help>。"
         }
       }
     },
@@ -9718,7 +9753,9 @@
       "makeRoom": "{limit, select, dynamicCodes {归档一个以腾出空间。} landingPages {删除一个以腾出空间。} storage {删除不再需要的文件以腾出空间。} savedThemes {删除一个以腾出空间。} other {}}",
       "resets": "{date} 重置。",
       "keeps": "{limit, select, dynamicCodes {现有二维码仍可正常使用。} landingPages {现有页面保持在线。} formResponses {页面保持在线。重置后，表单将再次接收回复。} storage {你已上传的文件仍可使用。} other {}}",
-      "upgradeButton": "升级到 {plan}"
+      "upgradeButton": "升级到 {plan}",
+      "includesBonus": "{plan} 包含 {amount}，另有邀请新增的 {bonus, number} 个。",
+      "invite": "或者<link>邀请好友</link>：好友创建第一个动态二维码后，你们双方各得 {count, number} 个额外名额。"
     },
     "weeklyDigest": {
       "subject": "你的 QRdx 一周概览：{scans, plural, other {# 次扫描}}",
@@ -9758,6 +9795,18 @@
       "taxes": "结账时可能会加收当地税费。",
       "reply": "如果您遇到任何问题，或不确定如何操作，请直接回复这封邮件。每一封回复都会有专人阅读。",
       "reason": "您收到这封邮件，是因为您刚刚创建了 QRdx 账户。"
+    },
+    "inviteReward": {
+      "subject": "你邀请的好友创建了第一个二维码：你们双方各增加了 {count, number} 个动态二维码",
+      "preview": "你们双方各增加了 {count, number} 个动态二维码",
+      "heading": "你们双方各增加了 {count, number} 个动态二维码",
+      "body": "通过你的邀请链接注册的好友刚刚创建了第一个动态二维码。你的工作区现已增加 {count, number} 个动态二维码，对方的工作区也一样。",
+      "progress": "你的链接最多可为你奖励 {max, number} 位好友，目前已奖励 {rewarded, plural, other {# 位好友}}。",
+      "last": "这是你的链接可为你奖励的 {max, number} 位好友中的最后一位。通过该链接加入的好友仍可获得 {count, number} 个。",
+      "inviteMore": "邀请更多好友",
+      "seeInvites": "查看你的邀请",
+      "keeps": "额外的二维码适用于任何套餐，没有现金价值。用它们创建的二维码会继续有效。",
+      "reason": "你收到这封邮件，是因为有好友通过你的 QRdx 邀请链接注册，并创建了第一个动态二维码。"
     }
   },
   "codeActions": {
@@ -10049,7 +10098,8 @@
       "bulkOverLimit": "最多 {limit, number} 行的文件无需账户。免费账户每个文件最多可生成 {max, number} 个，且你的文件会保持已加载状态。",
       "keepDesigns": "将你的设计保存在账户中，所有设备都能用。",
       "afterDownload": "免费使用，无论你的套餐如何变化，你的二维码都能继续正常使用。",
-      "upgrade": "套餐和账单归属于账户。你可以从刚才中断的地方继续。"
+      "upgrade": "套餐和账单归属于账户。你可以从刚才中断的地方继续。",
+      "invite": "你是通过好友的邀请来到这里的。现在注册，创建第一个动态二维码后，即可额外获得 {count, number} 个动态二维码。"
     },
     "nudge": {
       "dismiss": "不再显示此提示"
@@ -10197,6 +10247,11 @@
         "failed": "单点登录未能成功。请重试，或改用其他方式登录。",
         "rateLimited": "尝试次数过多。请等待一分钟后再试。"
       }
+    },
+    "inviteNote": {
+      "text": "你受邀加入 QRdx。在本次访问期间完成注册，并在 {days, number} 天内创建动态二维码，即可额外获得 {count, number} 个动态二维码。",
+      "signUp": "注册",
+      "dismiss": "关闭"
     }
   },
   "settingsActions": {
