@@ -873,6 +873,13 @@ export const oauthApp = pgTable(
     verified: boolean("verified").notNull().default(false),
     // Authorization requests must carry an S256 code_challenge.
     pkceRequired: boolean("pkce_required").notNull().default(false),
+    // "dynamic": registered by an MCP client itself at /api/oauth/register
+    // (RFC 7591), never first-party and never reviewed. Null: made in
+    // Settings → Developers or by the QRdx team.
+    registrationType: text("registration_type"),
+    // RFC 7591 token_endpoint_auth_method. "none": a public client (no
+    // secret; PKCE required). Null: client_secret_basic or _post, as before.
+    tokenEndpointAuthMethod: text("token_endpoint_auth_method"),
     secretRotatedAt: timestamp("secret_rotated_at"),
     createdAt: timestamp("created_at").notNull(),
     updatedAt: timestamp("updated_at").notNull(),

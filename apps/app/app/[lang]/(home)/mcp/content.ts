@@ -8,11 +8,14 @@ import {
   Book,
   Brush2,
   Category,
+  Chart2,
   Coffee,
   ColorSwatch,
   DocumentDownload,
   DocumentText,
+  Edit2,
   type Icon,
+  Link21,
   Location,
   MagicStar,
   MessageText,
@@ -23,6 +26,7 @@ import {
   SearchNormal1,
   Sms,
   TableDocument,
+  TaskSquare,
   TicketStar,
   UserSquare,
   Wifi,
@@ -58,6 +62,11 @@ export const MCP_TOOLS: {
    * (tests/api/mcp.test.ts checks this against the registered tools).
    */
   needsKey?: true;
+  /**
+   * Listed to everyone, but acts on the person's QRdx workspace: the first
+   * call asks them to sign in (app/api/mcp/auth.ts SIGN_IN_MCP_TOOLS).
+   */
+  needsSignIn?: true;
 }[] = [
   {
     name: "design_qr",
@@ -79,6 +88,38 @@ export const MCP_TOOLS: {
     description:
       "Renders the code and returns a PNG image plus public SVG, PNG, WebP and EPS image URLs ready for Markdown or HTML. Takes the image API options: colors or gradients, body, eye and dot shapes, error correction, margin, a border, a frame and a logo icon, or a whole style from design_qr. Set include_svg for the SVG markup.",
     icon: ScanBarcode,
+  },
+  {
+    name: "create_dynamic_code",
+    title: "Create a dynamic code",
+    description:
+      "A dynamic QR code in your QRdx workspace: it holds a short link, so where it goes can change after printing, and its scans are counted. Returns the short link, the code as a PNG and a link to it in your dashboard. Your app asks you to sign in to QRdx the first time; plan limits apply as in the dashboard.",
+    icon: Link21,
+    needsSignIn: true,
+  },
+  {
+    name: "update_code_destination",
+    title: "Change where a code goes",
+    description:
+      "Points one of your dynamic codes at a new address. The printed code stays the same. The new address is checked like a new code's.",
+    icon: Edit2,
+    needsSignIn: true,
+  },
+  {
+    name: "get_code_stats",
+    title: "Scan stats",
+    description:
+      "Scans and unique visitors for one of your dynamic codes over a range your plan keeps, with the top countries, devices and scans per day. Never single scans or precise locations.",
+    icon: Chart2,
+    needsSignIn: true,
+  },
+  {
+    name: "list_codes",
+    title: "List your codes",
+    description:
+      "Your dynamic codes with their short links, destinations, status and scan counts, to find one by name or link.",
+    icon: TaskSquare,
+    needsSignIn: true,
   },
   {
     name: "search_community",
@@ -205,12 +246,12 @@ export const MCP_FAQS: { question: string; answer: string }[] = [
   {
     question: "Is the QRdx MCP server free?",
     answer:
-      "Yes. It's free and open source, and designing, rendering and checking codes needs no account. The codes it makes are static, so they never expire and have no scan limits.",
+      "Yes. It's free and open source, and designing, rendering and checking codes needs no account. Those codes are static, so they never expire and have no scan limits. Dynamic codes live in a QRdx account, so making one asks you to sign in (or sign up) first; the plan's limits apply as in the dashboard.",
   },
   {
     question: "Does it need an API key?",
     answer:
-      "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+      "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. The dynamic-code tools need you signed in to QRdx instead, which your app asks for the first time you use one. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
   },
   {
     question: "Which AI tools does it work with?",
@@ -225,7 +266,7 @@ export const MCP_FAQS: { question: string; answer: string }[] = [
   {
     question: "Can it create dynamic QR codes?",
     answer:
-      "No. The MCP tools render static QR codes and format payloads. Dynamic codes, whose destination you can change later, are created in the QRdx dashboard or with the REST API.",
+      "Yes, once you sign in. create_dynamic_code makes a dynamic code in your QRdx workspace: the code holds a short link, so you can point it somewhere else later (update_code_destination) and see how often it's scanned (get_code_stats). The first time, your app asks you to sign in to QRdx, where new accounts sign up too.",
   },
   {
     question: "Does the code show up in the chat?",
@@ -235,7 +276,7 @@ export const MCP_FAQS: { question: string; answer: string }[] = [
   {
     question: "Does QRdx store the codes I generate?",
     answer:
-      "No. The tools render images, format text and read the public community. Only save_template and save_barcode write anything: the theme or barcode you ask them to save, in the API key's workspace. generate_ai_art uses one of the workspace's monthly AI art images but keeps neither the image nor a photo you send. The server doesn't save the codes. The image URLs it returns contain the encoded data, so don't share them if the data is private, such as a Wi-Fi password.",
+      "Not the static ones. The tools render images, format text and read the public community. Only these write anything: create_dynamic_code and update_code_destination (the dynamic code you ask for, in your workspace), and save_template and save_barcode (the theme or barcode you ask them to save, in the API key's workspace). generate_ai_art uses one of the workspace's monthly AI art images but keeps neither the image nor a photo you send. The image URLs the tools return contain the encoded data, so don't share them if the data is private, such as a Wi-Fi password.",
   },
   {
     question: "Are there limits?",

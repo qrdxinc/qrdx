@@ -103,24 +103,6 @@ export function verifyCodeChallenge(
   return safeEqual(hash, challenge);
 }
 
-export async function authenticateClient(
-  clientId: string,
-  clientSecret: string,
-): Promise<{ id: string } | null> {
-  const [app] = await db
-    .select({ id: oauthApp.id, clientSecretHash: oauthApp.clientSecretHash })
-    .from(oauthApp)
-    .where(and(eq(oauthApp.clientId, clientId), eq(oauthApp.isActive, true)))
-    .limit(1);
-
-  if (!app) return null;
-
-  const valid = await verifySecret(clientSecret, app.clientSecretHash);
-  if (!valid) return null;
-
-  return { id: app.id };
-}
-
 export async function createTokenPair(
   appId: string,
   userId: string,

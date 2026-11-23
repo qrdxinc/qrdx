@@ -446,7 +446,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     {
       title: "MCP server",
       url: "/docs/developers/mcp",
-      description: `Remote MCP endpoint \`${mcpUrl}\` (Streamable HTTP, no account or key, read-only tools that render QR codes and barcodes and build Wi-Fi, contact, email, SMS and map payloads; with an API key, tools that save themes and barcodes and make AI QR art). Claude Code: \`${claudeCodeCommand(mcpUrl)}\``,
+      description: `Remote MCP endpoint \`${mcpUrl}\` (Streamable HTTP, no account or key, read-only tools that render QR codes and barcodes and build Wi-Fi, contact, email, SMS and map payloads; signed in to QRdx with OAuth, tools that create dynamic codes, change their destination and report their scans; with an API key, tools that save themes and barcodes and make AI QR art). Claude Code: \`${claudeCodeCommand(mcpUrl)}\``,
     },
     {
       title: "Connect an AI app to the MCP server",

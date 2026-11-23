@@ -11,12 +11,12 @@ import { isAdminConsoleClientId } from "@/lib/admin-console/client";
 import { baseUrl } from "@/lib/metadata";
 import { oauthError } from "@/lib/oauth";
 import {
+  authorizationResponse,
   authorizeParamEntries,
   checkAuthorizeRequest,
   hasPriorConsent,
   issueAuthorizationCode,
   readAuthorizeParams,
-  redirectWith,
 } from "@/lib/oauth-apps/authorize";
 
 // GET: the URL apps send people to. Invalid requests get a JSON error and never
@@ -25,7 +25,9 @@ import {
 // yet, continue on the consent page (/oauth/authorize), which POSTs back here.
 // A repeat authorization for scopes already approved skips the page (and
 // "Confirm it's you"): it grants nothing new, and the code is only good to
-// the app's own registered redirect URI with its client secret.
+// the app's own registered redirect URI with its client secret. A client
+// that registered itself (an MCP client, /api/oauth/register) always gets
+// the page: anyone can register one under any name.
 // The back-office console is a first-party client defined by environment,
 // not an oauth_app row (lib/admin-console): admins only, and no consent page.
 
@@ -50,6 +52,7 @@ export async function GET(req: NextRequest) {
   if (
     userId &&
     params.prompt !== "consent" &&
+    !check.app.dynamic &&
     (await hasPriorConsent(check.app.id, userId, check.scopes))
   ) {
     const location = await issueAuthorizationCode(
@@ -134,7 +137,7 @@ export async function POST(req: NextRequest) {
   if (field("decision") !== "allow") {
     // RFC 6749 §4.1.2.1
     return Response.redirect(
-      redirectWith(params, {
+      authorizationResponse(params, {
         error: "access_denied",
         error_description: "The user denied the request",
       }),

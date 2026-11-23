@@ -33,7 +33,19 @@ const { QR_CARD_HTML } = await import("@/app/api/mcp/qr-card-html");
 const { MCP_SERVER_INFO } = await import("@/app/api/mcp/tools");
 
 const PROTOCOL = "2025-06-18";
-const UI_TOOLS = ["design_qr", "generate_qr_code"];
+const UI_TOOLS = ["create_dynamic_code", "design_qr", "generate_qr_code"];
+// OpenAI's per-tool auth declaration (app/api/mcp/auth.ts): every tool has
+// one; only the dynamic-code tools need sign-in.
+const NO_AUTH = { securitySchemes: [{ type: "noauth" }] };
+const SIGN_IN = {
+  securitySchemes: [{ type: "oauth2", scopes: ["codes:read", "codes:write"] }],
+};
+const SIGN_IN_TOOLS = [
+  "create_dynamic_code",
+  "list_codes",
+  "get_code_stats",
+  "update_code_destination",
+];
 
 let rpcId = 0;
 async function rpc(method: string, params: Record<string, unknown> = {}) {
@@ -76,7 +88,7 @@ describe("MCP Apps: the QR card", () => {
     expect(message.result.capabilities.resources).toBeDefined();
     expect(message.result.capabilities.tools).toBeDefined();
     expect(message.result.serverInfo).toEqual(MCP_SERVER_INFO);
-    expect(MCP_SERVER_INFO.version).toBe("1.5.0");
+    expect(MCP_SERVER_INFO.version).toBe("1.6.0");
   });
 
   it("links exactly the QR-producing tools to the card", async () => {
@@ -91,13 +103,15 @@ describe("MCP Apps: the QR card", () => {
       .sort();
     expect(linked).toEqual(UI_TOOLS);
     for (const tool of tools) {
+      const auth = SIGN_IN_TOOLS.includes(tool.name) ? SIGN_IN : NO_AUTH;
       if (!UI_TOOLS.includes(tool.name)) {
-        expect(tool._meta, tool.name).toBeUndefined();
+        expect(tool._meta, tool.name).toEqual(auth);
         continue;
       }
-      expect(tool._meta).toEqual({
+      expect(tool._meta, tool.name).toEqual({
         ui: { resourceUri: QR_CARD_URI },
         "ui/resourceUri": QR_CARD_URI,
+        ...auth,
       });
     }
   });

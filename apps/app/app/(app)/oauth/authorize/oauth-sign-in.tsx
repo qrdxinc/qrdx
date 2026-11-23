@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
+import { OAUTH_LANDING_KEY } from "@repo/auth/referral-keys";
 import { GithubLogo, GoogleLogo } from "@repo/design-system/components/icons";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
@@ -8,6 +9,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { OAuthAppLogo } from "@/components/oauth/oauth-app-logo";
+import { type SignUpLanding, signUpLanding } from "@/lib/analytics/landing";
 import type { OAuthScope } from "@/lib/oauth-scopes";
 import { signInPath } from "@/lib/safe-redirect";
 import { AuthorizeShell, ScopeList } from "./oauth-consent";
@@ -15,18 +17,22 @@ import { AuthorizeShell, ScopeList } from "./oauth-consent";
 /**
  * Signed-out step: sign in, then the same URL shows the consent screen.
  * Google and GitHub only where this server runs them (`providers`); with
- * neither, the sign-in page takes over, returning here after.
+ * neither, the sign-in page takes over, returning here after. A new account
+ * made here records how the visit started, like the sign-in panel's, plus
+ * `signUpTags` (an MCP client's ref and source) on top.
  */
 export function OAuthSignIn({
   app,
   scopes,
   callbackURL,
   providers,
+  signUpTags,
 }: {
   app: { name: string; logoUrl: string | null };
   scopes: OAuthScope[];
   callbackURL: string;
   providers: { google: boolean; github: boolean };
+  signUpTags?: Pick<SignUpLanding, "ref" | "utm_source">;
 }) {
   const t = useTranslations("app.oauth.authorize.oauthSignIn");
   const [loadingProvider, setLoadingProvider] = useState<string | null>(null);
@@ -34,9 +40,15 @@ export function OAuthSignIn({
   const handleSignIn = async (provider: "google" | "github") => {
     setLoadingProvider(provider);
     try {
+      // Null under Do Not Track or Global Privacy Control: nothing is sent.
+      const visit = signUpLanding();
+      const landing = visit ? { ...visit, ...signUpTags } : null;
       const { error } = await authClient.signIn.social({
         provider,
         callbackURL,
+        ...(landing
+          ? { additionalData: { [OAUTH_LANDING_KEY]: landing } }
+          : {}),
       });
       // e.g. the provider is not configured on this server
       if (error) setLoadingProvider(null);
