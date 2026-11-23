@@ -38830,5 +38830,263 @@
     "text": "Schweizer QR-Rechnungen: ja. QRdx erstellt den QR-Code für den Zahlteil einer QR-Rechnung, den Swiss Payments Code mit Fehlerkorrektur M und Schweizer Kreuz, den die zahlende Person in ihrer Banking-App scannt. Der Rest der Rechnung, also der Empfangsschein und das gedruckte Layout des Zahlteils, kommt aus deiner Rechnungssoftware. QR-Codes für E-Rechnungen, die Steuerbehörden vorschreiben: nein. Die kommen aus Buchhaltungs- oder E-Rechnungssoftware.",
     "status": "machine",
     "context": "placements.0.documents.items.invoices.faqs.1.answer"
+  },
+  "157d9b89ae53": {
+    "source": "Rectangular Micro QR for narrow spaces: cables, tubes, boards",
+    "text": "Rechteckiger Micro QR für enge Stellen: Kabel, Röhrchen, Platinen",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.summary"
+  },
+  "d9e29bdf3552": {
+    "source": "Any text, up to 361 digits, 219 capital letters or 150 characters of other text; less with accents or other scripts.",
+    "text": "Beliebiger Text, bis zu 361 Ziffern, 219 Großbuchstaben oder 150 Zeichen anderen Texts; weniger bei Akzenten oder anderen Schriften.",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.inputHint"
+  },
+  "f5a92bd24be6": {
+    "source": "UPS's fixed-size 2D code for sorting parcels",
+    "text": "Der 2D-Code von UPS mit fester Größe zum Sortieren von Paketen",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.summary"
+  },
+  "0c318d8d5087": {
+    "source": "A UPS carrier message, postcode<GS>country<GS>service class<GS>then the rest, or any text. Type <GS> between fields. Latin-1 characters only: up to 93 capital letters or 138 digits.",
+    "text": "Eine UPS-Carrier-Nachricht, Postleitzahl<GS>Land<GS>Servicekategorie<GS>dann der Rest, oder beliebiger Text. Gib <GS> zwischen den Feldern ein. Nur Latin-1-Zeichen: bis zu 93 Großbuchstaben oder 138 Ziffern.",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.inputHint"
+  },
+  "f6047eef20ba": {
+    "source": "A QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code: cables, test tubes and the edges of parts. It's a 2022 ISO standard, so check that your scanners read it.",
+    "text": "Ein QR-Code, der zu einem Streifen gezogen ist und nur 7 Module hoch sein kann, für Etiketten, die für einen quadratischen Code zu schmal sind: Kabel, Reagenzgläser und Kanten von Bauteilen. Er ist ein ISO-Standard von 2022, prüfe also, ob deine Scanner ihn lesen.",
+    "status": "machine",
+    "context": "barcodes.uses.rmqr"
+  },
+  "9c56d5f9dbb4": {
+    "source": "The fixed-size 2D code with a bullseye that UPS prints on parcel labels. A carrier message puts the destination postcode, country and service class where sorting machines look for them; it can also hold plain text.",
+    "text": "Der 2D-Code mit fester Größe und einem Bullauge in der Mitte, den UPS auf Paketetiketten druckt. Eine Carrier-Nachricht legt Postleitzahl, Land und Servicekategorie des Ziels dorthin, wo Sortiermaschinen danach suchen; er kann auch einfachen Text enthalten.",
+    "status": "machine",
+    "context": "barcodes.uses.maxicode"
+  },
+  "89f09d7bcb13": {
+    "source": "Free rMQR Code Generator (Rectangular Micro QR)",
+    "text": "Kostenloser rMQR-Code-Generator (rechteckiger Micro QR)",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.title"
+  },
+  "a705932e946e": {
+    "source": "Make an rMQR, the rectangular Micro QR code for narrow spaces like cables and test tubes. Up to 361 digits or 150 characters. SVG, PDF and PNG. Free.",
+    "text": "Erstelle einen rMQR, den rechteckigen Micro-QR-Code für schmale Flächen wie Kabel und Reagenzgläser. Bis zu 361 Ziffern oder 150 Zeichen. SVG, PDF und PNG. Kostenlos.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.metaDescription"
+  },
+  "fac05d5715dd": {
+    "source": "rMQR (Rectangular Micro QR) is a QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code. Type any text, check that it scans and download it.",
+    "text": "rMQR (Rectangular Micro QR) ist ein zu einem Streifen gezogener QR-Code, nur 7 Module hoch, für Etiketten, die für einen quadratischen Code zu schmal sind. Gib einen beliebigen Text ein, prüfe, ob er sich scannen lässt, und lade ihn herunter.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.intro"
+  },
+  "3016945159bc": {
+    "source": "Narrow labels where a square QR code would have to be tiny: cables and wires, test tubes and sample vials, the edges of parts and boxes.",
+    "text": "Schmale Etiketten, auf denen ein quadratischer QR-Code winzig sein müsste: Kabel und Drähte, Reagenzgläser und Probengefäße, die Kanten von Bauteilen und Kartons.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.0"
+  },
+  "a9b9994231ff": {
+    "source": "It's the ISO/IEC 23941 standard (2022), from DENSO WAVE, which also created the QR code. Because it's newer, check that the scanners that will read it support it before you print a batch.",
+    "text": "Er entspricht dem Standard ISO/IEC 23941 (2022) von DENSO WAVE, die auch den QR-Code entwickelt haben. Da er neuer ist, prüfe vor dem Druck einer Charge, ob die Scanner, die ihn lesen sollen, ihn unterstützen.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.1"
+  },
+  "29e08933b54e": {
+    "source": "Do I need to register an rMQR code?",
+    "text": "Muss ich einen rMQR-Code registrieren?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.title"
+  },
+  "5597274c9253": {
+    "source": "No. It holds whatever text you type, with no registration.",
+    "text": "Nein. Er enthält den Text, den du eingibst, ganz ohne Registrierung.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
+  },
+  "21d588136e54": {
+    "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",
+    "text": "Beliebiger Text: Buchstaben, Ziffern, Symbole, Zeilenumbrüche, Akzente und andere Schriften. Ziffern lassen sich am dichtesten packen, danach Großbuchstaben; Akzente und andere Schriften werden als UTF-8-Bytes gespeichert, die am meisten Platz brauchen.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.0"
+  },
+  "07e4daf832f2": {
+    "source": "rMQR comes in 32 sizes, from 7 to 17 modules tall and 27 to 139 wide. The generator picks the fewest rows your text fits in, then the fewest columns, so the code grows longer before it grows taller.",
+    "text": "rMQR gibt es in 32 Größen, von 7 bis 17 Modulen Höhe und 27 bis 139 Modulen Breite. Der Generator wählt die geringste Zeilenzahl, in die dein Text passt, und dann die geringste Spaltenzahl, sodass der Code erst länger wird, bevor er höher wird.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.1"
+  },
+  "fb39f2c0ee54": {
+    "source": "Error correction is level M, which lets a reader recover about 15% of the code if it's smudged or damaged.",
+    "text": "Die Fehlerkorrektur liegt bei Stufe M. Damit kann ein Lesegerät etwa 15 % des Codes wiederherstellen, wenn er verschmiert oder beschädigt ist.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.2"
+  },
+  "9341974e7321": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text comes out 44.4 × 7.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "Die Vektor-Downloads zeichnen jedes Modul 0,71 mm groß: Der Beispieltext ergibt 44,4 × 7,8 mm, inklusive Ruhezone. Skaliere ihn passend zum verfügbaren Platz und zu dem, was dein Drucker und dein Scanner auflösen können.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.0"
+  },
+  "a19aad812139": {
+    "source": "rMQR needs 2 modules of blank space all round, which the generator starts with.",
+    "text": "rMQR braucht ringsum 2 Module Leerraum, den der Generator von Anfang an einplant.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.1"
+  },
+  "e595e70dbbde": {
+    "source": "rMQR or QR code?",
+    "text": "rMQR oder QR-Code?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.question"
+  },
+  "556187e34590": {
+    "source": "For anything people scan with their phone, a QR code. Use rMQR where only a narrow strip fits and you know the scanners that will read it support it.",
+    "text": "Für alles, was Leute mit dem Handy scannen, ein QR-Code. Nimm rMQR, wenn nur ein schmaler Streifen Platz hat und du weißt, dass die Scanner, die ihn lesen sollen, ihn unterstützen.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.answer"
+  },
+  "1aca0f2cf8a2": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports rMQR, and tells you whether it reads back your text.",
+    "text": "Ja. Während du bearbeitest, decodiert der Generator das Bild, das du herunterladen würdest, mit ZXing, einem Open-Source-Reader, der rMQR unterstützt, und zeigt dir, ob er deinen Text wieder auslesen kann.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.1.answer"
+  },
+  "a0b78a78cf87": {
+    "source": "Free MaxiCode Generator",
+    "text": "Kostenloser MaxiCode-Generator",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.title"
+  },
+  "bf9d519773db": {
+    "source": "Make a MaxiCode, the fixed-size 2D code UPS sorts parcels by, as a carrier message (modes 2 and 3) or text (mode 4). SVG, PDF and PNG. Free.",
+    "text": "Erstelle einen MaxiCode, den 2D-Code in fester Größe, nach dem UPS Pakete sortiert, als Carrier-Nachricht (Modus 2 und 3) oder als Text (Modus 4). SVG, PDF und PNG. Kostenlos.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.metaDescription"
+  },
+  "93214fc470cb": {
+    "source": "MaxiCode is the fixed-size 2D code with a bullseye in the middle that UPS prints on parcel labels, so sorting machines can read where a parcel goes at speed. Type a carrier message or any text, check that it scans and download it.",
+    "text": "MaxiCode ist der 2D-Code in fester Größe mit einem Bullseye in der Mitte, den UPS auf Paketetiketten druckt, damit Sortiermaschinen im Vorbeilaufen lesen können, wohin ein Paket geht. Gib eine Carrier-Nachricht oder einen beliebigen Text ein, prüfe, ob er sich scannen lässt, und lade ihn herunter.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.intro"
+  },
+  "05263461581f": {
+    "source": "UPS parcel labels: the code carries the destination postcode, country and service class where a sorter expects them, followed by the shipment details.",
+    "text": "UPS-Paketetiketten: Der Code enthält Postleitzahl, Land und Serviceklasse des Ziels an den Stellen, an denen ein Sortierer sie erwartet, gefolgt von den Sendungsdetails.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.0"
+  },
+  "483824ed5b00": {
+    "source": "The layout of a real shipping label and what goes in the rest of the message are set by UPS. Use their label guide for parcels you ship; the example here is a sample, not a shipment.",
+    "text": "Das Layout eines echten Versandetiketts und der restliche Inhalt der Nachricht werden von UPS festgelegt. Nutze für Pakete, die du versendest, deren Etiketten-Leitfaden. Das Beispiel hier ist ein Muster, keine Sendung.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.1"
+  },
+  "c63b4f77b04c": {
+    "source": "Carrier message or text?",
+    "text": "Carrier-Nachricht oder Text?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.title"
+  },
+  "2ec386ec976a": {
+    "source": "A carrier message starts with the postcode, the 3-digit ISO country code (840 for the US) and the 3-digit service class, separated by GS characters. Type them as <GS>: 152382802<GS>840<GS>001<GS>then the rest. A message starting with the [)><RS>01<GS>96 header works too.",
+    "text": "Eine Carrier-Nachricht beginnt mit der Postleitzahl, dem 3-stelligen ISO-Ländercode (840 für die USA) und der 3-stelligen Serviceklasse, getrennt durch GS-Zeichen. Gib sie als <GS> ein: 152382802<GS>840<GS>001<GS>dann der Rest. Auch eine Nachricht, die mit dem Header [)><RS>01<GS>96 beginnt, funktioniert.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.0"
+  },
+  "07b2961ece2a": {
+    "source": "An all-digit postcode of up to 9 digits makes it mode 2 (US ZIP Codes); up to 6 capital letters, digits and spaces make it mode 3 (other countries). Anything else is drawn as text, mode 4.",
+    "text": "Eine reine Zifferncode-Postleitzahl mit bis zu 9 Ziffern ergibt Modus 2 (US-ZIP-Codes). Bis zu 6 Großbuchstaben, Ziffern und Leerzeichen ergeben Modus 3 (andere Länder). Alles andere wird als Text in Modus 4 gezeichnet.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.1"
+  },
+  "d57b60d2ae0d": {
+    "source": "Latin-1 characters only: letters, digits, symbols and Western European accents.",
+    "text": "Nur Latin-1-Zeichen: Buchstaben, Ziffern, Symbole und westeuropäische Akzente.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.0"
+  },
+  "cc2a86f2ce79": {
+    "source": "As text it holds up to 93 capital letters or 138 digits, fewer with lowercase or symbols. A carrier message leaves about 84 characters after the postcode, country and service class.",
+    "text": "Als Text passen bis zu 93 Großbuchstaben oder 138 Ziffern hinein, mit Kleinbuchstaben oder Symbolen weniger. Bei einer Carrier-Nachricht bleiben nach Postleitzahl, Land und Serviceklasse etwa 84 Zeichen übrig.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.1"
+  },
+  "262019b66f59": {
+    "source": "A 5-digit ZIP Code is drawn with 0000 for the +4, and a mode 3 postcode is padded with spaces to 6 characters; readers return them that way.",
+    "text": "Ein 5-stelliger ZIP Code wird mit 0000 für die +4 dargestellt, und eine Postleitzahl im Modus 3 wird mit Leerzeichen auf 6 Zeichen aufgefüllt; Lesegeräte geben sie so zurück.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.2"
+  },
+  "4f21cb41b2bd": {
+    "source": "Every MaxiCode is the same size: 33 rows of 30 hexagons around the bullseye. More data doesn't make it bigger, so there's a limit instead.",
+    "text": "Jeder MaxiCode hat dieselbe Größe: 33 Zeilen mit je 30 Sechsecken rund um das Bullseye. Mehr Daten machen ihn nicht größer, deshalb gibt es stattdessen ein Limit.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.3"
+  },
+  "d63cd93acd6c": {
+    "source": "The vector downloads are MaxiCode's nominal size, about 28.1 × 26.9 mm without the quiet zone. Print it at that size: readers look for a symbol of that size.",
+    "text": "Die Vektor-Downloads haben die Nenngröße von MaxiCode, etwa 28,1 × 26,9 mm ohne Ruhezone. Drucke ihn in dieser Größe: Lesegeräte suchen nach einem Symbol dieser Größe.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.0"
+  },
+  "525615b8ff04": {
+    "source": "The generator starts with 2 modules of blank space all round; MaxiCode needs at least 1.",
+    "text": "Der Generator beginnt mit 2 Modulen Leerraum rundherum. MaxiCode braucht mindestens 1.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.1"
+  },
+  "aac3339401fe": {
+    "source": "Image size starts at 4×: below that, the hexagons are rounded to whole pixels and lose their shape.",
+    "text": "Die Bildgröße beginnt bei 4×: Darunter werden die Sechsecke auf ganze Pixel gerundet und verlieren ihre Form.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.2"
+  },
+  "212789ea202f": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports MaxiCode, and tells you whether it reads back your message.",
+    "text": "Ja. Während du bearbeitest, dekodiert der Generator das Bild, das du herunterladen würdest, mit ZXing, einem Open-Source-Leser, der MaxiCode unterstützt, und sagt dir, ob deine Nachricht wieder gelesen wird.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.0.answer"
+  },
+  "7e26c57a4da7": {
+    "source": "Which modes does it make?",
+    "text": "Welche Modi erstellt er?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.question"
+  },
+  "573feb46c532": {
+    "source": "Modes 2 and 3 for carrier messages and mode 4 for text. Mode 5 (text with stronger error correction) and mode 6 (reader programming) aren't offered.",
+    "text": "Modus 2 und 3 für Carrier-Nachrichten und Modus 4 für Text. Modus 5 (Text mit stärkerer Fehlerkorrektur) und Modus 6 (Programmierung von Lesegeräten) werden nicht angeboten.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.answer"
+  },
+  "5cc737cfddfe": {
+    "source": "MaxiCode or a QR code?",
+    "text": "MaxiCode oder QR-Code?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.question"
+  },
+  "6402ef6937fb": {
+    "source": "MaxiCode where a carrier's system asks for it, as UPS's does. For anything people scan with a phone, a QR code.",
+    "text": "MaxiCode, wenn das System eines Carriers ihn verlangt, wie das von UPS. Für alles, was Leute mit dem Smartphone scannen, ein QR-Code.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.answer"
+  },
+  "817e8c09369f": {
+    "source": "With Raycast, Node.js 22 and Bun installed, run this and Raycast imports the extension.",
+    "text": "Wenn Raycast, Node.js 22 und Bun installiert sind, führst du dies aus, und Raycast importiert die Erweiterung.",
+    "status": "machine",
+    "context": "integrations.entries.raycast.steps.0.body"
+  },
+  "48d95404c31b": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode oder DotCode. Prüft den Wert (Prüfziffern, Längen, Zeichen) und liefert ein PNG sowie öffentliche URLs für SVG, PNG, PDF und weitere Bildformate.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }

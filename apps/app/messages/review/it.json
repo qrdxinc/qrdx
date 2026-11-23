@@ -3339,6 +3339,14 @@
     "source": "cff1556f0a13",
     "status": "machine"
   },
+  "tools.bulk.generator.formatTiff": {
+    "source": "a3ef4eb1d2ec",
+    "status": "machine"
+  },
+  "tools.bulk.generator.formatTiffCmyk": {
+    "source": "1fc80aac41b0",
+    "status": "machine"
+  },
   "tools.bulk.generator.formatSvg": {
     "source": "c6299e75cb4a",
     "status": "machine"
@@ -6311,6 +6319,30 @@
     "source": "70d18146d80d",
     "status": "machine"
   },
+  "barcodeTool.issues.maxicodeChars": {
+    "source": "83055075e225",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodePostcode": {
+    "source": "87e722a0fc7d",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodeCountry": {
+    "source": "dc6055ba22dd",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodeService": {
+    "source": "804364f39c26",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodeCarrier": {
+    "source": "7b16e9b48d8b",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodeZipPadded": {
+    "source": "4d8263d4e688",
+    "status": "machine"
+  },
   "barcodeTool.issues.imbEnter": {
     "source": "7a6cffc6dbfb",
     "status": "machine"
@@ -8309,6 +8341,10 @@
   },
   "qrCodeApi.builder.epsPreview": {
     "source": "bd469ea78c6d",
+    "status": "machine"
+  },
+  "qrCodeApi.builder.tiffPreview": {
+    "source": "7e06984ef916",
     "status": "machine"
   },
   "qrCodeApi.builder.empty": {
@@ -10395,6 +10431,10 @@
     "source": "40df8db3f859",
     "status": "machine"
   },
+  "editor.actionBar.downloadDialog.tiffCmykCantBeTransparent": {
+    "source": "8d2e59160bf5",
+    "status": "machine"
+  },
   "editor.actionBar.downloadDialog.gifWouldNotScan": {
     "source": "33cdc0a0a3d2",
     "status": "machine"
@@ -10493,6 +10533,14 @@
   },
   "editor.actionBar.downloadDialog.formatHints.ico": {
     "source": "809036c56b1c",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.formatHints.tiff": {
+    "source": "5ba574e857c8",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.formatHints.tiff-cmyk": {
+    "source": "83f1b49e49ee",
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.svg": {
@@ -24127,6 +24175,14 @@
     "source": "56cfcbae213b",
     "status": "machine"
   },
+  "app.dashboard.codes.codeActionsMenu.downloadTiff": {
+    "source": "1e87fab59837",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codeActionsMenu.downloadTiffCmyk": {
+    "source": "0dfdc0811030",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeActionsMenu.moreFormats": {
     "source": "b83931930ce6",
     "status": "machine"
@@ -24481,6 +24537,14 @@
   },
   "app.dashboard.codes.codesList.icoImagesZip": {
     "source": "e7859e50b34f",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codesList.tiffImagesZip": {
+    "source": "5ccd4cca9d0c",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codesList.tiffCmykImagesZip": {
+    "source": "c9c2dc9cae78",
     "status": "machine"
   },
   "app.dashboard.codes.codesList.svgImagesZip": {

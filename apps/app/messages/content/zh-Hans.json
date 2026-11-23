@@ -38830,5 +38830,263 @@
     "text": "瑞士 QR-bill 可以：QRdx 能生成 QR-bill 付款部分的二维码，即纠错等级为 M、带瑞士十字标志的 Swiss Payments Code，付款人可用银行应用扫描。账单的其余部分，包括收据和付款部分的打印版式，则由您的开票软件生成。税务机关要求的电子发票二维码不可以：这类二维码来自会计软件或电子发票软件。",
     "status": "machine",
     "context": "placements.0.documents.items.invoices.faqs.1.answer"
+  },
+  "157d9b89ae53": {
+    "source": "Rectangular Micro QR for narrow spaces: cables, tubes, boards",
+    "text": "矩形 Micro QR，适用于狭小空间：线缆、试管、电路板",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.summary"
+  },
+  "d9e29bdf3552": {
+    "source": "Any text, up to 361 digits, 219 capital letters or 150 characters of other text; less with accents or other scripts.",
+    "text": "任意文本，最多 361 个数字、219 个大写字母或 150 个其他字符；含重音符号或其他文字时容量更少。",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.inputHint"
+  },
+  "f5a92bd24be6": {
+    "source": "UPS's fixed-size 2D code for sorting parcels",
+    "text": "UPS 使用的固定尺寸 2D 码，用于包裹分拣",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.summary"
+  },
+  "0c318d8d5087": {
+    "source": "A UPS carrier message, postcode<GS>country<GS>service class<GS>then the rest, or any text. Type <GS> between fields. Latin-1 characters only: up to 93 capital letters or 138 digits.",
+    "text": "UPS 承运信息，格式为邮政编码<GS>国家<GS>服务等级<GS>其余内容，或任意文本。字段之间输入 <GS>。仅支持 Latin-1 字符：最多 93 个大写字母或 138 个数字。",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.inputHint"
+  },
+  "f6047eef20ba": {
+    "source": "A QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code: cables, test tubes and the edges of parts. It's a 2022 ISO standard, so check that your scanners read it.",
+    "text": "拉伸成条状的二维码，高度最低仅 7 个模块，适用于窄到放不下方形码的标签：线缆、试管和零件边缘。它是 2022 年发布的 ISO 标准，请先确认你的扫描设备能够识读。",
+    "status": "machine",
+    "context": "barcodes.uses.rmqr"
+  },
+  "9c56d5f9dbb4": {
+    "source": "The fixed-size 2D code with a bullseye that UPS prints on parcel labels. A carrier message puts the destination postcode, country and service class where sorting machines look for them; it can also hold plain text.",
+    "text": "UPS 印在包裹标签上的固定尺寸 2D 码，中间有一个靶心图案。承运信息会把目的地邮编、国家和服务等级放在分拣机读取的位置；它也可以存放纯文本。",
+    "status": "machine",
+    "context": "barcodes.uses.maxicode"
+  },
+  "89f09d7bcb13": {
+    "source": "Free rMQR Code Generator (Rectangular Micro QR)",
+    "text": "免费 rMQR 码生成器（矩形 Micro QR）",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.title"
+  },
+  "a705932e946e": {
+    "source": "Make an rMQR, the rectangular Micro QR code for narrow spaces like cables and test tubes. Up to 361 digits or 150 characters. SVG, PDF and PNG. Free.",
+    "text": "生成 rMQR 码，即适用于电缆、试管等狭窄空间的矩形 Micro QR 二维码。最多 361 位数字或 150 个字符。支持 SVG、PDF 和 PNG。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.metaDescription"
+  },
+  "fac05d5715dd": {
+    "source": "rMQR (Rectangular Micro QR) is a QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code. Type any text, check that it scans and download it.",
+    "text": "rMQR（矩形 Micro QR）是拉长成条状的二维码，高度最小仅 7 个模块，适合贴在放不下方形码的窄标签上。输入任意文本，确认可以扫描后即可下载。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.intro"
+  },
+  "3016945159bc": {
+    "source": "Narrow labels where a square QR code would have to be tiny: cables and wires, test tubes and sample vials, the edges of parts and boxes.",
+    "text": "适用于方形二维码只能做得很小的窄标签：电缆和电线、试管和样品瓶、零件和箱体的边缘。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.0"
+  },
+  "a9b9994231ff": {
+    "source": "It's the ISO/IEC 23941 standard (2022), from DENSO WAVE, which also created the QR code. Because it's newer, check that the scanners that will read it support it before you print a batch.",
+    "text": "它是 DENSO WAVE 制定的 ISO/IEC 23941 标准（2022 年），该公司也是二维码的发明者。由于推出时间较晚，批量打印之前，请先确认将要读取它的扫描设备是否支持。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.1"
+  },
+  "29e08933b54e": {
+    "source": "Do I need to register an rMQR code?",
+    "text": "rMQR 码需要注册吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.title"
+  },
+  "5597274c9253": {
+    "source": "No. It holds whatever text you type, with no registration.",
+    "text": "不需要。它可以存放你输入的任何文本，无需注册。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
+  },
+  "21d588136e54": {
+    "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",
+    "text": "任意文本：字母、数字、符号、换行、带重音的字符和其他文字。数字占用空间最小，其次是大写字母；带重音的字符和其他文字以 UTF-8 字节存储，占用空间最大。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.0"
+  },
+  "07e4daf832f2": {
+    "source": "rMQR comes in 32 sizes, from 7 to 17 modules tall and 27 to 139 wide. The generator picks the fewest rows your text fits in, then the fewest columns, so the code grows longer before it grows taller.",
+    "text": "rMQR 共有 32 种尺寸，高 7 到 17 个模块，宽 27 到 139 个模块。生成器会先选择能容纳文本的最少行数，再选择最少列数，因此二维码会先变长，再变高。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.1"
+  },
+  "fb39f2c0ee54": {
+    "source": "Error correction is level M, which lets a reader recover about 15% of the code if it's smudged or damaged.",
+    "text": "纠错等级为 M，二维码出现污损或破损时，读取设备可以恢复约 15% 的内容。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.2"
+  },
+  "9341974e7321": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text comes out 44.4 × 7.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "矢量文件下载中，每个模块是边长 0.71 mm 的正方形：示例文本的尺寸为 44.4 × 7.8 mm，已包含空白区。请根据可用空间，以及打印机和扫描设备的分辨能力来缩放。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.0"
+  },
+  "a19aad812139": {
+    "source": "rMQR needs 2 modules of blank space all round, which the generator starts with.",
+    "text": "rMQR 四周都需要 2 个模块宽的空白，生成器默认已留出。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.1"
+  },
+  "e595e70dbbde": {
+    "source": "rMQR or QR code?",
+    "text": "rMQR 还是二维码？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.question"
+  },
+  "556187e34590": {
+    "source": "For anything people scan with their phone, a QR code. Use rMQR where only a narrow strip fits and you know the scanners that will read it support it.",
+    "text": "如果是给人用手机扫描的场景，请用二维码。只有在仅能放下窄条，且你确定将要读取它的扫描设备支持时，才使用 rMQR。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.answer"
+  },
+  "1aca0f2cf8a2": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports rMQR, and tells you whether it reads back your text.",
+    "text": "可以。编辑时，生成器会用 ZXing 解码即将下载的图像，并告诉你能否读回你的文本。ZXing 是一款支持 rMQR 的开源读取工具。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.1.answer"
+  },
+  "a0b78a78cf87": {
+    "source": "Free MaxiCode Generator",
+    "text": "免费 MaxiCode 生成器",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.title"
+  },
+  "bf9d519773db": {
+    "source": "Make a MaxiCode, the fixed-size 2D code UPS sorts parcels by, as a carrier message (modes 2 and 3) or text (mode 4). SVG, PDF and PNG. Free.",
+    "text": "生成 MaxiCode，即 UPS 用来分拣包裹的固定尺寸二维码，支持承运商报文（模式 2 和 3）或文本（模式 4）。可导出 SVG、PDF 和 PNG。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.metaDescription"
+  },
+  "93214fc470cb": {
+    "source": "MaxiCode is the fixed-size 2D code with a bullseye in the middle that UPS prints on parcel labels, so sorting machines can read where a parcel goes at speed. Type a carrier message or any text, check that it scans and download it.",
+    "text": "MaxiCode 是一种固定尺寸的 2D 码，中间有一个靶心图案，UPS 会把它印在包裹面单上，方便分拣机高速读取包裹的去向。输入承运商信息或任意文本，确认可以扫描后下载即可。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.intro"
+  },
+  "05263461581f": {
+    "source": "UPS parcel labels: the code carries the destination postcode, country and service class where a sorter expects them, followed by the shipment details.",
+    "text": "UPS 包裹标签：代码按分拣设备预期的位置依次载有目的地邮编、国家和服务等级，后面是运单详情。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.0"
+  },
+  "483824ed5b00": {
+    "source": "The layout of a real shipping label and what goes in the rest of the message are set by UPS. Use their label guide for parcels you ship; the example here is a sample, not a shipment.",
+    "text": "实际运单标签的版式，以及报文其余部分应填写的内容，均由 UPS 规定。您寄送的包裹请参照他们的标签指南；这里的示例只是样例，并非真实运单。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.1"
+  },
+  "c63b4f77b04c": {
+    "source": "Carrier message or text?",
+    "text": "承运商报文还是文本？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.title"
+  },
+  "2ec386ec976a": {
+    "source": "A carrier message starts with the postcode, the 3-digit ISO country code (840 for the US) and the 3-digit service class, separated by GS characters. Type them as <GS>: 152382802<GS>840<GS>001<GS>then the rest. A message starting with the [)><RS>01<GS>96 header works too.",
+    "text": "承运商报文以邮编、3 位 ISO 国家代码（美国为 840）和 3 位服务等级开头，之间用 GS 字符分隔。请输入为 <GS>：152382802<GS>840<GS>001<GS>后面是其余内容。以 [)><RS>01<GS>96 报头开头的报文同样可用。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.0"
+  },
+  "07b2961ece2a": {
+    "source": "An all-digit postcode of up to 9 digits makes it mode 2 (US ZIP Codes); up to 6 capital letters, digits and spaces make it mode 3 (other countries). Anything else is drawn as text, mode 4.",
+    "text": "最多 9 位的纯数字邮编为模式 2（美国 ZIP Code）；最多 6 位的大写字母、数字和空格为模式 3（其他国家）。其余情况按文本绘制，即模式 4。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.1"
+  },
+  "d57b60d2ae0d": {
+    "source": "Latin-1 characters only: letters, digits, symbols and Western European accents.",
+    "text": "仅支持 Latin-1 字符：字母、数字、符号和西欧语言的重音字符。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.0"
+  },
+  "cc2a86f2ce79": {
+    "source": "As text it holds up to 93 capital letters or 138 digits, fewer with lowercase or symbols. A carrier message leaves about 84 characters after the postcode, country and service class.",
+    "text": "作为文本时，最多可容纳 93 个大写字母或 138 个数字；含小写字母或符号时容量更少。承运商报文在邮编、国家和服务等级之后还剩约 84 个字符。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.1"
+  },
+  "262019b66f59": {
+    "source": "A 5-digit ZIP Code is drawn with 0000 for the +4, and a mode 3 postcode is padded with spaces to 6 characters; readers return them that way.",
+    "text": "5 位 ZIP Code 的 +4 部分会绘制为 0000，模式 3 的邮编会用空格补足到 6 个字符；读取器返回的也是这样的结果。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.2"
+  },
+  "4f21cb41b2bd": {
+    "source": "Every MaxiCode is the same size: 33 rows of 30 hexagons around the bullseye. More data doesn't make it bigger, so there's a limit instead.",
+    "text": "每个 MaxiCode 的尺寸都相同：靶心周围是 33 行、每行 30 个六边形。数据再多也不会变大，所以设有容量上限。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.3"
+  },
+  "d63cd93acd6c": {
+    "source": "The vector downloads are MaxiCode's nominal size, about 28.1 × 26.9 mm without the quiet zone. Print it at that size: readers look for a symbol of that size.",
+    "text": "矢量文件按 MaxiCode 的标称尺寸导出，不含空白区约为 28.1 × 26.9 mm。请按此尺寸打印：读取器查找的就是这个尺寸的符号。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.0"
+  },
+  "525615b8ff04": {
+    "source": "The generator starts with 2 modules of blank space all round; MaxiCode needs at least 1.",
+    "text": "生成器默认四周各留 2 个模块的空白；MaxiCode 至少需要 1 个。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.1"
+  },
+  "aac3339401fe": {
+    "source": "Image size starts at 4×: below that, the hexagons are rounded to whole pixels and lose their shape.",
+    "text": "图片尺寸从 4× 起步：低于这个值，六边形会被取整到整像素而失去形状。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.2"
+  },
+  "212789ea202f": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports MaxiCode, and tells you whether it reads back your message.",
+    "text": "会。编辑时，生成器会用 ZXing（一款支持 MaxiCode 的开源读取器）解码即将下载的图片，并告诉您能否读回您的报文。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.0.answer"
+  },
+  "7e26c57a4da7": {
+    "source": "Which modes does it make?",
+    "text": "支持哪些模式？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.question"
+  },
+  "573feb46c532": {
+    "source": "Modes 2 and 3 for carrier messages and mode 4 for text. Mode 5 (text with stronger error correction) and mode 6 (reader programming) aren't offered.",
+    "text": "模式 2 和 3 用于承运商报文，模式 4 用于文本。不提供模式 5（纠错能力更强的文本）和模式 6（读取器编程）。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.answer"
+  },
+  "5cc737cfddfe": {
+    "source": "MaxiCode or a QR code?",
+    "text": "MaxiCode 还是二维码？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.question"
+  },
+  "6402ef6937fb": {
+    "source": "MaxiCode where a carrier's system asks for it, as UPS's does. For anything people scan with a phone, a QR code.",
+    "text": "承运商系统要求用 MaxiCode 时就用它，UPS 的系统就是这样。凡是供人用手机扫描的场景，请用二维码。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.answer"
+  },
+  "817e8c09369f": {
+    "source": "With Raycast, Node.js 22 and Bun installed, run this and Raycast imports the extension.",
+    "text": "在已安装 Raycast、Node.js 22 和 Bun 的情况下，运行下面的命令，Raycast 就会导入该扩展。",
+    "status": "machine",
+    "context": "integrations.entries.raycast.steps.0.body"
+  },
+  "48d95404c31b": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "支持 EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、USPS Intelligent Mail、Data Matrix、PDF417、Aztec、rMQR、MaxiCode 或 DotCode。会检查内容（校验位、长度、字符），并返回一张 PNG 图片，以及可公开访问的 SVG、PNG、PDF 等图片链接。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
   }
 }
