@@ -1241,7 +1241,8 @@
         "logoQuestion": "Un logo o una correzione degli errori più alta cambiano la dimensione?",
         "logoAnswer": "Una correzione degli errori più alta aggiunge ridondanza, quindi lo stesso contenuto richiede una versione superiore con più moduli e quindi una stampa più grande. Un logo non cambia il numero di moduli, ma ne nasconde alcuni, quindi usa il livello Q o H quando ne aggiungi uno.",
         "quietQuestion": "La zona di quiete conta nelle dimensioni?",
-        "quietAnswer": "La dimensione del codice indicata va da bordo a bordo. Gli scanner hanno bisogno anche di un margine bianco di {quiet, number} moduli su ogni lato, che è compreso nella seconda misura. I download di QRdx non hanno margine, a meno che tu non attivi la zona di quiete, quindi lascia questo spazio attorno al codice nel tuo layout.",
+        "quietAnswer": "La dimensione del codice indicata va da bordo a bordo. Gli scanner richiedono anche un margine bianco di {quiet, number} moduli su ogni lato, compreso nella seconda cifra. Un download di QRdx ha il margine impostato dal suo design, mentre i generatori e lo strumento di generazione in blocco aggiungono {quiet, number} moduli, a meno che tu non lo disattivi. Nel tuo layout lascia attorno al codice lo spazio che eventualmente manca.",
+        "quietAnswerNewDesigns": "La dimensione del codice indicata va da bordo a bordo. Gli scanner richiedono anche un margine bianco di {quiet, number} moduli su ogni lato, compreso nella seconda cifra. Un download di QRdx ha il margine impostato dal suo design: i nuovi design nell’editor partono con {start, number} moduli, mentre i generatori e lo strumento di generazione in blocco aggiungono {quiet, number} moduli, a meno che tu non lo disattivi. Nel tuo layout lascia attorno al codice lo spazio che eventualmente manca.",
         "resolutionQuestion": "Con quale risoluzione devo esportare per la stampa?",
         "resolutionAnswer": "Usa SVG quando puoi: è vettoriale e resta nitido a qualsiasi dimensione. Per PNG, esporta almeno alla larghezza in pixel indicata per 300 DPI, che è il minimo abituale per la stampa."
       },
@@ -5446,6 +5447,9 @@
       "checkingScan": "Controllo scansione…",
       "fullScanChecker": "Verifica completa scansione",
       "checkAPrintedCode": "Controlla un codice stampato",
+      "warning": "Avviso",
+      "scanScoreScoreValueWarningShow": "Punteggio di scansione {score, number}, {value}, con un avviso. Mostra i controlli",
+      "addAMargin": "Aggiungi un margine di {modules, number} moduli",
       "grades": {
         "great": "Ottimo",
         "ok": "OK",

@@ -115,7 +115,7 @@ import {
   BuilderSubmitKey,
   useBuilderShortcuts,
 } from "./builder-shell";
-import { BuilderStyle } from "./builder-style";
+import { BuilderStyle, themeLook } from "./builder-style";
 import {
   SlugSuggestions,
   SuggestButton,
@@ -931,6 +931,11 @@ export default function CodeBuilderModal({
       isPreview={link.isPreview}
       link={link.label}
       onScore={setScore}
+      onStyleChange={
+        created
+          ? undefined
+          : (change) => onStyleChange({ ...themeLook(displayStyle), ...change })
+      }
       style={created ? (created.code.style ?? displayStyle) : displayStyle}
       value={link.value}
     />

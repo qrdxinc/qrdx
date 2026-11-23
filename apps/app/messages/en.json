@@ -1640,7 +1640,8 @@
         "logoQuestion": "Does a logo or higher error correction change the size?",
         "logoAnswer": "Higher error correction adds redundancy, so the same content needs a higher version with more modules, and therefore a larger print. A logo doesn't change the module count, but it hides modules, so use level Q or H when adding one.",
         "quietQuestion": "Does the quiet zone count towards the size?",
-        "quietAnswer": "The code size shown is edge to edge. Scanners also need a blank margin of {quiet, number} modules on every side, which the second figure includes. QRdx downloads have no margin unless you turn on the quiet zone, so leave that space around the code in your layout.",
+        "quietAnswer": "The code size shown is edge to edge. Scanners also need a blank margin of {quiet, number} modules on every side, which the second figure includes. A QRdx download has the margin its design sets, and the generators and the bulk tool add {quiet, number} unless you turn that off. Leave any space it's missing around the code in your layout.",
+        "quietAnswerNewDesigns": "The code size shown is edge to edge. Scanners also need a blank margin of {quiet, number} modules on every side, which the second figure includes. A QRdx download has the margin its design sets: new designs in the editor start with {start, number} modules, and the generators and the bulk tool add {quiet, number} unless you turn that off. Leave any space it's missing around the code in your layout.",
         "resolutionQuestion": "What resolution should I export for print?",
         "resolutionAnswer": "Use SVG when you can: it is vector and stays sharp at any size. For PNG, export at least the pixel width shown for 300 DPI, which is the usual minimum for print."
       },
@@ -5846,6 +5847,9 @@
       "checkingScan": "Checking scan…",
       "fullScanChecker": "Full scan checker",
       "checkAPrintedCode": "Check a printed code",
+      "warning": "Warning",
+      "scanScoreScoreValueWarningShow": "Scan score {score, number}, {value}, with a warning. Show checks",
+      "addAMargin": "Add a {modules, number}-module margin",
       "grades": {
         "great": "Great",
         "ok": "OK",

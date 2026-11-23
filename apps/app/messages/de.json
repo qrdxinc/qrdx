@@ -1241,7 +1241,8 @@
         "logoQuestion": "Ändern ein Logo oder eine höhere Fehlerkorrektur die Größe?",
         "logoAnswer": "Eine höhere Fehlerkorrektur fügt Redundanz hinzu. Derselbe Inhalt braucht dadurch eine höhere Version mit mehr Modulen und damit einen größeren Druck. Ein Logo ändert die Modulanzahl nicht, verdeckt aber Module. Nimm deshalb Stufe Q oder H, wenn du eins einfügst.",
         "quietQuestion": "Zählt die Ruhezone zur Größe dazu?",
-        "quietAnswer": "Die angezeigte Code-Größe gilt von Kante zu Kante. Scanner brauchen außerdem an jeder Seite einen leeren Rand von {quiet, number} Modulen, den die zweite Angabe einschließt. QRdx-Downloads haben keinen Rand, solange du die Ruhezone nicht aktivierst. Lass deshalb in deinem Layout Platz um den Code.",
+        "quietAnswer": "Die angezeigte Codegröße gilt von Kante zu Kante. Scanner brauchen außerdem auf jeder Seite einen leeren Rand von {quiet, number} Modulen, den die zweite Angabe einschließt. Ein QRdx-Download hat den Rand, den sein Design festlegt, und die Generatoren sowie das Bulk-Tool fügen {quiet, number} hinzu, es sei denn, du schaltest das aus. Lass in deinem Layout um den Code herum den Platz frei, der noch fehlt.",
+        "quietAnswerNewDesigns": "Die angezeigte Codegröße gilt von Kante zu Kante. Scanner brauchen außerdem auf jeder Seite einen leeren Rand von {quiet, number} Modulen, den die zweite Angabe einschließt. Ein QRdx-Download hat den Rand, den sein Design festlegt: Neue Designs im Editor starten mit {start, number} Modulen, und die Generatoren sowie das Bulk-Tool fügen {quiet, number} hinzu, es sei denn, du schaltest das aus. Lass in deinem Layout um den Code herum den Platz frei, der noch fehlt.",
         "resolutionQuestion": "Mit welcher Auflösung sollte ich für den Druck exportieren?",
         "resolutionAnswer": "Nimm SVG, wenn es geht: Das Format ist vektorbasiert und bleibt in jeder Größe scharf. Exportiere PNG mindestens in der angezeigten Pixelbreite für 300 DPI, dem üblichen Minimum für den Druck."
       },
@@ -5446,6 +5447,9 @@
       "checkingScan": "Scan wird geprüft …",
       "fullScanChecker": "Vollständiger Scan-Check",
       "checkAPrintedCode": "Gedruckten Code prüfen",
+      "warning": "Warnung",
+      "scanScoreScoreValueWarningShow": "Scan-Score {score, number}, {value}, mit einer Warnung. Prüfungen anzeigen",
+      "addAMargin": "Rand von {modules, number} Modulen hinzufügen",
       "grades": {
         "great": "Sehr gut",
         "ok": "OK",

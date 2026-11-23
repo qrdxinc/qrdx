@@ -3,6 +3,8 @@
 import { authClient } from "@repo/auth/client";
 import { useEffect } from "react";
 import { getThemes } from "@/actions/qr-themes";
+import { storedStyleDefaults } from "@/config/qr";
+import { isDeepEqual } from "@/lib/utils";
 import { useQREditorStore } from "@/store/editor-store";
 import { useThemePresetStore } from "@/store/theme-preset-store";
 
@@ -27,8 +29,11 @@ function applyDefaultTheme(workspace: string) {
 
   const { themeState, hasUnsavedChanges, applyThemePreset } =
     useQREditorStore.getState();
+  // The default look kept from before new designs had a margin counts too
   const pristine =
-    (themeState.preset ?? "default") === "default" && !hasUnsavedChanges();
+    (themeState.preset ?? "default") === "default" &&
+    (!hasUnsavedChanges() ||
+      isDeepEqual(themeState.styles, storedStyleDefaults));
   if (pristine) applyThemePreset(defaultPresetId);
 }
 

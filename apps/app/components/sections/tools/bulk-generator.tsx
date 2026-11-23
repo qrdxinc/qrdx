@@ -44,7 +44,7 @@ import { useDropzone } from "react-dropzone";
 import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { SignUpNudge, useSignUpNudge } from "@/components/sign-up-nudge";
-import { defaultThemeState } from "@/config/qr";
+import { storedStyleDefaults } from "@/config/qr";
 import { authPromptSurface } from "@/lib/analytics/auth-prompt";
 import { useTrackEditorOpened } from "@/lib/analytics/react";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
@@ -140,7 +140,7 @@ const PNG_SIZES = [256, 512, 1024, 2048] as const;
 const DEFAULT_STYLE_ID = "preset:classic";
 
 function withDefaults(styles: ThemeStyles): ThemeStyles {
-  return { ...defaultThemeState.styles, ...styles };
+  return { ...storedStyleDefaults, ...styles };
 }
 
 /** The `style` a link may ask for: editor, preset:<id> or saved:<id>. */
