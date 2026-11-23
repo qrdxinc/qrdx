@@ -239,6 +239,10 @@ export default function SavedQRs() {
               actions={<SavedQRActions onRefresh={refresh} saved={saved} />}
               detail={
                 <List.Item.Detail
+                  // The path changes with the code's settings. A new key makes
+                  // Raycast lay the pane out again after an edit; it kept the
+                  // old value's width and cut "Liquid" to "Li…id".
+                  key={previewPath}
                   markdown={
                     hasPreview
                       ? imageMarkdown(previewPath, DETAIL_PREVIEW_POINTS)
