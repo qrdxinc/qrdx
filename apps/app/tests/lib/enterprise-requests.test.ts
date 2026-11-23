@@ -137,10 +137,8 @@ describe("the enterprise contact form", () => {
     ]) {
       expect(email?.html).toContain(part);
     }
-    // The footer names the address it went to.
-    expect(email?.html).toMatch(
-      /This email was meant for <span[^>]*>enterprise@qrdx\.dev<\/span>/,
-    );
+    // It goes to the QRdx team: no "meant for" line about an account.
+    expect(email?.html).not.toContain("This email was meant for");
     expect(state.turnstileTokens).toEqual(["token-1"]);
   });
 

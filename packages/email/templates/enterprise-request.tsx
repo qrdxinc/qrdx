@@ -14,7 +14,10 @@ export interface EnterpriseRequestEmailProps {
   need: string;
   /** The language of the page they wrote from, e.g. "ja" */
   locale: string;
-  /** The QRdx team's address, where this goes */
+  /**
+   * Who it was meant for, in the footer. The app leaves it out: this goes
+   * to the QRdx team, and that line speaks to an account holder.
+   */
   recipient?: string;
   /** The email's language (English: it goes to the QRdx team) */
   intl: EmailIntl;
@@ -61,5 +64,4 @@ EnterpriseRequestEmail.PreviewProps = {
   teamSize: "51 to 200 people",
   need: "Codes on every product label, with our own domain and SSO.",
   locale: "en",
-  recipient: "alex@example.com",
 } satisfies Omit<EnterpriseRequestEmailProps, "intl">;

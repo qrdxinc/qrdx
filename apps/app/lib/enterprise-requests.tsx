@@ -85,7 +85,6 @@ export async function sendEnterpriseRequest(
         locale={locale}
         name={data.name}
         need={data.need}
-        recipient={ENTERPRISE_EMAIL}
         teamSize={teamSize}
       />
     ),

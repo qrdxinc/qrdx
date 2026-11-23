@@ -198,6 +198,13 @@ export function EmailLayout({
       {chunks}
     </Link>
   );
+  // The host already is the address: the plain-text body prints it once
+  // (../render.ts).
+  const hostLink = (chunks: ReactNode) => (
+    <Link data-text-only="true" href={origin} style={styles.footerLink}>
+      {chunks}
+    </Link>
+  );
   return (
     <Html lang={intl.locale}>
       <Head>
@@ -254,11 +261,11 @@ export function EmailLayout({
             {sender
               ? t.rich("layout.sentFor", {
                   name: sender.name,
-                  link: footerLink(origin),
+                  link: hostLink,
                   host: baseUrl.host,
                 })
               : t.rich("layout.sentBy", {
-                  link: footerLink(origin),
+                  link: hostLink,
                   host: baseUrl.host,
                 })}
           </Text>

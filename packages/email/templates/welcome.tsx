@@ -1,15 +1,13 @@
 import type { CSSProperties, ReactNode } from "react";
-import { Link } from "react-email";
 import type { EmailIntl } from "../intl";
 import {
-  EMAIL_ACCENT,
   EMAIL_TEXT,
   EmailButton,
   EmailHeading,
   EmailLayout,
   EmailText,
 } from "./layout";
-import { formatCount } from "./parts";
+import { EmailTextLink, formatCount } from "./parts";
 
 // Sent once, right after someone makes an account
 // (apps/app/lib/email/welcome.tsx): a short note from a person on the team
@@ -26,7 +24,6 @@ const styles = {
     paddingLeft: "20px",
   },
   item: { margin: "0 0 8px", paddingLeft: "4px" },
-  link: { color: EMAIL_ACCENT, fontWeight: 500, textDecoration: "none" },
 } satisfies Record<string, CSSProperties>;
 
 export interface WelcomeEmailProps {
@@ -71,9 +68,7 @@ export function WelcomeEmail({
 }: WelcomeEmailProps) {
   const { t } = intl;
   const link = (href: string) => (chunks: ReactNode) => (
-    <Link href={href} style={styles.link}>
-      {chunks}
-    </Link>
+    <EmailTextLink href={href}>{chunks}</EmailTextLink>
   );
   return (
     <EmailLayout
@@ -127,5 +122,5 @@ WelcomeEmail.PreviewProps = {
   proMonthly: "$5",
   proYearly: "$48",
   unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
-  recipient: "alex@example.com",
+  recipient: "sam@example.com",
 } satisfies Omit<WelcomeEmailProps, "intl">;

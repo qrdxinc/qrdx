@@ -98,7 +98,6 @@ export async function sendNonprofitRequest(
         offer={nonprofitOffer()}
         organization={data.organization}
         plan={plan}
-        recipient={NONPROFIT_REQUEST_TO}
         registration={data.registration}
         workspace={account.workspace}
       />

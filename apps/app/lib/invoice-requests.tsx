@@ -115,7 +115,6 @@ export async function sendInvoiceRequest(
         country={data.country}
         notes={data.notes}
         plan={offer.label}
-        recipient={INVOICE_REQUEST_TO}
         taxId={data.taxId}
         workspace={account.workspace}
       />

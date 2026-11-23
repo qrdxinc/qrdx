@@ -13,8 +13,8 @@ import type { EmailIntl } from "../intl";
 import { baseUrl } from "../origin";
 import { EMAIL_LINE, EMAIL_MUTED, EMAIL_TEXT } from "./layout";
 
-// The frame of an email a person on the team writes (a personal note, the
-// welcome email): it should read like a short letter from them, so no logo,
+// The frame of a note a person on the team writes (personal-note.tsx, sent
+// from the console): it should read like a short letter from them, so no logo,
 // card or buttons, just their text in the same type as QRdx's other emails,
 // their name, and a small footer saying who it was meant for, why it came,
 // that replying reaches them, how to stop these emails, and QRdx's line.
@@ -67,9 +67,9 @@ export interface PersonalLayoutProps {
   /** The recipient's language (../intl.ts): the footer's */
   intl: EmailIntl;
   /**
-   * The whole email's language, when it's all in the recipient's (the
-   * welcome). A note is in its writer's language, which isn't known, so
-   * only its footer says it's in the recipient's.
+   * The whole email's language, when it's all in the recipient's. A note
+   * is in its writer's language, which isn't known, so only its footer
+   * says it's in the recipient's.
    */
   lang?: string;
 }
@@ -118,7 +118,11 @@ export function PersonalLayout({
             <Text style={styles.footerText}>
               {t.rich("layout.sentBy", {
                 link: (chunks) => (
-                  <Link href={baseUrl.origin} style={styles.footerLink}>
+                  <Link
+                    data-text-only="true"
+                    href={baseUrl.origin}
+                    style={styles.footerLink}
+                  >
                     {chunks}
                   </Link>
                 ),

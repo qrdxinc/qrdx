@@ -17,7 +17,10 @@ export interface InvoiceRequestEmailProps {
   address: string | null;
   notes: string | null;
   plan: string;
-  /** The QRdx team's address, where this goes */
+  /**
+   * Who it was meant for, in the footer. The app leaves it out: this goes
+   * to the QRdx team, and that line speaks to an account holder.
+   */
   recipient?: string;
   /** The email's language (English: it goes to the QRdx team) */
   intl: EmailIntl;
@@ -78,5 +81,4 @@ InvoiceRequestEmail.PreviewProps = {
   address: "1 Example Street, Berlin",
   notes: null,
   plan: "Business (yearly)",
-  recipient: "alex@example.com",
 } satisfies Omit<InvoiceRequestEmailProps, "intl">;

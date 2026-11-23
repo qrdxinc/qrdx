@@ -139,6 +139,7 @@ const styles = {
     verticalAlign: "top",
     whiteSpace: "nowrap",
   },
+  textLink: { color: EMAIL_ACCENT, fontWeight: 500, textDecoration: "none" },
   rankedLine: {
     border: "none",
     borderTop: `1px solid ${EMAIL_LINE}`,
@@ -255,6 +256,21 @@ export function RankedList({
         </Section>
       ))}
     </Section>
+  );
+}
+
+/** A link inside a sentence: the accent colour, no underline. */
+export function EmailTextLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: ReactNode;
+}) {
+  return (
+    <Link href={href} style={styles.textLink}>
+      {children}
+    </Link>
   );
 }
 

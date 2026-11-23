@@ -18,7 +18,10 @@ export interface NonprofitRequestEmailProps {
   accountEmail: string;
   accountId: string;
   workspace: { name: string; slug: string } | null;
-  /** The QRdx team's address, where this goes */
+  /**
+   * Who it was meant for, in the footer. The app leaves it out: this goes
+   * to the QRdx team, and that line speaks to an account holder.
+   */
   recipient?: string;
   /** The email's language (English: it goes to the QRdx team) */
   intl: EmailIntl;
@@ -75,5 +78,4 @@ NonprofitRequestEmail.PreviewProps = {
   accountEmail: "sam@example.org",
   accountId: "usr_preview",
   workspace: { name: "Example Food Bank", slug: "food-bank" },
-  recipient: "alex@example.com",
 } satisfies Omit<NonprofitRequestEmailProps, "intl">;

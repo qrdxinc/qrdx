@@ -2,7 +2,7 @@
 //   cd apps/app && npx tsx --test lib/email/templates.test.tsx
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { render } from "@react-email/render";
+import { renderEmail } from "@repo/email/render";
 import { AbuseReportAckEmail } from "@repo/email/templates/abuse-report-ack";
 import { CodeActivityEmail } from "@repo/email/templates/code-activity";
 import {
@@ -90,13 +90,8 @@ function assertDetails(text: string, label: string) {
   assert.match(text, /Review security/, label);
 }
 
-async function both(element: React.ReactElement) {
-  const [html, text] = await Promise.all([
-    render(element),
-    render(element, { plainText: true }),
-  ]);
-  return { html, text };
-}
+/** The HTML and plain-text bodies, as they're sent. */
+const both = (element: React.ReactElement) => renderEmail(element);
 
 describe("email templates", () => {
   it("alert emails carry an unsubscribe link", async () => {
@@ -353,6 +348,8 @@ describe("email templates", () => {
     assert.doesNotMatch(text, /Someone asked to sign in from/);
     // Who it was meant for, in the footer.
     assert.match(text, /This email was meant for ada@qrdx\.test\./);
+    // The QRdx line prints the host once, not the host and then its URL.
+    assert.match(text, /^QRdx · qrdx\.dev$/m);
     // The code renders large and letter-spaced (still copyable as one word).
     assert.match(html, /letter-spacing:0\.25em[^"]*"[^>]*>402871</);
     assert.match(html, /font-size:28px/);

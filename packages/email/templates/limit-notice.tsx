@@ -1,20 +1,7 @@
-import type { CSSProperties, ReactNode } from "react";
-import { Link } from "react-email";
+import type { ReactNode } from "react";
 import type { EmailIntl } from "../intl";
-import {
-  EMAIL_ACCENT,
-  EmailButton,
-  EmailHeading,
-  EmailLayout,
-  EmailText,
-} from "./layout";
-import { DetailsTable, MutedText } from "./parts";
-
-const linkStyle = {
-  color: EMAIL_ACCENT,
-  fontWeight: 500,
-  textDecoration: "none",
-} satisfies CSSProperties;
+import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { DetailsTable, EmailTextLink, MutedText } from "./parts";
 
 export interface LimitNoticeEmailProps {
   /** "Acme" */
@@ -106,9 +93,7 @@ export function LimitNoticeEmail({
           {t.rich("limitNotice.invite", {
             count: invite.count,
             link: (chunks: ReactNode) => (
-              <Link href={invite.url} style={linkStyle}>
-                {chunks}
-              </Link>
+              <EmailTextLink href={invite.url}>{chunks}</EmailTextLink>
             ),
           })}
         </EmailText>
