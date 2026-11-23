@@ -24,7 +24,13 @@ You need Node.js 22 (22.22.3 or later), [Bun](https://bun.com/docs/installation)
 
 4. Preview the app from the Developer Portal.
 
-`bun run --filter @qrdx/canva-plugin build` writes the production bundle to `plugins/canva/dist/app.js`, a single file as Canva requires.
+`bun run --filter @qrdx/canva-plugin build` writes the production bundle to `plugins/canva/dist/app.js`, a single file as Canva requires, and the app's English strings to `plugins/canva/dist/messages_en.json`.
+
+## Translations
+
+Every string the app shows goes through [`react-intl`](https://formatjs.github.io/docs/react-intl/), and `AppI18nProvider` from `@canva/app-i18n-kit` loads Canva's translations for the user's language. Write new strings as `FormattedMessage` (or `useIntl().formatMessage()` where a plain string is needed) with an English `defaultMessage` and a `description` that tells the translator where the text appears. Don't give them an `id`: the build makes one from the text, and `bun run --filter @qrdx/canva-plugin extract` writes the same IDs to `dist/messages_en.json`. The brand name, web addresses, hex colors and the error correction letters L, M, Q and H aren't translated.
+
+When you upload a new version in the Developer Portal, upload `dist/app.js` and, under **Code upload** > **Translations**, `dist/messages_en.json` from the same build. Canva translates the strings; you can't upload your own translations.
 
 ## License
 

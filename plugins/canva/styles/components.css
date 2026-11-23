@@ -3,9 +3,9 @@
   box-sizing: border-box;
   overflow-y: scroll;
   height: 100%;
-  padding-top: var(--ui-kit-space-200);
-  padding-right: var(--ui-kit-space-200);
-  padding-bottom: var(--ui-kit-space-200);
+  /* Logical properties, so right-to-left languages mirror the layout */
+  padding-block: var(--ui-kit-space-200);
+  padding-inline-end: var(--ui-kit-space-200);
 
   /* firefox */
   scrollbar-width: thin;
@@ -21,8 +21,7 @@
 .scrollContainer::-webkit-scrollbar-track {
   background: transparent;
   width: var(--ui-kit-base-unit);
-  margin-top: var(--ui-kit-space-100);
-  margin-bottom: var(--ui-kit-space-100);
+  margin-block: var(--ui-kit-space-100);
 }
 
 .scrollContainer::-webkit-scrollbar-thumb {
@@ -140,6 +139,11 @@
   color: var(--ui-kit-color-content-secondary);
   padding: 0;
   line-height: 1;
+}
+
+/* The arrow points toward the end of the row in right-to-left languages too */
+.pickerScrollBtn:dir(rtl) {
+  transform: scaleX(-1);
 }
 
 .pickerScrollBtn:hover {
