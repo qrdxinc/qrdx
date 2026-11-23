@@ -143,6 +143,12 @@ export const barcodeImageFields: INodeProperties[] = [
           "Stacked 2D code for IDs, boarding passes and documents; any text up to 1,000 characters",
       },
       {
+        name: "rMQR",
+        value: "rmqr",
+        description:
+          "Rectangular Micro QR: a QR code as a strip for narrow labels like cables and test tubes; up to 361 digits or 150 characters",
+      },
+      {
         name: "UPC-A",
         value: "upca",
         description:

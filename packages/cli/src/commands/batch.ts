@@ -10,7 +10,11 @@ import {
   resolveColumn,
   sanitizeFilename,
 } from "../lib/csv";
-import { type OutputFormat, saveOutput } from "../render/output";
+import {
+  type OutputFormat,
+  outputExtension,
+  saveOutput,
+} from "../render/output";
 import { buildQrProps, styleFromArgs } from "./generate";
 
 // `qrdx batch codes.csv`: a static QR code for every row of a CSV, rendered
@@ -225,7 +229,7 @@ export async function runBatch(args: string[], meta: BatchMeta): Promise<void> {
     const base =
       sanitizeFilename(nameColumn >= 0 ? (row[nameColumn] ?? "") : "") ||
       `qr-${String(index).padStart(5, "0")}`;
-    render(value, allocate(base, format), line);
+    render(value, allocate(base, outputExtension(format)), line);
     if (running.size >= jobs) await Promise.race(running);
   }
   await Promise.all(running);

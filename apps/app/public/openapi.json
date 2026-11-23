@@ -84,7 +84,7 @@
         "summary": "Render a QR code image",
         "tags": ["QR images"],
         "security": [],
-        "description": "A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Colors are hex without `#` (or with `#` encoded as `%23`). Limit: 300 requests a minute per IP address. More in the [Image API guide](https://qrdx.dev/docs/developers/image-api).\n\n**The editor's styles.** `style` takes the whole design as URL-encoded JSON, with the same fields as a saved theme: gradients (linear, radial), frames (built-in, custom frame specs, or a frame drawn as a template), eye and dot colors, and a logo icon. It also takes the `style` value of a playground link. `item` renders a community frame or theme (`/community/items`); `frame` and `frameText` add a built-in frame. Flat parameters you set win over `style`, and `style` wins over `item`. With a frame, `size` is the code's width and the frame adds to it.\n\n**Logos.** `logoIcon` draws one of the editor's quick icons, or a brand logo by its Simple Icons slug (`spotify`, `paypal:white`). `logoFileId` draws an image you uploaded, and needs `Authorization: Bearer qrdx_…` from the workspace that owns it; that response is private and counts toward the daily quota. QRdx never fetches a logo from an address you send. Logo QR and Image QR art aren't available here.\n\n**Caching.** Renders with `item` are cached for 5 minutes (10 at the CDN), since an item can change; renders with `logoFileId` aren't cached.\n\n**WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.\n\n**GIF** is for older tools and email builders that only take it. It holds at most 256 colors and one transparent color (a pixel under half opaque is transparent, so the soft edge of a code on a transparent background is hard-edged). A code in flat colors is written exactly. A gradient, image fill or photo logo is reduced to a palette without dithering, and if the PNG would scan and the GIF would not, the request fails with a `VALIDATION_ERROR` on `format` instead of returning a code that no longer reads: use PNG for that design.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.\n\n**ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. `size` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.",
+        "description": "A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO, TIFF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag (EPS and TIFF are files to download: browsers other than Safari can't show TIFF). The same query always returns the same bytes, so responses are cached for a year. Colors are hex without `#` (or with `#` encoded as `%23`). Limit: 300 requests a minute per IP address. More in the [Image API guide](https://qrdx.dev/docs/developers/image-api).\n\n**The editor's styles.** `style` takes the whole design as URL-encoded JSON, with the same fields as a saved theme: gradients (linear, radial), frames (built-in, custom frame specs, or a frame drawn as a template), eye and dot colors, and a logo icon. It also takes the `style` value of a playground link. `item` renders a community frame or theme (`/community/items`); `frame` and `frameText` add a built-in frame. Flat parameters you set win over `style`, and `style` wins over `item`. With a frame, `size` is the code's width and the frame adds to it.\n\n**Logos.** `logoIcon` draws one of the editor's quick icons, or a brand logo by its Simple Icons slug (`spotify`, `paypal:white`). `logoFileId` draws an image you uploaded, and needs `Authorization: Bearer qrdx_…` from the workspace that owns it; that response is private and counts toward the daily quota. QRdx never fetches a logo from an address you send. Logo QR and Image QR art aren't available here.\n\n**Caching.** Renders with `item` are cached for 5 minutes (10 at the CDN), since an item can change; renders with `logoFileId` aren't cached.\n\n**WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.\n\n**GIF** is for older tools and email builders that only take it. It holds at most 256 colors and one transparent color (a pixel under half opaque is transparent, so the soft edge of a code on a transparent background is hard-edged). A code in flat colors is written exactly. A gradient, image fill or photo logo is reduced to a palette without dithering, and if the PNG would scan and the GIF would not, the request fails with a `VALIDATION_ERROR` on `format` instead of returning a code that no longer reads: use PNG for that design.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.\n\n**ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. `size` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.\n\n**TIFF** is for print shops that ask for it, at 300 dpi, and is sent as a download (`Content-Disposition: attachment`, `qr-code.tif` or `qr-code-cmyk.tif`), as EPS is. Browsers other than Safari can't show it in an `<img>`. `tiff` keeps the PNG's pixels, transparency included. `tiff-cmyk` is CMYK by the same conversion as the editor's print PDF and EPS: pure black prints as K only, white as no ink, and a transparent background comes out white; no ICC profile is embedded, so ask your printer for a color-managed conversion when exact brand colors matter.",
         "parameters": [
           {
             "name": "data",
@@ -304,7 +304,17 @@
             "schema": {
               "default": "svg",
               "type": "string",
-              "enum": ["svg", "png", "webp", "bmp", "ico", "gif", "eps"]
+              "enum": [
+                "svg",
+                "png",
+                "webp",
+                "bmp",
+                "ico",
+                "gif",
+                "tiff",
+                "tiff-cmyk",
+                "eps"
+              ]
             },
             "example": "svg"
           },
@@ -427,6 +437,12 @@
                 "schema": {
                   "type": "string",
                   "contentMediaType": "image/vnd.microsoft.icon"
+                }
+              },
+              "image/tiff": {
+                "schema": {
+                  "type": "string",
+                  "contentMediaType": "image/tiff"
                 }
               },
               "application/postscript": {
@@ -3195,13 +3211,13 @@
         "summary": "Render a barcode image",
         "tags": ["Barcodes"],
         "security": [],
-        "description": "A static barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.\n\n**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128 and GS1 DataBar Expanded (GTIN and SSCC fields) and GS1 DataBar (its GTIN) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an ISSN (`0317-8471`) or its 13-digit 977 number, an ISMN (979-0) or its old M form, each with or without its check digit; a 2- or 5-digit add-on follows after a space (`978-1-873671-00-9 52250`), and an ISSN's 2-digit sequence variant comes before it (`0317-8471 00 05`, 00 when left out). Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, Data Matrix, PDF417 and Aztec any text up to 1,000 characters, MaxiCode a UPS carrier message (postcode, country and service class, then the rest, separated by `<GS>`; a numeric postcode makes it mode 2, another mode 3) or Latin-1 text (mode 4), and DotCode any text up to about 390 letters or 780 digits. USPS Intelligent Mail takes the 20-digit tracking code (barcode ID, service type ID, mailer ID and serial number) and a routing ZIP Code of 0, 5, 9 or 11 digits, with or without spaces and hyphens (`01 234 567094 987654321 01234-5678-91`).\n\n**Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall. USPS Intelligent Mail is drawn at the size USPS-B-3200 sets: bars 0.02 in wide, about 22 to the inch and 3.96 mm tall whatever `height` says, with `scale` from 2, as for DotCode.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel; the background is always a solid color, so it has the same pixels as the PNG.\n\nValues that shouldn't sit in a URL can go in a `POST` body instead.",
+        "description": "A static barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.\n\n**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128 and GS1 DataBar Expanded (GTIN and SSCC fields) and GS1 DataBar (its GTIN) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an ISSN (`0317-8471`) or its 13-digit 977 number, an ISMN (979-0) or its old M form, each with or without its check digit; a 2- or 5-digit add-on follows after a space (`978-1-873671-00-9 52250`), and an ISSN's 2-digit sequence variant comes before it (`0317-8471 00 05`, 00 when left out). Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, Data Matrix, PDF417 and Aztec any text up to 1,000 characters, rMQR any text up to 361 digits or 150 characters (the smallest strip it fits, 7 to 17 modules tall), MaxiCode a UPS carrier message (postcode, country and service class, then the rest, separated by `<GS>`; a numeric postcode makes it mode 2, another mode 3) or Latin-1 text (mode 4), and DotCode any text up to about 390 letters or 780 digits. USPS Intelligent Mail takes the 20-digit tracking code (barcode ID, service type ID, mailer ID and serial number) and a routing ZIP Code of 0, 5, 9 or 11 digits, with or without spaces and hyphens (`01 234 567094 987654321 01234-5678-91`).\n\n**Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall. USPS Intelligent Mail is drawn at the size USPS-B-3200 sets: bars 0.02 in wide, about 22 to the inch and 3.96 mm tall whatever `height` says, with `scale` from 2, as for DotCode.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel; the background is always a solid color, so it has the same pixels as the PNG.\n\nValues that shouldn't sit in a URL can go in a `POST` body instead.",
         "parameters": [
           {
             "name": "format",
             "in": "query",
             "required": true,
-            "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `intelligent-mail` (USPS Intelligent Mail), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec), `maxicode` (MaxiCode), `dotcode` (DotCode)",
+            "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `intelligent-mail` (USPS Intelligent Mail), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec), `rmqr` (rMQR), `maxicode` (MaxiCode), `dotcode` (DotCode)",
             "schema": {
               "type": "string",
               "enum": [
@@ -3224,6 +3240,7 @@
                 "datamatrix",
                 "pdf417",
                 "aztec",
+                "rmqr",
                 "maxicode",
                 "dotcode"
               ]
@@ -3462,10 +3479,11 @@
                       "datamatrix",
                       "pdf417",
                       "aztec",
+                      "rmqr",
                       "maxicode",
                       "dotcode"
                     ],
-                    "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `intelligent-mail` (USPS Intelligent Mail), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec), `maxicode` (MaxiCode), `dotcode` (DotCode)"
+                    "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `intelligent-mail` (USPS Intelligent Mail), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec), `rmqr` (rMQR), `maxicode` (MaxiCode), `dotcode` (DotCode)"
                   },
                   "data": {
                     "type": "string",
@@ -3731,6 +3749,7 @@
                 "datamatrix",
                 "pdf417",
                 "aztec",
+                "rmqr",
                 "maxicode",
                 "dotcode"
               ]
@@ -3930,10 +3949,11 @@
                       "datamatrix",
                       "pdf417",
                       "aztec",
+                      "rmqr",
                       "maxicode",
                       "dotcode"
                     ],
-                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, intelligent-mail, datamatrix, pdf417, aztec, maxicode or dotcode"
+                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, intelligent-mail, datamatrix, pdf417, aztec, rmqr, maxicode or dotcode"
                   },
                   "value": {
                     "type": "string",
@@ -4279,10 +4299,11 @@
                       "datamatrix",
                       "pdf417",
                       "aztec",
+                      "rmqr",
                       "maxicode",
                       "dotcode"
                     ],
-                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, intelligent-mail, datamatrix, pdf417, aztec, maxicode or dotcode"
+                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, intelligent-mail, datamatrix, pdf417, aztec, rmqr, maxicode or dotcode"
                   },
                   "value": {
                     "type": "string",
@@ -6334,6 +6355,7 @@
               "datamatrix",
               "pdf417",
               "aztec",
+              "rmqr",
               "maxicode",
               "dotcode"
             ],

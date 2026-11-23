@@ -593,9 +593,9 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
         summary: "Render a QR code image",
         tags: ["QR images"],
         security: [],
-        description: `A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO or EPS, with no key.
+        description: `A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO, TIFF or EPS, with no key.
 
-**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag. The same query always returns the same bytes, so responses are cached for a year. Colors are hex without \`#\` (or with \`#\` encoded as \`%23\`). Limit: 300 requests a minute per IP address. More in the [Image API guide](${docs("developers/image-api")}).
+**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag (EPS and TIFF are files to download: browsers other than Safari can't show TIFF). The same query always returns the same bytes, so responses are cached for a year. Colors are hex without \`#\` (or with \`#\` encoded as \`%23\`). Limit: 300 requests a minute per IP address. More in the [Image API guide](${docs("developers/image-api")}).
 
 **The editor's styles.** \`style\` takes the whole design as URL-encoded JSON, with the same fields as a saved theme: gradients (linear, radial), frames (built-in, custom frame specs, or a frame drawn as a template), eye and dot colors, and a logo icon. It also takes the \`style\` value of a playground link. \`item\` renders a community frame or theme (\`/community/items\`); \`frame\` and \`frameText\` add a built-in frame. Flat parameters you set win over \`style\`, and \`style\` wins over \`item\`. With a frame, \`size\` is the code's width and the frame adds to it.
 
@@ -609,7 +609,9 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
 
 **BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.
 
-**ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. \`size\` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.`,
+**ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. \`size\` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.
+
+**TIFF** is for print shops that ask for it, at 300 dpi, and is sent as a download (\`Content-Disposition: attachment\`, \`qr-code.tif\` or \`qr-code-cmyk.tif\`), as EPS is. Browsers other than Safari can't show it in an \`<img>\`. \`tiff\` keeps the PNG's pixels, transparency included. \`tiff-cmyk\` is CMYK by the same conversion as the editor's print PDF and EPS: pure black prints as K only, white as no ink, and a transparent background comes out white; no ICC profile is embedded, so ask your printer for a color-managed conversion when exact brand colors matter.`,
         parameters: c.parameters(
           qrImage,
           "query",
@@ -649,6 +651,9 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
                   type: "string",
                   contentMediaType: "image/vnd.microsoft.icon",
                 },
+              },
+              "image/tiff": {
+                schema: { type: "string", contentMediaType: "image/tiff" },
               },
               "application/postscript": {
                 schema: {
@@ -1671,7 +1676,7 @@ function barcodeOperations(c: SchemaCollector): Record<string, JsonSchema> {
 
 **No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like \`GET /qr\`.
 
-**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128 and GS1 DataBar Expanded (GTIN and SSCC fields) and GS1 DataBar (its GTIN) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a \`400\` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an ISSN (\`0317-8471\`) or its 13-digit 977 number, an ISMN (979-0) or its old M form, each with or without its check digit; a 2- or 5-digit add-on follows after a space (\`978-1-873671-00-9 52250\`), and an ISSN's 2-digit sequence variant comes before it (\`0317-8471 00 05\`, 00 when left out). Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and \`- . $ / + %\` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and \`- $ : / . +\`, Data Matrix, PDF417 and Aztec any text up to 1,000 characters, MaxiCode a UPS carrier message (postcode, country and service class, then the rest, separated by \`<GS>\`; a numeric postcode makes it mode 2, another mode 3) or Latin-1 text (mode 4), and DotCode any text up to about 390 letters or 780 digits. USPS Intelligent Mail takes the 20-digit tracking code (barcode ID, service type ID, mailer ID and serial number) and a routing ZIP Code of 0, 5, 9 or 11 digits, with or without spaces and hyphens (\`01 234 567094 987654321 01234-5678-91\`).
+**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128 and GS1 DataBar Expanded (GTIN and SSCC fields) and GS1 DataBar (its GTIN) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a \`400\` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an ISSN (\`0317-8471\`) or its 13-digit 977 number, an ISMN (979-0) or its old M form, each with or without its check digit; a 2- or 5-digit add-on follows after a space (\`978-1-873671-00-9 52250\`), and an ISSN's 2-digit sequence variant comes before it (\`0317-8471 00 05\`, 00 when left out). Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and \`- . $ / + %\` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and \`- $ : / . +\`, Data Matrix, PDF417 and Aztec any text up to 1,000 characters, rMQR any text up to 361 digits or 150 characters (the smallest strip it fits, 7 to 17 modules tall), MaxiCode a UPS carrier message (postcode, country and service class, then the rest, separated by \`<GS>\`; a numeric postcode makes it mode 2, another mode 3) or Latin-1 text (mode 4), and DotCode any text up to about 390 letters or 780 digits. USPS Intelligent Mail takes the 20-digit tracking code (barcode ID, service type ID, mailer ID and serial number) and a routing ZIP Code of 0, 5, 9 or 11 digits, with or without spaces and hyphens (\`01 234 567094 987654321 01234-5678-91\`).
 
 **Sizes.** Raster images are \`scale\` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars \`height\` millimetres tall. USPS Intelligent Mail is drawn at the size USPS-B-3200 sets: bars 0.02 in wide, about 22 to the inch and 3.96 mm tall whatever \`height\` says, with \`scale\` from 2, as for DotCode.
 

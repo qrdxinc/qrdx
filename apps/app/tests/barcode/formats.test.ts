@@ -52,6 +52,7 @@ describe("BARCODE_FORMATS", () => {
       "Data Matrix",
       "PDF417",
       "Aztec",
+      "rMQR",
       "MaxiCode",
       "DotCode",
     ]);
@@ -420,7 +421,13 @@ describe("USPS Intelligent Mail", () => {
 
 describe("2D formats", () => {
   it("take any text, including Unicode and line breaks, up to the limit", () => {
-    for (const id of ["datamatrix", "pdf417", "aztec", "dotcode"] as const) {
+    for (const id of [
+      "datamatrix",
+      "pdf417",
+      "aztec",
+      "rmqr",
+      "dotcode",
+    ] as const) {
       expect(ok(id, "héllo ✓\nline two").value).toBe("héllo ✓\nline two");
     }
     for (const id of ["datamatrix", "pdf417", "aztec"] as const) {
@@ -430,6 +437,11 @@ describe("2D formats", () => {
     // the field stops at 800 characters, past the 784 digits that fit.
     expect(error("dotcode", "1".repeat(801))).toBe(
       "DotCode here takes up to 800 characters; this has 801.",
+    );
+    // rMQR's largest size holds 361 digits; text that fills it sooner is
+    // refused when it's drawn (render.test.ts).
+    expect(error("rmqr", "1".repeat(362))).toBe(
+      "rMQR here takes up to 361 characters; this has 362.",
     );
   });
 });
@@ -888,6 +900,7 @@ describe("issue codes (the generator translates by code)", () => {
       ["intelligent-mail", "01234567094987654321012"],
       ["intelligent-mail", "07234567094987654321"],
       ["dotcode", ""],
+      ["rmqr", ""],
       [
         "gs1-databar-expanded",
         `(21)${"1".repeat(20)}(10)${"2".repeat(20)}(240)${"3".repeat(30)}`,

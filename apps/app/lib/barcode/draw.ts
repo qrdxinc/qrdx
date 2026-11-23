@@ -37,6 +37,8 @@ export interface DrawOptions {
   alttext?: string;
   /** Points between the bars and the text under them (negative: lower) */
   textyoffset?: number;
+  /** rMQR's size, rows × columns, e.g. "R7x43" (bwip-js picks none itself) */
+  version?: string;
   /** MaxiCode's mode: 2 and 3 carrier messages, 4 text */
   mode?: number;
   /** Encode each character as one byte (MaxiCode's Latin-1), not UTF-8 */
@@ -73,13 +75,14 @@ export const BCID: Record<BarcodeFormatId, string> = {
   datamatrix: "datamatrix",
   pdf417: "pdf417",
   aztec: "azteccode",
+  rmqr: "rectangularmicroqrcode",
   maxicode: "maxicode",
   dotcode: "dotcode",
 };
 
 /**
  * bwip-js drawing units per module: linear bars and PDF417 columns are one
- * unit wide, Data Matrix and Aztec cells two, DotCode's dot pitch two,
+ * unit wide, Data Matrix, Aztec and rMQR cells two, DotCode's dot pitch two,
  * MaxiCode's hexagons 3.44 apart (101.5 units across 29.5 columns).
  * Intelligent Mail's bars are 1.44 units (0.02 in) wide on a 3.312-unit
  * pitch; its module is the bar's width. Padding is given in units.
@@ -104,9 +107,28 @@ export const MODULE_UNITS: Record<BarcodeFormatId, number> = {
   datamatrix: 2,
   pdf417: 1,
   aztec: 2,
+  rmqr: 2,
   maxicode: 3.44,
   dotcode: 2,
 };
+
+/**
+ * rMQR's 32 sizes (ISO/IEC 23941), rows × columns, the fewest rows first,
+ * then the fewest columns: rMQR is for narrow spaces, so the generator keeps
+ * it as low as the text allows and lets it grow longer first. bwip-js draws
+ * only the size it's given, so drawBarcode takes the first one the text
+ * fits, at error correction M (bwip-js's default).
+ */
+export const RMQR_SIZES: readonly string[] = [7, 9, 11, 13, 15, 17].flatMap(
+  (rows) =>
+    [27, 43, 59, 77, 99, 139]
+      // Only 11 and 13 rows come 27 columns wide.
+      .filter((columns) => columns !== 27 || rows === 11 || rows === 13)
+      .map((columns) => `R${rows}x${columns}`),
+);
+
+const RMQR_FULL =
+  "Too much data for one rMQR: it holds up to 361 digits, 219 capital letters or 150 characters of other text, and less with accents or other scripts. Shorten the text.";
 
 /**
  * The largest DotCode drawn, in dot positions (columns × rows): 126 × 85 at
@@ -236,7 +258,10 @@ export function drawBarcode<Drawing>(
   const format = getBarcodeFormat(id);
   let svg: string;
   try {
-    svg = build.encoders[id](drawOptions(id, value, style), build.drawingSVG());
+    svg =
+      id === "rmqr"
+        ? drawRmqr(build, drawOptions(id, value, style))
+        : build.encoders[id](drawOptions(id, value, style), build.drawingSVG());
   } catch (error) {
     // bwip-js 4.11.4 has no message for a DataBar Expanded past its last
     // segment: it fails with a TypeError of its own. That only happens when
@@ -250,6 +275,8 @@ export function drawBarcode<Drawing>(
     if (id === "dotcode" && /dotcodeinputTooLong/.test(String(error))) {
       throw new Error(DOTCODE_FULL);
     }
+    // drawRmqr's own message already says what fits.
+    if (error instanceof Error && error.message === RMQR_FULL) throw error;
     // bwip-js 4.11.4: maxicodeMode23TooLong (a carrier message's rest),
     // maxicodeMode56TooLong (text, mode 4) or maxicodeInputTooLong.
     if (id === "maxicode" && /maxicode\w*TooLong/.test(String(error))) {
@@ -278,6 +305,22 @@ export function drawBarcode<Drawing>(
     widthUnits: (width / style.scale) * (format.vectorScale ?? 1),
     heightUnits: (height / style.scale) * (format.vectorScale ?? 1),
   };
+}
+
+/** The smallest rMQR `options.text` fits (RMQR_SIZES), as SVG. */
+function drawRmqr<Drawing>(
+  build: BwipBuild<Drawing>,
+  options: DrawOptions,
+): string {
+  for (const version of RMQR_SIZES) {
+    try {
+      return build.encoders.rmqr({ ...options, version }, build.drawingSVG());
+    } catch (error) {
+      // Too big for this size: try the next. Anything else is a real error.
+      if (!/qrcodeNoValidSymbol/.test(String(error))) throw error;
+    }
+  }
+  throw new Error(RMQR_FULL);
 }
 
 /**
