@@ -2139,6 +2139,9 @@
     "hosted": {
       "notFoundTitle": "Page not found",
       "notFoundMessage": "This link doesn't lead to a page. Its owner may have removed it, or the link was mistyped.",
+      "notReadyTitle": "This page isn't ready yet",
+      "notReadyMessage": "Whoever made this QR code is still setting up the page it opens. Try again a little later.",
+      "notReadyOwner": "Made this code? Publish its page in QRdx and scans will open it.",
       "passwordProtected": "Password protected",
       "madeWithQrdx": "Made with QRdx",
       "share": "Share",

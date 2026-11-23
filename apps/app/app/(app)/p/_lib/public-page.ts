@@ -10,6 +10,7 @@ import {
 import { hostedPageBranding } from "@/ee/white-label/access";
 import { parseLandingPageContent } from "@/lib/landing/blocks";
 import { withoutSampleLinks } from "@/lib/landing/samples";
+import { isUnpublishedTemplate } from "@/lib/landing/template-samples";
 import { getPlanForScope, getPlanLimits, type Plan } from "@/lib/plans";
 import { type RedirectCode, redirectCodeColumns } from "@/lib/redirect/code";
 import { isValidSlug } from "@/lib/short-links";
@@ -27,6 +28,12 @@ export interface PublicPage {
     organizationId: string | null;
   };
   content: LandingPageContent;
+  /**
+   * Never published: still a template exactly as a new page gets it
+   * (lib/landing/template-samples.ts isUnpublishedTemplate). Scans get "This
+   * page isn't ready yet", not the template's samples.
+   */
+  notReady: boolean;
   settings: PageSettings;
   plan: Plan;
   branding: {
@@ -48,6 +55,7 @@ const columns = {
   pageTitle: landingPage.title,
   pageUserId: landingPage.userId,
   pageOrganizationId: landingPage.organizationId,
+  pageVersion: landingPage.version,
   content: landingPage.content,
 };
 
@@ -110,9 +118,15 @@ export const loadPublicPage = cache(
       pageTitle,
       pageUserId,
       pageOrganizationId,
+      pageVersion,
       content: _content,
       ...code
     } = row;
+    const notReady = isUnpublishedTemplate({
+      type: pageType,
+      version: pageVersion,
+      content: parsed.data,
+    });
     // A template's sample links (example.com, a profile link with no
     // profile) never reach visitors, published or not: they'd lead nowhere.
     const content = withoutSampleLinks(parsed.data);
@@ -132,6 +146,7 @@ export const loadPublicPage = cache(
         organizationId: pageOrganizationId,
       },
       content,
+      notReady,
       settings: getPageSettings(content),
       plan,
       branding: {
