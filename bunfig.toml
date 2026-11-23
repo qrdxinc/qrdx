@@ -2,5 +2,5 @@
 # Isolated layout: each package sees only the dependencies it declares.
 linker = "isolated"
 # Only `workspace:` ranges link to the local package. The Raycast extension
-# takes `qrdx` from npm on purpose (plugins/raycast/README.md).
+# takes `qrdx` from npm on purpose (CONTRIBUTING.md, "Raycast extension").
 linkWorkspacePackages = false
