@@ -34,6 +34,7 @@ import {
 import {
   Bezier,
   Colorfilter,
+  ColorSwatch,
   Copy,
   DocumentText,
   Gallery,
@@ -185,13 +186,18 @@ const MORE_FORMATS: {
   { id: "gif", label: "GIF", Icon: Colorfilter },
   { id: "bmp", label: "BMP", Icon: Grid2 },
   { id: "ico", label: "ICO", Icon: Layer },
+  { id: "tiff", label: "TIFF", Icon: Gallery },
+  { id: "tiff-cmyk", label: "CMYK TIFF", Icon: ColorSwatch },
 ];
 
 /** The code's width (px) a GIF is checked at when the format is picked. */
 const GIF_CHECK_SIZE = 600;
 
-/** Formats that can't keep a transparent background (JPG and 24-bit BMP). */
-const OPAQUE_FORMATS: readonly ImageFormat[] = ["jpg", "bmp"];
+/**
+ * Formats that can't keep a transparent background (JPG, 24-bit BMP and CMYK
+ * TIFF, which is for print).
+ */
+const OPAQUE_FORMATS: readonly ImageFormat[] = ["jpg", "bmp", "tiff-cmyk"];
 
 // Names in messages/en.json: editor.actionBar.downloadDialog.sizePresets.
 const SIZE_PRESETS = [
@@ -853,7 +859,9 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                           : t(
                               format === "bmp"
                                 ? "bmpCantBeTransparent"
-                                : "jpgCantBeTransparent",
+                                : format === "tiff-cmyk"
+                                  ? "tiffCmykCantBeTransparent"
+                                  : "jpgCantBeTransparent",
                             )
                       }
                     >

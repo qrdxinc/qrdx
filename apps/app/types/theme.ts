@@ -194,6 +194,8 @@ export const downloadFormatSchema = z.enum([
   "gif",
   "bmp",
   "ico",
+  "tiff",
+  "tiff-cmyk",
   "svg",
   "pdf",
   "eps",

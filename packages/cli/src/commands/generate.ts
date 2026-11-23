@@ -31,6 +31,7 @@ import { idOptions } from "../lib/id-options";
 import {
   OUTPUT_FORMATS,
   type OutputFormat,
+  outputExtension,
   saveOutput,
 } from "../render/output";
 
@@ -85,7 +86,17 @@ const RASTER_NAMES: Record<string, string> = {
   webp: "WebP",
   gif: "GIF",
   bmp: "BMP",
+  tiff: "TIFF",
+  "tiff-cmyk": "TIFF",
 };
+
+/** The file extensions each output format is written with. */
+const EXTENSIONS: Partial<Record<OutputFormat, readonly string[]>> = {
+  tiff: [".tif", ".tiff"],
+  "tiff-cmyk": [".tif", ".tiff"],
+};
+const extensionsOf = (format: OutputFormat) =>
+  EXTENSIONS[format] ?? [`.${format}`];
 
 /**
  * Parses a color flag value: accepts a hex string or a JSON ColorConfig object.
@@ -199,31 +210,45 @@ function validateFlags(flags: GenerateFlags): void {
   if (flags.output !== undefined) {
     const ext = extname(flags.output).toLowerCase();
     if (
-      !["", ".svg", ".png", ".webp", ".gif", ".bmp", ".ico", ".eps"].includes(
-        ext
-      )
+      ![
+        "",
+        ".svg",
+        ".png",
+        ".webp",
+        ".gif",
+        ".bmp",
+        ".ico",
+        ".tif",
+        ".tiff",
+        ".eps",
+      ].includes(ext)
     ) {
       throw new Error(
-        `Unsupported output format "${ext}". Use a .svg, .png, .webp, .gif, .bmp, .ico or .eps file name.`
+        `Unsupported output format "${ext}". Use a .svg, .png, .webp, .gif, .bmp, .ico, .tif or .eps file name.`
       );
     }
-    if (ext && flags.format && ext !== `.${flags.format}`) {
+    if (
+      ext &&
+      flags.format &&
+      !extensionsOf(flags.format as OutputFormat).includes(ext)
+    ) {
+      const wanted = extensionsOf(flags.format as OutputFormat)[0];
       throw new Error(
-        `--format ${flags.format} does not match the output file "${flags.output}". Use a .${flags.format} file name or drop --format.`
+        `--format ${flags.format} does not match the output file "${flags.output}". Use a ${wanted} file name or drop --format.`
       );
     }
   }
-  const raster = [
-    extname(flags.output ?? "")
-      .toLowerCase()
-      .slice(1),
-    flags.format,
-  ].find(
+  const fromName = extname(flags.output ?? "")
+    .toLowerCase()
+    .slice(1);
+  const raster = [fromName === "tif" ? "tiff" : fromName, flags.format].find(
     (format) =>
       format === "png" ||
       format === "webp" ||
       format === "gif" ||
-      format === "bmp"
+      format === "bmp" ||
+      format === "tiff" ||
+      format === "tiff-cmyk"
   );
   if (raster && flags.size !== undefined && flags.size > MAX_PNG_SIZE) {
     throw new Error(
@@ -512,6 +537,9 @@ function inferFormat(
   if (ext === ".ico") {
     return "ico";
   }
+  if (ext === ".tif" || ext === ".tiff") {
+    return format === "tiff-cmyk" ? "tiff-cmyk" : "tiff";
+  }
   if (ext === ".eps") {
     return "eps";
   }
@@ -604,12 +632,13 @@ export async function runGenerate(
   // ── 2. Output path ────────────────────────────────────────────────────
   let outputPath = flags.output;
   const size = flags.size ?? 512;
-  const defaultOutput = `qr.${flags.format ?? "svg"}`;
+  const defaultOutput = `qr.${outputExtension(flags.format ?? "svg")}`;
 
   if (!outputPath) {
     if (canUseClack) {
       const pathRes = await p.text({
-        message: "Output file (.svg, .png, .webp, .gif, .bmp, .ico or .eps)",
+        message:
+          "Output file (.svg, .png, .webp, .gif, .bmp, .ico, .tif or .eps)",
         placeholder: defaultOutput,
         defaultValue: defaultOutput,
         validate(v) {
@@ -624,7 +653,7 @@ export async function runGenerate(
       outputPath = (pathRes as string) || defaultOutput;
     } else if (process.stdout.isTTY && !isCI) {
       const pathAns = await readLineFromTTY(
-        `Output file ${DIM}(.svg, .png, .webp, .gif, .bmp, .ico or .eps, Enter = ${defaultOutput})${RESET}: `
+        `Output file ${DIM}(.svg, .png, .webp, .gif, .bmp, .ico, .tif or .eps, Enter = ${defaultOutput})${RESET}: `
       );
       outputPath = pathAns?.trim() || defaultOutput;
     } else {

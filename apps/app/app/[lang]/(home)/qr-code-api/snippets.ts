@@ -10,6 +10,8 @@ export type ImageFormat =
   | "gif"
   | "bmp"
   | "ico"
+  | "tiff"
+  | "tiff-cmyk"
   | "eps";
 
 export const LEVELS = ["L", "M", "Q", "H"] as const;
@@ -73,17 +75,37 @@ export function queryString(query: ApiQuery): string {
 const escapeAttribute = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
+/**
+ * Formats an <img> can't show (EPS anywhere, TIFF outside Safari): the
+ * builder previews them in another format and links the file instead.
+ */
+const FILE_ONLY: Partial<
+  Record<
+    ImageFormat,
+    { label: string; extension: string; preview: ImageFormat }
+  >
+> = {
+  eps: { label: "EPS", extension: "eps", preview: "svg" },
+  tiff: { label: "TIFF", extension: "tif", preview: "png" },
+  "tiff-cmyk": { label: "CMYK TIFF", extension: "tif", preview: "png" },
+};
+
+/** The format the builder's preview shows `format` as. */
+export const previewFormat = (format: ImageFormat): ImageFormat =>
+  FILE_ONLY[format]?.preview ?? format;
+
 /** The image URL, and the HTML, Markdown and curl that use it. */
 export function apiSnippets(apiBase: string, query: ApiQuery) {
   const url = `${apiBase}/qr?${queryString(query)}`;
   const alt = `QR code for ${query.data}`;
-  // An <img> can't show EPS: link the file instead.
-  if (query.format === "eps") {
+  const file = FILE_ONLY[query.format];
+  // An <img> can't show it: link the file instead.
+  if (file) {
     return {
       url,
-      html: `<a href="${url}" download>Download the QR code (EPS)</a>`,
-      markdown: `[QR code (EPS)](${url})`,
-      curl: `curl -o qr.eps "${url}"`,
+      html: `<a href="${url}" download>Download the QR code (${file.label})</a>`,
+      markdown: `[QR code (${file.label})](${url})`,
+      curl: `curl -o qr.${file.extension} "${url}"`,
     };
   }
   const shown = Math.min(query.size, 256);

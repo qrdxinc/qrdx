@@ -3,9 +3,14 @@ import { existsSync, readFileSync, rmSync } from "node:fs";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { inflateSync } from "node:zlib";
 import sharp from "sharp";
 import { afterEach, describe, expect, it } from "vitest";
-import { buildSVGString, saveOutput } from "../src/render/output.js";
+import {
+  buildSVGString,
+  outputExtension,
+  saveOutput,
+} from "../src/render/output.js";
 
 const tmp = (name: string) => join(tmpdir(), `qrdx-output-test-${name}`);
 
@@ -738,5 +743,114 @@ describe("saveOutput – GIF", () => {
     expect(jsQR(data, info.width, info.height)?.data).toBe(
       "https://qrdx.dev/cli-gradient"
     );
+  });
+});
+
+describe("saveOutput – TIFF", () => {
+  const pixels = async (file: string) =>
+    await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+
+  /** A one-strip TIFF's samples: inflated, with the predictor undone. */
+  const storedSamples = (file: Buffer): Uint8Array => {
+    const ifd = file.readUInt32LE(4);
+    const tag = (id: number) => {
+      for (let i = 0; i < file.readUInt16LE(ifd); i++) {
+        const entry = ifd + 2 + i * 12;
+        if (file.readUInt16LE(entry) === id) {
+          return file.readUInt16LE(entry + 2) === 3
+            ? file.readUInt16LE(entry + 8)
+            : file.readUInt32LE(entry + 8);
+        }
+      }
+    };
+    const width = tag(256) ?? 0;
+    const offset = tag(273) ?? 0;
+    const strip = file.subarray(offset, offset + (tag(279) ?? 0));
+    const data = new Uint8Array(tag(259) === 8 ? inflateSync(strip) : strip);
+    if (tag(317) === 2) {
+      const stride = width * 4;
+      for (let row = 0; row < data.length; row += stride) {
+        for (let i = row + 4; i < row + stride; i++) {
+          data[i] = ((data[i] as number) + (data[i - 4] as number)) % 256;
+        }
+      }
+    }
+    return data;
+  };
+
+  // jsqr ships with qrdx, so resolve it from there.
+  const require = createRequire(import.meta.url);
+  const jsQR = createRequire(require.resolve("qrdx/package.json"))(
+    "jsqr"
+  ) as typeof import("jsqr").default;
+
+  it("writes the PNG's pixels as an RGBA TIFF at 300 dpi, and it scans", async () => {
+    const tiff = tmp("save.tif");
+    const png = tmp("same-tiff.png");
+    cleanups.push(tiff, png);
+    const props = {
+      value: "https://qrdx.dev/cli-tiff",
+      size: 300,
+      bgColor: "transparent",
+    };
+    await saveOutput({ ...props, outputPath: tiff, format: "tiff" });
+    await saveOutput({ ...props, outputPath: png, format: "png" });
+    const meta = await sharp(tiff).metadata();
+    expect([meta.format, meta.space, meta.channels, meta.density]).toEqual([
+      "tiff",
+      "srgb",
+      4,
+      300,
+    ]);
+    const { data, info } = await sharp(tiff)
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    const fromPng = await pixels(png);
+    expect([info.width, info.height]).toEqual([300, 300]);
+    // Every pixel, transparency included
+    expect(Buffer.compare(data, Buffer.from(fromPng.data))).toBe(0);
+  });
+
+  it("writes CMYK for print, black as K only, and it scans", async () => {
+    const tiff = tmp("save-cmyk.tif");
+    cleanups.push(tiff);
+    await saveOutput({
+      value: "https://qrdx.dev/cli-tiff",
+      size: 300,
+      outputPath: tiff,
+      format: "tiff-cmyk",
+    });
+    const meta = await sharp(tiff).metadata();
+    expect([meta.space, meta.channels, meta.hasProfile]).toEqual([
+      "cmyk",
+      4,
+      false,
+    ]);
+    // The stored samples, not sharp's conversion: a dark module is K only.
+    const data = storedSamples(readFileSync(tiff));
+    // Black on white, with anti-aliased grey edges: every pixel is K only.
+    let cmy = 0;
+    const blacks = new Set<number>();
+    for (let index = 0; index < data.length; index += 4) {
+      cmy +=
+        (data[index] ?? 0) + (data[index + 1] ?? 0) + (data[index + 2] ?? 0);
+      blacks.add(data[index + 3] ?? 0);
+    }
+    expect(cmy).toBe(0);
+    expect(blacks.has(0) && blacks.has(255)).toBe(true);
+    const rgb = await sharp(tiff)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    expect(
+      jsQR(new Uint8ClampedArray(rgb.data), rgb.info.width, rgb.info.height)
+        ?.data
+    ).toBe("https://qrdx.dev/cli-tiff");
+  });
+
+  it("saves both TIFFs with the .tif extension", () => {
+    expect(outputExtension("tiff")).toBe("tif");
+    expect(outputExtension("tiff-cmyk")).toBe("tif");
+    expect(outputExtension("png")).toBe("png");
   });
 });

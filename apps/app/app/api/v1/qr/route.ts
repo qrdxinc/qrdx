@@ -100,14 +100,30 @@ function parseQuery(searchParams: URLSearchParams) {
 
 type Query = ReturnType<typeof parseQuery>;
 
+/**
+ * TIFFs are print files most browsers can't show, so like EPS they're sent
+ * as downloads, named as the editor names them.
+ */
+const DOWNLOAD_NAMES: Partial<Record<ConvertedFormat, string>> = {
+  tiff: "qr-code.tif",
+  "tiff-cmyk": "qr-code-cmyk.tif",
+};
+
 /** A converted image (WebP, BMP) with its content type and the request's headers. */
 function imageResponse(
   bytes: Uint8Array,
   format: ConvertedFormat,
   headers: Record<string, string>,
 ) {
+  const name = DOWNLOAD_NAMES[format];
   return new Response(bytes as BodyInit, {
-    headers: { ...headers, "Content-Type": IMAGE_CONTENT_TYPES[format] },
+    headers: {
+      ...headers,
+      "Content-Type": IMAGE_CONTENT_TYPES[format],
+      ...(name
+        ? { "Content-Disposition": `attachment; filename="${name}"` }
+        : {}),
+    },
   });
 }
 
