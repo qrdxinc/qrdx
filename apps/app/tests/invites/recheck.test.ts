@@ -2,9 +2,9 @@
 // (lib/safety/recheck.ts) counts for their invite only once the look-up
 // clears it, and never when the look-up switches it off: the recheck settles
 // the invites of the codes it cleared (lib/invites/qualify.ts).
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const state = vi.hoisted(() => ({ threat: false }));
+const state = vi.hoisted(() => ({ threat: false, slowLookup: 0 }));
 
 vi.mock(
   "drizzle-orm",
@@ -18,10 +18,13 @@ vi.mock("@/lib/feature-availability", () => ({
   isFeatureAvailable: (id: string) => id === "inviteRewards",
 }));
 vi.mock("@/lib/safety/web-risk", () => ({
-  lookupWebRisk: async () =>
-    state.threat
+  lookupWebRisk: async () => {
+    // A look-up that takes the pass to its deadline.
+    if (state.slowLookup) vi.setSystemTime(Date.now() + state.slowLookup);
+    return state.threat
       ? { status: "threat", threats: ["SOCIAL_ENGINEERING"] }
-      : { status: "safe" },
+      : { status: "safe" };
+  },
 }));
 vi.mock("@/lib/events/worker-due", () => ({
   scheduleWorkerRun: async () => {},
@@ -31,6 +34,7 @@ vi.mock("@/lib/invites/notify", () => ({
   sendInviteRewardEmail: vi.fn(async () => "sent"),
 }));
 
+import { settleWaitingInvites } from "@/lib/invites/qualify";
 import { recheckWebRisk } from "@/lib/safety/recheck";
 import { fakeDb } from "../support/fake-db";
 
@@ -41,6 +45,7 @@ const invite = () => fakeDb.rows("invite")[0];
 
 beforeEach(() => {
   state.threat = false;
+  state.slowLookup = 0;
   fakeDb.resetAll();
   fakeDb.unique("invite", "inviteeUserId");
   fakeDb.unique("invite", "inviterUserId", "inviterRewardSlot");
@@ -87,9 +92,35 @@ beforeEach(() => {
   vi.spyOn(console, "info").mockImplementation(() => {});
 });
 
+afterEach(() => {
+  vi.useRealTimers();
+});
+
 describe("the safety recheck and a friend's invite", () => {
   it("rewards the invite once the look-up clears the code", async () => {
     await recheckWebRisk({ deadline: Date.now() + 5000 });
+    expect(invite()).toMatchObject({
+      status: "rewarded",
+      inviterRewardSlot: 1,
+    });
+  });
+
+  it("stops settling at the pass's deadline, and the worker's pass settles it later", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    state.slowLookup = 10_000;
+    vi.spyOn(console, "info").mockImplementation(() => {});
+    await recheckWebRisk({ deadline: Date.now() + 5000 });
+    // The code is cleared, but there was no time left to settle the invite.
+    expect(fakeDb.find("qrCode", { id: "code_1" })).toMatchObject({
+      webRiskRecheckAt: null,
+    });
+    expect(invite()).toMatchObject({ status: "pending" });
+    expect(console.info).toHaveBeenCalledWith(
+      expect.stringContaining("invites_left"),
+    );
+    expect(await settleWaitingInvites({ deadline: Date.now() + 3000 })).toEqual(
+      { settled: 1, left: false },
+    );
     expect(invite()).toMatchObject({
       status: "rewarded",
       inviterRewardSlot: 1,

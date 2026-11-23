@@ -1,7 +1,7 @@
 import "server-only";
 
 import { database as db, invite, qrCode } from "@repo/database";
-import { and, eq, isNull, lte, max } from "drizzle-orm";
+import { and, asc, eq, exists, isNotNull, isNull, lte, max } from "drizzle-orm";
 import { after } from "next/server";
 import { isSelfReferral } from "@/lib/affiliates/self-referral";
 import { trackServer } from "@/lib/analytics/server";
@@ -239,11 +239,92 @@ export async function settleInvite(
 
 /**
  * settleInvite for each person, one after the other, for code that already
- * runs after a response (the safety recheck). Never throws.
+ * runs after a response (the safety recheck), until `deadline`: whoever is
+ * left is settled by settleWaitingInvites on the worker's next run (or by
+ * their next code). Never throws.
  */
-export async function settleInvites(userIds: readonly string[]): Promise<void> {
-  if (!isFeatureAvailable("inviteRewards")) return;
-  for (const userId of new Set(userIds)) await settleInvite(userId);
+export async function settleInvites(
+  userIds: readonly string[],
+  { deadline = Number.POSITIVE_INFINITY }: { deadline?: number } = {},
+): Promise<{ checked: number; left: number }> {
+  if (!isFeatureAvailable("inviteRewards")) return { checked: 0, left: 0 };
+  const people = [...new Set(userIds)];
+  let checked = 0;
+  for (const userId of people) {
+    if (Date.now() >= deadline) break;
+    await settleInvite(userId);
+    checked++;
+  }
+  return { checked, left: people.length - checked };
+}
+
+/** Invites the worker's pass looks at, at most. */
+const WAITING_PASS_LIMIT = 100;
+
+export interface WaitingInvitesSummary {
+  /** Invites settled (rewarded, expired or refused) */
+  settled: number;
+  /** More are waiting: out of time, or past the pass's limit */
+  left: boolean;
+}
+
+/**
+ * The webhook worker's pass (app/api/cron/webhooks): pending invites whose
+ * friend already has a code that passed its safety checks, which no moment
+ * settled (the safety recheck ran out of time, or an after-response task was
+ * cut off). Oldest first, until `deadline`. Never throws.
+ */
+export async function settleWaitingInvites({
+  deadline,
+  limit = WAITING_PASS_LIMIT,
+}: {
+  deadline: number;
+  limit?: number;
+}): Promise<WaitingInvitesSummary> {
+  if (!isFeatureAvailable("inviteRewards")) return { settled: 0, left: false };
+  try {
+    const rows = await db
+      .select({ userId: invite.inviteeUserId })
+      .from(invite)
+      .where(
+        and(
+          eq(invite.status, "pending"),
+          isNull(invite.revokedAt),
+          isNotNull(invite.inviteeUserId),
+          exists(
+            db
+              .select({ id: qrCode.id })
+              .from(qrCode)
+              .where(
+                and(
+                  eq(qrCode.userId, invite.inviteeUserId),
+                  eq(qrCode.isActive, true),
+                  isNull(qrCode.webRiskRecheckAt),
+                ),
+              ),
+          ),
+        ),
+      )
+      .orderBy(asc(invite.createdAt))
+      .limit(limit + 1);
+    const due = rows.slice(0, limit);
+    let settled = 0;
+    let checked = 0;
+    for (const { userId } of due) {
+      if (Date.now() >= deadline) break;
+      checked++;
+      const result = await settleInvite(userId as string);
+      if (result.outcome !== "waiting" && result.outcome !== "error") {
+        settled++;
+      }
+    }
+    return { settled, left: rows.length > checked };
+  } catch (error) {
+    if (!noteMissingInviteTables(error)) {
+      logError(error as Error, { action: "invites.settle_waiting" });
+    }
+    return { settled: 0, left: false };
+  }
 }
 
 /** Runs `task` after the response, or now when there's no request. */

@@ -411,7 +411,7 @@ export function exportEntries(userId: string): ExportEntry[] {
       path: "invites.json",
       title: "Invite rewards",
       description:
-        "Your invite code, how many friends signed up through it by outcome (counts only), and your own invite if a friend's link brought your account in: when, and how it was settled (not whose link).",
+        "Your invite code, how many friends signed up through it by outcome and how many of those QRdx revoked (counts only), and your own invite if a friend's link brought your account in: when, how it was settled and when it was revoked, if it was (not whose link).",
       load: () => exportInviteData(userId),
     },
     {

@@ -7,7 +7,7 @@ import {
   invite,
   inviteCode,
 } from "@repo/database";
-import { count, eq } from "drizzle-orm";
+import { and, count, eq, isNotNull } from "drizzle-orm";
 import { noteMissingInviteTables } from "./missing-table";
 
 /**
@@ -20,7 +20,7 @@ import { noteMissingInviteTables } from "./missing-table";
  */
 export async function exportInviteData(userId: string) {
   try {
-    const [[code], sent, [received]] = await Promise.all([
+    const [[code], sent, [revokedRow], [received]] = await Promise.all([
       db
         .select({ code: inviteCode.code, createdAt: inviteCode.createdAt })
         .from(inviteCode)
@@ -32,10 +32,17 @@ export async function exportInviteData(userId: string) {
         .where(eq(invite.inviterUserId, userId))
         .groupBy(invite.status),
       db
+        .select({ total: count() })
+        .from(invite)
+        .where(
+          and(eq(invite.inviterUserId, userId), isNotNull(invite.revokedAt)),
+        ),
+      db
         .select({
           signedUpAt: invite.createdAt,
           status: invite.status,
           decidedAt: invite.decidedAt,
+          revokedAt: invite.revokedAt,
         })
         .from(invite)
         .where(eq(invite.inviteeUserId, userId))
@@ -48,12 +55,15 @@ export async function exportInviteData(userId: string) {
     for (const row of sent) {
       byOutcome[row.status as InviteStatus] = Number(row.total);
     }
+    const revoked = Number(revokedRow?.total ?? 0);
     return {
       inviteCode: code?.code ?? null,
       inviteCodeCreatedAt: code?.createdAt ?? null,
-      // Friends who signed up through your link, counted by outcome.
-      friendsInvited: byOutcome,
-      // Your own invite, if a friend's link brought your account in (not whose).
+      // Friends who signed up through your link, counted by outcome, and how
+      // many of those QRdx revoked for abuse (their codes stopped counting).
+      friendsInvited: { ...byOutcome, revoked },
+      // Your own invite, if a friend's link brought your account in (not
+      // whose): when, how it was settled, and when QRdx revoked it, if it did.
       invitedByAFriend: received ?? null,
     };
   } catch (error) {

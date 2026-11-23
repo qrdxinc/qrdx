@@ -69,6 +69,8 @@ import {
   noteDynamicCodesCreated,
   qualifyInvite,
   settleInvite,
+  settleInvites,
+  settleWaitingInvites,
 } from "@/lib/invites/qualify";
 import {
   bonusCodesFor,
@@ -815,6 +817,7 @@ describe("Download my data", () => {
         rewarded: 1,
         self_referral: 0,
         expired: 1,
+        revoked: 0,
       },
       invitedByAFriend: null,
     });
@@ -834,13 +837,96 @@ describe("Download my data", () => {
       signedUpAt: SIGNED_UP,
       status: "rewarded",
       decidedAt: at,
+      revokedAt: null,
     });
     expect(JSON.stringify(data)).not.toContain(INVITER.id);
+  });
+
+  it("says when QRdx revoked an invite, to both sides", async () => {
+    seedPendingFriend(FRIEND.id);
+    seedCode(FRIEND.id);
+    const revokedAt = new Date(SIGNED_UP.getTime() + DAY);
+    (invites()[0] as Record<string, unknown>).revokedAt = revokedAt;
+    await qualifyInvite(FRIEND.id);
+    expect((await exportInviteData(FRIEND.id))?.invitedByAFriend).toMatchObject(
+      { status: "expired", revokedAt },
+    );
+    expect((await exportInviteData(INVITER.id))?.friendsInvited).toMatchObject({
+      expired: 1,
+      revoked: 1,
+    });
   });
 
   it("has nothing for someone with no code and no invites, or before the tables exist", async () => {
     expect(await exportInviteData("user_nobody")).toBeNull();
     fakeDb.missing("invite", "inviteCode");
     expect(await exportInviteData(INVITER.id)).toBeNull();
+  });
+});
+
+describe("settling within a deadline, and the worker's pass for the rest", () => {
+  beforeEach(() => {
+    for (const id of ["user_a", "user_b", "user_c"]) {
+      seedPendingFriend(id);
+      seedCode(id);
+    }
+  });
+
+  it("settles no one once the deadline has passed, and says how many are left", async () => {
+    expect(
+      await settleInvites(["user_a", "user_b", "user_a"], {
+        deadline: Date.now() - 1,
+      }),
+    ).toEqual({ checked: 0, left: 2 });
+    expect(invites().every((row) => row.status === "pending")).toBe(true);
+  });
+
+  it("settles everyone within the deadline", async () => {
+    expect(
+      await settleInvites(["user_a", "user_b"], {
+        deadline: Date.now() + 60_000,
+      }),
+    ).toEqual({ checked: 2, left: 0 });
+  });
+
+  it("the worker's pass settles invites a code already qualifies, oldest first, within its limit", async () => {
+    // One friend without a code, one held: not picked up.
+    seedPendingFriend("user_none");
+    seedPendingFriend("user_held");
+    seedCode("user_held", { isActive: false });
+    expect(
+      await settleWaitingInvites({ deadline: Date.now() + 60_000, limit: 2 }),
+    ).toEqual({ settled: 2, left: true });
+    expect(
+      await settleWaitingInvites({ deadline: Date.now() + 60_000, limit: 2 }),
+    ).toEqual({ settled: 1, left: false });
+    const status = (id: string) =>
+      invites().find((row) => row.inviteeUserId === id)?.status;
+    expect(["user_a", "user_b", "user_c"].map(status)).toEqual([
+      "rewarded",
+      "rewarded",
+      "rewarded",
+    ]);
+    expect(status("user_none")).toBe("pending");
+    expect(status("user_held")).toBe("pending");
+  });
+
+  it("the worker's pass leaves the rest past its deadline", async () => {
+    expect(await settleWaitingInvites({ deadline: Date.now() - 1 })).toEqual({
+      settled: 0,
+      left: true,
+    });
+  });
+
+  it("the worker's pass is off on a self-hosted copy and fail-safe without the tables", async () => {
+    state.invites = false;
+    expect(
+      await settleWaitingInvites({ deadline: Date.now() + 60_000 }),
+    ).toEqual({ settled: 0, left: false });
+    state.invites = true;
+    fakeDb.missing("invite");
+    expect(
+      await settleWaitingInvites({ deadline: Date.now() + 60_000 }),
+    ).toEqual({ settled: 0, left: false });
   });
 });

@@ -120,12 +120,17 @@ export async function recheckWebRisk({
       .where(inArray(qrCode.id, answered.slice(start, start + 500)));
   }
   // A code that waited for this look-up can now be someone's first one for
-  // a friend's invite (lib/invites/qualify.ts). Never throws.
+  // a friend's invite (lib/invites/qualify.ts), within the same deadline;
+  // the worker's waiting-invites pass settles whoever is left. Never throws.
   if (answered.length > 0) {
     const cleared = new Set(answered);
-    await settleInvites(
+    const invites = await settleInvites(
       rows.filter((row) => cleared.has(row.id)).map((row) => row.userId),
+      { deadline },
     );
+    if (invites.left > 0) {
+      log("safety.web_risk_recheck.invites_left", { left: invites.left });
+    }
   }
 
   const left = outcomes.filter((outcome) => outcome === "pending").length;
