@@ -349,7 +349,7 @@
     "hero": {
       "badge": "免费开源（AGPL-3.0）",
       "title": "免费二维码生成器，动态二维码持续可用",
-      "description": "用图案、渐变、徽标和边框设计专属品牌二维码，无需注册，无水印，可下载 PNG、SVG、PDF 或 EPS。登录后可使用打印后仍能修改的动态二维码、托管页面和扫描分析。",
+      "description": "设计带有图案、渐变、徽标和边框的品牌二维码，无需注册，也没有水印，即可下载 PNG、SVG、PDF、EPS 或 TIFF 格式。登录后可使用印刷后仍可编辑的动态二维码、托管页面和扫描分析。",
       "primary": "试用 Playground",
       "secondary": "阅读文档",
       "sceneLabel": "QRdx 流程动画：设计工作室屏幕设计并美化二维码，打印机将其打印在卡片上，机械臂把卡片放到传送带上，闸机上的手机在每张卡片经过时进行扫描，扫描数据传到分析面板并新增一根柱状条，一张大型动态二维码卡片无需重新打印即可更换目标链接"
@@ -377,7 +377,7 @@
         "none": "无边框",
         "border": "边线"
       },
-      "more": "完整的 Playground 还提供 {bodyPatterns, number} 种主体图案、{eyeShapes, number} 种定位点形状、{eyeCentres, number} 种定位点中心、任意颜色和渐变、徽标、边框，以及 PNG、SVG、PDF 或 EPS 下载。",
+      "more": "完整版 Playground 另有 {bodyPatterns, number} 种主体图案、{eyeShapes, number} 种定位点形状、{eyeCentres, number} 种定位点中心、任意颜色与渐变、徽标、边框，以及 PNG、SVG、PDF、EPS 或 TIFF 下载。",
       "customize": "在 Playground 中自定义",
       "qrLabel": "{value} 的二维码",
       "empty": "输入链接即可查看你的二维码。"
@@ -518,7 +518,7 @@
       "items": {
         "free": {
           "question": "QRdx 真的免费吗？有隐藏限制吗？",
-          "answer": "可以。创建、自定义和下载静态二维码完全免费，且无需账户：二维码数量不限，所有设计选项均可使用（{bodyPatterns, number} 种主体图案、{eyeShapes, number} 种角部定位点形状和 {eyeCentres, number} 种定位点中心、渐变、徽标、边框以及 Logo QR 或 Image QR 艺术码），并支持下载 PNG、JPG、SVG、PDF 和 EPS 格式。没有水印，也没有广告。静态二维码把内容直接存储在码中，因此永不过期，也没有扫描次数限制。免费账户另可使用 10 个动态二维码、3 个托管页面、{historyYears, plural, one {# 年} other {# 年}}的扫描分析、10 个已保存主题和 5 次 AI 主题生成；Pro（{proMonthly}/月或 {proYearly}/年）和 Business（{businessMonthly}/月或 {businessYearly}/年）可提高这些额度。"
+          "answer": "是的。创建、自定义和下载静态二维码完全免费，也无需账号：二维码数量不限，所有设计选项均可使用（{bodyPatterns, number} 种主体图案、{eyeShapes, number} 种角部定位点形状和 {eyeCentres, number} 种定位点中心、渐变、徽标、边框，以及 Logo QR 或 Image QR 艺术二维码），还可下载 PNG、JPG、SVG、PDF、EPS 和 TIFF 格式。没有水印，也没有广告。静态二维码会把内容直接存储在二维码本身中，因此永不过期，也没有扫描次数限制。免费账号可额外获得 10 个动态二维码、3 个托管页面、{historyYears, plural, one {# 年} other {# 年}}的扫描分析、10 个已保存的主题和 5 次 AI 主题生成；Pro（{proMonthly}/月或 {proYearly}/年）和 Business（{businessMonthly}/月或 {businessYearly}/年）可提高这些额度。"
         },
         "signup": {
           "question": "我需要注册或创建账号吗？",
@@ -546,7 +546,7 @@
         },
         "api": {
           "question": "开发者可以通过 API 生成二维码吗？",
-          "answer": "可以。Image API 无需 API 密钥，即可将任意 URL 转换为 SVG、PNG 或 EPS 二维码；REST API 则可通过工作区 API 密钥或 OAuth 创建和编辑动态二维码，并读取其扫描数据。此外还提供适用于 Claude、Cursor 和 VS Code 的 MCP server、命令行工具（@qrdx/cli）、shadcn/ui 组件以及 qrdx React 库。"
+          "answer": "可以。Image API 能将任意 URL 转换为 SVG、PNG、TIFF 或 EPS 格式的二维码，无需 API 密钥；REST API 则通过工作区 API 密钥或 OAuth 创建和编辑动态二维码，并读取其扫描数据。此外还提供面向 Claude、Cursor 和 VS Code 的 MCP 服务器、命令行工具（@qrdx/cli）、shadcn/ui 组件以及 qrdx React 库。"
         },
         "paidPlans": {
           "question": "Pro 或 Business 包含哪些功能？",
@@ -913,12 +913,12 @@
       "metaTitle": "二维码类型：{count, number} 种免费生成器（Wi-Fi、vCard、UPI）",
       "metaDescription": "{count, number} 种二维码类型，每种都有免费生成器：Wi-Fi、vCard、WhatsApp、UPI、电子邮件、社交主页和支付。每个页面都会列出其确切的数据格式。",
       "title": "适用于各类内容的二维码生成器",
-      "intro1": "二维码的用途不只是打开网站。根据其中的文本内容，手机可以加入 Wi-Fi 网络、保存联系人、发起支付或打开聊天。从下面 {count, number} 种类型中任选一种，即可使用带有对应字段的生成器，并获得实时预览和 PNG、WebP 或 SVG 下载。",
+      "intro1": "二维码的用途不止于打开网站。根据其中的文本内容，手机可以加入 Wi-Fi 网络、保存联系人、发起付款或打开聊天。从下方 {count, number} 种类型中任选一种，即可使用带有对应字段的生成器，并获得实时预览，还能下载 PNG、WebP、SVG 或 TIFF 格式。",
       "intro2": "默认情况下，这些页面生成的是静态二维码：内容直接编码在图案中，因此可以离线使用、永不过期，也没有扫描次数限制。每个页面还会说明其写入的确切格式，让你清楚扫描器会读取到什么。",
       "cardTitle": "{name}二维码生成器",
       "moreTools": "更多工具",
       "bulkTitle": "需要上百个二维码？使用批量生成器",
-      "bulkDescription": "上传 CSV 文件，即可将所有二维码以 PNG、WebP 或 SVG 格式打包成一个 ZIP 文件下载，全程在浏览器中生成。",
+      "bulkDescription": "上传 CSV 文件，即可将所有二维码以 PNG、WebP、SVG 或 TIFF 格式打包成一个 ZIP 文件下载，整个过程完全在浏览器中完成。",
       "printTitle": "要打印二维码？先确认尺寸",
       "printDescription": "根据扫描距离和二维码包含的数据量，计算最小打印尺寸。",
       "dynamicTitle": "动态二维码生成器",
@@ -1104,7 +1104,7 @@
       "metaDescription": "将 CSV 转换为最多 {rows, number} 个带样式的二维码，以 PNG、WebP 或 SVG 格式打包为 ZIP。全程在浏览器中运行：无需上传，无水印，不超过 {limit, number} 行无需注册。",
       "crumb": "批量生成器",
       "title": "二维码批量生成器",
-      "intro1": "一次性将 CSV 文件转换为数千个二维码，按你的想法设置样式，并以 ZIP 压缩包下载 PNG、WebP 或 SVG 文件。每行对应一个二维码，文件名取自某一列：适用于产品标签、活动门票、资产标签、桌号或邮寄信函。",
+      "intro1": "一次性把 CSV 文件变成数千个二维码，样式按你的想法设定，并以 ZIP 压缩包下载，格式可选 PNG、WebP、SVG 或 TIFF（包括用于印刷的 CMYK TIFF）。每行对应一个二维码，文件名取自某一列，适用于产品标签、活动门票、资产标签、桌号或邮寄宣传品。",
       "intro2": "所有处理都在浏览器中完成，CSV 不会被上传，也没有水印或按个收费。不超过 {limit, number} 行的文件无需账号；更大的文件（最多 {rows, number} 行）需要免费账号。不确定格式？可以从示例 CSV 开始。",
       "facts": {
         "rows": "每个文件最多 {rows, number} 行",
@@ -2700,7 +2700,7 @@
     "playground": "在 Playground 中试用",
     "promptsEyebrow": "试一试",
     "promptsTitle": "从这些提示词开始",
-    "promptsDescription": "每条提示词都基于 QRdx 工具的实际功能：颜色与形状、Wi-Fi、联系人、电子邮件、短信和地图内容，以及 SVG、PNG、WebP 或 EPS 链接。可以在你的助手中打开，也可以复制。",
+    "promptsDescription": "每条提示词都基于 QRdx 工具的实际功能：颜色和形状、Wi-Fi、联系人、电子邮件、短信和地图内容，以及 SVG、PNG、WebP、TIFF 或 EPS 链接。可在你的助手中打开，也可以直接复制。",
     "howEyebrow": "使用方式",
     "howTitle": "三步设置，之后只管提问",
     "howDescription": "你的助手会替你调用 QRdx 工具，你无需接触任何 API。",
@@ -2817,7 +2817,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "免费二维码 API：无需密钥，支持 SVG、PNG 和 Logo",
-    "metaDescription": "免费的二维码 API，无需密钥。一个 URL 即可返回带有你的颜色、形状和标志的 SVG、PNG、WebP 或 EPS 二维码。每分钟 {perMinute, number} 次请求，缓存一年。",
+    "metaDescription": "免费的二维码 API，无需密钥：一个 URL 即可返回带有你的配色、形状和标志的 SVG、PNG、WebP、TIFF 或 EPS 二维码。每分钟 {perMinute, number} 次请求，缓存一年。",
     "crumb": "二维码 API",
     "title": "免费二维码 API",
     "intro1": "只要能放 URL 的地方，就能放二维码。向 api.qrdx.dev 发送一个 GET 请求，即可直接返回图片：无需账户，无需 API 密钥，无需 SDK。颜色、形状、纠错等级和 Logo 都通过查询字符串设置。",
@@ -2825,7 +2825,7 @@
     "facts": {
       "noKey": "无需密钥或注册",
       "rateLimit": "每个 IP 每分钟 {perMinute, number} 次请求",
-      "formats": "SVG、PNG、WebP 和 EPS",
+      "formats": "SVG、PNG、WebP、TIFF 和 EPS",
       "openSource": "开源"
     },
     "docs": "Image API 文档",
@@ -2882,7 +2882,7 @@
     "params": {
       "data": "要编码的文本或网址，最多 {max, number} 个字符。",
       "size": "宽度和高度，单位为像素，范围 {min, number} 到 {max, number}。对 EPS 而言，这是以点为单位的宽度。",
-      "format": "svg、png、webp（无损）或 eps（矢量，用于印刷）。",
+      "format": "svg、png、webp（无损）、tiff、tiff-cmyk（CMYK，用于印刷）或 eps（矢量，用于印刷）。",
       "colors": "二维码颜色和背景颜色，使用十六进制值，不带 #（155dfc）。bg=00000000 可让背景透明。",
       "shapes": "模块、角部定位点及其内部圆点的形状：模块形状共 {count, number} 种。",
       "level": "纠错级别：L（7%）、M（15%）、Q（25%）或 H（30%），表示二维码有这一比例受损时仍能被扫描。",
@@ -2914,7 +2914,7 @@
       "title": "Image API",
       "noKey": "无需密钥或账户",
       "static": "静态二维码：数据就在图片中",
-      "formats": "SVG、PNG、WebP 和 EPS",
+      "formats": "SVG、PNG、WebP、TIFF 和 EPS",
       "limit": "每个 IP 每分钟 {perMinute, number} 次请求"
     },
     "restCard": {
@@ -2946,7 +2946,7 @@
       "logoQuestion": "二维码 API 可以添加 Logo 吗？",
       "logoAnswer": "可以。logoIcon 可以在中心放置常用图标（Wi-Fi、链接、电话、邮件等），或 Simple Icons 中 {brands} 个品牌 Logo 的任意一个，无需密钥。需要时二维码会切换到纠错级别 H，因此仍然可以扫描。",
       "formatsQuestion": "它可以返回哪些图片格式？",
-      "formatsAnswer": "默认是 SVG，也可以通过 format=png、webp 或 eps 获取 PNG、无损 WebP 和矢量 EPS。尺寸范围为 {min, number} 到 {max, number} 像素。",
+      "formatsAnswer": "默认为 SVG；也可用 format=png、webp、tiff 或 eps 获取 PNG、无损 WebP、TIFF 和矢量 EPS，用 format=tiff-cmyk 获取适合印刷的 CMYK TIFF。尺寸范围为 {min, number} 到 {max, number} 像素。",
       "expireQuestion": "二维码会过期吗？",
       "expireAnswer": "不会。Image API 生成的是静态二维码：你编码的内容就在二维码里，只要其中的链接或文字有效，二维码就能使用。不会过期，也不会统计扫描次数。",
       "dynamicQuestion": "印刷之后还能更改二维码指向的地址吗？",
@@ -2984,7 +2984,7 @@
       },
       "print": {
         "title": "下载并打印",
-        "body": "可下载为 PNG、WebP 或 SVG，也可以先在 Playground 中设计样式。短链接比长网址所需的模块更少，因此二维码可以印得更小，依然能被扫描。"
+        "body": "可下载为 PNG、WebP、SVG 或 TIFF 格式，也可以先在 Playground 中设计样式。短链接所需的模块比长网址更少，因此二维码可以印得更小，依然能够扫描。"
       },
       "change": {
         "title": "需要时随时修改",
@@ -5735,7 +5735,7 @@
       "label": "关于二维码设计器",
       "summary": "自定义二维码设计器。免费的静态二维码，可添加你的 Logo、颜色和边框。无需注册，无水印。",
       "types": "可为链接、Wi-Fi 网络、联系人名片、付款或 {types, number} 种内容类型中的任意一种生成二维码。你可以使用 {bodyPatterns, number} 种码点样式、{eyeShapes, number} 种定位点形状、纯色或渐变色、中心 Logo 以及 {frames, number} 种行动号召边框来设计外观。打印之前，扫描评分会预估它的识别效果。",
-      "downloads": "可下载 PNG、JPG、WebP 或 SVG，也可按精确尺寸下载可直接印刷的 PDF 或 EPS。静态二维码免费且永不过期。登录后可创建动态二维码，印刷后仍可编辑，并可追踪扫描情况。",
+      "downloads": "可下载 PNG、JPG、WebP、SVG 或 TIFF（包括适用于印刷的 CMYK TIFF），也可按精确尺寸下载可直接印刷的 PDF 或 EPS。静态二维码免费，且永不过期。登录后可创建动态二维码，印刷后仍可编辑，并可追踪扫描情况。",
       "links": {
         "allTypes": "所有二维码类型",
         "scanChecker": "扫描检测工具",

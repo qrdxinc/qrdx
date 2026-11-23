@@ -39118,5 +39118,215 @@
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode o DotCode. Comprueba el valor (dígitos de control, longitudes, caracteres) y devuelve un PNG junto con URL públicas de SVG, PNG, PDF y otros formatos de imagen.",
     "status": "machine",
     "context": "mcp.tools.6.description"
+  },
+  "2614b42d8452": {
+    "source": "Invite friends",
+    "text": "Invitar amigos",
+    "status": "machine",
+    "context": "appNav.settings.account.items.5.label"
+  },
+  "afe8c0b259cc": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP, ICO or TIFF, including CMYK TIFF for print.",
+    "text": "Descarga el código como PNG, SVG, WebP, GIF, BMP, ICO o TIFF, incluido TIFF CMYK para impresión.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "81755d0fa703": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP, ICO or TIFF (including CMYK TIFF for print), or style the code in the full editor.",
+    "text": "Descarga un PNG, SVG, WebP, GIF, BMP, ICO o TIFF (incluido TIFF CMYK para impresión), o personaliza el estilo del código en el editor completo.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
+  },
+  "4a76e3b36834": {
+    "source": "Scan the preview with your wallet, check the address, network and amount, and download the code as PNG, SVG, WebP, GIF, BMP, ICO or TIFF.",
+    "text": "Escanea la vista previa con tu wallet, comprueba la dirección, la red y el importe, y descarga el código como PNG, SVG, WebP, GIF, BMP, ICO o TIFF.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.3"
+  },
+  "5f15bdca2f69": {
+    "source": "The smallest files, for websites",
+    "text": "Los archivos más pequeños, para sitios web",
+    "status": "machine",
+    "context": "barcodes.files.webp.hint"
+  },
+  "e1df66a04ed6": {
+    "source": "For systems that ask for AVIF",
+    "text": "Para sistemas que piden AVIF",
+    "status": "machine",
+    "context": "barcodes.files.avif.hint"
+  },
+  "64f3ee170959": {
+    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP makes the smallest files, for websites; AVIF is there for systems that ask for it, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
+    "text": "SVG, PDF o EPS para imprimir: son vectoriales, así que las barras se ven nítidas a cualquier tamaño. SVG y EPS se abren en herramientas de diseño como Illustrator, InDesign y Affinity, y PDF se abre en cualquier parte. PNG es para pantallas, documentos y tiendas online, y JPG para lugares que no aceptan PNG; WebP genera los archivos más pequeños, para sitios web; AVIF está para los sistemas que lo piden, y BMP es para sistemas antiguos que solo aceptan BMP. Aumenta el tamaño de la imagen para obtener imágenes más grandes.",
+    "status": "machine",
+    "context": "barcodes.faqs.4.answer"
+  },
+  "1f15cca76850": {
+    "source": "Generate QR codes with body patterns, corner styles, colors, frames and logos from the Raycast launcher, keep a library of saved codes, and export them.",
+    "text": "Genera códigos QR con patrones de cuerpo, estilos de esquina, colores, marcos y logotipos desde el lanzador de Raycast, mantén una biblioteca de códigos guardados y expórtalos.",
+    "status": "machine",
+    "context": "integrations.entries.raycast.description.0"
+  },
+  "9a99b4e6aca7": {
+    "source": "Body patterns, corner styles, colors, frames and logos.",
+    "text": "Patrones de cuerpo, estilos de esquina, colores, marcos y logotipos.",
+    "status": "machine",
+    "context": "integrations.entries.raycast.capabilities.0.description"
+  },
+  "1b59469b24e7": {
+    "source": "Enter a URL or text, then pick dot, eye and eye-dot patterns, colors from Canva's color picker, error correction and an optional logo. The preview updates as you go.",
+    "text": "Introduce una URL o un texto y elige patrones de puntos, ojos y puntos de ojo, colores desde el selector de color de Canva, corrección de errores y un logotipo opcional. La vista previa se actualiza sobre la marcha.",
+    "status": "machine",
+    "context": "integrations.entries.canva.description.0"
+  },
+  "160a13d94fb0": {
+    "source": "Patterns",
+    "text": "Patrones",
+    "status": "machine",
+    "context": "integrations.entries.canva.capabilities.1.title"
+  },
+  "4b5147422ca8": {
+    "source": "Body, eye and eye-dot shapes, each shown as a thumbnail.",
+    "text": "Formas del cuerpo, de los ojos y de los puntos de ojo, cada una con su miniatura.",
+    "status": "machine",
+    "context": "integrations.entries.canva.capabilities.1.description"
+  },
+  "0c606300ff29": {
+    "source": "GET /api/v1/qr returns an SVG, PNG, TIFF or print-ready EPS. Everything is in the query string, so the URL itself is the image: paste it into a README, an <img> tag or an email template.",
+    "text": "GET /api/v1/qr devuelve un SVG, PNG, TIFF o EPS listo para imprimir. Todo va en la query string, así que la propia URL es la imagen: pégala en un README, en una etiqueta <img> o en una plantilla de correo.",
+    "status": "machine",
+    "context": "integrations.entries.image-api.description.0"
+  },
+  "dbe3f099a18a": {
+    "source": "Choose size, colors, module and corner shapes, error correction, margin and a frame.",
+    "text": "Elige el tamaño, los colores, las formas de los módulos y de las esquinas, la corrección de errores, el margen y un marco.",
+    "status": "machine",
+    "context": "integrations.entries.image-api.description.1"
+  },
+  "84c033891645": {
+    "source": "SVG, PNG, TIFF or EPS",
+    "text": "SVG, PNG, TIFF o EPS",
+    "status": "machine",
+    "context": "integrations.entries.image-api.capabilities.0.title"
+  },
+  "91f21385d5c6": {
+    "source": "TIFF at 300 dpi, in RGB or CMYK, and vector EPS sized in points for print and design tools.",
+    "text": "TIFF a 300 dpi, en RGB o CMYK, y EPS vectorial con medidas en puntos para impresión y herramientas de diseño.",
+    "status": "machine",
+    "context": "integrations.entries.image-api.capabilities.0.description"
+  },
+  "7f1be9f2a989": {
+    "source": "Run npx @qrdx/cli to render a QR code with the same patterns, colors, gradients, logos and frames as the playground. Flags make it fully non-interactive for scripts and CI; in a terminal it can guide you with prompts.",
+    "text": "Ejecuta npx @qrdx/cli para generar un código QR con los mismos patrones, colores, degradados, logotipos y marcos que el Playground. Con los flags funciona sin ninguna interacción, ideal para scripts y CI; en una terminal puede guiarte con preguntas.",
+    "status": "machine",
+    "context": "integrations.entries.cli.description.0"
+  },
+  "e0a7cd8bafba": {
+    "source": "Patterns, colors and gradients, logos and call-to-action frames.",
+    "text": "Patrones, colores y degradados, logotipos y marcos con llamada a la acción.",
+    "status": "machine",
+    "context": "integrations.entries.cli.capabilities.1.description"
+  },
+  "55bafae97077": {
+    "source": "Render customizable QR codes in React with qrdx: patterns, gradients, logos and frames.",
+    "text": "Genera códigos QR personalizables en React con qrdx: patrones, degradados, logotipos y marcos.",
+    "status": "machine",
+    "context": "integrations.entries.react.tagline"
+  },
+  "e2b188d90949": {
+    "source": "qrdx is the open-source library behind QRdx. Render QR codes as SVG or canvas with custom body patterns, corner eyes, gradients, logos and frames, and export them as images.",
+    "text": "qrdx es la biblioteca de código abierto detrás de QRdx. Genera códigos QR como SVG o canvas con patrones de cuerpo, ojos de esquina, degradados, logotipos y marcos personalizados, y expórtalos como imágenes.",
+    "status": "machine",
+    "context": "integrations.entries.react.description.0"
+  },
+  "866770173d53": {
+    "source": "Body patterns, corner eyes and dots, gradients, logos and frames.",
+    "text": "Patrones de cuerpo, ojos y puntos de esquina, degradados, logotipos y marcos.",
+    "status": "machine",
+    "context": "integrations.entries.react.capabilities.1.description"
+  },
+  "12cf56c91b9e": {
+    "source": "A PNG image in the chat, plus SVG, PNG, WebP, TIFF and EPS links ready for Markdown, HTML or print. Apps that support MCP Apps also show the code as a card you can save or open in the editor.",
+    "text": "Una imagen PNG en el chat, además de enlaces SVG, PNG, WebP, TIFF y EPS listos para Markdown, HTML o impresión. Las apps compatibles con MCP Apps también muestran el código como una tarjeta que puedes guardar o abrir en el editor.",
+    "status": "machine",
+    "context": "mcp.steps.2.body"
+  },
+  "2ba0fda106c0": {
+    "source": "Renders the code and returns a PNG image plus public SVG, PNG, WebP, TIFF and EPS image URLs ready for Markdown, HTML or print. Takes the image API options: colors or gradients, body, eye and dot shapes, error correction, margin, a border, a frame and a logo icon, or a whole style from design_qr. Set include_svg for the SVG markup.",
+    "text": "Genera el código y devuelve una imagen PNG junto con URL públicas de imagen en SVG, PNG, WebP, TIFF y EPS, listas para Markdown, HTML o impresión. Admite las opciones de la Image API: colores o degradados, formas del cuerpo, de los ojos y de los puntos, corrección de errores, margen, un borde, un marco y un icono de logo, o un estilo completo de design_qr. Activa include_svg para obtener el código SVG.",
+    "status": "machine",
+    "context": "mcp.tools.2.description"
+  },
+  "9eb7c5a18750": {
+    "source": "Create a dynamic code",
+    "text": "Crear un código dinámico",
+    "status": "machine",
+    "context": "mcp.tools.3.title"
+  },
+  "08fc1b093feb": {
+    "source": "A dynamic QR code in your QRdx workspace: it holds a short link, so where it goes can change after printing, and its scans are counted. Returns the short link, the code as a PNG and a link to it in your dashboard. Your app asks you to sign in to QRdx the first time; plan limits apply as in the dashboard.",
+    "text": "Un código QR dinámico en tu espacio de trabajo de QRdx: contiene un enlace corto, de modo que su destino puede cambiar después de imprimirlo, y sus escaneos se cuentan. Devuelve el enlace corto, el código como PNG y un enlace a él en tu panel. Tu app te pide iniciar sesión en QRdx la primera vez; se aplican los límites del plan igual que en el panel.",
+    "status": "machine",
+    "context": "mcp.tools.3.description"
+  },
+  "cdc1d6d9d4f0": {
+    "source": "Change where a code goes",
+    "text": "Cambiar el destino de un código",
+    "status": "machine",
+    "context": "mcp.tools.4.title"
+  },
+  "0661b43aeabf": {
+    "source": "Points one of your dynamic codes at a new address. The printed code stays the same. The new address is checked like a new code's.",
+    "text": "Dirige uno de tus códigos dinámicos a una nueva dirección. El código impreso sigue siendo el mismo. La nueva dirección se comprueba igual que la de un código nuevo.",
+    "status": "machine",
+    "context": "mcp.tools.4.description"
+  },
+  "23eba5aaddf4": {
+    "source": "Scan stats",
+    "text": "Stats de escaneo",
+    "status": "machine",
+    "context": "mcp.tools.5.title"
+  },
+  "4ef922d54917": {
+    "source": "Scans and unique visitors for one of your dynamic codes over a range your plan keeps, with the top countries, devices and scans per day. Never single scans or precise locations.",
+    "text": "Escaneos y visitantes únicos de uno de tus códigos dinámicos en un periodo que tu plan conserva, con los países, dispositivos y escaneos por día principales. Nunca escaneos individuales ni ubicaciones precisas.",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
+  "43fadb385cd8": {
+    "source": "List your codes",
+    "text": "Listar tus códigos",
+    "status": "machine",
+    "context": "mcp.tools.6.title"
+  },
+  "9e95ef71da11": {
+    "source": "Your dynamic codes with their short links, destinations, status and scan counts, to find one by name or link.",
+    "text": "Tus códigos dinámicos con sus enlaces cortos, destinos, estado y número de escaneos, para encontrar uno por nombre o enlace.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "7bcee6d22cb6": {
+    "source": "Yes. It's free and open source, and designing, rendering and checking codes needs no account. Those codes are static, so they never expire and have no scan limits. Dynamic codes live in a QRdx account, so making one asks you to sign in (or sign up) first; the plan's limits apply as in the dashboard.",
+    "text": "Sí. Es gratis y de código abierto, y diseñar, generar y comprobar códigos no requiere cuenta. Esos códigos son estáticos, así que nunca caducan y no tienen límite de escaneos. Los códigos dinámicos viven en una cuenta de QRdx, por lo que crear uno te pide primero iniciar sesión (o registrarte); se aplican los límites del plan igual que en el panel.",
+    "status": "machine",
+    "context": "mcp.faqs.1.answer"
+  },
+  "7c864a0e3853": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. The dynamic-code tools need you signed in to QRdx instead, which your app asks for the first time you use one. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "No, para diseñar y generar códigos y explorar la comunidad: el servidor MCP de QRdx es público y gratuito, y no guarda ningún estado de sesión. En cambio, las herramientas de códigos dinámicos requieren que hayas iniciado sesión en QRdx, algo que tu app te pide la primera vez que usas una. Guardar un diseño en tus temas (save_template), guardar un código de barras (save_barcode), crear arte con IA (generate_ai_art) y usar un logo que subiste necesitan una clave de API de QRdx, enviada como Authorization: Bearer qrdx_… en los ajustes de tu app para el servidor. Tu app ve esas tres herramientas una vez configurada la clave.",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "a5537dfea3ae": {
+    "source": "Yes, once you sign in. create_dynamic_code makes a dynamic code in your QRdx workspace: the code holds a short link, so you can point it somewhere else later (update_code_destination) and see how often it's scanned (get_code_stats). The first time, your app asks you to sign in to QRdx, where new accounts sign up too.",
+    "text": "Sí, una vez que inicias sesión. create_dynamic_code crea un código dinámico en tu espacio de trabajo de QRdx: el código contiene un enlace corto, así que puedes dirigirlo a otro destino más tarde (update_code_destination) y ver con qué frecuencia se escanea (get_code_stats). La primera vez, tu app te pide iniciar sesión en QRdx, donde las cuentas nuevas también se registran.",
+    "status": "machine",
+    "context": "mcp.faqs.5.answer"
+  },
+  "ad02f2790a7a": {
+    "source": "Not the static ones. The tools render images, format text and read the public community. Only these write anything: create_dynamic_code and update_code_destination (the dynamic code you ask for, in your workspace), and save_template and save_barcode (the theme or barcode you ask them to save, in the API key's workspace). generate_ai_art uses one of the workspace's monthly AI art images but keeps neither the image nor a photo you send. The image URLs the tools return contain the encoded data, so don't share them if the data is private, such as a Wi-Fi password.",
+    "text": "Los estáticos no. Las herramientas generan imágenes, dan formato al texto y leen la comunidad pública. Solo estas escriben algo: create_dynamic_code y update_code_destination (el código dinámico que pides, en tu espacio de trabajo), y save_template y save_barcode (el tema o el código de barras que les pides guardar, en el espacio de trabajo de la clave de API). generate_ai_art usa una de las imágenes de arte con IA mensuales del espacio de trabajo, pero no conserva ni la imagen ni la foto que envías. Las URL de imagen que devuelven las herramientas contienen los datos codificados, así que no las compartas si los datos son privados, como la contraseña de una red Wi-Fi.",
+    "status": "machine",
+    "context": "mcp.faqs.7.answer"
   }
 }

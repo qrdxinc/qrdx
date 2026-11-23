@@ -349,7 +349,7 @@
     "hero": {
       "badge": "무료 오픈 소스 (AGPL-3.0)",
       "title": "계속 작동하는 동적 QR 코드를 만드는 무료 QR 코드 생성기",
-      "description": "패턴, 그라데이션, 로고, 프레임으로 브랜드에 맞는 QR 코드를 디자인하고, 가입이나 워터마크 없이 PNG, SVG, PDF, EPS로 다운로드하세요. 로그인하면 인쇄 후에도 수정할 수 있는 동적 QR 코드, 호스팅 페이지, 스캔 분석을 사용할 수 있어요.",
+      "description": "패턴, 그라데이션, 로고, 프레임으로 브랜드에 맞는 QR 코드를 디자인하고, 회원가입이나 워터마크 없이 PNG, SVG, PDF, EPS, TIFF로 다운로드하세요. 로그인하면 인쇄한 뒤에도 수정할 수 있는 동적 QR 코드, 호스팅 페이지, 스캔 분석을 사용할 수 있습니다.",
       "primary": "Playground 체험하기",
       "secondary": "문서 보기",
       "sceneLabel": "QRdx 흐름을 보여 주는 애니메이션 그림: 스튜디오 화면에서 QR 코드를 디자인하고 스타일을 지정하면, 프린터가 카드에 인쇄하고, 로봇 팔이 카드를 컨베이어에 올려놓습니다. 게이트에 설치된 휴대폰이 지나가는 각 카드를 스캔하고, 스캔 정보는 분석 패널로 전달되어 막대가 하나 추가됩니다. 큰 동적 QR 카드는 다시 인쇄하지 않고도 연결 링크를 바꿉니다."
@@ -377,7 +377,7 @@
         "none": "프레임 없음",
         "border": "테두리"
       },
-      "more": "전체 Playground에서는 본체 패턴 {bodyPatterns, number}개, 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 원하는 색상과 그라데이션, 로고, 프레임을 사용하고 PNG, SVG, PDF, EPS로 다운로드할 수 있어요.",
+      "more": "전체 Playground에서는 본체 패턴 {bodyPatterns, number}개, 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 원하는 색상과 그라데이션, 로고, 프레임, PNG, SVG, PDF, EPS, TIFF 다운로드를 사용할 수 있습니다.",
       "customize": "Playground에서 꾸미기",
       "qrLabel": "{value}의 QR 코드",
       "empty": "링크를 입력하면 QR 코드를 볼 수 있어요."
@@ -518,7 +518,7 @@
       "items": {
         "free": {
           "question": "QRdx는 정말 무료인가요? 숨겨진 제한이 있나요?",
-          "answer": "네. 정적 QR 코드는 계정 없이 무료로 만들고, 꾸미고, 다운로드할 수 있어요. 코드 수 제한이 없고, 모든 디자인 옵션(본체 패턴 {bodyPatterns, number}개, 모서리 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 그라데이션, 로고, 프레임, Logo QR 또는 Image QR 아트)을 쓸 수 있으며, PNG, JPG, SVG, PDF, EPS 다운로드도 가능해요. 워터마크와 광고는 없어요. 정적 QR 코드는 콘텐츠를 코드 자체에 저장하므로 만료되지 않고 스캔 횟수 제한도 없어요. 무료 계정을 만들면 동적 QR 코드 10개, 호스팅 페이지 3개, {historyYears, plural, one {#년} other {#년}}치 스캔 분석, 저장 가능한 테마 10개, AI 테마 생성 5회가 추가돼요. Pro(월 {proMonthly} 또는 연 {proYearly})와 Business(월 {businessMonthly} 또는 연 {businessYearly})는 이 한도를 더 늘려 줘요."
+          "answer": "네. 정적 QR 코드는 계정 없이 무료로 만들고, 꾸미고, 다운로드할 수 있습니다. 코드 수 제한이 없고, 모든 디자인 옵션(본체 패턴 {bodyPatterns, number}개, 모서리 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 그라데이션, 로고, 프레임, Logo QR 및 Image QR 아트)과 PNG, JPG, SVG, PDF, EPS, TIFF 다운로드를 모두 쓸 수 있습니다. 워터마크와 광고는 없습니다. 정적 QR 코드는 콘텐츠를 코드 자체에 저장하므로 만료되지 않고 스캔 횟수 제한도 없습니다. 무료 계정에서는 동적 QR 코드 10개, 호스팅 페이지 3개, {historyYears, plural, one {#년} other {#년}} 동안의 스캔 분석, 저장된 테마 10개, AI 테마 생성 5회가 추가되며, Pro({proMonthly}/월 또는 {proYearly}/년)와 Business({businessMonthly}/월 또는 {businessYearly}/년)는 이 한도를 더 늘려 줍니다."
         },
         "signup": {
           "question": "가입하거나 계정을 만들어야 하나요?",
@@ -546,7 +546,7 @@
         },
         "api": {
           "question": "개발자가 API로 QR 코드를 생성할 수 있나요?",
-          "answer": "네. Image API는 API 키 없이 어떤 URL이든 SVG, PNG, EPS 형식의 QR 코드로 만들어 줘요. REST API는 워크스페이스 API 키나 OAuth로 동적 QR 코드를 만들고 수정하며 스캔 데이터를 조회할 수 있어요. 그 밖에 Claude, Cursor, VS Code용 MCP server, 명령줄 도구(@qrdx/cli), shadcn/ui 컴포넌트, qrdx React 라이브러리도 있어요."
+          "answer": "네. Image API는 API 키 없이 모든 URL을 SVG, PNG, TIFF, EPS QR 코드로 만들어 주고, REST API는 워크스페이스 API 키 또는 OAuth로 동적 QR 코드를 만들고 수정하며 스캔 데이터를 읽을 수 있습니다. Claude, Cursor, VS Code용 MCP 서버, 명령줄 도구(@qrdx/cli), shadcn/ui 컴포넌트, qrdx React 라이브러리도 있습니다."
         },
         "paidPlans": {
           "question": "Pro나 Business에서는 무엇을 쓸 수 있나요?",
@@ -913,12 +913,12 @@
       "metaTitle": "QR 코드 유형: 무료 생성기 {count, number}종 (Wi-Fi, vCard, UPI)",
       "metaDescription": "무료 생성기를 제공하는 QR 코드 유형 {count, number}종: Wi-Fi, vCard, WhatsApp, UPI, 이메일, 소셜 프로필, 결제. 각 페이지에서 정확한 페이로드 형식을 확인할 수 있어요.",
       "title": "모든 콘텐츠 유형을 위한 QR 코드 생성기",
-      "intro1": "QR 코드는 웹사이트를 여는 것 이상의 일을 할 수 있습니다. 코드에 담긴 텍스트에 따라 휴대폰이 Wi-Fi 네트워크에 연결하거나, 연락처를 저장하거나, 결제를 시작하거나, 채팅을 열 수 있어요. 아래 {count, number}가지 유형 중 하나를 선택하면 알맞은 입력 필드, 실시간 미리보기, PNG, WebP, SVG 다운로드를 제공하는 생성기를 사용할 수 있습니다.",
+      "intro1": "QR 코드는 웹사이트를 여는 것 이상의 일을 할 수 있어요. 안에 담긴 텍스트에 따라 휴대폰이 Wi-Fi 네트워크에 연결하거나, 연락처를 저장하거나, 결제를 시작하거나, 채팅을 열 수 있어요. 아래 {count, number}가지 유형 중 하나를 고르면 알맞은 입력란, 실시간 미리보기, PNG, WebP, SVG, TIFF 다운로드를 갖춘 생성기를 사용할 수 있어요.",
       "intro2": "이 페이지에서 만든 코드는 기본적으로 정적입니다. 내용이 패턴 자체에 인코딩되므로 오프라인에서도 작동하고, 만료되지 않으며, 스캔 횟수 제한도 없습니다. 각 페이지에는 코드가 기록하는 정확한 형식도 설명되어 있어서 스캐너가 무엇을 읽는지 알 수 있습니다.",
       "cardTitle": "{name} QR 코드 생성기",
       "moreTools": "더 많은 도구",
       "bulkTitle": "수백 개의 코드가 필요하세요? 대량 생성기를 사용해 보세요",
-      "bulkDescription": "CSV를 업로드하면 모든 코드를 PNG, WebP 또는 SVG로 만들어 ZIP 파일 하나로 내려받을 수 있습니다. 모든 작업은 브라우저에서만 처리돼요.",
+      "bulkDescription": "CSV를 업로드하면 모든 코드를 PNG, WebP, SVG 또는 TIFF로 하나의 ZIP 파일에 담아 다운로드할 수 있어요. 모든 생성 과정은 브라우저 안에서만 이루어져요.",
       "printTitle": "코드를 인쇄하나요? 크기를 확인하세요",
       "printDescription": "스캔 거리와 코드에 담긴 데이터 양을 바탕으로 최소 인쇄 크기를 계산해 보세요.",
       "dynamicTitle": "동적 QR 코드 생성기",
@@ -1104,7 +1104,7 @@
       "metaDescription": "CSV 파일 하나로 스타일이 적용된 QR 코드를 최대 {rows, number}개까지 만들어 PNG, WebP, SVG 형식의 ZIP으로 받으세요. 브라우저에서 바로 실행되어 업로드도, 워터마크도 없고 {limit, number}행까지는 가입도 필요 없어요.",
       "crumb": "대량 생성기",
       "title": "QR 코드 대량 생성기",
-      "intro1": "CSV 파일 하나로 수천 개의 QR 코드를 한 번에 만들어 보세요. 원하는 스타일을 적용해 PNG, WebP, SVG 형식으로 ZIP에 담아 내려받을 수 있습니다. 한 행이 코드 하나이고, 파일 이름은 열에서 가져옵니다. 제품 라벨, 행사 티켓, 자산 태그, 테이블 번호, 우편물에 활용해 보세요.",
+      "intro1": "CSV 파일 하나로 수천 개의 QR 코드를 한 번에 만들 수 있어요. 원하는 스타일을 적용하고 PNG, WebP, SVG 또는 TIFF(인쇄용 CMYK TIFF 포함) 형식으로 ZIP 파일에 담아 다운로드하세요. 한 행이 코드 하나이며, 파일 이름은 열에서 가져옵니다. 제품 라벨, 행사 티켓, 자산 태그, 테이블 번호, 우편 발송물 등에 활용해 보세요.",
       "intro2": "모든 과정이 브라우저에서 실행되어 CSV 파일은 업로드되지 않으며, 워터마크나 코드당 요금도 없어요. {limit, number}행 이하 파일은 계정 없이 쓸 수 있고, 최대 {rows, number}행까지의 더 큰 파일은 무료 계정이 필요해요. 형식이 헷갈린다면 샘플 CSV로 시작해 보세요.",
       "facts": {
         "rows": "파일당 최대 {rows, number}행",
@@ -2700,7 +2700,7 @@
     "playground": "Playground에서 체험하기",
     "promptsEyebrow": "체험하기",
     "promptsTitle": "이런 프롬프트로 시작해 보세요",
-    "promptsDescription": "모든 프롬프트는 QRdx 도구가 실제로 하는 일을 활용해요. 색상과 모양, Wi-Fi, 연락처, 이메일, SMS, 지도 페이로드, SVG, PNG, WebP, EPS 링크까지 다룹니다. 어시스턴트에서 열거나 복사해 사용하세요.",
+    "promptsDescription": "각 프롬프트는 QRdx 도구가 실제로 할 수 있는 기능을 바탕으로 만들어졌어요. 색상과 모양, Wi-Fi, 연락처, 이메일, SMS, 지도 페이로드, 그리고 SVG, PNG, WebP, TIFF, EPS 링크까지 다룰 수 있어요. 어시스턴트에서 열거나 복사해서 사용해 보세요.",
     "howEyebrow": "사용 방법",
     "howTitle": "세 단계만 거치면 바로 요청할 수 있어요",
     "howDescription": "어시스턴트가 대신 QRdx 도구를 호출해요. API를 직접 다룰 일은 없어요.",
@@ -2817,7 +2817,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "무료 QR 코드 API: 키 없이 SVG, PNG, 로고까지",
-    "metaDescription": "키 없이 쓸 수 있는 무료 QR 코드 API예요. URL 하나로 색상, 모양, 로고를 적용한 SVG, PNG, WebP, EPS QR 코드를 받을 수 있어요. 분당 {perMinute, number}회 요청할 수 있고, 1년간 캐시돼요.",
+    "metaDescription": "키 없이 쓰는 무료 QR 코드 API예요. URL 하나로 원하는 색상, 모양, 로고가 적용된 SVG, PNG, WebP, TIFF, EPS QR 코드를 받을 수 있어요. 분당 {perMinute, number}회 요청할 수 있고, 1년간 캐시돼요.",
     "crumb": "QR 코드 API",
     "title": "무료 QR 코드 API",
     "intro1": "URL을 넣을 수 있는 곳이면 어디든 QR 코드를 넣어 보세요. api.qrdx.dev로 GET 요청을 한 번 보내면 이미지가 바로 반환돼요. 계정도, API 키도, SDK도 필요 없어요. 색상, 모양, 오류 정정, 로고는 쿼리 문자열에 넣으면 돼요.",
@@ -2825,7 +2825,7 @@
     "facts": {
       "noKey": "키·가입 불필요",
       "rateLimit": "IP당 분당 {perMinute, number}회 요청",
-      "formats": "SVG, PNG, WebP, EPS",
+      "formats": "SVG, PNG, WebP, TIFF, EPS",
       "openSource": "오픈 소스"
     },
     "docs": "Image API 문서",
@@ -2882,7 +2882,7 @@
     "params": {
       "data": "인코딩할 텍스트나 URL이에요. 최대 {max, number}자까지 가능해요.",
       "size": "가로와 세로 크기이며 단위는 픽셀로, {min, number}부터 {max, number}까지예요. EPS는 포인트 단위의 너비예요.",
-      "format": "svg, png, webp(무손실) 또는 eps(벡터, 인쇄용).",
+      "format": "svg, png, webp(무손실), tiff, tiff-cmyk(인쇄용 CMYK) 또는 eps(인쇄용 벡터).",
       "colors": "코드 색상과 배경 색상을 #을 뺀 hex 값으로 지정해요(155dfc). bg=00000000이면 배경이 투명해져요.",
       "shapes": "모듈, 모서리 눈, 그 안의 점의 모양이에요. 모듈 모양은 모두 {count, number}가지예요.",
       "level": "오류 정정 수준: L(7%), M(15%), Q(25%), H(30%)만큼 코드가 손상되어도 스캔할 수 있어요.",
@@ -2914,7 +2914,7 @@
       "title": "Image API",
       "noKey": "키나 계정이 필요 없어요",
       "static": "정적 코드: 데이터가 이미지에 들어 있어요",
-      "formats": "SVG, PNG, WebP, EPS",
+      "formats": "SVG, PNG, WebP, TIFF, EPS",
       "limit": "IP당 분당 {perMinute, number}회 요청"
     },
     "restCard": {
@@ -2946,7 +2946,7 @@
       "logoQuestion": "QR 코드 API로 로고를 넣을 수 있나요?",
       "logoAnswer": "네. logoIcon을 사용하면 키 없이 간편 아이콘(Wi-Fi, 링크, 전화, 이메일 등)이나 Simple Icons의 브랜드 로고 {brands}개 중 하나를 가운데에 넣을 수 있어요. 로고에 필요하면 오류 정정 수준이 H로 바뀌어서 스캔도 문제없이 돼요.",
       "formatsQuestion": "어떤 이미지 형식으로 반환하나요?",
-      "formatsAnswer": "기본은 SVG이고, format=png, webp, eps를 지정하면 PNG, 무손실 WebP, 벡터 EPS로 받을 수 있어요. 크기는 {min, number}픽셀부터 {max, number}픽셀까지 지원해요.",
+      "formatsAnswer": "기본값은 SVG이고, format=png, webp, tiff, eps를 지정하면 PNG, 무손실 WebP, TIFF, 벡터 EPS로 받을 수 있어요. 인쇄용 CMYK TIFF는 format=tiff-cmyk로 지정하세요. 크기는 {min, number}픽셀부터 {max, number}픽셀까지 가능해요.",
       "expireQuestion": "QR 코드는 만료되나요?",
       "expireAnswer": "아니요. 이미지 API는 정적 QR 코드를 만들어요. 인코딩한 내용이 코드 안에 들어 있어서, 그 안의 링크나 텍스트가 유효한 동안 계속 작동해요. 만료되는 것도 없고 스캔 횟수를 세지도 않아요.",
       "dynamicQuestion": "인쇄한 뒤에도 코드가 가리키는 곳을 바꿀 수 있나요?",
@@ -2984,7 +2984,7 @@
       },
       "print": {
         "title": "다운로드하고 인쇄하기",
-        "body": "PNG, WebP, SVG로 다운로드하거나 Playground에서 먼저 스타일을 꾸밀 수 있어요. 짧은 링크는 긴 URL보다 모듈이 적게 필요해서 코드를 더 작게 인쇄해도 스캔돼요."
+        "body": "PNG, WebP, SVG, TIFF 형식으로 다운로드하거나 먼저 Playground에서 스타일을 꾸며 보세요. 짧은 링크는 긴 URL보다 모듈이 적게 필요해서, 코드를 더 작게 인쇄해도 스캔할 수 있어요."
       },
       "change": {
         "title": "필요할 때 바꾸기",
@@ -5735,7 +5735,7 @@
       "label": "QR 코드 디자이너 소개",
       "summary": "맞춤 QR 코드 디자이너예요. 로고, 색상, 프레임을 넣은 정적 QR 코드를 무료로 만들 수 있어요. 가입도 워터마크도 없어요.",
       "types": "링크, Wi-Fi 네트워크, 연락처, 결제 등 {types, number}가지 콘텐츠 유형의 QR 코드를 만들 수 있어요. {bodyPatterns, number}가지 점 패턴, {eyeShapes, number}가지 모서리 눈 모양, 단색 또는 그라데이션 색상, 중앙 로고, {frames, number}가지 행동 유도 프레임으로 스타일을 꾸며 보세요. 스캔 점수로 인쇄 전에 얼마나 잘 인식될지 가늠해 볼 수 있어요.",
-      "downloads": "PNG, JPG, WebP, SVG로 다운로드하거나 정확한 크기의 인쇄용 PDF 또는 EPS로 받을 수 있어요. 정적 QR 코드는 무료이며 만료되지 않아요. 로그인하면 인쇄 후에도 수정할 수 있고 스캔을 추적할 수 있는 동적 QR 코드를 만들 수 있어요.",
+      "downloads": "PNG, JPG, WebP, SVG, TIFF(인쇄용 CMYK TIFF 포함)로 다운로드하거나, 정확한 크기의 인쇄용 PDF 또는 EPS로 받을 수 있어요. 정적 QR 코드는 무료이고 만료되지 않아요. 로그인하면 인쇄 후에도 수정할 수 있고 스캔을 추적할 수 있는 동적 QR 코드를 만들 수 있어요.",
       "links": {
         "allTypes": "모든 QR 코드 유형",
         "scanChecker": "스캔 검사기",
