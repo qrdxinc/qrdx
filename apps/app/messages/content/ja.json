@@ -38818,5 +38818,17 @@
     "text": "Spotify、Apple Music、SoundCloud、Bandcampなどのサービスにある曲、アルバム、プレイリスト、アーティストページ、ポッドキャストを紹介できます。",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "国や地域によっては、独自の請求書用QRフォーマットがあります。QRdxでは、スイスのQR-billの支払いコード、SEPA振込コード、チェコのQR Platbaコードなど、銀行振込向けのコードを作成できます。税務当局が求める電子インボイス用のQRコードは、お使いの会計ソフトで作成されます。QRdxでは、請求書に載せるそのほかのコードも作成できます。支払いリンク、オンライン版、連絡先情報のコードです。",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "スイスのQR-billについては、作成できます。QRdxでは、QR-billの支払部分に使うQRコード、つまり誤り訂正レベルMでスイスクロスを入れたSwiss Payments Codeを作成でき、支払う側は銀行アプリでスキャンします。受領証や支払部分の印刷レイアウトなど、請求書のそれ以外の部分は、お使いの請求書作成ソフトで作成されます。税務当局が求める電子インボイス用のQRコードは、作成できません。会計ソフトまたは電子インボイス対応ソフトで作成されます。",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }

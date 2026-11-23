@@ -38818,5 +38818,17 @@
     "text": "Morceaux, albums, playlists, pages d'artistes et podcasts sur Spotify, Apple Music, SoundCloud, Bandcamp et d'autres services.",
     "status": "machine",
     "context": "qrTypes.groups.music.description"
+  },
+  "f3d1bcbc6d3b": {
+    "source": "Some countries have their own invoice QR formats. QRdx makes the bank-transfer ones, such as the Swiss QR-bill's payment code, SEPA transfer codes and Czech QR Platba codes. E-invoicing QR codes required by tax authorities come from your accounting software. QRdx also makes the other codes on an invoice: payment links, the online copy and your contact details.",
+    "text": "Certains pays ont leurs propres formats de QR code pour les factures. QRdx génère ceux de virement bancaire, comme le code de paiement de la facture QR suisse (QR-bill), les codes de virement SEPA et les codes tchèques QR Platba. Les QR codes de facturation électronique exigés par les autorités fiscales proviennent de votre logiciel de comptabilité. QRdx génère aussi les autres codes d'une facture : liens de paiement, copie en ligne et vos coordonnées.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.intro.1"
+  },
+  "8aefc4fa45a3": {
+    "source": "Swiss QR-bills, yes: QRdx makes the QR code for a QR-bill's payment part, the Swiss Payments Code at error correction M with the Swiss cross, which the payer scans in their banking app. The rest of the bill, the receipt and the payment part's printed layout, comes from your invoicing software. E-invoice QR codes required by tax authorities, no: those come from accounting or e-invoicing software.",
+    "text": "Pour les QR-bills suisses, oui : QRdx génère le QR code de la section paiement d'une QR-bill, le Swiss Payments Code avec correction d'erreur M et la croix suisse, que le payeur scanne dans son application bancaire. Le reste de la facture, le récépissé et la mise en page imprimée de la section paiement, provient de votre logiciel de facturation. Pour les QR codes de facturation électronique exigés par les autorités fiscales, non : ils proviennent d'un logiciel de comptabilité ou de facturation électronique.",
+    "status": "machine",
+    "context": "placements.0.documents.items.invoices.faqs.1.answer"
   }
 }
