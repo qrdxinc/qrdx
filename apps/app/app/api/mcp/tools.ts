@@ -62,12 +62,16 @@ import { enforceRateLimits, getClientIp } from "@/lib/request-guards";
 import type { ThemeStyles } from "@/types/theme";
 // AI art: generate_ai_art (./art.ts)
 import { ART_MCP_INSTRUCTIONS, registerArtTools } from "./art";
+import { NO_AUTH_SECURITY_SCHEMES } from "./auth";
 // Barcodes: generate_barcode and save_barcode (./barcodes.ts)
 import {
   BARCODE_MCP_INSTRUCTIONS,
   BARCODE_MCP_KEYLESS_INSTRUCTIONS,
   registerBarcodeTools,
 } from "./barcodes";
+// Dynamic codes, for a signed-in person: create_dynamic_code, list_codes,
+// get_code_stats, update_code_destination (./codes.ts)
+import { CODE_MCP_INSTRUCTIONS, registerCodeTools } from "./codes";
 import {
   designOptions,
   designQr,
@@ -101,7 +105,7 @@ import {
   registerQrCard,
 } from "./qr-card";
 
-export const MCP_SERVER_INFO = { name: "qrdx", version: "1.5.0" };
+export const MCP_SERVER_INFO = { name: "qrdx", version: "1.6.0" };
 
 /**
  * The tools that act on an API key's workspace. The server lists them only
@@ -125,6 +129,7 @@ const QR_MCP_INSTRUCTIONS =
 /** The instructions for a connection with an API key: every tool. */
 export const MCP_INSTRUCTIONS =
   QR_MCP_INSTRUCTIONS +
+  CODE_MCP_INSTRUCTIONS +
   " With a QRdx API key on the connection (Authorization: Bearer qrdx_…), save_template saves a design as a theme in the key's workspace, and logos you uploaded can be used by file id." +
   BARCODE_MCP_INSTRUCTIONS +
   ART_MCP_INSTRUCTIONS +
@@ -136,6 +141,7 @@ export const MCP_INSTRUCTIONS =
  */
 export const MCP_KEYLESS_INSTRUCTIONS =
   QR_MCP_INSTRUCTIONS +
+  CODE_MCP_INSTRUCTIONS +
   BARCODE_MCP_KEYLESS_INSTRUCTIONS +
   DOCS_MCP_INSTRUCTIONS +
   " This connection has no QRdx API key. Adding one to the connection (Authorization: Bearer qrdx_…) adds save_template, save_barcode and generate_ai_art, which act on the key's workspace, and lets design_qr and generate_qr_code use logos you uploaded, by file id.";
@@ -281,6 +287,44 @@ function editorLink(style: ThemeStyles): string | null {
 
 /** A result's `_meta` with the QR card, for apps that support MCP Apps. */
 const withCard = (card: QrCard) => ({ [QR_CARD_META_KEY]: card });
+
+/**
+ * One line under a static code for a web address: the dynamic kind exists
+ * (./codes.ts), for when the link must change after printing.
+ */
+export const DYNAMIC_CODE_HINT =
+  "This is a static code: the address is in the code itself and can't be changed after printing. For a code whose link can be changed later and whose scans are counted, use create_dynamic_code (it needs the person signed in to QRdx).";
+
+const withDynamicHint = (summary: string, data: string) =>
+  /^https?:\/\//i.test(data.trim())
+    ? `${summary}\n${DYNAMIC_CODE_HINT}`
+    : summary;
+
+/**
+ * `server` with every tool registered on it declaring OpenAI's per-tool
+ * `securitySchemes` (Apps SDK) in `_meta`: noauth unless the tool says
+ * otherwise (the sign-in tools say oauth2, ./codes.ts). Wraps registerTool
+ * in place, as ./usage.ts countToolCalls does.
+ */
+function declaringSecuritySchemes(server: McpServer): McpServer {
+  type Register = (name: string, config: unknown, callback: unknown) => unknown;
+  const register = server.registerTool.bind(server) as unknown as Register;
+  const declared: Register = (name, config, callback) => {
+    const meta = (config as { _meta?: Record<string, unknown> })._meta ?? {};
+    return register(
+      name,
+      "securitySchemes" in meta
+        ? config
+        : {
+            ...(config as object),
+            _meta: { ...meta, securitySchemes: NO_AUTH_SECURITY_SCHEMES },
+          },
+      callback,
+    );
+  };
+  (server as unknown as { registerTool: Register }).registerTool = declared;
+  return server;
+}
 
 /** Image API URL for a styled render; null when it can't be public. */
 function styledImageUrl(
@@ -520,9 +564,15 @@ const FREE_SAVED_THEMES = getPlanLimits("free").savedThemes;
 
 /**
  * Registers the server's tools. Without `keyed`, save_template, save_barcode
- * and generate_ai_art are left out, and no description points to them.
+ * and generate_ai_art are left out, and no description points to them. The
+ * dynamic-code tools are listed to every connection: they ask for sign-in
+ * when they're called (./auth.ts).
  */
-export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
+export function registerQrTools(
+  registry: McpServer,
+  { keyed }: McpToolsOptions,
+) {
+  const server = declaringSecuritySchemes(registry);
   // The view design_qr and generate_qr_code show in apps with MCP Apps.
   registerQrCard(server);
 
@@ -576,7 +626,7 @@ export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
         };
       }
       const content = [
-        text(result.summary),
+        text(withDynamicHint(result.summary, result.design.payload)),
         text(
           JSON.stringify(
             {
@@ -644,7 +694,7 @@ export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
         throw error;
       }
       const content = [
-        text(result.summary),
+        text(withDynamicHint(result.summary, input.data)),
         {
           type: "image" as const,
           data: Buffer.from(result.png).toString("base64"),
@@ -852,6 +902,9 @@ export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
 
   // ── AI art (./art.ts): its one tool uses the key's workspace ──
   if (keyed) registerArtTools(server);
+
+  // ── Dynamic codes (./codes.ts): every connection; sign-in when called ──
+  registerCodeTools(server);
 
   // ── The docs (./docs.ts) ──
   registerDocsTools(server);

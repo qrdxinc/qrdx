@@ -102,6 +102,8 @@ For your own scripts, an [API key](/docs/developers/api-keys) is simpler. When y
 | Revocation endpoint | `https://qrdx.dev/api/oauth/revoke` |
 | User info | `https://qrdx.dev/api/oauth/userinfo` (`profile:read`) |
 | Grant types | `authorization_code` with PKCE `S256`, `refresh_token` |
+| Client authentication | `client_secret` in the body, or HTTP Basic (`client_secret_basic`) |
+| Discovery | `https://qrdx.dev/.well-known/oauth-authorization-server` (RFC 8414). MCP clients register themselves at `https://qrdx.dev/api/oauth/register`: [MCP server](/docs/developers/mcp#sign-in) |
 | Lifetimes | Authorization code 10 minutes, used once. Access token 1 hour. Refresh token 30 days, rotated on each use |
 
 ### 1. Register an app
@@ -121,7 +123,7 @@ https://qrdx.dev/api/oauth/authorize
   &code_challenge_method=S256
 ```
 
-`redirect_uri` must match a registered URL exactly, and `scope` (space or comma separated) may only ask for the app's scopes. PKCE is recommended, and required for apps with **Require PKCE** on; `S256` is the only method, and `plain` is refused. People sign in if needed, see the consent screen with your app's name, logo, website, who built it and the requested permissions, and choose **Authorize**. QRdx then redirects to `redirect_uri` with `code` and your `state`, or with `error=access_denied` if they chose **Cancel**. An invalid request (unknown client, unregistered redirect URI, a scope the app doesn't have) never redirects; it answers JSON such as `{ "error": "invalid_request", "error_description": "…" }`.
+`redirect_uri` must match a registered URL exactly, and `scope` (space or comma separated) may only ask for the app's scopes. PKCE is recommended, and required for apps with **Require PKCE** on; `S256` is the only method, and `plain` is refused. People sign in if needed, see the consent screen with your app's name, logo, website, who built it and the requested permissions, and choose **Authorize**. QRdx then redirects to `redirect_uri` with `code`, your `state` and `iss` (the issuer, `https://qrdx.dev`, per RFC 9207), or with `error=access_denied` if they chose **Cancel**. An invalid request (unknown client, unregistered redirect URI, a scope the app doesn't have) never redirects; it answers JSON such as `{ "error": "invalid_request", "error_description": "…" }`.
 
 ### 3. Exchange the code for tokens
 

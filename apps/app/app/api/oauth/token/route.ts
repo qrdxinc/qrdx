@@ -1,5 +1,6 @@
 import {
   database as db,
+  oauthApp,
   oauthAuthorizationCode,
   oauthToken,
   user,
@@ -10,7 +11,6 @@ import type { NextRequest } from "next/server";
 import { isAdminConsoleClientId } from "@/lib/admin-console/client";
 import { exchangeAdminConsoleCode } from "@/lib/admin-console/token";
 import {
-  authenticateClient,
   createTokenPair,
   hashToken,
   isBanActive,
@@ -18,7 +18,9 @@ import {
   NO_STORE_HEADERS,
   oauthError,
   verifyCodeChallenge,
+  verifySecret,
 } from "@/lib/oauth";
+import { isOwnResource } from "@/lib/oauth-metadata";
 import { getClientIp } from "@/lib/request-guards";
 
 // bcrypt client-secret checks are CPU-heavy: cap attempts per IP.
@@ -26,7 +28,31 @@ const tokenRateLimiter = createRateLimiter({
   limiter: slidingWindow(30, "60 s"),
 });
 
+/**
+ * Public clients (MCP apps in a browser) exchange codes from their own
+ * origin. Nothing here reads cookies: a code, a verifier or a secret is
+ * what counts.
+ */
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Authorization, Content-Type",
+  "Access-Control-Max-Age": "86400",
+};
+
+export function OPTIONS() {
+  return new Response(null, { status: 204, headers: CORS_HEADERS });
+}
+
 export async function POST(req: NextRequest) {
+  const response = await handleToken(req);
+  for (const [key, value] of Object.entries(CORS_HEADERS)) {
+    response.headers.set(key, value);
+  }
+  return response;
+}
+
+async function handleToken(req: NextRequest): Promise<Response> {
   const { success } = await tokenRateLimiter.limit(
     `oauth-token:ip:${getClientIp(req)}`,
   );
@@ -49,14 +75,26 @@ export async function POST(req: NextRequest) {
     return exchangeAdminConsoleCode(body);
   }
 
+  const credentials = readClientCredentials(req, body);
+  if (!credentials.ok) return credentials.error;
+
+  // RFC 8707: a token for another server is never issued here.
+  const resource = body.get("resource");
+  if (typeof resource === "string" && !isOwnResource(resource)) {
+    return oauthError(
+      "invalid_target",
+      "resource must be this QRdx server's MCP endpoint or REST API",
+    );
+  }
+
   const grantType = body.get("grant_type") as string | null;
 
   if (grantType === "authorization_code") {
-    return handleAuthorizationCode(body);
+    return handleAuthorizationCode(body, credentials);
   }
 
   if (grantType === "refresh_token") {
-    return handleRefreshToken(body);
+    return handleRefreshToken(body, credentials);
   }
 
   return oauthError(
@@ -65,24 +103,131 @@ export async function POST(req: NextRequest) {
   );
 }
 
-async function handleAuthorizationCode(body: FormData) {
-  const clientId = body.get("client_id") as string | null;
-  const clientSecret = body.get("client_secret") as string | null;
+interface ClientCredentials {
+  ok: true;
+  clientId: string | null;
+  clientSecret: string | null;
+}
+
+/**
+ * The client's id and secret, from HTTP Basic (client_secret_basic, RFC 6749
+ * §2.3.1: each part form-urlencoded) or the body (client_secret_post, and a
+ * public client's bare client_id). One method per request.
+ */
+function readClientCredentials(
+  req: NextRequest,
+  body: FormData,
+): ClientCredentials | { ok: false; error: Response } {
+  const bodyId = body.get("client_id");
+  const bodySecret = body.get("client_secret");
+  const clientId = typeof bodyId === "string" && bodyId ? bodyId : null;
+  const clientSecret =
+    typeof bodySecret === "string" && bodySecret ? bodySecret : null;
+  const header = req.headers.get("authorization");
+  if (!header?.toLowerCase().startsWith("basic ")) {
+    return { ok: true, clientId, clientSecret };
+  }
+  const basic = parseBasic(header.slice(6).trim());
+  if (!basic) {
+    return {
+      ok: false,
+      error: oauthError("invalid_client", "Malformed Basic credentials", 401),
+    };
+  }
+  if (clientSecret || (clientId && clientId !== basic.id)) {
+    return {
+      ok: false,
+      error: oauthError(
+        "invalid_request",
+        "Send the client's credentials one way: the Authorization header or the body",
+      ),
+    };
+  }
+  return { ok: true, clientId: basic.id, clientSecret: basic.secret };
+}
+
+function parseBasic(value: string): { id: string; secret: string } | null {
+  try {
+    const decoded = Buffer.from(value, "base64").toString("utf8");
+    const colon = decoded.indexOf(":");
+    if (colon <= 0) return null;
+    const formDecode = (part: string) =>
+      decodeURIComponent(part.replace(/\+/g, " "));
+    const id = formDecode(decoded.slice(0, colon));
+    const secret = formDecode(decoded.slice(colon + 1));
+    return id && secret ? { id, secret } : null;
+  } catch {
+    return null;
+  }
+}
+
+interface TokenClient {
+  id: string;
+  /** token_endpoint_auth_method "none": no secret, PKCE instead */
+  publicClient: boolean;
+}
+
+/**
+ * The app a token request is for. A public client (one that registered with
+ * token_endpoint_auth_method "none") sends its client_id alone and never a
+ * secret; every other app proves its secret.
+ */
+async function authenticateTokenClient(
+  credentials: ClientCredentials,
+  required: string,
+): Promise<TokenClient | Response> {
+  const { clientId, clientSecret } = credentials;
+  if (!clientId) {
+    return oauthError(
+      "invalid_request",
+      `Missing required parameters: ${required}`,
+    );
+  }
+  const [app] = await db
+    .select({
+      id: oauthApp.id,
+      clientSecretHash: oauthApp.clientSecretHash,
+      tokenEndpointAuthMethod: oauthApp.tokenEndpointAuthMethod,
+    })
+    .from(oauthApp)
+    .where(and(eq(oauthApp.clientId, clientId), eq(oauthApp.isActive, true)))
+    .limit(1);
+  if (app?.tokenEndpointAuthMethod === "none") {
+    // A secret from a public client means it's confused or someone guesses.
+    return clientSecret
+      ? oauthError("invalid_client", "Invalid client credentials", 401)
+      : { id: app.id, publicClient: true };
+  }
+  if (!clientSecret) {
+    return oauthError(
+      "invalid_request",
+      `Missing required parameters: ${required}`,
+    );
+  }
+  if (!(app && (await verifySecret(clientSecret, app.clientSecretHash)))) {
+    return oauthError("invalid_client", "Invalid client credentials", 401);
+  }
+  return { id: app.id, publicClient: false };
+}
+
+async function handleAuthorizationCode(
+  body: FormData,
+  credentials: ClientCredentials,
+) {
   const code = body.get("code") as string | null;
   const redirectUri = body.get("redirect_uri") as string | null;
   const codeVerifier = body.get("code_verifier") as string | null;
+  const required = "client_id, client_secret, code, redirect_uri";
 
-  if (!clientId || !clientSecret || !code || !redirectUri) {
+  if (!code || !redirectUri) {
     return oauthError(
       "invalid_request",
-      "Missing required parameters: client_id, client_secret, code, redirect_uri",
+      `Missing required parameters: ${required}`,
     );
   }
 
-  const app = await authenticateClient(clientId, clientSecret);
-  if (!app) {
-    return oauthError("invalid_client", "Invalid client credentials", 401);
-  }
+  const app = await authenticateTokenClient(credentials, required);
+  if (app instanceof Response) return app;
 
   const now = new Date();
 
@@ -121,6 +266,12 @@ async function handleAuthorizationCode(body: FormData) {
     return oauthError("invalid_grant", "redirect_uri mismatch");
   }
 
+  if (app.publicClient && !authCode.codeChallenge) {
+    // Never issued (PKCE is required for them), but a public client's code
+    // must not be redeemable on its client_id alone.
+    return oauthError("invalid_grant", "PKCE verification failed");
+  }
+
   if (authCode.codeChallenge) {
     if (!codeVerifier) {
       return oauthError("invalid_request", "code_verifier required for PKCE");
@@ -155,22 +306,22 @@ async function handleAuthorizationCode(body: FormData) {
   return Response.json(tokenResponse, { headers: NO_STORE_HEADERS });
 }
 
-async function handleRefreshToken(body: FormData) {
-  const clientId = body.get("client_id") as string | null;
-  const clientSecret = body.get("client_secret") as string | null;
+async function handleRefreshToken(
+  body: FormData,
+  credentials: ClientCredentials,
+) {
   const refreshToken = body.get("refresh_token") as string | null;
+  const required = "client_id, client_secret, refresh_token";
 
-  if (!clientId || !clientSecret || !refreshToken) {
+  if (!refreshToken) {
     return oauthError(
       "invalid_request",
-      "Missing required parameters: client_id, client_secret, refresh_token",
+      `Missing required parameters: ${required}`,
     );
   }
 
-  const app = await authenticateClient(clientId, clientSecret);
-  if (!app) {
-    return oauthError("invalid_client", "Invalid client credentials", 401);
-  }
+  const app = await authenticateTokenClient(credentials, required);
+  if (app instanceof Response) return app;
 
   const now = new Date();
   const refreshTokenHash = hashToken(refreshToken);

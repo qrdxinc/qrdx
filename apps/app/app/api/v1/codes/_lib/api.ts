@@ -247,6 +247,46 @@ export async function optionalApiKeyCaller(
   return { scope: bearer.scope, scopes: bearer.scopes };
 }
 
+/**
+ * The Bearer credential on a request that may come without one (the MCP
+ * server's sign-in tools): an API key or an OAuth access token, checked and
+ * limited exactly as resolveApiCaller checks a Bearer request (scopes, the
+ * workspace role, per-minute limits, the daily quota). Null without an
+ * Authorization header; throws the 401 or 403 otherwise. `kind` says which
+ * credential it was, so the caller can answer in its terms.
+ */
+export async function optionalBearerCaller(
+  req: Request,
+  access: ApiAccess,
+): Promise<(ApiCaller & { kind: "oauth" | "apiKey" }) | null> {
+  const authorization = req.headers.get("authorization");
+  if (!authorization) return null;
+  if (!authorization.startsWith("Bearer ")) throw missingTokenError();
+  const bearer = await authenticateBearer(authorization.slice(7).trim());
+  if (!SCOPES_FOR[access].some((s) => bearer.scopes.includes(s))) {
+    throw scopeError(bearer, `codes:${access}`);
+  }
+  if (access === "write") assertCan(bearer.scope, "content.write");
+  const [plan] = await Promise.all([
+    getPlanForScope(bearer.scope),
+    enforceRateLimits([
+      {
+        limiter: access === "write" ? writeLimiter : readLimiter,
+        key: `api:codes:${access}:user:${bearer.scope.userId}`,
+      },
+      { limiter: ipLimiter, key: `api:codes:ip:${getClientIp(req)}` },
+    ]),
+  ]);
+  await consumeApiQuota(req, bearer.scope, plan);
+  return {
+    kind: bearer.kind,
+    scope: bearer.scope,
+    canWrite:
+      SCOPES_FOR.write.some((s) => bearer.scopes.includes(s)) &&
+      can(bearer.scope.role, "content.write"),
+  };
+}
+
 /** resolveApiCaller's scope. */
 export async function resolveApiScope(
   req: NextRequest,

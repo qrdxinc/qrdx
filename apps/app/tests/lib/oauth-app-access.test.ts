@@ -41,9 +41,25 @@ const team = (
 const alicePersonalApp = {
   ownerUserId: alice,
   organizationId: ownWorkspaceId(alice),
+  registrationType: null,
 };
-const acmeApp = { ownerUserId: alice, organizationId: acme };
-const firstPartyApp = { ownerUserId: null, organizationId: null };
+const acmeApp = {
+  ownerUserId: alice,
+  organizationId: acme,
+  registrationType: null,
+};
+const firstPartyApp = {
+  ownerUserId: null,
+  organizationId: null,
+  registrationType: null,
+};
+// An MCP client that registered itself (lib/oauth-registration.ts): no
+// owner either, but never first-party.
+const dynamicApp = {
+  ownerUserId: null,
+  organizationId: null,
+  registrationType: "dynamic",
+};
 
 describe("isAppInScope", () => {
   it("apps in someone's own workspace belong there only", () => {
@@ -65,6 +81,12 @@ describe("isAppInScope", () => {
     expect(isFirstPartyApp(firstPartyApp)).toBe(true);
     expect(isAppInScope(personal(alice), firstPartyApp)).toBe(false);
     expect(isAppInScope(team(alice, acme, "owner"), firstPartyApp)).toBe(false);
+  });
+
+  it("a self-registered client has no owner but is never first-party", () => {
+    expect(isFirstPartyApp(dynamicApp)).toBe(false);
+    expect(isAppInScope(personal(alice), dynamicApp)).toBe(false);
+    expect(canEditOAuthApp(team(alice, acme, "owner"), dynamicApp)).toBe(false);
   });
 });
 
@@ -94,6 +116,11 @@ describe("isTrustedApp", () => {
     expect(isTrustedApp({ ...firstPartyApp, verified: false })).toBe(true);
     expect(isTrustedApp({ ...acmeApp, verified: true })).toBe(true);
     expect(isTrustedApp({ ...acmeApp, verified: false })).toBe(false);
+  });
+
+  it("never for a self-registered client, even marked verified", () => {
+    expect(isTrustedApp({ ...dynamicApp, verified: false })).toBe(false);
+    expect(isTrustedApp({ ...dynamicApp, verified: true })).toBe(false);
   });
 });
 
@@ -191,6 +218,109 @@ describe("authorization request", () => {
     expect(
       authorizeParamEntries(query({ ...base, code_challenge: challenge })),
     ).toContainEqual(["code_challenge_method", "S256"]);
+  });
+
+  it("refuses a resource that isn't this server's (RFC 8707)", () => {
+    expect(
+      checkAuthorizeParams(
+        query({ ...base, resource: "https://evil.example/mcp" }),
+      )?.error,
+    ).toBe("invalid_target");
+    expect(
+      checkAuthorizeParams(
+        query({ ...base, resource: "https://mcp.qrdx.dev/mcp" }),
+      ),
+    ).toBeNull();
+    expect(
+      checkAuthorizeParams(
+        query({ ...base, resource: "http://localhost:3000/api/mcp" }),
+      ),
+    ).toBeNull();
+  });
+
+  describe("a self-registered client", () => {
+    const mcpClient = {
+      redirectUris: [
+        "https://claude.ai/api/mcp/auth_callback",
+        "http://127.0.0.1/callback",
+      ],
+      scopes: ["codes:read", "codes:write"],
+      pkceRequired: true,
+      dynamic: true,
+    };
+    const pkce = {
+      code_challenge: challenge,
+      code_challenge_method: "S256",
+    };
+    const request = (values: Record<string, string>) =>
+      query({
+        response_type: "code",
+        client_id: "qrdx_app_mcp",
+        redirect_uri: "https://claude.ai/api/mcp/auth_callback",
+        ...pkce,
+        ...values,
+      });
+
+    it("gets its registered scopes when it names none", () => {
+      expect(checkAuthorizeApp(mcpClient, request({}))).toEqual({
+        ok: true,
+        scopes: ["codes:read", "codes:write"],
+      });
+    });
+
+    it("gets the registered scopes it asked for, ignoring the rest", () => {
+      expect(
+        checkAuthorizeApp(
+          mcpClient,
+          request({ scope: "codes:write openid offline_access" }),
+        ),
+      ).toEqual({ ok: true, scopes: ["codes:write"] });
+      expect(
+        checkAuthorizeApp(mcpClient, request({ scope: "profile:read" })),
+      ).toMatchObject({ ok: false, error: "invalid_scope" });
+    });
+
+    it("matches a loopback redirect URI on any port, nothing else", () => {
+      expect(
+        checkAuthorizeApp(
+          mcpClient,
+          request({ redirect_uri: "http://127.0.0.1:53682/callback" }),
+        ),
+      ).toMatchObject({ ok: true });
+      for (const uri of [
+        "http://127.0.0.1:53682/other",
+        "http://localhost:53682/callback",
+        "https://127.0.0.1:53682/callback",
+        "https://claude.ai:8443/api/mcp/auth_callback",
+        "http://127.0.0.1:53682/callback?x=1",
+      ]) {
+        expect(
+          checkAuthorizeApp(mcpClient, request({ redirect_uri: uri })),
+          uri,
+        ).toMatchObject({ ok: false, error: "invalid_request" });
+      }
+    });
+
+    it("needs PKCE", () => {
+      expect(
+        checkAuthorizeApp(
+          mcpClient,
+          query({
+            response_type: "code",
+            client_id: "qrdx_app_mcp",
+            redirect_uri: "https://claude.ai/api/mcp/auth_callback",
+          }),
+        ),
+      ).toMatchObject({ ok: false, error: "invalid_request" });
+    });
+  });
+
+  it("an app made in Settings still has to name its scopes", () => {
+    const { scope: _scope, ...withoutScope } = base;
+    expect(checkAuthorizeApp(app, query(withoutScope))).toMatchObject({
+      ok: false,
+      error: "invalid_request",
+    });
   });
 
   it("keeps the redirect URI's own query and appends state", () => {

@@ -5,13 +5,13 @@ import {
 } from "@repo/config";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { createMcpHandler } from "mcp-handler";
-import { API_KEY_PREFIX } from "@/lib/api-keys/shared";
 import { handleError } from "@/lib/error-response";
 import {
   enforceRateLimits,
   getClientIp,
   readBodyBytes,
 } from "@/lib/request-guards";
+import { sendsApiKey, signInGate } from "./auth";
 import {
   MCP_INSTRUCTIONS,
   MCP_KEYLESS_INSTRUCTIONS,
@@ -25,7 +25,10 @@ import { countMcpSessions, countToolCalls } from "./usage";
 export const maxDuration = 60;
 
 // Public, stateless MCP server (Streamable HTTP). Without a key the tools
-// render codes, format payloads and read the public community and docs. A
+// render codes, format payloads and read the public community and docs. The
+// dynamic-code tools (./codes.ts) are listed to everyone and need the person
+// signed in to QRdx (OAuth, ./auth.ts) when called: signInGate refuses such
+// a call with 401 before the SDK runs, so the client starts its sign-in. A
 // connection with an API key also gets save_template, save_barcode and
 // generate_ai_art (KEYED_MCP_TOOLS), which act on the key's workspace and
 // check the key when called. Tool calls and sessions are counted by name and
@@ -42,19 +45,10 @@ const handlerFor = ({ keyed }: McpToolsOptions) =>
 const keyedHandler = handlerFor({ keyed: true });
 const keylessHandler = handlerFor({ keyed: false });
 
-/**
- * Whether the request sends an API key (`Authorization: Bearer qrdx_…`), by
- * the header's shape alone, read like the keyed tools read it
- * (optionalApiKeyCaller): no lookup on this path. A wrong or revoked key
- * still lists the keyed tools, and calling one answers with what's wrong.
- */
-function sendsApiKey(req: Request): boolean {
-  const authorization = req.headers.get("authorization");
-  return Boolean(
-    authorization?.startsWith("Bearer ") &&
-      authorization.slice(7).trim().startsWith(API_KEY_PREFIX),
-  );
-}
+// Which handler: sendsApiKey (./auth.ts) reads the header's shape alone, like
+// the keyed tools read it (optionalApiKeyCaller): no lookup on this path. A
+// wrong or revoked key still lists the keyed tools, and calling one answers
+// with what's wrong. OAuth tokens get the keyless list.
 
 // Per IP, counting each JSON-RPC message: a batch of five tool calls uses
 // five of the minute's requests.
@@ -70,7 +64,8 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
   "Access-Control-Allow-Headers":
     "Accept, Authorization, Content-Type, Last-Event-ID, Mcp-Method, Mcp-Name, Mcp-Protocol-Version, Mcp-Session-Id",
-  "Access-Control-Expose-Headers": "Mcp-Protocol-Version, Mcp-Session-Id",
+  "Access-Control-Expose-Headers":
+    "Mcp-Protocol-Version, Mcp-Session-Id, WWW-Authenticate",
   "Access-Control-Max-Age": "86400",
 };
 
@@ -106,20 +101,24 @@ function browserVisit(req: Request): Response | null {
 }
 
 /**
- * How many JSON-RPC messages a request carries: a batch's length, else 1 (one
- * message, a GET or DELETE, or a body the SDK refuses itself).
+ * The JSON-RPC body (one message or a batch), read from a copy so the SDK
+ * still gets the request; null for a GET or DELETE, or a body the SDK
+ * refuses itself.
  */
-async function messageCount(req: Request): Promise<number> {
-  if (req.method !== "POST" || !req.body) return 1;
+async function readMessages(req: Request): Promise<unknown> {
+  if (req.method !== "POST" || !req.body) return null;
   const body = await readBodyBytes(req.clone(), MAX_BODY_BYTES);
-  if (!body) return 1;
+  if (!body) return null;
   try {
-    const parsed: unknown = JSON.parse(Buffer.from(body).toString("utf8"));
-    return Array.isArray(parsed) ? Math.max(1, parsed.length) : 1;
+    return JSON.parse(Buffer.from(body).toString("utf8")) as unknown;
   } catch {
-    return 1;
+    return null;
   }
 }
+
+/** How many JSON-RPC messages a body carries: a batch's length, else 1. */
+const messageCount = (body: unknown): number =>
+  Array.isArray(body) ? Math.max(1, body.length) : 1;
 
 const batchTooLarge = () =>
   Response.json(
@@ -138,7 +137,8 @@ async function handler(req: Request): Promise<Response> {
   const visit = browserVisit(req);
   if (visit) return visit;
   try {
-    const messages = await messageCount(req);
+    const body = await readMessages(req);
+    const messages = messageCount(body);
     await enforceRateLimits([
       {
         limiter: ipRateLimiter,
@@ -147,6 +147,10 @@ async function handler(req: Request): Promise<Response> {
       },
     ]);
     if (messages > MCP_MAX_BATCH_MESSAGES) return withCors(batchTooLarge());
+    // A sign-in tool called without a usable token: 401/403 for the client
+    // to sign in, before the SDK turns any answer into a 200.
+    const refused = await signInGate(req, body);
+    if (refused) return withCors(refused);
     const mcpHandler = sendsApiKey(req) ? keyedHandler : keylessHandler;
     return withCors(await mcpHandler(req));
   } catch (error) {
