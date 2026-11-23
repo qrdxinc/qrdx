@@ -1,5 +1,6 @@
 {
   "name": "QRdx",
+  "id": "1706676658479492903",
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "dist/ui.html",
