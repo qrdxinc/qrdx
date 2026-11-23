@@ -4,7 +4,13 @@
  */
 
 import { execSync } from "node:child_process";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { join } from "node:path";
 import { environment } from "@raycast/api";
 import type { BodyPattern, CornerEyeDotPattern, CornerEyePattern } from "qrdx";
@@ -21,7 +27,10 @@ import {
 } from "./types";
 
 const PREVIEW_VALUE = "https://qrdx.dev";
-const PREVIEW_SIZE = 64;
+// The pickers show three tiles a row, each about 470 px wide on a Retina
+// screen, so previews are drawn at 512 px to stay sharp. sips takes as long
+// at 512 px as at 64.
+const PREVIEW_SIZE = 512;
 
 function renderSVGString(overrides: Record<string, unknown>): string {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,9 +46,21 @@ function renderSVGString(overrides: Record<string, unknown>): string {
 }
 
 function getCacheDir(): string {
-  // One folder per qrdx version, so an update redraws every preview.
-  const dir = join(environment.supportPath, "previews", QRDX_VERSION);
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  // One folder per qrdx version and preview size, so an update redraws every
+  // preview. The folders of earlier versions and sizes are removed.
+  const root = join(environment.supportPath, "previews");
+  const name = `${QRDX_VERSION}-${PREVIEW_SIZE}px`;
+  const dir = join(root, name);
+  if (!existsSync(dir)) {
+    if (existsSync(root)) {
+      for (const old of readdirSync(root)) {
+        if (old !== name) {
+          rmSync(join(root, old), { recursive: true, force: true });
+        }
+      }
+    }
+    mkdirSync(dir, { recursive: true });
+  }
   return dir;
 }
 

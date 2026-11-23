@@ -8,6 +8,10 @@
 - Uses Raycast API 2.13 and Raycast's standard keyboard shortcuts for copy, save, open and edit. The keys are the same as before.
 - US English spelling in descriptions and hints.
 
+### Fixed
+
+- Pattern and template previews in the pickers are sharp. They were drawn at 64 px and stretched to fill the tiles.
+
 ## [1.2.0] - 2026-11-22
 
 ### Added
