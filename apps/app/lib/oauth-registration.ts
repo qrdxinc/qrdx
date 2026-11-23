@@ -6,7 +6,7 @@
 // - redirect URIs: https://, or http:// on a loopback address for desktop
 //   apps (any port at authorization time, RFC 8252 §7.3); never a QRdx host,
 //   whose own redirects could carry a code on to someone else; up to 5, of
-//   up to 512 characters;
+//   up to 512 characters and 1,024 together;
 // - authorization code + refresh token only, and PKCE (S256) always;
 // - only the scopes the MCP server's sign-in tools use (MCP_SCOPES);
 // - a name of up to 60 plain characters (NFKC, no invisible characters, no
@@ -18,7 +18,7 @@
 // marks it unverified and names it by the host it sends people back to
 // (lib/oauth-apps/access.ts, builder.ts), and its tokens work on the MCP
 // server only (lib/oauth.ts mcpOnly). Its rows say registration_type =
-// 'dynamic'; those never used are deleted after a day
+// 'dynamic'; those never used are deleted after a week
 // (pruneUnusedDynamicClients, from the daily cron).
 import "server-only";
 
@@ -31,7 +31,7 @@ import {
   oauthToken,
 } from "@repo/database";
 import cuid from "cuid";
-import { and, eq, inArray, lt, notExists } from "drizzle-orm";
+import { and, asc, eq, inArray, lt, notExists } from "drizzle-orm";
 import { baseUrl } from "@/lib/metadata";
 import { hashSecret, parseScopes } from "@/lib/oauth";
 import { DYNAMIC_REGISTRATION } from "@/lib/oauth-apps/access";
@@ -54,6 +54,8 @@ import { SHORT_LINK_BASE } from "@/lib/short-links";
 export const MAX_DYNAMIC_REDIRECT_URIS = 5;
 /** A self-registered client's redirect URI: far shorter than an app's 2,048. */
 export const MAX_DYNAMIC_REDIRECT_URI_LENGTH = 512;
+/** All of its redirect URIs together, which bounds a row's size. */
+export const MAX_DYNAMIC_REDIRECT_URIS_LENGTH = 1024;
 /** The registration request's largest body: a few URIs and a name. */
 export const MAX_REGISTRATION_BYTES = 16 * 1024;
 
@@ -90,36 +92,85 @@ const redirectError = (description: string): RegistrationError => ({
 const INVISIBLE = /[\p{Cc}\p{Cf}\p{Default_Ignorable_Code_Point}]/gu;
 
 /**
- * Letters from other scripts that look like the Latin ones in "qrdx", for
- * the QRdx check only (the stored name keeps them).
+ * A confusables skeleton for the four letters of "qrdx" (after UTS #39's
+ * confusables.txt): characters that look like q, r, d or x, in any case,
+ * mapped to the Latin letter, for the QRdx check only (the stored name keeps
+ * them). NFKC already folds the compatibility forms (fullwidth, math
+ * letters, roman numerals, ℛ and friends).
  */
 const LOOKALIKES: Record<string, string> = {
-  // q
-  "\u051b": "q", // Cyrillic qa
-  "\u0566": "q", // Armenian za
-  // r
-  "\u0433": "r", // Cyrillic ghe
-  "\u1d26": "r", // Greek letter small capital gamma
-  "\u2c85": "r", // Coptic gamma
-  // d
-  "\u0501": "d", // Cyrillic komi de
-  "\u13e7": "d", // Cherokee
-  "\u146f": "d", // Canadian syllabics
-  // x
-  "\u0445": "x", // Cyrillic ha
-  "\u03c7": "x", // Greek chi
-  "\u00d7": "x", // multiplication sign
-  "\u2179": "x", // small roman numeral ten (NFKC folds it too)
-  "\u1541": "x", // Canadian syllabics
+  // q, Q
+  "\u051b": "q", // ԛ Cyrillic small qa
+  "\u051a": "q", // Ԛ Cyrillic capital qa
+  "\u0566": "q", // զ Armenian small za
+  "\u0563": "q", // գ Armenian small gim
+  "\u024b": "q", // ɋ q with hook tail
+  "\u02a0": "q", // ʠ q with hook
+  "\ua7af": "q", // ꞯ Latin small capital q
+  "\u2d55": "q", // ⵕ Tifinagh yarr
+  // r, R
+  "\u0433": "r", // г Cyrillic small ghe
+  "\u1d26": "r", // ᴦ Greek letter small capital gamma
+  "\u2c85": "r", // ⲅ Coptic small gamma
+  "\uab47": "r", // ꭇ Latin small r without handle
+  "\uab48": "r", // ꭈ Latin small double r
+  "\uab81": "r", // ꮁ Cherokee small hu
+  "\u0280": "r", // ʀ Latin small capital r
+  "\u1d19": "r", // ᴙ Latin small capital reversed r
+  "\u027e": "r", // ɾ r with fishhook
+  "\u01a6": "r", // Ʀ Latin letter yr
+  "\u13d2": "r", // Ꮢ Cherokee sv
+  "\u13a1": "r", // Ꭱ Cherokee e
+  "\u1587": "r", // ᖇ Canadian syllabics tlhi
+  "\ua4e3": "r", // ꓣ Lisu letter zha
+  "\u16b1": "r", // ᚱ runic raido
+  // d, D
+  "\u0501": "d", // ԁ Cyrillic small komi de
+  "\u0500": "d", // Ԁ Cyrillic capital komi de
+  "\u13e7": "d", // Ꮷ Cherokee tsu
+  "\u146f": "d", // ᑯ Canadian syllabics ko
+  "\ua4d2": "d", // ꓒ Lisu letter pha
+  "\u1d05": "d", // ᴅ Latin small capital d
+  "\u0257": "d", // ɗ d with hook
+  "\u13a0": "d", // Ꭰ Cherokee a
+  "\uab70": "d", // ꭰ Cherokee small a
+  "\u15de": "d", // ᗞ Canadian syllabics carrier the
+  "\u15ea": "d", // ᗪ Canadian syllabics carrier pe
+  "\ua4d3": "d", // ꓓ Lisu letter da
+  // x, X
+  "\u0445": "x", // х Cyrillic small ha
+  "\u0425": "x", // Х Cyrillic capital ha
+  "\u03c7": "x", // χ Greek small chi
+  "\u03a7": "x", // Χ Greek capital chi
+  "\uab53": "x", // ꭓ Latin small chi
+  "\u00d7": "x", // × multiplication sign
+  "\u2a2f": "x", // ⨯ vector or cross product
+  "\u1541": "x", // ᕁ Canadian syllabics sayisi yi
+  "\u157d": "x", // ᕽ Canadian syllabics hk
+  "\u166e": "x", // ᙮ Canadian syllabics full stop
+  "\u2cac": "x", // Ⲭ Coptic capital khi
+  "\u2cad": "x", // ⲭ Coptic small khi
+  "\u16b7": "x", // ᚷ runic gebo
+  "\u2573": "x", // ╳ box drawings diagonal cross
+  "\ua4eb": "x", // ꓫ Lisu letter sha
+  "\u292b": "x", // ⤫ rising diagonal crossing falling diagonal
+  "\u292c": "x", // ⤬ falling diagonal crossing rising diagonal
 };
-const LOOKALIKE = new RegExp(`[${Object.keys(LOOKALIKES).join("")}]`, "g");
+const LOOKALIKE = new RegExp(`[${Object.keys(LOOKALIKES).join("")}]`, "gu");
+const fold = (text: string) =>
+  text.replace(LOOKALIKE, (char) => LOOKALIKES[char] ?? char);
 
-/** The name as compared with "qrdx": NFKC, lower case, lookalikes folded. */
+/**
+ * The name as compared with "qrdx": NFKC, lookalikes folded (before and
+ * after lower-casing, which turns some capitals into other lookalikes),
+ * lower case, and spaces, dots, dashes and other separators dropped, so
+ * "Q.R d-x" reads as "qrdx" too.
+ */
 function asLatin(name: string): string {
-  return name
-    .normalize("NFKC")
-    .toLowerCase()
-    .replace(LOOKALIKE, (char) => LOOKALIKES[char] ?? char);
+  return fold(fold(name.normalize("NFKC")).toLowerCase()).replace(
+    /[\p{Z}\p{P}\p{S}]/gu,
+    "",
+  );
 }
 
 /** Latin letters next to Cyrillic, Greek or Armenian ones: a mixed-script spoof. */
@@ -181,6 +232,14 @@ function checkRedirectUris(value: unknown): string[] | RegistrationError {
   if (value.length > MAX_DYNAMIC_REDIRECT_URIS) {
     return redirectError(
       `Register up to ${MAX_DYNAMIC_REDIRECT_URIS} redirect URIs.`,
+    );
+  }
+  if (
+    value.reduce((sum, input) => sum + input.length, 0) >
+    MAX_DYNAMIC_REDIRECT_URIS_LENGTH
+  ) {
+    return redirectError(
+      `Redirect URIs can be up to ${MAX_DYNAMIC_REDIRECT_URIS_LENGTH} characters together.`,
     );
   }
   const uris: string[] = [];
@@ -359,41 +418,32 @@ export function rateLimitAddress(ip: string): string {
   return `${prefix.join(":")}::/64`;
 }
 
-/** How long a registered client may go unused before it's deleted. */
-export const UNUSED_CLIENT_HOURS = 24;
 /**
- * ChatGPT registers once per connection, when the app is set up, and
- * reuses that client for everyone; the first person may sign in days
- * later. Its clients get longer.
+ * How long a registered client may go unused before it's deleted: one
+ * window for every client. A week covers ChatGPT, which registers once when
+ * a connection is set up and reuses that client for everyone, so its first
+ * sign-in may come days later.
  */
-export const UNUSED_CHATGPT_CLIENT_DAYS = 30;
-const CHATGPT_HOSTS = new Set(["chatgpt.com", "chat.openai.com"]);
-
-const sendsToChatGpt = (uris: unknown) =>
-  Array.isArray(uris) &&
-  uris.some((uri) => {
-    try {
-      return CHATGPT_HOSTS.has(new URL(String(uri)).hostname);
-    } catch {
-      return false;
-    }
-  });
+export const UNUSED_CLIENT_DAYS = 7;
+/** Rows deleted per statement. */
+const PRUNE_BATCH = 500;
 
 /**
- * Deletes self-registered clients nobody ever used: registered more than a
- * day ago (30 days for ChatGPT's), never marked used (updated_at is still
+ * Deletes self-registered clients nobody ever used: registered more than
+ * UNUSED_CLIENT_DAYS ago, never marked used (updated_at is still
  * created_at: the first authorization code moves it), and with no
  * authorization code or token. A client that ever issued a token is never
- * deleted. At most `limit` a run; returns how many went.
+ * deleted. Oldest first, in batches, until none are left or `deadline`
+ * (epoch ms) passes; returns how many went.
  */
-export async function pruneUnusedDynamicClients(
-  now: Date = new Date(),
-  { limit = 500 }: { limit?: number } = {},
-): Promise<number> {
-  const cutoff = new Date(now.getTime() - UNUSED_CLIENT_HOURS * 3_600_000);
-  const chatGptCutoff = new Date(
-    now.getTime() - UNUSED_CHATGPT_CLIENT_DAYS * 86_400_000,
-  );
+export async function pruneUnusedDynamicClients({
+  now = new Date(),
+  deadline = Number.POSITIVE_INFINITY,
+}: {
+  now?: Date;
+  deadline?: number;
+} = {}): Promise<number> {
+  const cutoff = new Date(now.getTime() - UNUSED_CLIENT_DAYS * 86_400_000);
   const unused = and(
     eq(oauthApp.registrationType, DYNAMIC_REGISTRATION),
     lt(oauthApp.createdAt, cutoff),
@@ -411,29 +461,32 @@ export async function pruneUnusedDynamicClients(
         .where(eq(oauthToken.appId, oauthApp.id)),
     ),
   );
-  const candidates = await db
-    .select({
-      id: oauthApp.id,
-      createdAt: oauthApp.createdAt,
-      redirectUris: oauthApp.redirectUris,
-    })
-    .from(oauthApp)
-    .where(unused)
-    .limit(limit);
-  const ids = candidates
-    .filter(
-      (row) =>
-        !sendsToChatGpt(row.redirectUris) ||
-        new Date(row.createdAt) < chatGptCutoff,
-    )
-    .map((row) => row.id);
-  if (ids.length === 0) return 0;
-  // The same conditions again: a sign-in that started meanwhile keeps it.
-  const deleted = await db
-    .delete(oauthApp)
-    .where(and(inArray(oauthApp.id, ids), unused))
-    .returning({ id: oauthApp.id });
-  return deleted.length;
+  let deleted = 0;
+  while (Date.now() < deadline) {
+    const batch = await db
+      .select({ id: oauthApp.id })
+      .from(oauthApp)
+      .where(unused)
+      .orderBy(asc(oauthApp.createdAt), asc(oauthApp.id))
+      .limit(PRUNE_BATCH);
+    if (batch.length === 0) break;
+    // The same conditions again: a sign-in that started meanwhile keeps it.
+    const gone = await db
+      .delete(oauthApp)
+      .where(
+        and(
+          inArray(
+            oauthApp.id,
+            batch.map((row) => row.id),
+          ),
+          unused,
+        ),
+      )
+      .returning({ id: oauthApp.id });
+    deleted += gone.length;
+    if (batch.length < PRUNE_BATCH || gone.length === 0) break;
+  }
+  return deleted;
 }
 
 /**

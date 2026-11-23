@@ -2710,9 +2710,10 @@
     "setupUrl": "URL del server",
     "toolsEyebrow": "Strumenti",
     "toolsTitle": "Cosa può usare il tuo assistente",
-    "toolsDescription": "{count, number} strumenti. Tutti tranne save_template, save_barcode e generate_ai_art sono di sola lettura e non richiedono nessuna chiave: generano immagini, formattano il testo e leggono la community pubblica. Questi tre compaiono solo quando la connessione ha una chiave API. Tutti i parametri sono nella <link>documentazione del server MCP</link>.",
+    "toolsDescription": "{count, number} strumenti. La maggior parte è in sola lettura e non richiede account né chiave: generano immagini, formattano testo e leggono la community pubblica. I quattro strumenti per i QR code dinamici ti chiedono di accedere a QRdx, mentre save_template, save_barcode e generate_ai_art compaiono quando la connessione ha una chiave API. Tutti i parametri sono nella <link>documentazione del server MCP</link>.",
     "toolNoKey": "Senza chiave",
     "toolNeedsKey": "Richiede una chiave API",
+    "toolNeedsSignIn": "Richiede l’accesso",
     "faqTitle": "FAQ sul server MCP",
     "connect": {
       "copyFailed": "Impossibile copiare. Seleziona il testo e copialo a mano.",
@@ -9286,8 +9287,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Questo link non può essere usato",
+          "unknownAppTitle": "La connessione di quest’app a QRdx è scaduta",
+          "unknownAppBody": "QRdx non riconosce più l’app che ti ha mandato qui. Se è un’app di IA che hai collegato a QRdx, come Claude, Cursor o VS Code, rimuovi QRdx dall’app, aggiungilo di nuovo e accedi. Altrimenti, chiedi a chi sviluppa l’app.",
           "theAppThatSentYou": "L’app che ti ha mandato qui ha fatto una richiesta non valida: <span>{description}</span>. Torna all’app e riprova, oppure contatta chi la sviluppa.",
           "appnameWillBeAbleTo": "{appName} potrà",
+          "mcpOnlyNote": "{appName} può usare il tuo account solo tramite gli strumenti per i codici del server MCP di QRdx: non può eliminare codici, gestire webhook o usare l’arte AI.",
           "nameWantsToAccessYour": "{name} vuole accedere al tuo account QRdx",
           "builtByName": "Creato da <strong>{name}</strong>",
           "unverifiedApp": "App non verificata.",

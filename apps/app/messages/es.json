@@ -2710,9 +2710,10 @@
     "setupUrl": "URL del servidor",
     "toolsEyebrow": "Herramientas",
     "toolsTitle": "Lo que tu asistente puede usar",
-    "toolsDescription": "{count, number} herramientas. Todas excepto save_template, save_barcode y generate_ai_art son de solo lectura y no necesitan clave: generan imágenes, dan formato al texto y leen la comunidad pública. Esas tres aparecen en la lista una vez que la conexión tiene una clave de API. Los parámetros completos están en la <link>documentación del servidor MCP</link>.",
+    "toolsDescription": "{count, number} herramientas. La mayoría son de solo lectura y no necesitan cuenta ni clave: generan imágenes, dan formato al texto y leen la comunidad pública. Las cuatro herramientas de códigos dinámicos te piden iniciar sesión en QRdx, y save_template, save_barcode y generate_ai_art aparecen en la lista una vez que la conexión tiene una clave de API. Los parámetros completos están en la <link>documentación del servidor MCP</link>.",
     "toolNoKey": "Sin clave",
     "toolNeedsKey": "Requiere clave de API",
+    "toolNeedsSignIn": "Requiere iniciar sesión",
     "faqTitle": "Preguntas sobre el servidor MCP",
     "connect": {
       "copyFailed": "No se pudo copiar. Selecciona el texto y cópialo manualmente.",
@@ -9286,8 +9287,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Este enlace no se puede usar",
+          "unknownAppTitle": "La conexión de esta aplicación con QRdx ha caducado",
+          "unknownAppBody": "QRdx ya no reconoce la aplicación que te envió aquí. Si es una aplicación de IA que conectaste a QRdx, como Claude, Cursor o VS Code, quita QRdx de la aplicación, vuelve a añadirlo e inicia sesión. Si no, consulta con el desarrollador de la aplicación.",
           "theAppThatSentYou": "La aplicación que te envió aquí hizo una solicitud no válida: <span>{description}</span>. Vuelve a la aplicación e inténtalo de nuevo, o contacta con su desarrollador.",
           "appnameWillBeAbleTo": "{appName} podrá",
+          "mcpOnlyNote": "{appName} solo puede usar tu cuenta a través de las herramientas de códigos del servidor MCP de QRdx: no puede eliminar códigos, gestionar webhooks ni usar el arte con IA.",
           "nameWantsToAccessYour": "{name} quiere acceder a tu cuenta de QRdx",
           "builtByName": "Creado por <strong>{name}</strong>",
           "unverifiedApp": "App no verificada.",

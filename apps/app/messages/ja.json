@@ -2710,9 +2710,10 @@
     "setupUrl": "サーバーURL",
     "toolsEyebrow": "ツール",
     "toolsTitle": "アシスタントが呼び出せるツール",
-    "toolsDescription": "{count, number} 個のツールがあります。save_template、save_barcode、generate_ai_art 以外はすべて読み取り専用で、キーは不要です。画像の生成、テキストの整形、公開コミュニティの閲覧ができます。この3つは、接続に API キーが設定されると一覧に表示されます。パラメーターの詳細は<link>MCP サーバーのドキュメント</link>をご覧ください。",
+    "toolsDescription": "{count, number} 個のツールがあります。ほとんどは読み取り専用で、アカウントもキーも不要です。画像の生成、テキストの整形、公開コミュニティの閲覧ができます。動的QRコードの4つのツールはQRdxへのサインインを求め、save_template、save_barcode、generate_ai_art は接続に API キーが設定されると一覧に表示されます。パラメーターの詳細は<link>MCP サーバーのドキュメント</link>をご覧ください。",
     "toolNoKey": "キー不要",
     "toolNeedsKey": "APIキーが必要",
+    "toolNeedsSignIn": "サインインが必要",
     "faqTitle": "MCPサーバーのFAQ",
     "connect": {
       "copyFailed": "コピーできませんでした。テキストを選択して手動でコピーしてください。",
@@ -9286,8 +9287,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "このリンクは使用できません",
+          "unknownAppTitle": "このアプリとQRdxの接続は期限切れです",
+          "unknownAppBody": "QRdxは、こちらに誘導したアプリを認識できなくなりました。Claude、Cursor、VS CodeなどQRdxに接続したAIアプリの場合は、アプリからQRdxを削除して追加し直し、サインインしてください。それ以外の場合は、アプリの開発元にお問い合わせください。",
           "theAppThatSentYou": "こちらに誘導したアプリが無効なリクエストを送信しました：<span>{description}</span>。アプリに戻ってもう一度お試しいただくか、開発元にお問い合わせください。",
           "appnameWillBeAbleTo": "{appName}に許可される操作",
+          "mcpOnlyNote": "{appName}はQRdx MCPサーバーのコードツールを通してのみアカウントを利用できます。コードの削除、Webhookの管理、AIアートの利用はできません。",
           "nameWantsToAccessYour": "{name}がQRdxアカウントへのアクセスを求めています",
           "builtByName": "提供元：<strong>{name}</strong>",
           "unverifiedApp": "未確認のアプリです。",

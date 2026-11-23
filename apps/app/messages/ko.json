@@ -2710,9 +2710,10 @@
     "setupUrl": "서버 URL",
     "toolsEyebrow": "도구",
     "toolsTitle": "어시스턴트가 호출할 수 있는 도구",
-    "toolsDescription": "도구 {count, number}개가 있어요. save_template, save_barcode, generate_ai_art를 제외한 모든 도구는 읽기 전용이라 키가 필요 없어요. 이미지를 렌더링하고, 텍스트를 포맷하고, 공개 커뮤니티를 읽어요. 이 세 가지는 연결에 API 키가 있을 때 목록에 표시돼요. 전체 매개변수는 <link>MCP server docs</link>에서 확인하세요.",
+    "toolsDescription": "{count, number}개의 도구가 있어요. 대부분 읽기 전용이며 계정이나 키 없이 쓸 수 있어요. 이미지를 렌더링하고, 텍스트 형식을 맞추고, 공개 커뮤니티를 읽어요. 동적 QR 코드 도구 4개는 QRdx 로그인을 요청하고, save_template, save_barcode, generate_ai_art는 연결에 API 키가 있을 때 목록에 나타나요. 전체 매개변수는 <link>MCP 서버 문서</link>에서 확인하세요.",
     "toolNoKey": "키 불필요",
     "toolNeedsKey": "API 키 필요",
+    "toolNeedsSignIn": "로그인 필요",
     "faqTitle": "MCP 서버 FAQ",
     "connect": {
       "copyFailed": "복사하지 못했어요. 텍스트를 선택해서 직접 복사해 주세요.",
@@ -9286,8 +9287,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "이 링크는 사용할 수 없어요",
+          "unknownAppTitle": "이 앱과 QRdx의 연결이 만료됐어요",
+          "unknownAppBody": "QRdx가 이곳으로 안내한 앱을 더 이상 알아보지 못해요. Claude, Cursor, VS Code처럼 QRdx에 연결한 AI 앱이라면 앱에서 QRdx를 삭제한 뒤 다시 추가하고 로그인하세요. 그렇지 않다면 앱 개발자에게 문의하세요.",
           "theAppThatSentYou": "이곳으로 안내한 앱에서 잘못된 요청을 보냈어요: <span>{description}</span>. 앱으로 돌아가 다시 시도하거나 앱 개발자에게 문의하세요.",
           "appnameWillBeAbleTo": "{appName}이(가) 할 수 있는 작업",
+          "mcpOnlyNote": "{appName}은(는) QRdx MCP 서버의 코드 도구를 통해서만 계정을 사용할 수 있어요. 코드 삭제, 웹훅 관리, AI 아트 사용은 할 수 없어요.",
           "nameWantsToAccessYour": "{name}이(가) 내 QRdx 계정에 접근하려고 해요",
           "builtByName": "제작: <strong>{name}</strong>",
           "unverifiedApp": "확인되지 않은 앱이에요.",

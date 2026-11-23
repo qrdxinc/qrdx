@@ -25,6 +25,8 @@ const state = vi.hoisted(() => ({
   blocked: new Set<string>(),
   /** Every key a limiter counted, in order */
   limitKeys: [] as string[],
+  /** Keys given back (a negative rate: refundRateLimits) */
+  refunds: [] as string[],
   analyticsCalls: [] as { codeId: string; days: number }[],
   logoReads: [] as { scope: unknown; id: string }[],
 }));
@@ -69,7 +71,17 @@ vi.mock("@repo/rate-limit", () => ({
   slidingWindow: () => ({}),
   fixedWindow: () => ({}),
   createRateLimiter: () => ({
-    limit: async (key: string) => {
+    limit: async (key: string, rate?: number) => {
+      if (rate !== undefined && rate < 0) {
+        state.refunds.push(key);
+        return {
+          success: true,
+          limit: 1000,
+          remaining: 999,
+          reset: Date.now() + 60_000,
+          pending: Promise.resolve(),
+        };
+      }
       state.limitKeys.push(key);
       const over = state.rateLimited || state.blocked.has(key);
       return {
@@ -206,6 +218,7 @@ const {
   rateLimitAddress,
   MAX_DYNAMIC_REDIRECT_URI_LENGTH,
 } = await import("@/lib/oauth-registration");
+const { forgetVerifiedSecrets } = await import("@/lib/oauth-secret-cache");
 const authorize = await import("@/app/api/oauth/authorize/route");
 const token = await import("@/app/api/oauth/token/route");
 const mcp = await import("@/app/api/mcp/route");
@@ -305,6 +318,8 @@ beforeEach(() => {
   state.rateLimited = false;
   state.blocked = new Set();
   state.limitKeys = [];
+  state.refunds = [];
+  forgetVerifiedSecrets();
   state.analyticsCalls = [];
   state.logoReads = [];
   seed();
@@ -600,7 +615,7 @@ describe("POST /api/oauth/register", () => {
   it("keeps the name plain, and names a nameless client by its host", async () => {
     const plain = await registerClient({
       ...CLAUDE,
-      client_name: "Cur‮sor\u0000  Agent",
+      client_name: "Cur\u202Esor\u0000  Agent",
     });
     expect((plain as { client_name?: string }).client_name).toBe(
       "Cursor Agent",
@@ -1360,13 +1375,21 @@ describe("registration limits", () => {
 
 describe("names that only look like another", () => {
   it.each([
-    ["a soft hyphen", "QR­dx"],
-    ["a combining grapheme joiner", "QR͏dx"],
-    ["a zero-width space", "QR​dx Connector"],
-    ["Cyrillic ha for x", "QRdх"],
-    ["fullwidth letters", "ＱＲｄｘ"],
-    ["Cyrillic lookalikes only", "ԛгԁх"],
-    ["Latin mixed with Cyrillic", "Clаude"],
+    ["a soft hyphen", "QR\u00ADdx"],
+    ["a combining grapheme joiner", "QR\u034Fdx"],
+    ["a zero-width space", "QR\u200Bdx Connector"],
+    ["Cyrillic ha for x", "QRd\u0445"],
+    ["fullwidth letters", "\uFF31\uFF32\uFF44\uFF58"],
+    ["Cyrillic lookalikes only", "\u051B\u0433\u0501\u0445"],
+    ["Latin mixed with Cyrillic", "Cl\u0430ude"],
+    ["a small capital D", "QR\u1D05x"],
+    ["a small capital R", "Q\u0280dx"],
+    ["a Latin chi for x", "QRd\uAB53"],
+    ["a small capital Q", "\uA7AFRdx"],
+    ["a Cherokee letter for R", "Q\u13D2dx"],
+    ["a syllabics letter for D", "QR\u15EAx"],
+    ["a multiplication sign for x", "QRd\u00D7"],
+    ["separators inside", "Q.R d-x"],
   ])("refuses %s", async (_label, name) => {
     const response = await postRegister({ ...CLAUDE, client_name: name });
     expect(response.status).toBe(400);
@@ -1377,7 +1400,7 @@ describe("names that only look like another", () => {
   it("stores names without invisible characters", async () => {
     const client = (await registerClient({
       ...CLAUDE,
-      client_name: "Claude​ Co­de️",
+      client_name: "Claude\u200B Co\u00ADde\uFE0F",
     })) as { client_name?: string };
     expect(client.client_name).toBe("Claude Code");
   });
@@ -1414,20 +1437,20 @@ describe("cleaning up registered clients", () => {
     };
   };
 
-  it("deletes only never-used clients older than a day (30 days for ChatGPT's)", async () => {
+  it("deletes only never-used clients older than a week, ChatGPT's alike", async () => {
+    const DAY = 24 * HOUR;
     fakeDb.seed("oauthApp", [
-      app("old_unused", 30),
-      app("young_unused", 2),
-      app("old_with_token", 30),
-      app("old_with_code", 30),
-      app("old_marked_used", 30, { updatedAt: new Date(Date.now() - HOUR) }),
-      app("chatgpt_2d", 48, {
+      app("old_unused", (8 * DAY) / HOUR),
+      app("six_days_unused", (6 * DAY) / HOUR),
+      app("old_with_token", (8 * DAY) / HOUR),
+      app("old_with_code", (8 * DAY) / HOUR),
+      app("old_marked_used", (8 * DAY) / HOUR, {
+        updatedAt: new Date(Date.now() - HOUR),
+      }),
+      app("chatgpt_8d", (8 * DAY) / HOUR, {
         redirectUris: ["https://chatgpt.com/connector_platform_oauth_redirect"],
       }),
-      app("chatgpt_31d", 31 * 24, {
-        redirectUris: ["https://chatgpt.com/connector_platform_oauth_redirect"],
-      }),
-      app("settings_app", 30 * 24, { registrationType: null }),
+      app("settings_app", (30 * DAY) / HOUR, { registrationType: null }),
     ]);
     fakeDb.seed("oauthToken", [
       {
@@ -1467,14 +1490,34 @@ describe("cleaning up registered clients", () => {
         .sort(),
     ).toEqual(
       [
-        "chatgpt_2d",
         "old_marked_used",
         "old_with_code",
         "old_with_token",
         "settings_app",
-        "young_unused",
+        "six_days_unused",
       ].sort(),
     );
+  });
+
+  it("works through any number of rows in batches, oldest first, within its deadline", async () => {
+    // 1,203 stale registrations, all with a chatgpt.com redirect: nothing
+    // about them can stall the cleanup.
+    fakeDb.seed(
+      "oauthApp",
+      Array.from({ length: 1203 }, (_, index) =>
+        app(`stale_${String(index).padStart(4, "0")}`, 10 * 24 + index, {
+          redirectUris: [
+            "https://chatgpt.com/connector_platform_oauth_redirect",
+          ],
+        }),
+      ),
+    );
+    // Out of time before it starts: nothing goes.
+    expect(await pruneUnusedDynamicClients({ deadline: Date.now() - 1 })).toBe(
+      0,
+    );
+    expect(await pruneUnusedDynamicClients()).toBe(1203);
+    expect(fakeDb.rows("oauthApp")).toHaveLength(0);
   });
 
   it("marks a client used at its first authorization code", async () => {
@@ -1489,28 +1532,110 @@ describe("cleaning up registered clients", () => {
 });
 
 describe("token endpoint limits", () => {
-  it("counts a public client's requests by client_id, a secret's by address", async () => {
+  const refreshFrom = (clientId: string, refreshToken: string, ip: string) =>
+    postToken(
+      {
+        grant_type: "refresh_token",
+        client_id: clientId,
+        refresh_token: refreshToken,
+      },
+      { "x-forwarded-for": ip },
+    );
+
+  it("counts a client's attempts per address: one address can't use up another's", async () => {
     const { clientId, tokens } = await signInClaude();
+    // Someone who copied the client_id from an authorize URL and spent its
+    // budget from their own address.
+    state.blocked.add(`oauth-token:client:${clientId}:ip:198.51.100.9`);
+    const attacker = await refreshFrom(
+      clientId,
+      tokens.refresh_token,
+      "198.51.100.9",
+    );
+    expect(attacker.status).toBe(429);
     state.limitKeys = [];
-    // The address is over its secret-check budget: a public refresh is not.
-    state.blocked.add("oauth-token:ip:unknown");
-    const refresh = await postToken({
-      grant_type: "refresh_token",
-      client_id: clientId,
-      refresh_token: tokens.refresh_token,
-    });
-    expect(refresh.status).toBe(200);
+    const owner = await refreshFrom(
+      clientId,
+      tokens.refresh_token,
+      "203.0.113.50",
+    );
+    expect(owner.status).toBe(200);
     expect(state.limitKeys).toEqual([
-      "oauth-token:ceiling:ip:unknown",
-      `oauth-token:client:${clientId}`,
+      "oauth-token:ceiling:ip:203.0.113.50",
+      `oauth-token:client:${clientId}:ip:203.0.113.50`,
     ]);
-    const withSecret = await postToken({
-      grant_type: "refresh_token",
-      client_id: "client_legacy",
-      client_secret: "qrdx_secret_legacy",
-      refresh_token: "whatever",
+  });
+
+  describe("a client with a secret, from a shared address", () => {
+    async function confidentialClient() {
+      const { token_endpoint_auth_method: _method, ...rest } = CLAUDE;
+      const client = await registerClient({
+        ...rest,
+        client_name: "ChatGPT",
+        redirect_uris: [CLAUDE_CALLBACK],
+      });
+      const secret = client.client_secret as string;
+      const exchange = async () => {
+        const code = (
+          await approve(authorizeQuery(client.client_id))
+        ).searchParams.get("code") as string;
+        return postToken(
+          {
+            grant_type: "authorization_code",
+            client_id: client.client_id,
+            client_secret: secret,
+            code,
+            redirect_uri: CLAUDE_CALLBACK,
+            code_verifier: VERIFIER,
+          },
+          { "x-forwarded-for": "192.0.2.10" },
+        );
+      };
+      return { client, secret, exchange };
+    }
+
+    it("counts a secret check as a failure only until it passes, then remembers it", async () => {
+      const { exchange } = await confidentialClient();
+      state.limitKeys = [];
+      expect((await exchange()).status).toBe(200);
+      // Counted before bcrypt, given back once the secret was right.
+      expect(state.limitKeys).toContain("oauth-token:ip:192.0.2.10");
+      expect(state.refunds).toEqual(["oauth-token:ip:192.0.2.10"]);
+      // The address's failure budget is spent: a remembered secret still
+      // works, with no bcrypt and nothing counted against it.
+      state.blocked.add("oauth-token:ip:192.0.2.10");
+      state.limitKeys = [];
+      expect((await exchange()).status).toBe(200);
+      expect(state.limitKeys).not.toContain("oauth-token:ip:192.0.2.10");
     });
-    expect(withSecret.status).toBe(429);
+
+    it("a wrong secret is counted and stays counted; over the budget, no bcrypt runs", async () => {
+      const { client } = await confidentialClient();
+      const wrong = () =>
+        postToken(
+          {
+            grant_type: "refresh_token",
+            client_id: client.client_id,
+            client_secret: "qrdx_secret_wrong",
+            refresh_token: "x",
+          },
+          { "x-forwarded-for": "192.0.2.66" },
+        );
+      expect((await wrong()).status).toBe(401);
+      expect(state.limitKeys).toContain("oauth-token:ip:192.0.2.66");
+      expect(state.refunds).toEqual([]);
+      state.blocked.add("oauth-token:ip:192.0.2.66");
+      expect((await wrong()).status).toBe(429);
+    });
+
+    it("a rotated secret isn't taken from memory", async () => {
+      const { client, exchange } = await confidentialClient();
+      expect((await exchange()).status).toBe(200);
+      const bcrypt = (await import("bcryptjs")).default;
+      const row = fakeDb.find("oauthApp", { clientId: client.client_id });
+      if (row) row.clientSecretHash = bcrypt.hashSync("qrdx_secret_new", 4);
+      expect((await exchange()).status).toBe(401);
+    });
   });
 });
 

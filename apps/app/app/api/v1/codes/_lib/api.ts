@@ -160,6 +160,15 @@ function mcpOnlyTokenRefused(): HttpError {
   );
 }
 
+/**
+ * The credential of an `Authorization: Bearer …` header, the scheme matched
+ * in any case (RFC 7235 §2.1); null for no header or another scheme.
+ */
+function bearerCredential(authorization: string | null): string | null {
+  if (!authorization || !/^bearer\s/i.test(authorization)) return null;
+  return authorization.slice(7).trim();
+}
+
 function scopeError(bearer: BearerCaller, scope: string): HttpError {
   return bearer.kind === "apiKey"
     ? insufficientKeyScopeError(scope)
@@ -181,8 +190,9 @@ export async function resolveApiCaller(
   const authorization = req.headers.get("authorization");
   let caller: ApiCaller;
 
-  if (authorization?.startsWith("Bearer ")) {
-    const bearer = await authenticateBearer(authorization.slice(7).trim());
+  const credential = bearerCredential(authorization);
+  if (credential !== null) {
+    const bearer = await authenticateBearer(credential);
     if (!SCOPES_FOR[access].some((s) => bearer.scopes.includes(s))) {
       throw scopeError(bearer, `codes:${access}`);
     }
@@ -242,9 +252,7 @@ export async function optionalApiKeyCaller(
 ): Promise<{ scope: ActiveScope; scopes: string[] } | null> {
   const authorization = req.headers.get("authorization");
   if (!authorization) return null;
-  // RFC 7235: the scheme is case-insensitive.
-  const token =
-    /^bearer\s+(.+)$/i.exec(authorization.trim())?.[1]?.trim() ?? "";
+  const token = bearerCredential(authorization) ?? "";
   if (!isApiKeyFormat(token)) {
     throw token.startsWith(API_KEY_PREFIX)
       ? invalidApiKeyError()
@@ -284,10 +292,9 @@ export async function optionalBearerCaller(
 ): Promise<(ApiCaller & { kind: "oauth" | "apiKey" }) | null> {
   const authorization = req.headers.get("authorization");
   if (!authorization) return null;
-  // RFC 7235: the scheme is case-insensitive.
-  const match = /^bearer\s+(.+)$/i.exec(authorization.trim());
-  if (!match?.[1]) throw missingTokenError();
-  const bearer = await authenticateBearer(match[1].trim(), { mcp: true });
+  const credential = bearerCredential(authorization);
+  if (!credential) throw missingTokenError();
+  const bearer = await authenticateBearer(credential, { mcp: true });
   if (!SCOPES_FOR[access].some((s) => bearer.scopes.includes(s))) {
     throw scopeError(bearer, `codes:${access}`);
   }
@@ -344,15 +351,15 @@ export async function requireApiToken(
   | { tokenData: ApiToken; error?: never }
   | { error: Response; tokenData?: never }
 > {
-  const authorization = req.headers.get("authorization");
-  if (!authorization?.startsWith("Bearer ")) {
+  const credential = bearerCredential(req.headers.get("authorization"));
+  if (credential === null) {
     return {
       error: oauthCompatibleError("invalid_token", missingTokenError()),
     };
   }
   let bearer: BearerCaller;
   try {
-    bearer = await authenticateBearer(authorization.slice(7).trim());
+    bearer = await authenticateBearer(credential);
   } catch (error) {
     if (!(error instanceof HttpError)) throw error;
     return { error: oauthCompatibleError("invalid_token", error) };

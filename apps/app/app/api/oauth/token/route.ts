@@ -22,21 +22,29 @@ import {
 } from "@/lib/oauth";
 import { DYNAMIC_REGISTRATION } from "@/lib/oauth-apps/access";
 import { isOwnResource } from "@/lib/oauth-metadata";
-import { getClientIp } from "@/lib/request-guards";
+import { rememberedSecret, rememberSecret } from "@/lib/oauth-secret-cache";
+import { getClientIp, refundRateLimits } from "@/lib/request-guards";
 
-// Requests that send a client secret (a bcrypt check, CPU-heavy) are capped
-// per IP address, as before. Public clients send none: ChatGPT and Claude
-// refresh many people's tokens from a few server addresses, so theirs count
-// per client_id instead, under a generous ceiling per address that every
-// request counts against first.
-const secretLimiter = createRateLimiter({
-  limiter: slidingWindow(30, "60 s"),
-});
-const publicClientLimiter = createRateLimiter({
-  limiter: slidingWindow(300, "60 s"),
-});
+// Limits. ChatGPT and Claude refresh many people's tokens from a few server
+// addresses, and a client_id is public (every authorization URL has it), so
+// nothing here lets one address use up a budget another address shares:
+// - every request counts against a ceiling per address;
+// - attempts count per client_id and address together: someone who knows a
+//   client_id only drains their own address's bucket for it;
+// - a client secret is a bcrypt check, so failed checks are capped per
+//   address. Each check is counted before it runs (no burst of bcrypts) and
+//   given back when the secret was right, so a busy address whose secrets
+//   are right never runs out;
+// - a secret that was just checked is remembered for a few minutes
+//   (lib/oauth-secret-cache.ts), so a burst of refreshes runs bcrypt once.
 const addressCeiling = createRateLimiter({
   limiter: slidingWindow(600, "60 s"),
+});
+const clientAttempts = createRateLimiter({
+  limiter: slidingWindow(300, "60 s"),
+});
+const failedSecrets = createRateLimiter({
+  limiter: slidingWindow(30, "60 s"),
 });
 
 const tooMany = () =>
@@ -82,10 +90,10 @@ async function handleToken(req: NextRequest): Promise<Response> {
   }
 
   // The back-office console: a first-party client defined by environment,
-  // with its own one-time codes (lib/admin-console). Its secret is checked
-  // like an app's: per IP.
+  // with its own one-time codes (lib/admin-console), capped per address as
+  // before.
   if (isAdminConsoleClientId(body.get("client_id") as string | null)) {
-    if (!(await secretLimiter.limit(`oauth-token:ip:${ip}`)).success) {
+    if (!(await failedSecrets.limit(`oauth-token:ip:${ip}`)).success) {
       return tooMany();
     }
     return exchangeAdminConsoleCode(body);
@@ -93,21 +101,21 @@ async function handleToken(req: NextRequest): Promise<Response> {
 
   const credentials = readClientCredentials(req, body);
   if (!credentials.ok) return credentials.error;
-  const limited = credentials.clientSecret
-    ? await secretLimiter.limit(`oauth-token:ip:${ip}`)
-    : await publicClientLimiter.limit(
-        `oauth-token:client:${(credentials.clientId ?? "").slice(0, 100)}`,
-      );
-  if (!limited.success) return tooMany();
+  if (credentials.clientId) {
+    const attempts = await clientAttempts.limit(
+      `oauth-token:client:${credentials.clientId.slice(0, 100)}:ip:${ip}`,
+    );
+    if (!attempts.success) return tooMany();
+  }
 
   const grantType = body.get("grant_type") as string | null;
 
   if (grantType === "authorization_code") {
-    return handleAuthorizationCode(body, credentials);
+    return handleAuthorizationCode(body, credentials, ip);
   }
 
   if (grantType === "refresh_token") {
-    return handleRefreshToken(body, credentials);
+    return handleRefreshToken(body, credentials, ip);
   }
 
   return oauthError(
@@ -215,6 +223,7 @@ async function authenticateTokenClient(
   credentials: ClientCredentials,
   required: string,
   body: FormData,
+  ip: string,
 ): Promise<TokenClient | Response> {
   const { clientId, clientSecret } = credentials;
   if (!clientId) {
@@ -263,15 +272,27 @@ async function authenticateTokenClient(
       `Missing required parameters: ${required}`,
     );
   }
-  if (!(app && (await verifySecret(clientSecret, app.clientSecretHash)))) {
+  if (!app) {
     return oauthError("invalid_client", "Invalid client credentials", 401);
   }
+  if (rememberedSecret(app.id, clientSecret, app.clientSecretHash)) {
+    return { id: app.id, publicClient: false, dynamic };
+  }
+  // A bcrypt check: counted as a failure until it passes.
+  const failure = { limiter: failedSecrets, key: `oauth-token:ip:${ip}` };
+  if (!(await failure.limiter.limit(failure.key)).success) return tooMany();
+  if (!(await verifySecret(clientSecret, app.clientSecretHash))) {
+    return oauthError("invalid_client", "Invalid client credentials", 401);
+  }
+  await refundRateLimits([failure]);
+  rememberSecret(app.id, clientSecret, app.clientSecretHash);
   return { id: app.id, publicClient: false, dynamic };
 }
 
 async function handleAuthorizationCode(
   body: FormData,
   credentials: ClientCredentials,
+  ip: string,
 ) {
   const code = body.get("code") as string | null;
   const redirectUri = body.get("redirect_uri") as string | null;
@@ -285,7 +306,7 @@ async function handleAuthorizationCode(
     );
   }
 
-  const app = await authenticateTokenClient(credentials, required, body);
+  const app = await authenticateTokenClient(credentials, required, body, ip);
   if (app instanceof Response) return app;
 
   const now = new Date();
@@ -368,6 +389,7 @@ async function handleAuthorizationCode(
 async function handleRefreshToken(
   body: FormData,
   credentials: ClientCredentials,
+  ip: string,
 ) {
   const refreshToken = body.get("refresh_token") as string | null;
   const required = "client_id, client_secret, refresh_token";
@@ -379,7 +401,7 @@ async function handleRefreshToken(
     );
   }
 
-  const app = await authenticateTokenClient(credentials, required, body);
+  const app = await authenticateTokenClient(credentials, required, body, ip);
   if (app instanceof Response) return app;
 
   const now = new Date();

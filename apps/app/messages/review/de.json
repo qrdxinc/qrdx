@@ -7936,7 +7936,7 @@
     "status": "machine"
   },
   "mcp.toolsDescription": {
-    "source": "646144455d7b",
+    "source": "dc41c7876802",
     "status": "machine"
   },
   "mcp.toolNoKey": {
@@ -7945,6 +7945,10 @@
   },
   "mcp.toolNeedsKey": {
     "source": "7077456c4851",
+    "status": "machine"
+  },
+  "mcp.toolNeedsSignIn": {
+    "source": "1077f6b6e64a",
     "status": "machine"
   },
   "mcp.faqTitle": {
@@ -29539,12 +29543,24 @@
     "source": "9941f422dbe5",
     "status": "machine"
   },
+  "app.oauth.authorize.oauthConsent.unknownAppTitle": {
+    "source": "4b2ee6240194",
+    "status": "machine"
+  },
+  "app.oauth.authorize.oauthConsent.unknownAppBody": {
+    "source": "dd4524d87d30",
+    "status": "machine"
+  },
   "app.oauth.authorize.oauthConsent.theAppThatSentYou": {
     "source": "5d9b4fa8a6e8",
     "status": "machine"
   },
   "app.oauth.authorize.oauthConsent.appnameWillBeAbleTo": {
     "source": "c9b18d29d255",
+    "status": "machine"
+  },
+  "app.oauth.authorize.oauthConsent.mcpOnlyNote": {
+    "source": "e57db88b55be",
     "status": "machine"
   },
   "app.oauth.authorize.oauthConsent.nameWantsToAccessYour": {

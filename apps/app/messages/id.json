@@ -2710,9 +2710,10 @@
     "setupUrl": "URL server",
     "toolsEyebrow": "Alat",
     "toolsTitle": "Yang dapat dipanggil asisten Anda",
-    "toolsDescription": "{count, number} alat. Semua alat kecuali save_template, save_barcode, dan generate_ai_art bersifat hanya-baca dan tidak memerlukan kunci: alat-alat ini merender gambar, memformat teks, dan membaca komunitas publik. Ketiga alat tersebut baru ditampilkan setelah koneksi memiliki kunci API. Parameter lengkap ada di <link>dokumentasi server MCP</link>.",
+    "toolsDescription": "{count, number} alat. Sebagian besar hanya-baca dan tidak memerlukan akun atau kunci: alat ini membuat gambar, memformat teks, dan membaca komunitas publik. Empat alat kode QR dinamis meminta Anda masuk ke QRdx, sedangkan save_template, save_barcode, dan generate_ai_art muncul setelah koneksi memiliki kunci API. Parameter lengkapnya ada di <link>dokumentasi server MCP</link>.",
     "toolNoKey": "Tanpa kunci",
     "toolNeedsKey": "Perlu kunci API",
+    "toolNeedsSignIn": "Perlu masuk",
     "faqTitle": "FAQ server MCP",
     "connect": {
       "copyFailed": "Tidak dapat menyalin. Pilih teksnya lalu salin secara manual.",
@@ -9286,8 +9287,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Tautan ini tidak dapat digunakan",
+          "unknownAppTitle": "Koneksi aplikasi ini ke QRdx sudah kedaluwarsa",
+          "unknownAppBody": "QRdx tidak lagi mengenali aplikasi yang mengarahkan Anda ke sini. Jika ini aplikasi AI yang Anda hubungkan ke QRdx, seperti Claude, Cursor, atau VS Code, hapus QRdx dari aplikasi tersebut, tambahkan lagi, lalu masuk. Jika bukan, tanyakan kepada pengembang aplikasinya.",
           "theAppThatSentYou": "Aplikasi yang mengarahkan Anda ke sini mengirim permintaan yang tidak valid: <span>{description}</span>. Kembali ke aplikasi tersebut dan coba lagi, atau hubungi pengembangnya.",
           "appnameWillBeAbleTo": "{appName} akan dapat",
+          "mcpOnlyNote": "{appName} hanya bisa memakai akun Anda lewat alat kode server MCP QRdx: aplikasi ini tidak bisa menghapus kode, mengelola webhook, atau memakai seni AI.",
           "nameWantsToAccessYour": "{name} ingin mengakses akun QRdx Anda",
           "builtByName": "Dibuat oleh <strong>{name}</strong>",
           "unverifiedApp": "Aplikasi belum terverifikasi.",

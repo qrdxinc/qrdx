@@ -23,15 +23,20 @@ import {
 // 2. the request is checked; a refused one stops here;
 // 3. a budget across every address, which only registrations that would be
 //    stored use up, so junk requests can't spend it for everyone else.
-// Clients that never get used are deleted after a day (the daily cron,
+// Clients that never get used are deleted after a week (the daily cron,
 // pruneUnusedDynamicClients).
 
 const minuteLimiter = createRateLimiter({
   limiter: slidingWindow(20, "60 s"),
 });
 const hourLimiter = createRateLimiter({ limiter: slidingWindow(200, "1 h") });
+// 300 an hour across every address. With unused clients deleted after a
+// week (pruneUnusedDynamicClients), at most 300 × 24 × 7 = 50,400 unused
+// rows can exist at once, each at most about 1.5 KB (1,024 characters of
+// redirect URIs, a 60-character name, ids, a hash): about 75 MB in the
+// worst case, and a few MB for real clients' short rows.
 const globalLimiter = createRateLimiter({
-  limiter: slidingWindow(2000, "1 h"),
+  limiter: slidingWindow(300, "1 h"),
 });
 
 /** Browser-based MCP clients register from their own origin; no cookies are read. */

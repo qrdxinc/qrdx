@@ -19,8 +19,9 @@ import {
   readAuthorizeParams,
 } from "@/lib/oauth-apps/authorize";
 
-// GET: the URL apps send people to. Invalid requests get a JSON error and never
-// a redirect (the redirect_uri can't be trusted until it has been checked).
+// GET: the URL apps send people to. Invalid requests never redirect to the
+// redirect_uri (it can't be trusted until it has been checked): apps get a
+// JSON error, and a browser goes to the consent page, which explains it.
 // People who are signed out, or haven't approved this app for these scopes
 // yet, continue on the consent page (/oauth/authorize), which POSTs back here.
 // A repeat authorization for scopes already approved skips the page (and
@@ -37,6 +38,11 @@ function consentPage(req: NextRequest, entries: [string, string][]) {
   return url;
 }
 
+/** A browser navigation (it asks for HTML), not an app's API call. */
+function wantsPage(req: NextRequest): boolean {
+  return (req.headers.get("accept") ?? "").includes("text/html");
+}
+
 export async function GET(req: NextRequest) {
   const params = readAuthorizeParams((key) =>
     req.nextUrl.searchParams.get(key),
@@ -45,7 +51,18 @@ export async function GET(req: NextRequest) {
     return authorizeAdminConsole(req, params);
   }
   const check = await checkAuthorizeRequest(params);
-  if (!check.ok) return oauthError(check.error, check.description);
+  if (!check.ok) {
+    // A person in a browser (an app's saved connection whose client was
+    // deleted, a broken link) gets the page that says so in words; apps
+    // get the JSON. Our own page, never the request's redirect_uri.
+    if (wantsPage(req)) {
+      return Response.redirect(
+        consentPage(req, authorizeParamEntries(params)).toString(),
+        302,
+      );
+    }
+    return oauthError(check.error, check.description);
+  }
 
   const session = await auth.api.getSession({ headers: await headers() });
   const userId = session?.user?.id;
