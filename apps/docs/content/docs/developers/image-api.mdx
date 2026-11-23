@@ -94,9 +94,9 @@ Flat parameters cover colors, shapes, a frame and a logo:
 https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&body=rounded&eye=rounded&dot=rounded&frame=arrow
 ```
 
-```txt title="A built-in frame with its label, an official frame by id, and a community frame"
+```txt title="A built-in frame with its label, an official frame with its version, and a community frame"
 https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&frame=banner-bottom&frameText=Scan%20the%20menu
-https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&frame=autumn-maple&frameText=Hello%20autumn
+https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&frame=autumn-maple.v1&frameText=Hello%20autumn
 https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&item=frame:wifi-card
 ```
 
@@ -139,7 +139,7 @@ Encode the `data` value when it contains `&`, `#`, `+` or spaces, for example wi
 | `dot` | `square` | Shape of the dot inside each corner eye |
 | `level` | `Q` | Error correction: `L` (about 7%), `M` (15%), `Q` (25%) or `H` (30%) |
 | `margin` | `4` | Quiet zone around the code in modules, `0` to `16` |
-| `frame` | none | A call-to-action [frame](/docs/features/frames): any of the {facts.frameStyles} built-in frames, such as `banner-bottom`, `speech-bubble`, `circle` or `dot-ring`, or one of the {facts.officialFrames} [official frames](/docs/features/frames#official-frames) by id, such as `autumn-maple` (the last part of its [community](/community/frames) page's address) |
+| `frame` | none | A call-to-action [frame](/docs/features/frames): any of the {facts.frameStyles} built-in frames, such as `banner-bottom`, `speech-bubble`, `circle` or `dot-ring`, or one of the {facts.officialFrames} [official frames](/docs/features/frames#official-frames) by id (the last part of its [community](/community/frames) page's address) with its version, such as `autumn-maple.v1`. Without a version it's version 1, and `.latest` follows the frame's redesigns; see [Official frames](#official-frames) |
 | `frameText` | `Scan me` | The frame's label, up to 24 characters. Also relabels the frame of a `style` or `item` |
 | `style` | none | The editor's whole design as JSON; see [Styles](#style) |
 | `item` | none | A community frame or theme by id, such as `frame:wifi-card`; see [Community items](#community-items) |
@@ -157,7 +157,7 @@ Enum values (`level`, `format`, `frame`) are case-insensitive. With a frame, `si
 | `bgColor`, `fgColor`, `eyeColor`, `dotColor` | A color (hex such as `#155dfc`, `rgb()`, `hsl()` or a color name), or a gradient: `{ "type": "linear", "angle": 45, "stops": [...] }` or `{ "type": "radial", "stops": [...] }`, with 2 to 8 stops of `{ "color", "offset" }` (offset 0 to 100) |
 | `bodyPattern`, `cornerEyePattern`, `cornerEyeDotPattern` | The [pattern values](#pattern-values) |
 | `level`, `margin` | As the parameters above (`margin` 0 to 16) |
-| `frame` | A built-in frame, `{ "style": "banner-bottom", "text": "Scan me", "color": "#155dfc", "textColor": "#ffffff" }`; an official frame by id, with your labels and colors, `{ "style": "autumn-maple", "text": "Hello autumn", "secondaryText": "", "color": "#4c1d95" }` (`secondaryColor` is its accent, `fontScale` sizes its labels, and an empty label hides it); or a custom one, `{ "style": "custom", "spec": { … } }`, with a frame spec from the [community](#community-items) or a custom frame made in the playground's Frame section. Specs are checked against the engine's frame-spec rules (no markup, links or images; at most 32 KB) |
+| `frame` | A built-in frame, `{ "style": "banner-bottom", "text": "Scan me", "color": "#155dfc", "textColor": "#ffffff" }`; an official frame by id (with a version or not, as in `frame`), with your labels and colors, `{ "style": "autumn-maple.v1", "text": "Hello autumn", "secondaryText": "", "color": "#4c1d95" }` (`secondaryColor` is its accent, `fontScale` sizes its labels, and an empty label hides it); or a custom one, `{ "style": "custom", "spec": { … } }`, with a frame spec from the [community](#community-items) or a custom frame made in the playground's Frame section. Specs are checked against the engine's frame-spec rules (no markup, links or images; at most 32 KB) |
 | `eyeColors` | Colors per eye, over `eyeColor` and `dotColor`: `{ "topLeft": { "outer": "#b91c1c", "inner": "#1d4ed8" }, "topRight": …, "bottomLeft": … }`, each a color or a gradient |
 | `moduleScale` | Size of each dot, `0.5` to `1` (default `1`) |
 | `shape` | `square` (default) or `circle`: the code in a disc of decorative dots |
@@ -181,7 +181,15 @@ Enum values (`level`, `format`, `frame`) are case-insensitive. With a frame, `si
 
 `item` renders a published [community](/community) frame or theme, free under CC0. Find ids with [`GET /v1/community/items`](/docs/developers/api/list-community-items), or open an item page and use its type and slug: `/community/frames/wifi-card` is `frame:wifi-card`. A frame item sits on a plain black-on-white code; add `style` or flat parameters to change the code under it. Renders with `item` are cached for 5 minutes (10 at the CDN), since an item can get a new version or be taken down.
 
-QRdx's own frames, published by @qrdx, can also go by id in `frame` (`frame=autumn-maple`) or as a frame's `style` in `style`. They're drawn from the frame library QRdx ships, not looked up in the community, so these renders are cached for a year like the rest; if QRdx changes one of its frames, an image already cached keeps the version it was drawn with. The playground's Get code dialog writes image URLs this way, so the frame's spec stays out of the URL.
+### Official frames [#official-frames]
+
+QRdx's own frames, published by @qrdx, can also go by id in `frame` or as a frame's `style` in `style`. They're drawn from the frames QRdx ships, not looked up in the community, so the frame's spec stays out of the URL. QRdx sometimes fixes or redesigns one of its frames, and keeps every version it has published, so an image you embed doesn't change:
+
+- **With a version**, `frame=autumn-maple.v1`: always draws that version of the frame. The playground's Get code dialog copies image URLs this way, with the version you see.
+- **Without a version**, `frame=autumn-maple`: version 1, the frame as it was first published. It never changes either.
+- **`.latest`**, `frame=autumn-maple.latest`: the frame's newest design, so the image changes when QRdx changes the frame. Use it only if that's what you want. These renders are cached for 5 minutes (10 at the CDN); the others are cached for a year like other renders.
+
+A version the frame doesn't have is a `400` that lists the versions it has. A playground link's `style` value names its official frame the same way.
 
 ## Logos [#logos]
 
@@ -223,10 +231,10 @@ These are the same styles as the [`qrdx` React library](/docs/features/patterns)
 A successful request returns the image with:
 
 - `Content-Type: image/svg+xml`, `image/png`, `image/webp`, `image/gif`, `image/bmp`, `image/vnd.microsoft.icon`, `image/tiff` or `application/postscript` (EPS is sent as a `qr-code.eps` download, and TIFF as `qr-code.tif` or `qr-code-cmyk.tif`: browsers other than Safari can't show TIFF in an `<img>`)
-- `Cache-Control: public, max-age=31536000, immutable`, except for renders with `item` (5 minutes, 10 at the CDN) and with `logoFileId` (`private, no-store`)
+- `Cache-Control: public, max-age=31536000, immutable`, except for renders with `item` or an official frame's `.latest` (5 minutes, 10 at the CDN) and with `logoFileId` (`private, no-store`)
 - `Access-Control-Allow-Origin: *`, so you can `fetch` it from any website
 
-Rendering is deterministic: the same query string always returns the same bytes, which is why responses can be cached for a year. URLs that use only the original parameters render exactly as they always have.
+Rendering is deterministic: the same query string returns the same bytes, which is why responses can be cached for a year. The exceptions are `item` and an official frame's `.latest`, which follow what they name. URLs that use only the original parameters render exactly as they always have.
 
 ## If something goes wrong
 
