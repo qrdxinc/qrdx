@@ -104,7 +104,8 @@ export async function GET(
     return undefined;
   });
   if (page === undefined) return text(503, "Please try again.");
-  if (!page) return text(404, "Contact not found.");
+  // Never published: the template's sample contact isn't anyone's.
+  if (!page || page.notReady) return text(404, "Contact not found.");
 
   // Password, schedule and pause rules apply to the contact file too.
   if ((await checkPageLifecycle(page.code)).action !== "allow") {

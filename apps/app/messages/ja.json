@@ -1740,6 +1740,9 @@
     "hosted": {
       "notFoundTitle": "ページが見つかりません",
       "notFoundMessage": "このリンクの先にはページがありません。所有者が削除したか、リンクが誤って入力された可能性があります。",
+      "notReadyTitle": "このページはまだ準備中です",
+      "notReadyMessage": "このQRコードの作成者が、開く先のページをまだ設定しています。しばらくしてからもう一度お試しください。",
+      "notReadyOwner": "このコードの作成者の方は、QRdxでページを公開してください。公開するとスキャンでそのページが開きます。",
       "passwordProtected": "パスワード保護あり",
       "madeWithQrdx": "QRdxで作成",
       "share": "共有",
