@@ -4,7 +4,7 @@ import { PersonalLayout, PersonalText } from "./personal-layout";
 
 // A note a person on the team writes to one person, sent from the console
 // (apps/app/lib/email/personal-notes.tsx): their text, as they wrote it,
-// signed with their name unless the text already is.
+// signed with their name unless the text already ends with it.
 
 export interface PersonalNoteEmailProps {
   /** Plain text; a blank line starts a new paragraph */
