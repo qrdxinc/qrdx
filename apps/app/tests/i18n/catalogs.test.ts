@@ -250,13 +250,16 @@ describe("language conventions", () => {
   const english = flatten(en);
 
   // Spanish (23 Nov 2026): numbers as {n, number} writes them in Spanish,
-  // 1000 and 10.000, never the English 1,000.
+  // 1000 and 10.000, never the English 1,000. Prices stay exactly as
+  // written (₹1,499), as the translation rules say.
   it("writes Spanish numbers the Spanish way", () => {
     const grouped = /(?<![\d.,])\d{1,3}(?:,\d{3})+(?![\d]|[.,]\d)/g;
     const fourDigitPoint = /(?<![\d.,])\d\.\d{3}(?![\d]|[.,]\d)/g;
     const wrong: string[] = [];
     const check = (where: string, text: string, source: string) => {
-      for (const [token] of text.matchAll(grouped)) {
+      for (const match of text.matchAll(grouped)) {
+        const [token] = match;
+        if (/[₹$€£]$/.test(text.slice(0, match.index))) continue;
         // A decimal comma ("0,495" for 0.495) isn't grouping.
         if (source.includes(token)) wrong.push(`${where}: ${token}`);
       }
