@@ -63,9 +63,7 @@ async function readsInPrint(props: QRProps, width: number): Promise<boolean> {
   // A frame adds its artwork around the code: the code is the share of
   // `width` that leaves the whole artwork `width` wide
   const size = (width * width) / getFrameDimensions(width, props.frame).width;
-  const svg = svgFromDataUri(
-    await getQRAsSVGDataUri({ ...props, size }),
-  );
+  const svg = svgFromDataUri(await getQRAsSVGDataUri({ ...props, size }));
   if (!svg) return false;
   const modules =
     qrcodegen.QrCode.encodeText(

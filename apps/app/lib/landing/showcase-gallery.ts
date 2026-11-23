@@ -500,7 +500,6 @@ const CIRCLE_EYES: Partial<ThemeStyles> = {
   cornerEyeDotPattern: "circle",
 };
 
-
 const artTiles: WallTile[] = [
   art("bloom", "logo", "blend", "classic"),
   art("wave", "logo", "badge", "minimal"),
