@@ -24,6 +24,11 @@ import {
   mailchimpTargets,
   syncResponsesToMailchimp,
 } from "@repo/integrations/src/integrations/mailchimp";
+import {
+  createPipedriveClient,
+  type PipedriveSettings,
+  syncResponsesToPipedrive,
+} from "@repo/integrations/src/integrations/pipedrive";
 import type { ResponseSinkSettings } from "@repo/integrations/src/sinks/mapping";
 import {
   isSyncDue,
@@ -31,6 +36,7 @@ import {
   readSyncState,
   SYNC_BATCH_SIZE,
   SYNC_LEASE_MS,
+  syncBatchSize,
 } from "@repo/integrations/src/sinks/state";
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { after } from "next/server";
@@ -152,7 +158,7 @@ async function deliverBatch(
   const responses = await loadResponses(scope, {
     pageIds: responseSettings.pageIds ?? null,
     cursor: state.cursor,
-    limit: SYNC_BATCH_SIZE,
+    limit: syncBatchSize(row.provider),
   });
   if (responses.length === 0) {
     return { result: { delivered: 0, skipped: 0, cursor: null }, read: 0 };
@@ -166,6 +172,26 @@ async function deliverBatch(
           forms: responseSettings.forms ?? {},
         },
         responses,
+      ),
+      read: responses.length,
+    };
+  }
+  if (row.provider === "pipedrive") {
+    const pipedrive = settings as unknown as PipedriveSettings;
+    return {
+      result: await syncResponsesToPipedrive(
+        createPipedriveClient(
+          accessToken,
+          String(row.metadata.apiDomain ?? ""),
+        ),
+        {
+          pageIds: pipedrive.pageIds ?? null,
+          forms: pipedrive.forms ?? {},
+          createLead: pipedrive.createLead === true,
+        },
+        responses,
+        // A batch that failed before may have made some of its leads
+        { isRetry: state.attempts > 0 },
       ),
       read: responses.length,
     };
@@ -310,7 +336,7 @@ async function syncOne(
           settings: { ...settingsOf(row.metadata), ...outcome.settingsPatch },
         };
       }
-      if (outcome.read < SYNC_BATCH_SIZE) {
+      if (outcome.read < syncBatchSize(row.provider)) {
         caughtUp = true;
         break;
       }

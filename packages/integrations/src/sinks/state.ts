@@ -1,5 +1,10 @@
 import { isIntegrationApiError } from "../core/http-client";
-import type { SinkDeliveryResult, SyncCursor, SyncState } from "./types";
+import type {
+  SinkDeliveryResult,
+  SinkProviderSlug,
+  SyncCursor,
+  SyncState,
+} from "./types";
 
 // Same schedule as webhook deliveries (apps/app lib/events/deliveries.ts):
 // 8 tries over about two days, then the stream stops until "Retry now".
@@ -10,6 +15,17 @@ const MAX_RETRY_DELAY_MS = 24 * 60 * MINUTE_MS;
 export const SYNC_LEASE_MS = 5 * MINUTE_MS;
 /** Items read per run. */
 export const SYNC_BATCH_SIZE = 500;
+/**
+ * Items read per run for a tool that takes them one request at a time (no
+ * bulk endpoint). A small batch keeps one delivery well inside a worker's
+ * time, so a worker that is cut off never leaves a long batch half done.
+ */
+export const ONE_BY_ONE_BATCH_SIZE = 10;
+
+/** Items to read per run for this provider's stream. */
+export function syncBatchSize(provider: SinkProviderSlug): number {
+  return provider === "pipedrive" ? ONE_BY_ONE_BATCH_SIZE : SYNC_BATCH_SIZE;
+}
 
 /** 1 min, 4 min, 16 min, ~1 h, ~4 h, ~17 h, then 24 h (±10% jitter). */
 export function syncRetryDelayMs(

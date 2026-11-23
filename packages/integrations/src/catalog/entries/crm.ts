@@ -109,4 +109,62 @@ export const crm: IntegrationCatalogEntry[] = [
     keywords: ["email", "newsletter", "audience", "list", "marketing"],
     related: ["hubspot", "google-sheets", "webhooks"],
   },
+  {
+    slug: "pipedrive",
+    name: "Pipedrive",
+    tagline:
+      "Every form response on your hosted pages creates or updates a Pipedrive person, and can add a lead.",
+    description: [
+      "Connect Pipedrive, choose the pages, and map each form's questions to person fields. Email, name and phone are suggested for you. New responses then find the person by email and update them, or create one, so the same person never becomes two.",
+      "Turn on leads and every response also adds a lead linked to that person, so each enquiry lands in your Leads Inbox. QRdx asks for access to contacts and leads, and only questions you map are sent. If a delivery is retried, a response that already has a lead doesn't get a second one.",
+    ],
+    kind: "connect",
+    surface: "integrations",
+    categories: ["crm"],
+    logo: { type: "image", src: "/integrations/pipedrive.svg" },
+    plan: "free",
+    builtBy: "QRdx",
+    website: "https://www.pipedrive.com",
+    primaryAction: {
+      type: "link",
+      label: "Connect Pipedrive",
+      href: "/settings/integrations/pipedrive",
+    },
+    steps: [
+      {
+        title: "Click Enable and pick your Pipedrive account",
+        body: "Settings → Integrations → Pipedrive. Approve access to contacts and leads.",
+      },
+      {
+        title: "Choose pages and map fields",
+        body: "Pick the hosted pages whose forms should reach Pipedrive, check the suggested mapping, and choose whether each response also adds a lead.",
+      },
+      {
+        title: "New responses become persons and leads",
+        body: "Responses after you turn it on are sent within minutes. Responses without an email are skipped.",
+      },
+    ],
+    capabilities: [
+      {
+        title: "Persons found by email",
+        description: "One person per email, updated by later responses.",
+      },
+      {
+        title: "A lead for every response",
+        description:
+          "Optional, linked to the person, and never added twice when a delivery is retried.",
+      },
+      {
+        title: "Field mapping",
+        description: "Email, name and phone, with suggested defaults.",
+      },
+      {
+        title: "Delivered reliably",
+        description:
+          "Batched, retried with backoff for about two days, with the last sync shown in settings.",
+      },
+    ],
+    keywords: ["crm", "persons", "leads", "sales", "forms", "oauth"],
+    related: ["hubspot", "mailchimp", "webhooks"],
+  },
 ];

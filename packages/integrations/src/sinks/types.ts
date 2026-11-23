@@ -9,6 +9,7 @@ export const SINK_PROVIDERS = [
   "google-sheets",
   "hubspot",
   "mailchimp",
+  "pipedrive",
 ] as const;
 export type SinkProviderSlug = (typeof SINK_PROVIDERS)[number];
 
@@ -23,6 +24,7 @@ export const SINK_STREAMS: Record<SinkProviderSlug, SinkStream> = {
   "google-sheets": "scans",
   hubspot: "responses",
   mailchimp: "responses",
+  pipedrive: "responses",
 };
 
 /** One scan as a row (no visitor hash, no IP: nothing identifies a person). */

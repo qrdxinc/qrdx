@@ -1,7 +1,7 @@
 /**
  * Server-side helpers for content sources (Stripe, Cal.com, Calendly,
  * Shopify, YouTube, Spotify) and data-out sinks (Google Sheets, Slack,
- * HubSpot, Mailchimp): build a client from a stored integration, verify
+ * HubSpot, Mailchimp, Pipedrive): build a client from a stored integration, verify
  * pasted keys, read account details after OAuth, revoke on disconnect.
  */
 
@@ -14,6 +14,10 @@ import {
 import { revokeGoogleToken } from "../integrations/google-sheets/client";
 import { revokeHubSpotToken } from "../integrations/hubspot/client";
 import { getMailchimpMetadata } from "../integrations/mailchimp/client";
+import {
+  parsePipedriveApiDomain,
+  revokePipedriveToken,
+} from "../integrations/pipedrive/client";
 import {
   createShopifyClient,
   mintShopifyToken,
@@ -300,6 +304,20 @@ export async function fetchDataAccountMetadata(
       const meta = await getMailchimpMetadata(accessToken);
       return { name: meta.accountname ?? "Mailchimp", dc: meta.dc };
     }
+    case "pipedrive": {
+      // Every API call goes to this company address, so it must be one
+      const apiDomain = parsePipedriveApiDomain(tokenResponse?.api_domain);
+      if (!apiDomain) {
+        throw new IntegrationApiError({
+          provider: "pipedrive",
+          status: 400,
+          code: "bad_request",
+          message: "Pipedrive didn't name a valid account address.",
+        });
+      }
+      const company = new URL(apiDomain).hostname.split(".")[0];
+      return { name: `Pipedrive ${company}`, apiDomain };
+    }
     case "google-sheets":
       return { name: "Google Sheets" };
     case "slack": {
@@ -320,6 +338,7 @@ export const DATA_REVOCABLE_PROVIDERS = [
   "calendly",
   "google-sheets",
   "hubspot",
+  "pipedrive",
   "slack",
 ] as const;
 
@@ -347,6 +366,11 @@ export async function revokeDataProviderToken(
     case "hubspot":
       if (!(client && tokens.refreshToken)) return false;
       await revokeHubSpotToken({ token: tokens.refreshToken, ...client });
+      return true;
+    case "pipedrive":
+      // Only the refresh token uninstalls the app in Pipedrive
+      if (!(client && tokens.refreshToken)) return false;
+      await revokePipedriveToken({ token: tokens.refreshToken, ...client });
       return true;
     case "slack":
       await revokeSlackToken(tokens.accessToken);
