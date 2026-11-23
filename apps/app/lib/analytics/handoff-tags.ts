@@ -7,12 +7,13 @@
 // (lib/affiliates/rules.ts) and never read as a referral: an affiliate can't
 // be credited for the people a plugin or bot sends.
 
-/** The browser and design-tool plugins (plugins/*). */
+/** The browser, design-tool and Google Workspace plugins (plugins/*). */
 export const PLUGIN_REFS = [
   "chrome-extension",
   "figma-plugin",
   "canva-app",
   "raycast-extension",
+  "google-workspace-addon",
 ] as const;
 
 /** Links the MCP server returns (app/api/mcp). */
