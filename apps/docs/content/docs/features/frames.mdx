@@ -176,7 +176,7 @@ export function OfficialFrameCode() {
 }
 ```
 
-`OFFICIAL_FRAMES` is the whole library, and `OFFICIAL_FRAME_INDEX` lists every frame without its spec, so a picker can show the library and load specs only as they are needed. The library is built as a module of its own, so an app that never imports it does not ship it. In the [image API](/docs/developers/image-api#community-items), name an official frame by its id, such as `frame=diwali-diya`, with your labels and colors in `style` if you change them. In the [MCP server](/docs/developers/mcp), use it as a community item, such as `frame:diwali-diya`.
+`OFFICIAL_FRAMES` is the whole library, and `OFFICIAL_FRAME_INDEX` lists every frame without its spec, so a picker can show the library and load specs only as they are needed. The library is built as a module of its own, so an app that never imports it does not ship it. In the [image API](/docs/developers/image-api#official-frames), name an official frame by its id, with your labels and colors in `style` if you change them. An id with a version, such as `frame=diwali-diya.v1`, always draws that version, and it's what the playground's Get code copies. An id without a version, `frame=diwali-diya`, is version 1 and never changes either. Add `.latest`, `frame=diwali-diya.latest`, to follow the frame when QRdx fixes or redesigns it. In the [MCP server](/docs/developers/mcp), use it as a community item, such as `frame:diwali-diya`.
 
 ## Will it scan?
 

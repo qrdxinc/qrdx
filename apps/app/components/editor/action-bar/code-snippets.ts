@@ -12,7 +12,8 @@
 // - Image URL: GET https://api.qrdx.dev/v1/qr (app/api/v1/qr/_lib/query.ts):
 //   flat parameters where they say it, and `style` (lib/qr-api/style.ts) for
 //   gradients, other colors and frames with more than a label. An official
-//   frame goes by its id, never its spec.
+//   frame goes by its id pinned to the version on screen (autumn-maple.v1,
+//   lib/frames/versions), never its spec, so the image never changes.
 // - REST API: POST https://api.qrdx.dev/v1/codes (createCodeSchema in
 //   app/(app)/dashboard/codes/_lib/qr-codes.ts, logo fields in
 //   app/api/v1/codes/_lib/style.ts).
@@ -154,8 +155,8 @@ export interface SnippetInput {
   content?: QRContentConfig;
   /**
    * Finds the official frame a custom frame is an unchanged copy of, so the
-   * image URL names it by id: by default, what the browser has loaded of
-   * the frame library (its index is enough)
+   * image URL names it by its pinned name: by default, what the browser has
+   * loaded of the frame library (its index is enough)
    */
   officialFrames?: OfficialFrameResolver;
 }
@@ -725,8 +726,9 @@ export function imageSnippet(input: SnippetInput): ImageSnippet {
   // `style` can carry.
   let ownSpec = false;
   if (frame && frame.style !== "none") {
-    // An official frame goes by its id, which the API knows, so its spec
-    // (most of a frame's size) stays out of the URL.
+    // An official frame goes by its id pinned to this version, which the
+    // API keeps drawing whatever QRdx changes later, so its spec (most of a
+    // frame's size) stays out of the URL.
     const official =
       frame.style === "custom"
         ? (input.officialFrames ?? LOADED_OFFICIAL_FRAMES).idOfSpec(frame.spec)

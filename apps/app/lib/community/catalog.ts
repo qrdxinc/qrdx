@@ -5,6 +5,7 @@
 // loads the library through lib/frames/library.ts instead.
 import { frameSpecHash, OFFICIAL_FRAMES, type OfficialFrame } from "qrdx";
 import type { FrameSpec, QRCustomFrame } from "qrdx/types";
+import { currentIdOf, pinFrameName } from "@/lib/frames/versions/names";
 import { framePreviewStyle } from "./payloads";
 import type {
   CommunityCreator,
@@ -82,12 +83,21 @@ export function officialFrameOfSpec(
 }
 
 /**
- * Every official frame, for playground links made on the server
- * (encodeStyleParam, decodeStyleParam, playgroundDesignHref).
+ * Every official frame as it is now, for playground links made on the
+ * server (encodeStyleParam, decodeStyleParam, playgroundDesignHref): a
+ * frame goes by its id with its newest version, and that name or `.latest`
+ * finds its spec. Older versions are the image API's alone
+ * (lib/frames/versions/record.ts).
  */
 export const OFFICIAL_FRAME_RESOLVER = {
-  idOfSpec: (spec: FrameSpec) => officialFrameOfSpec(spec)?.id,
-  specOf: (id: string) => findOfficialFrame(id)?.spec,
+  idOfSpec: (spec: FrameSpec) => {
+    const id = officialFrameOfSpec(spec)?.id;
+    return id === undefined ? undefined : pinFrameName(id);
+  },
+  specOf: (name: string) => {
+    const id = currentIdOf(name);
+    return id === undefined ? undefined : findOfficialFrame(id)?.spec;
+  },
 };
 
 export { BUILT_IN_SPEC_STYLES, builtInSpec } from "@/lib/frames/built-in";

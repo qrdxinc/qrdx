@@ -36,6 +36,7 @@ import {
 } from "qrdx/types";
 import { z } from "zod";
 import { LOADED_OFFICIAL_FRAMES } from "@/lib/frames/library";
+import { parseFrameName } from "@/lib/frames/versions/names";
 import {
   hasImageFills,
   hasSilhouette,
@@ -230,20 +231,27 @@ const pack = (
   packStyleParam(style as Partial<ThemeStyles>, preset, officialFrame);
 
 /**
- * Where links find QRdx's official frames: the id of an unchanged official
- * spec, and the spec of an id. In the browser, the library loaded so far
- * (lib/frames/library.ts, the default); on the server, the full catalogue
- * (OFFICIAL_FRAME_RESOLVER in lib/community/catalog.ts).
+ * Where links find QRdx's official frames: the name of an unchanged
+ * official spec, and the spec of a name. Names are ids with a version
+ * (autumn-maple.v1), bare ids (version 1) or `.latest` for the newest
+ * design (lib/frames/versions/names.ts). In the browser, the library loaded so far (lib/frames/
+ * library.ts, the default); on the server, the full catalogue
+ * (OFFICIAL_FRAME_RESOLVER in lib/community/catalog.ts), or every version
+ * ever published for the image API (lib/frames/versions/record.ts).
  */
 export interface OfficialFrameResolver {
+  /** The official frame this is the current spec of, pinned to its version */
   idOfSpec: (spec: FrameSpec) => string | undefined;
-  specOf: (id: string) => FrameSpec | undefined;
+  /** The spec a frame name draws */
+  specOf: (name: string) => FrameSpec | undefined;
+  /** How many versions the frame `id` has, to name them in an error */
+  versionCount?: (id: string) => number;
 }
 
 /**
  * The official frame (qrdx OFFICIAL_FRAMES) whose exact spec `frame`
- * draws, by id; undefined for any other frame. Its spec then travels as the
- * id, and decodeStyleParam puts the spec back.
+ * draws, by its pinned name; undefined for any other frame. Its spec then
+ * travels as the name, and decodeStyleParam puts the spec back.
  */
 function officialFrameId(
   frame: unknown,
@@ -256,10 +264,11 @@ function officialFrameId(
 }
 
 /**
- * The official frame id a `style` value names (its spec travels as the id),
- * so a caller can load that frame before decoding. Null for none.
+ * The official frame a `style` value names (its spec travels as the name:
+ * an id with its version in links made since versions, a bare id in older
+ * ones), as written. Null for none.
  */
-export function officialFrameIdOfStyleParam(
+export function officialFrameNameOfStyleParam(
   raw: string | null | undefined,
 ): string | null {
   const value = parseStyleValue(raw);
@@ -268,11 +277,22 @@ export function officialFrameIdOfStyleParam(
   if (json === null) return null;
   try {
     const compact = JSON.parse(json) as Record<string, unknown> | null;
-    const id = compact?.[OFFICIAL_FRAME_KEY];
-    return typeof id === "string" ? id : null;
+    const name = compact?.[OFFICIAL_FRAME_KEY];
+    return typeof name === "string" ? name : null;
   } catch {
     return null;
   }
+}
+
+/**
+ * The id of the official frame a `style` value names, so a caller can load
+ * that frame before decoding. Null for none.
+ */
+export function officialFrameIdOfStyleParam(
+  raw: string | null | undefined,
+): string | null {
+  const name = officialFrameNameOfStyleParam(raw);
+  return name === null ? null : (parseFrameName(name)?.id ?? name);
 }
 
 export interface EncodedStyle {
@@ -321,7 +341,8 @@ export function encodeStyleParam(
   if (styles.art) omitted.push("art");
 
   const preset = parsePresetId(options.preset) ?? undefined;
-  // An official frame travels by id (the spec is checked as it was given).
+  // An official frame travels by its pinned name (the spec is checked as it
+  // was given), so the link's style draws this version in the image API.
   const official = style.frame
     ? officialFrameId(
         linked.frame,
@@ -378,8 +399,9 @@ export function decodeStyleParam(
       templateId: source[LEGACY_TEMPLATE_KEY],
     });
   }
-  // An official frame by id: its spec goes back into the custom frame, which
-  // must name no spec of its own. Then it's checked like any other frame.
+  // An official frame by name: its spec goes back into the custom frame,
+  // which must name no spec of its own. Then it's checked like any other
+  // frame.
   const officialRaw = source[OFFICIAL_FRAME_KEY];
   if (officialRaw !== undefined) {
     const officialSpec =
