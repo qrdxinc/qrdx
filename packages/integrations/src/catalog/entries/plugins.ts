@@ -256,7 +256,7 @@ export const plugins: IntegrationCatalogEntry[] = [
     tagline:
       "Insert styled QR codes into Google Docs, Sheets and Slides from a side panel, or give every row of a list its own code.",
     description: [
-      "Pick what the code opens (a link, text, a Wi-Fi network, an email, a phone call or a text message), a style and a size, preview it, then insert it: at the cursor in Docs, in the middle of the current slide in Slides, or over the current cell in Sheets. The image is saved in your file.",
+      "Pick what the code opens (a link, text, a Wi-Fi network, an email, a phone call or a text message), a style and a size, preview it, then insert it: at the cursor in Docs, in the middle of the current slide in Slides, or in the current empty cell in Sheets. The image is saved in your file.",
       "In Sheets, select a column of links or text and the add-on writes an =IMAGE() formula next to each row, so each row shows its own code. The codes are drawn by QRdx's image API, so what you enter is sent to api.qrdx.dev; the add-on stores nothing and needs no account.",
     ],
     kind: "guide",
@@ -296,7 +296,7 @@ export const plugins: IntegrationCatalogEntry[] = [
       {
         title: "Docs, Sheets and Slides",
         description:
-          "At the cursor, on the current slide or over the current cell, saved in the file.",
+          "At the cursor, on the current slide or in the current empty cell, saved in the file.",
       },
       {
         title: "Codes for a list",
