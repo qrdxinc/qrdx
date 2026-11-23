@@ -960,7 +960,11 @@ describe("the MCP server with sign-in", () => {
     expect(response.headers.get("access-control-expose-headers")).toContain(
       "WWW-Authenticate",
     );
-    expect((message as { error?: unknown }).error).toBe("invalid_token");
+    // The body says what the header says: no error code, just the words.
+    const body = message as Record<string, unknown>;
+    expect(body).not.toHaveProperty("error");
+    expect(body).not.toHaveProperty("error_description");
+    expect(body.message).toContain("Sign in to QRdx");
     expect(fakeDb.rows("qrCode")).toHaveLength(0);
   });
 
@@ -980,7 +984,7 @@ describe("the MCP server with sign-in", () => {
     const { tokens } = await signInClaude();
     for (const row of fakeDb.rows("oauthToken")) row.revokedAt = new Date();
     for (const value of ["made-up-token", tokens.access_token]) {
-      const { response } = await callTool(
+      const { response, message } = await callTool(
         "list_codes",
         {},
         { authorization: `Bearer ${value}` },
@@ -989,6 +993,11 @@ describe("the MCP server with sign-in", () => {
       expect(response.headers.get("www-authenticate")).toContain(
         'error="invalid_token"',
       );
+      // A token was sent and refused: the body carries the same code.
+      expect(message).toMatchObject({
+        error: "invalid_token",
+        error_description: expect.stringContaining("Sign in again"),
+      });
     }
   });
 
@@ -996,7 +1005,7 @@ describe("the MCP server with sign-in", () => {
     const { tokens } = await signInClaude();
     // As if granted for another app's purpose: no codes scope at all.
     for (const row of fakeDb.rows("oauthToken")) row.scopes = ["profile:read"];
-    const { response } = await callTool(
+    const { response, message } = await callTool(
       "list_codes",
       {},
       { authorization: `Bearer ${tokens.access_token}` },
@@ -1004,6 +1013,9 @@ describe("the MCP server with sign-in", () => {
     expect(response.status).toBe(403);
     expect(response.headers.get("www-authenticate")).toContain(
       'error="insufficient_scope"',
+    );
+    expect((message as Record<string, unknown>).error).toBe(
+      "insufficient_scope",
     );
     // Read-only grants can list but not write.
     for (const row of fakeDb.rows("oauthToken")) row.scopes = ["codes:read"];
@@ -1044,6 +1056,21 @@ describe("the MCP server with sign-in", () => {
     expect(challenge).toMatch(/error_description="[^"]+"/);
     expect(message.result?.content[0]?.text).toContain("sign in to QRdx");
     expect(fakeDb.rows("qrCode")).toHaveLength(0);
+  });
+
+  it("tells ChatGPT invalid_token in _meta when its token was refused", async () => {
+    const { message } = await callTool(
+      "list_codes",
+      {},
+      {
+        authorization: "Bearer made-up-token",
+        meta: { "openai/subject": "v1/abc" },
+      },
+    );
+    expect(message.result?.isError).toBe(true);
+    expect(message.result?._meta?.["mcp/www_authenticate"]).toEqual([
+      expect.stringContaining('error="invalid_token"'),
+    ]);
   });
 
   it("leaves an API key's problems to the tool, in words", async () => {

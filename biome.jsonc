@@ -115,6 +115,16 @@
       }
     },
     {
+      // The Raycast Store formats extensions with Prettier at 120 columns
+      // (plugins/raycast/.prettierrc, checked by `ray lint`).
+      "includes": [
+        "plugins/raycast/**/*.ts",
+        "plugins/raycast/**/*.tsx",
+        "plugins/raycast/**/*.js"
+      ],
+      "javascript": { "formatter": { "lineWidth": 120 } }
+    },
+    {
       // Raycast's Metadata.Label is a native title-and-value row, not an HTML
       // <label>, so it has no control to belong to.
       "includes": ["plugins/raycast/src/**"],

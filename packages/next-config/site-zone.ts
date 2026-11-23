@@ -129,6 +129,26 @@ export const SITE_GROUPS = {
     "/id/qr-code-generator",
     "/hi/qr-code-generator",
   ],
+  /**
+   * The barcode generators in the other languages, as generators-i18n is
+   * for the QR code generators (owner decision, 23 Nov 2026, about the
+   * generator pages): /<language>/barcode-generator and its format pages, in
+   * every translated language of @repo/i18n/config. Opt-in
+   * (SITE_OPT_IN_GROUPS) and switched on by name, apart from
+   * generators-i18n. The English pages stay in `barcodes`.
+   */
+  "barcodes-i18n": [
+    "/es/barcode-generator",
+    "/pt-br/barcode-generator",
+    "/fr/barcode-generator",
+    "/de/barcode-generator",
+    "/it/barcode-generator",
+    "/ja/barcode-generator",
+    "/ko/barcode-generator",
+    "/zh-hans/barcode-generator",
+    "/id/barcode-generator",
+    "/hi/barcode-generator",
+  ],
 } as const satisfies Record<string, readonly SitePath[]>;
 
 export type SiteGroup = keyof typeof SITE_GROUPS;
@@ -161,7 +181,10 @@ export const SITE_GROUP_NAMES = Object.keys(
  * For groups added after the site went live, so that a new one changes
  * nothing until it's switched on by name.
  */
-export const SITE_OPT_IN_GROUPS: readonly SiteGroup[] = ["generators-i18n"];
+export const SITE_OPT_IN_GROUPS: readonly SiteGroup[] = [
+  "generators-i18n",
+  "barcodes-i18n",
+];
 
 /**
  * The English-only pages of this app (route paths, as in
@@ -174,6 +197,7 @@ export const SITE_TRANSLATED_GROUPS: Partial<
   Record<SiteGroup, readonly string[]>
 > = {
   "generators-i18n": ["/qr-code-generator", "/qr-code-generator/[type]"],
+  "barcodes-i18n": ["/barcode-generator", "/barcode-generator/[format]"],
 };
 
 /** The site's assetPrefix: its build assets live under it on qrdx.dev. */

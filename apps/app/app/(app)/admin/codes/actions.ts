@@ -3,6 +3,7 @@
 import { database as db, qrCode, user } from "@repo/database";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { noteDynamicCodesCreated } from "@/lib/invites/qualify";
 import {
   type AdminActionResult,
   adminError,
@@ -78,6 +79,9 @@ export async function setDynamicCodeActiveAction(
         .update(qrCode)
         .set({ isActive: active })
         .where(eq(qrCode.id, codeId));
+      // Switched back on: it can now be its owner's first code for a
+      // friend's invite (lib/invites/qualify.ts), after the response.
+      if (active) noteDynamicCodesCreated(target.ownerId);
       const outcome = codeAudit(codeId, target);
       return {
         audit: {

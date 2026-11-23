@@ -170,10 +170,13 @@
       "zh-Hans": "收藏",
       "id": "bookmark",
       "hi": "बुकमार्क"
+    },
+    "QR code": {
+      "hi": "QR कोड"
     }
   },
   "register": {
-    "es": "Neutral international Spanish, informal \"tú\". No regionalisms.",
+    "es": "Neutral international Spanish, informal \"tú\". No regionalisms. Numbers as Spanish writes them, the way {n, number} formats them: no separator up to four digits (1000, 2953), a point between groups of three from five digits (10.000, 150.000), never the English comma (1,000).",
     "pt-BR": "Brazilian Portuguese, informal \"você\".",
     "fr": "Standard French, \"vous\". French typography: a non-breaking space before : ; ? ! and %.",
     "de": "Standard German, informal \"du\" as in German software marketing. Compound nouns are fine, but keep buttons short.",
@@ -182,7 +185,7 @@
     "ko": "Polite 합니다/해요 style consistent within a string; 해요체 for UI labels and buttons.",
     "zh-Hans": "Simplified Chinese for mainland China and Singapore. Full-width punctuation. Call a QR code 二维码.",
     "id": "Standard Indonesian, friendly \"Anda\".",
-    "hi": "Simple, everyday Hindi in Devanagari. Keep common English tech words (QR code, link, app, download) in English or their usual Hindi transliteration where Indians would."
+    "hi": "Simple, everyday Hindi in Devanagari. Keep common English tech words (link, app, download) in English or their usual Hindi transliteration where Indians would. A QR code is always QR कोड in a Hindi sentence (QR codes too), never QR code; names and labels quoted in English keep it as they are (QR Code Monkey, Swiss QR Code, the Edit QR code button, Make QR code)."
   },
   "rules": [
     "Translate meaning, not words. Natural marketing copy a native speaker would write, but no new claims: never add a feature, number, promise or adjective the English doesn't make.",

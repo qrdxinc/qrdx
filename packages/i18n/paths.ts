@@ -11,6 +11,9 @@
 // (routing.ts). Links to them never gain a prefix. The exception is
 // `siteTranslated` (owner decision, 23 Nov 2026): the generator pages, which
 // the site zone serves in every language once its group for them is on.
+// The English-only pages outside app/[lang] (`englishOnlyOutside`: the
+// blog, the comparisons' pages, the legal pages and the rest the site zone
+// serves) have no translated URLs either; theirs redirect to English too.
 
 import {
   DEFAULT_LOCALE,
@@ -70,9 +73,25 @@ export function isEnglishOnlyPath(path: string): boolean {
 }
 
 /**
+ * Public pages that exist in English only and don't live under app/[lang]
+ * (written like LOCALIZED_PATHS): the ones this app serves under app/(app)
+ * that the site zone serves too (the blog, the comparisons' pages, the
+ * legal pages, the changelog), and the site's own (/custom-domain-qr-codes,
+ * /qr-code-tracking). They have no English rewrites; their translated URLs
+ * (/es/blog, /ja/compare/<slug>) redirect to the English page, query kept,
+ * as ENGLISH_ONLY_PATHS's do (routing.ts englishOnlyRedirects), instead of
+ * a 404. Every page the site serves is in one of these lists or
+ * SITE_TRANSLATED_PATHS (apps/app/tests/lib/site-zone.test.ts, and
+ * the site's own test of its routes).
+ */
+export const ENGLISH_ONLY_OUTSIDE_PATHS: readonly string[] =
+  localized.englishOnlyOutside;
+
+/**
  * English-only pages here that the site zone serves in every language, at
  * /<segment><path> (owner decision, 23 Nov 2026: the QR code generators,
- * for search traffic in other languages). This app's own copies of them
+ * for search traffic in other languages, and the barcode generators, the
+ * same way). This app's own copies of them
  * stay English only. While the site's group for them is on
  * (@repo/next-config/site-zone SITE_TRANSLATED_GROUPS), next.config.ts
  * stops redirecting their translated URLs to English (routing.ts

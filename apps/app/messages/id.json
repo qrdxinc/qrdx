@@ -349,7 +349,7 @@
     "hero": {
       "badge": "Gratis dan open source (AGPL-3.0)",
       "title": "Pembuat kode QR gratis, dengan kode dinamis yang tetap berfungsi",
-      "description": "Rancang kode QR bermerek dengan pola, gradasi, logo, dan bingkai, lalu unduh PNG, SVG, PDF, atau EPS tanpa perlu mendaftar dan tanpa watermark. Masuk untuk mendapatkan kode QR dinamis yang bisa diedit setelah dicetak, halaman yang di-hosting, dan analitik pemindaian.",
+      "description": "Rancang kode QR bermerek dengan pola, gradien, logo, dan bingkai, lalu unduh PNG, SVG, PDF, EPS, atau TIFF tanpa pendaftaran dan tanpa tanda air. Masuk untuk mendapatkan kode dinamis yang dapat diedit setelah dicetak, halaman yang di-hosting, dan analitik pemindaian.",
       "primary": "Coba Playground",
       "secondary": "Baca dokumentasi",
       "sceneLabel": "Gambar animasi alur QRdx: layar studio merancang dan menata gaya kode QR, printer mencetaknya pada sebuah kartu, lengan robot menaruh kartu itu di ban berjalan, ponsel di gerbang melakukan pemindaian setiap kartu yang lewat, hasil pemindaian dikirim ke panel analitik yang menambahkan satu batang baru, dan sebuah kartu kode QR dinamis berukuran besar mengganti tautan tujuannya tanpa dicetak ulang"
@@ -377,7 +377,7 @@
         "none": "Tanpa bingkai",
         "border": "Garis tepi"
       },
-      "more": "Playground lengkap menambahkan {bodyPatterns, number} pola badan, {eyeShapes, number} bentuk mata, {eyeCentres, number} pusat mata, warna dan gradasi sesuai keinginan, logo, bingkai, serta unduhan PNG, SVG, PDF, atau EPS.",
+      "more": "Playground lengkap menambahkan {bodyPatterns, number} pola badan, {eyeShapes, number} bentuk mata, {eyeCentres, number} pusat mata, warna dan gradien apa pun, logo, bingkai, serta unduhan PNG, SVG, PDF, EPS, atau TIFF.",
       "customize": "Sesuaikan di Playground",
       "qrLabel": "Kode QR untuk {value}",
       "empty": "Ketik tautan untuk melihat kode QR Anda."
@@ -518,7 +518,7 @@
       "items": {
         "free": {
           "question": "Apakah QRdx benar-benar gratis? Apakah ada batasan tersembunyi?",
-          "answer": "Ya. Membuat, menyesuaikan, dan mengunduh kode QR statis gratis dan tidak memerlukan akun: kode tanpa batas, semua opsi desain ({bodyPatterns, number} pola isi, {eyeShapes, number} bentuk mata sudut, dan {eyeCentres, number} pusat mata, gradasi, logo, bingkai, serta karya Logo QR atau Image QR), dan unduhan PNG, JPG, SVG, PDF, dan EPS. Tidak ada watermark dan tidak ada iklan. Kode statis menyimpan konten Anda di dalam kodenya sendiri, sehingga tidak pernah kedaluwarsa dan tidak memiliki batas pemindaian. Akun gratis menambahkan 10 kode QR dinamis, 3 halaman yang di-hosting, analitik pemindaian selama {historyYears, plural, other {# tahun}}, 10 tema tersimpan, dan 5 pembuatan tema dengan AI; Pro ({proMonthly}/bln atau {proYearly}/thn) dan Business ({businessMonthly}/bln atau {businessYearly}/thn) meningkatkan batas tersebut."
+          "answer": "Ya. Membuat, menyesuaikan, dan mengunduh kode QR statis gratis dan tidak memerlukan akun: kode tanpa batas, semua opsi desain ({bodyPatterns, number} pola badan, {eyeShapes, number} bentuk mata sudut, dan {eyeCentres, number} pusat mata, gradien, logo, bingkai, serta karya Logo QR atau Image QR), dan unduhan PNG, JPG, SVG, PDF, EPS, dan TIFF. Tanpa tanda air dan tanpa iklan. Kode statis menyimpan konten Anda di dalam kode itu sendiri, sehingga tidak pernah kedaluwarsa dan tidak memiliki batas pemindaian. Akun gratis menambahkan 10 kode QR dinamis, 3 halaman yang di-hosting, analitik pemindaian selama {historyYears, plural, other {# tahun}}, 10 tema tersimpan, dan 5 pembuatan tema dengan AI; Pro ({proMonthly}/bln atau {proYearly}/thn) dan Business ({businessMonthly}/bln atau {businessYearly}/thn) meningkatkan batas tersebut."
         },
         "signup": {
           "question": "Apakah saya perlu mendaftar atau membuat akun?",
@@ -546,7 +546,7 @@
         },
         "api": {
           "question": "Bisakah developer membuat kode QR dengan API?",
-          "answer": "Ya. Image API mengubah URL apa pun menjadi kode QR SVG, PNG, atau EPS tanpa kunci API, dan REST API, dengan kunci API workspace atau OAuth, membuat dan mengedit kode QR dinamis serta membaca data pemindaiannya. Tersedia juga MCP server untuk Claude, Cursor, dan VS Code, alat baris perintah (@qrdx/cli), komponen shadcn/ui, dan pustaka React qrdx."
+          "answer": "Ya. Image API mengubah URL apa pun menjadi kode QR SVG, PNG, TIFF, atau EPS tanpa kunci API, dan REST API, dengan kunci API workspace atau OAuth, membuat dan mengedit kode dinamis serta membaca data pemindaiannya. Tersedia juga server MCP untuk Claude, Cursor, dan VS Code, alat baris perintah (@qrdx/cli), komponen shadcn/ui, dan pustaka React qrdx."
         },
         "paidPlans": {
           "question": "Apa yang saya dapatkan dengan Pro atau Business?",
@@ -913,12 +913,12 @@
       "metaTitle": "Jenis Kode QR: {count, number} Generator Gratis (Wi-Fi, vCard, UPI)",
       "metaDescription": "{count, number} jenis kode QR dengan generator gratis: Wi-Fi, vCard, WhatsApp, UPI, email, profil sosial, dan pembayaran, lengkap dengan format payload-nya.",
       "title": "Generator kode QR untuk setiap jenis konten",
-      "intro1": "Kode QR bisa melakukan lebih dari sekadar membuka situs web. Bergantung pada teks di dalamnya, ponsel dapat terhubung ke jaringan Wi-Fi, menyimpan kontak, memulai pembayaran, atau membuka obrolan. Pilih salah satu dari {count, number} jenis di bawah untuk mendapatkan generator dengan kolom yang sesuai, pratinjau langsung, dan unduhan PNG, WebP, atau SVG.",
+      "intro1": "Kode QR bisa melakukan lebih dari sekadar membuka situs web. Bergantung pada teks di dalamnya, ponsel dapat terhubung ke jaringan Wi-Fi, menyimpan kontak, memulai pembayaran, atau membuka obrolan. Pilih salah satu dari {count, number} jenis di bawah ini untuk mendapatkan generator dengan kolom yang sesuai, pratinjau langsung, serta unduhan PNG, WebP, SVG, atau TIFF.",
       "intro2": "Secara default, kode yang dibuat di halaman ini bersifat statis: konten disandikan langsung di dalam polanya, sehingga berfungsi secara offline, tidak pernah kedaluwarsa, dan tidak memiliki batas pemindaian. Setiap halaman juga menjelaskan format persis yang dihasilkan, sehingga Anda tahu apa yang akan dibaca oleh pemindai.",
       "cardTitle": "Generator kode QR {name}",
       "moreTools": "Alat lainnya",
       "bulkTitle": "Butuh ratusan kode? Gunakan generator massal",
-      "bulkDescription": "Unggah file CSV dan unduh setiap kode sebagai PNG, WebP, atau SVG dalam satu file ZIP, semuanya dibuat sepenuhnya di browser Anda.",
+      "bulkDescription": "Unggah file CSV dan unduh setiap kode sebagai PNG, WebP, SVG, atau TIFF dalam satu file ZIP, semuanya dibuat sepenuhnya di browser Anda.",
       "printTitle": "Mau mencetak kode? Periksa ukurannya",
       "printDescription": "Hitung ukuran cetak minimum berdasarkan jarak pemindaian dan jumlah data yang dimuat kode.",
       "dynamicTitle": "Generator kode QR dinamis",
@@ -1104,7 +1104,7 @@
       "metaDescription": "Ubah CSV menjadi hingga {rows, number} kode QR bergaya dalam format PNG, WebP, atau SVG di dalam ZIP. Berjalan di browser Anda: tanpa unggah, tanpa watermark, tanpa pendaftaran hingga {limit, number} baris.",
       "crumb": "Generator massal",
       "title": "Generator kode QR massal",
-      "intro1": "Ubah file CSV menjadi ribuan kode QR sekaligus, dengan gaya sesuai keinginan Anda dan diunduh sebagai PNG, WebP, atau SVG dalam ZIP. Satu baris untuk satu kode, dengan nama file diambil dari sebuah kolom: label produk, tiket acara, label aset, nomor meja, atau surat kiriman.",
+      "intro1": "Ubah file CSV menjadi ribuan kode QR sekaligus, dengan gaya sesuai keinginan Anda dan diunduh sebagai PNG, WebP, SVG, atau TIFF (termasuk TIFF CMYK untuk cetak) dalam sebuah ZIP. Satu baris untuk satu kode, dengan nama file diambil dari sebuah kolom: label produk, tiket acara, tag aset, nomor meja, atau surat kiriman.",
       "intro2": "Semuanya berjalan di browser Anda, sehingga CSV tidak pernah diunggah, dan tidak ada watermark atau biaya per kode. File hingga {limit, number} baris tidak memerlukan akun; file yang lebih besar, hingga {rows, number}, memerlukan akun gratis. Belum yakin dengan tata letaknya? Mulai dari contoh CSV.",
       "facts": {
         "rows": "Hingga {rows, number} baris per file",
@@ -1976,7 +1976,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Pembuat Barcode Gratis: EAN-13, UPC, Code 128",
-    "metaDescription": "Buat EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix, dan lainnya: {count, number} jenis barcode dengan digit pemeriksa yang dihitung otomatis. PNG, JPG, SVG, PDF, EPS. Gratis, tanpa daftar.",
+    "metaDescription": "Buat EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix, dan lainnya: {count, number} jenis barcode dengan digit pemeriksa. PNG, JPG, SVG, PDF, EPS. Gratis.",
     "crumb": "Pembuat barcode",
     "title": "Pembuat barcode gratis",
     "intro1": "Buat barcode untuk ritel, pengiriman, dan inventaris dalam {count, number} format, mulai dari EAN-13 dan UPC-A hingga Code 128, GS1-128, ITF-14, dan Data Matrix. Ketik nomornya, lalu digit pemeriksa dihitung otomatis untuk Anda; digit yang salah akan terdeteksi sebelum Anda mencetak.",
@@ -2700,7 +2700,7 @@
     "playground": "Coba di Playground",
     "promptsEyebrow": "Coba sekarang",
     "promptsTitle": "Prompt untuk memulai",
-    "promptsDescription": "Setiap prompt memakai kemampuan alat QRdx yang sebenarnya: warna dan bentuk, Wi-Fi, kontak, email, SMS, dan data peta, serta tautan SVG, PNG, WebP, atau EPS. Buka di asisten Anda atau salin.",
+    "promptsDescription": "Setiap prompt memakai kemampuan sebenarnya dari tools QRdx: warna dan bentuk, Wi-Fi, kontak, email, SMS, dan payload peta, serta tautan SVG, PNG, WebP, TIFF, atau EPS. Buka di asisten Anda atau salin.",
     "howEyebrow": "Cara kerja",
     "howTitle": "Tiga langkah, lalu tinggal bertanya",
     "howDescription": "Asisten Anda memanggil alat QRdx untuk Anda. Anda tidak perlu menyentuh API.",
@@ -2817,7 +2817,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "API Kode QR Gratis: Tanpa Kunci, SVG, PNG, dan Logo",
-    "metaDescription": "API kode QR gratis tanpa kunci. Satu URL menghasilkan kode QR dalam format SVG, PNG, WebP, atau EPS dengan warna, bentuk, dan logo pilihan Anda. {perMinute, number} permintaan per menit, di-cache selama setahun.",
+    "metaDescription": "API kode QR gratis tanpa kunci: satu URL menghasilkan kode QR SVG, PNG, WebP, TIFF, atau EPS dengan warna, bentuk, dan logo Anda. {perMinute, number} permintaan per menit, di-cache selama setahun.",
     "crumb": "API kode QR",
     "title": "API kode QR gratis",
     "intro1": "Pasang kode QR di mana pun URL bisa digunakan. Satu permintaan GET ke api.qrdx.dev langsung mengembalikan gambarnya: tanpa akun, tanpa kunci API, tanpa SDK. Warna, bentuk, koreksi kesalahan, dan logo cukup ditulis di query string.",
@@ -2825,7 +2825,7 @@
     "facts": {
       "noKey": "Tanpa kunci atau pendaftaran",
       "rateLimit": "{perMinute, number} permintaan per menit untuk setiap IP",
-      "formats": "SVG, PNG, WebP, dan EPS",
+      "formats": "SVG, PNG, WebP, TIFF, dan EPS",
       "openSource": "Open source"
     },
     "docs": "Dokumentasi Image API",
@@ -2882,7 +2882,7 @@
     "params": {
       "data": "Teks atau URL yang akan di-encode, maksimal {max, number} karakter.",
       "size": "Lebar dan tinggi dalam piksel, {min, number} hingga {max, number}. Untuk EPS, ini adalah lebar dalam poin.",
-      "format": "svg, png, webp (lossless) atau eps (vektor, untuk cetak).",
+      "format": "svg, png, webp (lossless), tiff, tiff-cmyk (CMYK, untuk cetak), atau eps (vektor, untuk cetak).",
       "colors": "Warna kode dan latar belakang dalam format hex, tanpa # (155dfc). bg=00000000 membuat latar belakang transparan.",
       "shapes": "Bentuk modul, mata di sudut, dan titik di dalamnya: total ada {count, number} bentuk modul.",
       "level": "Koreksi kesalahan: L (7%), M (15%), Q (25%) atau H (30%) dari kode boleh rusak dan tetap bisa dipindai.",
@@ -2914,7 +2914,7 @@
       "title": "Image API",
       "noKey": "Tanpa kunci atau akun",
       "static": "Kode statis: data ada di dalam gambar",
-      "formats": "SVG, PNG, WebP, dan EPS",
+      "formats": "SVG, PNG, WebP, TIFF, dan EPS",
       "limit": "{perMinute, number} permintaan per menit per IP"
     },
     "restCard": {
@@ -2946,7 +2946,7 @@
       "logoQuestion": "Apakah API kode QR bisa menambahkan logo?",
       "logoAnswer": "Ya. logoIcon menempatkan ikon cepat (Wi-Fi, tautan, telepon, email, dan lainnya) atau salah satu dari {brands} logo merek dari Simple Icons di bagian tengah, tanpa kunci. Kode beralih ke koreksi kesalahan H saat logo memerlukannya, sehingga tetap bisa dipindai.",
       "formatsQuestion": "Format gambar apa yang dikembalikan?",
-      "formatsAnswer": "SVG secara default, atau PNG, WebP lossless, dan EPS vektor dengan format=png, webp, atau eps. Ukurannya mulai dari {min, number} hingga {max, number} piksel.",
+      "formatsAnswer": "Secara default SVG, atau PNG, WebP lossless, TIFF, dan EPS vektor dengan format=png, webp, tiff, atau eps, serta TIFF CMYK untuk cetak dengan format=tiff-cmyk. Ukurannya mulai dari {min, number} hingga {max, number} piksel.",
       "expireQuestion": "Apakah kode QR kedaluwarsa?",
       "expireAnswer": "Tidak. Image API membuat kode statis: apa yang Anda enkode ada di dalam kode, sehingga kode berfungsi selama tautan atau teks di dalamnya masih berfungsi. Tidak ada yang kedaluwarsa dan tidak ada yang menghitung pemindaian.",
       "dynamicQuestion": "Bisakah saya mengubah tujuan kode setelah dicetak?",
@@ -2984,7 +2984,7 @@
       },
       "print": {
         "title": "Unduh dan cetak",
-        "body": "Unduh sebagai PNG, WebP, atau SVG, atau atur gayanya dulu di Playground. Tautan pendek membutuhkan lebih sedikit modul daripada URL panjang, sehingga kode bisa dicetak lebih kecil dan tetap bisa dipindai."
+        "body": "Unduh sebagai PNG, WebP, SVG, atau TIFF, atau atur gayanya terlebih dahulu di Playground. Tautan pendek membutuhkan lebih sedikit modul daripada URL yang panjang, sehingga kode dapat dicetak lebih kecil dan tetap dapat dipindai."
       },
       "change": {
         "title": "Ubah saat diperlukan",
@@ -5735,7 +5735,7 @@
       "label": "Tentang desainer kode QR",
       "summary": "Desainer kode QR kustom. Kode statis gratis dengan logo, warna, dan bingkai Anda. Tanpa pendaftaran, tanpa watermark.",
       "types": "Buat kode QR untuk tautan, jaringan Wi-Fi, kartu kontak, pembayaran, atau salah satu dari {types, number} jenis konten. Atur gayanya dengan {bodyPatterns, number} pola titik, {eyeShapes, number} bentuk mata sudut, warna solid atau gradasi, logo di tengah, dan {frames, number} bingkai ajakan bertindak. Skor pemindaian memperkirakan seberapa baik kode terbaca sebelum Anda mencetak.",
-      "downloads": "Unduh PNG, JPG, WebP, atau SVG, atau PDF atau EPS siap cetak dengan ukuran persis. Kode statis gratis dan tidak pernah kedaluwarsa. Masuk untuk membuat kode dinamis yang bisa Anda ubah setelah dicetak dan untuk melacak pemindaian.",
+      "downloads": "Unduh PNG, JPG, WebP, SVG, atau TIFF (termasuk TIFF CMYK untuk cetak), atau PDF atau EPS siap cetak dengan ukuran yang tepat. Kode statis gratis dan tidak pernah kedaluwarsa. Masuk untuk membuat kode dinamis yang bisa Anda ubah setelah dicetak dan untuk melacak pemindaian.",
       "links": {
         "allTypes": "Semua jenis kode QR",
         "scanChecker": "Pemeriksa pemindaian",

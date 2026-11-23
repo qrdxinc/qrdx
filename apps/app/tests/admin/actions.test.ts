@@ -254,6 +254,8 @@ vi.mock("next/server", async (importOriginal) => ({
     void run();
   },
 }));
+const invites = vi.hoisted(() => ({ noteDynamicCodesCreated: vi.fn() }));
+vi.mock("@/lib/invites/qualify", () => invites);
 
 const modules = {
   "app/admin/actions": () => import("@/app/(app)/admin/actions"),
@@ -336,6 +338,7 @@ beforeEach(() => {
   state.limitCalls = [];
   state.adminTwoFactor = true;
   state.adminStrongConfirmation = true;
+  invites.noteDynamicCodesCreated.mockClear();
 });
 
 describe("admin guard", () => {
@@ -1066,6 +1069,37 @@ describe("with an admin", () => {
       targetId: "code_1",
       metadata: { subjectUserId: "user_target", reason: "Phishing report" },
     });
+    // Switching a code off settles no invite.
+    expect(invites.noteDynamicCodesCreated).not.toHaveBeenCalled();
+  });
+
+  it("settles the owner's invite when a code is switched back on", async () => {
+    const { setDynamicCodeActiveAction } = await import(
+      "@/app/(app)/admin/codes/actions"
+    );
+    state.results = [
+      [
+        {
+          slug: "Ab12Cd3",
+          kind: "redirect",
+          destinationUrl: "https://example.com",
+          isActive: false,
+          pausedAt: null,
+          ownerId: "user_target",
+          ownerEmail: "target@example.com",
+          organizationId: null,
+        },
+      ],
+    ];
+    expect(
+      await setDynamicCodeActiveAction({
+        codeId: "code_1",
+        active: true,
+        reason: "Cleared on review",
+      }),
+    ).toEqual({ ok: true });
+    expect(auditValues()[0]).toMatchObject({ action: "qr_code.enable" });
+    expect(invites.noteDynamicCodesCreated).toHaveBeenCalledWith("user_target");
   });
 
   it("deletes only with the email typed back", async () => {

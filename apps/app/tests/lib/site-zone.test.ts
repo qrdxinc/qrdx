@@ -5,13 +5,16 @@
 // guard: the rules never take over one of this app's own paths, the pages
 // are still here for deployments without a site, and proxy.ts sends the
 // zone key on exactly the proxied requests.
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
 import { docsZoneRewrites } from "@repo/i18n/docs";
 import {
+  ENGLISH_ONLY_OUTSIDE_PATHS,
   ENGLISH_ONLY_PATHS,
+  isEnglishOnlyPath,
   isSiteTranslatedPath,
+  routeMatcher,
   SITE_TRANSLATED_PATHS,
 } from "@repo/i18n/paths";
 import {
@@ -217,6 +220,11 @@ describe("siteZoneRewrites", () => {
         `/${LOCALE_INFO[locale].segment}/qr-code-generator`,
         `/${LOCALE_INFO[locale].segment}/qr-code-generator/:path+`,
       ]),
+      // barcodes-i18n, the same way.
+      ...TRANSLATED_LOCALES.flatMap((locale) => [
+        `/${LOCALE_INFO[locale].segment}/barcode-generator`,
+        `/${LOCALE_INFO[locale].segment}/barcode-generator/:path+`,
+      ]),
       "/site-static/:path*",
     ]);
     // A path's parameters go on as they came, without their patterns.
@@ -353,7 +361,8 @@ describe("SITE_ZONE_GROUPS", () => {
       (group) => !SITE_OPT_IN_GROUPS.includes(group),
     );
     expect(byDefault).not.toContain("generators-i18n");
-    expect(byDefault.length).toBe(SITE_GROUP_NAMES.length - 1);
+    expect(byDefault).not.toContain("barcodes-i18n");
+    expect(byDefault.length).toBe(SITE_GROUP_NAMES.length - 2);
     for (const value of [undefined, "", "  "]) {
       expect(parseSiteZoneGroups(value), String(value)).toEqual(byDefault);
       expect(siteZoneGroups(value), String(value)).toEqual(byDefault);
@@ -361,8 +370,9 @@ describe("SITE_ZONE_GROUPS", () => {
   });
 
   it("turns an opt-in group on only by name", () => {
-    expect(SITE_OPT_IN_GROUPS).toEqual(["generators-i18n"]);
+    expect(SITE_OPT_IN_GROUPS).toEqual(["generators-i18n", "barcodes-i18n"]);
     expect(parseSiteZoneGroups("generators-i18n")).toEqual(["generators-i18n"]);
+    expect(parseSiteZoneGroups("barcodes-i18n")).toEqual(["barcodes-i18n"]);
     expect(parseSiteZoneGroups(`${SITE_GROUP_NAMES.join(",")}`)?.length).toBe(
       SITE_GROUP_NAMES.length,
     );
@@ -744,8 +754,10 @@ describe("next.config.ts", () => {
   let on: NextConfig;
   let all: NextConfig;
   let home: NextConfig;
-  /** Every group named, the opt-in generators-i18n included. */
+  /** Every group named, the opt-in generators-i18n and barcodes-i18n included. */
   let every: NextConfig;
+  /** Production's groups on 23 Nov 2026: the default ones and generators-i18n. */
+  let production: NextConfig;
   let warned: string[];
 
   beforeAll(async () => {
@@ -762,6 +774,13 @@ describe("next.config.ts", () => {
       SITE_ORIGIN: ORIGIN,
       SITE_ZONE_KEY: KEY,
       SITE_ZONE_GROUPS: SITE_GROUP_NAMES.join(","),
+    });
+    production = await loadConfig({
+      SITE_ORIGIN: ORIGIN,
+      SITE_ZONE_KEY: KEY,
+      SITE_ZONE_GROUPS: [...siteZoneGroups(undefined), "generators-i18n"].join(
+        ",",
+      ),
     });
     all = await loadConfig({
       SITE_ORIGIN: ORIGIN,
@@ -949,8 +968,12 @@ describe("next.config.ts", () => {
         expect(ENGLISH_ONLY_PATHS, path).toContain(path);
       }
       expect(isSiteTranslatedPath("/qr-code-generator/wifi")).toBe(true);
-      expect(isSiteTranslatedPath("/barcode-generator/ean-13")).toBe(false);
-      expect(Object.keys(SITE_TRANSLATED_GROUPS)).toEqual(["generators-i18n"]);
+      expect(isSiteTranslatedPath("/barcode-generator/ean-13")).toBe(true);
+      expect(isSiteTranslatedPath("/qr-codes-for/restaurants")).toBe(false);
+      expect(Object.keys(SITE_TRANSLATED_GROUPS)).toEqual([
+        "generators-i18n",
+        "barcodes-i18n",
+      ]);
     });
 
     it("leaves the redirects alone unless the site and the group are on", () => {
@@ -992,10 +1015,23 @@ describe("next.config.ts", () => {
     });
 
     it("keeps every other English-only page's redirect, and English as it was", async () => {
-      for (const url of ["/es/pricing", "/ja/barcode-generator/ean-13"]) {
-        const response = await resolve(every, `https://qrdx.dev${url}`);
-        expect(response.status, url).toBe(307);
+      // As production has it (the barcode generators' group off): the
+      // English-only page's redirect is permanent; the barcode generator's,
+      // which the site serves once its group is on, only a 307.
+      for (const [url, status] of [
+        ["/es/pricing", 308],
+        ["/ja/barcode-generator/ean-13", 307],
+      ] as const) {
+        const response = await resolve(production, `https://qrdx.dev${url}`);
+        expect(response.status, url).toBe(status);
       }
+      expect((await resolve(every, "https://qrdx.dev/es/pricing")).status).toBe(
+        308,
+      );
+      // As production has it: the QR code generators on, the barcode ones off.
+      expect(
+        await siteTarget(production, "https://qrdx.dev/es/qr-code-generator"),
+      ).toBe(`${ORIGIN}/es/qr-code-generator`);
       expect(
         getRedirectUrl(
           await resolve(every, "https://qrdx.dev/en/qr-code-generator/wifi"),
@@ -1022,6 +1058,244 @@ describe("next.config.ts", () => {
         ),
       ).toBeNull();
     });
+  });
+
+  // The barcode generators in the other languages, the same way (owner
+  // decision, 23 Nov 2026, about the generator pages): their own opt-in
+  // group, switched on apart from generators-i18n.
+  describe("the barcode generators in other languages (barcodes-i18n)", () => {
+    const LOCALIZED = [
+      "/es/barcode-generator",
+      "/es/barcode-generator/ean-13",
+      "/pt-br/barcode-generator/code-128?utm_source=x",
+      "/zh-hans/barcode-generator/upc-a",
+      "/hi/barcode-generator",
+      "/ja/barcode-generator/ean-13/opengraph-image-1a2b3c",
+    ];
+
+    it("covers every translated language's barcode pages, and nothing else", () => {
+      expect(SITE_GROUPS["barcodes-i18n"]).toEqual(
+        TRANSLATED_LOCALES.map(
+          (locale) => `/${LOCALE_INFO[locale].segment}/barcode-generator`,
+        ),
+      );
+      for (const locale of TRANSLATED_LOCALES) {
+        const segment = LOCALE_INFO[locale].segment;
+        for (const path of ["/barcode-generator", "/barcode-generator/upc-a"]) {
+          expect(siteGroup(`/${segment}${path}`), segment).toBe(
+            "barcodes-i18n",
+          );
+        }
+      }
+      expect(siteGroup("/en/barcode-generator")).toBeNull();
+      expect(siteGroup("/barcode-generator/ean-13")).toBe("barcodes");
+      expect(siteTranslatedPaths(ORIGIN, ["barcodes-i18n"])).toEqual([
+        "/barcode-generator",
+        "/barcode-generator/[format]",
+      ]);
+    });
+
+    it.each(LOCALIZED)(
+      "redirects %s to English while the group is off",
+      async (url) => {
+        for (const nextConfig of [off, on, all, home, production]) {
+          expect(await siteTarget(nextConfig, `https://qrdx.dev${url}`)).toBe(
+            null,
+          );
+        }
+        if (url.includes("opengraph-image")) return;
+        for (const nextConfig of [on, production]) {
+          const response = await resolve(nextConfig, `https://qrdx.dev${url}`);
+          expect(response.status, url).toBe(307);
+          const english = url.replace(/^\/[^/]+/, "");
+          expect(getRedirectUrl(response), url).toBe(
+            `https://qrdx.dev${english}`,
+          );
+        }
+      },
+    );
+
+    it.each(LOCALIZED)("sends %s to the site while it's on", async (url) => {
+      const response = await resolve(every, `https://qrdx.dev${url}`);
+      expect(getRedirectUrl(response), url).toBeNull();
+      expect(await siteTarget(every, `https://qrdx.dev${url}`)).toBe(
+        `${ORIGIN}${url}`,
+      );
+    });
+
+    it("keeps English as it was, and only on QRdx's own hosts", async () => {
+      expect(
+        getRedirectUrl(
+          await resolve(every, "https://qrdx.dev/en/barcode-generator/ean-13"),
+        ),
+      ).toBe("https://qrdx.dev/barcode-generator/ean-13");
+      for (const nextConfig of [on, production, every]) {
+        expect(
+          await siteTarget(
+            nextConfig,
+            "https://qrdx.dev/barcode-generator/ean-13",
+          ),
+        ).toBe(`${ORIGIN}/barcode-generator/ean-13`);
+      }
+      expect(
+        await siteTarget(
+          every,
+          "https://links.customer.com/es/barcode-generator/ean-13",
+        ),
+      ).toBeNull();
+    });
+  });
+
+  // No translated URL of an English-only page is a 404 (23 Nov 2026:
+  // /es/compare/uniqode was one, while /es/pricing redirected). Every page
+  // the site serves and every English-only page here answers
+  // /<language><path> either as that page in the language (a page the site
+  // translates, while its group is on) or with a redirect to the English
+  // URL, query kept: a 308, or a 307 for a page the site can translate,
+  // while its group is off. The pages: the zone's manifest, this app's own copies of
+  // the site's pages (their routes: the blog's posts, authors, categories
+  // and feed among them) and @repo/i18n's English-only lists. The site's
+  // tests check its own routes against the same lists, so a page added
+  // there without a rule fails before it ships.
+  describe("translated URLs of English-only pages", () => {
+    const APP_DIR = path.resolve(import.meta.dirname, "../../app");
+
+    /** Route paths of the page and route files under `dir`. */
+    const routesUnder = (dir: string, at: string): string[] =>
+      readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+        if (!entry.isDirectory()) {
+          return /^(?:page\.tsx|route\.ts)$/.test(entry.name)
+            ? [at || "/"]
+            : [];
+        }
+        // Parallel and intercepting routes are other views of these pages.
+        if (entry.name.startsWith("@") || entry.name.startsWith("(.")) {
+          return [];
+        }
+        const segment = /^\(.*\)$/.test(entry.name) ? "" : `/${entry.name}`;
+        return routesUnder(path.join(dir, entry.name), `${at}${segment}`);
+      });
+
+    /** A route's URLs: a dynamic segment is any one value, `[[...x]]` none too. */
+    const samplesOf = (route: string): string[] =>
+      /\[\[\.\.\.[^\]]+\]\]/.test(route)
+        ? [
+            route.replace(/\/\[\[\.\.\.[^\]]+\]\]/, "") || "/",
+            route.replace(/\[\[\.\.\.[^\]]+\]\]/, "x"),
+          ]
+        : [route.replace(/\[(?:\.\.\.)?[^\]]+\]/g, "x")];
+
+    const TRANSLATED_GROUPS = Object.keys(SITE_TRANSLATED_GROUPS);
+    /** The manifest's pages (not the translated groups' or the images). */
+    const MANIFEST = SITE_GROUP_NAMES.filter(
+      (group) => !TRANSLATED_GROUPS.includes(group),
+    ).flatMap((group) =>
+      (SITE_GROUPS[group] as readonly SitePath[])
+        .map(entryPath)
+        .filter((entry) => !entry.includes("-image"))
+        .map((entry) => entry.replaceAll("*", "x")),
+    );
+    /** This app's copies of the site's pages, and its English-only pages. */
+    const OWN = [
+      ...routesUnder(path.join(APP_DIR, "(app)", "(home)"), ""),
+      ...routesUnder(path.join(APP_DIR, "[lang]"), ""),
+    ]
+      .flatMap(samplesOf)
+      .filter((url) => isSitePath(url) || isEnglishOnlyPath(url));
+    const LISTED = [
+      ...ENGLISH_ONLY_PATHS,
+      ...ENGLISH_ONLY_OUTSIDE_PATHS,
+    ].flatMap(samplesOf);
+    const PAGES = [...new Set([...MANIFEST, ...OWN, ...LISTED])].sort();
+
+    /** The opt-in group that translates `path`, if any. */
+    const translatedBy = (path: string) =>
+      Object.entries(SITE_TRANSLATED_GROUPS).find(([, routes]) =>
+        (routes ?? []).some((route) => routeMatcher(route)(path)),
+      )?.[0];
+
+    it("finds the site's pages, those of the 23 Nov 404s among them", () => {
+      for (const page of [
+        "/",
+        "/home",
+        "/blog",
+        "/blog/x",
+        "/blog/rss.xml",
+        "/blog/authors/x",
+        "/blog/category/x",
+        "/changelogs",
+        "/compare",
+        "/compare/x",
+        "/custom-domain-qr-codes",
+        "/qr-code-tracking",
+        "/legal",
+        "/legal/x",
+        "/pricing",
+        "/integrations/x",
+        "/barcode-generator/x",
+        "/qr-code-generator/x",
+      ]) {
+        expect(PAGES, page).toContain(page);
+      }
+      // This app's own pages outside the site's groups aren't in question.
+      expect(PAGES).not.toContain("/community");
+      expect(PAGES).not.toContain("/playground");
+    });
+
+    const CASES = [
+      { name: "without the site", groups: [] as string[] },
+      {
+        name: "with production's groups",
+        groups: [...siteZoneGroups(undefined), "generators-i18n"],
+      },
+      { name: "with every group", groups: [...SITE_GROUP_NAMES] },
+    ];
+
+    it.each(CASES)(
+      "answers every translated URL $name: the page, or a redirect to English",
+      async ({ name, groups }) => {
+        const nextConfig =
+          name === "without the site"
+            ? off
+            : name === "with every group"
+              ? every
+              : production;
+        const wrong: string[] = [];
+        for (const page of PAGES) {
+          const group = translatedBy(page);
+          for (const locale of TRANSLATED_LOCALES) {
+            const segment = LOCALE_INFO[locale].segment;
+            const url = `/${segment}${page === "/" ? "" : page}?from=audit`;
+            if (group && groups.includes(group)) {
+              const target = await siteTarget(
+                nextConfig,
+                `https://qrdx.dev${url}`,
+              );
+              if (target !== `${ORIGIN}${url}`) {
+                wrong.push(`${url}: ${target ?? "not the site"}`);
+              }
+              continue;
+            }
+            const response = await resolve(
+              nextConfig,
+              `https://qrdx.dev${url}`,
+            );
+            const to = getRedirectUrl(response);
+            // Permanent, but a 307 for a page the site can translate
+            // (routing.ts englishOnlyRedirects).
+            const status = group ? 307 : 308;
+            if (
+              response.status !== status ||
+              to !== `https://qrdx.dev${page}?from=audit`
+            ) {
+              wrong.push(`${url}: ${response.status} ${to ?? ""}`);
+            }
+          }
+        }
+        expect(wrong).toEqual([]);
+      },
+      60_000,
+    );
   });
 
   it.each(["/blog", "/blog/rss.xml", "/site-static/_next/static/x.js"])(
@@ -1179,13 +1453,13 @@ describe("next.config.ts", () => {
       async (segment) => {
         for (const nextConfig of [on, home]) {
           const root = await resolve(nextConfig, `https://qrdx.dev/${segment}`);
-          expect(root.status).toBe(307);
+          expect(root.status).toBe(308);
           expect(getRedirectUrl(root)).toBe("https://qrdx.dev/");
           const atHome = await resolve(
             nextConfig,
             `https://qrdx.dev/${segment}/home`,
           );
-          expect(atHome.status).toBe(307);
+          expect(atHome.status).toBe(308);
           expect(getRedirectUrl(atHome)).toBe("https://qrdx.dev/home");
         }
       },
@@ -1193,7 +1467,7 @@ describe("next.config.ts", () => {
 
     it("keeps the query through the language redirect", async () => {
       const response = await resolve(home, "https://qrdx.dev/es?ref=x");
-      expect(response.status).toBe(307);
+      expect(response.status).toBe(308);
       expect(getRedirectUrl(response)).toBe("https://qrdx.dev/?ref=x");
     });
 
@@ -1325,6 +1599,8 @@ describe("next.config.ts", () => {
       "/ES/qr-code-generator/wifi",
       "/es/QR-Code-Generator",
       "/Zh-Hans/qr-code-generator/vcard",
+      "/ES/barcode-generator/ean-13",
+      "/es/Barcode-Generator",
     ];
 
     it.each(CASINGS)(
@@ -1550,11 +1826,14 @@ describe("proxy.ts", () => {
     },
   );
 
-  it("gives the generators in other languages the key only while generators-i18n is on", async () => {
+  it("gives the generators in other languages the key only while their group is on", async () => {
     for (const pathname of [
       "/es/qr-code-generator",
       "/es/qr-code-generator/wifi",
       "/zh-hans/qr-code-generator/vcard/opengraph-image-1a",
+      "/es/barcode-generator",
+      "/ja/barcode-generator/ean-13",
+      "/zh-hans/barcode-generator/upc-a/opengraph-image-1a",
     ]) {
       const sent = forwarded(
         await every(
@@ -1582,6 +1861,13 @@ describe("proxy.ts", () => {
     expect(upper.status).toBe(308);
     expect(upper.headers.get("location")).toBe(
       "https://qrdx.dev/es/qr-code-generator/wifi",
+    );
+    const barcode = await every(
+      request("https://qrdx.dev/ES/Barcode-Generator/ean-13"),
+    );
+    expect(barcode.status).toBe(308);
+    expect(barcode.headers.get("location")).toBe(
+      "https://qrdx.dev/es/barcode-generator/ean-13",
     );
     // The translated pages that aren't the site's keep no key.
     expect(

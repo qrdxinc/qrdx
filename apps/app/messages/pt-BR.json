@@ -349,7 +349,7 @@
     "hero": {
       "badge": "Grátis e open source (AGPL-3.0)",
       "title": "Gerador de QR code grátis, com códigos dinâmicos que continuam funcionando",
-      "description": "Crie QR codes com a sua marca, usando padrões, gradientes, logos e molduras, e baixe em PNG, SVG, PDF ou EPS sem cadastro e sem marca d'água. Entre na sua conta para criar QR codes dinâmicos que você pode editar depois de impressos, páginas hospedadas e análises de leitura.",
+      "description": "Crie QR codes com a sua marca, com padrões, gradientes, logos e molduras, e baixe em PNG, SVG, PDF, EPS ou TIFF sem cadastro e sem marca d’água. Entre na sua conta para ter QR codes dinâmicos que você pode editar depois de imprimir, páginas hospedadas e análises de leituras.",
       "primary": "Testar o Playground",
       "secondary": "Ler a documentação",
       "sceneLabel": "Desenho animado do fluxo do QRdx: uma tela de estúdio cria e estiliza um QR code, uma impressora o imprime em um cartão, um braço robótico coloca o cartão em uma esteira, um celular em um portão faz a leitura de cada cartão que passa, a leitura segue para um painel de análises que ganha uma nova barra, e um grande cartão de QR code dinâmico troca o link de destino sem precisar ser reimpresso"
@@ -377,7 +377,7 @@
         "none": "Sem moldura",
         "border": "Borda"
       },
-      "more": "O Playground completo traz {bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho, {eyeCentres, number} centros de olho, cores e gradientes à vontade, logos, molduras e downloads em PNG, SVG, PDF ou EPS.",
+      "more": "O Playground completo traz mais {bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho, {eyeCentres, number} centros de olho, quaisquer cores e gradientes, logos, molduras e downloads em PNG, SVG, PDF, EPS ou TIFF.",
       "customize": "Personalizar no Playground",
       "qrLabel": "QR code de {value}",
       "empty": "Digite um link para ver o seu QR code."
@@ -518,7 +518,7 @@
       "items": {
         "free": {
           "question": "O QRdx é grátis mesmo? Existem limites escondidos?",
-          "answer": "Sim. Criar, personalizar e baixar QR codes estáticos é grátis e não exige conta: códigos ilimitados, todas as opções de design ({bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho de canto e {eyeCentres, number} centros de olho, gradientes, logos, molduras e arte com Logo QR ou Image QR) e downloads em PNG, JPG, SVG, PDF e EPS. Não há marcas d’água nem anúncios. Os códigos estáticos guardam seu conteúdo no próprio código, então nunca expiram e não têm limite de leituras. Uma conta grátis inclui 10 QR codes dinâmicos, 3 páginas hospedadas, {historyYears, plural, one {# ano} other {# anos}} de análise de leituras, 10 temas salvos e 5 gerações de tema com IA; Pro ({proMonthly}/mês ou {proYearly}/ano) e Business ({businessMonthly}/mês ou {businessYearly}/ano) ampliam esses limites."
+          "answer": "Sim. Criar, personalizar e baixar QR codes estáticos é grátis e não exige conta: códigos ilimitados, todas as opções de design ({bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho de canto e {eyeCentres, number} centros de olho, gradientes, logos, molduras e arte de Logo QR ou Image QR) e downloads em PNG, JPG, SVG, PDF, EPS e TIFF. Não há marcas d’água nem anúncios. Os QR codes estáticos guardam seu conteúdo no próprio código, então nunca expiram e não têm limite de leituras. Uma conta grátis inclui 10 QR codes dinâmicos, 3 páginas hospedadas, {historyYears, plural, one {# ano} other {# anos}} de análises de leituras, 10 temas salvos e 5 gerações de tema com IA; Pro ({proMonthly}/mês ou {proYearly}/ano) e Business ({businessMonthly}/mês ou {businessYearly}/ano) ampliam esses limites."
         },
         "signup": {
           "question": "Preciso me cadastrar ou criar uma conta?",
@@ -546,7 +546,7 @@
         },
         "api": {
           "question": "Desenvolvedores podem gerar QR codes por API?",
-          "answer": "Sim. A Image API transforma qualquer URL em um QR code SVG, PNG ou EPS sem precisar de chave de API, e a REST API, com uma chave de API do workspace ou OAuth, cria e edita QR codes dinâmicos e consulta as leituras deles. Também há um MCP server para Claude, Cursor e VS Code, uma ferramenta de linha de comando (@qrdx/cli), um componente shadcn/ui e a biblioteca qrdx para React."
+          "answer": "Sim. A Image API transforma qualquer URL em um QR code SVG, PNG, TIFF ou EPS sem chave de API, e a REST API, com uma chave de API do workspace ou OAuth, cria e edita QR codes dinâmicos e consulta as leituras deles. Também há um servidor MCP para Claude, Cursor e VS Code, uma ferramenta de linha de comando (@qrdx/cli), um componente shadcn/ui e a biblioteca React qrdx."
         },
         "paidPlans": {
           "question": "O que eu ganho com o Pro ou o Business?",
@@ -913,12 +913,12 @@
       "metaTitle": "Tipos de QR code: {count, number} geradores grátis (Wi-Fi, vCard, UPI)",
       "metaDescription": "{count, number} tipos de QR code, cada um com gerador grátis: Wi-Fi, vCard, WhatsApp, UPI, e-mail, perfis sociais e pagamentos. Cada um mostra o formato exato do conteúdo.",
       "title": "Geradores de QR code para todo tipo de conteúdo",
-      "intro1": "Um QR code pode fazer mais do que abrir um site. Dependendo do texto que ele guarda, o celular pode entrar em uma rede Wi-Fi, salvar um contato, iniciar um pagamento ou abrir uma conversa. Escolha um dos {count, number} tipos abaixo e veja um gerador com os campos certos, prévia ao vivo e download em PNG, WebP ou SVG.",
+      "intro1": "Um QR code pode fazer mais do que abrir um site. Dependendo do texto dentro dele, o celular pode entrar em uma rede Wi-Fi, salvar um contato, iniciar um pagamento ou abrir uma conversa. Escolha um dos {count, number} tipos abaixo para ter um gerador com os campos certos, uma prévia ao vivo e download em PNG, WebP, SVG ou TIFF.",
       "intro2": "Por padrão, os códigos criados nestas páginas são estáticos: o conteúdo fica codificado no próprio desenho, então funcionam offline, nunca expiram e não têm limite de leituras. Cada página também documenta o formato exato que gera, para você saber o que o leitor vai ler.",
       "cardTitle": "Gerador de QR code de {name}",
       "moreTools": "Mais ferramentas",
       "bulkTitle": "Precisa de centenas de códigos? Use o gerador em massa",
-      "bulkDescription": "Envie um CSV e baixe todos os códigos em PNG, WebP ou SVG em um único arquivo ZIP, gerado inteiramente no seu navegador.",
+      "bulkDescription": "Envie um CSV e baixe todos os códigos em PNG, WebP, SVG ou TIFF em um único arquivo ZIP, gerado inteiramente no seu navegador.",
       "printTitle": "Vai imprimir seu código? Confira o tamanho",
       "printDescription": "Descubra o tamanho mínimo de impressão a partir da distância de leitura e da quantidade de dados no código.",
       "dynamicTitle": "Gerador de QR code dinâmico",
@@ -1104,7 +1104,7 @@
       "metaDescription": "Transforme um CSV em até {rows, number} QR codes estilizados em PNG, WebP ou SVG dentro de um ZIP. Tudo roda no seu navegador: sem upload, sem marca d’água e sem cadastro até {limit, number} linhas.",
       "crumb": "Gerador em massa",
       "title": "Gerador de QR code em massa",
-      "intro1": "Transforme um arquivo CSV em milhares de QR codes de uma só vez, com o estilo que você quiser, e baixe em PNG, WebP ou SVG dentro de um ZIP. Uma linha por código, com os nomes dos arquivos vindos de uma coluna: etiquetas de produto, ingressos de eventos, etiquetas de patrimônio, números de mesa ou malas diretas.",
+      "intro1": "Transforme um arquivo CSV em milhares de QR codes de uma vez, com o estilo que você quiser, e baixe tudo em um ZIP como PNG, WebP, SVG ou TIFF (incluindo TIFF CMYK para impressão). Uma linha por código, com os nomes dos arquivos vindos de uma coluna: etiquetas de produto, ingressos de eventos, plaquetas de patrimônio, números de mesa ou malas diretas.",
       "intro2": "Tudo roda no seu navegador, então o CSV nunca é enviado e não há marca d’água nem cobrança por código. Arquivos de até {limit, number} linhas não precisam de conta; os maiores, de até {rows, number}, exigem uma conta grátis. Não tem certeza do formato? Comece pelo CSV de exemplo.",
       "facts": {
         "rows": "Até {rows, number} linhas por arquivo",
@@ -1975,8 +1975,8 @@
     }
   },
   "barcodeGenerator": {
-    "metaTitle": "Gerador de código de barras grátis: EAN-13, UPC, Code 128",
-    "metaDescription": "Crie EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix e mais: {count, number} tipos de código de barras com dígitos verificadores calculados para você. PNG, JPG, SVG, PDF, EPS. Grátis, sem cadastro.",
+    "metaTitle": "Crie códigos de barras grátis: EAN-13, UPC, Code 128",
+    "metaDescription": "Crie EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix e mais: {count, number} tipos de código de barras com dígito verificador. PNG, JPG, SVG, PDF, EPS. Grátis.",
     "crumb": "Gerador de código de barras",
     "title": "Gerador de código de barras grátis",
     "intro1": "Crie códigos de barras de varejo, envio e estoque em {count, number} formatos, de EAN-13 e UPC-A a Code 128, GS1-128, ITF-14 e Data Matrix. Digite o número e o dígito verificador é calculado para você; se estiver errado, o erro é detectado antes de você imprimir.",
@@ -2700,7 +2700,7 @@
     "playground": "Experimente no Playground",
     "promptsEyebrow": "Experimente",
     "promptsTitle": "Prompts para começar",
-    "promptsDescription": "Cada um usa o que as ferramentas do QRdx realmente fazem: cores e formas, Wi-Fi, contatos, e-mail, SMS e dados de mapa, além de links em SVG, PNG, WebP ou EPS. Abra no seu assistente ou copie.",
+    "promptsDescription": "Cada um usa o que as ferramentas do QRdx realmente fazem: cores e formas, Wi-Fi, contatos, e-mail, SMS e payloads de mapa, e links em SVG, PNG, WebP, TIFF ou EPS. Abra no seu assistente ou copie.",
     "howEyebrow": "Como funciona",
     "howTitle": "Três passos, e é só pedir",
     "howDescription": "Seu assistente chama as ferramentas do QRdx por você. Você nunca precisa mexer em uma API.",
@@ -2817,7 +2817,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "API de QR code grátis: sem chave, SVG, PNG e logos",
-    "metaDescription": "Uma API de QR code grátis e sem chave. Uma única URL retorna um QR code em SVG, PNG, WebP ou EPS com suas cores, formas e logo. {perMinute, number} requisições por minuto, com cache de um ano.",
+    "metaDescription": "Uma API de QR code grátis, sem chave: uma URL retorna um QR code em SVG, PNG, WebP, TIFF ou EPS com suas cores, formas e logo. {perMinute, number} requisições por minuto, em cache por um ano.",
     "crumb": "API de QR code",
     "title": "API de QR code grátis",
     "intro1": "Coloque um QR code em qualquer lugar onde caiba uma URL. Uma única requisição GET para api.qrdx.dev retorna a própria imagem: sem conta, sem chave de API, sem SDK. Cores, formas, correção de erros e um logo vão na query string.",
@@ -2825,7 +2825,7 @@
     "facts": {
       "noKey": "Sem chave nem cadastro",
       "rateLimit": "{perMinute, number} requisições por minuto por IP",
-      "formats": "SVG, PNG, WebP e EPS",
+      "formats": "SVG, PNG, WebP, TIFF e EPS",
       "openSource": "Código aberto"
     },
     "docs": "Docs da Image API",
@@ -2882,7 +2882,7 @@
     "params": {
       "data": "O texto ou a URL a codificar, com até {max, number} caracteres.",
       "size": "Largura e altura em pixels, de {min, number} a {max, number}. Para EPS, é a largura em pontos.",
-      "format": "svg, png, webp (sem perdas) ou eps (vetorial, para impressão).",
+      "format": "svg, png, webp (sem perdas), tiff, tiff-cmyk (CMYK, para impressão) ou eps (vetorial, para impressão).",
       "colors": "Cor do código e do fundo em hexadecimal, sem o # (155dfc). bg=00000000 deixa o fundo transparente.",
       "shapes": "Formas dos módulos, dos olhos dos cantos e dos pontos dentro deles: {count, number} formas de módulo no total.",
       "level": "Correção de erros: L (7%), M (15%), Q (25%) ou H (30%) do código pode ser danificado e ele ainda é lido.",
@@ -2914,7 +2914,7 @@
       "title": "Image API",
       "noKey": "Sem chave nem conta",
       "static": "Códigos estáticos: os dados ficam na imagem",
-      "formats": "SVG, PNG, WebP e EPS",
+      "formats": "SVG, PNG, WebP, TIFF e EPS",
       "limit": "{perMinute, number} requisições por minuto por IP"
     },
     "restCard": {
@@ -2946,7 +2946,7 @@
       "logoQuestion": "A API de QR code consegue adicionar um logo?",
       "logoAnswer": "Sim. O logoIcon coloca no centro um ícone rápido (Wi-Fi, link, telefone, e-mail e mais) ou qualquer um dos {brands} logos de marcas do Simple Icons, sem chave. O código muda para a correção de erros H quando o logo exige, e assim ele continua sendo lido.",
       "formatsQuestion": "Quais formatos de imagem ela retorna?",
-      "formatsAnswer": "SVG por padrão, ou PNG, WebP sem perdas e EPS vetorial com format=png, webp ou eps. Os tamanhos vão de {min, number} a {max, number} pixels.",
+      "formatsAnswer": "SVG por padrão, ou PNG, WebP sem perdas, TIFF e EPS vetorial com format=png, webp, tiff ou eps, e TIFF CMYK para impressão com format=tiff-cmyk. Os tamanhos vão de {min, number} a {max, number} pixels.",
       "expireQuestion": "Os QR codes expiram?",
       "expireAnswer": "Não. A Image API gera QR codes estáticos: o que você codifica fica dentro do código, então ele funciona enquanto o link ou o texto continuar funcionando. Nada expira e nada conta leituras.",
       "dynamicQuestion": "Posso mudar o destino de um código depois de imprimir?",
@@ -2984,7 +2984,7 @@
       },
       "print": {
         "title": "Baixe e imprima",
-        "body": "Baixe em PNG, WebP ou SVG, ou personalize antes no Playground. Um link curto precisa de menos módulos que uma URL longa, então o código pode ser impresso menor e ainda ser lido."
+        "body": "Baixe em PNG, WebP, SVG ou TIFF, ou personalize antes no playground. Um link curto precisa de menos módulos do que uma URL longa, então o código pode ser impresso menor e continuar sendo lido."
       },
       "change": {
         "title": "Mude quando precisar",
@@ -5735,7 +5735,7 @@
       "label": "Sobre o criador de QR code",
       "summary": "Criador de QR code personalizado. QR codes estáticos grátis com seu logo, cores e molduras. Sem cadastro, sem marca d’água.",
       "types": "Crie um QR code para um link, rede Wi-Fi, cartão de contato, pagamento ou qualquer um dos {types, number} tipos de conteúdo. Personalize com {bodyPatterns, number} padrões de pontos, {eyeShapes, number} formatos de olhos dos cantos, cores sólidas ou em gradiente, um logo no centro e {frames, number} molduras com chamada para ação. A pontuação de leitura estima o quão bem ele será lido antes de você imprimir.",
-      "downloads": "Baixe em PNG, JPG, WebP ou SVG, ou em PDF ou EPS prontos para impressão, em um tamanho exato. Os QR codes estáticos são grátis e nunca expiram. Entre na sua conta para criar um QR code dinâmico que você pode editar depois de impresso e acompanhar as leituras.",
+      "downloads": "Baixe em PNG, JPG, WebP, SVG ou TIFF (inclusive TIFF CMYK para impressão), ou em PDF ou EPS prontos para imprimir, no tamanho exato. Os QR codes estáticos são grátis e nunca expiram. Entre na sua conta para criar um QR code dinâmico que você pode editar depois de impresso e acompanhar as leituras.",
       "links": {
         "allTypes": "Todos os tipos de QR code",
         "scanChecker": "Verificador de leitura",
