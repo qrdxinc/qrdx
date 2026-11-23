@@ -1229,12 +1229,80 @@ export const affiliateRefundedOrder = pgTable("affiliate_refunded_order", {
 });
 
 // ─── Growth analytics ───────────────────────────────────────────────────────
+// ─── Invite rewards (apps/app/lib/invites) ──────────────────────────────────
+// Every signed-in person has an invite link. A friend who signs up through it
+// in the same visit and makes their first dynamic code within 30 days earns
+// both of them 5 more dynamic codes in their own workspace; an inviter is
+// rewarded for at most 10 friends. The bonus is worked out from these rows
+// (lib/invites/bonus.ts), never stored as a number.
+
+/** invite.status: open until the friend's first dynamic code decides it. */
+export const INVITE_STATUSES = [
+  "pending",
+  "rewarded",
+  "self_referral",
+  "expired",
+] as const;
+export type InviteStatus = (typeof INVITE_STATUSES)[number];
+
+// One per person who has opened their invite page: the code in their link.
+export const inviteCode = pgTable("invite_code", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  // The link is <app url>/i/<code>. Random, lower case, unique.
+  code: text("code").notNull().unique(),
+  createdAt: timestamp("created_at").notNull(),
+});
+
+// One per account that signed up through an invite link. Either person
+// deleting their account removes them from the row (set null) and leaves the
+// other one's reward in place.
+export const invite = pgTable(
+  "invite",
+  {
+    id: text("id").primaryKey(),
+    inviterUserId: text("inviter_user_id").references(() => user.id, {
+      onDelete: "set null",
+    }),
+    // An account is invited once, at sign-up: the first invite wins.
+    inviteeUserId: text("invitee_user_id")
+      .unique()
+      .references(() => user.id, { onDelete: "set null" }),
+    // INVITE_STATUSES
+    status: text("status", { enum: INVITE_STATUSES })
+      .notNull()
+      .default("pending"),
+    // When the friend signed up: their 30 days start here.
+    createdAt: timestamp("created_at").notNull(),
+    // When the friend's first dynamic code decided the status.
+    decidedAt: timestamp("decided_at"),
+    // The inviter's reward, 1 to 10 in the order they were earned; null when
+    // the inviter had already been rewarded for 10 friends (the friend's own
+    // 5 still count). Unique per inviter, so two friends qualifying at once
+    // can't both take the last one.
+    inviterRewardSlot: integer("inviter_reward_slot"),
+    // Set by QRdx for abuse: this row's bonus stops counting for new codes.
+    // Codes already made keep working.
+    revokedAt: timestamp("revoked_at"),
+  },
+  (table) => [
+    // Also the lookup of an inviter's invites (its first column).
+    uniqueIndex("invite_inviter_reward_slot_unique").on(
+      table.inviterUserId,
+      table.inviterRewardSlot
+    ),
+  ]
+);
+
 // apps/app/lib/analytics: how an account found QRdx, where codes are made,
 // and daily API, MCP and chat bot usage counts.
 
 /** user_acquisition.channel, worked out on the server (lib/analytics/channel.ts). */
 export const ACQUISITION_CHANNELS = [
   "affiliate",
+  // A friend's invite link (lib/invites), when no affiliate was credited.
+  "invite",
   "plugin",
   "mcp",
   "bot",

@@ -110,12 +110,20 @@ export function noticeCopy(
       sentences.push(t("limitNotice.resets", { date: reset }));
     }
   } else {
+    // Dynamic codes invites added to the owner's own workspace.
+    const bonus = usage.cap?.bonus ?? 0;
     sentences.push(
-      t("limitNotice.includes", {
-        monthly,
-        plan,
-        amount: amount(usage.limit),
-      }),
+      bonus > 0 && bonus < usage.limit
+        ? t("limitNotice.includesBonus", {
+            plan,
+            amount: amount(usage.limit - bonus),
+            bonus,
+          })
+        : t("limitNotice.includes", {
+            monthly,
+            plan,
+            amount: amount(usage.limit),
+          }),
     );
     const lift = usage.cap?.lift ?? null;
     let remedy: string;

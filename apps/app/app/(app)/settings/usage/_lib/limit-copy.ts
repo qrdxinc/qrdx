@@ -203,8 +203,12 @@ export function limitCopy(meter: Meter, ctx: LimitContext): LimitCopy | null {
     );
     if (resets) sentences.push(`${resets}.`);
   } else {
+    // Dynamic codes invites added to the owner's own workspace.
+    const bonus = ctx.cap?.bonus ?? 0;
     sentences.push(
-      `${plan} includes ${amountOf(meter.id, limit)}${words.monthly ? " a month" : ""}.`,
+      bonus > 0 && bonus < limit
+        ? `${plan} includes ${amountOf(meter.id, limit - bonus)} and invites added ${count(bonus)}.`
+        : `${plan} includes ${amountOf(meter.id, limit)}${words.monthly ? " a month" : ""}.`,
     );
     const fix = remedy(meter, ctx, upgrade);
     if (fix) sentences.push(fix);

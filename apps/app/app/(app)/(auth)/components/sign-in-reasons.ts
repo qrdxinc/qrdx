@@ -5,6 +5,7 @@ import {
   MAX_BULK_TOOL_ROWS_SIGNED_OUT,
 } from "@repo/config";
 import type { useTranslations } from "next-intl";
+import { INVITE_BONUS_CODES } from "@/lib/invites/terms";
 
 type ReasonTranslator = ReturnType<typeof useTranslations<"auth.reasons">>;
 
@@ -46,6 +47,8 @@ export function reasonLine(
       return t("afterDownload");
     case "upgrade":
       return t("upgrade");
+    case "invite":
+      return t("invite", { count: INVITE_BONUS_CODES });
     case "nav":
       return null;
     default:

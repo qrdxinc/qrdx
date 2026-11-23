@@ -18,6 +18,7 @@ import { assertBindableDomains } from "@/app/(app)/dashboard/domains/_lib/domain
 import { codeEvents, codeEventsByIds } from "@/ee/audit-log/code-events";
 import { changedFields } from "@/ee/audit-log/metadata";
 import { recordAuditEvent } from "@/ee/audit-log/record";
+import { dynamicCodeLimit } from "@/lib/code-limit";
 import { HttpError } from "@/lib/error-response";
 import { noteLimitUsage } from "@/lib/limit-notices";
 import { can } from "@/lib/permissions";
@@ -938,10 +939,11 @@ async function withSlotCheck(
   apply: () => Promise<string[]>,
   undo: (ids: string[]) => Promise<unknown>,
 ): Promise<string[]> {
-  const limit = getPlanLimits(await getPlanForScope(scope)).dynamicCodes;
+  // The plan's codes plus what invites added (lib/code-limit.ts).
+  const { limit, bonus } = await dynamicCodeLimit(scope);
   const capped = adding > 0 && Number.isFinite(limit);
   if (capped && (await countUnarchived(scope)) + adding > limit) {
-    throw limitReached(limit);
+    throw limitReached(limit, bonus);
   }
   const changed = await apply();
   // Concurrent requests may have used the same slots: re-check after writing.
@@ -949,11 +951,11 @@ async function withSlotCheck(
     const used = await countUnarchived(scope);
     if (used > limit) {
       await undo(changed);
-      throw limitReached(limit);
+      throw limitReached(limit, bonus);
     }
     // Owners hear about it at 90% and 100% (after the response).
     if (changed.length > 0)
-      noteLimitUsage(scope, "dynamicCodes", { used, limit });
+      noteLimitUsage(scope, "dynamicCodes", { used, limit, bonus });
   }
   return changed;
 }

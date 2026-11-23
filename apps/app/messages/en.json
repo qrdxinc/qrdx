@@ -5515,7 +5515,8 @@
       "yourQrCodeIsNow": "Your QR code is now dynamic",
       "destinationUpdated": "Destination updated",
       "designSavedToTheCode": "Design saved to the code",
-      "couldntCopyTheShortLink": "Couldn't copy the short link"
+      "couldntCopyTheShortLink": "Couldn't copy the short link",
+      "inviteForMore": "Or <link>invite a friend</link>: when they make their first dynamic code, you both get {count, number} more."
     },
     "frameInline": {
       "frameTextMenu": {
@@ -6161,7 +6162,8 @@
     "limitCard": {
       "planUsage": "Plan & usage",
       "notNow": "Not now",
-      "labelUsed": "{label} used"
+      "labelUsed": "{label} used",
+      "inviteForMore": "Or <link>invite a friend</link>: when they make their first dynamic code, you both get {count, number} more."
     },
     "limitDialog": {
       "limitReached": "Limit reached"
@@ -7346,6 +7348,39 @@
           "refreshToTryAgainYour": "Refresh to try again. Your plan and limits are unchanged.",
           "unlimitedOnValue": "Unlimited on {value}",
           "labelUsed": "{label} used"
+        }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "Your invite link:",
+          "copy": "Copy",
+          "copied": "Copied",
+          "linkCopied": "Link copied",
+          "couldntCopy": "Couldn't copy. Select the link and copy it yourself."
+        },
+        "page": {
+          "title": "Invite friends",
+          "description": "Share your link. When a friend signs up through it and makes their first dynamic code, you both get {count, number} more dynamic codes.",
+          "notReady": "Invites aren't available yet. Please check back soon.",
+          "yourInviteLink": "Your invite link",
+          "shareYourLink": "Send it to friends or post it anywhere. Each friend who joins through it and makes a dynamic code earns you both {count, number} more.",
+          "link": "Link",
+          "sameVisit": "A friend counts when they create their account in the same visit as the click. Nothing is stored on their device.",
+          "friendsJoined": "Friends joined",
+          "friendsRewarded": "Friends rewarded",
+          "rewardedOfMax": "{rewarded, number} of {max, number}",
+          "extraCodes": "Extra dynamic codes",
+          "waiting": "{waiting, plural, one {# friend hasn't} other {# friends haven't}} made a dynamic code yet. They have {days, number} days from signing up.",
+          "atCap": "You've been rewarded for {max, number} friends, the most an invite link earns. Friends who join through it still get their {count, number}.",
+          "youWereInvited": "You joined through a friend's invite, so your own workspace got {count, number} extra dynamic codes too.",
+          "howItWorks": "How it works",
+          "ruleSignUp": "A friend counts when they create a new QRdx account through your link during that visit. A sign-up on a later visit, or an account that already exists, doesn't count.",
+          "ruleFirstCode": "When they make their first dynamic code within {days, number} days of signing up, you both get {count, number} more dynamic codes in your own workspaces.",
+          "ruleCap": "You can be rewarded for up to {max, number} friends ({total, number} codes). Friends who join after that still get their {count, number}.",
+          "ruleNotYourself": "Your own other accounts don't count, and neither does an account using your email address under another spelling or anyone who shares a workspace with you.",
+          "ruleAllowance": "The extra codes add to your own workspace's dynamic codes on any plan, not a team's. They have no cash value and can't be moved to another account. Codes you make with them keep working.",
+          "rulePrivate": "We never show who signed up through your link, and your friends don't see who invited them.",
+          "ruleEnd": "We can end invite rewards for new invites; codes you've already earned stay. The details are in the <terms>Terms of Service</terms> and the <help>help page</help>."
         }
       }
     },
@@ -10125,7 +10160,9 @@
       "makeRoom": "{limit, select, dynamicCodes {Archive one to make room.} landingPages {Delete one to make room.} storage {Delete files you no longer need to make room.} savedThemes {Delete one to make room.} other {}}",
       "resets": "Resets {date}.",
       "keeps": "{limit, select, dynamicCodes {Existing codes keep working.} landingPages {Existing pages stay live.} formResponses {Pages stay live. Forms accept responses again after the reset.} storage {Files you've uploaded stay available.} other {}}",
-      "upgradeButton": "Upgrade to {plan}"
+      "upgradeButton": "Upgrade to {plan}",
+      "includesBonus": "{plan} includes {amount} and invites added {bonus, number}.",
+      "invite": "Or <link>invite a friend</link>: when they make their first dynamic code, you both get {count, number} more."
     },
     "weeklyDigest": {
       "subject": "Your QRdx week: {scans, plural, one {# scan} other {# scans}}",
@@ -10165,6 +10202,18 @@
       "taxes": "Local taxes may be added at checkout.",
       "reply": "If anything gets in your way, or you're not sure how to do something, reply to this email. A person reads every reply.",
       "reason": "You're getting this because you just made a QRdx account."
+    },
+    "inviteReward": {
+      "subject": "A friend you invited made their first code: you both got {count, number} more dynamic codes",
+      "preview": "You both got {count, number} more dynamic codes",
+      "heading": "You both got {count, number} more dynamic codes",
+      "body": "A friend who signed up through your invite link just made their first dynamic code. Your own workspace now has {count, number} more dynamic codes, and so does theirs.",
+      "progress": "That's {rewarded, plural, one {# friend} other {# friends}} of the {max, number} your link can reward you for.",
+      "last": "That's the last of the {max, number} friends your link can reward you for. Friends who join through it still get their {count, number}.",
+      "inviteMore": "Invite more friends",
+      "seeInvites": "See your invites",
+      "keeps": "The extra codes work on any plan and have no cash value. Codes you make with them keep working.",
+      "reason": "You're getting this because a friend signed up through your QRdx invite link and made their first dynamic code."
     }
   },
   "codeActions": {
@@ -10456,7 +10505,8 @@
       "bulkOverLimit": "Files of up to {limit, number} rows need no account. A free account makes up to {max, number} per file, and your file stays loaded.",
       "keepDesigns": "Keep your designs in your account, on every device.",
       "afterDownload": "It's free, and your code keeps working whatever happens to your plan.",
-      "upgrade": "Plans and billing belong to an account. You'll pick up right where you were."
+      "upgrade": "Plans and billing belong to an account. You'll pick up right where you were.",
+      "invite": "You came through a friend's invite. Sign up now and you'll get {count, number} extra dynamic codes when you make your first one."
     },
     "nudge": {
       "dismiss": "Don't show this again"
@@ -10604,6 +10654,11 @@
         "failed": "Single sign-on didn't work. Try again, or sign in another way.",
         "rateLimited": "Too many tries. Wait a minute, then try again."
       }
+    },
+    "inviteNote": {
+      "text": "You were invited to QRdx. Sign up during this visit and make a dynamic code within {days, number} days to get {count, number} extra dynamic codes.",
+      "signUp": "Sign up",
+      "dismiss": "Dismiss"
     }
   },
   "settingsActions": {

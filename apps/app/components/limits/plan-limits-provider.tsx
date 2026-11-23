@@ -21,6 +21,12 @@ export interface ShellLimits {
   isTeam: boolean;
   /** Plan & usage of the open workspace */
   usageHref: string;
+  /**
+   * Inviting a friend would raise this workspace's dynamic-code limit: the
+   * person's own workspace on a capped plan, while their invites can still
+   * earn codes (lib/invites). The dynamic-code limit card adds one line.
+   */
+  inviteOffer?: boolean;
 }
 
 const PlanLimitsContext = createContext<ShellLimits | null>(null);

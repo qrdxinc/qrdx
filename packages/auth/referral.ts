@@ -1,5 +1,9 @@
 import { getOAuthState } from "better-auth/api";
-import { OAUTH_LANDING_KEY, OAUTH_REFERRAL_KEY } from "./referral-keys";
+import {
+  OAUTH_INVITE_KEY,
+  OAUTH_LANDING_KEY,
+  OAUTH_REFERRAL_KEY,
+} from "./referral-keys";
 
 // What a sign-up carries to the new account, handed to the app once, when
 // the account is created:
@@ -9,6 +13,8 @@ import { OAUTH_LANDING_KEY, OAUTH_REFERRAL_KEY } from "./referral-keys";
 //   GitHub sign-up sends it as the OAuth flow's additionalData
 //   (OAUTH_REFERRAL_KEY), which Better Auth keeps in the OAuth state across
 //   the provider's redirect;
+// - a friend's invite code (apps/app/lib/invites), in INVITE_HEADER or
+//   OAUTH_INVITE_KEY the same way, apart from the affiliate's;
 // - how the visit started (apps/app/lib/analytics/landing.ts): the
 //   referring site's host, campaign tags and first page, in LANDING_HEADER
 //   or OAUTH_LANDING_KEY the same way.
@@ -24,7 +30,9 @@ import { OAUTH_LANDING_KEY, OAUTH_REFERRAL_KEY } from "./referral-keys";
 // sign-up.
 
 export {
+  INVITE_HEADER,
   LANDING_HEADER,
+  OAUTH_INVITE_KEY,
   OAUTH_LANDING_KEY,
   OAUTH_REFERRAL_KEY,
   REFERRAL_HEADER,
@@ -33,10 +41,12 @@ export {
 export interface NewUserSignUp {
   userId: string;
   email: string;
-  /** The sign-up request's headers (REFERRAL_HEADER, LANDING_HEADER). */
+  /** The sign-up request's headers (REFERRAL_HEADER, INVITE_HEADER, LANDING_HEADER). */
   headers: Pick<Headers, "get"> | null;
   /** The code a Google or GitHub sign-up carried through the OAuth state. */
   oauthReferralCode: string | null;
+  /** The invite code a Google or GitHub sign-up carried through the OAuth state. */
+  oauthInviteCode?: string | null;
   /**
    * How a Google or GitHub sign-up's visit started, as the OAuth state
    * carried it: an unchecked object (or null).
@@ -62,6 +72,7 @@ type EndpointContext = {
 
 interface OAuthCarried {
   referralCode: string | null;
+  inviteCode: string | null;
   landing: Record<string, unknown> | null;
 }
 
@@ -86,22 +97,27 @@ function carriedLanding(value: unknown): Record<string, unknown> | null {
 const asContext = (value: unknown): EndpointContext =>
   value && typeof value === "object" ? (value as EndpointContext) : null;
 
+/** A short code the state carried, or null. */
+const carriedCode = (value: unknown): string | null =>
+  typeof value === "string" && value ? value.slice(0, 64) : null;
+
 /**
  * In the user create `before` hook, still inside the sign-up request: keeps
  * what a Google or GitHub sign-up carried in the OAuth state (a referral
- * code, how the visit started), for the `after` hook. Never throws.
+ * code, an invite code, how the visit started), for the `after` hook. Never
+ * throws.
  */
 export async function noteSignUpState(ctx: unknown): Promise<void> {
   const context = asContext(ctx);
   if (!context) return;
   try {
     const state = await getOAuthState();
-    const code = state?.[OAUTH_REFERRAL_KEY];
     const carried: OAuthCarried = {
-      referralCode: typeof code === "string" && code ? code.slice(0, 64) : null,
+      referralCode: carriedCode(state?.[OAUTH_REFERRAL_KEY]),
+      inviteCode: carriedCode(state?.[OAUTH_INVITE_KEY]),
       landing: carriedLanding(state?.[OAUTH_LANDING_KEY]),
     };
-    if (carried.referralCode || carried.landing) {
+    if (carried.referralCode || carried.inviteCode || carried.landing) {
       oauthCarried.set(context, carried);
     }
   } catch {
@@ -138,6 +154,7 @@ export function recordNewUser(
       email: user.email,
       headers,
       oauthReferralCode: carried?.referralCode ?? null,
+      oauthInviteCode: carried?.inviteCode ?? null,
       oauthLanding: carried?.landing ?? null,
     });
   } catch (error) {

@@ -5116,7 +5116,8 @@
       "yourQrCodeIsNow": "Kode QR Anda kini dinamis",
       "destinationUpdated": "Tujuan diperbarui",
       "designSavedToTheCode": "Desain disimpan ke kode",
-      "couldntCopyTheShortLink": "Tidak dapat menyalin tautan pendek"
+      "couldntCopyTheShortLink": "Tidak dapat menyalin tautan pendek",
+      "inviteForMore": "Atau <link>undang teman</link>: saat mereka membuat kode dinamis pertamanya, Anda berdua mendapat tambahan {count, number}."
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5762,7 +5763,8 @@
     "limitCard": {
       "planUsage": "Paket & penggunaan",
       "notNow": "Nanti saja",
-      "labelUsed": "{label} terpakai"
+      "labelUsed": "{label} terpakai",
+      "inviteForMore": "Atau <link>undang teman</link>: saat mereka membuat kode QR dinamis pertamanya, Anda berdua mendapat {count, number} tambahan."
     },
     "limitDialog": {
       "limitReached": "Batas tercapai"
@@ -6947,6 +6949,39 @@
           "refreshToTryAgainYour": "Muat ulang untuk mencoba lagi. Paket dan batas Anda tidak berubah.",
           "unlimitedOnValue": "Tanpa batas di {value}",
           "labelUsed": "{label} terpakai"
+        }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "Tautan undangan Anda:",
+          "copy": "Salin",
+          "copied": "Tersalin",
+          "linkCopied": "Tautan disalin",
+          "couldntCopy": "Tidak dapat menyalin. Pilih tautan lalu salin sendiri."
+        },
+        "page": {
+          "title": "Undang teman",
+          "description": "Bagikan tautan Anda. Saat teman mendaftar melalui tautan itu dan membuat kode dinamis pertamanya, Anda berdua mendapat tambahan {count, number} kode dinamis.",
+          "notReady": "Undangan belum tersedia. Silakan cek kembali nanti.",
+          "yourInviteLink": "Tautan undangan Anda",
+          "shareYourLink": "Kirim ke teman atau posting di mana saja. Setiap teman yang bergabung melalui tautan ini dan membuat kode dinamis memberi Anda berdua tambahan {count, number}.",
+          "link": "Tautan",
+          "sameVisit": "Seorang teman dihitung jika ia membuat akun dalam kunjungan yang sama dengan saat mengeklik tautan. Tidak ada yang disimpan di perangkatnya.",
+          "friendsJoined": "Teman yang bergabung",
+          "friendsRewarded": "Teman yang diberi hadiah",
+          "rewardedOfMax": "{rewarded, number} dari {max, number}",
+          "extraCodes": "Kode dinamis tambahan",
+          "waiting": "{waiting, plural, one {# teman belum} other {# teman belum}} membuat kode dinamis. Mereka punya waktu {days, number} hari sejak mendaftar.",
+          "atCap": "Anda sudah mendapat hadiah untuk {max, number} teman, batas maksimum dari satu tautan undangan. Teman yang bergabung melalui tautan ini tetap mendapat {count, number} kode.",
+          "youWereInvited": "Anda bergabung melalui undangan teman, jadi workspace Anda sendiri juga mendapat tambahan {count, number} kode dinamis.",
+          "howItWorks": "Cara kerjanya",
+          "ruleSignUp": "Seorang teman dihitung jika ia membuat akun QRdx baru melalui tautan Anda dalam kunjungan tersebut. Pendaftaran pada kunjungan berikutnya, atau akun yang sudah ada, tidak dihitung.",
+          "ruleFirstCode": "Saat mereka membuat kode dinamis pertama dalam {days, number} hari sejak mendaftar, Anda berdua mendapat tambahan {count, number} kode dinamis di workspace masing-masing.",
+          "ruleCap": "Anda bisa mendapat hadiah untuk maksimal {max, number} teman ({total, number} kode). Teman yang bergabung setelah itu tetap mendapat {count, number} kode.",
+          "ruleNotYourself": "Akun Anda yang lain tidak dihitung, begitu pula akun yang memakai alamat email Anda dengan penulisan berbeda atau siapa pun yang berbagi workspace dengan Anda.",
+          "ruleAllowance": "Kode tambahan ini menambah kode dinamis di workspace pribadi Anda pada paket apa pun, bukan milik tim. Kode ini tidak bernilai uang tunai dan tidak dapat dipindahkan ke akun lain. Kode yang Anda buat dengannya tetap berfungsi.",
+          "rulePrivate": "Kami tidak pernah menampilkan siapa yang mendaftar melalui tautan Anda, dan teman Anda tidak melihat siapa yang mengundang mereka.",
+          "ruleEnd": "Kami dapat mengakhiri hadiah undangan untuk undangan baru; kode yang sudah Anda peroleh tetap ada. Detailnya ada di <terms>Ketentuan Layanan</terms> dan <help>halaman bantuan</help>."
         }
       }
     },
@@ -9726,7 +9761,9 @@
       "makeRoom": "{limit, select, dynamicCodes {Arsipkan satu untuk memberi ruang.} landingPages {Hapus satu untuk memberi ruang.} storage {Hapus file yang tidak lagi Anda perlukan untuk memberi ruang.} savedThemes {Hapus satu untuk memberi ruang.} other {}}",
       "resets": "Diatur ulang {date}.",
       "keeps": "{limit, select, dynamicCodes {Kode yang ada tetap berfungsi.} landingPages {Halaman yang ada tetap aktif.} formResponses {Halaman tetap aktif. Formulir kembali menerima respons setelah pengaturan ulang.} storage {File yang sudah Anda unggah tetap tersedia.} other {}}",
-      "upgradeButton": "Upgrade ke {plan}"
+      "upgradeButton": "Upgrade ke {plan}",
+      "includesBonus": "{plan} mencakup {amount} dan undangan menambahkan {bonus, number}.",
+      "invite": "Atau <link>undang teman</link>: saat mereka membuat kode dinamis pertamanya, Anda berdua mendapat tambahan {count, number}."
     },
     "weeklyDigest": {
       "subject": "Minggu Anda di QRdx: {scans, plural, other {# pemindaian}}",
@@ -9766,6 +9803,18 @@
       "taxes": "Pajak setempat mungkin ditambahkan saat pembayaran.",
       "reply": "Jika ada kendala, atau Anda tidak yakin cara melakukan sesuatu, balas email ini. Setiap balasan dibaca oleh seorang manusia.",
       "reason": "Anda menerima email ini karena baru saja membuat akun QRdx."
+    },
+    "inviteReward": {
+      "subject": "Teman yang Anda undang membuat kode pertamanya: Anda berdua mendapat tambahan {count, number} kode dinamis",
+      "preview": "Anda berdua mendapat tambahan {count, number} kode dinamis",
+      "heading": "Anda berdua mendapat tambahan {count, number} kode dinamis",
+      "body": "Teman yang mendaftar melalui tautan undangan Anda baru saja membuat kode dinamis pertamanya. Workspace Anda kini memiliki tambahan {count, number} kode dinamis, begitu juga workspace teman Anda.",
+      "progress": "Itu berarti {rewarded, plural, other {# teman}} dari {max, number} teman yang bisa memberi Anda hadiah lewat tautan Anda.",
+      "last": "Itu teman terakhir dari {max, number} teman yang bisa memberi Anda hadiah lewat tautan Anda. Teman yang bergabung lewat tautan ini tetap mendapat {count, number}.",
+      "inviteMore": "Undang lebih banyak teman",
+      "seeInvites": "Lihat undangan Anda",
+      "keeps": "Kode tambahan ini berlaku di paket apa pun dan tidak memiliki nilai tunai. Kode yang Anda buat dengannya akan terus berfungsi.",
+      "reason": "Anda menerima email ini karena seorang teman mendaftar melalui tautan undangan QRdx Anda dan membuat kode dinamis pertamanya."
     }
   },
   "codeActions": {
@@ -10057,7 +10106,8 @@
       "bulkOverLimit": "File hingga {limit, number} baris tidak memerlukan akun. Akun gratis dapat membuat hingga {max, number} per file, dan file Anda tetap dimuat.",
       "keepDesigns": "Simpan desain Anda di akun Anda, di setiap perangkat.",
       "afterDownload": "Gratis, dan kode Anda tetap berfungsi apa pun yang terjadi pada paket Anda.",
-      "upgrade": "Paket dan penagihan terhubung ke sebuah akun. Anda akan melanjutkan tepat dari tempat Anda berhenti."
+      "upgrade": "Paket dan penagihan terhubung ke sebuah akun. Anda akan melanjutkan tepat dari tempat Anda berhenti.",
+      "invite": "Anda datang melalui undangan teman. Daftar sekarang dan Anda akan mendapatkan {count, number} kode dinamis tambahan saat membuat kode dinamis pertama Anda."
     },
     "nudge": {
       "dismiss": "Jangan tampilkan lagi"
@@ -10205,6 +10255,11 @@
         "failed": "Single sign-on tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
         "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi."
       }
+    },
+    "inviteNote": {
+      "text": "Anda diundang ke QRdx. Daftar selama kunjungan ini dan buat kode dinamis dalam {days, number} hari untuk mendapatkan {count, number} kode dinamis tambahan.",
+      "signUp": "Daftar",
+      "dismiss": "Tutup"
     }
   },
   "settingsActions": {

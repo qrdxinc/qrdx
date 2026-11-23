@@ -87,6 +87,11 @@ describe("PRODUCT_FACTS", () => {
       affiliateHoldDays: 45,
       affiliateMinPayoutUsd: "US$25",
       affiliateTermsNoticeDays: 30,
+      // lib/invites/terms.ts
+      inviteBonusCodes: 5,
+      inviteMaxFriends: 10,
+      inviteMaxCodes: 50,
+      inviteQualifyDays: 30,
       // @repo/config limits.ts
       apiBatchCodes: MAX_CODES_PER_REQUEST.toLocaleString("en-US"),
       importRows: MAX_IMPORT_ROWS.toLocaleString("en-US"),
