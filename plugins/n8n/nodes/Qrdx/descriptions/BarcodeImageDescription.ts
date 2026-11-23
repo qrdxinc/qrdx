@@ -131,6 +131,12 @@ export const barcodeImageFields: INodeProperties[] = [
           "Shipping cartons holding retail products; 13 digits, or 14 with the check digit",
       },
       {
+        name: "MaxiCode",
+        value: "maxicode",
+        description:
+          "UPS parcel labels: a carrier message as postcode&lt;GS&gt;country&lt;GS&gt;service class&lt;GS&gt;the rest, or Latin-1 text; scale 4 to 10",
+      },
+      {
         name: "PDF417",
         value: "pdf417",
         description:

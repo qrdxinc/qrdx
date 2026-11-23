@@ -9,6 +9,7 @@ import { BARCODE_FORMATS, validateBarcodeInput } from "@/lib/barcode/formats";
 import {
   type BarcodeStyle,
   encoderMessage,
+  MM_PER_UNIT,
   MODULE_UNITS,
   printableSVG,
   renderBarcodeSVG,
@@ -50,7 +51,10 @@ describe("renderBarcodeSVG", () => {
       expect(rendered.svg).toContain("#fafaf0");
       expect(rendered.svg).not.toContain("#000000");
       expect(rendered.width).toBeGreaterThan(0);
-      expect(rendered.widthUnits).toBe(rendered.width / STYLE.scale);
+      // MaxiCode's vector size is scaled to its fixed size (vectorScale).
+      expect(rendered.widthUnits).toBe(
+        (rendered.width / STYLE.scale) * (format.vectorScale ?? 1),
+      );
     },
   );
 
@@ -65,11 +69,16 @@ describe("renderBarcodeSVG", () => {
         ...STYLE,
         quietZone: 5,
       });
-      // Intelligent Mail's module is 1.44 units, rounded to whole pixels.
-      expect(five.widthUnits - none.widthUnits).toBeCloseTo(
-        2 * 5 * MODULE_UNITS[format.id],
-        Number.isInteger(MODULE_UNITS[format.id]) ? 6 : 0,
-      );
+      // Intelligent Mail's module is 1.44 units, rounded to whole pixels;
+      // MaxiCode's 3.44 is rounded up to whole units, then scaled to its
+      // fixed size.
+      const side =
+        format.id === "maxicode"
+          ? Math.ceil(5 * MODULE_UNITS.maxicode)
+          : 5 * MODULE_UNITS[format.id];
+      expect(
+        (five.widthUnits - none.widthUnits) / (format.vectorScale ?? 1),
+      ).toBeCloseTo(2 * side, Number.isInteger(side) ? 6 : 0);
     }
   });
 
@@ -127,6 +136,37 @@ describe("renderBarcodeSVG", () => {
     );
     expect(() => renderBarcodeSVG("gs1-databar-expanded", full, STYLE)).toThrow(
       "Too much data for one GS1 DataBar Expanded: it holds up to 74 digits, and fewer when there are letters. Remove an AI or shorten a value.",
+    );
+  });
+
+  it("draws MaxiCode's vector downloads at its nominal 28.14 × 26.91 mm", () => {
+    const style = { ...STYLE, quietZone: 0, scale: 4 };
+    const drawn = renderBarcodeSVG("maxicode", "Hello", style);
+    const mm = (units: number) => units * MM_PER_UNIT;
+    expect(mm(drawn.widthUnits)).toBeCloseTo(28.14, 0);
+    expect(mm(drawn.heightUnits)).toBeCloseTo(26.91, 0);
+  });
+
+  it("never draws MaxiCode's quiet zone smaller than asked", () => {
+    // bwip-js drops a padding's fraction; one module is 3.44 units.
+    const bare = renderBarcodeSVG("maxicode", "Hello", {
+      ...STYLE,
+      quietZone: 0,
+      scale: 4,
+    });
+    const one = renderBarcodeSVG("maxicode", "Hello", {
+      ...STYLE,
+      quietZone: 1,
+      scale: 4,
+    });
+    const scale = MODULE_UNITS.maxicode;
+    const side = (one.width - bare.width) / 2 / 4;
+    expect(side).toBeGreaterThanOrEqual(scale);
+  });
+
+  it("says how much a MaxiCode holds when the text doesn't fit", () => {
+    expect(() => renderBarcodeSVG("maxicode", "A".repeat(94), STYLE)).toThrow(
+      "Too much data for one MaxiCode: it holds up to 93 capital letters or 138 digits",
     );
   });
 
