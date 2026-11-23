@@ -45,14 +45,15 @@ export const BARCODE_FILES: Record<BarcodeFileType, BarcodeFileInfo> = {
     mime: "image/webp",
     vector: false,
     serverOnly: true,
-    hint: "Smaller files for websites",
+    hint: "The smallest files, for websites",
   },
   avif: {
     label: "AVIF",
     mime: "image/avif",
     vector: false,
     serverOnly: true,
-    hint: "The smallest files for modern browsers",
+    // Lossless AVIF is larger than WebP, and than PNG, for barcodes (#332).
+    hint: "For systems that ask for AVIF",
   },
   bmp: {
     label: "BMP",
