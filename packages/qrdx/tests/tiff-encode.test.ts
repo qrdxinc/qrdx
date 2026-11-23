@@ -145,9 +145,11 @@ describe("encodeTIFF", () => {
     await expect(encodeTIFF(new Uint8Array(8), 1, 1)).rejects.toThrow(
       /Expected 4 RGBA bytes/
     );
-    await expect(
-      encodeTIFF(new Uint8Array(4), 1, 1, { dpi: 0 })
-    ).rejects.toThrow(/dpi must be a positive number/);
+    for (const dpi of [0, 0.001, 50_000_000, Number.NaN]) {
+      await expect(
+        encodeTIFF(new Uint8Array(4), 1, 1, { dpi })
+      ).rejects.toThrow(/dpi must be from 1 to 10000/);
+    }
   });
 });
 

@@ -11,7 +11,7 @@ import { Skeleton } from "@repo/design-system/components/ui/skeleton";
 import { Switch } from "@repo/design-system/components/ui/switch";
 import { ArrowRight, Import as Download } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { downloadQRCode, QRCode } from "qrdx";
+import { DOWNLOAD_FORMATS, downloadQRCode, QRCode } from "qrdx";
 import { type ComponentType, useEffect, useMemo, useState } from "react";
 import { CopyButton } from "@/components/copy-button";
 import { AmazonForm } from "@/components/editor/content-forms/amazon-form";
@@ -564,7 +564,7 @@ export function TypeGenerator({ type }: { type: ContentType }) {
       await downloadQRCode(buildQrProps(payload, styles, { quietZone }), {
         format,
         size: { width: 1024, height: 1024 },
-        filename: `${activeType}-qr-code.${format}`,
+        filename: `${activeType}-qr-code${DOWNLOAD_FORMATS[format].nameSuffix ?? ""}.${DOWNLOAD_FORMATS[format].extension}`,
       });
       soundEvent("download");
       track("qr_downloaded", {

@@ -366,6 +366,10 @@ describe("TIFF", () => {
     ]);
     expect(tiff.status).toBe(200);
     expect(tiff.headers.get("content-type")).toBe("image/tiff");
+    // A print file most browsers can't show: sent as a download, like EPS.
+    expect(tiff.headers.get("content-disposition")).toBe(
+      'attachment; filename="qr-code.tif"',
+    );
     expect(tiff.headers.get("cache-control")).toBe(IMMUTABLE);
     expect(tiff.headers.get("access-control-allow-origin")).toBe("*");
     const bytes = new Uint8Array(await tiff.arrayBuffer());
@@ -396,6 +400,9 @@ describe("TIFF", () => {
     );
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toBe("image/tiff");
+    expect(response.headers.get("content-disposition")).toBe(
+      'attachment; filename="qr-code-cmyk.tif"',
+    );
     const bytes = new Uint8Array(await response.arrayBuffer());
     expect(tag(bytes, 262)).toBe(5); // separated (CMYK)
     expect(tag(bytes, 332)).toBe(1); // InkSet: CMYK

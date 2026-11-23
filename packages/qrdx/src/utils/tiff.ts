@@ -22,6 +22,8 @@ import { deflate } from "./png";
 export const TIFF_MAX_DIMENSION = 16_384;
 /** The resolution recorded when none is given: print's usual 300 dpi. */
 export const TIFF_DPI = 300;
+/** The resolutions accepted: wider than any printer, small enough to store. */
+export const TIFF_DPI_RANGE = { min: 1, max: 10_000 } as const;
 
 export type TIFFColorMode = "rgb" | "cmyk";
 
@@ -128,7 +130,7 @@ function predict(data: Uint8Array, width: number, height: number): Uint8Array {
  * RGBA pixels (as a canvas's getImageData returns them: `width * height * 4`
  * bytes, top row first) as a TIFF file. Throws a RangeError for a size that
  * is not a whole number from 1 to TIFF_MAX_DIMENSION, pixels that don't
- * match it, or a `dpi` that isn't a positive number.
+ * match it, or a `dpi` outside TIFF_DPI_RANGE (1 to 10,000).
  */
 export async function encodeTIFF(
   rgba: ArrayLike<number>,
@@ -138,12 +140,25 @@ export async function encodeTIFF(
 ): Promise<Uint8Array> {
   checkSize(rgba, width, height);
   const dpi = options.dpi ?? TIFF_DPI;
-  if (!(Number.isFinite(dpi) && dpi > 0)) {
-    throw new RangeError(`TIFF dpi must be a positive number, not ${dpi}`);
+  if (
+    !(
+      Number.isFinite(dpi) &&
+      dpi >= TIFF_DPI_RANGE.min &&
+      dpi <= TIFF_DPI_RANGE.max
+    )
+  ) {
+    throw new RangeError(
+      `TIFF dpi must be from ${TIFF_DPI_RANGE.min} to ${TIFF_DPI_RANGE.max}, not ${dpi}`
+    );
   }
   const cmyk = options.colorMode === "cmyk";
   const raw = samples(rgba, cmyk);
-  const compressed = await deflate(predict(raw.slice(), width, height));
+  // Compress when the runtime can, predicting in place: no second copy of
+  // the pixels is kept for the uncompressed fallback.
+  const compressed =
+    typeof CompressionStream === "undefined"
+      ? null
+      : await deflate(predict(raw, width, height));
   const data = compressed ?? raw;
 
   const tags: [tag: number, type: number, count: number, value: number][] = [

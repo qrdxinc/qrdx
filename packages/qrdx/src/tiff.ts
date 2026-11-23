@@ -9,6 +9,7 @@ export {
   encodeTIFF,
   isTIFFFile,
   TIFF_DPI,
+  TIFF_DPI_RANGE,
   TIFF_MAX_DIMENSION,
   type TIFFColorMode,
   type TIFFOptions,

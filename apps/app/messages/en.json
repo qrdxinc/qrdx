@@ -3244,6 +3244,7 @@
       "logoNote": "With a logo, the code switches to error correction H when the logo needs it, so it still scans.",
       "previewAlt": "QR code for {value}",
       "epsPreview": "EPS is a print file, so the preview shows the same code as SVG.",
+      "tiffPreview": "TIFF is a print file most browsers can't show, so the preview shows the same code as PNG.",
       "empty": "Type the text or link to encode.",
       "tooLong": "That's longer than {max, number} characters, the API's limit.",
       "loadFailed": "The preview didn't load. If you changed it many times in a row, wait a minute: the API allows {perMinute, number} requests a minute.",

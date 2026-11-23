@@ -231,10 +231,6 @@ export async function getQRAsWebP(
 }
 
 /**
- * The code as a 24-bit BMP image (plus its frame, if any). A transparent
- * background comes out white. Every browser gets it from QRdx's own encoder.
- */
-/**
  * The code as a TIFF (plus its frame, if any): RGBA with its transparency,
  * or CMYK for print with `colorMode: "cmyk"`. 300 dpi unless `dpi` is set.
  * Every browser gets it from QRdx's own encoder.
@@ -255,6 +251,10 @@ export async function getQRAsTIFF(
   }
 }
 
+/**
+ * The code as a 24-bit BMP image (plus its frame, if any). A transparent
+ * background comes out white. Every browser gets it from QRdx's own encoder.
+ */
 export async function getQRAsBMP(qrProps: QRProps): Promise<Blob> {
   const canvas = (await getQRAsCanvas(
     qrProps,

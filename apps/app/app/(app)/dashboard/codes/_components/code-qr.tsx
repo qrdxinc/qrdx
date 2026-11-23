@@ -12,7 +12,13 @@ import {
 import { cn } from "@repo/design-system/lib/utils";
 import { Import as Download } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { downloadQRCode, GIFScanError, getQRData, QRCode } from "qrdx";
+import {
+  DOWNLOAD_FORMATS,
+  downloadQRCode,
+  GIFScanError,
+  getQRData,
+  QRCode,
+} from "qrdx";
 import { useState } from "react";
 import { defaultThemeState } from "@/config/qr";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
@@ -128,7 +134,7 @@ export async function downloadCodeQr(
     {
       format,
       size: { width: DOWNLOAD_SIZE, height: DOWNLOAD_SIZE },
-      filename: `qrdx-${code.slug}.${format}`,
+      filename: `qrdx-${code.slug}${DOWNLOAD_FORMATS[format].nameSuffix ?? ""}.${DOWNLOAD_FORMATS[format].extension}`,
     },
   );
   soundEvent("download");

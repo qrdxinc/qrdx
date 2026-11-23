@@ -119,6 +119,11 @@ describe("qrImageFile", () => {
       mimeType: "image/tiff",
       fileExtension: "tif",
     });
+    expect(qrImageFile("tiff", "label.TIFF")).toEqual({
+      fileName: "label.TIFF",
+      mimeType: "image/tiff",
+      fileExtension: "tif",
+    });
     expect(qrImageFile("tiff-cmyk", "label.tif")).toEqual({
       fileName: "label.tif",
       mimeType: "image/tiff",

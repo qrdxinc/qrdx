@@ -595,7 +595,7 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
         security: [],
         description: `A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO, TIFF or EPS, with no key.
 
-**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag. The same query always returns the same bytes, so responses are cached for a year. Colors are hex without \`#\` (or with \`#\` encoded as \`%23\`). Limit: 300 requests a minute per IP address. More in the [Image API guide](${docs("developers/image-api")}).
+**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag (EPS and TIFF are files to download: browsers other than Safari can't show TIFF). The same query always returns the same bytes, so responses are cached for a year. Colors are hex without \`#\` (or with \`#\` encoded as \`%23\`). Limit: 300 requests a minute per IP address. More in the [Image API guide](${docs("developers/image-api")}).
 
 **The editor's styles.** \`style\` takes the whole design as URL-encoded JSON, with the same fields as a saved theme: gradients (linear, radial), frames (built-in, custom frame specs, or a frame drawn as a template), eye and dot colors, and a logo icon. It also takes the \`style\` value of a playground link. \`item\` renders a community frame or theme (\`/community/items\`); \`frame\` and \`frameText\` add a built-in frame. Flat parameters you set win over \`style\`, and \`style\` wins over \`item\`. With a frame, \`size\` is the code's width and the frame adds to it.
 
@@ -611,7 +611,7 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
 
 **ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. \`size\` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.
 
-**TIFF** is for print shops that ask for it, at 300 dpi. \`tiff\` keeps the PNG's pixels, transparency included. \`tiff-cmyk\` is CMYK by the same conversion as the editor's print PDF and EPS: pure black prints as K only, white as no ink, and a transparent background comes out white; no ICC profile is embedded, so ask your printer for a color-managed conversion when exact brand colors matter.`,
+**TIFF** is for print shops that ask for it, at 300 dpi, and is sent as a download (\`Content-Disposition: attachment\`, \`qr-code.tif\` or \`qr-code-cmyk.tif\`), as EPS is. Browsers other than Safari can't show it in an \`<img>\`. \`tiff\` keeps the PNG's pixels, transparency included. \`tiff-cmyk\` is CMYK by the same conversion as the editor's print PDF and EPS: pure black prints as K only, white as no ink, and a transparent background comes out white; no ICC profile is embedded, so ask your printer for a color-managed conversion when exact brand colors matter.`,
         parameters: c.parameters(
           qrImage,
           "query",
