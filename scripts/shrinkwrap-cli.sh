@@ -105,7 +105,11 @@ console.error(`npm-shrinkwrap.json pins ${entries.length} packages (qrdx ${want}
 NODE
 
 tarball="$(npm pack --ignore-scripts --pack-destination "$out" --json | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8'))[0].filename")"
-if ! tar -tzf "$out/$tarball" | grep -qx 'package/npm-shrinkwrap.json'; then
+# List the whole tarball before searching it: `tar | grep -q` stops reading at
+# the first match, tar then dies writing the rest of the list (SIGPIPE), and
+# pipefail turns that into a false "left out" (publish run 45154901798).
+listing="$(tar -tzf "$out/$tarball")"
+if ! grep -qx 'package/npm-shrinkwrap.json' <<<"$listing"; then
   echo "error: npm pack left npm-shrinkwrap.json out of $tarball" >&2
   exit 1
 fi
