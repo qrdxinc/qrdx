@@ -18,11 +18,10 @@ Agents pick it up for requests like:
 
 What it covers:
 
-- SVG, PNG, WebP and EPS output
+- SVG, PNG, WebP, GIF, BMP, ICO, TIFF and EPS output
 - Every body, eye and corner dot pattern of the pinned CLI, listed in [`SKILL.md`](generate-qr/SKILL.md)
 - Solid colors and linear, radial or angular gradients, with separate eye and dot colors
-- Call-to-action frames with a label of up to 24 characters
-- Decorative templates: `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`
+- Call-to-action and decorative frames (banners, bubbles, an arrow, a dot ring and more) with a label of up to 24 characters
 - A center logo, with the modules behind it cleared
 - Error correction levels L, M, Q and H
 - The `batch` command: a code for every row of a CSV, with failed rows listed in `errors.csv`
@@ -62,7 +61,7 @@ gemini extensions install https://github.com/qrdxinc/qrdx
 
 The plugin is in [`plugins/agent`](../plugins/agent), and its [README](../plugins/agent/README.md) says what it runs and sends.
 
-The skill runs `npx @qrdx/cli@0.0.18`, which downloads that exact version from npm on first use and needs Node.js 22 or later. The version is pinned on purpose so agents never run an unreviewed release; [`AGENTS.md`](AGENTS.md) says how to move it. Codes are rendered locally and nothing is uploaded.
+The skill runs `npx @qrdx/cli@0.0.19`, which downloads that exact version from npm on first use and needs Node.js 22 or later. The version is pinned on purpose so agents never run an unreviewed release; [`AGENTS.md`](AGENTS.md) says how to move it. Codes are rendered locally and nothing is uploaded.
 
 For styles the CLI doesn't have, an agent can use the keyless [image API](https://qrdx.dev/docs/developers/image-api) or the [MCP server](https://qrdx.dev/docs/developers/mcp) instead.
 

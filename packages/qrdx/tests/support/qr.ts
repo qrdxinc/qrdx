@@ -24,11 +24,12 @@ export function renderSvg(props: QRProps): string {
 }
 
 // Tests capture the same props at several sizes in a row; keep the last
-// parsed render.
+// parsed render (props with functions, such as custom templates, skip it).
 let lastRender: { key: string; root: SvgNode } | null = null;
 
 function parsedSvg(props: QRProps): SvgNode | string {
   const markup = () => renderSvg(props);
+  if (props.customTemplate) return markup();
   const key = JSON.stringify(props);
   if (lastRender?.key !== key) {
     const root = parseSvgMarkup(markup());

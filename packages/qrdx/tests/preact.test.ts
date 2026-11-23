@@ -3,7 +3,7 @@
 // toSVGElement), on a server with preact-render-to-string (toSVGString's
 // markup), and through hydration, updates and unmounting. Covers the parity
 // matrix: every pattern, eye and dot, gradients, image fills, logos, frames,
-// official frames, shapes, art and root attributes.
+// official frames, shapes, art, templates and root attributes.
 import { h, hydrate, render } from "preact";
 import { renderToString } from "preact-render-to-string";
 import { afterEach, describe, expect, it } from "vitest";
@@ -15,6 +15,7 @@ import {
 } from "../src/core";
 import { QRCode, QRCodeSVG } from "../src/preact";
 import type { QRCodeProps } from "../src/qr-code-props";
+import type { TemplateDefinition } from "../types";
 import { domSnapshot } from "./support/dom-snapshot";
 import { lookToggles } from "./support/look-steps";
 import { type ParityCase, parityCases } from "./support/parity-cases";
@@ -104,27 +105,28 @@ describe("qrdx/preact", () => {
 
   it("updates when props change, and skips renders when none did", () => {
     const container = mount();
-    let reads = 0;
-    // Building the tree reads the frame's style: counts the builds
-    const counted = {
-      get style() {
-        reads++;
-        return "none" as const;
+    let draws = 0;
+    // A template's wrapper runs once each time the tree is built
+    const counted: TemplateDefinition = {
+      id: "Counted",
+      name: "Counted",
+      wrapper: (children) => {
+        draws++;
+        return children;
       },
     };
     const props: QRSVGOptions = {
       value: "https://qrdx.dev",
       size: 160,
-      frame: counted,
+      customTemplate: counted,
     };
     render(h(QRCodeSVG, props), container);
     const svg = container.firstElementChild;
-    const built = reads;
-    expect(built).toBeGreaterThan(0);
+    expect(draws).toBe(1);
 
     // The same props in a new object: nothing is rebuilt
     render(h(QRCodeSVG, { ...props }), container);
-    expect(reads).toBe(built);
+    expect(draws).toBe(1);
     expect(container.firstElementChild).toBe(svg);
 
     const next: QRSVGOptions = {
@@ -239,6 +241,7 @@ describe("qrdx/preact", () => {
         "logo API",
         "frame banner-bottom",
         "former template's frame with attributes",
+        "custom template with a frame, attributes and a logo",
         "root attributes with frame",
       ].includes(x.name)
     )) {
@@ -254,6 +257,6 @@ describe("qrdx/preact", () => {
       expect(after).toHaveLength(nodes.length);
       expect(after.every((node, index) => node === nodes[index])).toBe(true);
     }
-    expect(document.body.children.length).toBe(6);
+    expect(document.body.children.length).toBe(7);
   });
 });

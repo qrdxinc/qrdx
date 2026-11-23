@@ -72,6 +72,8 @@ const svgProps = {
   margin: Number,
   imageSettings: null,
   isOGContext: flag,
+  customTemplate: null,
+  customProps: null,
   frame: null,
   art: null,
   eyeColors: null,

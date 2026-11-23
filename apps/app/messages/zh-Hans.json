@@ -1740,6 +1740,9 @@
     "hosted": {
       "notFoundTitle": "页面不存在",
       "notFoundMessage": "此链接没有指向任何页面。可能是所有者已将其删除，或链接输入有误。",
+      "notReadyTitle": "此页面尚未就绪",
+      "notReadyMessage": "制作这个二维码的人仍在设置它所打开的页面。请稍后再试。",
+      "notReadyOwner": "这是你制作的二维码？请在 QRdx 中发布它的页面，之后扫描就会打开该页面。",
       "passwordProtected": "受密码保护",
       "madeWithQrdx": "由 QRdx 制作",
       "share": "分享",

@@ -74,13 +74,23 @@ const src = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeU
 const src = `https://api.qrdx.dev/v1/qr?format=png&size=200&data=${encodeURIComponent(link)}`;
 ```
 
-In Google Sheets:
+### In Google Sheets
+
+Sheets that drew codes with `=IMAGE()` and the old endpoint need only the address in the formula changed. With the value in `A2`:
 
 ```txt title="Sheets formula"
 =IMAGE("https://api.qrdx.dev/v1/qr?format=png&size=150&data="&ENCODEURL(A2))
 ```
 
-Sheets loads images through Google's own servers, so a sheet with hundreds of codes can run into the per-IP limit below. For a long list, make the files once with the [bulk generator](/tools/bulk) or the [CLI](/docs/developers/cli)'s `qrdx batch`.
+`ENCODEURL` encodes the cell's text, so a value with `&`, `#`, `+` or spaces reaches the API whole. To skip rows without a value, wrap it in `IF`:
+
+```txt title="Sheets formula"
+=IF(A2="","",IMAGE("https://api.qrdx.dev/v1/qr?format=png&size=150&data="&ENCODEURL(A2)))
+```
+
+Fill the formula down the column. The image shrinks to fit its cell, so make the rows taller and the column wider to see the codes at a size a phone can read. The style parameters work here too, such as `&body=rounded&fg=0051ff` before `&data=`.
+
+Sheets loads these images through Google's own servers, so a sheet with hundreds of codes can run into the per-IP limit below, and each cell's text travels in the image's address. For a long list, make the files once with the [bulk generator](/tools/bulk) or the [CLI](/docs/developers/cli)'s `qrdx batch`.
 
 ## If something goes wrong
 

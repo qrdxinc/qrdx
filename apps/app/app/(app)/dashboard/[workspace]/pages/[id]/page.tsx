@@ -18,7 +18,10 @@ import { HttpError } from "@/lib/error-response";
 import { formatBytes } from "@/lib/files/types";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { type PagePlanLine, pagePlanLine } from "@/lib/landing/plan-line";
-import { templateSampleTexts } from "@/lib/landing/template-samples";
+import {
+  isUnpublishedTemplate,
+  templateSampleTexts,
+} from "@/lib/landing/template-samples";
 import { getTemplate } from "@/lib/landing/templates";
 import { can } from "@/lib/permissions";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
@@ -95,6 +98,7 @@ export default async function EditLandingPage({
         version: page.version,
         typeLabel: getTemplate(page.type)?.label ?? "Page",
       }}
+      neverPublished={isUnpublishedTemplate(page)}
       sampleTexts={templateSampleTexts(page.type)}
       savedThemes={savedThemes}
       storageEnabled={isStorageConfigured}

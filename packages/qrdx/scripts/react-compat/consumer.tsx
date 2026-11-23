@@ -12,6 +12,7 @@ import {
   type QRFrameSVGProps,
   type QRPropsCanvas,
   type QRPropsSVG,
+  type TemplateDefinition,
 } from "qrdx";
 import { toSVGString } from "qrdx/core";
 import type { QRProps } from "qrdx/types";
@@ -43,6 +44,26 @@ const frameProps: QRFrameSVGProps = {
   slot: <QRCodeSVG value="https://qrdx.dev" size={200} />,
 };
 
+// Artwork drawn in code around the code, with its own props
+const labelled: TemplateDefinition<{ label?: string }> = {
+  id: "labelled",
+  name: "Labelled",
+  wrapper: (children, props, config) => (
+    <svg viewBox="0 0 300 340" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(20, 20) scale(0.87)">{children}</g>
+      <text
+        data-url={config?.url}
+        fill={props?.fgColor}
+        textAnchor="middle"
+        x="150"
+        y="325"
+      >
+        {props?.label}
+      </text>
+    </svg>
+  ),
+};
+
 export function App(): React.ReactElement {
   const [value, setValue] = React.useState("https://qrdx.dev");
   return (
@@ -66,6 +87,11 @@ export function App(): React.ReactElement {
       <QRCodeCanvas {...canvasProps} />
       <QRCodeCanvas size={160} style={{ borderRadius: 8 }} value={value} />
       <QRFrameSVG {...frameProps} />
+      <QRCode
+        customProps={{ label: "Scan me" }}
+        customTemplate={labelled}
+        value={value}
+      />
     </div>
   );
 }

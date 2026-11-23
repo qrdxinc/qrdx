@@ -4,10 +4,11 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createElement } from "react";
 import { createQRArtImage } from "../../src/art";
 import { BUILT_IN_FRAME_SPECS } from "../../src/frames/builtin";
 import { getOfficialFrame } from "../../src/frames/official";
-import type { LogoOptions, QRPropsSVG } from "../../types";
+import type { LogoOptions, QRPropsSVG, TemplateDefinition } from "../../types";
 import { CORNER_EYE_DOT_PATTERNS } from "../../types/corner-dot";
 import { CORNER_EYE_PATTERNS } from "../../types/corner-eye";
 import { FRAME_STYLES } from "../../types/frame";
@@ -63,6 +64,31 @@ function silhouette() {
   }
   return { type: "silhouette" as const, width: side, height: side, cells };
 }
+
+/** The README's custom template, written with React elements. */
+const reactTemplate: TemplateDefinition<{ label?: string }> = {
+  id: "Framed",
+  name: "Framed",
+  wrapper: (children, props) =>
+    createElement(
+      "svg",
+      {
+        style: { width: "100%" },
+        viewBox: "0 0 300 340",
+        xmlns: "http://www.w3.org/2000/svg",
+      },
+      createElement(
+        "g",
+        { transform: "translate(20, 20) scale(0.87)" },
+        children
+      ),
+      createElement(
+        "text",
+        { x: "150", y: "325", textAnchor: "middle", fill: props?.fgColor },
+        props?.label
+      )
+    ),
+};
 
 /** A colorful test picture: hue across, light down, a dark disc. */
 function syntheticPhoto(side: number) {
@@ -504,6 +530,20 @@ export function parityCases(
   });
   add("dot ring frame with a logo", {
     frame: { style: "dot-ring" },
+    level: "H",
+    imageSettings: { src: LOGO, width: 48, height: 48, excavate: true },
+  });
+  // A template drawn in code (customTemplate), with its props
+  add("React custom template", {
+    customTemplate: reactTemplate,
+    customProps: { label: "Scan <me>" },
+  });
+  add("custom template with a frame, attributes and a logo", {
+    customTemplate: reactTemplate,
+    customProps: { label: "Menu" },
+    frame: { style: "rounded-border" },
+    className: "qr",
+    style: { maxWidth: 200 },
     level: "H",
     imageSettings: { src: LOGO, width: 48, height: 48, excavate: true },
   });

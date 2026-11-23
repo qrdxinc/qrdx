@@ -20,6 +20,6 @@ export default async function Image({
     label: "Designer",
     title: "Design a custom QR code",
     description:
-      "Logo, colors, gradients, dot patterns and frames. Download PNG, SVG, PDF or EPS.",
+      "Logo, colors, gradients, dot patterns and frames. Download PNG, SVG, PDF, EPS or TIFF.",
   });
 }

@@ -1740,6 +1740,9 @@
     "hosted": {
       "notFoundTitle": "Página no encontrada",
       "notFoundMessage": "Este enlace no lleva a ninguna página. Es posible que su propietario la haya eliminado o que el enlace se haya escrito mal.",
+      "notReadyTitle": "Esta página aún no está lista",
+      "notReadyMessage": "Quien creó este código QR todavía está configurando la página que se abre. Inténtalo de nuevo un poco más tarde.",
+      "notReadyOwner": "¿Creaste este código? Publica su página en QRdx y los escaneos la abrirán.",
       "passwordProtected": "Protegida con contraseña",
       "madeWithQrdx": "Hecho con QRdx",
       "share": "Compartir",

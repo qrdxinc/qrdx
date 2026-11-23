@@ -5,9 +5,10 @@
 // hand-written template drew (tests/support/legacy-templates.tsx, unchanged
 // since qrdx 0.0.51), now around the code at its full size. Dot Ring keeps
 // its ring, its 593-unit geometry and dots from its own table (a fixed set:
-// a frame is the same for every link), and scans. A template prop passed at
-// run time (`templateId`, `customTemplate`, `customProps`) is dropped
-// without a trace: the code is drawn without it.
+// a frame is the same for every link), and scans. A `templateId` passed at
+// run time is dropped without a trace: the code is drawn without it
+// (`customTemplate` and `customProps` are back since 0.0.65:
+// tests/custom-template.test.ts).
 import { readFileSync } from "node:fs";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -347,18 +348,14 @@ const OLD_IDS = [
 ];
 
 const legacyProps = (templateId: string) =>
-  ({
-    templateId,
-    customTemplate: LegacyArrow,
-    customProps: { customText: "Scan me" },
-  }) as unknown as Partial<QRProps>;
+  ({ templateId }) as unknown as Partial<QRProps>;
 
-describe("template props passed at run time", () => {
+describe("templateId passed at run time", () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it.each(OLD_IDS)("templateId %s draws the code without it", (id) => {
+  it.each(OLD_IDS)("%s draws the code without it", (id) => {
     const plain = toSVGString({ value: VALUE });
     expect(toSVGString({ value: VALUE, ...legacyProps(id) })).toBe(plain);
     const framed = { value: VALUE, frame: { style: "banner-bottom" as const } };
@@ -367,7 +364,7 @@ describe("template props passed at run time", () => {
     );
   });
 
-  it("never reach React's <svg>, and React has nothing to warn about", () => {
+  it("never reaches React's <svg>, and React has nothing to warn about", () => {
     const error = vi
       .spyOn(console, "error")
       .mockImplementation(() => undefined);
@@ -391,16 +388,13 @@ describe("template props passed at run time", () => {
     );
     for (const markup of [svg, code]) {
       expect(markup.toLowerCase()).not.toContain("template");
-      expect(markup.toLowerCase()).not.toContain("customprops");
     }
     expect(error).not.toHaveBeenCalled();
   });
 
-  it("are dropped in their attribute spellings too", () => {
+  it("is dropped in its attribute spellings too", () => {
     const attrs = {
       "template-id": "Arrow",
-      "custom-template": "x",
-      "custom-props": "{}",
       templateid: "Arrow",
     } as unknown as Partial<QRProps>;
     expect(toSVGString({ value: VALUE, ...attrs })).toBe(

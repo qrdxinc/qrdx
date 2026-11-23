@@ -60,6 +60,8 @@ export async function preparePlainQRCode(
     cornerEyePattern: _cornerEyePattern,
     cornerEyeDotPattern: _cornerEyeDotPattern,
     isOGContext: _isOGContext,
+    customTemplate: _customTemplate,
+    customProps: _customProps,
     frame,
     art: _art,
     eyeColors: _eyeColors,

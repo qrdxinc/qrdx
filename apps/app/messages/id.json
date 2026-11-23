@@ -1740,6 +1740,9 @@
     "hosted": {
       "notFoundTitle": "Halaman tidak ditemukan",
       "notFoundMessage": "Tautan ini tidak mengarah ke halaman mana pun. Pemiliknya mungkin telah menghapusnya, atau tautannya salah ketik.",
+      "notReadyTitle": "Halaman ini belum siap",
+      "notReadyMessage": "Pembuat kode QR ini masih menyiapkan halaman yang akan dibuka. Coba lagi beberapa saat lagi.",
+      "notReadyOwner": "Anda yang membuat kode ini? Publikasikan halamannya di QRdx agar pemindaian membukanya.",
       "passwordProtected": "Dilindungi kata sandi",
       "madeWithQrdx": "Dibuat dengan QRdx",
       "share": "Bagikan",
