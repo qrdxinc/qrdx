@@ -1,18 +1,15 @@
-import { execSync } from "node:child_process";
-import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, readdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
-import { environment, LocalStorage } from "@raycast/api";
-import {
-  artworkSize,
-  buildQRProps,
-  buildSVGString,
-  type QRRenderProps,
-  squareSVG,
-} from "./qr-engine";
+import { LocalStorage } from "@raycast/api";
+import { cacheDir, codeSVG, drawPNG } from "./preview-files";
+import { buildQRProps, type QRRenderProps } from "./qr-engine";
 import { DEFAULT_SETTINGS, type Settings } from "./types";
 
 const STORAGE_KEY = "saved-qrs-v1";
-const PREVIEW_SIZE = 256;
+// The list's icons and its detail pane show these, the pane at 150 pt, so
+// they're drawn at 512 px to stay sharp on a Retina screen.
+const PREVIEW_SIZE = 512;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -26,49 +23,77 @@ export interface SavedQR {
 
 // ─── Preview PNG ──────────────────────────────────────────────────────────────
 
+// One folder per qrdx version and preview size, so an update or a new size
+// redraws the previews when the list loads. Earlier folders and the 256 px
+// previews of earlier versions, kept straight in saved-previews, are removed.
 function previewDir(): string {
-  const dir = join(environment.supportPath, "saved-previews");
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-  return dir;
+  return cacheDir("saved-previews", PREVIEW_SIZE);
 }
 
-export function savedPreviewPath(id: string): string {
-  return join(previewDir(), `${id}.png`);
+/**
+ * A preview's file: the code's id and a hash of what it draws, so an edited
+ * code gets a new path (Raycast caches images by path).
+ */
+function previewPath(id: string, qrProps: QRRenderProps): string {
+  const hash = createHash("sha256")
+    .update(JSON.stringify(qrProps))
+    .digest("hex")
+    .slice(0, 12);
+  return join(previewDir(), `${id}-${hash}.png`);
 }
 
-/** Draws a saved code's list icon: the code with any frame, on a square. */
-export function generateSavedPreview(id: string, qrProps: QRRenderProps): void {
+/** Where a saved code's preview is, once it's drawn. */
+export function savedPreviewPath(saved: SavedQR): string {
+  return previewPath(saved.id, savedToQRProps(saved));
+}
+
+/** Removes a saved code's previews, except the file at `keep`. */
+function removePreviews(id: string, keep?: string): void {
   const dir = previewDir();
-  const svgPath = join(dir, `${id}.svg`);
-  const pngPath = join(dir, `${id}.png`);
-  const svgString = squareSVG(
-    buildSVGString(qrProps),
-    artworkSize(qrProps),
-    PREVIEW_SIZE
-  );
-  writeFileSync(
-    svgPath,
-    `<?xml version="1.0" encoding="UTF-8"?>\n${svgString}`,
-    "utf-8"
-  );
-  try {
-    execSync(
-      `sips -s format png "${svgPath}" --out "${pngPath}" --resampleHeightWidth ${PREVIEW_SIZE} ${PREVIEW_SIZE} 2>/dev/null`,
-      { stdio: "pipe" }
-    );
-  } finally {
+  for (const name of readdirSync(dir)) {
+    const path = join(dir, name);
+    if (name.startsWith(`${id}-`) && path !== keep) {
+      rmSync(path, { force: true });
+    }
+  }
+}
+
+/**
+ * Draws a saved code's preview, the code with any frame on a square, and
+ * removes its earlier ones.
+ */
+export async function generateSavedPreview(
+  id: string,
+  qrProps: QRRenderProps
+): Promise<void> {
+  const path = previewPath(id, qrProps);
+  await drawPNG(codeSVG(qrProps, PREVIEW_SIZE), path, PREVIEW_SIZE);
+  removePreviews(id, path);
+}
+
+/**
+ * Draws the previews `list` is missing (codes saved before this version and
+ * size), one at a time. `onDrawn` runs after each, so the list can show it.
+ * A preview that fails to draw is left out; the list shows an icon instead.
+ */
+export async function drawMissingPreviews(
+  list: SavedQR[],
+  onDrawn: () => void
+): Promise<void> {
+  for (const saved of list) {
+    if (existsSync(savedPreviewPath(saved))) continue;
     try {
-      unlinkSync(svgPath);
+      await generateSavedPreview(saved.id, savedToQRProps(saved));
+      onDrawn();
     } catch {
-      /* ignore */
+      /* left without a preview */
     }
   }
 }
 
 export function deleteSavedPreview(id: string): void {
-  const pngPath = savedPreviewPath(id);
   try {
-    if (existsSync(pngPath)) unlinkSync(pngPath);
+    removePreviews(id);
   } catch {
     /* ignore */
   }

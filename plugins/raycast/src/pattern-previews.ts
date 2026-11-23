@@ -3,16 +3,8 @@
  * Results are cached to environment.supportPath so sips only runs on first load.
  */
 
-import { execSync } from "node:child_process";
-import {
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { environment } from "@raycast/api";
 import type {
   BodyPattern,
   CornerEyeDotPattern,
@@ -20,10 +12,10 @@ import type {
   QRFrame,
 } from "qrdx";
 import { DEFAULT_FRAME_TEXT, getFrameDimensions, QRCodeSVG } from "qrdx";
-import { version as QRDX_VERSION } from "qrdx/package.json";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { FRAME_CHOICES } from "./frames";
+import { cacheDir, drawPNGSync } from "./preview-files";
 import { squareSVG } from "./qr-engine";
 import {
   BODY_PATTERNS,
@@ -61,44 +53,14 @@ function renderSVGString(overrides: Record<string, unknown>): string {
   );
 }
 
-function getCacheDir(): string {
-  // One folder per qrdx version and preview size, so an update redraws every
-  // preview. The folders of earlier versions and sizes are removed.
-  const root = join(environment.supportPath, "previews");
-  const name = `${QRDX_VERSION}-${PREVIEW_SIZE}px`;
-  const dir = join(root, name);
-  if (!existsSync(dir)) {
-    if (existsSync(root)) {
-      for (const old of readdirSync(root)) {
-        if (old !== name) {
-          rmSync(join(root, old), { recursive: true, force: true });
-        }
-      }
-    }
-    mkdirSync(dir, { recursive: true });
-  }
-  return dir;
-}
-
 /** Returns the absolute path to a cached PNG for the given key + overrides. */
 function previewPNG(key: string, overrides: Record<string, unknown>): string {
-  const cacheDir = getCacheDir();
-  const pngPath = join(cacheDir, `${key}.png`);
-
+  // One folder per qrdx version and preview size, so an update redraws every
+  // preview. The folders of earlier versions and sizes are removed.
+  const pngPath = join(cacheDir("previews", PREVIEW_SIZE), `${key}.png`);
   if (!existsSync(pngPath)) {
-    const svgPath = join(cacheDir, `${key}.svg`);
-    const svgString = renderSVGString(overrides);
-    writeFileSync(
-      svgPath,
-      `<?xml version="1.0" encoding="UTF-8"?>\n${svgString}`,
-      "utf-8"
-    );
-    execSync(
-      `sips -s format png "${svgPath}" --out "${pngPath}" --resampleHeightWidth ${PREVIEW_SIZE} ${PREVIEW_SIZE} 2>/dev/null`,
-      { stdio: "pipe" }
-    );
+    drawPNGSync(renderSVGString(overrides), pngPath, PREVIEW_SIZE);
   }
-
   return pngPath;
 }
 

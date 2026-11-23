@@ -17,6 +17,8 @@
 
 - Pattern previews in the pickers are sharp. They were drawn at 64 px and stretched to fill the tiles.
 - Edit QR Code on a saved code opens its preview after Generate, where Update Saved QR saves the changes. Generate did nothing before. Edit on a preview goes back to the form with the same values instead of an empty one.
+- The preview after Generate fits the window. The code was drawn across the full width and cut off at the bottom, with its settings out of view below it. It's now shown whole, with its settings in a panel beside it.
+- Saved QR Codes shows the selected code and its settings in a pane beside the list; before, you saw only a small icon. Saved codes are drawn at 512 px (they were 256), and earlier saves are redrawn the first time the list opens. The list shows a code's changes when you come back from editing it.
 
 ## [1.2.0] - 2026-11-22
 

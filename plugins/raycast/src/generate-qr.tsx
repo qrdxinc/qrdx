@@ -15,8 +15,7 @@ import {
   Toast,
   useNavigation,
 } from "@raycast/api";
-import type { QRProps } from "qrdx";
-import { FRAME_TEXT_MAX_LENGTH, getFrameText } from "qrdx";
+import { FRAME_TEXT_MAX_LENGTH } from "qrdx";
 import { useState } from "react";
 import {
   capFrameText,
@@ -33,13 +32,14 @@ import {
   framePreviews,
 } from "./pattern-previews";
 import { playgroundLink } from "./playground-link";
+import { previewMarkdown } from "./preview-files";
 import {
   buildPNGBuffer,
   buildQRProps,
   buildSVGString,
-  getSVGDataURI,
   type QRRenderProps,
 } from "./qr-engine";
+import { QRMetadata } from "./qr-metadata";
 import { generateSavedPreview, saveQR } from "./storage";
 import {
   BODY_PATTERNS,
@@ -51,11 +51,6 @@ import {
   templateName,
   toLabel,
 } from "./types";
-
-/** Text for a Markdown table cell: backslashes and pipes escaped, one line. */
-function cell(text: string): string {
-  return text.replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/\n/g, " ");
-}
 
 /** A code's frame, or the template of a code saved before frames, as text. */
 function frameSummary(settings: Settings): { title: string; text: string } {
@@ -149,7 +144,8 @@ function SaveQRForm({
     });
     try {
       const id = existingId ?? `qr-${Date.now()}`;
-      generateSavedPreview(id, qrProps);
+      // Saved QR Codes draws a preview that fails here when it next loads.
+      await generateSavedPreview(id, qrProps).catch(() => undefined);
       await saveQR({
         id,
         name: name.trim(),
@@ -212,7 +208,6 @@ export function QRPreview({
   savedName?: string;
   onEdit?: () => void;
 }) {
-  const dataURI = getSVGDataURI(qrProps);
   const svgString = buildSVGString(qrProps);
   const downloadsDir = join(homedir(), "Downloads");
 
@@ -270,47 +265,6 @@ export function QRPreview({
     );
     await showHUD(`SVG saved → ${outPath}`);
   }
-
-  const colorStr = (c: QRProps["fgColor"]) =>
-    typeof c === "string" ? c : JSON.stringify(c);
-
-  const meta = [
-    "| | |",
-    "|---|---|",
-    `| **Data** | \`${qrProps.value}\` |`,
-    `| **Body** | ${toLabel(qrProps.bodyPattern ?? "square")} |`,
-    `| **Corner Eye** | ${toLabel(qrProps.cornerEyePattern ?? "square")} |`,
-    `| **Corner Dot** | ${toLabel(qrProps.cornerEyeDotPattern ?? "square")} |`,
-    `| **Foreground** | \`${colorStr(qrProps.fgColor)}\` |`,
-    `| **Background** | \`${colorStr(qrProps.bgColor)}\` |`,
-    ...(qrProps.eyeColor
-      ? [`| **Eye Color** | \`${colorStr(qrProps.eyeColor)}\` |`]
-      : []),
-    ...(qrProps.dotColor
-      ? [`| **Dot Color** | \`${colorStr(qrProps.dotColor)}\` |`]
-      : []),
-    ...(qrProps.frame && qrProps.frame.style !== "custom"
-      ? [
-          `| **Frame** | ${frameName(qrProps.frame.style)} |`,
-          `| **Frame Label** | ${cell(getFrameText(qrProps.frame)) || "None"} |`,
-          ...(qrProps.frame.color
-            ? [`| **Frame Color** | \`${qrProps.frame.color}\` |`]
-            : []),
-          ...(qrProps.frame.textColor
-            ? [`| **Label Color** | \`${qrProps.frame.textColor}\` |`]
-            : []),
-        ]
-      : []),
-    ...(qrProps.templateId
-      ? [`| **Template** | ${templateName(qrProps.templateId)} |`]
-      : []),
-    ...(qrProps.imageSettings?.src
-      ? [`| **Logo** | ${qrProps.imageSettings.src} |`]
-      : []),
-    `| **Error Correction** | ${qrProps.level ?? "Q"} |`,
-    `| **Size** | ${qrProps.size}px |`,
-    ...(qrProps.margin ? [`| **Margin** | ${qrProps.margin} |`] : []),
-  ].join("\n");
 
   return (
     <Detail
@@ -378,7 +332,8 @@ export function QRPreview({
           )}
         </ActionPanel>
       }
-      markdown={`![QR Code](${dataURI})\n\n${meta}`}
+      markdown={previewMarkdown(qrProps)}
+      metadata={<QRMetadata Metadata={Detail.Metadata} qrProps={qrProps} />}
       navigationTitle={savedName ?? "QR Code — Preview"}
     />
   );
