@@ -13,7 +13,7 @@ This page lists what `qrdx` exports, by entry point and by task, with each prop'
 | Import from | What it has | Needs |
 | --- | --- | --- |
 | `qrdx` | The React components (`QRCode`, `QRCodeSVG`, `QRCodeCanvas`, `getQRAsSVG`) plus everything in `qrdx/core` | `react` 16.8 or newer |
-| `qrdx/core` | The whole engine without React: markup, downloads, print files, the scan score, frames, art and types | Nothing |
+| `qrdx/core` | The whole engine without React: markup, downloads, print files, the scan score, frames, templates, art and types | Nothing |
 | `qrdx/vanilla` | `createQRCode`, plus `qrdx/core` | A DOM |
 | `qrdx/element` | The `<qrdx-code>` custom element: `QRdxCodeElement`, `defineQRdxCode`, `toQRdxCodeHTML` | A DOM to draw; nothing to render markup |
 | `qrdx/element/define` | Registers `<qrdx-code>` on import | A DOM |
@@ -41,7 +41,7 @@ import { QRCode } from "qrdx";
 | Prop | Type | Default | What it does |
 | --- | --- | --- | --- |
 | `value` | `string` | required | The text or URL to encode, exactly as given |
-| `size` | `number` | `128` | Width and height in pixels. A frame adds to it |
+| `size` | `number` | `128` | Width and height in pixels. A frame adds to it; a template fits inside it |
 | `scale` | `number` | `1` | Multiplies `size` |
 | `level` | `"L" \| "M" \| "Q" \| "H"` | `"Q"` | Error correction: about 7%, 15%, 25% or 30% of the code may be damaged |
 | `margin` | `number` | `0` | Quiet zone around the code, in modules. The standard asks for 4 |
@@ -66,6 +66,8 @@ import { QRCode } from "qrdx";
 | `autoLevel` | `boolean` | `false` | Raises `level` to `H` when the logo covers more than 7% of the code (`AUTO_LEVEL_LOGO_COVERAGE`) |
 | `exactLevel` | `boolean` | `false` | Encodes at exactly the level the code is drawn at. Without it the encoder raises `level` to `Q` or `H` whenever the data still fits the same version. A Swiss QR-bill must be `M`, so QRdx sets it for those |
 | `frame` | `AnyQRFrame` | none | A call-to-action frame: `{ style, text, color, textColor, secondaryText, secondaryColor, fontScale }`, or `{ style: "custom", spec }`. The output grows to fit it |
+| `customTemplate` | `TemplateDefinition` | none | Artwork you draw in code around the code, at `size` with the code inside it. See [Templates](#templates) |
+| `customProps` | `Record<string, any>` | none | Props for the template's `wrapper` |
 | `shape` | `"square" \| "circle" \| "heart" \| QRSilhouette` | `"square"` | Puts the code in a disc, a heart or your own outline filled with decorative modules |
 | `art` | `QRArt` | none | Blends a picture into the modules: `{ mode, image, intensity, variant, matchEyes }` |
 | `style` | `CSSProperties` | none | Inline styles for the `<svg>` |
@@ -93,7 +95,7 @@ A logo bigger than the code can repair is shrunk around its center (`capImageSet
 
 ### QRCodeCanvas
 
-`QRProps` plus React's canvas attributes (`QRPropsCanvas`), drawn on a `<canvas>` at the device's pixel ratio. It draws plain square modules with solid colors: a gradient falls back to its first stop, and the pattern, eye color, `eyeColors`, `eyeShapes`, `moduleScale`, `halo`, `shadow` and `art` are ignored (`bgRadius` and `backdrop` are drawn). It ships with `"use client"`.
+`QRProps` plus React's canvas attributes (`QRPropsCanvas`), drawn on a `<canvas>` at the device's pixel ratio. It draws plain square modules with solid colors: a gradient falls back to its first stop, and the pattern, eye color, `eyeColors`, `eyeShapes`, `moduleScale`, `halo`, `shadow`, `art` and template props are ignored (`bgRadius` and `backdrop` are drawn). It ships with `"use client"`.
 
 ### getQRAsSVG
 
@@ -191,6 +193,12 @@ Limits: `LOGO_SIZE_MIN` 0.1, `LOGO_SIZE_MAX` 0.3, `LOGO_SIZE_DEFAULT` 0.25, `LOG
 
 Constants: `FRAME_STYLES` (the {facts.frameStyles} built-in styles plus `none`), `DEFAULT_FRAME_TEXT` (`"Scan me"`), `FRAME_TEXT_MAX_LENGTH` (24), `FRAME_FONT_SCALE_MIN` (0.5), `FRAME_FONT_SCALE_MAX` (1.5), `CUSTOM_FRAME_STYLE` (`"custom"`), `GRADIENT_FRAME_DEFAULTS`.
 
+## Templates
+
+A template is artwork you draw in code around the code, for what a frame spec can't hold, such as dots that change from link to link. Pass it as `customTemplate` and its own props as `customProps`. It's a library feature only; [Artwork drawn in code](/docs/features/frames#artwork-drawn-in-code) has an example.
+
+`TemplateDefinition<TCustomProps>` is `{ id, name, description?, wrapper(children, props?, config?) }`. The wrapper gets the code as a 300 by 300 drawing, `{ fgColor, bgColor, ...customProps }` and `{ url, pixelSize }` (`TemplateConfig`), and returns the whole picture, which is drawn at `size`. It gets and returns React elements inside the React components and `QRNode`s elsewhere; a wrapper written with JSX (without hooks) or with `h` works in both. `QRCodeCanvas` ignores templates.
+
 ## Shapes and art
 
 | Export | What it is |
@@ -219,7 +227,7 @@ The React-free renderer, from `qrdx/core`:
 | `createQRCodeTree(options)` | The code as plain `{ type, props, key }` nodes (`QRNode`) |
 | `renderToString(tree)`, `renderToDOM(tree, document?)` | Markup, or DOM nodes |
 | `toHyperscript(tree, createElement)` | The tree as another framework's elements. The Vue and Preact entries are built on it |
-| `h(type, props, ...children)`, `Fragment`, `isQRNode(value)` | Build nodes without JSX, such as the `slot` of `createFrameTree` |
+| `h(type, props, ...children)`, `Fragment`, `isQRNode(value)` | Build nodes without JSX: a template's wrapper, or the `slot` of `createFrameTree` |
 | `getQRAsSVGNode(options)` | `Promise<QRNode>` with the logo embedded |
 | `getQRCodeData(props)`, `getQRCodeSVGProps(props, data)` | The two halves of `resolveQRCodeProps` |
 
@@ -246,6 +254,7 @@ The types below come from `qrdx`, `qrdx/core` and `qrdx/types`. The option lists
 | `QRFrame` | `{ style: FrameStyle, text?, color?, textColor?, secondaryText?, secondaryColor?, fontScale? }` |
 | `QRCustomFrame`, `AnyQRFrame`, `FrameSpec` | `{ style: "custom", spec, ...labels and colors }`, the union, and the spec format |
 | `QRArt`, `QRArtImage` | `{ mode, image, intensity?, variant?, matchEyes? }` and `{ width, height, data }` |
+| `TemplateDefinition`, `TemplateConfig`, `BaseTemplateProps`, `TemplateNode` | [Templates](#templates) |
 | `QRCodeShape`, `QRSilhouette` | `"square" \| "circle" \| "heart"` or `{ type: "silhouette", width, height, cells }` |
 | `DownloadFormat`, `DownloadSize`, `DownloadOptions`, `PrintOptions`, `PrintLayout`, `EPSOptions` | Export |
 | `ScanScoreResult`, `ImageScanScoreResult`, `ScanCheck`, `ScanGrade`, `StylePairRisk` | The scan score |

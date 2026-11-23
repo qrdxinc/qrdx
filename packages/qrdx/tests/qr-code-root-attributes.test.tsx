@@ -99,7 +99,34 @@ describe("<QRCode> root attributes", () => {
     expect(html.match(/class="qr"/g)).toHaveLength(1);
   });
 
-  it("keeps them when a withdrawn template prop is passed, which is dropped", () => {
+  it("puts them on a custom template's root <svg>", () => {
+    const html = renderToStaticMarkup(
+      createElement(QRCode, {
+        ...props,
+        customTemplate: {
+          id: "Boxed",
+          name: "Boxed",
+          wrapper: (children) =>
+            createElement(
+              "svg",
+              { viewBox: "0 0 300 300", xmlns: "http://www.w3.org/2000/svg" },
+              createElement("rect", { width: 300, height: 300, fill: "#fff" }),
+              createElement(
+                "g",
+                { transform: "translate(30, 30) scale(0.8)" },
+                children
+              )
+            ),
+        },
+      })
+    );
+    expect(rootTag(html)).toContain('class="qr"');
+    expect(rootTag(html)).toContain('viewBox="0 0 300 300"');
+    expect(html.match(/class="qr"/g)).toHaveLength(1);
+    expect(html).not.toContain("customTemplate");
+  });
+
+  it("keeps them when the withdrawn templateId is passed, which is dropped", () => {
     const html = renderToStaticMarkup(
       createElement(QRCode, { ...props, templateId: "Arrow" } as typeof props)
     );

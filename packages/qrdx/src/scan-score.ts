@@ -23,6 +23,7 @@ import {
 } from "./looks";
 import { circleQuietZone, getLayoutMargin, isShapedCode } from "./qr-shape";
 import { encodeSymbol } from "./symbol";
+import { getTemplateCodeShare } from "./template-placement";
 import { getImageSettings, getLuminance, resolveErrorLevel } from "./utils";
 import { parseColor, type RGBAColor } from "./utils/parse-color";
 
@@ -1200,8 +1201,9 @@ async function prepareScan(
   const { signal } = options;
   const sizes = testSizes(options);
 
-  // The code itself SOURCE_SIZE wide (a frame adds around it)
-  const artworkSize = SOURCE_SIZE;
+  // A template draws the code smaller than its artwork: render the artwork
+  // large enough for the code itself to be SOURCE_SIZE wide
+  const artworkSize = SOURCE_SIZE / getTemplateCodeShare(props);
   const sourceProps = await inlineImagePaints(
     await inlineLogo(
       withQRSize({ ...props, size: props.size ?? DEFAULT_SIZE }, artworkSize)
@@ -1253,9 +1255,9 @@ export const PIXEL_SCORE_MIN_CODE_WIDTH = SOURCE_SIZE;
  * `getScanScore` for servers and other places without a DOM: the same
  * checks, weights and camera model, decoding `pixels` instead of drawing the
  * SVG on a canvas. `pixels` is the whole artwork as `props` renders it (the
- * code plus its frame, if any), at any size with the code itself at least
- * `PIXEL_SCORE_MIN_CODE_WIDTH` px wide (rasterized with resvg, sharp or a
- * canvas).
+ * code plus its frame or template, if any), at any size with the code itself
+ * at least `PIXEL_SCORE_MIN_CODE_WIDTH` px wide (rasterized with resvg, sharp
+ * or a canvas; a template draws the code smaller than its artwork).
  * Transparent pixels count as white, like paper. Logos must already
  * be painted into the pixels; an opaque placeholder of the same size scores
  * the same.
@@ -1272,8 +1274,10 @@ export async function getScanScoreFromPixels(
   const sizes = testSizes(options);
   const size = props.size ?? DEFAULT_SIZE;
   const artwork = getFrameDimensions(size, props.frame);
-  // Code width in the source pixels
-  const sourceCodeWidth = (width * size) / artwork.width;
+  // Code width in the source pixels (a template draws it smaller than its
+  // artwork)
+  const sourceCodeWidth =
+    (width * size * getTemplateCodeShare(props)) / artwork.width;
   const source = { data: onWhite(pixels), width, height };
   const grey = isGrey(source.data);
 

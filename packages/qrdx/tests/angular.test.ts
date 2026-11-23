@@ -143,6 +143,8 @@ describe.skipIf(!existsSync(built))("qrdx/angular", () => {
         "autoLevel",
         "exactLevel",
         "scale",
+        "customTemplate",
+        "customProps",
         "frameLabelMarkers",
         "partMarkers",
         "svgStyle",

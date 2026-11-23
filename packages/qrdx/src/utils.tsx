@@ -12,6 +12,7 @@ import type {
   Modules,
   QRSVGOptions,
   RadialGradient,
+  TemplateConfig,
 } from "../types";
 import {
   isGradient,
@@ -952,7 +953,7 @@ export function convertImageSettingsToPixels(
  * `renderToDOM` into DOM nodes. Every styling option is supported.
  */
 export function createQRCodeTree(props: QRSVGOptions): QRNode {
-  // The template props qrdx 0.0.64 withdrew are dropped (withdrawn-props.ts)
+  // templateId, withdrawn in qrdx 0.0.64, is dropped (withdrawn-props.ts)
   const {
     value,
     size = DEFAULT_SIZE,
@@ -967,6 +968,8 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     margin = DEFAULT_MARGIN,
     isOGContext = false,
     imageSettings: requestedImageSettings,
+    customTemplate,
+    customProps,
     frame,
     art,
     eyeColors,
@@ -1565,6 +1568,156 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     </>
   );
 
+  // A template you draw in code (customTemplate) wraps the code in its
+  // artwork. The built-in templates and templateId became frames in 0.0.64.
+  const template = customTemplate;
+  if (template) {
+    // For templates, we need to create a properly sized SVG that fits the template coordinate system
+    // Templates expect the QR content to be in a coordinate system that matches their transforms
+    const templateSize = 300; // All templates use 300x300 base coordinate system
+
+    // Generate background gradient for template size (gradients use userSpaceOnUse, so coordinates must match)
+    const templateBgColorGradient = hasPaintDef(normalizedBgColor)
+      ? generateGradientDef(
+          normalizedBgColor,
+          templateSize,
+          "bg-color-template"
+        )
+      : null;
+
+    const templateBgFillValue = getFillProps(
+      bgColor,
+      templateBgColorGradient?.id ?? null,
+      DEFAULT_BGCOLOR
+    );
+
+    // Create QR content as a complete SVG for templates
+    const templateQrContent = (
+      <svg
+        height={templateSize}
+        viewBox={`0 0 ${templateSize} ${templateSize}`}
+        width={templateSize}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Gradient definitions */}
+        <defs>
+          {uniqueDefs([
+            templateBgColorGradient,
+            fgColorGradient,
+            topLeftEyeGradient,
+            topRightEyeGradient,
+            bottomLeftEyeGradient,
+            topLeftDotGradient,
+            topRightDotGradient,
+            bottomLeftDotGradient,
+          ])}
+        </defs>
+
+        {/* Background */}
+        {outline(templateSize, templateBgFillValue)}
+
+        {/* Scale all QR elements to fit template coordinate system */}
+        <g transform={`scale(${fmt(templateSize / size, SCALE_DECIMALS)})`}>
+          {haloLayer}
+          {shadowLayer}
+
+          {/* Data module circles */}
+          {dataLayer}
+
+          {/* Top-left corner square */}
+          <g {...topLeftEyeFillValue} {...part("eye-outer", "top-left")}>
+            <path
+              d={topLeftEye}
+              fillRule="evenodd"
+              transform={compact`rotate(0,${topLeftX + cornerSize / 2},${topLeftY + cornerSize / 2})`}
+            />
+          </g>
+
+          {/* Top-left corner dot */}
+          <g {...topLeftDotFillValue} {...part("eye-centre", "top-left")}>
+            {topLeftDot}
+          </g>
+
+          {/* Top-right corner square */}
+          <g {...topRightEyeFillValue} {...part("eye-outer", "top-right")}>
+            <path
+              d={topRightEye}
+              fillRule="evenodd"
+              transform={compact`rotate(0,${topRightX + cornerSize / 2},${topRightY + cornerSize / 2})`}
+            />
+          </g>
+
+          {/* Top-right corner dot */}
+          <g {...topRightDotFillValue} {...part("eye-centre", "top-right")}>
+            {topRightDot}
+          </g>
+
+          {/* Bottom-left corner square */}
+          <g {...bottomLeftEyeFillValue} {...part("eye-outer", "bottom-left")}>
+            <path
+              d={bottomLeftEye}
+              fillRule="evenodd"
+              transform={compact`rotate(0,${bottomLeftX + cornerSize / 2},${bottomLeftY + cornerSize / 2})`}
+            />
+          </g>
+
+          {/* Bottom-left corner dot */}
+          <g {...bottomLeftDotFillValue} {...part("eye-centre", "bottom-left")}>
+            {bottomLeftDot}
+          </g>
+
+          {image}
+        </g>
+      </svg>
+    );
+
+    // Scale pixelSize to match the template coordinate system
+    // Since QR content is scaled to templateSize, pixelSize should also be scaled
+    const scaleFactor = templateSize / size;
+    const scaledPixelSize = pixelSize * scaleFactor;
+
+    const templateConfig: TemplateConfig = {
+      pixelSize: scaledPixelSize,
+      url: value,
+    };
+
+    // Use template wrapper with the QR content and pass the size
+    // Spread customProps so templates can access their custom properties directly
+    const wrappedSvg = template.wrapper(
+      templateQrContent,
+      {
+        fgColor,
+        bgColor,
+        ...(customProps || {}),
+        ...otherProps,
+      },
+      templateConfig
+    );
+
+    // Clone the wrapped SVG element and override width/height to match requested size
+    // This ensures downloads get the proper size while keeping viewBox for scaling
+    // Remove percentage-based styles that would interfere with absolute sizing
+    const originalStyle = wrappedSvg?.props?.style || {};
+    const newStyle = {
+      ...originalStyle,
+      width: undefined,
+      height: undefined,
+      ...rootProps.style,
+    };
+
+    // Forward the caller's SVG attributes (className, aria-*, etc.) to the
+    // root element, same as the non-template path below.
+    return withFrame(
+      cloneElement(wrappedSvg, {
+        ...rootProps,
+        width: size,
+        height: size,
+        style: newStyle,
+      })
+    );
+  }
+
+  // Standard QR code without wrapper (backward compatibility)
   return withFrame(
     <svg
       height={size}
