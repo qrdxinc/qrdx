@@ -31,7 +31,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Papa from "papaparse";
-import { getQRCodeDataUrl, QRCode } from "qrdx";
+import { DOWNLOAD_FORMATS, getQRCodeDataUrl, QRCode } from "qrdx";
 import {
   useCallback,
   useEffect,
@@ -86,7 +86,15 @@ import { buildQrProps, QUIET_ZONE_MODULES } from "./qr-props";
  * GIF holds at most 256 colors: a row whose design would stop scanning in
  * them is listed in errors.csv instead of saved.
  */
-type Format = "png" | "webp" | "gif" | "bmp" | "ico" | "svg";
+type Format =
+  | "png"
+  | "webp"
+  | "gif"
+  | "bmp"
+  | "ico"
+  | "tiff"
+  | "tiff-cmyk"
+  | "svg";
 
 /** The raster formats' names for the size label. */
 const RASTER_NAMES = {
@@ -94,6 +102,8 @@ const RASTER_NAMES = {
   webp: "WebP",
   gif: "GIF",
   bmp: "BMP",
+  tiff: "TIFF",
+  "tiff-cmyk": "TIFF",
 } as const;
 type LevelChoice = "style" | "L" | "M" | "Q" | "H";
 
@@ -479,7 +489,7 @@ export function BulkGenerator({
           sanitizeFilename(rawName) ||
           `qr-${String(output.index + 1).padStart(4, "0")}`;
         await zip.add(
-          allocate(base, format),
+          allocate(base, DOWNLOAD_FORMATS[format].extension),
           output.bytes,
           format === "svg" || format === "bmp",
         );
@@ -841,6 +851,10 @@ export function BulkGenerator({
                   <SelectItem value="gif">{t("formatGif")}</SelectItem>
                   <SelectItem value="bmp">{t("formatBmp")}</SelectItem>
                   <SelectItem value="ico">{t("formatIco")}</SelectItem>
+                  <SelectItem value="tiff">{t("formatTiff")}</SelectItem>
+                  <SelectItem value="tiff-cmyk">
+                    {t("formatTiffCmyk")}
+                  </SelectItem>
                   <SelectItem value="svg">{t("formatSvg")}</SelectItem>
                 </SelectContent>
               </Select>

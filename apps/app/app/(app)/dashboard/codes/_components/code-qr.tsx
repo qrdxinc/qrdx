@@ -28,16 +28,32 @@ const DOWNLOAD_SIZE = 1024;
  * with the code at 16, 32, 48 and 256 px, GIF holds at most 256 colors (a
  * design that would stop scanning when reduced to them is refused).
  */
-export type CodeImageFormat = "png" | "webp" | "gif" | "bmp" | "ico" | "svg";
+export type CodeImageFormat =
+  | "png"
+  | "webp"
+  | "gif"
+  | "bmp"
+  | "ico"
+  | "tiff"
+  | "tiff-cmyk"
+  | "svg";
 const FORMATS: CodeImageFormat[] = ["png", "webp", "svg"];
 /** Formats beyond the buttons, in a "More" menu. */
-const MORE_FORMATS: CodeImageFormat[] = ["gif", "bmp", "ico"];
+const MORE_FORMATS: CodeImageFormat[] = [
+  "gif",
+  "bmp",
+  "ico",
+  "tiff",
+  "tiff-cmyk",
+];
 const FORMAT_LABELS: Record<CodeImageFormat, string> = {
   png: "PNG",
   webp: "WebP",
   gif: "GIF",
   bmp: "BMP",
   ico: "ICO",
+  tiff: "TIFF",
+  "tiff-cmyk": "CMYK TIFF",
   svg: "SVG",
 };
 

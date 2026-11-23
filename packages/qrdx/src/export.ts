@@ -10,6 +10,7 @@ import { getFrameDimensions } from "./frame";
 import { canvasToGIF, GIF_MIME } from "./gif";
 import { canvasToICO, ICO_MIME } from "./ico";
 import { toSVGString } from "./svg";
+import { canvasToTIFF, TIFF_MIME } from "./tiff";
 import { blobToDataUrl, canvasToWebP } from "./webp";
 
 export async function getQRAsSVGDataUri(props: QRProps) {
@@ -208,6 +209,13 @@ export async function getQRAsCanvas(
           // an ICO of the one canvas (at most 256 px); getQRAsICO makes the
           // favicon with several sizes.
           blobToDataUrl(canvasToICO(canvas))
+            .then(resolve, reject)
+            .finally(() => canvas.remove());
+        } else if (type === TIFF_MIME) {
+          // toDataURL would hand back a PNG: no browser encodes TIFF. This is
+          // the RGBA TIFF; getQRAsTIFF also makes the CMYK one.
+          canvasToTIFF(canvas)
+            .then(blobToDataUrl)
             .then(resolve, reject)
             .finally(() => canvas.remove());
         } else {

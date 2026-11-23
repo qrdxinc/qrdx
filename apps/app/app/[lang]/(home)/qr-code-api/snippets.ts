@@ -10,6 +10,8 @@ export type ImageFormat =
   | "gif"
   | "bmp"
   | "ico"
+  | "tiff"
+  | "tiff-cmyk"
   | "eps";
 
 export const LEVELS = ["L", "M", "Q", "H"] as const;

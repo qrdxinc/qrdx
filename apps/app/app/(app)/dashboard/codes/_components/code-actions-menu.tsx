@@ -379,6 +379,12 @@ export function CodeActionsMenu({
               <DropdownMenuItem onSelect={() => download("ico")}>
                 <GalleryImport /> {t("downloadIco")}
               </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => download("tiff")}>
+                <GalleryImport /> {t("downloadTiff")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => download("tiff-cmyk")}>
+                <GalleryImport /> {t("downloadTiffCmyk")}
+              </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         </DropdownMenuContent>
@@ -440,6 +446,12 @@ export function CodeActionsMenu({
               </DropdownMenuItem>
               <DropdownMenuItem onSelect={() => download("ico")}>
                 <GalleryImport /> {t("downloadIco")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => download("tiff")}>
+                <GalleryImport /> {t("downloadTiff")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => download("tiff-cmyk")}>
+                <GalleryImport /> {t("downloadTiffCmyk")}
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>

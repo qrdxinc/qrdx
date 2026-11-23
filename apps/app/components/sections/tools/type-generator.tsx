@@ -270,15 +270,26 @@ const LINK_ONLY = new Set<ContentType>(["dubsh", "google-drive"]);
  * WebP is lossless: the PNG's pixels in a smaller file. BMP is an
  * uncompressed 24-bit bitmap (a transparent background comes out white). ICO
  * is a favicon with the code at 16, 32, 48 and 256 px. GIF holds at most 256
- * colors and says so when a design would stop scanning in them.
+ * colors and says so when a design would stop scanning in them. TIFF is for
+ * print, at 300 dpi: RGBA, or CMYK with black as K only.
  */
-type ImageFormat = "png" | "webp" | "gif" | "bmp" | "ico" | "svg";
+type ImageFormat =
+  | "png"
+  | "webp"
+  | "gif"
+  | "bmp"
+  | "ico"
+  | "tiff"
+  | "tiff-cmyk"
+  | "svg";
 const IMAGE_FORMATS: ImageFormat[] = [
   "png",
   "webp",
   "gif",
   "bmp",
   "ico",
+  "tiff",
+  "tiff-cmyk",
   "svg",
 ];
 const IMAGE_FORMAT_LABELS: Record<ImageFormat, string> = {
@@ -287,6 +298,8 @@ const IMAGE_FORMAT_LABELS: Record<ImageFormat, string> = {
   gif: "GIF",
   bmp: "BMP",
   ico: "ICO",
+  tiff: "TIFF",
+  "tiff-cmyk": "CMYK TIFF",
   svg: "SVG",
 };
 
@@ -401,7 +414,7 @@ function GeneratorPanel({
           />
         </div>
 
-        <div className="grid w-full grid-cols-3 gap-2">
+        <div className="grid w-full grid-cols-4 gap-2">
           {IMAGE_FORMATS.map((format) => (
             <Button
               key={format}
