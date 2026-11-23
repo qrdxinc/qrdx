@@ -5,7 +5,7 @@
 //
 // First match wins:
 //   affiliate     an affiliate was credited with the account
-//   plugin        ref is a plugin's tag (Chrome, Figma, Canva, Raycast)
+//   plugin        ref is a plugin's tag (Chrome, Figma, Canva, Raycast, Google Workspace)
 //   mcp           ref=mcp (a link the MCP server returned)
 //   bot           ref is a chat bot's tag (Slack, Telegram, Discord)
 //   developer     ref=cli or ref=n8n, or the referrer is npm or GitHub

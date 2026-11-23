@@ -121,6 +121,7 @@ You don't need a database or any environment variables to work on the React libr
 | `packages/rate-limit` | Upstash-based rate limiting |
 | `packages/next-config`, `packages/typescript-config` | Shared Next.js config, env keys and Content-Security-Policy builder (`@repo/next-config/csp`), shared tsconfig presets |
 | `plugins/chrome`, `plugins/figma`, `plugins/raycast`, `plugins/canva` | The Chrome extension, Figma plugin, Raycast extension and Canva app |
+| `plugins/google-workspace` | The Google Workspace add-on for Docs, Sheets and Slides (Apps Script; its README has the tests and the deploy steps) |
 | `skills/` | Agent skills, such as `generate-qr` |
 
 ## Checks before you open a pull request

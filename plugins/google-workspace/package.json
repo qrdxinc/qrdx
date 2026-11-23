@@ -1,0 +1,13 @@
+{
+  "name": "@qrdx/google-workspace-addon",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "test:node": "node --test \"test/*.test.mjs\""
+  },
+  "engines": {
+    "node": ">=22.22.3"
+  }
+}
