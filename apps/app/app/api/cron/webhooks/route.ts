@@ -97,12 +97,14 @@ export async function GET(request: Request) {
   // UTC day, so the daily run is the one that completes them.
   let twoFactorResets: DueResetsSummary | null = null;
   // OAuth clients that registered themselves through the MCP server and
-  // were never used (lib/oauth-registration.ts): registration is open, so
-  // they're cleared once a day.
+  // were never used in a week (lib/oauth-registration.ts): registration is
+  // open, so they're cleared once a day, oldest first, for at most 5 s.
   let oauthClientsPruned = 0;
   if (trigger === "daily") {
     try {
-      oauthClientsPruned = await pruneUnusedDynamicClients();
+      oauthClientsPruned = await pruneUnusedDynamicClients({
+        deadline: Math.min(Date.now() + 5_000, startedAt + 30_000),
+      });
     } catch (error) {
       console.error(
         JSON.stringify({

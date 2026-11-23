@@ -2706,9 +2706,10 @@
     "setupUrl": "सर्वर URL",
     "toolsEyebrow": "टूल",
     "toolsTitle": "आपका असिस्टेंट क्या-क्या चला सकता है",
-    "toolsDescription": "{count, number} टूल। save_template, save_barcode और generate_ai_art को छोड़कर बाकी सभी रीड-ओनली हैं और इनके लिए किसी key की ज़रूरत नहीं होती: ये इमेज बनाते हैं, टेक्स्ट फ़ॉर्मैट करते हैं और पब्लिक कम्युनिटी को पढ़ते हैं। ये तीनों तब दिखते हैं जब कनेक्शन में API key हो। पूरे पैरामीटर <link>MCP server docs</link> में हैं।",
+    "toolsDescription": "{count, number} टूल। ज़्यादातर सिर्फ़ पढ़ने के लिए हैं और इनके लिए न अकाउंट चाहिए न key: ये इमेज बनाते हैं, टेक्स्ट फ़ॉर्मैट करते हैं और पब्लिक कम्युनिटी पढ़ते हैं। डायनेमिक QR कोड वाले चार टूल आपसे QRdx में साइन इन करने को कहते हैं, और save_template, save_barcode और generate_ai_art तब दिखते हैं जब कनेक्शन में API key हो। सारे पैरामीटर <link>MCP सर्वर डॉक्स</link> में हैं।",
     "toolNoKey": "की ज़रूरत नहीं",
     "toolNeedsKey": "API key ज़रूरी है",
+    "toolNeedsSignIn": "साइन इन ज़रूरी है",
     "faqTitle": "MCP सर्वर FAQ",
     "connect": {
       "copyFailed": "कॉपी नहीं हो सका। टेक्स्ट चुनकर खुद कॉपी करें।",
@@ -9279,8 +9280,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "यह लिंक इस्तेमाल नहीं हो सकता",
+          "unknownAppTitle": "इस app का QRdx से कनेक्शन खत्म हो गया है",
+          "unknownAppBody": "QRdx अब उस app को नहीं पहचानता जिसने आपको यहाँ भेजा। अगर यह कोई AI app है जिसे आपने QRdx से जोड़ा था, जैसे Claude, Cursor या VS Code, तो app से QRdx हटाएँ, फिर से जोड़ें और साइन इन करें। नहीं तो app के डेवलपर से पूछें।",
           "theAppThatSentYou": "जिस app ने आपको यहाँ भेजा, उसने गलत रिक्वेस्ट भेजी: <span>{description}</span>। app पर वापस जाकर फिर कोशिश करें, या उसके डेवलपर से संपर्क करें।",
           "appnameWillBeAbleTo": "{appName} यह कर पाएगा",
+          "mcpOnlyNote": "{appName} आपके अकाउंट का इस्तेमाल सिर्फ़ QRdx MCP सर्वर के कोड टूल से कर सकता है: यह कोड डिलीट नहीं कर सकता, webhooks मैनेज नहीं कर सकता और AI आर्ट इस्तेमाल नहीं कर सकता।",
           "nameWantsToAccessYour": "{name} आपके QRdx अकाउंट का एक्सेस चाहता है",
           "builtByName": "<strong>{name}</strong> द्वारा बनाया गया",
           "unverifiedApp": "अनवेरिफ़ाइड app।",

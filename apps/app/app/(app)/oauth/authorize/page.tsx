@@ -40,7 +40,14 @@ export default async function OAuthAuthorizePage({
   });
   const check = await checkAuthorizeRequest(params);
   if (!check.ok) {
-    return <OAuthRequestError description={check.description} />;
+    return (
+      <OAuthRequestError
+        description={check.description}
+        // An unknown client_id: most often an MCP app's saved connection
+        // whose registration was deleted as unused.
+        unknownApp={check.error === "invalid_client"}
+      />
+    );
   }
 
   const entries = authorizeParamEntries(params);

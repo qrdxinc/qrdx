@@ -2706,9 +2706,10 @@
     "setupUrl": "URL do servidor",
     "toolsEyebrow": "Ferramentas",
     "toolsTitle": "O que seu assistente pode chamar",
-    "toolsDescription": "{count, number} ferramentas. Todas, exceto save_template, save_barcode e generate_ai_art, são somente leitura e não precisam de chave: elas geram imagens, formatam texto e leem a comunidade pública. Essas três aparecem na lista quando a conexão tem uma chave de API. Os parâmetros completos estão na <link>documentação do servidor MCP</link>.",
+    "toolsDescription": "{count, number} ferramentas. A maioria é somente leitura e não precisa de conta nem chave: elas geram imagens, formatam texto e leem a comunidade pública. As quatro ferramentas de QR codes dinâmicos pedem que você faça login no QRdx, e save_template, save_barcode e generate_ai_art aparecem quando a conexão tem uma chave de API. Os parâmetros completos estão na <link>documentação do servidor MCP</link>.",
     "toolNoKey": "Sem chave",
     "toolNeedsKey": "Requer chave de API",
+    "toolNeedsSignIn": "Requer login",
     "faqTitle": "Dúvidas sobre o servidor MCP",
     "connect": {
       "copyFailed": "Não foi possível copiar. Selecione o texto e copie manualmente.",
@@ -9279,8 +9280,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Não é possível usar este link",
+          "unknownAppTitle": "A conexão deste app com o QRdx expirou",
+          "unknownAppBody": "O QRdx não reconhece mais o app que enviou você até aqui. Se for um app de IA que você conectou ao QRdx, como Claude, Cursor ou VS Code, remova o QRdx do app, adicione de novo e faça login. Caso contrário, fale com o desenvolvedor do app.",
           "theAppThatSentYou": "O app que enviou você até aqui fez uma solicitação inválida: <span>{description}</span>. Volte para o app e tente de novo, ou fale com o desenvolvedor.",
           "appnameWillBeAbleTo": "{appName} poderá",
+          "mcpOnlyNote": "{appName} só pode usar sua conta pelas ferramentas de códigos do servidor MCP do QRdx: não pode excluir códigos, gerenciar webhooks nem usar arte com IA.",
           "nameWantsToAccessYour": "{name} quer acessar sua conta do QRdx",
           "builtByName": "Criado por <strong>{name}</strong>",
           "unverifiedApp": "App não verificado.",

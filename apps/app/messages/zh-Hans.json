@@ -2706,9 +2706,10 @@
     "setupUrl": "服务器 URL",
     "toolsEyebrow": "工具",
     "toolsTitle": "你的助手可以调用什么",
-    "toolsDescription": "共 {count, number} 个工具。除 save_template、save_barcode 和 generate_ai_art 外，其余均为只读工具，无需密钥：它们可以渲染图像、格式化文本并读取公开社区内容。连接配置 API 密钥后，才会列出这几个例外工具。完整参数请见 <link>MCP server 文档</link>。",
+    "toolsDescription": "共 {count, number} 个工具。大多数为只读，无需账户或密钥：它们生成图片、格式化文本并读取公开社区内容。四个动态二维码工具会请你登录 QRdx，而 save_template、save_barcode 和 generate_ai_art 会在连接设置了 API 密钥后列出。完整参数见 <link>MCP 服务器文档</link>。",
     "toolNoKey": "无需密钥",
     "toolNeedsKey": "需要 API 密钥",
+    "toolNeedsSignIn": "需要登录",
     "faqTitle": "MCP 服务器常见问题",
     "connect": {
       "copyFailed": "复制失败，请选中文本后手动复制。",
@@ -9279,8 +9280,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "此链接无法使用",
+          "unknownAppTitle": "此应用与 QRdx 的连接已过期",
+          "unknownAppBody": "QRdx 已无法识别将你带到此处的应用。如果这是你连接到 QRdx 的 AI 应用（例如 Claude、Cursor 或 VS Code），请在该应用中移除 QRdx，重新添加并登录。否则，请联系该应用的开发者。",
           "theAppThatSentYou": "将你带到此处的应用发出了无效请求：<span>{description}</span>。请返回该应用重试，或联系其开发者。",
           "appnameWillBeAbleTo": "{appName} 将能够",
+          "mcpOnlyNote": "{appName} 只能通过 QRdx MCP 服务器的二维码工具使用你的账户：它无法删除二维码、管理 Webhook 或使用 AI 艺术。",
           "nameWantsToAccessYour": "{name} 想要访问你的 QRdx 账号",
           "builtByName": "开发者：<strong>{name}</strong>",
           "unverifiedApp": "未经验证的应用。",

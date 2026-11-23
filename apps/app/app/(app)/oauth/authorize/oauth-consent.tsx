@@ -25,8 +25,27 @@ export function AuthorizeShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function OAuthRequestError({ description }: { description: string }) {
+export function OAuthRequestError({
+  description,
+  unknownApp = false,
+}: {
+  description: string;
+  /** QRdx doesn't know the app (its client_id): say how to reconnect it. */
+  unknownApp?: boolean;
+}) {
   const t = useTranslations("app.oauth.authorize.oauthConsent");
+  if (unknownApp) {
+    return (
+      <AuthorizeShell>
+        <div className="space-y-2 text-center">
+          <h1 className="text-lg font-semibold">{t("unknownAppTitle")}</h1>
+          <p className="text-muted-foreground text-sm text-pretty">
+            {t("unknownAppBody")}
+          </p>
+        </div>
+      </AuthorizeShell>
+    );
+  }
   return (
     <AuthorizeShell>
       <div className="space-y-2 text-center">
