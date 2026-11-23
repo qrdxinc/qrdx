@@ -17,13 +17,18 @@ import {
   ENGLISH_ONLY_PATHS,
   isEnglishOnlyPath,
   isLocalizedPath,
+  isSiteTranslatedPath,
   LOCALIZED_PATHS,
   localizeHref,
   localizePath,
+  localizeSitePath,
   routeMatcher,
+  SITE_TRANSLATED_PATHS,
   splitLocale,
 } from "@repo/i18n/paths";
 import {
+  INDEXED_MACHINE_PATHS,
+  isIndexedWhenMachine,
   isPublished,
   publishedLocales,
   REVIEW,
@@ -420,6 +425,75 @@ describe("English-only marketing pages, in either review state", () => {
   });
 });
 
+// The QR code generators in every language (owner decision, 23 Nov 2026):
+// the site zone serves them at /<lang>/qr-code-generator/..., and their
+// machine translations are indexed, unlike every other page's. This app's
+// own copies stay English only (above).
+describe("generator pages the site serves in every language", () => {
+  it("are English-only pages here, listed once", () => {
+    expect([...SITE_TRANSLATED_PATHS]).toEqual([
+      "/qr-code-generator",
+      "/qr-code-generator/[type]",
+    ]);
+    for (const path of SITE_TRANSLATED_PATHS) {
+      expect(ENGLISH_ONLY_PATHS, path).toContain(path);
+      expect(LOCALIZED_PATHS, path).not.toContain(path);
+    }
+    expect(isSiteTranslatedPath("/qr-code-generator")).toBe(true);
+    expect(isSiteTranslatedPath("/qr-code-generator/wifi")).toBe(true);
+    expect(isSiteTranslatedPath("/qr-code-generator/wifi/x")).toBe(false);
+    expect(isSiteTranslatedPath("/barcode-generator")).toBe(false);
+    expect(isSiteTranslatedPath("/playground")).toBe(false);
+  });
+
+  it("get the language's prefix in the site's links, English none", () => {
+    expect(localizeSitePath("/qr-code-generator/wifi", "es")).toBe(
+      "/es/qr-code-generator/wifi",
+    );
+    expect(localizeSitePath("/qr-code-generator", "zh-Hans")).toBe(
+      "/zh-hans/qr-code-generator",
+    );
+    expect(localizeSitePath("/qr-code-generator/wifi", "en")).toBe(
+      "/qr-code-generator/wifi",
+    );
+    // Any other page keeps its one URL, and this app's own links don't change.
+    expect(localizeSitePath("/pricing", "es")).toBe("/pricing");
+    expect(localizeSitePath("/playground", "es")).toBe("/playground");
+    expect(localizePath("/qr-code-generator/wifi", "es")).toBe(
+      "/qr-code-generator/wifi",
+    );
+    expect(localizeHref("/qr-code-generator", "ja")).toBe("/qr-code-generator");
+  });
+
+  it("are indexed in every language while every locale is machine-made", () => {
+    expect([...INDEXED_MACHINE_PATHS]).toEqual([...SITE_TRANSLATED_PATHS]);
+    for (const path of ["/qr-code-generator", "/qr-code-generator/wifi"]) {
+      expect(isIndexedWhenMachine(path), path).toBe(true);
+      expect(publishedLocales(path, MACHINE), path).toEqual([...LOCALES]);
+      for (const locale of TRANSLATED_LOCALES) {
+        expect(isPublished(locale, path, MACHINE), locale).toBe(true);
+      }
+    }
+  });
+
+  it("leave every other page's review state alone", () => {
+    for (const path of [...LOCALIZED_PATHS, "/pricing", "/barcode-generator"]) {
+      expect(isIndexedWhenMachine(path), path).toBe(false);
+      expect(publishedLocales(path, MACHINE), path).toEqual(["en"]);
+    }
+    expect(publishedLocales("/playground", SIGNED_OFF)).toEqual([
+      "en",
+      "es",
+      "zh-Hans",
+    ]);
+    // The playground, AI, MCP and scanner pages stay noindex in Spanish.
+    for (const path of LOCALIZED_PATHS) {
+      const es = localizedMetadata({ locale: "es", path, title: "x" });
+      expect(es.robots, path).toEqual({ index: false, follow: true });
+    }
+  });
+});
+
 describe("next.config.ts routing", () => {
   const matches = (source: string, path: string) =>
     pathToRegexp(source, [], { strict: true }).test(path);
@@ -496,6 +570,33 @@ describe("next.config.ts routing", () => {
     expect(matches(pages?.source ?? "", "/en/pricing/twitter-image")).toBe(
       false,
     );
+  });
+
+  it("leaves out the pages the site serves in every language, when told to", () => {
+    const rules = englishOnlyRedirects("(?:qrdx\\.dev)", {
+      except: SITE_TRANSLATED_PATHS,
+    });
+    expect(rules).toHaveLength(
+      ENGLISH_ONLY_PATHS.length - SITE_TRANSLATED_PATHS.length + 1,
+    );
+    const target = (path: string) =>
+      rules.find((rule) => matches(rule.source, path))?.destination;
+    expect(target("/es/qr-code-generator")).toBeUndefined();
+    expect(target("/es/qr-code-generator/wifi")).toBeUndefined();
+    expect(target("/ja/barcode-generator/ean-13")).toBe(
+      "/barcode-generator/:format",
+    );
+    expect(target("/es/pricing")).toBe("/pricing");
+    expect(target("/es")).toBe("/");
+    // Only English-only pages, named as they're listed.
+    expect(() =>
+      englishOnlyRedirects("(?:qrdx\\.dev)", { except: ["/playground"] }),
+    ).toThrow("/playground");
+    expect(() =>
+      englishOnlyRedirects("(?:qrdx\\.dev)", {
+        except: ["/qr-code-generator/wifi"],
+      }),
+    ).toThrow("/qr-code-generator/wifi");
   });
 
   it("redirects the English-only pages' translated URLs, for now as 307", () => {

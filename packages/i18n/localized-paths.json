@@ -1,5 +1,5 @@
 {
-  "$comment": "Public pages that live under app/[lang]. `paths` exist in every locale (apps/app/tests/i18n/split-roots.test.ts checks that every listed page is under app/[lang]); packages/i18n/paths.ts reads the same list for links, rewrites, hreflang and the sitemap. `englishOnly` are marketing pages that stay under app/[lang] but exist in English only (owner decision, 17 Nov 2026): English serves them at their unprefixed URLs, and their old translated URLs redirect there (routing.ts). A dynamic segment is written like its folder: /compare/[slug] covers every slug. /scan stays translated until the owner decides: each language's scanner installs as its own app, scoped to /<lang>/scan (apps/app/lib/scanner-app.ts), and a redirect would move installed apps out of their scope.",
+  "$comment": "Public pages that live under app/[lang]. `paths` exist in every locale (apps/app/tests/i18n/split-roots.test.ts checks that every listed page is under app/[lang]); packages/i18n/paths.ts reads the same list for links, rewrites, hreflang and the sitemap. `englishOnly` are marketing pages that stay under app/[lang] but exist in English only (owner decision, 17 Nov 2026): English serves them at their unprefixed URLs, and their old translated URLs redirect there (routing.ts). A dynamic segment is written like its folder: /compare/[slug] covers every slug. /scan stays translated until the owner decides: each language's scanner installs as its own app, scoped to /<lang>/scan (apps/app/lib/scanner-app.ts), and a redirect would move installed apps out of their scope. `siteTranslated` are English-only pages here that the site zone serves in every language at /<lang><path> (owner decision, 23 Nov 2026: the QR code generators, for search traffic in other languages): this app's own copies stay English only, and while the site's group for them is on (@repo/next-config/site-zone SITE_TRANSLATED_GROUPS) their translated URLs aren't redirected and go to the site instead. Their machine translations are indexed (review.ts INDEXED_MACHINE_PATHS).",
   "paths": ["/scan", "/mcp", "/ai", "/ai/art", "/playground"],
   "englishOnly": [
     "/",
@@ -27,5 +27,6 @@
     "/dynamic-qr-code",
     "/open-source-qr-code-generator",
     "/compare"
-  ]
+  ],
+  "siteTranslated": ["/qr-code-generator", "/qr-code-generator/[type]"]
 }
