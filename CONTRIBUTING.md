@@ -123,6 +123,26 @@ You don't need a database or any environment variables to work on the React libr
 | `plugins/chrome`, `plugins/figma`, `plugins/raycast`, `plugins/canva` | The Chrome extension, Figma plugin, Raycast extension and Canva app |
 | `skills/` | Agent skills, such as `generate-qr` |
 
+### Raycast extension
+
+`plugins/raycast` is published to the Raycast Store, which takes every file in that folder, so its README is the Store page and its CHANGELOG is the Store's version history: write both for people who install the extension from the Store. A Store release adds one entry at the top of the CHANGELOG, titled `## [Short Description] - {PR_MERGE_DATE}`. Notes for working on the extension go here instead.
+
+You need Raycast and Node.js 22.22.3 or later. From the repository root:
+
+```bash
+bun run --filter qrdx-raycast dev         # ray develop: loads the extension into Raycast
+bun run --filter qrdx-raycast lint        # Raycast's linter: ESLint and Prettier (120 columns)
+bun run --filter qrdx-raycast typecheck
+```
+
+The commands then show up in Raycast's root search. `bun run --filter qrdx-raycast build` installs its build into Raycast as `dev` does, replacing the copy you have; to check that it builds without touching Raycast, run `bun x ray build -e dist -o <a scratch folder>` in `plugins/raycast`.
+
+The extension takes `qrdx` from npm, as the Store's own build does, so a change to `packages/qrdx` reaches it only once that version is published and the extension's `qrdx` range is raised. Its pattern and frame lists come from that `qrdx`, so raising it brings the new shapes and frames along.
+
+The Store builds the extension with npm, so the folder keeps a `package-lock.json` beside `package.json`. npm can't run inside this repository, so after changing one of the extension's dependencies, rewrite the lockfile from the root with `bun run raycast:lock` (it resolves the extension in a temporary folder). `apps/app/tests/repo/raycast-lock.test.ts` fails while the two disagree.
+
+Store screenshots go in `plugins/raycast/metadata/` (2000 × 1250 PNG, up to six; Raycast's Window Capture can save them there). `bun run raycast:publish` from the root opens or updates the pull request to `raycast/extensions`. Two files in the folder are for this repository only: `turbo.json` (its build) and `LICENSE` (each `plugins/*` folder keeps its own; `raycast/extensions` doesn't accept one, since its MIT license covers every extension). After each publish, delete both from the Raycast pull request's branch.
+
 ## Checks before you open a pull request
 
 CI (`.github/workflows/ci.yml`) runs these on every pull request and on every push to `staging` and `main`. Both branches require the job to pass before anything merges. A push to `staging` runs the full suite in the background after each merge. A release pull request into `main`, and the push to `main` it creates, hold the same code, so they reuse that result instead of testing it again (`scripts/ci-reuse-check.sh` compares git trees; it waits up to 20 minutes for a staging run that's still going, and falls back to the full suite when nothing matches). Manual runs always test everything.
