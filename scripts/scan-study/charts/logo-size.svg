@@ -1,0 +1,663 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 960 560"
+  width="960"
+  height="560"
+  role="img"
+  aria-label="How big can a centre logo be?"
+>
+  <style>
+  svg {
+    --bg: #f7f7f8;
+    --ink: #0b0b0b;
+    --ink2: #52514e;
+    --muted: #6f6e69;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --s1: #2a78d6;
+    --s2: #eb6834;
+    --s3: #1baf7a;
+    --o1: #86b6ef;
+    --o2: #3987e5;
+    --o3: #1c5cab;
+    --o4: #0d366b;
+    --band: rgba(11, 11, 11, 0.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    svg {
+      --bg: #111113;
+      --ink: #f0efec;
+      --ink2: #c3c2b7;
+      --muted: #9a9890;
+      --grid: #2c2c2a;
+      --axis: #45453f;
+      --s1: #3987e5;
+      --s2: #d95926;
+      --s3: #199e70;
+      --o1: #184f95;
+      --o2: #2a78d6;
+      --o3: #6da7ec;
+      --o4: #b7d3f6;
+      --band: rgba(255, 255, 255, 0.06);
+    }
+  }
+  text {
+    font-family:
+      system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    fill: var(--ink2);
+  }
+  .t {
+    font-size: 22px;
+    font-weight: 600;
+    fill: var(--ink);
+  }
+  .st {
+    font-size: 15px;
+    fill: var(--ink2);
+  }
+  .pt {
+    font-size: 15px;
+    font-weight: 600;
+    fill: var(--ink);
+  }
+  .tick {
+    font-size: 13px;
+    fill: var(--muted);
+  }
+  .ax {
+    font-size: 13px;
+    fill: var(--ink2);
+  }
+  .lab {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .note {
+    font-size: 12px;
+    fill: var(--muted);
+  }
+  .grid {
+    stroke: var(--grid);
+    stroke-width: 1;
+  }
+  .base {
+    stroke: var(--axis);
+    stroke-width: 1.5;
+  }
+  .ln {
+    fill: none;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  </style>
+  <rect width="960" height="560" rx="12" fill="var(--bg)" />
+  <text class="t" x="40" y="48">How big can a centre logo be?</text>
+  <text class="st" x="40" y="74">
+    Share of 60 captures read by all three decoders, by error correction level
+  </text>
+  <line class="base" x1="90" x2="890" y1="470" y2="470" />
+  <text class="tick" x="80" y="474" text-anchor="end">0%</text>
+  <line class="grid" x1="90" x2="890" y1="385" y2="385" />
+  <text class="tick" x="80" y="389" text-anchor="end">25%</text>
+  <line class="grid" x1="90" x2="890" y1="300" y2="300" />
+  <text class="tick" x="80" y="304" text-anchor="end">50%</text>
+  <line class="grid" x1="90" x2="890" y1="215" y2="215" />
+  <text class="tick" x="80" y="219" text-anchor="end">75%</text>
+  <line class="grid" x1="90" x2="890" y1="130" y2="130" />
+  <text class="tick" x="80" y="134" text-anchor="end">100%</text>
+  <text class="tick" x="90" y="492" text-anchor="middle">0%</text>
+  <text class="tick" x="178.9" y="492" text-anchor="middle">5%</text>
+  <text class="tick" x="267.8" y="492" text-anchor="middle">10%</text>
+  <text class="tick" x="356.7" y="492" text-anchor="middle">15%</text>
+  <text class="tick" x="445.6" y="492" text-anchor="middle">20%</text>
+  <text class="tick" x="534.4" y="492" text-anchor="middle">25%</text>
+  <text class="tick" x="623.3" y="492" text-anchor="middle">30%</text>
+  <text class="tick" x="712.2" y="492" text-anchor="middle">35%</text>
+  <text class="tick" x="801.1" y="492" text-anchor="middle">40%</text>
+  <text class="tick" x="890" y="492" text-anchor="middle">45%</text>
+  <text class="ax" x="490" y="516" text-anchor="middle">
+    Logo width, % of the code's width (area is this squared)
+  </text>
+  <path
+    class="ln"
+    d="M90 135.7L151.3 135.7L212.6 158.3L273.9 158.3L335.2 158.3L396.5 198L457.8 339.7L519.1 470L580.4 470L641.7 470L703 470L764.3 470L825.6 470"
+    stroke="var(--o1)"
+  />
+  <path
+    class="ln"
+    d="M90 135.7L151.3 135.7L212.6 130L273.9 135.7L335.2 135.7L396.5 147L457.8 152.7L519.1 181L580.4 271.7L641.7 436L703 470L764.3 470L825.6 470"
+    stroke="var(--o2)"
+  />
+  <path
+    class="ln"
+    d="M90 135.7L143.9 135.7L197.7 135.7L251.6 135.7L305.5 135.7L359.4 141.3L413.2 141.3L467.1 135.7L521 141.3L574.8 147L628.7 158.3L682.6 198L736.5 402L790.3 441.7L844.2 470"
+    stroke="var(--o3)"
+  />
+  <path
+    class="ln"
+    d="M90 130L143.9 135.7L197.7 135.7L251.6 135.7L305.5 141.3L359.4 152.7L413.2 141.3L467.1 169.7L521 164L574.8 169.7L628.7 181L682.6 186.7L736.5 192.3L790.3 198L844.2 345.3"
+    stroke="var(--o4)"
+  />
+  <circle
+    cx="90"
+    cy="135.7"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="151.3"
+    cy="135.7"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="212.6"
+    cy="158.3"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="273.9"
+    cy="158.3"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="335.2"
+    cy="158.3"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="396.5"
+    cy="198"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="457.8"
+    cy="339.7"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="519.1"
+    cy="470"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="580.4"
+    cy="470"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="641.7"
+    cy="470"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="703"
+    cy="470"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="764.3"
+    cy="470"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="825.6"
+    cy="470"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="85.5"
+    y="131.2"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="146.8"
+    y="131.2"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="208.1"
+    y="125.5"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="269.4"
+    y="131.2"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="330.7"
+    y="131.2"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="392"
+    y="142.5"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="453.3"
+    y="148.2"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="514.6"
+    y="176.5"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="575.9"
+    y="267.2"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="637.2"
+    y="431.5"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="698.5"
+    y="465.5"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="759.8"
+    y="465.5"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <rect
+    x="821.1"
+    y="465.5"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M90 129.7L96 135.7L90 141.7L84 135.7Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M143.9 129.7L149.9 135.7L143.9 141.7L137.9 135.7Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M197.7 129.7L203.7 135.7L197.7 141.7L191.7 135.7Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M251.6 129.7L257.6 135.7L251.6 141.7L245.6 135.7Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M305.5 129.7L311.5 135.7L305.5 141.7L299.5 135.7Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M359.4 135.3L365.4 141.3L359.4 147.3L353.4 141.3Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M413.2 135.3L419.2 141.3L413.2 147.3L407.2 141.3Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M467.1 129.7L473.1 135.7L467.1 141.7L461.1 135.7Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M521 135.3L527 141.3L521 147.3L515 141.3Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M574.8 141L580.8 147L574.8 153L568.8 147Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M628.7 152.3L634.7 158.3L628.7 164.3L622.7 158.3Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M682.6 192L688.6 198L682.6 204L676.6 198Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M736.5 396L742.5 402L736.5 408L730.5 402Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M790.3 435.7L796.3 441.7L790.3 447.7L784.3 441.7Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <path
+    d="M844.2 464L850.2 470L844.2 476L838.2 470Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="90"
+    cy="130"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="143.9"
+    cy="135.7"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="197.7"
+    cy="135.7"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="251.6"
+    cy="135.7"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="305.5"
+    cy="141.3"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="359.4"
+    cy="152.7"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="413.2"
+    cy="141.3"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="467.1"
+    cy="169.7"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="521"
+    cy="164"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="574.8"
+    cy="169.7"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="628.7"
+    cy="181"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="682.6"
+    cy="186.7"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="736.5"
+    cy="192.3"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="790.3"
+    cy="198"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <circle
+    cx="844.2"
+    cy="345.3"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <text class="lab" x="430.6" y="304" text-anchor="end" style="fill:var(--o1)">
+    L
+  </text>
+  <text class="lab" x="581" y="304" text-anchor="end" style="fill:var(--o2)">
+    M
+  </text>
+  <text class="lab" x="699.5" y="304" text-anchor="end" style="fill:var(--o3)">
+    Q
+  </text>
+  <text class="lab" x="817.6" y="304" text-anchor="end" style="fill:var(--o4)">
+    H
+  </text>
+  <line x1="90" x2="120" y1="104" y2="104" class="ln" stroke="var(--o1)" />
+  <circle
+    cx="105"
+    cy="104"
+    r="5"
+    fill="var(--o1)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <text class="ax" x="128" y="108.5">Level L</text>
+  <line
+    x1="195.39999999999998"
+    x2="225.39999999999998"
+    y1="104"
+    y2="104"
+    class="ln"
+    stroke="var(--o2)"
+  />
+  <rect
+    x="205.9"
+    y="99.5"
+    width="9"
+    height="9"
+    rx="1.5"
+    fill="var(--o2)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <text class="ax" x="233.39999999999998" y="108.5">Level M</text>
+  <line
+    x1="300.79999999999995"
+    x2="330.79999999999995"
+    y1="104"
+    y2="104"
+    class="ln"
+    stroke="var(--o3)"
+  />
+  <path
+    d="M315.8 98L321.8 104L315.8 110L309.8 104Z"
+    fill="var(--o3)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <text class="ax" x="338.79999999999995" y="108.5">Level Q</text>
+  <line
+    x1="406.19999999999993"
+    x2="436.19999999999993"
+    y1="104"
+    y2="104"
+    class="ln"
+    stroke="var(--o4)"
+  />
+  <circle
+    cx="421.2"
+    cy="104"
+    r="5"
+    fill="var(--o4)"
+    stroke="var(--bg)"
+    stroke-width="2"
+  />
+  <text class="ax" x="444.19999999999993" y="108.5">Level H</text>
+  <text class="note" x="40" y="542">
+    QRdx scan study, 2026-11-23 · jsQR 1.4.0, ZXing-C++, zbar 0.23.93 (Homebrew)
+    · github.com/qrdxinc/qrdx/tree/main/scripts/scan-study
+  </text>
+</svg>
