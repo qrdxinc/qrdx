@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Figma, Canva, Raycast और Chrome के लिए प्लगइन",
         "leftOutValue": "छोड़ा गया: {value}।",
         "imageUrl": "इमेज URL",
+        "showAll": "सभी दिखाएँ",
+        "showLess": "कम दिखाएँ",
         "terminal": "टर्मिनल",
         "designQrArguments": "design_qr arguments",
         "labelCopied": "{label} कॉपी हो गया",

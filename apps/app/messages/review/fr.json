@@ -10703,6 +10703,14 @@
     "source": "e55026675e45",
     "status": "machine"
   },
+  "editor.actionBar.qrCodeDialog.showAll": {
+    "source": "2150d8df37e4",
+    "status": "machine"
+  },
+  "editor.actionBar.qrCodeDialog.showLess": {
+    "source": "94ea9b1d33a0",
+    "status": "machine"
+  },
   "editor.actionBar.qrCodeDialog.terminal": {
     "source": "e0926fdac700",
     "status": "machine"

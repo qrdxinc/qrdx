@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Figma、Canva、Raycast、Chrome用のプラグイン",
         "leftOutValue": "省略: {value}",
         "imageUrl": "画像URL",
+        "showAll": "すべて表示",
+        "showLess": "表示を減らす",
         "terminal": "ターミナル",
         "designQrArguments": "design_qrの引数",
         "labelCopied": "{label}をコピーしました",

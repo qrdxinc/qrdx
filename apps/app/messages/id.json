@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugin untuk Figma, Canva, Raycast, dan Chrome",
         "leftOutValue": "Dihilangkan: {value}.",
         "imageUrl": "URL gambar",
+        "showAll": "Lihat semua",
+        "showLess": "Lihat lebih sedikit",
         "terminal": "Terminal",
         "designQrArguments": "Argumen design_qr",
         "labelCopied": "{label} disalin",

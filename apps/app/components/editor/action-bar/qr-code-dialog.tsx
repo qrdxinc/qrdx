@@ -23,10 +23,19 @@ import {
   TabsList,
   TabsTrigger,
 } from "@repo/design-system/components/ui/tabs";
+import { cn } from "@repo/design-system/lib/utils";
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Book1, Copy, Element3, InfoCircle } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useCodeDialogStore } from "@/components/editor/action-bar/code-dialog-store";
 import {
   CODE_TAB_LABELS,
@@ -55,6 +64,7 @@ import { emitSound } from "@/components/editor/sound";
 import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { BrandLogo, type BrandMarkSlug } from "@/lib/brand-logos/brand-logo";
+import { useFrameLibrary } from "@/lib/frames/use-frame-library";
 import type { CodeLang } from "@/lib/playground-links";
 import { useQREditorStore } from "@/store/editor-store";
 
@@ -190,6 +200,11 @@ function GetCode({ onLeave }: { onLeave: () => void }) {
     onCopy: () => copy(id, text),
   });
 
+  // The image URL names an official frame by id once the index has loaded
+  const frameLibrary = useFrameLibrary({
+    withIndex: style.frame?.style === "custom",
+  });
+
   const input: SnippetInput = useMemo(
     () => ({ style, value, contentType, content }),
     [style, value, contentType, content],
@@ -199,7 +214,8 @@ function GetCode({ onLeave }: { onLeave: () => void }) {
     [framework, input],
   );
   const shadcn = useMemo(() => shadcnSnippet(input), [input]);
-  const image = useMemo(() => imageSnippet(input), [input]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: frameLibrary changes as the frame index loads, which lets the URL name an official frame by id
+  const image = useMemo(() => imageSnippet(input), [input, frameLibrary]);
   const rest = useMemo(() => restSnippet(input), [input]);
   const mcp = useMemo(() => mcpSnippet(input), [input]);
   const cli = useMemo(
@@ -224,8 +240,10 @@ function GetCode({ onLeave }: { onLeave: () => void }) {
         onValueChange={(next) => setTab(next as CodeTab)}
         value={tab}
       >
+        {/* shrink-0: as a scroll container it would otherwise give up its
+            height to a tall tab on a phone and clip the tabs */}
         <div
-          className="relative flex overflow-x-auto px-6 pt-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="relative flex shrink-0 overflow-x-auto px-6 pt-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           ref={tabStrip}
         >
           <TabsList className="w-max shrink-0">
@@ -523,22 +541,68 @@ function CommandLine({
   );
 }
 
-/** A long address, wrapped so all of it shows. */
+/**
+ * An address to copy, at most two lines with the rest cut off, and Show all
+ * when there is more to read. Copy always takes the whole address.
+ */
 function UrlBox({
   text,
   label,
   copyLabel = label.toLowerCase(),
   ...copy
 }: CopyProps & { text: string; label: string; copyLabel?: string }) {
+  const t = useTranslations("editor.actionBar.qrCodeDialog");
+  const id = useId();
+  const [expanded, setExpanded] = useState(false);
+  const [clipped, setClipped] = useState(false);
+  const codeRef = useRef<HTMLElement>(null);
+  // Show all only when two lines don't hold the address, at this width.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a new address can fill the same two lines, so its own size change never fires the observer
+  useLayoutEffect(() => {
+    const code = codeRef.current;
+    if (!code || expanded) return;
+    const measure = () => setClipped(code.scrollHeight > code.clientHeight + 1);
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const resize = new ResizeObserver(measure);
+    resize.observe(code);
+    return () => resize.disconnect();
+  }, [text, expanded]);
+
   return (
     <div className="space-y-1.5">
-      <span className="text-muted-foreground block text-xs font-medium">
-        {label}
-      </span>
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-muted-foreground text-xs font-medium">
+          {label}
+        </span>
+        {clipped || expanded ? (
+          <button
+            aria-controls={id}
+            aria-expanded={expanded}
+            className="text-muted-foreground hover:text-foreground -my-1.5 shrink-0 py-1.5 text-xs underline decoration-current/30 underline-offset-4"
+            onClick={() => setExpanded(!expanded)}
+            type="button"
+          >
+            {expanded ? t("showLess") : t("showAll")}
+          </button>
+        ) : null}
+      </div>
       <div className="bg-muted/40 flex items-start gap-2 rounded-lg border py-1 pr-1 pl-4">
-        <code className="min-w-0 flex-1 py-1.5 font-mono text-xs leading-5 break-all">
-          {text}
-        </code>
+        {/* The padding sits outside the clamped lines, so a third never shows */}
+        <div className="min-w-0 flex-1 py-1.5">
+          <code
+            className={cn(
+              "block font-mono text-xs leading-5 break-all",
+              expanded
+                ? "max-h-[min(30dvh,240px)] overflow-y-auto"
+                : "line-clamp-2",
+            )}
+            id={id}
+            ref={codeRef}
+          >
+            {text}
+          </code>
+        </div>
         <CopyIconButton label={copyLabel} {...copy} />
       </div>
     </div>
