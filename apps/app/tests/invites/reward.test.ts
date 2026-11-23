@@ -63,8 +63,13 @@ import {
 import { canStillEarnFromInvites, inviteBonusCodes } from "@/lib/invites/bonus";
 import { ensureInviteCode, inviterOfCode } from "@/lib/invites/codes";
 import { loadInviteDashboard } from "@/lib/invites/dashboard";
+import { exportInviteData } from "@/lib/invites/export";
 import { sendInviteRewardEmail } from "@/lib/invites/notify";
-import { noteDynamicCodesCreated, qualifyInvite } from "@/lib/invites/qualify";
+import {
+  noteDynamicCodesCreated,
+  qualifyInvite,
+  settleInvite,
+} from "@/lib/invites/qualify";
 import {
   bonusCodesFor,
   inviteLandingHref,
@@ -73,7 +78,7 @@ import {
 } from "@/lib/invites/rules";
 import { INVITE_MAX_REWARDED_FRIENDS } from "@/lib/invites/terms";
 import { seedAffiliate } from "../affiliates/seed";
-import { fakeDb } from "../support/fake-db";
+import { fakeDb, repoDatabase } from "../support/fake-db";
 
 const SIGNED_UP = new Date("2026-11-23T10:00:00Z");
 const DAY = 24 * 60 * 60 * 1000;
@@ -123,12 +128,43 @@ function seedPendingFriend(id: string, signedUpAt = SIGNED_UP) {
 }
 
 const invites = () => fakeDb.rows("invite");
+/** The fake database client, to make one of its writes fail. */
+const fakeDatabase = repoDatabase.database as {
+  update: (...args: unknown[]) => unknown;
+};
+
+let codeCount = 0;
+/** A dynamic code of `userId`'s, on and checked unless said otherwise. */
+function seedCode(
+  userId: string,
+  {
+    createdAt = new Date(SIGNED_UP.getTime() + DAY),
+    isActive = true,
+    webRiskRecheckAt = null as Date | null,
+  } = {},
+) {
+  const id = `code_${codeCount++}`;
+  fakeDb.seed("qrCode", [
+    {
+      id,
+      userId,
+      organizationId: ownWorkspaceId(userId),
+      slug: id,
+      destinationUrl: "https://example.com/menu",
+      isActive,
+      webRiskRecheckAt,
+      createdAt,
+    },
+  ]);
+  return id;
+}
 
 beforeEach(() => {
   state.invites = true;
   state.affiliates = true;
   state.plans.clear();
   fakeDb.resetAll();
+  codeCount = 0;
   fakeDb.unique("inviteCode", "userId");
   fakeDb.unique("inviteCode", "code");
   fakeDb.unique("invite", "id");
@@ -325,6 +361,7 @@ describe("the friend's first dynamic code", () => {
   beforeEach(() => seedPendingFriend(FRIEND.id));
 
   it("rewards both sides once", async () => {
+    seedCode(FRIEND.id);
     const at = new Date(SIGNED_UP.getTime() + 2 * DAY);
     expect(await qualifyInvite(FRIEND.id, at)).toEqual({
       outcome: "rewarded",
@@ -342,6 +379,8 @@ describe("the friend's first dynamic code", () => {
   });
 
   it("rewards once when two codes are made at the same moment", async () => {
+    seedCode(FRIEND.id);
+    seedCode(FRIEND.id);
     const results = await Promise.all([
       qualifyInvite(FRIEND.id),
       qualifyInvite(FRIEND.id),
@@ -350,11 +389,15 @@ describe("the friend's first dynamic code", () => {
     expect(invites()[0]?.inviterRewardSlot).toBe(1);
   });
 
-  it("expires after 30 days, and the grant never comes later", async () => {
+  it("waits without a code, and expires after 30 days without one", async () => {
+    expect(await qualifyInvite(FRIEND.id)).toEqual({ outcome: "waiting" });
+    expect(invites()[0]?.status).toBe("pending");
     const late = new Date(SIGNED_UP.getTime() + 31 * DAY);
     expect(await qualifyInvite(FRIEND.id, late)).toEqual({
       outcome: "expired",
     });
+    // A code after the window changes nothing: it was decided.
+    seedCode(FRIEND.id, { createdAt: late });
     expect(await qualifyInvite(FRIEND.id, late)).toEqual({
       outcome: "decided",
     });
@@ -362,12 +405,26 @@ describe("the friend's first dynamic code", () => {
     expect(await inviteBonusCodes(INVITER.id)).toBe(0);
   });
 
-  it("counts on the 30th day", async () => {
-    const last = new Date(SIGNED_UP.getTime() + 30 * DAY);
-    expect((await qualifyInvite(FRIEND.id, last)).outcome).toBe("rewarded");
+  it("counts a code made on the 30th day, even when it's settled later", async () => {
+    seedCode(FRIEND.id, {
+      createdAt: new Date(SIGNED_UP.getTime() + 30 * DAY),
+    });
+    const later = new Date(SIGNED_UP.getTime() + 31 * DAY);
+    expect((await qualifyInvite(FRIEND.id, later)).outcome).toBe("rewarded");
+  });
+
+  it("doesn't count a code made after the 30 days", async () => {
+    seedCode(FRIEND.id, {
+      createdAt: new Date(SIGNED_UP.getTime() + 30 * DAY + 1),
+    });
+    const later = new Date(SIGNED_UP.getTime() + 31 * DAY);
+    expect(await qualifyInvite(FRIEND.id, later)).toEqual({
+      outcome: "expired",
+    });
   });
 
   it("refuses self-referral found later: a workspace shared since sign-up", async () => {
+    seedCode(FRIEND.id);
     fakeDb.seed("member", [
       {
         id: "m_shared",
@@ -384,6 +441,7 @@ describe("the friend's first dynamic code", () => {
   });
 
   it("still rewards the friend when the inviter's account is gone", async () => {
+    seedCode(FRIEND.id);
     const row = invites()[0] as Record<string, unknown>;
     row.inviterUserId = null;
     expect(await qualifyInvite(FRIEND.id)).toEqual({
@@ -394,12 +452,9 @@ describe("the friend's first dynamic code", () => {
     expect(await inviteBonusCodes(FRIEND.id)).toBe(5);
   });
 
-  it("emails the inviter after the response, and skips a code held for review", async () => {
-    noteDynamicCodesCreated(FRIEND.id, { counted: false });
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    expect(invites()[0]?.status).toBe("pending");
-
-    noteDynamicCodesCreated(FRIEND.id, { counted: true });
+  it("emails the inviter after a code is made", async () => {
+    seedCode(FRIEND.id);
+    noteDynamicCodesCreated(FRIEND.id);
     await vi.waitFor(() =>
       expect(sendInviteRewardEmail).toHaveBeenCalledWith({
         inviterUserId: INVITER.id,
@@ -422,13 +477,146 @@ describe("the friend's first dynamic code", () => {
   });
 });
 
+describe("the first code and the sign-up, in either order", () => {
+  const signUp = () =>
+    recordInvitedSignUp({
+      userId: FRIEND.id,
+      email: FRIEND.email,
+      codes: [CODE],
+      now: SIGNED_UP,
+    });
+
+  it("rewards a code made before the invite was recorded (the Dynamic toggle's resume)", async () => {
+    // The code's own moment found no invite yet.
+    seedCode(FRIEND.id, { createdAt: SIGNED_UP });
+    expect(await qualifyInvite(FRIEND.id)).toEqual({ outcome: "no_invite" });
+    // Recording the invite after the sign-up's response settles it.
+    expect((await signUp()).status).toBe("recorded");
+    expect(invites()[0]).toMatchObject({
+      status: "rewarded",
+      inviterRewardSlot: 1,
+    });
+    expect(sendInviteRewardEmail).toHaveBeenCalledWith({
+      inviterUserId: INVITER.id,
+      rewardedFriends: 1,
+    });
+  });
+
+  it("rewards a code made after the invite was recorded", async () => {
+    expect((await signUp()).status).toBe("recorded");
+    expect(invites()[0]?.status).toBe("pending");
+    seedCode(FRIEND.id);
+    noteDynamicCodesCreated(FRIEND.id);
+    await vi.waitFor(() => expect(invites()[0]?.status).toBe("rewarded"));
+    expect(sendInviteRewardEmail).toHaveBeenCalledTimes(1);
+  });
+
+  it("rewards once when both moments land together", async () => {
+    seedCode(FRIEND.id, { createdAt: SIGNED_UP });
+    const [recorded] = await Promise.all([signUp(), settleInvite(FRIEND.id)]);
+    expect(recorded.status).toBe("recorded");
+    await settleInvite(FRIEND.id);
+    expect(invites()[0]).toMatchObject({
+      status: "rewarded",
+      inviterRewardSlot: 1,
+    });
+    expect(sendInviteRewardEmail).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("a code that hasn't passed its safety checks", () => {
+  beforeEach(() => seedPendingFriend(FRIEND.id));
+
+  it("doesn't count while held for review or waiting for its Web Risk look-up", async () => {
+    seedCode(FRIEND.id, { isActive: false });
+    const pending = seedCode(FRIEND.id, {
+      webRiskRecheckAt: new Date(SIGNED_UP.getTime() + DAY),
+    });
+    expect(await qualifyInvite(FRIEND.id)).toEqual({ outcome: "waiting" });
+
+    // The look-up clears: now it counts.
+    const row = fakeDb.find("qrCode", { id: pending }) as Record<
+      string,
+      unknown
+    >;
+    row.webRiskRecheckAt = null;
+    expect((await qualifyInvite(FRIEND.id)).outcome).toBe("rewarded");
+  });
+
+  it("doesn't count when the look-up switched it off", async () => {
+    seedCode(FRIEND.id, { isActive: false, webRiskRecheckAt: null });
+    expect(await qualifyInvite(FRIEND.id)).toEqual({ outcome: "waiting" });
+  });
+});
+
+describe("a revoked invite", () => {
+  it("never pays out while still pending: decided as expired, no slot, no email", async () => {
+    seedPendingFriend(FRIEND.id);
+    seedCode(FRIEND.id);
+    (invites()[0] as Record<string, unknown>).revokedAt = new Date();
+    expect(await settleInvite(FRIEND.id)).toEqual({ outcome: "revoked" });
+    expect(invites()[0]).toMatchObject({
+      status: "expired",
+      inviterRewardSlot: null,
+    });
+    expect(sendInviteRewardEmail).not.toHaveBeenCalled();
+    expect(await inviteBonusCodes(INVITER.id)).toBe(0);
+    expect(await inviteBonusCodes(FRIEND.id)).toBe(0);
+  });
+});
+
+describe("the reward and the inviter's slot", () => {
+  beforeEach(() => {
+    seedPendingFriend(FRIEND.id);
+    seedCode(FRIEND.id);
+  });
+
+  it("are written together: a failed write leaves the invite pending, and the next moment rewards it", async () => {
+    const update = vi
+      .spyOn(fakeDatabase, "update")
+      .mockImplementationOnce(() => {
+        throw new Error("connection reset");
+      });
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    expect(await qualifyInvite(FRIEND.id)).toEqual({ outcome: "error" });
+    expect(invites()[0]).toMatchObject({
+      status: "pending",
+      inviterRewardSlot: null,
+    });
+    update.mockRestore();
+    expect(await qualifyInvite(FRIEND.id)).toEqual({
+      outcome: "rewarded",
+      inviterUserId: INVITER.id,
+      inviterSlot: 1,
+    });
+  });
+
+  it("stays pending when every slot try is taken, and the next moment rewards it", async () => {
+    const taken = Object.assign(new Error("duplicate key value"), {
+      code: "23505",
+    });
+    const update = vi.spyOn(fakeDatabase, "update").mockImplementation(() => {
+      throw taken;
+    });
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    expect(await qualifyInvite(FRIEND.id)).toEqual({ outcome: "contended" });
+    expect(invites()[0]?.status).toBe("pending");
+    update.mockRestore();
+    expect((await qualifyInvite(FRIEND.id)).outcome).toBe("rewarded");
+    expect(invites()[0]?.inviterRewardSlot).toBe(1);
+  });
+});
+
 describe("the inviter's cap", () => {
   it("rewards at most 10 friends; the 11th friend still gets theirs", async () => {
     const friends = Array.from(
       { length: INVITE_MAX_REWARDED_FRIENDS + 1 },
       (_, i) => `user_f${i}`,
     );
-    for (const id of friends) seedPendingFriend(id);
+    for (const id of friends) {
+      seedPendingFriend(id);
+      seedCode(id);
+    }
     // Two at a time, as if they made their codes at the same moment.
     for (let i = 0; i < friends.length; i += 2) {
       await Promise.all(friends.slice(i, i + 2).map((id) => qualifyInvite(id)));
@@ -457,6 +645,7 @@ describe("the bonus in the dynamic-code limit", () => {
 
   beforeEach(async () => {
     seedPendingFriend(FRIEND.id);
+    seedCode(FRIEND.id);
     await qualifyInvite(FRIEND.id);
   });
 
@@ -522,6 +711,7 @@ describe("Settings → Invite friends", () => {
     seedPendingFriend(FRIEND.id);
     seedPendingFriend("user_late", new Date(SIGNED_UP.getTime() - 40 * DAY));
     seedPendingFriend("user_new");
+    seedCode(FRIEND.id);
     await qualifyInvite(FRIEND.id);
     const page = await loadInviteDashboard(INVITER.id, SIGNED_UP);
     expect(page).toEqual({
@@ -605,5 +795,52 @@ describe("the invite link, /i/<code>", () => {
     state.invites = true;
     fakeDb.missing("inviteCode");
     expect((await open(CODE)).headers.get("location")).toBe("/playground");
+  });
+});
+
+describe("Download my data", () => {
+  it("gives the inviter counts by outcome only, never a friend's dates", async () => {
+    seedPendingFriend(FRIEND.id);
+    seedCode(FRIEND.id);
+    seedPendingFriend("user_waiting");
+    seedPendingFriend("user_late", new Date(SIGNED_UP.getTime() - 40 * DAY));
+    await qualifyInvite(FRIEND.id);
+    await qualifyInvite("user_late");
+    const data = await exportInviteData(INVITER.id);
+    expect(data).toEqual({
+      inviteCode: CODE,
+      inviteCodeCreatedAt: SIGNED_UP,
+      friendsInvited: {
+        pending: 1,
+        rewarded: 1,
+        self_referral: 0,
+        expired: 1,
+      },
+      invitedByAFriend: null,
+    });
+    const text = JSON.stringify(data);
+    for (const id of [FRIEND.id, "user_waiting", "user_late"]) {
+      expect(text).not.toContain(id);
+    }
+  });
+
+  it("gives the friend their own invite: when and how it was settled, not whose link", async () => {
+    seedPendingFriend(FRIEND.id);
+    seedCode(FRIEND.id);
+    const at = new Date(SIGNED_UP.getTime() + 2 * DAY);
+    await qualifyInvite(FRIEND.id, at);
+    const data = await exportInviteData(FRIEND.id);
+    expect(data?.invitedByAFriend).toEqual({
+      signedUpAt: SIGNED_UP,
+      status: "rewarded",
+      decidedAt: at,
+    });
+    expect(JSON.stringify(data)).not.toContain(INVITER.id);
+  });
+
+  it("has nothing for someone with no code and no invites, or before the tables exist", async () => {
+    expect(await exportInviteData("user_nobody")).toBeNull();
+    fakeDb.missing("invite", "inviteCode");
+    expect(await exportInviteData(INVITER.id)).toBeNull();
   });
 });

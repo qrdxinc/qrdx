@@ -5,6 +5,7 @@ import cuid from "cuid";
 import { and, asc, eq, inArray, isNotNull } from "drizzle-orm";
 import { after } from "next/server";
 import { scheduleWorkerRun } from "@/lib/events/worker-due";
+import { settleInvites } from "@/lib/invites/qualify";
 import { mapWithConcurrency, THREAT_LABELS } from "./check";
 import { safetyLimits } from "./limits";
 import { lookupWebRisk } from "./web-risk";
@@ -77,7 +78,11 @@ export async function recheckWebRisk({
 }): Promise<RecheckSummary> {
   const pending = isNotNull(qrCode.webRiskRecheckAt);
   const rows = await db
-    .select({ id: qrCode.id, destinationUrl: qrCode.destinationUrl })
+    .select({
+      id: qrCode.id,
+      destinationUrl: qrCode.destinationUrl,
+      userId: qrCode.userId,
+    })
     .from(qrCode)
     .where(ids ? and(pending, inArray(qrCode.id, ids)) : pending)
     .orderBy(asc(qrCode.webRiskRecheckAt))
@@ -113,6 +118,14 @@ export async function recheckWebRisk({
       .update(qrCode)
       .set({ webRiskRecheckAt: null })
       .where(inArray(qrCode.id, answered.slice(start, start + 500)));
+  }
+  // A code that waited for this look-up can now be someone's first one for
+  // a friend's invite (lib/invites/qualify.ts). Never throws.
+  if (answered.length > 0) {
+    const cleared = new Set(answered);
+    await settleInvites(
+      rows.filter((row) => cleared.has(row.id)).map((row) => row.userId),
+    );
   }
 
   const left = outcomes.filter((outcome) => outcome === "pending").length;

@@ -93,17 +93,19 @@ export async function getShellData(): Promise<ShellData | null> {
     ]);
     const isTeam = !workspace.own;
     const canUpgrade = can(scope.role, "billing.manage");
-    // The plan's dynamic codes plus what invites added (lib/code-limit.ts).
-    const { limit, bonus } = await dynamicCodeLimit(scope, plan);
-    // Inviting a friend would raise it (lib/invites): only the person's own
-    // workspace on a capped plan, while their invites can still earn codes.
-    const inviteOffer =
-      Number.isFinite(limit) &&
-      !isTeam &&
-      (await canStillEarnFromInvites(scope.userId));
-    const codes = Number.isFinite(limit)
+    // A capped plan's dynamic codes plus what invites added
+    // (lib/code-limit.ts), the count against them, and whether inviting a
+    // friend would raise them (lib/invites: only the person's own workspace,
+    // while their invites can still earn codes), read side by side.
+    const capped = Number.isFinite(getPlanLimits(plan).dynamicCodes);
+    const [{ limit, bonus }, used, inviteOffer] = await Promise.all([
+      dynamicCodeLimit(scope, plan),
+      capped ? countUnarchived(scope) : 0,
+      capped && !isTeam ? canStillEarnFromInvites(scope.userId) : false,
+    ]);
+    const codes = capped
       ? {
-          used: await countUnarchived(scope),
+          used,
           limit,
           unlimitedPlan: cheapestPlanWith(
             (limits) => !Number.isFinite(limits.dynamicCodes),

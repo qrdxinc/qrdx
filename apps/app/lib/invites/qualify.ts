@@ -1,7 +1,7 @@
 import "server-only";
 
-import { database as db, invite } from "@repo/database";
-import { and, eq, max } from "drizzle-orm";
+import { database as db, invite, qrCode } from "@repo/database";
+import { and, eq, isNull, lte, max } from "drizzle-orm";
 import { after } from "next/server";
 import { isSelfReferral } from "@/lib/affiliates/self-referral";
 import { trackServer } from "@/lib/analytics/server";
@@ -9,29 +9,45 @@ import { isFeatureAvailable } from "@/lib/feature-availability";
 import { logError } from "@/lib/log-error";
 import { isUniqueViolation } from "@/lib/slug-claims";
 import { noteMissingInviteTables } from "./missing-table";
-import { isWithinQualifyWindow } from "./rules";
+import { qualifyDeadline } from "./rules";
 import { INVITE_MAX_REWARDED_FRIENDS } from "./terms";
 
-// An invite counts when the friend makes their first dynamic code within
-// INVITE_QUALIFY_DAYS of signing up: then the friend's own workspace gets
-// INVITE_BONUS_CODES more, and so does the inviter's while they've been
-// rewarded for fewer than INVITE_MAX_REWARDED_FRIENDS friends. Every way of
-// making a code goes through createCodesBatch
-// (app/(app)/dashboard/codes/_lib/qr-codes.ts: the dashboard, the editor,
-// hosted pages, imports, the REST API, the MCP server and the chat bots),
-// which calls noteDynamicCodesCreated after the codes are saved.
+// An invite counts when the friend has a dynamic code made within
+// INVITE_QUALIFY_DAYS of signing up that passed its safety checks: then the
+// friend's own workspace gets INVITE_BONUS_CODES more, and so does the
+// inviter's while they've been rewarded for fewer than
+// INVITE_MAX_REWARDED_FRIENDS friends.
 //
-// Decided once: the first code after sign-up settles the invite (rewarded,
-// expired past the window, or refused as self-referral, checked again here
-// because people can join a workspace after signing up). One UPDATE ... WHERE
-// status = 'pending' decides it, so two codes made at once reward it once.
-// The inviter's reward then takes the next of their numbered slots; the
-// slots are unique per inviter, so two friends qualifying at once can't both
-// take the last one (the loser's write fails, and the next try finds none
-// left).
+// It's settled from what the database holds, not from the event that asked,
+// so the order things happen in never matters. Three moments ask
+// (settleInvite):
+// - a code is made (every way of making one goes through createCodesBatch,
+//   app/(app)/dashboard/codes/_lib/qr-codes.ts, which calls
+//   noteDynamicCodesCreated after the response);
+// - the invite is recorded at sign-up (./attribution.ts), which happens
+//   after the sign-up's response, so the friend's first code (the editor's
+//   Dynamic toggle resumes right after signing in) can already be there;
+// - a code's safety checks clear: the Web Risk look-up that was still
+//   pending when it was made (lib/safety/recheck.ts), or an admin switching
+//   a held code back on.
 //
-// A code deleted straight after doesn't undo the reward: the grant stands.
-// A code held for a safety check (made switched off) doesn't count.
+// What counts: a code of the friend's that is switched on (a code held for a
+// safety check is saved switched off) and not waiting for its Web Risk
+// look-up, made before the deadline. A code trashed or deleted after that
+// keeps the grant: it's decided once and stands.
+//
+// Decided once. One UPDATE ... WHERE status = 'pending' AND revoked_at IS
+// NULL sets the reward and the inviter's numbered slot together, so two
+// moments at once reward it once, and the friend is never rewarded without
+// the inviter's slot being settled in the same statement. The slots are
+// unique per inviter: when another friend's invite takes the same number at
+// the same moment the statement fails, nothing is written, and the next
+// number is tried; past the cap the slot is null (the friend still gets
+// theirs). If every try is taken, or the task is cut off, the invite stays
+// pending and the next moment settles it.
+//
+// An invite QRdx revoked (for abuse) before it was decided never pays out:
+// it's decided as expired, and revoked_at says why.
 
 export type QualifyOutcome =
   | {
@@ -44,8 +60,13 @@ export type QualifyOutcome =
         | "unavailable"
         | "no_invite"
         | "decided"
+        /** No qualifying code yet, still inside the window */
+        | "waiting"
         | "expired"
+        | "revoked"
         | "self_referral"
+        /** Every try at the inviter's slot was taken: still pending */
+        | "contended"
         | "missing_tables"
         | "error";
     };
@@ -53,42 +74,42 @@ export type QualifyOutcome =
 /** Tries at the inviter's next slot when another friend took the same one. */
 const SLOT_TRIES = 4;
 
-/**
- * Gives invite `id` its inviter's next reward slot (1 to the cap) and returns
- * it, or null when they've been rewarded for the most friends. The slots are
- * unique per inviter: when another friend's invite takes the same number at
- * the same moment, the write fails and the next number is tried.
- */
-async function takeInviterSlot(
-  id: string,
-  inviterUserId: string,
-): Promise<number | null> {
-  for (let attempt = 0; attempt < SLOT_TRIES; attempt++) {
-    const [taken] = await db
-      .select({ last: max(invite.inviterRewardSlot) })
-      .from(invite)
-      .where(eq(invite.inviterUserId, inviterUserId));
-    const next = Number(taken?.last ?? 0) + 1;
-    if (next > INVITE_MAX_REWARDED_FRIENDS) return null;
-    try {
-      await db
-        .update(invite)
-        .set({ inviterRewardSlot: next })
-        .where(eq(invite.id, id));
-      return next;
-    } catch (error) {
-      if (isUniqueViolation(error)) continue;
-      throw error;
-    }
-  }
-  // Taken every time: log it rather than guess.
-  console.error(JSON.stringify({ event: "invites.slot_contended" }));
-  return null;
+/** The inviter's next reward slot, or null once they've had the most. */
+async function nextInviterSlot(inviterUserId: string): Promise<number | null> {
+  const [taken] = await db
+    .select({ last: max(invite.inviterRewardSlot) })
+    .from(invite)
+    .where(eq(invite.inviterUserId, inviterUserId));
+  const next = Number(taken?.last ?? 0) + 1;
+  return next > INVITE_MAX_REWARDED_FRIENDS ? null : next;
 }
 
 /**
- * Settles the person's invite, if they have an open one, now that they've
- * made a dynamic code. Never throws.
+ * Whether the person has a dynamic code made by `deadline` that passed its
+ * safety checks: switched on, and not waiting for a Web Risk look-up.
+ */
+async function hasQualifyingCode(
+  userId: string,
+  deadline: Date,
+): Promise<boolean> {
+  const [code] = await db
+    .select({ id: qrCode.id })
+    .from(qrCode)
+    .where(
+      and(
+        eq(qrCode.userId, userId),
+        eq(qrCode.isActive, true),
+        isNull(qrCode.webRiskRecheckAt),
+        lte(qrCode.createdAt, deadline),
+      ),
+    )
+    .limit(1);
+  return Boolean(code);
+}
+
+/**
+ * Settles the person's invite, if they have an open one, from the codes
+ * they have now. Never throws.
  */
 export async function qualifyInvite(
   inviteeUserId: string,
@@ -102,6 +123,7 @@ export async function qualifyInvite(
         inviterUserId: invite.inviterUserId,
         status: invite.status,
         createdAt: invite.createdAt,
+        revokedAt: invite.revokedAt,
       })
       .from(invite)
       .where(eq(invite.inviteeUserId, inviteeUserId))
@@ -109,13 +131,28 @@ export async function qualifyInvite(
     if (!row) return { outcome: "no_invite" };
     if (row.status !== "pending") return { outcome: "decided" };
 
-    const open = and(eq(invite.id, row.id), eq(invite.status, "pending"));
-    if (!isWithinQualifyWindow(row.createdAt, now)) {
-      await db
+    const open = and(
+      eq(invite.id, row.id),
+      eq(invite.status, "pending"),
+      isNull(invite.revokedAt),
+    );
+    const decide = (status: "expired" | "self_referral") =>
+      db
         .update(invite)
-        .set({ status: "expired", decidedAt: now })
-        .where(open);
-      return { outcome: "expired" };
+        .set({ status, decidedAt: now })
+        .where(and(eq(invite.id, row.id), eq(invite.status, "pending")));
+
+    if (row.revokedAt) {
+      await decide("expired");
+      return { outcome: "revoked" };
+    }
+    const deadline = qualifyDeadline(row.createdAt);
+    if (!(await hasQualifyingCode(inviteeUserId, deadline))) {
+      if (now.getTime() > deadline.getTime()) {
+        await decide("expired");
+        return { outcome: "expired" };
+      }
+      return { outcome: "waiting" };
     }
     if (
       row.inviterUserId &&
@@ -124,36 +161,46 @@ export async function qualifyInvite(
         customerUserId: inviteeUserId,
       }))
     ) {
-      await db
-        .update(invite)
-        .set({ status: "self_referral", decidedAt: now })
-        .where(open);
+      await decide("self_referral");
       return { outcome: "self_referral" };
     }
 
-    // The friend's reward: exactly one code made now gets past this.
-    const [decided] = await db
-      .update(invite)
-      .set({ status: "rewarded", decidedAt: now })
-      .where(open)
-      .returning({ inviterUserId: invite.inviterUserId });
-    // Another code made at the same moment decided it first.
-    if (!decided) return { outcome: "decided" };
-    // The inviter's, while they have slots left (and an account).
-    const inviterSlot = decided.inviterUserId
-      ? await takeInviterSlot(row.id, decided.inviterUserId)
-      : null;
-    console.info(
-      JSON.stringify({
-        event: "invites.rewarded",
-        inviter_rewarded: inviterSlot !== null,
-      }),
-    );
-    return {
-      outcome: "rewarded",
-      inviterUserId: decided.inviterUserId,
-      inviterSlot,
-    };
+    for (let attempt = 0; attempt < SLOT_TRIES; attempt++) {
+      const slot = row.inviterUserId
+        ? await nextInviterSlot(row.inviterUserId)
+        : null;
+      try {
+        // Both rewards in one statement.
+        const [decided] = await db
+          .update(invite)
+          .set({ status: "rewarded", decidedAt: now, inviterRewardSlot: slot })
+          .where(open)
+          .returning({
+            inviterUserId: invite.inviterUserId,
+            inviterSlot: invite.inviterRewardSlot,
+          });
+        // Decided (or revoked) by someone else in between.
+        if (!decided) return { outcome: "decided" };
+        console.info(
+          JSON.stringify({
+            event: "invites.rewarded",
+            inviter_rewarded: decided.inviterSlot !== null,
+          }),
+        );
+        return {
+          outcome: "rewarded",
+          inviterUserId: decided.inviterUserId,
+          inviterSlot: decided.inviterSlot,
+        };
+      } catch (error) {
+        // Another friend of the same inviter took this slot: nothing was
+        // written; try the next one.
+        if (isUniqueViolation(error)) continue;
+        throw error;
+      }
+    }
+    console.error(JSON.stringify({ event: "invites.slot_contended" }));
+    return { outcome: "contended" };
   } catch (error) {
     if (noteMissingInviteTables(error)) return { outcome: "missing_tables" };
     logError(error as Error, { action: "invites.qualify" });
@@ -161,8 +208,46 @@ export async function qualifyInvite(
   }
 }
 
+/**
+ * Settles the person's invite now (qualifyInvite) and, when it's rewarded,
+ * counts it and emails the inviter if they got codes. Never throws.
+ */
+export async function settleInvite(
+  userId: string,
+  now: Date = new Date(),
+): Promise<QualifyOutcome> {
+  const result = await qualifyInvite(userId, now);
+  if (result.outcome !== "rewarded") return result;
+  try {
+    const inviterRewarded =
+      result.inviterSlot !== null && result.inviterUserId !== null;
+    trackServer("invite_reward_granted", {
+      inviter_rewarded: inviterRewarded,
+    });
+    if (inviterRewarded) {
+      const { sendInviteRewardEmail } = await import("./notify");
+      await sendInviteRewardEmail({
+        inviterUserId: result.inviterUserId as string,
+        rewardedFriends: result.inviterSlot as number,
+      });
+    }
+  } catch (error) {
+    logError(error as Error, { action: "invites.settle" });
+  }
+  return result;
+}
+
+/**
+ * settleInvite for each person, one after the other, for code that already
+ * runs after a response (the safety recheck). Never throws.
+ */
+export async function settleInvites(userIds: readonly string[]): Promise<void> {
+  if (!isFeatureAvailable("inviteRewards")) return;
+  for (const userId of new Set(userIds)) await settleInvite(userId);
+}
+
 /** Runs `task` after the response, or now when there's no request. */
-function afterResponse(task: () => Promise<void>): void {
+function afterResponse(task: () => Promise<unknown>): void {
   try {
     after(task);
   } catch {
@@ -172,32 +257,16 @@ function afterResponse(task: () => Promise<void>): void {
 }
 
 /**
- * After someone makes dynamic codes: settles their invite (if they have an
- * open one) after the response, rewards both sides and emails the inviter.
- * `counted`: at least one of the codes was saved switched on (a code held
- * for a safety check doesn't count). Returns at once; never throws.
+ * After someone's codes are made, or their safety checks clear: settles
+ * the invites of those people after the response (settleInvite). Returns
+ * at once; never throws.
  */
-export function noteDynamicCodesCreated(
-  userId: string,
-  { counted }: { counted: boolean },
-): void {
+export function noteDynamicCodesCreated(...userIds: string[]): void {
   try {
-    if (!(counted && isFeatureAvailable("inviteRewards"))) return;
+    const people = [...new Set(userIds)];
+    if (people.length === 0 || !isFeatureAvailable("inviteRewards")) return;
     afterResponse(async () => {
-      const result = await qualifyInvite(userId);
-      if (result.outcome !== "rewarded") return;
-      const inviterRewarded =
-        result.inviterSlot !== null && result.inviterUserId !== null;
-      trackServer("invite_reward_granted", {
-        inviter_rewarded: inviterRewarded,
-      });
-      if (inviterRewarded) {
-        const { sendInviteRewardEmail } = await import("./notify");
-        await sendInviteRewardEmail({
-          inviterUserId: result.inviterUserId as string,
-          rewardedFriends: result.inviterSlot as number,
-        });
-      }
+      for (const userId of people) await settleInvite(userId);
     });
   } catch (error) {
     logError(error as Error, { action: "invites.note_codes" });

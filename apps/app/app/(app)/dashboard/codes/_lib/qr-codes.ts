@@ -1232,12 +1232,10 @@ export async function createCodesBatch(
       });
     }
     // A friend's first dynamic code settles their invite (lib/invites),
-    // after the response. A code held for a safety check doesn't count.
-    if (inserted.length > 0) {
-      noteDynamicCodesCreated(scope.userId, {
-        counted: inserted.some((row) => row.isActive),
-      });
-    }
+    // after the response, from the codes in the database: one held for a
+    // safety check, or still waiting for its Web Risk look-up, doesn't count
+    // until that clears (lib/safety/recheck.ts asks again then).
+    if (inserted.length > 0) noteDynamicCodesCreated(scope.userId);
     // Before the views: a held code's answer already says "Safety check".
     const saved = new Set(inserted.map((row) => row.id));
     await writeHoldReports(holds.filter((hold) => saved.has(hold.qrCodeId)));

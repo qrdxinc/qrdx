@@ -411,7 +411,7 @@ export function exportEntries(userId: string): ExportEntry[] {
       path: "invites.json",
       title: "Invite rewards",
       description:
-        "Your invite code, when friends signed up through it and whether they earned you extra codes, and whether a friend's invite brought your account in (not who).",
+        "Your invite code, how many friends signed up through it by outcome (counts only), and your own invite if a friend's link brought your account in: when, and how it was settled (not whose link).",
       load: () => exportInviteData(userId),
     },
     {

@@ -8,6 +8,7 @@ import { isFeatureAvailable } from "@/lib/feature-availability";
 import { logError } from "@/lib/log-error";
 import { inviterOfCode } from "./codes";
 import { noteMissingInviteTables } from "./missing-table";
+import { settleInvite } from "./qualify";
 import { parseInviteCode } from "./rules";
 
 // Records that a NEW account signed up through a friend's invite link, once,
@@ -115,6 +116,11 @@ export async function recordInvitedSignUp(input: {
       }
       // No ids or codes in the log.
       console.info(JSON.stringify({ event: "invites.sign_up_recorded" }));
+      // This runs after the sign-up's response, so the friend's first code
+      // can already be there (the editor's Dynamic toggle makes it straight
+      // after signing in): settle the invite now too, from the codes they
+      // have (./qualify.ts). Never throws.
+      await settleInvite(input.userId);
       return { status: "recorded", inviterUserId };
     }
     return { status: "skipped", reason };
