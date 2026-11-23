@@ -87,7 +87,7 @@ describe("the sidebar", () => {
   it("offers formulas in Sheets and names each app's Insert", () => {
     const { get } = setUp();
     const sheets = get("onHomepage")(actionEvent("sheets"));
-    assert.equal(buttonAction(sheets, "Insert over sheet"), "onInsert");
+    assert.equal(buttonAction(sheets, "Insert in cell"), "onInsert");
     assert.equal(
       buttonAction(sheets, "Add =IMAGE() formulas"),
       "onWriteFormulas"
@@ -344,14 +344,18 @@ describe("Insert in Slides", () => {
 });
 
 describe("Sheets", () => {
-  it("places one code over the sheet at the current cell", () => {
+  /** A spreadsheet whose current cell is B3, holding `value` and `formula`. */
+  function currentCell({ value = "", formula = "" } = {}) {
     const log = [];
-    const image = chain("image", log);
     const sheet = {
-      insertImage: (blob, column, row) => {
-        log.push(["sheet", "insertImage", blob.name, column, row]);
-        return image;
-      },
+      getRange: (row, column) => ({
+        getValue: () => value,
+        getFormula: () => formula,
+        setValue: (image) => log.push(["cell", "setValue", row, column, image]),
+      }),
+      setRowHeight: (row, px) => log.push(["sheet", "setRowHeight", row, px]),
+      setColumnWidth: (column, px) =>
+        log.push(["sheet", "setColumnWidth", column, px]),
     };
     const SpreadsheetApp = {
       getActiveSpreadsheet: () => ({
@@ -361,22 +365,67 @@ describe("Sheets", () => {
           getRow: () => 3,
         }),
       }),
-      flush: () => log.push(["SpreadsheetApp", "flush"]),
+      // A CellImageBuilder: build() returns the calls made on it.
+      newCellImage: () => {
+        const calls = [];
+        const builder = new Proxy(
+          {},
+          {
+            get:
+              (_target, method) =>
+              (...args) => {
+                if (method === "build") return { cellImage: calls };
+                calls.push([method, ...args]);
+                return builder;
+              },
+          }
+        );
+        return builder;
+      },
     };
-    const { get } = setUp({ hosts: { SpreadsheetApp } });
+    return { ...setUp({ hosts: { SpreadsheetApp } }), log };
+  }
+
+  it("puts the code in the current cell and sizes its row and column", () => {
+    const { get, fetch, log } = currentCell();
     const response = get("onInsert")(
       actionEvent("sheets", { type: "url", url: "qrdx.dev", size: "small" })
     );
-    assert.equal(notification(response), "QR code placed over cell B3.");
+    assert.equal(notification(response), "QR code added in cell B3.");
+    assert.equal(fetch.requests.length, 1);
     assert.deepEqual(log, [
-      ["sheet", "insertImage", "qr-code.png", 2, 3],
-      ["image", "setWidth", 96],
-      ["image", "setHeight", 96],
-      ["image", "setAltTextTitle", "QR code"],
-      ["image", "setAltTextDescription", "QR code for https://qrdx.dev"],
-      // Sheets shows the image only once pending changes are applied.
-      ["SpreadsheetApp", "flush"],
+      [
+        "cell",
+        "setValue",
+        3,
+        2,
+        {
+          cellImage: [
+            // The PNG itself, so the file keeps it and Sheets fetches nothing.
+            ["setSourceUrl", "data:image/png;base64,iVBORw=="],
+            ["setAltTextTitle", "QR code"],
+            ["setAltTextDescription", "QR code for https://qrdx.dev"],
+          ],
+        },
+      ],
+      ["sheet", "setRowHeight", 3, 96],
+      ["sheet", "setColumnWidth", 2, 96],
     ]);
+  });
+
+  it("refuses a cell that holds a value or a formula, before fetching", () => {
+    for (const filled of [{ value: "keep me" }, { formula: "=1+1" }]) {
+      const { get, fetch, log } = currentCell(filled);
+      const response = get("onInsert")(
+        actionEvent("sheets", { type: "url", url: "qrdx.dev" })
+      );
+      assert.equal(
+        notification(response),
+        "Cell B3 isn't empty, and the code goes inside the cell. Select an empty cell, then insert again."
+      );
+      assert.equal(fetch.requests.length, 0);
+      assert.deepEqual(log, []);
+    }
   });
 
   /** A one-sheet spreadsheet whose active range is `rows` × `columns` at (row, column). */

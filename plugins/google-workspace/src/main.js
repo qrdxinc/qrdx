@@ -22,9 +22,9 @@ const HOST_TEXT = {
       "Insert puts the code in the middle of the current slide, as an image saved in the presentation.",
   },
   sheets: {
-    insert: "Insert over sheet",
+    insert: "Insert in cell",
     where:
-      "Insert places the code over the sheet at the selected cell, as an image saved in the spreadsheet.",
+      "Insert puts the code in the selected cell, which must be empty, as an image saved in the spreadsheet, and resizes that row and column to fit.",
   },
 };
 
@@ -349,24 +349,38 @@ function placeInSlides(loadImage, placement) {
   return "QR code added to the slide.";
 }
 
+/**
+ * Sheets gets the code inside the current cell, as a cell image. An image
+ * over the grid (Sheet.insertImage) didn't show in the open spreadsheet
+ * until a page reload, even after SpreadsheetApp.flush() (24 Nov 2026); a
+ * cell image shows at once. Its source is a data: URL, so the PNG is saved
+ * in the file and Sheets fetches nothing.
+ */
 function placeInSheets(loadImage, placement) {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const cell = spreadsheet.getCurrentCell();
-  const sheet = cell ? cell.getSheet() : spreadsheet.getActiveSheet();
-  const column = cell ? cell.getColumn() : 1;
-  const row = cell ? cell.getRow() : 1;
+  const current = spreadsheet.getCurrentCell();
+  const sheet = current ? current.getSheet() : spreadsheet.getActiveSheet();
+  const column = current ? current.getColumn() : 1;
+  const row = current ? current.getRow() : 1;
+  const name = `${columnLetter(column)}${row}`;
+  const cell = sheet.getRange(row, column);
+  if (countFilledCells([[cell.getValue()]], [[cell.getFormula()]]) > 0) {
+    return `Cell ${name} isn't empty, and the code goes inside the cell. Select an empty cell, then insert again.`;
+  }
   const loaded = loadImage();
   if (!loaded.ok) return loaded.message;
   const pixels = Math.round(placement.inches * PIXELS_PER_INCH);
-  sheet
-    .insertImage(loaded.blob, column, row)
-    .setWidth(pixels)
-    .setHeight(pixels)
-    .setAltTextTitle("QR code")
-    .setAltTextDescription(placement.description);
-  // Without it, the image appeared only after a page reload (24 Nov 2026).
-  SpreadsheetApp.flush();
-  return `QR code placed over cell ${columnLetter(column)}${row}.`;
+  const dataUrl = `data:image/png;base64,${Utilities.base64Encode(loaded.blob.getBytes())}`;
+  cell.setValue(
+    SpreadsheetApp.newCellImage()
+      .setSourceUrl(dataUrl)
+      .setAltTextTitle("QR code")
+      .setAltTextDescription(placement.description)
+      .build()
+  );
+  sheet.setRowHeight(row, pixels);
+  sheet.setColumnWidth(column, pixels);
+  return `QR code added in cell ${name}.`;
 }
 
 const PLACERS = {
