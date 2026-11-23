@@ -71,7 +71,7 @@ const formatInput = z
     return format;
   })
   .describe(
-    `The symbology: ${BARCODE_FORMAT_IDS.join(", ")} (EAN-13 and UPC-A for retail products, ISBN for books, ISSN for magazines, ISMN for printed music, ITF-14 for cartons, GS1-128 for logistics labels, GS1 DataBar for a GTIN on small retail items, GS1 DataBar Expanded for a GTIN with a weight, price or date at the checkout, intelligent-mail for USPS letters and flats, Code 128 for your own labels, Data Matrix, PDF417, Aztec and DotCode for 2D)`,
+    `The symbology: ${BARCODE_FORMAT_IDS.join(", ")} (EAN-13 and UPC-A for retail products, ISBN for books, ISSN for magazines, ISMN for printed music, ITF-14 for cartons, GS1-128 for logistics labels, GS1 DataBar for a GTIN on small retail items, GS1 DataBar Expanded for a GTIN with a weight, price or date at the checkout, intelligent-mail for USPS letters and flats, Code 128 for your own labels, Data Matrix, PDF417, Aztec, rMQR (a strip for narrow labels) and DotCode for 2D)`,
   );
 
 const generateInput = barcodeImageBodySchema
@@ -93,7 +93,7 @@ const saveInput = createBarcodeSchema.omit({ format: true }).extend({
 const FREE_SAVED_BARCODES = getPlanLimits("free").savedBarcodes;
 
 export const BARCODE_MCP_INSTRUCTIONS =
-  " For barcodes (EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, Code 128, Code 39, Code 93, Codabar, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, DotCode), call generate_barcode: it checks the value (check digits, lengths, characters) and returns a PNG plus public image URLs; with an API key, save_barcode keeps one in the workspace's Barcodes.";
+  " For barcodes (EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, Code 128, Code 39, Code 93, Codabar, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, DotCode), call generate_barcode: it checks the value (check digits, lengths, characters) and returns a PNG plus public image URLs; with an API key, save_barcode keeps one in the workspace's Barcodes.";
 
 export function registerBarcodeTools(server: McpServer) {
   server.registerTool(
@@ -101,7 +101,7 @@ export function registerBarcodeTools(server: McpServer) {
     {
       title: "Generate a barcode",
       description:
-        "Draw a static barcode: EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128, GS1 DataBar and GS1 DataBar Expanded (check digits added or verified), ISBN, ISSN and ISMN (EAN-13s with the number printed above, an ISBN-10 converted, and an optional 2- or 5-digit add-on after a space), Code 128, Code 39, Code 93 (its check characters added), Codabar, USPS Intelligent Mail (the 20-digit tracking code and a 0-, 5-, 9- or 11-digit routing ZIP Code), or the 2D Data Matrix, PDF417, Aztec and DotCode. Checks the value against the format's rules (characters, length, check digit) and says what it added. Options: bar and background colors, bar height, quiet zone, scale, the text under the bars and rotation. Returns a PNG and public image URLs (SVG, PNG, JPG, WebP, AVIF, BMP, PDF and EPS) for embedding or printing. No account needed.",
+        "Draw a static barcode: EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128, GS1 DataBar and GS1 DataBar Expanded (check digits added or verified), ISBN, ISSN and ISMN (EAN-13s with the number printed above, an ISBN-10 converted, and an optional 2- or 5-digit add-on after a space), Code 128, Code 39, Code 93 (its check characters added), Codabar, USPS Intelligent Mail (the 20-digit tracking code and a 0-, 5-, 9- or 11-digit routing ZIP Code), or the 2D Data Matrix, PDF417, Aztec, rMQR and DotCode. Checks the value against the format's rules (characters, length, check digit) and says what it added. Options: bar and background colors, bar height, quiet zone, scale, the text under the bars and rotation. Returns a PNG and public image URLs (SVG, PNG, JPG, WebP, AVIF, BMP, PDF and EPS) for embedding or printing. No account needed.",
       inputSchema: generateInput,
       annotations: {
         readOnlyHint: true,

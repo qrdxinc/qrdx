@@ -120,6 +120,15 @@ const EXTRA_VALUES: Partial<Record<BarcodeFormatId, string[]>> = {
   datamatrix: ["héllo ✓ 日本", "A".repeat(300)],
   pdf417: ["Line one\nLine two", "1234567890".repeat(20)],
   aztec: ["héllo ✓", "https://qrdx.dev/barcode-generator?x=1"],
+  // The smallest and largest sizes, and the most of each kind of text.
+  rmqr: [
+    "1",
+    "héllo ✓ 日本",
+    "https://qrdx.dev/c/AB12CD",
+    "9".repeat(361),
+    "A".repeat(219),
+    "x".repeat(150),
+  ],
 };
 
 /** Every format a reader here decodes: all but DotCode and Intelligent Mail. */

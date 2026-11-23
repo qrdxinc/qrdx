@@ -27,6 +27,7 @@ import {
   pdf417,
   type RenderOptions,
   rationalizedCodabar,
+  rectangularmicroqrcode,
   upca,
   upce,
 } from "@bwip-js/browser";
@@ -77,6 +78,7 @@ const BROWSER_BUILD: BwipBuild<Drawing> = {
     datamatrix: encoder(datamatrix),
     pdf417: encoder(pdf417),
     aztec: encoder(azteccode),
+    rmqr: encoder(rectangularmicroqrcode),
     dotcode: encoder(dotcode),
   },
   drawingSVG,

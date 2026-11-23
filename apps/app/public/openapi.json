@@ -3195,13 +3195,13 @@
         "summary": "Render a barcode image",
         "tags": ["Barcodes"],
         "security": [],
-        "description": "A static barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.\n\n**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128 and GS1 DataBar Expanded (GTIN and SSCC fields) and GS1 DataBar (its GTIN) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an ISSN (`0317-8471`) or its 13-digit 977 number, an ISMN (979-0) or its old M form, each with or without its check digit; a 2- or 5-digit add-on follows after a space (`978-1-873671-00-9 52250`), and an ISSN's 2-digit sequence variant comes before it (`0317-8471 00 05`, 00 when left out). Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, Data Matrix, PDF417 and Aztec any text up to 1,000 characters, and DotCode any text up to about 390 letters or 780 digits. USPS Intelligent Mail takes the 20-digit tracking code (barcode ID, service type ID, mailer ID and serial number) and a routing ZIP Code of 0, 5, 9 or 11 digits, with or without spaces and hyphens (`01 234 567094 987654321 01234-5678-91`).\n\n**Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall. USPS Intelligent Mail is drawn at the size USPS-B-3200 sets: bars 0.02 in wide, about 22 to the inch and 3.96 mm tall whatever `height` says, with `scale` from 2, as for DotCode.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel; the background is always a solid color, so it has the same pixels as the PNG.\n\nValues that shouldn't sit in a URL can go in a `POST` body instead.",
+        "description": "A static barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.\n\n**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128 and GS1 DataBar Expanded (GTIN and SSCC fields) and GS1 DataBar (its GTIN) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. ISBN, ISSN and ISMN are EAN-13s with the number printed above the bars: an ISBN-13 or a whole ISBN-10 (converted to 978), an ISSN (`0317-8471`) or its 13-digit 977 number, an ISMN (979-0) or its old M form, each with or without its check digit; a 2- or 5-digit add-on follows after a space (`978-1-873671-00-9 52250`), and an ISSN's 2-digit sequence variant comes before it (`0317-8471 00 05`, 00 when left out). Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, Data Matrix, PDF417 and Aztec any text up to 1,000 characters, rMQR any text up to 361 digits or 150 characters (the smallest strip it fits, 7 to 17 modules tall), and DotCode any text up to about 390 letters or 780 digits. USPS Intelligent Mail takes the 20-digit tracking code (barcode ID, service type ID, mailer ID and serial number) and a routing ZIP Code of 0, 5, 9 or 11 digits, with or without spaces and hyphens (`01 234 567094 987654321 01234-5678-91`).\n\n**Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall. USPS Intelligent Mail is drawn at the size USPS-B-3200 sets: bars 0.02 in wide, about 22 to the inch and 3.96 mm tall whatever `height` says, with `scale` from 2, as for DotCode.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel; the background is always a solid color, so it has the same pixels as the PNG.\n\nValues that shouldn't sit in a URL can go in a `POST` body instead.",
         "parameters": [
           {
             "name": "format",
             "in": "query",
             "required": true,
-            "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `intelligent-mail` (USPS Intelligent Mail), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec), `dotcode` (DotCode)",
+            "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `intelligent-mail` (USPS Intelligent Mail), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec), `rmqr` (rMQR), `dotcode` (DotCode)",
             "schema": {
               "type": "string",
               "enum": [
@@ -3224,6 +3224,7 @@
                 "datamatrix",
                 "pdf417",
                 "aztec",
+                "rmqr",
                 "dotcode"
               ]
             },
@@ -3461,9 +3462,10 @@
                       "datamatrix",
                       "pdf417",
                       "aztec",
+                      "rmqr",
                       "dotcode"
                     ],
-                    "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `intelligent-mail` (USPS Intelligent Mail), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec), `dotcode` (DotCode)"
+                    "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `isbn` (ISBN), `issn` (ISSN), `ismn` (ISMN), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `gs1-databar` (GS1 DataBar), `gs1-databar-expanded` (GS1 DataBar Expanded), `intelligent-mail` (USPS Intelligent Mail), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec), `rmqr` (rMQR), `dotcode` (DotCode)"
                   },
                   "data": {
                     "type": "string",
@@ -3729,6 +3731,7 @@
                 "datamatrix",
                 "pdf417",
                 "aztec",
+                "rmqr",
                 "dotcode"
               ]
             }
@@ -3927,9 +3930,10 @@
                       "datamatrix",
                       "pdf417",
                       "aztec",
+                      "rmqr",
                       "dotcode"
                     ],
-                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, intelligent-mail, datamatrix, pdf417, aztec or dotcode"
+                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, intelligent-mail, datamatrix, pdf417, aztec, rmqr or dotcode"
                   },
                   "value": {
                     "type": "string",
@@ -4275,9 +4279,10 @@
                       "datamatrix",
                       "pdf417",
                       "aztec",
+                      "rmqr",
                       "dotcode"
                     ],
-                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, intelligent-mail, datamatrix, pdf417, aztec or dotcode"
+                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, isbn, issn, ismn, code128, code39, code93, codabar, itf14, gs1-128, gs1-databar, gs1-databar-expanded, intelligent-mail, datamatrix, pdf417, aztec, rmqr or dotcode"
                   },
                   "value": {
                     "type": "string",
@@ -6329,6 +6334,7 @@
               "datamatrix",
               "pdf417",
               "aztec",
+              "rmqr",
               "dotcode"
             ],
             "description": "The symbology"

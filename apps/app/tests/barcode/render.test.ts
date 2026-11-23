@@ -5,6 +5,7 @@ import path from "node:path";
 import { SCAN_CONTRAST_FAIL, SCAN_CONTRAST_LOW, SCAN_CONTRAST_MIN } from "qrdx";
 import { describe, expect, it } from "vitest";
 import { BARCODE_CONTRAST, barcodeColorWarnings } from "@/lib/barcode/colors";
+import { RMQR_SIZES } from "@/lib/barcode/draw";
 import { BARCODE_FORMATS, validateBarcodeInput } from "@/lib/barcode/formats";
 import {
   type BarcodeStyle,
@@ -127,6 +128,37 @@ describe("renderBarcodeSVG", () => {
     );
     expect(() => renderBarcodeSVG("gs1-databar-expanded", full, STYLE)).toThrow(
       "Too much data for one GS1 DataBar Expanded: it holds up to 74 digits, and fewer when there are letters. Remove an AI or shorten a value.",
+    );
+  });
+
+  it("draws rMQR at the fewest rows the text fits, then the fewest columns", () => {
+    // ISO/IEC 23941's 32 sizes; 27 columns come only 11 or 13 rows tall.
+    expect(RMQR_SIZES).toHaveLength(32);
+    expect(RMQR_SIZES.slice(0, 5)).toEqual([
+      "R7x43",
+      "R7x59",
+      "R7x77",
+      "R7x99",
+      "R7x139",
+    ]);
+    expect(RMQR_SIZES.at(-1)).toBe("R17x139");
+    const style = { ...STYLE, quietZone: 2, scale: 1 };
+    // Modules, quiet zone included: 2 units each.
+    const modules = (value: string) => {
+      const drawn = renderBarcodeSVG("rmqr", value, style);
+      return [drawn.widthUnits / 2 - 4, drawn.heightUnits / 2 - 4];
+    };
+    expect(modules("1")).toEqual([43, 7]);
+    expect(modules("QRdx rMQR")).toEqual([59, 7]);
+    // 42 bytes fill the longest 7-row size; one more needs 9 rows.
+    expect(modules("x".repeat(42))).toEqual([139, 7]);
+    expect(modules("x".repeat(43))).toEqual([139, 9]);
+    expect(modules("9".repeat(361))).toEqual([139, 17]);
+  });
+
+  it("says how much an rMQR holds when the text fits no size", () => {
+    expect(() => renderBarcodeSVG("rmqr", "x".repeat(151), STYLE)).toThrow(
+      "Too much data for one rMQR: it holds up to 361 digits, 219 capital letters or 150 characters of other text, and less with accents or other scripts. Shorten the text.",
     );
   });
 
