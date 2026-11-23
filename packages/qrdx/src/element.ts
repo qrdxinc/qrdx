@@ -375,7 +375,7 @@ export class QRdxCodeElement extends BaseElement {
     return renderToString(createQRCodeTree(this.#requireOptions()));
   }
 
-  /** The code as a data URL: "png" (default), "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" or "eps". */
+  /** The code as a data URL: "png" (default), "jpg", "webp", "bmp", "ico", "gif", "tiff", "tiff-cmyk", "svg", "pdf" or "eps". */
   async toDataURL(
     format: DownloadFormat = "png",
     options: QRCodeExportOptions = {}

@@ -12,16 +12,19 @@ import { LOGO_ICON_IDS } from "@/lib/qr-design/style";
 import * as n8n from "../../../../plugins/n8n/nodes/Qrdx/constants";
 import { verifySignature } from "../../../../plugins/n8n/nodes/Qrdx/webhook";
 
+interface Schema {
+  enum?: string[];
+  anyOf?: Schema[];
+  minimum?: number;
+  maximum?: number;
+  maxLength?: number;
+  pattern?: string;
+  default?: unknown;
+}
+
 interface Parameter {
   name: string;
-  schema: {
-    enum?: string[];
-    minimum?: number;
-    maximum?: number;
-    maxLength?: number;
-    pattern?: string;
-    default?: unknown;
-  };
+  schema: Schema;
 }
 
 const openapi = JSON.parse(
@@ -42,6 +45,14 @@ function parameter(path: string, name: string): Parameter["schema"] {
 const sorted = (values: readonly string[] | undefined) =>
   [...(values ?? [])].sort();
 
+/**
+ * A parameter's listed values: its enum, or the enum among its `anyOf`
+ * (frame also takes an official frame's id, by pattern, which the node
+ * doesn't offer).
+ */
+const enumOf = (schema: Schema) =>
+  schema.enum ?? schema.anyOf?.find((member) => member.enum)?.enum;
+
 describe("n8n node: GET /qr options", () => {
   it.each([
     ["format", n8n.QR_IMAGE_FORMATS],
@@ -51,7 +62,7 @@ describe("n8n node: GET /qr options", () => {
     ["level", n8n.ERROR_CORRECTION_LEVELS],
     ["frame", n8n.FRAMES],
   ] as const)("%s offers exactly the API's values", (name, values) => {
-    expect(sorted(values)).toEqual(sorted(parameter("/qr", name).enum));
+    expect(sorted(values)).toEqual(sorted(enumOf(parameter("/qr", name))));
   });
 
   // The API's logoIcon also takes any Simple Icons brand slug (a pattern,

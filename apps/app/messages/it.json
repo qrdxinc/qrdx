@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugin per Figma, Canva, Raycast e Chrome",
         "leftOutValue": "Escluso: {value}.",
         "imageUrl": "URL immagine",
+        "showAll": "Mostra tutto",
+        "showLess": "Mostra meno",
         "terminal": "Terminale",
         "designQrArguments": "Argomenti di design_qr",
         "labelCopied": "{label} copiato",
@@ -4817,19 +4819,22 @@
         "smallerDotsGiveALighter": "Punti più piccoli danno un aspetto più leggero. I punti {value} scendono fino al {floor, number}%, la dimensione minima che si legge ancora."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "Dai a ogni occhio d’angolo un colore per la cornice e uno per il centro. Gli occhi che non modifichi usano i colori di Occhi e Punti.",
+        "eyesYouLeaveAlone": "Gli occhi che non tocchi mantengono i colori di Occhi e Punti.",
         "useTheSameColorsFor": "Usa gli stessi colori per tutti gli occhi",
         "sameForAll": "Uguale per tutti",
         "eyeColors": "Colori occhi",
         "frame": "Cornice",
         "center": "Centro",
+        "eyesContinueTheCodes": "Gli occhi seguono il gradiente del codice",
+        "offEachEyeSweeps": "Disattivato, ogni occhio ha un proprio gradiente. Attivo, gli occhi stendono il gradiente su tutto il codice, così gli occhi colorati come i punti ne sono la continuazione."
+      },
+      "eyeTabs": {
+        "whichEye": "Quale occhio",
         "positions": {
           "topLeft": "In alto a sinistra",
           "topRight": "In alto a destra",
           "bottomLeft": "In basso a sinistra"
-        },
-        "eyesContinueTheCodes": "Gli occhi seguono il gradiente del codice",
-        "offEachEyeSweeps": "Disattivato, ogni occhio ha un proprio gradiente. Attivo, gli occhi stendono il gradiente su tutto il codice, così gli occhi colorati come i punti ne sono la continuazione."
+        }
       },
       "frameControls": {
         "uploadSvg": "Carica SVG",
@@ -5007,18 +5012,12 @@
       "eyeShapesSection": {
         "eyeShapes": "Forme degli occhi",
         "sameForAll": "Uguali per tutti",
-        "giveEachCornerEyeIts": "Dai a ogni occhio angolare la sua forma di cornice e di centro. Gli occhi che non modifichi usano le forme degli occhi.",
-        "whichEye": "Quale occhio",
+        "eyesYouLeaveAlone": "Gli occhi che non tocchi mantengono le forme di Occhi.",
         "frame": "Cornice",
         "center": "Centro",
         "frameShapes": "forme della cornice",
         "centerShapes": "forme del centro",
-        "useTheSameShapesFor": "Usa le stesse forme per tutti gli occhi",
-        "positions": {
-          "topLeft": "In alto a sinistra",
-          "topRight": "In alto a destra",
-          "bottomLeft": "In basso a sinistra"
-        }
+        "useTheSameShapesFor": "Usa le stesse forme per tutti gli occhi"
       },
       "cornersSection": {
         "roundedCorners": "Angoli arrotondati",

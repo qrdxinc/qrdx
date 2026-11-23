@@ -1,6 +1,6 @@
 ---
 title: Export and download
-description: Save a QR code as PNG, JPG, WebP, GIF, BMP, ICO, SVG, PDF or EPS with downloadQRCode, get a data URL, Blob or SVG markup, copy it, or make a PNG in Node.
+description: Save a QR code as PNG, JPG, WebP, GIF, BMP, ICO, TIFF, SVG, PDF or EPS with downloadQRCode, get a data URL, Blob or SVG markup, copy it, or make a PNG in Node.
 icon: Download
 ---
 
@@ -112,6 +112,23 @@ const favicon = await getQRAsICO({ value: "https://example.com" });
 ```
 
 `canvasesToICO(canvases)` writes any canvases of 1 to 256 px, and `encodeICO(images)` wraps PNG files you already have, with no DOM.
+
+### TIFF
+
+TIFF is for print shops that ask for it. `"tiff"` is the code's pixels with its transparency, recorded at 300 dpi; `"tiff-cmyk"` is the same file in CMYK for print. The CMYK one uses the same conversion as the print PDF and EPS: pure black prints as black ink only (no rich black under fine modules), white is no ink, and a transparent background comes out white. No ICC profile is embedded, so ask your printer for a color-managed conversion when exact brand colors matter. Both are saved as `.tif`, the CMYK one with `-cmyk` in its name.
+
+No browser can write TIFF from a canvas (`toBlob("image/tiff")` returns a PNG), so the library writes it itself (Deflate-compressed where the browser has Compression Streams, uncompressed otherwise) and checks its header before saving. `getQRAsTIFF` returns it as a `Blob`:
+
+```ts title="lib/print-tiff.ts"
+import { getQRAsTIFF } from "qrdx";
+
+const tiff = await getQRAsTIFF(
+  { value: "https://example.com", size: 1200 },
+  { colorMode: "cmyk", dpi: 300 },
+);
+```
+
+`canvasToTIFF(canvas, options)` does the same for any canvas, and `encodeTIFF(rgba, width, height, options)` writes RGBA pixels with no DOM.
 
 ### PDF
 

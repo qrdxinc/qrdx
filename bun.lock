@@ -270,7 +270,7 @@
     },
     "packages/cli": {
       "name": "@qrdx/cli",
-      "version": "0.0.17",
+      "version": "0.0.18",
       "bin": {
         "qrdx": "./dist/index.js",
       },
@@ -493,7 +493,7 @@
     },
     "packages/qrdx": {
       "name": "qrdx",
-      "version": "0.0.62",
+      "version": "0.0.63",
       "dependencies": {
         "csstype": "^3.2.3",
         "jsqr": "^1.4.0",

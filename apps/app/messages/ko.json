@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Figma, Canva, Raycast, Chrome용 플러그인",
         "leftOutValue": "제외됨: {value}",
         "imageUrl": "이미지 URL",
+        "showAll": "모두 보기",
+        "showLess": "간단히 보기",
         "terminal": "터미널",
         "designQrArguments": "design_qr 인자",
         "labelCopied": "{label} 복사됨",
@@ -4817,19 +4819,22 @@
         "smallerDotsGiveALighter": "점이 작을수록 더 가벼운 느낌이 나요. {value} 점은 스캔이 가능한 최소 크기인 {floor, number}%까지 줄어들어요."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "각 코너 눈에 프레임과 중심 색상을 따로 지정해 보세요. 그대로 둔 눈은 눈 색상과 점 색상을 사용해요.",
+        "eyesYouLeaveAlone": "그대로 둔 눈은 눈과 점 색상을 유지해요.",
         "useTheSameColorsFor": "모든 눈에 같은 색상 사용",
         "sameForAll": "모두 동일하게",
         "eyeColors": "눈 색상",
         "frame": "프레임",
         "center": "중앙",
+        "eyesContinueTheCodes": "눈 모양이 코드의 그라데이션을 이어가요",
+        "offEachEyeSweeps": "끄면 각 눈이 자체 그라데이션을 그려요. 켜면 눈의 그라데이션이 코드 전체에 걸쳐 적용되어, 점과 같은 색으로 칠한 눈이 그 색을 이어받아요."
+      },
+      "eyeTabs": {
+        "whichEye": "눈 선택",
         "positions": {
           "topLeft": "왼쪽 위",
           "topRight": "오른쪽 위",
           "bottomLeft": "왼쪽 아래"
-        },
-        "eyesContinueTheCodes": "눈 모양이 코드의 그라데이션을 이어가요",
-        "offEachEyeSweeps": "끄면 각 눈이 자체 그라데이션을 그려요. 켜면 눈의 그라데이션이 코드 전체에 걸쳐 적용되어, 점과 같은 색으로 칠한 눈이 그 색을 이어받아요."
+        }
       },
       "frameControls": {
         "uploadSvg": "SVG 업로드",
@@ -5007,18 +5012,12 @@
       "eyeShapesSection": {
         "eyeShapes": "눈 모양",
         "sameForAll": "모두 동일",
-        "giveEachCornerEyeIts": "모서리 눈마다 프레임과 중앙 모양을 따로 지정해요. 그대로 둔 눈은 눈 모양 설정을 따라요.",
-        "whichEye": "눈 선택",
+        "eyesYouLeaveAlone": "그대로 둔 눈은 눈 모양을 유지해요.",
         "frame": "프레임",
         "center": "중앙",
         "frameShapes": "프레임 모양",
         "centerShapes": "중앙 모양",
-        "useTheSameShapesFor": "모든 눈에 같은 모양 사용",
-        "positions": {
-          "topLeft": "왼쪽 위",
-          "topRight": "오른쪽 위",
-          "bottomLeft": "왼쪽 아래"
-        }
+        "useTheSameShapesFor": "모든 눈에 같은 모양 사용"
       },
       "cornersSection": {
         "roundedCorners": "둥근 모서리",

@@ -133,7 +133,7 @@ export function OfficialFrameCode() {
 }
 ```
 
-`OFFICIAL_FRAMES` is the whole library, and `OFFICIAL_FRAME_INDEX` lists every frame without its spec, so a picker can show the library and load specs only as they are needed. The library is built as a module of its own, so an app that never imports it does not ship it. In the [image API](/docs/developers/image-api#community-items) and the [MCP server](/docs/developers/mcp), use an official frame as a community item, such as `item=frame:diwali-diya`.
+`OFFICIAL_FRAMES` is the whole library, and `OFFICIAL_FRAME_INDEX` lists every frame without its spec, so a picker can show the library and load specs only as they are needed. The library is built as a module of its own, so an app that never imports it does not ship it. In the [image API](/docs/developers/image-api#community-items), name an official frame by its id, such as `frame=diwali-diya`, with your labels and colors in `style` if you change them. In the [MCP server](/docs/developers/mcp), use it as a community item, such as `frame:diwali-diya`.
 
 ## Will it scan?
 
@@ -243,6 +243,6 @@ How big to print: a code scans from about ten times its width, so width is about
 <Cards>
   <Card href="/docs/features/templates" title="Use a frame template" description="Arrow, Standard Box and the other frames that fit the code inside artwork of a set size." />
   <Card href="/docs/styles" title="Shapes, eyes and frames" description="Every built-in frame drawn live, with the value to copy." />
-  <Card href="/docs/features/downloads" title="Export and download" description="PNG, JPG, WebP, GIF, BMP, SVG, PDF and EPS, with the frame included (an ICO favicon leaves the frame out)." />
+  <Card href="/docs/features/downloads" title="Export and download" description="PNG, JPG, WebP, GIF, BMP, TIFF, SVG, PDF and EPS, with the frame included (an ICO favicon leaves the frame out)." />
   <Card href="/docs/developers/image-api" title="QR code image API" description="Frames and official frames as URL parameters." />
 </Cards>

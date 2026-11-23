@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/complexity/noVoid: false positive */
-
 import { existsSync, writeFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
@@ -17,7 +15,8 @@ import {
   Toast,
 } from "@raycast/api";
 import { useCallback, useEffect, useState } from "react";
-import { QRForm, QRPreview } from "./generate-qr";
+import { frameName } from "./frames";
+import { QREditor, QRPreview } from "./generate-qr";
 import { playgroundLink } from "./playground-link";
 import { buildPNGBuffer, buildSVGString } from "./qr-engine";
 import {
@@ -27,7 +26,7 @@ import {
   savedPreviewPath,
   savedToQRProps,
 } from "./storage";
-import { toLabel } from "./types";
+import { templateName, toLabel } from "./types";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -140,14 +139,11 @@ function SavedQRActions({
           icon={Icon.Pencil}
           shortcut={Keyboard.Shortcut.Common.Edit}
           target={
-            <QRForm
+            <QREditor
               initialSettings={saved.settings}
               initialUrl={saved.url}
-              onGenerate={(url, settings) => {
-                // handled inside QRForm → QRPreview flow
-                void url;
-                void settings;
-              }}
+              savedId={saved.id}
+              savedName={saved.name}
             />
           }
           title="Edit QR Code"
@@ -246,12 +242,18 @@ export default function SavedQRs() {
                     text: toLabel(saved.settings.bodyPattern),
                     tooltip: "Body Pattern",
                   },
-                  {
-                    text: saved.settings.templateId
-                      ? toLabel(saved.settings.templateId)
-                      : undefined,
-                    tooltip: "Template",
-                  },
+                  saved.settings.frame
+                    ? {
+                        text: frameName(saved.settings.frame),
+                        tooltip: "Frame",
+                      }
+                    : {
+                        // Saved with a template, before frames
+                        text: saved.settings.templateId
+                          ? templateName(saved.settings.templateId)
+                          : undefined,
+                        tooltip: "Template",
+                      },
                   {
                     text: formatDate(saved.savedAt),
                     tooltip: "Saved on",

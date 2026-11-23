@@ -5,6 +5,7 @@ import {
   decodePNGPixels,
   encodeBMP,
   encodeICO,
+  encodeTIFF,
   ICO_SIZES,
   type IcoImage,
   pixelsToGIF,
@@ -20,7 +21,9 @@ import { renderToStaticMarkup } from "react-dom/server";
  * uncompressed 24-bit bitmap; a transparent background comes out white.
  * "ico" is a favicon holding the code at 16, 32, 48 and 256 px. "gif" holds
  * at most 256 colors and one transparent color; a design that needs more is
- * reduced, and refused when the reduced image would no longer scan.
+ * reduced, and refused when the reduced image would no longer scan. "tiff"
+ * is RGBA at 300 dpi with its transparency; "tiff-cmyk" is the same in CMYK
+ * for print (black as K only, transparency laid over white).
  */
 export type OutputFormat =
   | "svg"
@@ -29,6 +32,8 @@ export type OutputFormat =
   | "gif"
   | "bmp"
   | "ico"
+  | "tiff"
+  | "tiff-cmyk"
   | "eps";
 
 export const OUTPUT_FORMATS: readonly OutputFormat[] = [
@@ -38,8 +43,15 @@ export const OUTPUT_FORMATS: readonly OutputFormat[] = [
   "gif",
   "bmp",
   "ico",
+  "tiff",
+  "tiff-cmyk",
   "eps",
 ];
+
+/** The extension a format's files are saved with: both TIFFs are ".tif". */
+export function outputExtension(format: OutputFormat): string {
+  return format === "tiff" || format === "tiff-cmyk" ? "tif" : format;
+}
 
 export interface OutputOptions extends QRProps {
   size?: number;
@@ -176,6 +188,22 @@ export async function saveOutput(options: OutputOptions): Promise<void> {
     writeFileSync(
       outputPath,
       encodeBMP(pixels.data, pixels.width, pixels.height)
+    );
+    return;
+  }
+
+  // TIFF: the PNG's pixels written by the engine's own encoder, so it needs
+  // no sharp. RGBA keeps a transparent background; CMYK lays it over white.
+  if (format === "tiff" || format === "tiff-cmyk") {
+    const pixels = await decodePNGPixels(pngBytes);
+    if (!pixels) {
+      throw new Error("Could not read the rendered PNG to write a TIFF file.");
+    }
+    writeFileSync(
+      outputPath,
+      await encodeTIFF(pixels.data, pixels.width, pixels.height, {
+        colorMode: format === "tiff-cmyk" ? "cmyk" : "rgb",
+      })
     );
     return;
   }

@@ -1,12 +1,12 @@
 ---
 title: QR code image API
-description: Turn any URL or text into a QR code image with one GET request and no API key, as SVG, PNG, WebP, GIF, BMP, ICO or EPS, in the editor's styles, for web and print.
+description: Turn any URL or text into a QR code image with one GET request and no API key, as SVG, PNG, WebP, GIF, BMP, ICO, TIFF or EPS, in the editor's styles, for web and print.
 icon: ImageDown
 ---
 
 By the end of this page you will have a QR code image URL you can paste into a README, an `<img>` tag or an email template, styled the way you want, and you will know what the API refuses and why.
 
-`GET https://api.qrdx.dev/v1/qr` returns a QR code as an SVG, PNG, WebP, BMP or ICO image, or as a vector EPS file for print and design tools. Everything is in the query string, so the URL itself is the image. It takes the editor's styles too: gradients, frames (custom frames included), borders, eye and dot colors and logo icons. No account or API key is required, apart from a logo you uploaded to QRdx (see [Logos](#logos)). The [free QR code API](/qr-code-api) page has the short overview.
+`GET https://api.qrdx.dev/v1/qr` returns a QR code as an SVG, PNG, WebP, GIF, BMP, ICO or TIFF image, or as a vector EPS file for print and design tools. Everything is in the query string, so the URL itself is the image. It takes the editor's styles too: gradients, frames (custom frames included), borders, eye and dot colors and logo icons. No account or API key is required, apart from a logo you uploaded to QRdx (see [Logos](#logos)). The [free QR code API](/qr-code-api) page has the short overview.
 
 ```md title="README.md"
 ![QR code](https://api.qrdx.dev/v1/qr?data=https://github.com/you/repo)
@@ -74,6 +74,8 @@ Quote the URL in a shell so it keeps the `&`. In an HTML page, the URL goes stra
 | `gif` | `image/gif`, at most 256 colors and one transparent color | Older tools and email builders that only take GIF. A design with gradients, an image fill or a photo logo is reduced to a palette; if that would stop it scanning, the request fails with a `400` on `format` (use PNG for that design) |
 | `bmp` | `image/bmp`, 24-bit and uncompressed; a transparent background comes out white | Legacy systems and embedded tools that only take BMP |
 | `ico` | `image/vnd.microsoft.icon`: a favicon with the code at 16, 32, 48 and 256 px, transparency kept | Favicons. `size` and frames don't apply, and the small sizes are for icons, not for scanning |
+| `tiff` | `image/tiff`, 300 dpi, the PNG's pixels with their transparency | Print shops that ask for TIFF |
+| `tiff-cmyk` | `image/tiff` in CMYK: black as black ink only, white as no ink, a transparent background white, no ICC profile | Print shops that want CMYK. For exact brand colors, ask your printer for a color-managed conversion |
 | `eps` | `application/postscript`, sent as a `qr-code.eps` download | Illustrator, InDesign, print shops. `size` is then the width in points, 72 per inch, so `144` is 2 inches |
 
 ```bash title="Terminal"
@@ -92,8 +94,9 @@ Flat parameters cover colors, shapes, a frame and a logo:
 https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&body=rounded&eye=rounded&dot=rounded&template=Arrow
 ```
 
-```txt title="A built-in frame with its label, and a community frame by id"
+```txt title="A built-in frame with its label, an official frame by id, and a community frame"
 https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&frame=banner-bottom&frameText=Scan%20the%20menu
+https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&frame=autumn-maple&frameText=Hello%20autumn
 https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&item=frame:wifi-card
 ```
 
@@ -125,7 +128,7 @@ Encode the `data` value when it contains `&`, `#`, `+` or spaces, for example wi
 | Parameter | Default | Description |
 | --- | --- | --- |
 | `data` | required | Text or URL to encode, up to 2048 characters |
-| `format` | `svg` | `svg`, `png`, `webp`, `gif`, `bmp`, `ico` or `eps` |
+| `format` | `svg` | `svg`, `png`, `webp`, `gif`, `bmp`, `ico`, `tiff`, `tiff-cmyk` or `eps` |
 | `size` | `512` | Width and height in pixels, `64` to `2048` (points for EPS) |
 | `fg` | `000000` | Module color as hex (`155dfc`, `fff`, or 8 digits with alpha) |
 | `bg` | `ffffff` | Background color as hex. `00000000` gives a transparent background |
@@ -137,7 +140,7 @@ Encode the `data` value when it contains `&`, `#`, `+` or spaces, for example wi
 | `level` | `Q` | Error correction: `L` (about 7%), `M` (15%), `Q` (25%) or `H` (30%) |
 | `margin` | `4` | Quiet zone around the code in modules, `0` to `16` |
 | `template` | none | A [frame drawn as a template](/docs/features/templates): the whole image is `size` wide, with the code smaller inside it |
-| `frame` | none | A built-in call-to-action [frame](/docs/features/frames), such as `banner-bottom`, `speech-bubble` or `circle`: any of the {facts.frameStyles} built-in frames |
+| `frame` | none | A call-to-action [frame](/docs/features/frames): any of the {facts.frameStyles} built-in frames, such as `banner-bottom`, `speech-bubble` or `circle`, or one of the {facts.officialFrames} [official frames](/docs/features/frames#official-frames) by id, such as `autumn-maple` (the last part of its [community](/community/frames) page's address) |
 | `frameText` | `Scan me` | The frame's label, up to 24 characters. Also relabels the frame of a `style` or `item` |
 | `style` | none | The editor's whole design as JSON; see [Styles](#style) |
 | `item` | none | A community frame or theme by id, such as `frame:wifi-card`; see [Community items](#community-items) |
@@ -156,7 +159,7 @@ Enum values (`level`, `format`, `template`, `frame`) are case-insensitive. With 
 | `bodyPattern`, `cornerEyePattern`, `cornerEyeDotPattern` | The [pattern values](#pattern-values) |
 | `level`, `margin` | As the parameters above (`margin` 0 to 16) |
 | `templateId` | A frame drawn as a template, `default` for none |
-| `frame` | A built-in frame, `{ "style": "banner-bottom", "text": "Scan me", "color": "#155dfc", "textColor": "#ffffff" }`, or a custom one, `{ "style": "custom", "spec": { … } }`, with a frame spec from the [community](#community-items) or a custom frame made in the playground's Frame section. Specs are checked against the engine's frame-spec rules (no markup, links or images; at most 32 KB) |
+| `frame` | A built-in frame, `{ "style": "banner-bottom", "text": "Scan me", "color": "#155dfc", "textColor": "#ffffff" }`; an official frame by id, with your labels and colors, `{ "style": "autumn-maple", "text": "Hello autumn", "secondaryText": "", "color": "#4c1d95" }` (`secondaryColor` is its accent, `fontScale` sizes its labels, and an empty label hides it); or a custom one, `{ "style": "custom", "spec": { … } }`, with a frame spec from the [community](#community-items) or a custom frame made in the playground's Frame section. Specs are checked against the engine's frame-spec rules (no markup, links or images; at most 32 KB) |
 | `eyeColors` | Colors per eye, over `eyeColor` and `dotColor`: `{ "topLeft": { "outer": "#b91c1c", "inner": "#1d4ed8" }, "topRight": …, "bottomLeft": … }`, each a color or a gradient |
 | `moduleScale` | Size of each dot, `0.5` to `1` (default `1`) |
 | `shape` | `square` (default) or `circle`: the code in a disc of decorative dots |
@@ -179,6 +182,8 @@ Enum values (`level`, `format`, `template`, `frame`) are case-insensitive. With 
 ## Community items [#community-items]
 
 `item` renders a published [community](/community) frame or theme, free under CC0. Find ids with [`GET /v1/community/items`](/docs/developers/api/list-community-items), or open an item page and use its type and slug: `/community/frames/wifi-card` is `frame:wifi-card`. A frame item sits on a plain black-on-white code; add `style` or flat parameters to change the code under it. Renders with `item` are cached for 5 minutes (10 at the CDN), since an item can get a new version or be taken down.
+
+QRdx's own frames, published by @qrdx, can also go by id in `frame` (`frame=autumn-maple`) or as a frame's `style` in `style`. They're drawn from the frame library QRdx ships, not looked up in the community, so these renders are cached for a year like the rest; if QRdx changes one of its frames, an image already cached keeps the version it was drawn with. The playground's Get code dialog writes image URLs this way, so the frame's spec stays out of the URL.
 
 ## Logos [#logos]
 
@@ -220,7 +225,7 @@ These are the same styles as the [`qrdx` React library](/docs/features/patterns)
 
 A successful request returns the image with:
 
-- `Content-Type: image/svg+xml`, `image/png`, `image/webp`, `image/gif`, `image/bmp`, `image/vnd.microsoft.icon` or `application/postscript` (EPS is sent as a `qr-code.eps` download)
+- `Content-Type: image/svg+xml`, `image/png`, `image/webp`, `image/gif`, `image/bmp`, `image/vnd.microsoft.icon`, `image/tiff` or `application/postscript` (EPS is sent as a `qr-code.eps` download, and TIFF as `qr-code.tif` or `qr-code-cmyk.tif`: browsers other than Safari can't show TIFF in an `<img>`)
 - `Cache-Control: public, max-age=31536000, immutable`, except for renders with `item` (5 minutes, 10 at the CDN) and with `logoFileId` (`private, no-store`)
 - `Access-Control-Allow-Origin: *`, so you can `fetch` it from any website
 

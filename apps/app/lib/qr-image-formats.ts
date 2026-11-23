@@ -4,9 +4,11 @@ import {
   assertGIFStillScans,
   encodeBMP,
   encodeICO,
+  encodeTIFF,
   GIF_MIME,
   ICO_MIME,
   ICO_SIZES,
+  TIFF_MIME,
 } from "qrdx";
 
 // The image API's pixel formats beyond PNG, converted on the server from
@@ -16,7 +18,14 @@ import {
 // it up from there.
 
 /** Formats made from the PNG render. */
-export const CONVERTED_FORMATS = ["webp", "bmp", "ico", "gif"] as const;
+export const CONVERTED_FORMATS = [
+  "webp",
+  "bmp",
+  "ico",
+  "gif",
+  "tiff",
+  "tiff-cmyk",
+] as const;
 
 /**
  * The size an ICO's render is drawn at before it is scaled down to each of the
@@ -30,6 +39,8 @@ export const IMAGE_CONTENT_TYPES: Record<ConvertedFormat, string> = {
   bmp: "image/bmp",
   ico: ICO_MIME,
   gif: GIF_MIME,
+  tiff: TIFF_MIME,
+  "tiff-cmyk": TIFF_MIME,
 };
 
 export const isConvertedFormat = (format: string): format is ConvertedFormat =>
@@ -46,7 +57,10 @@ export const isConvertedFormat = (format: string): format is ConvertedFormat =>
  * stops a code scanning) and one transparent color. A design that needs more
  * colors is checked against the PNG when `expected` (the value the code
  * encodes) is given, and a GIFScanError is thrown if the original scanned and
- * the GIF would not.
+ * the GIF would not. TIFF is written by the engine's encoder at 300 dpi, the
+ * same file the playground saves: RGBA with its transparency, or CMYK for
+ * print (black as K only, transparency laid over white). sharp's own CMYK
+ * prints black with up to 82% yellow under it, so it isn't used.
  */
 export async function convertPng(
   png: ArrayBuffer | Uint8Array,
@@ -110,6 +124,16 @@ export async function convertPng(
         );
       }
       return file;
+    }
+    case "tiff":
+    case "tiff-cmyk": {
+      const { data, info } = await image
+        .ensureAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+      return await encodeTIFF(data, info.width, info.height, {
+        colorMode: format === "tiff-cmyk" ? "cmyk" : "rgb",
+      });
     }
     default:
       throw new TypeError(`Unknown image format: ${format satisfies never}`);

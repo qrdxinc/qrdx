@@ -331,6 +331,92 @@ describe("BMP", () => {
   });
 });
 
+describe("TIFF", () => {
+  const pixelsOf = async (bytes: Uint8Array) => {
+    const { default: sharp } = await import("sharp");
+    const { data, info } = await sharp(Buffer.from(bytes))
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    return { data: new Uint8ClampedArray(data), info };
+  };
+  const tag = (bytes: Uint8Array, id: number) => {
+    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    const ifd = view.getUint32(4, true);
+    for (let i = 0; i < view.getUint16(ifd, true); i++) {
+      const entry = ifd + 2 + i * 12;
+      if (view.getUint16(entry, true) === id) {
+        return view.getUint16(entry + 8, true);
+      }
+    }
+    return undefined;
+  };
+
+  it("is the PNG's pixels as a TIFF at 300 dpi, with the same caching", async () => {
+    const { default: sharp } = await import("sharp");
+    const query = {
+      data: "https://qrdx.dev/tiff",
+      size: "300",
+      fg: "155dfc",
+      style: JSON.stringify({ bgColor: "transparent" }),
+    };
+    const [tiff, png] = await Promise.all([
+      get(q({ ...query, format: "tiff" })),
+      get(q({ ...query, format: "png" })),
+    ]);
+    expect(tiff.status).toBe(200);
+    expect(tiff.headers.get("content-type")).toBe("image/tiff");
+    // A print file most browsers can't show: sent as a download, like EPS.
+    expect(tiff.headers.get("content-disposition")).toBe(
+      'attachment; filename="qr-code.tif"',
+    );
+    expect(tiff.headers.get("cache-control")).toBe(IMMUTABLE);
+    expect(tiff.headers.get("access-control-allow-origin")).toBe("*");
+    const bytes = new Uint8Array(await tiff.arrayBuffer());
+    expect(String.fromCharCode(bytes[0] as number, bytes[1] as number)).toBe(
+      "II",
+    );
+    expect((await sharp(Buffer.from(bytes)).metadata()).density).toBe(300);
+    const fromTiff = await pixelsOf(bytes);
+    const fromPng = await pixelsOf(new Uint8Array(await png.arrayBuffer()));
+    // Every pixel, transparency included
+    expect(
+      Buffer.compare(Buffer.from(fromTiff.data), Buffer.from(fromPng.data)),
+    ).toBe(0);
+    expect(decodeQR({ data: fromTiff.data, width: 300, height: 300 })).toBe(
+      "https://qrdx.dev/tiff",
+    );
+  });
+
+  it("writes CMYK for print by the engine's conversion, not sharp's, and it scans", async () => {
+    const { default: sharp } = await import("sharp");
+    const response = await get(
+      q({
+        data: "https://qrdx.dev/cmyk",
+        size: "240",
+        format: "TIFF-CMYK",
+        style: JSON.stringify({ bgColor: "transparent" }),
+      }),
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toBe("image/tiff");
+    expect(response.headers.get("content-disposition")).toBe(
+      'attachment; filename="qr-code-cmyk.tif"',
+    );
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    expect(tag(bytes, 262)).toBe(5); // separated (CMYK)
+    expect(tag(bytes, 332)).toBe(1); // InkSet: CMYK
+    const meta = await sharp(Buffer.from(bytes)).metadata();
+    expect([meta.space, meta.hasProfile]).toEqual(["cmyk", false]);
+    const { data, info } = await pixelsOf(bytes);
+    // The quiet zone's corner: no ink, white
+    expect([...data.subarray(0, 3)]).toEqual([255, 255, 255]);
+    expect(decodeQR({ data, width: info.width, height: info.height })).toBe(
+      "https://qrdx.dev/cmyk",
+    );
+  });
+});
+
 describe("GIF", () => {
   const gifOf = async (response: Response) => {
     const { default: sharp } = await import("sharp");

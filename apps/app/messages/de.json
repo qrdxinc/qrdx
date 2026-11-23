@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugins für Figma, Canva, Raycast und Chrome",
         "leftOutValue": "Weggelassen: {value}.",
         "imageUrl": "Bild-URL",
+        "showAll": "Alle anzeigen",
+        "showLess": "Weniger anzeigen",
         "terminal": "Terminal",
         "designQrArguments": "design_qr-Argumente",
         "labelCopied": "{label} kopiert",
@@ -4817,19 +4819,22 @@
         "smallerDotsGiveALighter": "Kleinere Punkte wirken leichter. {value}-Punkte werden bis auf {floor, number} % verkleinert, die kleinste Größe, die sich noch scannen lässt."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "Gib jedem Eckauge eine eigene Rahmen- und Mittelfarbe. Augen, die du nicht änderst, nutzen die Farben für Augen und Punkte.",
+        "eyesYouLeaveAlone": "Augen, die du unverändert lässt, behalten die Farben aus „Augen“ und „Punkte“.",
         "useTheSameColorsFor": "Dieselben Farben für alle Augen verwenden",
         "sameForAll": "Für alle gleich",
         "eyeColors": "Augenfarben",
         "frame": "Rahmen",
         "center": "Mitte",
+        "eyesContinueTheCodes": "Eyes setzen den Verlauf des Codes fort",
+        "offEachEyeSweeps": "Aus: Jedes Eye hat seinen eigenen Verlauf. An: Die Eyes legen ihren Verlauf über den ganzen Code, sodass Eyes, die wie die Punkte gefärbt sind, diese fortsetzen."
+      },
+      "eyeTabs": {
+        "whichEye": "Welches Eye",
         "positions": {
           "topLeft": "Oben links",
           "topRight": "Oben rechts",
           "bottomLeft": "Unten links"
-        },
-        "eyesContinueTheCodes": "Eyes setzen den Verlauf des Codes fort",
-        "offEachEyeSweeps": "Aus: Jedes Eye hat seinen eigenen Verlauf. An: Die Eyes legen ihren Verlauf über den ganzen Code, sodass Eyes, die wie die Punkte gefärbt sind, diese fortsetzen."
+        }
       },
       "frameControls": {
         "uploadSvg": "SVG hochladen",
@@ -5007,18 +5012,12 @@
       "eyeShapesSection": {
         "eyeShapes": "Eye-Formen",
         "sameForAll": "Für alle gleich",
-        "giveEachCornerEyeIts": "Gib jedem Eckauge einen eigenen Rahmen und eine eigene Mittelform. Eyes, die du nicht änderst, nutzen die Eye-Formen.",
-        "whichEye": "Welches Eye",
+        "eyesYouLeaveAlone": "Augen, die du unverändert lässt, behalten die Formen aus „Augen“.",
         "frame": "Rahmen",
         "center": "Mitte",
         "frameShapes": "Rahmenformen",
         "centerShapes": "Mittelformen",
-        "useTheSameShapesFor": "Gleiche Formen für alle Eyes verwenden",
-        "positions": {
-          "topLeft": "Oben links",
-          "topRight": "Oben rechts",
-          "bottomLeft": "Unten links"
-        }
+        "useTheSameShapesFor": "Gleiche Formen für alle Eyes verwenden"
       },
       "cornersSection": {
         "roundedCorners": "Runde Ecken",
