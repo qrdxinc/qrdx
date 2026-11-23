@@ -520,7 +520,7 @@ export function ContentTypeModal({
       <button
         aria-current={isCurrent ? "true" : undefined}
         className={cn(
-          "group bg-card flex w-full min-w-0 items-center gap-3 rounded-lg border p-2.5 text-left transition-colors outline-none",
+          "group bg-card flex w-full min-w-0 items-center gap-3 rounded-xl border p-2.5 text-left transition-colors outline-none sm:p-3",
           "hover:border-foreground/15 hover:bg-accent/40",
           "focus-visible:border-foreground/25 focus-visible:bg-accent/40 focus-visible:ring-ring/40 focus-visible:ring-[3px]",
           isCurrent && "border-foreground/20 bg-accent/50",
@@ -577,14 +577,14 @@ export function ContentTypeModal({
         type="button"
       >
         <TypeMarkArt
-          className="aspect-[16/10] w-full max-sm:aspect-auto max-sm:h-28"
+          className="h-[5.5rem] w-full"
           fallbackIcon={getTypeIcon(item.icon)}
           markClassName={TYPE_MARK_LIFT}
-          phoneSize={56}
-          size={64}
+          phoneSize={44}
+          size={56}
           type={item.type}
         />
-        <span className="block w-full min-w-0 px-3 pb-3">
+        <span className="block w-full min-w-0 px-3 pb-3 sm:px-4 sm:pb-4">
           <span className="flex items-center gap-2 text-sm leading-5 font-medium">
             <span className="truncate">{tc(item.label)}</span>
             {isCurrent && (
@@ -593,7 +593,7 @@ export function ContentTypeModal({
               </span>
             )}
           </span>
-          <span className="text-muted-foreground mt-0.5 line-clamp-2 text-xs leading-4">
+          <span className="text-muted-foreground mt-1 line-clamp-2 text-xs leading-[1.125rem]">
             {tc(item.description)}
           </span>
         </span>
@@ -602,29 +602,29 @@ export function ContentTypeModal({
   };
 
   const grid =
-    "grid gap-2 sm:grid-cols-2 sm:[&>*:last-child:nth-child(odd)]:col-span-2";
+    "grid gap-2 sm:grid-cols-2 sm:gap-3 sm:[&>*:last-child:nth-child(odd)]:col-span-2";
 
   return (
     <ResponsiveDialog onOpenChange={onOpenChange} open={open}>
-      <ResponsiveDialogContent className="max-h-[92dvh] gap-0 overflow-hidden p-0 sm:max-w-4xl dark:!border-border">
-        <div className="flex h-[82dvh] flex-col sm:h-[min(640px,85dvh)]">
-          <div className="flex items-start gap-3 px-4 pt-1 pb-3 sm:px-5 sm:pt-4">
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5">
-                <ResponsiveDialogTitle className="text-base">
-                  {t("chooseAQrCodeType")}
-                </ResponsiveDialogTitle>
-                <InfoHint align="start" id="qr-types" side="bottom" />
+      <ResponsiveDialogContent className="max-h-[92dvh] gap-0 overflow-hidden p-0 sm:max-w-5xl dark:!border-border">
+        <div className="flex h-[82dvh] flex-col sm:h-[min(780px,90dvh)]">
+          <div className="border-b px-4 pt-1 pb-3 sm:px-6 sm:pt-5 sm:pb-4">
+            <div className="flex items-start gap-3">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5">
+                  <ResponsiveDialogTitle className="text-base">
+                    {t("chooseAQrCodeType")}
+                  </ResponsiveDialogTitle>
+                  <InfoHint align="start" id="qr-types" side="bottom" />
+                </div>
+                <ResponsiveDialogDescription className="mt-1 text-xs">
+                  {t("whatShouldHappenWhenSomeone")}
+                </ResponsiveDialogDescription>
               </div>
-              <ResponsiveDialogDescription className="mt-1 text-xs">
-                {t("whatShouldHappenWhenSomeone")}
-              </ResponsiveDialogDescription>
+              <DialogCloseButton className="-mt-1 -mr-1 hidden sm:inline-flex" />
             </div>
-            <DialogCloseButton className="-mt-1 -mr-1 hidden sm:inline-flex" />
-          </div>
 
-          <div className="space-y-3 border-b px-4 pb-3 sm:px-5">
-            <div className="relative">
+            <div className="relative mt-3 sm:mt-4">
               <SearchNormal1 className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
               <Input
                 aria-label={t("searchQrCodeTypes")}
@@ -643,38 +643,10 @@ export function ContentTypeModal({
               )}
             </div>
 
-            {recentItems.length > 0 && !tokens.length && (
-              <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none]">
-                <span className="text-muted-foreground flex shrink-0 items-center gap-1 text-xs">
-                  <Clock className="size-3.5" />
-                  {t("recent")}
-                </span>
-                {recentItems.map((item) => {
-                  const ItemIcon = getTypeIcon(item.icon);
-                  return (
-                    <Button
-                      className={cn(
-                        "h-7 shrink-0 text-xs",
-                        item.type === contentType && "bg-accent",
-                      )}
-                      key={item.key}
-                      onClick={() => selectItem(item)}
-                      size="sm"
-                      type="button"
-                      variant="outline"
-                    >
-                      <ItemIcon className="size-3.5" />
-                      {tc(item.label)}
-                    </Button>
-                  );
-                })}
-              </div>
-            )}
-
             {!tokens.length && (
               <nav
                 aria-label={t("categories")}
-                className="-mx-4 flex gap-1.5 overflow-x-auto px-4 [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-24px),transparent)] [scrollbar-width:none] sm:hidden"
+                className="-mx-4 mt-3 flex gap-1.5 overflow-x-auto px-4 [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-24px),transparent)] [scrollbar-width:none] sm:hidden"
               >
                 {sections.map((section) => (
                   <Button
@@ -697,7 +669,7 @@ export function ContentTypeModal({
           <div className="flex min-h-0 flex-1">
             <nav
               aria-label={t("categories")}
-              className="hidden w-52 shrink-0 flex-col gap-0.5 overflow-y-auto border-r p-2 sm:flex"
+              className="hidden w-56 shrink-0 flex-col gap-1 overflow-y-auto border-r p-3 sm:flex"
             >
               {sections.map((section) => {
                 const isActive = !tokens.length && activeSection === section.id;
@@ -705,7 +677,7 @@ export function ContentTypeModal({
                   <Button
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
-                      "text-muted-foreground w-full justify-start gap-2.5 font-normal",
+                      "text-muted-foreground h-9 w-full shrink-0 justify-start gap-2.5 px-3 font-normal",
                       isActive && "bg-accent text-foreground font-medium",
                     )}
                     key={section.id}
@@ -728,14 +700,14 @@ export function ContentTypeModal({
 
             {/* biome-ignore lint/a11y/noStaticElementInteractions: arrow-key navigation between the tiles inside */}
             <div
-              className="@container relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5"
+              className="@container relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5"
               onKeyDown={handleListKeyDown}
               ref={scrollRef}
             >
               {tokens.length ? (
                 results.length ? (
                   <section>
-                    <h3 className="text-muted-foreground mb-2 text-xs font-medium">
+                    <h3 className="text-muted-foreground mb-3 text-xs font-medium">
                       {t("matchesFor", {
                         count: results.length,
                         query: query.trim(),
@@ -769,7 +741,34 @@ export function ContentTypeModal({
                   </div>
                 )
               ) : (
-                <div className="space-y-6">
+                <div className="space-y-8">
+                  {recentItems.length > 0 && (
+                    <div className="mb-6 flex items-center gap-2 overflow-x-auto [scrollbar-width:none]">
+                      <span className="text-muted-foreground mr-1 flex shrink-0 items-center gap-1.5 text-xs">
+                        <Clock className="size-3.5" />
+                        {t("recent")}
+                      </span>
+                      {recentItems.map((item) => {
+                        const ItemIcon = getTypeIcon(item.icon);
+                        return (
+                          <Button
+                            className={cn(
+                              "h-8 shrink-0 rounded-full px-3 text-xs",
+                              item.type === contentType && "bg-accent",
+                            )}
+                            key={item.key}
+                            onClick={() => selectItem(item)}
+                            size="sm"
+                            type="button"
+                            variant="outline"
+                          >
+                            <ItemIcon className="size-3.5" />
+                            {tc(item.label)}
+                          </Button>
+                        );
+                      })}
+                    </div>
+                  )}
                   {sections.map((section) => (
                     <section
                       aria-labelledby={`picker-${section.id}`}
@@ -777,7 +776,7 @@ export function ContentTypeModal({
                       data-section-id={section.id}
                       key={section.id}
                     >
-                      <div className="mb-2">
+                      <div className="mb-3">
                         <h3
                           className="text-muted-foreground text-xs font-medium tracking-wider uppercase"
                           id={`picker-${section.id}`}
@@ -801,7 +800,7 @@ export function ContentTypeModal({
                         )}
                       </div>
                       {section.id === POPULAR_SECTION ? (
-                        <div className="grid grid-cols-2 gap-2 @lg:grid-cols-4">
+                        <div className="grid grid-cols-2 gap-2 sm:gap-3 @lg:grid-cols-4">
                           {section.items.map((item) =>
                             item.kind === "type"
                               ? renderCard(item)
@@ -821,7 +820,8 @@ export function ContentTypeModal({
             </div>
           </div>
 
-          <div className="text-muted-foreground hidden items-center gap-4 border-t px-5 py-2 text-xs sm:flex">
+          {/* Keyboard hints: on short screens (under 800 px tall) the list gets the room instead. */}
+          <div className="text-muted-foreground hidden items-center gap-5 border-t px-6 py-2.5 text-xs sm:[@media(min-height:800px)]:flex">
             <span className="flex items-center gap-1">
               <Kbd>↑</Kbd>
               <Kbd>↓</Kbd>

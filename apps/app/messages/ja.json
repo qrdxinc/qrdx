@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Figma、Canva、Raycast、Chrome用のプラグイン",
         "leftOutValue": "省略: {value}",
         "imageUrl": "画像URL",
+        "showAll": "すべて表示",
+        "showLess": "表示を減らす",
         "terminal": "ターミナル",
         "designQrArguments": "design_qrの引数",
         "labelCopied": "{label}をコピーしました",
@@ -4817,19 +4819,22 @@
         "smallerDotsGiveALighter": "ドットを小さくすると軽やかな印象になります。{value}のドットは、スキャンできる最小サイズの{floor, number}%まで小さくなります。"
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "コーナーのアイごとに、フレームと中心の色を個別に設定できます。変更しないアイには、アイとドットの色が使われます。",
+        "eyesYouLeaveAlone": "個別に設定していない目には、「目」と「ドット」の色が適用されます。",
         "useTheSameColorsFor": "すべてのアイに同じ色を使用",
         "sameForAll": "すべて同じ",
         "eyeColors": "アイの色",
         "frame": "フレーム",
         "center": "中央",
+        "eyesContinueTheCodes": "アイをコードのグラデーションに連続させる",
+        "offEachEyeSweeps": "オフの場合、各アイはそれぞれ独自のグラデーションになります。オンの場合、アイのグラデーションがコード全体にわたって適用されるため、ドットと同じ塗りのアイはドットから連続します。"
+      },
+      "eyeTabs": {
+        "whichEye": "対象のアイ",
         "positions": {
           "topLeft": "左上",
           "topRight": "右上",
           "bottomLeft": "左下"
-        },
-        "eyesContinueTheCodes": "アイをコードのグラデーションに連続させる",
-        "offEachEyeSweeps": "オフの場合、各アイはそれぞれ独自のグラデーションになります。オンの場合、アイのグラデーションがコード全体にわたって適用されるため、ドットと同じ塗りのアイはドットから連続します。"
+        }
       },
       "frameControls": {
         "uploadSvg": "SVGをアップロード",
@@ -5007,18 +5012,12 @@
       "eyeShapesSection": {
         "eyeShapes": "アイの形",
         "sameForAll": "すべて同じ",
-        "giveEachCornerEyeIts": "コーナーのアイごとに、フレームと中心の形を個別に設定できます。設定しないアイにはアイの形が使われます。",
-        "whichEye": "対象のアイ",
+        "eyesYouLeaveAlone": "個別に設定していない目には、「目」の形が適用されます。",
         "frame": "フレーム",
         "center": "中心",
         "frameShapes": "フレームの形",
         "centerShapes": "中心の形",
-        "useTheSameShapesFor": "すべてのアイに同じ形を使う",
-        "positions": {
-          "topLeft": "左上",
-          "topRight": "右上",
-          "bottomLeft": "左下"
-        }
+        "useTheSameShapesFor": "すべてのアイに同じ形を使う"
       },
       "cornersSection": {
         "roundedCorners": "角を丸くする",

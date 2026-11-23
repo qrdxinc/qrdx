@@ -1,27 +1,34 @@
 /**
- * Generates mini QR code preview images (PNG) for each pattern/template option.
+ * Generates mini QR code preview images (PNG) for each pattern and frame option.
  * Results are cached to environment.supportPath so sips only runs on first load.
  */
 
-import { execSync } from "node:child_process";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { environment } from "@raycast/api";
-import type { BodyPattern, CornerEyeDotPattern, CornerEyePattern } from "qrdx";
-import { QRCodeSVG } from "qrdx";
-import { version as QRDX_VERSION } from "qrdx/package.json";
+import type {
+  BodyPattern,
+  CornerEyeDotPattern,
+  CornerEyePattern,
+  QRFrame,
+} from "qrdx";
+import { DEFAULT_FRAME_TEXT, getFrameDimensions, QRCodeSVG } from "qrdx";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { FRAME_CHOICES } from "./frames";
+import { cacheDir, drawPNGSync } from "./preview-files";
+import { squareSVG } from "./qr-engine";
 import {
   BODY_PATTERNS,
   CORNER_DOT_PATTERNS,
   CORNER_EYE_PATTERNS,
   isCornerDotPattern,
-  TEMPLATES,
 } from "./types";
 
 const PREVIEW_VALUE = "https://qrdx.dev";
-const PREVIEW_SIZE = 64;
+// The pickers show three tiles a row, each about 470 px wide on a Retina
+// screen, so previews are drawn at 512 px to stay sharp. sips takes as long
+// at 512 px as at 64.
+const PREVIEW_SIZE = 512;
 
 function renderSVGString(overrides: Record<string, unknown>): string {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,35 +40,27 @@ function renderSVGString(overrides: Record<string, unknown>): string {
     margin: 1,
     ...overrides,
   });
-  return renderToStaticMarkup(el);
-}
-
-function getCacheDir(): string {
-  // One folder per qrdx version, so an update redraws every preview.
-  const dir = join(environment.supportPath, "previews", QRDX_VERSION);
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-  return dir;
+  const svg = renderToStaticMarkup(el);
+  const frame = overrides.frame as QRFrame | undefined;
+  if (!frame) return svg;
+  // A frame adds space around the code, so the artwork is larger than the
+  // tile and seldom square: fit it, centered, on a white square.
+  return squareSVG(
+    svg,
+    getFrameDimensions(PREVIEW_SIZE, frame),
+    PREVIEW_SIZE,
+    "#ffffff"
+  );
 }
 
 /** Returns the absolute path to a cached PNG for the given key + overrides. */
 function previewPNG(key: string, overrides: Record<string, unknown>): string {
-  const cacheDir = getCacheDir();
-  const pngPath = join(cacheDir, `${key}.png`);
-
+  // One folder per qrdx version and preview size, so an update redraws every
+  // preview. The folders of earlier versions and sizes are removed.
+  const pngPath = join(cacheDir("previews", PREVIEW_SIZE), `${key}.png`);
   if (!existsSync(pngPath)) {
-    const svgPath = join(cacheDir, `${key}.svg`);
-    const svgString = renderSVGString(overrides);
-    writeFileSync(
-      svgPath,
-      `<?xml version="1.0" encoding="UTF-8"?>\n${svgString}`,
-      "utf-8"
-    );
-    execSync(
-      `sips -s format png "${svgPath}" --out "${pngPath}" --resampleHeightWidth ${PREVIEW_SIZE} ${PREVIEW_SIZE} 2>/dev/null`,
-      { stdio: "pipe" }
-    );
+    drawPNGSync(renderSVGString(overrides), pngPath, PREVIEW_SIZE);
   }
-
   return pngPath;
 }
 
@@ -102,12 +101,16 @@ export const cornerDotPatternPreviews: Record<CornerEyeDotPattern, string> =
     return map;
   })();
 
-// ─── Templates ────────────────────────────────────────────────────────────────
+// ─── Frames ───────────────────────────────────────────────────────────────────
 
-export const templatePreviews: Record<string, string> = (() => {
+// Each frame with qrdx's default label and colors; no frame is the plain code.
+export const framePreviews: Record<string, string> = (() => {
   const map: Record<string, string> = {};
-  for (const { value: t } of TEMPLATES) {
-    map[t] = previewPNG(`template-${t || "none"}`, t ? { templateId: t } : {});
+  for (const style of FRAME_CHOICES) {
+    map[style] = previewPNG(
+      `frame-${style || "none"}`,
+      style ? { frame: { style, text: DEFAULT_FRAME_TEXT } } : {}
+    );
   }
   return map;
 })();

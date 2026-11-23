@@ -89,12 +89,13 @@ ${BOLD}Commands:${RESET}
 
 ${BOLD}Generate Options:${RESET}
   <data>              URL or text to encode (positional)
-  -o, --output        Output file path (.svg, .png, .webp, .gif, .bmp, .ico or .eps)
+  -o, --output        Output file path (.svg, .png, .webp, .gif, .bmp, .ico, .tif or .eps)
   --format            Output format when the file name has no extension:
-                        ${DIM}svg, png, webp, gif, bmp, ico, eps${RESET}  ${DIM}(WebP is lossless; GIF is${RESET}
+                        ${DIM}svg, png, webp, gif, bmp, ico, tiff, tiff-cmyk, eps${RESET}  ${DIM}(WebP is lossless; GIF is${RESET}
                         ${DIM}256 colors, refused if it would stop scanning; BMP is${RESET}
                         ${DIM}24-bit, transparent = white; ICO is a favicon with 16, 32, 48${RESET}
-                        ${DIM}and 256 px, --size doesn't apply; EPS is vector,${RESET}
+                        ${DIM}and 256 px, --size doesn't apply; TIFF is 300 dpi, tiff-cmyk${RESET}
+                        ${DIM}is CMYK for print; EPS is vector,${RESET}
                         ${DIM}--size = width in points)${RESET}
   -l, --level         Error correction: L, M, Q, H  ${DIM}(default: Q)${RESET}
   --body              Body dot pattern, e.g.:

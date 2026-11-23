@@ -114,6 +114,8 @@ const MIME_TYPES: Record<QrImageFormat, string> = {
   gif: "image/gif",
   bmp: "image/bmp",
   ico: "image/vnd.microsoft.icon",
+  tiff: "image/tiff",
+  "tiff-cmyk": "image/tiff",
   svg: "image/svg+xml",
   eps: "application/postscript",
 };
@@ -124,12 +126,15 @@ export function qrImageFile(
   fileName?: string
 ): { fileName: string; mimeType: string; fileExtension: string } {
   const name = fileName?.trim() || "qr-code";
-  const extension = `.${format}`;
+  // Both TIFFs are saved as .tif, and a name already ending .tiff is kept.
+  const tiff = format === "tiff" || format === "tiff-cmyk";
+  const fileExtension = tiff ? "tif" : format;
+  const extension = `.${fileExtension}`;
+  const lower = name.toLowerCase();
+  const named = lower.endsWith(extension) || (tiff && lower.endsWith(".tiff"));
   return {
-    fileName: name.toLowerCase().endsWith(extension)
-      ? name
-      : `${name}${extension}`,
+    fileName: named ? name : `${name}${extension}`,
     mimeType: MIME_TYPES[format],
-    fileExtension: format,
+    fileExtension,
   };
 }

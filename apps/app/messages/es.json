@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugins para Figma, Canva, Raycast y Chrome",
         "leftOutValue": "Omitido: {value}.",
         "imageUrl": "URL de la imagen",
+        "showAll": "Ver todo",
+        "showLess": "Ver menos",
         "terminal": "Terminal",
         "designQrArguments": "Argumentos de design_qr",
         "labelCopied": "{label} copiado",
@@ -4817,19 +4819,22 @@
         "smallerDotsGiveALighter": "Los puntos más pequeños dan un aspecto más ligero. Los puntos {value} bajan hasta el {floor, number} %, el tamaño mínimo que aún se escanea."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "Dale a cada ojo de esquina su propio color de marco y de centro. Los ojos que no cambies usan los colores de Ojos y Puntos.",
+        "eyesYouLeaveAlone": "Los ojos que no modifiques mantienen los colores de Ojos y Puntos.",
         "useTheSameColorsFor": "Usar los mismos colores en todos los ojos",
         "sameForAll": "Igual en todos",
         "eyeColors": "Colores de ojos",
         "frame": "Marco",
         "center": "Centro",
-        "positions": {
-          "topLeft": "Superior izquierda",
-          "topRight": "Superior derecha",
-          "bottomLeft": "Inferior izquierda"
-        },
         "eyesContinueTheCodes": "Los ojos continúan el degradado del código",
         "offEachEyeSweeps": "Desactivado, cada ojo aplica su propio degradado. Activado, los ojos extienden su degradado por todo el código, de modo que los ojos pintados como los puntos los continúan."
+      },
+      "eyeTabs": {
+        "whichEye": "Qué ojo",
+        "positions": {
+          "topLeft": "Arriba izquierda",
+          "topRight": "Arriba derecha",
+          "bottomLeft": "Abajo izquierda"
+        }
       },
       "frameControls": {
         "uploadSvg": "Subir SVG",
@@ -5007,18 +5012,12 @@
       "eyeShapesSection": {
         "eyeShapes": "Formas de ojos",
         "sameForAll": "Igual para todos",
-        "giveEachCornerEyeIts": "Dale a cada ojo de esquina su propio marco y forma de centro. Los ojos que no toques usan las formas de Ojos.",
-        "whichEye": "Qué ojo",
+        "eyesYouLeaveAlone": "Los ojos que no modifiques mantienen las formas de Ojos.",
         "frame": "Marco",
         "center": "Centro",
         "frameShapes": "formas de marco",
         "centerShapes": "formas de centro",
-        "useTheSameShapesFor": "Usar las mismas formas en todos los ojos",
-        "positions": {
-          "topLeft": "Arriba izquierda",
-          "topRight": "Arriba derecha",
-          "bottomLeft": "Abajo izquierda"
-        }
+        "useTheSameShapesFor": "Usar las mismas formas en todos los ojos"
       },
       "cornersSection": {
         "roundedCorners": "Esquinas redondeadas",

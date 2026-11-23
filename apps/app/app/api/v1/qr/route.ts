@@ -14,7 +14,13 @@ import {
   renderStyledSvg,
   resolveRender,
 } from "@/lib/qr-api/render";
-import { type ApiStyle, parseStyleQuery } from "@/lib/qr-api/style";
+import {
+  type ApiStyle,
+  apiFrameSchema,
+  isOfficialFrameName,
+  parseStyleQuery,
+  unknownOfficialFrame,
+} from "@/lib/qr-api/style";
 import { UnknownBrandLogoError } from "@/lib/qr-design/logo";
 import {
   type ConvertedFormat,
@@ -45,7 +51,10 @@ const CORS_HEADERS = {
   "Access-Control-Max-Age": "86400",
 };
 
-// Same query → same bytes, so responses can be cached forever.
+// Same query → same bytes, so responses can be cached forever. An official
+// frame named by id (`frame`, `style`, a playground link's style) is read
+// from the engine's catalogue, which changes only with a deploy: cached the
+// same way, as playground links naming one always have been.
 const IMMUTABLE = "public, max-age=31536000, immutable";
 // A community item can get a new version or be taken down.
 const ITEM_CACHE = "public, max-age=300, stale-while-revalidate=3600";
@@ -100,15 +109,52 @@ function parseQuery(searchParams: URLSearchParams) {
 
 type Query = ReturnType<typeof parseQuery>;
 
+/**
+ * TIFFs are print files most browsers can't show, so like EPS they're sent
+ * as downloads, named as the editor names them.
+ */
+const DOWNLOAD_NAMES: Partial<Record<ConvertedFormat, string>> = {
+  tiff: "qr-code.tif",
+  "tiff-cmyk": "qr-code-cmyk.tif",
+};
+
 /** A converted image (WebP, BMP) with its content type and the request's headers. */
 function imageResponse(
   bytes: Uint8Array,
   format: ConvertedFormat,
   headers: Record<string, string>,
 ) {
+  const name = DOWNLOAD_NAMES[format];
   return new Response(bytes as BodyInit, {
-    headers: { ...headers, "Content-Type": IMAGE_CONTENT_TYPES[format] },
+    headers: {
+      ...headers,
+      "Content-Type": IMAGE_CONTENT_TYPES[format],
+      ...(name
+        ? { "Content-Disposition": `attachment; filename="${name}"` }
+        : {}),
+    },
   });
+}
+
+type ApiFrame = NonNullable<ApiStyle["frame"]>;
+
+/**
+ * `frame` (with `frameText`) as a frame: a built-in style, or one of QRdx's
+ * official frames by id, from the engine's catalogue. An official frame is
+ * checked as the same frame in `style` is, so both draw the same bytes.
+ */
+function flatFrame(name: string, text: string | undefined): ApiFrame {
+  const label = text !== undefined ? { text } : {};
+  if (!isOfficialFrameName(name)) {
+    return { style: name as Exclude<ApiFrame["style"], "custom">, ...label };
+  }
+  const spec = OFFICIAL_FRAME_RESOLVER.specOf(name);
+  if (!spec) throw invalid("frame", unknownOfficialFrame(name));
+  const parsed = apiFrameSchema.safeParse({ style: "custom", spec, ...label });
+  if (!parsed.success) {
+    throw invalid("frame", parsed.error.issues[0]?.message ?? "Invalid frame");
+  }
+  return parsed.data;
 }
 
 /** The `style` value plus the frame and logo parameters, as one style. */
@@ -128,16 +174,7 @@ function styleLayer(query: Query): ApiStyle | undefined {
     style = parsed.style;
   }
   if (query.frame) {
-    style = {
-      ...style,
-      frame: {
-        style: query.frame as Exclude<
-          NonNullable<ApiStyle["frame"]>["style"],
-          "custom"
-        >,
-        ...(query.frameText !== undefined ? { text: query.frameText } : {}),
-      },
-    };
+    style = { ...style, frame: flatFrame(query.frame, query.frameText) };
   }
   if (query.logoIcon) style = { ...style, logoIcon: query.logoIcon };
   if (query.logoFileId) style = { ...style, logoFileId: query.logoFileId };

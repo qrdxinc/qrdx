@@ -144,7 +144,7 @@ const qr = createQRCode("#qr", {
 
 qr.update({ fgColor: "#1d4ed8" }); // merges, redraws only when the markup changes
 qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" or "eps"
+await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "gif", "tiff", "tiff-cmyk", "svg", "pdf" or "eps"
 await qr.download({ format: "svg", filename: "menu.svg" });
 qr.destroy(); // removes the <svg>
 ```
@@ -252,7 +252,7 @@ qr.frame = { style: "banner-bottom", text: "Scan me" };
 qr.props = { margin: 2 }; // every option at once; attributes and named properties win over it
 
 qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" or "eps"
+await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "gif", "tiff", "tiff-cmyk", "svg", "pdf" or "eps"
 await qr.download({ format: "svg", filename: "menu.svg" });
 ```
 
@@ -556,6 +556,7 @@ import {
   getQRAsBMP,
   getQRAsGIF,
   getQRAsICO,
+  getQRAsTIFF,
   getQRAsWebP,
   getQRCodeDataUrl,
   getSVGString,
@@ -564,15 +565,18 @@ import {
 
 const props = { value: "https://example.com", bodyPattern: "rounded" as const };
 
-await downloadQRCode(props, { format: "png", size: PRESET_SIZES.large }); // png | jpg | webp | bmp | ico | gif | svg | pdf | eps
+await downloadQRCode(props, { format: "png", size: PRESET_SIZES.large }); // png | jpg | webp | bmp | ico | gif | tiff | tiff-cmyk | svg | pdf | eps
 await downloadQRCode(props, { format: "webp", size: PRESET_SIZES.large }); // lossless WebP
 await downloadQRCode(props, { format: "bmp", size: PRESET_SIZES.large }); // 24-bit BMP, transparent areas white
 await downloadQRCode(props, { format: "ico", size: PRESET_SIZES.large }); // a favicon: 16, 32, 48 and 256 px in one file
 await downloadQRCode(props, { format: "gif", size: PRESET_SIZES.large }); // GIF, at most 256 colors
+await downloadQRCode(props, { format: "tiff", size: PRESET_SIZES.large }); // TIFF at 300 dpi, transparency kept
+await downloadQRCode(props, { format: "tiff-cmyk", size: PRESET_SIZES.large }); // CMYK TIFF for print, black as K only
 const webp = await getQRAsWebP({ ...props, size: 1024 }); // a Blob; { quality: 0.9 } makes it lossy
 const bmp = await getQRAsBMP({ ...props, size: 1024 }); // a Blob of type image/bmp
 const ico = await getQRAsICO(props); // a Blob of type image/vnd.microsoft.icon
 const gif = await getQRAsGIF({ ...props, size: 1024 }); // a Blob of type image/gif
+const tiff = await getQRAsTIFF({ ...props, size: 1024 }, { colorMode: "cmyk" }); // a Blob of type image/tiff
 const png = await getQRAsPNG({ ...props, size: 1024 }); // PNG bytes, plain Node — import from "qrdx/node"
 await downloadQRCode(props, { format: "pdf", size: { width: 1200, height: 1200 }, filename: "qr.pdf" });
 const dataUrl = await getQRCodeDataUrl(props, "svg", { width: 512, height: 512 });

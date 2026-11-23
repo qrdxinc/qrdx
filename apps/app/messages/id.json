@@ -3588,6 +3588,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugin untuk Figma, Canva, Raycast, dan Chrome",
         "leftOutValue": "Dihilangkan: {value}.",
         "imageUrl": "URL gambar",
+        "showAll": "Lihat semua",
+        "showLess": "Lihat lebih sedikit",
         "terminal": "Terminal",
         "designQrArguments": "Argumen design_qr",
         "labelCopied": "{label} disalin",
@@ -4817,19 +4819,22 @@
         "smallerDotsGiveALighter": "Titik yang lebih kecil memberi tampilan lebih ringan. Titik {value} dapat mengecil hingga {floor, number}%, ukuran terkecil yang masih bisa dipindai."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "Berikan setiap mata sudut warna bingkai dan warna tengahnya sendiri. Mata yang tidak diubah memakai warna Mata dan Titik.",
+        "eyesYouLeaveAlone": "Mata yang tidak Anda ubah tetap memakai warna Mata dan Titik.",
         "useTheSameColorsFor": "Gunakan warna yang sama untuk semua mata",
         "sameForAll": "Sama untuk semua",
         "eyeColors": "Warna mata",
         "frame": "Bingkai",
         "center": "Tengah",
+        "eyesContinueTheCodes": "Mata melanjutkan gradasi kode",
+        "offEachEyeSweeps": "Jika nonaktif, setiap mata memiliki gradasi sendiri. Jika aktif, gradasi mata membentang di seluruh kode, sehingga mata yang diwarnai seperti titik akan menyambung dengannya."
+      },
+      "eyeTabs": {
+        "whichEye": "Pilih mata",
         "positions": {
           "topLeft": "Kiri atas",
           "topRight": "Kanan atas",
           "bottomLeft": "Kiri bawah"
-        },
-        "eyesContinueTheCodes": "Mata melanjutkan gradasi kode",
-        "offEachEyeSweeps": "Jika nonaktif, setiap mata memiliki gradasi sendiri. Jika aktif, gradasi mata membentang di seluruh kode, sehingga mata yang diwarnai seperti titik akan menyambung dengannya."
+        }
       },
       "frameControls": {
         "uploadSvg": "Unggah SVG",
@@ -5007,18 +5012,12 @@
       "eyeShapesSection": {
         "eyeShapes": "Bentuk mata",
         "sameForAll": "Sama untuk semua",
-        "giveEachCornerEyeIts": "Beri setiap mata sudut bingkai dan bentuk tengahnya sendiri. Mata yang tidak diubah memakai bentuk mata umum.",
-        "whichEye": "Pilih mata",
+        "eyesYouLeaveAlone": "Mata yang tidak Anda ubah tetap memakai bentuk Mata.",
         "frame": "Bingkai",
         "center": "Tengah",
         "frameShapes": "bentuk bingkai",
         "centerShapes": "bentuk tengah",
-        "useTheSameShapesFor": "Gunakan bentuk yang sama untuk semua mata",
-        "positions": {
-          "topLeft": "Kiri atas",
-          "topRight": "Kanan atas",
-          "bottomLeft": "Kiri bawah"
-        }
+        "useTheSameShapesFor": "Gunakan bentuk yang sama untuk semua mata"
       },
       "cornersSection": {
         "roundedCorners": "Sudut membulat",

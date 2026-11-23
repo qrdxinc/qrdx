@@ -114,13 +114,37 @@ describe("qrImageFile", () => {
       mimeType: "image/vnd.microsoft.icon",
       fileExtension: "ico",
     });
+    expect(qrImageFile("tiff", "print")).toEqual({
+      fileName: "print.tif",
+      mimeType: "image/tiff",
+      fileExtension: "tif",
+    });
+    expect(qrImageFile("tiff", "label.TIFF")).toEqual({
+      fileName: "label.TIFF",
+      mimeType: "image/tiff",
+      fileExtension: "tif",
+    });
+    expect(qrImageFile("tiff-cmyk", "label.tif")).toEqual({
+      fileName: "label.tif",
+      mimeType: "image/tiff",
+      fileExtension: "tif",
+    });
   });
 
   it("knows the formats", () => {
     expect(
-      ["png", "webp", "gif", "bmp", "ico", "svg", "eps", "jpg"].map(
-        isQrImageFormat
-      )
-    ).toEqual([true, true, true, true, true, true, true, false]);
+      [
+        "png",
+        "webp",
+        "gif",
+        "bmp",
+        "ico",
+        "tiff",
+        "tiff-cmyk",
+        "svg",
+        "eps",
+        "jpg",
+      ].map(isQrImageFormat)
+    ).toEqual([true, true, true, true, true, true, true, true, true, false]);
   });
 });

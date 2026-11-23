@@ -332,6 +332,8 @@ async function generateQrCode(input: GenerateInput, ctx: ToolContext) {
         `BMP URL (24-bit, for legacy systems; a transparent background comes out white): ${buildQrImageUrl(options, "bmp")}`,
         `GIF URL (for older tools and email builders; at most 256 colors, so a gradient or photo logo may be refused): ${buildQrImageUrl(options, "gif")}`,
         `ICO URL (a favicon: 16, 32, 48 and 256 px in one file; the small sizes are for icons, not scanning): ${buildQrImageUrl(options, "ico")}`,
+        `TIFF URL (300 dpi, transparency kept): ${buildQrImageUrl(options, "tiff")}`,
+        `CMYK TIFF URL (for print: black as K only, no ICC profile): ${buildQrImageUrl(options, "tiff-cmyk")}`,
         `EPS URL (vector, for print; ${options.size} pt wide): ${buildQrImageUrl(options, "eps")}`,
         `Markdown: ![QR code](${url})`,
       ].join("\n"),
@@ -441,6 +443,8 @@ async function generateQrCode(input: GenerateInput, ctx: ToolContext) {
       `BMP URL (24-bit, for legacy systems; a transparent background comes out white): ${styledImageUrl(input, given, "bmp")}`,
       `GIF URL (for older tools and email builders; at most 256 colors, so a gradient or photo logo may be refused): ${styledImageUrl(input, given, "gif")}`,
       `ICO URL (a favicon: 16, 32, 48 and 256 px in one file; the small sizes are for icons, not scanning): ${styledImageUrl(input, given, "ico")}`,
+      `TIFF URL (300 dpi, transparency kept): ${styledImageUrl(input, given, "tiff")}`,
+      `CMYK TIFF URL (for print: black as K only, no ICC profile): ${styledImageUrl(input, given, "tiff-cmyk")}`,
       `EPS URL (vector, for print): ${styledImageUrl(input, given, "eps")}`,
       `Markdown: ![QR code](${svgUrl})`,
     );

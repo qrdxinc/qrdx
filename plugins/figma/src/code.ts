@@ -19,8 +19,14 @@ figma.showUI(__html__, {
   title: "QRdx",
 });
 
+// A code's content and style are kept on its node as shared plugin data.
+// Figma allows private plugin data (and relaunch buttons) only for a plugin
+// with an id, which it assigns when the plugin is first published, so a
+// build imported from source failed on Insert. Shared data needs no id.
+const DATA_NAMESPACE = "qrdx";
+
 function readMeta(node: BaseNode): QRMeta | null {
-  return parseMeta(node.getPluginData(PLUGIN_DATA_KEY));
+  return parseMeta(node.getSharedPluginData(DATA_NAMESPACE, PLUGIN_DATA_KEY));
 }
 
 /** The selected node, if exactly one QRdx code is selected. */
@@ -50,9 +56,19 @@ function nodeName(value: string) {
 function createQRNode(svg: string, meta: QRMeta): FrameNode {
   const node = figma.createNodeFromSvg(svg);
   node.name = nodeName(meta.value);
-  node.setPluginData(PLUGIN_DATA_KEY, JSON.stringify(meta));
+  node.setSharedPluginData(
+    DATA_NAMESPACE,
+    PLUGIN_DATA_KEY,
+    JSON.stringify(meta)
+  );
   // Shows an "Edit QR code" button in the properties panel (see manifest).
-  node.setRelaunchData({ edit: "Change this QR code's content or style" });
+  // Figma refuses relaunch data until the plugin has an id; without the
+  // button, selecting the code and running the plugin can still replace it.
+  try {
+    node.setRelaunchData({ edit: "Change this QR code's content or style" });
+  } catch {
+    // No plugin id yet (imported from source, never published).
+  }
   return node;
 }
 

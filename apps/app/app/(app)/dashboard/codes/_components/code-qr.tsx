@@ -12,7 +12,13 @@ import {
 import { cn } from "@repo/design-system/lib/utils";
 import { Import as Download } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { downloadQRCode, GIFScanError, getQRData, QRCode } from "qrdx";
+import {
+  DOWNLOAD_FORMATS,
+  downloadQRCode,
+  GIFScanError,
+  getQRData,
+  QRCode,
+} from "qrdx";
 import { useState } from "react";
 import { defaultThemeState } from "@/config/qr";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
@@ -28,16 +34,32 @@ const DOWNLOAD_SIZE = 1024;
  * with the code at 16, 32, 48 and 256 px, GIF holds at most 256 colors (a
  * design that would stop scanning when reduced to them is refused).
  */
-export type CodeImageFormat = "png" | "webp" | "gif" | "bmp" | "ico" | "svg";
+export type CodeImageFormat =
+  | "png"
+  | "webp"
+  | "gif"
+  | "bmp"
+  | "ico"
+  | "tiff"
+  | "tiff-cmyk"
+  | "svg";
 const FORMATS: CodeImageFormat[] = ["png", "webp", "svg"];
 /** Formats beyond the buttons, in a "More" menu. */
-const MORE_FORMATS: CodeImageFormat[] = ["gif", "bmp", "ico"];
+const MORE_FORMATS: CodeImageFormat[] = [
+  "gif",
+  "bmp",
+  "ico",
+  "tiff",
+  "tiff-cmyk",
+];
 const FORMAT_LABELS: Record<CodeImageFormat, string> = {
   png: "PNG",
   webp: "WebP",
   gif: "GIF",
   bmp: "BMP",
   ico: "ICO",
+  tiff: "TIFF",
+  "tiff-cmyk": "CMYK TIFF",
   svg: "SVG",
 };
 
@@ -112,7 +134,7 @@ export async function downloadCodeQr(
     {
       format,
       size: { width: DOWNLOAD_SIZE, height: DOWNLOAD_SIZE },
-      filename: `qrdx-${code.slug}.${format}`,
+      filename: `qrdx-${code.slug}${DOWNLOAD_FORMATS[format].nameSuffix ?? ""}.${DOWNLOAD_FORMATS[format].extension}`,
     },
   );
   soundEvent("download");

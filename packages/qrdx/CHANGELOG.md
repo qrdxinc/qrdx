@@ -2,6 +2,13 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## 0.0.63
+
+- **TIFF export.** `"tiff"` and `"tiff-cmyk"` are new `DownloadFormat`s, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write a TIFF for print shops that ask for one. No browser encodes TIFF from a canvas (`toBlob("image/tiff")` returns a PNG), so the engine writes the file itself, the same way in every browser and in Node: one strip of 8-bit samples, Deflate with the horizontal predictor through Compression Streams (uncompressed where those are missing), at 300 dpi.
+- **`"tiff"` keeps transparency** (RGBA, unassociated alpha). **`"tiff-cmyk"` is CMYK for print** by `rgbToCmyk`, the conversion the print PDF and EPS already use: pure black is K only, white is no ink, a transparent background comes out white, and no ICC profile is embedded. Both are saved as `.tif`; the CMYK one is named with `-cmyk` (`DownloadFormatInfo` has a new optional `nameSuffix`).
+- **New TIFF exports** from `qrdx`, `qrdx/core` and `qrdx/vanilla`: `getQRAsTIFF(props, { colorMode?, dpi? })` returns the code, with its frame, as a TIFF `Blob`, and `canvasToTIFF(canvas, options?)` turns a canvas into one. `encodeTIFF(rgba, width, height, options?)` does it for RGBA pixels without a DOM, and `isTIFFFile(bytes)` checks a file. `TIFF_MIME`, `TIFF_DPI` (300), `TIFF_DPI_RANGE` (1 to 10,000) and `TIFF_MAX_DIMENSION` (16,384) are the limits. `getQRAsCanvas(props, "image/tiff")` returns an RGBA TIFF data URL.
+- `@qrdx/cli` 0.0.18 writes TIFF too: `-o qr.tif` (or `.tiff`) for RGBA, and `--format tiff-cmyk -o qr.tif` for CMYK. `qrdx batch --format tiff-cmyk` saves `.tif` files.
+
 ## 0.0.62
 
 ### Exact error correction (`exactLevel`)
