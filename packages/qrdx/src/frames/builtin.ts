@@ -39,10 +39,10 @@ import dotRing from "./builtin/dot-ring.json";
 import envelope from "./builtin/envelope.json";
 import focus from "./builtin/focus.json";
 import gradientBorder from "./builtin/gradient-border.json";
-import halloween from "./builtin/halloween.json";
 import menuCard from "./builtin/menu-card.json";
 import phone from "./builtin/phone.json";
 import polaroid from "./builtin/polaroid.json";
+import pumpkin from "./builtin/pumpkin.json";
 import roundedBorder from "./builtin/rounded-border.json";
 import speechBubble from "./builtin/speech-bubble.json";
 import speechBubbleTop from "./builtin/speech-bubble-top.json";
@@ -129,8 +129,8 @@ export const BUILT_IN_FRAMES: readonly BuiltInFrame[] = [
     "box",
     "lines",
   ]),
-  frame("halloween", "Halloween", halloween, "background", [
-    "pumpkin",
+  frame("pumpkin", "Pumpkin", pumpkin, "background", [
+    "halloween",
     "seasonal",
     "october",
   ]),

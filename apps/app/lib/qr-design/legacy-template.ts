@@ -26,7 +26,7 @@ export const TEMPLATE_FRAMES: Readonly<Record<string, TemplateFrame | null>> = {
   StandardBox: { style: "standard-box", takesCodeColor: true },
   SquareBorder: { style: "square-border", takesCodeColor: true },
   StrikedBox: { style: "striked-box", takesCodeColor: false },
-  Halloween: { style: "halloween", takesCodeColor: false },
+  Halloween: { style: "pumpkin", takesCodeColor: false },
   DotRing: { style: "dot-ring", takesCodeColor: true },
   // Dot Ring's earlier id
   FlamQR: { style: "dot-ring", takesCodeColor: true },

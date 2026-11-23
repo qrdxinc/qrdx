@@ -357,7 +357,7 @@ const FRAME_RANKS: Record<
   "standard-box": { category: "Classic", popularity: null },
   "square-border": { category: "Classic", popularity: null },
   "striked-box": { category: "Decorative", popularity: null },
-  halloween: { category: "Playful", popularity: null },
+  pumpkin: { category: "Playful", popularity: null },
   "dot-ring": { category: "Rounded", popularity: null },
 };
 

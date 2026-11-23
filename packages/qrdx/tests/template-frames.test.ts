@@ -54,7 +54,7 @@ const SPEC_TEMPLATES: [
   ["StandardBox", "standard-box", LegacyStandardBox, [46, 1, 1]],
   ["SquareBorder", "square-border", LegacySquareBorder, [0, 0, 300 / 316]],
   ["StrikedBox", "striked-box", LegacyStrikedBox, [24, 0, 1]],
-  ["Halloween", "halloween", LegacyHalloween, [38, 10, 1]],
+  ["Halloween", "pumpkin", LegacyHalloween, [38, 10, 1]],
 ];
 
 const NAMES: Record<string, string> = {
@@ -62,7 +62,7 @@ const NAMES: Record<string, string> = {
   "standard-box": "Standard box",
   "square-border": "Square border",
   "striked-box": "Striked box",
-  halloween: "Halloween",
+  pumpkin: "Pumpkin",
   "dot-ring": "Dot ring",
 };
 

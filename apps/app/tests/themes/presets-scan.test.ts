@@ -85,8 +85,17 @@ describe("the built-in library covers the editor's options", () => {
 
   it("uses every frame style", () => {
     const frames = used((s) => s.frame?.style);
+    // The engine's former templates were never themes, but Ink's square
+    // border; the walls show the rest (lib/landing/showcase-gallery.ts)
+    const formerTemplates = new Set([
+      "arrow",
+      "standard-box",
+      "striked-box",
+      "pumpkin",
+      "dot-ring",
+    ]);
     for (const style of FRAME_STYLES) {
-      if (style === "none") continue;
+      if (style === "none" || formerTemplates.has(style)) continue;
       expect(frames, style).toContain(style);
     }
   });

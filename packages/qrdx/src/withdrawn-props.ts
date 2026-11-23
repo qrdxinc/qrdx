@@ -1,7 +1,7 @@
 // Props the engine no longer reads. Its decorative templates became frames
 // in qrdx 0.0.64 (Arrow, Standard Box, Square Border, Striked Box, Halloween
 // and Dot Ring are the built-in frame styles "arrow", "standard-box",
-// "square-border", "striked-box", "halloween" and "dot-ring"), and
+// "square-border", "striked-box", "pumpkin" and "dot-ring"), and
 // `templateId`, `customTemplate` and `customProps` left the types. Code and
 // saved props that still pass one keep drawing: it's dropped without an
 // error, never reaches the <svg> as an attribute (no React unknown-prop

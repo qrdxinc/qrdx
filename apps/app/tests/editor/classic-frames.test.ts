@@ -21,7 +21,7 @@ describe("Classic frames", () => {
       "standard-box",
       "square-border",
       "striked-box",
-      "halloween",
+      "pumpkin",
       "dot-ring",
     ]) {
       expect(CLASSIC_FRAME_IDS).toContain(style);
@@ -30,7 +30,7 @@ describe("Classic frames", () => {
 
   it("shows the Classic tile a design has", () => {
     expect(classicFrameOf({})).toBe("none");
-    expect(classicFrameOf({ frame: { style: "halloween" } })).toBe("halloween");
+    expect(classicFrameOf({ frame: { style: "pumpkin" } })).toBe("pumpkin");
     expect(classicFrameOf({ frame: { style: "ticket" } })).toBe("ticket");
     expect(classicFrameOf({ shape: "heart" })).toBeNull();
   });

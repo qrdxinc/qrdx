@@ -213,7 +213,7 @@ export const FRAME_STYLES = [
   "standard-box",
   "square-border",
   "striked-box",
-  "halloween",
+  "pumpkin",
   "dot-ring",
 ] as const;
 

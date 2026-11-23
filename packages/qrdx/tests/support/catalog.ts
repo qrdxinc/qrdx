@@ -31,7 +31,7 @@ export const TEMPLATE_FRAMES = [
   "standard-box",
   "square-border",
   "striked-box",
-  "halloween",
+  "pumpkin",
   "dot-ring",
 ] as const;
 /** Built-in frames that show no label (`text` has nothing to fill). */

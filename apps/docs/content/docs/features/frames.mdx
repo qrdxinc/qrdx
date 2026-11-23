@@ -44,7 +44,7 @@ A built-in frame is named by its `style`. The options fill its spec's labels and
 | --- | --- | --- |
 | `style` | none | One of the {facts.frameStyles} built-in styles below, `none`, or `custom` with a `spec` |
 | `text` | `"Scan me"` | Up to 24 characters. Pass `""` to hide the label |
-| `color` | the spec's own color: black for every built-in frame but `gradient-border`, which starts violet | Frame color. `striked-box` and `halloween` keep their own colors |
+| `color` | the spec's own color: black for every built-in frame but `gradient-border`, which starts violet | Frame color. `striked-box` and `pumpkin` keep their own colors |
 | `textColor` | white on the frame, `color` on light areas | Label color |
 | `secondaryText` | none | Second label, up to 24 characters: the bottom band of `banner-top-bottom`, the lower arc of `circle` and `dot-ring`, the footer of `menu-card` |
 | `secondaryColor` | the spec's accent, pink | End color of `gradient-border` |
@@ -56,7 +56,7 @@ The built-in frames, by `style`:
 - Bubbles: `speech-bubble`, `speech-bubble-top`, `chat-bubble`
 - Badges: `circle` (text set around a ring), `badge` (ribbon), `sticker` (die-cut with a shadow)
 - Objects: `polaroid`, `phone`, `ticket`, `tag` (hang tag with a hole), `envelope`, `menu-card`
-- Artwork: `arrow` (a hand-drawn arrow pointing at the code), `standard-box` (a rounded box with a tab under it), `square-border` (a thin square outline), `striked-box` (a dark card with diagonal strokes), `halloween` (a pumpkin) and `dot-ring` (a round code, below)
+- Artwork: `arrow` (a hand-drawn arrow pointing at the code), `standard-box` (a rounded box with a tab under it), `square-border` (a thin square outline), `striked-box` (a dark card with diagonal strokes), `pumpkin` (a jack-o'-lantern) and `dot-ring` (a round code, below)
 
 Each of these names stands for a spec in the engine, and the names stay valid for good. Saved designs, image API links, CLI flags and code that use them keep drawing the same frame. Frames that drop their label's row when there is no label, such as the borders, still do. See them all, decoded in your browser, in [Shapes, eyes and frames](/docs/styles#frames).
 

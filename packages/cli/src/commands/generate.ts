@@ -413,7 +413,7 @@ function parseFlags(args: string[]): GenerateFlags {
 
 /** What `--template` prints: it's read and ignored. */
 export const TEMPLATE_NOTE =
-  "Templates are frames now, so --template is ignored. Use --frame instead (arrow, standard-box, square-border, striked-box, halloween or dot-ring).";
+  "Templates are frames now, so --template is ignored. Use --frame instead (arrow, standard-box, square-border, striked-box, pumpkin or dot-ring).";
 
 /** The QR props for `value` with these settings (generate and batch). */
 export function buildQrProps(
@@ -884,7 +884,7 @@ export async function runGenerate(
       const choice = res as string;
       const picked = BUILT_IN_FRAMES.find((item) => item.style === choice);
       if (picked && !picked.spec.labels.some((l) => l.slot === "primary")) {
-        // Artwork without a label (arrow, halloween…): nothing to ask
+        // Artwork without a label (arrow, pumpkin…): nothing to ask
         frame = { style: picked.style };
       } else if (choice !== "none") {
         const text = await p.text({

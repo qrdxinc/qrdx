@@ -23,7 +23,7 @@ describe("a saved template reads as its frame", () => {
     ["StandardBox", "standard-box"],
     ["SquareBorder", "square-border"],
     ["StrikedBox", "striked-box"],
-    ["Halloween", "halloween"],
+    ["Halloween", "pumpkin"],
     ["DotRing", "dot-ring"],
     ["FlamQR", "dot-ring"],
   ])("%s → %s", (templateId, style) => {
@@ -152,7 +152,7 @@ describe("a saved template reads as its frame", () => {
       withTemplateAsFrame(
         legacy({ templateId: "Halloween", frame: { style: "none" } }),
       ).frame,
-    ).toEqual({ style: "halloween" });
+    ).toEqual({ style: "pumpkin" });
   });
 });
 

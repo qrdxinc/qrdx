@@ -425,8 +425,8 @@ describe("the home wall", () => {
     expect(tiles.some((t) => t.art?.mode === "halftone")).toBe(true);
     expect(tiles.some((t) => tileLogo(t) === "qrdx")).toBe(true);
     expect(tiles.some((t) => t.officialFrame)).toBe(true);
-    // The former templates, frames now
-    expect(styles.some((s) => s.frame?.style === "dot-ring")).toBe(true);
+    // A former template's frame (Ink's square border)
+    expect(styles.some((s) => s.frame?.style === "square-border")).toBe(true);
     expect(tiles.some((t) => t.pageType)).toBe(true);
     // Neon: dark modules on a neon ground.
     expect(
@@ -574,13 +574,8 @@ describe("the community wall", () => {
 
   it("flags only the options the score marks down", () => {
     const cautions = tiles.filter((t) => t.caution).map((t) => t.id);
-    expect(cautions.sort()).toEqual([
-      "border-arrow",
-      "border-dot-ring",
-      "border-halloween",
-      "border-standard-box",
-      "eyes-circle",
-      "theme-halloween-pumpkin",
-    ]);
+    // The former templates' frames draw the code at its full size and
+    // score Great, so none of them needs a caution any more
+    expect(cautions.sort()).toEqual(["eyes-circle", "theme-halloween-pumpkin"]);
   });
 });

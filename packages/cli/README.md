@@ -47,7 +47,7 @@ qrdx generate <data> [options]
 | `--logo` | | — | Center logo image URL (use with `--level H`) |
 | `--no-logo` | | — | Skip the logo prompt in interactive mode |
 | `--margin` | | `0` | Quiet zone margin (modules) |
-| `--frame` | | — | Call-to-action frame: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`, `arrow`, `standard-box`, `square-border`, `striked-box`, `halloween`, `dot-ring`<!-- /catalogue --> |
+| `--frame` | | — | Call-to-action frame: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`, `arrow`, `standard-box`, `square-border`, `striked-box`, `pumpkin`, `dot-ring`<!-- /catalogue --> |
 | `--frame-text` | | `Scan me` | Frame label, up to 24 characters (`""` hides it) |
 | `--frame-color` | | `#000000` | Frame color (hex) |
 | `--frame-text-color` | | white on banners | Frame label color (hex) |

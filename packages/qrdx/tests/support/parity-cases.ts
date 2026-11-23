@@ -471,7 +471,7 @@ export function parityCases(
     "standard-box",
     "square-border",
     "striked-box",
-    "halloween",
+    "pumpkin",
     "dot-ring",
   ] as const) {
     add(`frame ${style}`, {

@@ -138,7 +138,7 @@ describe("getScanScore", () => {
 
   it("scores a code in a former template's frame at the code's own size", async () => {
     // The frames add their artwork around the code, which keeps its size
-    for (const style of ["arrow", "halloween", "dot-ring"] as const) {
+    for (const style of ["arrow", "pumpkin", "dot-ring"] as const) {
       const result = await getScanScore({ ...PLAIN, frame: { style } });
       const passed = (id: string) =>
         result.checks.find((c) => c.id === id)?.passed;

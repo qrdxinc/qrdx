@@ -408,7 +408,7 @@ SVG draws an image fill as a `<pattern>`, and PDF embeds the picture once. EPS r
 
 | Option | Default | Notes |
 | --- | --- | --- |
-| `style` | — | One of `FRAME_STYLES`: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`, `arrow`, `standard-box`, `square-border`, `striked-box`, `halloween`, `dot-ring`<!-- /catalogue --> |
+| `style` | — | One of `FRAME_STYLES`: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`, `arrow`, `standard-box`, `square-border`, `striked-box`, `pumpkin`, `dot-ring`<!-- /catalogue --> |
 | `text` | `"Scan me"` | Up to 24 characters; `""` hides the label |
 | `color` | `#000000` | Frame color (`gradient-border`: start color) |
 | `textColor` | white on the frame, `color` on light areas | Label color |
@@ -418,7 +418,7 @@ SVG draws an image fill as a `<pattern>`, and PDF embeds the picture once. EPS r
 
 Frames are plain shapes and text with opaque colors, so SVG, PNG, PDF and EPS match: the gradient border is drawn as fine solid color steps, and `circle` and `dot-ring` set their letters as rotated text in every format.
 
-`arrow`, `standard-box`, `square-border`, `striked-box` and `halloween` are artwork without a label (`text` doesn't show). `dot-ring` is a round code: the code in a disc of dots inside a ring, with `text` over the top and `secondaryText` along the bottom (both "Scan the QR code" by default; `""` hides one). Its dots are the same for every code, so a dense one (a long link, more than 49 modules across) reads best printed a little larger.
+`arrow`, `standard-box`, `square-border`, `striked-box` and `pumpkin` are artwork without a label (`text` doesn't show). `dot-ring` is a round code: the code in a disc of dots inside a ring, with `text` over the top and `secondaryText` along the bottom (both "Scan the QR code" by default; `""` hides one). Its dots are the same for every code, so a dense one (a long link, more than 49 modules across) reads best printed a little larger.
 
 Each style is a built-in frame: a frame spec in `BUILT_IN_FRAMES` (with its `name` and `spec`; `BUILT_IN_FRAME_SPECS` has the specs by style), drawn exactly like a [custom frame](#custom-frames). The style names stay valid for good. `frameSpecOf(frame)` returns the spec a frame draws, and `getFrameColors(frame)` the frame, text and accent colors it paints with.
 

@@ -3,7 +3,7 @@
 // The engine's templates as they were hand-written up to qrdx 0.0.51
 // (src/template/*.tsx), kept here unchanged as the reference the built-in
 // frames they became (src/frames/builtin: arrow, standard-box,
-// square-border, striked-box, halloween) are proven against in
+// square-border, striked-box, pumpkin) are proven against in
 // tests/template-frames.test.ts. Nothing ships this code.
 import type { QRNode } from "../../src/jsx/runtime";
 

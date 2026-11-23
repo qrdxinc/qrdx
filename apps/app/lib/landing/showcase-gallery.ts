@@ -471,11 +471,7 @@ const art = (
  * The built-in frames that are artwork around the code (the engine's
  * templates until qrdx 0.0.64), each on a plain code.
  */
-const border = (
-  frameStyle: BuiltInFrameStyle,
-  label: string,
-  caution?: string,
-): WallTile => {
+const border = (frameStyle: BuiltInFrameStyle, label: string): WallTile => {
   const style: Partial<ThemeStyles> = {
     frame: { style: frameStyle },
     bodyPattern: "square",
@@ -493,7 +489,6 @@ const border = (
     style,
     href: tileHref({ preset: "minimal", style }),
     shape: "square",
-    ...(caution && { caution }),
   };
 };
 
@@ -505,8 +500,6 @@ const CIRCLE_EYES: Partial<ThemeStyles> = {
   cornerEyeDotPattern: "circle",
 };
 
-const HALF_IN_FRAME =
-  "The code is about half the artwork's width; print it at 5 cm or more.";
 
 const artTiles: WallTile[] = [
   art("bloom", "logo", "blend", "classic"),
@@ -577,8 +570,8 @@ const artTiles: WallTile[] = [
   border("standard-box", "Standard box"),
   border("striked-box", "Striked box"),
   border("arrow", "Arrow"),
-  border("halloween", "Halloween", HALF_IN_FRAME),
-  border("dot-ring", "Dot ring", HALF_IN_FRAME),
+  border("pumpkin", "Pumpkin"),
+  border("dot-ring", "Dot ring"),
   {
     id: "eyes-circle",
     band: "art",
