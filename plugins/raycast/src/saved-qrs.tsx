@@ -15,28 +15,23 @@ import {
   Toast,
 } from "@raycast/api";
 import { useCallback, useEffect, useState } from "react";
-import { frameName } from "./frames";
 import { QREditor, QRPreview } from "./generate-qr";
 import { playgroundLink } from "./playground-link";
+import { imageMarkdown } from "./preview-files";
 import { buildPNGBuffer, buildSVGString } from "./qr-engine";
+import { QRMetadata } from "./qr-metadata";
 import {
   deleteQR,
+  drawMissingPreviews,
   loadSavedQRs,
   type SavedQR,
   savedPreviewPath,
   savedToQRProps,
 } from "./storage";
-import { templateName, toLabel } from "./types";
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-function formatDate(ts: number): string {
-  return new Date(ts).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
+// The detail pane shows the markdown in its top half, about 190 pt high in
+// Raycast's 475 pt window, and the settings in the bottom half.
+const DETAIL_PREVIEW_POINTS = 150;
 
 // ─── Saved QR Item Actions ────────────────────────────────────────────────────
 
@@ -124,6 +119,7 @@ function SavedQRActions({
       <ActionPanel.Section title="View">
         <Action.Push
           icon={Icon.Eye}
+          onPop={onRefresh}
           target={
             <QRPreview
               qrProps={qrProps}
@@ -137,6 +133,7 @@ function SavedQRActions({
         />
         <Action.Push
           icon={Icon.Pencil}
+          onPop={onRefresh}
           shortcut={Keyboard.Shortcut.Common.Edit}
           target={
             <QREditor
@@ -203,11 +200,15 @@ function SavedQRActions({
 export default function SavedQRs() {
   const [list, setList] = useState<SavedQR[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  // Counts the previews drawn since loading, so each shows when it's ready.
+  const [, setDrawn] = useState(0);
 
+  // Loads the list again after a change, such as an edit or a delete.
   const refresh = useCallback(async () => {
     setIsLoading(true);
     const items = await loadSavedQRs();
     setList(items);
+    await drawMissingPreviews(items, () => setDrawn((n) => n + 1));
     setIsLoading(false);
   }, []);
 
@@ -218,6 +219,7 @@ export default function SavedQRs() {
   return (
     <List
       isLoading={isLoading}
+      isShowingDetail={list.length > 0}
       navigationTitle="Saved QR Codes"
       searchBarPlaceholder="Search saved QR codes…"
     >
@@ -229,39 +231,33 @@ export default function SavedQRs() {
         />
       ) : (
         list.map((saved) => {
-          const previewPath = savedPreviewPath(saved.id);
-          const icon = existsSync(previewPath)
-            ? { source: previewPath }
-            : Icon.Star;
+          const previewPath = savedPreviewPath(saved);
+          const hasPreview = existsSync(previewPath);
 
           return (
             <List.Item
-              accessories={
-                [
-                  {
-                    text: toLabel(saved.settings.bodyPattern),
-                    tooltip: "Body Pattern",
-                  },
-                  saved.settings.frame
-                    ? {
-                        text: frameName(saved.settings.frame),
-                        tooltip: "Frame",
-                      }
-                    : {
-                        // Saved with a template, before frames
-                        text: saved.settings.templateId
-                          ? templateName(saved.settings.templateId)
-                          : undefined,
-                        tooltip: "Template",
-                      },
-                  {
-                    text: formatDate(saved.savedAt),
-                    tooltip: "Saved on",
-                  },
-                ].filter((a) => a.text !== undefined) as List.Item.Accessory[]
-              }
               actions={<SavedQRActions onRefresh={refresh} saved={saved} />}
-              icon={icon}
+              detail={
+                <List.Item.Detail
+                  // The path changes with the code's settings. A new key makes
+                  // Raycast lay the pane out again after an edit; it kept the
+                  // old value's width and cut "Liquid" to "Li…id".
+                  key={previewPath}
+                  markdown={
+                    hasPreview
+                      ? imageMarkdown(previewPath, DETAIL_PREVIEW_POINTS)
+                      : undefined
+                  }
+                  metadata={
+                    <QRMetadata
+                      Metadata={List.Item.Detail.Metadata}
+                      qrProps={savedToQRProps(saved)}
+                      savedAt={saved.savedAt}
+                    />
+                  }
+                />
+              }
+              icon={hasPreview ? { source: previewPath } : Icon.Star}
               key={saved.id}
               subtitle={saved.url}
               title={saved.name}

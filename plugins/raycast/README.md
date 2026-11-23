@@ -3,7 +3,7 @@
 A [Raycast](https://www.raycast.com) extension that makes styled QR codes, built with the [`qrdx`](../../packages/qrdx) library. It isn't in the Raycast Store yet, so you install it from source.
 
 - **Generate QR:** enter a URL or text, pick body, eye and dot patterns from previews, colors, a call-to-action frame with your label (such as "Scan me") and a logo. Copy the code as PNG or SVG, or save either to `~/Downloads`.
-- **Saved QR Codes:** save a code's settings, then browse, edit and export them later. They're kept in Raycast's local storage. Codes saved with a template, before frames replaced templates, still show and export with it.
+- **Saved QR Codes:** save a code's settings, then browse them with a preview of each, edit and export them later. They're kept in Raycast's local storage. Codes saved with a template, before frames replaced templates, still show and export with it.
 - **Generate QR with AI:** describe the code you want and Raycast AI fills in the settings. This command and the AI tools in `ai.yaml` need access to Raycast AI.
 - **Open in QRdx Playground** (⌘O) opens the full editor at qrdx.dev with the code's web address. Other content, colors and patterns stay in Raycast.
 

@@ -115,6 +115,14 @@
       }
     },
     {
+      // Raycast's Metadata.Label is a native title-and-value row, not an HTML
+      // <label>, so it has no control to belong to.
+      "includes": ["plugins/raycast/src/**"],
+      "linter": {
+        "rules": { "a11y": { "noLabelWithoutControl": "off" } }
+      }
+    },
+    {
       // CSS modules scope with :global(). Ultracite turns Biome's CSS modules
       // parsing off; back on for module files, where the unknown-pseudo-class
       // rule still reads :global() as a typo.
