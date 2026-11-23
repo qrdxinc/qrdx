@@ -27,7 +27,7 @@ import {
   QRCode,
 } from "qrdx";
 import type { ReactNode } from "react";
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 // biome-ignore lint/correctness/noUndeclaredDependencies: "styles/" is a tsconfig/webpack path alias
 import * as styles from "styles/components.css";
@@ -42,6 +42,14 @@ const URL_EXAMPLE = "https://example.com";
 const LOGO_URL_EXAMPLE = "https://example.com/logo.png";
 /** How far the arrow button scrolls a row of pattern choices, in pixels. */
 const PICKER_SCROLL_STEP = 160;
+
+/**
+ * Whether `element` lays out right to left. Read from the computed style:
+ * Canva's right-to-left mode doesn't set a `dir` attribute that `:dir()`
+ * would match.
+ */
+const isRtl = (element: Element) =>
+  getComputedStyle(element).direction === "rtl";
 
 const BODY_PATTERNS = [...BODY_PATTERN] as BodyPattern[];
 const EYE_PATTERNS: CornerEyePattern[] = [...CORNER_EYE_PATTERNS];
@@ -66,15 +74,21 @@ function HorizontalPicker<T extends string>({
 }: HorizontalPickerProps<T>) {
   const intl = useIntl();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [rtl, setRtl] = useState(false);
+
+  // No dependency list: the direction is read again after every render, so
+  // the arrow follows a change of language. Setting the same value is a no-op.
+  useLayoutEffect(() => {
+    if (scrollRef.current) setRtl(isRtl(scrollRef.current));
+  });
 
   // Scrolls toward the end of the row: right in left-to-right languages,
   // left in right-to-left ones.
   const scrollForward = () => {
     const row = scrollRef.current;
     if (!row) return;
-    const rtl = getComputedStyle(row).direction === "rtl";
     row.scrollBy({
-      left: rtl ? -PICKER_SCROLL_STEP : PICKER_SCROLL_STEP,
+      left: isRtl(row) ? -PICKER_SCROLL_STEP : PICKER_SCROLL_STEP,
       behavior: "smooth",
     });
   };
@@ -107,7 +121,8 @@ function HorizontalPicker<T extends string>({
           onClick={scrollForward}
           type="button"
         >
-          ›
+          {/* Points toward the end of the row */}
+          {rtl ? "‹" : "›"}
         </button>
       </div>
     </div>

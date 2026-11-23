@@ -141,11 +141,6 @@
   line-height: 1;
 }
 
-/* The arrow points toward the end of the row in right-to-left languages too */
-.pickerScrollBtn:dir(rtl) {
-  transform: scaleX(-1);
-}
-
 .pickerScrollBtn:hover {
   background: var(--ui-kit-color-surface-default-hover);
 }
