@@ -27,6 +27,8 @@ export interface KnownUsage {
   limit: number | null;
   /** AI art: shared by the workspace (else counted per person) */
   pooled?: boolean;
+  /** Dynamic codes: of `limit`, what invites added (lib/code-limit.ts) */
+  bonus?: number;
 }
 
 /** Email can reach people from here (production, Resend configured). */

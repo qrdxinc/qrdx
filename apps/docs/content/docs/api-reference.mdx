@@ -44,7 +44,7 @@ import { QRCode } from "qrdx";
 | `size` | `number` | `128` | Width and height in pixels. A frame adds to it; a template fits inside it |
 | `scale` | `number` | `1` | Multiplies `size` |
 | `level` | `"L" \| "M" \| "Q" \| "H"` | `"Q"` | Error correction: about 7%, 15%, 25% or 30% of the code may be damaged |
-| `margin` | `number` | `0` | Quiet zone around the code, in modules. The standard asks for 4 |
+| `margin` | `number` | `0` | Quiet zone around the code, in modules. 0 fills the box; give a code that may sit on a dark or busy surface at least 2 (the QR standard asks for 4) |
 | `fgColor` | `ColorConfig` | `"#000000"` | Color of the data modules: a CSS color, a gradient or an image fill |
 | `bgColor` | `ColorConfig` | `"#FFFFFF"` | Background. `"transparent"` paints none |
 | `eyeColor` | `ColorConfig` | `fgColor` | Color of the three corner eyes |

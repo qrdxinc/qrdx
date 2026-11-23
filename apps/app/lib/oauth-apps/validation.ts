@@ -124,16 +124,43 @@ export function checkRedirectUris(
 export function isAllowedRedirectUri(
   uri: string,
   registered: readonly string[],
+  { loopbackAnyPort = false }: { loopbackAnyPort?: boolean } = {},
 ): boolean {
-  if (!registered.includes(uri)) return false;
   if (uri.includes("#") || UNSAFE_CHARACTERS.test(uri)) return false;
   const url = parseUrl(uri);
-  return (
-    url !== null &&
-    (url.protocol === "https:" || url.protocol === "http:") &&
-    !url.username &&
-    !url.password
-  );
+  if (
+    !url ||
+    !(url.protocol === "https:" || url.protocol === "http:") ||
+    url.username ||
+    url.password
+  ) {
+    return false;
+  }
+  if (registered.includes(uri)) return true;
+  return loopbackAnyPort && matchesLoopbackAnyPort(url, registered);
+}
+
+/**
+ * RFC 8252 §7.3: a native app listens on whatever port is free, so a
+ * loopback redirect URI matches a registered one whatever its port. Same
+ * scheme (http), host, path and query, character for character otherwise.
+ * Only for clients that registered themselves (lib/oauth-registration.ts).
+ */
+function matchesLoopbackAnyPort(url: URL, registered: readonly string[]) {
+  if (url.protocol !== "http:" || !isLoopbackHost(url.hostname)) return false;
+  return registered.some((value) => {
+    if (value.includes("#") || UNSAFE_CHARACTERS.test(value)) return false;
+    const candidate = parseUrl(value);
+    return (
+      candidate !== null &&
+      candidate.protocol === "http:" &&
+      candidate.hostname === url.hostname &&
+      !candidate.username &&
+      !candidate.password &&
+      candidate.pathname === url.pathname &&
+      candidate.search === url.search
+    );
+  });
 }
 
 /** Website or logo URL: optional; https:// (http:// on localhost). */

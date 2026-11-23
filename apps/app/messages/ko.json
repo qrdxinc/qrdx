@@ -1241,7 +1241,8 @@
         "logoQuestion": "로고나 더 높은 오류 정정 수준을 쓰면 크기가 달라지나요?",
         "logoAnswer": "오류 정정 수준이 높을수록 중복 데이터가 늘어나므로, 같은 내용이라도 모듈이 더 많은 높은 버전이 필요하고 인쇄 크기도 커집니다. 로고는 모듈 수를 바꾸지 않지만 일부 모듈을 가리므로, 로고를 넣을 때는 Q 또는 H 수준을 사용하세요.",
         "quietQuestion": "여백(콰이어트 존)도 크기에 포함되나요?",
-        "quietAnswer": "표시된 코드 크기는 가장자리에서 가장자리까지의 크기예요. 스캐너가 읽으려면 사방에 {quiet, number}모듈 너비의 빈 여백도 필요하며, 두 번째 수치에는 이 여백이 포함되어 있어요. QRdx에서 다운로드한 파일은 콰이어트 존을 켜지 않으면 여백이 없으므로, 레이아웃에서 코드 주변에 이 공간을 남겨 두세요.",
+        "quietAnswer": "표시된 코드 크기는 가장자리에서 가장자리까지의 크기예요. 스캐너가 읽으려면 사방에 {quiet, number}모듈의 여백도 필요하며, 두 번째 수치에는 이 여백이 포함돼 있어요. QRdx에서 다운로드한 코드에는 디자인에 설정된 여백이 들어 있고, 생성기와 대량 생성 도구는 끄지 않는 한 {quiet, number}모듈을 추가해요. 부족한 여백이 있다면 레이아웃에서 코드 주위에 그만큼 비워 두세요.",
+        "quietAnswerNewDesigns": "표시된 코드 크기는 가장자리에서 가장자리까지의 크기예요. 스캐너가 읽으려면 사방에 {quiet, number}모듈의 여백도 필요하며, 두 번째 수치에는 이 여백이 포함돼 있어요. QRdx에서 다운로드한 코드에는 디자인에 설정된 여백이 들어 있어요. 에디터의 새 디자인은 {start, number}모듈로 시작하고, 생성기와 대량 생성 도구는 끄지 않는 한 {quiet, number}모듈을 추가해요. 부족한 여백이 있다면 레이아웃에서 코드 주위에 그만큼 비워 두세요.",
         "resolutionQuestion": "인쇄용으로는 어떤 해상도로 내보내야 하나요?",
         "resolutionAnswer": "가능하면 SVG를 사용하세요. 벡터 형식이라 어떤 크기에서도 선명해요. PNG는 인쇄 시 일반적인 최소 기준인 300 DPI에 맞춰 표시된 픽셀 너비 이상으로 내보내세요."
       },
@@ -1740,6 +1741,9 @@
     "hosted": {
       "notFoundTitle": "페이지를 찾을 수 없어요",
       "notFoundMessage": "이 링크는 페이지로 연결되지 않아요. 소유자가 삭제했거나 링크가 잘못 입력되었을 수 있어요.",
+      "notReadyTitle": "이 페이지는 아직 준비되지 않았어요",
+      "notReadyMessage": "이 QR 코드를 만든 사람이 연결된 페이지를 아직 설정하고 있어요. 잠시 후에 다시 시도해 주세요.",
+      "notReadyOwner": "이 코드를 만드셨나요? QRdx에서 페이지를 게시하면 스캔했을 때 해당 페이지가 열려요.",
       "passwordProtected": "비밀번호로 보호됨",
       "madeWithQrdx": "QRdx로 제작",
       "share": "공유",
@@ -2706,9 +2710,10 @@
     "setupUrl": "서버 URL",
     "toolsEyebrow": "도구",
     "toolsTitle": "어시스턴트가 호출할 수 있는 도구",
-    "toolsDescription": "도구 {count, number}개가 있어요. save_template, save_barcode, generate_ai_art를 제외한 모든 도구는 읽기 전용이라 키가 필요 없어요. 이미지를 렌더링하고, 텍스트를 포맷하고, 공개 커뮤니티를 읽어요. 이 세 가지는 연결에 API 키가 있을 때 목록에 표시돼요. 전체 매개변수는 <link>MCP server docs</link>에서 확인하세요.",
+    "toolsDescription": "{count, number}개의 도구가 있어요. 대부분 읽기 전용이며 계정이나 키 없이 쓸 수 있어요. 이미지를 렌더링하고, 텍스트 형식을 맞추고, 공개 커뮤니티를 읽어요. 동적 QR 코드 도구 4개는 QRdx 로그인을 요청하고, save_template, save_barcode, generate_ai_art는 연결에 API 키가 있을 때 목록에 나타나요. 전체 매개변수는 <link>MCP 서버 문서</link>에서 확인하세요.",
     "toolNoKey": "키 불필요",
     "toolNeedsKey": "API 키 필요",
+    "toolNeedsSignIn": "로그인 필요",
     "faqTitle": "MCP 서버 FAQ",
     "connect": {
       "copyFailed": "복사하지 못했어요. 텍스트를 선택해서 직접 복사해 주세요.",
@@ -5111,7 +5116,8 @@
       "yourQrCodeIsNow": "QR 코드가 이제 동적이 되었어요",
       "destinationUpdated": "대상을 업데이트했어요",
       "designSavedToTheCode": "코드에 디자인을 저장했어요",
-      "couldntCopyTheShortLink": "짧은 링크를 복사하지 못했어요"
+      "couldntCopyTheShortLink": "짧은 링크를 복사하지 못했어요",
+      "inviteForMore": "아니면 <link>친구를 초대해 보세요</link>. 친구가 첫 동적 QR 코드를 만들면 두 분 모두 {count, number}개를 더 받아요."
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5443,6 +5449,9 @@
       "checkingScan": "스캔 확인 중…",
       "fullScanChecker": "전체 스캔 검사기",
       "checkAPrintedCode": "인쇄된 코드 확인",
+      "warning": "경고",
+      "scanScoreScoreValueWarningShow": "스캔 점수 {score, number}, {value}, 경고 있음. 검사 항목 보기",
+      "addAMargin": "{modules, number}모듈 여백 추가",
       "grades": {
         "great": "매우 좋음",
         "ok": "양호",
@@ -5754,7 +5763,8 @@
     "limitCard": {
       "planUsage": "요금제 및 사용량",
       "notNow": "나중에 할게요",
-      "labelUsed": "{label} 사용량"
+      "labelUsed": "{label} 사용량",
+      "inviteForMore": "아니면 <link>친구를 초대해 보세요</link>. 친구가 첫 동적 QR 코드를 만들면 두 분 모두 {count, number}개를 더 받아요."
     },
     "limitDialog": {
       "limitReached": "한도에 도달했어요"
@@ -6939,6 +6949,39 @@
           "refreshToTryAgainYour": "새로고침하여 다시 시도하세요. 요금제와 한도는 변경되지 않았습니다.",
           "unlimitedOnValue": "{value}에서 무제한",
           "labelUsed": "{label} 사용량"
+        }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "내 초대 링크:",
+          "copy": "복사",
+          "copied": "복사됨",
+          "linkCopied": "링크를 복사했어요",
+          "couldntCopy": "복사하지 못했어요. 링크를 선택해서 직접 복사해 주세요."
+        },
+        "page": {
+          "title": "친구 초대",
+          "description": "내 링크를 공유하세요. 친구가 이 링크로 가입해서 첫 동적 QR 코드를 만들면, 두 분 모두 동적 QR 코드를 {count, number}개 더 받아요.",
+          "notReady": "아직 초대 기능을 사용할 수 없어요. 나중에 다시 확인해 주세요.",
+          "yourInviteLink": "내 초대 링크",
+          "shareYourLink": "친구에게 보내거나 어디에든 올려 보세요. 이 링크로 가입한 친구가 동적 QR 코드를 만들면 두 분 모두 {count, number}개를 더 받아요.",
+          "link": "링크",
+          "sameVisit": "친구가 링크를 클릭한 같은 방문에서 계정을 만들면 인정돼요. 친구의 기기에는 아무것도 저장되지 않아요.",
+          "friendsJoined": "가입한 친구",
+          "friendsRewarded": "보상받은 친구",
+          "rewardedOfMax": "{max, number}명 중 {rewarded, number}명",
+          "extraCodes": "추가 동적 QR 코드",
+          "waiting": "{waiting, plural, other {#명이 아직 동적 QR 코드를 만들지 않았어요.}} 가입한 날부터 {days, number}일 안에 만들어야 해요.",
+          "atCap": "초대 링크 하나로 받을 수 있는 최대치인 {max, number}명의 친구에 대한 보상을 받았어요. 이 링크로 가입하는 친구는 계속 {count, number}개를 받아요.",
+          "youWereInvited": "친구의 초대로 가입하셨기 때문에 내 워크스페이스에도 동적 QR 코드 {count, number}개가 추가로 지급됐어요.",
+          "howItWorks": "이용 방법",
+          "ruleSignUp": "친구가 그 방문 중에 내 링크로 새 QRdx 계정을 만들면 인정돼요. 이후 방문에서 가입했거나 이미 있는 계정은 인정되지 않아요.",
+          "ruleFirstCode": "친구가 가입 후 {days, number}일 안에 첫 동적 QR 코드를 만들면, 두 분 모두 각자의 워크스페이스에서 동적 QR 코드를 {count, number}개 더 받아요.",
+          "ruleCap": "최대 {max, number}명의 친구({total, number}개 코드)에 대해 보상을 받을 수 있어요. 그 이후에 가입하는 친구도 {count, number}개를 받아요.",
+          "ruleNotYourself": "내 다른 계정은 인정되지 않아요. 다른 철자로 된 내 이메일 주소를 쓰는 계정이나 나와 워크스페이스를 공유하는 사람도 마찬가지예요.",
+          "ruleAllowance": "추가 코드는 어떤 플랜에서든 팀이 아닌 내 워크스페이스의 동적 QR 코드에 더해져요. 현금 가치는 없으며 다른 계정으로 옮길 수 없어요. 추가 코드로 만든 코드는 계속 작동해요.",
+          "rulePrivate": "내 링크로 누가 가입했는지는 절대 보여 드리지 않으며, 친구도 누가 초대했는지 볼 수 없어요.",
+          "ruleEnd": "새 초대에 대한 초대 보상은 종료될 수 있으며, 이미 받은 코드는 그대로 유지돼요. 자세한 내용은 <terms>서비스 약관</terms>과 <help>도움말 페이지</help>에서 확인하세요."
         }
       }
     },
@@ -9279,8 +9322,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "이 링크는 사용할 수 없어요",
+          "unknownAppTitle": "이 앱과 QRdx의 연결이 만료됐어요",
+          "unknownAppBody": "QRdx가 이곳으로 안내한 앱을 더 이상 알아보지 못해요. Claude, Cursor, VS Code처럼 QRdx에 연결한 AI 앱이라면 앱에서 QRdx를 삭제한 뒤 다시 추가하고 로그인하세요. 그렇지 않다면 앱 개발자에게 문의하세요.",
           "theAppThatSentYou": "이곳으로 안내한 앱에서 잘못된 요청을 보냈어요: <span>{description}</span>. 앱으로 돌아가 다시 시도하거나 앱 개발자에게 문의하세요.",
           "appnameWillBeAbleTo": "{appName}이(가) 할 수 있는 작업",
+          "mcpOnlyNote": "{appName}은(는) QRdx MCP 서버의 코드 도구를 통해서만 계정을 사용할 수 있어요. 코드 삭제, 웹훅 관리, AI 아트 사용은 할 수 없어요.",
           "nameWantsToAccessYour": "{name}이(가) 내 QRdx 계정에 접근하려고 해요",
           "builtByName": "제작: <strong>{name}</strong>",
           "unverifiedApp": "확인되지 않은 앱이에요.",
@@ -9715,7 +9761,9 @@
       "makeRoom": "{limit, select, dynamicCodes {공간을 확보하려면 코드 하나를 보관하세요.} landingPages {공간을 확보하려면 페이지 하나를 삭제하세요.} storage {공간을 확보하려면 필요 없는 파일을 삭제하세요.} savedThemes {공간을 확보하려면 테마 하나를 삭제하세요.} other {}}",
       "resets": "{date}에 초기화돼요.",
       "keeps": "{limit, select, dynamicCodes {기존 코드는 계속 작동해요.} landingPages {기존 페이지는 계속 게시돼요.} formResponses {페이지는 계속 게시돼요. 초기화 후에는 폼이 다시 응답을 받아요.} storage {업로드한 파일은 계속 사용할 수 있어요.} other {}}",
-      "upgradeButton": "{plan}(으)로 업그레이드"
+      "upgradeButton": "{plan}(으)로 업그레이드",
+      "includesBonus": "{plan}에는 {amount}와 초대로 추가된 {bonus, number}개가 포함돼요.",
+      "invite": "또는 <link>친구를 초대해 보세요</link>. 친구가 첫 동적 QR 코드를 만들면 두 분 모두 {count, number}개를 더 받아요."
     },
     "weeklyDigest": {
       "subject": "이번 주 QRdx 현황: {scans, plural, one {스캔 #회} other {스캔 #회}}",
@@ -9755,6 +9803,18 @@
       "taxes": "결제 시 현지 세금이 추가될 수 있어요.",
       "reply": "사용하다가 막히거나 방법이 헷갈리면 이 이메일에 답장해 주세요. 답장은 사람이 한 건씩 직접 읽습니다.",
       "reason": "방금 QRdx 계정을 만드셔서 이 이메일을 받으셨습니다."
+    },
+    "inviteReward": {
+      "subject": "초대한 친구가 첫 코드를 만들었어요. 두 분 모두 동적 QR 코드 {count, number}개를 더 받았어요",
+      "preview": "두 분 모두 동적 QR 코드 {count, number}개를 더 받았어요",
+      "heading": "두 분 모두 동적 QR 코드 {count, number}개를 더 받았어요",
+      "body": "초대 링크로 가입한 친구가 방금 첫 동적 QR 코드를 만들었습니다. 회원님의 워크스페이스에 동적 QR 코드 {count, number}개가 추가되었고, 친구의 워크스페이스에도 똑같이 추가되었습니다.",
+      "progress": "링크로 보상을 받을 수 있는 {max, number}명 중 {rewarded, plural, one {#명} other {#명}}째입니다.",
+      "last": "링크로 보상을 받을 수 있는 친구 {max, number}명을 모두 채웠습니다. 링크로 가입하는 친구는 계속 {count, number}개를 받습니다.",
+      "inviteMore": "친구 더 초대하기",
+      "seeInvites": "내 초대 보기",
+      "keeps": "추가 코드는 모든 플랜에서 사용할 수 있으며 현금 가치는 없습니다. 추가 코드로 만든 코드는 계속 작동합니다.",
+      "reason": "친구가 회원님의 QRdx 초대 링크로 가입해 첫 동적 QR 코드를 만들어서 이 메일을 받으셨습니다."
     }
   },
   "codeActions": {
@@ -10046,7 +10106,8 @@
       "bulkOverLimit": "최대 {limit, number}행까지의 파일은 계정 없이 사용할 수 있어요. 무료 계정은 파일당 최대 {max, number}개까지 만들 수 있고, 불러온 파일도 그대로 유지돼요.",
       "keepDesigns": "디자인을 계정에 보관하고 모든 기기에서 사용하세요.",
       "afterDownload": "무료이고, 요금제에 어떤 일이 생기더라도 QR 코드는 계속 작동해요.",
-      "upgrade": "요금제와 결제는 계정에 속해요. 보던 곳에서 바로 이어서 진행할 수 있어요."
+      "upgrade": "요금제와 결제는 계정에 속해요. 보던 곳에서 바로 이어서 진행할 수 있어요.",
+      "invite": "친구의 초대로 오셨네요. 지금 가입해서 첫 번째 코드를 만들면 동적 QR 코드를 {count, number}개 더 받아요."
     },
     "nudge": {
       "dismiss": "다시 표시하지 않기"
@@ -10194,6 +10255,11 @@
         "failed": "SSO가 제대로 작동하지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
         "rateLimited": "시도 횟수가 너무 많아요. 1분 정도 기다린 후 다시 시도해 주세요."
       }
+    },
+    "inviteNote": {
+      "text": "QRdx에 초대받으셨어요. 이번 방문 중에 가입하고 {days, number}일 이내에 동적 QR 코드를 만들면 동적 QR 코드를 {count, number}개 더 받아요.",
+      "signUp": "가입하기",
+      "dismiss": "닫기"
     }
   },
   "settingsActions": {

@@ -270,7 +270,7 @@
     },
     "packages/cli": {
       "name": "@qrdx/cli",
-      "version": "0.0.19",
+      "version": "0.0.20",
       "bin": {
         "qrdx": "./dist/index.js",
       },
@@ -641,6 +641,10 @@
         "tsup": "^9.0.0",
         "typescript": "^6.0.3",
       },
+    },
+    "plugins/google-workspace": {
+      "name": "@qrdx/google-workspace-addon",
+      "version": "0.0.1",
     },
     "plugins/n8n": {
       "name": "@qrdx/n8n-nodes-qrdx",
@@ -1775,6 +1779,8 @@
     "@qrdx/cli": ["@qrdx/cli@workspace:packages/cli"],
 
     "@qrdx/figma-plugin": ["@qrdx/figma-plugin@workspace:plugins/figma"],
+
+    "@qrdx/google-workspace-addon": ["@qrdx/google-workspace-addon@workspace:plugins/google-workspace"],
 
     "@qrdx/n8n-nodes-qrdx": ["@qrdx/n8n-nodes-qrdx@workspace:plugins/n8n"],
 

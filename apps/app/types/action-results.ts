@@ -22,7 +22,19 @@ export type QrCodeErrorCode =
 
 export type QrCodeActionResult<T> =
   | { success: true; data: T }
-  | { success: false; error: { code: QrCodeErrorCode; message: string } };
+  | {
+      success: false;
+      error: {
+        code: QrCodeErrorCode;
+        message: string;
+        /**
+         * LIMIT_REACHED in the person's own workspace while inviting a
+         * friend would still earn them more codes (lib/invites): the limit
+         * gate adds its invite line.
+         */
+        invite?: true;
+      };
+    };
 
 export type BarcodeErrorCode =
   | "UNAUTHORIZED"

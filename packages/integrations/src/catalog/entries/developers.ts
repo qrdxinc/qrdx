@@ -85,7 +85,7 @@ export const developers: IntegrationCatalogEntry[] = [
     tagline:
       "Turn any URL into a QR code image for Markdown, HTML or email. No account or key.",
     description: [
-      "GET /api/v1/qr returns an SVG, PNG or print-ready EPS. Everything is in the query string, so the URL itself is the image: paste it into a README, an <img> tag or an email template.",
+      "GET /api/v1/qr returns an SVG, PNG, TIFF or print-ready EPS. Everything is in the query string, so the URL itself is the image: paste it into a README, an <img> tag or an email template.",
       "Choose size, colors, module and corner shapes, error correction, margin and a frame.",
     ],
     kind: "native",
@@ -131,8 +131,9 @@ export const developers: IntegrationCatalogEntry[] = [
     ],
     capabilities: [
       {
-        title: "SVG, PNG or EPS",
-        description: "Vector EPS sized in points for print and design tools.",
+        title: "SVG, PNG, TIFF or EPS",
+        description:
+          "TIFF at 300 dpi, in RGB or CMYK, and vector EPS sized in points for print and design tools.",
       },
       {
         title: "Styles",

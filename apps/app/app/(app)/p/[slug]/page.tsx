@@ -20,6 +20,7 @@ import { baseUrl } from "@/lib/metadata";
 import { NFC_PARAM } from "@/lib/nfc/links";
 import { aliasCode } from "@/lib/path-alias-store";
 import { enforcePageLifecycle } from "@/lib/redirect/lifecycle";
+import { ScanNotice } from "../_components/scan-notice";
 import { loadPublicPage, pageSummary } from "../_lib/public-page";
 
 // Hosted landing pages (qr_code.kind = 'page'), reached via /q/<slug> or
@@ -74,6 +75,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: { absolute: t("hosted.notFoundTitle") },
       robots: { index: false },
+    };
+  }
+
+  // Not published yet: no title, photo or text from the template's samples.
+  if (page.notReady) {
+    const { t } = await scanPagesIntl(await scannerLocale());
+    return {
+      title: { absolute: t("hosted.notReadyTitle") },
+      robots: { index: false, follow: false },
+      openGraph: null,
+      twitter: null,
     };
   }
 
@@ -138,6 +150,22 @@ export default async function LandingPage({ params, searchParams }: Props) {
   }
   // Password gate, schedule, scan limit and pause apply to direct visits too.
   await enforcePageLifecycle(page.code);
+
+  // Never published: the template's samples would read as the owner's page
+  // (a stranger's name, a product they don't sell). Say it isn't ready, and
+  // tell whoever made the code what to do.
+  if (page.notReady) {
+    const { t } = await scanPagesIntl(locale);
+    return (
+      <ScanNotice
+        aside={t("hosted.notReadyOwner")}
+        locale={locale}
+        makeYourOwn={t("status.makeYourOwn")}
+        message={t("hosted.notReadyMessage")}
+        title={t("hosted.notReadyTitle")}
+      />
+    );
+  }
 
   const requestHeaders = await headers();
   const context: BlockRenderContext = {

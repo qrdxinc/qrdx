@@ -84,7 +84,7 @@ Ask in plain words, with the link or details and any colors you want:
 
 For requests like these the assistant usually calls `design_qr`. It checks the content first, so a WPA password shorter than 8 characters is refused with the reason. Then it draws the code, decodes it at 96, 160 and 320 pixels through a model of a phone camera, and if the scan score is below Great, adjusts the style (darker colors that keep their hue, a safer eye shape) and tries again. You get the score, a PNG in the chat, the SVG and a link that opens the design in the QRdx playground.
 
-`generate_qr_code` is the quicker tool. It skips the check and returns a PNG plus public SVG, PNG, WebP and EPS links you can paste into Markdown or HTML. Those links contain whatever the code encodes, so don't share them for a Wi-Fi code with a password you want to keep private.
+`generate_qr_code` is the quicker tool. It skips the check and returns a PNG plus public SVG, PNG, WebP, TIFF and EPS links ready for Markdown, HTML or print. Those links contain whatever the code encodes, so don't share them for a Wi-Fi code with a password you want to keep private.
 
 ## No connector? Ask for an image URL
 

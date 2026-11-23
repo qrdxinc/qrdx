@@ -362,6 +362,9 @@ describe("POST /api/playground/codes (the Dynamic toggle)", () => {
     expect((await json(over)).error).toEqual({
       code: "LIMIT_REACHED",
       message: expect.stringContaining("10 active dynamic QR codes"),
+      // Their own workspace, with invites still able to earn codes here
+      // (lib/invites): the limit gate adds its invite line.
+      invite: true,
     });
     expect(fakeDb.rows("qrCode")).toHaveLength(limit);
   });

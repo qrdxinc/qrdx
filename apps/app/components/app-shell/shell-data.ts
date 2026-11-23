@@ -5,6 +5,7 @@ import { countUnarchived } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import {
   attentionMeters,
   type Meter,
+  withCodeBonus,
 } from "@/app/(app)/settings/usage/_lib/meters";
 import {
   getUsageMeters,
@@ -13,6 +14,8 @@ import {
 import type { ShellLimits } from "@/components/limits/plan-limits-provider";
 import { getChangelogSeen } from "@/lib/changelog-feed-server";
 import { getCheckoutOpen } from "@/lib/checkout-availability";
+import { dynamicCodeLimit } from "@/lib/code-limit";
+import { canStillEarnFromInvites } from "@/lib/invites/bonus";
 import { can } from "@/lib/permissions";
 import {
   cheapestPlanWith,
@@ -90,10 +93,19 @@ export async function getShellData(): Promise<ShellData | null> {
     ]);
     const isTeam = !workspace.own;
     const canUpgrade = can(scope.role, "billing.manage");
-    const limit = getPlanLimits(plan).dynamicCodes;
-    const codes = Number.isFinite(limit)
+    // A capped plan's dynamic codes plus what invites added
+    // (lib/code-limit.ts), the count against them, and whether inviting a
+    // friend would raise them (lib/invites: only the person's own workspace,
+    // while their invites can still earn codes), read side by side.
+    const capped = Number.isFinite(getPlanLimits(plan).dynamicCodes);
+    const [{ limit, bonus }, used, inviteOffer] = await Promise.all([
+      dynamicCodeLimit(scope, plan),
+      capped ? countUnarchived(scope) : 0,
+      capped && !isTeam ? canStillEarnFromInvites(scope.userId) : false,
+    ]);
+    const codes = capped
       ? {
-          used: await countUnarchived(scope),
+          used,
           limit,
           unlimitedPlan: cheapestPlanWith(
             (limits) => !Number.isFinite(limits.dynamicCodes),
@@ -112,9 +124,13 @@ export async function getShellData(): Promise<ShellData | null> {
         plan,
         canUpgrade,
         checkoutOpen: getCheckoutOpen(),
-        caps: meterCapsFor(plan, { isTeam, personalPlan }),
+        caps: withCodeBonus(
+          meterCapsFor(plan, { isTeam, personalPlan }),
+          bonus,
+        ),
         isTeam,
         usageHref: workspaceHref(workspace.slug, "/settings/usage"),
+        inviteOffer,
       },
       changelogSeen: seen && { viewerId: scope.userId, ...seen },
     };

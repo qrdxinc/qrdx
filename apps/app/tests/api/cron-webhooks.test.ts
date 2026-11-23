@@ -76,6 +76,15 @@ vi.mock("@/lib/safety/recheck", () => ({
   },
 }));
 
+// Friends' invites a first code already qualifies (lib/invites/qualify.ts).
+const invites = vi.hoisted(() => ({ calls: 0, left: false }));
+vi.mock("@/lib/invites/qualify", () => ({
+  settleWaitingInvites: async () => {
+    invites.calls++;
+    return { settled: 0, left: invites.left };
+  },
+}));
+
 const { GET } = await import("@/app/api/cron/webhooks/route");
 const { WORKER_DUE_KEY, forgetScheduledRunsForTests, scheduleWorkerRun } =
   await import("@/lib/events/worker-due");
@@ -117,6 +126,8 @@ beforeEach(() => {
   state.integrations = { streams: 0, ok: 0, failed: 0, skipped: 0 };
   recheck.calls = 0;
   recheck.pending = 0;
+  invites.calls = 0;
+  invites.left = false;
 });
 
 afterEach(() => {
@@ -281,6 +292,21 @@ describe("the daily call", () => {
     await json(await call("github"));
     expect(ranWorker()).toBe(true);
     expect(recheck.calls).toBe(3);
+  });
+
+  it("settles waiting invites on full runs, and stays due while some are left", async () => {
+    await call();
+    expect(invites.calls).toBe(1);
+    vi.setSystemTime(T0 + 5 * MINUTE);
+    expect((await json(await call("github"))).skipped).toBe(true);
+    expect(invites.calls).toBe(1);
+    invites.left = true;
+    await call();
+    vi.setSystemTime(T0 + 10 * MINUTE);
+    state.dbCalls = [];
+    await json(await call("github"));
+    expect(ranWorker()).toBe(true);
+    expect(invites.calls).toBe(3);
   });
 
   it("doesn't touch the database outside production", async () => {

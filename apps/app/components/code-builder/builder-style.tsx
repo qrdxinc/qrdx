@@ -27,7 +27,7 @@ import {
   QR_IMAGE_KINDS,
 } from "@/components/editor/gradient-picker";
 import { QRStyleScopeProvider } from "@/components/editor/style-scope";
-import { defaultThemeState } from "@/config/qr";
+import { defaultThemeState, storedStyleDefaults } from "@/config/qr";
 import { useFrameLibrary } from "@/lib/frames/use-frame-library";
 import { designColors } from "@/lib/paint/swatches";
 import { soundEvent } from "@/lib/sound/emit";
@@ -46,9 +46,13 @@ interface ThemeChoice {
   isDefault: boolean;
 }
 
-/** A theme applied over the defaults, as the playground applies presets. */
+/**
+ * A theme applied over the defaults. A saved theme or code keeps the margin
+ * it has (none when it has no `margin`); the built-in choices carry the
+ * default one, as applying a preset in the playground does.
+ */
 export const themeLook = (style: QRStyle): QRStyle => ({
-  ...defaultThemeState.styles,
+  ...storedStyleDefaults,
   ...style,
 });
 
@@ -67,7 +71,7 @@ export function themeChoices(saved: SavedTheme[]): ThemeChoice[] {
     .map(([id, preset]) => ({
       id: `built-in:${id}`,
       name: preset.label ?? id,
-      style: preset.styles,
+      style: { ...defaultThemeState.styles, ...preset.styles },
       isDefault: false,
     }));
   return [

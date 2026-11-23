@@ -67,6 +67,17 @@ async function rpc(
 const call = (name: string, args: Record<string, unknown>) =>
   rpc("tools/call", { name, arguments: args });
 
+const SIGN_IN_TOOLS = [
+  "create_dynamic_code",
+  "get_code_stats",
+  "list_codes",
+  "update_code_destination",
+];
+const WRITING_SIGN_IN_TOOLS = [
+  "create_dynamic_code",
+  "update_code_destination",
+];
+
 describe("MCP over Streamable HTTP", () => {
   it("initializes with QRdx's server info and instructions", async () => {
     const { response, message } = await rpc("initialize", {
@@ -81,7 +92,7 @@ describe("MCP over Streamable HTTP", () => {
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
   });
 
-  it("lists the QR, barcode and docs tools without a key, all read-only", async () => {
+  it("lists the QR, barcode and docs tools without a key, all read-only, and the sign-in tools", async () => {
     const { message } = await rpc("tools/list");
     const tools = message?.result.tools as {
       name: string;
@@ -90,6 +101,7 @@ describe("MCP over Streamable HTTP", () => {
     }[];
     expect(tools.map((tool) => tool.name).sort()).toEqual(
       [
+        ...SIGN_IN_TOOLS,
         "design_qr",
         "get_community_item",
         "list_options",
@@ -109,12 +121,18 @@ describe("MCP over Streamable HTTP", () => {
       ].sort(),
     );
     for (const tool of tools) {
-      expect(tool.annotations?.readOnlyHint, tool.name).toBe(true);
-      expect(tool.annotations?.destructiveHint, tool.name).toBe(false);
+      // create_dynamic_code and update_code_destination write to the
+      // signed-in person's workspace; changing a destination replaces one.
+      expect(tool.annotations?.readOnlyHint, tool.name).toBe(
+        !WRITING_SIGN_IN_TOOLS.includes(tool.name),
+      );
+      expect(tool.annotations?.destructiveHint, tool.name).toBe(
+        tool.name === "update_code_destination",
+      );
     }
   });
 
-  it("adds the save tools and AI art with an API key, the only ones that aren't read-only", async () => {
+  it("adds the save tools and AI art with an API key, the only other ones that aren't read-only", async () => {
     const { message } = await rpc(
       "tools/list",
       {},
@@ -124,16 +142,21 @@ describe("MCP over Streamable HTTP", () => {
       name: string;
       annotations?: { readOnlyHint?: boolean; destructiveHint?: boolean };
     }[];
-    expect(tools).toHaveLength(19);
+    expect(tools).toHaveLength(23);
     for (const tool of tools) {
       // save_template and save_barcode write to the API key's workspace;
       // generate_ai_art uses its monthly AI art images.
       expect(tool.annotations?.readOnlyHint, tool.name).toBe(
-        !["save_template", "save_barcode", "generate_ai_art"].includes(
-          tool.name,
-        ),
+        ![
+          "save_template",
+          "save_barcode",
+          "generate_ai_art",
+          ...WRITING_SIGN_IN_TOOLS,
+        ].includes(tool.name),
       );
-      expect(tool.annotations?.destructiveHint, tool.name).toBe(false);
+      expect(tool.annotations?.destructiveHint, tool.name).toBe(
+        tool.name === "update_code_destination",
+      );
     }
   });
 
@@ -153,6 +176,10 @@ describe("MCP over Streamable HTTP", () => {
       const tool = MCP_TOOLS.find((item) => item.name === name);
       // The tools that need a key are the ones a keyless client isn't shown.
       expect(Boolean(tool?.needsKey), name).toBe(!keyless.includes(name));
+      // The ones that need sign-in are listed to everyone.
+      expect(Boolean(tool?.needsSignIn), name).toBe(
+        SIGN_IN_TOOLS.includes(name),
+      );
     }
   });
 

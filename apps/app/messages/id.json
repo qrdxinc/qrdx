@@ -911,7 +911,7 @@
     "crumb": "Generator kode QR",
     "hub": {
       "metaTitle": "Jenis Kode QR: {count, number} Generator Gratis (Wi-Fi, vCard, UPI)",
-      "metaDescription": "{count, number} jenis kode QR, masing-masing dengan generator gratis: Wi-Fi, vCard, WhatsApp, UPI, email, profil sosial, dan pembayaran. Setiap halaman menampilkan format payload yang tepat.",
+      "metaDescription": "{count, number} jenis kode QR dengan generator gratis: Wi-Fi, vCard, WhatsApp, UPI, email, profil sosial, dan pembayaran, lengkap dengan format payload-nya.",
       "title": "Generator kode QR untuk setiap jenis konten",
       "intro1": "Kode QR bisa melakukan lebih dari sekadar membuka situs web. Bergantung pada teks di dalamnya, ponsel dapat terhubung ke jaringan Wi-Fi, menyimpan kontak, memulai pembayaran, atau membuka obrolan. Pilih salah satu dari {count, number} jenis di bawah untuk mendapatkan generator dengan kolom yang sesuai, pratinjau langsung, dan unduhan PNG, WebP, atau SVG.",
       "intro2": "Secara default, kode yang dibuat di halaman ini bersifat statis: konten disandikan langsung di dalam polanya, sehingga berfungsi secara offline, tidak pernah kedaluwarsa, dan tidak memiliki batas pemindaian. Setiap halaman juga menjelaskan format persis yang dihasilkan, sehingga Anda tahu apa yang akan dibaca oleh pemindai.",
@@ -1241,7 +1241,8 @@
         "logoQuestion": "Apakah logo atau koreksi kesalahan yang lebih tinggi mengubah ukuran?",
         "logoAnswer": "Koreksi kesalahan yang lebih tinggi menambah redundansi, sehingga konten yang sama membutuhkan versi lebih tinggi dengan lebih banyak modul, dan karena itu hasil cetaknya lebih besar. Logo tidak mengubah jumlah modul, tetapi menutupi sebagian modul, jadi gunakan level Q atau H saat menambahkannya.",
         "quietQuestion": "Apakah quiet zone dihitung dalam ukuran?",
-        "quietAnswer": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx tidak memiliki margin kecuali Anda mengaktifkan quiet zone, jadi sisakan ruang tersebut di sekitar kode pada tata letak Anda.",
+        "quietAnswer": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx memiliki margin sesuai pengaturan desainnya, sedangkan generator dan alat massal menambahkan {quiet, number} kecuali Anda menonaktifkannya. Sisakan ruang yang kurang di sekitar kode pada tata letak Anda.",
+        "quietAnswerNewDesigns": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx memiliki margin sesuai pengaturan desainnya: desain baru di editor dimulai dengan {start, number} modul, sedangkan generator dan alat massal menambahkan {quiet, number} kecuali Anda menonaktifkannya. Sisakan ruang yang kurang di sekitar kode pada tata letak Anda.",
         "resolutionQuestion": "Resolusi berapa yang sebaiknya saya ekspor untuk cetak?",
         "resolutionAnswer": "Gunakan SVG jika memungkinkan: formatnya vektor dan tetap tajam di ukuran apa pun. Untuk PNG, ekspor minimal dengan lebar piksel yang ditampilkan untuk 300 DPI, yang merupakan standar minimum untuk cetak."
       },
@@ -1740,6 +1741,9 @@
     "hosted": {
       "notFoundTitle": "Halaman tidak ditemukan",
       "notFoundMessage": "Tautan ini tidak mengarah ke halaman mana pun. Pemiliknya mungkin telah menghapusnya, atau tautannya salah ketik.",
+      "notReadyTitle": "Halaman ini belum siap",
+      "notReadyMessage": "Pembuat kode QR ini masih menyiapkan halaman yang akan dibuka. Coba lagi beberapa saat lagi.",
+      "notReadyOwner": "Anda yang membuat kode ini? Publikasikan halamannya di QRdx agar pemindaian membukanya.",
       "passwordProtected": "Dilindungi kata sandi",
       "madeWithQrdx": "Dibuat dengan QRdx",
       "share": "Bagikan",
@@ -2706,9 +2710,10 @@
     "setupUrl": "URL server",
     "toolsEyebrow": "Alat",
     "toolsTitle": "Yang dapat dipanggil asisten Anda",
-    "toolsDescription": "{count, number} alat. Semua alat kecuali save_template, save_barcode, dan generate_ai_art bersifat hanya-baca dan tidak memerlukan kunci: alat-alat ini merender gambar, memformat teks, dan membaca komunitas publik. Ketiga alat tersebut baru ditampilkan setelah koneksi memiliki kunci API. Parameter lengkap ada di <link>dokumentasi server MCP</link>.",
+    "toolsDescription": "{count, number} alat. Sebagian besar hanya-baca dan tidak memerlukan akun atau kunci: alat ini membuat gambar, memformat teks, dan membaca komunitas publik. Empat alat kode QR dinamis meminta Anda masuk ke QRdx, sedangkan save_template, save_barcode, dan generate_ai_art muncul setelah koneksi memiliki kunci API. Parameter lengkapnya ada di <link>dokumentasi server MCP</link>.",
     "toolNoKey": "Tanpa kunci",
     "toolNeedsKey": "Perlu kunci API",
+    "toolNeedsSignIn": "Perlu masuk",
     "faqTitle": "FAQ server MCP",
     "connect": {
       "copyFailed": "Tidak dapat menyalin. Pilih teksnya lalu salin secara manual.",
@@ -5111,7 +5116,8 @@
       "yourQrCodeIsNow": "Kode QR Anda kini dinamis",
       "destinationUpdated": "Tujuan diperbarui",
       "designSavedToTheCode": "Desain disimpan ke kode",
-      "couldntCopyTheShortLink": "Tidak dapat menyalin tautan pendek"
+      "couldntCopyTheShortLink": "Tidak dapat menyalin tautan pendek",
+      "inviteForMore": "Atau <link>undang teman</link>: saat mereka membuat kode dinamis pertamanya, Anda berdua mendapat tambahan {count, number}."
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5443,6 +5449,9 @@
       "checkingScan": "Memeriksa pemindaian…",
       "fullScanChecker": "Pemeriksa pemindaian lengkap",
       "checkAPrintedCode": "Periksa kode yang dicetak",
+      "warning": "Peringatan",
+      "scanScoreScoreValueWarningShow": "Skor pemindaian {score, number}, {value}, dengan peringatan. Tampilkan pemeriksaan",
+      "addAMargin": "Tambahkan margin {modules, number} modul",
       "grades": {
         "great": "Bagus",
         "ok": "OK",
@@ -5754,7 +5763,8 @@
     "limitCard": {
       "planUsage": "Paket & penggunaan",
       "notNow": "Nanti saja",
-      "labelUsed": "{label} terpakai"
+      "labelUsed": "{label} terpakai",
+      "inviteForMore": "Atau <link>undang teman</link>: saat mereka membuat kode QR dinamis pertamanya, Anda berdua mendapat {count, number} tambahan."
     },
     "limitDialog": {
       "limitReached": "Batas tercapai"
@@ -6939,6 +6949,39 @@
           "refreshToTryAgainYour": "Muat ulang untuk mencoba lagi. Paket dan batas Anda tidak berubah.",
           "unlimitedOnValue": "Tanpa batas di {value}",
           "labelUsed": "{label} terpakai"
+        }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "Tautan undangan Anda:",
+          "copy": "Salin",
+          "copied": "Tersalin",
+          "linkCopied": "Tautan disalin",
+          "couldntCopy": "Tidak dapat menyalin. Pilih tautan lalu salin sendiri."
+        },
+        "page": {
+          "title": "Undang teman",
+          "description": "Bagikan tautan Anda. Saat teman mendaftar melalui tautan itu dan membuat kode dinamis pertamanya, Anda berdua mendapat tambahan {count, number} kode dinamis.",
+          "notReady": "Undangan belum tersedia. Silakan cek kembali nanti.",
+          "yourInviteLink": "Tautan undangan Anda",
+          "shareYourLink": "Kirim ke teman atau posting di mana saja. Setiap teman yang bergabung melalui tautan ini dan membuat kode dinamis memberi Anda berdua tambahan {count, number}.",
+          "link": "Tautan",
+          "sameVisit": "Seorang teman dihitung jika ia membuat akun dalam kunjungan yang sama dengan saat mengeklik tautan. Tidak ada yang disimpan di perangkatnya.",
+          "friendsJoined": "Teman yang bergabung",
+          "friendsRewarded": "Teman yang diberi hadiah",
+          "rewardedOfMax": "{rewarded, number} dari {max, number}",
+          "extraCodes": "Kode dinamis tambahan",
+          "waiting": "{waiting, plural, one {# teman belum} other {# teman belum}} membuat kode dinamis. Mereka punya waktu {days, number} hari sejak mendaftar.",
+          "atCap": "Anda sudah mendapat hadiah untuk {max, number} teman, batas maksimum dari satu tautan undangan. Teman yang bergabung melalui tautan ini tetap mendapat {count, number} kode.",
+          "youWereInvited": "Anda bergabung melalui undangan teman, jadi workspace Anda sendiri juga mendapat tambahan {count, number} kode dinamis.",
+          "howItWorks": "Cara kerjanya",
+          "ruleSignUp": "Seorang teman dihitung jika ia membuat akun QRdx baru melalui tautan Anda dalam kunjungan tersebut. Pendaftaran pada kunjungan berikutnya, atau akun yang sudah ada, tidak dihitung.",
+          "ruleFirstCode": "Saat mereka membuat kode dinamis pertama dalam {days, number} hari sejak mendaftar, Anda berdua mendapat tambahan {count, number} kode dinamis di workspace masing-masing.",
+          "ruleCap": "Anda bisa mendapat hadiah untuk maksimal {max, number} teman ({total, number} kode). Teman yang bergabung setelah itu tetap mendapat {count, number} kode.",
+          "ruleNotYourself": "Akun Anda yang lain tidak dihitung, begitu pula akun yang memakai alamat email Anda dengan penulisan berbeda atau siapa pun yang berbagi workspace dengan Anda.",
+          "ruleAllowance": "Kode tambahan ini menambah kode dinamis di workspace pribadi Anda pada paket apa pun, bukan milik tim. Kode ini tidak bernilai uang tunai dan tidak dapat dipindahkan ke akun lain. Kode yang Anda buat dengannya tetap berfungsi.",
+          "rulePrivate": "Kami tidak pernah menampilkan siapa yang mendaftar melalui tautan Anda, dan teman Anda tidak melihat siapa yang mengundang mereka.",
+          "ruleEnd": "Kami dapat mengakhiri hadiah undangan untuk undangan baru; kode yang sudah Anda peroleh tetap ada. Detailnya ada di <terms>Ketentuan Layanan</terms> dan <help>halaman bantuan</help>."
         }
       }
     },
@@ -9279,8 +9322,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Tautan ini tidak dapat digunakan",
+          "unknownAppTitle": "Koneksi aplikasi ini ke QRdx sudah kedaluwarsa",
+          "unknownAppBody": "QRdx tidak lagi mengenali aplikasi yang mengarahkan Anda ke sini. Jika ini aplikasi AI yang Anda hubungkan ke QRdx, seperti Claude, Cursor, atau VS Code, hapus QRdx dari aplikasi tersebut, tambahkan lagi, lalu masuk. Jika bukan, tanyakan kepada pengembang aplikasinya.",
           "theAppThatSentYou": "Aplikasi yang mengarahkan Anda ke sini mengirim permintaan yang tidak valid: <span>{description}</span>. Kembali ke aplikasi tersebut dan coba lagi, atau hubungi pengembangnya.",
           "appnameWillBeAbleTo": "{appName} akan dapat",
+          "mcpOnlyNote": "{appName} hanya bisa memakai akun Anda lewat alat kode server MCP QRdx: aplikasi ini tidak bisa menghapus kode, mengelola webhook, atau memakai seni AI.",
           "nameWantsToAccessYour": "{name} ingin mengakses akun QRdx Anda",
           "builtByName": "Dibuat oleh <strong>{name}</strong>",
           "unverifiedApp": "Aplikasi belum terverifikasi.",
@@ -9715,7 +9761,9 @@
       "makeRoom": "{limit, select, dynamicCodes {Arsipkan satu untuk memberi ruang.} landingPages {Hapus satu untuk memberi ruang.} storage {Hapus file yang tidak lagi Anda perlukan untuk memberi ruang.} savedThemes {Hapus satu untuk memberi ruang.} other {}}",
       "resets": "Diatur ulang {date}.",
       "keeps": "{limit, select, dynamicCodes {Kode yang ada tetap berfungsi.} landingPages {Halaman yang ada tetap aktif.} formResponses {Halaman tetap aktif. Formulir kembali menerima respons setelah pengaturan ulang.} storage {File yang sudah Anda unggah tetap tersedia.} other {}}",
-      "upgradeButton": "Upgrade ke {plan}"
+      "upgradeButton": "Upgrade ke {plan}",
+      "includesBonus": "{plan} mencakup {amount} dan undangan menambahkan {bonus, number}.",
+      "invite": "Atau <link>undang teman</link>: saat mereka membuat kode dinamis pertamanya, Anda berdua mendapat tambahan {count, number}."
     },
     "weeklyDigest": {
       "subject": "Minggu Anda di QRdx: {scans, plural, other {# pemindaian}}",
@@ -9755,6 +9803,18 @@
       "taxes": "Pajak setempat mungkin ditambahkan saat pembayaran.",
       "reply": "Jika ada kendala, atau Anda tidak yakin cara melakukan sesuatu, balas email ini. Setiap balasan dibaca oleh seorang manusia.",
       "reason": "Anda menerima email ini karena baru saja membuat akun QRdx."
+    },
+    "inviteReward": {
+      "subject": "Teman yang Anda undang membuat kode pertamanya: Anda berdua mendapat tambahan {count, number} kode dinamis",
+      "preview": "Anda berdua mendapat tambahan {count, number} kode dinamis",
+      "heading": "Anda berdua mendapat tambahan {count, number} kode dinamis",
+      "body": "Teman yang mendaftar melalui tautan undangan Anda baru saja membuat kode dinamis pertamanya. Workspace Anda kini memiliki tambahan {count, number} kode dinamis, begitu juga workspace teman Anda.",
+      "progress": "Itu berarti {rewarded, plural, other {# teman}} dari {max, number} teman yang bisa memberi Anda hadiah lewat tautan Anda.",
+      "last": "Itu teman terakhir dari {max, number} teman yang bisa memberi Anda hadiah lewat tautan Anda. Teman yang bergabung lewat tautan ini tetap mendapat {count, number}.",
+      "inviteMore": "Undang lebih banyak teman",
+      "seeInvites": "Lihat undangan Anda",
+      "keeps": "Kode tambahan ini berlaku di paket apa pun dan tidak memiliki nilai tunai. Kode yang Anda buat dengannya akan terus berfungsi.",
+      "reason": "Anda menerima email ini karena seorang teman mendaftar melalui tautan undangan QRdx Anda dan membuat kode dinamis pertamanya."
     }
   },
   "codeActions": {
@@ -10046,7 +10106,8 @@
       "bulkOverLimit": "File hingga {limit, number} baris tidak memerlukan akun. Akun gratis dapat membuat hingga {max, number} per file, dan file Anda tetap dimuat.",
       "keepDesigns": "Simpan desain Anda di akun Anda, di setiap perangkat.",
       "afterDownload": "Gratis, dan kode Anda tetap berfungsi apa pun yang terjadi pada paket Anda.",
-      "upgrade": "Paket dan penagihan terhubung ke sebuah akun. Anda akan melanjutkan tepat dari tempat Anda berhenti."
+      "upgrade": "Paket dan penagihan terhubung ke sebuah akun. Anda akan melanjutkan tepat dari tempat Anda berhenti.",
+      "invite": "Anda datang melalui undangan teman. Daftar sekarang dan Anda akan mendapatkan {count, number} kode dinamis tambahan saat membuat kode dinamis pertama Anda."
     },
     "nudge": {
       "dismiss": "Jangan tampilkan lagi"
@@ -10194,6 +10255,11 @@
         "failed": "Single sign-on tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
         "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi."
       }
+    },
+    "inviteNote": {
+      "text": "Anda diundang ke QRdx. Daftar selama kunjungan ini dan buat kode dinamis dalam {days, number} hari untuk mendapatkan {count, number} kode dinamis tambahan.",
+      "signUp": "Daftar",
+      "dismiss": "Tutup"
     }
   },
   "settingsActions": {

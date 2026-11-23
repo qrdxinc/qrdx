@@ -1241,7 +1241,8 @@
         "logoQuestion": "ロゴや高い誤り訂正レベルでサイズは変わりますか?",
         "logoAnswer": "誤り訂正レベルを上げると冗長性が増えるため、同じ内容でもバージョンが上がってモジュール数が増え、印刷サイズも大きくなります。ロゴを入れてもモジュール数は変わりませんが、一部のモジュールが隠れるため、ロゴを追加するときはレベルQまたはHを使用してください。",
         "quietQuestion": "クワイエットゾーンもサイズに含まれますか？",
-        "quietAnswer": "表示されているコードサイズは端から端までの寸法です。スキャナーには四方に{quiet, number}モジュール分の余白も必要で、2つ目の数値にはこの余白が含まれています。QRdxのダウンロードデータは、クワイエットゾーンをオンにしない限り余白がないため、レイアウトではコードの周囲にその余白を確保してください。",
+        "quietAnswer": "表示されているコードのサイズは、端から端までの寸法です。スキャナーが読み取るには、四方すべてに {quiet, number} モジュール分の余白も必要で、2つ目の数値にはこの余白が含まれています。QRdxでダウンロードしたコードには、デザインで設定した余白が付いています。ジェネレーターと一括生成ツールでは、オフにしない限り {quiet, number} モジュール分が追加されます。不足している余白がある場合は、レイアウト上でコードの周囲に空けてください。",
+        "quietAnswerNewDesigns": "表示されているコードのサイズは、端から端までの寸法です。スキャナーが読み取るには、四方すべてに {quiet, number} モジュール分の余白も必要で、2つ目の数値にはこの余白が含まれています。QRdxでダウンロードしたコードには、デザインで設定した余白が付いています。エディターの新しいデザインは {start, number} モジュールから始まり、ジェネレーターと一括生成ツールでは、オフにしない限り {quiet, number} モジュール分が追加されます。不足している余白がある場合は、レイアウト上でコードの周囲に空けてください。",
         "resolutionQuestion": "印刷用には何の解像度で書き出せばよいですか？",
         "resolutionAnswer": "可能であればSVGをお使いください。ベクター形式なので、どんなサイズでも鮮明なままです。PNGの場合は、印刷の一般的な最小値である300 DPIに対応する、表示されているピクセル幅以上で書き出してください。"
       },
@@ -1740,6 +1741,9 @@
     "hosted": {
       "notFoundTitle": "ページが見つかりません",
       "notFoundMessage": "このリンクの先にはページがありません。所有者が削除したか、リンクが誤って入力された可能性があります。",
+      "notReadyTitle": "このページはまだ準備中です",
+      "notReadyMessage": "このQRコードの作成者が、開く先のページをまだ設定しています。しばらくしてからもう一度お試しください。",
+      "notReadyOwner": "このコードの作成者の方は、QRdxでページを公開してください。公開するとスキャンでそのページが開きます。",
       "passwordProtected": "パスワード保護あり",
       "madeWithQrdx": "QRdxで作成",
       "share": "共有",
@@ -2706,9 +2710,10 @@
     "setupUrl": "サーバーURL",
     "toolsEyebrow": "ツール",
     "toolsTitle": "アシスタントが呼び出せるツール",
-    "toolsDescription": "{count, number} 個のツールがあります。save_template、save_barcode、generate_ai_art 以外はすべて読み取り専用で、キーは不要です。画像の生成、テキストの整形、公開コミュニティの閲覧ができます。この3つは、接続に API キーが設定されると一覧に表示されます。パラメーターの詳細は<link>MCP サーバーのドキュメント</link>をご覧ください。",
+    "toolsDescription": "{count, number} 個のツールがあります。ほとんどは読み取り専用で、アカウントもキーも不要です。画像の生成、テキストの整形、公開コミュニティの閲覧ができます。動的QRコードの4つのツールはQRdxへのサインインを求め、save_template、save_barcode、generate_ai_art は接続に API キーが設定されると一覧に表示されます。パラメーターの詳細は<link>MCP サーバーのドキュメント</link>をご覧ください。",
     "toolNoKey": "キー不要",
     "toolNeedsKey": "APIキーが必要",
+    "toolNeedsSignIn": "サインインが必要",
     "faqTitle": "MCPサーバーのFAQ",
     "connect": {
       "copyFailed": "コピーできませんでした。テキストを選択して手動でコピーしてください。",
@@ -5111,7 +5116,8 @@
       "yourQrCodeIsNow": "QRコードが動的になりました",
       "destinationUpdated": "リンク先を更新しました",
       "designSavedToTheCode": "デザインをコードに保存しました",
-      "couldntCopyTheShortLink": "短縮リンクをコピーできませんでした"
+      "couldntCopyTheShortLink": "短縮リンクをコピーできませんでした",
+      "inviteForMore": "または、<link>友達を招待</link>してください。お友達が初めて動的QRコードを作成すると、お二人とも{count, number}個ずつ増えます。"
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5443,6 +5449,9 @@
       "checkingScan": "スキャンを確認中…",
       "fullScanChecker": "フルスキャンチェッカー",
       "checkAPrintedCode": "印刷したコードを確認",
+      "warning": "警告",
+      "scanScoreScoreValueWarningShow": "スキャンスコア {score, number}、{value}、警告あり。チェック項目を表示",
+      "addAMargin": "{modules, number}モジュール分の余白を追加",
       "grades": {
         "great": "良好",
         "ok": "OK",
@@ -5754,7 +5763,8 @@
     "limitCard": {
       "planUsage": "プランと使用量",
       "notNow": "今はしない",
-      "labelUsed": "{label}の使用量"
+      "labelUsed": "{label}の使用量",
+      "inviteForMore": "または<link>友達を招待</link>してください。友達が最初の動的QRコードを作成すると、お二人とも{count, number}件ずつ追加されます。"
     },
     "limitDialog": {
       "limitReached": "上限に達しました"
@@ -6939,6 +6949,39 @@
           "refreshToTryAgainYour": "更新してもう一度お試しください。プランと上限は変更されていません。",
           "unlimitedOnValue": "{value}では無制限",
           "labelUsed": "{label}の使用量"
+        }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "あなたの招待リンク:",
+          "copy": "コピー",
+          "copied": "コピーしました",
+          "linkCopied": "リンクをコピーしました",
+          "couldntCopy": "コピーできませんでした。リンクを選択して、手動でコピーしてください。"
+        },
+        "page": {
+          "title": "友だちを招待",
+          "description": "リンクを共有しましょう。友だちがそのリンクから登録して最初の動的QRコードを作成すると、お二人とも動的QRコードを{count, number}個ずつ追加で受け取れます。",
+          "notReady": "招待機能はまだご利用いただけません。しばらくしてからもう一度ご確認ください。",
+          "yourInviteLink": "あなたの招待リンク",
+          "shareYourLink": "友だちに送ったり、好きな場所に投稿したりできます。リンクから参加した友だちが動的QRコードを作成するたびに、お二人とも{count, number}個ずつ追加で受け取れます。",
+          "link": "リンク",
+          "sameVisit": "友だちは、リンクをクリックしたのと同じ訪問中にアカウントを作成した場合にカウントされます。友だちの端末には何も保存されません。",
+          "friendsJoined": "参加した友だち",
+          "friendsRewarded": "特典を受け取った友だち",
+          "rewardedOfMax": "{max, number}人中{rewarded, number}人",
+          "extraCodes": "追加の動的QRコード",
+          "waiting": "{waiting, plural, other {#人の友だちがまだ動的QRコードを作成していません。}}登録から{days, number}日以内に作成する必要があります。",
+          "atCap": "{max, number}人の友だちに対する特典を受け取りました。これが招待リンク1つで受け取れる上限です。リンクから参加した友だちは、引き続き{count, number}個を受け取れます。",
+          "youWereInvited": "友だちの招待から参加したため、あなた自身のワークスペースにも動的QRコードが{count, number}個追加されました。",
+          "howItWorks": "仕組み",
+          "ruleSignUp": "友だちがあなたのリンクから、その訪問中に新しいQRdxアカウントを作成した場合にカウントされます。後日の訪問での登録や、すでに存在するアカウントはカウントされません。",
+          "ruleFirstCode": "友だちが登録から{days, number}日以内に最初の動的QRコードを作成すると、お二人とも、それぞれのワークスペースで動的QRコードを{count, number}個ずつ追加で受け取れます。",
+          "ruleCap": "特典を受け取れるのは最大{max, number}人の友だちまで（{total, number}個分）です。それ以降に参加した友だちも、引き続き{count, number}個を受け取れます。",
+          "ruleNotYourself": "ご自身の別アカウントは対象外です。別の表記で同じメールアドレスを使用しているアカウントや、ワークスペースを共有している人も対象外です。",
+          "ruleAllowance": "追加されたコードは、どのプランでも、チームではなくあなた自身のワークスペースの動的QRコードに加算されます。現金価値はなく、別のアカウントに移すこともできません。これらで作成したコードは引き続き使えます。",
+          "rulePrivate": "あなたのリンクから誰が登録したかを表示することはありません。また、友だちにも誰が招待したかは表示されません。",
+          "ruleEnd": "新しい招待に対する招待特典は終了する場合があります。すでに獲得したコードはそのまま残ります。詳細は<terms>利用規約</terms>と<help>ヘルプページ</help>をご覧ください。"
         }
       }
     },
@@ -9279,8 +9322,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "このリンクは使用できません",
+          "unknownAppTitle": "このアプリとQRdxの接続は期限切れです",
+          "unknownAppBody": "QRdxは、こちらに誘導したアプリを認識できなくなりました。Claude、Cursor、VS CodeなどQRdxに接続したAIアプリの場合は、アプリからQRdxを削除して追加し直し、サインインしてください。それ以外の場合は、アプリの開発元にお問い合わせください。",
           "theAppThatSentYou": "こちらに誘導したアプリが無効なリクエストを送信しました：<span>{description}</span>。アプリに戻ってもう一度お試しいただくか、開発元にお問い合わせください。",
           "appnameWillBeAbleTo": "{appName}に許可される操作",
+          "mcpOnlyNote": "{appName}はQRdx MCPサーバーのコードツールを通してのみアカウントを利用できます。コードの削除、Webhookの管理、AIアートの利用はできません。",
           "nameWantsToAccessYour": "{name}がQRdxアカウントへのアクセスを求めています",
           "builtByName": "提供元：<strong>{name}</strong>",
           "unverifiedApp": "未確認のアプリです。",
@@ -9715,7 +9761,9 @@
       "makeRoom": "{limit, select, dynamicCodes {コードを1つアーカイブして空きを作ってください。} landingPages {ページを1つ削除して空きを作ってください。} storage {不要なファイルを削除して空きを作ってください。} savedThemes {テーマを1つ削除して空きを作ってください。} other {}}",
       "resets": "{date}にリセットされます。",
       "keeps": "{limit, select, dynamicCodes {既存のコードは引き続き動作します。} landingPages {既存のページは公開されたままです。} formResponses {ページは公開されたままです。リセット後、フォームは再び回答を受け付けます。} storage {アップロード済みのファイルは引き続き利用できます。} other {}}",
-      "upgradeButton": "{plan}にアップグレード"
+      "upgradeButton": "{plan}にアップグレード",
+      "includesBonus": "{plan}には{amount}と、招待で追加された{bonus, number}が含まれています。",
+      "invite": "または<link>友だちを招待</link>してください。友だちが初めての動的QRコードを作成すると、お二人にそれぞれ{count, number}個が追加されます。"
     },
     "weeklyDigest": {
       "subject": "今週のQRdx：スキャン{scans, plural, other {#回}}",
@@ -9755,6 +9803,18 @@
       "taxes": "お支払い時に、現地の税金が加算される場合があります。",
       "reply": "困ったことや操作がわからないことがあれば、このメールにご返信ください。返信は一通ずつ担当者が読んでいます。",
       "reason": "QRdxのアカウントを作成されたため、このメールをお送りしています。"
+    },
+    "inviteReward": {
+      "subject": "招待した友だちが初めてのコードを作成しました：お二人に動的QRコードが{count, number}個ずつ追加されました",
+      "preview": "お二人に動的QRコードが{count, number}個ずつ追加されました",
+      "heading": "お二人に動的QRコードが{count, number}個ずつ追加されました",
+      "body": "あなたの招待リンクから登録した友だちが、初めての動的QRコードを作成しました。あなたのワークスペースに動的QRコードが{count, number}個追加されました。友だちのワークスペースにも同じ数が追加されています。",
+      "progress": "これで{rewarded, plural, other {#人}}目です。招待リンクで特典を受け取れるのは最大{max, number}人です。",
+      "last": "これで、招待リンクで特典を受け取れる{max, number}人に達しました。リンクから参加する友だちには、引き続き{count, number}個が追加されます。",
+      "inviteMore": "友だちをさらに招待",
+      "seeInvites": "招待状況を見る",
+      "keeps": "追加されたコードはどのプランでも使え、現金価値はありません。それらで作成したコードは引き続き使えます。",
+      "reason": "このメールは、友だちがあなたのQRdx招待リンクから登録し、初めての動的QRコードを作成したためお送りしています。"
     }
   },
   "codeActions": {
@@ -10046,7 +10106,8 @@
       "bulkOverLimit": "{limit, number}行までのファイルはアカウント不要です。フリーアカウントなら1ファイルあたり最大{max, number}件まで作成でき、ファイルは読み込まれたままです。",
       "keepDesigns": "デザインをアカウントに保存して、すべてのデバイスで使えます。",
       "afterDownload": "無料です。プランがどうなっても、お使いのコードは引き続き使えます。",
-      "upgrade": "プランと請求はアカウントに紐づいています。今の続きからそのまま再開できます。"
+      "upgrade": "プランと請求はアカウントに紐づいています。今の続きからそのまま再開できます。",
+      "invite": "お友達の招待でお越しいただきました。今すぐ登録して最初の動的QRコードを作成すると、動的コードを{count, number}個追加で受け取れます。"
     },
     "nudge": {
       "dismiss": "今後は表示しない"
@@ -10194,6 +10255,11 @@
         "failed": "シングルサインオンを完了できませんでした。もう一度お試しいただくか、別の方法でサインインしてください。",
         "rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。"
       }
+    },
+    "inviteNote": {
+      "text": "QRdxに招待されました。今回のアクセス中に登録し、{days, number}日以内に動的QRコードを作成すると、動的コードを{count, number}個追加で受け取れます。",
+      "signUp": "登録する",
+      "dismiss": "閉じる"
     }
   },
   "settingsActions": {

@@ -274,12 +274,16 @@ export default async function McpPage() {
                     <span
                       className={cn(
                         "rounded-full border px-2 py-0.5 text-xs",
-                        tool.needsKey
+                        tool.needsKey || tool.needsSignIn
                           ? "border-foreground/20 text-foreground"
                           : "text-muted-foreground",
                       )}
                     >
-                      {tool.needsKey ? t("toolNeedsKey") : t("toolNoKey")}
+                      {tool.needsKey
+                        ? t("toolNeedsKey")
+                        : tool.needsSignIn
+                          ? t("toolNeedsSignIn")
+                          : t("toolNoKey")}
                     </span>
                   </div>
                   <p

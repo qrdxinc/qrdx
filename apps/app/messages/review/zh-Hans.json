@@ -3516,7 +3516,11 @@
     "status": "machine"
   },
   "tools.printSize.faq.quietAnswer": {
-    "source": "ba39588a3190",
+    "source": "ced356966dcc",
+    "status": "machine"
+  },
+  "tools.printSize.faq.quietAnswerNewDesigns": {
+    "source": "d31f1ff850e7",
     "status": "machine"
   },
   "tools.printSize.faq.resolutionQuestion": {
@@ -5097,6 +5101,18 @@
   },
   "scanPages.hosted.notFoundMessage": {
     "source": "e3751b57a096",
+    "status": "machine"
+  },
+  "scanPages.hosted.notReadyTitle": {
+    "source": "99911333cb22",
+    "status": "machine"
+  },
+  "scanPages.hosted.notReadyMessage": {
+    "source": "643d5f0fbdfe",
+    "status": "machine"
+  },
+  "scanPages.hosted.notReadyOwner": {
+    "source": "7425f2eff611",
     "status": "machine"
   },
   "scanPages.hosted.passwordProtected": {
@@ -7920,7 +7936,7 @@
     "status": "machine"
   },
   "mcp.toolsDescription": {
-    "source": "646144455d7b",
+    "source": "dc41c7876802",
     "status": "machine"
   },
   "mcp.toolNoKey": {
@@ -7929,6 +7945,10 @@
   },
   "mcp.toolNeedsKey": {
     "source": "7077456c4851",
+    "status": "machine"
+  },
+  "mcp.toolNeedsSignIn": {
+    "source": "1077f6b6e64a",
     "status": "machine"
   },
   "mcp.faqTitle": {
@@ -15715,6 +15735,10 @@
     "source": "82484d20f5c1",
     "status": "machine"
   },
+  "editor.dynamicLinkToggle.inviteForMore": {
+    "source": "1fd43c9dcb13",
+    "status": "machine"
+  },
   "editor.frameInline.frameTextMenu.lowContrastValue1The": {
     "source": "ddb0baf919f0",
     "status": "machine"
@@ -16719,6 +16743,18 @@
     "source": "87763218505a",
     "status": "machine"
   },
+  "editor.scanScore.warning": {
+    "source": "e981ddae45d8",
+    "status": "machine"
+  },
+  "editor.scanScore.scanScoreScoreValueWarningShow": {
+    "source": "6b92296354fd",
+    "status": "machine"
+  },
+  "editor.scanScore.addAMargin": {
+    "source": "de244bba26dc",
+    "status": "machine"
+  },
   "editor.scanScore.grades.great": {
     "source": "c8cc1c7bb662",
     "status": "machine"
@@ -17621,6 +17657,10 @@
   },
   "limits.limitCard.labelUsed": {
     "source": "515626cd8fe0",
+    "status": "machine"
+  },
+  "limits.limitCard.inviteForMore": {
+    "source": "1fd43c9dcb13",
     "status": "machine"
   },
   "limits.limitDialog.limitReached": {
@@ -21533,6 +21573,114 @@
   },
   "app.settings.usage.usageMeters.labelUsed": {
     "source": "515626cd8fe0",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.inviteLinkField.yourInviteLink": {
+    "source": "844f9f026194",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.inviteLinkField.copy": {
+    "source": "e21f935f11d7",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.inviteLinkField.copied": {
+    "source": "8d525e5f158b",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.inviteLinkField.linkCopied": {
+    "source": "d12860c21e78",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.inviteLinkField.couldntCopy": {
+    "source": "c9a1d33bd83b",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.title": {
+    "source": "2614b42d8452",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.description": {
+    "source": "252ed9d94053",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.notReady": {
+    "source": "d2afcd031165",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.yourInviteLink": {
+    "source": "1ed61b786730",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.shareYourLink": {
+    "source": "29568677ffa5",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.link": {
+    "source": "a6a32dbc5618",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.sameVisit": {
+    "source": "55224d9f56a6",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.friendsJoined": {
+    "source": "9c76671646e7",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.friendsRewarded": {
+    "source": "a93226c61440",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.rewardedOfMax": {
+    "source": "fabed8cc2e3d",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.extraCodes": {
+    "source": "c5243026f444",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.waiting": {
+    "source": "8f6cacc27845",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.atCap": {
+    "source": "34dcab31ff19",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.youWereInvited": {
+    "source": "ff5d872586df",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.howItWorks": {
+    "source": "9c870aa6e5e9",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleSignUp": {
+    "source": "ab1655e6c5ad",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleFirstCode": {
+    "source": "d9612bae9127",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleCap": {
+    "source": "a0b8d3de08e5",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleNotYourself": {
+    "source": "684bf12998c6",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleAllowance": {
+    "source": "ed99d1c55755",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.rulePrivate": {
+    "source": "e6ea19795f5c",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleEnd": {
+    "source": "9ce366f12bca",
     "status": "machine"
   },
   "app.dashboard.analytics.page.conversions": {
@@ -29511,12 +29659,24 @@
     "source": "9941f422dbe5",
     "status": "machine"
   },
+  "app.oauth.authorize.oauthConsent.unknownAppTitle": {
+    "source": "4b2ee6240194",
+    "status": "machine"
+  },
+  "app.oauth.authorize.oauthConsent.unknownAppBody": {
+    "source": "dd4524d87d30",
+    "status": "machine"
+  },
   "app.oauth.authorize.oauthConsent.theAppThatSentYou": {
     "source": "5d9b4fa8a6e8",
     "status": "machine"
   },
   "app.oauth.authorize.oauthConsent.appnameWillBeAbleTo": {
     "source": "c9b18d29d255",
+    "status": "machine"
+  },
+  "app.oauth.authorize.oauthConsent.mcpOnlyNote": {
+    "source": "e57db88b55be",
     "status": "machine"
   },
   "app.oauth.authorize.oauthConsent.nameWantsToAccessYour": {
@@ -30851,6 +31011,14 @@
     "source": "fcc19175c100",
     "status": "machine"
   },
+  "emails.limitNotice.includesBonus": {
+    "source": "749996af372d",
+    "status": "machine"
+  },
+  "emails.limitNotice.invite": {
+    "source": "1fd43c9dcb13",
+    "status": "machine"
+  },
   "emails.weeklyDigest.subject": {
     "source": "16f59aaf314b",
     "status": "machine"
@@ -30973,6 +31141,46 @@
   },
   "emails.welcome.reason": {
     "source": "0f58ba16364b",
+    "status": "machine"
+  },
+  "emails.inviteReward.subject": {
+    "source": "c29ade304535",
+    "status": "machine"
+  },
+  "emails.inviteReward.preview": {
+    "source": "ae11732275cf",
+    "status": "machine"
+  },
+  "emails.inviteReward.heading": {
+    "source": "ae11732275cf",
+    "status": "machine"
+  },
+  "emails.inviteReward.body": {
+    "source": "5ea4648f6076",
+    "status": "machine"
+  },
+  "emails.inviteReward.progress": {
+    "source": "395d5cc9e5bb",
+    "status": "machine"
+  },
+  "emails.inviteReward.last": {
+    "source": "91e7f4007ff0",
+    "status": "machine"
+  },
+  "emails.inviteReward.inviteMore": {
+    "source": "632d43b4f50d",
+    "status": "machine"
+  },
+  "emails.inviteReward.seeInvites": {
+    "source": "2abb9a4ea507",
+    "status": "machine"
+  },
+  "emails.inviteReward.keeps": {
+    "source": "350d43914fc1",
+    "status": "machine"
+  },
+  "emails.inviteReward.reason": {
+    "source": "324613c70bd5",
     "status": "machine"
   },
   "codeActions.lifecycle.signIn": {
@@ -31895,6 +32103,10 @@
     "source": "d4d0d17a08e8",
     "status": "machine"
   },
+  "auth.reasons.invite": {
+    "source": "6d7ce9583d5c",
+    "status": "machine"
+  },
   "auth.nudge.dismiss": {
     "source": "497a0f940e31",
     "status": "machine"
@@ -32361,6 +32573,18 @@
   },
   "auth.signInErrors.sso.rateLimited": {
     "source": "2c69a672e807",
+    "status": "machine"
+  },
+  "auth.inviteNote.text": {
+    "source": "11b7803827bd",
+    "status": "machine"
+  },
+  "auth.inviteNote.signUp": {
+    "source": "5e2b8e96503d",
+    "status": "machine"
+  },
+  "auth.inviteNote.dismiss": {
+    "source": "48845bff334a",
     "status": "machine"
   },
   "settingsActions.account.rateLimited": {

@@ -39,6 +39,7 @@ on:
       - apps/app/lib/plan-allowances.ts
       - apps/app/lib/path-alias-limits.ts
       - apps/app/lib/affiliates/terms.ts
+      - apps/app/lib/invites/terms.ts
       - apps/app/lib/ai/art-models.ts
       - apps/app/lib/ai/models.ts
       - apps/app/lib/barcode/formats.ts

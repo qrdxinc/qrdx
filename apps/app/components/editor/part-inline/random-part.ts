@@ -16,7 +16,7 @@ import {
   SCAN_CONTRAST_MIN,
 } from "qrdx";
 import { BODY_PATTERN, type BodyPattern, EYE_POSITIONS } from "qrdx/types";
-import { defaultThemeState } from "@/config/qr";
+import { storedStyleDefaults } from "@/config/qr";
 import { LOGO_ICON_IDS } from "@/lib/qr-design/style";
 import type { QRStyle } from "@/types/theme";
 import { carryFrameSettings } from "../control-sections/frame-specs";
@@ -45,7 +45,7 @@ function safest<T>(
 }
 
 const withDefaults = (style: Partial<QRStyle>): QRStyle => ({
-  ...defaultThemeState.styles,
+  ...storedStyleDefaults,
   ...style,
 });
 

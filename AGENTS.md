@@ -23,7 +23,7 @@ QRdx is an open-source QR code platform (https://qrdx.dev): a free static QR gen
 | `packages/analytics` | `@repo/analytics`: the cookie banner and consent, `track()`, and the browser tools consent gates (PostHog, Umami, Featurebase); the app registers its untracked pages and keeps the server parts (`apps/app/lib/analytics`) |
 | `packages/i18n` | `@repo/i18n`: the languages (`config.ts`), translated paths and their URLs, the docs' URL rules, and the loader for the docs' messages (a copy of the docs' part of `apps/app/messages/en.json`, written before use, not committed) |
 | `packages/rate-limit`, `packages/next-config`, `packages/typescript-config` | Shared helpers and config |
-| `plugins/*` | Chrome, Figma, Raycast and Canva plugins |
+| `plugins/*` | Chrome, Figma, Raycast and Canva plugins, and the Google Workspace add-on |
 | `skills/` | Agent Skills, such as `generate-qr` |
 
 ## Run, test, check

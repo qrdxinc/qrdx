@@ -3,6 +3,7 @@
 import { abuseReport, database as db, qrCode } from "@repo/database";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
+import { noteDynamicCodesCreated } from "@/lib/invites/qualify";
 import { ABUSE_REPORT_STATUSES } from "@/lib/safety/abuse-reasons";
 import { moderatedIds } from "@/lib/safety/holds";
 import {
@@ -154,6 +155,9 @@ export async function restoreReportedCodeAction(
         .update(abuseReport)
         .set({ status: "dismissed" })
         .where(eq(abuseReport.id, reportId));
+      // Switched back on: it can now be its owner's first code for a
+      // friend's invite (lib/invites/qualify.ts), after the response.
+      noteDynamicCodesCreated(code.userId);
       return {
         audit: {
           targetType: "qr_code",

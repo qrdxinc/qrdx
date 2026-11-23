@@ -31,6 +31,8 @@ export async function listAuthorizedApps(
       verified: oauthApp.verified,
       ownerUserId: oauthApp.ownerUserId,
       organizationId: oauthApp.organizationId,
+      registrationType: oauthApp.registrationType,
+      redirectUris: oauthApp.redirectUris,
       appActive: oauthApp.isActive,
       teamName: organization.name,
       ownerName: user.name,
@@ -47,12 +49,15 @@ export async function listAuthorizedApps(
     .where(and(eq(oauthToken.userId, userId), isNull(oauthToken.revokedAt)));
 
   return groupAuthorizedApps(
-    rows.map((row) => {
+    rows.map(({ redirectUris, ...row }) => {
       const firstParty = isFirstPartyApp(row);
       return {
         ...row,
         firstParty,
-        builtBy: appBuilderName(row),
+        builtBy: appBuilderName({
+          ...row,
+          redirectUris: Array.isArray(redirectUris) ? redirectUris : [],
+        }),
       };
     }),
     now,

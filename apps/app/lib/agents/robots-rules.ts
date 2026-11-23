@@ -88,4 +88,6 @@ export const DISALLOW = [
   "/m/",
   // Affiliate referral links: redirects to the home page that count visits.
   "/r/",
+  // Invite links (lib/invites): redirects to the editor.
+  "/i/",
 ];

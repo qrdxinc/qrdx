@@ -86,7 +86,7 @@ async function PlaygroundSchema() {
             "Solid or gradient colors and a center logo",
             `${frames} call-to-action frames`,
             "Scan score before you print",
-            "PNG, JPG, WebP, SVG, PDF, EPS, GIF, BMP and ICO downloads",
+            "PNG, JPG, WebP, SVG, PDF, EPS, GIF, BMP, ICO and TIFF downloads, including CMYK TIFF for print",
           ],
         }}
       />

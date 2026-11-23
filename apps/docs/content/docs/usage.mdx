@@ -35,7 +35,7 @@ export function MenuCode() {
 ## Size and quiet zone
 
 - `size` is the width and height in pixels (default 128). Below about 128 px a dense code gets hard to scan from a screen.
-- `margin` is the quiet zone around the code, in modules (default 0). The QR standard asks for 4. Set it when the code sits on a photo, a pattern or a dark page; a code inside a white card with its own padding can keep 0.
+- `margin` is the quiet zone around the code, in modules (default 0). Set 2 or more when the code sits on a photo, a pattern or a dark page, where a code with no light border may not scan (the QR standard asks for 4); a code inside a white card with its own padding can keep 0.
 - `scale` multiplies `size` on `QRCode`.
 
 A frame changes the output size. See [Frame](#frame).

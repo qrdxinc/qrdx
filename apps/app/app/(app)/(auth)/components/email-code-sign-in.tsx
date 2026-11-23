@@ -1,7 +1,11 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
-import { LANDING_HEADER, REFERRAL_HEADER } from "@repo/auth/referral-keys";
+import {
+  INVITE_HEADER,
+  LANDING_HEADER,
+  REFERRAL_HEADER,
+} from "@repo/auth/referral-keys";
 import { SIGN_IN_CODES_UNAVAILABLE } from "@repo/auth/sign-in-code-rules";
 import { SSO_REQUIRED_ERROR as SSO_REQUIRED } from "@repo/auth/sso-required-rules";
 import {
@@ -31,6 +35,7 @@ import { SsoOffer } from "@/ee/sso/sso-offer";
 import { pendingReferralCode } from "@/lib/affiliates/referral-client";
 import { encodeLandingHeader, signUpLanding } from "@/lib/analytics/landing";
 import type { Translator } from "@/lib/i18n/translator";
+import { pendingInviteCode } from "@/lib/invites/invite-client";
 import type { SecondStep } from "./second-step";
 import { TwoFactorChallenge } from "./two-factor-challenge";
 
@@ -173,6 +178,7 @@ export function EmailCodeSignIn({
   const router = useRouter();
   const id = useId();
   const affiliates = useAvailability().has("affiliates");
+  const invites = useAvailability().has("inviteRewards");
   const emailRef = useRef<HTMLInputElement>(null);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -311,15 +317,18 @@ export function EmailCodeSignIn({
       // headers; they only count if this sign-in creates the account
       // (packages/auth/referral.ts).
       const referral = affiliates ? pendingReferralCode() : null;
+      // A friend's invite code goes in its own header (lib/invites).
+      const invite = invites ? pendingInviteCode() : null;
       const landing = signUpLanding();
       const headers: Record<string, string> = {
         ...(referral ? { [REFERRAL_HEADER]: referral } : {}),
+        ...(invite ? { [INVITE_HEADER]: invite } : {}),
         ...(landing ? { [LANDING_HEADER]: encodeLandingHeader(landing) } : {}),
       };
       const { data, error } = await authClient.signIn.emailOtp({
         email: sentTo,
         otp,
-        ...(referral || landing ? { fetchOptions: { headers } } : {}),
+        ...(referral || invite || landing ? { fetchOptions: { headers } } : {}),
       });
       if (error) {
         setCode("");

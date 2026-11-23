@@ -50,6 +50,12 @@ export const SAMPLE_PREVIEW_VALUE = CANONICAL_ORIGIN;
 /** The scan score popover's "Check a photo of the print" (PhotoScanDialog). */
 const openPhotoCheck = () => usePhotoScanDialogStore.getState().setOpen(true);
 
+/** A scan check's one-click fix: one change to the design, as a control makes. */
+const changeStyle = (change: Partial<QRStyle>) => {
+  const { themeState, setThemeState } = useQREditorStore.getState();
+  setThemeState({ ...themeState, styles: { ...themeState.styles, ...change } });
+};
+
 function SampleLabel({ className }: { className?: string }) {
   const t = useTranslations("editor.qrPreviewPanel");
   const contentType = useQREditorStore((state) => state.contentType);
@@ -155,6 +161,7 @@ const QRPreviewPanel: React.FC<QRPreviewPanelProps> = ({
           <ScanScoreBadge
             className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2"
             onCheckPhoto={openPhotoCheck}
+            onStyleChange={changeStyle}
             style={style}
             value={value}
           />

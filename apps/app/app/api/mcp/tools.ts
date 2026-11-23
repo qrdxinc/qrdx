@@ -11,6 +11,7 @@ import { z } from "zod";
 import {
   apiKeyRequiredError,
   optionalApiKeyCaller,
+  optionalBearerCaller,
 } from "@/app/api/v1/codes/_lib/api";
 import { MCP_REF } from "@/lib/analytics/handoff-tags";
 import { brandLogoOptions } from "@/lib/brand-logos/options";
@@ -62,12 +63,16 @@ import { enforceRateLimits, getClientIp } from "@/lib/request-guards";
 import type { ThemeStyles } from "@/types/theme";
 // AI art: generate_ai_art (./art.ts)
 import { ART_MCP_INSTRUCTIONS, registerArtTools } from "./art";
+import { NO_AUTH_SECURITY_SCHEMES } from "./auth";
 // Barcodes: generate_barcode and save_barcode (./barcodes.ts)
 import {
   BARCODE_MCP_INSTRUCTIONS,
   BARCODE_MCP_KEYLESS_INSTRUCTIONS,
   registerBarcodeTools,
 } from "./barcodes";
+// Dynamic codes, for a signed-in person: create_dynamic_code, list_codes,
+// get_code_stats, update_code_destination (./codes.ts)
+import { CODE_MCP_INSTRUCTIONS, registerCodeTools } from "./codes";
 import {
   designOptions,
   designQr,
@@ -101,7 +106,7 @@ import {
   registerQrCard,
 } from "./qr-card";
 
-export const MCP_SERVER_INFO = { name: "qrdx", version: "1.5.0" };
+export const MCP_SERVER_INFO = { name: "qrdx", version: "1.6.0" };
 
 /**
  * The tools that act on an API key's workspace. The server lists them only
@@ -125,6 +130,7 @@ const QR_MCP_INSTRUCTIONS =
 /** The instructions for a connection with an API key: every tool. */
 export const MCP_INSTRUCTIONS =
   QR_MCP_INSTRUCTIONS +
+  CODE_MCP_INSTRUCTIONS +
   " With a QRdx API key on the connection (Authorization: Bearer qrdx_…), save_template saves a design as a theme in the key's workspace, and logos you uploaded can be used by file id." +
   BARCODE_MCP_INSTRUCTIONS +
   ART_MCP_INSTRUCTIONS +
@@ -136,6 +142,7 @@ export const MCP_INSTRUCTIONS =
  */
 export const MCP_KEYLESS_INSTRUCTIONS =
   QR_MCP_INSTRUCTIONS +
+  CODE_MCP_INSTRUCTIONS +
   BARCODE_MCP_KEYLESS_INSTRUCTIONS +
   DOCS_MCP_INSTRUCTIONS +
   " This connection has no QRdx API key. Adding one to the connection (Authorization: Bearer qrdx_…) adds save_template, save_barcode and generate_ai_art, which act on the key's workspace, and lets design_qr and generate_qr_code use logos you uploaded, by file id.";
@@ -182,15 +189,16 @@ const designLimiter = createRateLimiter({
 type ToolContext = { http?: { req?: Request } };
 const requestOf = (ctx: ToolContext): Request | null => ctx.http?.req ?? null;
 
-/** The API key's workspace on this connection, or null without one. */
-async function keyScope(
-  ctx: ToolContext,
-  access: "read" | "write",
-  feature: string,
-) {
+/**
+ * The workspace of the connection's credential, for reading an uploaded
+ * logo: an API key's, or a signed-in person's (an OAuth token, ./auth.ts),
+ * with the read access GET /v1/qr asks a logo by file id for. Null without
+ * one.
+ */
+async function credentialScope(ctx: ToolContext) {
   const req = requestOf(ctx);
   if (!req) return null;
-  return (await optionalApiKeyCaller(req, access, feature))?.scope ?? null;
+  return (await optionalBearerCaller(req, "read"))?.scope ?? null;
 }
 
 // generate_qr_code: the image API's parameters. The flat style ones have no
@@ -259,7 +267,7 @@ const generateInput = z.object({
     .regex(FILE_ID, "Must be an uploaded file id")
     .optional()
     .describe(
-      "Your own uploaded logo (PNG or JPEG, up to 1 MB) by file id; needs the workspace's API key on this connection. The code then has no public image URL.",
+      "Your own uploaded logo (PNG or JPEG, up to 1 MB) by file id; needs the workspace's API key on this connection, or the person signed in to QRdx. The code then has no public image URL.",
     ),
   include_svg: z
     .boolean()
@@ -281,6 +289,44 @@ function editorLink(style: ThemeStyles): string | null {
 
 /** A result's `_meta` with the QR card, for apps that support MCP Apps. */
 const withCard = (card: QrCard) => ({ [QR_CARD_META_KEY]: card });
+
+/**
+ * One line under a static code for a web address: the dynamic kind exists
+ * (./codes.ts), for when the link must change after printing.
+ */
+export const DYNAMIC_CODE_HINT =
+  "This is a static code: the address is in the code itself and can't be changed after printing. For a code whose link can be changed later and whose scans are counted, use create_dynamic_code (it needs the person signed in to QRdx).";
+
+const withDynamicHint = (summary: string, data: string) =>
+  /^https?:\/\//i.test(data.trim())
+    ? `${summary}\n${DYNAMIC_CODE_HINT}`
+    : summary;
+
+/**
+ * `server` with every tool registered on it declaring OpenAI's per-tool
+ * `securitySchemes` (Apps SDK) in `_meta`: noauth unless the tool says
+ * otherwise (the sign-in tools say oauth2, ./codes.ts). Wraps registerTool
+ * in place, as ./usage.ts countToolCalls does.
+ */
+function declaringSecuritySchemes(server: McpServer): McpServer {
+  type Register = (name: string, config: unknown, callback: unknown) => unknown;
+  const register = server.registerTool.bind(server) as unknown as Register;
+  const declared: Register = (name, config, callback) => {
+    const meta = (config as { _meta?: Record<string, unknown> })._meta ?? {};
+    return register(
+      name,
+      "securitySchemes" in meta
+        ? config
+        : {
+            ...(config as object),
+            _meta: { ...meta, securitySchemes: NO_AUTH_SECURITY_SCHEMES },
+          },
+      callback,
+    );
+  };
+  (server as unknown as { registerTool: Register }).registerTool = declared;
+  return server;
+}
 
 /** Image API URL for a styled render; null when it can't be public. */
 function styledImageUrl(
@@ -409,9 +455,7 @@ async function generateQrCode(input: GenerateInput, ctx: ToolContext) {
   if (input.logoIcon) style = { ...style, logoIcon: input.logoIcon };
   if (input.logoFileId) style = { ...style, logoFileId: input.logoFileId };
 
-  const scope = style?.logoFileId
-    ? await keyScope(ctx, "read", "logoFileId")
-    : null;
+  const scope = style?.logoFileId ? await credentialScope(ctx) : null;
   const flat: FlatStyle = Object.fromEntries(
     FLAT_KEYS.filter((key) => input[key] !== undefined).map((key) => [
       key,
@@ -520,9 +564,15 @@ const FREE_SAVED_THEMES = getPlanLimits("free").savedThemes;
 
 /**
  * Registers the server's tools. Without `keyed`, save_template, save_barcode
- * and generate_ai_art are left out, and no description points to them.
+ * and generate_ai_art are left out, and no description points to them. The
+ * dynamic-code tools are listed to every connection: they ask for sign-in
+ * when they're called (./auth.ts).
  */
-export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
+export function registerQrTools(
+  registry: McpServer,
+  { keyed }: McpToolsOptions,
+) {
+  const server = declaringSecuritySchemes(registry);
   // The view design_qr and generate_qr_code show in apps with MCP Apps.
   registerQrCard(server);
 
@@ -530,7 +580,7 @@ export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
     "design_qr",
     {
       title: "Design a QR code",
-      description: `Design a QR code for any content type (link, Wi-Fi, contact, email, SMS, WhatsApp, payments, social profiles and more) with the style you choose: colors and gradients, dot, eye and eye center shapes, a built-in call-to-action frame with its text or a custom frame spec, a border, a logo icon or your own uploaded logo (logo_file_id, with an API key), margin and error correction. Can start from a built-in preset or a community item. Validates the content like the QRdx editor, checks the scan score with the editor's scan check and repairs the style until it is Great (at most 3 repairs, then a classic black-on-white code). Returns the score, what was changed and why, the style JSON (qrdxStyle, ready for ${keyed ? "save_template and generate_qr_code" : "generate_qr_code"}), a playground_url that opens the design in the QRdx editor, a PNG and the SVG. Call list_options first for the accepted values.`,
+      description: `Design a QR code for any content type (link, Wi-Fi, contact, email, SMS, WhatsApp, payments, social profiles and more) with the style you choose: colors and gradients, dot, eye and eye center shapes, a built-in call-to-action frame with its text or a custom frame spec, a border, a logo icon or your own uploaded logo (logo_file_id, with an API key or sign-in), margin and error correction. Can start from a built-in preset or a community item. Validates the content like the QRdx editor, checks the scan score with the editor's scan check and repairs the style until it is Great (at most 3 repairs, then a classic black-on-white code). Returns the score, what was changed and why, the style JSON (qrdxStyle, ready for ${keyed ? "save_template and generate_qr_code" : "generate_qr_code"}), a playground_url that opens the design in the QRdx editor, a PNG and the SVG. Call list_options first for the accepted values.`,
       inputSchema: designQrInputSchema,
       annotations: { ...readOnly, title: "Design a QR code" },
       _meta: QR_CARD_TOOL_META,
@@ -558,7 +608,7 @@ export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
       let result: Awaited<ReturnType<typeof designQr>>;
       try {
         result = await designQr(input, {
-          scope: () => keyScope(ctx, "read", "logo_file_id"),
+          scope: () => credentialScope(ctx),
         });
       } catch (error) {
         const failed = toolError(error);
@@ -576,7 +626,7 @@ export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
         };
       }
       const content = [
-        text(result.summary),
+        text(withDynamicHint(result.summary, result.design.payload)),
         text(
           JSON.stringify(
             {
@@ -629,7 +679,7 @@ export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
     {
       title: "Generate QR code",
       description:
-        "Render a QR code with the editor's style options: colors or gradients (linear, radial), dot and eye shapes, eye and dot colors, a built-in frame with its text or a custom frame spec, a logo icon or your own uploaded logo (logoFileId, needs an API key), or a community item. Pass design_qr's qrdxStyle as style to render the same design again at another size. Returns a PNG image and public image URLs (SVG, PNG and lossless WebP for embedding in Markdown or HTML, plus a vector EPS for print); set include_svg to also get the SVG markup. No scan check: use design_qr for that.",
+        "Render a QR code with the editor's style options: colors or gradients (linear, radial), dot and eye shapes, eye and dot colors, a built-in frame with its text or a custom frame spec, a logo icon or your own uploaded logo (logoFileId, needs an API key or sign-in), or a community item. Pass design_qr's qrdxStyle as style to render the same design again at another size. Returns a PNG image and public image URLs (SVG, PNG and lossless WebP for embedding in Markdown or HTML, plus a 300 dpi TIFF, RGB or CMYK, and a vector EPS for print); set include_svg to also get the SVG markup. No scan check: use design_qr for that.",
       inputSchema: generateInput,
       annotations: { ...readOnly, title: "Generate QR code" },
       _meta: QR_CARD_TOOL_META,
@@ -644,7 +694,7 @@ export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
         throw error;
       }
       const content = [
-        text(result.summary),
+        text(withDynamicHint(result.summary, input.data)),
         {
           type: "image" as const,
           data: Buffer.from(result.png).toString("base64"),
@@ -852,6 +902,9 @@ export function registerQrTools(server: McpServer, { keyed }: McpToolsOptions) {
 
   // ── AI art (./art.ts): its one tool uses the key's workspace ──
   if (keyed) registerArtTools(server);
+
+  // ── Dynamic codes (./codes.ts): every connection; sign-in when called ──
+  registerCodeTools(server);
 
   // ── The docs (./docs.ts) ──
   registerDocsTools(server);

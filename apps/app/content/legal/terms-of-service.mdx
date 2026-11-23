@@ -1,7 +1,7 @@
 ---
 title: Terms of Service
 description: The agreement for using QRdx, covering accounts, dynamic codes, hosted pages, teams, custom domains, integrations, the API, CLI and MCP server, AI features, billing through Polar, and what happens to your data when you leave.
-lastUpdated: 2026-11-18
+lastUpdated: 2026-11-23
 ---
 
 <Callout title="Summary">
@@ -116,6 +116,18 @@ Follow the [Acceptable Use Policy](/legal/acceptable-use-policy). In short: no p
 - **Price changes.** We'll give you notice before a price change applies to your subscription. It takes effect at your next renewal, so you can cancel first.
 - **Refunds.** Your first payment for a paid plan comes with a {facts.moneyBackDays}-day money-back guarantee, once per customer, and a longer one while we offer it if you're moving from another QR code provider. We look at other refund requests case by case. The details are in [Refunds & Cancellations](/legal/refunds).
 
+<IfAvailable feature="inviteRewards" title="Invite rewards">
+
+Every account has an invite link under **Settings** → **Invite friends**.
+
+- **What counts.** A friend counts when they create a new QRdx account through your link during the same visit. If they make their first dynamic code within {facts.inviteQualifyDays} days of signing up, you both get {facts.inviteBonusCodes} more dynamic codes in your own workspaces.
+- **Limits.** You're rewarded for at most {facts.inviteMaxFriends} friends ({facts.inviteMaxCodes} codes). Your friend's {facts.inviteBonusCodes} come once. Your own other accounts, accounts using your email address under another spelling, and people who share a workspace with you don't count.
+- **What the codes are.** Extra allowance on any plan, added to your own workspace, not a team's. They aren't a plan or a discount, have no cash value and can't be sold, transferred or moved to another account.
+- **Codes keep working.** Codes you make with the extra allowance keep working like all codes. If we find an invite was abused (fake accounts, say), we can take its extra allowance away: codes you already made stay active, and only new ones need room under your plan's limit again.
+- **Ending it.** We can change or end invite rewards for new invites at any time. Extra codes you've already earned stay.
+
+</IfAvailable>
+
 ## Open source and the hosted Service
 
 QRdx's source code is published on GitHub under three licences, set out in [LICENSING.md](https://github.com/qrdxinc/qrdx/blob/main/LICENSING.md):
@@ -190,4 +202,4 @@ Ritesh Bucha, India. Email: [support@qrdx.dev](mailto:support@qrdx.dev).
 
 ---
 
-**Changes:** 18 November 2026. Plans, billing and refunds now mentions the longer money-back window for customers moving from another QR code provider. 15 November 2026. Open source and the hosted Service now names all three licences of the code (AGPL-3.0-or-later, MIT, and the QRdx Commercial License for the `ee/` folders) and links LICENSING.md. 13 November 2026. Added the money-back guarantee on the first payment for a paid plan to Plans, billing and refunds. 1 November 2026. Rewritten to cover dynamic codes, hosted pages, teams, custom domains, integrations and imports, the API, CLI and MCP server, AI features, billing through Polar, the open-source licence, suspension and what happens to data on termination.
+**Changes:** <IfAvailable feature="inviteRewards">23 November 2026. Added Invite rewards: extra dynamic codes when a friend you invite makes their first one, the limits, and that the codes have no cash value. </IfAvailable>18 November 2026. Plans, billing and refunds now mentions the longer money-back window for customers moving from another QR code provider. 15 November 2026. Open source and the hosted Service now names all three licences of the code (AGPL-3.0-or-later, MIT, and the QRdx Commercial License for the `ee/` folders) and links LICENSING.md. 13 November 2026. Added the money-back guarantee on the first payment for a paid plan to Plans, billing and refunds. 1 November 2026. Rewritten to cover dynamic codes, hosted pages, teams, custom domains, integrations and imports, the API, CLI and MCP server, AI features, billing through Polar, the open-source licence, suspension and what happens to data on termination.

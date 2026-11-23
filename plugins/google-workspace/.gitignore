@@ -1,0 +1,3 @@
+# clasp's project link and credentials stay on the machine that pushes.
+.clasp.json
+.clasprc.json

@@ -78,7 +78,7 @@ export interface GenerateMeta {
 }
 
 const HEX_COLOR = /^#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
-/** Largest PNG, WebP, GIF or BMP side: beyond this sharp hits its pixel limit (and RAM). */
+/** Largest PNG, WebP, GIF, BMP or TIFF side: beyond this sharp hits its pixel limit (and RAM). */
 const MAX_PNG_SIZE = 10_000;
 const RASTER_NAMES: Record<string, string> = {
   png: "PNG",

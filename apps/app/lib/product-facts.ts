@@ -61,6 +61,12 @@ import { ART_MODEL_LABEL } from "./ai/art-models";
 import { BARCODE_FORMATS } from "./barcode/formats";
 import { BRAND_LOGO_COUNT } from "./brand-logos/catalog.generated";
 import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "./free-plan-limits";
+import {
+  INVITE_BONUS_CODES,
+  INVITE_MAX_INVITER_CODES,
+  INVITE_MAX_REWARDED_FRIENDS,
+  INVITE_QUALIFY_DAYS,
+} from "./invites/terms";
 import { PAGE_TYPE_IDS } from "./landing/page-type-ids";
 import { PATH_ALIASES_PER_CODE } from "./path-alias-limits";
 import { AI_ART_PER_MONTH, API_REQUESTS_PER_DAY } from "./plan-allowances";
@@ -131,6 +137,16 @@ export const PRODUCT_FACTS = {
   affiliateMinPayoutUsd: AFFILIATE_MIN_PAYOUT_LABEL,
   /** Days of notice before the affiliate terms change: "30". */
   affiliateTermsNoticeDays: AFFILIATE_TERMS_NOTICE_DAYS,
+  // Invite rewards (lib/invites/terms.ts), for the legal and help pages; the
+  // limit check and the reward read the same constants.
+  /** Dynamic codes each side gets when a friend's invite counts: "5". */
+  inviteBonusCodes: INVITE_BONUS_CODES,
+  /** Friends one person can be rewarded for: "10". */
+  inviteMaxFriends: INVITE_MAX_REWARDED_FRIENDS,
+  /** The most codes invites can earn an inviter: "50". */
+  inviteMaxCodes: INVITE_MAX_INVITER_CODES,
+  /** Days after signing up in which the friend's first dynamic code counts: "30". */
+  inviteQualifyDays: INVITE_QUALIFY_DAYS,
   // Large batches (@repo/config limits.ts), as copy writes them ("1,000").
   /** Dynamic codes in one POST /v1/codes request. */
   apiBatchCodes: formatCount(MAX_CODES_PER_REQUEST),

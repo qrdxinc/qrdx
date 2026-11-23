@@ -12,12 +12,17 @@ import { LimitNoticeEmail } from "@repo/email/templates/limit-notice";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@repo/i18n/config";
 import cuid from "cuid";
 import { and, eq, inArray, like } from "drizzle-orm";
-import { resolveMeterCaps } from "@/app/(app)/settings/usage/_lib/meters";
+import {
+  resolveMeterCaps,
+  withCodeBonus,
+} from "@/app/(app)/settings/usage/_lib/meters";
 import { getCheckoutOpen } from "@/lib/checkout-availability";
 import { pricingHref } from "@/lib/checkout-surface";
 import { isMissingSchemaError } from "@/lib/community/tables";
 import { sendEmail } from "@/lib/email/send";
 import { emailIntl } from "@/lib/i18n/email";
+import { canStillEarnFromInvites } from "@/lib/invites/bonus";
+import { INVITE_BONUS_CODES } from "@/lib/invites/terms";
 import { baseUrl } from "@/lib/metadata";
 import { holdsPlanRole } from "@/lib/permissions";
 import { PLAN_LIMITS } from "@/lib/plans";
@@ -235,8 +240,20 @@ export async function sendLimitNotice(
       !perPerson ||
       (await paysForWorkspace(scope.organizationId, scope.userId)),
     checkoutOpen: getCheckoutOpen(),
-    cap: resolveMeterCaps(PLAN_LIMITS, usage.plan, { isTeam: !own })[limitId],
+    cap: withCodeBonus(
+      resolveMeterCaps(PLAN_LIMITS, usage.plan, { isTeam: !own }),
+      usage.bonus ?? 0,
+    )[limitId],
   };
+  // Dynamic codes in someone's own workspace: one line on inviting a friend,
+  // while their invites can still earn codes (lib/invites), beside the
+  // upgrade, never instead of it.
+  const invite =
+    limitId === "dynamicCodes" &&
+    own &&
+    (await canStillEarnFromInvites(scope.userId))
+      ? { url: absolute("/settings/invite"), count: INVITE_BONUS_CODES }
+      : undefined;
   const level = top === 100 ? "full" : "near";
   const key = noticeKey({ ...claim, threshold: top });
 
@@ -258,6 +275,7 @@ export async function sendLimitNotice(
         react: (
           <LimitNoticeEmail
             intl={intl}
+            invite={invite}
             level={level}
             limitLabel={copy.label}
             noun={copy.noun}

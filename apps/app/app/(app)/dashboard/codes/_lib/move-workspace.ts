@@ -8,13 +8,13 @@ import {
   qrCodeTag,
 } from "@repo/database";
 import { and, eq, isNull } from "drizzle-orm";
+import { dynamicCodeLimit } from "@/lib/code-limit";
 import {
   forbiddenText,
   WorkspaceActionError,
 } from "@/lib/i18n/workspace-actions";
 import { can } from "@/lib/permissions";
 import { assertCan } from "@/lib/permissions-server";
-import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import type { ActiveScope } from "@/lib/scope";
 import {
   findWorkspaceById,
@@ -150,15 +150,16 @@ export async function moveCodeToWorkspace(
     }
   }
 
-  const limits = getPlanLimits(await getPlanForScope(targetScope));
-  const capped = !row.archivedAt && Number.isFinite(limits.dynamicCodes);
+  // The target's limit, invites' codes included (lib/code-limit.ts).
+  const { limit: codeLimit } = await dynamicCodeLimit(targetScope);
+  const capped = !row.archivedAt && Number.isFinite(codeLimit);
   const full = async () =>
-    capped && (await countUnarchived(targetScope)) >= limits.dynamicCodes;
+    capped && (await countUnarchived(targetScope)) >= codeLimit;
   const limitError = () =>
     new WorkspaceActionError(402, "LIMIT_REACHED", (t) =>
       t("moveCode.limitReached", {
         name: target.name,
-        limit: String(limits.dynamicCodes),
+        limit: String(codeLimit),
       }),
     );
   if (await full()) throw limitError();
@@ -194,7 +195,7 @@ export async function moveCodeToWorkspace(
   if ((moved[0] as { id: string }[]).length === 0) throw notFound();
 
   // Concurrent creates there can pass the check above: undo when over.
-  if (capped && (await countUnarchived(targetScope)) > limits.dynamicCodes) {
+  if (capped && (await countUnarchived(targetScope)) > codeLimit) {
     await db.batch([
       db
         .update(qrCode)
