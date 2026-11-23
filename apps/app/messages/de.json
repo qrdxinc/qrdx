@@ -2698,7 +2698,7 @@
     "setupUrl": "Server-URL",
     "toolsEyebrow": "Tools",
     "toolsTitle": "Das kann dein Assistent aufrufen",
-    "toolsDescription": "{count, number} Tools. Alle außer save_template, save_barcode und generate_ai_art sind schreibgeschützt und brauchen keinen Key: Sie rendern Bilder, formatieren Text und lesen die öffentliche Community. Alle Parameter findest du in der <link>MCP-Server-Dokumentation</link>.",
+    "toolsDescription": "{count, number} Tools. Alle außer save_template, save_barcode und generate_ai_art sind schreibgeschützt und brauchen keinen Schlüssel: Sie rendern Bilder, formatieren Text und lesen die öffentliche Community. Diese drei werden erst aufgelistet, sobald die Verbindung einen API-Schlüssel hat. Alle Parameter findest du in der <link>MCP-Server-Doku</link>.",
     "toolNoKey": "Ohne Key",
     "toolNeedsKey": "API-Key erforderlich",
     "faqTitle": "FAQ zum MCP-Server",

@@ -2698,7 +2698,7 @@
     "setupUrl": "服务器 URL",
     "toolsEyebrow": "工具",
     "toolsTitle": "你的助手可以调用什么",
-    "toolsDescription": "共 {count, number} 个工具。除 save_template、save_barcode 和 generate_ai_art 外，其余均为只读，无需密钥：它们可以渲染图像、格式化文本，并读取公开社区的内容。完整参数请参阅 <link>MCP server 文档</link>。",
+    "toolsDescription": "共 {count, number} 个工具。除 save_template、save_barcode 和 generate_ai_art 外，其余均为只读工具，无需密钥：它们可以渲染图像、格式化文本并读取公开社区内容。连接配置 API 密钥后，才会列出这几个例外工具。完整参数请见 <link>MCP server 文档</link>。",
     "toolNoKey": "无需密钥",
     "toolNeedsKey": "需要 API 密钥",
     "faqTitle": "MCP 服务器常见问题",

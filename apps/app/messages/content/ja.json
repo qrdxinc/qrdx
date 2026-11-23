@@ -36701,6 +36701,12 @@
     "status": "machine",
     "context": "mcp.tools.5.description"
   },
+  "6fc17acdab37": {
+    "source": "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Listed once the connection has a QRdx API key.",
+    "text": "デザインをテーマとして、プランの保存テーマ数の上限内でワークスペースに保存します。接続に QRdx API キーがある場合に表示されます。",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
   "5059cb851dc2": {
     "source": "Generate a barcode",
     "text": "バーコードを生成",
@@ -36710,6 +36716,12 @@
   "26e9ed7d6f36": {
     "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
     "text": "EAN-13、UPC-A、UPC-E、EAN-8、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417、Aztecに対応しています。値（チェックディジット、桁数、文字）を検証し、PNGと、公開されているSVG、PNG、PDFなどの画像URLを返します。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "fdfe7dc89241": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、USPS Intelligent Mail、Data Matrix、PDF417、Aztec、MaxiCode、DotCode に対応しています。値（チェックディジット、桁数、文字）を検証し、PNG と、公開されている SVG、PNG、PDF などの画像 URL を返します。",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
@@ -36725,6 +36737,12 @@
     "status": "machine",
     "context": "mcp.tools.7.description"
   },
+  "09892b7b00fa": {
+    "source": "Keeps a barcode in your workspace's Barcodes to edit and download later. Listed once the connection has a QRdx API key.",
+    "text": "バーコードをワークスペースの「バーコード」に保管し、後から編集やダウンロードができます。接続に QRdx API キーがある場合に表示されます。",
+    "status": "machine",
+    "context": "mcp.tools.7.description"
+  },
   "4c95ba85d6f1": {
     "source": "Generate AI art",
     "text": "AIアートを生成",
@@ -36734,6 +36752,12 @@
   "9254cd62817d": {
     "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
     "text": "説明文、シーン、または写真をもとに、QRコードをAIアートとして描き、スキャンできるかを確認します。画像1枚につき、ワークスペースの月間AIアート画像を1枚使用し、最大で1分ほどかかります。接続にQRdx APIキーが必要です。",
+    "status": "machine",
+    "context": "mcp.tools.8.description"
+  },
+  "fe114ac9b6bc": {
+    "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Listed once the connection has a QRdx API key.",
+    "text": "説明文、シーン、または写真をもとに、AI アートの中に QR コードを描き込み、スキャンできるかどうかを確認します。画像1枚につき、ワークスペースの月間 AI アート画像を1枚使用し、最大1分かかります。接続に QRdx API キーがある場合に表示されます。",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36878,6 +36902,12 @@
   "95b27c7bcd0a": {
     "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server.",
     "text": "いいえ。コードのデザインと生成、コミュニティの閲覧であれば不要です。QRdx MCPサーバーは公開されており無料で、セッション状態も保持しません。デザインをテーマに保存する場合(save_template)、バーコードを保存する場合(save_barcode)、AIアートを作る場合(generate_ai_art)、アップロードしたロゴを使う場合には、QRdx APIキーが必要です。アプリのサーバー設定で、Authorization: Bearer qrdx_… として送信してください。",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "57125b32502d": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "いいえ。コードのデザインや生成、コミュニティの閲覧には不要です。QRdx MCP サーバーは公開されていて無料で、セッション状態も保持しません。デザインをテーマに保存する場合（save_template）、バーコードを保存する場合（save_barcode）、AI アートを作成する場合（generate_ai_art）、アップロードしたロゴを使う場合は、QRdx API キーが必要です。キーは、お使いのアプリのサーバー設定で Authorization: Bearer qrdx_… として送信します。キーを設定すると、アプリにこの3つのツールが表示されます。",
     "status": "machine",
     "context": "mcp.faqs.2.answer"
   },

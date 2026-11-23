@@ -435,7 +435,8 @@ describe("POST /v1/art", () => {
 // ─── MCP generate_ai_art ────────────────────────────────────────────────────
 
 let rpcId = 0;
-async function tool(args: Record<string, unknown>, key?: string) {
+/** The tools/call answer: a result, or a JSON-RPC error. */
+async function send(args: Record<string, unknown>, key?: string) {
   const response = await mcp.POST(
     new Request(`${ORIGIN}/api/mcp`, {
       method: "POST",
@@ -462,16 +463,25 @@ async function tool(args: Record<string, unknown>, key?: string) {
         .map((line) => line.slice(5).trim())
         .join("")
     : text;
-  return JSON.parse(json).result as {
-    isError?: boolean;
-    structuredContent?: Record<string, unknown>;
-    content: {
-      type: string;
-      text?: string;
-      data?: string;
-      mimeType?: string;
-    }[];
+  return JSON.parse(json) as {
+    result?: {
+      isError?: boolean;
+      structuredContent?: Record<string, unknown>;
+      content: {
+        type: string;
+        text?: string;
+        data?: string;
+        mimeType?: string;
+      }[];
+    };
+    error?: { code: number; message: string };
   };
+}
+
+async function tool(args: Record<string, unknown>, key?: string) {
+  const { result } = await send(args, key);
+  if (!result) throw new Error("generate_ai_art answered without a result");
+  return result;
 }
 
 describe("POST /v1/art without a prompt", () => {
@@ -499,14 +509,16 @@ describe("POST /v1/art without a prompt", () => {
 });
 
 describe("MCP generate_ai_art", () => {
-  it("without a key is a 401 tool error that says how to add one", async () => {
-    const result = await tool(body());
-    expect(result.isError).toBe(true);
-    expect(result.structuredContent).toMatchObject({
-      code: "UNAUTHORIZED",
+  it("isn't offered without a key, and refuses an unknown one", async () => {
+    const keyless = await send(body());
+    expect(keyless.result).toBeUndefined();
+    expect(keyless.error?.message).toContain("Tool generate_ai_art not found");
+    const unknown = await tool(body(), UNKNOWN_KEY);
+    expect(unknown.isError).toBe(true);
+    expect(unknown.structuredContent).toMatchObject({
+      code: "INVALID_TOKEN",
       status: 401,
     });
-    expect(result.content[0]?.text).toContain("Authorization: Bearer qrdx_");
     expect(gateway.calls).toHaveLength(0);
   });
 

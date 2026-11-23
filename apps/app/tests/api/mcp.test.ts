@@ -81,7 +81,7 @@ describe("MCP over Streamable HTTP", () => {
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
   });
 
-  it("lists the QR, barcode, AI art and docs tools, all read-only but the ones that need a key", async () => {
+  it("lists the QR, barcode and docs tools without a key, all read-only", async () => {
     const { message } = await rpc("tools/list");
     const tools = message?.result.tools as {
       name: string;
@@ -102,15 +102,29 @@ describe("MCP over Streamable HTTP", () => {
         "qr_payload_sms",
         "qr_payload_vcard",
         "qr_payload_wifi",
-        "save_template",
         "search_community",
         "generate_barcode",
-        "save_barcode",
-        "generate_ai_art",
         "search_docs",
         "read_docs_page",
       ].sort(),
     );
+    for (const tool of tools) {
+      expect(tool.annotations?.readOnlyHint, tool.name).toBe(true);
+      expect(tool.annotations?.destructiveHint, tool.name).toBe(false);
+    }
+  });
+
+  it("adds the save tools and AI art with an API key, the only ones that aren't read-only", async () => {
+    const { message } = await rpc(
+      "tools/list",
+      {},
+      { authorization: `Bearer qrdx_${"a".repeat(40)}` },
+    );
+    const tools = message?.result.tools as {
+      name: string;
+      annotations?: { readOnlyHint?: boolean; destructiveHint?: boolean };
+    }[];
+    expect(tools).toHaveLength(19);
     for (const tool of tools) {
       // save_template and save_barcode write to the API key's workspace;
       // generate_ai_art uses its monthly AI art images.
@@ -125,20 +139,20 @@ describe("MCP over Streamable HTTP", () => {
 
   it("the /mcp page lists exactly the registered tools, with the ones that need a key", async () => {
     const { MCP_TOOLS } = await import("@/app/[lang]/(home)/mcp/content");
-    const { message } = await rpc("tools/list");
-    const tools = message?.result.tools as {
-      name: string;
-      annotations?: { readOnlyHint?: boolean };
-    }[];
-    expect(MCP_TOOLS.map((tool) => tool.name).sort()).toEqual(
-      tools.map((tool) => tool.name).sort(),
-    );
-    for (const tool of tools) {
-      const listed = MCP_TOOLS.find((item) => item.name === tool.name);
-      // The tools that write (the save ones) are the ones that need a key.
-      expect(Boolean(listed?.needsKey), tool.name).toBe(
-        tool.annotations?.readOnlyHint === false,
-      );
+    const listed = async (headers: Record<string, string>) => {
+      const { message } = await rpc("tools/list", {}, headers);
+      const tools = (message?.result.tools ?? []) as { name: string }[];
+      return tools.map((tool) => tool.name);
+    };
+    const keyless = await listed({});
+    const keyed = await listed({
+      authorization: `Bearer qrdx_${"a".repeat(40)}`,
+    });
+    expect(MCP_TOOLS.map((tool) => tool.name).sort()).toEqual(keyed.sort());
+    for (const name of keyed) {
+      const tool = MCP_TOOLS.find((item) => item.name === name);
+      // The tools that need a key are the ones a keyless client isn't shown.
+      expect(Boolean(tool?.needsKey), name).toBe(!keyless.includes(name));
     }
   });
 

@@ -36701,6 +36701,12 @@
     "status": "machine",
     "context": "mcp.tools.5.description"
   },
+  "6fc17acdab37": {
+    "source": "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Listed once the connection has a QRdx API key.",
+    "text": "Salva um design como tema no seu workspace, dentro do limite de temas salvos do plano. Aparece na lista quando a conexão tem uma chave de API do QRdx.",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
   "5059cb851dc2": {
     "source": "Generate a barcode",
     "text": "Gerar um código de barras",
@@ -36710,6 +36716,12 @@
   "26e9ed7d6f36": {
     "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 ou Aztec. Verifica o valor (dígitos verificadores, tamanhos, caracteres) e retorna um PNG, além de URLs públicas de imagem em SVG, PNG, PDF e outros formatos.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "fdfe7dc89241": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode ou DotCode. Confere o valor (dígitos verificadores, tamanhos, caracteres) e devolve um PNG, além de URLs públicas de SVG, PNG, PDF e outros formatos de imagem.",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
@@ -36725,6 +36737,12 @@
     "status": "machine",
     "context": "mcp.tools.7.description"
   },
+  "09892b7b00fa": {
+    "source": "Keeps a barcode in your workspace's Barcodes to edit and download later. Listed once the connection has a QRdx API key.",
+    "text": "Guarda um código de barras em Barcodes, no seu workspace, para você editar e baixar depois. Aparece na lista quando a conexão tem uma chave de API do QRdx.",
+    "status": "machine",
+    "context": "mcp.tools.7.description"
+  },
   "4c95ba85d6f1": {
     "source": "Generate AI art",
     "text": "Gerar arte com IA",
@@ -36734,6 +36752,12 @@
   "9254cd62817d": {
     "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
     "text": "Transforma um QR code em arte feita por IA a partir da sua descrição, de uma cena ou da sua foto, e confere se ele é lido. Cada imagem usa uma das imagens de arte com IA mensais do seu workspace e leva até um minuto. Precisa de uma chave de API do QRdx na conexão.",
+    "status": "machine",
+    "context": "mcp.tools.8.description"
+  },
+  "fe114ac9b6bc": {
+    "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Listed once the connection has a QRdx API key.",
+    "text": "Pinta um QR code dentro de uma arte de IA a partir da sua descrição, de uma cena ou da sua foto, e confere se ele lê. Cada imagem usa uma das imagens de arte de IA mensais do seu workspace e leva até um minuto. Aparece na lista quando a conexão tem uma chave de API do QRdx.",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36878,6 +36902,12 @@
   "95b27c7bcd0a": {
     "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server.",
     "text": "Não, para criar e gerar códigos e para navegar pela comunidade: o servidor MCP do QRdx é público e grátis, e não guarda estado de sessão. Salvar um design nos seus temas (save_template), salvar um código de barras (save_barcode), criar arte com IA (generate_ai_art) e usar um logo que você enviou exigem uma chave de API do QRdx, enviada como Authorization: Bearer qrdx_… nas configurações do servidor no seu app.",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "57125b32502d": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "Não, para criar e gerar códigos e navegar pela comunidade: o servidor MCP do QRdx é público e grátis, e não guarda nenhum estado de sessão. Salvar um design nos seus temas (save_template), salvar um código de barras (save_barcode), criar arte de IA (generate_ai_art) e usar um logo que você enviou exigem uma chave de API do QRdx, enviada como Authorization: Bearer qrdx_… nas configurações do servidor no seu app. Seu app passa a ver essas três ferramentas quando a chave está definida.",
     "status": "machine",
     "context": "mcp.faqs.2.answer"
   },

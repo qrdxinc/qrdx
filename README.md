@@ -107,7 +107,7 @@ Add `format=png` or `format=eps`, `size`, colors, patterns, a frame, a community
 claude mcp add --transport http qrdx https://mcp.qrdx.dev/mcp
 ```
 
-None of that needs an account. With a QRdx API key on the connection, `save_template` also saves a design to your workspace's themes. Cursor, VS Code and other clients: see the [MCP docs](https://qrdx.dev/docs/developers/mcp).
+None of that needs an account. With a QRdx API key on the connection, the server also lists `save_template` and `save_barcode`, which save designs and barcodes to your workspace, and `generate_ai_art` for AI QR art. Cursor, VS Code and other clients: see the [MCP docs](https://qrdx.dev/docs/developers/mcp).
 
 **REST API.** Create and edit dynamic codes (up to 100 per request on Pro and Business), read scan analytics, report conversions, subscribe to webhooks and read your saved themes under `https://api.qrdx.dev/v1`, with an API key or an OAuth 2.0 token. Every endpoint is in the [API reference](https://qrdx.dev/docs/developers/api), generated from the [OpenAPI document](https://qrdx.dev/openapi.json). Start with the [REST API docs](https://qrdx.dev/docs/developers/rest-api).
 

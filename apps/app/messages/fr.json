@@ -2698,7 +2698,7 @@
     "setupUrl": "URL du serveur",
     "toolsEyebrow": "Outils",
     "toolsTitle": "Ce que votre assistant peut appeler",
-    "toolsDescription": "{count, number} outils. Tous, sauf save_template, save_barcode et generate_ai_art, sont en lecture seule et ne nécessitent aucune clé : ils génèrent des images, mettent du texte en forme et lisent la communauté publique. Les paramètres complets figurent dans la <link>documentation du serveur MCP</link>.",
+    "toolsDescription": "{count, number} outils. Tous, sauf save_template, save_barcode et generate_ai_art, sont en lecture seule et n’exigent aucune clé : ils génèrent des images, mettent en forme du texte et lisent la communauté publique. Ces trois-là apparaissent dès que la connexion dispose d’une clé API. Tous les paramètres figurent dans la <link>documentation du serveur MCP</link>.",
     "toolNoKey": "Sans clé",
     "toolNeedsKey": "Clé API requise",
     "faqTitle": "FAQ du serveur MCP",

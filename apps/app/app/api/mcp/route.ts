@@ -5,29 +5,56 @@ import {
 } from "@repo/config";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { createMcpHandler } from "mcp-handler";
+import { API_KEY_PREFIX } from "@/lib/api-keys/shared";
 import { handleError } from "@/lib/error-response";
 import {
   enforceRateLimits,
   getClientIp,
   readBodyBytes,
 } from "@/lib/request-guards";
-import { MCP_INSTRUCTIONS, MCP_SERVER_INFO, registerQrTools } from "./tools";
+import {
+  MCP_INSTRUCTIONS,
+  MCP_KEYLESS_INSTRUCTIONS,
+  MCP_SERVER_INFO,
+  type McpToolsOptions,
+  registerQrTools,
+} from "./tools";
 import { countMcpSessions, countToolCalls } from "./usage";
 
 // generate_ai_art waits for the art model (./art.ts), which gives up first.
 export const maxDuration = 60;
 
-// Public, stateless MCP server (Streamable HTTP). Tools only render QR codes
-// and format payloads; nothing here reads or writes user data. Tool calls
-// and sessions are counted by name and client family only (./usage.ts).
-const mcpHandler = createMcpHandler(
-  (server) => registerQrTools(countToolCalls(server)),
-  {
-    serverInfo: MCP_SERVER_INFO,
-    instructions: MCP_INSTRUCTIONS,
-    onEvent: countMcpSessions,
-  },
-);
+// Public, stateless MCP server (Streamable HTTP). Without a key the tools
+// render codes, format payloads and read the public community and docs. A
+// connection with an API key also gets save_template, save_barcode and
+// generate_ai_art (KEYED_MCP_TOOLS), which act on the key's workspace and
+// check the key when called. Tool calls and sessions are counted by name and
+// client family only (./usage.ts).
+const handlerFor = ({ keyed }: McpToolsOptions) =>
+  createMcpHandler(
+    (server) => registerQrTools(countToolCalls(server), { keyed }),
+    {
+      serverInfo: MCP_SERVER_INFO,
+      instructions: keyed ? MCP_INSTRUCTIONS : MCP_KEYLESS_INSTRUCTIONS,
+      onEvent: countMcpSessions,
+    },
+  );
+const keyedHandler = handlerFor({ keyed: true });
+const keylessHandler = handlerFor({ keyed: false });
+
+/**
+ * Whether the request sends an API key (`Authorization: Bearer qrdx_…`), by
+ * the header's shape alone, read like the keyed tools read it
+ * (optionalApiKeyCaller): no lookup on this path. A wrong or revoked key
+ * still lists the keyed tools, and calling one answers with what's wrong.
+ */
+function sendsApiKey(req: Request): boolean {
+  const authorization = req.headers.get("authorization");
+  return Boolean(
+    authorization?.startsWith("Bearer ") &&
+      authorization.slice(7).trim().startsWith(API_KEY_PREFIX),
+  );
+}
 
 // Per IP, counting each JSON-RPC message: a batch of five tool calls uses
 // five of the minute's requests.
@@ -120,6 +147,7 @@ async function handler(req: Request): Promise<Response> {
       },
     ]);
     if (messages > MCP_MAX_BATCH_MESSAGES) return withCors(batchTooLarge());
+    const mcpHandler = sendsApiKey(req) ? keyedHandler : keylessHandler;
     return withCors(await mcpHandler(req));
   } catch (error) {
     return withCors(handleError(error, { route: "/api/mcp" }));

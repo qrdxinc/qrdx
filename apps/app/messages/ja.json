@@ -2698,7 +2698,7 @@
     "setupUrl": "サーバーURL",
     "toolsEyebrow": "ツール",
     "toolsTitle": "アシスタントが呼び出せるツール",
-    "toolsDescription": "{count, number}個のツールがあります。save_template、save_barcode、generate_ai_art以外はすべて読み取り専用で、キーは不要です。画像のレンダリング、テキストの整形、公開コミュニティの閲覧ができます。パラメーターの詳細は<link>MCPサーバーのドキュメント</link>をご覧ください。",
+    "toolsDescription": "{count, number} 個のツールがあります。save_template、save_barcode、generate_ai_art 以外はすべて読み取り専用で、キーは不要です。画像の生成、テキストの整形、公開コミュニティの閲覧ができます。この3つは、接続に API キーが設定されると一覧に表示されます。パラメーターの詳細は<link>MCP サーバーのドキュメント</link>をご覧ください。",
     "toolNoKey": "キー不要",
     "toolNeedsKey": "APIキーが必要",
     "faqTitle": "MCPサーバーのFAQ",

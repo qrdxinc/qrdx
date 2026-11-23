@@ -36701,6 +36701,12 @@
     "status": "machine",
     "context": "mcp.tools.5.description"
   },
+  "6fc17acdab37": {
+    "source": "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Listed once the connection has a QRdx API key.",
+    "text": "किसी डिज़ाइन को आपके workspace में थीम के रूप में सेव करता है, प्लान की सेव्ड-थीम सीमा के अंदर। यह तभी दिखता है जब कनेक्शन में QRdx API key हो।",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
   "5059cb851dc2": {
     "source": "Generate a barcode",
     "text": "बारकोड बनाएँ",
@@ -36710,6 +36716,12 @@
   "26e9ed7d6f36": {
     "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 या Aztec। यह वैल्यू (चेक डिजिट, लंबाई, कैरेक्टर) जाँचता है और एक PNG के साथ SVG, PNG, PDF और दूसरे फ़ॉर्मैट के पब्लिक इमेज URL लौटाता है।",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "fdfe7dc89241": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode या DotCode। वैल्यू जाँचता है (चेक डिजिट, लंबाई, अक्षर) और एक PNG के साथ पब्लिक SVG, PNG, PDF और दूसरे इमेज URL लौटाता है।",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
@@ -36725,6 +36737,12 @@
     "status": "machine",
     "context": "mcp.tools.7.description"
   },
+  "09892b7b00fa": {
+    "source": "Keeps a barcode in your workspace's Barcodes to edit and download later. Listed once the connection has a QRdx API key.",
+    "text": "बारकोड को आपके workspace के Barcodes में रखता है, ताकि बाद में उसे एडिट और डाउनलोड कर सकें। यह तभी दिखता है जब कनेक्शन में QRdx API key हो।",
+    "status": "machine",
+    "context": "mcp.tools.7.description"
+  },
   "4c95ba85d6f1": {
     "source": "Generate AI art",
     "text": "AI आर्ट बनाएँ",
@@ -36734,6 +36752,12 @@
   "9254cd62817d": {
     "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
     "text": "आपके विवरण, किसी दृश्य या आपकी फ़ोटो से QR कोड को AI आर्टवर्क में बदलता है और जाँचता है कि वह स्कैन होता है। हर इमेज आपके वर्कस्पेस की मासिक AI आर्ट इमेज में से एक इस्तेमाल करती है और उसमें एक मिनट तक लग सकता है। कनेक्शन पर QRdx API key ज़रूरी है।",
+    "status": "machine",
+    "context": "mcp.tools.8.description"
+  },
+  "fe114ac9b6bc": {
+    "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Listed once the connection has a QRdx API key.",
+    "text": "आपके विवरण, किसी सीन या आपकी फ़ोटो से बनी AI आर्टवर्क में QR कोड बनाता है और जाँचता है कि वह स्कैन होता है। हर इमेज में आपके workspace की महीने की AI art इमेज में से एक लगती है और इसमें एक मिनट तक लग सकता है। यह तभी दिखता है जब कनेक्शन में QRdx API key हो।",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36878,6 +36902,12 @@
   "95b27c7bcd0a": {
     "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server.",
     "text": "नहीं, कोड डिज़ाइन करने, रेंडर करने और कम्युनिटी ब्राउज़ करने के लिए नहीं: QRdx MCP server पब्लिक और फ़्री है, और यह कोई सेशन स्टेट नहीं रखता। अपनी थीम में डिज़ाइन सेव करने (save_template), बारकोड सेव करने (save_barcode), AI आर्ट बनाने (generate_ai_art) और आपके अपलोड किए लोगो का इस्तेमाल करने के लिए QRdx API key चाहिए, जिसे आपके ऐप की सेटिंग में server के लिए Authorization: Bearer qrdx_… के रूप में भेजा जाता है।",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "57125b32502d": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "नहीं, कोड डिज़ाइन करने, रेंडर करने और कम्युनिटी ब्राउज़ करने के लिए नहीं: QRdx MCP सर्वर पब्लिक और फ़्री है, और यह कोई सेशन स्टेट नहीं रखता। अपनी थीम में डिज़ाइन सेव करने (save_template), बारकोड सेव करने (save_barcode), AI art बनाने (generate_ai_art) और आपके अपलोड किए लोगो को इस्तेमाल करने के लिए QRdx API key चाहिए, जिसे आपके app की सर्वर सेटिंग में Authorization: Bearer qrdx_… के रूप में भेजा जाता है। key सेट होने के बाद आपके app को ये तीन टूल दिखते हैं।",
     "status": "machine",
     "context": "mcp.faqs.2.answer"
   },

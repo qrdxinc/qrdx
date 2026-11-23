@@ -2698,7 +2698,7 @@
     "setupUrl": "서버 URL",
     "toolsEyebrow": "도구",
     "toolsTitle": "어시스턴트가 호출할 수 있는 도구",
-    "toolsDescription": "도구 {count, number}개가 있어요. save_template, save_barcode, generate_ai_art를 제외한 모든 도구는 읽기 전용이며 키가 필요 없어요. 이미지를 렌더링하고, 텍스트를 서식화하고, 공개 커뮤니티를 읽어 와요. 전체 파라미터는 <link>MCP server docs</link>에서 확인하세요.",
+    "toolsDescription": "도구 {count, number}개가 있어요. save_template, save_barcode, generate_ai_art를 제외한 모든 도구는 읽기 전용이라 키가 필요 없어요. 이미지를 렌더링하고, 텍스트를 포맷하고, 공개 커뮤니티를 읽어요. 이 세 가지는 연결에 API 키가 있을 때 목록에 표시돼요. 전체 매개변수는 <link>MCP server docs</link>에서 확인하세요.",
     "toolNoKey": "키 불필요",
     "toolNeedsKey": "API 키 필요",
     "faqTitle": "MCP 서버 FAQ",

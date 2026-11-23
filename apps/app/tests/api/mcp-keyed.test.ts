@@ -2,7 +2,7 @@
 // apps/docs/content/docs/developers/mcp.mdx and image-api.mdx describe it:
 // - MCP save_template saves a design as a theme in the key's workspace (the
 //   plan's saved-theme limit, the API's LIMIT_REACHED shape), and without a
-//   key it's a clear 401 tool error;
+//   key the server doesn't offer it (tests/api/mcp-tool-visibility.test.ts);
 // - logos by uploaded file id in design_qr, generate_qr_code and GET /v1/qr,
 //   private and uncached on the image API.
 // The key lookup, quota, plan and theme store are mocked: no database.
@@ -166,7 +166,8 @@ const image = await import("@/app/api/v1/qr/route");
 
 const ORIGIN = "http://localhost:3000";
 let rpcId = 0;
-async function call(name: string, args: Record<string, unknown>, key?: string) {
+/** The tools/call answer: a result, or a JSON-RPC error. */
+async function send(name: string, args: Record<string, unknown>, key?: string) {
   const response = await mcp.POST(
     new Request(`${ORIGIN}/api/mcp`, {
       method: "POST",
@@ -193,11 +194,20 @@ async function call(name: string, args: Record<string, unknown>, key?: string) {
         .map((line) => line.slice(5).trim())
         .join("")
     : text;
-  return JSON.parse(json).result as {
-    isError?: boolean;
-    structuredContent?: Record<string, unknown>;
-    content: { type: string; text?: string; data?: string }[];
+  return JSON.parse(json) as {
+    result?: {
+      isError?: boolean;
+      structuredContent?: Record<string, unknown>;
+      content: { type: string; text?: string; data?: string }[];
+    };
+    error?: { code: number; message: string };
   };
+}
+
+async function call(name: string, args: Record<string, unknown>, key?: string) {
+  const { result } = await send(name, args, key);
+  if (!result) throw new Error(`${name} answered without a result`);
+  return result;
 }
 
 const style = { fgColor: "#155DFC", bodyPattern: "rounded", logoIcon: "link" };
@@ -209,14 +219,13 @@ beforeEach(() => {
 });
 
 describe("save_template", () => {
-  it("without a key is a 401-style tool error that says how to add one", async () => {
-    const result = await call("save_template", { name: "Brand", style });
-    expect(result.isError).toBe(true);
-    expect(result.structuredContent).toMatchObject({
-      code: "UNAUTHORIZED",
-      status: 401,
+  it("isn't offered without a key: the server has no such tool", async () => {
+    const { result, error } = await send("save_template", {
+      name: "Brand",
+      style,
     });
-    expect(result.content[0]?.text).toContain("Authorization: Bearer qrdx_");
+    expect(result).toBeUndefined();
+    expect(error?.message).toContain("Tool save_template not found");
     expect(state.themes).toHaveLength(0);
   });
 
