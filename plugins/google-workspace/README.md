@@ -31,6 +31,8 @@ There is no QRdx account connection in this version: every code is a static code
 bun run --filter @qrdx/google-workspace-addon test
 ```
 
+`test/syntax.test.mjs` parses `src/` as ES2020, the newest syntax Apps Script's parser takes (a `clasp push` rejected numeric separators, ES2021, so Biome's `useNumericSeparators` is off for `src/`); run the tests before every push.
+
 `test/addon.test.mjs` loads the sources with fakes of the Card, UrlFetch, Document, Slides and Spreadsheet services and runs every entry point: the card's fields and buttons, the request sent to the API, the size, position, alt text and link of each inserted image, the formulas and the refusals. `apps/app/tests/plugins/google-workspace.test.ts` holds the add-on's copies to the app: each style's address against the image API's query schema, the payloads against the MCP server's builders and the editor's encoders, and the analytics tag against the plugin channel.
 
 Apps Script itself can't run on your machine, so the fakes are only as right as our reading of Google's reference. Before a release, run the manual test plan below on a test deployment.
