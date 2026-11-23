@@ -5,7 +5,11 @@
 // @bwip-js/browser and bwip-js to the same version), and every option is
 // built here, so the two return the same SVG byte for byte
 // (tests/barcode/parity.test.ts).
-import { type BarcodeFormatId, getBarcodeFormat } from "./formats";
+import {
+  type BarcodeFormatId,
+  getBarcodeFormat,
+  maxicodeMessage,
+} from "./formats";
 import type { BarcodeRotation, BarcodeStyle } from "./style";
 
 export type { BarcodeStyle } from "./style";
@@ -33,6 +37,10 @@ export interface DrawOptions {
   alttext?: string;
   /** Points between the bars and the text under them (negative: lower) */
   textyoffset?: number;
+  /** MaxiCode's mode: 2 and 3 carrier messages, 4 text */
+  mode?: number;
+  /** Encode each character as one byte (MaxiCode's Latin-1), not UTF-8 */
+  binarytext?: boolean;
 }
 
 /** One bwip-js build: its encoder per format and its SVG drawing. */
@@ -65,12 +73,14 @@ export const BCID: Record<BarcodeFormatId, string> = {
   datamatrix: "datamatrix",
   pdf417: "pdf417",
   aztec: "azteccode",
+  maxicode: "maxicode",
   dotcode: "dotcode",
 };
 
 /**
  * bwip-js drawing units per module: linear bars and PDF417 columns are one
- * unit wide, Data Matrix and Aztec cells two, DotCode's dot pitch two.
+ * unit wide, Data Matrix and Aztec cells two, DotCode's dot pitch two,
+ * MaxiCode's hexagons 3.44 apart (101.5 units across 29.5 columns).
  * Intelligent Mail's bars are 1.44 units (0.02 in) wide on a 3.312-unit
  * pitch; its module is the bar's width. Padding is given in units.
  */
@@ -94,6 +104,7 @@ export const MODULE_UNITS: Record<BarcodeFormatId, number> = {
   datamatrix: 2,
   pdf417: 1,
   aztec: 2,
+  maxicode: 3.44,
   dotcode: 2,
 };
 
@@ -105,6 +116,9 @@ export const MODULE_UNITS: Record<BarcodeFormatId, number> = {
  * alike, in any shape: about 390 letters or 780 digits.
  */
 export const DOTCODE_MAX_DOTS = 10_710;
+
+const MAXICODE_FULL =
+  "Too much data for one MaxiCode: it holds up to 93 capital letters or 138 digits, fewer with lowercase or symbols, and about 84 characters after a carrier message's postcode, country and service class. Shorten the text.";
 
 const DOTCODE_FULL =
   "Too much data for one DotCode here: it holds up to about 390 letters or 780 digits, and less with accents or other scripts. Shorten the text.";
@@ -125,7 +139,10 @@ export interface RenderedBarcode {
   /** Pixel size at `scale`: the PNG's size */
   width: number;
   height: number;
-  /** Size at one unit per point, for vector downloads */
+  /**
+   * Size in points for vector downloads: one point a unit, times the
+   * format's vectorScale (MaxiCode's fixed size)
+   */
   widthUnits: number;
   heightUnits: number;
 }
@@ -140,7 +157,10 @@ export function drawOptions(
 ): DrawOptions {
   const format = getBarcodeFormat(id);
   const linear = format.kind === "linear";
-  const padding = Math.max(0, style.quietZone) * MODULE_UNITS[id];
+  const modules = Math.max(0, style.quietZone) * MODULE_UNITS[id];
+  // bwip-js drops a padding's fraction; MaxiCode's module is 3.44 units, so
+  // round up to keep at least the quiet zone asked for.
+  const padding = id === "maxicode" ? Math.ceil(modules) : modules;
   const color = hex(style.foreground);
   const options: DrawOptions = {
     bcid: BCID[id],
@@ -191,6 +211,14 @@ export function drawOptions(
     // option draws nothing.
     if (id === "isbn" || id === "issn" || id === "ismn") options.addongap = 9;
   }
+  if (id === "maxicode") {
+    // bwip-js picks mode 5 for a message it isn't told the mode of, so say
+    // it; and MaxiCode reads bytes as Latin-1, so pass one byte a character.
+    const message = maxicodeMessage(value);
+    options.text = message.text;
+    options.mode = message.mode;
+    options.binarytext = true;
+  }
   return options;
 }
 
@@ -222,6 +250,11 @@ export function drawBarcode<Drawing>(
     if (id === "dotcode" && /dotcodeinputTooLong/.test(String(error))) {
       throw new Error(DOTCODE_FULL);
     }
+    // bwip-js 4.11.4: maxicodeMode23TooLong (a carrier message's rest),
+    // maxicodeMode56TooLong (text, mode 4) or maxicodeInputTooLong.
+    if (id === "maxicode" && /maxicode\w*TooLong/.test(String(error))) {
+      throw new Error(MAXICODE_FULL);
+    }
     throw new Error(encoderMessage(format.label, error));
   }
 
@@ -242,8 +275,8 @@ export function drawBarcode<Drawing>(
     ),
     width,
     height,
-    widthUnits: width / style.scale,
-    heightUnits: height / style.scale,
+    widthUnits: (width / style.scale) * (format.vectorScale ?? 1),
+    heightUnits: (height / style.scale) * (format.vectorScale ?? 1),
   };
 }
 
