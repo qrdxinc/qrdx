@@ -258,6 +258,32 @@ describe("Official frame versions in the image URL", () => {
         officialFrames: resolver,
       });
       expect(copied).toContain(`&frame=${ID}.v2&frameText=Hi`);
+
+      // Playground links made before the redesign (a bare id, as every link
+      // made before versions has, or v1): read on the server, like in the
+      // browser, they keep their frame at its newest design; the image API
+      // still draws v1 for the same values.
+      const { decodeStyleParam: decode } = await import(
+        "@/lib/playground-style"
+      );
+      for (const name of [ID, `${ID}.v1`]) {
+        const value = linkStyle(name, { text: "Hello autumn" });
+        expect(decode(value, resolver)?.styles.frame, name).toEqual({
+          style: "custom",
+          text: "Hello autumn",
+          spec: REDESIGNED,
+        });
+        const drawn = await render(redesigned, url({ style: value }));
+        expect(
+          drawn.body.equals(before[2]?.body ?? Buffer.alloc(0)),
+          name,
+        ).toBe(true);
+        expect(drawn.cache, name).toBe(IMMUTABLE);
+      }
+      // A version past the newest is still unknown
+      expect(
+        decode(linkStyle(`${ID}.v3`, { text: "Hello autumn" }), resolver),
+      ).toBeNull();
     } finally {
       vi.doUnmock("qrdx");
       vi.doUnmock("@/lib/frames/versions/record.json");
@@ -296,7 +322,7 @@ describe("Official frame versions in playground links", () => {
 });
 
 describe("Older versions where only the newest design is at hand", () => {
-  it("open at the newest in the playground, and nowhere else", async () => {
+  it("open at the newest, in the playground and in links read on the server", async () => {
     vi.resetModules();
     vi.doMock("@/lib/frames/versions/latest", () => ({
       LATEST_FRAME_VERSIONS: { [ID]: 2 },
@@ -309,13 +335,11 @@ describe("Older versions where only the newest design is at hand", () => {
       expect(pinFrameName("menu-cutlery")).toBe("menu-cutlery.v1");
       expect(currentIdOf(`${ID}.v2`)).toBe(ID);
       expect(currentIdOf(`${ID}.latest`)).toBe(ID);
-      // The browser holds v2 only: a link naming v1, or a bare id (v1),
-      // opens at it
-      expect(currentIdOf(`${ID}.v1`, "latest")).toBe(ID);
-      expect(currentIdOf(ID, "latest")).toBe(ID);
-      expect(currentIdOf(`${ID}.v1`)).toBeUndefined();
-      expect(currentIdOf(ID)).toBeUndefined();
-      expect(currentIdOf(`${ID}.v3`, "latest")).toBeUndefined();
+      // Only v2 is at hand: a link naming v1, or a bare id (v1), opens at it
+      expect(currentIdOf(`${ID}.v1`)).toBe(ID);
+      expect(currentIdOf(ID)).toBe(ID);
+      expect(currentIdOf(`${ID}.v3`)).toBeUndefined();
+      expect(currentIdOf("menu-cutlery.v2")).toBeUndefined();
       expect(currentIdOf("constructor.v2")).toBeUndefined();
     } finally {
       vi.doUnmock("@/lib/frames/versions/latest");

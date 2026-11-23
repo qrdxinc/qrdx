@@ -53,24 +53,19 @@ export const pinFrameName = (id: string): string =>
   `${id}.v${latestFrameVersion(id)}`;
 
 /**
- * The id whose current spec draws `name`, for code that holds only each
- * frame's newest design (the browser's frame library, the server's
- * catalogue): `.latest`, or the newest version by number (or bare, while
- * that's v1). With `olderVersions: "latest"`, an older version opens at the
- * newest design too (the playground does, as links did before versions);
- * without it, there's nothing for one. A version past the newest is never
- * known.
+ * The id whose current spec stands in for `name` where only each frame's
+ * newest design is at hand (the browser's frame library, the server's
+ * catalogue, both reading playground links): `.latest` and any version up
+ * to the newest, a bare id (v1) included, so a link made before a redesign
+ * still opens with its frame, as links did before versions. A version past
+ * the newest is unknown. The image API draws exact versions instead
+ * (./record.ts).
  */
-export function currentIdOf(
-  name: string,
-  olderVersions?: "latest",
-): string | undefined {
+export function currentIdOf(name: string): string | undefined {
   const parsed = parseFrameName(name);
   if (!parsed) return undefined;
   if (parsed.version === LATEST_SUFFIX) return parsed.id;
-  const latest = latestFrameVersion(parsed.id);
-  if (parsed.version === latest) return parsed.id;
-  return olderVersions === "latest" && parsed.version < latest
+  return parsed.version <= latestFrameVersion(parsed.id)
     ? parsed.id
     : undefined;
 }

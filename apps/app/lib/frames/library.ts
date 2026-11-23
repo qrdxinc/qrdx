@@ -174,7 +174,7 @@ export const LOADED_OFFICIAL_FRAMES = {
     return id === undefined ? undefined : pinFrameName(id);
   },
   specOf: (name: string) => {
-    const id = currentIdOf(name, "latest");
+    const id = currentIdOf(name);
     return id === undefined ? undefined : peekOfficialFrame(id)?.spec;
   },
 };
