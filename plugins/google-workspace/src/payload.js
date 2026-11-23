@@ -39,8 +39,8 @@ function utf8Length(value) {
   for (const char of String(value)) {
     const code = char.codePointAt(0);
     if (code < 0x80) bytes += 1;
-    else if (code < 0x8_00) bytes += 2;
-    else if (code < 0x1_00_00) bytes += 3;
+    else if (code < 0x800) bytes += 2;
+    else if (code < 0x10000) bytes += 3;
     else bytes += 4;
   }
   return bytes;

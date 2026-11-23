@@ -27,11 +27,11 @@ The copy and settings for the add-on's store listing (Google Cloud console → G
 > Where it goes:
 > - Docs: at your cursor
 > - Slides: in the middle of the current slide
-> - Sheets: over the sheet at the selected cell
+> - Sheets: in the selected cell
 >
 > The code is saved in your file as an image, at 1, 1.5 or 2 inches, sharp enough to print. It gets alt text, and a link code in Docs or Slides is also a clickable link. Preview shows the code in the side panel first, so you can scan it with your phone before you insert it.
 >
-> For a list in Sheets, select a column of links or text and QRdx fills the next column with =IMAGE() formulas, one code per row, sized to fit. Those codes follow their cells: edit a link and its code changes. Sheets loads them from QRdx's image API rather than saving them in the file.
+> For a list in Sheets, select a column of links or text and QRdx fills the next column with =IMAGE() formulas, one code per row, sized to fit. Those codes follow their cells: edit a link and its code changes. Sheets loads them from QRdx's image API rather than saving them in the file, so the first time it may ask you to click Allow access.
 >
 > Six styles: Classic (round dots), Plain squares, Blue, Slate, Green and Coffee. Each is dark on light and checked to scan.
 >

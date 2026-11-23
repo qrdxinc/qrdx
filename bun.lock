@@ -645,6 +645,9 @@
     "plugins/google-workspace": {
       "name": "@qrdx/google-workspace-addon",
       "version": "0.0.1",
+      "devDependencies": {
+        "acorn": "8.16.0",
+      },
     },
     "plugins/n8n": {
       "name": "@qrdx/n8n-nodes-qrdx",
