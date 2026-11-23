@@ -1,5 +1,5 @@
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, MutedText } from "./parts";
 
 // To QRdx (agency tools): someone asked to pay Business yearly by invoice.
@@ -17,6 +17,8 @@ export interface InvoiceRequestEmailProps {
   address: string | null;
   notes: string | null;
   plan: string;
+  /** The QRdx team's address, where this goes */
+  recipient?: string;
   /** The email's language (English: it goes to the QRdx team) */
   intl: EmailIntl;
 }
@@ -48,6 +50,7 @@ export function InvoiceRequestEmail(props: InvoiceRequestEmailProps) {
       intl={props.intl}
       preview={invoiceRequestSubject(props.company, props.plan)}
       reason="Sent by the pay-by-invoice form on the pricing page."
+      recipient={props.recipient}
     >
       <EmailHeading>Invoice request</EmailHeading>
       <EmailText>
@@ -55,7 +58,6 @@ export function InvoiceRequestEmail(props: InvoiceRequestEmailProps) {
         this email to reach {props.billingEmail}.
       </EmailText>
       <DetailsTable rows={rows} />
-      <EmailDivider />
       <MutedText>
         Nothing was charged and no plan changed. The invoice and the plan are
         arranged by hand.
@@ -76,4 +78,5 @@ InvoiceRequestEmail.PreviewProps = {
   address: "1 Example Street, Berlin",
   notes: null,
   plan: "Business (yearly)",
+  recipient: "alex@example.com",
 } satisfies Omit<InvoiceRequestEmailProps, "intl">;

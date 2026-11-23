@@ -229,6 +229,7 @@ async function noteEmail(
       <PersonalNoteEmail
         body={text.body}
         intl={intl}
+        recipient={recipient.email}
         senderName={sender.name}
         unsubscribeUrl={unsubscribeUrl}
       />

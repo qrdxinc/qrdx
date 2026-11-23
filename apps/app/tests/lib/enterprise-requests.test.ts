@@ -137,6 +137,10 @@ describe("the enterprise contact form", () => {
     ]) {
       expect(email?.html).toContain(part);
     }
+    // The footer names the address it went to.
+    expect(email?.html).toMatch(
+      /This email was meant for <span[^>]*>enterprise@qrdx\.dev<\/span>/,
+    );
     expect(state.turnstileTokens).toEqual(["token-1"]);
   });
 

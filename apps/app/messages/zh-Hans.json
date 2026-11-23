@@ -9787,6 +9787,7 @@
       "open": "打开控制台"
     },
     "personal": {
+      "meantFor": "这封邮件的收件人是 <strong>{email}</strong>。",
       "reply": "直接回复这封邮件，{name} 就能收到。",
       "stop": "不再接收 QRdx 团队的来信"
     },

@@ -9787,6 +9787,7 @@
       "open": "Buka dasbor Anda"
     },
     "personal": {
+      "meantFor": "Email ini ditujukan untuk <strong>{email}</strong>.",
       "reply": "Balas email ini dan balasan Anda akan sampai ke {name}.",
       "stop": "Berhenti menerima catatan dari tim QRdx"
     },

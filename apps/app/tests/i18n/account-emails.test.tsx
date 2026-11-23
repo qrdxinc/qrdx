@@ -312,6 +312,7 @@ describe("the account and security emails in Spanish", async () => {
         details={DETAILS}
         intl={intl}
         paypalEmail="ada@example.com"
+        recipient="sam@example.com"
         replaced
       />,
     );
@@ -319,6 +320,8 @@ describe("the account and security emails in Spanish", async () => {
       "Se cambió la dirección de PayPal de tus pagos de afiliado.",
     );
     expect(html).toContain("<strong>ada@example.com</strong>");
+    // The footer names the account's address, in Spanish too.
+    expect(html).toMatch(/Este correo era para <span[^>]*>sam@example\.com</);
   });
 
   it("the time of the request, in the email's language", () => {

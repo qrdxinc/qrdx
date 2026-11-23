@@ -1,7 +1,13 @@
+import type { CSSProperties } from "react";
+import { Link } from "react-email";
 import type { EmailIntl } from "../intl";
 import { baseUrl } from "../origin";
-import { EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EMAIL_ACCENT, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, formatEmailDateTime, MutedText } from "./parts";
+
+const styles = {
+  link: { color: EMAIL_ACCENT, wordBreak: "break-all" },
+} satisfies Record<string, CSSProperties>;
 
 export interface AbuseReportAckEmailProps {
   /** Reported link or code, as the reporter entered it */
@@ -9,6 +15,8 @@ export interface AbuseReportAckEmailProps {
   reason: string;
   reportedAt: Date | string;
   reportId: string;
+  /** The reporter's address, where this goes */
+  recipient?: string;
   /** The layout's language (the body is English) */
   intl: EmailIntl;
 }
@@ -22,13 +30,16 @@ export function AbuseReportAckEmail({
   reason,
   reportedAt,
   reportId,
+  recipient,
   intl,
 }: AbuseReportAckEmailProps) {
+  const terms = new URL("/legal/terms-of-service", baseUrl).toString();
   return (
     <EmailLayout
       intl={intl}
       preview="We received your report"
       reason="You got this email because this address was entered on the QRdx abuse report form."
+      recipient={recipient}
     >
       <EmailHeading>We received your report</EmailHeading>
       <EmailText>
@@ -46,7 +57,9 @@ export function AbuseReportAckEmail({
       <MutedText>
         We may not be able to reply to every report individually. Our rules are
         in the terms of service:{" "}
-        {new URL("/legal/terms-of-service", baseUrl).toString()}
+        <Link href={terms} style={styles.link}>
+          {terms}
+        </Link>
       </MutedText>
     </EmailLayout>
   );
@@ -58,4 +71,5 @@ AbuseReportAckEmail.PreviewProps = {
   reason: "Phishing",
   reportedAt: new Date("2026-11-19T09:30:00Z"),
   reportId: "rep_7f3k2m9x",
+  recipient: "alex@example.com",
 } satisfies Omit<AbuseReportAckEmailProps, "intl">;

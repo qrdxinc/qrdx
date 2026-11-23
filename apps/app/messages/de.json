@@ -9787,6 +9787,7 @@
       "open": "Dashboard öffnen"
     },
     "personal": {
+      "meantFor": "Diese E-Mail war für <strong>{email}</strong> bestimmt.",
       "reply": "Antworte auf diese E-Mail, und sie geht direkt an {name}.",
       "stop": "Nachrichten vom QRdx-Team abbestellen"
     },

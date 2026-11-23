@@ -10186,6 +10186,7 @@
       "open": "Open your dashboard"
     },
     "personal": {
+      "meantFor": "This email was meant for <strong>{email}</strong>.",
       "reply": "Reply to this email and it reaches {name}.",
       "stop": "Stop notes from the QRdx team"
     },
