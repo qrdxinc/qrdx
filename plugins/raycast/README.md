@@ -2,12 +2,12 @@
 
 A [Raycast](https://www.raycast.com) extension that makes styled QR codes, built with the [`qrdx`](../../packages/qrdx) library. It isn't in the Raycast Store yet, so you install it from source.
 
-- **Generate QR:** enter a URL or text, pick body, eye and dot patterns from previews, colors, a decorative template and a logo. Copy the code as PNG or SVG, or save either to `~/Downloads`.
-- **Saved QR Codes:** save a code's settings, then browse, edit and export them later. They're kept in Raycast's local storage.
+- **Generate QR:** enter a URL or text, pick body, eye and dot patterns from previews, colors, a call-to-action frame with your label (such as "Scan me") and a logo. Copy the code as PNG or SVG, or save either to `~/Downloads`.
+- **Saved QR Codes:** save a code's settings, then browse, edit and export them later. They're kept in Raycast's local storage. Codes saved with a template, before frames replaced templates, still show and export with it.
 - **Generate QR with AI:** describe the code you want and Raycast AI fills in the settings. This command and the AI tools in `ai.yaml` need access to Raycast AI.
 - **Open in QRdx Playground** (⌘O) opens the full editor at qrdx.dev with the code's web address. Other content, colors and patterns stay in Raycast.
 
-It depends on `qrdx` 0.0.60 from npm and offers every body pattern, eye frame, eye center and template that version offers, taken from `qrdx` itself, so updating `qrdx` brings its new shapes along.
+It depends on `qrdx` 0.0.60 from npm and offers every body pattern, eye frame, eye center and call-to-action frame that version offers, taken from `qrdx` itself, so updating `qrdx` brings its new shapes and frames along. The AI tool checks a frame's name against that list and answers with the valid names when it doesn't know one.
 
 ## Install from source
 
