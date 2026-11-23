@@ -22,6 +22,7 @@ What it covers:
 - Every body, eye and corner dot pattern of the pinned CLI, listed in [`SKILL.md`](generate-qr/SKILL.md)
 - Solid colors and linear, radial or angular gradients, with separate eye and dot colors
 - Call-to-action frames with a label of up to 24 characters
+- Decorative templates: `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`
 - A center logo, with the modules behind it cleared
 - Error correction levels L, M, Q and H
 - The `batch` command: a code for every row of a CSV, with failed rows listed in `errors.csv`

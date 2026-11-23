@@ -1,10 +1,10 @@
 ---
 name: generate-qr
-description: Generate a styled, scannable QR code with the QRdx CLI (@qrdx/cli) from a URL, text, Wi-Fi login or vCard and save it as SVG, PNG, WebP, GIF, BMP, ICO or EPS, or make one code per row of a CSV file. Supports solid colors, linear, radial and angular gradients, body, eye and corner dot patterns, call-to-action frames with a label and a center logo. Use when the user says "create a QR code", "generate a QR for this URL", "make a Wi-Fi QR", "build a branded QR with our logo", "add a gradient to the QR", "add a Scan me frame", "make QR codes for every row of this CSV", or needs to automate QR code creation in a workflow.
+description: Generate a styled, scannable QR code with the QRdx CLI (@qrdx/cli) from a URL, text, Wi-Fi login or vCard and save it as SVG, PNG, WebP, GIF, BMP, ICO or EPS, or make one code per row of a CSV file. Supports solid colors, linear, radial and angular gradients, body, eye and corner dot patterns, call-to-action frames with a label, decorative templates and a center logo. Use when the user says "create a QR code", "generate a QR for this URL", "make a Wi-Fi QR", "build a branded QR with our logo", "add a gradient to the QR", "add a Scan me frame", "use the Arrow template", "make QR codes for every row of this CSV", or needs to automate QR code creation in a workflow.
 license: MIT
 compatibility: Requires Node.js 22 or later and network access to the npm registry.
 metadata:
-  version: "2.4.2"
+  version: "2.4.1"
 ---
 
 # Generate QR Code
@@ -42,6 +42,7 @@ Always pass both the data and `-o`. In an interactive terminal the CLI asks for 
 | `--dot-color <color>` | matches `--fg` | Corner dot color (hex or JSON gradient) |
 | `--logo <url>` | none | Center logo image URL, 20% of the code's width, with the modules behind it cleared. Use with `--level H`. PNG, WebP, GIF, BMP, ICO and EPS embed the image; SVG links to the URL. |
 | `--margin <n>` | `0` | Quiet zone margin in modules |
+| `--template <id>` | none | Decorative template wrapper (case-sensitive) |
 | `--frame <style>` | none | Call-to-action frame. It adds space around the code, so the file is larger than `--size`. |
 | `--frame-text <text>` | `Scan me` | Frame label, up to 24 characters. `""` hides it. |
 | `--frame-color <hex>` | `#000000` | Frame color |
@@ -60,6 +61,17 @@ These are the values `@qrdx/cli@0.0.17` accepts. Anything else exits with an err
 **Dot** (`--dot`): `square` `rounded` `extra-rounded` `circle` `message` `message-reverse` `diya` `diya-reverse` `rounded-triangle` `leaf` `leaf-reverse` `drop` `drop-reverse` `plus` `cross-rounded` `hexagon` `octagon` `flower` `heart` `squircle` `dots` `cushion`
 
 **Frame** (`--frame`): `none` `banner-bottom` `banner-top` `banner-top-bottom` `border` `rounded-border` `gradient-border` `speech-bubble` `speech-bubble-top` `chat-bubble` `circle` `polaroid` `phone` `ticket` `badge` `envelope` `tag` `menu-card` `sticker` `focus`
+
+**Template** (`--template`):
+
+| ID | Description |
+|----|-------------|
+| `Arrow` | Adds a curved arrow pointing to the QR code |
+| `StandardBox` | Framed box with a clean border |
+| `SquareBorder` | Bold square border around the QR |
+| `StrikedBox` | Box with diagonal strike decoration |
+| `Halloween` | Spooky Halloween-themed frame |
+| `DotRing` | Round badge: the code in a disc of dots, inside a ring that reads "Scan the QR code" |
 
 Previews of every pattern and frame: https://qrdx.dev/docs/styles
 
@@ -151,9 +163,16 @@ npx @qrdx/cli@0.0.17 generate "https://qrdx.dev" -o multi-gradient.svg \
   --fg '{"type":"linear","stops":[{"color":"#0ea5e9","offset":0},{"color":"#6366f1","offset":100}],"angle":90}' \
   --eye-color '{"type":"radial","stops":[{"color":"#f97316","offset":0},{"color":"#ef4444","offset":100}]}'
 
-# Combined: frame + gradient + logo
+# Arrow template
+npx @qrdx/cli@0.0.17 generate "https://qrdx.dev" -o arrow.svg --template Arrow
+
+# Halloween template with spooky styling (keep a light background so it scans)
+npx @qrdx/cli@0.0.17 generate "https://qrdx.dev" -o halloween.svg \
+  --template Halloween --body circle --eye gear --dot leaf --fg "#1a0a00"
+
+# Combined: template + gradient + logo
 npx @qrdx/cli@0.0.17 generate "https://qrdx.dev" -o full.svg \
-  --frame rounded-border --frame-text "Scan me" --level H \
+  --template StandardBox --level H \
   --fg '{"type":"linear","stops":[{"color":"#1e3a5f","offset":0},{"color":"#3b82f6","offset":100}],"angle":45}' \
   --logo "https://qrdx.dev/logo.png"
 
@@ -185,7 +204,7 @@ Take the dimensions from that line: a frame makes the file larger than `--size`,
 If SVG or EPS: mention it scales to any size without losing quality (EPS is the one print shops ask for).
 If PNG, WebP, GIF or BMP: mention the pixel dimensions.
 If ICO: say it's a favicon with 16, 32, 48 and 256 px images. If a frame was asked for, the CLI prints `An ICO holds the code alone, so the frame was left out.`; pass that on.
-If a frame was used: name it, and the frame label.
+If a frame or template was used: name it, and the frame label.
 If gradients were used: briefly describe the effect (e.g. "indigo-to-pink diagonal gradient").
 For a Wi-Fi code: say it holds the network's login, without repeating the password.
 For `batch`: say how many codes were saved, where, and point to `errors.csv` if rows were skipped.
@@ -196,7 +215,7 @@ Invalid input makes the CLI exit with code `1` and print the reason: `✗ …` f
 
 **`No data to encode`**: the data string is missing. Wrap multi-line values (vCard, Wi-Fi) in quotes.
 
-**`Invalid --body "…"` / `--eye` / `--dot` / `--level` / `--frame`**: the message lists the accepted values.
+**`Invalid --body "…"` / `--eye` / `--dot` / `--level` / `--template` / `--frame`**: the message lists the accepted values. Template IDs are case-sensitive: `Arrow`, not `arrow`.
 
 **`Invalid gradient JSON` / `Invalid gradient`**: single-quote the JSON in the shell, use double quotes inside it, and give at least 2 stops with `offset` 0–100.
 
