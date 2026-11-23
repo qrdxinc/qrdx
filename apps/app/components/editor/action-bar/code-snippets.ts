@@ -11,7 +11,9 @@
 //   installs the current npm `qrdx` and passes them to its QRCode as given.
 // - Image URL: GET https://api.qrdx.dev/v1/qr (app/api/v1/qr/_lib/query.ts):
 //   flat parameters where they say it, and `style` (lib/qr-api/style.ts) for
-//   gradients, other colors and frames with more than a label.
+//   gradients, other colors and frames with more than a label. An official
+//   frame goes by its id pinned to the version on screen (autumn-maple.v1,
+//   lib/frames/versions), never its spec, so the image never changes.
 // - REST API: POST https://api.qrdx.dev/v1/codes (createCodeSchema in
 //   app/(app)/dashboard/codes/_lib/qr-codes.ts, logo fields in
 //   app/api/v1/codes/_lib/style.ts).
@@ -29,13 +31,7 @@ import {
   SHADCN_REGISTRY_NAMESPACE,
   SHADCN_REGISTRY_URL,
 } from "@repo/config";
-import {
-  DEFAULT_SIZE,
-  getTemplate,
-  getTemplateIds,
-  type QRCodeProps,
-  resolveQRCodeProps,
-} from "qrdx";
+import { DEFAULT_SIZE, type QRCodeProps, resolveQRCodeProps } from "qrdx";
 import {
   BODY_PATTERN,
   CORNER_EYE_DOT_PATTERNS,
@@ -49,13 +45,27 @@ import {
 } from "qrdx/types";
 import { presetLogoIcon } from "@/lib/community/public-style";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
+import { LOADED_OFFICIAL_FRAMES } from "@/lib/frames/library";
 import {
   hasImageFills,
   hasSilhouette,
   withoutImageFills,
 } from "@/lib/paint/image-fills";
-import { type CodeLang, parseLinkUrl } from "@/lib/playground-links";
-import { GRADIENT_STOPS_MAX, isSafeColor } from "@/lib/qr-api/style";
+import {
+  type CodeLang,
+  MAX_STYLE_PARAM_LENGTH,
+  parseLinkUrl,
+} from "@/lib/playground-links";
+import type { OfficialFrameResolver } from "@/lib/playground-style";
+import {
+  type LinkableStyle,
+  packStyleParam,
+} from "@/lib/playground-style-pack";
+import {
+  GRADIENT_STOPS_MAX,
+  isSafeColor,
+  parseStyleQuery,
+} from "@/lib/qr-api/style";
 import { CONTENT_FIELDS } from "@/lib/qr-design/content";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
 import type { ContentType, QRContentConfig } from "@/types/qr-content";
@@ -143,6 +153,12 @@ export interface SnippetInput {
   contentType: ContentType;
   /** The content form's fields for contentType, when known */
   content?: QRContentConfig;
+  /**
+   * Finds the official frame a custom frame is an unchanged copy of, so the
+   * image URL names it by its pinned name: by default, what the browser has
+   * loaded of the frame library (its index is enough)
+   */
+  officialFrames?: OfficialFrameResolver;
 }
 
 export interface Snippet {
@@ -234,8 +250,6 @@ export const LEFT_OUT = {
 
 const shapeLeftOut = (part: "dot" | "eye" | "eye center", value: string) =>
   `The "${value}" ${part} shape`;
-const borderLeftOut = (id: string) =>
-  `The "${getTemplate(id)?.name ?? id}" frame`;
 
 /** What the editor renders when a style field is unset (QRCodeSVG defaults). */
 const ENGINE_DEFAULTS = {
@@ -248,7 +262,6 @@ const ENGINE_DEFAULTS = {
   margin: 0,
 } as const;
 
-const TEMPLATE_IDS = new Set(getTemplateIds());
 const MARGIN_MAX = 16;
 const IMAGE_DATA_MAX_LENGTH = 2048;
 
@@ -469,8 +482,6 @@ function shadcnStyleProps(style: ThemeStyles, notes: Notes): string[] {
     "cornerEyePattern",
     "cornerEyeDotPattern",
     "level",
-    // "default" is a template too: it insets the code a little.
-    "templateId",
   ] as const) {
     const value = clean[key];
     if (value !== undefined && value !== "") props.push(jsxProp(key, value));
@@ -552,6 +563,36 @@ function hexKey(hex: string): string {
 
 /** Longest `style` value (STYLE_QUERY_MAX_LENGTH in app/api/v1/qr/_lib/query.ts). */
 const IMAGE_STYLE_MAX_LENGTH = 8192;
+
+/**
+ * How much shorter, in the URL, a playground link's compact `style` value
+ * must be than the JSON to be used instead: JSON reads, so it wins unless
+ * the compact value saves a fifth or more.
+ */
+const COMPACT_STYLE_SHARE = 0.8;
+
+/**
+ * The `style` value for the image API: readable JSON, or, for a frame drawn
+ * from its own spec, a playground link's compact value ("1." + base64url,
+ * lib/playground-style-pack.ts) when it's clearly shorter in the URL and
+ * the API reads it back. The flat parameters stay as they are either way.
+ */
+function imageStyleValue(
+  styleParam: Record<string, unknown>,
+  ownSpec: boolean,
+): string {
+  const json = JSON.stringify(styleParam);
+  if (!ownSpec) return json;
+  const compact = packStyleParam(styleParam as LinkableStyle);
+  // URL-encoded, JSON grows (each quote, brace and colon takes three
+  // characters); the compact value is URL-safe as it is.
+  const jsonInUrl = new URLSearchParams({ s: json }).toString().length - 2;
+  return compact.length <= MAX_STYLE_PARAM_LENGTH &&
+    compact.length <= jsonInUrl * COMPACT_STYLE_SHARE &&
+    parseStyleQuery(compact).ok
+    ? compact
+    : json;
+}
 
 /**
  * A color for the image API: a flat hex value when it is one, else for
@@ -680,30 +721,41 @@ export function imageSnippet(input: SnippetInput): ImageSnippet {
   if (level !== IMAGE_DEFAULTS.level) params.set("level", level);
   const margin = roundMargin(style.margin);
   if (margin !== IMAGE_DEFAULTS.margin) params.set("margin", String(margin));
-  const template = style.templateId;
-  if (template && template !== "default") {
-    if (TEMPLATE_IDS.has(template)) params.set("template", template);
-    else notes.add(borderLeftOut(template));
-  }
-
   const frame = style.frame;
+  // A frame drawn from its own spec (not an official one's), which only
+  // `style` can carry.
+  let ownSpec = false;
   if (frame && frame.style !== "none") {
+    // An official frame goes by its id pinned to this version, which the
+    // API keeps drawing whatever QRdx changes later, so its spec (most of a
+    // frame's size) stays out of the URL.
+    const official =
+      frame.style === "custom"
+        ? (input.officialFrames ?? LOADED_OFFICIAL_FRAMES).idOfSpec(frame.spec)
+        : undefined;
+    ownSpec = frame.style === "custom" && !official;
+    // An empty second line hides the spec's own, so "" is a change too.
     const extras =
-      frame.style === "custom" ||
+      ownSpec ||
       frame.color ||
       frame.textColor ||
       frame.secondaryColor ||
-      frame.secondaryText ||
+      frame.secondaryText !== undefined ||
       frame.fontScale !== undefined;
     if (!extras) {
-      params.set("frame", frame.style);
+      params.set("frame", official ?? frame.style);
       if (frame.text !== undefined) params.set("frameText", frame.text);
     } else {
       const { color, textColor, secondaryColor, ...rest } = frame;
       const colors = Object.entries({ color, textColor, secondaryColor })
         .map(([key, value]) => [key, frameColor(value, notes)] as const)
         .filter(([, value]) => value);
-      styleParam.frame = { ...rest, ...Object.fromEntries(colors) };
+      const labels: Record<string, unknown> = { ...rest };
+      if (official) {
+        labels.style = official;
+        delete labels.spec;
+      }
+      styleParam.frame = { ...labels, ...Object.fromEntries(colors) };
     }
   }
 
@@ -723,17 +775,17 @@ export function imageSnippet(input: SnippetInput): ImageSnippet {
   );
 
   if (Object.keys(styleParam).length > 0) {
-    let json = JSON.stringify(styleParam);
-    if (json.length > IMAGE_STYLE_MAX_LENGTH && styleParam.frame) {
+    let value = imageStyleValue(styleParam, ownSpec);
+    if (value.length > IMAGE_STYLE_MAX_LENGTH && styleParam.frame) {
       delete styleParam.frame;
       notes.add(
         frame?.style === "custom"
           ? LEFT_OUT.customFrameTooLarge
           : LEFT_OUT.frame,
       );
-      json = JSON.stringify(styleParam);
+      value = JSON.stringify(styleParam);
     }
-    if (Object.keys(styleParam).length > 0) params.set("style", json);
+    if (Object.keys(styleParam).length > 0) params.set("style", value);
   }
 
   const url = `${IMAGE_API_URL}?${params.toString()}`;
@@ -981,12 +1033,6 @@ export function mcpSnippet(input: SnippetInput): Snippet {
   if (Object.keys(gradients).length > 0) design.gradients = gradients;
   design.margin = roundMargin(style.margin);
   design.level = style.level ?? ENGINE_DEFAULTS.level;
-  const template = style.templateId;
-  if (template && template !== "default") {
-    if (TEMPLATE_IDS.has(template)) design.templateId = template;
-    else notes.add(borderLeftOut(template));
-  }
-
   const frame = style.frame;
   if (frame && frame.style !== "none") {
     const out: Record<string, unknown> = { style: frame.style };
@@ -1054,7 +1100,6 @@ const CLI_HEX = /^#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
 /**
  * `npx @qrdx/cli generate …`. Every option it can take is passed, because
  * in a terminal the CLI asks for any option left out. It still asks for a
- * border when the design has none (it has no `--template none`) and for a
  * shape it no longer offers.
  */
 export function cliSnippet(input: SnippetInput): Snippet {
@@ -1099,12 +1144,6 @@ export function cliSnippet(input: SnippetInput): Snippet {
     `--level ${style.level ?? ENGINE_DEFAULTS.level}`,
     `--margin ${roundMargin(style.margin)}`,
   ];
-  const template = style.templateId;
-  if (template && template !== "default") {
-    if (TEMPLATE_IDS.has(template)) otherFlags.push(`--template ${template}`);
-    else notes.add(borderLeftOut(template));
-  }
-
   const frameFlags: string[] = [];
   const frame = style.frame;
   if (frame && frame.style !== "none" && frame.style !== "custom") {
@@ -1200,8 +1239,6 @@ function libraryProps(
   if (style.level) props.level = style.level;
   // The default quiet zone is 0, as in the editor.
   if (style.margin) props.margin = style.margin;
-  // "default" is a template too: it insets the code a little.
-  if (style.templateId) props.templateId = style.templateId;
   if (style.frame && hasFrame(style)) props.frame = style.frame;
 
   // No logo unless one is passed (qrdx 0.0.47 and later).
@@ -1485,7 +1522,6 @@ const ELEMENT_ATTRIBUTES: Record<string, "string" | "number" | "boolean"> = {
   cornerEyePattern: "string",
   cornerEyeDotPattern: "string",
   margin: "number",
-  templateId: "string",
   moduleScale: "number",
   autoLevel: "boolean",
   shape: "string",

@@ -905,8 +905,8 @@ describe("spec fields the built-in frames use", () => {
   });
 });
 
-// Added with the built-in templates as specs (src/template/specs)
-describe("spec fields the built-in templates use", () => {
+// Added with the engine's templates as specs (built-in frames since 0.0.64)
+describe("spec fields the former templates use", () => {
   const stroked = (): FrameSpec => ({
     ...baseSpec(),
     shapes: [

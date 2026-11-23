@@ -8,7 +8,9 @@
 //   value can't point a renderer at a remote resource.
 // - Frames are a built-in style, or `{ style: "custom", spec }` validated
 //   by the engine's frame-spec schema (types/frame-spec.ts: no markup, no
-//   URL, no image, hard limits).
+//   URL, no image, hard limits). The image API's `style` (parseStyleQuery)
+//   also takes an official frame's name as the style (its id, with a
+//   version or `.latest`, lib/frames/versions/names.ts), and puts its spec in.
 // - Logos: `logoIcon` (one of the editor's quick icons, drawn by QRdx) or
 //   `logoFileId` (an image the caller uploaded, resolved by lib/qr-api/
 //   logo.ts against the caller's workspace). A logo address (`customLogo`)
@@ -24,7 +26,6 @@
 // `apiStyleFields`, mapped in engine-options.ts. The OpenAPI document and
 // the MCP tool descriptions are generated from this schema.
 
-import { getTemplateIds } from "qrdx";
 import {
   BG_RADIUS_MAX,
   bodyPatternSchema,
@@ -34,6 +35,7 @@ import {
   EYE_POSITIONS,
   errorLevelSchema,
   eyeGradientSpanSchema,
+  FRAME_STYLES,
   frameSchema,
   HALO_COLOR_DEFAULT,
   HALO_LIGHT_MIN,
@@ -52,8 +54,13 @@ import {
 } from "qrdx/types";
 import { z } from "zod";
 import {
+  OFFICIAL_FRAME_NAME,
+  parseFrameName,
+} from "@/lib/frames/versions/names";
+import {
   decodeStyleParam,
   type OfficialFrameResolver,
+  officialFrameNameOfStyleParam,
 } from "@/lib/playground-style";
 import { logoIconSchema } from "@/lib/qr-design/logo-icon";
 import type { ThemeStyles } from "@/types/theme";
@@ -161,7 +168,43 @@ export const apiFrameSchema = z
     'A call-to-action frame: a built-in style with its text ({ "style": "banner-bottom", "text": "Scan me" }), or { "style": "custom", "spec": <frame spec> } from the community or a custom frame made in the playground',
   );
 
-const TEMPLATE_IDS = getTemplateIds() as [string, ...string[]];
+/** Longest official frame name the image API reads. */
+export const OFFICIAL_FRAME_ID_MAX_LENGTH = 80;
+
+const SPEC_FREE_FRAME_STYLES = new Set<string>([...FRAME_STYLES, "custom"]);
+
+/**
+ * Whether `style` could name an official frame (qrdx OFFICIAL_FRAMES): an
+ * id such as autumn-maple, with a version (autumn-maple.v1) or `.latest`,
+ * and not a built-in frame style or "custom" (no official id is one of
+ * those). The image API takes one wherever it takes a frame style.
+ */
+export const isOfficialFrameName = (style: string) =>
+  style.length <= OFFICIAL_FRAME_ID_MAX_LENGTH &&
+  OFFICIAL_FRAME_NAME.test(style) &&
+  !SPEC_FREE_FRAME_STYLES.has(style);
+
+/**
+ * What the image API says about a frame name it has no frame for: no such
+ * frame, or a version the frame doesn't have, with the ones it has.
+ */
+export function unknownOfficialFrame(
+  name: string,
+  officialFrames?: OfficialFrameResolver,
+): string {
+  const parsed = parseFrameName(name);
+  const versions = parsed
+    ? (officialFrames?.versionCount?.(parsed.id) ?? 0)
+    : 0;
+  if (parsed && typeof parsed.version === "number" && versions > 0) {
+    const names = Array.from(
+      { length: versions },
+      (_, index) => `${parsed.id}.v${index + 1}`,
+    );
+    return `Frame ${parsed.id} has no version ${parsed.version}. Its versions: ${names.join(", ")}; ${parsed.id}.latest follows the newest`;
+  }
+  return `No frame "${name}": use a built-in frame such as banner-bottom, or one of QRdx's official frames by id, such as autumn-maple (its page is /community/frames/<id>)`;
+}
 
 const eyeOverrideSchema = z
   .object({
@@ -325,10 +368,6 @@ export const apiStyleFields = {
     .max(API_MARGIN_MAX)
     .optional()
     .describe(`Quiet zone, in modules (0 to ${API_MARGIN_MAX}; 4 is ideal)`),
-  templateId: z
-    .enum(TEMPLATE_IDS)
-    .optional()
-    .describe('Decorative border template; "default" for none'),
   frame: apiFrameSchema.optional(),
   eyeColors: eyeColorsSchema.optional(),
   moduleScale: z
@@ -411,7 +450,7 @@ export type ApiStyle = z.output<typeof apiStyleSchema>;
 export const apiStyleToolSchema = z
   .record(z.string(), z.unknown())
   .describe(
-    'The editor\'s style JSON, as design_qr returns it in qrdxStyle and a saved theme stores it. Fields: bgColor, fgColor, eyeColor, dotColor (a color such as #155dfc, or a gradient { type: linear | radial, angle, stops: [{ color, offset 0-100 }] } with 2 to 8 stops), bodyPattern, cornerEyePattern, cornerEyeDotPattern, level (L, M, Q, H), margin (0-16), templateId, frame (a built-in style with text, or { style: "custom", spec }), eyeColors ({ topLeft, topRight, bottomLeft: { outer, inner } }), moduleScale (0.5-1), autoLevel, shape (square or circle), logoOptions ({ size 0.1-0.3, padding 0-2, x and y 0-1, shape square, rounded or circle, plate }), eyeShapes ({ topLeft, topRight, bottomLeft: { outer, inner } shapes }), eyeGradient (corner or code), bgRadius (0-0.5, needs a margin), backdrop (a color outside the rounded background), halo ({ color, width 0.1-0.5 }), shadow ({ color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 }), showLogo, logoIcon, logoFileId. Unknown fields are refused.',
+    'The editor\'s style JSON, as design_qr returns it in qrdxStyle and a saved theme stores it. Fields: bgColor, fgColor, eyeColor, dotColor (a color such as #155dfc, or a gradient { type: linear | radial, angle, stops: [{ color, offset 0-100 }] } with 2 to 8 stops), bodyPattern, cornerEyePattern, cornerEyeDotPattern, level (L, M, Q, H), margin (0-16), frame (a built-in style with text, or { style: "custom", spec }), eyeColors ({ topLeft, topRight, bottomLeft: { outer, inner } }), moduleScale (0.5-1), autoLevel, shape (square or circle), logoOptions ({ size 0.1-0.3, padding 0-2, x and y 0-1, shape square, rounded or circle, plate }), eyeShapes ({ topLeft, topRight, bottomLeft: { outer, inner } shapes }), eyeGradient (corner or code), bgRadius (0-0.5, needs a margin), backdrop (a color outside the rounded background), halo ({ color, width 0.1-0.5 }), shadow ({ color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 }), showLogo, logoIcon, logoFileId. Unknown fields are refused.',
   );
 
 export interface StyleIssue {
@@ -462,7 +501,14 @@ export function parseApiStyle(input: unknown): ParsedStyle {
       ],
     };
   }
-  const result = apiStyleSchema.safeParse(input);
+  // Templates are frames since qrdx 0.0.64: a style that still names one
+  // (`templateId`, with Dot Ring's `customProps`) is drawn without it
+  const {
+    templateId: _templateId,
+    customProps: _customProps,
+    ...current
+  } = input as Record<string, unknown>;
+  const result = apiStyleSchema.safeParse(current);
   if (!result.success) {
     return {
       ok: false,
@@ -476,11 +522,57 @@ export function parseApiStyle(input: unknown): ParsedStyle {
 }
 
 /**
+ * `json` with a frame that names an official frame as its style
+ * (`{ "frame": { "style": "autumn-maple.v1", "text": "Hello" } }`) turned
+ * into the custom frame it names: the spec from `officialFrames`, the
+ * labels, colors and label size as given. Anything else is returned as it
+ * is, for the schema to check; a name with no frame is an issue.
+ */
+function withOfficialFrame(
+  json: unknown,
+  officialFrames: OfficialFrameResolver | undefined,
+): { ok: true; json: unknown } | { ok: false; issues: StyleIssue[] } {
+  if (!(officialFrames && json && typeof json === "object")) {
+    return { ok: true, json };
+  }
+  const frame = (json as { frame?: unknown }).frame;
+  if (!frame || typeof frame !== "object" || Array.isArray(frame)) {
+    return { ok: true, json };
+  }
+  const { style } = frame as { style?: unknown };
+  if (
+    typeof style !== "string" ||
+    !isOfficialFrameName(style) ||
+    Object.hasOwn(frame, "spec")
+  ) {
+    return { ok: true, json };
+  }
+  const spec = officialFrames.specOf(style);
+  if (!spec) {
+    return {
+      ok: false,
+      issues: [
+        {
+          path: "style.frame.style",
+          message: unknownOfficialFrame(style, officialFrames),
+        },
+      ],
+    };
+  }
+  return {
+    ok: true,
+    json: { ...json, frame: { ...frame, style: "custom", spec } },
+  };
+}
+
+/**
  * A `style` query value: URL-decoded JSON (`{"fgColor":"#155dfc",…}`), or
  * the `style` value of a playground link ("1." + base64url, see
- * lib/playground-style.ts). Either way the strict schema checks it. A link
- * names an official frame by id: `officialFrames` finds its spec (the image
- * API passes the full catalogue, OFFICIAL_FRAME_RESOLVER).
+ * lib/playground-style.ts). Either way the strict schema checks it. Both
+ * can name an official frame (JSON as the frame's style, a link under its
+ * own key): `officialFrames` finds its spec (the image API passes every
+ * version ever published, FRAME_VERSION_RESOLVER in lib/frames/versions/
+ * record.ts).
  */
 export function parseStyleQuery(
   raw: string,
@@ -503,17 +595,22 @@ export function parseStyleQuery(
         ],
       };
     }
-    return parseApiStyle(json);
+    const named = withOfficialFrame(json, officialFrames);
+    return named.ok ? parseApiStyle(named.json) : named;
   }
   const decoded = decodeStyleParam(value, officialFrames);
   if (!decoded) {
+    // A link naming a frame (or a frame's version) there's no spec for
+    const frame = officialFrameNameOfStyleParam(value);
     return {
       ok: false,
       issues: [
         {
           path: "style",
           message:
-            "Must be JSON (URL-encode it) or a playground style value (1.…)",
+            frame !== null && officialFrames && !officialFrames.specOf(frame)
+              ? unknownOfficialFrame(frame, officialFrames)
+              : "Must be JSON (URL-encode it) or a playground style value (1.…)",
         },
       ],
     };

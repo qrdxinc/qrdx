@@ -23,6 +23,7 @@ import { parseSvgMarkup, type SvgNode } from "../src/utils/svg-geometry";
 import type { AnyQRFrame, FrameSpec, QRProps } from "../types";
 import { FRAME_STYLES } from "../types/frame";
 import { getFrameSpecIssues } from "../types/frame-spec";
+import { UNLABELLED_FRAMES } from "./support/catalog";
 import { renderSvg } from "./support/qr";
 
 const VALUE = "https://qrdx.dev/q/Ab3dE9x";
@@ -36,9 +37,13 @@ const MARKER_FRAMES = framePart(
     ? OFFICIAL_FRAMES
     : OFFICIAL_FRAMES.filter((frame) => MARKED_IDS.has(frame.id))
 );
-const BUILT_IN = FRAME_STYLES.filter((style) => style !== "none");
+// The built-in styles with labels (the former templates but Dot ring are
+// artwork without one)
+const BUILT_IN = FRAME_STYLES.filter(
+  (style) => style !== "none" && !UNLABELLED_FRAMES.has(style)
+);
 // The built-in styles that draw `secondaryText`
-const SECOND_LINE = ["banner-top-bottom", "circle", "menu-card"];
+const SECOND_LINE = ["banner-top-bottom", "circle", "menu-card", "dot-ring"];
 
 const MARKER = new RegExp(` ${FRAME_LABEL_ATTRIBUTE}="[^"]*"`, "g");
 

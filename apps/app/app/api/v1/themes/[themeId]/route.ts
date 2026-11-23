@@ -6,6 +6,7 @@ import { withApiUsage } from "@/lib/analytics/usage";
 import { oauthCompatibleError } from "@/lib/api-errors";
 import { withApiQuotaHeaders } from "@/lib/api-quota";
 import { HttpError } from "@/lib/error-response";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import { themesWhere } from "../_lib/scope";
 
 const handleGET = withApiQuotaHeaders(
@@ -37,7 +38,10 @@ const handleGET = withApiQuotaHeaders(
       );
     }
 
-    return Response.json({ data: theme });
+    // A theme saved with a template reads as its frame
+    return Response.json({
+      data: { ...theme, style: withTemplateAsFrame(theme.style) },
+    });
   },
 );
 

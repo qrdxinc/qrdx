@@ -13,7 +13,7 @@ import {
   getColorString,
   isGradient,
 } from "qrdx/types";
-import { useId } from "react";
+import { useId, useState } from "react";
 import ControlSection from "@/components/editor/control-section";
 import {
   GradientPicker,
@@ -25,8 +25,10 @@ import {
   eyeInnerColor,
   eyeOuterColor,
   hasEyeColors,
+  hasOwnEyeColor,
   withEyeColor,
 } from "./eye-colors";
+import { EyeTabs } from "./eye-tabs";
 import { NewLookTag } from "./new-look-tag";
 
 interface EyeColorsSectionProps {
@@ -101,7 +103,8 @@ export function SameEyeColorsButton({ onClick }: { onClick: () => void }) {
 
 /**
  * Per-eye colors: each corner eye's frame and center can differ from the
- * Eyes and Dots colors. An eye without its own color keeps those.
+ * Eyes and Dots colors. One eye at a time (EyeTabs, as in Eye shapes); an
+ * eye without its own color shows the colors it is drawn in.
  */
 export function EyeColorsSection({
   style,
@@ -110,32 +113,27 @@ export function EyeColorsSection({
   expanded,
 }: EyeColorsSectionProps) {
   const t = useTranslations("editor.controlSections.eyeColorsSection");
+  const [position, setPosition] = useState<EyePosition>("topLeft");
   const custom = hasEyeColors(style);
 
-  const setEye = (
-    position: EyePosition,
-    part: keyof EyeColorOverride,
-    color: ColorConfig,
-  ) => {
+  const setEye = (part: keyof EyeColorOverride, color: ColorConfig) => {
     onChange(withEyeColor(style.eyeColors, position, part, color));
   };
-
-  const outer = (position: EyePosition) => eyeOuterColor(style, position);
-  const inner = (position: EyePosition) => eyeInnerColor(style, position);
 
   return (
     <ControlSection
       expanded={expanded}
+      popover
       section="eye-colors"
       summary={
         custom ? (
           <span className="flex -space-x-1">
-            {EYE_POSITIONS.map((position) => {
-              const color = outer(position);
+            {EYE_POSITIONS.map((eye) => {
+              const color = eyeOuterColor(style, eye);
               return (
                 <span
                   className="ring-background size-3.5 rounded-full border ring-2"
-                  key={position}
+                  key={eye}
                   style={{
                     background: color ? getColorString(color) : undefined,
                   }}
@@ -150,31 +148,31 @@ export function EyeColorsSection({
       title={t("eyeColors")}
     >
       <p className="text-muted-foreground text-xs text-pretty">
-        {t("giveEachCornerEyeIts")}
+        {t("eyesYouLeaveAlone")}
       </p>
-      {EYE_POSITIONS.map((position) => (
-        <fieldset className="space-y-2" key={position}>
-          <legend className="text-muted-foreground mb-2 text-xs font-medium">
-            {t(`positions.${position}`)}
-          </legend>
-          <div className="grid grid-cols-2 gap-2">
-            <GradientPicker
-              kinds={QR_IMAGE_KINDS}
-              label={t("frame")}
-              name={`eyeColors.${position}.outer`}
-              onChange={(color) => setEye(position, "outer", color)}
-              value={outer(position)}
-            />
-            <GradientPicker
-              kinds={QR_IMAGE_KINDS}
-              label={t("center")}
-              name={`eyeColors.${position}.inner`}
-              onChange={(color) => setEye(position, "inner", color)}
-              value={inner(position)}
-            />
-          </div>
-        </fieldset>
-      ))}
+      <EyeTabs
+        marked={(eye) => hasOwnEyeColor(style, eye)}
+        onChange={setPosition}
+        value={position}
+      >
+        {/* Keyed by eye: a picker never carries one eye's state to another */}
+        <div className="grid grid-cols-2 gap-2" key={position}>
+          <GradientPicker
+            kinds={QR_IMAGE_KINDS}
+            label={t("frame")}
+            name={`eyeColors.${position}.outer`}
+            onChange={(color) => setEye("outer", color)}
+            value={eyeOuterColor(style, position)}
+          />
+          <GradientPicker
+            kinds={QR_IMAGE_KINDS}
+            label={t("center")}
+            name={`eyeColors.${position}.inner`}
+            onChange={(color) => setEye("inner", color)}
+            value={eyeInnerColor(style, position)}
+          />
+        </div>
+      </EyeTabs>
       {custom && <SameEyeColorsButton onClick={() => onChange(undefined)} />}
       {onEyeGradientChange && (
         <EyeGradientControl onChange={onEyeGradientChange} style={style} />

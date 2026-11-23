@@ -173,7 +173,6 @@ export function QRShareDialog({
                   level={style.level}
                   margin={style.margin}
                   size={220}
-                  templateId={style.templateId}
                   value={value || SAMPLE_VALUE}
                   {...styleSvgOptions(style, value || SAMPLE_VALUE)}
                 />

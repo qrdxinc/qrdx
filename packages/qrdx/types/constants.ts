@@ -208,6 +208,13 @@ export const FRAME_STYLES = [
   "sticker",
   "gradient-border",
   "focus",
+  // Added in 0.0.64: the engine's former templates, now frames
+  "arrow",
+  "standard-box",
+  "square-border",
+  "striked-box",
+  "pumpkin",
+  "dot-ring",
 ] as const;
 
 /** Longest call-to-action label a frame renders. */

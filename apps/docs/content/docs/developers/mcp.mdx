@@ -145,15 +145,15 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | Tool | What it does |
 | --- | --- |
 | `design_qr` | Designs a code for any content type with the style your assistant chooses, or starting from a built-in theme or a community item, checks its scan score and repairs the style until it is Great. Returns the score, what it changed, the style JSON, a playground link, a PNG and the SVG |
-| `list_options` | Lists every value `design_qr` accepts: content types and their fields, colors and gradients, shapes, frames (with the ids of QRdx's official frames), borders, logo icons and brand logos, built-in themes, error correction levels and limits |
+| `list_options` | Lists every value `design_qr` accepts: content types and their fields, colors and gradients, shapes, frames (with the ids of QRdx's official frames), logo icons and brand logos, built-in themes, error correction levels and limits |
 | `generate_qr_code` | Renders a QR code with the editor's styles. Returns a PNG image and public [image API](/docs/developers/image-api) URLs (SVG, PNG, lossless WebP, GIF, BMP, ICO, TIFF and vector EPS) ready for Markdown, HTML or print, plus the SVG markup on request |
-| `list_qr_styles` | Lists body patterns, corner eye and eye dot shapes, frames (the built-in styles and those drawn as templates), logo icons, error correction levels, defaults and limits |
+| `list_qr_styles` | Lists body patterns, corner eye and eye dot shapes, frames (the built-in styles), logo icons, error correction levels, defaults and limits |
 | `search_community` | Finds published [community](/community) frames, themes and collections by words, type or tag |
 | `get_community_item` | One community item with the style it applies, ready for `design_qr` or `generate_qr_code` |
-| `save_template` | Saves a design as a theme in your workspace. Needs an [API key](#use-an-api-key) |
+| `save_template` | Saves a design as a theme in your workspace. Listed when the connection has an [API key](#use-an-api-key) |
 | `generate_barcode` | Draws an EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode or DotCode barcode after checking the value (check digits, lengths, characters). Returns a PNG and public [barcode API](/docs/developers/barcode-api) URLs |
-| `save_barcode` | Saves a barcode to your workspace's Barcodes. Needs an [API key](#use-an-api-key) |
-| `generate_ai_art` | Paints a QR code into AI artwork and checks that it scans. Uses one of the workspace's monthly AI art images and takes up to a minute. Needs an [API key](#use-an-api-key). See [AI art API](/docs/developers/ai-art-api) |
+| `save_barcode` | Saves a barcode to your workspace's Barcodes. Listed when the connection has an [API key](#use-an-api-key) |
+| `generate_ai_art` | Paints a QR code into AI artwork and checks that it scans. Uses one of the workspace's monthly AI art images and takes up to a minute. Listed when the connection has an [API key](#use-an-api-key). See [AI art API](/docs/developers/ai-art-api) |
 | `qr_payload_wifi` | Builds a `WIFI:` network payload with special characters escaped: WPA/WPA2 (and WPA2/WPA3 transition), WPA3-only (`T:SAE`), WEP or open, optionally hidden. WPA2/WPA3-Enterprise networks (`T:WPA2-EAP`, with the EAP method and identity) are read by ZXing-based scanner apps, not by phone camera apps |
 | `qr_payload_vcard` | Builds a vCard 3.0 contact (RFC 2426): name, organization, title, phones, email, website, address and note |
 | `qr_payload_mecard` | Builds a MeCard contact (`MECARD:`), the compact alternative to a vCard: name, reading, nickname, phone, email, website, birthday, address and note |
@@ -237,7 +237,7 @@ Item text is written by community members. Names, descriptions, handles, tags an
 
 ## Use an API key [#use-an-api-key]
 
-Some tools need a QRdx [API key](/docs/developers/api-keys) on the connection, sent as `Authorization: Bearer qrdx_…`:
+Some tools need a QRdx [API key](/docs/developers/api-keys) on the connection, sent as `Authorization: Bearer qrdx_…`. The server lists `save_template`, `save_barcode` and `generate_ai_art` only to connections that send one:
 
 - **`save_template`** saves a design as a theme, listed under Themes in the dashboard and offered in the editor. It needs a key with `codes:write`, which **Full access** keys have. A key of your own workspace saves to your themes; a team key saves to the team's shared themes when its creator is an owner or admin and the plan has team themes. Saves count toward the plan's saved-theme limit (see [Plans and limits](/docs/plans-and-limits)); over it, the tool returns the API's `LIMIT_REACHED` error (`402`).
 - **`save_barcode`** saves a barcode (format, value, an optional title and drawing options) to the key's workspace, listed under Barcodes in the dashboard. It needs a key with `codes:write`. Every plan saves barcodes, up to 1,000 on Free; over the limit it returns `LIMIT_REACHED` (`402`).
@@ -246,10 +246,10 @@ Some tools need a QRdx [API key](/docs/developers/api-keys) on the connection, s
 - **Logos you uploaded** in [Dashboard → Files](/docs/files), by file id (`logo_file_id` in `design_qr`, `logoFileId` in `generate_qr_code`): a PNG or JPEG of up to 1 MB. The key must belong to the workspace that owns the file.
 </IfAvailable>
 
-Without a key, these tools answer with how to add one:
+Without a key, the server doesn't list those three tools, and its instructions tell the assistant that adding a key adds them. The server goes by the header's form, so a key that is wrong, revoked or read-only still lists them, and calling one answers with what's wrong with the key:
 
-```txt title="save_template without a key"
-save_template needs a QRdx API key: send it as Authorization: Bearer qrdx_… (create one in Settings → API keys & apps).
+```txt title="save_template with a revoked key"
+Invalid API key: it doesn't exist, was revoked or has expired, or its creator left the workspace. Check that you copied the whole key, or create a new one at https://qrdx.dev/dashboard?to=settings/developers.
 ```
 
 <Tabs items={["Claude Code", "Cursor", "VS Code"]}>
@@ -294,9 +294,9 @@ Keep the key out of shared or committed config files. Calls made with a key coun
 
 Check the URL is exactly `https://mcp.qrdx.dev/mcp` and the transport is HTTP (Streamable HTTP), not SSE or stdio. Clients that only run local servers need the `mcp-remote` bridge above. Opening the URL in a browser redirects to the connect page, which is expected: MCP clients never ask for HTML.
 
-### The assistant says a tool needs an API key
+### The assistant can't find a tool, or says it needs an API key
 
-`save_template`, `save_barcode`, `generate_ai_art` and uploaded logos need `Authorization: Bearer qrdx_…` on the connection. Add the header as shown above and reconnect.
+`save_template`, `save_barcode` and `generate_ai_art` are listed only when the connection sends `Authorization: Bearer qrdx_…`, and uploaded logos need the same header. Add it as shown above, then reconnect or refresh the server's tools so your app fetches the list again.
 
 ### `design_qr` refuses the content
 

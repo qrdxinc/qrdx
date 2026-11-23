@@ -3,7 +3,7 @@
   "name": "dev.qrdx/qrdx",
   "title": "QRdx",
   "description": "QR codes and barcodes that scan: styled designs with a scan check, plus Wi-Fi and payment codes.",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "websiteUrl": "https://qrdx.dev/mcp",
   "repository": {
     "url": "https://github.com/qrdxinc/qrdx",
@@ -30,7 +30,7 @@
       "headers": [
         {
           "name": "Authorization",
-          "description": "Optional. A QRdx API key as Bearer qrdx_…, only to save themes and barcodes to your workspace, make AI QR art on its monthly AI art images or use a logo you uploaded. Every other tool works without it.",
+          "description": "Optional. A QRdx API key as Bearer qrdx_…, only to save themes and barcodes to your workspace, make AI QR art on its monthly AI art images or use a logo you uploaded: with it the server also lists save_template, save_barcode and generate_ai_art. Every other tool works without it.",
           "isRequired": false,
           "isSecret": true
         }

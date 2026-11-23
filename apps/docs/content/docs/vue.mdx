@@ -115,26 +115,6 @@ In Nuxt, use them in any page or component. They render on the server and hydrat
 
 `qrdx/vue` re-exports everything in `qrdx/core`: `toSVGString`, `downloadQRCode`, `getQRCodeDataUrl`, `getScanScore`, the official frame library (`getOfficialFrame`) and the rest. [Vanilla JavaScript](/docs/vanilla-js) covers them. For PNG on a server, use `getQRAsPNG` from `qrdx/node`.
 
-A custom template's `wrapper` is written with the `h` that `qrdx/vue` exports. That is the core's `h`, not Vue's, so import one of them under another name when a file needs both:
-
-```ts title="src/labelled-template.ts"
-import { h } from "qrdx/vue";
-
-export const Labelled = {
-  id: "Labelled",
-  name: "Labelled",
-  wrapper: (children, props) =>
-    h(
-      "svg",
-      { viewBox: "0 0 300 340", xmlns: "http://www.w3.org/2000/svg" },
-      h("g", { transform: "translate(20, 20) scale(0.87)" }, children),
-      h("text", { x: "150", y: "325", textAnchor: "middle" }, props?.label)
-    ),
-};
-```
-
-Pass it as `customTemplate`, with its props in `customProps`: `<QRCode value="https://example.com" :custom-template="Labelled" :custom-props="{ label: 'Scan me' }" />`.
-
 ## If something goes wrong
 
 - **`Failed to resolve component: QRCode`.** The component is not imported in that file. Add `import { QRCode } from "qrdx/vue"` to its `<script setup>`.

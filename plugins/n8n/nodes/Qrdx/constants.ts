@@ -119,6 +119,13 @@ export const FRAMES = [
   "sticker",
   "gradient-border",
   "focus",
+  // Artwork around the code (the engine's templates until qrdx 0.0.64)
+  "arrow",
+  "standard-box",
+  "square-border",
+  "striked-box",
+  "pumpkin",
+  "dot-ring",
 ] as const;
 
 /** `logoIcon`: quick logo icons QRdx draws in the centre */

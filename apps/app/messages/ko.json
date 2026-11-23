@@ -377,7 +377,7 @@
         "none": "프레임 없음",
         "border": "테두리"
       },
-      "more": "전체 Playground에서는 본체 패턴 {bodyPatterns, number}개, 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 원하는 색상과 그라데이션, 로고, 템플릿을 사용하고 PNG, SVG, PDF, EPS로 다운로드할 수 있어요.",
+      "more": "전체 Playground에서는 본체 패턴 {bodyPatterns, number}개, 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 원하는 색상과 그라데이션, 로고, 프레임을 사용하고 PNG, SVG, PDF, EPS로 다운로드할 수 있어요.",
       "customize": "Playground에서 꾸미기",
       "qrLabel": "{value}의 QR 코드",
       "empty": "링크를 입력하면 QR 코드를 볼 수 있어요."
@@ -1193,6 +1193,8 @@
         "formatGif": "GIF(이미지, 256색)",
         "formatBmp": "BMP(이미지, 비압축)",
         "formatIco": "ICO (파비콘, 16~256px)",
+        "formatTiff": "TIFF (인쇄용 이미지)",
+        "formatTiffCmyk": "CMYK TIFF (인쇄용)",
         "formatSvg": "SVG(벡터, 인쇄용)",
         "size": "{format} 크기",
         "quietZone": "{modules, number}모듈 여백 추가(인쇄 시 권장)",
@@ -2103,6 +2105,12 @@
       "gs1TooLong": "GS1-128은 AI와 데이터를 합쳐 최대 {max}자까지 담을 수 있어요. 현재 {count}자예요. 바코드 두 개로 나누세요.",
       "databarGtinOnly": "GS1 DataBar에는 GTIN만 담을 수 있어요. (01)과 14자리 숫자예요. 날짜, 배치, 중량을 담으려면 GS1 DataBar Expanded나 GS1-128을 사용해 주세요.",
       "databarTooLong": "GS1 DataBar Expanded에는 AI와 데이터를 최대 {max}자리까지 담을 수 있고, 문자가 있으면 더 적게 담겨요. 현재는 {count}자예요. AI를 하나 빼거나 값을 줄여 주세요.",
+      "maxicodeChars": "MaxiCode는 Latin-1 문자를 담을 수 있어요. 문자, 숫자, 기호, 서유럽 악센트 문자가 해당돼요. 허용되지 않는 문자: {chars}",
+      "maxicodePostcode": "캐리어 메시지는 우편번호로 시작해요. 미국 ZIP Code는 최대 9자리 숫자이고, 그 밖의 지역은 대문자, 숫자, 공백을 합쳐 최대 6자예요.",
+      "maxicodeCountry": "우편번호 다음에는 3자리 ISO 국가 코드가 와요(미국은 840). 현재 값은 \"{country}\"예요.",
+      "maxicodeService": "국가 코드 다음에는 3자리 서비스 등급이 와요. 현재 값은 \"{service}\"예요.",
+      "maxicodeCarrier": "캐리어 메시지(모드 {mode}): 우편번호 {postcode}, 국가 {country}, 서비스 등급 {service}.",
+      "maxicodeZipPadded": "5자리 ZIP Code는 +4 자리에 0000을 넣은 {zip} 형태로 그려지고, 리더도 그대로 읽어 와요.",
       "imbEnter": "20자리 추적 코드를 입력하고, 라우팅 ZIP Code가 있으면 이어서 입력해 주세요.",
       "imbTrackingLength": "추적 코드는 20자리예요. 바코드 ID(2), 서비스 유형(3), 발송인 ID와 일련번호(15)로 이루어져 있어요. 현재는 {count, plural, other {#자리}}예요.",
       "imbRoutingLength": "20자리 추적 코드 뒤에는 라우팅 ZIP Code가 와요. 5자리, 9자리(ZIP+4) 또는 11자리(ZIP+4와 배달 지점)예요. 추적 코드 뒤에 현재 {count, plural, other {#자리}}가 있어요.",
@@ -2698,7 +2706,7 @@
     "setupUrl": "서버 URL",
     "toolsEyebrow": "도구",
     "toolsTitle": "어시스턴트가 호출할 수 있는 도구",
-    "toolsDescription": "도구 {count, number}개가 있어요. save_template, save_barcode, generate_ai_art를 제외한 모든 도구는 읽기 전용이며 키가 필요 없어요. 이미지를 렌더링하고, 텍스트를 서식화하고, 공개 커뮤니티를 읽어 와요. 전체 파라미터는 <link>MCP server docs</link>에서 확인하세요.",
+    "toolsDescription": "도구 {count, number}개가 있어요. save_template, save_barcode, generate_ai_art를 제외한 모든 도구는 읽기 전용이라 키가 필요 없어요. 이미지를 렌더링하고, 텍스트를 포맷하고, 공개 커뮤니티를 읽어요. 이 세 가지는 연결에 API 키가 있을 때 목록에 표시돼요. 전체 매개변수는 <link>MCP server docs</link>에서 확인하세요.",
     "toolNoKey": "키 불필요",
     "toolNeedsKey": "API 키 필요",
     "faqTitle": "MCP 서버 FAQ",
@@ -2837,6 +2845,7 @@
       "logoNote": "로고를 넣으면 로고에 필요할 때 오류 정정 수준이 H로 바뀌어 스캔이 잘 돼요.",
       "previewAlt": "{value}의 QR 코드",
       "epsPreview": "EPS는 인쇄용 파일이라 미리보기에는 SVG와 같은 코드가 표시돼요.",
+      "tiffPreview": "TIFF는 대부분의 브라우저에서 표시할 수 없는 인쇄용 파일이라서, 미리보기에는 PNG와 같은 코드가 표시돼요.",
       "empty": "인코딩할 텍스트나 링크를 입력하세요.",
       "tooLong": "API 제한인 {max, number}자를 넘었어요.",
       "loadFailed": "미리보기를 불러오지 못했어요. 여러 번 연달아 바꿨다면 1분 정도 기다려 주세요. API는 1분에 {perMinute, number}번까지 요청할 수 있어요.",
@@ -3497,6 +3506,7 @@
         "pdfAndEpsDrawEvery": "PDF와 EPS는 모든 점을 벡터 도형으로 그리며, 선형 및 방사형 그라데이션도 부드러운 벡터 셰이딩으로 유지해요.",
         "jpgCantBeTransparent": "JPG는 투명하게 만들 수 없어요",
         "bmpCantBeTransparent": "BMP는 투명하게 저장할 수 없어요. 배경은 흰색으로 저장돼요",
+        "tiffCmykCantBeTransparent": "CMYK TIFF는 인쇄용이라 투명도를 지원하지 않아요. 투명 배경은 흰색으로 출력돼요.",
         "gifWouldNotScan": "GIF는 256색까지만 담을 수 있는데, 이 디자인은 더 많은 색이 필요해요. 256색으로 줄이면 더 이상 스캔되지 않아요. 대신 PNG로 다운로드하세요.",
         "moreFormats": "다른 형식 더 보기",
         "vector": " · 벡터",
@@ -3523,6 +3533,8 @@
           "gif": "GIF만 지원하는 오래된 도구나 이메일 빌더에 적합해요 · 최대 256색이며, 그중 하나는 투명하게 쓸 수 있어요.",
           "bmp": "BMP만 지원하는 오래된 시스템이나 임베디드 도구에 적합합니다 · 비압축 24비트, 투명 배경은 흰색으로 저장됩니다.",
           "ico": "파비콘에 가장 적합해요 · 16, 32, 48, 256px 이미지가 들어 있는 파일 하나예요. 작은 크기는 아이콘용이며 스캔용이 아니에요.",
+          "tiff": "TIFF를 요구하는 인쇄소에 적합해요 · 300 dpi, 투명도 유지.",
+          "tiff-cmyk": "CMYK를 요구하는 인쇄소에 적합해요 · 검정은 검정 잉크만으로 인쇄되고, 투명 배경은 흰색으로 출력돼요. 컬러 프로파일은 포함되지 않아요. 정확한 브랜드 색상은 인쇄소에 문의하세요.",
           "svg": "Figma, Illustrator, 웹사이트에 가장 좋아요 · 어떤 크기에서도 선명해요.",
           "pdf": "문서와 간단한 인쇄에 가장 좋아요 · 벡터 PDF가 필요하면 인쇄용을 사용하세요.",
           "eps": "인쇄소와 벡터 앱에 가장 좋아요 · 어떤 크기에서도 선명해요."
@@ -3588,6 +3600,8 @@
         "pluginsForFigmaCanvaRaycast": "Figma, Canva, Raycast, Chrome용 플러그인",
         "leftOutValue": "제외됨: {value}",
         "imageUrl": "이미지 URL",
+        "showAll": "모두 보기",
+        "showLess": "간단히 보기",
         "terminal": "터미널",
         "designQrArguments": "design_qr 인자",
         "labelCopied": "{label} 복사됨",
@@ -4817,19 +4831,22 @@
         "smallerDotsGiveALighter": "점이 작을수록 더 가벼운 느낌이 나요. {value} 점은 스캔이 가능한 최소 크기인 {floor, number}%까지 줄어들어요."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "각 코너 눈에 프레임과 중심 색상을 따로 지정해 보세요. 그대로 둔 눈은 눈 색상과 점 색상을 사용해요.",
+        "eyesYouLeaveAlone": "그대로 둔 눈은 눈과 점 색상을 유지해요.",
         "useTheSameColorsFor": "모든 눈에 같은 색상 사용",
         "sameForAll": "모두 동일하게",
         "eyeColors": "눈 색상",
         "frame": "프레임",
         "center": "중앙",
+        "eyesContinueTheCodes": "눈 모양이 코드의 그라데이션을 이어가요",
+        "offEachEyeSweeps": "끄면 각 눈이 자체 그라데이션을 그려요. 켜면 눈의 그라데이션이 코드 전체에 걸쳐 적용되어, 점과 같은 색으로 칠한 눈이 그 색을 이어받아요."
+      },
+      "eyeTabs": {
+        "whichEye": "눈 선택",
         "positions": {
           "topLeft": "왼쪽 위",
           "topRight": "오른쪽 위",
           "bottomLeft": "왼쪽 아래"
-        },
-        "eyesContinueTheCodes": "눈 모양이 코드의 그라데이션을 이어가요",
-        "offEachEyeSweeps": "끄면 각 눈이 자체 그라데이션을 그려요. 켜면 눈의 그라데이션이 코드 전체에 걸쳐 적용되어, 점과 같은 색으로 칠한 눈이 그 색을 이어받아요."
+        }
       },
       "frameControls": {
         "uploadSvg": "SVG 업로드",
@@ -4837,10 +4854,7 @@
         "theFrameIsAddedAround": "프레임은 코드 바깥쪽에 추가되므로 다운로드한 이미지는 더 커지고, 코드 자체는 계속 스캔할 수 있어요.",
         "label": "라벨",
         "pickAFrameFirst": "먼저 프레임을 선택하세요",
-        "none": "없음",
-        "takesDotColor": "코드 점의 색상을 따라가요.",
-        "alsoHasTemplate": "이 디자인에는 이 프레임 안에 {name} 프레임도 들어 있어요. 다른 프레임을 고르면 두 프레임이 모두 바뀌어요.",
-        "templateKeepsSize": "이 프레임은 안에 들어가는 코드에 맞춰지므로 다운로드한 이미지는 선택한 크기를 유지해요."
+        "none": "없음"
       },
       "frameFields": {
         "textSize": "텍스트 크기"
@@ -5007,18 +5021,12 @@
       "eyeShapesSection": {
         "eyeShapes": "눈 모양",
         "sameForAll": "모두 동일",
-        "giveEachCornerEyeIts": "모서리 눈마다 프레임과 중앙 모양을 따로 지정해요. 그대로 둔 눈은 눈 모양 설정을 따라요.",
-        "whichEye": "눈 선택",
+        "eyesYouLeaveAlone": "그대로 둔 눈은 눈 모양을 유지해요.",
         "frame": "프레임",
         "center": "중앙",
         "frameShapes": "프레임 모양",
         "centerShapes": "중앙 모양",
-        "useTheSameShapesFor": "모든 눈에 같은 모양 사용",
-        "positions": {
-          "topLeft": "왼쪽 위",
-          "topRight": "오른쪽 위",
-          "bottomLeft": "왼쪽 아래"
-        }
+        "useTheSameShapesFor": "모든 눈에 같은 모양 사용"
       },
       "cornersSection": {
         "roundedCorners": "둥근 모서리",
@@ -7676,6 +7684,8 @@
           "downloadGif": "GIF 다운로드",
           "downloadBmp": "BMP 다운로드",
           "downloadIco": "ICO 다운로드",
+          "downloadTiff": "TIFF 다운로드",
+          "downloadTiffCmyk": "CMYK TIFF 다운로드",
           "moreFormats": "다른 형식",
           "editLinkValue": "링크 편집",
           "codeSettings": "코드 설정",
@@ -7777,6 +7787,8 @@
           "gifImagesZip": "GIF 이미지(ZIP)",
           "bmpImagesZip": "BMP 이미지(ZIP)",
           "icoImagesZip": "ICO 파비콘 (ZIP)",
+          "tiffImagesZip": "TIFF 이미지(ZIP)",
+          "tiffCmykImagesZip": "CMYK TIFF 이미지(ZIP)",
           "svgImagesZip": "SVG 이미지 (ZIP)",
           "more": "더 보기",
           "moveToTrash": "휴지통으로 이동",

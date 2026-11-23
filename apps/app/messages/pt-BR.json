@@ -377,7 +377,7 @@
         "none": "Sem moldura",
         "border": "Borda"
       },
-      "more": "O Playground completo traz {bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho, {eyeCentres, number} centros de olho, cores e gradientes à vontade, logos, modelos e downloads em PNG, SVG, PDF ou EPS.",
+      "more": "O Playground completo traz {bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho, {eyeCentres, number} centros de olho, cores e gradientes à vontade, logos, molduras e downloads em PNG, SVG, PDF ou EPS.",
       "customize": "Personalizar no Playground",
       "qrLabel": "QR code de {value}",
       "empty": "Digite um link para ver o seu QR code."
@@ -1193,6 +1193,8 @@
         "formatGif": "GIF (imagem, 256 cores)",
         "formatBmp": "BMP (imagem, sem compressão)",
         "formatIco": "ICO (favicon, de 16 a 256 px)",
+        "formatTiff": "TIFF (imagem, para impressão)",
+        "formatTiffCmyk": "TIFF CMYK (para impressão)",
         "formatSvg": "SVG (vetor, para impressão)",
         "size": "Tamanho do {format}",
         "quietZone": "Adicionar uma zona de silêncio de {modules, number} módulos (recomendado para impressão)",
@@ -2103,6 +2105,12 @@
       "gs1TooLong": "O GS1-128 comporta até {max} caracteres de AIs e dados; este tem {count}. Divida em dois códigos de barras.",
       "databarGtinOnly": "O GS1 DataBar guarda apenas um GTIN: (01) e seus 14 dígitos. Para datas, lote ou peso, use o GS1 DataBar Expanded ou o GS1-128.",
       "databarTooLong": "O GS1 DataBar Expanded comporta até {max} dígitos de AIs e dados, e menos quando há letras; este tem {count} caracteres. Remova um AI ou encurte um valor.",
+      "maxicodeChars": "O MaxiCode aceita caracteres Latin-1: letras, dígitos, símbolos e acentos do Europa Ocidental. Não permitidos: {chars}",
+      "maxicodePostcode": "Uma mensagem de transportadora começa com o código postal: até 9 dígitos (um ZIP Code dos EUA) ou até 6 letras maiúsculas, dígitos e espaços nos demais países.",
+      "maxicodeCountry": "Depois do código postal vem o código de país ISO de 3 dígitos (840 para os EUA); aqui está \"{country}\".",
+      "maxicodeService": "Depois do código de país vem a classe de serviço de 3 dígitos; aqui está \"{service}\".",
+      "maxicodeCarrier": "Mensagem de transportadora (modo {mode}): código postal {postcode}, país {country}, classe de serviço {service}.",
+      "maxicodeZipPadded": "Um ZIP Code de 5 dígitos é desenhado como {zip}, com 0000 no +4, e os leitores o retornam assim.",
       "imbEnter": "Digite o código de rastreamento de 20 dígitos e, se houver, o CEP de roteamento.",
       "imbTrackingLength": "O código de rastreamento tem 20 dígitos: ID do código de barras (2), tipo de serviço (3), ID do remetente e número de série (15). Este tem {count, plural, one {# dígito} other {# dígitos}}.",
       "imbRoutingLength": "Depois do código de rastreamento de 20 dígitos vem o CEP de roteamento: 5 dígitos, 9 (ZIP+4) ou 11 (ZIP+4 e ponto de entrega). Há {count, plural, one {# dígito} other {# dígitos}} depois do código de rastreamento.",
@@ -2698,7 +2706,7 @@
     "setupUrl": "URL do servidor",
     "toolsEyebrow": "Ferramentas",
     "toolsTitle": "O que seu assistente pode chamar",
-    "toolsDescription": "{count, number} ferramentas. Todas, exceto save_template, save_barcode e generate_ai_art, são somente leitura e não precisam de chave: elas geram imagens, formatam texto e leem a comunidade pública. Os parâmetros completos estão na <link>documentação do servidor MCP</link>.",
+    "toolsDescription": "{count, number} ferramentas. Todas, exceto save_template, save_barcode e generate_ai_art, são somente leitura e não precisam de chave: elas geram imagens, formatam texto e leem a comunidade pública. Essas três aparecem na lista quando a conexão tem uma chave de API. Os parâmetros completos estão na <link>documentação do servidor MCP</link>.",
     "toolNoKey": "Sem chave",
     "toolNeedsKey": "Requer chave de API",
     "faqTitle": "Dúvidas sobre o servidor MCP",
@@ -2837,6 +2845,7 @@
       "logoNote": "Com um logo, o código passa para a correção de erros H quando o logo exige, para continuar sendo lido.",
       "previewAlt": "QR code de {value}",
       "epsPreview": "EPS é um arquivo de impressão, então a prévia mostra o mesmo código em SVG.",
+      "tiffPreview": "TIFF é um arquivo de impressão que a maioria dos navegadores não consegue exibir, então a prévia mostra o mesmo código em PNG.",
       "empty": "Digite o texto ou o link a codificar.",
       "tooLong": "Isso passa de {max, number} caracteres, o limite da API.",
       "loadFailed": "A prévia não carregou. Se você fez muitas alterações seguidas, espere um minuto: a API permite {perMinute, number} requisições por minuto.",
@@ -3497,6 +3506,7 @@
         "pdfAndEpsDrawEvery": "PDF e EPS desenham cada ponto como uma forma vetorial e mantêm gradientes lineares e radiais como degradês vetoriais suaves.",
         "jpgCantBeTransparent": "JPG não pode ser transparente",
         "bmpCantBeTransparent": "BMP não suporta transparência: o fundo sai branco",
+        "tiffCmykCantBeTransparent": "TIFF CMYK é para impressão, que não tem transparência: um fundo transparente sai branco.",
         "gifWouldNotScan": "Um GIF comporta 256 cores, e este design precisa de mais: reduzido para 256, ele deixaria de ser lido. Baixe um PNG no lugar.",
         "moreFormats": "Mais formatos",
         "vector": " · vetorial",
@@ -3523,6 +3533,8 @@
           "gif": "Ideal para ferramentas antigas e editores de e-mail que só aceitam GIF · no máximo 256 cores, e uma delas pode ser transparente.",
           "bmp": "Ideal para sistemas mais antigos e ferramentas embarcadas que só aceitam BMP · 24 bits sem compressão, um fundo transparente sai branco.",
           "ico": "Ideal para favicons · um arquivo com imagens de 16, 32, 48 e 256 px. Os tamanhos pequenos servem para ícones, não para leitura.",
+          "tiff": "Ideal para gráficas que pedem TIFF · 300 dpi, com transparência mantida.",
+          "tiff-cmyk": "Ideal para gráficas que pedem CMYK · o preto é impresso só com tinta preta, e um fundo transparente sai branco. Sem perfil de cor: pergunte à sua gráfica sobre as cores exatas da marca.",
           "svg": "Ideal para Figma, Illustrator e sites · continua nítido em qualquer tamanho.",
           "pdf": "Ideal para documentos e impressões rápidas · para um PDF vetorial, use Pronto para impressão.",
           "eps": "Ideal para gráficas e apps vetoriais · continua nítido em qualquer tamanho."
@@ -3588,6 +3600,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugins para Figma, Canva, Raycast e Chrome",
         "leftOutValue": "Ignorado: {value}.",
         "imageUrl": "URL da imagem",
+        "showAll": "Ver tudo",
+        "showLess": "Ver menos",
         "terminal": "Terminal",
         "designQrArguments": "Argumentos do design_qr",
         "labelCopied": "{label} copiado",
@@ -4817,19 +4831,22 @@
         "smallerDotsGiveALighter": "Pontos menores deixam o visual mais leve. Pontos {value} chegam a {floor, number}%, o menor tamanho que ainda é lido."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "Dê a cada olho de canto uma cor própria para a moldura e o centro. Os olhos que você não alterar usam as cores de Olhos e Pontos.",
+        "eyesYouLeaveAlone": "Os olhos que você não alterar mantêm as cores de Olhos e Pontos.",
         "useTheSameColorsFor": "Usar as mesmas cores em todos os olhos",
         "sameForAll": "Igual para todos",
         "eyeColors": "Cores dos olhos",
         "frame": "Moldura",
         "center": "Centro",
-        "positions": {
-          "topLeft": "Superior esquerdo",
-          "topRight": "Superior direito",
-          "bottomLeft": "Inferior esquerdo"
-        },
         "eyesContinueTheCodes": "Olhos seguem o degradê do código",
         "offEachEyeSweeps": "Desativado, cada olho aplica o próprio degradê. Ativado, os olhos estendem o degradê por todo o código, e os olhos pintados como os pontos continuam o degradê deles."
+      },
+      "eyeTabs": {
+        "whichEye": "Qual olho",
+        "positions": {
+          "topLeft": "Superior esq.",
+          "topRight": "Superior dir.",
+          "bottomLeft": "Inferior esq."
+        }
       },
       "frameControls": {
         "uploadSvg": "Enviar SVG",
@@ -4837,10 +4854,7 @@
         "theFrameIsAddedAround": "A moldura é adicionada ao redor do código, então a imagem baixada fica maior e o código continua legível na leitura.",
         "label": "Texto",
         "pickAFrameFirst": "Escolha uma moldura primeiro",
-        "none": "Nenhuma",
-        "takesDotColor": "Usa a cor dos pontos do código.",
-        "alsoHasTemplate": "Este design também tem a moldura {name} dentro desta. Ao escolher outra moldura, as duas são substituídas.",
-        "templateKeepsSize": "Esta moldura ajusta o código dentro dela, então a imagem baixada mantém o tamanho que você escolher."
+        "none": "Nenhuma"
       },
       "frameFields": {
         "textSize": "Tamanho do texto"
@@ -5007,18 +5021,12 @@
       "eyeShapesSection": {
         "eyeShapes": "Formas dos olhos",
         "sameForAll": "Igual para todos",
-        "giveEachCornerEyeIts": "Dê a cada olho de canto sua própria forma de moldura e de centro. Os olhos que você não alterar usam as formas de Olhos.",
-        "whichEye": "Qual olho",
+        "eyesYouLeaveAlone": "Os olhos que você não alterar mantêm os formatos de Olhos.",
         "frame": "Moldura",
         "center": "Centro",
         "frameShapes": "formas de moldura",
         "centerShapes": "formas de centro",
-        "useTheSameShapesFor": "Usar as mesmas formas em todos os olhos",
-        "positions": {
-          "topLeft": "Superior esq.",
-          "topRight": "Superior dir.",
-          "bottomLeft": "Inferior esq."
-        }
+        "useTheSameShapesFor": "Usar as mesmas formas em todos os olhos"
       },
       "cornersSection": {
         "roundedCorners": "Cantos arredondados",
@@ -7676,6 +7684,8 @@
           "downloadGif": "Baixar GIF",
           "downloadBmp": "Baixar BMP",
           "downloadIco": "Baixar ICO",
+          "downloadTiff": "Baixar TIFF",
+          "downloadTiffCmyk": "Baixar TIFF CMYK",
           "moreFormats": "Mais formatos",
           "editLinkValue": "Editar link",
           "codeSettings": "Configurações do código",
@@ -7777,6 +7787,8 @@
           "gifImagesZip": "Imagens GIF (ZIP)",
           "bmpImagesZip": "Imagens BMP (ZIP)",
           "icoImagesZip": "Favicons ICO (ZIP)",
+          "tiffImagesZip": "Imagens TIFF (ZIP)",
+          "tiffCmykImagesZip": "Imagens TIFF CMYK (ZIP)",
           "svgImagesZip": "Imagens SVG (ZIP)",
           "more": "Mais",
           "moveToTrash": "Mover para a lixeira",

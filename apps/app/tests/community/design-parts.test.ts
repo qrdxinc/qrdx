@@ -72,7 +72,6 @@ describe("swatchStyle", () => {
       bodyPattern: "classy-rounded",
       cornerEyePattern: "rounded",
       frame: { style: "banner-bottom", text: "Scan me" },
-      templateId: "default",
       shape: "circle",
       showLogo: true,
       customLogo: "data:image/png;base64,AAAA",

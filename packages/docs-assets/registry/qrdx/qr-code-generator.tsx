@@ -8,7 +8,7 @@ import { Button } from "@/registry/ui/button";
 import { Input } from "@/registry/ui/input";
 import { Label } from "@/registry/ui/label";
 
-/** qrdx style options: colors, gradients, patterns, logo, template. */
+/** qrdx style options: colors, gradients, patterns, logo, frame. */
 export type QrCodeStyle = Omit<ComponentProps<typeof QRCode>, "value" | "size">;
 
 export interface QrCodePreset {

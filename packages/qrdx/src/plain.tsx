@@ -22,6 +22,7 @@ import {
   resolveErrorLevel,
 } from "./utils";
 import { getSolidColor } from "./utils/color";
+import { withoutWithdrawnProps } from "./withdrawn-props";
 
 /** What `drawPlainQRCode` draws: everything loaded and laid out. */
 export interface PlainQRCode {
@@ -59,9 +60,6 @@ export async function preparePlainQRCode(
     cornerEyePattern: _cornerEyePattern,
     cornerEyeDotPattern: _cornerEyeDotPattern,
     isOGContext: _isOGContext,
-    templateId: _templateId,
-    customTemplate: _customTemplate,
-    customProps: _customProps,
     frame,
     art: _art,
     eyeColors: _eyeColors,
@@ -77,7 +75,7 @@ export async function preparePlainQRCode(
     autoLevel,
     exactLevel,
     ...otherProps
-  } = props;
+  } = withoutWithdrawnProps(props);
   // A logo no bigger than the code can repair (logo-budget.ts)
   const imageSettings = capImageSettings(
     { value, size, margin, level, autoLevel, exactLevel },

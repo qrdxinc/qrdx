@@ -377,7 +377,7 @@
         "none": "No frame",
         "border": "Border"
       },
-      "more": "The full playground adds {bodyPatterns, number} body patterns, {eyeShapes, number} eye shapes, {eyeCentres, number} eye centers, any colors and gradients, logos, templates and PNG, SVG, PDF or EPS downloads.",
+      "more": "The full playground adds {bodyPatterns, number} body patterns, {eyeShapes, number} eye shapes, {eyeCentres, number} eye centers, any colors and gradients, logos, frames and PNG, SVG, PDF or EPS downloads.",
       "customize": "Customize in the playground",
       "qrLabel": "QR code for {value}",
       "empty": "Type a link to see your QR code."
@@ -3105,7 +3105,7 @@
     "setupUrl": "Server URL",
     "toolsEyebrow": "Tools",
     "toolsTitle": "What your assistant can call",
-    "toolsDescription": "{count, number} tools. All but save_template, save_barcode and generate_ai_art are read-only and need no key: they render images, format text and read the public community. Full parameters are in the <link>MCP server docs</link>.",
+    "toolsDescription": "{count, number} tools. All but save_template, save_barcode and generate_ai_art are read-only and need no key: they render images, format text and read the public community. Those three are listed once the connection has an API key. Full parameters are in the <link>MCP server docs</link>.",
     "toolNoKey": "No key",
     "toolNeedsKey": "Needs an API key",
     "faqTitle": "MCP server FAQ",
@@ -3999,6 +3999,8 @@
         "pluginsForFigmaCanvaRaycast": "Plugins for Figma, Canva, Raycast and Chrome",
         "leftOutValue": "Left out: {value}.",
         "imageUrl": "Image URL",
+        "showAll": "Show all",
+        "showLess": "Show less",
         "terminal": "Terminal",
         "designQrArguments": "design_qr arguments",
         "labelCopied": "{label} copied",
@@ -5228,19 +5230,22 @@
         "smallerDotsGiveALighter": "Smaller dots give a lighter look. {value} dots go down to {floor, number}%, the smallest size that still scans."
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "Give each corner eye its own frame and center color. Eyes you leave alone use the Eyes and Dots colors.",
+        "eyesYouLeaveAlone": "Eyes you leave alone keep the Eyes and Dots colors.",
         "useTheSameColorsFor": "Use the same colors for all eyes",
         "sameForAll": "Same for all",
         "eyeColors": "Eye colors",
         "frame": "Frame",
         "center": "Center",
+        "eyesContinueTheCodes": "Eyes continue the code's gradient",
+        "offEachEyeSweeps": "Off, each eye sweeps its own gradient. On, the eyes lay their gradient across the whole code, so eyes painted like the dots continue them."
+      },
+      "eyeTabs": {
+        "whichEye": "Which eye",
         "positions": {
           "topLeft": "Top left",
           "topRight": "Top right",
           "bottomLeft": "Bottom left"
-        },
-        "eyesContinueTheCodes": "Eyes continue the code's gradient",
-        "offEachEyeSweeps": "Off, each eye sweeps its own gradient. On, the eyes lay their gradient across the whole code, so eyes painted like the dots continue them."
+        }
       },
       "frameControls": {
         "uploadSvg": "Upload SVG",
@@ -5248,10 +5253,7 @@
         "theFrameIsAddedAround": "The frame is added around the code, so the downloaded image gets bigger and the code itself stays scannable.",
         "label": "Label",
         "pickAFrameFirst": "Pick a frame first",
-        "none": "None",
-        "takesDotColor": "It takes the color of the code's dots.",
-        "alsoHasTemplate": "This design also has the {name} frame inside this one. Picking another frame replaces both.",
-        "templateKeepsSize": "This frame fits the code inside it, so the downloaded image keeps the size you choose."
+        "none": "None"
       },
       "frameFields": {
         "textSize": "Text size"
@@ -5418,18 +5420,12 @@
       "eyeShapesSection": {
         "eyeShapes": "Eye shapes",
         "sameForAll": "Same for all",
-        "giveEachCornerEyeIts": "Give each corner eye its own frame and center shape. Eyes you leave alone use the Eyes shapes.",
-        "whichEye": "Which eye",
+        "eyesYouLeaveAlone": "Eyes you leave alone keep the Eyes shapes.",
         "frame": "Frame",
         "center": "Center",
         "frameShapes": "frame shapes",
         "centerShapes": "center shapes",
-        "useTheSameShapesFor": "Use the same shapes for all eyes",
-        "positions": {
-          "topLeft": "Top left",
-          "topRight": "Top right",
-          "bottomLeft": "Bottom left"
-        }
+        "useTheSameShapesFor": "Use the same shapes for all eyes"
       },
       "cornersSection": {
         "roundedCorners": "Rounded corners",

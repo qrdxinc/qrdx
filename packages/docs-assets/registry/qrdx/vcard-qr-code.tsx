@@ -4,7 +4,7 @@ import { QRCode } from "qrdx";
 import type { ComponentProps } from "react";
 import { cn } from "@/registry/lib/utils";
 
-/** qrdx style options: colors, gradients, patterns, logo, template. */
+/** qrdx style options: colors, gradients, patterns, logo, frame. */
 export type QrCodeStyle = Omit<ComponentProps<typeof QRCode>, "value" | "size">;
 
 export interface VCardAddress {

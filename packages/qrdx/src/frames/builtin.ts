@@ -11,6 +11,11 @@
 // `fontScale` scales its labels, the same as on `{ style: "custom", spec }`.
 // tests/frame-spec-parity.test.ts proves each spec draws what the engine's
 // hand-written layout for the style drew up to qrdx 0.0.51.
+//
+// The last six were the engine's templates until 0.0.63 (`templateId`):
+// Arrow, Standard Box, Square Border, Striked Box, Halloween and Dot Ring.
+// They draw the same artwork as frames do, around the code at its full size
+// (tests/template-frames.test.ts).
 import type { ColorConfig } from "../../types/color";
 import type { FrameStyle, QRFrame } from "../../types/frame";
 import type { AnyQRFrame, FrameSpec } from "../../types/frame-spec";
@@ -22,6 +27,7 @@ import {
   getFrameSpecColors,
   resolveFrameSpec,
 } from "../frame-spec";
+import arrow from "./builtin/arrow.json";
 import badge from "./builtin/badge.json";
 import bannerBottom from "./builtin/banner-bottom.json";
 import bannerTop from "./builtin/banner-top.json";
@@ -29,16 +35,21 @@ import bannerTopBottom from "./builtin/banner-top-bottom.json";
 import border from "./builtin/border.json";
 import chatBubble from "./builtin/chat-bubble.json";
 import circle from "./builtin/circle.json";
+import dotRing from "./builtin/dot-ring.json";
 import envelope from "./builtin/envelope.json";
 import focus from "./builtin/focus.json";
 import gradientBorder from "./builtin/gradient-border.json";
 import menuCard from "./builtin/menu-card.json";
 import phone from "./builtin/phone.json";
 import polaroid from "./builtin/polaroid.json";
+import pumpkin from "./builtin/pumpkin.json";
 import roundedBorder from "./builtin/rounded-border.json";
 import speechBubble from "./builtin/speech-bubble.json";
 import speechBubbleTop from "./builtin/speech-bubble-top.json";
+import squareBorder from "./builtin/square-border.json";
+import standardBox from "./builtin/standard-box.json";
 import sticker from "./builtin/sticker.json";
+import strikedBox from "./builtin/striked-box.json";
 import tag from "./builtin/tag.json";
 import ticket from "./builtin/ticket.json";
 
@@ -103,6 +114,31 @@ export const BUILT_IN_FRAMES: readonly BuiltInFrame[] = [
   frame("menu-card", "Menu card", menuCard, "background", [
     "menu",
     "restaurant",
+  ]),
+  // The former templates (no labels but Dot ring's)
+  frame("arrow", "Arrow", arrow, "background", ["pointer", "hand-drawn"]),
+  frame("standard-box", "Standard box", standardBox, "background", [
+    "box",
+    "scan me",
+  ]),
+  frame("square-border", "Square border", squareBorder, "background", [
+    "square",
+    "outline",
+  ]),
+  frame("striked-box", "Striked box", strikedBox, "background", [
+    "box",
+    "lines",
+  ]),
+  frame("pumpkin", "Pumpkin", pumpkin, "background", [
+    "halloween",
+    "seasonal",
+    "october",
+  ]),
+  frame("dot-ring", "Dot ring", dotRing, "frame", [
+    "round",
+    "ring",
+    "dots",
+    "curved",
   ]),
 ];
 

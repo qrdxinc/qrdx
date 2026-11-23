@@ -1,7 +1,7 @@
 import "server-only";
 
 import { ImageResponse } from "next/og";
-import { getAllTemplates, QRCodeSVG, svgToEPS } from "qrdx";
+import { QRCodeSVG, svgToEPS } from "qrdx";
 import {
   BODY_PATTERN,
   type BodyPattern,
@@ -44,7 +44,6 @@ export {
   QR_MARGIN_MAX,
   QR_SIZE_MAX,
   QR_SIZE_MIN,
-  QR_TEMPLATE_IDS,
   type QrImageFormat,
   type QrOptions,
   qrImageFormats,
@@ -144,8 +143,8 @@ const DOT_DESCRIPTIONS: Record<PickableCornerEyeDotPattern, string> = {
 };
 
 /**
- * Patterns, the frames drawn as templates and limits, for the MCP
- * `list_qr_styles` tool.
+ * Patterns, levels and limits, for the MCP `list_qr_styles` tool (which
+ * adds the built-in frames).
  */
 export function getQrStyleCatalog() {
   return {
@@ -160,16 +159,6 @@ export function getQrStyleCatalog() {
     dot: CORNER_EYE_DOT_PATTERNS.map((id) => ({
       id,
       description: DOT_DESCRIPTIONS[id] ?? id,
-    })),
-    // Frames drawn as templates (`template`): the whole artwork is `size`
-    // wide, the code smaller inside it; "default" draws none
-    templates: getAllTemplates().map(({ id, name }) => ({
-      id,
-      name: id === "default" ? "None" : name,
-      description:
-        id === "default"
-          ? "No frame"
-          : `The ${name} frame, drawn at the template's size: the whole artwork is size wide`,
     })),
     levels: [
       { id: "L", recovery: "~7%" },
@@ -200,7 +189,6 @@ function toQrProps(options: QrOptions) {
     cornerEyePattern: options.eye,
     cornerEyeDotPattern: options.dot,
     margin: options.margin,
-    templateId: options.template,
     // A Swiss QR-bill is encoded at exactly its level (IG §6.1)
     ...payloadEngineOptions(options.data),
   };

@@ -2,7 +2,7 @@
 
 A [Canva app](https://www.canva.dev/docs/apps/) that adds a styled QR code to your design, built with the [`qrdx`](../../packages/qrdx) library. It isn't in Canva's app marketplace, so you run it from source as a development app.
 
-Enter a URL or text, pick a template, dot, eye and eye-dot patterns, colors, an error correction level and an optional logo URL, then click **Add to Design**. The code goes into the design as a PNG image with alt text. **More options in the QRdx playground** opens the full editor at qrdx.dev, after Canva asks you to confirm. A web address goes along; plain text, colors, patterns and the logo stay in Canva.
+Enter a URL or text, pick dot, eye and eye-dot patterns, colors, an error correction level and an optional logo URL, then click **Add to Design**. The code goes into the design as a PNG image with alt text. **More options in the QRdx playground** opens the full editor at qrdx.dev, after Canva asks you to confirm. A web address goes along; plain text, colors, patterns and the logo stay in Canva.
 
 ## Run from source
 

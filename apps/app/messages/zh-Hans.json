@@ -377,7 +377,7 @@
         "none": "无边框",
         "border": "边线"
       },
-      "more": "完整的 Playground 还提供 {bodyPatterns, number} 种主体图案、{eyeShapes, number} 种定位点形状、{eyeCentres, number} 种定位点中心、任意颜色和渐变、徽标、模板，以及 PNG、SVG、PDF 或 EPS 下载。",
+      "more": "完整的 Playground 还提供 {bodyPatterns, number} 种主体图案、{eyeShapes, number} 种定位点形状、{eyeCentres, number} 种定位点中心、任意颜色和渐变、徽标、边框，以及 PNG、SVG、PDF 或 EPS 下载。",
       "customize": "在 Playground 中自定义",
       "qrLabel": "{value} 的二维码",
       "empty": "输入链接即可查看你的二维码。"
@@ -1193,6 +1193,8 @@
         "formatGif": "GIF（图片，256 色）",
         "formatBmp": "BMP（未压缩图像）",
         "formatIco": "ICO（favicon，16 至 256 px）",
+        "formatTiff": "TIFF（图片，用于印刷）",
+        "formatTiffCmyk": "CMYK TIFF（用于印刷）",
         "formatSvg": "SVG（矢量，适合印刷）",
         "size": "{format} 尺寸",
         "quietZone": "添加 {modules, number} 个模块宽度的静区（印刷时推荐）",
@@ -2103,6 +2105,12 @@
       "gs1TooLong": "GS1-128 最多可容纳 {max} 个 AI 和数据字符；当前为 {count} 个。请拆分为两个条形码。",
       "databarGtinOnly": "GS1 DataBar 只能容纳 GTIN：(01) 及其 14 位数字。如需包含日期、批次或重量，请使用 GS1 DataBar Expanded 或 GS1-128。",
       "databarTooLong": "GS1 DataBar Expanded 最多可容纳 {max} 位 AI 和数据数字，包含字母时容量更少；当前有 {count} 个字符。请删除一个 AI 或缩短某个值。",
+      "maxicodeChars": "MaxiCode 支持 Latin-1 字符：字母、数字、符号和西欧语言的重音字母。不允许的字符：{chars}",
+      "maxicodePostcode": "承运商消息以邮政编码开头：最多 9 位数字（美国 ZIP 邮编），其他地区为最多 6 位大写字母、数字和空格。",
+      "maxicodeCountry": "邮政编码之后是 3 位 ISO 国家代码（美国为 840），当前为“{country}”。",
+      "maxicodeService": "国家代码之后是 3 位服务等级代码，当前为“{service}”。",
+      "maxicodeCarrier": "承运商消息（模式 {mode}）：邮政编码 {postcode}，国家 {country}，服务等级 {service}。",
+      "maxicodeZipPadded": "5 位 ZIP 邮编会绘制为 {zip}，+4 部分补 0000，读取器也会按此返回。",
       "imbEnter": "请输入 20 位追踪码，如有投递邮编，再接着输入。",
       "imbTrackingLength": "追踪码为 20 位：条码 ID（2 位）、服务类型（3 位）、邮寄方 ID 和序列号（15 位）。当前为 {count, plural, other {# 位数字}}。",
       "imbRoutingLength": "20 位追踪码之后是投递邮编：5 位、9 位（ZIP+4）或 11 位（ZIP+4 加投递点）。追踪码之后当前为 {count, plural, other {# 位数字}}。",
@@ -2698,7 +2706,7 @@
     "setupUrl": "服务器 URL",
     "toolsEyebrow": "工具",
     "toolsTitle": "你的助手可以调用什么",
-    "toolsDescription": "共 {count, number} 个工具。除 save_template、save_barcode 和 generate_ai_art 外，其余均为只读，无需密钥：它们可以渲染图像、格式化文本，并读取公开社区的内容。完整参数请参阅 <link>MCP server 文档</link>。",
+    "toolsDescription": "共 {count, number} 个工具。除 save_template、save_barcode 和 generate_ai_art 外，其余均为只读工具，无需密钥：它们可以渲染图像、格式化文本并读取公开社区内容。连接配置 API 密钥后，才会列出这几个例外工具。完整参数请见 <link>MCP server 文档</link>。",
     "toolNoKey": "无需密钥",
     "toolNeedsKey": "需要 API 密钥",
     "faqTitle": "MCP 服务器常见问题",
@@ -2837,6 +2845,7 @@
       "logoNote": "添加 Logo 后，如有需要，二维码会切换到纠错等级 H，以保证仍可扫描。",
       "previewAlt": "{value} 的二维码",
       "epsPreview": "EPS 是印刷文件，因此预览显示的是与 SVG 相同的二维码。",
+      "tiffPreview": "TIFF 是一种印刷文件格式，大多数浏览器无法显示，因此预览中显示的是同一个二维码的 PNG 版本。",
       "empty": "请输入要编码的文本或链接。",
       "tooLong": "超过了 API 的上限 {max, number} 个字符。",
       "loadFailed": "预览未能加载。如果你连续多次修改，请等待一分钟：该 API 每分钟允许 {perMinute, number} 次请求。",
@@ -3497,6 +3506,7 @@
         "pdfAndEpsDrawEvery": "PDF 和 EPS 将每个圆点绘制为矢量形状，并将线性和径向渐变保留为平滑的矢量渐变。",
         "jpgCantBeTransparent": "JPG 不支持透明",
         "bmpCantBeTransparent": "BMP 不支持透明：背景会变为白色",
+        "tiffCmykCantBeTransparent": "CMYK TIFF 用于印刷，而印刷不支持透明：透明背景会变成白色。",
         "gifWouldNotScan": "GIF 最多支持 256 种颜色，而此设计需要更多颜色：压缩到 256 色后将无法扫描。请改为下载 PNG。",
         "moreFormats": "更多格式",
         "vector": " · 矢量",
@@ -3523,6 +3533,8 @@
           "gif": "适合只支持 GIF 的旧工具和邮件编辑器 · 最多 256 种颜色，其中一种可设为透明。",
           "bmp": "适合只支持 BMP 的旧系统和嵌入式工具 · 未压缩 24 位，透明背景会变为白色。",
           "ico": "适合用作网站图标 · 一个文件包含 16、32、48 和 256 px 的图像。小尺寸仅用于图标，不适合扫描。",
+          "tiff": "适合要求提供 TIFF 的印刷店 · 300 dpi，保留透明背景。",
+          "tiff-cmyk": "适合要求 CMYK 的印刷店 · 黑色只用黑墨印刷，透明背景会变成白色。不含色彩配置文件：如需精确还原品牌色，请向印刷商咨询。",
           "svg": "适合 Figma、Illustrator 和网站 · 任意尺寸都保持清晰。",
           "pdf": "适合文档和快速打印 · 如需矢量 PDF，请使用“印刷就绪”。",
           "eps": "适合印刷厂和矢量应用 · 任意尺寸都保持清晰。"
@@ -3588,6 +3600,8 @@
         "pluginsForFigmaCanvaRaycast": "适用于 Figma、Canva、Raycast 和 Chrome 的插件",
         "leftOutValue": "已省略：{value}。",
         "imageUrl": "图片网址",
+        "showAll": "显示全部",
+        "showLess": "收起",
         "terminal": "终端",
         "designQrArguments": "design_qr 参数",
         "labelCopied": "已复制{label}",
@@ -4817,19 +4831,22 @@
         "smallerDotsGiveALighter": "较小的圆点外观更轻盈。{value}圆点最小可缩至 {floor, number}%，这是仍可扫描的最小尺寸。"
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "为每个码眼单独设置外框和中心颜色。未调整的码眼将使用“码眼”和“圆点”的颜色。",
+        "eyesYouLeaveAlone": "未单独设置的定位点会沿用“定位点”和“圆点”的颜色。",
         "useTheSameColorsFor": "所有码眼使用相同颜色",
         "sameForAll": "全部相同",
         "eyeColors": "码眼颜色",
         "frame": "外框",
         "center": "中心",
+        "eyesContinueTheCodes": "定位点延续二维码渐变",
+        "offEachEyeSweeps": "关闭时，每个定位点使用各自的渐变。开启后，定位点的渐变会铺满整个二维码，因此与圆点颜色相同的定位点会与圆点连成一体。"
+      },
+      "eyeTabs": {
+        "whichEye": "选择定位点",
         "positions": {
           "topLeft": "左上",
           "topRight": "右上",
           "bottomLeft": "左下"
-        },
-        "eyesContinueTheCodes": "定位点延续二维码渐变",
-        "offEachEyeSweeps": "关闭时，每个定位点使用各自的渐变。开启后，定位点的渐变会铺满整个二维码，因此与圆点颜色相同的定位点会与圆点连成一体。"
+        }
       },
       "frameControls": {
         "uploadSvg": "上传 SVG",
@@ -4837,10 +4854,7 @@
         "theFrameIsAddedAround": "边框会添加在二维码外围，因此下载的图片尺寸会变大，二维码本身仍可正常扫描。",
         "label": "标签",
         "pickAFrameFirst": "请先选择边框",
-        "none": "无",
-        "takesDotColor": "它使用二维码圆点的颜色。",
-        "alsoHasTemplate": "此设计内还包含 {name} 边框。选择其他边框会同时替换这两个边框。",
-        "templateKeepsSize": "此边框会将二维码容纳在内部，因此下载的图片会保持你所选的尺寸。"
+        "none": "无"
       },
       "frameFields": {
         "textSize": "文字大小"
@@ -5007,18 +5021,12 @@
       "eyeShapesSection": {
         "eyeShapes": "定位点形状",
         "sameForAll": "全部相同",
-        "giveEachCornerEyeIts": "为每个角上的定位点单独设置外框和中心形状。未设置的定位点将使用“定位点形状”。",
-        "whichEye": "选择定位点",
+        "eyesYouLeaveAlone": "未单独设置的定位点会沿用“定位点”的形状。",
         "frame": "外框",
         "center": "中心",
         "frameShapes": "外框形状",
         "centerShapes": "中心形状",
-        "useTheSameShapesFor": "所有定位点使用相同形状",
-        "positions": {
-          "topLeft": "左上",
-          "topRight": "右上",
-          "bottomLeft": "左下"
-        }
+        "useTheSameShapesFor": "所有定位点使用相同形状"
       },
       "cornersSection": {
         "roundedCorners": "圆角",
@@ -7676,6 +7684,8 @@
           "downloadGif": "下载 GIF",
           "downloadBmp": "下载 BMP",
           "downloadIco": "下载 ICO",
+          "downloadTiff": "下载 TIFF",
+          "downloadTiffCmyk": "下载 CMYK TIFF",
           "moreFormats": "更多格式",
           "editLinkValue": "编辑链接",
           "codeSettings": "二维码设置",
@@ -7777,6 +7787,8 @@
           "gifImagesZip": "GIF 图片（ZIP）",
           "bmpImagesZip": "BMP 图片（ZIP）",
           "icoImagesZip": "ICO 网站图标 (ZIP)",
+          "tiffImagesZip": "TIFF 图片（ZIP）",
+          "tiffCmykImagesZip": "CMYK TIFF 图片（ZIP）",
           "svgImagesZip": "SVG 图片（ZIP）",
           "more": "更多",
           "moveToTrash": "移至回收站",

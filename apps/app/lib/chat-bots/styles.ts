@@ -1,7 +1,6 @@
 import "server-only";
 
 import type { ScanScoreResult } from "qrdx";
-import { getTemplateIds } from "qrdx";
 import {
   BODY_PATTERN,
   CORNER_EYE_DOT_PATTERNS,
@@ -162,7 +161,7 @@ const isOption = (picker: Picker, value: unknown): value is string =>
 // ── A design ────────────────────────────────────────────────────────────────
 
 export interface ChatDesign {
-  /** Colors, shapes, frame and border, as the editor stores them (no logo) */
+  /** Colors, shapes and frame, as the editor stores them (no logo) */
   styles: ThemeStyles;
   /** A quick logo icon, drawn by the image API */
   logo: LogoIconId | null;
@@ -182,7 +181,6 @@ export interface ChatStyleChoice {
   dot?: ThemeStyles["cornerEyeDotPattern"];
   frame?: FrameStyle;
   frameText?: string;
-  template?: string;
   logo?: ChatLogoId | LogoIconId;
 }
 
@@ -245,14 +243,13 @@ export function applyChoice(
   let logo = design?.logo ?? null;
 
   if (choice.look) {
-    const { frame, templateId } = styles;
+    const { frame } = styles;
     const preset =
       choice.look === "plain" ? null : defaultPresets[choice.look]?.styles;
     styles = {
       ...BASE_STYLE,
       ...preset,
       ...(frame ? { frame } : {}),
-      ...(templateId ? { templateId } : {}),
     };
     look = choice.look === "plain" ? null : choice.look;
   }
@@ -279,10 +276,6 @@ export function applyChoice(
       style: style as Exclude<FrameStyle, "none">,
       ...(text ? { text } : {}),
     };
-  }
-  if (choice.template) {
-    if (choice.template === "default") delete styles.templateId;
-    else styles.templateId = choice.template;
   }
   if (choice.logo) logo = choice.logo === "none" ? null : choice.logo;
 
@@ -542,18 +535,12 @@ export const CHAT_FLAGS = [
   "dot",
   "frame",
   "frame-text",
-  "template",
   "logo",
 ] as const;
 type ChatFlag = (typeof CHAT_FLAGS)[number];
 
 /** Other names people reach for. */
 const FLAG_ALIASES: Record<string, ChatFlag> = { color: "fg" };
-
-/** Frames drawn as templates, by lower-case id ("default" draws none). */
-const TEMPLATES = new Map(
-  getTemplateIds().map((id) => [id.toLowerCase(), id] as const),
-);
 
 /**
  * Where the options start: the first `--word` after a space. Phones turn
@@ -668,16 +655,6 @@ function setFlag(choice: ChatStyleChoice, flag: ChatFlag, raw: string) {
       }
       choice.frameText = raw;
       return;
-    case "template": {
-      const id = TEMPLATES.get(raw.toLowerCase());
-      if (!id) {
-        throw new FlagError(
-          `There's no template frame "${raw.slice(0, 40)}". --template takes one of: ${list([...TEMPLATES.values()])}.`,
-        );
-      }
-      choice.template = id;
-      return;
-    }
     case "logo":
       choice.logo = valid(
         oneOf(flag, raw, ["none", ...LOGO_ICON_IDS] as const, "logo icon"),
@@ -716,6 +693,8 @@ export function readChatStyleFlags(raw: string): ChatStyleFlags {
 
   const choice: ChatStyleChoice = {};
   for (const { name, parts } of flags) {
+    // Templates are frames since qrdx 0.0.64: --template is ignored
+    if (name === "template") continue;
     const flag =
       FLAG_ALIASES[name] ??
       (CHAT_FLAGS as readonly string[]).find((known) => known === name);

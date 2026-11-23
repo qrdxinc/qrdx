@@ -12,12 +12,18 @@ export const EYE_GRADIENT_CONTROL = "eye-gradient";
 
 import type { QRStyle } from "@/types/theme";
 
+/** True when the eye at `position` has a frame or center color of its own. */
+export function hasOwnEyeColor(
+  style: Partial<QRStyle>,
+  position: EyePosition,
+): boolean {
+  const own = style.eyeColors?.[position];
+  return Boolean(own?.outer || own?.inner);
+}
+
 /** True when at least one eye has its own color. */
 export function hasEyeColors(style: Partial<QRStyle>): boolean {
-  return EYE_POSITIONS.some(
-    (position) =>
-      style.eyeColors?.[position]?.outer || style.eyeColors?.[position]?.inner,
-  );
+  return EYE_POSITIONS.some((position) => hasOwnEyeColor(style, position));
 }
 
 /** The color an eye's frame is drawn in (its own, else the Eyes color). */

@@ -874,7 +874,8 @@ async function testImageApi() {
     ];
   });
 
-  await check("image", "frame template", async () => {
+  // Templates are frames now: an old link's `template` is ignored
+  await check("image", "template ignored", async () => {
     const response = await get(query({ template: "arrow" }));
     const svg = await response.text();
     return [

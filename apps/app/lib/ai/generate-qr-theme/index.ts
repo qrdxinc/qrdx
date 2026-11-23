@@ -13,7 +13,7 @@ const hex = z
 // What the AI returns. The four colours and three patterns are required: with
 // an all-optional schema the model kept dropping eyeColor/dotColor, so a
 // "matching eyes" request left the old eyes on screen while the reply claimed
-// otherwise. templateId, frame, art and level stay manual-only.
+// otherwise. frame, art and level stay manual-only.
 export const themeStylePropsOutputSchema = themeStylePropsSchema
   .pick({
     size: true,

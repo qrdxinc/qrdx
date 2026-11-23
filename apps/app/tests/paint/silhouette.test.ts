@@ -177,14 +177,13 @@ describe("it travels like a logo", () => {
 });
 
 describe("Design → Frame: a shaped code takes the place of a frame", () => {
-  it("picking a shape clears the frame and border; a frame clears the shape", async () => {
+  it("picking a shape clears the frame; a frame clears the shape", async () => {
     const { frameShapeOf, withShape, withoutShape } = await import(
       "@/components/editor/control-sections/frame-shapes"
     );
     const framed: ThemeStyles = {
       fgColor: "#111827",
       frame: { style: "banner-bottom", text: "Scan me" },
-      templateId: "border",
     };
     const heart = withShape(framed, { shape: "heart" });
     expect(heart).toEqual({ fgColor: "#111827", shape: "heart" });

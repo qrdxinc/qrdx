@@ -377,7 +377,7 @@
         "none": "フレームなし",
         "border": "枠線"
       },
-      "more": "Playgroundのフル機能では、ボディパターン{bodyPatterns, number}種類、アイシェイプ{eyeShapes, number}種類、アイセンター{eyeCentres, number}種類、自由な色とグラデーション、ロゴ、テンプレート、PNG、SVG、PDF、EPSのダウンロードをご利用いただけます。",
+      "more": "Playgroundのフル機能では、ボディパターン{bodyPatterns, number}種類、アイシェイプ{eyeShapes, number}種類、アイセンター{eyeCentres, number}種類、自由な色とグラデーション、ロゴ、フレーム、PNG、SVG、PDF、EPSのダウンロードをご利用いただけます。",
       "customize": "Playgroundでカスタマイズ",
       "qrLabel": "{value}のQRコード",
       "empty": "リンクを入力するとQRコードが表示されます。"
@@ -1193,6 +1193,8 @@
         "formatGif": "GIF(画像、256色)",
         "formatBmp": "BMP(非圧縮の画像)",
         "formatIco": "ICO(ファビコン、16〜256 px)",
+        "formatTiff": "TIFF（印刷用画像）",
+        "formatTiffCmyk": "CMYK TIFF（印刷用）",
         "formatSvg": "SVG（ベクター、印刷用）",
         "size": "{format}のサイズ",
         "quietZone": "{modules, number}モジュール分のクワイエットゾーンを追加（印刷時に推奨）",
@@ -2103,6 +2105,12 @@
       "gs1TooLong": "GS1-128に含められるAIとデータは最大{max}文字です。現在は{count}文字です。2つのバーコードに分けてください。",
       "databarGtinOnly": "GS1 DataBarで扱えるのはGTINのみで、(01)と14桁の数字です。日付、ロット、重量を扱う場合は、GS1 DataBar ExpandedまたはGS1-128を使用してください。",
       "databarTooLong": "GS1 DataBar Expandedで扱えるのは、AIとデータを合わせて最大{max}桁の数字です。英字が含まれる場合はそれより少なくなります。現在は{count}文字です。AIを減らすか、値を短くしてください。",
+      "maxicodeChars": "MaxiCodeはLatin-1の文字（英字、数字、記号、西ヨーロッパのアクセント付き文字）を格納できます。使用できない文字：{chars}",
+      "maxicodePostcode": "キャリアメッセージは郵便番号から始まります。米国のZIPコードの場合は最大9桁の数字、それ以外の地域では大文字の英字、数字、スペースを合わせて最大6文字です。",
+      "maxicodeCountry": "郵便番号の後には、3桁のISO国コード（米国は840）が続きます。現在の値は「{country}」です。",
+      "maxicodeService": "国コードの後には、3桁のサービスクラスが続きます。現在の値は「{service}」です。",
+      "maxicodeCarrier": "キャリアメッセージ（モード{mode}）：郵便番号 {postcode}、国 {country}、サービスクラス {service}。",
+      "maxicodeZipPadded": "5桁のZIPコードは、+4の部分を0000として {zip} のように描画され、リーダーでもその形で読み取られます。",
       "imbEnter": "20桁のトラッキングコードを入力し、ルーティングZIPコードがある場合は続けて入力してください。",
       "imbTrackingLength": "トラッキングコードは20桁で、バーコードID（2桁）、サービスタイプ（3桁）、メーラーIDとシリアル番号（15桁）で構成されます。現在は{count, plural, other {#桁}}です。",
       "imbRoutingLength": "20桁のトラッキングコードの後ろには、ルーティングZIPコードが続きます。桁数は5桁、9桁（ZIP+4）、または11桁（ZIP+4と配達ポイント）です。トラッキングコードの後ろは現在{count, plural, other {#桁}}です。",
@@ -2698,7 +2706,7 @@
     "setupUrl": "サーバーURL",
     "toolsEyebrow": "ツール",
     "toolsTitle": "アシスタントが呼び出せるツール",
-    "toolsDescription": "{count, number}個のツールがあります。save_template、save_barcode、generate_ai_art以外はすべて読み取り専用で、キーは不要です。画像のレンダリング、テキストの整形、公開コミュニティの閲覧ができます。パラメーターの詳細は<link>MCPサーバーのドキュメント</link>をご覧ください。",
+    "toolsDescription": "{count, number} 個のツールがあります。save_template、save_barcode、generate_ai_art 以外はすべて読み取り専用で、キーは不要です。画像の生成、テキストの整形、公開コミュニティの閲覧ができます。この3つは、接続に API キーが設定されると一覧に表示されます。パラメーターの詳細は<link>MCP サーバーのドキュメント</link>をご覧ください。",
     "toolNoKey": "キー不要",
     "toolNeedsKey": "APIキーが必要",
     "faqTitle": "MCPサーバーのFAQ",
@@ -2837,6 +2845,7 @@
       "logoNote": "ロゴを入れる場合、必要に応じて誤り訂正レベルHに切り替わるため、スキャンできる状態が保たれます。",
       "previewAlt": "{value}のQRコード",
       "epsPreview": "EPSは印刷用ファイルのため、プレビューにはSVGで同じコードを表示しています。",
+      "tiffPreview": "TIFFは多くのブラウザーで表示できない印刷用ファイルのため、プレビューにはPNGと同じコードが表示されます。",
       "empty": "エンコードするテキストまたはリンクを入力してください。",
       "tooLong": "APIの上限である{max, number}文字を超えています。",
       "loadFailed": "プレビューを読み込めませんでした。続けて何度も変更した場合は、1分ほど待ってください。APIは1分あたり{perMinute, number}件のリクエストまで受け付けます。",
@@ -3497,6 +3506,7 @@
         "pdfAndEpsDrawEvery": "PDFとEPSではすべてのドットをベクター図形として描画し、線形グラデーションと放射状グラデーションもなめらかなベクターシェーディングとして保持します。",
         "jpgCantBeTransparent": "JPGは透過に対応していません",
         "bmpCantBeTransparent": "BMPは透過に対応していません。背景は白になります",
+        "tiffCmykCantBeTransparent": "CMYK形式のTIFFは印刷用で、透明には対応していません。透明な背景は白で出力されます。",
         "gifWouldNotScan": "GIFは256色までしか扱えませんが、このデザインにはそれ以上の色が必要です。256色に減色するとスキャンできなくなります。代わりにPNGでダウンロードしてください。",
         "moreFormats": "その他の形式",
         "vector": " ・ベクター",
@@ -3523,6 +3533,8 @@
           "gif": "GIFしか使えない古いツールやメールビルダー向けです · 最大256色で、そのうち1色を透明にできます。",
           "bmp": "BMPのみ対応している古いシステムや組み込みツールに最適です · 非圧縮の24ビットで、透明な背景は白になります。",
           "ico": "ファビコンに最適です · 16、32、48、256 pxの画像を1つのファイルにまとめます。小さいサイズはアイコン用で、スキャン用ではありません。",
+          "tiff": "TIFFでの入稿を求める印刷会社に最適です · 300 dpi、透明を保持します。",
+          "tiff-cmyk": "CMYKでの入稿を求める印刷会社に最適です · 黒は黒インクのみで印刷され、透明な背景は白で出力されます。カラープロファイルは含まれません。正確なブランドカラーについては印刷会社にご確認ください。",
           "svg": "Figma、Illustrator、Webサイト向け・どんなサイズでも鮮明なままです。",
           "pdf": "ドキュメントや手軽な印刷向け・ベクターPDFが必要な場合は印刷用を選んでください。",
           "eps": "印刷会社やベクターアプリ向け・どんなサイズでも鮮明なままです。"
@@ -3588,6 +3600,8 @@
         "pluginsForFigmaCanvaRaycast": "Figma、Canva、Raycast、Chrome用のプラグイン",
         "leftOutValue": "省略: {value}",
         "imageUrl": "画像URL",
+        "showAll": "すべて表示",
+        "showLess": "表示を減らす",
         "terminal": "ターミナル",
         "designQrArguments": "design_qrの引数",
         "labelCopied": "{label}をコピーしました",
@@ -4817,19 +4831,22 @@
         "smallerDotsGiveALighter": "ドットを小さくすると軽やかな印象になります。{value}のドットは、スキャンできる最小サイズの{floor, number}%まで小さくなります。"
       },
       "eyeColorsSection": {
-        "giveEachCornerEyeIts": "コーナーのアイごとに、フレームと中心の色を個別に設定できます。変更しないアイには、アイとドットの色が使われます。",
+        "eyesYouLeaveAlone": "個別に設定していない目には、「目」と「ドット」の色が適用されます。",
         "useTheSameColorsFor": "すべてのアイに同じ色を使用",
         "sameForAll": "すべて同じ",
         "eyeColors": "アイの色",
         "frame": "フレーム",
         "center": "中央",
+        "eyesContinueTheCodes": "アイをコードのグラデーションに連続させる",
+        "offEachEyeSweeps": "オフの場合、各アイはそれぞれ独自のグラデーションになります。オンの場合、アイのグラデーションがコード全体にわたって適用されるため、ドットと同じ塗りのアイはドットから連続します。"
+      },
+      "eyeTabs": {
+        "whichEye": "対象のアイ",
         "positions": {
           "topLeft": "左上",
           "topRight": "右上",
           "bottomLeft": "左下"
-        },
-        "eyesContinueTheCodes": "アイをコードのグラデーションに連続させる",
-        "offEachEyeSweeps": "オフの場合、各アイはそれぞれ独自のグラデーションになります。オンの場合、アイのグラデーションがコード全体にわたって適用されるため、ドットと同じ塗りのアイはドットから連続します。"
+        }
       },
       "frameControls": {
         "uploadSvg": "SVGをアップロード",
@@ -4837,10 +4854,7 @@
         "theFrameIsAddedAround": "フレームはコードの周囲に追加されるため、ダウンロードする画像は大きくなりますが、コード自体はスキャンできる状態のままです。",
         "label": "ラベル",
         "pickAFrameFirst": "先にフレームを選んでください",
-        "none": "なし",
-        "takesDotColor": "コードのドットの色が適用されます。",
-        "alsoHasTemplate": "このデザインには、このフレームの内側に {name} フレームも含まれています。別のフレームを選ぶと、両方が置き換えられます。",
-        "templateKeepsSize": "このフレームはコードを内側に収めるため、ダウンロードする画像は選択したサイズのままです。"
+        "none": "なし"
       },
       "frameFields": {
         "textSize": "文字サイズ"
@@ -5007,18 +5021,12 @@
       "eyeShapesSection": {
         "eyeShapes": "アイの形",
         "sameForAll": "すべて同じ",
-        "giveEachCornerEyeIts": "コーナーのアイごとに、フレームと中心の形を個別に設定できます。設定しないアイにはアイの形が使われます。",
-        "whichEye": "対象のアイ",
+        "eyesYouLeaveAlone": "個別に設定していない目には、「目」の形が適用されます。",
         "frame": "フレーム",
         "center": "中心",
         "frameShapes": "フレームの形",
         "centerShapes": "中心の形",
-        "useTheSameShapesFor": "すべてのアイに同じ形を使う",
-        "positions": {
-          "topLeft": "左上",
-          "topRight": "右上",
-          "bottomLeft": "左下"
-        }
+        "useTheSameShapesFor": "すべてのアイに同じ形を使う"
       },
       "cornersSection": {
         "roundedCorners": "角を丸くする",
@@ -7676,6 +7684,8 @@
           "downloadGif": "GIFをダウンロード",
           "downloadBmp": "BMPをダウンロード",
           "downloadIco": "ICOをダウンロード",
+          "downloadTiff": "TIFFをダウンロード",
+          "downloadTiffCmyk": "CMYK TIFFをダウンロード",
           "moreFormats": "その他の形式",
           "editLinkValue": "リンクを編集",
           "codeSettings": "コード設定",
@@ -7777,6 +7787,8 @@
           "gifImagesZip": "GIF画像（ZIP）",
           "bmpImagesZip": "BMP画像（ZIP）",
           "icoImagesZip": "ICOファビコン(ZIP)",
+          "tiffImagesZip": "TIFF画像（ZIP）",
+          "tiffCmykImagesZip": "CMYK TIFF画像（ZIP）",
           "svgImagesZip": "SVG画像（ZIP）",
           "more": "その他",
           "moveToTrash": "ゴミ箱に移動",

@@ -53,7 +53,8 @@ export const MCP_TOOLS: {
   description: string;
   icon: CardIcon;
   /**
-   * Needs a QRdx API key on the connection. The rest work without one
+   * Needs a QRdx API key on the connection, and the server lists it only to
+   * connections that send one. The rest work without one
    * (tests/api/mcp.test.ts checks this against the registered tools).
    */
   needsKey?: true;
@@ -97,7 +98,7 @@ export const MCP_TOOLS: {
     name: "save_template",
     title: "Save as a theme",
     description:
-      "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Needs a QRdx API key on the connection.",
+      "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Listed once the connection has a QRdx API key.",
     icon: Save2,
     needsKey: true,
   },
@@ -112,7 +113,7 @@ export const MCP_TOOLS: {
     name: "save_barcode",
     title: "Save a barcode",
     description:
-      "Keeps a barcode in your workspace's Barcodes to edit and download later. Needs a QRdx API key on the connection.",
+      "Keeps a barcode in your workspace's Barcodes to edit and download later. Listed once the connection has a QRdx API key.",
     icon: ArchiveAdd,
     needsKey: true,
   },
@@ -120,7 +121,7 @@ export const MCP_TOOLS: {
     name: "generate_ai_art",
     title: "Generate AI art",
     description:
-      "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
+      "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Listed once the connection has a QRdx API key.",
     icon: MagicStar,
     needsKey: true,
   },
@@ -142,7 +143,7 @@ export const MCP_TOOLS: {
     name: "list_qr_styles",
     title: "List styles",
     description:
-      "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
+      "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
     icon: ColorSwatch,
   },
   {
@@ -209,7 +210,7 @@ export const MCP_FAQS: { question: string; answer: string }[] = [
   {
     question: "Does it need an API key?",
     answer:
-      "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server.",
+      "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
   },
   {
     question: "Which AI tools does it work with?",

@@ -9,7 +9,7 @@ import {
   CLASSIC_FRAME_IDS,
   classicFrameOf,
   withClassicFrame,
-} from "@/components/editor/control-sections/frame-templates";
+} from "@/components/editor/control-sections/classic-frames";
 import { patterns as cornerEyeDotPatterns } from "@/components/playground/corner-eye-dot-pattern-selector";
 import { patterns as cornerEyePatterns } from "@/components/playground/corner-eye-pattern-selector";
 import { patterns as bodyPatterns } from "@/components/playground/pattern-selector";
@@ -156,7 +156,6 @@ export function usePlaygroundShortcuts({
           level: themeState.styles.level,
           cornerEyePattern: themeState.styles.cornerEyePattern,
           cornerEyeDotPattern: themeState.styles.cornerEyeDotPattern,
-          templateId: themeState.styles.templateId,
           margin: themeState.styles.margin,
           frame: themeState.styles.frame,
         };

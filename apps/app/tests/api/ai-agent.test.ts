@@ -168,7 +168,6 @@ const RISKY = {
   margin: 4,
   level: "L",
   frame: { style: "banner-bottom", text: "Free Wi-Fi" },
-  templateId: "default",
   logo: "wifi",
 };
 /** The designer's revision: the same look, darker, rounded eyes, level H. */
@@ -815,7 +814,6 @@ describe("every option the editor draws", () => {
     margin: 4,
     level: "H",
     frame: { style: "none" },
-    templateId: "default",
     logo: "none",
   };
 

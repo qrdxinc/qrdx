@@ -9,6 +9,10 @@
 // The frames live in ./official/<id>.json; ./catalogue/ is generated from
 // them (scripts/official-frames/write.mjs): the full list, one module per
 // collection (load a group at a time) and a light index without specs.
+// Changing a spec makes a new version of the frame: QRdx's image API keeps
+// every version it has published (apps/app/lib/frames/versions, recorded
+// by write.mjs or `bun run --filter app frames:versions`), so an image URL
+// naming autumn-maple.v1 never changes.
 // The package builds this module on its own (dist/frames-official), so an
 // app that never uses the frames doesn't ship them (tsup.config.ts).
 import { OFFICIAL_FRAME_LIST } from "./catalogue/all";

@@ -30,7 +30,7 @@ Don't use `withElementFactory`. It's internal: the React components use it to bu
 
 - Building the tree is the cost: about 1.5–2 ms for a styled, framed code (logo, gradient, frame). Turning it into markup or DOM nodes is a small share of that. Rebuild only when the props change.
 - The markup is a pure function of the props. Comparing `renderToString(tree)` with the last one is a cheap way to skip DOM work when nothing visible changed (`createQRCode` does this).
-- Replace the whole `<svg>` when it changes. There is no stable node identity between two trees to patch against. Gradient, pattern and logo clip-path ids are hashes of their content (templates use fixed ids), so a replaced element never points at another code's `url(#…)` with different content.
+- Replace the whole `<svg>` when it changes. There is no stable node identity between two trees to patch against. Gradient, pattern and logo clip-path ids are hashes of their content, so a replaced element never points at another code's `url(#…)` with different content.
 - A virtual-DOM adapter can let its framework diff the `toHyperscript` output instead. Lists carry keys (the fourth argument to `create`).
 
 ## SSR and hydration
@@ -45,10 +45,6 @@ Don't use `withElementFactory`. It's internal: the React components use it to bu
 - Root attributes go in the props with React's names (`className`, `aria-label`, `style` as an object, `data-*`). `class` and a CSS string for `style` also work in the core.
 - Event handlers and other functions in the props are dropped, as React drops them from markup. Attach events to the adapter's own element.
 - With a `frame`, root attributes go on the frame's outer `<svg>`, as in React.
-
-## Templates
-
-A custom template's `wrapper` receives the drawn code and returns the wrapped one. With the core it receives `QRNode`s. A wrapper written with React's JSX still renders through the core, as long as it uses no hooks (React elements are read as nodes). `h(type, props, ...children)` writes one without JSX for both. Import `h` from the entry that draws the code: `qrdx` for the React components, `qrdx/core` otherwise.
 
 ## Known limits
 

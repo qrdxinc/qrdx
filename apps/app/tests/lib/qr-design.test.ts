@@ -152,7 +152,6 @@ describe("style", () => {
         body: { type: "linear", from: "#1E3A8A", to: "#7C3AED", angle: 45 },
       },
       frame: { style: "banner-bottom", text: "Join our Wi-Fi" },
-      templateId: "StandardBox",
       logo: "wifi",
     });
     expect(styles.fgColor).toEqual({
@@ -167,7 +166,7 @@ describe("style", () => {
       style: "banner-bottom",
       text: "Join our Wi-Fi",
     });
-    expect(styles.templateId).toBe("StandardBox");
+    expect(styles).not.toHaveProperty("templateId");
     expect(styles.showLogo).toBe(true);
   });
 

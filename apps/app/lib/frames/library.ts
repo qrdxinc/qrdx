@@ -15,6 +15,7 @@ import {
   type OfficialFrameCollection,
   type OfficialFrameIndexEntry,
 } from "qrdx";
+import { currentIdOf, pinFrameName } from "./versions/names";
 
 type CollectionModule = { default: readonly OfficialFrame[] };
 
@@ -159,13 +160,23 @@ export function peekOfficialEntryOfSpec(
 }
 
 /**
- * The official frames for playground links, from what has loaded here:
- * playground-style.ts's default. Server code passes the full catalogue
- * (OFFICIAL_FRAME_RESOLVER in lib/community/catalog.ts).
+ * The official frames for playground links and the Get code dialog, from
+ * what has loaded here: playground-style.ts's default. A frame goes by its
+ * id with its newest version (lib/frames/versions/names.ts). The browser
+ * holds each frame's newest design only, so a link naming an older version
+ * (or a bare id, v1) opens at the newest one, as links did before versions;
+ * the image API draws the version itself. Server code passes the full
+ * catalogue (OFFICIAL_FRAME_RESOLVER in lib/community/catalog.ts).
  */
 export const LOADED_OFFICIAL_FRAMES = {
-  idOfSpec: (spec: FrameSpec) => peekOfficialEntryOfSpec(spec)?.id,
-  specOf: (id: string) => peekOfficialFrame(id)?.spec,
+  idOfSpec: (spec: FrameSpec) => {
+    const id = peekOfficialEntryOfSpec(spec)?.id;
+    return id === undefined ? undefined : pinFrameName(id);
+  },
+  specOf: (name: string) => {
+    const id = currentIdOf(name);
+    return id === undefined ? undefined : peekOfficialFrame(id)?.spec;
+  },
 };
 
 // ── Watching ────────────────────────────────────────────────────────────────

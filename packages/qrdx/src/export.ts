@@ -36,7 +36,6 @@ export async function getQRAsSVGDataUri(props: QRProps) {
     }
   }
 
-  // Create the SVG element with all props including templateId
   // Filter out props that aren't valid for QRCodeSVG (like hideLogo, url, etc.)
   // Exports never carry the preview's frame label or part markers.
   const {
@@ -50,11 +49,7 @@ export async function getQRAsSVGDataUri(props: QRProps) {
   } = updatedProps as any;
 
   // The same markup <QRCodeSVG> renders, drawn without React
-  const svgString = toSVGString({
-    ...validSVGProps,
-    templateId: updatedProps.templateId, // Ensure templateId is passed
-    customTemplate: updatedProps.customTemplate, // Ensure customTemplate is passed
-  });
+  const svgString = toSVGString(validSVGProps);
 
   return `data:image/svg+xml,${encodeURIComponent(svgString)}`;
 }

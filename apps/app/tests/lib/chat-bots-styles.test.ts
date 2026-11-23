@@ -214,9 +214,15 @@ describe("the scan check", () => {
 });
 
 describe("typed options", () => {
+  it("ignores --template (templates are frames now)", () => {
+    expect(readChatStyleFlags("qrdx.dev --template arrow --fg 0051ff")).toEqual(
+      { ok: true, content: "qrdx.dev", choice: { fg: "#0051FF" } },
+    );
+  });
+
   it("reads every option, with the CLI's names", () => {
     const read = readChatStyleFlags(
-      'qrdx.dev --look modern --fg 0051ff --bg #fff --eye-color 111111 --dot-color red --body circle --eye gear --dot rounded --frame banner-bottom --frame-text "Scan me" --template arrow --logo wifi',
+      'qrdx.dev --look modern --fg 0051ff --bg #fff --eye-color 111111 --dot-color red --body circle --eye gear --dot rounded --frame banner-bottom --frame-text "Scan me" --logo wifi',
     );
     expect(read).toEqual({
       ok: true,
@@ -232,7 +238,6 @@ describe("typed options", () => {
         dot: "rounded",
         frame: "banner-bottom",
         frameText: "Scan me",
-        template: "Arrow",
         logo: "wifi",
       },
     });
@@ -319,7 +324,6 @@ describe("typed options", () => {
       ["x --body blob", /no dot shape "blob".*square/],
       ["x --frame cloud", /no frame "cloud".*banner-bottom/],
       ["x --logo cat", /no logo icon "cat".*wifi/],
-      ["x --template wavy", /no template frame "wavy".*Arrow/],
       [`x --frame-text "${"a".repeat(25)}"`, /up to 24 characters/],
       ["x --look", /--look needs a value/],
       ['x --frame-text ""', /--frame-text needs a value/],

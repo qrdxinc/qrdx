@@ -23,7 +23,7 @@ import { workspaceSlug } from "@/lib/workspaces";
 
 // The MCP server's barcode tools: generate_barcode draws one (no key, like
 // GET /v1/barcode) and save_barcode keeps it in the key's workspace (like
-// save_template saves a theme).
+// save_template saves a theme), listed only to connections with a key.
 
 const text = (value: string) => ({ type: "text" as const, text: value });
 
@@ -92,10 +92,23 @@ const saveInput = createBarcodeSchema.omit({ format: true }).extend({
 
 const FREE_SAVED_BARCODES = getPlanLimits("free").savedBarcodes;
 
-export const BARCODE_MCP_INSTRUCTIONS =
-  " For barcodes (EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, Code 128, Code 39, Code 93, Codabar, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode, DotCode), call generate_barcode: it checks the value (check digits, lengths, characters) and returns a PNG plus public image URLs; with an API key, save_barcode keeps one in the workspace's Barcodes.";
+const GENERATE_BARCODE_INSTRUCTIONS =
+  " For barcodes (EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, Code 128, Code 39, Code 93, Codabar, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode, DotCode), call generate_barcode: it checks the value (check digits, lengths, characters) and returns a PNG plus public image URLs";
 
-export function registerBarcodeTools(server: McpServer) {
+/** For a connection with an API key, which also gets save_barcode. */
+export const BARCODE_MCP_INSTRUCTIONS = `${GENERATE_BARCODE_INSTRUCTIONS}; with an API key, save_barcode keeps one in the workspace's Barcodes.`;
+
+/** For a connection without a key, which isn't offered save_barcode. */
+export const BARCODE_MCP_KEYLESS_INSTRUCTIONS = `${GENERATE_BARCODE_INSTRUCTIONS}.`;
+
+/**
+ * generate_barcode, plus save_barcode when the connection has an API key
+ * (`keyed`): it saves to the key's workspace.
+ */
+export function registerBarcodeTools(
+  server: McpServer,
+  { keyed }: { keyed: boolean },
+) {
   server.registerTool(
     "generate_barcode",
     {
@@ -149,6 +162,8 @@ export function registerBarcodeTools(server: McpServer) {
       }
     },
   );
+
+  if (!keyed) return;
 
   server.registerTool(
     "save_barcode",

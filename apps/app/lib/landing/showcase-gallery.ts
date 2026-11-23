@@ -5,8 +5,8 @@ import {
   FRAME_CATALOG,
 } from "@repo/docs-assets/pattern-catalog";
 import {
+  type BuiltInFrameStyle,
   getFrameLayout,
-  getTemplate,
   isFrameActive,
   OFFICIAL_FRAMES,
 } from "qrdx";
@@ -41,7 +41,7 @@ import { defaultPresets } from "@/utils/qr-presets";
  * every one, so nothing that doesn't scan can ship.
  *
  * Tiles come in four bands: every built-in theme, the official frames, art
- * and logos (with the template frames and the transparent and print-ready
+ * and logos (with the artwork frames and the transparent and print-ready
  * codes), and every content type and hosted page. The home page shows a
  * curated selection (lib/landing/showcase-wall.ts); /community shows them
  * all.
@@ -86,7 +86,7 @@ export interface WallTile {
   value: string;
   /** Built-in theme the code is drawn in (a key of defaultPresets). */
   preset: string;
-  /** Changes on top of the theme (an official frame, a template, an eye). */
+  /** Changes on top of the theme (an official frame, a frame, an eye). */
   style?: Partial<ThemeStyles>;
   /**
    * Where the tile goes: the playground with the tile's look (and its
@@ -271,10 +271,6 @@ function describeLook(styles: ThemeStyles): string {
         ? `a ${name} frame that says ${frame.text}`
         : `a ${name} frame`,
     );
-  }
-  if (styles.templateId && styles.templateId !== "default") {
-    const name = getTemplate(styles.templateId)?.name.toLowerCase() ?? "";
-    parts.push(name ? `the ${name} frame` : "a frame");
   }
   if (styles.showLogo) parts.push("the QRdx logo in the center");
   return parts.join(", ");
@@ -472,22 +468,18 @@ const art = (
 };
 
 /**
- * The templates (frames drawn at the template's size) that score Great are
- * themes; these show the rest.
+ * The built-in frames that are artwork around the code (the engine's
+ * templates until qrdx 0.0.64), each on a plain code.
  */
-const border = (
-  templateId: string,
-  label: string,
-  caution?: string,
-): WallTile => {
+const border = (frameStyle: BuiltInFrameStyle, label: string): WallTile => {
   const style: Partial<ThemeStyles> = {
-    templateId,
+    frame: { style: frameStyle },
     bodyPattern: "square",
     cornerEyePattern: "square",
     cornerEyeDotPattern: "square",
   };
   return {
-    id: `border-${kebab(templateId)}`,
+    id: `border-${frameStyle}`,
     band: "art",
     label: `${label} frame`,
     detail: "Frame",
@@ -497,7 +489,6 @@ const border = (
     style,
     href: tileHref({ preset: "minimal", style }),
     shape: "square",
-    ...(caution && { caution }),
   };
 };
 
@@ -508,11 +499,6 @@ const CIRCLE_EYES: Partial<ThemeStyles> = {
   cornerEyePattern: "circle",
   cornerEyeDotPattern: "circle",
 };
-
-const SMALL_IN_BORDER =
-  "The border draws the code at under half the artwork's width; print it at 5 cm or more.";
-const HALF_IN_RING =
-  "The ring draws the code at about half the artwork's width; print it at 5 cm or more.";
 
 const artTiles: WallTile[] = [
   art("bloom", "logo", "blend", "classic"),
@@ -580,11 +566,11 @@ const artTiles: WallTile[] = [
     },
     shape: "square",
   },
-  border("StandardBox", "Standard box", SMALL_IN_BORDER),
-  border("StrikedBox", "Striked box"),
-  border("Arrow", "Arrow", SMALL_IN_BORDER),
-  border("Halloween", "Halloween", SMALL_IN_BORDER),
-  border("DotRing", "Dot ring", HALF_IN_RING),
+  border("standard-box", "Standard box"),
+  border("striked-box", "Striked box"),
+  border("arrow", "Arrow"),
+  border("pumpkin", "Pumpkin"),
+  border("dot-ring", "Dot ring"),
   {
     id: "eyes-circle",
     band: "art",
@@ -1553,7 +1539,6 @@ export function galleryCodeProps(
     level: logo || tile.art ? "H" : styles.level,
     margin: styles.margin,
   };
-  if (styles.templateId) props.templateId = styles.templateId;
   if (styles.frame) props.frame = styles.frame;
   if (logo) {
     if (!assets.logo) throw new Error(`Wall tile "${tile.id}" needs a logo`);

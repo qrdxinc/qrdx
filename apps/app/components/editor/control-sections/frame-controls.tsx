@@ -36,13 +36,6 @@ import {
   withoutShape,
 } from "./frame-shapes";
 import { carryFrameSettings, customFrameName } from "./frame-specs";
-import {
-  FRAME_TEMPLATES,
-  TEMPLATE_PREFIX,
-  templateOf,
-  templateTakesCodeColor,
-  withoutTemplate,
-} from "./frame-templates";
 import { FrameTextPresets } from "./frame-text-presets";
 
 // One picker for every frame: the engine's built-in frames (the classic
@@ -94,11 +87,10 @@ function useSavedFrames() {
 }
 
 /**
- * The frame picker on its own: the built-in frames (the classic ones and
- * the templates), the shaped codes, the official library and the frames you
- * saved, with Upload SVG beside the search (an SVG of your own becomes a
- * custom frame). One choice at a time: picking a frame, template or shaped
- * code replaces the one before. A built-in frame keeps the text and colors
+ * The frame picker on its own: the built-in frames, the shaped codes, the
+ * official library and the frames you saved, with Upload SVG beside the
+ * search (an SVG of your own becomes a custom frame). One choice at a time:
+ * picking a frame or a shaped code replaces the one before. A built-in frame keeps the text and colors
  * chosen so far; a ready-made frame comes as its tile shows it. Pass
  * `shapes` when the shaped code panel is shown elsewhere (FrameControls);
  * on its own the picker shows the panel under it.
@@ -123,14 +115,13 @@ export function FrameStylePicker({
   const [importUsed, setImportUsed] = useState(false);
 
   // A frame (a picked or an uploaded one) takes the place of a shaped code
-  // (frame-shapes.tsx) or a template (frame-templates.ts)
+  // (frame-shapes.tsx)
   const setFrame = (next: AnyQRFrame) =>
-    setStyle({ ...withoutTemplate(withoutShape(style)), frame: next });
+    setStyle({ ...withoutShape(style), frame: next });
   const shape = frameShapeOf(style) ?? shapes.current;
-  const template = templateOf(style);
 
-  // The picker's own tiles: no frame, the built-in frames and templates,
-  // the shaped codes, saved frames. Official frames come from the library
+  // The picker's own tiles: no frame, the built-in frames, the shaped
+  // codes, saved frames. Official frames come from the library
   // (frame-picker.tsx).
   const choices = useMemo(() => {
     const list: FrameChoice[] = [
@@ -148,15 +139,6 @@ export function FrameStylePicker({
           frame: { style: item.style, text: "" },
           group: "built-in",
           keywords: `classic built-in ${item.tags.join(" ")}`,
-        }),
-      ),
-      ...FRAME_TEMPLATES.map(
-        (item): FrameChoice => ({
-          id: `${TEMPLATE_PREFIX}${item.id}`,
-          name: item.name,
-          frame: { style: "none" },
-          group: "built-in",
-          keywords: `classic built-in border ${item.id} ${item.description ?? ""}`,
         }),
       ),
       ...FRAME_SHAPE_IDS.map(
@@ -187,10 +169,6 @@ export function FrameStylePicker({
 
   const value = (() => {
     if (shape && frame.style === "none") return `${SHAPE_PREFIX}${shape}`;
-    // A legacy design with a template inside a frame shows its frame
-    if (template && frame.style === "none") {
-      return `${TEMPLATE_PREFIX}${template.id}`;
-    }
     if (!custom) return frame.style as string;
     if (official) return `${OFFICIAL_PREFIX}${official.id}`;
     const json = JSON.stringify(custom.spec);
@@ -220,12 +198,6 @@ export function FrameStylePicker({
       return;
     }
     soundEvent("tick");
-    if (id.startsWith(TEMPLATE_PREFIX)) {
-      // A template takes the place of the frame and of a shaped code
-      const { frame: _frame, ...rest } = withoutShape(style);
-      setStyle({ ...rest, templateId: id.slice(TEMPLATE_PREFIX.length) });
-      return;
-    }
     if (picked.style === "custom") {
       // A ready-made frame looks like its tile: its own labels and colors.
       setFrame(id === CUSTOM_ID && custom ? custom : picked);
@@ -240,7 +212,7 @@ export function FrameStylePicker({
       ? frameName(frame, t("none"))
       : shape
         ? shapes.names[shape]
-        : (template?.name ?? t("none"));
+        : t("none");
 
   return (
     <>
@@ -270,16 +242,7 @@ export function FrameStylePicker({
         currentName={currentName}
         onPick={pick}
         preview={(option, id) =>
-          id.startsWith(TEMPLATE_PREFIX) ? (
-            <QRCodeSVG
-              bgColor="transparent"
-              fgColor={frame.color || "#000000"}
-              size={40}
-              style={{ maxHeight: "100%", maxWidth: "100%" }}
-              templateId={id.slice(TEMPLATE_PREFIX.length)}
-              value={CANONICAL_HOST}
-            />
-          ) : id.startsWith(SHAPE_PREFIX) ? (
+          id.startsWith(SHAPE_PREFIX) ? (
             <ShapePreview
               id={id.slice(SHAPE_PREFIX.length) as FrameShapeId}
               silhouette={shapes.silhouette}
@@ -344,8 +307,8 @@ export function FrameControls() {
 
 /**
  * Everything the Frame section shows under the picker: the frame's labels,
- * colors, icons and text size (its spec), a template's notes, Publish frame
- * for a custom one, or, with no frame, label ideas that add one. The Frame
+ * colors, icons and text size (its spec), Publish frame for a custom one,
+ * or, with no frame, label ideas that add one. The Frame
  * section, and the preview's frame toolbar.
  */
 export function FrameFields({
@@ -370,25 +333,11 @@ export function FrameFields({
   const setFrame = (next: AnyQRFrame) =>
     setStyle({ ...withoutShape(style), frame: next });
   const shaped = given ?? frameShapeOf(style) !== null;
-  const template = templateOf(style);
 
   return (
     <>
       {spec ? (
-        <>
-          <FrameSpecFields frame={frame} onChange={setFrame} spec={spec} />
-          {template && (
-            // A design from before templates were frames, with both
-            <p className="text-muted-foreground text-xs text-pretty">
-              {t("alsoHasTemplate", { name: template.name })}
-            </p>
-          )}
-        </>
-      ) : template ? (
-        <p className="text-muted-foreground text-xs text-pretty">
-          {t("templateKeepsSize")}
-          {templateTakesCodeColor(template) && ` ${t("takesDotColor")}`}
-        </p>
+        <FrameSpecFields frame={frame} onChange={setFrame} spec={spec} />
       ) : (
         !shaped && <NoFrameFields />
       )}
@@ -409,11 +358,9 @@ export function FrameFields({
         </Button>
       )}
 
-      {!(template && !spec) && (
-        <p className="text-muted-foreground text-xs">
-          {t("theFrameIsAddedAround")}
-        </p>
-      )}
+      <p className="text-muted-foreground text-xs">
+        {t("theFrameIsAddedAround")}
+      </p>
 
       {custom && publishUsed && (
         <PublishFrameDialog

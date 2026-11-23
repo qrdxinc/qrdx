@@ -21,7 +21,12 @@
 // Tiles marked `caution` (an option the score marks down that the community
 // wall still shows) skip the score and pair checks and must decode at
 // print size instead.
-import { getQRAsSVGDataUri, getScanScore, getStylePairRisk } from "qrdx";
+import {
+  getFrameDimensions,
+  getQRAsSVGDataUri,
+  getScanScore,
+  getStylePairRisk,
+} from "qrdx";
 import type { QRProps } from "qrdx/types";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
@@ -53,18 +58,12 @@ import {
 const CHECKER = GALLERY_CHECKER.dark;
 /** Artwork width a caution tile must read at (about 6 cm at 300 dpi). */
 const PRINT_WIDTH = 720;
-/**
- * Share of the artwork's width a border template draws the code at, at the
- * least (the Arrow and Halloween borders draw it smallest), so the camera
- * model blurs by the code's real module size.
- */
-const TEMPLATE_CODE_SHARE = 0.4;
-
 /** Renders the artwork `width` px wide, blurs it like a phone camera, decodes. */
 async function readsInPrint(props: QRProps, width: number): Promise<boolean> {
-  const svg = svgFromDataUri(
-    await getQRAsSVGDataUri({ ...props, size: width }),
-  );
+  // A frame adds its artwork around the code: the code is the share of
+  // `width` that leaves the whole artwork `width` wide
+  const size = (width * width) / getFrameDimensions(width, props.frame).width;
+  const svg = svgFromDataUri(await getQRAsSVGDataUri({ ...props, size }));
   if (!svg) return false;
   const modules =
     qrcodegen.QrCode.encodeText(
@@ -72,11 +71,8 @@ async function readsInPrint(props: QRProps, width: number): Promise<boolean> {
       ERROR_LEVEL_MAP[props.level ?? "Q"],
     ).size +
     2 * (props.margin ?? 0);
-  const share = props.templateId ? TEMPLATE_CODE_SHARE : 1;
   const image = rasterizeSvg(svg, { pad: 24, background: "#ffffff" });
-  return (
-    decodeQR(simulateCamera(image, (width * share) / modules)) === props.value
-  );
+  return decodeQR(simulateCamera(image, size / modules)) === props.value;
 }
 
 async function propsFor(tile: WallTile): Promise<QRProps> {

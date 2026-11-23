@@ -9,7 +9,12 @@ import {
   WITHDRAWN_CORNER_EYE_PATTERNS,
 } from "qrdx/types";
 import { z } from "zod";
-import { FILE_ID } from "@/lib/qr-api/style";
+import { OFFICIAL_FRAME_NAME } from "@/lib/frames/versions/names";
+import {
+  FILE_ID,
+  isOfficialFrameName,
+  OFFICIAL_FRAME_ID_MAX_LENGTH,
+} from "@/lib/qr-api/style";
 import { logoIconSchema } from "@/lib/qr-design/logo-icon";
 import {
   QR_DEFAULTS,
@@ -27,7 +32,10 @@ import {
 /** Longest `style` value, in characters. */
 export const STYLE_QUERY_MAX_LENGTH = 8192;
 
-/** Built-in frames a URL can name (custom frames go in `style`). */
+/**
+ * Built-in frames a URL can name. Official frames go by name (an id, with
+ * a version or `.latest`); other custom frames go in `style`.
+ */
 const URL_FRAME_STYLES = FRAME_STYLES.filter(
   (style) => style !== "none",
 ) as unknown as [string, ...string[]];
@@ -79,7 +87,7 @@ export const qrImageQuerySchema = qrOptionsSchema.extend({
     .max(STYLE_QUERY_MAX_LENGTH)
     .optional()
     .describe(
-      "The editor's whole style: URL-encoded JSON with the same fields as a saved theme (gradients, frames (built-in, custom frame specs, or a template), eye and dot colors, logoIcon, logoFileId), or the `style` value of a playground link (1.…). Flat parameters you also set win over it.",
+      'The editor\'s whole style: URL-encoded JSON with the same fields as a saved theme (gradients, frames (built-in, custom frame specs, or an official frame by name as { "style": "autumn-maple.v1", "text": "Hello" }), eye and dot colors, logoIcon, logoFileId), or the `style` value of a playground link (1.…). Flat parameters you also set win over it.',
     ),
   item: z
     .string()
@@ -89,9 +97,19 @@ export const qrImageQuerySchema = qrOptionsSchema.extend({
       "A community theme or frame by id, such as frame:wifi-table-card (from /v1/community/items). `style` and flat parameters win over it.",
     ),
   frame: z
-    .enum(URL_FRAME_STYLES)
+    .union([
+      z.enum(URL_FRAME_STYLES),
+      z
+        .string()
+        .max(OFFICIAL_FRAME_ID_MAX_LENGTH)
+        .regex(OFFICIAL_FRAME_NAME, "Must be a built-in frame or a frame id")
+        // "none" and "custom" are frame styles, never ids
+        .refine(isOfficialFrameName, "Must be a built-in frame or a frame id"),
+    ])
     .optional()
-    .describe("A built-in call-to-action frame around the code"),
+    .describe(
+      "A call-to-action frame around the code: a built-in frame, or one of QRdx's official frames by id with its version, such as autumn-maple.v1 (what the editor copies). An id without a version, such as autumn-maple, is version 1. Either way the image never changes; add .latest (autumn-maple.latest) to follow the frame's redesigns",
+    ),
   frameText: z
     .string()
     .max(FRAME_TEXT_MAX_LENGTH)
