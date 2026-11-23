@@ -9722,7 +9722,7 @@
         "viewer": "I visualizzatori vedono codici, pagine e statistiche dello spazio di lavoro senza modificare nulla."
       },
       "accept": "Accetta l’invito",
-      "expires": "Accedi con questo indirizzo email per accettare. L’invito scade il {date}. Se non te lo aspettavi, puoi ignorare questa email.",
+      "expires": "Accedi con questo indirizzo email per accettare. L’invito scade il {date}.",
       "someone": "Un collega"
     },
     "portalInvite": {
@@ -9731,7 +9731,7 @@
       "heading": "I tuoi report dei QR code",
       "body": "{hasFolders, select, yes {{inviter} ti invita a vedere i QR code di {portal} in {folders}: quante scansioni riceve ciascuno, da dove e con quali dispositivi, e quali pagine aprono. È di sola lettura.} other {{inviter} ti invita a vedere i QR code di {portal}: quante scansioni riceve ciascuno, da dove e con quali dispositivi, e quali pagine aprono. È di sola lettura.}}",
       "open": "Apri i report",
-      "signIn": "Accedi con questo indirizzo email: ti invieremo un codice monouso. Se non te lo aspettavi, puoi ignorarlo.",
+      "signIn": "Accedi con questo indirizzo email: ti invieremo un codice monouso.",
       "yourAgency": "La tua agenzia"
     },
     "limitNotice": {

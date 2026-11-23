@@ -9722,7 +9722,7 @@
         "viewer": "Pengamat melihat kode, halaman, dan analitik ruang kerja tanpa mengubah apa pun."
       },
       "accept": "Terima undangan",
-      "expires": "Masuk dengan alamat email ini untuk menerima. Undangan berakhir pada {date}. Jika Anda tidak mengharapkannya, abaikan saja email ini.",
+      "expires": "Masuk dengan alamat email ini untuk menerima undangan. Undangan berakhir pada {date}.",
       "someone": "Rekan tim"
     },
     "portalInvite": {
@@ -9731,7 +9731,7 @@
       "heading": "Laporan kode QR Anda",
       "body": "{hasFolders, select, yes {{inviter} mengundang Anda untuk melihat kode QR milik {portal} di {folders}: seberapa sering tiap kode dipindai, di mana dan pada perangkat apa, serta halaman yang dibuka. Hanya bisa dilihat.} other {{inviter} mengundang Anda untuk melihat kode QR milik {portal}: seberapa sering tiap kode dipindai, di mana dan pada perangkat apa, serta halaman yang dibuka. Hanya bisa dilihat.}}",
       "open": "Buka laporan",
-      "signIn": "Masuk dengan alamat email ini: kami akan mengirimkan kode sekali pakai. Jika Anda tidak mengharapkannya, abaikan saja.",
+      "signIn": "Masuk dengan alamat email ini: kami akan mengirimkan kode sekali pakai kepada Anda.",
       "yourAgency": "Agensi Anda"
     },
     "limitNotice": {

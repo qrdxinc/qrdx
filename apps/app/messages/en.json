@@ -10121,7 +10121,7 @@
         "viewer": "Viewers see the workspace's codes, pages and analytics without changing anything."
       },
       "accept": "Accept invitation",
-      "expires": "Sign in with this email address to accept. The invitation expires on {date}. If you weren't expecting it, you can ignore this email.",
+      "expires": "Sign in with this email address to accept. The invitation expires on {date}.",
       "someone": "A teammate"
     },
     "portalInvite": {
@@ -10130,7 +10130,7 @@
       "heading": "Your QR code reports",
       "body": "{hasFolders, select, yes {{inviter} invited you to see {portal}'s QR codes in {folders}: how often each one is scanned, where and on which devices, and the pages they open. It's read-only.} other {{inviter} invited you to see {portal}'s QR codes: how often each one is scanned, where and on which devices, and the pages they open. It's read-only.}}",
       "open": "Open the reports",
-      "signIn": "Sign in with this email address: we'll send you a one-time code. If you weren't expecting this, you can ignore it.",
+      "signIn": "Sign in with this email address: we'll send you a one-time code.",
       "yourAgency": "Your agency"
     },
     "limitNotice": {
