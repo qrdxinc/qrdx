@@ -1241,7 +1241,7 @@
         "logoQuestion": "Logo 或更高的纠错级别会改变尺寸吗？",
         "logoAnswer": "更高的纠错级别会增加冗余，因此相同内容需要更高的版本、更多的模块，打印尺寸也就更大。logo 不会改变模块数量，但会遮住部分模块，所以添加 logo 时请使用 Q 或 H 级。",
         "quietQuestion": "静区算在尺寸内吗？",
-        "quietAnswer": "显示的二维码尺寸是边到边的尺寸。扫描器还需要在每一侧留出 {quiet, number} 个模块宽度的空白边距，第二个数值已包含这部分。除非开启静区，否则 QRdx 下载的二维码不带边距，请在排版时在二维码四周留出这部分空间。",
+        "quietAnswer": "显示的二维码尺寸是从边缘到边缘的尺寸。扫描器还需要在每一侧留出 {quiet, number} 个模块宽的空白边距，第二个数值已包含该边距。从 QRdx 下载的二维码带有其设计所设定的边距：编辑器中的新设计起始为 {start, number} 个模块，生成器和批量工具会添加 {quiet, number} 个模块，除非你将其关闭。如果边距有缺失，请在版面中围绕二维码补足所缺的空白。",
         "resolutionQuestion": "打印时应导出多高的分辨率？",
         "resolutionAnswer": "尽量使用 SVG：它是矢量格式，任何尺寸下都保持清晰。如果使用 PNG，请至少按所示的像素宽度导出，对应 300 DPI，这是打印通常的最低要求。"
       },
@@ -5446,6 +5446,9 @@
       "checkingScan": "正在检查扫描…",
       "fullScanChecker": "完整扫描检测",
       "checkAPrintedCode": "检查已打印的二维码",
+      "warning": "警告",
+      "scanScoreScoreValueWarningShow": "扫描评分 {score, number}，{value}，有警告。显示检查项",
+      "addAMargin": "添加 {modules, number} 个模块的边距",
       "grades": {
         "great": "优秀",
         "ok": "良好",

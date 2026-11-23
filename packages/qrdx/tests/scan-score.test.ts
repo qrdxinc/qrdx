@@ -8,6 +8,9 @@ import {
   drawScanFrames,
   getScanScore,
   getScanScoreFromFrames,
+  QUIET_ZONE_MIN,
+  type ScanCheck,
+  type ScanScoreResult,
 } from "../src/scan-score";
 import { getTemplateCodeShare } from "../src/template-placement";
 import type { QRProps, TemplateDefinition } from "../types";
@@ -241,6 +244,71 @@ describe("getScanScore", () => {
     expect(
       result.checks.find((check) => check.id === "quiet-zone")?.passed
     ).toBe(false);
+  });
+
+  describe("quiet zone warning", () => {
+    const quietZone = (result: { checks: ScanCheck[] }) =>
+      result.checks.find((check) => check.id === "quiet-zone");
+
+    it("warns below QUIET_ZONE_MIN modules, in plain words with a fix", async () => {
+      expect(QUIET_ZONE_MIN).toBe(2);
+      for (const margin of [0, 1, 1.5]) {
+        const check = quietZone(await getScanScore({ ...PLAIN, margin }));
+        expect(check?.passed, `margin ${margin}`).toBe(false);
+        expect(check?.severity, `margin ${margin}`).toBe("warning");
+        expect(check?.fix).toMatch(/dark or busy surface/);
+        expect(check?.fix).toMatch(/margin to 2 modules/);
+      }
+      const none = quietZone(await getScanScore({ ...PLAIN, margin: 0 }));
+      expect(none?.message).toBe("No quiet zone around the code");
+      const one = quietZone(await getScanScore({ ...PLAIN, margin: 1 }));
+      expect(one?.message).toBe("Quiet zone of only 1 module");
+    });
+
+    it("passes from QUIET_ZONE_MIN modules up, with no warning", async () => {
+      for (const margin of [2, 3, 4, 8]) {
+        const check = quietZone(await getScanScore({ ...PLAIN, margin }));
+        expect(check?.passed, `margin ${margin}`).toBe(true);
+        expect(check?.severity, `margin ${margin}`).toBeUndefined();
+      }
+    });
+
+    it("counts a frame's light gap towards it", async () => {
+      // One module of margin warns on its own; the banner's plate keeps a
+      // light gap of 7% of the code's width around it, about 2 modules more.
+      const check = quietZone(
+        await getScanScore({
+          ...PLAIN,
+          margin: 1,
+          frame: { style: "banner-bottom", text: "Scan me", color: "#000000" },
+        })
+      );
+      expect(check?.passed).toBe(true);
+      expect(check?.severity).toBeUndefined();
+    });
+
+    // The warning is about where the code is placed, not the design: the
+    // number and grade stay what they were before it existed (5 points off
+    // below 1.5 modules, nothing from 1.5 up).
+    it("keeps the score and grade the quiet zone had before", async () => {
+      const [none, one, half, two] = await Promise.all(
+        [0, 1, 1.5, 2].map((margin) => getScanScore({ ...PLAIN, margin }))
+      );
+      const decodePenalty = (result: ScanScoreResult) =>
+        result.checks.some(
+          (check) => check.id.startsWith("decode-") && !check.passed
+        );
+      for (const result of [none, one, half, two]) {
+        expect(decodePenalty(result)).toBe(false);
+      }
+      expect(two?.score).toBe(100);
+      expect(half?.score).toBe(100);
+      expect(one?.score).toBe(95);
+      expect(none?.score).toBe(95);
+      for (const result of [none, one, half, two]) {
+        expect(result?.grade).toBe("great");
+      }
+    });
   });
 
   it("flags a logo that covers more than the error correction can recover", async () => {

@@ -1241,7 +1241,7 @@
         "logoQuestion": "Apakah logo atau koreksi kesalahan yang lebih tinggi mengubah ukuran?",
         "logoAnswer": "Koreksi kesalahan yang lebih tinggi menambah redundansi, sehingga konten yang sama membutuhkan versi lebih tinggi dengan lebih banyak modul, dan karena itu hasil cetaknya lebih besar. Logo tidak mengubah jumlah modul, tetapi menutupi sebagian modul, jadi gunakan level Q atau H saat menambahkannya.",
         "quietQuestion": "Apakah quiet zone dihitung dalam ukuran?",
-        "quietAnswer": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx tidak memiliki margin kecuali Anda mengaktifkan quiet zone, jadi sisakan ruang tersebut di sekitar kode pada tata letak Anda.",
+        "quietAnswer": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga memerlukan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx memiliki margin sesuai pengaturan desainnya: desain baru di editor dimulai dengan {start, number} modul, dan generator serta alat massal menambahkan {quiet, number} kecuali Anda menonaktifkannya. Sisakan ruang yang kurang di sekitar kode pada tata letak Anda.",
         "resolutionQuestion": "Resolusi berapa yang sebaiknya saya ekspor untuk cetak?",
         "resolutionAnswer": "Gunakan SVG jika memungkinkan: formatnya vektor dan tetap tajam di ukuran apa pun. Untuk PNG, ekspor minimal dengan lebar piksel yang ditampilkan untuk 300 DPI, yang merupakan standar minimum untuk cetak."
       },
@@ -5446,6 +5446,9 @@
       "checkingScan": "Memeriksa pemindaian…",
       "fullScanChecker": "Pemeriksa pemindaian lengkap",
       "checkAPrintedCode": "Periksa kode yang dicetak",
+      "warning": "Peringatan",
+      "scanScoreScoreValueWarningShow": "Skor pemindaian {score, number}, {value}, dengan peringatan. Tampilkan pemeriksaan",
+      "addAMargin": "Tambahkan margin {modules, number} modul",
       "grades": {
         "great": "Bagus",
         "ok": "OK",

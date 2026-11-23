@@ -38,6 +38,13 @@ export interface ScanCheck {
    * the quiet zone): neither passed nor failed. Show it as "not checked".
    */
   skipped?: boolean;
+  /**
+   * "warning" on a failed check that is a caution rather than a problem
+   * with the design: the code reads as drawn, but may not where it's placed
+   * (a code with no quiet zone, on a dark or busy surface). Show it milder
+   * than a failure. Absent on every other check.
+   */
+  severity?: "warning";
   message: string;
   /** How to fix a failed check */
   fix?: string;
@@ -65,6 +72,16 @@ export interface ScanScoreOptions {
 
 /** Widths (px) of the QR code that `getScanScore` decodes by default. */
 export const SCAN_TEST_SIZES = [96, 160, 320] as const;
+
+/**
+ * The quiet zone (light margin around the code, frame gap included), in
+ * modules, below which the score's quiet-zone check warns. QRdx's scan study
+ * (scripts/scan-study, 23 Nov 2026 run): with no margin, codes printed
+ * straight onto a dark surface were read in 0% (jsQR, ZXing-C++) and 70%
+ * (zbar) of captures, and on a busy pattern in 10%, 2% and 38%; one module of
+ * light margin brought all three to 98% or more. Two leaves room for that.
+ */
+export const QUIET_ZONE_MIN = 2;
 
 // Code width (px) the artwork is rendered at before downscaling to test sizes.
 const SOURCE_SIZE = 640;
@@ -826,7 +843,7 @@ function quietZoneCheck(props: QRProps): { check: ScanCheck; penalty: number } {
       penalty: 0,
     };
   }
-  if (modules >= 1.5) {
+  if (modules >= QUIET_ZONE_MIN) {
     return {
       check: {
         id: "quiet-zone",
@@ -836,14 +853,22 @@ function quietZoneCheck(props: QRProps): { check: ScanCheck; penalty: number } {
       penalty: 0,
     };
   }
+  // A warning, not a lower score: the decode tests draw the code on its own
+  // background, where it reads; on a dark or busy surface it may not (see
+  // QUIET_ZONE_MIN). It costs what it always has, 5 points below 1.5 modules
+  // and nothing from there, so scores and grades stay as they were.
   return {
     check: {
       id: "quiet-zone",
       passed: false,
-      message: "No quiet zone around the code",
-      fix: "Leave clear space (about 10% of the code width) around it wherever you place it, or add a frame",
+      severity: "warning",
+      message:
+        rounded === 0
+          ? "No quiet zone around the code"
+          : `Quiet zone of only ${rounded} ${rounded === 1 ? "module" : "modules"}`,
+      fix: `Without a light border, the code may not scan on a dark or busy surface. Set the margin to ${QUIET_ZONE_MIN} modules or more, or add a frame`,
     },
-    penalty: 5,
+    penalty: modules >= 1.5 ? 0 : 5,
   };
 }
 

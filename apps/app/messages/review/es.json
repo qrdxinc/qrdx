@@ -3516,7 +3516,7 @@
     "status": "machine"
   },
   "tools.printSize.faq.quietAnswer": {
-    "source": "ba39588a3190",
+    "source": "d31f1ff850e7",
     "status": "machine"
   },
   "tools.printSize.faq.resolutionQuestion": {
@@ -16729,6 +16729,18 @@
   },
   "editor.scanScore.checkAPrintedCode": {
     "source": "87763218505a",
+    "status": "machine"
+  },
+  "editor.scanScore.warning": {
+    "source": "e981ddae45d8",
+    "status": "machine"
+  },
+  "editor.scanScore.scanScoreScoreValueWarningShow": {
+    "source": "6b92296354fd",
+    "status": "machine"
+  },
+  "editor.scanScore.addAMargin": {
+    "source": "de244bba26dc",
     "status": "machine"
   },
   "editor.scanScore.grades.great": {

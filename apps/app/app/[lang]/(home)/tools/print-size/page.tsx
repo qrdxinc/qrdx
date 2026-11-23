@@ -8,6 +8,7 @@ import { PrintSizePlacements } from "@/components/sections/page-codes/page-code-
 import { FaqList } from "@/components/sections/tools/faq-list";
 import { PrintSizeCalculator } from "@/components/sections/tools/print-size-calculator";
 import { ToolHero } from "@/components/sections/tools/tool-hero";
+import { NEW_DESIGN_MARGIN } from "@/config/qr";
 import { localizedMetadata } from "@/lib/i18n/metadata";
 import { requireLocale } from "@/lib/i18n/server";
 import { playgroundHref } from "@/lib/playground-links";
@@ -48,7 +49,10 @@ export default async function PrintSizePage() {
     { question: t("faq.logoQuestion"), answer: t("faq.logoAnswer") },
     {
       question: t("faq.quietQuestion"),
-      answer: t("faq.quietAnswer", { quiet: QUIET_ZONE_MODULES }),
+      answer: t("faq.quietAnswer", {
+        quiet: QUIET_ZONE_MODULES,
+        start: NEW_DESIGN_MARGIN,
+      }),
     },
     {
       question: t("faq.resolutionQuestion"),

@@ -1241,7 +1241,7 @@
         "logoQuestion": "¿Cambian el tamaño un logo o una corrección de errores más alta?",
         "logoAnswer": "Una corrección de errores más alta añade redundancia, así que el mismo contenido necesita una versión mayor con más módulos y, por tanto, una impresión más grande. Un logo no cambia el número de módulos, pero oculta algunos, así que usa el nivel Q o H al añadir uno.",
         "quietQuestion": "¿La zona de silencio cuenta para el tamaño?",
-        "quietAnswer": "El tamaño del código que se muestra va de borde a borde. Los escáneres también necesitan un margen en blanco de {quiet, number} módulos en cada lado, que la segunda cifra incluye. Las descargas de QRdx no tienen margen a menos que actives la zona de silencio, así que deja ese espacio alrededor del código en tu diseño.",
+        "quietAnswer": "El tamaño del código que se muestra va de borde a borde. Los escáneres también necesitan un margen en blanco de {quiet, number} módulos en cada lado, que la segunda cifra incluye. Una descarga de QRdx trae el margen que fija su diseño: los diseños nuevos del editor empiezan con {start, number} módulos, y los generadores y la herramienta masiva añaden {quiet, number} a menos que lo desactives. Deja en tu maquetación el espacio que falte alrededor del código.",
         "resolutionQuestion": "¿Qué resolución debo exportar para imprimir?",
         "resolutionAnswer": "Usa SVG siempre que puedas: es vectorial y se mantiene nítido a cualquier tamaño. Para PNG, exporta al menos con el ancho en píxeles indicado para 300 DPI, que es el mínimo habitual para imprimir."
       },
@@ -5446,6 +5446,9 @@
       "checkingScan": "Comprobando escaneo…",
       "fullScanChecker": "Verificador completo de escaneo",
       "checkAPrintedCode": "Comprueba un código impreso",
+      "warning": "Aviso",
+      "scanScoreScoreValueWarningShow": "Puntuación de escaneo {score, number}, {value}, con una advertencia. Mostrar comprobaciones",
+      "addAMargin": "Añade un margen de {modules, number} módulos",
       "grades": {
         "great": "Genial",
         "ok": "Bien",

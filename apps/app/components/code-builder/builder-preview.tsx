@@ -19,6 +19,7 @@ export function BuilderPreview({
   link,
   isPreview,
   onScore,
+  onStyleChange,
   compact,
   action,
 }: {
@@ -30,6 +31,8 @@ export function BuilderPreview({
   /** The code doesn't exist yet: what it encodes isn't live */
   isPreview: boolean;
   onScore?: (result: ScanScoreResult) => void;
+  /** A scan check's one-click fix (the quiet zone's margin) */
+  onStyleChange?: (change: Partial<QRStyle>) => void;
   /** The phone layout: a thumbnail beside the score */
   compact?: boolean;
   /** Phones: a button under the score (e.g. "Design") */
@@ -45,7 +48,12 @@ export function BuilderPreview({
           value={value}
         />
         <div className="min-w-0 flex-1 space-y-1.5">
-          <ScanScoreBadge onResult={onScore} style={style} value={value} />
+          <ScanScoreBadge
+            onResult={onScore}
+            onStyleChange={onStyleChange}
+            style={style}
+            value={value}
+          />
           {link && (
             <p className="text-muted-foreground truncate text-xs">
               {displayUrl(link)}
@@ -64,7 +72,12 @@ export function BuilderPreview({
         value={value}
       />
       <div className="flex justify-center">
-        <ScanScoreBadge onResult={onScore} style={style} value={value} />
+        <ScanScoreBadge
+          onResult={onScore}
+          onStyleChange={onStyleChange}
+          style={style}
+          value={value}
+        />
       </div>
       {link && (
         <p className="text-muted-foreground truncate text-center text-xs">

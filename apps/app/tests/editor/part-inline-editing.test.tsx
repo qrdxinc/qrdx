@@ -1260,7 +1260,7 @@ describe("a toolbar button that shows a value says it", () => {
     expect(background).toContain("Error correction (Q)");
     expect(
       background.some((label) =>
-        label.startsWith("Padding and corners (0 modules)"),
+        label.startsWith("Padding and corners (2 modules)"),
       ),
     ).toBe(true);
   });

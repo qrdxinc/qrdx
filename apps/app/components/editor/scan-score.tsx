@@ -13,10 +13,12 @@ import {
   MinusCirlce as CircleMinus,
   CloseCircle as CircleX,
   ScanBarcode,
+  Warning2,
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import {
   getQRData,
+  QUIET_ZONE_MIN,
   type ScanCheck,
   type ScanGrade,
   type ScanScoreResult,
@@ -49,52 +51,93 @@ export const GRADE_COLORS: Record<ScanGrade, string> = {
   fails: "bg-red-500",
 };
 
-/** Failed checks first (their fixes on top), then passed, then not checked. */
-const checkOrder = (check: ScanCheck) =>
-  check.passed ? (check.skipped ? 2 : 1) : 0;
+/** A warning: a caution about where the code goes, not a lower score. */
+export const isScanWarning = (check: ScanCheck) =>
+  !check.passed && check.severity === "warning";
 
-export function ScanCheckList({ checks }: { checks: ScanCheck[] }) {
+/**
+ * Failed checks first (their fixes on top), then warnings, then passed, then
+ * not checked.
+ */
+const checkOrder = (check: ScanCheck) => {
+  if (check.passed) return check.skipped ? 3 : 2;
+  return isScanWarning(check) ? 1 : 0;
+};
+
+/** A one-click fix shown under a check's own fix, by the check's id. */
+export interface ScanCheckAction {
+  label: string;
+  onClick: () => void;
+}
+
+export function ScanCheckList({
+  checks,
+  actions,
+}: {
+  checks: ScanCheck[];
+  actions?: Partial<Record<string, ScanCheckAction>>;
+}) {
   const t = useTranslations("editor.scanScore");
   const sorted = [...checks].sort((a, b) => checkOrder(a) - checkOrder(b));
   return (
     <ul className="space-y-2.5">
-      {sorted.map((check) => (
-        <li className="flex gap-2 text-sm" key={check.id}>
-          {check.skipped ? (
-            // Couldn't be checked: neither a pass nor a problem.
-            <CircleMinus
-              aria-label={t("notChecked")}
-              className="mt-0.5 size-4 shrink-0 text-muted-foreground"
-              variant="Bold"
-            />
-          ) : check.passed ? (
-            <CircleCheck
-              className="mt-0.5 size-4 shrink-0 text-emerald-500"
-              variant="Bold"
-            />
-          ) : (
-            <CircleX
-              className="mt-0.5 size-4 shrink-0 text-red-500"
-              variant="Bold"
-            />
-          )}
-          <div className="min-w-0">
-            <p
-              className={cn(
-                "leading-snug",
-                check.skipped && "text-muted-foreground",
-              )}
-            >
-              {check.message}
-            </p>
-            {!check.passed && check.fix && (
-              <p className="text-muted-foreground mt-0.5 text-xs leading-snug">
-                {check.fix}
-              </p>
+      {sorted.map((check) => {
+        const action = check.passed ? undefined : actions?.[check.id];
+        return (
+          <li className="flex gap-2 text-sm" key={check.id}>
+            {check.skipped ? (
+              // Couldn't be checked: neither a pass nor a problem.
+              <CircleMinus
+                aria-label={t("notChecked")}
+                className="mt-0.5 size-4 shrink-0 text-muted-foreground"
+                variant="Bold"
+              />
+            ) : check.passed ? (
+              <CircleCheck
+                className="mt-0.5 size-4 shrink-0 text-emerald-500"
+                variant="Bold"
+              />
+            ) : isScanWarning(check) ? (
+              <Warning2
+                aria-label={t("warning")}
+                className="mt-0.5 size-4 shrink-0 text-amber-500"
+                variant="Bold"
+              />
+            ) : (
+              <CircleX
+                className="mt-0.5 size-4 shrink-0 text-red-500"
+                variant="Bold"
+              />
             )}
-          </div>
-        </li>
-      ))}
+            <div className="min-w-0">
+              <p
+                className={cn(
+                  "leading-snug",
+                  check.skipped && "text-muted-foreground",
+                )}
+              >
+                {check.message}
+              </p>
+              {!check.passed && check.fix && (
+                <p className="text-muted-foreground mt-0.5 text-xs leading-snug">
+                  {check.fix}
+                </p>
+              )}
+              {action && (
+                <Button
+                  className="mt-2"
+                  onClick={action.onClick}
+                  size="sm"
+                  type="button"
+                  variant="outline"
+                >
+                  {action.label}
+                </Button>
+              )}
+            </div>
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -111,6 +154,11 @@ interface ScanScoreBadgeProps {
    * photo of the print"; elsewhere it links to the scan checker page.
    */
   onCheckPhoto?: () => void;
+  /**
+   * Applies a check's one-click fix to the design (the quiet zone warning's
+   * "Add a 2-module margin"). Without it the checks show their fixes only.
+   */
+  onStyleChange?: (change: Partial<QRStyle>) => void;
 }
 
 /**
@@ -124,6 +172,7 @@ export function ScanScoreBadge({
   className,
   onResult,
   onCheckPhoto,
+  onStyleChange,
 }: ScanScoreBadgeProps) {
   const gradeLabels = useGradeLabels();
   const t = useTranslations("editor.scanScore");
@@ -209,7 +258,19 @@ export function ScanScoreBadge({
   const result = scored && scored.value === value ? scored.result : null;
   const checking = !failed && scored?.key !== propsKey;
   const hidden = failed && !result;
-  const state = result ? `${result.score}-${result.grade}` : "checking";
+  // A warning shows on the badge too, so it's seen without opening the
+  // checks; the score and grade stay as they are.
+  const warned = Boolean(result?.checks.some(isScanWarning));
+  const state = result
+    ? `${result.score}-${result.grade}${warned ? "-warned" : ""}`
+    : "checking";
+  const actions: Partial<Record<string, ScanCheckAction>> | undefined =
+    onStyleChange && {
+      "quiet-zone": {
+        label: t("addAMargin", { modules: QUIET_ZONE_MIN }),
+        onClick: () => onStyleChange({ margin: QUIET_ZONE_MIN }),
+      },
+    };
 
   // The pill eases to its new width when the label changes (Web Animations,
   // measured before paint); none with reduced motion.
@@ -251,10 +312,15 @@ export function ScanScoreBadge({
           data-scan-score-badge=""
           aria-label={
             result
-              ? t("scanScoreScoreValueShow", {
-                  score: result.score,
-                  value: gradeLabels[result.grade],
-                })
+              ? t(
+                  warned
+                    ? "scanScoreScoreValueWarningShow"
+                    : "scanScoreScoreValueShow",
+                  {
+                    score: result.score,
+                    value: gradeLabels[result.grade],
+                  },
+                )
               : t("checkingScanScore")
           }
           className={cn(
@@ -294,6 +360,16 @@ export function ScanScoreBadge({
                 })
               : t("checkingScan")}
           </span>
+          {warned && (
+            <Warning2
+              aria-hidden
+              className={cn(
+                "size-3.5 shrink-0 text-amber-500 transition-opacity",
+                checking && "opacity-60",
+              )}
+              variant="Bold"
+            />
+          )}
         </button>
       </PopoverTrigger>
       {/* Scrolls when the screen is short (a phone's preview), so the photo
@@ -317,7 +393,7 @@ export function ScanScoreBadge({
             )}
           </div>
           {result ? (
-            <ScanCheckList checks={result.checks} />
+            <ScanCheckList actions={actions} checks={result.checks} />
           ) : (
             <p className="text-muted-foreground flex items-center gap-2 text-sm">
               <FinderTrace aria-hidden className="size-4" />

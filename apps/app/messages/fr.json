@@ -1241,7 +1241,7 @@
         "logoQuestion": "Un logo ou une correction d'erreur plus élevée change-t-il la taille ?",
         "logoAnswer": "Une correction d'erreurs plus élevée ajoute de la redondance : pour le même contenu, il faut donc une version supérieure avec plus de modules, et par conséquent une impression plus grande. Un logo ne change pas le nombre de modules, mais il en masque une partie ; utilisez donc le niveau Q ou H si vous en ajoutez un.",
         "quietQuestion": "La zone de silence compte-t-elle dans la taille ?",
-        "quietAnswer": "La taille du code indiquée va d'un bord à l'autre. Les lecteurs ont aussi besoin d'une marge vierge de {quiet, number} modules sur chaque côté, que le second chiffre inclut. Les téléchargements QRdx n'ont aucune marge, sauf si vous activez la zone de silence : laissez donc cet espace autour du code dans votre mise en page.",
+        "quietAnswer": "La taille du code indiquée va d’un bord à l’autre. Les scanners ont aussi besoin d’une marge vide de {quiet, number} modules sur chaque côté, que le second chiffre inclut. Un téléchargement QRdx comporte la marge que définit son design : les nouveaux designs de l’éditeur commencent avec {start, number} modules, et les générateurs ainsi que l’outil en masse ajoutent {quiet, number} modules, sauf si vous le désactivez. Laissez dans votre mise en page l’espace qui manque autour du code.",
         "resolutionQuestion": "Quelle résolution dois-je exporter pour l'impression ?",
         "resolutionAnswer": "Utilisez SVG dès que possible : c'est un format vectoriel qui reste net à toutes les tailles. Pour PNG, exportez au moins la largeur en pixels indiquée pour 300 DPI, qui est le minimum habituel pour l'impression."
       },
@@ -5446,6 +5446,9 @@
       "checkingScan": "Vérification du scan…",
       "fullScanChecker": "Vérificateur de scan complet",
       "checkAPrintedCode": "Vérifier un code imprimé",
+      "warning": "Avertissement",
+      "scanScoreScoreValueWarningShow": "Score de scan {score, number}, {value}, avec un avertissement. Afficher les vérifications",
+      "addAMargin": "Ajouter une marge de {modules, number} modules",
       "grades": {
         "great": "Excellent",
         "ok": "OK",
