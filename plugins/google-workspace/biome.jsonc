@@ -22,7 +22,13 @@
             // (24 Nov 2026). It takes ES2020 (`?.`, `??`); the rule's fix is
             // the only one in the preset that writes newer syntax, and
             // test/syntax.test.mjs parses src/ as ES2020 to catch the rest.
-            "useNumericSeparators": "off"
+            "useNumericSeparators": "off",
+            // Its fix writes Array.prototype.at (ES2022), unverified in Apps Script.
+            "useAtIndex": "off"
+          },
+          "suspicious": {
+            // Its fix writes Object.hasOwn (ES2022), unverified in Apps Script.
+            "noPrototypeBuiltins": "off"
           }
         }
       }

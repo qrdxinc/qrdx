@@ -50,6 +50,7 @@ Install a test deployment ([PUBLISHING.md](PUBLISHING.md), step 6), then:
 | 5 | Docs | Wi-Fi, a real network, WPA, Insert | A phone that scans it offers to join; the alt text has the network name and no password |
 | 6 | Docs | Email to your address with a subject and two-line message | Scanning opens a new email with all three filled in |
 | 7 | Docs | Text with 2,100 characters | "That's 2100 characters; a code holds at most 2048…" |
+| 7b | Docs | Classic style, Text with 2,000 digits; Preview, then Insert at cursor | Both say "This is too long for the add-on: Google limits the image's web address to 2,000 characters, and this content needs 2,084 once encoded…"; nothing inserted |
 | 8 | Slides | Link, size Large, Add to slide | A 2 in code in the middle of the current slide, selected |
 | 9 | Slides | Phone and SMS codes | Scanning offers to call, or to text with the message filled in |
 | 10 | Sheets | Select C5, Insert over sheet | "QR code placed over cell C5."; the image sits over C5 |

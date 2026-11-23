@@ -426,7 +426,9 @@ function onPreview(e) {
   const state = cardState(e);
   const payload = buildPayload(state.type, state.fields);
   if (!payload.ok) return notify(payload.message);
-  const image = fetchQrImage(qrImageUrl(payload.data, state.style, 256));
+  const request = fetchableImageUrl(payload.data, state.style, 256);
+  if (!request.ok) return notify(request.message);
+  const image = fetchQrImage(request.url);
   if (!image.ok) return notify(image.message);
   const dataUri = `data:image/png;base64,${Utilities.base64Encode(image.blob.getBytes())}`;
   return showCard(
@@ -442,10 +444,16 @@ function onInsert(e) {
   const payload = buildPayload(state.type, state.fields);
   if (!payload.ok) return notify(payload.message);
   const size = sizeById(state.size);
-  const url = qrImageUrl(payload.data, state.style, fetchPixels(size.inches));
+  // Checked before the placer runs, so nothing in the file changes either.
+  const request = fetchableImageUrl(
+    payload.data,
+    state.style,
+    fetchPixels(size.inches)
+  );
+  if (!request.ok) return notify(request.message);
   try {
     return notify(
-      place(() => fetchQrImage(url), {
+      place(() => fetchQrImage(request.url), {
         inches: size.inches,
         description: payload.description,
         link: payload.link,
