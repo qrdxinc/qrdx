@@ -18,7 +18,6 @@ import {
   type QRProps,
 } from "qrdx/types";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { PLUGIN_CODES } from "@/app/[lang]/(home)/plugins/mock-codes";
 import { CHAT_MOCK_CODE } from "@/components/sections/chat-bots/mock-code";
 import { HOME_CODES } from "@/components/sections/home/demos/codes";
 import {
@@ -128,17 +127,6 @@ describe("marketing codes scan", () => {
   });
 
   it.each(Object.entries(HOME_CODES))("home: %s", async (name, props) => {
-    await expectScans(name, props);
-  });
-
-  const pluginCodes = Object.entries(PLUGIN_CODES).flatMap(([name, codes]) =>
-    Array.isArray(codes)
-      ? codes.map((props, index) => [`${name}[${index}]`, props] as const)
-      : [[name, codes] as const],
-  );
-
-  it.each(pluginCodes)("plugins: %s", async (name, props) => {
-    expect(getStylePairRisk(props), name).toBeNull();
     await expectScans(name, props);
   });
 

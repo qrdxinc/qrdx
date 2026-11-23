@@ -216,10 +216,6 @@ export const SHOWCASE_PLACEMENTS = {
   "home.scan-score": "logo",
   "home.print-size": "classic",
   "home.dynamic": "dots",
-  "plugins.chrome": "signature",
-  "plugins.figma": "classic",
-  "plugins.raycast": "classy",
-  "plugins.canva": "facet",
   "ai-art.logo": "logo-art",
   "ai-art.image": "photo-art",
 } as const satisfies Record<string, ShowcaseStyleName>;
