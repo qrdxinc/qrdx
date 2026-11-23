@@ -2,8 +2,14 @@ import { execSync } from "node:child_process";
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { environment, LocalStorage } from "@raycast/api";
-import type { QRProps } from "qrdx";
-import type { Settings } from "./types";
+import {
+  artworkSize,
+  buildQRProps,
+  buildSVGString,
+  type QRRenderProps,
+  squareSVG,
+} from "./qr-engine";
+import { DEFAULT_SETTINGS, type Settings } from "./types";
 
 const STORAGE_KEY = "saved-qrs-v1";
 const PREVIEW_SIZE = 256;
@@ -30,10 +36,16 @@ export function savedPreviewPath(id: string): string {
   return join(previewDir(), `${id}.png`);
 }
 
-export function generateSavedPreview(id: string, svgString: string): void {
+/** Draws a saved code's list icon: the code with any frame, on a square. */
+export function generateSavedPreview(id: string, qrProps: QRRenderProps): void {
   const dir = previewDir();
   const svgPath = join(dir, `${id}.svg`);
   const pngPath = join(dir, `${id}.png`);
+  const svgString = squareSVG(
+    buildSVGString(qrProps),
+    artworkSize(qrProps),
+    PREVIEW_SIZE
+  );
   writeFileSync(
     svgPath,
     `<?xml version="1.0" encoding="UTF-8"?>\n${svgString}`,
@@ -64,7 +76,8 @@ export function deleteSavedPreview(id: string): void {
 
 // ─── CRUD ─────────────────────────────────────────────────────────────────────
 
-export async function loadSavedQRs(): Promise<SavedQR[]> {
+/** The saved codes as stored. */
+async function readList(): Promise<SavedQR[]> {
   const raw = await LocalStorage.getItem<string>(STORAGE_KEY);
   if (!raw) return [];
   try {
@@ -74,12 +87,22 @@ export async function loadSavedQRs(): Promise<SavedQR[]> {
   }
 }
 
+export async function loadSavedQRs(): Promise<SavedQR[]> {
+  // Codes saved before frames have no frame settings: they're read with the
+  // defaults (no frame) and keep their template, which still draws. What's
+  // stored changes only when the code itself is saved again.
+  return (await readList()).map((saved) => ({
+    ...saved,
+    settings: { ...DEFAULT_SETTINGS, ...saved.settings },
+  }));
+}
+
 async function persist(list: SavedQR[]): Promise<void> {
   await LocalStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 }
 
 export async function saveQR(entry: SavedQR): Promise<void> {
-  const list = await loadSavedQRs();
+  const list = await readList();
   const existing = list.findIndex((q) => q.id === entry.id);
   if (existing >= 0) {
     list[existing] = entry;
@@ -90,38 +113,13 @@ export async function saveQR(entry: SavedQR): Promise<void> {
 }
 
 export async function deleteQR(id: string): Promise<void> {
-  const list = await loadSavedQRs();
+  const list = await readList();
   await persist(list.filter((q) => q.id !== id));
   deleteSavedPreview(id);
 }
 
 // ─── Build QRProps from saved entry ──────────────────────────────────────────
 
-export function savedToQRProps(saved: SavedQR): QRProps & { size: number } {
-  const s = saved.settings;
-  const size = Math.max(64, Number.parseInt(s.size || "512", 10) || 512);
-  const margin = Number.parseInt(s.margin || "0", 10) || 0;
-  const props: QRProps & { size: number } = {
-    value: saved.url.trim() || "https://qrdx.dev",
-    size,
-    margin,
-    level: s.level || "Q",
-    bodyPattern: s.bodyPattern,
-    cornerEyePattern: s.cornerEyePattern,
-    cornerEyeDotPattern: s.cornerEyeDotPattern,
-    fgColor: s.fgColor || "#000000",
-    bgColor: s.bgColor || "#ffffff",
-  };
-  if (s.eyeColor?.trim()) props.eyeColor = s.eyeColor;
-  if (s.dotColor?.trim()) props.dotColor = s.dotColor;
-  if (s.templateId?.trim()) props.templateId = s.templateId;
-  if (s.logo?.trim()) {
-    props.imageSettings = {
-      src: s.logo,
-      height: Math.round(size * 0.2),
-      width: Math.round(size * 0.2),
-      excavate: true,
-    };
-  }
-  return props;
+export function savedToQRProps(saved: SavedQR): QRRenderProps {
+  return buildQRProps(saved.url, saved.settings);
 }

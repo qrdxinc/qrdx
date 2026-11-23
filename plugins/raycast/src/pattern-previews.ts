@@ -1,5 +1,5 @@
 /**
- * Generates mini QR code preview images (PNG) for each pattern/template option.
+ * Generates mini QR code preview images (PNG) for each pattern and frame option.
  * Results are cached to environment.supportPath so sips only runs on first load.
  */
 
@@ -13,17 +13,23 @@ import {
 } from "node:fs";
 import { join } from "node:path";
 import { environment } from "@raycast/api";
-import type { BodyPattern, CornerEyeDotPattern, CornerEyePattern } from "qrdx";
-import { QRCodeSVG } from "qrdx";
+import type {
+  BodyPattern,
+  CornerEyeDotPattern,
+  CornerEyePattern,
+  QRFrame,
+} from "qrdx";
+import { DEFAULT_FRAME_TEXT, getFrameDimensions, QRCodeSVG } from "qrdx";
 import { version as QRDX_VERSION } from "qrdx/package.json";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { FRAME_CHOICES } from "./frames";
+import { squareSVG } from "./qr-engine";
 import {
   BODY_PATTERNS,
   CORNER_DOT_PATTERNS,
   CORNER_EYE_PATTERNS,
   isCornerDotPattern,
-  TEMPLATES,
 } from "./types";
 
 const PREVIEW_VALUE = "https://qrdx.dev";
@@ -42,7 +48,17 @@ function renderSVGString(overrides: Record<string, unknown>): string {
     margin: 1,
     ...overrides,
   });
-  return renderToStaticMarkup(el);
+  const svg = renderToStaticMarkup(el);
+  const frame = overrides.frame as QRFrame | undefined;
+  if (!frame) return svg;
+  // A frame adds space around the code, so the artwork is larger than the
+  // tile and seldom square: fit it, centered, on a white square.
+  return squareSVG(
+    svg,
+    getFrameDimensions(PREVIEW_SIZE, frame),
+    PREVIEW_SIZE,
+    "#ffffff"
+  );
 }
 
 function getCacheDir(): string {
@@ -123,12 +139,16 @@ export const cornerDotPatternPreviews: Record<CornerEyeDotPattern, string> =
     return map;
   })();
 
-// ─── Templates ────────────────────────────────────────────────────────────────
+// ─── Frames ───────────────────────────────────────────────────────────────────
 
-export const templatePreviews: Record<string, string> = (() => {
+// Each frame with qrdx's default label and colors; no frame is the plain code.
+export const framePreviews: Record<string, string> = (() => {
   const map: Record<string, string> = {};
-  for (const { value: t } of TEMPLATES) {
-    map[t] = previewPNG(`template-${t || "none"}`, t ? { templateId: t } : {});
+  for (const style of FRAME_CHOICES) {
+    map[style] = previewPNG(
+      `frame-${style || "none"}`,
+      style ? { frame: { style, text: DEFAULT_FRAME_TEXT } } : {}
+    );
   }
   return map;
 })();

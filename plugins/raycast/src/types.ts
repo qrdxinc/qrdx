@@ -7,9 +7,11 @@ import type {
 import {
   BODY_PATTERN,
   CORNER_EYE_DOT_PATTERNS,
-  getTemplateIds,
+  DEFAULT_FRAME_TEXT,
+  getTemplate,
   CORNER_EYE_PATTERNS as QRDX_CORNER_EYE_PATTERNS,
 } from "qrdx";
+import type { FrameChoice } from "./frames";
 
 export interface Settings {
   bodyPattern: BodyPattern;
@@ -20,7 +22,20 @@ export interface Settings {
   eyeColor: string;
   dotColor: string;
   level: ErrorLevel;
-  templateId: string;
+  /** A built-in frame's style (see ./frames), or "" for none */
+  frame: FrameChoice;
+  /** The frame's label; "" hides it */
+  frameText: string;
+  /** Hex frame color; "" uses the frame's own */
+  frameColor: string;
+  /** Hex label color; "" uses the frame's own */
+  frameTextColor: string;
+  /**
+   * A decorative template, on codes saved before frames replaced templates.
+   * It's still drawn, so those codes look as they did, but nothing offers
+   * templates any more, and choosing a frame replaces it.
+   */
+  templateId?: string;
   logo: string;
   size: string;
   margin: string;
@@ -35,7 +50,10 @@ export const DEFAULT_SETTINGS: Settings = {
   eyeColor: "",
   dotColor: "",
   level: "Q",
-  templateId: "",
+  frame: "",
+  frameText: DEFAULT_FRAME_TEXT,
+  frameColor: "",
+  frameTextColor: "",
   logo: "",
   size: "512",
   margin: "0",
@@ -73,16 +91,10 @@ export const ERROR_LEVELS: { value: ErrorLevel; label: string }[] = [
   { value: "H", label: "H — High (30%)" },
 ];
 
-// qrdx's decorative templates ("default" is the plain code, offered as None).
-export const TEMPLATES: { value: string; label: string }[] = [
-  { value: "", label: "None" },
-  ...getTemplateIds()
-    .filter((id) => id !== "default")
-    .map((id) => ({
-      value: id,
-      label: id.replace(/([a-z])([A-Z])/g, "$1 $2"),
-    })),
-];
+/** A saved code's template by its name in qrdx ("StandardBox" → "Standard Box"). */
+export function templateName(id: string): string {
+  return getTemplate(id)?.name ?? id;
+}
 
 export function toLabel(val: string): string {
   if (!val) return "None";
