@@ -52,9 +52,9 @@ import {
   toLabel,
 } from "./types";
 
-/** Text for a Markdown table cell. */
+/** Text for a Markdown table cell: backslashes and pipes escaped, one line. */
 function cell(text: string): string {
-  return text.replace(/\|/g, "\\|").replace(/\n/g, " ");
+  return text.replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/\n/g, " ");
 }
 
 /** A code's frame, or the template of a code saved before frames, as text. */
