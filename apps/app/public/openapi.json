@@ -5397,7 +5397,7 @@
         }
       },
       "Error403_InsufficientScope_CodesRead": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.",
         "content": {
           "application/json": {
             "schema": {
@@ -5418,7 +5418,7 @@
         }
       },
       "Error403_InsufficientScope_ConversionsOff_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`CONVERSIONS_OFF`: A browser conversion for a code that doesn't have conversion tracking turned on.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.\n\n`CONVERSIONS_OFF`: A browser conversion for a code that doesn't have conversion tracking turned on.",
         "content": {
           "application/json": {
             "schema": {
@@ -5447,7 +5447,7 @@
         }
       },
       "Error403_InsufficientScope_Forbidden_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.",
         "content": {
           "application/json": {
             "schema": {
@@ -5476,7 +5476,7 @@
         }
       },
       "Error403_InsufficientScope_Forbidden_LimitReached_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.",
         "content": {
           "application/json": {
             "schema": {
@@ -5513,7 +5513,7 @@
         }
       },
       "Error403_InsufficientScope_Forbidden_LimitReached_ConfirmationRequired_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.\n\n`CONFIRMATION_REQUIRED`: Creating a hook with a signed-in browser session needs a recent \"Confirm it's you\". API keys and OAuth tokens aren't asked.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.\n\n`CONFIRMATION_REQUIRED`: Creating a hook with a signed-in browser session needs a recent \"Confirm it's you\". API keys and OAuth tokens aren't asked.",
         "content": {
           "application/json": {
             "schema": {
@@ -5558,7 +5558,7 @@
         }
       },
       "Error403_InsufficientScope_ProfileRead_OAuth": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.",
         "content": {
           "application/json": {
             "schema": {
@@ -5581,7 +5581,7 @@
         }
       },
       "Error403_InsufficientScope_ThemesRead_OAuth": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.",
         "content": {
           "application/json": {
             "schema": {

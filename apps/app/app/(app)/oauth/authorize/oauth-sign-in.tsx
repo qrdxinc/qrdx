@@ -28,7 +28,7 @@ export function OAuthSignIn({
   providers,
   signUpTags,
 }: {
-  app: { name: string; logoUrl: string | null };
+  app: { name: string; logoUrl: string | null; mcpOnly?: boolean };
   scopes: OAuthScope[];
   callbackURL: string;
   providers: { google: boolean; github: boolean };
@@ -114,7 +114,7 @@ export function OAuthSignIn({
 
       {scopes.length > 0 && (
         <div className="mt-8">
-          <ScopeList appName={app.name} scopes={scopes} />
+          <ScopeList appName={app.name} mcpOnly={app.mcpOnly} scopes={scopes} />
         </div>
       )}
 

@@ -136,7 +136,11 @@ describe("validateAccessToken", () => {
 
   it("accepts a live token of a user in good standing", async () => {
     db.selects.push([{ ...record, banned: false, banExpires: null }]);
-    expect(await validateAccessToken("token")).toEqual(record);
+    // Not a self-registered MCP client's token: good everywhere.
+    expect(await validateAccessToken("token")).toEqual({
+      ...record,
+      mcpOnly: false,
+    });
   });
 
   it("rejects the token of a banned user", async () => {
@@ -146,7 +150,10 @@ describe("validateAccessToken", () => {
 
   it("accepts it again once a temporary ban has ended", async () => {
     db.selects.push([{ ...record, banned: true, banExpires: earlier }]);
-    expect(await validateAccessToken("token")).toEqual(record);
+    expect(await validateAccessToken("token")).toEqual({
+      ...record,
+      mcpOnly: false,
+    });
   });
 });
 

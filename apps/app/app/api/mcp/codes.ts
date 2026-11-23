@@ -9,6 +9,8 @@ import "server-only";
 // they do there. Scan stats are totals and short breakdowns, never single
 // scans or precise locations.
 import type { McpServer } from "@modelcontextprotocol/server";
+import { database as db, qrCode } from "@repo/database";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 import {
   type CodeListStatus,
@@ -42,6 +44,7 @@ import {
   themeFieldsOf,
 } from "@/lib/qr-api/style";
 import { QR_DEFAULTS } from "@/lib/qr-render";
+import { parseRoutingConfig } from "@/lib/redirect/routing";
 import { SCAN_RANGE_KEYS, type ScanRange } from "@/lib/scan-ranges";
 import { codeScanRange, getScanAnalytics } from "@/lib/scans";
 import type { ActiveScope } from "@/lib/scope";
@@ -274,6 +277,8 @@ function codeSummary(code: QrCodeView) {
     title: code.title,
     shortLink: code.shortLink,
     destinationUrl: code.destinationUrl,
+    // "redirect" sends scans to destinationUrl; "page" opens a hosted page
+    kind: code.kind,
     status: code.status,
     ...(code.heldForReview ? { heldForReview: true } : {}),
     scanCount: code.scanCount,
@@ -284,6 +289,9 @@ function codeSummary(code: QrCodeView) {
 
 /** What a status means for someone scanning, when it isn't "active". */
 function statusNote(code: QrCodeView): string | null {
+  if (code.paused) {
+    return "This code is paused: scans go to its fallback address (or a paused page) until it's resumed in the dashboard.";
+  }
   if (code.heldForReview) {
     return "QRdx is checking this destination before the link goes live, which usually takes a short while; scans show a holding page until then.";
   }
@@ -294,6 +302,20 @@ function statusNote(code: QrCodeView): string | null {
     return "This code is archived: scans don't reach the destination until it's restored in the dashboard.";
   }
   return null;
+}
+
+/**
+ * The code's switched-on routing rules (lib/redirect/routing.ts), which send
+ * the scans they match somewhere other than the destination.
+ */
+async function enabledRoutingRules(codeId: string): Promise<number> {
+  const [row] = await db
+    .select({ routing: qrCode.routing })
+    .from(qrCode)
+    .where(eq(qrCode.id, codeId))
+    .limit(1);
+  const config = row?.routing ? parseRoutingConfig(row.routing) : null;
+  return config?.rules.filter((rule) => rule.enabled).length ?? 0;
 }
 
 const createInput = z.object({
@@ -614,7 +636,7 @@ export function registerCodeTools(server: McpServer) {
     {
       title: "Change where a code goes",
       description:
-        "Point an existing dynamic QR code at a new destination URL. The printed code stays the same; scans go to the new address from now on. Use it when the person says the link behind a code should change (a new menu, a moved page). The new destination is screened like a new code's. Needs the person signed in to QRdx.",
+        "Point an existing dynamic QR code that opens a website at a new destination URL. The printed code stays the same; scans go to the new address from now on (routing rules set in the dashboard still send the scans they match elsewhere). Use it when the person says the link behind a code should change (a new menu, a moved page). Codes that open a hosted page are changed in the dashboard instead. The new destination is screened like a new code's. Needs the person signed in to QRdx.",
       inputSchema: updateInput,
       annotations: {
         readOnlyHint: false,
@@ -643,12 +665,27 @@ export function registerCodeTools(server: McpServer) {
           );
         }
         const before = await getCode(scope, input.id);
+        if (before.kind !== "redirect") {
+          // Its scans open the hosted page (/p/<slug>), whatever the stored
+          // destination says: changing that would change nothing.
+          throw new HttpError(
+            409,
+            "HOSTED_PAGE_CODE",
+            `${before.shortLink} opens a hosted page, not a website link, so a new destination wouldn't change where scans go. Edit the page, or switch the code to a website link, in the QRdx dashboard: ${await dashboardUrl(scope, before.id)}`,
+          );
+        }
         const code = await updateCode(scope, input.id, {
           destinationUrl: destination.data,
         });
+        const rules = await enabledRoutingRules(code.id);
         const note = statusNote(code);
         const lines = [
           `${code.shortLink} now sends scans to ${code.destinationUrl} (it went to ${before.destinationUrl}). The printed code doesn't change.`,
+          ...(rules > 0
+            ? [
+                `It also has ${rules} routing rule${rules === 1 ? "" : "s"} (by device, place, time or an A/B split), which still send the scans they match elsewhere; they're edited in the dashboard.`,
+              ]
+            : []),
           ...(note ? [note] : []),
           `Open it in the QRdx dashboard: ${await dashboardUrl(scope, code.id)}`,
         ];

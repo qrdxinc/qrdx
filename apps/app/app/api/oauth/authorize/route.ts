@@ -60,6 +60,7 @@ export async function GET(req: NextRequest) {
       userId,
       params,
       check.scopes,
+      { dynamic: check.app.dynamic },
     );
     return Response.redirect(location, 302);
   }
@@ -150,6 +151,7 @@ export async function POST(req: NextRequest) {
     userId,
     params,
     check.scopes,
+    { dynamic: check.app.dynamic },
   );
   auditOAuthApp(userId, "oauth_app.authorized", check.app, check.scopes);
   return Response.redirect(location, 303);

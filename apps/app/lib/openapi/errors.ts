@@ -107,8 +107,8 @@ export const API_ERRORS = [
     code: "INSUFFICIENT_SCOPE",
     status: 403,
     meaning:
-      "The API key or token is valid but lacks the scope this endpoint needs.",
-    fix: "Create a key with the scope named in the message (a key's scopes can't be changed). For an OAuth app, add the scope and ask for it when the user authorizes.",
+      "The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.",
+    fix: "Create a key with the scope named in the message (a key's scopes can't be changed). For an OAuth app, add the scope and ask for it when the user authorizes. For the REST API, use an API key or an OAuth app made in Settings → API keys & apps.",
   },
   {
     code: "FORBIDDEN",
