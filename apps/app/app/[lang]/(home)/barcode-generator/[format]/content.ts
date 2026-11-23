@@ -57,6 +57,7 @@ export const DOWNLOAD_SIZES_MM: Record<
   datamatrix: { width: 15.5, height: 15.5 },
   pdf417: { width: 43.7, height: 8.8 },
   aztec: { width: 19, height: 19 },
+  rmqr: { width: 44.4, height: 7.8 },
   maxicode: { width: 31.9, height: 30.6 },
   dotcode: { width: 25.5, height: 19.1 },
 };
@@ -917,6 +918,46 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
         question: "Can phones read Aztec codes?",
         answer:
           "Many scanner apps and ticket gates can. Some built-in camera apps only open QR codes.",
+      },
+    ],
+  },
+  {
+    id: "rmqr",
+    slug: "rmqr",
+    title: "Free rMQR Code Generator (Rectangular Micro QR)",
+    metaDescription:
+      "Make an rMQR, the rectangular Micro QR code for narrow spaces like cables and test tubes. Up to 361 digits or 150 characters. SVG, PDF and PNG. Free.",
+    intro:
+      "rMQR (Rectangular Micro QR) is a QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code. Type any text, check that it scans and download it.",
+    usedFor: [
+      "Narrow labels where a square QR code would have to be tiny: cables and wires, test tubes and sample vials, the edges of parts and boxes.",
+      "It's the ISO/IEC 23941 standard (2022), from DENSO WAVE, which also created the QR code. Because it's newer, check that the scanners that will read it support it before you print a batch.",
+    ],
+    numbers: {
+      title: "Do I need to register an rMQR code?",
+      paragraphs: [
+        "No. It holds whatever text you type, with no registration.",
+      ],
+    },
+    rules: [
+      "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",
+      "rMQR comes in 32 sizes, from 7 to 17 modules tall and 27 to 139 wide. The generator picks the fewest rows your text fits in, then the fewest columns, so the code grows longer before it grows taller.",
+      "Error correction is level M, which lets a reader recover about 15% of the code if it's smudged or damaged.",
+    ],
+    sizing: [
+      "The vector downloads draw each module 0.71 mm square: the sample text comes out 44.4 × 7.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+      "rMQR needs 2 modules of blank space all round, which the generator starts with.",
+    ],
+    faqs: [
+      {
+        question: "rMQR or QR code?",
+        answer:
+          "For anything people scan with their phone, a QR code. Use rMQR where only a narrow strip fits and you know the scanners that will read it support it.",
+      },
+      {
+        question: "Can this page check that it scans?",
+        answer:
+          "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports rMQR, and tells you whether it reads back your text.",
       },
     ],
   },

@@ -31,6 +31,7 @@ export type BarcodeFormatId =
   | "datamatrix"
   | "pdf417"
   | "aztec"
+  | "rmqr"
   | "maxicode"
   | "dotcode";
 
@@ -354,6 +355,21 @@ export const BARCODE_FORMATS: readonly BarcodeFormat[] = [
     quietZone: { min: 0, default: 2 },
     maxLength: 1000,
     detectorFormats: ["aztec"],
+  },
+  {
+    id: "rmqr",
+    label: "rMQR",
+    kind: "2d",
+    summary: "Rectangular Micro QR for narrow spaces: cables, tubes, boards",
+    example: "QRdx rMQR",
+    inputHint:
+      "Any text, up to 361 digits, 219 capital letters or 150 characters of other text; less with accents or other scripts.",
+    // ISO/IEC 23941 asks for 2 modules of blank space all round.
+    quietZone: { min: 2, default: 2 },
+    // The largest symbol, R17x139, holds 361 digits; the drawing (RMQR_SIZES
+    // in draw.ts) reports anything that doesn't fit.
+    maxLength: 361,
+    detectorFormats: ["rm_qr_code"],
   },
   {
     id: "maxicode",
@@ -1573,6 +1589,7 @@ export function validateBarcodeInput(
     case "datamatrix":
     case "pdf417":
     case "aztec":
+    case "rmqr":
     case "dotcode":
       return textInput(format, raw, null);
     case "maxicode":

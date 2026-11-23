@@ -344,6 +344,9 @@ describe("GET /v1/barcode", () => {
     ["intelligent-mail", "012345670949876543210", /This has 1 digit after/],
     ["dotcode", "QRdx DotCode sample", undefined],
     ["dotcode", "A".repeat(396), /Too much data for one DotCode here/],
+    ["rmqr", "QRdx rMQR", undefined],
+    ["rectangular-micro-qr", "CABLE-0042", undefined],
+    ["rmqr", "x".repeat(151), /Too much data for one rMQR: it holds up to 361/],
     ["maxicode", "152382802<GS>840<GS>001<GS>QRDX SAMPLE PARCEL", undefined],
     [
       "maxicode",
