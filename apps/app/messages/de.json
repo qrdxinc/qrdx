@@ -1976,7 +1976,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Kostenloser Barcode-Generator: EAN-13, UPC, Code 128",
-    "metaDescription": "Erstelle EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix und mehr: {count, number} Barcode-Typen, Prüfziffern werden automatisch berechnet. PNG, JPG, SVG, PDF, EPS. Kostenlos, ohne Anmeldung.",
+    "metaDescription": "Erstelle EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix und mehr: {count, number} Barcode-Typen mit Prüfziffer. PNG, JPG, SVG, PDF, EPS. Kostenlos.",
     "crumb": "Barcode-Generator",
     "title": "Kostenloser Barcode-Generator",
     "intro1": "Erstelle Barcodes für Handel, Versand und Inventur in {count, number} Formaten, von EAN-13 und UPC-A bis Code 128, GS1-128, ITF-14 und Data Matrix. Gib die Nummer ein, und die Prüfziffer wird für dich berechnet. Eine falsche fällt auf, bevor du druckst.",

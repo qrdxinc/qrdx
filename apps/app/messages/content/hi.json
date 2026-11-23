@@ -2065,7 +2065,7 @@
   },
   "b04a9859b7cc": {
     "source": "No, a tel: code always opens the phone app. To start a WhatsApp chat, use the WhatsApp QR code generator.",
-    "text": "नहीं, tel: कोड हमेशा फ़ोन ऐप खोलता है। WhatsApp चैट शुरू करने के लिए WhatsApp QR code generator इस्तेमाल करें।",
+    "text": "नहीं, tel: कोड हमेशा फ़ोन ऐप खोलता है। WhatsApp चैट शुरू करने के लिए WhatsApp QR कोड generator इस्तेमाल करें।",
     "status": "machine",
     "context": "qrTypes.types.phone.faqs.2.answer"
   },
@@ -2305,7 +2305,7 @@
   },
   "ee330fcc62d7": {
     "source": "A Wi-Fi QR code lets guests join your network by pointing their camera at it, instead of reading out a 20-character password. The camera apps on iPhone and on most Android phones (or Google Lens) recognize the format and offer to join the network.",
-    "text": "Wi-Fi QR code से मेहमान 20 अक्षरों का पासवर्ड पढ़कर बोलने की जगह बस कैमरा उस पर घुमाकर आपके नेटवर्क से जुड़ सकते हैं। iPhone और ज़्यादातर Android फ़ोन के कैमरा ऐप (या Google Lens) इस फ़ॉर्मैट को पहचान लेते हैं और नेटवर्क से जुड़ने का विकल्प देते हैं।",
+    "text": "Wi-Fi QR कोड से मेहमान 20 अक्षरों का पासवर्ड पढ़कर बोलने की जगह बस कैमरा उस पर घुमाकर आपके नेटवर्क से जुड़ सकते हैं। iPhone और ज़्यादातर Android फ़ोन के कैमरा ऐप (या Google Lens) इस फ़ॉर्मैट को पहचान लेते हैं और नेटवर्क से जुड़ने का विकल्प देते हैं।",
     "status": "machine",
     "context": "qrTypes.types.wifi.intro.0"
   },
@@ -2377,7 +2377,7 @@
   },
   "1674145adaf8": {
     "source": "Is it safe to put my Wi-Fi password in a QR code?",
-    "text": "क्या Wi-Fi पासवर्ड QR code में डालना सुरक्षित है?",
+    "text": "क्या Wi-Fi पासवर्ड QR कोड में डालना सुरक्षित है?",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.0.question"
   },
@@ -3739,13 +3739,13 @@
   },
   "65ba78b2b19a": {
     "source": "Create a Spotify QR code for a song, album, playlist, artist or podcast. Works with any camera, unlike Spotify Codes. Free PNG and SVG.",
-    "text": "गाने, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट के लिए Spotify QR code बनाएँ। Spotify Codes के उलट, यह किसी भी कैमरे से काम करता है। फ़्री PNG और SVG।",
+    "text": "गाने, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट के लिए Spotify QR कोड बनाएँ। Spotify Codes के उलट, यह किसी भी कैमरे से काम करता है। फ़्री PNG और SVG।",
     "status": "machine",
     "context": "qrTypes.types.spotify.metaDescription"
   },
   "53e16875e3a2": {
     "source": "A Spotify QR code opens a song, album, playlist, podcast or artist page in Spotify. Musicians put it on posters, flyers and merch; cafés, gyms and shops use it to share the playlist that's playing; couples print it on wedding invitations.",
-    "text": "Spotify QR code Spotify में कोई गाना, एल्बम, प्लेलिस्ट, पॉडकास्ट या आर्टिस्ट पेज खोलता है। संगीतकार इसे पोस्टर, फ़्लायर और मर्च पर लगाते हैं; कैफ़े, जिम और दुकानें इससे चल रही प्लेलिस्ट शेयर करती हैं; और कपल इसे शादी के कार्ड पर छपवाते हैं।",
+    "text": "Spotify QR कोड Spotify में कोई गाना, एल्बम, प्लेलिस्ट, पॉडकास्ट या आर्टिस्ट पेज खोलता है। संगीतकार इसे पोस्टर, फ़्लायर और मर्च पर लगाते हैं; कैफ़े, जिम और दुकानें इससे चल रही प्लेलिस्ट शेयर करती हैं; और कपल इसे शादी के कार्ड पर छपवाते हैं।",
     "status": "machine",
     "context": "qrTypes.types.spotify.intro.0"
   },
@@ -3787,7 +3787,7 @@
   },
   "57b51e0d3ba8": {
     "source": "Spotify Codes (the sound-wave codes in the app) only scan inside Spotify; a QR code works with any camera.",
-    "text": "Spotify Codes (ऐप में दिखने वाले साउंड-वेव कोड) सिर्फ़ Spotify के अंदर स्कैन होते हैं; QR code किसी भी कैमरे से काम करता है।",
+    "text": "Spotify Codes (ऐप में दिखने वाले साउंड-वेव कोड) सिर्फ़ Spotify के अंदर स्कैन होते हैं; QR कोड किसी भी कैमरे से काम करता है।",
     "status": "machine",
     "context": "qrTypes.types.spotify.payload.notes.2"
   },
@@ -4267,13 +4267,13 @@
   },
   "8ba9f841bb6b": {
     "source": "Create a Bitcoin QR code in the BIP21 bitcoin: format with optional amount, label and message. Works with SegWit and Taproot addresses. Free.",
-    "text": "BIP21 bitcoin: फ़ॉर्मेट में Bitcoin QR code बनाएं, जिसमें अमाउंट, लेबल और मैसेज वैकल्पिक हैं। SegWit और Taproot एड्रेस के साथ काम करता है। फ़्री।",
+    "text": "BIP21 bitcoin: फ़ॉर्मेट में Bitcoin QR कोड बनाएं, जिसमें अमाउंट, लेबल और मैसेज वैकल्पिक हैं। SegWit और Taproot एड्रेस के साथ काम करता है। फ़्री।",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.metaDescription"
   },
   "5286158b2980": {
     "source": "A Bitcoin QR code holds your wallet address, and optionally an amount, a label and a message, in the BIP21 bitcoin: URI format. Scanning it with a Bitcoin wallet fills in the payment, so the sender doesn't have to copy a long address by hand, where one wrong character would send coins to the wrong place.",
-    "text": "Bitcoin QR code में आपका वॉलेट एड्रेस रहता है, और चाहें तो अमाउंट, लेबल और मैसेज भी, BIP21 bitcoin: URI फ़ॉर्मेट में। Bitcoin वॉलेट से इसे स्कैन करने पर पेमेंट की जानकारी अपने आप भर जाती है, इसलिए भेजने वाले को लंबा एड्रेस हाथ से कॉपी नहीं करना पड़ता, जहां एक गलत अक्षर से कॉइन गलत जगह पहुंच सकते हैं।",
+    "text": "Bitcoin QR कोड में आपका वॉलेट एड्रेस रहता है, और चाहें तो अमाउंट, लेबल और मैसेज भी, BIP21 bitcoin: URI फ़ॉर्मेट में। Bitcoin वॉलेट से इसे स्कैन करने पर पेमेंट की जानकारी अपने आप भर जाती है, इसलिए भेजने वाले को लंबा एड्रेस हाथ से कॉपी नहीं करना पड़ता, जहां एक गलत अक्षर से कॉइन गलत जगह पहुंच सकते हैं।",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.intro.0"
   },
@@ -4321,13 +4321,13 @@
   },
   "0da1324a4996": {
     "source": "Is it safe to share my Bitcoin QR code?",
-    "text": "क्या मेरा Bitcoin QR code शेयर करना सुरक्षित है?",
+    "text": "क्या मेरा Bitcoin QR कोड शेयर करना सुरक्षित है?",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.faqs.0.question"
   },
   "a7dd06aa79da": {
     "source": "Yes. It contains your receiving address, which is meant to be shared. Never put a private key or seed phrase in a QR code.",
-    "text": "हां। इसमें आपका रिसीव करने का एड्रेस होता है, जिसे शेयर करने के लिए ही बनाया गया है। QR code में प्राइवेट key या सीड फ़्रेज़ कभी न डालें।",
+    "text": "हां। इसमें आपका रिसीव करने का एड्रेस होता है, जिसे शेयर करने के लिए ही बनाया गया है। QR कोड में प्राइवेट key या सीड फ़्रेज़ कभी न डालें।",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.faqs.0.answer"
   },
@@ -7123,13 +7123,13 @@
   },
   "b2f0a77751f8": {
     "source": "Make a Monero QR code (monero: URI) with your address and an optional amount, recipient name and description. Made in your browser. Free.",
-    "text": "अपने address और वैकल्पिक अमाउंट, पाने वाले का नाम और विवरण के साथ Monero QR code (monero: URI) बनाएं। आपके ब्राउज़र में बनता है। फ़्री।",
+    "text": "अपने address और वैकल्पिक अमाउंट, पाने वाले का नाम और विवरण के साथ Monero QR कोड (monero: URI) बनाएं। आपके ब्राउज़र में बनता है। फ़्री।",
     "status": "machine",
     "context": "qrTypes.types.monero.metaDescription"
   },
   "6b02906436f6": {
     "source": "A Monero QR code holds a payment request: your address and, if you like, an amount in XMR, your name and a description.",
-    "text": "Monero QR code में एक पेमेंट रिक्वेस्ट होती है: आपका address और, चाहें तो, XMR में अमाउंट, आपका नाम और विवरण।",
+    "text": "Monero QR कोड में एक पेमेंट रिक्वेस्ट होती है: आपका address और, चाहें तो, XMR में अमाउंट, आपका नाम और विवरण।",
     "status": "machine",
     "context": "qrTypes.types.monero.intro.0"
   },
@@ -9097,13 +9097,13 @@
   },
   "8910c76fe64e": {
     "source": "Create an Amazon Music QR code for a song, album, playlist or podcast. For posters, merch and flyers. Paste the link. Free.",
-    "text": "गाने, एल्बम, प्लेलिस्ट या पॉडकास्ट के लिए Amazon Music QR code बनाएँ। पोस्टर, मर्च और फ़्लायर के लिए। बस लिंक पेस्ट करें। फ़्री।",
+    "text": "गाने, एल्बम, प्लेलिस्ट या पॉडकास्ट के लिए Amazon Music QR कोड बनाएँ। पोस्टर, मर्च और फ़्लायर के लिए। बस लिंक पेस्ट करें। फ़्री।",
     "status": "machine",
     "context": "qrTypes.types.amazon-music.metaDescription"
   },
   "01a0acbc683e": {
     "source": "An Amazon Music QR code opens a song, an album, a playlist, an artist or a podcast in Amazon Music.",
-    "text": "Amazon Music QR code Amazon Music में गाना, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
+    "text": "Amazon Music QR कोड Amazon Music में गाना, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
     "status": "machine",
     "context": "qrTypes.types.amazon-music.intro.0"
   },
@@ -9145,13 +9145,13 @@
   },
   "57983725eeb5": {
     "source": "Make a Deezer QR code that plays a track, album, playlist or podcast. For gig posters, merch and record sleeves. Free, no signup.",
-    "text": "ट्रैक, एल्बम, प्लेलिस्ट या पॉडकास्ट चलाने वाला Deezer QR code बनाएँ। गिग पोस्टर, मर्च और रिकॉर्ड स्लीव के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "text": "ट्रैक, एल्बम, प्लेलिस्ट या पॉडकास्ट चलाने वाला Deezer QR कोड बनाएँ। गिग पोस्टर, मर्च और रिकॉर्ड स्लीव के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
     "status": "machine",
     "context": "qrTypes.types.deezer.metaDescription"
   },
   "28b553d09c48": {
     "source": "A Deezer QR code opens a track, an album, a playlist, an artist or a podcast in Deezer.",
-    "text": "Deezer QR code Deezer में ट्रैक, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
+    "text": "Deezer QR कोड Deezer में ट्रैक, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
     "status": "machine",
     "context": "qrTypes.types.deezer.intro.0"
   },
@@ -9193,13 +9193,13 @@
   },
   "ba39758079e2": {
     "source": "Create a TIDAL QR code that plays a track, album or playlist, or opens an artist. For merch, sleeves and posters. Free, no signup.",
-    "text": "ट्रैक, एल्बम या प्लेलिस्ट चलाने या आर्टिस्ट खोलने वाला TIDAL QR code बनाएँ। मर्च, स्लीव और पोस्टर के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "text": "ट्रैक, एल्बम या प्लेलिस्ट चलाने या आर्टिस्ट खोलने वाला TIDAL QR कोड बनाएँ। मर्च, स्लीव और पोस्टर के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
     "status": "machine",
     "context": "qrTypes.types.tidal.metaDescription"
   },
   "a9b8feb0aff5": {
     "source": "A TIDAL QR code opens a track, an album, a playlist or an artist on TIDAL.",
-    "text": "TIDAL QR code TIDAL पर ट्रैक, एल्बम, प्लेलिस्ट या आर्टिस्ट खोलता है।",
+    "text": "TIDAL QR कोड TIDAL पर ट्रैक, एल्बम, प्लेलिस्ट या आर्टिस्ट खोलता है।",
     "status": "machine",
     "context": "qrTypes.types.tidal.intro.0"
   },
@@ -22915,7 +22915,7 @@
   },
   "f4f67de0e873": {
     "source": "QR code table tents for restaurants, cafés, hotels and events: what to link to, sizes that scan from a seat, materials and how to measure each table.",
-    "text": "रेस्टोरेंट, कैफ़े, होटल और इवेंट के लिए QR code टेबल टेंट: क्या लिंक करें, कौन-से साइज़ सीट से स्कैन होते हैं, मटीरियल और हर टेबल की नाप कैसे लें।",
+    "text": "रेस्टोरेंट, कैफ़े, होटल और इवेंट के लिए QR कोड टेबल टेंट: क्या लिंक करें, कौन-से साइज़ सीट से स्कैन होते हैं, मटीरियल और हर टेबल की नाप कैसे लें।",
     "status": "machine",
     "context": "placements.0.in-store.items.table-tents.metaDescription"
   },
@@ -34717,13 +34717,13 @@
   },
   "b152aa87a0a4": {
     "source": "Shorten a QR code's link on your own Short.io domain, with the path you choose.",
-    "text": "QR code के link को अपने Short.io डोमेन पर छोटा करें, अपनी चुनी हुई path के साथ।",
+    "text": "QR कोड के link को अपने Short.io डोमेन पर छोटा करें, अपनी चुनी हुई path के साथ।",
     "status": "machine",
     "context": "integrations.entries.short-io.tagline"
   },
   "bbdbabf02454": {
     "source": "Connect Short.io with a secret API key, pick which of your domains to use, and it shows up in the QR editor's URL type, under Use a link from… beside the Website address field. Create a link with your own path or pick an existing one; the QR code encodes the Short.io link.",
-    "text": "Short.io को secret API key से कनेक्ट करें, चुनें कि आपके कौन से डोमेन इस्तेमाल करने हैं, और यह QR editor के URL type में, Website address फ़ील्ड के पास Use a link from… के नीचे दिखने लगेगा। अपनी path के साथ link बनाएं या कोई मौजूदा link चुनें; QR code में Short.io link ही एन्कोड होता है।",
+    "text": "Short.io को secret API key से कनेक्ट करें, चुनें कि आपके कौन से डोमेन इस्तेमाल करने हैं, और यह QR editor के URL type में, Website address फ़ील्ड के पास Use a link from… के नीचे दिखने लगेगा। अपनी path के साथ link बनाएं या कोई मौजूदा link चुनें; QR कोड में Short.io link ही एन्कोड होता है।",
     "status": "machine",
     "context": "integrations.entries.short-io.description.0"
   },
@@ -37657,7 +37657,7 @@
   },
   "0135740ce7f9": {
     "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
-    "text": "Wi-Fi QR code बनाएं, ताकि मेहमान एक स्कैन में आपके नेटवर्क से जुड़ जाएं। WPA/WPA2, WEP और ओपन नेटवर्क, छिपे SSID, सही एस्केपिंग। फ़्री।",
+    "text": "Wi-Fi QR कोड बनाएं, ताकि मेहमान एक स्कैन में आपके नेटवर्क से जुड़ जाएं। WPA/WPA2, WEP और ओपन नेटवर्क, छिपे SSID, सही एस्केपिंग। फ़्री।",
     "status": "machine",
     "context": "qrTypes.types.wifi.metaDescription"
   },

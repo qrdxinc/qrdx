@@ -1699,7 +1699,7 @@
   },
   "f6e78b8a59e2": {
     "source": "Most URLs contain lowercase letters, so they are stored in byte mode: one byte per character, up to 2,953 bytes at error-correction level L.",
-    "text": "La mayoría de las URL contienen letras minúsculas, por lo que se almacenan en modo byte: un byte por carácter, hasta 2,953 bytes con el nivel de corrección de errores L.",
+    "text": "La mayoría de las URL contienen letras minúsculas, por lo que se almacenan en modo byte: un byte por carácter, hasta 2953 bytes con el nivel de corrección de errores L.",
     "status": "machine",
     "context": "qrTypes.types.url.payload.notes.3"
   },
@@ -1735,7 +1735,7 @@
   },
   "a9a8054d0656": {
     "source": "Up to 2,953 bytes at the lowest error-correction level, but long URLs create dense codes that must be printed larger. Under about 100 characters is comfortable for print.",
-    "text": "Hasta 2,953 bytes con el nivel de corrección de errores más bajo, pero las URL largas generan códigos densos que hay que imprimir más grandes. Menos de unos 100 caracteres es una longitud cómoda para imprimir.",
+    "text": "Hasta 2953 bytes con el nivel de corrección de errores más bajo, pero las URL largas generan códigos densos que hay que imprimir más grandes. Menos de unos 100 caracteres es una longitud cómoda para imprimir.",
     "status": "machine",
     "context": "qrTypes.types.url.faqs.2.answer"
   },
@@ -1813,7 +1813,7 @@
   },
   "423d75adc08a": {
     "source": "One code holds up to 2,953 bytes at error-correction level L and 1,663 at level Q, the QRdx default.",
-    "text": "Un código admite hasta 2,953 bytes con nivel de corrección de errores L y 1,663 con nivel Q, el valor predeterminado de QRdx.",
+    "text": "Un código admite hasta 2953 bytes con nivel de corrección de errores L y 1663 con nivel Q, el valor predeterminado de QRdx.",
     "status": "machine",
     "context": "qrTypes.types.text.payload.notes.2"
   },
@@ -1837,7 +1837,7 @@
   },
   "625e84dfd4af": {
     "source": "In theory 2,953 bytes (about 2,900 English characters) at error-correction level L. In practice, keep it under 300 characters so the code stays easy to scan at normal print sizes.",
-    "text": "En teoría, 2,953 bytes (unos 2,900 caracteres en inglés) con nivel de corrección de errores L. En la práctica, mantenlo por debajo de 300 caracteres para que el código siga siendo fácil de escanear en tamaños de impresión normales.",
+    "text": "En teoría, 2953 bytes (unos 2900 caracteres en inglés) con nivel de corrección de errores L. En la práctica, mantenlo por debajo de 300 caracteres para que el código siga siendo fácil de escanear en tamaños de impresión normales.",
     "status": "machine",
     "context": "qrTypes.types.text.faqs.1.answer"
   },
@@ -9979,7 +9979,7 @@
   },
   "a058beb73635": {
     "source": "Amounts are written with two decimals, from 0.01 to 999,999,999.99. Leave the amount empty and the payer enters it.",
-    "text": "Los importes se escriben con dos decimales, de 0.01 a 999,999,999.99. Si dejas el importe vacío, lo introduce quien paga.",
+    "text": "Los importes se escriben con dos decimales, de 0,01 a 999.999.999,99. Si dejas el importe vacío, lo introduce quien paga.",
     "status": "machine",
     "context": "qrTypes.types.swiss-qr-bill.payload.notes.2"
   },
@@ -10201,7 +10201,7 @@
   },
   "dacaaddc6a13": {
     "source": "Optionally add an amount from 1 to 150,000 kronor and a message of up to 50 characters.",
-    "text": "Si quieres, añade un importe de 1 a 150,000 coronas y un mensaje de hasta 50 caracteres.",
+    "text": "Si quieres, añade un importe de 1 a 150.000 coronas y un mensaje de hasta 50 caracteres.",
     "status": "machine",
     "context": "qrTypes.types.swish.steps.1"
   },
@@ -10231,7 +10231,7 @@
   },
   "24225545374a": {
     "source": "Amounts are in kronor, 1 to 150,000 with up to 2 decimals, the range Swish's own generator takes. Messages are up to 50 characters and percent-encoded.",
-    "text": "Los importes van en coronas, de 1 a 150,000 con hasta 2 decimales, el intervalo que admite el propio generador de Swish. Los mensajes tienen hasta 50 caracteres y se codifican con porcentajes.",
+    "text": "Los importes van en coronas, de 1 a 150.000 con hasta 2 decimales, el intervalo que admite el propio generador de Swish. Los mensajes tienen hasta 50 caracteres y se codifican con porcentajes.",
     "status": "machine",
     "context": "qrTypes.types.swish.payload.notes.2"
   },
@@ -12271,7 +12271,7 @@
   },
   "7b75fe2b1ea7": {
     "source": "RSVPs count towards the workspace's form responses: 50 a month on Free and 1,000 on Pro. Replies you already have are never deleted or hidden.",
-    "text": "Las confirmaciones cuentan para las respuestas de formularios del espacio de trabajo: 50 al mes en Gratis y 1,000 en Pro. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
+    "text": "Las confirmaciones cuentan para las respuestas de formularios del espacio de trabajo: 50 al mes en Gratis y 1000 en Pro. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
     "status": "machine",
     "context": "hostedTypes.invitation.editing.1"
   },
@@ -12349,7 +12349,7 @@
   },
   "1366d371549e": {
     "source": "Free includes 50 form responses a month across the workspace, Pro 1,000 and Business 10,000. When the limit is reached, the form asks guests to try again later and keeps what they typed.",
-    "text": "Gratis incluye 50 respuestas de formulario al mes en todo el espacio de trabajo, Pro 1,000 y Business 10,000. Al alcanzar el límite, el formulario pide a los invitados que lo intenten más tarde y conserva lo que han escrito.",
+    "text": "Gratis incluye 50 respuestas de formulario al mes en todo el espacio de trabajo, Pro 1000 y Business 10.000. Al alcanzar el límite, el formulario pide a los invitados que lo intenten más tarde y conserva lo que han escrito.",
     "status": "machine",
     "context": "hostedTypes.invitation.faqs.2.answer"
   },
@@ -12499,7 +12499,7 @@
   },
   "b313ffcebf30": {
     "source": "Responses count per workspace each calendar month: 50 on Free, 1,000 on Pro and 10,000 on Business. Responses you already have are never deleted or hidden.",
-    "text": "Las respuestas se cuentan por espacio de trabajo cada mes natural: 50 en Gratis, 1,000 en Pro y 10,000 en Business. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
+    "text": "Las respuestas se cuentan por espacio de trabajo cada mes natural: 50 en Gratis, 1000 en Pro y 10.000 en Business. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
     "status": "machine",
     "context": "hostedTypes.contact-form.editing.1"
   },
@@ -12583,7 +12583,7 @@
   },
   "3987ec8d1d8b": {
     "source": "Free includes 50 responses a month across the workspace, Pro 1,000 and Business 10,000. The count starts over on the 1st of each month.",
-    "text": "Gratis incluye 50 respuestas al mes en todo el espacio de trabajo, Pro 1,000 y Business 10,000. El recuento se reinicia el día 1 de cada mes.",
+    "text": "Gratis incluye 50 respuestas al mes en todo el espacio de trabajo, Pro 1000 y Business 10.000. El recuento se reinicia el día 1 de cada mes.",
     "status": "machine",
     "context": "hostedTypes.contact-form.faqs.2.answer"
   },
@@ -23887,7 +23887,7 @@
   },
   "fa94d0562562": {
     "source": "Tell customers what the code does ('Scan to pay ₹4,500 by UPI') so they trust it.",
-    "text": "Explica a los clientes qué hace el código ('Escanea para pagar ₹4,500 con UPI') para que confíen en él.",
+    "text": "Explica a los clientes qué hace el código ('Escanea para pagar ₹4500 con UPI') para que confíen en él.",
     "status": "machine",
     "context": "placements.0.documents.items.invoices.tips.2"
   },
@@ -28981,7 +28981,7 @@
   },
   "5379979c6f98": {
     "source": "Any text up to 1,000 characters.",
-    "text": "Cualquier texto de hasta 1,000 caracteres.",
+    "text": "Cualquier texto de hasta 1000 caracteres.",
     "status": "machine",
     "context": "barcodes.formats.datamatrix.inputHint"
   },
@@ -29215,7 +29215,7 @@
   },
   "f82b55c71510": {
     "source": "Yes, with a free QRdx account. Signed in, press Save to dashboard and the barcode goes to Barcodes in your workspace, where you can find it again, edit it, put it in a folder and download it in any format. Every plan saves barcodes: 1,000 on Free.",
-    "text": "Sí, con una cuenta gratuita de QRdx. Con la sesión iniciada, pulsa Guardar en el panel y el código de barras irá a Códigos de barras en tu espacio de trabajo, donde podrás encontrarlo de nuevo, editarlo, ponerlo en una carpeta y descargarlo en cualquier formato. Todos los planes guardan códigos de barras: 1,000 en Gratis.",
+    "text": "Sí, con una cuenta gratuita de QRdx. Con la sesión iniciada, pulsa Guardar en el panel y el código de barras irá a Códigos de barras en tu espacio de trabajo, donde podrás encontrarlo de nuevo, editarlo, ponerlo en una carpeta y descargarlo en cualquier formato. Todos los planes guardan códigos de barras: 1000 en Gratis.",
     "status": "machine",
     "context": "barcodes.faqs.5.answer"
   },
@@ -29863,13 +29863,13 @@
   },
   "33a7d883dd0b": {
     "source": "Make a Data Matrix code for part marking, small labels and serial numbers. Any text up to 1,000 characters, scan-checked in your browser. SVG, PDF and PNG.",
-    "text": "Crea un código Data Matrix para marcado de piezas, etiquetas pequeñas y números de serie. Cualquier texto de hasta 1,000 caracteres, con escaneo comprobado en tu navegador. SVG, PDF y PNG.",
+    "text": "Crea un código Data Matrix para marcado de piezas, etiquetas pequeñas y números de serie. Cualquier texto de hasta 1000 caracteres, con escaneo comprobado en tu navegador. SVG, PDF y PNG.",
     "status": "machine",
     "context": "barcodeFormats.pages.data-matrix.metaDescription"
   },
   "0bd28fd6ac6c": {
     "source": "Data Matrix is a small square 2D code that holds a lot of data in very little space. Type any text, up to 1,000 characters here, check that it scans and download it for parts, electronics, small labels and lab samples.",
-    "text": "Data Matrix es un código 2D cuadrado y pequeño que guarda muchos datos en muy poco espacio. Escribe cualquier texto, de hasta 1,000 caracteres, comprueba que se escanea y descárgalo para piezas, electrónica, etiquetas pequeñas y muestras de laboratorio.",
+    "text": "Data Matrix es un código 2D cuadrado y pequeño que guarda muchos datos en muy poco espacio. Escribe cualquier texto, de hasta 1000 caracteres, comprueba que se escanea y descárgalo para piezas, electrónica, etiquetas pequeñas y muestras de laboratorio.",
     "status": "machine",
     "context": "barcodeFormats.pages.data-matrix.intro"
   },
@@ -29905,13 +29905,13 @@
   },
   "084247522b6a": {
     "source": "Any text, up to 1,000 characters here. The code grows in steps as you add text, from 10 × 10 cells upwards; this generator draws the square form.",
-    "text": "Cualquier texto, de hasta 1,000 caracteres aquí. El código crece por pasos al añadir texto, desde 10 × 10 celdas; este generador dibuja la forma cuadrada.",
+    "text": "Cualquier texto, de hasta 1000 caracteres aquí. El código crece por pasos al añadir texto, desde 10 × 10 celdas; este generador dibuja la forma cuadrada.",
     "status": "machine",
     "context": "barcodeFormats.pages.data-matrix.rules.0"
   },
   "df3a5ab10444": {
     "source": "The largest square Data Matrix (144 × 144 cells) holds 3,116 digits, 2,335 letters and digits, or 1,556 bytes. Digits pack most tightly.",
-    "text": "El Data Matrix cuadrado más grande (144 × 144 celdas) guarda 3,116 dígitos, 2,335 letras y dígitos, o 1,556 bytes. Los dígitos son los que se compactan más.",
+    "text": "El Data Matrix cuadrado más grande (144 × 144 celdas) guarda 3116 dígitos, 2335 letras y dígitos, o 1556 bytes. Los dígitos son los que se compactan más.",
     "status": "machine",
     "context": "barcodeFormats.pages.data-matrix.rules.1"
   },
@@ -30433,7 +30433,7 @@
   },
   "c59ac66e5fad": {
     "source": "Make a PDF417 barcode, the stacked 2D code on IDs and boarding passes. Any text up to 1,000 characters, scan-checked in your browser. SVG, PDF and PNG.",
-    "text": "Crea un código de barras PDF417, el código 2D apilado de documentos de identidad y tarjetas de embarque. Cualquier texto de hasta 1,000 caracteres, con escaneo verificado en tu navegador. SVG, PDF y PNG.",
+    "text": "Crea un código de barras PDF417, el código 2D apilado de documentos de identidad y tarjetas de embarque. Cualquier texto de hasta 1000 caracteres, con escaneo verificado en tu navegador. SVG, PDF y PNG.",
     "status": "machine",
     "context": "barcodeFormats.pages.pdf417.metaDescription"
   },
@@ -30469,7 +30469,7 @@
   },
   "356c0ea4f70f": {
     "source": "Any text, up to 1,000 characters here. A PDF417 has 3 to 90 rows of 1 to 30 data columns and can hold up to 1,850 letters and digits, 2,710 digits or 1,108 bytes.",
-    "text": "Cualquier texto, hasta 1,000 caracteres aquí. Un PDF417 tiene de 3 a 90 filas de 1 a 30 columnas de datos y puede contener hasta 1,850 letras y dígitos, 2,710 dígitos o 1,108 bytes.",
+    "text": "Cualquier texto, hasta 1000 caracteres aquí. Un PDF417 tiene de 3 a 90 filas de 1 a 30 columnas de datos y puede contener hasta 1850 letras y dígitos, 2710 dígitos o 1108 bytes.",
     "status": "machine",
     "context": "barcodeFormats.pages.pdf417.rules.0"
   },
@@ -30523,7 +30523,7 @@
   },
   "4da66deb316c": {
     "source": "Make an Aztec code, the 2D code on rail tickets and mobile boarding passes. No quiet zone needed. Any text up to 1,000 characters. SVG, PDF and PNG. Free.",
-    "text": "Crea un código Aztec, el código 2D de los billetes de tren y las tarjetas de embarque en el móvil. No necesita zona de silencio. Cualquier texto de hasta 1,000 caracteres. SVG, PDF y PNG. Gratis.",
+    "text": "Crea un código Aztec, el código 2D de los billetes de tren y las tarjetas de embarque en el móvil. No necesita zona de silencio. Cualquier texto de hasta 1000 caracteres. SVG, PDF y PNG. Gratis.",
     "status": "machine",
     "context": "barcodeFormats.pages.aztec.metaDescription"
   },
@@ -30559,7 +30559,7 @@
   },
   "de7e5ed9bda0": {
     "source": "Any text, up to 1,000 characters here. Aztec codes range from 15 × 15 cells (compact) to 151 × 151, holding up to 3,832 digits, 3,067 letters or 1,914 bytes.",
-    "text": "Cualquier texto, hasta 1,000 caracteres aquí. Los códigos Aztec van desde 15 × 15 celdas (compacto) hasta 151 × 151, con capacidad de hasta 3,832 dígitos, 3,067 letras o 1,914 bytes.",
+    "text": "Cualquier texto, hasta 1000 caracteres aquí. Los códigos Aztec van desde 15 × 15 celdas (compacto) hasta 151 × 151, con capacidad de hasta 3832 dígitos, 3067 letras o 1914 bytes.",
     "status": "machine",
     "context": "barcodeFormats.pages.aztec.rules.0"
   },
@@ -32341,7 +32341,7 @@
   },
   "2a1f4782a074": {
     "source": "A code's first scan, with when, where and on which device, then 10, 100, 1,000 scans and beyond.",
-    "text": "El primer escaneo de un código, con cuándo, dónde y en qué dispositivo, y después 10, 100, 1,000 escaneos y más.",
+    "text": "El primer escaneo de un código, con cuándo, dónde y en qué dispositivo, y después 10, 100, 1000 escaneos y más.",
     "status": "machine",
     "context": "integrations.entries.slack.capabilities.0.description"
   },
@@ -32797,7 +32797,7 @@
   },
   "da0656aa0c54": {
     "source": "Webhooks send events from a workspace to a URL you control as they happen: update a CRM when someone fills in a form, post to an internal tool when a code passes 1,000 scans, or keep your own copy of scan data.",
-    "text": "Los webhooks envían eventos de un espacio de trabajo a una URL que tú controlas en el momento en que ocurren: actualiza un CRM cuando alguien rellena un formulario, publica en una herramienta interna cuando un código supera los 1,000 escaneos o conserva tu propia copia de los datos de escaneo.",
+    "text": "Los webhooks envían eventos de un espacio de trabajo a una URL que tú controlas en el momento en que ocurren: actualiza un CRM cuando alguien rellena un formulario, publica en una herramienta interna cuando un código supera los 1000 escaneos o conserva tu propia copia de los datos de escaneo.",
     "status": "machine",
     "context": "integrations.entries.webhooks.description.0"
   },
@@ -32923,7 +32923,7 @@
   },
   "2736f9cd6520": {
     "source": "Use a Webhooks by Zapier “Catch Hook” trigger as a QRdx webhook endpoint and every event you pick starts your Zap: add form responses to a CRM, email your team at 1,000 scans, or log each scan.",
-    "text": "Usa un disparador “Catch Hook” de Webhooks by Zapier como endpoint de webhook de QRdx y cada evento que elijas inicia tu Zap: añade respuestas de formularios a un CRM, envía un correo a tu equipo al llegar a 1,000 escaneos o registra cada escaneo.",
+    "text": "Usa un disparador “Catch Hook” de Webhooks by Zapier como endpoint de webhook de QRdx y cada evento que elijas inicia tu Zap: añade respuestas de formularios a un CRM, envía un correo a tu equipo al llegar a 1000 escaneos o registra cada escaneo.",
     "status": "machine",
     "context": "integrations.entries.zapier.description.0"
   },
@@ -36157,7 +36157,7 @@
   },
   "8b7f435b254e": {
     "source": "1,000 requests a day on Free, 10,000 on Pro and 100,000 on Business.",
-    "text": "1,000 solicitudes al día en Gratis, 10,000 en Pro y 100,000 en Business.",
+    "text": "1000 solicitudes al día en Gratis, 10.000 en Pro y 100.000 en Business.",
     "status": "machine",
     "context": "integrations.entries.rest-api.capabilities.3.description"
   },

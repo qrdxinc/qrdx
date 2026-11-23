@@ -1975,8 +1975,8 @@
     }
   },
   "barcodeGenerator": {
-    "metaTitle": "Generador de códigos de barras gratis: EAN-13, UPC, Code 128",
-    "metaDescription": "Crea EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix y más: {count, number} tipos de códigos de barras con los dígitos de control calculados por ti. PNG, JPG, SVG, PDF, EPS. Gratis, sin registro.",
+    "metaTitle": "Crea códigos de barras gratis: EAN-13, UPC, Code 128",
+    "metaDescription": "Crea EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix y más: {count, number} tipos de código de barras con dígito de control. PNG, JPG, SVG, PDF, EPS. Gratis.",
     "crumb": "Generador de códigos de barras",
     "title": "Generador de códigos de barras gratis",
     "intro1": "Crea códigos de barras para comercio, envíos e inventario en {count, number} formatos, desde EAN-13 y UPC-A hasta Code 128, GS1-128, ITF-14 y Data Matrix. Escribe el número y el dígito de control se calcula solo; si es incorrecto, se detecta antes de imprimir.",
@@ -2313,8 +2313,8 @@
         "1-10": "De 1 a 10 personas",
         "11-50": "De 11 a 50 personas",
         "51-200": "De 51 a 200 personas",
-        "201-1000": "De 201 a 1.000 personas",
-        "1000+": "Más de 1.000 personas"
+        "201-1000": "De 201 a 1000 personas",
+        "1000+": "Más de 1000 personas"
       },
       "need": "¿Qué necesitas?",
       "needPlaceholder": "Por ejemplo: inicio de sesión único para 300 personas, una factura anual, nuestro cuestionario de seguridad",
@@ -6701,7 +6701,7 @@
           "couldntCopySelectTheLink": "No se pudo copiar. Selecciona el enlace y cópialo manualmente."
         },
         "dataConnectionPanel": {
-          "aNewSpreadsheetWithEvery": "Una hoja de cálculo nueva con cada escaneo de los códigos del espacio de trabajo (del más antiguo al más reciente, hasta 50,000): hora, código, país, ciudad, dispositivo, sistema operativo, navegador, referente e idioma. Para un solo código, usa Exportar en la página del código; para las respuestas de formularios, en la pantalla Respuestas de la página.",
+          "aNewSpreadsheetWithEvery": "Una hoja de cálculo nueva con cada escaneo de los códigos del espacio de trabajo (del más antiguo al más reciente, hasta 50.000): hora, código, país, ciudad, dispositivo, sistema operativo, navegador, referente e idioma. Para un solo código, usa Exportar en la página del código; para las respuestas de formularios, en la pantalla Respuestas de la página.",
           "lastExport": "Última exportación:",
           "rows": "filas.",
           "openSheet": "Abrir hoja",
@@ -6867,7 +6867,7 @@
           "bulkImport": "Importación masiva",
           "nothingToPickYet": "Aún no hay nada que elegir.",
           "andMoreInThePicker": "Y más en el selector.",
-          "theCsvHasOneRow": "El CSV tiene una fila por cada producto activo (hasta 1,000) en el formato del importador: destino, título, carpeta y etiquetas. Impórtalo para crear un código dinámico por cada producto.",
+          "theCsvHasOneRow": "El CSV tiene una fila por cada producto activo (hasta 1000) en el formato del importador: destino, título, carpeta y etiquetas. Impórtalo para crear un código dinámico por cada producto.",
           "openTitle": "Abrir {title}"
         },
         "page": {
@@ -8505,7 +8505,7 @@
             "formResponsesUsedThisMonth": "Respuestas de formularios usadas este mes",
             "yourFormsShowNotAccepting": "Tus formularios mostrarán \"no se aceptan respuestas\" hasta {resets}. Las respuestas que ya tienes se conservan.",
             "countedAcrossAllPagesIn": "Se cuentan entre todas las páginas de este espacio de trabajo. Las respuestas nunca se eliminan al alcanzar el límite.",
-            "get1000AMonth": "Consigue 1,000 al mes",
+            "get1000AMonth": "Consigue 1000 al mes",
             "get10000AMonth": "Consigue 10.000 al mes"
           },
           "responsesList": {

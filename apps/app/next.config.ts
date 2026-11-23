@@ -172,9 +172,10 @@ const siteZone = siteZoneRewrites(env.SITE_ORIGIN, {
   groups: siteGroupsOn,
 });
 // The English-only pages whose translated URLs the site serves (its
-// generators-i18n group, owner decision 23 Nov 2026): their redirects to the
-// English page are left out, so /es/qr-code-generator/wifi reaches the
-// site's rewrite. None while SITE_ORIGIN is unset or the group is off.
+// generators-i18n and barcodes-i18n groups, owner decision 23 Nov 2026):
+// their redirects to the English page are left out, so
+// /es/qr-code-generator/wifi reaches the site's rewrite. None while
+// SITE_ORIGIN is unset or the group is off.
 const siteTranslated = siteTranslatedPaths(env.SITE_ORIGIN, siteGroupsOn);
 if (siteZone.length > 0 && !env.SITE_ZONE_KEY) {
   console.warn(

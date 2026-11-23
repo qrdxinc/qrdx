@@ -7,13 +7,16 @@
 // The marketing pages under app/[lang] that are English only (paths.ts
 // ENGLISH_ONLY_PATHS) keep their English rewrites, and their translated URLs
 // redirect to the English page (englishOnlyRedirects), except the pages the
-// site zone serves in every language while its group for them is on.
+// site zone serves in every language while its group for them is on. So do
+// the English-only pages outside app/[lang] (ENGLISH_ONLY_OUTSIDE_PATHS: the
+// blog, the comparisons' pages and the rest), which have no rewrites.
 //
 // next.config.ts imports this module (and docs.ts) from the package itself:
 // Next compiles the config with the app's tsconfig paths, and a file in a
 // subfolder of the app that imports @repo/* can't be resolved there.
 import { LOCALE_INFO, TRANSLATED_LOCALES } from "./config";
 import {
+  ENGLISH_ONLY_OUTSIDE_PATHS,
   ENGLISH_ONLY_PATHS,
   LOCALIZED_PATHS,
   SITE_TRANSLATED_PATHS,
@@ -78,18 +81,23 @@ const TRANSLATED_SEGMENT = `:locale(${TRANSLATED_LOCALES.map(
  * query kept: /es/pricing → /pricing, /ja/qr-code-generator/wifi?x=1 →
  * /qr-code-generator/wifi?x=1. The home page too: /es → / (where a
  * signed-in visitor goes on to the dashboard, as /es did) and /es/home →
- * /home (the logo's address, which never does).
+ * /home (the logo's address, which never does). And the English-only
+ * pages outside app/[lang] (paths.ts ENGLISH_ONLY_OUTSIDE_PATHS), which
+ * never had translated URLs: /es/blog → /blog, /ja/compare/x → /compare/x,
+ * rather than a 404.
  *
  * On QRdx's own hosts only: on a customer's domain /es is a short link.
  * Only the page URLs themselves; their Open Graph images under them aren't
  * linked from anywhere once the pages redirect.
  *
  * Permanent (308), as englishRedirects are: 307 for the first week after
- * #580 went live (17 Nov 2026), 308 since that watch passed. Except the
- * pages the site zone can serve in every language (paths.ts
- * SITE_TRANSLATED_PATHS): while their group is off they redirect to English,
- * but only with a 307, which browsers and search engines don't keep, so
- * switching the group back on is never stuck behind a cached redirect.
+ * #580 went live (17 Nov 2026), 308 since that watch passed. The pages
+ * outside app/[lang] too: they're never translated. Except the pages the
+ * site zone can serve in every language (paths.ts SITE_TRANSLATED_PATHS:
+ * the QR code and barcode generators): while their group is off they
+ * redirect to English, but only with a 307, which browsers and search
+ * engines don't keep, so switching the group back on is never stuck behind
+ * a cached redirect.
  *
  * `except` leaves out pages whose translated URLs another app answers: the
  * site zone serves the generator pages in every language while its group
@@ -108,9 +116,10 @@ export function englishOnlyRedirects(
     );
   }
   const has = [{ type: "host" as const, value: platformHosts }];
-  const redirected = ENGLISH_ONLY_PATHS.filter(
-    (path) => !except.includes(path)
-  );
+  const redirected = [
+    ...ENGLISH_ONLY_PATHS.filter((path) => !except.includes(path)),
+    ...ENGLISH_ONLY_OUTSIDE_PATHS,
+  ];
   const pages = redirected.map((path) => {
     const source = rewriteSource(path);
     return {
