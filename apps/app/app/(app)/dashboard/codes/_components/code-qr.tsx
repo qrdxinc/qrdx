@@ -20,6 +20,7 @@ import {
   QRCode,
 } from "qrdx";
 import { useState } from "react";
+import { markSpotlightSeen } from "@/actions/spotlights";
 import { storedStyleDefaults } from "@/config/qr";
 import { downloadLookProps } from "@/lib/analytics/download-look";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
@@ -137,6 +138,8 @@ export async function downloadCodeQr(
     },
   );
   soundEvent("download");
+  // Home's first steps: "Download it for print" is done (first-steps-card.tsx).
+  markSpotlightSeen("first-download").catch(() => undefined);
   track("qr_downloaded", {
     format,
     source: "dashboard",

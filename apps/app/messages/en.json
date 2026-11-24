@@ -9210,7 +9210,60 @@
           "fullHistory": "Look back over every scan, not only the last {years, plural, one {year} other {# years}}",
           "price": "Pro is {month} a month or {year} a year.",
           "seePro": "See Pro",
+          "hide": "Hide",
+          "invite": "Or <link>invite a friend</link>: when they make their first dynamic code, you both get {count, number} more."
+        },
+        "firstSteps": {
+          "title": "Get your first code ready to print",
+          "progress": "{done, number} of {total, number} done",
+          "progressLabel": "First steps done",
+          "hide": "Hide",
+          "done": "(done)",
+          "make": "Make a dynamic code",
+          "makeHint": "A QR code whose link you can change after printing.",
+          "create": "Create",
+          "scan": "Scan it with your phone",
+          "scanHint": "Point your phone's camera at the code on screen and open the link.",
+          "showCode": "Show code",
+          "download": "Download it for print",
+          "downloadHint": "SVG stays sharp at any print size.",
+          "downloadAction": "Download",
+          "makeFirstCode": "Make your first dynamic code"
+        },
+        "inviteCard": {
+          "title": "Know someone who prints QR codes?",
+          "body": "When a friend signs up through your link and makes their first dynamic code, you both get {count, number} more dynamic codes.",
+          "messageLabel": "Message to send:",
+          "message": "I make my QR codes with QRdx. They're free, and dynamic codes keep working whatever happens to your plan. Sign up through my link and make a dynamic code, and we both get {count, number} more: {link}",
+          "copyMessage": "Copy message",
+          "copyLink": "Copy link",
+          "copied": "Copied",
+          "linkCopied": "Link copied",
+          "messageCopied": "Message copied",
+          "couldntCopy": "Couldn't copy. Select the text and copy it yourself.",
+          "howItWorks": "How it works",
           "hide": "Hide"
+        },
+        "whereHeard": {
+          "question": "Where did you first hear about QRdx?",
+          "why": "Optional. One tap tells us what's working.",
+          "answers": {
+            "ai_assistant": "ChatGPT or another AI assistant",
+            "search": "Google or Bing",
+            "friend": "A friend or colleague",
+            "x_threads": "X or Threads",
+            "linkedin": "LinkedIn",
+            "youtube": "YouTube",
+            "reddit_hn": "Reddit or Hacker News",
+            "product_hunt": "Product Hunt",
+            "directory": "A list or directory",
+            "other": "Other"
+          },
+          "otherLabel": "Where did you hear about QRdx?",
+          "otherPlaceholder": "A few words",
+          "save": "Save",
+          "hide": "Hide",
+          "thanks": "Thanks, that helps."
         }
       },
       "listSelection": {

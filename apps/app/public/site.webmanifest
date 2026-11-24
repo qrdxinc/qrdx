@@ -1,7 +1,7 @@
 {
   "name": "QRdx",
   "short_name": "QRdx",
-  "description": "Free, open-source QR code generator: unlimited codes with logos, colors and frames, no signup or watermark. Plus dynamic codes and scan analytics.",
+  "description": "Free QR codes, and dynamic codes that keep working whatever happens to your plan. Design them with logos, colors and frames, no signup or watermark.",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
