@@ -31,6 +31,7 @@ import {
 import { workspaceCanUnpublish } from "@/lib/community/publish-access";
 import { getItem, moreFromCreator, remixesOf } from "@/lib/community/queries";
 import { MIN_GATE_SCORE } from "@/lib/community/scan-samples";
+import { isIndexedItemType } from "@/lib/community/sitemap";
 import {
   type CommunityItemDetail,
   itemPath,
@@ -67,6 +68,11 @@ export async function generateMetadata({
       item.description ??
       `A free QR code ${TYPE_LABELS[item.type].one.toLowerCase()} from the QRdx community, under ${COMMUNITY_LICENSE_NAME}.`,
     path: `/community/${type}/${slug}`,
+    // Frames' pages are kept out of search until they carry more text of
+    // their own; their links are still followed (lib/community/sitemap.ts).
+    ...(isIndexedItemType(item.type)
+      ? {}
+      : { robots: { index: false, follow: true } }),
   });
 }
 
