@@ -10,8 +10,10 @@ import { isMissingSchemaError } from "@/lib/community/tables";
 // 100-scan email (./free-scan-milestone.tsx) and the note after a first
 // payment (./new-customer.tsx). A row is claimed before sending, so two
 // runs at once send one email, and released when the send fails, so a
-// later run tries again. Until the table exists nothing is claimed and
-// nothing is sent (logged once).
+// later run tries again. A row also stays for someone it was decided not
+// to email (the nudge for a banned account), so they aren't looked at
+// again. Until the table exists nothing is claimed and nothing is sent
+// (logged once).
 
 export type LifecycleKind =
   | "activation-nudge"

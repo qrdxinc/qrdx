@@ -13,6 +13,7 @@ import {
 } from "@repo/rate-limit";
 import { eq } from "drizzle-orm";
 import type { ReactElement } from "react";
+import { paidInvite } from "@/lib/email/invite-line";
 import { sendEmail } from "@/lib/email/send";
 import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { emailIntlForUser } from "@/lib/i18n/email-locale";
@@ -204,6 +205,7 @@ function milestoneAlert(
             code={data.code}
             device={device}
             intl={intl}
+            invite={paidInvite()}
             location={location}
             scannedAt={data.scan.scanned_at}
             recipient={recipient}
@@ -229,6 +231,7 @@ function milestoneAlert(
           analyticsUrl={url}
           code={data.code}
           intl={intl}
+          invite={paidInvite()}
           milestone={data.milestone}
           recipient={recipient}
           unsubscribeUrl={unsubscribe}

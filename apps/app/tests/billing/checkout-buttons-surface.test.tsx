@@ -181,6 +181,10 @@ describe("the main buttons and links name their own surface", () => {
     ],
     ["lib/limit-notices/notify.tsx", 'pricingHref("limit_email", "month")'],
     ["lib/email/first-scan.tsx", 'pricingHref("first_scan_email", "month")'],
+    [
+      "lib/email/free-scan-milestone.tsx",
+      'pricingHref("scan_milestone_email", "month")',
+    ],
     ["app/(app)/(home)/success/page.tsx", 'pricingHref("success_page")'],
   ])("%s: %s", (file, needle) => {
     expect(read(file)).toContain(needle);

@@ -2119,10 +2119,10 @@ export const limitNotice = pgTable(
 );
 
 /**
- * Lifecycle emails already sent (apps/app/lib/email/lifecycle.ts): one row
- * per kind and subject, so each goes once. The subject is what the email is
- * about: the person for once-per-account emails, the subscription for the
- * new-customer note.
+ * Lifecycle emails already sent, or decided against (apps/app/lib/email/
+ * lifecycle.ts): one row per kind and subject, so each goes at most once.
+ * The subject is what the email is about: the person for once-per-account
+ * emails, the subscription for the new-customer note.
  */
 export const lifecycleEmail = pgTable(
   "lifecycle_email",

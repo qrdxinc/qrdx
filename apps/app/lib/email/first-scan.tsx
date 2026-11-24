@@ -7,15 +7,17 @@ import { FirstScanEmail } from "@repo/email/templates/first-scan";
 import { codeLabel } from "@repo/email/templates/parts";
 import { DEFAULT_LOCALE, isLocale } from "@repo/i18n/config";
 import { and, eq, gte, lt, or } from "drizzle-orm";
+import { serverEventsEnabled, trackServer } from "@/lib/analytics/server";
 import { pricingHref } from "@/lib/checkout-surface";
 import type { RecordedScan, ScannedCode } from "@/lib/events/emit";
 import { SCAN_MILESTONES } from "@/lib/events/types";
 import { teamNotesUnsubscribeUrl } from "@/lib/events/unsubscribe";
 import { isFeatureAvailable } from "@/lib/feature-availability";
 import { emailIntl } from "@/lib/i18n/email";
-import { getPlanForScope, getPlanLimits } from "@/lib/plans";
+import { getPlanForScope, getPlanLimits, type Plan } from "@/lib/plans";
 import { workspaceLink } from "@/lib/workspace-paths";
 import { workspaceSlug } from "@/lib/workspaces";
+import { freeInvite } from "./invite-line";
 import { personalSender } from "./personal-sender";
 import { sendEmail } from "./send";
 import { wantsTeamNotes } from "./team-notes";
@@ -23,7 +25,7 @@ import { isPortalClient } from "./welcome";
 
 // Free's one first-scan email per code (owner decision, 19 Nov): "your code
 // got its first scan", to the person who made the code, with one line on
-// what Pro adds. Pro and Business have their own first-scan alert (scan
+// what Pro adds and the invite line under it (./invite-line.ts). Pro and Business have their own first-scan alert (scan
 // milestone 1, on by default; lib/events/types.ts DEFAULT_EMAIL_EVENTS), so
 // this never goes to a workspace whose plan has email alerts, and nobody
 // gets both for one code: both go on the same scan, the code's first real
@@ -148,6 +150,57 @@ export async function firstScanStatus(
   return (await hadRealScan(code, scan, after)) ? "not_first" : "first";
 }
 
+/**
+ * first_real_scan (packages/analytics/events.ts), the activation moment:
+ * the code's first real scan, on every plan, decided by the same
+ * firstScanStatus as both first-scan emails. Codes brought in from
+ * elsewhere don't count. Once per code (PostHog keeps one event per code
+ * id), with the plan only and no person: the scan's request is a
+ * scanner's, not the maker's. Nothing is read where server events are off.
+ * Never throws.
+ */
+export async function trackFirstRealScan(
+  scan: RecordedScan,
+  code: ScannedCode,
+  {
+    plan,
+    firstScan = () => firstScanStatus(scan, code),
+  }: {
+    /** The workspace's plan, when the caller has read it */
+    plan?: Plan;
+    /** firstScanStatus, shared with the emails (emit.ts) */
+    firstScan?: () => Promise<FirstScanStatus>;
+  } = {},
+): Promise<void> {
+  try {
+    if (!code.createdAt || code.scanCount > FIRST_SCAN_CHECK_LIMIT) return;
+    if (isBroughtIn(code.createdVia)) return;
+    if (scan.scannedAt < testWindowEnd(code.createdAt)) return;
+    if (!serverEventsEnabled()) return;
+    if ((await firstScan()) !== "first") return;
+    trackServer(
+      "first_real_scan",
+      {
+        plan:
+          plan ??
+          (await getPlanForScope({
+            userId: code.userId,
+            organizationId: code.organizationId,
+          })),
+      },
+      { dedupeKey: code.id, timestamp: scan.scannedAt },
+    );
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        event: "analytics.first_real_scan_failed",
+        codeId: code.id,
+        error: error instanceof Error ? error.message : String(error),
+      }),
+    );
+  }
+}
+
 let warnedNoSender = false;
 
 const logFailure = (codeId: string, error: string) =>
@@ -253,6 +306,7 @@ export async function sendFreeFirstScanEmail(
             milestones: nextMilestones(intl.locale),
           }}
           intl={intl}
+          invite={await freeInvite(maker.id)}
           location={location || null}
           recipient={maker.email}
           scannedAt={scan.scannedAt}

@@ -237,6 +237,14 @@ export interface AnalyticsEvents {
 
   // Dynamic codes and hosted pages
   dynamic_code_created: { source: "playground" | "dashboard" | "page" };
+  /**
+   * Server side: a code's first real scan, once per code, on every plan
+   * (after the maker's test window, apps/app/lib/email/first-scan.tsx;
+   * codes imported from elsewhere don't count). The activation moment: a
+   * printed code someone scanned. The plan only, nothing about the code or
+   * the scanner.
+   */
+  first_real_scan: { plan: "free" | "pro" | "business" };
   page_published: { page_type?: string };
   /** Server side, from hosted pages: a count only, nothing about the visitor. */
   form_submitted: NoProps;
@@ -383,7 +391,8 @@ export type ServerAnalyticsEventName =
   | "import_finished"
   | "import_bridge_run"
   | "domain_verified"
-  | "invite_reward_granted";
+  | "invite_reward_granted"
+  | "first_real_scan";
 
 /** `track("sign_out")` for events without required properties. */
 export type AnalyticsPropsArg<E extends AnalyticsEventName> =
