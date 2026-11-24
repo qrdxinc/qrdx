@@ -253,6 +253,31 @@ describe("sendLimitNotice", () => {
     expect(text).not.toContain("You get this");
   });
 
+  it("names the owners it goes to in its footer", async () => {
+    const alice = fakeDb.find("user", { id: "u_alice" });
+    const carol = fakeDb.find("user", { id: "u_carol" });
+    if (alice) alice.email = "alice@mail.acme.org.uk";
+    if (carol) carol.email = "carol@mail.acme.org.uk";
+    await sendLimitNotice(scope, "dynamicCodes", { used: 9, limit: 10 }, NOW);
+    const text = await render(state.sent[0]?.react as ReactElement, {
+      plainText: true,
+    });
+    expect(text).toMatch(
+      /This email was meant for (alice|carol)@mail\.acme\.org\.uk and (alice|carol)@mail\.acme\.org\.uk\./,
+    );
+  });
+
+  it("leaves reserved test addresses out of the footer: they never get email", async () => {
+    const alice = fakeDb.find("user", { id: "u_alice" });
+    if (alice) alice.email = "alice@mail.acme.org.uk";
+    await sendLimitNotice(scope, "dynamicCodes", { used: 9, limit: 10 }, NOW);
+    const text = await render(state.sent[0]?.react as ReactElement, {
+      plainText: true,
+    });
+    expect(text).toContain("This email was meant for alice@mail.acme.org.uk.");
+    expect(text).not.toContain("carol@example.com");
+  });
+
   it("frees the claim when one language's email didn't go out", async () => {
     const alice = fakeDb.find("user", { id: "u_alice" });
     if (alice) alice.locale = "es";

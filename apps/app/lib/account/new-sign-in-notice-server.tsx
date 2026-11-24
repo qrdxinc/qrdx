@@ -50,6 +50,7 @@ async function sendNewSignInAlert({
               details={details}
               intl={intl}
               method={methodLabel}
+              recipient={user.email}
             />
           ),
           tags: [{ name: "category", value: "new_sign_in" }],

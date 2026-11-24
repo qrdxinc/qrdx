@@ -1,5 +1,5 @@
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, MutedText } from "./parts";
 
 // To QRdx: a non-profit or charity asked for the non-profit discount on the
@@ -18,6 +18,11 @@ export interface NonprofitRequestEmailProps {
   accountEmail: string;
   accountId: string;
   workspace: { name: string; slug: string } | null;
+  /**
+   * Who it was meant for, in the footer. The app leaves it out: this goes
+   * to the QRdx team, and that line speaks to an account holder.
+   */
+  recipient?: string;
   /** The email's language (English: it goes to the QRdx team) */
   intl: EmailIntl;
 }
@@ -45,6 +50,7 @@ export function NonprofitRequestEmail(props: NonprofitRequestEmailProps) {
       intl={props.intl}
       preview={nonprofitRequestSubject(props.organization, props.plan)}
       reason="Sent by the non-profit discount form on the pricing page."
+      recipient={props.recipient}
     >
       <EmailHeading>Non-profit discount request</EmailHeading>
       <EmailText>
@@ -52,7 +58,6 @@ export function NonprofitRequestEmail(props: NonprofitRequestEmailProps) {
         on {props.plan}. Reply to this email to reach {props.contactEmail}.
       </EmailText>
       <DetailsTable rows={rows} />
-      <EmailDivider />
       <MutedText>
         Nothing was charged and no plan changed. Check the registration, then
         reply with a single-use Polar discount code if the organization

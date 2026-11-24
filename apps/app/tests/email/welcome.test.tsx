@@ -130,7 +130,8 @@ describe("sendWelcomeEmail", () => {
       "reply to this email. A person reads every reply.",
       "Ritesh from QRdx",
       "You're getting this because you just made a QRdx account.",
-      "Stop notes from the QRdx team",
+      "This email was meant for u_new@mail.example.org.uk.",
+      "Unsubscribe",
     ]) {
       expect(text, line).toContain(line);
     }
@@ -138,11 +139,15 @@ describe("sendWelcomeEmail", () => {
       (m[1] ?? "").replaceAll("&amp;", "&"),
     );
     expect(hrefs).toContain(new URL("/playground", baseUrl).toString());
+    // The button makes a code too.
+    expect(text).toMatch(/Make your first code \S*\/playground/);
     expect(hrefs).toContain(
       new URL("/dashboard?to=analytics", baseUrl).toString(),
     );
-    // No wordmark or card: it reads like an email from a person.
-    expect(html).not.toContain(">QR<");
+    // The frame every QRdx email shares: the logo on top, signed by a person.
+    expect(html).toMatch(
+      /<img alt="QRdx"[^>]* src="[^"]*\/email\/qrdx-logo\.png"/,
+    );
   });
 
   it("isn't sent without a personal sender: it promises a person reads replies", async () => {

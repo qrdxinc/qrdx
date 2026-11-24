@@ -137,6 +137,8 @@ describe("the enterprise contact form", () => {
     ]) {
       expect(email?.html).toContain(part);
     }
+    // It goes to the QRdx team: no "meant for" line about an account.
+    expect(email?.html).not.toContain("This email was meant for");
     expect(state.turnstileTokens).toEqual(["token-1"]);
   });
 

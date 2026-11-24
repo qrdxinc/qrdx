@@ -2,7 +2,7 @@
 //   cd apps/app && npx tsx --test lib/email/templates.test.tsx
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { render } from "@react-email/render";
+import { renderEmail } from "@repo/email/render";
 import { AbuseReportAckEmail } from "@repo/email/templates/abuse-report-ack";
 import { CodeActivityEmail } from "@repo/email/templates/code-activity";
 import {
@@ -78,22 +78,20 @@ function assertSecurityLinks(html: string, label: string) {
   assert.equal(review, 1, `${label} has one Review security button`);
 }
 
-/** Device, place, address and time, in the details table. */
+/**
+ * Device, place, address and time, in the details table (each row a table
+ * in the plain text: the label, three spaces, the value).
+ */
 function assertDetails(text: string, label: string) {
-  assert.match(text, /Device:\s+Chrome on macOS/, label);
-  assert.match(text, /Approximate location:\s+Mumbai, India/, label);
-  assert.match(text, /IP address:\s+203\.0\.113\.24/, label);
-  assert.match(text, /Time:\s+Nov 7, 2026, 3:04 PM GMT\+5:30/, label);
+  assert.match(text, /Device {3}Chrome on macOS/, label);
+  assert.match(text, /Approximate location {3}Mumbai, India/, label);
+  assert.match(text, /IP address {3}203\.0\.113\.24/, label);
+  assert.match(text, /Time {3}Nov 7, 2026, 3:04 PM GMT\+5:30/, label);
   assert.match(text, /Review security/, label);
 }
 
-async function both(element: React.ReactElement) {
-  const [html, text] = await Promise.all([
-    render(element),
-    render(element, { plainText: true }),
-  ]);
-  return { html, text };
-}
+/** The HTML and plain-text bodies, as they're sent. */
+const both = (element: React.ReactElement) => renderEmail(element);
 
 describe("email templates", () => {
   it("alert emails carry an unsubscribe link", async () => {
@@ -172,7 +170,10 @@ describe("email templates", () => {
         email.key ?? "",
       );
       assert.match(text, /Unsubscribe/);
-      assert.match(html, /QR<span[^>]*>dx<\/span>/);
+      assert.match(
+        html,
+        /<img alt="QRdx"[^>]* src="https:\/\/qrdx\.dev\/email\/qrdx-logo\.png"/,
+      );
     }
   });
 
@@ -212,7 +213,8 @@ describe("email templates", () => {
     );
     assert.match(text, /1,250/);
     assert.match(text, /Oct 26 – Nov 1/);
-    assert.match(text, /India 900/);
+    // A row of the countries list: the name, three spaces, the count.
+    assert.match(text, /India {3}900/);
     assert.equal(weekOverWeek(120, 100, ENGLISH_EMAIL), "+20% vs last week");
     assert.equal(weekOverWeek(50, 100, ENGLISH_EMAIL), "-50% vs last week");
     assert.equal(weekOverWeek(5, 0, ENGLISH_EMAIL), "New this week");
@@ -227,8 +229,16 @@ describe("email templates", () => {
         inviteUrl="https://qrdx.dev/invite/inv_1"
         inviterName="Ada"
         memberRole="admin"
+        recipient="grace@example.com"
         teamName="Acme"
       />,
+    );
+    // The footer names the invited address; the link is repeated under the
+    // button for mail apps that break buttons.
+    assert.match(invite.text, /This email was meant for grace@example\.com\./);
+    assert.match(
+      invite.html,
+      /or copy and paste this link into your browser:[\s\S]*>qrdx\.dev\/invite\/inv_1<\/a>/,
     );
     assert.match(
       invite.text,
@@ -258,10 +268,16 @@ describe("email templates", () => {
         reason="Phishing"
         reportId="rep_1"
         reported="https://qrdx.dev/q/aB3dE5f"
+        recipient="reporter@example.com"
         reportedAt="2026-10-31T10:00:00Z"
       />,
     );
     assert.match(ack.text, /We received your report/i);
+    assert.match(ack.text, /This email was meant for reporter@example\.com\./);
+    assert.match(
+      ack.text,
+      /terms of service: https:\/\/qrdx\.dev\/legal\/terms-of-service/,
+    );
     assert.match(ack.text, /rep_1/);
     assert.doesNotMatch(ack.text, /Unsubscribe/);
   });
@@ -316,7 +332,11 @@ describe("email templates", () => {
 
   it("sign-in code email shows the code and has no tracking links", async () => {
     const { html, text } = await both(
-      <SignInCodeEmail intl={ENGLISH_EMAIL} code="402871" />,
+      <SignInCodeEmail
+        intl={ENGLISH_EMAIL}
+        code="402871"
+        recipient="ada@qrdx.test"
+      />,
     );
     assert.match(text, /Your QRdx sign-in code/i);
     assert.match(text, /402871/);
@@ -326,17 +346,26 @@ describe("email templates", () => {
     assert.doesNotMatch(text, /Unsubscribe/);
     // No place known: no line about it.
     assert.doesNotMatch(text, /Someone asked to sign in from/);
+    // Who it was meant for, in the footer.
+    assert.match(text, /This email was meant for ada@qrdx\.test\./);
+    // The QRdx line prints the host once, not the host and then its URL.
+    assert.match(text, /^QRdx · qrdx\.dev$/m);
     // The code renders large and letter-spaced (still copyable as one word).
-    assert.match(html, /letter-spacing:0\.4em[^"]*"[^>]*>402871</);
-    assert.match(html, /font-size:34px/);
-    // Only the plain site links from the layout: no query strings, no pixels.
+    assert.match(html, /letter-spacing:0\.25em[^"]*"[^>]*>402871</);
+    assert.match(html, /font-size:28px/);
+    // Only the plain site links from the layout and the footer's support
+    // address: no query strings, and no image but the logo (no pixels).
     const hrefs = [...html.matchAll(/href="([^"]*)"/g)].map((m) => m[1]);
     assert.ok(hrefs.length > 0);
     for (const href of hrefs) {
+      if (href === "mailto:support@qrdx.dev") continue;
       assert.equal(new URL(href).search, "", href);
       assert.equal(new URL(href).pathname, "/", href);
     }
-    assert.doesNotMatch(html, /<img/i);
+    const images = [...html.matchAll(/<img[^>]*\ssrc="([^"]*)"/gi)].map(
+      (m) => m[1],
+    );
+    assert.deepEqual(images, ["https://qrdx.dev/email/qrdx-logo.png"]);
   });
 
   it("sign-in code email says roughly where the code was asked for", async () => {
@@ -362,7 +391,7 @@ describe("email templates", () => {
     assert.match(text, /expires in 5 minutes/);
     assert.ok(text.includes(NEVER_ASK));
     assert.match(text, /Nothing changes without the code/);
-    assert.match(html, /letter-spacing:0\.4em[^"]*"[^>]*>915273</);
+    assert.match(html, /letter-spacing:0\.25em[^"]*"[^>]*>915273</);
     const hrefs = [...html.matchAll(/href="([^"]*)"/g)].map((m) => m[1]);
     for (const href of hrefs) {
       assert.equal(new URL(href).pathname, "/", href);
@@ -482,9 +511,9 @@ describe("email templates", () => {
         kind="support-off"
       />,
     );
-    assert.match(text, /By:\s+QRdx support/);
+    assert.match(text, /By {3}QRdx support/);
     assert.match(text, /signed it out on every device/);
-    assert.match(text, /Time:\s+Nov 7, 2026/);
+    assert.match(text, /Time {3}Nov 7, 2026/);
     assert.doesNotMatch(text, /Chrome on macOS|203\.0\.113\.24|Mumbai/);
     assert.doesNotMatch(text, /If this was you/);
   });
@@ -502,8 +531,8 @@ describe("email templates", () => {
         kind="on"
       />,
     );
-    assert.match(text, /Device:\s+Unknown device/);
-    assert.match(text, /Time:\s+Nov 7, 2026, 9:34 AM UTC/);
+    assert.match(text, /Device {3}Unknown device/);
+    assert.match(text, /Time {3}Nov 7, 2026, 9:34 AM UTC/);
     assert.doesNotMatch(text, /Approximate location|IP address/);
   });
 
@@ -539,7 +568,7 @@ describe("email templates", () => {
     // Headings come out in capitals in plain text.
     assert.match(text, new RegExp(NEW_SIGN_IN_SUBJECT, "i"));
     assertDetails(text, "new sign-in");
-    assert.match(text, /Signed in with:\s+Email code, then a passkey/);
+    assert.match(text, /Signed in with {3}Email code, then a passkey/);
     assert.match(text, /If this was you, there's nothing to do/);
     assert.match(text, /Sign out everywhere else/);
     assert.match(text, /Turn on two-step verification/);
@@ -579,7 +608,7 @@ describe("email templates", () => {
     assert.ok(text.includes(NEVER_ASK));
     assertDetails(text, "confirmation code");
     assert.match(text, /If you didn't ask for this, don't enter the code/);
-    assert.match(html, /letter-spacing:0\.4em[^"]*"[^>]*>503118</);
+    assert.match(html, /letter-spacing:0\.25em[^"]*"[^>]*>503118</);
     assertSecurityLinks(html, "confirmation code");
   });
 
@@ -602,7 +631,7 @@ describe("email templates", () => {
     assert.match(near.text, /Acme is close to a plan limit/i);
     assert.match(near.text, /Acme has used 45 of 50 form responses\./);
     assert.match(near.text, /Resets Dec 1\./);
-    assert.match(near.text, /Form responses:\s+45 of 50/);
+    assert.match(near.text, /Form responses {3}45 of 50/);
     assert.match(
       near.html,
       /href="https:\/\/qrdx\.dev\/dashboard\/acme\/settings\/usage"/,

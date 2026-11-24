@@ -9495,9 +9495,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "Email ini ditujukan untuk <strong>{email}</strong>. Jika Anda tidak mengharapkannya, abaikan saja. Jika Anda khawatir dengan keamanan akun Anda, <link>beri tahu kami</link>.",
       "sentFor": "Dikirim untuk {name} oleh <link>{host}</link>",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "Berhenti berlangganan"
+      "unsubscribe": "Berhenti berlangganan",
+      "settings": "Ubah email yang Anda terima",
+      "copyLink": "atau salin dan tempel tautan ini ke browser Anda:"
     },
     "codes": {
       "neverAsk": "QRdx tidak akan pernah meminta kode ini melalui telepon, chat, atau email.",
@@ -9719,8 +9722,7 @@
         "viewer": "Pengamat melihat kode, halaman, dan analitik ruang kerja tanpa mengubah apa pun."
       },
       "accept": "Terima undangan",
-      "expires": "Masuk dengan alamat email ini untuk menerima. Undangan berakhir pada {date}. Jika Anda tidak mengharapkannya, abaikan saja email ini.",
-      "pasteLink": "Atau tempel tautan ini di browser Anda: {url}",
+      "expires": "Masuk dengan alamat email ini untuk menerima undangan. Undangan berakhir pada {date}.",
       "someone": "Rekan tim"
     },
     "portalInvite": {
@@ -9729,8 +9731,7 @@
       "heading": "Laporan kode QR Anda",
       "body": "{hasFolders, select, yes {{inviter} mengundang Anda untuk melihat kode QR milik {portal} di {folders}: seberapa sering tiap kode dipindai, di mana dan pada perangkat apa, serta halaman yang dibuka. Hanya bisa dilihat.} other {{inviter} mengundang Anda untuk melihat kode QR milik {portal}: seberapa sering tiap kode dipindai, di mana dan pada perangkat apa, serta halaman yang dibuka. Hanya bisa dilihat.}}",
       "open": "Buka laporan",
-      "signIn": "Masuk dengan alamat email ini: kami akan mengirimkan kode sekali pakai. Jika Anda tidak mengharapkannya, abaikan saja.",
-      "pasteLink": "Atau tempel tautan ini di browser Anda: {url}",
+      "signIn": "Masuk dengan alamat email ini: kami akan mengirimkan kode sekali pakai kepada Anda.",
       "yourAgency": "Agensi Anda"
     },
     "limitNotice": {
@@ -9779,11 +9780,14 @@
       "sameAsLastWeek": "Sama seperti minggu lalu",
       "change": "{change} dibanding minggu lalu",
       "topCodes": "Kode teratas",
+      "code": "Kode",
       "countries": "Dari mana orang memindai",
+      "country": "Negara",
       "newCodesLine": "{count, plural, other {# kode baru}} minggu ini.",
       "open": "Buka dasbor Anda"
     },
     "personal": {
+      "meantFor": "Email ini ditujukan untuk <strong>{email}</strong>.",
       "reply": "Balas email ini dan balasan Anda akan sampai ke {name}.",
       "stop": "Berhenti menerima catatan dari tim QRdx"
     },
@@ -9798,6 +9802,7 @@
       "makeCode": "<link>Buat kode dinamis.</link> Kode ini membuka tautan pendek yang tidak berubah, sehingga bisa langsung Anda cetak.",
       "seeScans": "<link>Lihat pemindaiannya:</link> kapan, di mana, dan dari perangkat apa orang memindainya.",
       "changeLink": "Ubah tujuan tautannya kapan pun Anda mau, bahkan setelah dicetak. Tanpa cetak ulang.",
+      "button": "Buat kode pertama Anda",
       "free": "Kode QR statis tetap gratis, dan kode yang Anda buat tetap berfungsi meskipun Anda berganti paket atau berhenti membayar. Paket Gratis juga mencakup {count} kode QR dinamis.",
       "pro": "Jika Anda membutuhkan lebih, Pro seharga {monthly} per bulan atau {yearly} per tahun, dengan tambahan kode dinamis tanpa batas, {domains} domain kustom, peringatan email di setiap tonggak pemindaian, serta ringkasan mingguan jika Anda menginginkannya.",
       "taxes": "Pajak setempat mungkin ditambahkan saat pembayaran.",
