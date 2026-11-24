@@ -25,7 +25,6 @@ const DESCRIPTIONS: Record<string, string> = {
     "Pick a file or folder. QRdx creates its shared link, or reuses the one it already has.",
   onedrive:
     "Pick a file or folder. QRdx creates a view-only link that anyone can open.",
-  box: "Pick a file or folder. QRdx turns on its shared link for anyone with the link.",
   notion:
     "Pages you shared with QRdx. Anyone can open a page once it's published to the web.",
 };

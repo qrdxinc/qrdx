@@ -8,7 +8,6 @@ import {
   verifyShortLinkCredentials,
 } from "../src/capabilities/factory";
 import { BitlyClient } from "../src/integrations/bitly/client";
-import { BoxClient } from "../src/integrations/box/client";
 import { DropboxClient } from "../src/integrations/dropbox/client";
 import { NotionClient } from "../src/integrations/notion/client";
 import { OneDriveClient } from "../src/integrations/onedrive/client";
@@ -33,7 +32,6 @@ describe("capability factory", () => {
     expect(createFilePickerClient("onedrive", "t")).toBeInstanceOf(
       OneDriveClient
     );
-    expect(createFilePickerClient("box", "t")).toBeInstanceOf(BoxClient);
     expect(createFilePickerClient("notion", "t")).toBeInstanceOf(NotionClient);
   });
 
@@ -87,8 +85,16 @@ describe("capability factory", () => {
   });
 
   it("reads file picker account details from the API", async () => {
-    mockFetch(json({ id: "7", name: "Ana", login: "ana@acme.com" }));
-    await expect(fetchConnectedAccountMetadata("box", "t")).resolves.toEqual({
+    mockFetch(
+      json({
+        account_id: "7",
+        name: { display_name: "Ana" },
+        email: "ana@acme.com",
+      })
+    );
+    await expect(
+      fetchConnectedAccountMetadata("dropbox", "t")
+    ).resolves.toEqual({
       accountId: "7",
       name: "Ana",
       email: "ana@acme.com",
@@ -97,27 +103,23 @@ describe("capability factory", () => {
   });
 
   it("revokes where supported", async () => {
-    const { calls } = mockFetch(json(null), new Response(null), json({}));
+    const { calls } = mockFetch(json(null), json({}));
     const client = { clientId: "id", clientSecret: "secret" };
     await expect(
       revokeProviderToken("dropbox", { accessToken: "a" })
-    ).resolves.toBe(true);
-    await expect(
-      revokeProviderToken("box", { accessToken: "a" }, client)
     ).resolves.toBe(true);
     await expect(
       revokeProviderToken("notion", { accessToken: "a" }, client)
     ).resolves.toBe(true);
     expect(calls.map((call) => new URL(call.url).hostname)).toEqual([
       "api.dropboxapi.com",
-      "api.box.com",
       "api.notion.com",
     ]);
     await expect(
       revokeProviderToken("bitly", { accessToken: "a" })
     ).resolves.toBe(false);
     await expect(
-      revokeProviderToken("box", { accessToken: "a" })
+      revokeProviderToken("notion", { accessToken: "a" })
     ).resolves.toBe(false);
   });
 });

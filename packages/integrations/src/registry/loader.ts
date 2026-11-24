@@ -1,6 +1,5 @@
 import { CANONICAL_ORIGIN } from "@repo/config";
 import { bitlyIntegration } from "../integrations/bitly/config";
-import { boxIntegration } from "../integrations/box/config";
 import { calcomIntegration } from "../integrations/calcom/config";
 import { calendlyIntegration } from "../integrations/calendly/config";
 import { dropboxIntegration } from "../integrations/dropbox/config";
@@ -72,7 +71,6 @@ export function registerAllIntegrations(): void {
   // File and page pickers
   registry.register(dropboxIntegration);
   registry.register(oneDriveIntegration);
-  registry.register(boxIntegration);
   registry.register(notionIntegration);
 
   // Content sources
@@ -129,7 +127,6 @@ export const INTEGRATION_ENV_VARS: Record<string, IntegrationEnvVars> = {
     clientId: "MICROSOFT_CLIENT_ID",
     clientSecret: "MICROSOFT_CLIENT_SECRET",
   },
-  box: { clientId: "BOX_CLIENT_ID", clientSecret: "BOX_CLIENT_SECRET" },
   notion: {
     clientId: "NOTION_CLIENT_ID",
     clientSecret: "NOTION_CLIENT_SECRET",

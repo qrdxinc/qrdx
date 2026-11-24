@@ -43,8 +43,6 @@ const ENV = {
   DROPBOX_CLIENT_SECRET: "dbx-secret",
   MICROSOFT_CLIENT_ID: "ms-id",
   MICROSOFT_CLIENT_SECRET: "ms-secret",
-  BOX_CLIENT_ID: "box-id",
-  BOX_CLIENT_SECRET: "box-secret",
   NOTION_CLIENT_ID: "ntn-id",
   NOTION_CLIENT_SECRET: "ntn-secret",
 };
@@ -116,14 +114,6 @@ describe("authorization URLs", () => {
     );
     expect(notion.searchParams.get("owner")).toBe("user");
     expect(notion.searchParams.has("scope")).toBe(false);
-  });
-
-  it("Box asks only for root_readwrite", () => {
-    const url = new URL(
-      createOAuthHandler(getConfig("box")).generateAuthUrl("v", "s")
-    );
-    expect(url.searchParams.get("scope")).toBe("root_readwrite");
-    expect(url.searchParams.has("code_challenge")).toBe(false);
   });
 });
 
@@ -219,23 +209,7 @@ describe("token refresh (core/token-refresh)", () => {
     );
   });
 
-  it("stores Box's rotated refresh token, encrypted", async () => {
-    storeRow("box", "box-r1");
-    mockFetch(
-      json({
-        access_token: "box-a2",
-        refresh_token: "box-r2",
-        expires_in: 3600,
-        token_type: "bearer",
-      })
-    );
-    await refreshIntegrationToken("int_1", getConfig);
-    const update = db.updates[0] ?? {};
-    expect(update.refreshToken).not.toBe("box-r2");
-    expect(decryptApiKey(update.refreshToken as string)).toBe("box-r2");
-  });
-
-  it("refreshes Microsoft tokens at the v2.0 endpoint", async () => {
+  it("refreshes Microsoft tokens at the v2.0 endpoint and stores the rotated refresh token, encrypted", async () => {
     storeRow("onedrive", "ms-r1");
     const { calls } = mockFetch(
       json({
@@ -249,6 +223,9 @@ describe("token refresh (core/token-refresh)", () => {
     expect(calls[0]?.url).toBe(
       "https://login.microsoftonline.com/common/oauth2/v2.0/token"
     );
+    const update = db.updates[0] ?? {};
+    expect(update.refreshToken).not.toBe("ms-r2");
+    expect(decryptApiKey(update.refreshToken as string)).toBe("ms-r2");
   });
 
   it("marks the integration as errored when refresh fails, without leaking tokens", async () => {
@@ -269,8 +246,8 @@ describe("loader", () => {
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv("VERCEL_PROJECT_PRODUCTION_URL", "");
     vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://qrdx.dev/");
-    expect(getConfig("box").redirectUri).toBe(
-      "https://qrdx.dev/api/integrations/box/callback"
+    expect(getConfig("onedrive").redirectUri).toBe(
+      "https://qrdx.dev/api/integrations/onedrive/callback"
     );
   });
 

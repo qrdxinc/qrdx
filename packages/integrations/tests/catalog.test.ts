@@ -49,7 +49,6 @@ describe("catalog surfaces", () => {
         "google-drive",
         "dropbox",
         "onedrive",
-        "box",
         "notion",
         "stripe",
         "shopify",
