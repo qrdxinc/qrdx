@@ -9071,7 +9071,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "Novedades",
         "backToLabel": "Volver a {label}",
         "expandSidebar": "Expandir barra lateral",
         "collapseSidebar": "Contraer barra lateral",

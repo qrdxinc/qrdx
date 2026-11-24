@@ -9471,7 +9471,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "What's new",
         "backToLabel": "Back to {label}",
         "expandSidebar": "Expand sidebar",
         "collapseSidebar": "Collapse sidebar",

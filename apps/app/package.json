@@ -73,6 +73,7 @@
     "bcryptjs": "^3.0.2",
     "bwip-js": "4.11.4",
     "class-variance-authority": "^0.7.1",
+    "country-flag-icons": "1.6.20",
     "cuid": "^3.0.0",
     "drizzle-orm": "^0.45.4",
     "dub": "^0.75.0",

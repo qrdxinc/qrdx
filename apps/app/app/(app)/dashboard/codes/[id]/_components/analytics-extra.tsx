@@ -20,6 +20,10 @@ import {
   displayUrl,
   formatNumber,
 } from "@/app/(app)/dashboard/codes/_components/format";
+import {
+  languageMark,
+  targetMark,
+} from "@/app/(app)/dashboard/codes/_lib/breakdown-marks";
 import { ConversionsCard } from "@/ee/conversions/analytics-cards";
 import { getConversionSummary } from "@/ee/conversions/queries";
 import { isFeatureAvailable } from "@/lib/feature-availability";
@@ -238,6 +242,7 @@ export function LanguagesCard({ languages }: { languages: LanguageBreakdown }) {
           ? `${languageName(row.value)} (${row.value})`
           : t("unknown"),
         count: row.count,
+        mark: languageMark(row.value),
       }))}
       title={t("languages")}
       total={languages.total}
@@ -268,6 +273,7 @@ function PageEventsCard({ events }: { events: PageEventSummary }) {
         items={events.targets.map((row) => ({
           label: row.value ? displayUrl(row.value) : t("unknown"),
           count: row.count,
+          mark: targetMark(row.value),
         }))}
         title={t("mostTapped")}
         total={events.interactions}

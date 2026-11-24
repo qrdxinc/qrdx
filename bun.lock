@@ -61,6 +61,7 @@
         "bcryptjs": "^3.0.2",
         "bwip-js": "4.11.4",
         "class-variance-authority": "^0.7.1",
+        "country-flag-icons": "1.6.20",
         "cuid": "^3.0.0",
         "drizzle-orm": "^0.45.4",
         "dub": "^0.75.0",
@@ -2952,6 +2953,8 @@
     "cose-base": ["cose-base@1.0.3", "", { "dependencies": { "layout-base": "1.0.2" } }, "sha512-s9whTXInMSgAp/NVXVNuVxVKzGH2qck3aQlVHxDCdAEPgtMKwc4Wq6/QKhgdEdgbLSi9rBTAcPoRa6JpiG4ksg=="],
 
     "cosmiconfig": ["cosmiconfig@9.0.1", "", { "dependencies": { "env-paths": "2.2.1", "import-fresh": "3.3.1", "js-yaml": "4.3.2", "parse-json": "5.2.0" }, "peerDependencies": { "typescript": ">=4.9.5" }, "optionalPeers": ["typescript"] }, "sha512-hr4ihw+DBqcvrsEDioRO31Z17x71pUYoNe/4h6Z0wB72p7MU7/9gH8Q3s12NFhHPfYBBOV3qyfUxmr/Yn3shnQ=="],
+
+    "country-flag-icons": ["country-flag-icons@1.6.20", "", {}, "sha512-py8JiEKzjhYw6HPJ0L7SxLgCYim36UPRTZX43/kqGueUCZLSvnrqAiwW8HtQibur7mdkFQUkjOgdK+o/9FBtaw=="],
 
     "cpu-features": ["cpu-features@0.0.10", "", { "dependencies": { "buildcheck": "0.0.7", "nan": "2.30.0" }, "hasInstallScript": true }, "sha512-9IkYqtX3YHPCzoVg1Py+o9057a3i0fp7S530UWokCSaFVTc7CwXPRiOjRjBQQ18ZCNafx78YfnG+HALxtVmOGA=="],
 

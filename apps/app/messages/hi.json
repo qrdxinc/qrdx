@@ -9071,7 +9071,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "नया क्या है",
         "backToLabel": "{label} पर वापस जाएँ",
         "expandSidebar": "साइडबार फैलाएँ",
         "collapseSidebar": "साइडबार समेटें",
