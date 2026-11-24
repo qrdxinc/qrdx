@@ -113,8 +113,6 @@ export function isRetryableSyncError(error: unknown): boolean {
 /** Text for the dashboard and logs: provider and status, no response body. */
 export function describeSyncError(error: unknown): string {
   if (isIntegrationApiError(error)) {
-    // The client's own safe wording (Salesforce's record errors) says more.
-    if (error.detail) return error.detail.slice(0, 300);
     const labels: Record<string, string> = {
       unauthorized: "the connection was rejected; reconnect the account",
       forbidden: "the account doesn't allow this",

@@ -320,7 +320,6 @@ const DATA_OAUTH_PROVIDERS = new Set([
   "slack",
   "hubspot",
   "mailchimp",
-  "salesforce",
 ]);
 
 /**
@@ -379,9 +378,7 @@ export async function prepareDataConnect(
     }
     const accessToken = String(tokenData.access_token ?? "");
     let metadata: Record<string, unknown> | null = null;
-    // Salesforce's org address comes from the token response, not a call,
-    // and every later call needs it.
-    if (dataCallsAllowed() || provider === "salesforce") {
+    if (dataCallsAllowed()) {
       metadata = await fetchDataAccountMetadata(
         provider,
         accessToken,
@@ -472,7 +469,6 @@ export async function cleanupDataConnection(
         refreshToken: connection.refreshToken,
       },
       client,
-      connection.metadata,
     );
   } catch (error) {
     console.error(

@@ -92,12 +92,9 @@ export async function GET(request: Request, context: RouteContext) {
       }
 
       try {
-        // Optional same-site path to come back to (validated when stored),
-        // and the sign-in host for providers that offer more than one
-        // (`variant=sandbox` for Salesforce sandboxes)
+        // Optional same-site path to come back to (validated when stored)
         const authUrl = await createIntegrationAuthUrl(provider, {
           returnTo: searchParams.get("returnTo"),
-          variant: searchParams.get("variant"),
         });
         return NextResponse.json({ url: authUrl });
       } catch (error) {

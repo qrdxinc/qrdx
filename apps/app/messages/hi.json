@@ -6788,10 +6788,7 @@
           "failedToConnectIntegration": "इंटीग्रेशन कनेक्ट नहीं हो सका",
           "nameDisconnectedAndQrdxsAccess": "{name} डिस्कनेक्ट हो गया और QRdx का एक्सेस हटा दिया गया",
           "nameDisconnected": "{name} डिस्कनेक्ट हो गया",
-          "failedToDisconnectIntegration": "इंटीग्रेशन डिस्कनेक्ट नहीं हो सका",
-          "salesforceOrgType": "Salesforce org का प्रकार",
-          "production": "Production",
-          "sandbox": "Sandbox"
+          "failedToDisconnectIntegration": "इंटीग्रेशन डिस्कनेक्ट नहीं हो सका"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "फ़ॉर्म के जवाब {name} को भेजें",
@@ -6829,12 +6826,7 @@
           "loadMorePages": "और पेज लोड करें",
           "loadingPages": "पेज लोड हो रहे हैं…",
           "tryAgain": "फिर कोशिश करें",
-          "couldntLoadMorePages": "और पेज लोड नहीं हो सके। फिर कोशिश करें।",
-          "newResponsesCreateOrUpdateLead": "नए जवाबों से एक लीड बनती है, या उसी ईमेल वाली खुली लीड अपडेट हो जाती है। सिर्फ़ वे मैप किए गए सवाल भेजे जाते हैं जिनका जवाब दिया गया है।",
-          "leads": "लीड",
-          "leadSource": "लीड सोर्स",
-          "leadSourceHelp": "यह QRdx से बनने वाली लीड पर सेट होता है। अपनी Lead Source पिकलिस्ट की कोई वैल्यू इस्तेमाल करें, या कोई वैल्यू न देने के लिए इसे खाली छोड़ दें।",
-          "salesforceOrg": "{environment, select, sandbox {Sandbox org} other {Production org}}: {host}"
+          "couldntLoadMorePages": "और पेज लोड नहीं हो सके। फिर कोशिश करें।"
         },
         "slackBotPanel": {
           "qrdxBot": "QRdx बॉट",

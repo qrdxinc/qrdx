@@ -83,7 +83,6 @@ export const DATA_OUT_PROVIDERS = [
   "google-sheets",
   "hubspot",
   "mailchimp",
-  "salesforce",
   "slack",
 ] as const;
 

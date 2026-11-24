@@ -1,8 +1,7 @@
 // Connecting a tool that QRdx sends the account's data to asks "Confirm it's
 // you" (lib/data-connections/connect-confirmation.ts), as pasting a Slack or
 // Discord webhook does: Slack (each channel gets form answers and scan
-// milestones) and the data-out syncs, Google Sheets, HubSpot, Mailchimp and
-// Salesforce.
+// milestones) and the data-out syncs, Google Sheets, HubSpot and Mailchimp.
 // Every way their sign-in starts checks it: "Add to Slack"
 // (app/api/integrations/slack/install), Enable and Reconnect
 // (connectIntegrationAction) and GET /api/integrations/<provider>?action=connect.
@@ -94,13 +93,7 @@ const { connectIntegrationAction } = await import(
 );
 
 const REQUIRED = { ok: false, error: "CONFIRMATION_REQUIRED" };
-const DATA_OUT = [
-  "slack",
-  "google-sheets",
-  "hubspot",
-  "mailchimp",
-  "salesforce",
-];
+const DATA_OUT = ["slack", "google-sheets", "hubspot", "mailchimp"];
 
 const confirm = () =>
   recordConfirmation({ userId: "user_1", sessionId: "session_1" });
