@@ -619,7 +619,7 @@
       }
     },
     "cards": {
-      "popular": "Popular",
+      "recommended": "Recommended",
       "leadPro": "Everything in Free, plus:",
       "leadBusiness": "Everything in Pro, plus:",
       "goToDashboard": "Go to dashboard",

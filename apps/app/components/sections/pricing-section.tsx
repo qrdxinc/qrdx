@@ -540,18 +540,19 @@ export function PricingSection({
         {/* The Pro card (the middle one, also when stacked) sits in a soft light. */}
         <RadialHalo className="-inset-y-32" width={760} height={1000} />
         {cards.map(({ plan, lead, action }) => {
-          const popular = plan === "pro";
+          // The plan QRdx recommends for most people who print a code.
+          const recommended = plan === "pro";
           return (
             <Card
               className={cn(
                 "relative p-6",
-                popular
+                recommended
                   ? "border-foreground/20 shadow-lg shadow-black/[0.06] dark:border-white/20 dark:bg-accent/60 dark:shadow-black/40"
                   : "bg-muted/40 shadow-none dark:bg-card",
               )}
               key={plan}
             >
-              {popular && (
+              {recommended && (
                 <span
                   aria-hidden
                   className="pointer-events-none absolute inset-x-10 -top-px h-px bg-gradient-to-r from-transparent via-foreground/60 to-transparent"
@@ -560,7 +561,7 @@ export function PricingSection({
               <div className="flex flex-col gap-1.5">
                 <h2 className="flex items-center gap-2 text-lg font-semibold tracking-tight">
                   {planName(plan)}
-                  {popular && <Badge>{t("cards.popular")}</Badge>}
+                  {recommended && <Badge>{t("cards.recommended")}</Badge>}
                 </h2>
                 <p className="text-sm text-muted-foreground">
                   {t(`tiers.${plan}.tagline`)}
