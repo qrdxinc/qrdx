@@ -139,17 +139,15 @@ function newPhones(
 }
 
 /**
- * The person's id, and whether this call created them (a person created a
- * moment ago has no leads yet). `known` holds the people this worker run has
- * already found or created: Pipedrive's search can lag behind a create, so an
- * email seen in an earlier batch of the run is never searched (and created)
- * again.
+ * The person's id. `known` holds the people this worker run has already found
+ * or created: Pipedrive's search can lag behind a create, so an email seen in
+ * an earlier batch of the run is never searched (and created) again.
  */
 async function upsertPerson(
   client: PipedriveClient,
   person: PipedrivePerson,
   known: Map<string, number>
-): Promise<{ id: number; created: boolean }> {
+): Promise<number> {
   // The latest answer wins: the last response that gave a name
   const name = [...person.entries].reverse().find((entry) => entry.name)?.name;
   const id =
@@ -161,7 +159,7 @@ async function upsertPerson(
       phones: newPhones(person.entries, []),
     });
     known.set(person.email, createdId);
-    return { id: createdId, created: true };
+    return createdId;
   }
   known.set(person.email, id);
   // The person was found by this email, so their emails stay as they are. A
@@ -188,19 +186,37 @@ async function upsertPerson(
       ...(phones ? { phones } : {}),
     });
   }
-  return { id, created: false };
+  return id;
+}
+
+export interface PipedriveSyncOptions {
+  /**
+   * Email → person id, shared by every batch of one worker run and filled as
+   * people are found or created.
+   */
+  knownPeople?: Map<string, number>;
+  /**
+   * The responses that already got their lead in an earlier attempt at this
+   * batch (QRdx's own record: see `onLeadCreated`). They get no second one.
+   */
+  leadsMade?: ReadonlySet<string>;
+  /**
+   * Called right after Pipedrive created a response's lead, for the caller to
+   * record it before anything else can fail.
+   */
+  onLeadCreated?: (responseId: string) => Promise<void>;
+  sleep?: (ms: number) => Promise<void>;
 }
 
 /**
  * Creates or updates a person for each email in the responses and, with
- * `createLead`, one lead per response. Safe to send again, however the last
- * attempt ended ("Retry now", a backoff retry, a worker stopped mid-batch): a
- * person is found by email, and before adding leads to a person who already
- * existed, their leads (open and archived) are read, and a response that has
- * one (its `origin_id` is the response id) is not given another.
+ * `createLead`, one lead per response.
  *
- * `knownPeople` (email → person id) is shared by every batch of one worker
- * run; it is filled as people are found or created.
+ * Safe to send again, however the last attempt ended ("Retry now", a backoff
+ * retry, a worker stopped mid-batch): a person is found by email, and a lead
+ * is only added for a response that isn't in `leadsMade`. Pipedrive can't
+ * answer that itself: it replaces the `origin_id` an OAuth app sends with the
+ * app's own client id, so a lead can't be traced back to its response there.
  */
 export async function syncResponsesToPipedrive(
   client: PipedriveClient,
@@ -208,33 +224,24 @@ export async function syncResponsesToPipedrive(
   responses: SinkFormResponse[],
   {
     knownPeople = new Map<string, number>(),
+    leadsMade = new Set<string>(),
+    onLeadCreated = async () => undefined,
     sleep = (ms: number) => new Promise<void>((done) => setTimeout(done, ms)),
-  }: {
-    knownPeople?: Map<string, number>;
-    sleep?: (ms: number) => Promise<void>;
-  } = {}
+  }: PipedriveSyncOptions = {}
 ): Promise<SinkDeliveryResult> {
   const { people, skipped } = pipedrivePeople(responses, settings);
   let delivered = 0;
   for (const [index, person] of people.entries()) {
     if (index > 0) await sleep(PIPEDRIVE_SEARCH_SPACING_MS);
-    const { id: personId, created } = await upsertPerson(
-      client,
-      person,
-      knownPeople
-    );
+    const personId = await upsertPerson(client, person, knownPeople);
     if (settings.createLead) {
-      // A person created just now has no leads to read back
-      const have = created
-        ? new Set<string>()
-        : await client.listLeadOrigins(personId);
       for (const entry of person.entries) {
-        if (have.has(entry.response.id)) continue;
+        if (leadsMade.has(entry.response.id)) continue;
         await client.createLead({
           title: pipedriveLeadTitle(entry, person.email),
           personId,
-          originId: entry.response.id,
         });
+        await onLeadCreated(entry.response.id);
       }
     }
     delivered += person.entries.length;

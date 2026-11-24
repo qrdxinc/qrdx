@@ -5,15 +5,6 @@ export const PIPEDRIVE_REVOKE_URL = "https://oauth.pipedrive.com/oauth/revoke";
 
 /** One label of letters, digits and dashes in front of pipedrive.com. */
 const API_HOST = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.pipedrive\.com$/;
-/** Leads read back per page (Pipedrive's default, and its largest). */
-const LEADS_PAGE_SIZE = 100;
-/** Pages read per lead list; a person with more can't be checked for duplicates. */
-const MAX_LEAD_PAGES = 50;
-/**
- * The two lead lists: GET /v1/leads returns only leads that aren't archived,
- * so archived ones are read from their own list.
- */
-const LEAD_LISTS = ["/api/v1/leads", "/api/v1/leads/archived"] as const;
 /** The longest `term` /v2/persons/search takes (maxLength in Pipedrive's spec). */
 export const PIPEDRIVE_MAX_SEARCH_TERM = 100;
 /** Search results read per call; the oldest person (lowest id) is used. */
@@ -77,11 +68,6 @@ function unexpected(what: string): never {
     message: `Pipedrive sent a ${what} QRdx didn't expect.`,
   });
 }
-
-const pageNumber = (value: unknown, fallback: number, min: number): number =>
-  typeof value === "number" && Number.isInteger(value) && value >= min
-    ? value
-    : fallback;
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
@@ -231,86 +217,18 @@ export class PipedriveClient {
   }
 
   /**
-   * The `origin_id` of every lead on a person (the QRdx response ids), from
-   * both the open and the archived list, so archiving a lead doesn't let it be
-   * added again.
+   * A lead on the person. No `origin_id` is sent: for a lead an OAuth app
+   * creates, Pipedrive stores the app's client id there instead (checked on a
+   * sandbox account), so it can't carry the response id. QRdx keeps its own
+   * record of which responses got a lead (see syncResponsesToPipedrive).
    */
-  async listLeadOrigins(personId: number): Promise<Set<string>> {
-    const origins = new Set<string>();
-    for (const list of LEAD_LISTS) {
-      await this.collectLeadOrigins(list, personId, origins);
-    }
-    return origins;
-  }
-
-  private async collectLeadOrigins(
-    list: (typeof LEAD_LISTS)[number],
-    personId: number,
-    origins: Set<string>
-  ): Promise<void> {
-    let start = 0;
-    for (let page = 0; page < MAX_LEAD_PAGES; page++) {
-      const query = new URLSearchParams({
-        person_id: String(personId),
-        limit: String(LEADS_PAGE_SIZE),
-        start: String(start),
-      });
-      const body = await this.request(`${list}?${query}`);
-      const data = dataOf(body, "lead list");
-      // A list endpoint may send null rather than [] when there is nothing
-      const leads = data === null ? [] : data;
-      if (!Array.isArray(leads)) unexpected("lead list");
-      for (const lead of leads) {
-        if (!isRecord(lead)) unexpected("lead list");
-        if (typeof lead.origin_id === "string") origins.add(lead.origin_id);
-      }
-      // Pipedrive's leads lists page with a flat additional_data:
-      // { start, limit, more_items_in_collection }.
-      const extra = isRecord(body) ? body.additional_data : undefined;
-      const more = isRecord(extra) ? extra.more_items_in_collection : undefined;
-      if (typeof more !== "boolean") {
-        // Without it, only a page that held fewer than the limit is known to
-        // be the last one.
-        if (leads.length < LEADS_PAGE_SIZE) return;
-        unexpected("lead list");
-      }
-      if (!more) return;
-      const at = pageNumber(
-        isRecord(extra) ? extra.start : undefined,
-        start,
-        0
-      );
-      const size = pageNumber(
-        isRecord(extra) ? extra.limit : undefined,
-        LEADS_PAGE_SIZE,
-        1
-      );
-      // Always forward, so a confused answer can't loop on one page
-      if (at + size <= start) unexpected("lead list");
-      start = at + size;
-    }
-    throw new IntegrationApiError({
-      provider: PROVIDER.slug,
-      status: 200,
-      code: "bad_request",
-      message:
-        "Pipedrive has too many leads on this person to check for duplicates.",
-    });
-  }
-
-  /** A lead on the person; `originId` ties it to the QRdx response. */
-  async createLead(input: {
-    title: string;
-    personId: number;
-    originId: string;
-  }): Promise<void> {
+  async createLead(input: { title: string; personId: number }): Promise<void> {
     dataOf(
       await this.request("/api/v1/leads", {
         method: "POST",
         body: JSON.stringify({
           title: input.title.slice(0, MAX_TITLE_LENGTH),
           person_id: input.personId,
-          origin_id: input.originId,
         }),
       }),
       "new lead"

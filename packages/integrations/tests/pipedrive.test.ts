@@ -42,60 +42,68 @@ import {
 } from "./helpers";
 
 // The response bodies below follow the examples and schemas in Pipedrive's
-// OpenAPI files (developers.pipedrive.com/docs/api/v1/openapi-v2.yaml for
-// persons and search, openapi.yaml for leads), with fake ids and emails. A
-// response from a real sandbox account replaces them if one differs.
+// OpenAPI files (openapi-v2.yaml for persons and search, openapi.yaml for
+// leads), checked against a real developer sandbox: the search, new-person,
+// person and new-lead shapes matched. The sandbox also showed that Pipedrive
+// replaces the origin_id an OAuth app sends on a lead with the app's client id
+// (origin "Marketplace"), which is why leads are de-duplicated by QRdx's own
+// record rather than by reading them back. Ids and emails here are fake.
 
 const DOMAIN = "https://acme.pipedrive.com";
 const TOKEN = "pd-access-token";
+const CLIENT_ID = "0123456789abcdef";
 
 const search = (...ids: number[]) =>
   json({
     success: true,
-    data: { items: ids.map((id) => ({ result_score: 1, item: { id } })) },
+    data: {
+      items: ids.map((id) => ({
+        result_score: 1,
+        item: { id, type: "person", name: `Person ${id}` },
+      })),
+    },
     additional_data: { next_cursor: null },
   });
 const created = (id: number) => json({ success: true, data: { id } });
 const person = (phones: Array<{ value: string; primary: boolean }> = []) =>
   json({ success: true, data: { id: 7, phones } });
 const updated = () => json({ success: true, data: { id: 7 } });
+/** POST /v1/leads as an OAuth app gets it back: origin_id is the client id. */
 const leadCreated = () =>
-  json({ success: true, data: { id: "c9a1f2e4-0000-4000-8000-000000000001" } });
-/** A page of GET /v1/leads or /v1/leads/archived: a flat additional_data. */
-const leads = (
-  origins: Array<string | null>,
-  additional: Record<string, unknown> = {
-    start: 0,
-    limit: 100,
-    more_items_in_collection: false,
-  }
-) =>
-  json({
-    success: true,
-    data: origins.map((origin_id, index) => ({
-      id: `adf21080-0e10-11eb-879b-05d71fb426e${index}`,
-      title: "Spring: Ada Lovelace",
-      person_id: 7,
-      source_name: "API",
-      origin: "API",
-      origin_id,
-      is_archived: false,
-    })),
-    additional_data: additional,
-  });
-/** A person's leads, open then archived, as listLeadOrigins reads them. */
-const leadLists = (
-  open: Array<string | null> = [],
-  archived: Array<string | null> = []
-) => [leads(open), leads(archived)];
-const isLeadRead = (call: RecordedCall) =>
-  call.method === "GET" && call.url.includes("/api/v1/leads");
+  json(
+    {
+      success: true,
+      data: {
+        id: "8918aea0-e806-11f1-9c6d-875f879429ab",
+        title: "Form response",
+        person_id: 7,
+        source_name: "API",
+        origin: "Marketplace",
+        origin_id: CLIENT_ID,
+      },
+    },
+    201
+  );
 const isLeadPost = (call: RecordedCall) =>
   call.method === "POST" && call.url.endsWith("/api/v1/leads");
-const leadOrigins = (calls: RecordedCall[]) =>
+const leadTitles = (calls: RecordedCall[]) =>
   calls
     .filter(isLeadPost)
-    .map((call) => (bodyOf(call) as { origin_id: string }).origin_id);
+    .map((call) => (bodyOf(call) as { title: string }).title);
+/** A stand-in for the worker's record of leads made (metadata.pipedriveLeadsMade). */
+function leadRecord(made: string[] = []) {
+  const recorded: string[] = [];
+  const leadsMade = new Set(made);
+  return {
+    recorded,
+    leadsMade,
+    onLeadCreated: (responseId: string) => {
+      recorded.push(responseId);
+      leadsMade.add(responseId);
+      return Promise.resolve();
+    },
+  };
+}
 
 const answer = (
   id: string,
@@ -315,145 +323,21 @@ describe("Pipedrive client", () => {
     expect(bodyOf(calls[0])).toEqual({ name: "Ada King" });
   });
 
-  it("reads a person's open leads, then their archived ones", async () => {
-    const { calls } = mockFetch(leads(["r1", null]), leads(["r9"]));
-    const origins = await client().listLeadOrigins(7);
-    // Leads without an origin (made by hand in Pipedrive) are ignored
-    expect([...origins].sort()).toEqual(["r1", "r9"]);
-    const [open, archived] = calls.map((call) => new URL(call.url));
-    expect(open?.origin).toBe(DOMAIN);
-    expect(open?.pathname).toBe("/api/v1/leads");
-    expect(archived?.pathname).toBe("/api/v1/leads/archived");
-    for (const url of [open, archived]) {
-      expect(Object.fromEntries(url?.searchParams ?? [])).toEqual({
-        person_id: "7",
-        limit: "100",
-        start: "0",
-      });
-    }
-    expect(calls.every((call) => call.method === "GET")).toBe(true);
-  });
-
-  it("pages each list with more_items_in_collection and start + limit", async () => {
-    const { calls } = mockFetch(
-      leads(["r1"], { start: 0, limit: 100, more_items_in_collection: true }),
-      leads(["r2"], {
-        start: 100,
-        limit: 100,
-        more_items_in_collection: false,
-      }),
-      leads(["r3"], { start: 0, limit: 100, more_items_in_collection: true }),
-      leads(["r4"], { start: 100, limit: 100, more_items_in_collection: false })
-    );
-    const origins = await client().listLeadOrigins(7);
-    expect([...origins].sort()).toEqual(["r1", "r2", "r3", "r4"]);
-    expect(
-      calls.map((call) => {
-        const url = new URL(call.url);
-        return `${url.pathname}@${url.searchParams.get("start")}`;
-      })
-    ).toEqual([
-      "/api/v1/leads@0",
-      "/api/v1/leads@100",
-      "/api/v1/leads/archived@0",
-      "/api/v1/leads/archived@100",
-    ]);
-  });
-
-  it("follows the page size Pipedrive says it used, if smaller", async () => {
-    const { calls } = mockFetch(
-      leads(["r1"], { start: 0, limit: 50, more_items_in_collection: true }),
-      leads(["r2"]),
-      leads([])
-    );
-    await client().listLeadOrigins(7);
-    expect(new URL(calls[1]?.url ?? "").searchParams.get("start")).toBe("50");
-  });
-
-  it("reads a full page of 100 leads and goes on to the next", async () => {
-    const full = Array.from({ length: 100 }, (_, i) => `r${i}`);
-    mockFetch(
-      leads(full, { start: 0, limit: 100, more_items_in_collection: true }),
-      leads(["r100"]),
-      leads([])
-    );
-    const origins = await client().listLeadOrigins(7);
-    expect(origins.size).toBe(101);
-    expect(origins.has("r100")).toBe(true);
-  });
-
-  it("treats data: null as no leads (a brand-new person)", async () => {
-    mockFetch(
-      json({ success: true, data: null, additional_data: null }),
-      json({ success: true, data: null })
-    );
-    expect((await client().listLeadOrigins(7)).size).toBe(0);
-  });
-
-  it("stops at a short page when Pipedrive sends no additional_data", async () => {
-    mockFetch(
-      json({ success: true, data: [{ id: "l1", origin_id: "r1" }] }),
-      json({ success: true, data: [] })
-    );
-    expect([...(await client().listLeadOrigins(7))]).toEqual(["r1"]);
-  });
-
-  it("won't treat a full page without additional_data as the last one", async () => {
-    mockFetch(
-      json({
-        success: true,
-        data: Array.from({ length: 100 }, (_, i) => ({
-          id: `l${i}`,
-          origin_id: `r${i}`,
-        })),
-      })
-    );
-    const error = await rejection(client().listLeadOrigins(7));
-    expect(error.code).toBe("server");
-  });
-
-  it("won't loop when Pipedrive's paging doesn't move forward", async () => {
-    const { calls } = mockFetch(
-      leads(["r1"], { start: 0, limit: 100, more_items_in_collection: true }),
-      // The second page claims to be the first again
-      leads(["r1"], { start: 0, limit: 100, more_items_in_collection: true })
-    );
-    const error = await rejection(client().listLeadOrigins(7));
-    expect(error.code).toBe("server");
-    expect(calls).toHaveLength(2);
-  });
-
-  it("fails loudly on a lead list that isn't a list", async () => {
-    mockFetch(json({ success: true, data: { id: "l1" } }));
-    expect((await rejection(client().listLeadOrigins(7))).code).toBe("server");
-  });
-
-  it("gives up loudly on a person with an endless lead list", async () => {
-    mockFetch(
-      ...Array.from({ length: 50 }, (_, page) =>
-        leads(["x"], {
-          start: page * 100,
-          limit: 100,
-          more_items_in_collection: true,
-        })
-      )
-    );
-    const error = await rejection(client().listLeadOrigins(7));
-    expect(error.message).toMatch(/too many leads/);
-  });
-
-  it("creates a lead on the person with the response id as its origin", async () => {
+  it("creates a lead on the person, with no origin_id (Pipedrive replaces it)", async () => {
     const { calls } = mockFetch(leadCreated());
-    await client().createLead({
-      title: "x".repeat(400),
-      personId: 7,
-      originId: "resp_9",
-    });
+    await client().createLead({ title: "x".repeat(400), personId: 7 });
     expect(calls[0]?.url).toBe(`${DOMAIN}/api/v1/leads`);
     expect(calls[0]?.method).toBe("POST");
     const body = bodyOf(calls[0]) as Record<string, unknown>;
-    expect(body).toMatchObject({ person_id: 7, origin_id: "resp_9" });
-    expect((body.title as string).length).toBe(255);
+    expect(body).toEqual({ title: "x".repeat(255), person_id: 7 });
+  });
+
+  it("fails loudly on a new lead answer it doesn't understand", async () => {
+    mockFetch(json({ success: false, data: null }, 201));
+    const error = await rejection(
+      client().createLead({ title: "t", personId: 7 })
+    );
+    expect(error.code).toBe("server");
   });
 
   it("maps errors by status and never echoes what was sent", async () => {
@@ -473,9 +357,7 @@ describe("Pipedrive client", () => {
       networkError()
     );
     const c = client();
-    const bad = await rejection(
-      c.createLead({ title: "t", personId: 1, originId: "o" })
-    );
+    const bad = await rejection(c.createLead({ title: "t", personId: 1 }));
     expect(bad.code).toBe("bad_request");
     expect(bad.message).not.toContain("ada@");
     expect(bad.message).not.toContain("Lovelace");
@@ -758,11 +640,11 @@ describe("Pipedrive sync", () => {
     expect(calls.some((call) => call.url.includes("/leads"))).toBe(false);
   });
 
-  it("adds one lead per response, titled by page and person, linked by response id", async () => {
+  it("adds one lead per response, titled by page and person", async () => {
+    const record = leadRecord();
     const { calls } = mockFetch(
       search(7),
       updated(),
-      ...leadLists(),
       leadCreated(),
       leadCreated(),
       leadCreated()
@@ -782,14 +664,15 @@ describe("Pipedrive sync", () => {
           { pageTitle: null }
         ),
       ],
-      { sleep: noWait }
+      { sleep: noWait, ...record }
     );
-    const posts = calls.filter((call) => call.url.endsWith("/api/v1/leads"));
-    expect(posts.map((call) => bodyOf(call))).toEqual([
-      { title: "Spring: Ada Lovelace", person_id: 7, origin_id: "r1" },
-      { title: "Spring: ada@example.com", person_id: 7, origin_id: "r2" },
-      { title: "Form response", person_id: 7, origin_id: "r3" },
+    expect(calls.filter(isLeadPost).map((call) => bodyOf(call))).toEqual([
+      { title: "Spring: Ada Lovelace", person_id: 7 },
+      { title: "Spring: ada@example.com", person_id: 7 },
+      { title: "Form response", person_id: 7 },
     ]);
+    // Each lead is recorded as it's made, in order
+    expect(record.recorded).toEqual(["r1", "r2", "r3"]);
     // One search for the person, however many responses
     expect(calls.filter((call) => call.url.includes("search"))).toHaveLength(1);
   });
@@ -805,53 +688,22 @@ describe("Pipedrive sync", () => {
     expect(bodyOf(calls[2])).toMatchObject({ person_id: 31 });
   });
 
-  it("reads no leads for a person it just created: they can't have any", async () => {
-    const { calls } = mockFetch(search(), created(31), leadCreated());
+  it("never reads leads back from Pipedrive: their origin_id can't identify a response", async () => {
+    const { calls } = mockFetch(search(7), updated(), leadCreated());
     await syncResponsesToPipedrive(
       client(),
       { ...settings, createLead: true },
       [ada()],
       { sleep: noWait }
     );
-    expect(calls.some(isLeadRead)).toBe(false);
-    expect(leadOrigins(calls)).toEqual(["r1"]);
+    expect(
+      calls.some((call) => call.method === "GET" && call.url.includes("/leads"))
+    ).toBe(false);
   });
 
-  it("always reads an existing person's leads first, with no retry flag", async () => {
-    const { calls } = mockFetch(
-      search(7),
-      updated(),
-      ...leadLists(),
-      leadCreated()
-    );
-    await syncResponsesToPipedrive(
-      client(),
-      { ...settings, createLead: true },
-      [ada()],
-      { sleep: noWait }
-    );
-    const reads = calls.filter(isLeadRead).map((call) => new URL(call.url));
-    expect(reads.map((url) => url.pathname)).toEqual([
-      "/api/v1/leads",
-      "/api/v1/leads/archived",
-    ]);
-    expect(reads.map((url) => url.searchParams.get("person_id"))).toEqual([
-      "7",
-      "7",
-    ]);
-    // Read before the lead is added
-    expect(calls.findIndex(isLeadRead)).toBeLessThan(
-      calls.findIndex(isLeadPost)
-    );
-  });
-
-  it("gives no second lead to a response that already has one, open or archived", async () => {
-    const { calls } = mockFetch(
-      search(7),
-      updated(),
-      ...leadLists(["r1", "someone-elses"], ["r2"]),
-      leadCreated()
-    );
+  it("gives no lead to a response already recorded as having one", async () => {
+    const record = leadRecord(["r1", "r2"]);
+    const { calls } = mockFetch(search(7), updated(), leadCreated());
     const result = await syncResponsesToPipedrive(
       client(),
       { ...settings, createLead: true },
@@ -860,42 +712,84 @@ describe("Pipedrive sync", () => {
         response("r2", [answer("e", "email", "ada@example.com", "Email")]),
         response("r3", [answer("e", "email", "ada@example.com", "Email")]),
       ],
-      { sleep: noWait }
+      { sleep: noWait, ...record }
     );
-    expect(leadOrigins(calls)).toEqual(["r3"]);
-    // Already there counts as delivered: the response reached Pipedrive
+    expect(leadTitles(calls)).toHaveLength(1);
+    expect(record.recorded).toEqual(["r3"]);
+    // Recorded responses still count as delivered: the person was updated
     expect(result.delivered).toBe(3);
   });
 
-  it("reads no leads when leads are off", async () => {
+  it("records a lead only once Pipedrive has made it", async () => {
+    const record = leadRecord();
+    mockFetch(search(7), updated(), json({ success: false }, 400));
+    await rejection(
+      syncResponsesToPipedrive(
+        client(),
+        { ...settings, createLead: true },
+        [ada("r1")],
+        { sleep: noWait, ...record }
+      )
+    );
+    expect(record.recorded).toEqual([]);
+  });
+
+  it("stops the batch, unsent, if recording a lead fails", async () => {
+    // Better to stop than to go on without a record that would prevent a
+    // second lead on the retry.
+    mockFetch(search(7), updated(), leadCreated());
+    const error = await rejection(
+      syncResponsesToPipedrive(
+        client(),
+        { ...settings, createLead: true },
+        [ada("r1"), ada("r2")],
+        {
+          sleep: noWait,
+          onLeadCreated: () => Promise.reject(new Error("database down")),
+        }
+      )
+    );
+    expect(String(error)).toMatch(/database down/);
+  });
+
+  it("records nothing when leads are off", async () => {
+    const record = leadRecord();
     const { calls } = mockFetch(search(7), updated());
     await syncResponsesToPipedrive(client(), settings, [ada()], {
       sleep: noWait,
+      ...record,
     });
     expect(calls.some((call) => call.url.includes("/leads"))).toBe(false);
+    expect(record.recorded).toEqual([]);
   });
 
   it("'Retry now' after a half-made batch adds no lead twice (fail, resume, retry)", async () => {
+    // As on the sandbox: Pipedrive gives back the client id as origin_id, so
+    // only QRdx's own record can tell that r1 already has its lead.
     const batch = [
       ada("r1"),
       response("r2", [answer("e", "email", "bob@example.com", "Email")]),
     ];
     const withLeads = { ...settings, createLead: true };
+    const record = leadRecord();
 
-    // First delivery: Ada's lead is made, then Pipedrive refuses Bob's.
+    // First delivery: Ada's lead is made (and recorded), then Pipedrive
+    // refuses Bob's.
     const first = mockFetch(
       search(7),
       updated(),
-      ...leadLists(),
       leadCreated(),
       search(8),
-      ...leadLists(),
       json({ success: false, error: "Invalid lead" }, 400)
     );
     const error = await rejection(
-      syncResponsesToPipedrive(client(), withLeads, batch, { sleep: noWait })
+      syncResponsesToPipedrive(client(), withLeads, batch, {
+        sleep: noWait,
+        ...record,
+      })
     );
-    expect(leadOrigins(first.calls)).toEqual(["r1", "r2"]);
+    expect(leadTitles(first.calls)).toHaveLength(2);
+    expect(record.recorded).toEqual(["r1"]);
     const start = initialSyncState(null);
     let state = nextSyncState(start, { ok: false, error });
     expect(state.status).toBe("failed");
@@ -907,39 +801,22 @@ describe("Pipedrive sync", () => {
     expect(state.attempts).toBe(0);
     expect(state.cursor).toEqual(start.cursor);
 
-    // The same batch again: Ada's lead is found and not made twice.
-    const second = mockFetch(
-      search(7),
-      updated(),
-      ...leadLists(["r1"]),
-      search(8),
-      ...leadLists(),
-      leadCreated()
-    );
+    // The same batch again, with what the worker recorded: no second lead
+    // for Ada, Bob's is made.
+    const second = mockFetch(search(7), updated(), search(8), leadCreated());
     const result = await syncResponsesToPipedrive(client(), withLeads, batch, {
       sleep: noWait,
+      leadsMade: new Set(record.recorded),
+      onLeadCreated: record.onLeadCreated,
     });
-    expect(leadOrigins(second.calls)).toEqual(["r2"]);
+    expect(second.calls.filter(isLeadPost)).toHaveLength(1);
+    // The one lead made is Bob's (person 8), not a second one for Ada (7)
+    expect(bodyOf(second.calls.find(isLeadPost))).toMatchObject({
+      person_id: 8,
+    });
+    expect(record.recorded).toEqual(["r1", "r2"]);
     expect(result.delivered).toBe(2);
     expect(nextSyncState(state, { ok: true, result }).status).toBe("ok");
-  });
-
-  it("adds no lead twice when the worker stopped mid-batch and the stream runs again", async () => {
-    // Nothing was recorded (the function timed out), so the next run is an
-    // ordinary first delivery of the same batch.
-    const { calls } = mockFetch(
-      search(7),
-      updated(),
-      ...leadLists(["r1"]),
-      leadCreated()
-    );
-    await syncResponsesToPipedrive(
-      client(),
-      { ...settings, createLead: true },
-      [ada("r1"), ada("r2")],
-      { sleep: noWait }
-    );
-    expect(leadOrigins(calls)).toEqual(["r2"]);
   });
 
   it("pauses between people, never before the first", async () => {
@@ -1040,7 +917,7 @@ describe("Pipedrive sync", () => {
       first.calls.filter((call) => call.url.includes("search"))
     ).toHaveLength(1);
 
-    const second = mockFetch(updated(), ...leadLists(["r1"]), leadCreated());
+    const second = mockFetch(updated(), leadCreated());
     await syncResponsesToPipedrive(client(), withLeads, [ada("r2")], {
       sleep: noWait,
       knownPeople,
@@ -1054,9 +931,10 @@ describe("Pipedrive sync", () => {
       )
     ).toBe(false);
     expect(second.calls[0]?.url).toBe(`${DOMAIN}/api/v2/persons/31`);
-    // Created by an earlier batch, so their leads are read before adding one
-    expect(second.calls.some(isLeadRead)).toBe(true);
-    expect(leadOrigins(second.calls)).toEqual(["r2"]);
+    // The second response's lead goes on the same person
+    expect(bodyOf(second.calls.find(isLeadPost))).toMatchObject({
+      person_id: 31,
+    });
   });
 
   it("remembers people it found by search too, for the rest of the run", async () => {
@@ -1090,12 +968,7 @@ describe("Pipedrive sync", () => {
   });
 
   it("fails the whole batch, with no cursor, when Pipedrive refuses a lead", async () => {
-    mockFetch(
-      search(7),
-      updated(),
-      ...leadLists(),
-      json({ success: false }, 500)
-    );
+    mockFetch(search(7), updated(), json({ success: false }, 500));
     const error = await rejection(
       syncResponsesToPipedrive(
         client(),
