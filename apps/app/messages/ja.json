@@ -3484,6 +3484,8 @@
         "downloadQrCode": "QRコードをダウンロード",
         "imageFile": "画像ファイル",
         "printReady": "印刷用",
+        "printSuggestion": "印刷しますか？{tab}なら、印刷する実寸サイズのベクターPDFまたはEPSを作成できます。印刷会社から求められた場合は、CMYK、塗り足し、トンボにも対応しています。",
+        "usePrintReady": "{tab}に切り替え",
         "size": "サイズ",
         "custom": "カスタム",
         "px": "px",
@@ -3542,7 +3544,7 @@
           "tiff": "TIFFでの入稿を求める印刷会社に最適です · 300 dpi、透明を保持します。",
           "tiff-cmyk": "CMYKでの入稿を求める印刷会社に最適です · 黒は黒インクのみで印刷され、透明な背景は白で出力されます。カラープロファイルは含まれません。正確なブランドカラーについては印刷会社にご確認ください。",
           "svg": "Figma、Illustrator、Webサイト向け・どんなサイズでも鮮明なままです。",
-          "pdf": "ドキュメントや手軽な印刷向け・ベクターPDFが必要な場合は印刷用を選んでください。",
+          "pdf": "ドキュメントや手軽な印刷に最適です。",
           "eps": "印刷会社やベクターアプリ向け・どんなサイズでも鮮明なままです。"
         },
         "sizePresets": {
@@ -7742,6 +7744,7 @@
           "editLinkValue": "リンクを編集",
           "codeSettings": "コード設定",
           "editDesignInPlayground": "Playgroundでデザインを編集",
+          "printReadyFile": "印刷用PDFまたはEPS",
           "removeFromFavorites": "お気に入りから削除",
           "addToFavorites": "お気に入りに追加",
           "moveToFolderValue": "フォルダに移動...",
@@ -7791,6 +7794,7 @@
           "shortLinkEncodedInThe": "短縮リンク(QRコードにエンコード)",
           "opens": "開く先",
           "editDesignInPlayground": "Playgroundでデザインを編集",
+          "printReadyFile": "印刷用PDFまたはEPS",
           "shortLinkCopied": "短縮リンクをコピーしました"
         },
         "codeQr": {

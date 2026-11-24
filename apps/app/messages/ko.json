@@ -3484,6 +3484,8 @@
         "downloadQrCode": "QR 코드 다운로드",
         "imageFile": "이미지 파일",
         "printReady": "인쇄용",
+        "printSuggestion": "인쇄하실 건가요? {tab}에서 인쇄할 크기 그대로 벡터 PDF나 EPS를 만들 수 있고, 인쇄소에서 요청하면 CMYK, 도련, 재단선도 넣을 수 있어요.",
+        "usePrintReady": "{tab}(으)로 전환",
         "size": "크기",
         "custom": "직접 입력",
         "px": "px",
@@ -3542,7 +3544,7 @@
           "tiff": "TIFF를 요구하는 인쇄소에 적합해요 · 300 dpi, 투명도 유지.",
           "tiff-cmyk": "CMYK를 요구하는 인쇄소에 적합해요 · 검정은 검정 잉크만으로 인쇄되고, 투명 배경은 흰색으로 출력돼요. 컬러 프로파일은 포함되지 않아요. 정확한 브랜드 색상은 인쇄소에 문의하세요.",
           "svg": "Figma, Illustrator, 웹사이트에 가장 좋아요 · 어떤 크기에서도 선명해요.",
-          "pdf": "문서와 간단한 인쇄에 가장 좋아요 · 벡터 PDF가 필요하면 인쇄용을 사용하세요.",
+          "pdf": "문서와 간단한 인쇄에 가장 좋아요.",
           "eps": "인쇄소와 벡터 앱에 가장 좋아요 · 어떤 크기에서도 선명해요."
         },
         "sizePresets": {
@@ -7742,6 +7744,7 @@
           "editLinkValue": "링크 편집",
           "codeSettings": "코드 설정",
           "editDesignInPlayground": "Playground에서 디자인 편집",
+          "printReadyFile": "인쇄용 PDF 또는 EPS",
           "removeFromFavorites": "즐겨찾기에서 제거",
           "addToFavorites": "즐겨찾기에 추가",
           "moveToFolderValue": "폴더로 이동...",
@@ -7791,6 +7794,7 @@
           "shortLinkEncodedInThe": "짧은 링크(QR 코드에 인코딩됨)",
           "opens": "연결 대상",
           "editDesignInPlayground": "Playground에서 디자인 편집",
+          "printReadyFile": "인쇄용 PDF 또는 EPS",
           "shortLinkCopied": "짧은 링크를 복사했어요"
         },
         "codeQr": {

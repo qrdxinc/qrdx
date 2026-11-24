@@ -3484,6 +3484,8 @@
         "downloadQrCode": "Descargar código QR",
         "imageFile": "Archivo de imagen",
         "printReady": "Listo para imprimir",
+        "printSuggestion": "¿Vas a imprimirlo? {tab} genera un PDF o EPS vectorial al tamaño exacto de impresión, con CMYK, sangrado y marcas de corte si tu imprenta los pide.",
+        "usePrintReady": "Cambiar a {tab}",
         "size": "Tamaño",
         "custom": "Personalizado",
         "px": "px",
@@ -3542,7 +3544,7 @@
           "tiff": "Ideal para imprentas que piden TIFF · 300 dpi, con la transparencia conservada.",
           "tiff-cmyk": "Ideal para imprentas que piden CMYK · el negro se imprime solo con tinta negra y un fondo transparente se verá blanco. Sin perfil de color: consulta con tu imprenta los colores exactos de tu marca.",
           "svg": "Ideal para Figma, Illustrator y sitios web · se mantiene nítido a cualquier tamaño.",
-          "pdf": "Ideal para documentos e impresiones rápidas · para un PDF vectorial, usa Listo para imprimir.",
+          "pdf": "Ideal para documentos e impresiones rápidas.",
           "eps": "Ideal para imprentas y apps vectoriales · se mantiene nítido a cualquier tamaño."
         },
         "sizePresets": {
@@ -7742,6 +7744,7 @@
           "editLinkValue": "Editar enlace",
           "codeSettings": "Ajustes del código",
           "editDesignInPlayground": "Editar diseño en Playground",
+          "printReadyFile": "PDF o EPS listo para imprimir",
           "removeFromFavorites": "Quitar de favoritos",
           "addToFavorites": "Añadir a favoritos",
           "moveToFolderValue": "Mover a carpeta...",
@@ -7791,6 +7794,7 @@
           "shortLinkEncodedInThe": "Enlace corto (codificado en el código QR)",
           "opens": "Abre",
           "editDesignInPlayground": "Editar diseño en Playground",
+          "printReadyFile": "PDF o EPS listo para imprimir",
           "shortLinkCopied": "Enlace corto copiado"
         },
         "codeQr": {

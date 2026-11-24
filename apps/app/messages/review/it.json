@@ -10343,6 +10343,14 @@
     "source": "f34970edd3b5",
     "status": "machine"
   },
+  "editor.actionBar.downloadDialog.printSuggestion": {
+    "source": "a34946d09885",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.usePrintReady": {
+    "source": "e8fb69554a5a",
+    "status": "machine"
+  },
   "editor.actionBar.downloadDialog.size": {
     "source": "1af851907331",
     "status": "machine"
@@ -10572,7 +10580,7 @@
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.pdf": {
-    "source": "0a2f4df35fb5",
+    "source": "bc0b0548c834",
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.eps": {
@@ -24371,6 +24379,10 @@
     "source": "b80841795011",
     "status": "machine"
   },
+  "app.dashboard.codes.codeActionsMenu.printReadyFile": {
+    "source": "b5e1b58b95d0",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeActionsMenu.removeFromFavorites": {
     "source": "18720329ca30",
     "status": "machine"
@@ -24549,6 +24561,10 @@
   },
   "app.dashboard.codes.codeOverview.editDesignInPlayground": {
     "source": "b80841795011",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codeOverview.printReadyFile": {
+    "source": "b5e1b58b95d0",
     "status": "machine"
   },
   "app.dashboard.codes.codeOverview.shortLinkCopied": {
