@@ -25,7 +25,14 @@ import { BARCODE_FORMATS } from "@/lib/barcode/formats";
 import { BRAND_LOGO_COUNT } from "@/lib/brand-logos/catalog.generated";
 import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "@/lib/free-plan-limits";
 import { PAGE_TYPE_IDS } from "@/lib/landing/page-type-ids";
-import { AI_ART_PER_MONTH, API_REQUESTS_PER_DAY } from "@/lib/plan-allowances";
+import {
+  AI_ART_PER_MONTH,
+  API_REQUESTS_PER_DAY,
+  FILE_STORAGE_BYTES,
+  FORM_RESPONSES_PER_MONTH,
+  MAX_FILE_BYTES,
+  PRO_TEAM_MEMBERS,
+} from "@/lib/plan-allowances";
 import { PLAN_LIMITS } from "@/lib/plans";
 import { formatPrice, PRICING } from "@/lib/pricing";
 import {
@@ -131,6 +138,18 @@ describe("PRODUCT_FACTS", () => {
       freeAiArtPerMonth: 3,
       proAiArtPerMonth: 30,
       businessAiArtPerMonth: 150,
+      // lib/plan-allowances.ts, PLAN_LIMITS.*.storageBytes, maxFileBytes,
+      // formResponsesPerMonth and pro.teamMembers
+      freeStorage: "50 MB",
+      proStorage: "5 GB",
+      businessStorage: "50 GB",
+      freeMaxFileSize: "10 MB",
+      proMaxFileSize: "100 MB",
+      businessMaxFileSize: "250 MB",
+      freeFormResponsesPerMonth: "50",
+      proFormResponsesPerMonth: "1,000",
+      businessFormResponsesPerMonth: "10,000",
+      proTeamMembers: 3,
       // lib/path-alias-limits.ts
       pathAliasesPerCode: 5,
     });
@@ -457,6 +476,84 @@ describe("Free plan allowances in copy", () => {
       'competitor: "10 free; 50–900+ paid"',
     ]) {
       expect(line).not.toMatch(HARD_CODED_FREE_LIMIT);
+    }
+  });
+});
+
+/**
+ * Storage, file sizes, form responses and Pro's seats typed into the docs'
+ * plan pages ("50 MB of storage", "| Form responses per month | 50 |",
+ * "up to 3 people") instead of their {facts.*} tokens.
+ */
+const HARD_CODED_PLAN_LIMIT = new RegExp(
+  [
+    "\\b\\d+ [MG]B of storage",
+    "workspace with files up to \\d+ [MG]B",
+    "\\| (?:Free|Pro|Business) \\| \\d+ [MG]B \\|",
+    "\\| File storage[^|]*\\| \\d+ [MG]B",
+    "\\| Form responses per month \\| \\d",
+    "\\b[\\d,]+ form responses a month",
+    "up to \\d+ (?:people|members)",
+    "on Pro, \\d+ people",
+    "\\| Pro \\| \\d+, including the owner",
+    "\\| (?:Members|Seats)[^|]*\\| 1[^|]*\\| \\d+ \\|",
+  ].join("|"),
+);
+
+describe("storage, form and seat limits in copy", () => {
+  it("come from {facts.*} tokens in the docs", () => {
+    const docs = path.join(app, "../docs/content/docs");
+    const offenders = readdirSync(docs, { recursive: true })
+      .map(String)
+      .filter(
+        (file) =>
+          /\.mdx?$/.test(file) &&
+          !file.startsWith(path.join("developers", "api")),
+      )
+      .flatMap((file) =>
+        readFileSync(path.join(docs, file), "utf8")
+          .split("\n")
+          .flatMap((line, index) => {
+            const match = HARD_CODED_PLAN_LIMIT.exec(line);
+            return match ? [`${file}:${index + 1}: "${match[0]}"`] : [];
+          }),
+      );
+    expect(offenders).toEqual([]);
+  });
+
+  it("match lib/plans.ts", () => {
+    for (const plan of ["free", "pro", "business"] as const) {
+      expect(PLAN_LIMITS[plan].storageBytes).toBe(FILE_STORAGE_BYTES[plan]);
+      expect(PLAN_LIMITS[plan].maxFileBytes).toBe(MAX_FILE_BYTES[plan]);
+      expect(PLAN_LIMITS[plan].formResponsesPerMonth).toBe(
+        FORM_RESPONSES_PER_MONTH[plan],
+      );
+    }
+    expect(PLAN_LIMITS.pro.teamMembers).toBe(PRO_TEAM_MEMBERS);
+  });
+
+  it("catch a typed limit", () => {
+    for (const line of [
+      "Free includes 50 MB of storage per workspace with files up to 10 MB",
+      "| Pro | 5 GB | 100 MB |",
+      "| File storage (largest file) | 50 MB (10 MB) | 5 GB (100 MB) |",
+      "| Form responses per month | 50 | 1,000 | 10,000 |",
+      "- 1,000 form responses a month.",
+      "More workspaces, with up to 3 people in each.",
+      "need Pro (up to 3 members) or Business (no limit)",
+      "The workspace has no free seat: on Pro, 3 people including pending invitations.",
+      "| Pro | 3, including the owner |",
+      "| Members per workspace | 1 (only you) | 3 | Unlimited |",
+    ]) {
+      expect(line).toMatch(HARD_CODED_PLAN_LIMIT);
+    }
+    for (const line of [
+      "Free includes {facts.freeStorage} of storage per workspace",
+      "| Members per workspace | 1 (only you) | {facts.proTeamMembers} | Unlimited |",
+      "A file can have up to {facts.importRows} rows and be up to 10 MB.",
+      "PNG, JPG, WebP or SVG files up to 1 MB",
+    ]) {
+      expect(line).not.toMatch(HARD_CODED_PLAN_LIMIT);
     }
   });
 });

@@ -10,7 +10,14 @@ import { cache } from "react";
 import { featureContext } from "./feature-context";
 import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "./free-plan-limits";
 import { holdsPlanRole } from "./permissions";
-import { AI_ART_PER_MONTH, API_REQUESTS_PER_DAY } from "./plan-allowances";
+import {
+  AI_ART_PER_MONTH,
+  API_REQUESTS_PER_DAY,
+  FILE_STORAGE_BYTES,
+  FORM_RESPONSES_PER_MONTH,
+  MAX_FILE_BYTES,
+  PRO_TEAM_MEMBERS,
+} from "./plan-allowances";
 import { type Plan, planForProductId } from "./pricing";
 import { SCAN_HISTORY_DAYS } from "./scan-history";
 import { getMyActiveSubscription } from "./subscription";
@@ -33,9 +40,6 @@ export const PLANS: readonly Plan[] = ["free", "pro", "business"];
 
 /** Use `Number.isFinite(limit)` to tell a cap from "unlimited". */
 export const UNLIMITED = Number.POSITIVE_INFINITY;
-
-const MB = 1024 * 1024;
-const GB = 1024 * MB;
 
 export interface PlanLimits {
   /** Active (non-archived) dynamic QR codes per scope */
@@ -160,8 +164,8 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
     landingPageBadge: true,
     whiteLabel: false,
     customCss: false,
-    storageBytes: 50 * MB,
-    maxFileBytes: 10 * MB,
+    storageBytes: FILE_STORAGE_BYTES.free,
+    maxFileBytes: MAX_FILE_BYTES.free,
     analyticsRetentionDays: SCAN_HISTORY_DAYS.free,
     rawScanRetentionDays: 365,
     customDomains: 0,
@@ -180,7 +184,7 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
     emailAlerts: false,
     webhooks: false,
     oauthApps: 1,
-    formResponsesPerMonth: 50,
+    formResponsesPerMonth: FORM_RESPONSES_PER_MONTH.free,
     apiRequestsPerDay: API_REQUESTS_PER_DAY.free,
     bulkApi: false,
     aiArtPerMonth: AI_ART_PER_MONTH.free,
@@ -201,15 +205,15 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
     landingPageBadge: false,
     whiteLabel: false,
     customCss: false,
-    storageBytes: 5 * GB,
-    maxFileBytes: 100 * MB,
+    storageBytes: FILE_STORAGE_BYTES.pro,
+    maxFileBytes: MAX_FILE_BYTES.pro,
     analyticsRetentionDays: SCAN_HISTORY_DAYS.pro,
     // Same planned threshold as Business: both keep the whole history.
     rawScanRetentionDays: 395,
     customDomains: 5,
     customSlugs: true,
     teams: true,
-    teamMembers: 3,
+    teamMembers: PRO_TEAM_MEMBERS,
     folderPermissions: false,
     sso: false,
     requireTwoFactor: false,
@@ -222,7 +226,7 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
     emailAlerts: true,
     webhooks: false,
     oauthApps: 5,
-    formResponsesPerMonth: 1000,
+    formResponsesPerMonth: FORM_RESPONSES_PER_MONTH.pro,
     apiRequestsPerDay: API_REQUESTS_PER_DAY.pro,
     bulkApi: true,
     aiArtPerMonth: AI_ART_PER_MONTH.pro,
@@ -244,8 +248,8 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
     landingPageBadge: false,
     whiteLabel: true,
     customCss: true,
-    storageBytes: 50 * GB,
-    maxFileBytes: 250 * MB,
+    storageBytes: FILE_STORAGE_BYTES.business,
+    maxFileBytes: MAX_FILE_BYTES.business,
     analyticsRetentionDays: SCAN_HISTORY_DAYS.business,
     // Planned: ~13 months raw, then daily rollups. Not built, so not advertised.
     rawScanRetentionDays: 395,
@@ -265,7 +269,7 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
     emailAlerts: true,
     webhooks: true,
     oauthApps: 25,
-    formResponsesPerMonth: 10_000,
+    formResponsesPerMonth: FORM_RESPONSES_PER_MONTH.business,
     apiRequestsPerDay: API_REQUESTS_PER_DAY.business,
     bulkApi: true,
     aiArtPerMonth: AI_ART_PER_MONTH.business,
