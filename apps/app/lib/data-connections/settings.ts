@@ -18,7 +18,6 @@ import {
   type MailchimpAudience,
   type MailchimpMergeField,
 } from "@repo/integrations/src/integrations/mailchimp";
-import { SALESFORCE_DEFAULT_LEAD_SOURCE } from "@repo/integrations/src/integrations/salesforce/sink";
 import type { FormMapping } from "@repo/integrations/src/sinks/mapping";
 import {
   initialSyncState,
@@ -271,16 +270,12 @@ export interface ResponseSinkInput {
   audienceId?: string;
   tags?: string[];
   withoutConsent?: "pending" | "skip";
-  /** Salesforce only: LeadSource on new leads ("" for none) */
-  leadSource?: string;
 }
 
-export type ResponseSinkProvider = "hubspot" | "mailchimp" | "salesforce";
-
-/** Saves HubSpot / Mailchimp / Salesforce settings and turns the stream on or off. */
+/** Saves HubSpot / Mailchimp settings and turns the stream on or off. */
 export async function saveResponseSink(
   scope: ActiveScope,
-  provider: ResponseSinkProvider,
+  provider: "hubspot" | "mailchimp",
   input: ResponseSinkInput,
 ): Promise<void> {
   const connection = await requireConnection(scope.userId, provider);
@@ -304,9 +299,6 @@ export async function saveResponseSink(
       // Merge fields are cached so the worker maps without an extra call.
       patch.mergeFields = await client.listMergeFields(input.audienceId);
     }
-  }
-  if (provider === "salesforce") {
-    patch.leadSource = input.leadSource ?? SALESFORCE_DEFAULT_LEAD_SOURCE;
   }
   const current = readSyncState(metadata.sync);
   const sameWorkspace = current?.organizationId === scope.organizationId;

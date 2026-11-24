@@ -6788,10 +6788,7 @@
           "failedToConnectIntegration": "Impossibile collegare l’integrazione",
           "nameDisconnectedAndQrdxsAccess": "{name} scollegato e accesso di QRdx revocato",
           "nameDisconnected": "{name} scollegato",
-          "failedToDisconnectIntegration": "Impossibile scollegare l’integrazione",
-          "salesforceOrgType": "Tipo di org Salesforce",
-          "production": "Produzione",
-          "sandbox": "Sandbox"
+          "failedToDisconnectIntegration": "Impossibile scollegare l’integrazione"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "Invia le risposte dei moduli a {name}",
@@ -6829,12 +6826,7 @@
           "loadMorePages": "Carica altre pagine",
           "loadingPages": "Caricamento delle pagine…",
           "tryAgain": "Riprova",
-          "couldntLoadMorePages": "Impossibile caricare altre pagine. Riprova.",
-          "newResponsesCreateOrUpdateLead": "Le nuove risposte creano un lead oppure aggiornano il lead aperto con la stessa email. Vengono inviate solo le domande con risposta e mappate.",
-          "leads": "lead",
-          "leadSource": "Origine del lead",
-          "leadSourceHelp": "Viene impostata sui lead creati da QRdx. Usa un valore della tua picklist Lead Source oppure lascia vuoto per non impostarla.",
-          "salesforceOrg": "{environment, select, sandbox {Org Sandbox} other {Org di produzione}}: {host}"
+          "couldntLoadMorePages": "Impossibile caricare altre pagine. Riprova."
         },
         "slackBotPanel": {
           "qrdxBot": "Bot QRdx",

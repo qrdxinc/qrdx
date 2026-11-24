@@ -24,10 +24,6 @@ import type {
   MailchimpMergeField,
 } from "@repo/integrations/src/integrations/mailchimp/types";
 import {
-  SALESFORCE_DEFAULT_LEAD_SOURCE,
-  SALESFORCE_TARGETS,
-} from "@repo/integrations/src/integrations/salesforce/sink";
-import {
   type FormMapping,
   formKey,
   type SinkTarget,
@@ -62,22 +58,16 @@ const NO_PAGES: CursorPage<ScopedFormPage> = { items: [], nextCursor: null };
 const SEARCH_DELAY_MS = 300;
 
 interface ResponseSinkPanelProps {
-  provider: "hubspot" | "mailchimp" | "salesforce";
+  provider: "hubspot" | "mailchimp";
   name: string;
-  /** Salesforce: the connected org's address and whether it's a sandbox */
-  org?: { host: string; sandbox: boolean } | null;
 }
 
 /**
- * HubSpot / Mailchimp / Salesforce: which pages' forms to send, the field
- * mapping (with suggested defaults), Mailchimp's audience, tags and consent,
- * Salesforce's lead source, the on switch and the last sync.
+ * HubSpot / Mailchimp: which pages' forms to send, the field mapping (with
+ * suggested defaults), Mailchimp's audience, tags and consent, the on switch
+ * and the last sync.
  */
-export function ResponseSinkPanel({
-  provider,
-  name,
-  org,
-}: ResponseSinkPanelProps) {
+export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
   const t = useTranslations("app.settings.integrations.responseSinkPanel");
   const id = useId();
   const [view, setView] = useState<SinkViewData | null>(null);
@@ -93,11 +83,9 @@ export function ResponseSinkPanel({
   const [withoutConsent, setWithoutConsent] = useState<"pending" | "skip">(
     "pending",
   );
-  const [leadSource, setLeadSource] = useState(SALESFORCE_DEFAULT_LEAD_SOURCE);
   const [saving, setSaving] = useState(false);
   const [retrying, setRetrying] = useState(false);
   const isMailchimp = provider === "mailchimp";
-  const isSalesforce = provider === "salesforce";
   // The workspace's form pages, a page at a time (most recently updated
   // first), narrowed by a title search once typing pauses.
   const [search, setSearch] = useState("");
@@ -129,7 +117,6 @@ export function ResponseSinkPanel({
           audienceId?: string;
           tags?: string[];
           withoutConsent?: "pending" | "skip";
-          leadSource?: string;
         };
         setEnabled(Boolean(data.sync?.enabled));
         setAllPages(!settings.pageIds);
@@ -138,11 +125,6 @@ export function ResponseSinkPanel({
         setAudienceId(settings.audienceId ?? "");
         setTags((settings.tags ?? []).join(", "));
         setWithoutConsent(settings.withoutConsent ?? "pending");
-        setLeadSource(
-          typeof settings.leadSource === "string"
-            ? settings.leadSource
-            : SALESFORCE_DEFAULT_LEAD_SOURCE,
-        );
       })
       .catch((err) => {
         if (!cancelled) {
@@ -203,13 +185,8 @@ export function ResponseSinkPanel({
   }, [isMailchimp, audienceId]);
 
   const targets: SinkTarget[] = useMemo(
-    () =>
-      isMailchimp
-        ? mailchimpTargets(mergeFields)
-        : isSalesforce
-          ? SALESFORCE_TARGETS
-          : HUBSPOT_TARGETS,
-    [isMailchimp, isSalesforce, mergeFields],
+    () => (isMailchimp ? mailchimpTargets(mergeFields) : HUBSPOT_TARGETS),
+    [isMailchimp, mergeFields],
   );
 
   const pages = list.items;
@@ -274,7 +251,6 @@ export function ResponseSinkPanel({
               withoutConsent,
             }
           : {}),
-        ...(isSalesforce ? { leadSource: leadSource.trim() } : {}),
       });
       setView(next);
       emitSound("success");
@@ -322,18 +298,8 @@ export function ResponseSinkPanel({
           <p className="text-muted-foreground text-sm text-pretty">
             {isMailchimp
               ? t("newResponsesAddOrUpdate")
-              : isSalesforce
-                ? t("newResponsesCreateOrUpdateLead")
-                : t("newResponsesCreateOrUpdate")}
+              : t("newResponsesCreateOrUpdate")}
           </p>
-          {org && (
-            <p className="text-muted-foreground text-xs">
-              {t("salesforceOrg", {
-                environment: org.sandbox ? "sandbox" : "production",
-                host: org.host,
-              })}
-            </p>
-          )}
         </div>
         <div className="flex items-center gap-2">
           <Switch
@@ -346,30 +312,11 @@ export function ResponseSinkPanel({
       </div>
 
       <SyncStatus
-        noun={
-          isMailchimp ? t("members") : isSalesforce ? t("leads") : t("contacts")
-        }
+        noun={isMailchimp ? t("members") : t("contacts")}
         onRetry={retry}
         retrying={retrying}
         state={view.sync}
       />
-
-      {isSalesforce && (
-        <div className="space-y-2">
-          <Label htmlFor={`${id}-lead-source`}>{t("leadSource")}</Label>
-          <Input
-            className="sm:max-w-xs"
-            id={`${id}-lead-source`}
-            maxLength={255}
-            onChange={(event) => setLeadSource(event.target.value)}
-            placeholder={SALESFORCE_DEFAULT_LEAD_SOURCE}
-            value={leadSource}
-          />
-          <p className="text-muted-foreground text-xs text-pretty">
-            {t("leadSourceHelp")}
-          </p>
-        </div>
-      )}
 
       {isMailchimp && (
         <div className="grid gap-4 sm:grid-cols-2">

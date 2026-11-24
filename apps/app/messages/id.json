@@ -6788,10 +6788,7 @@
           "failedToConnectIntegration": "Gagal menghubungkan integrasi",
           "nameDisconnectedAndQrdxsAccess": "{name} diputuskan dan akses QRdx dicabut",
           "nameDisconnected": "{name} diputuskan",
-          "failedToDisconnectIntegration": "Gagal memutuskan integrasi",
-          "salesforceOrgType": "Jenis org Salesforce",
-          "production": "Produksi",
-          "sandbox": "Sandbox"
+          "failedToDisconnectIntegration": "Gagal memutuskan integrasi"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "Kirim respons formulir ke {name}",
@@ -6829,12 +6826,7 @@
           "loadMorePages": "Muat halaman lainnya",
           "loadingPages": "Memuat halaman…",
           "tryAgain": "Coba lagi",
-          "couldntLoadMorePages": "Tidak dapat memuat halaman lainnya. Coba lagi.",
-          "newResponsesCreateOrUpdateLead": "Respons baru akan membuat lead, atau memperbarui lead terbuka dengan email yang sama. Hanya pertanyaan yang dijawab dan sudah dipetakan yang dikirim.",
-          "leads": "lead",
-          "leadSource": "Sumber lead",
-          "leadSourceHelp": "Diatur pada lead yang dibuat QRdx. Gunakan nilai dari picklist Lead Source Anda, atau biarkan kosong jika tidak ada.",
-          "salesforceOrg": "{environment, select, sandbox {Org Sandbox} other {Org Produksi}}: {host}"
+          "couldntLoadMorePages": "Tidak dapat memuat halaman lainnya. Coba lagi."
         },
         "slackBotPanel": {
           "qrdxBot": "Bot QRdx",

@@ -1,7 +1,7 @@
 /**
  * Server-side helpers for content sources (Stripe, Cal.com, Calendly,
  * Shopify, YouTube, Spotify) and data-out sinks (Google Sheets, Slack,
- * HubSpot, Mailchimp, Salesforce): build a client from a stored integration, verify
+ * HubSpot, Mailchimp): build a client from a stored integration, verify
  * pasted keys, read account details after OAuth, revoke on disconnect.
  */
 
@@ -14,11 +14,6 @@ import {
 import { revokeGoogleToken } from "../integrations/google-sheets/client";
 import { revokeHubSpotToken } from "../integrations/hubspot/client";
 import { getMailchimpMetadata } from "../integrations/mailchimp/client";
-import {
-  revokeSalesforceToken,
-  salesforceAccountMetadata,
-  salesforceEnvironment,
-} from "../integrations/salesforce/client";
 import {
   createShopifyClient,
   mintShopifyToken,
@@ -307,9 +302,6 @@ export async function fetchDataAccountMetadata(
     }
     case "google-sheets":
       return { name: "Google Sheets" };
-    // From the token response alone: the org's API address and id.
-    case "salesforce":
-      return salesforceAccountMetadata(tokenResponse);
     case "slack": {
       const install = readSlackInstall(tokenResponse);
       return {
@@ -328,7 +320,6 @@ export const DATA_REVOCABLE_PROVIDERS = [
   "calendly",
   "google-sheets",
   "hubspot",
-  "salesforce",
   "slack",
 ] as const;
 
@@ -340,9 +331,7 @@ export const DATA_REVOCABLE_PROVIDERS = [
 export async function revokeDataProviderToken(
   provider: string,
   tokens: { accessToken: string; refreshToken?: string | null },
-  client?: { clientId: string; clientSecret: string },
-  /** The connection's metadata: Salesforce revokes on the host it signed in on */
-  metadata?: Metadata
+  client?: { clientId: string; clientSecret: string }
 ): Promise<boolean> {
   switch (provider) {
     case "calendly":
@@ -358,12 +347,6 @@ export async function revokeDataProviderToken(
     case "hubspot":
       if (!(client && tokens.refreshToken)) return false;
       await revokeHubSpotToken({ token: tokens.refreshToken, ...client });
-      return true;
-    case "salesforce":
-      await revokeSalesforceToken({
-        environment: salesforceEnvironment(metadata),
-        token: tokens.refreshToken ?? tokens.accessToken,
-      });
       return true;
     case "slack":
       await revokeSlackToken(tokens.accessToken);

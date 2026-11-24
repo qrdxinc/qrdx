@@ -287,28 +287,5 @@ export function DataConnectionPanel({
   if (slug === "hubspot" || slug === "mailchimp") {
     return <ResponseSinkPanel name={name} provider={slug} />;
   }
-  if (slug === "salesforce") {
-    return (
-      <ResponseSinkPanel
-        name={name}
-        org={salesforceOrg(metadata)}
-        provider="salesforce"
-      />
-    );
-  }
   return null;
-}
-
-/** The connected org's address (metadata.instanceUrl) and whether it's a sandbox. */
-function salesforceOrg(
-  metadata: Record<string, unknown> | undefined,
-): { host: string; sandbox: boolean } | null {
-  try {
-    const host = new URL(String(metadata?.instanceUrl ?? "")).hostname;
-    return host
-      ? { host, sandbox: metadata?.oauthVariant === "sandbox" }
-      : null;
-  } catch {
-    return null;
-  }
 }
