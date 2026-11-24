@@ -8,9 +8,20 @@
 //
 // Messages other modules throw (the code, page and domain services, rate
 // limits, roles) reach the client as those modules wrote them, unless one is
-// word for word one of these (ownMessage).
+// word for word one of these (ownMessage). The organize section is the
+// exception: organize.ts throws these itself, in English for logs and its
+// other callers, and runOrganize says them again for the actions.
 
-import { MAX_TAGS_PER_CODE } from "@/app/(app)/dashboard/codes/_lib/organize-shared";
+import {
+  MAX_BULK_IDS,
+  MAX_FOLDER_DEPTH,
+  MAX_FOLDER_NAME,
+  MAX_FOLDERS,
+  MAX_NOTES_LENGTH,
+  MAX_TAG_NAME,
+  MAX_TAGS,
+  MAX_TAGS_PER_CODE,
+} from "@/app/(app)/dashboard/codes/_lib/organize-shared";
 import type { Translator } from "@/lib/i18n/translator";
 import { PLAN_NAMES, type Plan } from "@/lib/pricing";
 
@@ -25,6 +36,9 @@ const planRequired =
   (feature: string, verb: "is" | "are") =>
   (plan: Plan | null): string =>
     `${feature} ${plan ? `${verb} a ${PLAN_NAMES[plan]} feature` : `${verb === "is" ? "isn't" : "aren't"} on your plan`}. You can still turn off or remove what's already set up.`;
+
+/** tags.tooManyTags and organize.tagsPerCode: one rule, one sentence. */
+const tooManyTagsPerCode = `A code can have up to ${MAX_TAGS_PER_CODE} tags.`;
 
 export const CODE_ACTION_MESSAGES = {
   lifecycle: {
@@ -93,8 +107,47 @@ export const CODE_ACTION_MESSAGES = {
   },
   tags: {
     nothingToUpdate: "Nothing to update",
-    tooManyTags: `A code can have up to ${MAX_TAGS_PER_CODE} tags.`,
+    tooManyTags: tooManyTagsPerCode,
     chooseTag: "Choose a tag to add or remove",
+  },
+  /**
+   * Folders, tags, favourites, notes, the trash and bulk actions: what
+   * app/(app)/dashboard/codes/_lib/organize.ts throws and its schemas say,
+   * which actions/folders.ts, tags.ts and bulk-codes.ts answer with
+   * (runOrganize). The messages that name a folder or tag are functions:
+   * their errors carry the name (OrganizeValidationError).
+   */
+  organize: {
+    signIn: "Sign in to manage your codes.",
+    failed: "Something went wrong.",
+    invalidInput: "Invalid input",
+    selectAtLeastOne: "Select at least one code",
+    selectUpTo: `Select up to ${MAX_BULK_IDS} codes at a time`,
+    folderNameRequired: "Enter a folder name",
+    folderNameTooLong: `Folder names can be up to ${MAX_FOLDER_NAME} characters`,
+    folderNameSlash: "Folder names can't contain /",
+    tagNameRequired: "Enter a tag name",
+    tagNameTooLong: `Tag names can be up to ${MAX_TAG_NAME} characters`,
+    tagNameCharacters: "Tag names can't contain , ; or |",
+    notesTooLong: `Notes can be up to ${MAX_NOTES_LENGTH.toLocaleString("en")} characters`,
+    folderNotFound: "Folder not found",
+    folderExists: ({ name }: { name: string }) =>
+      `A folder named "${name}" already exists there.`,
+    folderDepth: `Folders can be nested up to ${MAX_FOLDER_DEPTH} levels deep.`,
+    folderIntoItself: "A folder can't be moved into itself.",
+    folderLimit: `You can have up to ${MAX_FOLDERS} folders.`,
+    tagNotFound: "Tag not found",
+    tagExists: ({ name }: { name: string }) =>
+      `A tag named "${name}" already exists.`,
+    tagLimit: `You can have up to ${MAX_TAGS} tags.`,
+    /** The same sentence as tags.tooManyTags, read from that key */
+    tagsPerCode: tooManyTagsPerCode,
+    codeNotFound: "QR code not found",
+    othersFolders:
+      "Only team owners and admins can change folders created by others.",
+    othersTags:
+      "Only team owners and admins can change tags created by others.",
+    tryAgain: "Please try again.",
   },
   publicStats: {
     signIn: "Sign in to share analytics.",
@@ -222,6 +275,35 @@ export function codeActionMessages(
       nothingToUpdate: t("tags.nothingToUpdate"),
       tooManyTags: t("tags.tooManyTags", { max: MAX_TAGS_PER_CODE }),
       chooseTag: t("tags.chooseTag"),
+    },
+    organize: {
+      signIn: t("organize.signIn"),
+      failed: t("organize.failed"),
+      invalidInput: t("organize.invalidInput"),
+      selectAtLeastOne: t("organize.selectAtLeastOne"),
+      selectUpTo: t("organize.selectUpTo", { max: MAX_BULK_IDS }),
+      folderNameRequired: t("organize.folderNameRequired"),
+      folderNameTooLong: t("organize.folderNameTooLong", {
+        max: MAX_FOLDER_NAME,
+      }),
+      folderNameSlash: t("organize.folderNameSlash"),
+      tagNameRequired: t("organize.tagNameRequired"),
+      tagNameTooLong: t("organize.tagNameTooLong", { max: MAX_TAG_NAME }),
+      tagNameCharacters: t("organize.tagNameCharacters"),
+      notesTooLong: t("organize.notesTooLong", { max: MAX_NOTES_LENGTH }),
+      folderNotFound: t("organize.folderNotFound"),
+      folderExists: (values) => t("organize.folderExists", values),
+      folderDepth: t("organize.folderDepth", { max: MAX_FOLDER_DEPTH }),
+      folderIntoItself: t("organize.folderIntoItself"),
+      folderLimit: t("organize.folderLimit", { max: MAX_FOLDERS }),
+      tagNotFound: t("organize.tagNotFound"),
+      tagExists: (values) => t("organize.tagExists", values),
+      tagLimit: t("organize.tagLimit", { max: MAX_TAGS }),
+      tagsPerCode: t("tags.tooManyTags", { max: MAX_TAGS_PER_CODE }),
+      codeNotFound: t("organize.codeNotFound"),
+      othersFolders: t("organize.othersFolders"),
+      othersTags: t("organize.othersTags"),
+      tryAgain: t("organize.tryAgain"),
     },
     publicStats: {
       signIn: t("publicStats.signIn"),

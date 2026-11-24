@@ -18,6 +18,12 @@ import { assertBindableDomains } from "@/app/(app)/dashboard/domains/_lib/domain
 import { codeEvents, codeEventsByIds } from "@/ee/audit-log/code-events";
 import { changedFields } from "@/ee/audit-log/metadata";
 import { recordAuditEvent } from "@/ee/audit-log/record";
+import {
+  CODE_ACTION_MESSAGES,
+  type CodeActionMessages,
+  ownMessage,
+} from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { dynamicCodeLimit } from "@/lib/code-limit";
 import { HttpError } from "@/lib/error-response";
 import { noteLimitUsage } from "@/lib/limit-notices";
@@ -62,6 +68,38 @@ import {
  * and trashing or purging codes is limited to what the member created
  * (owners and admins may act on everything).
  */
+
+// ─── Messages ────────────────────────────────────────────────────────────────
+
+/**
+ * What this module says (CODE_ACTION_MESSAGES.organize), in English: errors
+ * keep it, for logs and other callers (the CSV import, migrations), and
+ * runOrganize says it again in the language of the page that called the
+ * action.
+ */
+const SAY = CODE_ACTION_MESSAGES.organize;
+
+/** Those messages in any language (codeActions.organize in messages/en.json). */
+export type OrganizeMessages = CodeActionMessages["organize"];
+
+/**
+ * A ValidationError that names a folder or tag: its message is the English,
+ * and messageIn() says it from another language's messages with the same
+ * name, which matching the words (ownMessage) can't.
+ */
+export class OrganizeValidationError extends ValidationError {
+  private readonly say: (messages: OrganizeMessages) => string;
+
+  constructor(say: (messages: OrganizeMessages) => string) {
+    super(say(SAY));
+    this.say = say;
+  }
+
+  /** The message from `messages` (another language's set). */
+  messageIn(messages: OrganizeMessages): string {
+    return this.say(messages);
+  }
+}
 
 // ─── Action plumbing ─────────────────────────────────────────────────────────
 
@@ -110,7 +148,7 @@ export function organizeFailure(
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: { code: "UNAUTHORIZED", message: "Sign in to manage your codes." },
+      error: { code: "UNAUTHORIZED", message: SAY.signIn },
     };
   }
   if (error instanceof ValidationError) {
@@ -141,7 +179,34 @@ export function organizeFailure(
   logError(error as Error, { action });
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: SAY.failed },
+  };
+}
+
+/**
+ * organizeFailure in the language of the page that called the action
+ * (codeActionText: `pageLocale`, else the person's): this module's own
+ * messages from the catalog, with the name an OrganizeValidationError
+ * carries; other modules' messages (the code service, the CSV import) as
+ * they wrote them. The catalog is read only for one of this module's own.
+ */
+async function organizeFailureIn(
+  error: unknown,
+  action: string,
+  pageLocale: string | undefined,
+): Promise<OrganizeResult<never>> {
+  const result = organizeFailure(error, action);
+  if (result.success) return result;
+  const named = error instanceof OrganizeValidationError ? error : null;
+  const { message } = result.error;
+  if (!(named || Object.values(SAY).includes(message))) return result;
+  const text = (await codeActionText({ pageLocale })).organize;
+  return {
+    ...result,
+    error: {
+      ...result.error,
+      message: named ? named.messageIn(text) : ownMessage(SAY, text, message),
+    },
   };
 }
 
@@ -152,7 +217,7 @@ export function parseInput<T extends z.ZodType>(
   const result = schema.safeParse(input);
   if (!result.success) {
     throw new ValidationError(
-      result.error.issues[0]?.message ?? "Invalid input",
+      result.error.issues[0]?.message ?? SAY.invalidInput,
     );
   }
   return result.data;
@@ -160,8 +225,10 @@ export function parseInput<T extends z.ZodType>(
 
 /**
  * Resolves the caller's scope (never from the client), runs `fn`, maps
- * errors. Everything here changes codes unless `access` says "read", so it
- * needs a role that may write (lib/permissions.ts).
+ * errors, saying this module's messages in the person's language (or
+ * `pageLocale`'s, the calling page's useLocale(), when it sends one).
+ * Everything here changes codes unless `access` says "read", so it needs a
+ * role that may write (lib/permissions.ts).
  */
 export async function runOrganize<T>(
   action: string,
@@ -169,7 +236,12 @@ export async function runOrganize<T>(
   {
     revalidate = true,
     access = "write",
-  }: { revalidate?: boolean; access?: "read" | "write" } = {},
+    pageLocale,
+  }: {
+    revalidate?: boolean;
+    access?: "read" | "write";
+    pageLocale?: string;
+  } = {},
 ): Promise<OrganizeResult<T>> {
   try {
     const scope = await getActiveScope();
@@ -178,7 +250,7 @@ export async function runOrganize<T>(
     if (revalidate) revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return organizeFailure(error, action);
+    return await organizeFailureIn(error, action, pageLocale);
   }
 }
 
@@ -188,8 +260,8 @@ export const idSchema = z.string().trim().min(1).max(64);
 
 export const idsSchema = z
   .array(idSchema)
-  .min(1, "Select at least one code")
-  .max(MAX_BULK_IDS, `Select up to ${MAX_BULK_IDS} codes at a time`)
+  .min(1, SAY.selectAtLeastOne)
+  .max(MAX_BULK_IDS, SAY.selectUpTo)
   .transform((ids) => [...new Set(ids)]);
 
 const collapse = (value: string) => value.replace(/\s+/g, " ");
@@ -197,27 +269,24 @@ const collapse = (value: string) => value.replace(/\s+/g, " ");
 export const folderNameSchema = z
   .string()
   .trim()
-  .min(1, "Enter a folder name")
-  .max(
-    MAX_FOLDER_NAME,
-    `Folder names can be up to ${MAX_FOLDER_NAME} characters`,
-  )
-  .refine((value) => !value.includes("/"), "Folder names can't contain /")
+  .min(1, SAY.folderNameRequired)
+  .max(MAX_FOLDER_NAME, SAY.folderNameTooLong)
+  .refine((value) => !value.includes("/"), SAY.folderNameSlash)
   .transform(collapse);
 
 export const tagNameSchema = z
   .string()
   .trim()
-  .min(1, "Enter a tag name")
-  .max(MAX_TAG_NAME, `Tag names can be up to ${MAX_TAG_NAME} characters`)
-  .refine((value) => !/[;|,]/.test(value), "Tag names can't contain , ; or |")
+  .min(1, SAY.tagNameRequired)
+  .max(MAX_TAG_NAME, SAY.tagNameTooLong)
+  .refine((value) => !/[;|,]/.test(value), SAY.tagNameCharacters)
   .transform(collapse);
 
 export const tagColorSchema = z.enum(TAG_COLORS);
 
 export const notesSchema = z
   .string()
-  .max(MAX_NOTES_LENGTH, `Notes can be up to ${MAX_NOTES_LENGTH} characters`)
+  .max(MAX_NOTES_LENGTH, SAY.notesTooLong)
   .transform((value) => value.trim() || null);
 
 // ─── Scope helpers ───────────────────────────────────────────────────────────
@@ -246,13 +315,13 @@ const deletableWhere = (scope: ActiveScope): SQL | undefined =>
 function assertCreator(
   scope: ActiveScope,
   row: { userId: string },
-  what: string,
+  what: "folders" | "tags",
 ) {
   if (!canManageAll(scope) && row.userId !== scope.userId) {
     throw new HttpError(
       403,
       "FORBIDDEN",
-      `Only team owners and admins can change ${what} created by others.`,
+      what === "folders" ? SAY.othersFolders : SAY.othersTags,
     );
   }
 }
@@ -287,7 +356,7 @@ async function scopeFolders(scope: ActiveScope): Promise<FolderRecord[]> {
 
 function requireFolder(folders: FolderRecord[], id: string): FolderRecord {
   const row = folders.find((candidate) => candidate.id === id);
-  if (!row) throw new HttpError(404, "NOT_FOUND", "Folder not found");
+  if (!row) throw new HttpError(404, "NOT_FOUND", SAY.folderNotFound);
   return row;
 }
 
@@ -304,7 +373,7 @@ function assertUniqueSibling(
       sameName(row.name, name),
   );
   if (taken) {
-    throw new ValidationError(`A folder named "${name}" already exists there.`);
+    throw new OrganizeValidationError((say) => say.folderExists({ name }));
   }
 }
 
@@ -315,9 +384,7 @@ function assertDepth(
 ) {
   const parentDepth = parentId ? folderPath(folders, parentId).length : 0;
   if (parentDepth + height > MAX_FOLDER_DEPTH) {
-    throw new ValidationError(
-      `Folders can be nested up to ${MAX_FOLDER_DEPTH} levels deep.`,
-    );
+    throw new ValidationError(SAY.folderDepth);
   }
 }
 
@@ -356,11 +423,7 @@ export async function createFolder(
 ): Promise<FolderRow> {
   const folders = await scopeFolders(scope);
   if (folders.length >= MAX_FOLDERS) {
-    throw new HttpError(
-      400,
-      "LIMIT_REACHED",
-      `You can have up to ${MAX_FOLDERS} folders.`,
-    );
+    throw new HttpError(400, "LIMIT_REACHED", SAY.folderLimit);
   }
   if (parentId) requireFolder(folders, parentId);
   assertDepth(folders, parentId);
@@ -415,7 +478,7 @@ export async function moveFolder(
   if (parentId) {
     requireFolder(folders, parentId);
     if (folderSubtreeIds(folders, id).has(parentId)) {
-      throw new ValidationError("A folder can't be moved into itself.");
+      throw new ValidationError(SAY.folderIntoItself);
     }
   }
   assertDepth(folders, parentId, subtreeHeight(folders, id));
@@ -471,16 +534,10 @@ export async function resolveFolderPaths(
     );
     if (existing) return existing.id;
     if (depth > MAX_FOLDER_DEPTH) {
-      throw new ValidationError(
-        `Folders can be nested up to ${MAX_FOLDER_DEPTH} levels deep.`,
-      );
+      throw new ValidationError(SAY.folderDepth);
     }
     if (folders.length >= MAX_FOLDERS) {
-      throw new HttpError(
-        400,
-        "LIMIT_REACHED",
-        `You can have up to ${MAX_FOLDERS} folders.`,
-      );
+      throw new HttpError(400, "LIMIT_REACHED", SAY.folderLimit);
     }
     const row: FolderRecord = {
       id: cuid(),
@@ -590,7 +647,7 @@ function assertUniqueTag(
   exceptId?: string,
 ) {
   if (tags.some((row) => row.id !== exceptId && sameName(row.name, name))) {
-    throw new ValidationError(`A tag named "${name}" already exists.`);
+    throw new OrganizeValidationError((say) => say.tagExists({ name }));
   }
 }
 
@@ -600,11 +657,7 @@ export async function createTag(
 ): Promise<TagRow> {
   const tags = await scopeTags(scope);
   if (tags.length >= MAX_TAGS) {
-    throw new HttpError(
-      400,
-      "LIMIT_REACHED",
-      `You can have up to ${MAX_TAGS} tags.`,
-    );
+    throw new HttpError(400, "LIMIT_REACHED", SAY.tagLimit);
   }
   assertUniqueTag(tags, name);
   const row = {
@@ -629,7 +682,7 @@ export async function updateTag(
 ): Promise<void> {
   const tags = await scopeTags(scope);
   const current = tags.find((row) => row.id === id);
-  if (!current) throw new HttpError(404, "NOT_FOUND", "Tag not found");
+  if (!current) throw new HttpError(404, "NOT_FOUND", SAY.tagNotFound);
   assertCreator(scope, current, "tags");
   if (name !== undefined) assertUniqueTag(tags, name, id);
   await db
@@ -651,7 +704,7 @@ export async function updateTag(
 export async function deleteTag(scope: ActiveScope, id: string): Promise<void> {
   const tags = await scopeTags(scope);
   const current = tags.find((row) => row.id === id);
-  if (!current) throw new HttpError(404, "NOT_FOUND", "Tag not found");
+  if (!current) throw new HttpError(404, "NOT_FOUND", SAY.tagNotFound);
   assertCreator(scope, current, "tags");
   // qr_code_tag rows go with it (on delete cascade).
   await db.delete(tag).where(and(eq(tag.id, id), tagScope(scope)));
@@ -678,11 +731,7 @@ export async function resolveTagNames(
       continue;
     }
     if (tags.length + created.length >= MAX_TAGS) {
-      throw new HttpError(
-        400,
-        "LIMIT_REACHED",
-        `You can have up to ${MAX_TAGS} tags.`,
-      );
+      throw new HttpError(400, "LIMIT_REACHED", SAY.tagLimit);
     }
     const row = {
       id: cuid(),
@@ -722,7 +771,7 @@ async function assertScopeTags(scope: ActiveScope, tagIds: string[]) {
     .from(tag)
     .where(and(inArray(tag.id, tagIds), tagScope(scope)));
   if (rows.length !== new Set(tagIds).size) {
-    throw new HttpError(404, "NOT_FOUND", "Tag not found");
+    throw new HttpError(404, "NOT_FOUND", SAY.tagNotFound);
   }
 }
 
@@ -784,7 +833,7 @@ export async function setNotes(
     .where(codesWhere(scope, [id]))
     .returning({ id: qrCode.id });
   if (rows.length === 0) {
-    throw new HttpError(404, "NOT_FOUND", "QR code not found");
+    throw new HttpError(404, "NOT_FOUND", SAY.codeNotFound);
   }
 }
 
@@ -825,9 +874,7 @@ async function assertTagRoom(ids: string[], adding: string[]) {
   for (const id of ids) {
     const tags = new Set([...(tagsByCode.get(id) ?? []), ...adding]);
     if (tags.size > MAX_TAGS_PER_CODE) {
-      throw new ValidationError(
-        `A code can have up to ${MAX_TAGS_PER_CODE} tags.`,
-      );
+      throw new ValidationError(SAY.tagsPerCode);
     }
   }
 }
@@ -879,16 +926,14 @@ export async function setCodeTags(
 ): Promise<void> {
   const unique = [...new Set(tagIds)];
   if (unique.length > MAX_TAGS_PER_CODE) {
-    throw new ValidationError(
-      `A code can have up to ${MAX_TAGS_PER_CODE} tags.`,
-    );
+    throw new ValidationError(SAY.tagsPerCode);
   }
   await assertScopeTags(scope, unique);
   const [code] = await db
     .select({ id: qrCode.id })
     .from(qrCode)
     .where(codesWhere(scope, [codeId]));
-  if (!code) throw new HttpError(404, "NOT_FOUND", "QR code not found");
+  if (!code) throw new HttpError(404, "NOT_FOUND", SAY.codeNotFound);
 
   const clear = db.delete(qrCodeTag).where(eq(qrCodeTag.qrCodeId, codeId));
   if (unique.length === 0) {
@@ -1096,7 +1141,7 @@ export async function duplicateCode(
     .select()
     .from(qrCode)
     .where(codesWhere(scope, [id]));
-  if (!source) throw new HttpError(404, "NOT_FOUND", "QR code not found");
+  if (!source) throw new HttpError(404, "NOT_FOUND", SAY.codeNotFound);
 
   await enforceCreateRateLimit(scope.userId);
   const limits = getPlanLimits(await getPlanForScope(scope));
@@ -1123,7 +1168,7 @@ export async function duplicateCode(
     ],
     { via: "duplicate" },
   );
-  if (!copy) throw new HttpError(503, "UNAVAILABLE", "Please try again.");
+  if (!copy) throw new HttpError(503, "UNAVAILABLE", SAY.tryAgain);
 
   const [tagRows] = await Promise.all([
     db

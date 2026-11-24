@@ -24,7 +24,7 @@ import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import { cn } from "@repo/design-system/lib/utils";
 import { Add as Plus } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 import {
   createCodeTag,
@@ -112,6 +112,7 @@ export function TagEditDialog({
   onSaved?: (tag: TagRow) => void;
 }) {
   const t = useTranslations("app.dashboard.codes.tagDialogs");
+  const locale = useLocale();
   const { run, isPending } = useOrganizeAction();
   const [name, setName] = useState("");
   const [color, setColor] = useState<TagColor>("blue");
@@ -135,7 +136,7 @@ export function TagEditDialog({
       }
       return;
     }
-    const created = await run(() => createCodeTag({ name, color }), {
+    const created = await run(() => createCodeTag({ name, color }, locale), {
       success: (row) => `Created tag "${row.name}"`,
     });
     if (created) {
