@@ -153,7 +153,7 @@ export async function GET(request: Request) {
           deadline: Math.min(Date.now() + 3_000, startedAt + 45_000),
         })
       : 0;
-  // Data-out streams (Google Sheets, HubSpot, Mailchimp) ride the same cron.
+  // Data-out streams (Google Sheets, HubSpot, Mailchimp, Salesforce) ride the same cron.
   const integrations = await runIntegrationSyncs({ budgetMs: 12_000 });
   // Destinations created without a Web Risk answer (large batches out of
   // time, Web Risk down): look them up, switch off the flagged ones

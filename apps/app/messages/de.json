@@ -6788,7 +6788,10 @@
           "failedToConnectIntegration": "Integration konnte nicht verbunden werden",
           "nameDisconnectedAndQrdxsAccess": "{name} getrennt und Zugriff von QRdx widerrufen",
           "nameDisconnected": "{name} getrennt",
-          "failedToDisconnectIntegration": "Integration konnte nicht getrennt werden"
+          "failedToDisconnectIntegration": "Integration konnte nicht getrennt werden",
+          "salesforceOrgType": "Salesforce-Org-Typ",
+          "production": "Produktion",
+          "sandbox": "Sandbox"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "Formularantworten an {name} senden",
@@ -6826,7 +6829,12 @@
           "loadMorePages": "Weitere Seiten laden",
           "loadingPages": "Seiten werden geladen…",
           "tryAgain": "Erneut versuchen",
-          "couldntLoadMorePages": "Weitere Seiten konnten nicht geladen werden. Versuch es erneut."
+          "couldntLoadMorePages": "Weitere Seiten konnten nicht geladen werden. Versuch es erneut.",
+          "newResponsesCreateOrUpdateLead": "Neue Antworten erstellen einen Lead oder aktualisieren den offenen Lead mit derselben E-Mail-Adresse. Es werden nur beantwortete, zugeordnete Fragen gesendet.",
+          "leads": "Leads",
+          "leadSource": "Lead-Quelle",
+          "leadSourceHelp": "Wird bei den Leads gesetzt, die QRdx erstellt. Verwende einen Wert aus deiner Lead-Source-Auswahlliste oder lass das Feld leer, um keinen zu setzen.",
+          "salesforceOrg": "{environment, select, sandbox {Sandbox-Org} other {Produktions-Org}}: {host}"
         },
         "slackBotPanel": {
           "qrdxBot": "QRdx-Bot",

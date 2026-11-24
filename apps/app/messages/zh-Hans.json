@@ -6788,7 +6788,10 @@
           "failedToConnectIntegration": "连接集成失败",
           "nameDisconnectedAndQrdxsAccess": "{name} 已断开连接，QRdx 的访问权限已撤销",
           "nameDisconnected": "{name} 已断开连接",
-          "failedToDisconnectIntegration": "断开集成失败"
+          "failedToDisconnectIntegration": "断开集成失败",
+          "salesforceOrgType": "Salesforce 组织类型",
+          "production": "生产环境",
+          "sandbox": "沙盒"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "将表单回复发送到 {name}",
@@ -6826,7 +6829,12 @@
           "loadMorePages": "加载更多页面",
           "loadingPages": "正在加载页面…",
           "tryAgain": "重试",
-          "couldntLoadMorePages": "无法加载更多页面，请重试。"
+          "couldntLoadMorePages": "无法加载更多页面，请重试。",
+          "newResponsesCreateOrUpdateLead": "新的回复会创建一条线索，或更新使用相同邮箱的未关闭线索。仅发送已回答且已映射的问题。",
+          "leads": "线索",
+          "leadSource": "线索来源",
+          "leadSourceHelp": "设置在 QRdx 创建的线索上。请使用 Lead Source 选项列表中的值，留空则不设置。",
+          "salesforceOrg": "{environment, select, sandbox {沙盒组织} other {生产组织}}：{host}"
         },
         "slackBotPanel": {
           "qrdxBot": "QRdx 机器人",

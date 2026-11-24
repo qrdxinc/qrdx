@@ -21047,6 +21047,18 @@
     "source": "594c3a549835",
     "status": "machine"
   },
+  "app.settings.integrations.integrationDetail.salesforceOrgType": {
+    "source": "ef2ad47f9ea1",
+    "status": "machine"
+  },
+  "app.settings.integrations.integrationDetail.production": {
+    "source": "13a7c655a7d4",
+    "status": "machine"
+  },
+  "app.settings.integrations.integrationDetail.sandbox": {
+    "source": "67fc62497e85",
+    "status": "machine"
+  },
   "app.settings.integrations.responseSinkPanel.sendFormResponsesToName": {
     "source": "49952870287b",
     "status": "machine"
@@ -21189,6 +21201,26 @@
   },
   "app.settings.integrations.responseSinkPanel.couldntLoadMorePages": {
     "source": "56be4d318a76",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.newResponsesCreateOrUpdateLead": {
+    "source": "363a14d6de22",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.leads": {
+    "source": "aef450dc78ea",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.leadSource": {
+    "source": "e419f2c27cb1",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.leadSourceHelp": {
+    "source": "7a1b7c490591",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.salesforceOrg": {
+    "source": "24a2650e843e",
     "status": "machine"
   },
   "app.settings.integrations.slackBotPanel.qrdxBot": {

@@ -33443,6 +33443,84 @@
     "status": "machine",
     "context": "integrations.entries.mailchimp.capabilities.1.description"
   },
+  "2dbd461465b4": {
+    "source": "Every form response on your hosted pages creates or updates a Salesforce lead.",
+    "text": "आपके होस्टेड पेज पर आने वाला हर फ़ॉर्म रिस्पॉन्स Salesforce में एक लीड बनाता या अपडेट करता है।",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.tagline"
+  },
+  "deba4ea87198": {
+    "source": "Connect a production or sandbox org, choose the pages, and map each form's questions to lead fields. Email, name, phone and company are suggested for you. A response from an email that already has an open lead updates that lead; any other response creates one, with the lead source you pick (Web unless you change it).",
+    "text": "प्रोडक्शन या सैंडबॉक्स org कनेक्ट करें, पेज चुनें और हर फ़ॉर्म के सवालों को लीड फ़ील्ड से मैप करें। ईमेल, नाम, फ़ोन और कंपनी अपने आप सुझाए जाते हैं। जिस ईमेल की कोई ओपन लीड पहले से है, उससे आया रिस्पॉन्स उसी लीड को अपडेट करता है; बाकी हर रिस्पॉन्स आपके चुने लीड सोर्स के साथ नई लीड बनाता है (बदलाव न करें तो Web)।",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.0"
+  },
+  "d4b9a1af1e32": {
+    "source": "Salesforce needs a last name and a company on every lead. When a form doesn't ask for them, QRdx uses the part of the email before the @ and Salesforce's own [not provided]. QRdx asks for API access and a refresh token (api, refresh_token), and only questions you map are sent.",
+    "text": "Salesforce को हर लीड पर last name और company चाहिए। फ़ॉर्म में ये न पूछे गए हों, तो QRdx ईमेल में @ से पहले वाला हिस्सा और Salesforce का अपना [not provided] इस्तेमाल करता है। QRdx API एक्सेस और एक रिफ़्रेश टोकन (api, refresh_token) माँगता है, और सिर्फ़ वही सवाल भेजे जाते हैं जिन्हें आप मैप करते हैं।",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.1"
+  },
+  "8c9592f4fc1b": {
+    "source": "Connect Salesforce",
+    "text": "Salesforce कनेक्ट करें",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.primaryAction.label"
+  },
+  "9436d9616759": {
+    "source": "Pick production or sandbox, then click Enable",
+    "text": "प्रोडक्शन या सैंडबॉक्स चुनें, फिर Enable पर क्लिक करें",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.title"
+  },
+  "c0e545dee66f": {
+    "source": "Settings → Integrations → Salesforce. Sign in to the org and allow access. It needs a Salesforce edition with API access and a user who can create leads; your Salesforce admin may need to approve the app first.",
+    "text": "Settings → Integrations → Salesforce। org में साइन इन करें और एक्सेस की अनुमति दें। इसके लिए API एक्सेस वाला Salesforce एडिशन और लीड बना सकने वाला यूज़र चाहिए; हो सकता है पहले आपके Salesforce एडमिन को ऐप मंज़ूर करना पड़े।",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.body"
+  },
+  "9cc2cb890587": {
+    "source": "Choose pages, map fields and set the lead source",
+    "text": "पेज चुनें, फ़ील्ड मैप करें और लीड सोर्स सेट करें",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.title"
+  },
+  "01bddd108b4e": {
+    "source": "Pick the hosted pages whose forms should reach Salesforce, check the suggested mapping, and turn the sync on.",
+    "text": "वे होस्टेड पेज चुनें जिनके फ़ॉर्म Salesforce तक पहुँचने चाहिए, सुझाई गई मैपिंग देखें और सिंक चालू करें।",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.body"
+  },
+  "b650021a8590": {
+    "source": "New responses become leads",
+    "text": "नए रिस्पॉन्स बनते हैं लीड",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.2.title"
+  },
+  "598f409deb1f": {
+    "source": "Matched by email",
+    "text": "ईमेल से मैच",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.title"
+  },
+  "4be6b5639961": {
+    "source": "One open lead per email, updated by later responses instead of duplicated.",
+    "text": "हर ईमेल पर एक ओपन लीड, जो बाद के रिस्पॉन्स से अपडेट होती है, डुप्लिकेट नहीं बनती।",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.description"
+  },
+  "b74f68846b09": {
+    "source": "Field mapping and lead source",
+    "text": "फ़ील्ड मैपिंग और लीड सोर्स",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.title"
+  },
+  "8f629d2cbc27": {
+    "source": "Email, name, phone, company, title and more, with suggested defaults.",
+    "text": "ईमेल, नाम, फ़ोन, कंपनी, टाइटल और बहुत कुछ, सुझाए गए डिफ़ॉल्ट के साथ।",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.description"
+  },
   "29ade64ecd40": {
     "source": "Styled QR codes",
     "text": "स्टाइल वाले QR कोड",

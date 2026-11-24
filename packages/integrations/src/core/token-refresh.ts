@@ -2,7 +2,7 @@ import { database as db, integration } from "@repo/database";
 import { eq } from "drizzle-orm";
 import type { Integration } from "../types";
 import { decryptApiKey, encryptApiKey } from "./encryption";
-import { createOAuthHandler } from "./oauth";
+import { createOAuthHandler, withOAuthVariant } from "./oauth";
 
 // Mutex to prevent concurrent token refreshes for the same integration
 const refreshLocks = new Map<string, Promise<string>>();
@@ -75,8 +75,13 @@ async function performTokenRefresh(
     );
   }
 
-  // Get provider config
-  const config = getConfig(integrationData.provider);
+  // Get provider config, on the sign-in host the person connected with
+  // (Salesforce sandboxes refresh on test.salesforce.com)
+  const config = withOAuthVariant(
+    getConfig(integrationData.provider),
+    (integrationData.metadata as { oauthVariant?: unknown } | null)
+      ?.oauthVariant
+  );
 
   if (!config.supportsRefresh) {
     throw new Error(

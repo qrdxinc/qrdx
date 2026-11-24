@@ -39,6 +39,7 @@ describe("catalog surfaces", () => {
         "google-sheets",
         "hubspot",
         "mailchimp",
+        "salesforce",
         "zapier",
         "make",
         "n8n",

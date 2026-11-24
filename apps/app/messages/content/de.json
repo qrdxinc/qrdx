@@ -33443,6 +33443,84 @@
     "status": "machine",
     "context": "integrations.entries.mailchimp.capabilities.1.description"
   },
+  "2dbd461465b4": {
+    "source": "Every form response on your hosted pages creates or updates a Salesforce lead.",
+    "text": "Jede Formularantwort auf deinen gehosteten Seiten erstellt oder aktualisiert einen Salesforce-Lead.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.tagline"
+  },
+  "deba4ea87198": {
+    "source": "Connect a production or sandbox org, choose the pages, and map each form's questions to lead fields. Email, name, phone and company are suggested for you. A response from an email that already has an open lead updates that lead; any other response creates one, with the lead source you pick (Web unless you change it).",
+    "text": "Verbinde eine Produktiv- oder Sandbox-Org, wähle die Seiten aus und ordne die Fragen jedes Formulars den Lead-Feldern zu. E-Mail, Name, Telefon und Firma werden dir vorgeschlagen. Eine Antwort von einer E-Mail-Adresse, die bereits einen offenen Lead hat, aktualisiert diesen Lead; jede andere Antwort erstellt einen neuen, mit der Lead-Quelle, die du auswählst (Web, solange du sie nicht änderst).",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.0"
+  },
+  "d4b9a1af1e32": {
+    "source": "Salesforce needs a last name and a company on every lead. When a form doesn't ask for them, QRdx uses the part of the email before the @ and Salesforce's own [not provided]. QRdx asks for API access and a refresh token (api, refresh_token), and only questions you map are sent.",
+    "text": "Salesforce braucht bei jedem Lead einen Nachnamen und eine Firma. Fragt ein Formular nicht danach, verwendet QRdx den Teil der E-Mail-Adresse vor dem @ und das eigene [not provided] von Salesforce. QRdx fragt nach API-Zugriff und einem Refresh-Token (api, refresh_token), und es werden nur Fragen gesendet, die du zugeordnet hast.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.1"
+  },
+  "8c9592f4fc1b": {
+    "source": "Connect Salesforce",
+    "text": "Salesforce verbinden",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.primaryAction.label"
+  },
+  "9436d9616759": {
+    "source": "Pick production or sandbox, then click Enable",
+    "text": "Produktiv oder Sandbox wählen, dann auf Aktivieren klicken",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.title"
+  },
+  "c0e545dee66f": {
+    "source": "Settings → Integrations → Salesforce. Sign in to the org and allow access. It needs a Salesforce edition with API access and a user who can create leads; your Salesforce admin may need to approve the app first.",
+    "text": "Einstellungen → Integrationen → Salesforce. Melde dich bei der Org an und erlaube den Zugriff. Du brauchst eine Salesforce-Edition mit API-Zugriff und einen Nutzer, der Leads erstellen darf; eventuell muss dein Salesforce-Admin die App zuerst freigeben.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.body"
+  },
+  "9cc2cb890587": {
+    "source": "Choose pages, map fields and set the lead source",
+    "text": "Seiten auswählen, Felder zuordnen und Lead-Quelle festlegen",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.title"
+  },
+  "01bddd108b4e": {
+    "source": "Pick the hosted pages whose forms should reach Salesforce, check the suggested mapping, and turn the sync on.",
+    "text": "Wähle die gehosteten Seiten aus, deren Formulare an Salesforce gehen sollen, prüfe die vorgeschlagene Zuordnung und schalte die Synchronisierung ein.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.body"
+  },
+  "b650021a8590": {
+    "source": "New responses become leads",
+    "text": "Neue Antworten werden zu Leads",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.2.title"
+  },
+  "598f409deb1f": {
+    "source": "Matched by email",
+    "text": "Abgleich per E-Mail",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.title"
+  },
+  "4be6b5639961": {
+    "source": "One open lead per email, updated by later responses instead of duplicated.",
+    "text": "Ein offener Lead pro E-Mail-Adresse, der von späteren Antworten aktualisiert statt doppelt angelegt wird.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.description"
+  },
+  "b74f68846b09": {
+    "source": "Field mapping and lead source",
+    "text": "Feldzuordnung und Lead-Quelle",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.title"
+  },
+  "8f629d2cbc27": {
+    "source": "Email, name, phone, company, title and more, with suggested defaults.",
+    "text": "E-Mail, Name, Telefon, Firma, Position und mehr, mit vorgeschlagenen Standardwerten.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.description"
+  },
   "29ade64ecd40": {
     "source": "Styled QR codes",
     "text": "Gestaltete QR-Codes",
