@@ -29175,6 +29175,22 @@
     "source": "03281c889c28",
     "status": "machine"
   },
+  "app.shell.pastDueBanner.title": {
+    "source": "2ec568ab3c75",
+    "status": "machine"
+  },
+  "app.shell.pastDueBanner.grace": {
+    "source": "8414739e1dc9",
+    "status": "machine"
+  },
+  "app.shell.pastDueBanner.ended": {
+    "source": "ea2fd723ca46",
+    "status": "machine"
+  },
+  "app.shell.pastDueBanner.updateCard": {
+    "source": "e28b5def97ee",
+    "status": "machine"
+  },
   "app.shell.appSidebar.backToLabel": {
     "source": "e47ed0abc2c7",
     "status": "machine"
@@ -30991,6 +31007,14 @@
     "source": "25aa9031b263",
     "status": "machine"
   },
+  "emails.scanMilestone.pro": {
+    "source": "149f53413cdb",
+    "status": "machine"
+  },
+  "emails.scanMilestone.freeReason": {
+    "source": "fd2a603f61b3",
+    "status": "machine"
+  },
   "emails.formSubmission.subject": {
     "source": "72fe11245539",
     "status": "machine"
@@ -31457,6 +31481,118 @@
   },
   "emails.inviteReward.reason": {
     "source": "324613c70bd5",
+    "status": "machine"
+  },
+  "emails.invite.both": {
+    "source": "dde6bdfabfe5",
+    "status": "machine"
+  },
+  "emails.invite.friend": {
+    "source": "0b2ad64e816f",
+    "status": "machine"
+  },
+  "emails.activationNudge.subject": {
+    "source": "31356c894960",
+    "status": "machine"
+  },
+  "emails.activationNudge.greeting": {
+    "source": "9f7b52b0f23b",
+    "status": "machine"
+  },
+  "emails.activationNudge.what": {
+    "source": "dbaa1e26998f",
+    "status": "machine"
+  },
+  "emails.activationNudge.button": {
+    "source": "023601942334",
+    "status": "machine"
+  },
+  "emails.activationNudge.reply": {
+    "source": "ca61f95b8a76",
+    "status": "machine"
+  },
+  "emails.activationNudge.reason": {
+    "source": "a63569c6442e",
+    "status": "machine"
+  },
+  "emails.paymentFailed.subject": {
+    "source": "2929de5c074b",
+    "status": "machine"
+  },
+  "emails.paymentFailed.heading": {
+    "source": "a9415f206f78",
+    "status": "machine"
+  },
+  "emails.paymentFailed.greeting": {
+    "source": "9f7b52b0f23b",
+    "status": "machine"
+  },
+  "emails.paymentFailed.body": {
+    "source": "528bcb949516",
+    "status": "machine"
+  },
+  "emails.paymentFailed.grace": {
+    "source": "325ef104c4d9",
+    "status": "machine"
+  },
+  "emails.paymentFailed.button": {
+    "source": "382cdb06ff17",
+    "status": "machine"
+  },
+  "emails.paymentFailed.reply": {
+    "source": "0db00565f856",
+    "status": "machine"
+  },
+  "emails.paymentFailed.reason": {
+    "source": "bf100a1985df",
+    "status": "machine"
+  },
+  "emails.newCustomer.subject": {
+    "source": "d3d3a1e2182a",
+    "status": "machine"
+  },
+  "emails.newCustomer.greeting": {
+    "source": "9f7b52b0f23b",
+    "status": "machine"
+  },
+  "emails.newCustomer.thanks": {
+    "source": "35b69827b748",
+    "status": "machine"
+  },
+  "emails.newCustomer.setUp": {
+    "source": "5d5c36d0f0bf",
+    "status": "machine"
+  },
+  "emails.newCustomer.domain": {
+    "source": "47518f7e9411",
+    "status": "machine"
+  },
+  "emails.newCustomer.backHalf": {
+    "source": "b75ce38d08d3",
+    "status": "machine"
+  },
+  "emails.newCustomer.alerts": {
+    "source": "64b2c571a198",
+    "status": "machine"
+  },
+  "emails.newCustomer.team": {
+    "source": "d601c90caa83",
+    "status": "machine"
+  },
+  "emails.newCustomer.teamUnlimited": {
+    "source": "0f20fbf1f96b",
+    "status": "machine"
+  },
+  "emails.newCustomer.moneyBack": {
+    "source": "229262d85947",
+    "status": "machine"
+  },
+  "emails.newCustomer.reply": {
+    "source": "a1c484ec2e2a",
+    "status": "machine"
+  },
+  "emails.newCustomer.reason": {
+    "source": "6f872c3af515",
     "status": "machine"
   },
   "codeActions.lifecycle.signIn": {
