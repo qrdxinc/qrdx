@@ -16,8 +16,7 @@ import { useWhatsNew } from "./whats-new";
 
 /**
  * Docs, help and support. "What's new" opens the app's panel (with the
- * unread count) instead of leaving for /changelogs. On phones, where the
- * sidebar's "What's new" row sits in the menu sheet, the button carries a
+ * unread count) instead of leaving for /changelogs, and the button carries a
  * dot while something is unread.
  */
 export function HelpMenu() {
@@ -42,7 +41,7 @@ export function HelpMenu() {
           {unread > 0 && (
             <span
               aria-hidden
-              className="bg-primary ring-background absolute top-1 right-1 size-1.5 rounded-full ring-2 md:hidden"
+              className="bg-primary ring-background absolute top-1 right-1 size-1.5 rounded-full ring-2"
             />
           )}
         </Button>

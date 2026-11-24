@@ -9071,7 +9071,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "新着情報",
         "backToLabel": "{label}に戻る",
         "expandSidebar": "サイドバーを展開",
         "collapseSidebar": "サイドバーを折りたたむ",

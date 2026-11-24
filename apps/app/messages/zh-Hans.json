@@ -9071,7 +9071,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "新功能",
         "backToLabel": "返回{label}",
         "expandSidebar": "展开侧边栏",
         "collapseSidebar": "收起侧边栏",
