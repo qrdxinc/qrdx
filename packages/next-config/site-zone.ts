@@ -149,6 +149,14 @@ export const SITE_GROUPS = {
     "/id/barcode-generator",
     "/hi/barcode-generator",
   ],
+  /**
+   * The press kit: /press and its Open Graph image. The site's alone: this
+   * app has no page there (a 404 without the site), so its sitemap and
+   * llms.txt list it only while the site serves this group. Opt-in
+   * (SITE_OPT_IN_GROUPS), so it changes nothing until SITE_ZONE_GROUPS
+   * names it.
+   */
+  press: ["/press"],
 } as const satisfies Record<string, readonly SitePath[]>;
 
 export type SiteGroup = keyof typeof SITE_GROUPS;
@@ -184,6 +192,7 @@ export const SITE_GROUP_NAMES = Object.keys(
 export const SITE_OPT_IN_GROUPS: readonly SiteGroup[] = [
   "generators-i18n",
   "barcodes-i18n",
+  "press",
 ];
 
 /**

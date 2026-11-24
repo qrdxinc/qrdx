@@ -94,6 +94,8 @@ describe("next.config.ts, English-only marketing pages", () => {
       "https://qrdx.dev/id/qr-code-tracking",
       "https://qrdx.dev/qr-code-tracking",
     ],
+    // The site's press kit.
+    ["https://qrdx.dev/fr/press", "https://qrdx.dev/press"],
   ])("redirects %s to %s with a 308", async (url, location) => {
     const response = await respond(url);
     expect(response.status).toBe(308);

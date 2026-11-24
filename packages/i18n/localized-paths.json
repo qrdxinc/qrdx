@@ -44,6 +44,7 @@
     "/compare/[slug]",
     "/legal/[[...slug]]",
     "/custom-domain-qr-codes",
-    "/qr-code-tracking"
+    "/qr-code-tracking",
+    "/press"
   ]
 }

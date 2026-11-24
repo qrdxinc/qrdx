@@ -354,6 +354,16 @@ describe("llms.txt", () => {
     expect(limited).not.toMatch(/conversion tracking on Business/);
   });
 
+  it("lists the site's press kit only while the site serves it", () => {
+    const page = `${LOCAL.origin}/press)`;
+    expect(text).not.toContain(page);
+    const served = buildLlmsTxt(fixture({ pressPage: true }));
+    const optional = served.slice(served.indexOf("## Optional"));
+    expect(optional).toContain(
+      `- [Press kit](${page}: Descriptions of QRdx in three lengths, a fact sheet, the logo as SVG and PNG, and who to contact`,
+    );
+  });
+
   it("lists the site's app download generator only while the site serves it", () => {
     const page = `${LOCAL.origin}/qr-code-generator/app-download)`;
     // This app has no such hosted type.

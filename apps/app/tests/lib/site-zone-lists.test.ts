@@ -428,3 +428,45 @@ describe("the site's scan tracking page and app download generator", () => {
     expect(text).not.toContain(TRACKING_PAGE);
   });
 });
+
+// /press, the press kit, is the marketing site's page alone too
+// (SITE_GROUPS.press, opt-in): this app's sitemap and llms.txt list it only
+// while the site serves its group, so neither points at this app's 404.
+const PRESS_PAGE = "/press";
+
+describe("the site's press kit", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set();
+  });
+
+  it("is in neither list without the site, or with every group but its own", async () => {
+    for (const groups of [
+      [],
+      ["blog", "compare", "products", "generators", "barcodes", "home"],
+    ]) {
+      zone.groups = new Set(groups);
+      const paths = (await sitemap()).map(
+        (entry) => new URL(entry.url).pathname,
+      );
+      expect(paths, groups.join()).not.toContain(PRESS_PAGE);
+      expect(await llmsTxt(), groups.join()).not.toMatch(/\/press\)/);
+    }
+  });
+
+  it("is in both while the site serves it", async () => {
+    zone.groups = new Set(["press"]);
+    const entries = (await sitemap()).filter(
+      (entry) => new URL(entry.url).pathname === PRESS_PAGE,
+    );
+    // No lastmod: its copy isn't in this repo.
+    expect(entries).toEqual([
+      {
+        url: expect.stringMatching(/\/press$/),
+        changeFrequency: "monthly",
+        priority: 0.5,
+      },
+    ]);
+    expect(await llmsTxt()).toMatch(/- \[Press kit\]\([^)]*\/press\): /);
+  });
+});

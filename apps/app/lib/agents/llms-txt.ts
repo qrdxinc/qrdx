@@ -84,6 +84,11 @@ export interface LlmsTxtInput {
    */
   trackingPage?: boolean;
   /**
+   * Whether the marketing site serves its press kit here (/press,
+   * SITE_GROUPS.press). Listed only then, as `customDomainPage`.
+   */
+  pressPage?: boolean;
+  /**
    * Whether the marketing site serves its app download generator here
    * (/qr-code-generator/app-download, SITE_GROUPS.generators), a hosted
    * type this app's HOSTED_QR_TYPES doesn't have. Listed only then.
@@ -663,6 +668,12 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     },
     { title: "Customers", url: "/customers" },
     ...input.customers,
+    Boolean(input.pressPage) && {
+      title: "Press kit",
+      url: "/press",
+      description:
+        "Descriptions of QRdx in three lengths, a fact sheet, the logo as SVG and PNG, and who to contact",
+    },
   ]);
 
   const sections: Record<(typeof LLMS_SECTIONS)[number], string[]> = {
