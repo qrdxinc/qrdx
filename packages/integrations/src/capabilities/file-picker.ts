@@ -1,6 +1,6 @@
 /**
- * Common shape every file/page picker client (Dropbox, OneDrive, Box,
- * Notion) implements: browse or search, then turn the picked item into a
+ * Common shape every file/page picker client (Dropbox, OneDrive, Notion)
+ * implements: browse or search, then turn the picked item into a
  * link people can open. Client-safe types only.
  */
 

@@ -54,8 +54,11 @@ export type CatalogFeatureIcon =
 
 export type CatalogLogo =
   /**
-   * The brand's official logo file in apps/app/public, shown on a white
-   * tile. Every third-party entry uses one; never an icon or an initial.
+   * The brand's official logo file, shown on a white tile: a file in
+   * apps/app/public, or, for a brand that lets us show its logo but not
+   * commit it (Pipedrive), the same path uploaded to R2 with
+   * `bun run media:upload` (apps/app/lib/media.ts resolves it). Every
+   * third-party entry uses one; never an icon or an initial.
    */
   | { type: "image"; src: string }
   | { type: "feature"; icon: CatalogFeatureIcon };

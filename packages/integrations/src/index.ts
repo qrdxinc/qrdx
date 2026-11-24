@@ -32,7 +32,7 @@ export {
   verifyContentSourceCredentials,
 } from "./capabilities/data-factory";
 // Short-link providers and file pickers (Bitly, Rebrandly, Short.io,
-// Dropbox, OneDrive, Box, Notion)
+// Dropbox, OneDrive, Notion)
 export {
   createFilePickerClient,
   createShortLinkClient,
@@ -97,7 +97,6 @@ export {
   shouldRefreshToken,
 } from "./core/token-refresh";
 export { BitlyClient, createBitlyClient } from "./integrations/bitly";
-export { BoxClient, createBoxClient } from "./integrations/box";
 export { createDropboxClient, DropboxClient } from "./integrations/dropbox";
 export type {
   DubError,

@@ -95,5 +95,23 @@ jobs:
         run: ./mcp-publisher login dns --domain qrdx.dev --private-key "$MCP_REGISTRY_PRIVATE_KEY"
 
       - name: Publish
+        id: publish
         if: steps.check.outputs.publish == 'true'
         run: ./mcp-publisher publish
+
+      # "QRdx MCP server <version> is in the MCP Registry" in the QRdx
+      # Discord's #releases (scripts/discord-notify.mjs). Without the
+      # DISCORD_RELEASES_WEBHOOK_URL secret it's a notice; it never fails
+      # the publish.
+      - name: Setup Node
+        if: steps.publish.outcome == 'success'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Post to Discord
+        if: steps.publish.outcome == 'success'
+        continue-on-error: true
+        env:
+          DISCORD_RELEASES_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASES_WEBHOOK_URL }}
+        run: node scripts/discord-notify.mjs mcp-registry

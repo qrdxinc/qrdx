@@ -70,8 +70,6 @@ export const env = validateTogether(() =>
       DROPBOX_CLIENT_SECRET: z.string().min(1).optional(),
       MICROSOFT_CLIENT_ID: z.string().min(1).optional(),
       MICROSOFT_CLIENT_SECRET: z.string().min(1).optional(),
-      BOX_CLIENT_ID: z.string().min(1).optional(),
-      BOX_CLIENT_SECRET: z.string().min(1).optional(),
       NOTION_CLIENT_ID: z.string().min(1).optional(),
       NOTION_CLIENT_SECRET: z.string().min(1).optional(),
 
@@ -291,8 +289,6 @@ export const env = validateTogether(() =>
       DROPBOX_CLIENT_SECRET: process.env.DROPBOX_CLIENT_SECRET,
       MICROSOFT_CLIENT_ID: process.env.MICROSOFT_CLIENT_ID,
       MICROSOFT_CLIENT_SECRET: process.env.MICROSOFT_CLIENT_SECRET,
-      BOX_CLIENT_ID: process.env.BOX_CLIENT_ID,
-      BOX_CLIENT_SECRET: process.env.BOX_CLIENT_SECRET,
       NOTION_CLIENT_ID: process.env.NOTION_CLIENT_ID,
       NOTION_CLIENT_SECRET: process.env.NOTION_CLIENT_SECRET,
       CALENDLY_CLIENT_ID: process.env.CALENDLY_CLIENT_ID,

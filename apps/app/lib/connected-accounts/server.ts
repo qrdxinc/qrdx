@@ -192,7 +192,7 @@ export async function resolveFilePickerClient(
 
 /**
  * Revokes the stored token where the provider has a revoke API (Dropbox,
- * Box, Notion). Best effort: a failure never blocks deleting the row.
+ * Notion). Best effort: a failure never blocks deleting the row.
  */
 export async function revokeStoredToken(
   userId: string,

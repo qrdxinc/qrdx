@@ -1,12 +1,7 @@
 /** Which registry slugs implement which capability. Client-safe. */
 
 export const SHORT_LINK_PROVIDERS = ["bitly", "rebrandly", "short-io"] as const;
-export const FILE_PICKER_PROVIDERS = [
-  "dropbox",
-  "onedrive",
-  "box",
-  "notion",
-] as const;
+export const FILE_PICKER_PROVIDERS = ["dropbox", "onedrive", "notion"] as const;
 
 /**
  * Providers connected only to import from (Codes → Import): an API key, no

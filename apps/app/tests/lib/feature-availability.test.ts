@@ -755,7 +755,7 @@ describe("what client components learn", () => {
   it("lists unavailable ids and their pages, never variable names", () => {
     const view = toPublicAvailability(computeFeatures(ctx({}, vercelProd)), [
       "slack",
-      "box",
+      "notion",
     ]);
     expect(view.unavailable).toEqual([...FEATURE_IDS]);
     expect(view.hiddenPaths).toEqual(
@@ -766,7 +766,7 @@ describe("what client components learn", () => {
         "/docs/custom-domains",
       ]),
     );
-    expect(view.hiddenIntegrations).toEqual(["box", "slack"]);
+    expect(view.hiddenIntegrations).toEqual(["notion", "slack"]);
     expect(JSON.stringify(view)).not.toMatch(/[A-Z]{2,}_[A-Z]/);
   });
 
@@ -982,7 +982,6 @@ describe("a production-like deployment", () => {
     );
     expect(toAvailabilityView(availability).hidden).toEqual(
       [
-        "box",
         "calendly",
         "custom-domains",
         "discord-bot",

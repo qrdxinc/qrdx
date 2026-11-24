@@ -33,11 +33,10 @@ describe("linkSourcesHint", () => {
         shortener("Short.io"),
         picker("Dropbox"),
         picker("OneDrive"),
-        picker("Box"),
         picker("Notion"),
       ]),
     ).toBe(
-      "Shorten with Bitly, Rebrandly or Short.io, or pick a file from Dropbox, OneDrive, Box or Notion",
+      "Shorten with Bitly, Rebrandly or Short.io, or pick a file from Dropbox, OneDrive or Notion",
     );
   });
 

@@ -45,7 +45,7 @@ describe("toAvailabilityView", () => {
       needsSetup: { dub: ["DUB_CLIENT_ID"] },
     };
     const view = toAvailabilityView(dev);
-    view.needsSetup.box = ["BOX_CLIENT_ID"];
+    view.needsSetup.notion = ["NOTION_CLIENT_ID"];
     expect(dev.needsSetup).toEqual({ dub: ["DUB_CLIENT_ID"] });
   });
 });

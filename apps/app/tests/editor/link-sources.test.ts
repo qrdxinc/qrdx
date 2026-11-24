@@ -74,13 +74,13 @@ describe("buildLinkSourceMenu", () => {
     const menu = buildLinkSourceMenu(
       [
         account("bitly", "short-links", { connected: false, status: null }),
-        account("box", "files", { status: "error" }),
+        account("notion", "files", { status: "error" }),
       ],
       [source("shopify", { connected: false, status: null })],
       open,
     );
     expect(menu?.ready).toEqual([]);
-    expect(menu?.connectable).toEqual(["Bitly", "Box", "Shopify"]);
+    expect(menu?.connectable).toEqual(["Bitly", "Notion", "Shopify"]);
   });
 
   it("never shows a provider that isn't set up on this deployment", () => {
@@ -112,7 +112,7 @@ describe("connectableSummary", () => {
       "Bitly, Dropbox and Stripe",
     );
     expect(
-      connectableSummary(["Bitly", "Dropbox", "Stripe", "Shopify", "Box"]),
+      connectableSummary(["Bitly", "Dropbox", "Stripe", "Shopify", "Notion"]),
     ).toBe("Bitly, Dropbox, Stripe and 2 more");
   });
 });
