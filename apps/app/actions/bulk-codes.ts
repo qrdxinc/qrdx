@@ -63,13 +63,22 @@ export async function setQrCodeNotes(
   });
 }
 
+/**
+ * `pageLocale`: the calling page's useLocale() (the code builder's, which
+ * opens over /[lang]/playground too), the language its messages are in.
+ */
 export async function moveQrCodes(
   input: z.input<typeof moveSchema>,
+  pageLocale?: string,
 ): Promise<OrganizeResult<Counted>> {
-  return runOrganize("moveQrCodes", (scope) => {
-    const { ids, folderId } = parseInput(moveSchema, input);
-    return moveCodes(scope, ids, folderId);
-  });
+  return runOrganize(
+    "moveQrCodes",
+    (scope) => {
+      const { ids, folderId } = parseInput(moveSchema, input);
+      return moveCodes(scope, ids, folderId);
+    },
+    { pageLocale },
+  );
 }
 
 /** Pause works on every plan; paused codes show the owner's fallback. */

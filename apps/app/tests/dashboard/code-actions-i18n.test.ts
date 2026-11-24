@@ -1,6 +1,8 @@
-// The code, page, domain, tag, suggestion and webhook actions in another
-// language: what they say themselves (signing in, validation, plan limits)
-// comes in the language of the page that shows it. The code builder and the
+// The code, page, domain, folder, tag, bulk, suggestion and webhook actions
+// in another language: what they say themselves (signing in, validation,
+// plan limits) comes in the language of the page that shows it, and so does
+// what organize.ts throws for them (names included), which stays English
+// for its own callers. The code builder and the
 // editor send their page's language (useLocale(): /es/playground is Spanish,
 // /playground English, whatever the cookie says), and so do the code and
 // barcode routes when the page adds ?locale=. Without one, it's the app's
@@ -142,6 +144,9 @@ const marketing = await import("@/actions/code-marketing");
 const pages = await import("@/actions/landing-pages");
 const domains = await import("@/actions/custom-domains");
 const tags = await import("@/actions/tags");
+const folders = await import("@/actions/folders");
+const bulk = await import("@/actions/bulk-codes");
+const organize = await import("@/app/(app)/dashboard/codes/_lib/organize");
 const suggestions = await import("@/actions/code-suggestions");
 const qrCodes = await import("@/actions/qr-codes");
 const files = await import("@/actions/files");
@@ -155,6 +160,7 @@ const barcodesRoute = await import("@/app/api/barcodes/route");
 const { CODE_ACTION_MESSAGES, codeActionMessages } = await import(
   "@/lib/code-actions/messages"
 );
+const { ValidationError } = await import("@/types/errors");
 
 const english = en.codeActions;
 const spanish = es.codeActions;
@@ -196,6 +202,29 @@ function code() {
   ]);
 }
 
+/** The workspace's folder "Spring" and tag "VIP". */
+function organized() {
+  fakeDb.seed("folder", [
+    {
+      id: "folder_spring",
+      userId: USER,
+      organizationId: ORG,
+      parentId: null,
+      name: "Spring",
+      position: 0,
+    },
+  ]);
+  fakeDb.seed("tag", [
+    {
+      id: "tag_vip",
+      userId: USER,
+      organizationId: ORG,
+      name: "VIP",
+      color: "blue",
+    },
+  ]);
+}
+
 const rule = {
   id: "r1",
   name: "",
@@ -214,6 +243,7 @@ beforeEach(() => {
   state.errors = [];
   account();
   code();
+  organized();
 });
 
 describe("with the language menu on Spanish", () => {
@@ -375,6 +405,92 @@ describe("with the language menu on Spanish", () => {
     });
   });
 
+  it("says folder, tag and bulk messages in Spanish (organize, through runOrganize)", async () => {
+    // A schema's message (folderNameSchema)
+    expect(
+      await folders.createCodeFolder({ name: "Spring/Summer", parentId: null }),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "VALIDATION_ERROR",
+        message: translated(
+          english.organize.folderNameSlash,
+          spanish.organize.folderNameSlash,
+        ),
+      },
+    });
+    // Messages that name a folder or tag: the name comes with the error,
+    // as the person typed it.
+    expect(
+      await folders.createCodeFolder({ name: "spring", parentId: null }),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "VALIDATION_ERROR",
+        message: translated(
+          'A folder named "spring" already exists there.',
+          'Ya existe una carpeta llamada "spring" en ese lugar.',
+        ),
+      },
+    });
+    expect(await tags.createCodeTag({ name: "vip" })).toEqual({
+      success: false,
+      error: {
+        code: "VALIDATION_ERROR",
+        message: translated(
+          'A tag named "vip" already exists.',
+          'Ya existe una etiqueta llamada "vip".',
+        ),
+      },
+    });
+    // A throw with a status (404), and the bulk actions' selection
+    expect(
+      await folders.renameCodeFolder({ id: "folder_gone", name: "Autumn" }),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "NOT_FOUND",
+        message: translated(
+          english.organize.folderNotFound,
+          spanish.organize.folderNotFound,
+        ),
+      },
+    });
+    expect(await bulk.trashQrCodes({ ids: [] })).toEqual({
+      success: false,
+      error: {
+        code: "VALIDATION_ERROR",
+        message: translated(
+          english.organize.selectAtLeastOne,
+          spanish.organize.selectAtLeastOne,
+        ),
+      },
+    });
+    state.signedIn = false;
+    expect(
+      await bulk.setQrCodesFavorite({ ids: [CODE], favorite: true }),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "UNAUTHORIZED",
+        message: translated(english.organize.signIn, spanish.organize.signIn),
+      },
+    });
+    expect(state.errors).toEqual([]);
+  });
+
+  it("keeps organize's own errors English for logs and the API", async () => {
+    const scope = { userId: USER, organizationId: ORG, role: "owner" as const };
+    const error = await organize
+      .createTag(scope, { name: "vip", color: "gray" })
+      .catch((caught: unknown) => caught);
+    expect(error).toBeInstanceOf(ValidationError);
+    expect((error as Error).message).toBe('A tag named "vip" already exists.');
+    await expect(
+      organize.renameFolder(scope, { id: "folder_gone", name: "Autumn" }),
+    ).rejects.toThrow("Folder not found");
+  });
+
   it("says too many suggestions in Spanish (code-suggestions)", async () => {
     state.limited = true;
     expect(
@@ -519,6 +635,25 @@ describe("on a page whose URL carries the language (the builder, the editor)", (
     });
   });
 
+  it("comes to the builder's tag and folder writes", async () => {
+    expect(await tags.createCodeTag({ name: "vip" }, "es")).toMatchObject({
+      success: false,
+      error: { message: 'Ya existe una etiqueta llamada "vip".' },
+    });
+    expect(
+      await bulk.moveQrCodes({ ids: [CODE], folderId: "folder_gone" }, "es"),
+    ).toEqual({
+      success: false,
+      error: { code: "NOT_FOUND", message: spanish.organize.folderNotFound },
+    });
+    // The page's English over a Spanish cookie
+    state.cookieLocale = "es";
+    expect(await tags.createCodeTag({ name: "vip" }, "en")).toMatchObject({
+      error: { message: 'A tag named "vip" already exists.' },
+    });
+    expect(state.errors).toEqual([]);
+  });
+
   it("is ignored when it isn't one of QRdx's languages (the app's rule)", async () => {
     state.cookieLocale = "fr";
     state.signedIn = false;
@@ -618,6 +753,41 @@ describe("whose language it is", () => {
       success: false,
       error: { code: "VALIDATION_ERROR", message: "Nothing to update" },
     });
+    expect(
+      await folders.createCodeFolder({ name: "Spring/Summer", parentId: null }),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "VALIDATION_ERROR",
+        message: "Folder names can't contain /",
+      },
+    });
+    expect(
+      await folders.createCodeFolder({ name: "spring", parentId: null }),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "VALIDATION_ERROR",
+        message: 'A folder named "spring" already exists there.',
+      },
+    });
+    expect(await tags.createCodeTag({ name: "vip" })).toEqual({
+      success: false,
+      error: {
+        code: "VALIDATION_ERROR",
+        message: 'A tag named "vip" already exists.',
+      },
+    });
+    expect(
+      await folders.renameCodeFolder({ id: "folder_gone", name: "Autumn" }),
+    ).toEqual({
+      success: false,
+      error: { code: "NOT_FOUND", message: "Folder not found" },
+    });
+    expect(await bulk.trashQrCodes({ ids: [] })).toEqual({
+      success: false,
+      error: { code: "VALIDATION_ERROR", message: "Select at least one code" },
+    });
     state.limited = true;
     expect(
       await suggestions.suggestCodeDetailsAction({
@@ -642,6 +812,12 @@ describe("whose language it is", () => {
     expect(await webhooks.deleteWebhookEndpoint({ id: "wh_1" })).toEqual({
       ok: false,
       error: "Sign in to manage webhooks.",
+    });
+    expect(
+      await bulk.setQrCodesFavorite({ ids: [CODE], favorite: true }),
+    ).toEqual({
+      success: false,
+      error: { code: "UNAUTHORIZED", message: "Sign in to manage your codes." },
     });
     expect(state.errors).toEqual([]);
   });
@@ -674,8 +850,16 @@ describe("the catalog's English", () => {
         planRequired,
         ...plain
       } = messages.marketing;
+      const { folderExists, tagExists, ...organizePlain } = messages.organize;
       return {
         ...messages,
+        organize: {
+          ...organizePlain,
+          folderExists: ["Spring", 'Q4 "launch"'].map((name) =>
+            folderExists({ name }),
+          ),
+          tagExists: ["VIP", "{name}"].map((name) => tagExists({ name })),
+        },
         marketing: {
           ...plain,
           rule: [1, 12].map(ruleLabel),

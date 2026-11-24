@@ -25,16 +25,14 @@ import type { ActiveScope } from "@/lib/scope";
 const ENGLISH = CODE_ACTION_MESSAGES.tags;
 
 /**
- * runOrganize, saying this file's own messages (its schemas') in the
- * calling page's language (codeActionText); the rest is runOrganize's.
+ * runOrganize (which says organize's messages in the calling page's
+ * language), saying this file's own messages (its schemas') in that
+ * language too (codeActionText).
  */
 async function run<T>(
   action: string,
   fn: (scope: ActiveScope) => Promise<T>,
-  {
-    pageLocale,
-    ...options
-  }: Parameters<typeof runOrganize>[2] & { pageLocale?: string } = {},
+  options: Parameters<typeof runOrganize>[2] = {},
 ): Promise<OrganizeResult<T>> {
   const result = await runOrganize(action, fn, options);
   if (
@@ -43,7 +41,7 @@ async function run<T>(
   ) {
     return result;
   }
-  const text = (await codeActionText({ pageLocale })).tags;
+  const text = (await codeActionText({ pageLocale: options.pageLocale })).tags;
   return {
     ...result,
     error: {
@@ -94,11 +92,18 @@ export async function listCodeTags(): Promise<OrganizeResult<TagRow[]>> {
   });
 }
 
+/**
+ * `pageLocale`: the calling page's useLocale() (the code builder's, which
+ * opens over /[lang]/playground too), the language its messages are in.
+ */
 export async function createCodeTag(
   input: z.input<typeof createSchema>,
+  pageLocale?: string,
 ): Promise<OrganizeResult<TagRow>> {
-  return run("createCodeTag", (scope) =>
-    createTag(scope, parseInput(createSchema, input)),
+  return run(
+    "createCodeTag",
+    (scope) => createTag(scope, parseInput(createSchema, input)),
+    { pageLocale },
   );
 }
 

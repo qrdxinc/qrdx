@@ -17,12 +17,11 @@ import type { BuilderServices } from "./submit";
 /**
  * The builder's writes: the dashboard's existing server actions, answering
  * in `locale`, the language of the page the builder is on (its useLocale()).
- * Moving codes says only organize's own messages, which aren't translated.
  */
 export const builderServices = (locale: string): BuilderServices => ({
   createCode: (input) => createQrCode(input, undefined, locale),
   updateCode: (input) => updateQrCode(input, locale),
-  moveCodes: moveQrCodes,
+  moveCodes: (input) => moveQrCodes(input, locale),
   setTags: (input) => setQrCodeTags(input, locale),
 });
 

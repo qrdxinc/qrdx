@@ -27,7 +27,7 @@ import {
   FolderAdd as FolderPlus,
   DirectInbox as Inbox,
 } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   type FormEvent,
   type ReactNode,
@@ -230,6 +230,7 @@ export function MoveToFolderDialog({
   onMoved?: () => void;
 }) {
   const t = useTranslations("app.dashboard.codes.folderDialogs");
+  const locale = useLocale();
   const [folders, setFolders] = useFolders(open, initialFolders);
   const { run, isPending } = useOrganizeAction();
   const [creating, setCreating] = useState<FolderRow | null | false>(false);
@@ -239,7 +240,7 @@ export function MoveToFolderDialog({
   );
 
   const move = async (folderId: string | null, name: string | null) => {
-    const result = await run(() => moveQrCodes({ ids, folderId }), {
+    const result = await run(() => moveQrCodes({ ids, folderId }, locale), {
       success: ({ updated }) =>
         name
           ? t("movedToFolder", { count: updated, name })
