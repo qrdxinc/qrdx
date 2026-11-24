@@ -587,14 +587,14 @@ describe("imageSnippet", () => {
     expect(imageQuery(colored.url).frame).toBeUndefined();
     expect(styleOf(colored.url).frame).toEqual(builtInFrame.frame);
     expect(colored.omitted).toEqual([]);
-    // An official frame goes by its id (tests/api/image-api-official-frames
-    // checks it draws the same as its spec)
+    // An official frame goes by its id pinned to its version (tests/api/
+    // image-api-official-frames checks it draws the same as its spec)
     const official = imageSnippet({
       ...urlInput(customFrame),
       officialFrames: OFFICIAL_FRAME_RESOLVER,
     });
     expect(imageQuery(official.url)).toMatchObject({
-      frame: officialFrame.id,
+      frame: `${officialFrame.id}.v1`,
       frameText: "Free Wi-Fi",
     });
     expect(official.url).not.toContain("qrdx.frame");
@@ -635,8 +635,12 @@ describe("imageSnippet", () => {
     expect(imageQuery(imageSnippet(urlInput(retiredShapes)).url).eye).toBe(
       "curly",
     );
-    const bordered = imageSnippet(urlInput({ ...plain, templateId: "Arrow" }));
-    expect(imageQuery(bordered.url).template).toBe("Arrow");
+    // The former templates are frames: the snippet names the frame
+    const framed = imageSnippet(
+      urlInput({ ...plain, frame: { style: "arrow" } }),
+    );
+    expect(imageQuery(framed.url).frame).toBe("arrow");
+    expect(imageQuery(framed.url).template).toBeUndefined();
   });
 });
 

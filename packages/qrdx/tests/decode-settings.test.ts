@@ -6,7 +6,6 @@
 import { describe, expect, it } from "vitest";
 import { getFrameDimensions } from "../src/frame";
 import { getQRData } from "../src/helpers";
-import { getTemplateIds } from "../src/templates";
 import type { QRProps } from "../types";
 import { FRAME_STYLES } from "../types/frame";
 import { knownUnreadable } from "./support/known-issues";
@@ -200,29 +199,6 @@ describe("frames", () => {
     });
     expect(failures).toEqual([]);
   });
-});
-
-describe("templates", () => {
-  it.each(getTemplateIds())(
-    "%s template keeps the code decodable",
-    (templateId) => {
-      const svg = renderSvg({
-        value: VALUE,
-        size: 256,
-        templateId,
-        bodyPattern: "square",
-        cornerEyePattern: "square",
-        cornerEyeDotPattern: "square",
-      });
-      const readable = [600, 900, 1200].filter(
-        (width) => decodeQR(rasterizeSvg(svg, { width, pad: 24 })) === VALUE
-      );
-      expect(
-        readable.length,
-        "decoded at template widths 600/900/1200 px"
-      ).toBe(3);
-    }
-  );
 });
 
 describe("payloads", () => {

@@ -30,7 +30,7 @@ Don't use `withElementFactory`. It's internal: the React components use it to bu
 
 - Building the tree is the cost: about 1.5–2 ms for a styled, framed code (logo, gradient, frame). Turning it into markup or DOM nodes is a small share of that. Rebuild only when the props change.
 - The markup is a pure function of the props. Comparing `renderToString(tree)` with the last one is a cheap way to skip DOM work when nothing visible changed (`createQRCode` does this).
-- Replace the whole `<svg>` when it changes. There is no stable node identity between two trees to patch against. Gradient, pattern and logo clip-path ids are hashes of their content (templates use fixed ids), so a replaced element never points at another code's `url(#…)` with different content.
+- Replace the whole `<svg>` when it changes. There is no stable node identity between two trees to patch against. Gradient, pattern and logo clip-path ids are hashes of their content, so a replaced element never points at another code's `url(#…)` with different content.
 - A virtual-DOM adapter can let its framework diff the `toHyperscript` output instead. Lists carry keys (the fourth argument to `create`).
 
 ## SSR and hydration

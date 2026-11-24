@@ -9,7 +9,8 @@
 // home page later), so the list is a map of group → path prefixes. A group
 // is on while SITE_ORIGIN is set and SITE_ZONE_GROUPS is unset or names it,
 // so traffic moves one group at a time with an environment change and a
-// redeploy, and moves back the same way.
+// redeploy, and moves back the same way. An opt-in group
+// (SITE_OPT_IN_GROUPS) is on only while SITE_ZONE_GROUPS names it.
 //
 // Unlike the console, these pages are public: no session check, and the
 // main app adds no cache rules of its own, so the zone's own Cache-Control
@@ -106,6 +107,48 @@ export const SITE_GROUPS = {
    * the dashboard before anything reaches the site; /home never redirects.
    */
   home: [{ path: "/" }, { path: "/home" }],
+  /**
+   * The QR code generators in the other languages (owner decision, 23 Nov
+   * 2026, for search traffic in other languages): /<language>/
+   * qr-code-generator and its type pages, in every translated language of
+   * @repo/i18n/config (tests/lib/site-zone.test.ts checks the list against
+   * it). Opt-in (SITE_OPT_IN_GROUPS). While it's on, this app stops
+   * redirecting those URLs to the English page (SITE_TRANSLATED_GROUPS),
+   * and the site answers them; off, they redirect as every English-only
+   * page's translated URL does. The English pages stay in `generators`.
+   */
+  "generators-i18n": [
+    "/es/qr-code-generator",
+    "/pt-br/qr-code-generator",
+    "/fr/qr-code-generator",
+    "/de/qr-code-generator",
+    "/it/qr-code-generator",
+    "/ja/qr-code-generator",
+    "/ko/qr-code-generator",
+    "/zh-hans/qr-code-generator",
+    "/id/qr-code-generator",
+    "/hi/qr-code-generator",
+  ],
+  /**
+   * The barcode generators in the other languages, as generators-i18n is
+   * for the QR code generators (owner decision, 23 Nov 2026, about the
+   * generator pages): /<language>/barcode-generator and its format pages, in
+   * every translated language of @repo/i18n/config. Opt-in
+   * (SITE_OPT_IN_GROUPS) and switched on by name, apart from
+   * generators-i18n. The English pages stay in `barcodes`.
+   */
+  "barcodes-i18n": [
+    "/es/barcode-generator",
+    "/pt-br/barcode-generator",
+    "/fr/barcode-generator",
+    "/de/barcode-generator",
+    "/it/barcode-generator",
+    "/ja/barcode-generator",
+    "/ko/barcode-generator",
+    "/zh-hans/barcode-generator",
+    "/id/barcode-generator",
+    "/hi/barcode-generator",
+  ],
 } as const satisfies Record<string, readonly SitePath[]>;
 
 export type SiteGroup = keyof typeof SITE_GROUPS;
@@ -131,6 +174,31 @@ export const SITE_SITEMAPS: Partial<Record<SiteGroup, string>> = {
 export const SITE_GROUP_NAMES = Object.keys(
   SITE_GROUPS
 ) as readonly SiteGroup[];
+
+/**
+ * Groups that are on only while SITE_ZONE_GROUPS names them, never by
+ * default: a deployment that leaves SITE_ZONE_GROUPS unset keeps them off.
+ * For groups added after the site went live, so that a new one changes
+ * nothing until it's switched on by name.
+ */
+export const SITE_OPT_IN_GROUPS: readonly SiteGroup[] = [
+  "generators-i18n",
+  "barcodes-i18n",
+];
+
+/**
+ * The English-only pages of this app (route paths, as in
+ * @repo/i18n/localized-paths.json `englishOnly`) whose translated URLs a
+ * group serves: while it's on, next.config.ts doesn't redirect them to the
+ * English page (siteTranslatedPaths). Together, the paths are
+ * @repo/i18n/paths SITE_TRANSLATED_PATHS (tests/lib/site-zone.test.ts).
+ */
+export const SITE_TRANSLATED_GROUPS: Partial<
+  Record<SiteGroup, readonly string[]>
+> = {
+  "generators-i18n": ["/qr-code-generator", "/qr-code-generator/[type]"],
+  "barcodes-i18n": ["/barcode-generator", "/barcode-generator/[format]"],
+};
 
 /** The site's assetPrefix: its build assets live under it on qrdx.dev. */
 export const SITE_ASSET_PREFIX = "/site-static";
@@ -214,13 +282,18 @@ export function isSiteGroup(name: string): name is SiteGroup {
 
 /**
  * The groups SITE_ZONE_GROUPS names ("blog,compare"), in list order and
- * each once; every group when it's unset or blank. Null when a name isn't
- * a group: env.ts refuses the value then, naming the variable.
+ * each once; every group but the opt-in ones (SITE_OPT_IN_GROUPS) when it's
+ * unset or blank. Null when a name isn't a group: env.ts refuses the value
+ * then, naming the variable.
  */
 export function parseSiteZoneGroups(
   value: string | undefined
 ): SiteGroup[] | null {
-  if (value === undefined || value.trim() === "") return [...SITE_GROUP_NAMES];
+  if (value === undefined || value.trim() === "") {
+    return SITE_GROUP_NAMES.filter(
+      (group) => !SITE_OPT_IN_GROUPS.includes(group)
+    );
+  }
   const names = value.split(",").map((name) => name.trim());
   if (!names.every(isSiteGroup)) return null;
   return SITE_GROUP_NAMES.filter((group) => names.includes(group));
@@ -244,6 +317,23 @@ export function siteZoneGroups(value: string | undefined): SiteGroup[] {
     );
   }
   return groups;
+}
+
+/**
+ * The English-only pages (route paths) whose translated URLs the site
+ * serves on this deployment: SITE_TRANSLATED_GROUPS's paths for the groups
+ * that are on, none while `origin` is unset or empty. next.config.ts leaves
+ * their redirects to English out (@repo/i18n/routing englishOnlyRedirects
+ * `except`), so the site's rewrites get those URLs.
+ */
+export function siteTranslatedPaths(
+  origin: string | undefined,
+  groups: readonly SiteGroup[]
+): string[] {
+  if (!origin) return [];
+  return SITE_GROUP_NAMES.filter((group) => groups.includes(group)).flatMap(
+    (group) => [...(SITE_TRANSLATED_GROUPS[group] ?? [])]
+  );
 }
 
 /** The rewrite source for a prefix: the page and everything under it. */
@@ -448,16 +538,15 @@ export function isSitePagePath(href: string): boolean {
 }
 
 /**
- * The first segment of every SitePath, and the site's asset prefix: what
- * proxy.ts's matcher lists in any casing (tests/lib/site-zone.test.ts
- * checks it does).
+ * Every prefix (all of it: /blog, /es/qr-code-generator), the first segment
+ * of every `{ path }`, and the site's asset prefix: what proxy.ts's matcher
+ * lists in any casing (tests/lib/site-zone.test.ts checks it does).
  */
 export function siteMatcherPrefixes(): string[] {
   const firsts = SITE_GROUP_NAMES.flatMap((group) =>
-    (SITE_GROUPS[group] as readonly SitePath[]).map((entry) => {
-      const path = typeof entry === "string" ? entry : entry.path;
-      return `/${path.split("/")[1] ?? ""}`;
-    })
+    (SITE_GROUPS[group] as readonly SitePath[]).map((entry) =>
+      typeof entry === "string" ? entry : `/${entry.path.split("/")[1] ?? ""}`
+    )
   );
   return [...new Set([...firsts, SITE_ASSET_PREFIX])].filter(
     (prefix) => prefix !== "/"

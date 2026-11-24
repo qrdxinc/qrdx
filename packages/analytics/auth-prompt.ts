@@ -21,6 +21,9 @@ export const AUTH_PROMPT_REASONS = [
   "keep_designs",
   "after_download",
   "upgrade",
+  // A friend's invite link: the note about the extra codes (apps/app
+  // components/invites/invite-note.tsx)
+  "invite",
   "nav",
 ] as const;
 

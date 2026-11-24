@@ -126,6 +126,8 @@ describe("pay by invoice", () => {
     ]) {
       expect(email?.html).toContain(part);
     }
+    // It goes to the QRdx team: no "meant for" line about an account.
+    expect(email?.html).not.toContain("This email was meant for");
   });
 
   it("needs a sign-in, valid details and a few requests a day at most", async () => {

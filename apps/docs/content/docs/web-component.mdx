@@ -134,7 +134,6 @@ Without `jsqr` mapped, that GIF is refused and a PNG is the way to save the desi
 | `fg-color`, `bg-color`, `eye-color`, `dot-color` | Solid colors |
 | `body-pattern`, `corner-eye-pattern`, `corner-eye-dot-pattern` | Shapes of the modules, eyes and eye dots |
 | `margin` | Quiet zone, in modules |
-| `template-id` | A built-in template |
 | `module-scale` | Size of each module, 0.5 to 1 |
 | `auto-level` | Raises error correction to `H` when a logo needs it |
 | `exact-level` | Encodes at exactly `level`, never higher (a Swiss QR-bill must be `M`) |
@@ -146,7 +145,7 @@ Numbers and levels that cannot be read are ignored. [Shapes, eyes and frames](/d
 
 ## Properties
 
-Each attribute is also a property, with the option's name: `qr.fgColor`, `qr.bodyPattern`, `qr.templateId`. Options that are objects are properties only: gradients and image fills, `frame`, `imageSettings`, `eyeColors`, `art`, `customTemplate` and `customProps`. `props` takes every option at once.
+Each attribute is also a property, with the option's name: `qr.fgColor`, `qr.bodyPattern`, `qr.margin`. Options that are objects are properties only: gradients and image fills, `frame`, `imageSettings`, `eyeColors`, `eyeShapes`, `halo`, `shadow`, `art`, `customTemplate` and `customProps`. `props` takes every option at once.
 
 - An attribute or a named property wins over the same option in `props`. Between an attribute and its property, the one set last wins. Set a property to `undefined` to drop it.
 - Properties do not write attributes back.
@@ -195,7 +194,7 @@ const html = toQRdxCodeHTML(
 //   props="{…}"><template shadowrootmode="open">…</template></qrdx-code>
 ```
 
-Simple options become attributes and the rest go in `props` as JSON, so the element reads back the same options. `customTemplate` cannot be written as markup: set it as a property in the browser. Pass `tagName` if you registered another name.
+Simple options become attributes and the rest go in `props` as JSON, so the element reads back the same options. `customTemplate` can't be written as markup: set it as a property in the browser. Pass `tagName` if you registered another name.
 
 ## React 19
 

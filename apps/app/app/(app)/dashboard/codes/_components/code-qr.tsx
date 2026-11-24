@@ -20,7 +20,7 @@ import {
   QRCode,
 } from "qrdx";
 import { useState } from "react";
-import { defaultThemeState } from "@/config/qr";
+import { storedStyleDefaults } from "@/config/qr";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
 import { soundEvent } from "@/lib/sound/emit";
@@ -64,7 +64,7 @@ const FORMAT_LABELS: Record<CodeImageFormat, string> = {
 };
 
 const resolveStyle = (style: ThemeStyles | null | undefined): ThemeStyles =>
-  style ?? defaultThemeState.styles;
+  style ?? storedStyleDefaults;
 
 /** The code's saved design rendered with its short link. */
 export function CodeQr({
@@ -97,7 +97,6 @@ export function CodeQr({
         frame={s.frame}
         logo={s.customLogo ?? DEFAULT_QR_LOGO}
         margin={s.margin}
-        templateId={s.templateId}
         value={value}
         {...styleEngineOptions(s, value)}
       />
@@ -128,7 +127,6 @@ export async function downloadCodeQr(
       level: s.level,
       cornerEyePattern: s.cornerEyePattern,
       cornerEyeDotPattern: s.cornerEyeDotPattern,
-      templateId: s.templateId,
       frame: s.frame,
     },
     {

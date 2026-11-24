@@ -5,7 +5,7 @@ Styled, scannable QR codes from your coding agent. This plugin bundles two thing
 - **The `generate-qr` skill.** It teaches the agent to make QR codes with the QRdx CLI: URLs, text, Wi-Fi logins and vCards as SVG, PNG, WebP or EPS, with colors, gradients, patterns, frames and a center logo, or one code per row of a CSV file.
 - **The QRdx MCP server** at `https://mcp.qrdx.dev/mcp`. Its tools design a code and check how well it scans, build Wi-Fi, contact, email, SMS, location and bank-payment payloads, and draw barcodes (EAN-13, UPC, Code 128, Data Matrix, PDF417, Aztec and more).
 
-No account or API key is needed.
+No account or API key is needed to draw codes. Four tools, `create_dynamic_code`, `update_code_destination`, `get_code_stats` and `list_codes`, make and manage dynamic codes in your own QRdx workspace: the first time one is called, your client asks you to sign in to QRdx ([MCP docs](https://qrdx.dev/docs/developers/mcp#sign-in)).
 
 ## Install
 
@@ -38,9 +38,9 @@ gemini extensions install https://github.com/qrdxinc/qrdx
 
 ## What it runs and what it sends
 
-- **The skill runs `npx @qrdx/cli@0.0.17`.** npx downloads that exact version of the CLI from the npm registry the first time, and it needs Node.js 22 or later. The code is drawn on your machine and written to the file the agent names. The CLI sends nothing to QRdx. If the agent passes `--logo` with a URL, the CLI fetches that image.
+- **The skill runs `npx @qrdx/cli@0.0.19`.** npx downloads that exact version of the CLI from the npm registry the first time, and it needs Node.js 22 or later. The code is drawn on your machine and written to the file the agent names. The CLI sends nothing to QRdx. If the agent passes `--logo` with a URL, the CLI fetches that image.
 - **The MCP server is remote.** When the agent calls one of its tools, your client sends the tool's arguments, such as the text to encode and the style, to `mcp.qrdx.dev`, which returns the code. The [privacy policy](https://qrdx.dev/legal/privacy-policy) covers that service.
-- **No keys or headers are set.** Two tools, `save_template` and `save_barcode`, save to a QRdx workspace and need an API key, which you add in your client's MCP settings yourself ([MCP docs](https://qrdx.dev/docs/developers/mcp)). Everything else works without one.
+- **No keys or headers are set.** Three tools, `save_template`, `save_barcode` and `generate_ai_art`, act on a QRdx workspace and need an API key, which you add in your client's MCP settings yourself ([MCP docs](https://qrdx.dev/docs/developers/mcp)); the server lists them only once you do. The dynamic-code tools use the sign-in your client keeps instead. Everything else works without either.
 
 The plugin has no hooks and no scripts of its own.
 

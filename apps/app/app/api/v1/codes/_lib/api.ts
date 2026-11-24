@@ -95,8 +95,16 @@ async function ownScope(userId: string): Promise<ActiveScope> {
  * own workspace (where codes made before workspaces now live), as its
  * owner. Throws the 401 for a bad credential, in the words of the kind of
  * credential it looks like.
+ *
+ * A token of an app that registered itself (an MCP client,
+ * lib/oauth-registration.ts) works only where `mcp` is set, the MCP
+ * server's tools: the person approved those tools, not the REST API
+ * (deleting codes, webhooks, AI art). Anywhere else it's a 403.
  */
-async function authenticateBearer(token: string): Promise<BearerCaller> {
+async function authenticateBearer(
+  token: string,
+  { mcp = false }: { mcp?: boolean } = {},
+): Promise<BearerCaller> {
   if (isApiKeyFormat(token)) {
     const key = await authenticateApiKey(token);
     if (!key) throw invalidApiKeyError();
@@ -121,6 +129,7 @@ async function authenticateBearer(token: string): Promise<BearerCaller> {
     };
   }
   const oauth = await validateAccessToken(token);
+  if (oauth?.mcpOnly && !mcp) throw mcpOnlyTokenRefused();
   if (oauth) {
     return {
       kind: "oauth",
@@ -136,6 +145,28 @@ async function authenticateBearer(token: string): Promise<BearerCaller> {
   throw token.startsWith(API_KEY_PREFIX)
     ? invalidApiKeyError()
     : invalidTokenError();
+}
+
+/** A self-registered MCP client's token outside the MCP server. */
+function mcpOnlyTokenRefused(): HttpError {
+  return new HttpError(
+    403,
+    "INSUFFICIENT_SCOPE",
+    "This token belongs to an app that registered itself to use the QRdx MCP server, and works only there. For the REST API, use an API key or an OAuth app made in Settings → API keys & apps.",
+    {
+      "WWW-Authenticate": 'Bearer realm="QRdx API", error="insufficient_scope"',
+    },
+    `${baseUrl.origin}/docs/developers/mcp#sign-in`,
+  );
+}
+
+/**
+ * The credential of an `Authorization: Bearer …` header, the scheme matched
+ * in any case (RFC 7235 §2.1); null for no header or another scheme.
+ */
+function bearerCredential(authorization: string | null): string | null {
+  if (!authorization || !/^bearer\s/i.test(authorization)) return null;
+  return authorization.slice(7).trim();
 }
 
 function scopeError(bearer: BearerCaller, scope: string): HttpError {
@@ -159,8 +190,9 @@ export async function resolveApiCaller(
   const authorization = req.headers.get("authorization");
   let caller: ApiCaller;
 
-  if (authorization?.startsWith("Bearer ")) {
-    const bearer = await authenticateBearer(authorization.slice(7).trim());
+  const credential = bearerCredential(authorization);
+  if (credential !== null) {
+    const bearer = await authenticateBearer(credential);
     if (!SCOPES_FOR[access].some((s) => bearer.scopes.includes(s))) {
       throw scopeError(bearer, `codes:${access}`);
     }
@@ -220,9 +252,7 @@ export async function optionalApiKeyCaller(
 ): Promise<{ scope: ActiveScope; scopes: string[] } | null> {
   const authorization = req.headers.get("authorization");
   if (!authorization) return null;
-  const token = authorization.startsWith("Bearer ")
-    ? authorization.slice(7).trim()
-    : "";
+  const token = bearerCredential(authorization) ?? "";
   if (!isApiKeyFormat(token)) {
     throw token.startsWith(API_KEY_PREFIX)
       ? invalidApiKeyError()
@@ -245,6 +275,48 @@ export async function optionalApiKeyCaller(
   ]);
   await consumeApiQuota(req, bearer.scope, plan);
   return { scope: bearer.scope, scopes: bearer.scopes };
+}
+
+/**
+ * The Bearer credential on a request that may come without one (the MCP
+ * server's tools; the only caller that accepts a self-registered MCP
+ * client's token): an API key or an OAuth access token, checked and
+ * limited exactly as resolveApiCaller checks a Bearer request (scopes, the
+ * workspace role, per-minute limits, the daily quota). Null without an
+ * Authorization header; throws the 401 or 403 otherwise. `kind` says which
+ * credential it was, so the caller can answer in its terms.
+ */
+export async function optionalBearerCaller(
+  req: Request,
+  access: ApiAccess,
+): Promise<(ApiCaller & { kind: "oauth" | "apiKey" }) | null> {
+  const authorization = req.headers.get("authorization");
+  if (!authorization) return null;
+  const credential = bearerCredential(authorization);
+  if (!credential) throw missingTokenError();
+  const bearer = await authenticateBearer(credential, { mcp: true });
+  if (!SCOPES_FOR[access].some((s) => bearer.scopes.includes(s))) {
+    throw scopeError(bearer, `codes:${access}`);
+  }
+  if (access === "write") assertCan(bearer.scope, "content.write");
+  const [plan] = await Promise.all([
+    getPlanForScope(bearer.scope),
+    enforceRateLimits([
+      {
+        limiter: access === "write" ? writeLimiter : readLimiter,
+        key: `api:codes:${access}:user:${bearer.scope.userId}`,
+      },
+      { limiter: ipLimiter, key: `api:codes:ip:${getClientIp(req)}` },
+    ]),
+  ]);
+  await consumeApiQuota(req, bearer.scope, plan);
+  return {
+    kind: bearer.kind,
+    scope: bearer.scope,
+    canWrite:
+      SCOPES_FOR.write.some((s) => bearer.scopes.includes(s)) &&
+      can(bearer.scope.role, "content.write"),
+  };
 }
 
 /** resolveApiCaller's scope. */
@@ -279,15 +351,15 @@ export async function requireApiToken(
   | { tokenData: ApiToken; error?: never }
   | { error: Response; tokenData?: never }
 > {
-  const authorization = req.headers.get("authorization");
-  if (!authorization?.startsWith("Bearer ")) {
+  const credential = bearerCredential(req.headers.get("authorization"));
+  if (credential === null) {
     return {
       error: oauthCompatibleError("invalid_token", missingTokenError()),
     };
   }
   let bearer: BearerCaller;
   try {
-    bearer = await authenticateBearer(authorization.slice(7).trim());
+    bearer = await authenticateBearer(credential);
   } catch (error) {
     if (!(error instanceof HttpError)) throw error;
     return { error: oauthCompatibleError("invalid_token", error) };

@@ -84,7 +84,7 @@
         "summary": "Render a QR code image",
         "tags": ["QR images"],
         "security": [],
-        "description": "A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO, TIFF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag (EPS and TIFF are files to download: browsers other than Safari can't show TIFF). The same query always returns the same bytes, so responses are cached for a year. Colors are hex without `#` (or with `#` encoded as `%23`). Limit: 300 requests a minute per IP address. More in the [Image API guide](https://qrdx.dev/docs/developers/image-api).\n\n**The editor's styles.** `style` takes the whole design as URL-encoded JSON, with the same fields as a saved theme: gradients (linear, radial), frames (built-in, custom frame specs, or a frame drawn as a template), eye and dot colors, and a logo icon. It also takes the `style` value of a playground link. `item` renders a community frame or theme (`/community/items`); `frame` and `frameText` add a built-in frame, or one of QRdx's official frames by id (`frame=autumn-maple`), which `style` also takes as a frame's `style`. Flat parameters you set win over `style`, and `style` wins over `item`. With a frame, `size` is the code's width and the frame adds to it.\n\n**Logos.** `logoIcon` draws one of the editor's quick icons, or a brand logo by its Simple Icons slug (`spotify`, `paypal:white`). `logoFileId` draws an image you uploaded, and needs `Authorization: Bearer qrdx_…` from the workspace that owns it; that response is private and counts toward the daily quota. QRdx never fetches a logo from an address you send. Logo QR and Image QR art aren't available here.\n\n**Caching.** Renders with `item` are cached for 5 minutes (10 at the CDN), since an item can change; renders with `logoFileId` aren't cached.\n\n**WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.\n\n**GIF** is for older tools and email builders that only take it. It holds at most 256 colors and one transparent color (a pixel under half opaque is transparent, so the soft edge of a code on a transparent background is hard-edged). A code in flat colors is written exactly. A gradient, image fill or photo logo is reduced to a palette without dithering, and if the PNG would scan and the GIF would not, the request fails with a `VALIDATION_ERROR` on `format` instead of returning a code that no longer reads: use PNG for that design.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.\n\n**ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. `size` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.\n\n**TIFF** is for print shops that ask for it, at 300 dpi, and is sent as a download (`Content-Disposition: attachment`, `qr-code.tif` or `qr-code-cmyk.tif`), as EPS is. Browsers other than Safari can't show it in an `<img>`. `tiff` keeps the PNG's pixels, transparency included. `tiff-cmyk` is CMYK by the same conversion as the editor's print PDF and EPS: pure black prints as K only, white as no ink, and a transparent background comes out white; no ICC profile is embedded, so ask your printer for a color-managed conversion when exact brand colors matter.",
+        "description": "A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO, TIFF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag (EPS and TIFF are files to download: browsers other than Safari can't show TIFF). The same query returns the same bytes, so responses are cached for a year (with the exceptions under Caching). Colors are hex without `#` (or with `#` encoded as `%23`). Limit: 300 requests a minute per IP address. More in the [Image API guide](https://qrdx.dev/docs/developers/image-api).\n\n**The editor's styles.** `style` takes the whole design as URL-encoded JSON, with the same fields as a saved theme: gradients (linear, radial), frames (built-in or custom frame specs), eye and dot colors, and a logo icon. It also takes the `style` value of a playground link. `item` renders a community frame or theme (`/community/items`); `frame` and `frameText` add a built-in frame, or one of QRdx's official frames by id, which `style` also takes as a frame's `style`. An official frame with its version (`frame=autumn-maple.v1`, what the editor's Get code copies) always draws that version; an id without a version is version 1 and never changes either; add `.latest` (`frame=autumn-maple.latest`) to follow the frame's redesigns. Flat parameters you set win over `style`, and `style` wins over `item`. With a frame, `size` is the code's width and the frame adds to it.\n\n**Logos.** `logoIcon` draws one of the editor's quick icons, or a brand logo by its Simple Icons slug (`spotify`, `paypal:white`). `logoFileId` draws an image you uploaded, and needs `Authorization: Bearer qrdx_…` from the workspace that owns it; that response is private and counts toward the daily quota. QRdx never fetches a logo from an address you send. Logo QR and Image QR art aren't available here.\n\n**Caching.** Renders with `item` or an official frame's `.latest` are cached for 5 minutes (10 at the CDN), since an item can change and `.latest` follows the frame's redesigns; renders with `logoFileId` aren't cached.\n\n**WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.\n\n**GIF** is for older tools and email builders that only take it. It holds at most 256 colors and one transparent color (a pixel under half opaque is transparent, so the soft edge of a code on a transparent background is hard-edged). A code in flat colors is written exactly. A gradient, image fill or photo logo is reduced to a palette without dithering, and if the PNG would scan and the GIF would not, the request fails with a `VALIDATION_ERROR` on `format` instead of returning a code that no longer reads: use PNG for that design.\n\n**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.\n\n**ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. `size` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.\n\n**TIFF** is for print shops that ask for it, at 300 dpi, and is sent as a download (`Content-Disposition: attachment`, `qr-code.tif` or `qr-code-cmyk.tif`), as EPS is. Browsers other than Safari can't show it in an `<img>`. `tiff` keeps the PNG's pixels, transparency included. `tiff-cmyk` is CMYK by the same conversion as the editor's print PDF and EPS: pure black prints as K only, white as no ink, and a transparent background comes out white; no ICC profile is embedded, so ask your printer for a color-managed conversion when exact brand colors matter.",
         "parameters": [
           {
             "name": "data",
@@ -279,24 +279,6 @@
             }
           },
           {
-            "name": "template",
-            "in": "query",
-            "required": false,
-            "description": "A built-in frame drawn as a template (Arrow, StandardBox, SquareBorder, StrikedBox, Halloween, DotRing; default is none). Unlike `frame`, the whole artwork is `size` wide with the code smaller inside it",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "default",
-                "Arrow",
-                "StandardBox",
-                "SquareBorder",
-                "StrikedBox",
-                "Halloween",
-                "DotRing"
-              ]
-            }
-          },
-          {
             "name": "format",
             "in": "query",
             "required": false,
@@ -322,7 +304,7 @@
             "name": "style",
             "in": "query",
             "required": false,
-            "description": "The editor's whole style: URL-encoded JSON with the same fields as a saved theme (gradients, frames (built-in, custom frame specs, an official frame by id as { \"style\": \"autumn-maple\", \"text\": \"Hello\" }, or a template), eye and dot colors, logoIcon, logoFileId), or the `style` value of a playground link (1.…). Flat parameters you also set win over it.",
+            "description": "The editor's whole style: URL-encoded JSON with the same fields as a saved theme (gradients, frames (built-in, custom frame specs, or an official frame by name as { \"style\": \"autumn-maple.v1\", \"text\": \"Hello\" }), eye and dot colors, logoIcon, logoFileId), or the `style` value of a playground link (1.…). Flat parameters you also set win over it.",
             "schema": {
               "type": "string",
               "maxLength": 8192
@@ -342,7 +324,7 @@
             "name": "frame",
             "in": "query",
             "required": false,
-            "description": "A call-to-action frame around the code: a built-in frame, or one of QRdx's official frames by id, such as autumn-maple",
+            "description": "A call-to-action frame around the code: a built-in frame, or one of QRdx's official frames by id with its version, such as autumn-maple.v1 (what the editor copies). An id without a version, such as autumn-maple, is version 1. Either way the image never changes; add .latest (autumn-maple.latest) to follow the frame's redesigns",
             "schema": {
               "anyOf": [
                 {
@@ -366,13 +348,19 @@
                     "menu-card",
                     "sticker",
                     "gradient-border",
-                    "focus"
+                    "focus",
+                    "arrow",
+                    "standard-box",
+                    "square-border",
+                    "striked-box",
+                    "pumpkin",
+                    "dot-ring"
                   ]
                 },
                 {
                   "type": "string",
                   "maxLength": 80,
-                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.v[1-9]\\d{0,5}|\\.latest)?$"
                 }
               ]
             }
@@ -5409,7 +5397,7 @@
         }
       },
       "Error403_InsufficientScope_CodesRead": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.",
         "content": {
           "application/json": {
             "schema": {
@@ -5430,7 +5418,7 @@
         }
       },
       "Error403_InsufficientScope_ConversionsOff_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`CONVERSIONS_OFF`: A browser conversion for a code that doesn't have conversion tracking turned on.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.\n\n`CONVERSIONS_OFF`: A browser conversion for a code that doesn't have conversion tracking turned on.",
         "content": {
           "application/json": {
             "schema": {
@@ -5459,7 +5447,7 @@
         }
       },
       "Error403_InsufficientScope_Forbidden_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.",
         "content": {
           "application/json": {
             "schema": {
@@ -5488,7 +5476,7 @@
         }
       },
       "Error403_InsufficientScope_Forbidden_LimitReached_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.",
         "content": {
           "application/json": {
             "schema": {
@@ -5525,7 +5513,7 @@
         }
       },
       "Error403_InsufficientScope_Forbidden_LimitReached_ConfirmationRequired_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.\n\n`CONFIRMATION_REQUIRED`: Creating a hook with a signed-in browser session needs a recent \"Confirm it's you\". API keys and OAuth tokens aren't asked.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.\n\n`CONFIRMATION_REQUIRED`: Creating a hook with a signed-in browser session needs a recent \"Confirm it's you\". API keys and OAuth tokens aren't asked.",
         "content": {
           "application/json": {
             "schema": {
@@ -5570,7 +5558,7 @@
         }
       },
       "Error403_InsufficientScope_ProfileRead_OAuth": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.",
         "content": {
           "application/json": {
             "schema": {
@@ -5593,7 +5581,7 @@
         }
       },
       "Error403_InsufficientScope_ThemesRead_OAuth": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs, or the token belongs to an app that registered itself to use the MCP server, which works only there.",
         "content": {
           "application/json": {
             "schema": {
@@ -7816,10 +7804,6 @@
                     "type": "number",
                     "minimum": 0
                   },
-                  "templateId": {
-                    "description": "Template/frame ID to use",
-                    "type": "string"
-                  },
                   "frame": {
                     "description": "Call-to-action frame around the QR code, e.g. a 'Scan me' banner (text up to 24 characters), or a custom frame drawn from a frame spec (style 'custom')",
                     "oneOf": [
@@ -7848,7 +7832,13 @@
                               "menu-card",
                               "sticker",
                               "gradient-border",
-                              "focus"
+                              "focus",
+                              "arrow",
+                              "standard-box",
+                              "square-border",
+                              "striked-box",
+                              "pumpkin",
+                              "dot-ring"
                             ]
                           },
                           "text": {
@@ -11538,10 +11528,6 @@
             "type": "number",
             "minimum": 0
           },
-          "templateId": {
-            "description": "Template/frame ID to use",
-            "type": "string"
-          },
           "frame": {
             "description": "Call-to-action frame around the QR code, e.g. a 'Scan me' banner (text up to 24 characters), or a custom frame drawn from a frame spec (style 'custom')",
             "oneOf": [
@@ -11570,7 +11556,13 @@
                       "menu-card",
                       "sticker",
                       "gradient-border",
-                      "focus"
+                      "focus",
+                      "arrow",
+                      "standard-box",
+                      "square-border",
+                      "striked-box",
+                      "pumpkin",
+                      "dot-ring"
                     ]
                   },
                   "text": {

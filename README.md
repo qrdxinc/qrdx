@@ -8,6 +8,7 @@
   <a href="https://qrdx.dev/playground"><strong>Open the playground</strong></a> ·
   <a href="https://qrdx.dev/docs">Docs</a> ·
   <a href="https://qrdx.dev/community">Community</a> ·
+  <a href="https://discord.gg/856fWMrYBm">Discord</a> ·
   <a href="https://qrdx.dev/pricing">Pricing</a>
 </p>
 
@@ -37,7 +38,7 @@
 
 **Design and download, free and without an account**
 
-- Start from one of 123 built-in themes, or build a look from 23 body patterns, 22 corner-eye shapes and 22 eye centers. Pick one of 1,133 frames, from 19 call-to-action frames to holiday, seasonal and industry designs, everyday objects and playful scenes, and edit its text right in the preview.
+- Start from one of 123 built-in themes, or build a look from 23 body patterns, 22 corner-eye shapes and 22 eye centers. Pick one of 1,139 frames, from 25 call-to-action frames to holiday, seasonal and industry designs, everyday objects and playful scenes, and edit its text right in the preview.
 - Or give the code itself a shape: a circle of dots, a heart, or a silhouette traced in your browser from a PNG, JPEG or SVG you upload.
 - Color the background, dots and eyes with a solid color, a linear, radial or angular gradient, a see-through color or a photo.
 - Use the Art tab to blend a logo or photo into the dots (Logo QR and Image QR). They're vector art, so they export to every format. When you're signed in, AI art is there too.
@@ -107,7 +108,7 @@ Add `format=png` or `format=eps`, `size`, colors, patterns, a frame, a community
 claude mcp add --transport http qrdx https://mcp.qrdx.dev/mcp
 ```
 
-None of that needs an account. With a QRdx API key on the connection, `save_template` also saves a design to your workspace's themes. Cursor, VS Code and other clients: see the [MCP docs](https://qrdx.dev/docs/developers/mcp).
+None of that needs an account. With a QRdx API key on the connection, the server also lists `save_template` and `save_barcode`, which save designs and barcodes to your workspace, and `generate_ai_art` for AI QR art. Cursor, VS Code and other clients: see the [MCP docs](https://qrdx.dev/docs/developers/mcp).
 
 **REST API.** Create and edit dynamic codes (up to 100 per request on Pro and Business), read scan analytics, report conversions, subscribe to webhooks and read your saved themes under `https://api.qrdx.dev/v1`, with an API key or an OAuth 2.0 token. Every endpoint is in the [API reference](https://qrdx.dev/docs/developers/api), generated from the [OpenAPI document](https://qrdx.dev/openapi.json). Start with the [REST API docs](https://qrdx.dev/docs/developers/rest-api).
 
@@ -177,7 +178,7 @@ The QRdx name and logo are trademarks. Read the [trademark policy](TRADEMARK.md)
 
 ## Contributing
 
-Bug reports, ideas and pull requests are welcome. [Open an issue](https://github.com/qrdxinc/qrdx/issues), or look for issues labeled `good first issue`. [CONTRIBUTING.md](CONTRIBUTING.md) covers local setup, the project layout and the checks to run. Report security issues privately, as [SECURITY.md](SECURITY.md) describes.
+Bug reports, ideas and pull requests are welcome. [Open an issue](https://github.com/qrdxinc/qrdx/issues), or look for issues labeled `good first issue`. To ask a question, share a design or talk to the team, join the [QRdx Discord](https://discord.gg/856fWMrYBm). [CONTRIBUTING.md](CONTRIBUTING.md) covers local setup, the project layout and the checks to run. Report security issues privately, as [SECURITY.md](SECURITY.md) describes.
 
 QRdx is a Bun and Turborepo monorepo: a Next.js app with React, TypeScript, Tailwind CSS, Drizzle on Postgres, Better Auth and the Vercel AI SDK. QR generation started from [qrcode.react](https://github.com/zpao/qrcode.react), and the playground layout was inspired by [tweakcn](https://github.com/jnsahaj/tweakcn).
 

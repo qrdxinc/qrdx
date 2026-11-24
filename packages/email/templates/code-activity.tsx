@@ -16,6 +16,8 @@ export interface CodeActivityEmailProps {
   codeUrl: string;
   workspaceName: string;
   unsubscribeUrl: string;
+  /** The address it's sent to (the footer names it) */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -28,6 +30,7 @@ export function CodeActivityEmail({
   codeUrl,
   workspaceName,
   unsubscribeUrl,
+  recipient,
   intl,
 }: CodeActivityEmailProps) {
   const { t } = intl;
@@ -45,6 +48,7 @@ export function CodeActivityEmail({
     <EmailLayout
       intl={intl}
       preview={heading}
+      recipient={recipient}
       reason={t(`codeActivity.${kind}.reason`, { workspace: workspaceName })}
       unsubscribeUrl={unsubscribeUrl}
     >
@@ -72,4 +76,5 @@ CodeActivityEmail.PreviewProps = {
   codeUrl: "https://qrdx.dev/dashboard/acme/codes/aB3dE5f",
   workspaceName: "Acme",
   unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+  recipient: "alex@example.com",
 } satisfies Omit<CodeActivityEmailProps, "intl">;

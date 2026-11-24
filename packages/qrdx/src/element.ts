@@ -33,7 +33,6 @@ export interface QRdxCodeProperties {
   cornerEyePattern?: QRProps["cornerEyePattern"];
   cornerEyeDotPattern?: QRProps["cornerEyeDotPattern"];
   margin?: QRProps["margin"];
-  templateId?: QRProps["templateId"];
   moduleScale?: QRProps["moduleScale"];
   autoLevel?: QRProps["autoLevel"];
   exactLevel?: QRProps["exactLevel"];
@@ -69,7 +68,6 @@ export interface QRdxCodeAttributes {
   "corner-eye-pattern"?: string;
   "corner-eye-dot-pattern"?: string;
   margin?: number | string;
-  "template-id"?: string;
   "module-scale"?: number | string;
   "auto-level"?: boolean | string;
   shape?: string;
@@ -111,7 +109,6 @@ const ATTRIBUTES: Record<string, [OptionKey, AttributeKind]> = {
   "corner-eye-pattern": ["cornerEyePattern", "string"],
   "corner-eye-dot-pattern": ["cornerEyeDotPattern", "string"],
   margin: ["margin", "number"],
-  "template-id": ["templateId", "string"],
   "module-scale": ["moduleScale", "number"],
   "auto-level": ["autoLevel", "boolean"],
   "exact-level": ["exactLevel", "boolean"],
@@ -136,6 +133,8 @@ const OPTION_KEYS: readonly OptionKey[] = [
 ];
 
 const LEVELS = new Set(["L", "M", "Q", "H"]);
+/** The template prop the engine no longer reads (src/withdrawn-props.ts). */
+const WITHDRAWN_PROPS = new Set(["templateId"]);
 const DEFAULT_LABEL = "QR code";
 const ELEMENT_MARK: unique symbol = Symbol.for("qrdx.code-element");
 // Lowercase letter first and at least one hyphen. Written as dash-led
@@ -238,7 +237,6 @@ export class QRdxCodeElement extends BaseElement {
   declare cornerEyePattern: QRdxCodeProperties["cornerEyePattern"];
   declare cornerEyeDotPattern: QRdxCodeProperties["cornerEyeDotPattern"];
   declare margin: QRdxCodeProperties["margin"];
-  declare templateId: QRdxCodeProperties["templateId"];
   declare moduleScale: QRdxCodeProperties["moduleScale"];
   declare autoLevel: QRdxCodeProperties["autoLevel"];
   declare exactLevel: QRdxCodeProperties["exactLevel"];
@@ -598,8 +596,14 @@ export function toQRdxCodeHTML(
   }
   const current = compact(options as Record<string, unknown>);
   const { attributes, rest } = toAttributes(current);
-  // A template's wrapper is a function, which JSON can't carry
-  const { customTemplate: _template, ...serializable } = rest;
+  // A template's wrapper is a function, which JSON can't carry; templateId,
+  // withdrawn in qrdx 0.0.64, is dropped when the core draws, so the markup
+  // leaves it out too
+  const serializable = Object.fromEntries(
+    Object.entries(rest).filter(
+      ([key]) => key !== "customTemplate" && !WITHDRAWN_PROPS.has(key)
+    )
+  );
   if (label !== undefined) {
     attributes.push(["label", label]);
   }

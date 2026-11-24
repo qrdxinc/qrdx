@@ -220,6 +220,7 @@
     "description": "Platform kode QR open-source.",
     "starOnGithub": "Beri bintang di GitHub",
     "newsOnX": "Kabar QRdx di X",
+    "joinDiscord": "Gabung Discord QRdx",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -349,7 +350,7 @@
     "hero": {
       "badge": "Gratis dan open source (AGPL-3.0)",
       "title": "Pembuat kode QR gratis, dengan kode dinamis yang tetap berfungsi",
-      "description": "Rancang kode QR bermerek dengan pola, gradasi, logo, dan bingkai, lalu unduh PNG, SVG, PDF, atau EPS tanpa perlu mendaftar dan tanpa watermark. Masuk untuk mendapatkan kode QR dinamis yang bisa diedit setelah dicetak, halaman yang di-hosting, dan analitik pemindaian.",
+      "description": "Rancang kode QR bermerek dengan pola, gradien, logo, dan bingkai, lalu unduh PNG, SVG, PDF, EPS, atau TIFF tanpa pendaftaran dan tanpa tanda air. Masuk untuk mendapatkan kode dinamis yang dapat diedit setelah dicetak, halaman yang di-hosting, dan analitik pemindaian.",
       "primary": "Coba Playground",
       "secondary": "Baca dokumentasi",
       "sceneLabel": "Gambar animasi alur QRdx: layar studio merancang dan menata gaya kode QR, printer mencetaknya pada sebuah kartu, lengan robot menaruh kartu itu di ban berjalan, ponsel di gerbang melakukan pemindaian setiap kartu yang lewat, hasil pemindaian dikirim ke panel analitik yang menambahkan satu batang baru, dan sebuah kartu kode QR dinamis berukuran besar mengganti tautan tujuannya tanpa dicetak ulang"
@@ -377,7 +378,7 @@
         "none": "Tanpa bingkai",
         "border": "Garis tepi"
       },
-      "more": "Playground lengkap menambahkan {bodyPatterns, number} pola badan, {eyeShapes, number} bentuk mata, {eyeCentres, number} pusat mata, warna dan gradasi sesuai keinginan, logo, templat, serta unduhan PNG, SVG, PDF, atau EPS.",
+      "more": "Playground lengkap menambahkan {bodyPatterns, number} pola badan, {eyeShapes, number} bentuk mata, {eyeCentres, number} pusat mata, warna dan gradien apa pun, logo, bingkai, serta unduhan PNG, SVG, PDF, EPS, atau TIFF.",
       "customize": "Sesuaikan di Playground",
       "qrLabel": "Kode QR untuk {value}",
       "empty": "Ketik tautan untuk melihat kode QR Anda."
@@ -518,7 +519,7 @@
       "items": {
         "free": {
           "question": "Apakah QRdx benar-benar gratis? Apakah ada batasan tersembunyi?",
-          "answer": "Ya. Membuat, menyesuaikan, dan mengunduh kode QR statis gratis dan tidak memerlukan akun: kode tanpa batas, semua opsi desain ({bodyPatterns, number} pola isi, {eyeShapes, number} bentuk mata sudut, dan {eyeCentres, number} pusat mata, gradasi, logo, bingkai, serta karya Logo QR atau Image QR), dan unduhan PNG, JPG, SVG, PDF, dan EPS. Tidak ada watermark dan tidak ada iklan. Kode statis menyimpan konten Anda di dalam kodenya sendiri, sehingga tidak pernah kedaluwarsa dan tidak memiliki batas pemindaian. Akun gratis menambahkan 10 kode QR dinamis, 3 halaman yang di-hosting, analitik pemindaian selama {historyYears, plural, other {# tahun}}, 10 tema tersimpan, dan 5 pembuatan tema dengan AI; Pro ({proMonthly}/bln atau {proYearly}/thn) dan Business ({businessMonthly}/bln atau {businessYearly}/thn) meningkatkan batas tersebut."
+          "answer": "Ya. Membuat, menyesuaikan, dan mengunduh kode QR statis gratis dan tidak memerlukan akun: kode tanpa batas, semua opsi desain ({bodyPatterns, number} pola badan, {eyeShapes, number} bentuk mata sudut, dan {eyeCentres, number} pusat mata, gradien, logo, bingkai, serta karya Logo QR atau Image QR), dan unduhan PNG, JPG, SVG, PDF, EPS, dan TIFF. Tanpa tanda air dan tanpa iklan. Kode statis menyimpan konten Anda di dalam kode itu sendiri, sehingga tidak pernah kedaluwarsa dan tidak memiliki batas pemindaian. Akun gratis menambahkan 10 kode QR dinamis, 3 halaman yang di-hosting, analitik pemindaian selama {historyYears, plural, other {# tahun}}, 10 tema tersimpan, dan 5 pembuatan tema dengan AI; Pro ({proMonthly}/bln atau {proYearly}/thn) dan Business ({businessMonthly}/bln atau {businessYearly}/thn) meningkatkan batas tersebut."
         },
         "signup": {
           "question": "Apakah saya perlu mendaftar atau membuat akun?",
@@ -546,7 +547,7 @@
         },
         "api": {
           "question": "Bisakah developer membuat kode QR dengan API?",
-          "answer": "Ya. Image API mengubah URL apa pun menjadi kode QR SVG, PNG, atau EPS tanpa kunci API, dan REST API, dengan kunci API workspace atau OAuth, membuat dan mengedit kode QR dinamis serta membaca data pemindaiannya. Tersedia juga MCP server untuk Claude, Cursor, dan VS Code, alat baris perintah (@qrdx/cli), komponen shadcn/ui, dan pustaka React qrdx."
+          "answer": "Ya. Image API mengubah URL apa pun menjadi kode QR SVG, PNG, TIFF, atau EPS tanpa kunci API, dan REST API, dengan kunci API workspace atau OAuth, membuat dan mengedit kode dinamis serta membaca data pemindaiannya. Tersedia juga server MCP untuk Claude, Cursor, dan VS Code, alat baris perintah (@qrdx/cli), komponen shadcn/ui, dan pustaka React qrdx."
         },
         "paidPlans": {
           "question": "Apa yang saya dapatkan dengan Pro atau Business?",
@@ -911,14 +912,14 @@
     "crumb": "Generator kode QR",
     "hub": {
       "metaTitle": "Jenis Kode QR: {count, number} Generator Gratis (Wi-Fi, vCard, UPI)",
-      "metaDescription": "{count, number} jenis kode QR, masing-masing dengan generator gratis: Wi-Fi, vCard, WhatsApp, UPI, email, profil sosial, dan pembayaran. Setiap halaman menampilkan format payload yang tepat.",
+      "metaDescription": "{count, number} jenis kode QR dengan generator gratis: Wi-Fi, vCard, WhatsApp, UPI, email, profil sosial, dan pembayaran, lengkap dengan format payload-nya.",
       "title": "Generator kode QR untuk setiap jenis konten",
-      "intro1": "Kode QR bisa melakukan lebih dari sekadar membuka situs web. Bergantung pada teks di dalamnya, ponsel dapat terhubung ke jaringan Wi-Fi, menyimpan kontak, memulai pembayaran, atau membuka obrolan. Pilih salah satu dari {count, number} jenis di bawah untuk mendapatkan generator dengan kolom yang sesuai, pratinjau langsung, dan unduhan PNG, WebP, atau SVG.",
+      "intro1": "Kode QR bisa melakukan lebih dari sekadar membuka situs web. Bergantung pada teks di dalamnya, ponsel dapat terhubung ke jaringan Wi-Fi, menyimpan kontak, memulai pembayaran, atau membuka obrolan. Pilih salah satu dari {count, number} jenis di bawah ini untuk mendapatkan generator dengan kolom yang sesuai, pratinjau langsung, serta unduhan PNG, WebP, SVG, atau TIFF.",
       "intro2": "Secara default, kode yang dibuat di halaman ini bersifat statis: konten disandikan langsung di dalam polanya, sehingga berfungsi secara offline, tidak pernah kedaluwarsa, dan tidak memiliki batas pemindaian. Setiap halaman juga menjelaskan format persis yang dihasilkan, sehingga Anda tahu apa yang akan dibaca oleh pemindai.",
       "cardTitle": "Generator kode QR {name}",
       "moreTools": "Alat lainnya",
       "bulkTitle": "Butuh ratusan kode? Gunakan generator massal",
-      "bulkDescription": "Unggah file CSV dan unduh setiap kode sebagai PNG, WebP, atau SVG dalam satu file ZIP, semuanya dibuat sepenuhnya di browser Anda.",
+      "bulkDescription": "Unggah file CSV dan unduh setiap kode sebagai PNG, WebP, SVG, atau TIFF dalam satu file ZIP, semuanya dibuat sepenuhnya di browser Anda.",
       "printTitle": "Mau mencetak kode? Periksa ukurannya",
       "printDescription": "Hitung ukuran cetak minimum berdasarkan jarak pemindaian dan jumlah data yang dimuat kode.",
       "dynamicTitle": "Generator kode QR dinamis",
@@ -1104,7 +1105,7 @@
       "metaDescription": "Ubah CSV menjadi hingga {rows, number} kode QR bergaya dalam format PNG, WebP, atau SVG di dalam ZIP. Berjalan di browser Anda: tanpa unggah, tanpa watermark, tanpa pendaftaran hingga {limit, number} baris.",
       "crumb": "Generator massal",
       "title": "Generator kode QR massal",
-      "intro1": "Ubah file CSV menjadi ribuan kode QR sekaligus, dengan gaya sesuai keinginan Anda dan diunduh sebagai PNG, WebP, atau SVG dalam ZIP. Satu baris untuk satu kode, dengan nama file diambil dari sebuah kolom: label produk, tiket acara, label aset, nomor meja, atau surat kiriman.",
+      "intro1": "Ubah file CSV menjadi ribuan kode QR sekaligus, dengan gaya sesuai keinginan Anda dan diunduh sebagai PNG, WebP, SVG, atau TIFF (termasuk TIFF CMYK untuk cetak) dalam sebuah ZIP. Satu baris untuk satu kode, dengan nama file diambil dari sebuah kolom: label produk, tiket acara, tag aset, nomor meja, atau surat kiriman.",
       "intro2": "Semuanya berjalan di browser Anda, sehingga CSV tidak pernah diunggah, dan tidak ada watermark atau biaya per kode. File hingga {limit, number} baris tidak memerlukan akun; file yang lebih besar, hingga {rows, number}, memerlukan akun gratis. Belum yakin dengan tata letaknya? Mulai dari contoh CSV.",
       "facts": {
         "rows": "Hingga {rows, number} baris per file",
@@ -1193,6 +1194,8 @@
         "formatGif": "GIF (gambar, 256 warna)",
         "formatBmp": "BMP (gambar, tidak terkompresi)",
         "formatIco": "ICO (favicon, 16 hingga 256 px)",
+        "formatTiff": "TIFF (gambar, untuk cetak)",
+        "formatTiffCmyk": "TIFF CMYK (untuk cetak)",
         "formatSvg": "SVG (vektor, untuk cetak)",
         "size": "Ukuran {format}",
         "quietZone": "Tambahkan quiet zone sebesar {modules, number} modul (disarankan untuk cetak)",
@@ -1239,7 +1242,8 @@
         "logoQuestion": "Apakah logo atau koreksi kesalahan yang lebih tinggi mengubah ukuran?",
         "logoAnswer": "Koreksi kesalahan yang lebih tinggi menambah redundansi, sehingga konten yang sama membutuhkan versi lebih tinggi dengan lebih banyak modul, dan karena itu hasil cetaknya lebih besar. Logo tidak mengubah jumlah modul, tetapi menutupi sebagian modul, jadi gunakan level Q atau H saat menambahkannya.",
         "quietQuestion": "Apakah quiet zone dihitung dalam ukuran?",
-        "quietAnswer": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx tidak memiliki margin kecuali Anda mengaktifkan quiet zone, jadi sisakan ruang tersebut di sekitar kode pada tata letak Anda.",
+        "quietAnswer": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx memiliki margin sesuai pengaturan desainnya, sedangkan generator dan alat massal menambahkan {quiet, number} kecuali Anda menonaktifkannya. Sisakan ruang yang kurang di sekitar kode pada tata letak Anda.",
+        "quietAnswerNewDesigns": "Ukuran kode yang ditampilkan dihitung dari tepi ke tepi. Pemindai juga membutuhkan margin kosong sebesar {quiet, number} modul di setiap sisi, yang sudah termasuk dalam angka kedua. Unduhan QRdx memiliki margin sesuai pengaturan desainnya: desain baru di editor dimulai dengan {start, number} modul, sedangkan generator dan alat massal menambahkan {quiet, number} kecuali Anda menonaktifkannya. Sisakan ruang yang kurang di sekitar kode pada tata letak Anda.",
         "resolutionQuestion": "Resolusi berapa yang sebaiknya saya ekspor untuk cetak?",
         "resolutionAnswer": "Gunakan SVG jika memungkinkan: formatnya vektor dan tetap tajam di ukuran apa pun. Untuk PNG, ekspor minimal dengan lebar piksel yang ditampilkan untuk 300 DPI, yang merupakan standar minimum untuk cetak."
       },
@@ -1738,6 +1742,9 @@
     "hosted": {
       "notFoundTitle": "Halaman tidak ditemukan",
       "notFoundMessage": "Tautan ini tidak mengarah ke halaman mana pun. Pemiliknya mungkin telah menghapusnya, atau tautannya salah ketik.",
+      "notReadyTitle": "Halaman ini belum siap",
+      "notReadyMessage": "Pembuat kode QR ini masih menyiapkan halaman yang akan dibuka. Coba lagi beberapa saat lagi.",
+      "notReadyOwner": "Anda yang membuat kode ini? Publikasikan halamannya di QRdx agar pemindaian membukanya.",
       "passwordProtected": "Dilindungi kata sandi",
       "madeWithQrdx": "Dibuat dengan QRdx",
       "share": "Bagikan",
@@ -1970,7 +1977,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Pembuat Barcode Gratis: EAN-13, UPC, Code 128",
-    "metaDescription": "Buat EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix, dan lainnya: {count, number} jenis barcode dengan digit pemeriksa yang dihitung otomatis. PNG, JPG, SVG, PDF, EPS. Gratis, tanpa daftar.",
+    "metaDescription": "Buat EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix, dan lainnya: {count, number} jenis barcode dengan digit pemeriksa. PNG, JPG, SVG, PDF, EPS. Gratis.",
     "crumb": "Pembuat barcode",
     "title": "Pembuat barcode gratis",
     "intro1": "Buat barcode untuk ritel, pengiriman, dan inventaris dalam {count, number} format, mulai dari EAN-13 dan UPC-A hingga Code 128, GS1-128, ITF-14, dan Data Matrix. Ketik nomornya, lalu digit pemeriksa dihitung otomatis untuk Anda; digit yang salah akan terdeteksi sebelum Anda mencetak.",
@@ -2103,6 +2110,12 @@
       "gs1TooLong": "GS1-128 menampung hingga {max} karakter AI dan data; ini memiliki {count}. Bagi menjadi dua barcode.",
       "databarGtinOnly": "GS1 DataBar hanya memuat GTIN: (01) beserta 14 digitnya. Untuk tanggal, batch, atau berat, gunakan GS1 DataBar Expanded atau GS1-128.",
       "databarTooLong": "GS1 DataBar Expanded memuat hingga {max} digit AI dan data, dan lebih sedikit jika ada huruf; data ini memiliki {count} karakter. Hapus satu AI atau persingkat salah satu nilai.",
+      "maxicodeChars": "MaxiCode menyimpan karakter Latin-1: huruf, angka, simbol, dan aksen Eropa Barat. Tidak diizinkan: {chars}",
+      "maxicodePostcode": "Pesan operator pengiriman diawali dengan kode pos: hingga 9 angka (ZIP Code AS), atau hingga 6 huruf kapital, angka, dan spasi untuk negara lain.",
+      "maxicodeCountry": "Setelah kode pos, tuliskan kode negara ISO 3 angka (840 untuk AS); yang tertulis saat ini adalah \"{country}\".",
+      "maxicodeService": "Setelah kode negara, tuliskan kelas layanan 3 angka; yang tertulis saat ini adalah \"{service}\".",
+      "maxicodeCarrier": "Pesan operator pengiriman (mode {mode}): kode pos {postcode}, negara {country}, kelas layanan {service}.",
+      "maxicodeZipPadded": "ZIP Code 5 angka digambar sebagai {zip} dengan 0000 untuk bagian +4, dan pembaca memberikan hasil yang sama.",
       "imbEnter": "Masukkan kode pelacakan 20 digit, lalu ZIP Code perutean jika ada.",
       "imbTrackingLength": "Kode pelacakan terdiri dari 20 digit: ID barcode (2), jenis layanan (3), ID pengirim dan nomor seri (15). Kode ini memiliki {count, plural, one {# digit} other {# digit}}.",
       "imbRoutingLength": "Setelah kode pelacakan 20 digit, diikuti ZIP Code perutean: 5 digit, 9 digit (ZIP+4), atau 11 digit (ZIP+4 dan titik pengiriman). Setelah kode pelacakan terdapat {count, plural, one {# digit} other {# digit}}.",
@@ -2688,7 +2701,7 @@
     "playground": "Coba di Playground",
     "promptsEyebrow": "Coba sekarang",
     "promptsTitle": "Prompt untuk memulai",
-    "promptsDescription": "Setiap prompt memakai kemampuan alat QRdx yang sebenarnya: warna dan bentuk, Wi-Fi, kontak, email, SMS, dan data peta, serta tautan SVG, PNG, WebP, atau EPS. Buka di asisten Anda atau salin.",
+    "promptsDescription": "Setiap prompt memakai kemampuan sebenarnya dari tools QRdx: warna dan bentuk, Wi-Fi, kontak, email, SMS, dan payload peta, serta tautan SVG, PNG, WebP, TIFF, atau EPS. Buka di asisten Anda atau salin.",
     "howEyebrow": "Cara kerja",
     "howTitle": "Tiga langkah, lalu tinggal bertanya",
     "howDescription": "Asisten Anda memanggil alat QRdx untuk Anda. Anda tidak perlu menyentuh API.",
@@ -2698,9 +2711,10 @@
     "setupUrl": "URL server",
     "toolsEyebrow": "Alat",
     "toolsTitle": "Yang dapat dipanggil asisten Anda",
-    "toolsDescription": "{count, number} alat. Semua alat kecuali save_template, save_barcode, dan generate_ai_art bersifat hanya-baca dan tidak memerlukan kunci: alat-alat ini merender gambar, memformat teks, dan membaca komunitas publik. Parameter lengkap ada di <link>dokumentasi server MCP</link>.",
+    "toolsDescription": "{count, number} alat. Sebagian besar hanya-baca dan tidak memerlukan akun atau kunci: alat ini membuat gambar, memformat teks, dan membaca komunitas publik. Empat alat kode QR dinamis meminta Anda masuk ke QRdx, sedangkan save_template, save_barcode, dan generate_ai_art muncul setelah koneksi memiliki kunci API. Parameter lengkapnya ada di <link>dokumentasi server MCP</link>.",
     "toolNoKey": "Tanpa kunci",
     "toolNeedsKey": "Perlu kunci API",
+    "toolNeedsSignIn": "Perlu masuk",
     "faqTitle": "FAQ server MCP",
     "connect": {
       "copyFailed": "Tidak dapat menyalin. Pilih teksnya lalu salin secara manual.",
@@ -2804,7 +2818,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "API Kode QR Gratis: Tanpa Kunci, SVG, PNG, dan Logo",
-    "metaDescription": "API kode QR gratis tanpa kunci. Satu URL menghasilkan kode QR dalam format SVG, PNG, WebP, atau EPS dengan warna, bentuk, dan logo pilihan Anda. {perMinute, number} permintaan per menit, di-cache selama setahun.",
+    "metaDescription": "API kode QR gratis tanpa kunci: satu URL menghasilkan kode QR SVG, PNG, WebP, TIFF, atau EPS dengan warna, bentuk, dan logo Anda. {perMinute, number} permintaan per menit, di-cache selama setahun.",
     "crumb": "API kode QR",
     "title": "API kode QR gratis",
     "intro1": "Pasang kode QR di mana pun URL bisa digunakan. Satu permintaan GET ke api.qrdx.dev langsung mengembalikan gambarnya: tanpa akun, tanpa kunci API, tanpa SDK. Warna, bentuk, koreksi kesalahan, dan logo cukup ditulis di query string.",
@@ -2812,7 +2826,7 @@
     "facts": {
       "noKey": "Tanpa kunci atau pendaftaran",
       "rateLimit": "{perMinute, number} permintaan per menit untuk setiap IP",
-      "formats": "SVG, PNG, WebP, dan EPS",
+      "formats": "SVG, PNG, WebP, TIFF, dan EPS",
       "openSource": "Open source"
     },
     "docs": "Dokumentasi Image API",
@@ -2837,6 +2851,7 @@
       "logoNote": "Jika memakai logo, kode beralih ke koreksi kesalahan H saat logo membutuhkannya, sehingga tetap bisa dipindai.",
       "previewAlt": "Kode QR untuk {value}",
       "epsPreview": "EPS adalah file untuk cetak, jadi pratinjau menampilkan kode yang sama dalam format SVG.",
+      "tiffPreview": "TIFF adalah file cetak yang tidak dapat ditampilkan oleh sebagian besar browser, sehingga pratinjau menampilkan kode yang sama dalam format PNG.",
       "empty": "Ketik teks atau tautan yang ingin di-encode.",
       "tooLong": "Teks ini lebih dari {max, number} karakter, batas yang berlaku di API.",
       "loadFailed": "Pratinjau gagal dimuat. Jika Anda mengubahnya berkali-kali berturut-turut, tunggu semenit: API mengizinkan {perMinute, number} permintaan per menit.",
@@ -2868,7 +2883,7 @@
     "params": {
       "data": "Teks atau URL yang akan di-encode, maksimal {max, number} karakter.",
       "size": "Lebar dan tinggi dalam piksel, {min, number} hingga {max, number}. Untuk EPS, ini adalah lebar dalam poin.",
-      "format": "svg, png, webp (lossless) atau eps (vektor, untuk cetak).",
+      "format": "svg, png, webp (lossless), tiff, tiff-cmyk (CMYK, untuk cetak), atau eps (vektor, untuk cetak).",
       "colors": "Warna kode dan latar belakang dalam format hex, tanpa # (155dfc). bg=00000000 membuat latar belakang transparan.",
       "shapes": "Bentuk modul, mata di sudut, dan titik di dalamnya: total ada {count, number} bentuk modul.",
       "level": "Koreksi kesalahan: L (7%), M (15%), Q (25%) atau H (30%) dari kode boleh rusak dan tetap bisa dipindai.",
@@ -2900,7 +2915,7 @@
       "title": "Image API",
       "noKey": "Tanpa kunci atau akun",
       "static": "Kode statis: data ada di dalam gambar",
-      "formats": "SVG, PNG, WebP, dan EPS",
+      "formats": "SVG, PNG, WebP, TIFF, dan EPS",
       "limit": "{perMinute, number} permintaan per menit per IP"
     },
     "restCard": {
@@ -2932,7 +2947,7 @@
       "logoQuestion": "Apakah API kode QR bisa menambahkan logo?",
       "logoAnswer": "Ya. logoIcon menempatkan ikon cepat (Wi-Fi, tautan, telepon, email, dan lainnya) atau salah satu dari {brands} logo merek dari Simple Icons di bagian tengah, tanpa kunci. Kode beralih ke koreksi kesalahan H saat logo memerlukannya, sehingga tetap bisa dipindai.",
       "formatsQuestion": "Format gambar apa yang dikembalikan?",
-      "formatsAnswer": "SVG secara default, atau PNG, WebP lossless, dan EPS vektor dengan format=png, webp, atau eps. Ukurannya mulai dari {min, number} hingga {max, number} piksel.",
+      "formatsAnswer": "Secara default SVG, atau PNG, WebP lossless, TIFF, dan EPS vektor dengan format=png, webp, tiff, atau eps, serta TIFF CMYK untuk cetak dengan format=tiff-cmyk. Ukurannya mulai dari {min, number} hingga {max, number} piksel.",
       "expireQuestion": "Apakah kode QR kedaluwarsa?",
       "expireAnswer": "Tidak. Image API membuat kode statis: apa yang Anda enkode ada di dalam kode, sehingga kode berfungsi selama tautan atau teks di dalamnya masih berfungsi. Tidak ada yang kedaluwarsa dan tidak ada yang menghitung pemindaian.",
       "dynamicQuestion": "Bisakah saya mengubah tujuan kode setelah dicetak?",
@@ -2970,7 +2985,7 @@
       },
       "print": {
         "title": "Unduh dan cetak",
-        "body": "Unduh sebagai PNG, WebP, atau SVG, atau atur gayanya dulu di Playground. Tautan pendek membutuhkan lebih sedikit modul daripada URL panjang, sehingga kode bisa dicetak lebih kecil dan tetap bisa dipindai."
+        "body": "Unduh sebagai PNG, WebP, SVG, atau TIFF, atau atur gayanya terlebih dahulu di Playground. Tautan pendek membutuhkan lebih sedikit modul daripada URL yang panjang, sehingga kode dapat dicetak lebih kecil dan tetap dapat dipindai."
       },
       "change": {
         "title": "Ubah saat diperlukan",
@@ -3497,6 +3512,7 @@
         "pdfAndEpsDrawEvery": "PDF dan EPS menggambar setiap titik sebagai bentuk vektor dan mempertahankan gradasi linear dan radial sebagai shading vektor yang halus.",
         "jpgCantBeTransparent": "JPG tidak bisa transparan",
         "bmpCantBeTransparent": "BMP tidak mendukung transparansi: latar belakang akan menjadi putih",
+        "tiffCmykCantBeTransparent": "TIFF CMYK ditujukan untuk cetak, yang tidak mendukung transparansi: latar belakang transparan akan menjadi putih.",
         "gifWouldNotScan": "GIF hanya mendukung 256 warna, sedangkan desain ini membutuhkan lebih banyak: jika dikurangi menjadi 256, kode tidak akan bisa dipindai lagi. Unduh PNG sebagai gantinya.",
         "moreFormats": "Format lainnya",
         "vector": " · vektor",
@@ -3523,6 +3539,8 @@
           "gif": "Paling cocok untuk alat lama dan pembuat email yang hanya menerima GIF · maksimal 256 warna, salah satunya bisa transparan.",
           "bmp": "Cocok untuk sistem lama dan alat tertanam yang hanya menerima BMP · 24-bit tanpa kompresi, latar belakang transparan akan menjadi putih.",
           "ico": "Terbaik untuk favicon · satu file berisi gambar 16, 32, 48, dan 256 px. Ukuran kecil untuk ikon, bukan untuk pemindaian.",
+          "tiff": "Paling cocok untuk percetakan yang meminta TIFF · 300 dpi, transparansi tetap dipertahankan.",
+          "tiff-cmyk": "Paling cocok untuk percetakan yang meminta CMYK · warna hitam dicetak hanya dengan tinta hitam, dan latar belakang transparan akan menjadi putih. Tanpa profil warna: tanyakan kepada pencetak Anda soal warna merek yang presisi.",
           "svg": "Terbaik untuk Figma, Illustrator, dan situs web · tetap tajam di ukuran berapa pun.",
           "pdf": "Terbaik untuk dokumen dan cetak cepat · untuk PDF vektor, gunakan Siap cetak.",
           "eps": "Terbaik untuk percetakan dan aplikasi vektor · tetap tajam di ukuran berapa pun."
@@ -4842,10 +4860,7 @@
         "theFrameIsAddedAround": "Bingkai ditambahkan di sekeliling kode, sehingga gambar yang diunduh menjadi lebih besar dan kodenya sendiri tetap dapat dipindai.",
         "label": "Label",
         "pickAFrameFirst": "Pilih bingkai terlebih dahulu",
-        "none": "Tidak ada",
-        "takesDotColor": "Warnanya mengikuti warna titik-titik kode.",
-        "alsoHasTemplate": "Desain ini juga memiliki bingkai {name} di dalam bingkai ini. Memilih bingkai lain akan mengganti keduanya.",
-        "templateKeepsSize": "Bingkai ini menyesuaikan kode di dalamnya, sehingga gambar yang diunduh tetap berukuran sesuai pilihan Anda."
+        "none": "Tidak ada"
       },
       "frameFields": {
         "textSize": "Ukuran teks"
@@ -5102,7 +5117,8 @@
       "yourQrCodeIsNow": "Kode QR Anda kini dinamis",
       "destinationUpdated": "Tujuan diperbarui",
       "designSavedToTheCode": "Desain disimpan ke kode",
-      "couldntCopyTheShortLink": "Tidak dapat menyalin tautan pendek"
+      "couldntCopyTheShortLink": "Tidak dapat menyalin tautan pendek",
+      "inviteForMore": "Atau <link>undang teman</link>: saat mereka membuat kode dinamis pertamanya, Anda berdua mendapat tambahan {count, number}."
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5434,6 +5450,9 @@
       "checkingScan": "Memeriksa pemindaian…",
       "fullScanChecker": "Pemeriksa pemindaian lengkap",
       "checkAPrintedCode": "Periksa kode yang dicetak",
+      "warning": "Peringatan",
+      "scanScoreScoreValueWarningShow": "Skor pemindaian {score, number}, {value}, dengan peringatan. Tampilkan pemeriksaan",
+      "addAMargin": "Tambahkan margin {modules, number} modul",
       "grades": {
         "great": "Bagus",
         "ok": "OK",
@@ -5717,7 +5736,7 @@
       "label": "Tentang desainer kode QR",
       "summary": "Desainer kode QR kustom. Kode statis gratis dengan logo, warna, dan bingkai Anda. Tanpa pendaftaran, tanpa watermark.",
       "types": "Buat kode QR untuk tautan, jaringan Wi-Fi, kartu kontak, pembayaran, atau salah satu dari {types, number} jenis konten. Atur gayanya dengan {bodyPatterns, number} pola titik, {eyeShapes, number} bentuk mata sudut, warna solid atau gradasi, logo di tengah, dan {frames, number} bingkai ajakan bertindak. Skor pemindaian memperkirakan seberapa baik kode terbaca sebelum Anda mencetak.",
-      "downloads": "Unduh PNG, JPG, WebP, atau SVG, atau PDF atau EPS siap cetak dengan ukuran persis. Kode statis gratis dan tidak pernah kedaluwarsa. Masuk untuk membuat kode dinamis yang bisa Anda ubah setelah dicetak dan untuk melacak pemindaian.",
+      "downloads": "Unduh PNG, JPG, WebP, SVG, atau TIFF (termasuk TIFF CMYK untuk cetak), atau PDF atau EPS siap cetak dengan ukuran yang tepat. Kode statis gratis dan tidak pernah kedaluwarsa. Masuk untuk membuat kode dinamis yang bisa Anda ubah setelah dicetak dan untuk melacak pemindaian.",
       "links": {
         "allTypes": "Semua jenis kode QR",
         "scanChecker": "Pemeriksa pemindaian",
@@ -5745,7 +5764,8 @@
     "limitCard": {
       "planUsage": "Paket & penggunaan",
       "notNow": "Nanti saja",
-      "labelUsed": "{label} terpakai"
+      "labelUsed": "{label} terpakai",
+      "inviteForMore": "Atau <link>undang teman</link>: saat mereka membuat kode QR dinamis pertamanya, Anda berdua mendapat {count, number} tambahan."
     },
     "limitDialog": {
       "limitReached": "Batas tercapai"
@@ -6935,6 +6955,39 @@
           "unlimitedOnValue": "Tanpa batas di {value}",
           "labelUsed": "{label} terpakai"
         }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "Tautan undangan Anda:",
+          "copy": "Salin",
+          "copied": "Tersalin",
+          "linkCopied": "Tautan disalin",
+          "couldntCopy": "Tidak dapat menyalin. Pilih tautan lalu salin sendiri."
+        },
+        "page": {
+          "title": "Undang teman",
+          "description": "Bagikan tautan Anda. Saat teman mendaftar melalui tautan itu dan membuat kode dinamis pertamanya, Anda berdua mendapat tambahan {count, number} kode dinamis.",
+          "notReady": "Undangan belum tersedia. Silakan cek kembali nanti.",
+          "yourInviteLink": "Tautan undangan Anda",
+          "shareYourLink": "Kirim ke teman atau posting di mana saja. Setiap teman yang bergabung melalui tautan ini dan membuat kode dinamis memberi Anda berdua tambahan {count, number}.",
+          "link": "Tautan",
+          "sameVisit": "Seorang teman dihitung jika ia membuat akun dalam kunjungan yang sama dengan saat mengeklik tautan. Tidak ada yang disimpan di perangkatnya.",
+          "friendsJoined": "Teman yang bergabung",
+          "friendsRewarded": "Teman yang diberi hadiah",
+          "rewardedOfMax": "{rewarded, number} dari {max, number}",
+          "extraCodes": "Kode dinamis tambahan",
+          "waiting": "{waiting, plural, one {# teman belum} other {# teman belum}} membuat kode dinamis. Mereka punya waktu {days, number} hari sejak mendaftar.",
+          "atCap": "Anda sudah mendapat hadiah untuk {max, number} teman, batas maksimum dari satu tautan undangan. Teman yang bergabung melalui tautan ini tetap mendapat {count, number} kode.",
+          "youWereInvited": "Anda bergabung melalui undangan teman, jadi workspace Anda sendiri juga mendapat tambahan {count, number} kode dinamis.",
+          "howItWorks": "Cara kerjanya",
+          "ruleSignUp": "Seorang teman dihitung jika ia membuat akun QRdx baru melalui tautan Anda dalam kunjungan tersebut. Pendaftaran pada kunjungan berikutnya, atau akun yang sudah ada, tidak dihitung.",
+          "ruleFirstCode": "Saat mereka membuat kode dinamis pertama dalam {days, number} hari sejak mendaftar, Anda berdua mendapat tambahan {count, number} kode dinamis di workspace masing-masing.",
+          "ruleCap": "Anda bisa mendapat hadiah untuk maksimal {max, number} teman ({total, number} kode). Teman yang bergabung setelah itu tetap mendapat {count, number} kode.",
+          "ruleNotYourself": "Akun Anda yang lain tidak dihitung, begitu pula akun yang memakai alamat email Anda dengan penulisan berbeda atau siapa pun yang berbagi workspace dengan Anda.",
+          "ruleAllowance": "Kode tambahan ini menambah kode dinamis di workspace pribadi Anda pada paket apa pun, bukan milik tim. Kode ini tidak bernilai uang tunai dan tidak dapat dipindahkan ke akun lain. Kode yang Anda buat dengannya tetap berfungsi.",
+          "rulePrivate": "Kami tidak pernah menampilkan siapa yang mendaftar melalui tautan Anda, dan teman Anda tidak melihat siapa yang mengundang mereka.",
+          "ruleEnd": "Kami dapat mengakhiri hadiah undangan untuk undangan baru; kode yang sudah Anda peroleh tetap ada. Detailnya ada di <terms>Ketentuan Layanan</terms> dan <help>halaman bantuan</help>."
+        }
       }
     },
     "dashboard": {
@@ -7679,6 +7732,8 @@
           "downloadGif": "Unduh GIF",
           "downloadBmp": "Unduh BMP",
           "downloadIco": "Unduh ICO",
+          "downloadTiff": "Unduh TIFF",
+          "downloadTiffCmyk": "Unduh TIFF CMYK",
           "moreFormats": "Format lainnya",
           "editLinkValue": "Edit tautan",
           "codeSettings": "Pengaturan kode",
@@ -7780,6 +7835,8 @@
           "gifImagesZip": "Gambar GIF (ZIP)",
           "bmpImagesZip": "Gambar BMP (ZIP)",
           "icoImagesZip": "Favicon ICO (ZIP)",
+          "tiffImagesZip": "Gambar TIFF (ZIP)",
+          "tiffCmykImagesZip": "Gambar TIFF CMYK (ZIP)",
           "svgImagesZip": "Gambar SVG (ZIP)",
           "more": "Lainnya",
           "moveToTrash": "Pindahkan ke sampah",
@@ -9019,7 +9076,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "Yang baru",
         "backToLabel": "Kembali ke {label}",
         "expandSidebar": "Perluas sidebar",
         "collapseSidebar": "Ciutkan sidebar",
@@ -9270,8 +9326,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Tautan ini tidak dapat digunakan",
+          "unknownAppTitle": "Koneksi aplikasi ini ke QRdx sudah kedaluwarsa",
+          "unknownAppBody": "QRdx tidak lagi mengenali aplikasi yang mengarahkan Anda ke sini. Jika ini aplikasi AI yang Anda hubungkan ke QRdx, seperti Claude, Cursor, atau VS Code, hapus QRdx dari aplikasi tersebut, tambahkan lagi, lalu masuk. Jika bukan, tanyakan kepada pengembang aplikasinya.",
           "theAppThatSentYou": "Aplikasi yang mengarahkan Anda ke sini mengirim permintaan yang tidak valid: <span>{description}</span>. Kembali ke aplikasi tersebut dan coba lagi, atau hubungi pengembangnya.",
           "appnameWillBeAbleTo": "{appName} akan dapat",
+          "mcpOnlyNote": "{appName} hanya bisa memakai akun Anda lewat alat kode server MCP QRdx: aplikasi ini tidak bisa menghapus kode, mengelola webhook, atau memakai seni AI.",
           "nameWantsToAccessYour": "{name} ingin mengakses akun QRdx Anda",
           "builtByName": "Dibuat oleh <strong>{name}</strong>",
           "unverifiedApp": "Aplikasi belum terverifikasi.",
@@ -9440,9 +9499,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "Email ini ditujukan untuk <strong>{email}</strong>. Jika Anda tidak mengharapkannya, abaikan saja. Jika Anda khawatir dengan keamanan akun Anda, <link>beri tahu kami</link>.",
       "sentFor": "Dikirim untuk {name} oleh <link>{host}</link>",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "Berhenti berlangganan"
+      "unsubscribe": "Berhenti berlangganan",
+      "settings": "Ubah email yang Anda terima",
+      "copyLink": "atau salin dan tempel tautan ini ke browser Anda:"
     },
     "codes": {
       "neverAsk": "QRdx tidak akan pernah meminta kode ini melalui telepon, chat, atau email.",
@@ -9664,8 +9726,7 @@
         "viewer": "Pengamat melihat kode, halaman, dan analitik ruang kerja tanpa mengubah apa pun."
       },
       "accept": "Terima undangan",
-      "expires": "Masuk dengan alamat email ini untuk menerima. Undangan berakhir pada {date}. Jika Anda tidak mengharapkannya, abaikan saja email ini.",
-      "pasteLink": "Atau tempel tautan ini di browser Anda: {url}",
+      "expires": "Masuk dengan alamat email ini untuk menerima undangan. Undangan berakhir pada {date}.",
       "someone": "Rekan tim"
     },
     "portalInvite": {
@@ -9674,8 +9735,7 @@
       "heading": "Laporan kode QR Anda",
       "body": "{hasFolders, select, yes {{inviter} mengundang Anda untuk melihat kode QR milik {portal} di {folders}: seberapa sering tiap kode dipindai, di mana dan pada perangkat apa, serta halaman yang dibuka. Hanya bisa dilihat.} other {{inviter} mengundang Anda untuk melihat kode QR milik {portal}: seberapa sering tiap kode dipindai, di mana dan pada perangkat apa, serta halaman yang dibuka. Hanya bisa dilihat.}}",
       "open": "Buka laporan",
-      "signIn": "Masuk dengan alamat email ini: kami akan mengirimkan kode sekali pakai. Jika Anda tidak mengharapkannya, abaikan saja.",
-      "pasteLink": "Atau tempel tautan ini di browser Anda: {url}",
+      "signIn": "Masuk dengan alamat email ini: kami akan mengirimkan kode sekali pakai kepada Anda.",
       "yourAgency": "Agensi Anda"
     },
     "limitNotice": {
@@ -9706,7 +9766,9 @@
       "makeRoom": "{limit, select, dynamicCodes {Arsipkan satu untuk memberi ruang.} landingPages {Hapus satu untuk memberi ruang.} storage {Hapus file yang tidak lagi Anda perlukan untuk memberi ruang.} savedThemes {Hapus satu untuk memberi ruang.} other {}}",
       "resets": "Diatur ulang {date}.",
       "keeps": "{limit, select, dynamicCodes {Kode yang ada tetap berfungsi.} landingPages {Halaman yang ada tetap aktif.} formResponses {Halaman tetap aktif. Formulir kembali menerima respons setelah pengaturan ulang.} storage {File yang sudah Anda unggah tetap tersedia.} other {}}",
-      "upgradeButton": "Upgrade ke {plan}"
+      "upgradeButton": "Upgrade ke {plan}",
+      "includesBonus": "{plan} mencakup {amount} dan undangan menambahkan {bonus, number}.",
+      "invite": "Atau <link>undang teman</link>: saat mereka membuat kode dinamis pertamanya, Anda berdua mendapat tambahan {count, number}."
     },
     "weeklyDigest": {
       "subject": "Minggu Anda di QRdx: {scans, plural, other {# pemindaian}}",
@@ -9722,11 +9784,14 @@
       "sameAsLastWeek": "Sama seperti minggu lalu",
       "change": "{change} dibanding minggu lalu",
       "topCodes": "Kode teratas",
+      "code": "Kode",
       "countries": "Dari mana orang memindai",
+      "country": "Negara",
       "newCodesLine": "{count, plural, other {# kode baru}} minggu ini.",
       "open": "Buka dasbor Anda"
     },
     "personal": {
+      "meantFor": "Email ini ditujukan untuk <strong>{email}</strong>.",
       "reply": "Balas email ini dan balasan Anda akan sampai ke {name}.",
       "stop": "Berhenti menerima catatan dari tim QRdx"
     },
@@ -9741,11 +9806,24 @@
       "makeCode": "<link>Buat kode dinamis.</link> Kode ini membuka tautan pendek yang tidak berubah, sehingga bisa langsung Anda cetak.",
       "seeScans": "<link>Lihat pemindaiannya:</link> kapan, di mana, dan dari perangkat apa orang memindainya.",
       "changeLink": "Ubah tujuan tautannya kapan pun Anda mau, bahkan setelah dicetak. Tanpa cetak ulang.",
+      "button": "Buat kode pertama Anda",
       "free": "Kode QR statis tetap gratis, dan kode yang Anda buat tetap berfungsi meskipun Anda berganti paket atau berhenti membayar. Paket Gratis juga mencakup {count} kode QR dinamis.",
       "pro": "Jika Anda membutuhkan lebih, Pro seharga {monthly} per bulan atau {yearly} per tahun, dengan tambahan kode dinamis tanpa batas, {domains} domain kustom, peringatan email di setiap tonggak pemindaian, serta ringkasan mingguan jika Anda menginginkannya.",
       "taxes": "Pajak setempat mungkin ditambahkan saat pembayaran.",
       "reply": "Jika ada kendala, atau Anda tidak yakin cara melakukan sesuatu, balas email ini. Setiap balasan dibaca oleh seorang manusia.",
       "reason": "Anda menerima email ini karena baru saja membuat akun QRdx."
+    },
+    "inviteReward": {
+      "subject": "Teman yang Anda undang membuat kode pertamanya: Anda berdua mendapat tambahan {count, number} kode dinamis",
+      "preview": "Anda berdua mendapat tambahan {count, number} kode dinamis",
+      "heading": "Anda berdua mendapat tambahan {count, number} kode dinamis",
+      "body": "Teman yang mendaftar melalui tautan undangan Anda baru saja membuat kode dinamis pertamanya. Workspace Anda kini memiliki tambahan {count, number} kode dinamis, begitu juga workspace teman Anda.",
+      "progress": "Itu berarti {rewarded, plural, other {# teman}} dari {max, number} teman yang bisa memberi Anda hadiah lewat tautan Anda.",
+      "last": "Itu teman terakhir dari {max, number} teman yang bisa memberi Anda hadiah lewat tautan Anda. Teman yang bergabung lewat tautan ini tetap mendapat {count, number}.",
+      "inviteMore": "Undang lebih banyak teman",
+      "seeInvites": "Lihat undangan Anda",
+      "keeps": "Kode tambahan ini berlaku di paket apa pun dan tidak memiliki nilai tunai. Kode yang Anda buat dengannya akan terus berfungsi.",
+      "reason": "Anda menerima email ini karena seorang teman mendaftar melalui tautan undangan QRdx Anda dan membuat kode dinamis pertamanya."
     }
   },
   "codeActions": {
@@ -10037,7 +10115,8 @@
       "bulkOverLimit": "File hingga {limit, number} baris tidak memerlukan akun. Akun gratis dapat membuat hingga {max, number} per file, dan file Anda tetap dimuat.",
       "keepDesigns": "Simpan desain Anda di akun Anda, di setiap perangkat.",
       "afterDownload": "Gratis, dan kode Anda tetap berfungsi apa pun yang terjadi pada paket Anda.",
-      "upgrade": "Paket dan penagihan terhubung ke sebuah akun. Anda akan melanjutkan tepat dari tempat Anda berhenti."
+      "upgrade": "Paket dan penagihan terhubung ke sebuah akun. Anda akan melanjutkan tepat dari tempat Anda berhenti.",
+      "invite": "Anda datang melalui undangan teman. Daftar sekarang dan Anda akan mendapatkan {count, number} kode dinamis tambahan saat membuat kode dinamis pertama Anda."
     },
     "nudge": {
       "dismiss": "Jangan tampilkan lagi"
@@ -10185,6 +10264,11 @@
         "failed": "Single sign-on tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
         "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi."
       }
+    },
+    "inviteNote": {
+      "text": "Anda diundang ke QRdx. Daftar selama kunjungan ini dan buat kode dinamis dalam {days, number} hari untuk mendapatkan {count, number} kode dinamis tambahan.",
+      "signUp": "Daftar",
+      "dismiss": "Tutup"
     }
   },
   "settingsActions": {

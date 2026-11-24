@@ -240,7 +240,8 @@ describe("qrdx/preact", () => {
         "linear gradient",
         "logo API",
         "frame banner-bottom",
-        "template with frame and attributes",
+        "former template's frame with attributes",
+        "custom template with a frame, attributes and a logo",
         "root attributes with frame",
       ].includes(x.name)
     )) {
@@ -256,6 +257,6 @@ describe("qrdx/preact", () => {
       expect(after).toHaveLength(nodes.length);
       expect(after.every((node, index) => node === nodes[index])).toBe(true);
     }
-    expect(document.body.children.length).toBe(6);
+    expect(document.body.children.length).toBe(7);
   });
 });

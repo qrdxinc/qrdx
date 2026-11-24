@@ -12,7 +12,6 @@ import {
   type Icon,
   SidebarLeft,
   SidebarRight,
-  Star,
 } from "iconsax-reactjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -30,7 +29,6 @@ import { useAvailability } from "@/components/availability-provider";
 import { useContentText } from "@/components/i18n/content-text";
 import { OrgSwitcher } from "@/components/org-switcher";
 import { useCan } from "@/components/workspace-provider";
-import { unreadLabel } from "@/lib/changelog-feed";
 import { PLAN_NAMES } from "@/lib/pricing";
 import { useCreate } from "./create-actions";
 import { LimitNotice } from "./limit-notice";
@@ -48,7 +46,6 @@ import {
 import { isNavItemActive } from "./nav-config";
 import type { ShellData } from "./shell-data";
 import { showsSidebarUpgrade, UpgradeRow } from "./upgrade-row";
-import { useWhatsNew } from "./whats-new";
 import { WhatsNewCards } from "./whats-new-cards";
 
 // The focus ring is inset: the area panels clip their sides (they slide),
@@ -249,40 +246,43 @@ function AreaPanel({
       inert={!open}
     >
       {area.back && (
-        <RailTip
-          collapsed={collapsed}
-          label={t("backToLabel", { label: tc(area.back.label) })}
+        // One line: the back arrow (named "Back to Dashboard") beside the
+        // area's title; the rail keeps just the arrow.
+        <div
+          className={cn(
+            "flex items-center",
+            collapsed ? "mb-1 justify-center" : "gap-1 pb-3",
+          )}
         >
-          <Link
-            aria-label={
-              collapsed
-                ? t("backToLabel", { label: tc(area.back.label) })
-                : undefined
-            }
-            className={cn(
-              rowClass,
-              "text-muted-foreground mb-1",
-              collapsed
-                ? "size-9 self-center justify-center"
-                : "h-8 w-full gap-2 px-2.5",
-            )}
-            data-area-back=""
-            href={area.back.href}
-            onClick={(event) =>
-              onArea(area.back?.href ?? "", event.detail === 0)
-            }
+          <RailTip
+            collapsed={collapsed}
+            label={t("backToLabel", { label: tc(area.back.label) })}
           >
-            <ArrowLeft aria-hidden className="size-4 shrink-0" />
-            {!collapsed && (
-              <span className="truncate">{tc(area.back.label)}</span>
-            )}
-          </Link>
-        </RailTip>
-      )}
-      {area.back && !collapsed && (
-        <h2 className="px-2.5 pt-1 pb-3 text-base font-semibold" id={titleId}>
-          {tc(area.title)}
-        </h2>
+            <Link
+              aria-label={t("backToLabel", { label: tc(area.back.label) })}
+              className={cn(
+                rowClass,
+                "text-muted-foreground justify-center",
+                collapsed ? "size-9" : "size-8",
+              )}
+              data-area-back=""
+              href={area.back.href}
+              onClick={(event) =>
+                onArea(area.back?.href ?? "", event.detail === 0)
+              }
+            >
+              <ArrowLeft aria-hidden className="size-4 shrink-0" />
+            </Link>
+          </RailTip>
+          {!collapsed && (
+            <h2
+              className="min-w-0 truncate text-base font-semibold"
+              id={titleId}
+            >
+              {tc(area.title)}
+            </h2>
+          )}
+        </div>
       )}
       <nav
         aria-label={area.back && !collapsed ? undefined : tc(area.title)}
@@ -366,66 +366,13 @@ function AreaPanel({
   );
 }
 
-/** Opens the "What's new" panel; a count while there are unread entries. */
-function WhatsNewRow({
-  collapsed,
-  onNavigate,
-}: {
-  collapsed: boolean;
-  onNavigate?: () => void;
-}) {
-  const t = useTranslations("app.shell.appSidebar");
-  const whatsNew = useWhatsNew();
-  if (!whatsNew || whatsNew.items.length === 0) return null;
-  const { unread, openPanel } = whatsNew;
-  const label =
-    unread > 0 ? `What's new, ${unreadLabel(unread)} unread` : "What's new";
-
-  return (
-    <RailTip collapsed={collapsed} label={label}>
-      <button
-        aria-label={collapsed || unread > 0 ? label : undefined}
-        className={cn(
-          rowClass,
-          "text-muted-foreground relative",
-          collapsed ? "size-9 justify-center" : "h-8 w-full gap-2.5 px-2.5",
-        )}
-        onClick={() => {
-          onNavigate?.();
-          openPanel();
-        }}
-        type="button"
-      >
-        <Star aria-hidden className="size-4 shrink-0" />
-        {!collapsed && (
-          <span className="flex-1 truncate text-left">{t("whatsNew")}</span>
-        )}
-        {unread > 0 &&
-          (collapsed ? (
-            <span
-              aria-hidden
-              className="bg-primary ring-sidebar absolute top-2 right-2 size-1.5 rounded-full ring-2"
-            />
-          ) : (
-            <span
-              aria-hidden
-              className="bg-primary/10 text-primary rounded-full px-1.5 text-[11px] leading-5 font-medium tabular-nums"
-            >
-              {unreadLabel(unread)}
-            </span>
-          ))}
-      </button>
-    </RailTip>
-  );
-}
-
 /**
  * The sidebar, shared by the desktop rail and the mobile sheet. Its areas
  * (nav-areas.ts) are the dashboard, Codes, Pages & forms and Settings; the
  * URL picks the open one, and changing it slides the panels sideways
  * (deeper from the right, back from the left; instant with reduced
- * motion). The collapse toggle, What's new (with its feature cards) and the
- * workspace switcher stay put in every area. `collapsed` turns it into an icon rail (desktop only).
+ * motion). The collapse toggle, the What's new cards and the workspace
+ * switcher stay put in every area. `collapsed` turns it into an icon rail (desktop only).
  * Without shell data (signed out, or the lookup failed) only the account
  * settings are listed.
  */
@@ -557,7 +504,6 @@ export function AppSidebar({
         )}
       >
         {!collapsed && <WhatsNewCards onNavigate={onNavigate} />}
-        <WhatsNewRow collapsed={collapsed} onNavigate={onNavigate} />
         {shell && showsSidebarUpgrade(shell.limits) && (
           <UpgradeRow collapsed={collapsed} onNavigate={onNavigate} />
         )}

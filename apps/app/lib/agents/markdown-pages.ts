@@ -162,7 +162,7 @@ export function mcpMarkdown(origin: URL): string {
     `> ${MCP_INTRO}`,
     [
       `- Endpoint: \`${url}\` (Streamable HTTP)`,
-      "- No account or API key for designing, rendering and the community. Only save_template and save_barcode write (a theme or a barcode in an API key's workspace), and generate_ai_art uses the key's workspace's monthly AI art images; the server keeps no other data.",
+      "- No account or API key for designing, rendering and the community. create_dynamic_code, update_code_destination, get_code_stats and list_codes act on the person's own QRdx workspace: they're listed to everyone, and the first call asks the person to sign in to QRdx (OAuth; new accounts sign up there). Only those and save_template and save_barcode write (a dynamic code, a theme or a barcode), and generate_ai_art uses the key's workspace's monthly AI art images; the server keeps no other data. save_template, save_barcode and generate_ai_art are listed only to connections that send an API key (`Authorization: Bearer qrdx_…`).",
       `- Connect page: ${abs("/mcp")}`,
       `- Docs: ${abs("/docs/developers/mcp")}`,
       `- Server card: ${mcpServerCardUrl(origin)}`,
@@ -176,7 +176,7 @@ export function mcpMarkdown(origin: URL): string {
     "## Tools",
     MCP_TOOLS.map(
       (tool) =>
-        `- \`${tool.name}\` (${tool.title}${tool.needsKey ? ", needs an API key" : ", no key"}): ${tool.description}`,
+        `- \`${tool.name}\` (${tool.title}${tool.needsKey ? ", needs an API key" : tool.needsSignIn ? ", needs sign-in" : ", no key"}): ${tool.description}`,
     ).join("\n"),
     "## FAQ",
     faqSection(MCP_FAQS),

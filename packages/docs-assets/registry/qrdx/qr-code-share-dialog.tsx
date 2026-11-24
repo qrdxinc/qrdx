@@ -21,7 +21,7 @@ import {
 } from "@/registry/ui/dialog";
 import { Input } from "@/registry/ui/input";
 
-/** qrdx style options: colors, gradients, patterns, logo, template. */
+/** qrdx style options: colors, gradients, patterns, logo, frame. */
 export type QrCodeStyle = Omit<ComponentProps<typeof QRCode>, "value" | "size">;
 
 export interface QrCodeShareDialogProps

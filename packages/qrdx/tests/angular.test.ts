@@ -143,7 +143,6 @@ describe.skipIf(!existsSync(built))("qrdx/angular", () => {
         "autoLevel",
         "exactLevel",
         "scale",
-        "templateId",
         "customTemplate",
         "customProps",
         "frameLabelMarkers",

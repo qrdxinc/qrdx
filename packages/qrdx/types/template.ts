@@ -1,5 +1,8 @@
 import { z } from "zod";
-import type { FrameSpec } from "./frame-spec";
+
+// A custom template: artwork you draw in code around the code (`customTemplate`,
+// with its own props in `customProps`). The built-in templates became frames
+// in qrdx 0.0.64, which also dropped this hook; it's back since 0.0.65.
 
 // Zod schemas
 export const baseTemplatePropsSchema = z.object({
@@ -8,21 +11,15 @@ export const baseTemplatePropsSchema = z.object({
 });
 
 /**
- * Configuration object passed to template wrappers containing all QR code metadata.
- * All dimension values are in the template coordinate space (typically 300x300).
+ * The third argument of a template's wrapper: the code's `url` (its value)
+ * and `pixelSize`, one module's width in the template's 300 × 300 drawing.
  *
  * @example
  * ```tsx
- * wrapper: (children, config, props) => {
- *   // Use pixelSize to calculate decorative element sizes
- *   const decorativeRadius = config.pixelSize * 0.5;
- *
- *   // Use qrSize to determine QR complexity
- *   if (config.qrSize > 40) {
- *     // Adjust template for high-density QR codes
- *   }
- *
- *   return <svg>...</svg>;
+ * wrapper: (children, props, config) => {
+ *   // Size decorative dots from the module width
+ *   const dotRadius = (config?.pixelSize ?? 10) * 0.5;
+ *   return <svg viewBox="0 0 300 300">...</svg>;
  * }
  * ```
  */
@@ -55,12 +52,6 @@ export interface TemplateDefinition<TCustomProps = Record<string, never>> {
   id: string;
   name: string;
   description?: string;
-  /**
-   * The frame spec a built-in template draws its artwork from (they're all
-   * frames: `{ style: "custom", spec }` draws the same artwork as a frame).
-   * Templates that draw in code, like custom ones, have none.
-   */
-  spec?: FrameSpec;
   wrapper: (
     children: TemplateNode,
     props?: BaseTemplateProps & TCustomProps,

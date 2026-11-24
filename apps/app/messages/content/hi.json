@@ -2065,7 +2065,7 @@
   },
   "b04a9859b7cc": {
     "source": "No, a tel: code always opens the phone app. To start a WhatsApp chat, use the WhatsApp QR code generator.",
-    "text": "नहीं, tel: कोड हमेशा फ़ोन ऐप खोलता है। WhatsApp चैट शुरू करने के लिए WhatsApp QR code generator इस्तेमाल करें।",
+    "text": "नहीं, tel: कोड हमेशा फ़ोन ऐप खोलता है। WhatsApp चैट शुरू करने के लिए WhatsApp QR कोड generator इस्तेमाल करें।",
     "status": "machine",
     "context": "qrTypes.types.phone.faqs.2.answer"
   },
@@ -2305,7 +2305,7 @@
   },
   "ee330fcc62d7": {
     "source": "A Wi-Fi QR code lets guests join your network by pointing their camera at it, instead of reading out a 20-character password. The camera apps on iPhone and on most Android phones (or Google Lens) recognize the format and offer to join the network.",
-    "text": "Wi-Fi QR code से मेहमान 20 अक्षरों का पासवर्ड पढ़कर बोलने की जगह बस कैमरा उस पर घुमाकर आपके नेटवर्क से जुड़ सकते हैं। iPhone और ज़्यादातर Android फ़ोन के कैमरा ऐप (या Google Lens) इस फ़ॉर्मैट को पहचान लेते हैं और नेटवर्क से जुड़ने का विकल्प देते हैं।",
+    "text": "Wi-Fi QR कोड से मेहमान 20 अक्षरों का पासवर्ड पढ़कर बोलने की जगह बस कैमरा उस पर घुमाकर आपके नेटवर्क से जुड़ सकते हैं। iPhone और ज़्यादातर Android फ़ोन के कैमरा ऐप (या Google Lens) इस फ़ॉर्मैट को पहचान लेते हैं और नेटवर्क से जुड़ने का विकल्प देते हैं।",
     "status": "machine",
     "context": "qrTypes.types.wifi.intro.0"
   },
@@ -2377,7 +2377,7 @@
   },
   "1674145adaf8": {
     "source": "Is it safe to put my Wi-Fi password in a QR code?",
-    "text": "क्या Wi-Fi पासवर्ड QR code में डालना सुरक्षित है?",
+    "text": "क्या Wi-Fi पासवर्ड QR कोड में डालना सुरक्षित है?",
     "status": "machine",
     "context": "qrTypes.types.wifi.faqs.0.question"
   },
@@ -3739,13 +3739,13 @@
   },
   "65ba78b2b19a": {
     "source": "Create a Spotify QR code for a song, album, playlist, artist or podcast. Works with any camera, unlike Spotify Codes. Free PNG and SVG.",
-    "text": "गाने, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट के लिए Spotify QR code बनाएँ। Spotify Codes के उलट, यह किसी भी कैमरे से काम करता है। फ़्री PNG और SVG।",
+    "text": "गाने, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट के लिए Spotify QR कोड बनाएँ। Spotify Codes के उलट, यह किसी भी कैमरे से काम करता है। फ़्री PNG और SVG।",
     "status": "machine",
     "context": "qrTypes.types.spotify.metaDescription"
   },
   "53e16875e3a2": {
     "source": "A Spotify QR code opens a song, album, playlist, podcast or artist page in Spotify. Musicians put it on posters, flyers and merch; cafés, gyms and shops use it to share the playlist that's playing; couples print it on wedding invitations.",
-    "text": "Spotify QR code Spotify में कोई गाना, एल्बम, प्लेलिस्ट, पॉडकास्ट या आर्टिस्ट पेज खोलता है। संगीतकार इसे पोस्टर, फ़्लायर और मर्च पर लगाते हैं; कैफ़े, जिम और दुकानें इससे चल रही प्लेलिस्ट शेयर करती हैं; और कपल इसे शादी के कार्ड पर छपवाते हैं।",
+    "text": "Spotify QR कोड Spotify में कोई गाना, एल्बम, प्लेलिस्ट, पॉडकास्ट या आर्टिस्ट पेज खोलता है। संगीतकार इसे पोस्टर, फ़्लायर और मर्च पर लगाते हैं; कैफ़े, जिम और दुकानें इससे चल रही प्लेलिस्ट शेयर करती हैं; और कपल इसे शादी के कार्ड पर छपवाते हैं।",
     "status": "machine",
     "context": "qrTypes.types.spotify.intro.0"
   },
@@ -3787,7 +3787,7 @@
   },
   "57b51e0d3ba8": {
     "source": "Spotify Codes (the sound-wave codes in the app) only scan inside Spotify; a QR code works with any camera.",
-    "text": "Spotify Codes (ऐप में दिखने वाले साउंड-वेव कोड) सिर्फ़ Spotify के अंदर स्कैन होते हैं; QR code किसी भी कैमरे से काम करता है।",
+    "text": "Spotify Codes (ऐप में दिखने वाले साउंड-वेव कोड) सिर्फ़ Spotify के अंदर स्कैन होते हैं; QR कोड किसी भी कैमरे से काम करता है।",
     "status": "machine",
     "context": "qrTypes.types.spotify.payload.notes.2"
   },
@@ -4267,13 +4267,13 @@
   },
   "8ba9f841bb6b": {
     "source": "Create a Bitcoin QR code in the BIP21 bitcoin: format with optional amount, label and message. Works with SegWit and Taproot addresses. Free.",
-    "text": "BIP21 bitcoin: फ़ॉर्मेट में Bitcoin QR code बनाएं, जिसमें अमाउंट, लेबल और मैसेज वैकल्पिक हैं। SegWit और Taproot एड्रेस के साथ काम करता है। फ़्री।",
+    "text": "BIP21 bitcoin: फ़ॉर्मेट में Bitcoin QR कोड बनाएं, जिसमें अमाउंट, लेबल और मैसेज वैकल्पिक हैं। SegWit और Taproot एड्रेस के साथ काम करता है। फ़्री।",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.metaDescription"
   },
   "5286158b2980": {
     "source": "A Bitcoin QR code holds your wallet address, and optionally an amount, a label and a message, in the BIP21 bitcoin: URI format. Scanning it with a Bitcoin wallet fills in the payment, so the sender doesn't have to copy a long address by hand, where one wrong character would send coins to the wrong place.",
-    "text": "Bitcoin QR code में आपका वॉलेट एड्रेस रहता है, और चाहें तो अमाउंट, लेबल और मैसेज भी, BIP21 bitcoin: URI फ़ॉर्मेट में। Bitcoin वॉलेट से इसे स्कैन करने पर पेमेंट की जानकारी अपने आप भर जाती है, इसलिए भेजने वाले को लंबा एड्रेस हाथ से कॉपी नहीं करना पड़ता, जहां एक गलत अक्षर से कॉइन गलत जगह पहुंच सकते हैं।",
+    "text": "Bitcoin QR कोड में आपका वॉलेट एड्रेस रहता है, और चाहें तो अमाउंट, लेबल और मैसेज भी, BIP21 bitcoin: URI फ़ॉर्मेट में। Bitcoin वॉलेट से इसे स्कैन करने पर पेमेंट की जानकारी अपने आप भर जाती है, इसलिए भेजने वाले को लंबा एड्रेस हाथ से कॉपी नहीं करना पड़ता, जहां एक गलत अक्षर से कॉइन गलत जगह पहुंच सकते हैं।",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.intro.0"
   },
@@ -4321,13 +4321,13 @@
   },
   "0da1324a4996": {
     "source": "Is it safe to share my Bitcoin QR code?",
-    "text": "क्या मेरा Bitcoin QR code शेयर करना सुरक्षित है?",
+    "text": "क्या मेरा Bitcoin QR कोड शेयर करना सुरक्षित है?",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.faqs.0.question"
   },
   "a7dd06aa79da": {
     "source": "Yes. It contains your receiving address, which is meant to be shared. Never put a private key or seed phrase in a QR code.",
-    "text": "हां। इसमें आपका रिसीव करने का एड्रेस होता है, जिसे शेयर करने के लिए ही बनाया गया है। QR code में प्राइवेट key या सीड फ़्रेज़ कभी न डालें।",
+    "text": "हां। इसमें आपका रिसीव करने का एड्रेस होता है, जिसे शेयर करने के लिए ही बनाया गया है। QR कोड में प्राइवेट key या सीड फ़्रेज़ कभी न डालें।",
     "status": "machine",
     "context": "qrTypes.types.bitcoin.faqs.0.answer"
   },
@@ -7123,13 +7123,13 @@
   },
   "b2f0a77751f8": {
     "source": "Make a Monero QR code (monero: URI) with your address and an optional amount, recipient name and description. Made in your browser. Free.",
-    "text": "अपने address और वैकल्पिक अमाउंट, पाने वाले का नाम और विवरण के साथ Monero QR code (monero: URI) बनाएं। आपके ब्राउज़र में बनता है। फ़्री।",
+    "text": "अपने address और वैकल्पिक अमाउंट, पाने वाले का नाम और विवरण के साथ Monero QR कोड (monero: URI) बनाएं। आपके ब्राउज़र में बनता है। फ़्री।",
     "status": "machine",
     "context": "qrTypes.types.monero.metaDescription"
   },
   "6b02906436f6": {
     "source": "A Monero QR code holds a payment request: your address and, if you like, an amount in XMR, your name and a description.",
-    "text": "Monero QR code में एक पेमेंट रिक्वेस्ट होती है: आपका address और, चाहें तो, XMR में अमाउंट, आपका नाम और विवरण।",
+    "text": "Monero QR कोड में एक पेमेंट रिक्वेस्ट होती है: आपका address और, चाहें तो, XMR में अमाउंट, आपका नाम और विवरण।",
     "status": "machine",
     "context": "qrTypes.types.monero.intro.0"
   },
@@ -9097,13 +9097,13 @@
   },
   "8910c76fe64e": {
     "source": "Create an Amazon Music QR code for a song, album, playlist or podcast. For posters, merch and flyers. Paste the link. Free.",
-    "text": "गाने, एल्बम, प्लेलिस्ट या पॉडकास्ट के लिए Amazon Music QR code बनाएँ। पोस्टर, मर्च और फ़्लायर के लिए। बस लिंक पेस्ट करें। फ़्री।",
+    "text": "गाने, एल्बम, प्लेलिस्ट या पॉडकास्ट के लिए Amazon Music QR कोड बनाएँ। पोस्टर, मर्च और फ़्लायर के लिए। बस लिंक पेस्ट करें। फ़्री।",
     "status": "machine",
     "context": "qrTypes.types.amazon-music.metaDescription"
   },
   "01a0acbc683e": {
     "source": "An Amazon Music QR code opens a song, an album, a playlist, an artist or a podcast in Amazon Music.",
-    "text": "Amazon Music QR code Amazon Music में गाना, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
+    "text": "Amazon Music QR कोड Amazon Music में गाना, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
     "status": "machine",
     "context": "qrTypes.types.amazon-music.intro.0"
   },
@@ -9145,13 +9145,13 @@
   },
   "57983725eeb5": {
     "source": "Make a Deezer QR code that plays a track, album, playlist or podcast. For gig posters, merch and record sleeves. Free, no signup.",
-    "text": "ट्रैक, एल्बम, प्लेलिस्ट या पॉडकास्ट चलाने वाला Deezer QR code बनाएँ। गिग पोस्टर, मर्च और रिकॉर्ड स्लीव के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "text": "ट्रैक, एल्बम, प्लेलिस्ट या पॉडकास्ट चलाने वाला Deezer QR कोड बनाएँ। गिग पोस्टर, मर्च और रिकॉर्ड स्लीव के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
     "status": "machine",
     "context": "qrTypes.types.deezer.metaDescription"
   },
   "28b553d09c48": {
     "source": "A Deezer QR code opens a track, an album, a playlist, an artist or a podcast in Deezer.",
-    "text": "Deezer QR code Deezer में ट्रैक, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
+    "text": "Deezer QR कोड Deezer में ट्रैक, एल्बम, प्लेलिस्ट, आर्टिस्ट या पॉडकास्ट खोलता है।",
     "status": "machine",
     "context": "qrTypes.types.deezer.intro.0"
   },
@@ -9193,13 +9193,13 @@
   },
   "ba39758079e2": {
     "source": "Create a TIDAL QR code that plays a track, album or playlist, or opens an artist. For merch, sleeves and posters. Free, no signup.",
-    "text": "ट्रैक, एल्बम या प्लेलिस्ट चलाने या आर्टिस्ट खोलने वाला TIDAL QR code बनाएँ। मर्च, स्लीव और पोस्टर के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
+    "text": "ट्रैक, एल्बम या प्लेलिस्ट चलाने या आर्टिस्ट खोलने वाला TIDAL QR कोड बनाएँ। मर्च, स्लीव और पोस्टर के लिए। फ़्री, साइनअप की ज़रूरत नहीं।",
     "status": "machine",
     "context": "qrTypes.types.tidal.metaDescription"
   },
   "a9b8feb0aff5": {
     "source": "A TIDAL QR code opens a track, an album, a playlist or an artist on TIDAL.",
-    "text": "TIDAL QR code TIDAL पर ट्रैक, एल्बम, प्लेलिस्ट या आर्टिस्ट खोलता है।",
+    "text": "TIDAL QR कोड TIDAL पर ट्रैक, एल्बम, प्लेलिस्ट या आर्टिस्ट खोलता है।",
     "status": "machine",
     "context": "qrTypes.types.tidal.intro.0"
   },
@@ -22915,7 +22915,7 @@
   },
   "f4f67de0e873": {
     "source": "QR code table tents for restaurants, cafés, hotels and events: what to link to, sizes that scan from a seat, materials and how to measure each table.",
-    "text": "रेस्टोरेंट, कैफ़े, होटल और इवेंट के लिए QR code टेबल टेंट: क्या लिंक करें, कौन-से साइज़ सीट से स्कैन होते हैं, मटीरियल और हर टेबल की नाप कैसे लें।",
+    "text": "रेस्टोरेंट, कैफ़े, होटल और इवेंट के लिए QR कोड टेबल टेंट: क्या लिंक करें, कौन-से साइज़ सीट से स्कैन होते हैं, मटीरियल और हर टेबल की नाप कैसे लें।",
     "status": "machine",
     "context": "placements.0.in-store.items.table-tents.metaDescription"
   },
@@ -34717,13 +34717,13 @@
   },
   "b152aa87a0a4": {
     "source": "Shorten a QR code's link on your own Short.io domain, with the path you choose.",
-    "text": "QR code के link को अपने Short.io डोमेन पर छोटा करें, अपनी चुनी हुई path के साथ।",
+    "text": "QR कोड के link को अपने Short.io डोमेन पर छोटा करें, अपनी चुनी हुई path के साथ।",
     "status": "machine",
     "context": "integrations.entries.short-io.tagline"
   },
   "bbdbabf02454": {
     "source": "Connect Short.io with a secret API key, pick which of your domains to use, and it shows up in the QR editor's URL type, under Use a link from… beside the Website address field. Create a link with your own path or pick an existing one; the QR code encodes the Short.io link.",
-    "text": "Short.io को secret API key से कनेक्ट करें, चुनें कि आपके कौन से डोमेन इस्तेमाल करने हैं, और यह QR editor के URL type में, Website address फ़ील्ड के पास Use a link from… के नीचे दिखने लगेगा। अपनी path के साथ link बनाएं या कोई मौजूदा link चुनें; QR code में Short.io link ही एन्कोड होता है।",
+    "text": "Short.io को secret API key से कनेक्ट करें, चुनें कि आपके कौन से डोमेन इस्तेमाल करने हैं, और यह QR editor के URL type में, Website address फ़ील्ड के पास Use a link from… के नीचे दिखने लगेगा। अपनी path के साथ link बनाएं या कोई मौजूदा link चुनें; QR कोड में Short.io link ही एन्कोड होता है।",
     "status": "machine",
     "context": "integrations.entries.short-io.description.0"
   },
@@ -36701,6 +36701,12 @@
     "status": "machine",
     "context": "mcp.tools.5.description"
   },
+  "6fc17acdab37": {
+    "source": "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Listed once the connection has a QRdx API key.",
+    "text": "किसी डिज़ाइन को आपके workspace में थीम के रूप में सेव करता है, प्लान की सेव्ड-थीम सीमा के अंदर। यह तभी दिखता है जब कनेक्शन में QRdx API key हो।",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
   "5059cb851dc2": {
     "source": "Generate a barcode",
     "text": "बारकोड बनाएँ",
@@ -36710,6 +36716,12 @@
   "26e9ed7d6f36": {
     "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 या Aztec। यह वैल्यू (चेक डिजिट, लंबाई, कैरेक्टर) जाँचता है और एक PNG के साथ SVG, PNG, PDF और दूसरे फ़ॉर्मैट के पब्लिक इमेज URL लौटाता है।",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "fdfe7dc89241": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode या DotCode। वैल्यू जाँचता है (चेक डिजिट, लंबाई, अक्षर) और एक PNG के साथ पब्लिक SVG, PNG, PDF और दूसरे इमेज URL लौटाता है।",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
@@ -36725,6 +36737,12 @@
     "status": "machine",
     "context": "mcp.tools.7.description"
   },
+  "09892b7b00fa": {
+    "source": "Keeps a barcode in your workspace's Barcodes to edit and download later. Listed once the connection has a QRdx API key.",
+    "text": "बारकोड को आपके workspace के Barcodes में रखता है, ताकि बाद में उसे एडिट और डाउनलोड कर सकें। यह तभी दिखता है जब कनेक्शन में QRdx API key हो।",
+    "status": "machine",
+    "context": "mcp.tools.7.description"
+  },
   "4c95ba85d6f1": {
     "source": "Generate AI art",
     "text": "AI आर्ट बनाएँ",
@@ -36734,6 +36752,12 @@
   "9254cd62817d": {
     "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
     "text": "आपके विवरण, किसी दृश्य या आपकी फ़ोटो से QR कोड को AI आर्टवर्क में बदलता है और जाँचता है कि वह स्कैन होता है। हर इमेज आपके वर्कस्पेस की मासिक AI आर्ट इमेज में से एक इस्तेमाल करती है और उसमें एक मिनट तक लग सकता है। कनेक्शन पर QRdx API key ज़रूरी है।",
+    "status": "machine",
+    "context": "mcp.tools.8.description"
+  },
+  "fe114ac9b6bc": {
+    "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Listed once the connection has a QRdx API key.",
+    "text": "आपके विवरण, किसी सीन या आपकी फ़ोटो से बनी AI आर्टवर्क में QR कोड बनाता है और जाँचता है कि वह स्कैन होता है। हर इमेज में आपके workspace की महीने की AI art इमेज में से एक लगती है और इसमें एक मिनट तक लग सकता है। यह तभी दिखता है जब कनेक्शन में QRdx API key हो।",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36767,9 +36791,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "बॉडी पैटर्न, कोने की आई और आई डॉट के आकार, फ़्रेम टेम्पलेट, एरर करेक्शन लेवल, डिफ़ॉल्ट और सीमाएँ।",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "बॉडी पैटर्न, कोने की आई और आई डॉट के आकार, बिल्ट-इन फ़्रेम, एरर करेक्शन लेवल, डिफ़ॉल्ट और सीमाएँ।",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36878,6 +36902,12 @@
   "95b27c7bcd0a": {
     "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server.",
     "text": "नहीं, कोड डिज़ाइन करने, रेंडर करने और कम्युनिटी ब्राउज़ करने के लिए नहीं: QRdx MCP server पब्लिक और फ़्री है, और यह कोई सेशन स्टेट नहीं रखता। अपनी थीम में डिज़ाइन सेव करने (save_template), बारकोड सेव करने (save_barcode), AI आर्ट बनाने (generate_ai_art) और आपके अपलोड किए लोगो का इस्तेमाल करने के लिए QRdx API key चाहिए, जिसे आपके ऐप की सेटिंग में server के लिए Authorization: Bearer qrdx_… के रूप में भेजा जाता है।",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "57125b32502d": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "नहीं, कोड डिज़ाइन करने, रेंडर करने और कम्युनिटी ब्राउज़ करने के लिए नहीं: QRdx MCP सर्वर पब्लिक और फ़्री है, और यह कोई सेशन स्टेट नहीं रखता। अपनी थीम में डिज़ाइन सेव करने (save_template), बारकोड सेव करने (save_barcode), AI art बनाने (generate_ai_art) और आपके अपलोड किए लोगो को इस्तेमाल करने के लिए QRdx API key चाहिए, जिसे आपके app की सर्वर सेटिंग में Authorization: Bearer qrdx_… के रूप में भेजा जाता है। key सेट होने के बाद आपके app को ये तीन टूल दिखते हैं।",
     "status": "machine",
     "context": "mcp.faqs.2.answer"
   },
@@ -37627,7 +37657,7 @@
   },
   "0135740ce7f9": {
     "source": "Make a Wi-Fi QR code so guests join your network with one scan. WPA/WPA2, WEP and open networks, hidden SSIDs, correct escaping. Free.",
-    "text": "Wi-Fi QR code बनाएं, ताकि मेहमान एक स्कैन में आपके नेटवर्क से जुड़ जाएं। WPA/WPA2, WEP और ओपन नेटवर्क, छिपे SSID, सही एस्केपिंग। फ़्री।",
+    "text": "Wi-Fi QR कोड बनाएं, ताकि मेहमान एक स्कैन में आपके नेटवर्क से जुड़ जाएं। WPA/WPA2, WEP और ओपन नेटवर्क, छिपे SSID, सही एस्केपिंग। फ़्री।",
     "status": "machine",
     "context": "qrTypes.types.wifi.metaDescription"
   },
@@ -38830,5 +38860,473 @@
     "text": "Swiss QR-bill के लिए हाँ: QRdx QR-bill के पेमेंट पार्ट का QR कोड बनाता है, यानी error correction M वाला Swiss Payments Code, जिसमें Swiss cross होता है और जिसे भुगतान करने वाला अपने बैंकिंग ऐप में स्कैन करता है। बिल का बाकी हिस्सा, यानी रसीद और पेमेंट पार्ट का प्रिंट लेआउट, आपके इनवॉइसिंग सॉफ़्टवेयर से आता है। टैक्स अथॉरिटी के लिए ज़रूरी e-invoice QR कोड के लिए नहीं: वे अकाउंटिंग या e-invoicing सॉफ़्टवेयर से आते हैं।",
     "status": "machine",
     "context": "placements.0.documents.items.invoices.faqs.1.answer"
+  },
+  "157d9b89ae53": {
+    "source": "Rectangular Micro QR for narrow spaces: cables, tubes, boards",
+    "text": "संकरी जगहों के लिए रेक्टैंगुलर Micro QR: केबल, ट्यूब, बोर्ड",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.summary"
+  },
+  "d9e29bdf3552": {
+    "source": "Any text, up to 361 digits, 219 capital letters or 150 characters of other text; less with accents or other scripts.",
+    "text": "कोई भी टेक्स्ट, 361 अंकों, 219 कैपिटल अक्षरों या अन्य टेक्स्ट के 150 वर्णों तक; एक्सेंट या दूसरी लिपियों के साथ कम।",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.inputHint"
+  },
+  "f5a92bd24be6": {
+    "source": "UPS's fixed-size 2D code for sorting parcels",
+    "text": "पार्सल की छँटाई के लिए UPS का फ़िक्स्ड-साइज़ 2D कोड",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.summary"
+  },
+  "0c318d8d5087": {
+    "source": "A UPS carrier message, postcode<GS>country<GS>service class<GS>then the rest, or any text. Type <GS> between fields. Latin-1 characters only: up to 93 capital letters or 138 digits.",
+    "text": "UPS कैरियर मैसेज, पोस्टकोड<GS>देश<GS>सर्विस क्लास<GS>फिर बाकी, या कोई भी टेक्स्ट। फ़ील्ड के बीच <GS> टाइप करें। केवल Latin-1 वर्ण: 93 कैपिटल अक्षरों या 138 अंकों तक।",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.inputHint"
+  },
+  "f6047eef20ba": {
+    "source": "A QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code: cables, test tubes and the edges of parts. It's a 2022 ISO standard, so check that your scanners read it.",
+    "text": "एक पट्टी में खिंचा हुआ QR कोड, सिर्फ़ 7 मॉड्यूल ऊँचा तक, उन लेबल के लिए जो चौकोर कोड के लिए बहुत संकरे हैं: केबल, टेस्ट ट्यूब और पुर्ज़ों के किनारे। यह 2022 का ISO स्टैंडर्ड है, इसलिए जाँच लें कि आपके स्कैनर इसे पढ़ते हैं।",
+    "status": "machine",
+    "context": "barcodes.uses.rmqr"
+  },
+  "9c56d5f9dbb4": {
+    "source": "The fixed-size 2D code with a bullseye that UPS prints on parcel labels. A carrier message puts the destination postcode, country and service class where sorting machines look for them; it can also hold plain text.",
+    "text": "बुल्सआई वाला फ़िक्स्ड-साइज़ 2D कोड, जिसे UPS पार्सल लेबल पर प्रिंट करता है। कैरियर मैसेज में गंतव्य का पोस्टकोड, देश और सर्विस क्लास वहाँ रखे जाते हैं जहाँ छँटाई की मशीनें उन्हें देखती हैं; इसमें सादा टेक्स्ट भी रखा जा सकता है।",
+    "status": "machine",
+    "context": "barcodes.uses.maxicode"
+  },
+  "89f09d7bcb13": {
+    "source": "Free rMQR Code Generator (Rectangular Micro QR)",
+    "text": "फ़्री rMQR कोड जनरेटर (रेक्टैंगुलर Micro QR)",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.title"
+  },
+  "a705932e946e": {
+    "source": "Make an rMQR, the rectangular Micro QR code for narrow spaces like cables and test tubes. Up to 361 digits or 150 characters. SVG, PDF and PNG. Free.",
+    "text": "rMQR बनाएं, यानी केबल और टेस्ट ट्यूब जैसी संकरी जगहों के लिए रेक्टैंगुलर Micro QR कोड। 361 अंकों या 150 अक्षरों तक। SVG, PDF और PNG। फ़्री।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.metaDescription"
+  },
+  "fac05d5715dd": {
+    "source": "rMQR (Rectangular Micro QR) is a QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code. Type any text, check that it scans and download it.",
+    "text": "rMQR (रेक्टैंगुलर Micro QR) एक QR कोड है जिसे पट्टी की तरह खींचा गया है, सिर्फ़ 7 मॉड्यूल तक ऊंचा, उन लेबल के लिए जो चौकोर कोड के लिए बहुत संकरे हैं। कोई भी टेक्स्ट लिखें, जांचें कि वह स्कैन होता है और डाउनलोड करें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.intro"
+  },
+  "3016945159bc": {
+    "source": "Narrow labels where a square QR code would have to be tiny: cables and wires, test tubes and sample vials, the edges of parts and boxes.",
+    "text": "संकरे लेबल, जहां चौकोर QR कोड को बहुत छोटा रखना पड़ता: केबल और तार, टेस्ट ट्यूब और सैंपल शीशियां, पुर्ज़ों और डिब्बों के किनारे।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.0"
+  },
+  "a9b9994231ff": {
+    "source": "It's the ISO/IEC 23941 standard (2022), from DENSO WAVE, which also created the QR code. Because it's newer, check that the scanners that will read it support it before you print a batch.",
+    "text": "यह ISO/IEC 23941 स्टैंडर्ड (2022) है, जो DENSO WAVE का बनाया है, जिसने QR कोड भी बनाया था। यह नया है, इसलिए बैच प्रिंट करने से पहले जांच लें कि इसे पढ़ने वाले स्कैनर इसे सपोर्ट करते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.1"
+  },
+  "29e08933b54e": {
+    "source": "Do I need to register an rMQR code?",
+    "text": "क्या मुझे rMQR कोड रजिस्टर कराना होगा?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.title"
+  },
+  "5597274c9253": {
+    "source": "No. It holds whatever text you type, with no registration.",
+    "text": "नहीं। आप जो भी टेक्स्ट लिखते हैं, यह उसे रखता है, किसी रजिस्ट्रेशन की ज़रूरत नहीं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
+  },
+  "21d588136e54": {
+    "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",
+    "text": "कोई भी टेक्स्ट: अक्षर, अंक, चिह्न, नई लाइनें, एक्सेंट और दूसरी लिपियां। अंक सबसे कम जगह लेते हैं, फिर कैपिटल अक्षर; एक्सेंट और दूसरी लिपियां UTF-8 बाइट के रूप में रखी जाती हैं, जिनमें सबसे ज़्यादा जगह लगती है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.0"
+  },
+  "07e4daf832f2": {
+    "source": "rMQR comes in 32 sizes, from 7 to 17 modules tall and 27 to 139 wide. The generator picks the fewest rows your text fits in, then the fewest columns, so the code grows longer before it grows taller.",
+    "text": "rMQR 32 साइज़ में आता है, 7 से 17 मॉड्यूल ऊंचा और 27 से 139 चौड़ा। जनरेटर पहले सबसे कम पंक्तियां चुनता है जिनमें आपका टेक्स्ट आ जाए, फिर सबसे कम कॉलम, इसलिए कोड ऊंचा होने से पहले लंबा होता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.1"
+  },
+  "fb39f2c0ee54": {
+    "source": "Error correction is level M, which lets a reader recover about 15% of the code if it's smudged or damaged.",
+    "text": "एरर करेक्शन लेवल M है, जिससे कोड धुंधला या खराब होने पर रीडर लगभग 15% कोड वापस पा सकता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.2"
+  },
+  "9341974e7321": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text comes out 44.4 × 7.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "वेक्टर डाउनलोड में हर मॉड्यूल 0.71 mm का चौकोर बनता है: सैंपल टेक्स्ट क्वाइट ज़ोन समेत 44.4 × 7.8 mm आता है। इसे अपनी जगह और अपने प्रिंटर व स्कैनर की क्षमता के हिसाब से छोटा-बड़ा करें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.0"
+  },
+  "a19aad812139": {
+    "source": "rMQR needs 2 modules of blank space all round, which the generator starts with.",
+    "text": "rMQR को चारों ओर 2 मॉड्यूल की खाली जगह चाहिए, जिसके साथ जनरेटर शुरू होता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.1"
+  },
+  "e595e70dbbde": {
+    "source": "rMQR or QR code?",
+    "text": "rMQR या QR कोड?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.question"
+  },
+  "556187e34590": {
+    "source": "For anything people scan with their phone, a QR code. Use rMQR where only a narrow strip fits and you know the scanners that will read it support it.",
+    "text": "जिसे लोग फ़ोन से स्कैन करते हैं, उसके लिए QR कोड। rMQR वहां इस्तेमाल करें जहां सिर्फ़ संकरी पट्टी आ सके और आप जानते हों कि उसे पढ़ने वाले स्कैनर इसे सपोर्ट करते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.answer"
+  },
+  "1aca0f2cf8a2": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports rMQR, and tells you whether it reads back your text.",
+    "text": "हां। एडिट करते समय जनरेटर डाउनलोड होने वाली इमेज को ZXing से डिकोड करता है, जो rMQR को सपोर्ट करने वाला ओपन-सोर्स रीडर है, और बताता है कि वह आपका टेक्स्ट वापस पढ़ पाता है या नहीं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.1.answer"
+  },
+  "a0b78a78cf87": {
+    "source": "Free MaxiCode Generator",
+    "text": "फ़्री MaxiCode जनरेटर",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.title"
+  },
+  "bf9d519773db": {
+    "source": "Make a MaxiCode, the fixed-size 2D code UPS sorts parcels by, as a carrier message (modes 2 and 3) or text (mode 4). SVG, PDF and PNG. Free.",
+    "text": "MaxiCode बनाएँ, यह फ़िक्स्ड साइज़ का 2D कोड है जिससे UPS पार्सल छाँटता है। कैरियर मैसेज (मोड 2 और 3) या टेक्स्ट (मोड 4) के रूप में। SVG, PDF और PNG। फ़्री।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.metaDescription"
+  },
+  "93214fc470cb": {
+    "source": "MaxiCode is the fixed-size 2D code with a bullseye in the middle that UPS prints on parcel labels, so sorting machines can read where a parcel goes at speed. Type a carrier message or any text, check that it scans and download it.",
+    "text": "MaxiCode बीच में बुलसआई वाला फ़िक्स्ड साइज़ का 2D कोड है, जिसे UPS पार्सल लेबल पर प्रिंट करता है, ताकि सॉर्टिंग मशीनें तेज़ी से पढ़ सकें कि पार्सल कहाँ जाना है। कैरियर मैसेज या कोई भी टेक्स्ट लिखें, जाँचें कि वह स्कैन होता है और डाउनलोड करें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.intro"
+  },
+  "05263461581f": {
+    "source": "UPS parcel labels: the code carries the destination postcode, country and service class where a sorter expects them, followed by the shipment details.",
+    "text": "UPS पार्सल लेबल: कोड में गंतव्य का पोस्टकोड, देश और सर्विस क्लास वहीं होती है जहाँ सॉर्टर उन्हें खोजता है, उसके बाद शिपमेंट की जानकारी होती है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.0"
+  },
+  "483824ed5b00": {
+    "source": "The layout of a real shipping label and what goes in the rest of the message are set by UPS. Use their label guide for parcels you ship; the example here is a sample, not a shipment.",
+    "text": "असली शिपिंग लेबल का लेआउट और मैसेज के बाकी हिस्से में क्या जाएगा, यह UPS तय करता है। जो पार्सल आप भेजते हैं उनके लिए UPS की लेबल गाइड देखें; यहाँ का उदाहरण सिर्फ़ एक नमूना है, असली शिपमेंट नहीं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.1"
+  },
+  "c63b4f77b04c": {
+    "source": "Carrier message or text?",
+    "text": "कैरियर मैसेज या टेक्स्ट?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.title"
+  },
+  "2ec386ec976a": {
+    "source": "A carrier message starts with the postcode, the 3-digit ISO country code (840 for the US) and the 3-digit service class, separated by GS characters. Type them as <GS>: 152382802<GS>840<GS>001<GS>then the rest. A message starting with the [)><RS>01<GS>96 header works too.",
+    "text": "कैरियर मैसेज की शुरुआत पोस्टकोड, 3 अंकों के ISO देश कोड (US के लिए 840) और 3 अंकों की सर्विस क्लास से होती है, जिन्हें GS कैरेक्टर से अलग किया जाता है। इन्हें <GS> के रूप में लिखें: 152382802<GS>840<GS>001<GS>फिर बाकी। [)><RS>01<GS>96 हेडर से शुरू होने वाला मैसेज भी चलता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.0"
+  },
+  "07b2961ece2a": {
+    "source": "An all-digit postcode of up to 9 digits makes it mode 2 (US ZIP Codes); up to 6 capital letters, digits and spaces make it mode 3 (other countries). Anything else is drawn as text, mode 4.",
+    "text": "9 अंकों तक का सिर्फ़ अंकों वाला पोस्टकोड इसे मोड 2 (US ZIP Code) बनाता है; 6 तक कैपिटल अक्षर, अंक और स्पेस इसे मोड 3 (दूसरे देश) बनाते हैं। बाकी सब कुछ टेक्स्ट के रूप में, यानी मोड 4 में बनता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.1"
+  },
+  "d57b60d2ae0d": {
+    "source": "Latin-1 characters only: letters, digits, symbols and Western European accents.",
+    "text": "सिर्फ़ Latin-1 कैरेक्टर: अक्षर, अंक, चिह्न और पश्चिमी यूरोप के एक्सेंट।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.0"
+  },
+  "cc2a86f2ce79": {
+    "source": "As text it holds up to 93 capital letters or 138 digits, fewer with lowercase or symbols. A carrier message leaves about 84 characters after the postcode, country and service class.",
+    "text": "टेक्स्ट के रूप में इसमें 93 कैपिटल अक्षर या 138 अंक तक आ सकते हैं, लोअरकेस या चिह्न होने पर कम। कैरियर मैसेज में पोस्टकोड, देश और सर्विस क्लास के बाद करीब 84 कैरेक्टर बचते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.1"
+  },
+  "262019b66f59": {
+    "source": "A 5-digit ZIP Code is drawn with 0000 for the +4, and a mode 3 postcode is padded with spaces to 6 characters; readers return them that way.",
+    "text": "5 अंकों का ZIP Code +4 की जगह 0000 के साथ बनाया जाता है, और मोड 3 के पोस्टकोड में 6 कैरेक्टर तक स्पेस जोड़े जाते हैं; रीडर उन्हें उसी रूप में लौटाते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.2"
+  },
+  "4f21cb41b2bd": {
+    "source": "Every MaxiCode is the same size: 33 rows of 30 hexagons around the bullseye. More data doesn't make it bigger, so there's a limit instead.",
+    "text": "हर MaxiCode का साइज़ एक जैसा होता है: बुलसआई के चारों ओर 30 हेक्सागन की 33 पंक्तियाँ। ज़्यादा डेटा से यह बड़ा नहीं होता, इसलिए इसकी एक सीमा है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.3"
+  },
+  "d63cd93acd6c": {
+    "source": "The vector downloads are MaxiCode's nominal size, about 28.1 × 26.9 mm without the quiet zone. Print it at that size: readers look for a symbol of that size.",
+    "text": "वेक्टर डाउनलोड MaxiCode के नॉमिनल साइज़ के होते हैं, क्वाइट ज़ोन के बिना करीब 28.1 × 26.9 mm। इसे उसी साइज़ में प्रिंट करें: रीडर उसी साइज़ का सिंबल खोजते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.0"
+  },
+  "525615b8ff04": {
+    "source": "The generator starts with 2 modules of blank space all round; MaxiCode needs at least 1.",
+    "text": "जनरेटर चारों ओर 2 मॉड्यूल की खाली जगह से शुरू होता है; MaxiCode को कम से कम 1 चाहिए।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.1"
+  },
+  "aac3339401fe": {
+    "source": "Image size starts at 4×: below that, the hexagons are rounded to whole pixels and lose their shape.",
+    "text": "इमेज साइज़ 4× से शुरू होता है: इससे कम होने पर हेक्सागन पूरे पिक्सल में गोल हो जाते हैं और अपना आकार खो देते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.2"
+  },
+  "212789ea202f": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports MaxiCode, and tells you whether it reads back your message.",
+    "text": "हाँ। आपके एडिट करते समय जनरेटर डाउनलोड होने वाली इमेज को ZXing से डिकोड करता है, जो MaxiCode को सपोर्ट करने वाला ओपन-सोर्स रीडर है, और बताता है कि वह आपका मैसेज वापस पढ़ पाता है या नहीं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.0.answer"
+  },
+  "7e26c57a4da7": {
+    "source": "Which modes does it make?",
+    "text": "यह कौन-से मोड बनाता है?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.question"
+  },
+  "573feb46c532": {
+    "source": "Modes 2 and 3 for carrier messages and mode 4 for text. Mode 5 (text with stronger error correction) and mode 6 (reader programming) aren't offered.",
+    "text": "कैरियर मैसेज के लिए मोड 2 और 3, और टेक्स्ट के लिए मोड 4। मोड 5 (ज़्यादा मज़बूत एरर करेक्शन वाला टेक्स्ट) और मोड 6 (रीडर प्रोग्रामिंग) उपलब्ध नहीं हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.answer"
+  },
+  "5cc737cfddfe": {
+    "source": "MaxiCode or a QR code?",
+    "text": "MaxiCode या QR कोड?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.question"
+  },
+  "6402ef6937fb": {
+    "source": "MaxiCode where a carrier's system asks for it, as UPS's does. For anything people scan with a phone, a QR code.",
+    "text": "जहाँ कैरियर का सिस्टम माँगे, वहाँ MaxiCode, जैसे UPS का। जिसे लोग फ़ोन से स्कैन करें, उसके लिए QR कोड।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.answer"
+  },
+  "817e8c09369f": {
+    "source": "With Raycast, Node.js 22 and Bun installed, run this and Raycast imports the extension.",
+    "text": "Raycast, Node.js 22 और Bun इंस्टॉल होने पर इसे चलाएँ, Raycast एक्सटेंशन इम्पोर्ट कर लेगा।",
+    "status": "machine",
+    "context": "integrations.entries.raycast.steps.0.body"
+  },
+  "48d95404c31b": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode या DotCode। वैल्यू की जाँच करता है (चेक डिजिट, लंबाई, अक्षर) और एक PNG के साथ SVG, PNG, PDF और दूसरे इमेज फ़ॉर्मैट के पब्लिक URL लौटाता है।",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "2614b42d8452": {
+    "source": "Invite friends",
+    "text": "दोस्तों को बुलाएँ",
+    "status": "machine",
+    "context": "appNav.settings.account.items.5.label"
+  },
+  "afe8c0b259cc": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP, ICO or TIFF, including CMYK TIFF for print.",
+    "text": "कोड को PNG, SVG, WebP, GIF, BMP, ICO या TIFF में डाउनलोड करें, प्रिंट के लिए CMYK TIFF भी उपलब्ध है।",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "81755d0fa703": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP, ICO or TIFF (including CMYK TIFF for print), or style the code in the full editor.",
+    "text": "PNG, SVG, WebP, GIF, BMP, ICO या TIFF (प्रिंट के लिए CMYK TIFF सहित) डाउनलोड करें, या पूरे एडिटर में कोड को स्टाइल करें।",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
+  },
+  "4a76e3b36834": {
+    "source": "Scan the preview with your wallet, check the address, network and amount, and download the code as PNG, SVG, WebP, GIF, BMP, ICO or TIFF.",
+    "text": "प्रीव्यू को अपने वॉलेट से स्कैन करें, पता, नेटवर्क और राशि जाँचें, और कोड को PNG, SVG, WebP, GIF, BMP, ICO या TIFF में डाउनलोड करें।",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.3"
+  },
+  "5f15bdca2f69": {
+    "source": "The smallest files, for websites",
+    "text": "सबसे छोटी फ़ाइलें, वेबसाइट के लिए",
+    "status": "machine",
+    "context": "barcodes.files.webp.hint"
+  },
+  "e1df66a04ed6": {
+    "source": "For systems that ask for AVIF",
+    "text": "उन सिस्टम के लिए जो AVIF माँगते हैं",
+    "status": "machine",
+    "context": "barcodes.files.avif.hint"
+  },
+  "64f3ee170959": {
+    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP makes the smallest files, for websites; AVIF is there for systems that ask for it, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
+    "text": "प्रिंट के लिए SVG, PDF या EPS चुनें: ये वेक्टर हैं, इसलिए बार किसी भी साइज़ में साफ़ रहते हैं। SVG और EPS Illustrator, InDesign और Affinity जैसे डिज़ाइन टूल में खुलते हैं, और PDF कहीं भी खुल जाता है। PNG स्क्रीन, डॉक्यूमेंट और ऑनलाइन शॉप के लिए है, और JPG उन जगहों के लिए जहाँ PNG नहीं चलता; WebP सबसे छोटी फ़ाइलें बनाता है, वेबसाइट के लिए; AVIF उन सिस्टम के लिए है जो इसे माँगते हैं, और BMP उन पुराने सिस्टम के लिए है जो सिर्फ़ BMP लेते हैं। बड़ी तस्वीरों के लिए इमेज साइज़ बढ़ाएँ।",
+    "status": "machine",
+    "context": "barcodes.faqs.4.answer"
+  },
+  "1f15cca76850": {
+    "source": "Generate QR codes with body patterns, corner styles, colors, frames and logos from the Raycast launcher, keep a library of saved codes, and export them.",
+    "text": "Raycast लॉन्चर से बॉडी पैटर्न, कॉर्नर स्टाइल, रंग, फ़्रेम और लोगो के साथ QR कोड बनाएँ, सेव किए हुए कोड की लाइब्रेरी रखें और उन्हें एक्सपोर्ट करें।",
+    "status": "machine",
+    "context": "integrations.entries.raycast.description.0"
+  },
+  "9a99b4e6aca7": {
+    "source": "Body patterns, corner styles, colors, frames and logos.",
+    "text": "बॉडी पैटर्न, कॉर्नर स्टाइल, रंग, फ़्रेम और लोगो।",
+    "status": "machine",
+    "context": "integrations.entries.raycast.capabilities.0.description"
+  },
+  "1b59469b24e7": {
+    "source": "Enter a URL or text, then pick dot, eye and eye-dot patterns, colors from Canva's color picker, error correction and an optional logo. The preview updates as you go.",
+    "text": "कोई URL या टेक्स्ट डालें, फिर डॉट, आई और आई-डॉट पैटर्न, Canva के कलर पिकर से रंग, एरर करेक्शन और वैकल्पिक लोगो चुनें। आप जैसे-जैसे बदलाव करते हैं, प्रीव्यू अपडेट होता रहता है।",
+    "status": "machine",
+    "context": "integrations.entries.canva.description.0"
+  },
+  "160a13d94fb0": {
+    "source": "Patterns",
+    "text": "पैटर्न",
+    "status": "machine",
+    "context": "integrations.entries.canva.capabilities.1.title"
+  },
+  "4b5147422ca8": {
+    "source": "Body, eye and eye-dot shapes, each shown as a thumbnail.",
+    "text": "बॉडी, आई और आई-डॉट शेप, हर एक थंबनेल के साथ दिखाई गई।",
+    "status": "machine",
+    "context": "integrations.entries.canva.capabilities.1.description"
+  },
+  "0c606300ff29": {
+    "source": "GET /api/v1/qr returns an SVG, PNG, TIFF or print-ready EPS. Everything is in the query string, so the URL itself is the image: paste it into a README, an <img> tag or an email template.",
+    "text": "GET /api/v1/qr से SVG, PNG, TIFF या प्रिंट के लिए तैयार EPS मिलता है। सब कुछ क्वेरी स्ट्रिंग में होता है, इसलिए URL ही इमेज है: इसे README, <img> टैग या ईमेल टेम्पलेट में पेस्ट करें।",
+    "status": "machine",
+    "context": "integrations.entries.image-api.description.0"
+  },
+  "dbe3f099a18a": {
+    "source": "Choose size, colors, module and corner shapes, error correction, margin and a frame.",
+    "text": "साइज़, रंग, मॉड्यूल और कॉर्नर की शेप, एरर करेक्शन, मार्जिन और फ़्रेम चुनें।",
+    "status": "machine",
+    "context": "integrations.entries.image-api.description.1"
+  },
+  "84c033891645": {
+    "source": "SVG, PNG, TIFF or EPS",
+    "text": "SVG, PNG, TIFF या EPS",
+    "status": "machine",
+    "context": "integrations.entries.image-api.capabilities.0.title"
+  },
+  "91f21385d5c6": {
+    "source": "TIFF at 300 dpi, in RGB or CMYK, and vector EPS sized in points for print and design tools.",
+    "text": "RGB या CMYK में 300 dpi पर TIFF, और प्रिंट व डिज़ाइन टूल के लिए पॉइंट में साइज़ वाला वेक्टर EPS।",
+    "status": "machine",
+    "context": "integrations.entries.image-api.capabilities.0.description"
+  },
+  "7f1be9f2a989": {
+    "source": "Run npx @qrdx/cli to render a QR code with the same patterns, colors, gradients, logos and frames as the playground. Flags make it fully non-interactive for scripts and CI; in a terminal it can guide you with prompts.",
+    "text": "npx @qrdx/cli चलाकर वही पैटर्न, रंग, ग्रेडिएंट, लोगो और फ़्रेम वाला QR कोड बनाएँ जो Playground में मिलते हैं। फ़्लैग इसे स्क्रिप्ट और CI के लिए पूरी तरह नॉन-इंटरैक्टिव बना देते हैं; टर्मिनल में यह प्रॉम्प्ट के ज़रिए आपको गाइड भी कर सकता है।",
+    "status": "machine",
+    "context": "integrations.entries.cli.description.0"
+  },
+  "e0a7cd8bafba": {
+    "source": "Patterns, colors and gradients, logos and call-to-action frames.",
+    "text": "पैटर्न, रंग और ग्रेडिएंट, लोगो और कॉल-टू-एक्शन फ़्रेम।",
+    "status": "machine",
+    "context": "integrations.entries.cli.capabilities.1.description"
+  },
+  "55bafae97077": {
+    "source": "Render customizable QR codes in React with qrdx: patterns, gradients, logos and frames.",
+    "text": "qrdx के साथ React में कस्टमाइज़ करने लायक QR कोड बनाएँ: पैटर्न, ग्रेडिएंट, लोगो और फ़्रेम।",
+    "status": "machine",
+    "context": "integrations.entries.react.tagline"
+  },
+  "e2b188d90949": {
+    "source": "qrdx is the open-source library behind QRdx. Render QR codes as SVG or canvas with custom body patterns, corner eyes, gradients, logos and frames, and export them as images.",
+    "text": "qrdx वह ओपन-सोर्स लाइब्रेरी है जिस पर QRdx बना है। कस्टम बॉडी पैटर्न, कॉर्नर आई, ग्रेडिएंट, लोगो और फ़्रेम के साथ QR कोड को SVG या canvas के रूप में रेंडर करें और इमेज के रूप में एक्सपोर्ट करें।",
+    "status": "machine",
+    "context": "integrations.entries.react.description.0"
+  },
+  "866770173d53": {
+    "source": "Body patterns, corner eyes and dots, gradients, logos and frames.",
+    "text": "बॉडी पैटर्न, कॉर्नर आई और डॉट, ग्रेडिएंट, लोगो और फ़्रेम।",
+    "status": "machine",
+    "context": "integrations.entries.react.capabilities.1.description"
+  },
+  "12cf56c91b9e": {
+    "source": "A PNG image in the chat, plus SVG, PNG, WebP, TIFF and EPS links ready for Markdown, HTML or print. Apps that support MCP Apps also show the code as a card you can save or open in the editor.",
+    "text": "चैट में एक PNG इमेज, साथ में Markdown, HTML या प्रिंट के लिए तैयार SVG, PNG, WebP, TIFF और EPS लिंक। MCP Apps को सपोर्ट करने वाले ऐप कोड को एक कार्ड की तरह भी दिखाते हैं, जिसे आप सेव कर सकते हैं या एडिटर में खोल सकते हैं।",
+    "status": "machine",
+    "context": "mcp.steps.2.body"
+  },
+  "2ba0fda106c0": {
+    "source": "Renders the code and returns a PNG image plus public SVG, PNG, WebP, TIFF and EPS image URLs ready for Markdown, HTML or print. Takes the image API options: colors or gradients, body, eye and dot shapes, error correction, margin, a border, a frame and a logo icon, or a whole style from design_qr. Set include_svg for the SVG markup.",
+    "text": "कोड रेंडर करता है और एक PNG इमेज लौटाता है, साथ में Markdown, HTML या प्रिंट के लिए तैयार पब्लिक SVG, PNG, WebP, TIFF और EPS इमेज URL भी देता है। इसमें Image API के विकल्प लिए जाते हैं: रंग या ग्रेडिएंट, बॉडी, आई और डॉट के आकार, एरर करेक्शन, मार्जिन, बॉर्डर, फ़्रेम और लोगो आइकन, या design_qr से पूरा स्टाइल। SVG मार्कअप के लिए include_svg सेट करें।",
+    "status": "machine",
+    "context": "mcp.tools.2.description"
+  },
+  "9eb7c5a18750": {
+    "source": "Create a dynamic code",
+    "text": "डायनेमिक कोड बनाएँ",
+    "status": "machine",
+    "context": "mcp.tools.3.title"
+  },
+  "08fc1b093feb": {
+    "source": "A dynamic QR code in your QRdx workspace: it holds a short link, so where it goes can change after printing, and its scans are counted. Returns the short link, the code as a PNG and a link to it in your dashboard. Your app asks you to sign in to QRdx the first time; plan limits apply as in the dashboard.",
+    "text": "आपके QRdx वर्कस्पेस में एक डायनेमिक QR कोड: इसमें एक छोटा लिंक होता है, इसलिए प्रिंट के बाद भी यह कहाँ जाए, यह बदला जा सकता है, और इसके स्कैन गिने जाते हैं। यह छोटा लिंक, PNG के रूप में कोड और आपके डैशबोर्ड में उसका लिंक लौटाता है। पहली बार आपका ऐप आपसे QRdx में साइन इन करने को कहता है; प्लान की सीमाएँ वही लागू होती हैं जो डैशबोर्ड में हैं।",
+    "status": "machine",
+    "context": "mcp.tools.3.description"
+  },
+  "cdc1d6d9d4f0": {
+    "source": "Change where a code goes",
+    "text": "कोड कहाँ जाए, यह बदलें",
+    "status": "machine",
+    "context": "mcp.tools.4.title"
+  },
+  "0661b43aeabf": {
+    "source": "Points one of your dynamic codes at a new address. The printed code stays the same. The new address is checked like a new code's.",
+    "text": "आपके किसी डायनेमिक कोड को नए पते पर भेजता है। प्रिंट किया हुआ कोड वैसा ही रहता है। नए पते की जाँच वैसे ही होती है जैसे नए कोड के पते की होती है।",
+    "status": "machine",
+    "context": "mcp.tools.4.description"
+  },
+  "23eba5aaddf4": {
+    "source": "Scan stats",
+    "text": "स्कैन आँकड़े",
+    "status": "machine",
+    "context": "mcp.tools.5.title"
+  },
+  "4ef922d54917": {
+    "source": "Scans and unique visitors for one of your dynamic codes over a range your plan keeps, with the top countries, devices and scans per day. Never single scans or precise locations.",
+    "text": "आपके किसी डायनेमिक कोड के स्कैन और यूनीक विज़िटर, उस अवधि के लिए जो आपका प्लान रखता है, साथ में टॉप देश, डिवाइस और रोज़ के स्कैन। अलग-अलग स्कैन या सटीक लोकेशन कभी नहीं।",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
+  "43fadb385cd8": {
+    "source": "List your codes",
+    "text": "अपने कोड की सूची",
+    "status": "machine",
+    "context": "mcp.tools.6.title"
+  },
+  "9e95ef71da11": {
+    "source": "Your dynamic codes with their short links, destinations, status and scan counts, to find one by name or link.",
+    "text": "आपके डायनेमिक कोड, उनके छोटे लिंक, डेस्टिनेशन, स्टेटस और स्कैन की संख्या के साथ, ताकि आप नाम या लिंक से कोई कोड ढूँढ सकें।",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "7bcee6d22cb6": {
+    "source": "Yes. It's free and open source, and designing, rendering and checking codes needs no account. Those codes are static, so they never expire and have no scan limits. Dynamic codes live in a QRdx account, so making one asks you to sign in (or sign up) first; the plan's limits apply as in the dashboard.",
+    "text": "हाँ। यह फ़्री और ओपन सोर्स है, और कोड डिज़ाइन करने, रेंडर करने और जाँचने के लिए अकाउंट की ज़रूरत नहीं है। ये कोड स्टैटिक QR कोड होते हैं, इसलिए ये कभी एक्सपायर नहीं होते और इनकी कोई स्कैन सीमा नहीं है। डायनेमिक QR कोड QRdx अकाउंट में रहते हैं, इसलिए एक बनाने के लिए पहले साइन इन (या साइन अप) करना होता है; प्लान की सीमाएँ वही लागू होती हैं जो डैशबोर्ड में हैं।",
+    "status": "machine",
+    "context": "mcp.faqs.1.answer"
+  },
+  "7c864a0e3853": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. The dynamic-code tools need you signed in to QRdx instead, which your app asks for the first time you use one. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "नहीं, कोड डिज़ाइन करने, रेंडर करने और कम्युनिटी ब्राउज़ करने के लिए नहीं: QRdx MCP सर्वर पब्लिक और फ़्री है, और यह कोई सेशन स्टेट नहीं रखता। डायनेमिक कोड वाले टूल के लिए आपका QRdx में साइन इन होना ज़रूरी है, जिसके लिए आपका ऐप पहली बार इस्तेमाल करने पर कहता है। अपनी थीम में डिज़ाइन सेव करने (save_template), बारकोड सेव करने (save_barcode), AI आर्ट बनाने (generate_ai_art) और आपके अपलोड किए लोगो का इस्तेमाल करने के लिए QRdx API key चाहिए, जिसे सर्वर के लिए अपने ऐप की सेटिंग में Authorization: Bearer qrdx_… के रूप में भेजा जाता है। key सेट होने के बाद आपका ऐप ये तीनों टूल देख पाता है।",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "a5537dfea3ae": {
+    "source": "Yes, once you sign in. create_dynamic_code makes a dynamic code in your QRdx workspace: the code holds a short link, so you can point it somewhere else later (update_code_destination) and see how often it's scanned (get_code_stats). The first time, your app asks you to sign in to QRdx, where new accounts sign up too.",
+    "text": "हाँ, साइन इन करने के बाद। create_dynamic_code आपके QRdx वर्कस्पेस में एक डायनेमिक QR कोड बनाता है: कोड में एक छोटा लिंक होता है, इसलिए आप उसे बाद में कहीं और भेज सकते हैं (update_code_destination) और देख सकते हैं कि उसे कितनी बार स्कैन किया गया (get_code_stats)। पहली बार आपका ऐप आपसे QRdx में साइन इन करने को कहता है, जहाँ नए अकाउंट भी साइन अप होते हैं।",
+    "status": "machine",
+    "context": "mcp.faqs.5.answer"
+  },
+  "ad02f2790a7a": {
+    "source": "Not the static ones. The tools render images, format text and read the public community. Only these write anything: create_dynamic_code and update_code_destination (the dynamic code you ask for, in your workspace), and save_template and save_barcode (the theme or barcode you ask them to save, in the API key's workspace). generate_ai_art uses one of the workspace's monthly AI art images but keeps neither the image nor a photo you send. The image URLs the tools return contain the encoded data, so don't share them if the data is private, such as a Wi-Fi password.",
+    "text": "स्टैटिक वाले नहीं। टूल इमेज रेंडर करते हैं, टेक्स्ट फ़ॉर्मैट करते हैं और पब्लिक कम्युनिटी पढ़ते हैं। सिर्फ़ ये कुछ लिखते हैं: create_dynamic_code और update_code_destination (आपके कहने पर वर्कस्पेस में बना डायनेमिक QR कोड), और save_template और save_barcode (आपके कहने पर API key के वर्कस्पेस में सेव हुई थीम या बारकोड)। generate_ai_art वर्कस्पेस की महीने की AI आर्ट इमेज में से एक इस्तेमाल करता है, लेकिन न इमेज रखता है और न आपकी भेजी कोई फ़ोटो। टूल जो इमेज URL लौटाते हैं उनमें एन्कोड किया हुआ डेटा होता है, इसलिए अगर डेटा निजी है, जैसे Wi-Fi पासवर्ड, तो उन्हें शेयर न करें।",
+    "status": "machine",
+    "context": "mcp.faqs.7.answer"
   }
 }

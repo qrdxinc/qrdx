@@ -2,7 +2,7 @@
 
 Thanks for your interest in contributing. This guide covers local setup, the project layout, the checks to run before opening a pull request, and how we review changes.
 
-Not sure where to start? See [Good first issues](#good-first-issues) below. For questions, use [Q&A in Discussions](https://github.com/qrdxinc/qrdx/discussions/categories/q-a), and [SUPPORT.md](SUPPORT.md) lists where everything else goes. To report a security problem, follow [SECURITY.md](SECURITY.md) instead of opening a public issue. If you work with a coding agent, [AGENTS.md](AGENTS.md) has the short version of this guide and the rules that are easy to break.
+Not sure where to start? See [Good first issues](#good-first-issues) below. For questions, use [Q&A in Discussions](https://github.com/qrdxinc/qrdx/discussions/categories/q-a) or the [QRdx Discord](https://discord.gg/856fWMrYBm), and [SUPPORT.md](SUPPORT.md) lists where everything else goes. To report a security problem, follow [SECURITY.md](SECURITY.md) instead of opening a public issue. If you work with a coding agent, [AGENTS.md](AGENTS.md) has the short version of this guide and the rules that are easy to break.
 
 ## Prerequisites
 
@@ -121,7 +121,28 @@ You don't need a database or any environment variables to work on the React libr
 | `packages/rate-limit` | Upstash-based rate limiting |
 | `packages/next-config`, `packages/typescript-config` | Shared Next.js config, env keys and Content-Security-Policy builder (`@repo/next-config/csp`), shared tsconfig presets |
 | `plugins/chrome`, `plugins/figma`, `plugins/raycast`, `plugins/canva` | The Chrome extension, Figma plugin, Raycast extension and Canva app |
+| `plugins/google-workspace` | The Google Workspace add-on for Docs, Sheets and Slides (Apps Script; its README has the tests and the deploy steps) |
 | `skills/` | Agent skills, such as `generate-qr` |
+
+### Raycast extension
+
+`plugins/raycast` is published to the Raycast Store, which takes every file in that folder, so its README is the Store page and its CHANGELOG is the Store's version history: write both for people who install the extension from the Store. A Store release adds one entry at the top of the CHANGELOG, titled `## [Short Description] - {PR_MERGE_DATE}`. Notes for working on the extension go here instead.
+
+You need Raycast and Node.js 22.22.3 or later. From the repository root:
+
+```bash
+bun run --filter qrdx-raycast dev         # ray develop: loads the extension into Raycast
+bun run --filter qrdx-raycast lint        # Raycast's linter: ESLint and Prettier (120 columns)
+bun run --filter qrdx-raycast typecheck
+```
+
+The commands then show up in Raycast's root search. `bun run --filter qrdx-raycast build` installs its build into Raycast as `dev` does, replacing the copy you have; to check that it builds without touching Raycast, run `bun x ray build -e dist -o <a scratch folder>` in `plugins/raycast`.
+
+The extension takes `qrdx` from npm, as the Store's own build does, so a change to `packages/qrdx` reaches it only once that version is published and the extension's `qrdx` range is raised. Its pattern and frame lists come from that `qrdx`, so raising it brings the new shapes and frames along.
+
+The Store builds the extension with npm, so the folder keeps a `package-lock.json` beside `package.json`. npm can't run inside this repository, so after changing one of the extension's dependencies, rewrite the lockfile from the root with `bun run raycast:lock` (it resolves the extension in a temporary folder). `apps/app/tests/repo/raycast-lock.test.ts` fails while the two disagree.
+
+Store screenshots go in `plugins/raycast/metadata/` (2000 × 1250 PNG, up to six; Raycast's Window Capture can save them there). `bun run raycast:publish` from the root opens or updates the pull request to `raycast/extensions`. Two files in the folder are for this repository only: `turbo.json` (its build) and `LICENSE` (each `plugins/*` folder keeps its own; `raycast/extensions` doesn't accept one, since its MIT license covers every extension). After each publish, delete both from the Raycast pull request's branch.
 
 ## Checks before you open a pull request
 
@@ -157,7 +178,7 @@ bun run --filter qrdx build:inplace
 bun run --filter qrdx check:package
 ```
 
-The same job checks the React components on every React line the package supports (`react >=16.8.0`), on the same terms. `packages/qrdx/scripts/react-compat.mjs` packs the package the same way and installs the tarball with npm next to React 16.8, 17, 18 and the React 19 the package's own tests use, each in a folder of its own. Each React renders a set of designs (the default code, a gradient, dots with custom eyes, eye shapes and looks, a template, a logo, a frame with text, root attributes, `QRFrameSVG`, `QRCodeCanvas` and `getQRAsSVG`) through the built package, to static markup with `react-dom/server` and in a DOM (jsdom) with `react-dom`, and both must be React 19's, character for character, with nothing logged by React. Every name the built ES modules import from `react` must be one that version exports, and a small app (`scripts/react-compat/consumer.tsx`) must type-check against its `@types/react`, with `skipLibCheck` off so the package's own `.d.ts` files are checked too. It needs the network, takes about 8 seconds with an empty npm cache and 5 with a warm one, and keeps its install folders when something fails (`--keep` keeps them anyway). After changing the React components, their types or the build, run it yourself:
+The same job checks the React components on every React line the package supports (`react >=16.8.0`), on the same terms. `packages/qrdx/scripts/react-compat.mjs` packs the package the same way and installs the tarball with npm next to React 16.8, 17, 18 and the React 19 the package's own tests use, each in a folder of its own. Each React renders a set of designs (the default code, a gradient, dots with custom eyes, eye shapes and looks, the dot ring frame, a logo, a frame with text, root attributes, `QRFrameSVG`, `QRCodeCanvas` and `getQRAsSVG`) through the built package, to static markup with `react-dom/server` and in a DOM (jsdom) with `react-dom`, and both must be React 19's, character for character, with nothing logged by React. Every name the built ES modules import from `react` must be one that version exports, and a small app (`scripts/react-compat/consumer.tsx`) must type-check against its `@types/react`, with `skipLibCheck` off so the package's own `.d.ts` files are checked too. It needs the network, takes about 8 seconds with an empty npm cache and 5 with a warm one, and keeps its install folders when something fails (`--keep` keeps them anyway). After changing the React components, their types or the build, run it yourself:
 
 ```bash
 bun run --filter qrdx build:inplace

@@ -84,7 +84,6 @@ function blackOnWhite(styles: Partial<ThemeStyles>): boolean {
 function clearBorder(styles: Partial<ThemeStyles>): boolean {
   return (
     !isFrameActive(styles.frame) &&
-    !styles.templateId &&
     (styles.shape ?? "square") === "square" &&
     !styles.silhouette &&
     !styles.bgRadius
@@ -122,7 +121,6 @@ export function withSwissQrStyle(
     shadow: _shadow,
     eyeGradient: _eyeGradient,
     frame: _frame,
-    templateId: _templateId,
     shape: _shape,
     silhouette: _silhouette,
     bgRadius: _bgRadius,

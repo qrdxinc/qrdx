@@ -1,27 +1,15 @@
-import { BUILT_IN_FRAMES, getAllTemplates, getTemplateIds } from "qrdx";
+import { BUILT_IN_FRAMES } from "qrdx";
 import { HALO_LIGHT_MIN } from "qrdx/types";
 import { contentFieldGuide } from "@/lib/qr-design/content";
 import { OFFICIAL_FRAME_COUNT } from "@/lib/qr-design/official-frames";
 import { MAX_REPAIRS } from "@/lib/qr-design/repair";
 import { LOGO_ICON_IDS } from "@/lib/qr-design/style";
 
-/** The frames drawn as templates ("default" draws none). */
-const FRAME_TEMPLATE_IDS = getTemplateIds()
-  .filter((id) => id !== "default")
-  .join(", ");
-
-/**
- * The templates whose artwork takes the dot color: their spec's frame color,
- * or `fgColor` for those drawn in code.
- */
-const DOT_COLORED_TEMPLATES = getAllTemplates()
-  .filter(
-    (template) =>
-      template.id !== "default" &&
-      (!template.spec ||
-        template.spec.shapes.some((shape) => shape.fill === "frame")),
-  )
-  .map((template) => template.id)
+/** The built-in frames that are artwork with no label. */
+const UNLABELLED_FRAMES = BUILT_IN_FRAMES.filter(
+  (frame) => frame.spec.labels.length === 0,
+)
+  .map((frame) => frame.style)
   .join(", ");
 
 /** The chat agent (Claude): talks to the user and calls the tools. */
@@ -34,7 +22,7 @@ You are QRdx's QR code designer in the editor's Generate tab. You make any kind 
 - check_scan_score: checks the code in the editor as it is, without changing it ("will this scan?").
 - ask_user: one short question with 2 to 5 short options, when something required is missing or unclear. The run pauses until the user answers.
 - apply_design: puts a design from design_qr in the user's editor. The user sees it and approves or rejects it.
-- save_template: saves a look (style, frame and its text, border and logo, no content) to the user's account as a reusable template. The user approves first.
+- save_template: saves a look (style, frame and its text, and logo, no content) to the user's account as a reusable template. The user approves first.
 
 # Flow
 1. Greetings, thanks and questions: answer in one or two short sentences, no tools. Questions about scanning the current code: check_scan_score.
@@ -94,10 +82,9 @@ You produce the complete style of a QR code as JSON, from the conversation, the 
 # Options
 - bodyPattern, cornerEyePattern, cornerEyeDotPattern: only the schema's values.
 - gradients: optional two-color gradients for the dots (body), background, eyes or eye centers. Use them only when the user asks for a gradient.
-- frame: a call-to-action frame (${BUILT_IN_FRAMES.map((frame) => frame.style).join(", ")}) with a label of at most 24 characters, or style "none". Without colors a frame is black with a white label; to match the design, set the frame color (usually the eye or dot color) and a label color that contrasts with it.
+- frame: a call-to-action frame (${BUILT_IN_FRAMES.map((frame) => frame.style).join(", ")}) with a label of at most 24 characters, or style "none". Without colors a frame is black with a white label; to match the design, set the frame color (usually the eye or dot color) and a label color that contrasts with it. ${UNLABELLED_FRAMES} are artwork with no label: leave their text out.
   - style "official" with an id: one of QRdx's official frames. Only an id the brief names or the current style already has. Its own labels and colors stay unless you set text, secondaryText, color or textColor (set them only when the user asks).
   - style "keep": the code's own frame, only when the current style has it. Keep it unless the user asks for another frame.
-- templateId: one of the frames drawn as templates (${FRAME_TEMPLATE_IDS}; "default" for none). These are frames too: use either \`frame\` or \`templateId\`, never both. ${DOT_COLORED_TEMPLATES} take the dot color; the others have colors of their own.
 - logo: none, keep (the code's current logo), qrdx, an icon (${LOGO_ICON_IDS.join(", ")}), or a brand by its Simple Icons slug (spotify, paypal, googlemaps, youtube, tiktok; add :black or :white for a one-color mark). Use none unless the brief or the user asks for a logo; keep when changing a code that has one.
 - level: L, M, Q or H. margin: 0 to 16 modules.
 

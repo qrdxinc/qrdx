@@ -128,12 +128,12 @@ const softwareApplicationSchema = {
   featureList: [
     "Unlimited free static QR codes with no signup and no watermark",
     "Dot patterns, corner-eye shapes, solid colors and linear or radial gradients",
-    "Center logos, call-to-action frames and decorative templates",
+    "Center logos and call-to-action frames",
     "Logo QR and Image QR art that blend a logo or photo into the code",
     "AI-designed QR code themes",
     // AI art is listed where it can run (lib/ai/art-availability.ts).
     ...(isArtAvailable ? ["AI QR code art that still scans"] : []),
-    "PNG, JPG, WebP, SVG, PDF, EPS, GIF, BMP and ICO downloads, with print-ready PDFs at exact sizes",
+    "PNG, JPG, WebP, SVG, PDF, EPS, GIF, BMP, ICO and TIFF downloads, with print-ready PDFs at exact sizes and CMYK TIFF for print",
     "Dynamic QR codes with editable destinations and scan analytics",
     "Hosted mobile pages: link lists, business pages, vCards, menus, coupons, events, forms, PDFs, images, audio and video",
     "Smart routing by device, country, language and time, A/B tests and UTM tags",

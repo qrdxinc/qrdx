@@ -7,38 +7,26 @@
 
 import { execFile, execFileSync } from "node:child_process";
 import { createHash, randomUUID } from "node:crypto";
-import {
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  renameSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, mkdirSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import { environment } from "@raycast/api";
 import { version as QRDX_VERSION } from "qrdx/package.json";
-import {
-  artworkSize,
-  buildSVGString,
-  getSVGDataURI,
-  type QRRenderProps,
-  squareSVG,
-} from "./qr-engine";
+import { artworkSize, buildSVGString, getSVGDataURI, type QRRenderProps, squareSVG } from "./qr-engine";
 
 const execFileAsync = promisify(execFile);
 
 /**
- * A cache folder in the support folder, one per qrdx version and preview
- * size, so an update or a new size redraws every preview. Whatever else
- * `name` holds (the folders of earlier versions and sizes, older files) is
+ * A cache folder in the support folder, one per qrdx version, preview size
+ * and `drawing` (a name for how the previews are drawn), so an update, a new
+ * size or a new drawing redraws every preview. Whatever else `name` holds
+ * (the folders of earlier versions, sizes and drawings, older files) is
  * removed when the folder is made.
  */
-export function cacheDir(name: string, pixels: number): string {
+export function cacheDir(name: string, pixels: number, drawing?: string): string {
   const root = join(environment.supportPath, name);
-  const folder = `${QRDX_VERSION}-${pixels}px`;
+  const folder = `${QRDX_VERSION}-${pixels}px${drawing ? `-${drawing}` : ""}`;
   const dir = join(root, folder);
   if (!existsSync(dir)) {
     if (existsSync(root)) {
@@ -60,17 +48,7 @@ export function codeSVG(props: QRRenderProps, pixels: number): string {
 
 /** The sips call that draws `svgPath` as a `pixels`-wide square PNG. */
 function sipsArgs(svgPath: string, pngPath: string, pixels: number): string[] {
-  return [
-    "-s",
-    "format",
-    "png",
-    svgPath,
-    "--out",
-    pngPath,
-    "--resampleHeightWidth",
-    String(pixels),
-    String(pixels),
-  ];
+  return ["-s", "format", "png", svgPath, "--out", pngPath, "--resampleHeightWidth", String(pixels), String(pixels)];
 }
 
 /**

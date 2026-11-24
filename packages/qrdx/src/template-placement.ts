@@ -1,9 +1,8 @@
-// Where a template draws the code in its artwork. A template wraps the code
-// (a 300 × 300 drawing) in artwork of its own and usually draws it smaller
-// than the whole, so the scan score measures the code's share of the
-// artwork to test the code at its real size.
+// Where a custom template (`customTemplate`) draws the code in its artwork.
+// A template wraps the code (a 300 × 300 drawing) in artwork of its own and
+// usually draws it smaller than the whole, so the scan score measures the
+// code's share of the artwork to test the code at its real size.
 import type { QRProps } from "../types";
-import { getTemplate } from "./templates";
 import {
   applyMatrix,
   IDENTITY,
@@ -99,9 +98,7 @@ function locate(
  * the template's wrapper doesn't place the code it is given).
  */
 export function getTemplateCodeShare(props: QRProps): number {
-  const template =
-    props.customTemplate ||
-    (props.templateId ? getTemplate(props.templateId) : undefined);
+  const template = props.customTemplate;
   if (!template) {
     return 1;
   }

@@ -3,13 +3,16 @@
 // camera simulation and jsQR decoding all run. Expectations come from what a
 // user needs from a "will it scan" check, not from the current weights.
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { h } from "../src/core";
 import {
   drawScanFrames,
   getScanScore,
   getScanScoreFromFrames,
+  QUIET_ZONE_MIN,
+  type ScanCheck,
 } from "../src/scan-score";
 import { getTemplateCodeShare } from "../src/template-placement";
-import type { QRProps } from "../types";
+import type { QRProps, TemplateDefinition } from "../types";
 import { installFakeDom } from "./support/fake-dom";
 import { capture } from "./support/qr";
 
@@ -21,6 +24,53 @@ const PLAIN: QRProps = {
   bodyPattern: "square",
   cornerEyePattern: "square",
   cornerEyeDotPattern: "square",
+};
+
+/** A custom template that draws the code at half its artwork's width. */
+const HALF: TemplateDefinition = {
+  id: "half",
+  name: "Half",
+  wrapper: (children, props) =>
+    h(
+      "svg",
+      { viewBox: "0 0 300 300", xmlns: "http://www.w3.org/2000/svg" },
+      h("circle", {
+        cx: 150,
+        cy: 150,
+        r: 140,
+        fill: "none",
+        stroke: props?.fgColor ?? "#000000",
+        strokeWidth: 8,
+      }),
+      h("g", { transform: "translate(75, 75) scale(0.5)" }, children)
+    ),
+};
+
+/**
+ * A ring like Flam's: a 593-unit drawing with the code's 300 × 300 drawing
+ * in a nested <svg> in the middle.
+ */
+const RING: TemplateDefinition = {
+  id: "ring",
+  name: "Ring",
+  wrapper: (children) =>
+    h(
+      "svg",
+      { viewBox: "0 0 593 593", xmlns: "http://www.w3.org/2000/svg" },
+      h("circle", {
+        cx: 296.5,
+        cy: 296.5,
+        r: 270,
+        fill: "none",
+        stroke: "#111827",
+        strokeWidth: 40,
+      }),
+      h(
+        "svg",
+        { x: 146.5, y: 146.5, width: 300, height: 300, viewBox: "0 0 300 300" },
+        children
+      )
+    ),
 };
 
 describe("getScanScore outside a browser", () => {
@@ -137,30 +187,54 @@ describe("getScanScore", () => {
     );
   });
 
-  it("tests a code in a template at the size the template draws it", async () => {
-    // Templates draw the code at a share of their artwork
+  it("tests a code in a custom template at the size the template draws it", async () => {
+    // A template draws the code at a share of its artwork
     expect(getTemplateCodeShare({ value: VALUE })).toBe(1);
-    expect(getTemplateCodeShare({ value: VALUE, templateId: "default" })).toBe(
-      0.95
-    );
-    expect(getTemplateCodeShare({ value: VALUE, templateId: "Arrow" })).toBe(
+    expect(getTemplateCodeShare({ value: VALUE, customTemplate: HALF })).toBe(
       0.5
     );
     expect(
-      getTemplateCodeShare({ value: VALUE, templateId: "Halloween" })
-    ).toBeCloseTo(0.38, 6);
-    expect(
-      getTemplateCodeShare({ value: VALUE, templateId: "DotRing" })
+      getTemplateCodeShare({ value: VALUE, customTemplate: RING })
     ).toBeCloseTo(300 / 593, 6);
+    // A wrapper that doesn't place the code, or throws, counts as the whole
+    const unplaced: TemplateDefinition = {
+      id: "unplaced",
+      name: "Unplaced",
+      wrapper: () => h("svg", { viewBox: "0 0 300 300" }),
+    };
+    const throwing: TemplateDefinition = {
+      id: "throwing",
+      name: "Throwing",
+      wrapper: () => {
+        throw new Error("no");
+      },
+    };
+    expect(
+      getTemplateCodeShare({ value: VALUE, customTemplate: unplaced })
+    ).toBe(1);
+    expect(
+      getTemplateCodeShare({ value: VALUE, customTemplate: throwing })
+    ).toBe(1);
     // So a code that scans well on its own scores well in a template too
-    // (it used to be tested as if it filled the artwork, and failed)
-    for (const templateId of ["Arrow", "Halloween", "DotRing"]) {
-      const result = await getScanScore({ ...PLAIN, templateId });
+    for (const customTemplate of [HALF, RING]) {
+      const result = await getScanScore({ ...PLAIN, customTemplate });
       const passed = (id: string) =>
         result.checks.find((c) => c.id === id)?.passed;
-      expect(result.grade, templateId).toBe("great");
-      expect(passed("decode-160"), templateId).toBe(true);
-      expect(passed("decode-320"), templateId).toBe(true);
+      expect(result.grade, customTemplate.id).toBe("great");
+      expect(passed("decode-160"), customTemplate.id).toBe(true);
+      expect(passed("decode-320"), customTemplate.id).toBe(true);
+    }
+  });
+
+  it("scores a code in a former template's frame at the code's own size", async () => {
+    // The frames add their artwork around the code, which keeps its size
+    for (const style of ["arrow", "pumpkin", "dot-ring"] as const) {
+      const result = await getScanScore({ ...PLAIN, frame: { style } });
+      const passed = (id: string) =>
+        result.checks.find((c) => c.id === id)?.passed;
+      expect(result.grade, style).toBe("great");
+      expect(passed("decode-160"), style).toBe(true);
+      expect(passed("decode-320"), style).toBe(true);
     }
   });
 
@@ -169,6 +243,107 @@ describe("getScanScore", () => {
     expect(
       result.checks.find((check) => check.id === "quiet-zone")?.passed
     ).toBe(false);
+  });
+
+  describe("quiet zone warning", () => {
+    const quietZone = (result: { checks: ScanCheck[] }) =>
+      result.checks.find((check) => check.id === "quiet-zone");
+
+    it("warns below QUIET_ZONE_MIN modules, in plain words with a fix", async () => {
+      expect(QUIET_ZONE_MIN).toBe(2);
+      for (const margin of [0, 1, 1.5]) {
+        const check = quietZone(await getScanScore({ ...PLAIN, margin }));
+        expect(check?.severity, `margin ${margin}`).toBe("warning");
+        expect(check?.fix).toMatch(/dark or busy surface/);
+        expect(check?.fix).toMatch(/margin to 2 modules/);
+      }
+      const none = quietZone(await getScanScore({ ...PLAIN, margin: 0 }));
+      expect(none?.message).toBe("No quiet zone around the code");
+      const one = quietZone(await getScanScore({ ...PLAIN, margin: 1 }));
+      expect(one?.message).toBe("Quiet zone of only 1 module");
+    });
+
+    it("passes from QUIET_ZONE_MIN modules up, with no warning", async () => {
+      for (const margin of [2, 3, 4, 8]) {
+        const check = quietZone(await getScanScore({ ...PLAIN, margin }));
+        expect(check?.passed, `margin ${margin}`).toBe(true);
+        expect(check?.severity, `margin ${margin}`).toBeUndefined();
+      }
+    });
+
+    it("counts a frame's light gap towards it", async () => {
+      // One module of margin warns on its own; the banner's plate keeps a
+      // light gap of 7% of the code's width around it, about 2 modules more.
+      const check = quietZone(
+        await getScanScore({
+          ...PLAIN,
+          margin: 1,
+          frame: { style: "banner-bottom", text: "Scan me", color: "#000000" },
+        })
+      );
+      expect(check?.passed).toBe(true);
+      expect(check?.severity).toBeUndefined();
+    });
+
+    // The warning is display-only (owner, 23 Nov 2026): for every margin the
+    // score, the grade and the check's `passed` are what staging's scorer
+    // gave before the warning existed. Expected values: origin/staging
+    // 2d73ef02a's scan-score.ts run side by side with this one on these
+    // designs (24 Nov 2026), identical for every row. `passed` drives the
+    // repairs (lib/qr-design/repair.ts) and MCP design_qr's stillFailing, so
+    // those don't change either.
+    const EDITOR_LOOK: QRProps = {
+      ...PLAIN,
+      bodyPattern: "circle",
+      cornerEyePattern: "gear",
+      cornerEyeDotPattern: "circle",
+      level: "Q",
+    };
+    const BEFORE: Record<
+      string,
+      { props: QRProps; rows: [number, number, boolean][] }
+    > = {
+      "square modules": {
+        props: PLAIN,
+        rows: [
+          [0, 95, false],
+          [0.5, 95, false],
+          [1, 95, false],
+          [1.5, 100, true],
+          [1.75, 100, true],
+          [2, 100, true],
+          [3, 100, true],
+          [4, 92, true],
+        ],
+      },
+      "the editor's default look": {
+        props: EDITOR_LOOK,
+        rows: [
+          [0, 95, false],
+          [0.5, 95, false],
+          [1, 95, false],
+          [1.5, 92, true],
+          [1.75, 100, true],
+          [2, 100, true],
+          [3, 92, true],
+          [4, 92, true],
+        ],
+      },
+    };
+    for (const [look, { props, rows }] of Object.entries(BEFORE)) {
+      it(`keeps the score, grade and pass of every margin in ${look}`, async () => {
+        for (const [margin, score, passed] of rows) {
+          const result = await getScanScore({ ...props, margin });
+          const check = quietZone(result);
+          expect(result.score, `margin ${margin}`).toBe(score);
+          expect(result.grade, `margin ${margin}`).toBe("great");
+          expect(check?.passed, `margin ${margin}`).toBe(passed);
+          expect(check?.severity, `margin ${margin}`).toBe(
+            margin < QUIET_ZONE_MIN ? "warning" : undefined
+          );
+        }
+      });
+    }
   });
 
   it("flags a logo that covers more than the error correction can recover", async () => {
@@ -219,7 +394,8 @@ describe("drawScanFrames and getScanScoreFromFrames", () => {
     ["low contrast", { ...PLAIN, fgColor: "#9a9a9a", bgColor: "#b0b0b0" }],
     ["light on dark", { ...PLAIN, fgColor: "#ffffff", bgColor: "#111111" }],
     ["no quiet zone", { ...PLAIN, margin: 0 }],
-    ["in a template", { ...PLAIN, templateId: "Arrow" }],
+    ["in a former template's frame", { ...PLAIN, frame: { style: "arrow" } }],
+    ["in a custom template", { ...PLAIN, customTemplate: HALF }],
     [
       "framed",
       { ...PLAIN, frame: { style: "banner-bottom", text: "Scan me" } },

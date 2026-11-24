@@ -136,7 +136,7 @@ export const plugins: IntegrationCatalogEntry[] = [
     tagline:
       "Generate, save and export customized QR codes from Raycast, or describe one to Raycast AI.",
     description: [
-      "Generate QR codes with body patterns, corner styles, colors, templates and logos from the Raycast launcher, keep a library of saved codes, and export them.",
+      "Generate QR codes with body patterns, corner styles, colors, frames and logos from the Raycast launcher, keep a library of saved codes, and export them.",
       "Generate QR with AI turns a plain-English description into settings, and Raycast AI can call the extension's tools directly.",
     ],
     kind: "guide",
@@ -171,8 +171,7 @@ export const plugins: IntegrationCatalogEntry[] = [
     capabilities: [
       {
         title: "Generate QR",
-        description:
-          "Body patterns, corner styles, colors, templates and logos.",
+        description: "Body patterns, corner styles, colors, frames and logos.",
       },
       {
         title: "Saved QR codes",
@@ -193,7 +192,7 @@ export const plugins: IntegrationCatalogEntry[] = [
     tagline:
       "Style a QR code in a Canva side panel and add it to your design in one click.",
     description: [
-      "Enter a URL or text, then pick a template, dot, eye and eye-dot patterns, colors from Canva's color picker, error correction and an optional logo. The preview updates as you go.",
+      "Enter a URL or text, then pick dot, eye and eye-dot patterns, colors from Canva's color picker, error correction and an optional logo. The preview updates as you go.",
       "Add to Design places the code on your page as a 1024 px PNG with alt text.",
     ],
     kind: "guide",
@@ -235,9 +234,8 @@ export const plugins: IntegrationCatalogEntry[] = [
         description: "The code redraws as you change its content or style.",
       },
       {
-        title: "Templates and patterns",
-        description:
-          "Frame templates and body, eye and eye-dot shapes, each shown as a thumbnail.",
+        title: "Patterns",
+        description: "Body, eye and eye-dot shapes, each shown as a thumbnail.",
       },
       {
         title: "Canva colors",
@@ -251,5 +249,80 @@ export const plugins: IntegrationCatalogEntry[] = [
     ],
     keywords: ["design", "canva", "app", "print", "poster", "social"],
     related: ["figma", "chrome", "raycast"],
+  },
+  {
+    slug: "google-workspace",
+    name: "Google Workspace add-on",
+    tagline:
+      "Insert styled QR codes into Google Docs, Sheets and Slides from a side panel, or give every row of a list its own code.",
+    description: [
+      "Pick what the code opens (a link, text, a Wi-Fi network, an email, a phone call or a text message), a style and a size, preview it, then insert it: at the cursor in Docs, in the middle of the current slide in Slides, or in the current empty cell in Sheets. The image is saved in your file.",
+      "In Sheets, select a column of links or text and the add-on writes an =IMAGE() formula next to each row, so each row shows its own code. The codes are drawn by QRdx's image API, so what you enter is sent to api.qrdx.dev; the add-on stores nothing and needs no account.",
+    ],
+    kind: "guide",
+    surface: "plugins",
+    canonicalPath: "/plugins#google-workspace",
+    categories: ["plugins"],
+    logo: { type: "image", src: "/integrations/google-sheets.svg" },
+    plan: "no-account",
+    builtBy: "QRdx",
+    website: "https://workspace.google.com",
+    note: "Not in the Google Workspace Marketplace yet. Install it from source.",
+    primaryAction: {
+      type: "link",
+      label: "View source",
+      href: `${REPO}/tree/main/plugins/google-workspace`,
+    },
+    steps: [
+      {
+        title: "Push it to an Apps Script project",
+        body: "Turn on the Google Apps Script API in your Apps Script settings, click New project at script.google.com, and paste its Script ID (Project Settings) into .clasp.json before you push.",
+        snippet: {
+          label: "Terminal",
+          language: "bash",
+          code: `git clone ${REPO}.git\ncd qrdx/plugins/google-workspace\nbunx @google/clasp login\ncp .clasp.example.json .clasp.json\nbunx @google/clasp push --force`,
+        },
+      },
+      {
+        title: "Install a test deployment",
+        body: "In the Apps Script editor, Deploy → Test deployments → Install.",
+      },
+      {
+        title: "Open it",
+        body: "Open a Doc, a Sheet or a presentation: QRdx is in the side panel.",
+      },
+    ],
+    capabilities: [
+      {
+        title: "Docs, Sheets and Slides",
+        description:
+          "At the cursor, on the current slide or in the current empty cell, saved in the file.",
+      },
+      {
+        title: "Codes for a list",
+        description:
+          "An =IMAGE() formula next to each row of a column in Sheets.",
+      },
+      {
+        title: "Wi-Fi, email, calls and texts",
+        description:
+          "Besides links and text, encoded as the QRdx editor encodes them.",
+      },
+      {
+        title: "Styles and sizes",
+        description:
+          "Dark-on-light styles, each checked to scan, at 1, 1.5 or 2 inches.",
+      },
+    ],
+    keywords: [
+      "google",
+      "docs",
+      "sheets",
+      "slides",
+      "workspace",
+      "spreadsheet",
+      "add-on",
+    ],
+    related: ["google-sheets", "image-api", "chrome"],
   },
 ];

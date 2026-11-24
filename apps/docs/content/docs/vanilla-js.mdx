@@ -132,7 +132,7 @@ The output has no random ids, so markup rendered on a server matches the browser
 
 ## Custom templates without JSX
 
-A template's `wrapper` receives the drawn code and returns it wrapped. `h(type, props, ...children)` writes one without JSX:
+A template's `wrapper` ([artwork drawn in code](/docs/features/frames#artwork-drawn-in-code)) receives the drawn code and returns it wrapped in your artwork. `h(type, props, ...children)` writes one without JSX:
 
 ```js title="labelled-template.js"
 import { h, toSVGString } from "qrdx/core";

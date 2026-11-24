@@ -254,7 +254,6 @@ export {
   loadQRSilhouette,
 } from "./silhouette";
 export { toSVGElement, toSVGString } from "./svg";
-export * from "./templates";
 export * from "./tiff";
 export * from "./utils";
 /** Reads an 8-bit PNG into RGBA pixels (no DOM or sharp), or null. */

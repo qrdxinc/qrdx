@@ -66,6 +66,7 @@ export async function sendTeamInviteEmail(
           inviteUrl={inviteUrl}
           inviterName={inviterName}
           memberRole={invitation.role}
+          recipient={invitation.email}
           teamName={team.name}
         />
       ),

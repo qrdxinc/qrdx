@@ -36701,6 +36701,12 @@
     "status": "machine",
     "context": "mcp.tools.5.description"
   },
+  "6fc17acdab37": {
+    "source": "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Listed once the connection has a QRdx API key.",
+    "text": "デザインをテーマとして、プランの保存テーマ数の上限内でワークスペースに保存します。接続に QRdx API キーがある場合に表示されます。",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
   "5059cb851dc2": {
     "source": "Generate a barcode",
     "text": "バーコードを生成",
@@ -36710,6 +36716,12 @@
   "26e9ed7d6f36": {
     "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
     "text": "EAN-13、UPC-A、UPC-E、EAN-8、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417、Aztecに対応しています。値（チェックディジット、桁数、文字）を検証し、PNGと、公開されているSVG、PNG、PDFなどの画像URLを返します。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "fdfe7dc89241": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、USPS Intelligent Mail、Data Matrix、PDF417、Aztec、MaxiCode、DotCode に対応しています。値（チェックディジット、桁数、文字）を検証し、PNG と、公開されている SVG、PNG、PDF などの画像 URL を返します。",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
@@ -36725,6 +36737,12 @@
     "status": "machine",
     "context": "mcp.tools.7.description"
   },
+  "09892b7b00fa": {
+    "source": "Keeps a barcode in your workspace's Barcodes to edit and download later. Listed once the connection has a QRdx API key.",
+    "text": "バーコードをワークスペースの「バーコード」に保管し、後から編集やダウンロードができます。接続に QRdx API キーがある場合に表示されます。",
+    "status": "machine",
+    "context": "mcp.tools.7.description"
+  },
   "4c95ba85d6f1": {
     "source": "Generate AI art",
     "text": "AIアートを生成",
@@ -36734,6 +36752,12 @@
   "9254cd62817d": {
     "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
     "text": "説明文、シーン、または写真をもとに、QRコードをAIアートとして描き、スキャンできるかを確認します。画像1枚につき、ワークスペースの月間AIアート画像を1枚使用し、最大で1分ほどかかります。接続にQRdx APIキーが必要です。",
+    "status": "machine",
+    "context": "mcp.tools.8.description"
+  },
+  "fe114ac9b6bc": {
+    "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Listed once the connection has a QRdx API key.",
+    "text": "説明文、シーン、または写真をもとに、AI アートの中に QR コードを描き込み、スキャンできるかどうかを確認します。画像1枚につき、ワークスペースの月間 AI アート画像を1枚使用し、最大1分かかります。接続に QRdx API キーがある場合に表示されます。",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36767,9 +36791,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "本体パターン、コーナーのアイとアイドットの形、フレームテンプレート、誤り訂正レベル、初期値、制限を一覧します。",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "本体パターン、コーナーのアイとアイドットの形、組み込みフレーム、誤り訂正レベル、初期値、制限を一覧します。",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36878,6 +36902,12 @@
   "95b27c7bcd0a": {
     "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server.",
     "text": "いいえ。コードのデザインと生成、コミュニティの閲覧であれば不要です。QRdx MCPサーバーは公開されており無料で、セッション状態も保持しません。デザインをテーマに保存する場合(save_template)、バーコードを保存する場合(save_barcode)、AIアートを作る場合(generate_ai_art)、アップロードしたロゴを使う場合には、QRdx APIキーが必要です。アプリのサーバー設定で、Authorization: Bearer qrdx_… として送信してください。",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "57125b32502d": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "いいえ。コードのデザインや生成、コミュニティの閲覧には不要です。QRdx MCP サーバーは公開されていて無料で、セッション状態も保持しません。デザインをテーマに保存する場合（save_template）、バーコードを保存する場合（save_barcode）、AI アートを作成する場合（generate_ai_art）、アップロードしたロゴを使う場合は、QRdx API キーが必要です。キーは、お使いのアプリのサーバー設定で Authorization: Bearer qrdx_… として送信します。キーを設定すると、アプリにこの3つのツールが表示されます。",
     "status": "machine",
     "context": "mcp.faqs.2.answer"
   },
@@ -38830,5 +38860,473 @@
     "text": "スイスのQR-billについては、作成できます。QRdxでは、QR-billの支払部分に使うQRコード、つまり誤り訂正レベルMでスイスクロスを入れたSwiss Payments Codeを作成でき、支払う側は銀行アプリでスキャンします。受領証や支払部分の印刷レイアウトなど、請求書のそれ以外の部分は、お使いの請求書作成ソフトで作成されます。税務当局が求める電子インボイス用のQRコードは、作成できません。会計ソフトまたは電子インボイス対応ソフトで作成されます。",
     "status": "machine",
     "context": "placements.0.documents.items.invoices.faqs.1.answer"
+  },
+  "157d9b89ae53": {
+    "source": "Rectangular Micro QR for narrow spaces: cables, tubes, boards",
+    "text": "狭いスペース向けの長方形 Micro QR：ケーブル、チューブ、基板に",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.summary"
+  },
+  "d9e29bdf3552": {
+    "source": "Any text, up to 361 digits, 219 capital letters or 150 characters of other text; less with accents or other scripts.",
+    "text": "任意のテキスト。数字は最大361桁、大文字は219文字、その他のテキストは150文字までです。アクセント付き文字や他の文字体系では少なくなります。",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.inputHint"
+  },
+  "f5a92bd24be6": {
+    "source": "UPS's fixed-size 2D code for sorting parcels",
+    "text": "荷物の仕分けに使われるUPSの固定サイズ2次元コード",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.summary"
+  },
+  "0c318d8d5087": {
+    "source": "A UPS carrier message, postcode<GS>country<GS>service class<GS>then the rest, or any text. Type <GS> between fields. Latin-1 characters only: up to 93 capital letters or 138 digits.",
+    "text": "UPSキャリアメッセージ（郵便番号<GS>国<GS>サービスクラス<GS>その他の内容）または任意のテキスト。項目の間には <GS> と入力してください。Latin-1の文字のみ使用でき、大文字は93文字、数字は138桁までです。",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.inputHint"
+  },
+  "f6047eef20ba": {
+    "source": "A QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code: cables, test tubes and the edges of parts. It's a 2022 ISO standard, so check that your scanners read it.",
+    "text": "QRコードを帯状に引き延ばした形式で、高さは最小7モジュールです。正方形のコードでは収まらない細いラベル（ケーブル、試験管、部品の縁など）に使えます。2022年に制定されたISO規格のため、お使いのスキャナーが読み取れるかご確認ください。",
+    "status": "machine",
+    "context": "barcodes.uses.rmqr"
+  },
+  "9c56d5f9dbb4": {
+    "source": "The fixed-size 2D code with a bullseye that UPS prints on parcel labels. A carrier message puts the destination postcode, country and service class where sorting machines look for them; it can also hold plain text.",
+    "text": "UPSが荷物のラベルに印刷する、中央にブルズアイ（同心円）がある固定サイズの2次元コードです。キャリアメッセージを使うと、仕分け機が探す位置に配送先の郵便番号、国、サービスクラスを入れられます。通常のテキストも格納できます。",
+    "status": "machine",
+    "context": "barcodes.uses.maxicode"
+  },
+  "89f09d7bcb13": {
+    "source": "Free rMQR Code Generator (Rectangular Micro QR)",
+    "text": "無料のrMQRコードジェネレーター（長方形 Micro QR）",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.title"
+  },
+  "a705932e946e": {
+    "source": "Make an rMQR, the rectangular Micro QR code for narrow spaces like cables and test tubes. Up to 361 digits or 150 characters. SVG, PDF and PNG. Free.",
+    "text": "ケーブルや試験管のような狭いスペース向けの長方形 Micro QR コード、rMQRを作成できます。最大361桁の数字または150文字に対応。SVG、PDF、PNG形式。無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.metaDescription"
+  },
+  "fac05d5715dd": {
+    "source": "rMQR (Rectangular Micro QR) is a QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code. Type any text, check that it scans and download it.",
+    "text": "rMQR（長方形 Micro QR）は、QRコードを帯状に引き伸ばしたもので、高さは最小7モジュールです。正方形のコードが収まらない細いラベルに向いています。好きなテキストを入力し、スキャンできることを確認してダウンロードしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.intro"
+  },
+  "3016945159bc": {
+    "source": "Narrow labels where a square QR code would have to be tiny: cables and wires, test tubes and sample vials, the edges of parts and boxes.",
+    "text": "正方形のQRコードでは小さくなりすぎる細いラベルに使います。ケーブルや電線、試験管やサンプルバイアル、部品や箱の縁などです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.0"
+  },
+  "a9b9994231ff": {
+    "source": "It's the ISO/IEC 23941 standard (2022), from DENSO WAVE, which also created the QR code. Because it's newer, check that the scanners that will read it support it before you print a batch.",
+    "text": "QRコードを生み出したDENSO WAVEによる、ISO/IEC 23941規格（2022年）です。新しい規格のため、まとめて印刷する前に、読み取りに使うスキャナーが対応しているか確認してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.1"
+  },
+  "29e08933b54e": {
+    "source": "Do I need to register an rMQR code?",
+    "text": "rMQRコードは登録が必要ですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.title"
+  },
+  "5597274c9253": {
+    "source": "No. It holds whatever text you type, with no registration.",
+    "text": "いいえ。登録なしで、入力したテキストをそのまま格納できます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
+  },
+  "21d588136e54": {
+    "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",
+    "text": "任意のテキストを入力できます。英字、数字、記号、改行、アクセント付き文字、他の言語の文字も使えます。最も効率よく格納できるのは数字で、次に大文字です。アクセント付き文字や他の言語の文字はUTF-8のバイト列として格納されるため、最も場所を取ります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.0"
+  },
+  "07e4daf832f2": {
+    "source": "rMQR comes in 32 sizes, from 7 to 17 modules tall and 27 to 139 wide. The generator picks the fewest rows your text fits in, then the fewest columns, so the code grows longer before it grows taller.",
+    "text": "rMQRには32種類のサイズがあり、高さは7～17モジュール、幅は27～139モジュールです。ジェネレーターは、テキストが収まる最少の行数を選び、次に最少の列数を選ぶため、コードは高くなる前にまず横に長くなります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.1"
+  },
+  "fb39f2c0ee54": {
+    "source": "Error correction is level M, which lets a reader recover about 15% of the code if it's smudged or damaged.",
+    "text": "誤り訂正はレベルMです。コードが汚れたり損傷したりしても、約15%まで読み取り側で復元できます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.2"
+  },
+  "9341974e7321": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text comes out 44.4 × 7.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "ベクター形式のダウンロードでは、1モジュールを0.71 mm四方で描画します。サンプルテキストの場合、クワイエットゾーンを含めて44.4 × 7.8 mmになります。使えるスペースと、プリンターやスキャナーが解像できる大きさに合わせて拡大縮小してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.0"
+  },
+  "a19aad812139": {
+    "source": "rMQR needs 2 modules of blank space all round, which the generator starts with.",
+    "text": "rMQRには、周囲に2モジュール分の余白が必要です。ジェネレーターは最初からこの余白を付けています。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.1"
+  },
+  "e595e70dbbde": {
+    "source": "rMQR or QR code?",
+    "text": "rMQRとQRコードの違いは？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.question"
+  },
+  "556187e34590": {
+    "source": "For anything people scan with their phone, a QR code. Use rMQR where only a narrow strip fits and you know the scanners that will read it support it.",
+    "text": "スマートフォンでスキャンするものには、QRコードをおすすめします。細い帯状のスペースしか使えず、読み取るスキャナーが対応していると分かっている場合に、rMQRを使ってください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.answer"
+  },
+  "1aca0f2cf8a2": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports rMQR, and tells you whether it reads back your text.",
+    "text": "はい。編集するたびに、ダウンロードされる画像をrMQRに対応したオープンソースのリーダーであるZXingでデコードし、入力したテキストを読み取れるかどうかをお知らせします。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.1.answer"
+  },
+  "a0b78a78cf87": {
+    "source": "Free MaxiCode Generator",
+    "text": "無料MaxiCodeジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.title"
+  },
+  "bf9d519773db": {
+    "source": "Make a MaxiCode, the fixed-size 2D code UPS sorts parcels by, as a carrier message (modes 2 and 3) or text (mode 4). SVG, PDF and PNG. Free.",
+    "text": "UPSが荷物の仕分けに使う固定サイズの2次元コード、MaxiCodeを作成できます。キャリアメッセージ(モード2と3)にもテキスト(モード4)にも対応。SVG、PDF、PNG形式。無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.metaDescription"
+  },
+  "93214fc470cb": {
+    "source": "MaxiCode is the fixed-size 2D code with a bullseye in the middle that UPS prints on parcel labels, so sorting machines can read where a parcel goes at speed. Type a carrier message or any text, check that it scans and download it.",
+    "text": "MaxiCodeは、中央にブルズアイを持つ固定サイズの2次元コードです。UPSが荷物のラベルに印刷し、仕分け機が荷物の行き先を高速で読み取れるようにしています。キャリアメッセージまたは任意のテキストを入力し、スキャンできることを確認してからダウンロードしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.intro"
+  },
+  "05263461581f": {
+    "source": "UPS parcel labels: the code carries the destination postcode, country and service class where a sorter expects them, followed by the shipment details.",
+    "text": "UPSの荷物ラベル:コードには、仕分け機が想定する位置に、配送先の郵便番号、国、サービスクラスが入り、そのあとに発送の詳細が続きます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.0"
+  },
+  "483824ed5b00": {
+    "source": "The layout of a real shipping label and what goes in the rest of the message are set by UPS. Use their label guide for parcels you ship; the example here is a sample, not a shipment.",
+    "text": "実際の配送ラベルのレイアウトや、メッセージの残りの部分に入れる内容はUPSが定めています。発送する荷物にはUPSのラベルガイドをご覧ください。ここにある例はサンプルであり、実際の発送ではありません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.1"
+  },
+  "c63b4f77b04c": {
+    "source": "Carrier message or text?",
+    "text": "キャリアメッセージかテキストか",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.title"
+  },
+  "2ec386ec976a": {
+    "source": "A carrier message starts with the postcode, the 3-digit ISO country code (840 for the US) and the 3-digit service class, separated by GS characters. Type them as <GS>: 152382802<GS>840<GS>001<GS>then the rest. A message starting with the [)><RS>01<GS>96 header works too.",
+    "text": "キャリアメッセージは、郵便番号、3桁のISO国コード(米国は840)、3桁のサービスクラスの順に、GS文字で区切って始めます。入力時は <GS> と書きます。例:152382802<GS>840<GS>001<GS>以降の内容。[)><RS>01<GS>96 のヘッダーで始まるメッセージも使えます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.0"
+  },
+  "07b2961ece2a": {
+    "source": "An all-digit postcode of up to 9 digits makes it mode 2 (US ZIP Codes); up to 6 capital letters, digits and spaces make it mode 3 (other countries). Anything else is drawn as text, mode 4.",
+    "text": "9桁以内の数字だけの郵便番号はモード2(米国のZIPコード)になり、大文字・数字・スペースで6文字以内の場合はモード3(その他の国)になります。それ以外はテキストとして描画され、モード4になります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.1"
+  },
+  "d57b60d2ae0d": {
+    "source": "Latin-1 characters only: letters, digits, symbols and Western European accents.",
+    "text": "使えるのはLatin-1の文字のみです。英字、数字、記号、西ヨーロッパのアクセント付き文字が使えます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.0"
+  },
+  "cc2a86f2ce79": {
+    "source": "As text it holds up to 93 capital letters or 138 digits, fewer with lowercase or symbols. A carrier message leaves about 84 characters after the postcode, country and service class.",
+    "text": "テキストの場合、大文字なら最大93文字、数字なら最大138桁を格納できます。小文字や記号を含むと、それより少なくなります。キャリアメッセージでは、郵便番号、国、サービスクラスを除いて約84文字が残ります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.1"
+  },
+  "262019b66f59": {
+    "source": "A 5-digit ZIP Code is drawn with 0000 for the +4, and a mode 3 postcode is padded with spaces to 6 characters; readers return them that way.",
+    "text": "5桁のZIPコードは、+4の部分を0000として描画されます。モード3の郵便番号は、スペースで6文字になるまで埋められます。リーダーもその形で読み取ります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.2"
+  },
+  "4f21cb41b2bd": {
+    "source": "Every MaxiCode is the same size: 33 rows of 30 hexagons around the bullseye. More data doesn't make it bigger, so there's a limit instead.",
+    "text": "MaxiCodeはすべて同じサイズで、ブルズアイの周りに30個の六角形が並ぶ行が33行あります。データが増えてもサイズは大きくならないため、格納できる量に上限があります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.3"
+  },
+  "d63cd93acd6c": {
+    "source": "The vector downloads are MaxiCode's nominal size, about 28.1 × 26.9 mm without the quiet zone. Print it at that size: readers look for a symbol of that size.",
+    "text": "ベクター形式のダウンロードは、クワイエットゾーンを除いたMaxiCodeの公称サイズで、約28.1 × 26.9 mmです。このサイズで印刷してください。リーダーはこのサイズのシンボルを探します。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.0"
+  },
+  "525615b8ff04": {
+    "source": "The generator starts with 2 modules of blank space all round; MaxiCode needs at least 1.",
+    "text": "ジェネレーターの初期設定では、周囲に2モジュール分の余白が入ります。MaxiCodeには少なくとも1モジュール分が必要です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.1"
+  },
+  "aac3339401fe": {
+    "source": "Image size starts at 4×: below that, the hexagons are rounded to whole pixels and lose their shape.",
+    "text": "画像サイズは4×から始まります。それより小さいと、六角形が整数ピクセルに丸められて形が崩れます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.2"
+  },
+  "212789ea202f": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports MaxiCode, and tells you whether it reads back your message.",
+    "text": "はい。編集するたびに、ダウンロードされる画像を、MaxiCodeに対応したオープンソースのリーダーであるZXingでデコードし、メッセージを読み取れるかどうかをお知らせします。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.0.answer"
+  },
+  "7e26c57a4da7": {
+    "source": "Which modes does it make?",
+    "text": "どのモードを作成できますか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.question"
+  },
+  "573feb46c532": {
+    "source": "Modes 2 and 3 for carrier messages and mode 4 for text. Mode 5 (text with stronger error correction) and mode 6 (reader programming) aren't offered.",
+    "text": "キャリアメッセージ用のモード2と3、テキスト用のモード4です。モード5(誤り訂正を強化したテキスト)とモード6(リーダーのプログラミング)には対応していません。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.answer"
+  },
+  "5cc737cfddfe": {
+    "source": "MaxiCode or a QR code?",
+    "text": "MaxiCodeとQRコード、どちらですか?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.question"
+  },
+  "6402ef6937fb": {
+    "source": "MaxiCode where a carrier's system asks for it, as UPS's does. For anything people scan with a phone, a QR code.",
+    "text": "UPSのシステムのように、運送会社のシステムが求める場合はMaxiCodeを使います。スマートフォンでスキャンするものには、QRコードを使います。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.answer"
+  },
+  "817e8c09369f": {
+    "source": "With Raycast, Node.js 22 and Bun installed, run this and Raycast imports the extension.",
+    "text": "Raycast、Node.js 22、Bun がインストールされている状態で、次のコマンドを実行すると、Raycast に拡張機能がインポートされます。",
+    "status": "machine",
+    "context": "integrations.entries.raycast.steps.0.body"
+  },
+  "48d95404c31b": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ISBN、ISSN、ISMN、ITF-14、GS1-128、GS1 DataBar、GS1 DataBar Expanded、Code 128、Code 39、Code 93、Codabar、USPS Intelligent Mail、Data Matrix、PDF417、Aztec、rMQR、MaxiCode、DotCodeに対応しています。値(チェックディジット、桁数、文字)を検証し、PNG画像と、SVG、PNG、PDFなどの公開画像URLを返します。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "2614b42d8452": {
+    "source": "Invite friends",
+    "text": "友達を招待",
+    "status": "machine",
+    "context": "appNav.settings.account.items.5.label"
+  },
+  "afe8c0b259cc": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP, ICO or TIFF, including CMYK TIFF for print.",
+    "text": "コードをPNG、SVG、WebP、GIF、BMP、ICO、TIFFでダウンロードできます。印刷用のCMYK TIFFにも対応しています。",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "81755d0fa703": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP, ICO or TIFF (including CMYK TIFF for print), or style the code in the full editor.",
+    "text": "PNG、SVG、WebP、GIF、BMP、ICO、TIFF（印刷用のCMYK TIFFを含む）でダウンロードするか、フルエディターでコードをスタイル設定できます。",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
+  },
+  "4a76e3b36834": {
+    "source": "Scan the preview with your wallet, check the address, network and amount, and download the code as PNG, SVG, WebP, GIF, BMP, ICO or TIFF.",
+    "text": "プレビューをウォレットでスキャンし、アドレス、ネットワーク、金額を確認してから、コードをPNG、SVG、WebP、GIF、BMP、ICO、TIFFでダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.3"
+  },
+  "5f15bdca2f69": {
+    "source": "The smallest files, for websites",
+    "text": "Web サイト向けの最小サイズのファイル",
+    "status": "machine",
+    "context": "barcodes.files.webp.hint"
+  },
+  "e1df66a04ed6": {
+    "source": "For systems that ask for AVIF",
+    "text": "AVIF を求めるシステム向け",
+    "status": "machine",
+    "context": "barcodes.files.avif.hint"
+  },
+  "64f3ee170959": {
+    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP makes the smallest files, for websites; AVIF is there for systems that ask for it, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
+    "text": "印刷には SVG、PDF、EPS をお使いください。ベクター形式なので、どのサイズでもバーが鮮明なままです。SVG と EPS は Illustrator、InDesign、Affinity などのデザインツールで開け、PDF はどこでも開けます。PNG は画面、ドキュメント、オンラインショップ向けで、JPG は PNG を受け付けない場面で使います。WebP は最小サイズのファイルになり、Web サイト向けです。AVIF は対応を求めるシステム向けに用意しており、BMP は BMP しか受け付けない古いシステム向けです。画像を大きくしたい場合は、画像サイズを上げてください。",
+    "status": "machine",
+    "context": "barcodes.faqs.4.answer"
+  },
+  "1f15cca76850": {
+    "source": "Generate QR codes with body patterns, corner styles, colors, frames and logos from the Raycast launcher, keep a library of saved codes, and export them.",
+    "text": "Raycastランチャーから、ボディパターン、コーナースタイル、カラー、フレーム、ロゴを使ったQRコードを生成できます。保存したコードのライブラリを管理し、エクスポートすることもできます。",
+    "status": "machine",
+    "context": "integrations.entries.raycast.description.0"
+  },
+  "9a99b4e6aca7": {
+    "source": "Body patterns, corner styles, colors, frames and logos.",
+    "text": "ボディパターン、コーナースタイル、カラー、フレーム、ロゴ。",
+    "status": "machine",
+    "context": "integrations.entries.raycast.capabilities.0.description"
+  },
+  "1b59469b24e7": {
+    "source": "Enter a URL or text, then pick dot, eye and eye-dot patterns, colors from Canva's color picker, error correction and an optional logo. The preview updates as you go.",
+    "text": "URLまたはテキストを入力し、ドット、アイ、アイドットのパターン、Canvaのカラーピッカーによる色、誤り訂正、任意のロゴを選びます。プレビューは操作に合わせて更新されます。",
+    "status": "machine",
+    "context": "integrations.entries.canva.description.0"
+  },
+  "160a13d94fb0": {
+    "source": "Patterns",
+    "text": "パターン",
+    "status": "machine",
+    "context": "integrations.entries.canva.capabilities.1.title"
+  },
+  "4b5147422ca8": {
+    "source": "Body, eye and eye-dot shapes, each shown as a thumbnail.",
+    "text": "ボディ、アイ、アイドットの形状を、それぞれサムネイルで表示します。",
+    "status": "machine",
+    "context": "integrations.entries.canva.capabilities.1.description"
+  },
+  "0c606300ff29": {
+    "source": "GET /api/v1/qr returns an SVG, PNG, TIFF or print-ready EPS. Everything is in the query string, so the URL itself is the image: paste it into a README, an <img> tag or an email template.",
+    "text": "GET /api/v1/qr は、SVG、PNG、TIFF、または印刷向けEPSを返します。すべてクエリ文字列で指定するため、URLそのものが画像になります。README、<img>タグ、メールテンプレートにそのまま貼り付けられます。",
+    "status": "machine",
+    "context": "integrations.entries.image-api.description.0"
+  },
+  "dbe3f099a18a": {
+    "source": "Choose size, colors, module and corner shapes, error correction, margin and a frame.",
+    "text": "サイズ、色、モジュールとコーナーの形状、誤り訂正、余白、フレームを選べます。",
+    "status": "machine",
+    "context": "integrations.entries.image-api.description.1"
+  },
+  "84c033891645": {
+    "source": "SVG, PNG, TIFF or EPS",
+    "text": "SVG、PNG、TIFF、EPS",
+    "status": "machine",
+    "context": "integrations.entries.image-api.capabilities.0.title"
+  },
+  "91f21385d5c6": {
+    "source": "TIFF at 300 dpi, in RGB or CMYK, and vector EPS sized in points for print and design tools.",
+    "text": "300 dpiのTIFF(RGBまたはCMYK)と、印刷やデザインツール向けにポイント単位でサイズ指定したベクターEPSに対応します。",
+    "status": "machine",
+    "context": "integrations.entries.image-api.capabilities.0.description"
+  },
+  "7f1be9f2a989": {
+    "source": "Run npx @qrdx/cli to render a QR code with the same patterns, colors, gradients, logos and frames as the playground. Flags make it fully non-interactive for scripts and CI; in a terminal it can guide you with prompts.",
+    "text": "npx @qrdx/cli を実行すると、Playgroundと同じパターン、カラー、グラデーション、ロゴ、フレームでQRコードを生成できます。フラグを使えばスクリプトやCIで完全に非対話で実行でき、ターミナルではプロンプトで案内することもできます。",
+    "status": "machine",
+    "context": "integrations.entries.cli.description.0"
+  },
+  "e0a7cd8bafba": {
+    "source": "Patterns, colors and gradients, logos and call-to-action frames.",
+    "text": "パターン、カラーとグラデーション、ロゴ、行動喚起フレーム。",
+    "status": "machine",
+    "context": "integrations.entries.cli.capabilities.1.description"
+  },
+  "55bafae97077": {
+    "source": "Render customizable QR codes in React with qrdx: patterns, gradients, logos and frames.",
+    "text": "qrdxを使って、パターン、グラデーション、ロゴ、フレームをカスタマイズしたQRコードをReactで描画できます。",
+    "status": "machine",
+    "context": "integrations.entries.react.tagline"
+  },
+  "e2b188d90949": {
+    "source": "qrdx is the open-source library behind QRdx. Render QR codes as SVG or canvas with custom body patterns, corner eyes, gradients, logos and frames, and export them as images.",
+    "text": "qrdxは、QRdxの基盤となるオープンソースライブラリです。カスタムのボディパターン、コーナーアイ、グラデーション、ロゴ、フレームを使ったQRコードをSVGまたはcanvasで描画し、画像としてエクスポートできます。",
+    "status": "machine",
+    "context": "integrations.entries.react.description.0"
+  },
+  "866770173d53": {
+    "source": "Body patterns, corner eyes and dots, gradients, logos and frames.",
+    "text": "ボディパターン、コーナーアイとドット、グラデーション、ロゴ、フレーム。",
+    "status": "machine",
+    "context": "integrations.entries.react.capabilities.1.description"
+  },
+  "12cf56c91b9e": {
+    "source": "A PNG image in the chat, plus SVG, PNG, WebP, TIFF and EPS links ready for Markdown, HTML or print. Apps that support MCP Apps also show the code as a card you can save or open in the editor.",
+    "text": "チャットにPNG画像が表示されるほか、Markdown、HTML、印刷にそのまま使えるSVG、PNG、WebP、TIFF、EPSのリンクも届きます。MCP Appsに対応したアプリでは、コードがカードとして表示され、保存したりエディタで開いたりできます。",
+    "status": "machine",
+    "context": "mcp.steps.2.body"
+  },
+  "2ba0fda106c0": {
+    "source": "Renders the code and returns a PNG image plus public SVG, PNG, WebP, TIFF and EPS image URLs ready for Markdown, HTML or print. Takes the image API options: colors or gradients, body, eye and dot shapes, error correction, margin, a border, a frame and a logo icon, or a whole style from design_qr. Set include_svg for the SVG markup.",
+    "text": "コードをレンダリングし、PNG画像と、Markdown、HTML、印刷にそのまま使える公開SVG、PNG、WebP、TIFF、EPSの画像URLを返します。Image APIのオプション(色またはグラデーション、本体・アイ・ドットの形、誤り訂正、余白、枠線、フレーム、ロゴアイコン)のほか、design_qrで作成したスタイル一式も指定できます。SVGマークアップが必要な場合は include_svg を設定してください。",
+    "status": "machine",
+    "context": "mcp.tools.2.description"
+  },
+  "9eb7c5a18750": {
+    "source": "Create a dynamic code",
+    "text": "動的コードを作成",
+    "status": "machine",
+    "context": "mcp.tools.3.title"
+  },
+  "08fc1b093feb": {
+    "source": "A dynamic QR code in your QRdx workspace: it holds a short link, so where it goes can change after printing, and its scans are counted. Returns the short link, the code as a PNG and a link to it in your dashboard. Your app asks you to sign in to QRdx the first time; plan limits apply as in the dashboard.",
+    "text": "QRdxワークスペースに作成する動的QRコードです。短縮リンクを保持するため、印刷後でも移動先を変更でき、スキャン数も集計されます。短縮リンク、PNG形式のコード、ダッシュボード内のリンクが返されます。初回はアプリからQRdxへのサインインを求められます。プランの制限はダッシュボードと同じく適用されます。",
+    "status": "machine",
+    "context": "mcp.tools.3.description"
+  },
+  "cdc1d6d9d4f0": {
+    "source": "Change where a code goes",
+    "text": "コードの移動先を変更",
+    "status": "machine",
+    "context": "mcp.tools.4.title"
+  },
+  "0661b43aeabf": {
+    "source": "Points one of your dynamic codes at a new address. The printed code stays the same. The new address is checked like a new code's.",
+    "text": "動的コードの1つを新しいアドレスに向け直します。印刷済みのコードはそのまま使えます。新しいアドレスは、新規コードと同じようにチェックされます。",
+    "status": "machine",
+    "context": "mcp.tools.4.description"
+  },
+  "23eba5aaddf4": {
+    "source": "Scan stats",
+    "text": "スキャン統計",
+    "status": "machine",
+    "context": "mcp.tools.5.title"
+  },
+  "4ef922d54917": {
+    "source": "Scans and unique visitors for one of your dynamic codes over a range your plan keeps, with the top countries, devices and scans per day. Never single scans or precise locations.",
+    "text": "動的コードの1つについて、プランで保持される期間のスキャン数とユニーク訪問者数を、上位の国、デバイス、日ごとのスキャン数とともに表示します。個々のスキャンや正確な位置情報は含まれません。",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
+  "43fadb385cd8": {
+    "source": "List your codes",
+    "text": "コードを一覧表示",
+    "status": "machine",
+    "context": "mcp.tools.6.title"
+  },
+  "9e95ef71da11": {
+    "source": "Your dynamic codes with their short links, destinations, status and scan counts, to find one by name or link.",
+    "text": "動的コードを、短縮リンク、移動先、ステータス、スキャン数とともに一覧表示します。名前やリンクから探せます。",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "7bcee6d22cb6": {
+    "source": "Yes. It's free and open source, and designing, rendering and checking codes needs no account. Those codes are static, so they never expire and have no scan limits. Dynamic codes live in a QRdx account, so making one asks you to sign in (or sign up) first; the plan's limits apply as in the dashboard.",
+    "text": "はい。無料のオープンソースで、コードのデザイン、レンダリング、チェックにアカウントは不要です。これらは静的QRコードのため、有効期限もスキャン数の上限もありません。動的QRコードはQRdxアカウントに保存されるので、作成するにはまずサインイン(または新規登録)が必要です。プランの制限はダッシュボードと同じく適用されます。",
+    "status": "machine",
+    "context": "mcp.faqs.1.answer"
+  },
+  "7c864a0e3853": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. The dynamic-code tools need you signed in to QRdx instead, which your app asks for the first time you use one. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "コードのデザインやレンダリング、コミュニティの閲覧には不要です。QRdx MCPサーバーは公開されていて無料で、セッション状態も保持しません。動的コードのツールは、代わりにQRdxへのサインインが必要で、初めて使うときにアプリから求められます。デザインをテーマに保存する(save_template)、バーコードを保存する(save_barcode)、AIアートを作成する(generate_ai_art)、アップロードしたロゴを使う場合は、QRdx APIキーが必要です。アプリ側のサーバー設定で Authorization: Bearer qrdx_… として送信してください。キーを設定すると、この3つのツールがアプリに表示されます。",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "a5537dfea3ae": {
+    "source": "Yes, once you sign in. create_dynamic_code makes a dynamic code in your QRdx workspace: the code holds a short link, so you can point it somewhere else later (update_code_destination) and see how often it's scanned (get_code_stats). The first time, your app asks you to sign in to QRdx, where new accounts sign up too.",
+    "text": "はい。サインインすれば作成できます。create_dynamic_code はQRdxワークスペースに動的コードを作成します。コードは短縮リンクを保持するため、後から移動先を変更でき(update_code_destination)、スキャンされた回数も確認できます(get_code_stats)。初回はアプリからQRdxへのサインインを求められ、新規アカウントもそこで登録できます。",
+    "status": "machine",
+    "context": "mcp.faqs.5.answer"
+  },
+  "ad02f2790a7a": {
+    "source": "Not the static ones. The tools render images, format text and read the public community. Only these write anything: create_dynamic_code and update_code_destination (the dynamic code you ask for, in your workspace), and save_template and save_barcode (the theme or barcode you ask them to save, in the API key's workspace). generate_ai_art uses one of the workspace's monthly AI art images but keeps neither the image nor a photo you send. The image URLs the tools return contain the encoded data, so don't share them if the data is private, such as a Wi-Fi password.",
+    "text": "静的なものについては書き込みません。ツールは画像のレンダリング、テキストの整形、公開コミュニティの読み取りを行います。書き込みを行うのは次のツールだけです。create_dynamic_code と update_code_destination(ご依頼の動的コードをワークスペースに作成・更新)、save_template と save_barcode(ご依頼のテーマやバーコードをAPIキーのワークスペースに保存)。generate_ai_art はワークスペースの月間AIアート枠を1枚分使いますが、画像も送信された写真も保存しません。ツールが返す画像URLにはエンコードされたデータが含まれるため、Wi-Fiのパスワードなど非公開のデータの場合は共有しないでください。",
+    "status": "machine",
+    "context": "mcp.faqs.7.answer"
   }
 }

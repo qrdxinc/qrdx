@@ -43,9 +43,15 @@ export const DEFAULT_DOTCOLOR = "#000000";
 
 /**
  * Default margin (quiet zone) around the QR code, in modules.
- * Defaults to 0 so the code fills its box; the QR spec recommends a 4-module
- * light quiet zone, so set `margin` (or give the container light padding)
- * when the code sits on a busy or dark background.
+ * Defaults to 0 so the code fills its box (pages lay the component out
+ * relying on that). A code needs a light border wherever it's placed: in
+ * QRdx's scan study (scripts/scan-study), codes with none printed straight
+ * onto a dark surface or a busy pattern were read in 0–70% of captures, and
+ * one module of light margin brought every decoder to 98% or more. So set
+ * `margin` (2 or more; the QR spec recommends 4), or give the container light
+ * padding, when the code may sit on anything but a plain light background.
+ * The scan score warns below QUIET_ZONE_MIN (scan-score.ts), and the QRdx
+ * editor starts new designs at 2.
  */
 export const DEFAULT_MARGIN = 0;
 

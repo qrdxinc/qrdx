@@ -45,8 +45,8 @@ curl -o qr.png "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png&size
 # Vector EPS for a print shop; size is in points, so 144 = 2 inches
 curl -o qr.eps "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=eps&size=144"
 
-# Rounded modules with a frame template
-curl -o menu.svg "https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com%2Fmenu&body=rounded&eye=rounded&dot=rounded&template=Arrow"
+# Rounded modules with an arrow pointing at the code
+curl -o menu.svg "https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com%2Fmenu&body=rounded&eye=rounded&dot=rounded&frame=arrow"
 ```
 
 From JavaScript, encode the data so `&`, `#`, `+` and spaces survive:
@@ -59,7 +59,7 @@ const src = `https://api.qrdx.dev/v1/qr?${new URLSearchParams({
 })}`;
 ```
 
-The parameters are `data`, `format`, `size` (64 to 2048), `fg`, `bg`, `eyeColor`, `dotColor`, `body`, `eye`, `dot`, `level` (L, M, Q or H; Q by default), `margin` (4 by default) and `template`. Responses are cached for a year, because the same query always returns the same bytes, and are served with `Access-Control-Allow-Origin: *`.
+The parameters are `data`, `format`, `size` (64 to 2048), `fg`, `bg`, `eyeColor`, `dotColor`, `body`, `eye`, `dot`, `level` (L, M, Q or H; Q by default), `margin` (4 by default), and `frame` with `frameText`. Responses are cached for a year, because the same query always returns the same bytes, and are served with `Access-Control-Allow-Origin: *`.
 
 Limits worth knowing: 300 requests a minute per IP address; solid colors only, so no logos or gradients; and the data is part of the URL, so don't put a Wi-Fi password in a link you'll share. The image API is also part of the open-source app, so a [self-hosted](/docs/self-hosting) instance serves it at `/api/v1/qr`.
 
@@ -132,8 +132,8 @@ npx @qrdx/cli generate "https://example.com" --body rounded --eye rounded --dot 
 # A Wi-Fi login
 npx @qrdx/cli generate "WIFI:T:WPA;S:Cafe Guest;P:espresso-2026;;" --level M --margin 4 -o wifi.svg
 
-# A frame template
-npx @qrdx/cli generate "https://example.com" --template Arrow --margin 4 -o arrow.svg
+# An arrow pointing at the code
+npx @qrdx/cli generate "https://example.com" --frame arrow --margin 4 -o arrow.svg
 ```
 
 Install it globally with `npm install -g @qrdx/cli` to get a `qrdx` command. PNG output uses [sharp](https://sharp.pixelplumbing.com), which npm installs alongside it on most platforms. Run `qrdx generate` with no arguments in a terminal and it asks for each option.

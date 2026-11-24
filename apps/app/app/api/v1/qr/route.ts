@@ -3,8 +3,10 @@ import type { NextRequest } from "next/server";
 import { GIFScanError } from "qrdx";
 import { withApiUsage } from "@/lib/analytics/usage";
 import { CommunityItemError } from "@/lib/community/api";
-import { OFFICIAL_FRAME_RESOLVER } from "@/lib/community/catalog";
 import { handleError } from "@/lib/error-response";
+import { LATEST_SUFFIX, parseFrameName } from "@/lib/frames/versions/names";
+import { FRAME_VERSION_RESOLVER } from "@/lib/frames/versions/record";
+import type { OfficialFrameResolver } from "@/lib/playground-style";
 import {
   type FlatStyle,
   type RenderRequest,
@@ -28,7 +30,6 @@ import {
   isConvertedFormat,
 } from "@/lib/qr-image-formats";
 import {
-  QR_TEMPLATE_IDS,
   QrDataTooLongError,
   renderQrEps,
   renderQrImage,
@@ -52,11 +53,15 @@ const CORS_HEADERS = {
 };
 
 // Same query → same bytes, so responses can be cached forever. An official
-// frame named by id (`frame`, `style`, a playground link's style) is read
-// from the engine's catalogue, which changes only with a deploy: cached the
-// same way, as playground links naming one always have been.
+// frame named with its version (`frame=autumn-maple.v1`, a frame's `style`,
+// a playground link's style; what the editor copies) or by its bare id
+// (version 1, as image URLs named frames before versions) is drawn from the
+// record of every version QRdx has published (lib/frames/versions), which
+// never changes or drops one: the same bytes forever, cached the same way.
 const IMMUTABLE = "public, max-age=31536000, immutable";
-// A community item can get a new version or be taken down.
+// A community item can get a new version or be taken down, and an official
+// frame asked for with `.latest` (`frame=autumn-maple.latest`) follows the
+// frame's newest design, which changes when QRdx changes the frame.
 const ITEM_CACHE = "public, max-age=300, stale-while-revalidate=3600";
 const ITEM_CDN_CACHE = "public, max-age=600, stale-while-revalidate=3600";
 // A logo by file id is the workspace's own image, read with its key.
@@ -72,25 +77,19 @@ const FLAT_PARAMS = [
   "dot",
   "level",
   "margin",
-  "template",
 ] as const;
-
-const templateIdsByLowercase = new Map(
-  QR_TEMPLATE_IDS.map((id) => [id.toLowerCase(), id]),
-);
 
 const invalid = (param: string, message: string) =>
   new ValidationError("Invalid query parameters", [{ param, message }]);
 
 function parseQuery(searchParams: URLSearchParams) {
-  const raw: Record<string, string> = Object.fromEntries(searchParams);
+  // Templates are frames since qrdx 0.0.64: `template` is ignored, so
+  // image links that still pass one keep drawing the code
+  const { template: _template, ...raw }: Record<string, string> =
+    Object.fromEntries(searchParams);
   // Case-insensitive enums for hand-written URLs.
   if (raw.level) raw.level = raw.level.toUpperCase();
   if (raw.format) raw.format = raw.format.toLowerCase();
-  if (raw.template) {
-    raw.template =
-      templateIdsByLowercase.get(raw.template.toLowerCase()) ?? raw.template;
-  }
   if (raw.frame) raw.frame = raw.frame.toLowerCase();
   if (raw.item) raw.item = raw.item.toLowerCase();
 
@@ -139,17 +138,43 @@ function imageResponse(
 type ApiFrame = NonNullable<ApiStyle["frame"]>;
 
 /**
- * `frame` (with `frameText`) as a frame: a built-in style, or one of QRdx's
- * official frames by id, from the engine's catalogue. An official frame is
- * checked as the same frame in `style` is, so both draw the same bytes.
+ * The official frames for one request: every version QRdx has published,
+ * noting whether one was asked for with `.latest`, so it follows the
+ * frame's newest design and the image can change.
  */
-function flatFrame(name: string, text: string | undefined): ApiFrame {
+function requestFrames() {
+  let followsLatest = false;
+  const resolver: OfficialFrameResolver = {
+    ...FRAME_VERSION_RESOLVER,
+    specOf: (name) => {
+      const spec = FRAME_VERSION_RESOLVER.specOf(name);
+      if (spec && parseFrameName(name)?.version === LATEST_SUFFIX) {
+        followsLatest = true;
+      }
+      return spec;
+    },
+  };
+  return { resolver, followsLatest: () => followsLatest };
+}
+
+/**
+ * `frame` (with `frameText`) as a frame: a built-in style, or one of QRdx's
+ * official frames by name. An official frame is checked as the same frame
+ * in `style` is, so both draw the same bytes.
+ */
+function flatFrame(
+  name: string,
+  text: string | undefined,
+  officialFrames: OfficialFrameResolver,
+): ApiFrame {
   const label = text !== undefined ? { text } : {};
   if (!isOfficialFrameName(name)) {
     return { style: name as Exclude<ApiFrame["style"], "custom">, ...label };
   }
-  const spec = OFFICIAL_FRAME_RESOLVER.specOf(name);
-  if (!spec) throw invalid("frame", unknownOfficialFrame(name));
+  const spec = officialFrames.specOf(name);
+  if (!spec) {
+    throw invalid("frame", unknownOfficialFrame(name, officialFrames));
+  }
   const parsed = apiFrameSchema.safeParse({ style: "custom", spec, ...label });
   if (!parsed.success) {
     throw invalid("frame", parsed.error.issues[0]?.message ?? "Invalid frame");
@@ -158,10 +183,13 @@ function flatFrame(name: string, text: string | undefined): ApiFrame {
 }
 
 /** The `style` value plus the frame and logo parameters, as one style. */
-function styleLayer(query: Query): ApiStyle | undefined {
+function styleLayer(
+  query: Query,
+  officialFrames: OfficialFrameResolver,
+): ApiStyle | undefined {
   let style: ApiStyle | undefined;
   if (query.style !== undefined) {
-    const parsed = parseStyleQuery(query.style, OFFICIAL_FRAME_RESOLVER);
+    const parsed = parseStyleQuery(query.style, officialFrames);
     if (!parsed.ok) {
       throw new ValidationError(
         "Invalid query parameters",
@@ -174,7 +202,10 @@ function styleLayer(query: Query): ApiStyle | undefined {
     style = parsed.style;
   }
   if (query.frame) {
-    style = { ...style, frame: flatFrame(query.frame, query.frameText) };
+    style = {
+      ...style,
+      frame: flatFrame(query.frame, query.frameText, officialFrames),
+    };
   }
   if (query.logoIcon) style = { ...style, logoIcon: query.logoIcon };
   if (query.logoFileId) style = { ...style, logoFileId: query.logoFileId };
@@ -232,7 +263,8 @@ async function original(query: Query, headers: Record<string, string>) {
 }
 
 async function styled(req: NextRequest, query: Query) {
-  const style = styleLayer(query);
+  const frames = requestFrames();
+  const style = styleLayer(query, frames.resolver);
   const needsKey = Boolean(style?.logoFileId);
   const caller = needsKey
     ? await optionalApiKeyCaller(req, "read", "A logo by file id")
@@ -271,7 +303,7 @@ async function styled(req: NextRequest, query: Query) {
   const cache: Record<string, string> =
     render.logoSource === "file"
       ? { "Cache-Control": PRIVATE }
-      : render.itemId
+      : render.itemId || frames.followsLatest()
         ? { "Cache-Control": ITEM_CACHE, "CDN-Cache-Control": ITEM_CDN_CACHE }
         : { "Cache-Control": IMMUTABLE, "CDN-Cache-Control": IMMUTABLE };
   const headers: Record<string, string> = {

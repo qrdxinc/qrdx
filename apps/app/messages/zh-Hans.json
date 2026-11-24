@@ -220,6 +220,7 @@
     "description": "开源二维码平台。",
     "starOnGithub": "在 GitHub 上点星标",
     "newsOnX": "X 上的 QRdx 动态",
+    "joinDiscord": "加入 QRdx Discord",
     "navLabel": "页脚",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -349,7 +350,7 @@
     "hero": {
       "badge": "免费开源（AGPL-3.0）",
       "title": "免费二维码生成器，动态二维码持续可用",
-      "description": "用图案、渐变、徽标和边框设计专属品牌二维码，无需注册，无水印，可下载 PNG、SVG、PDF 或 EPS。登录后可使用打印后仍能修改的动态二维码、托管页面和扫描分析。",
+      "description": "设计带有图案、渐变、徽标和边框的品牌二维码，无需注册，也没有水印，即可下载 PNG、SVG、PDF、EPS 或 TIFF 格式。登录后可使用印刷后仍可编辑的动态二维码、托管页面和扫描分析。",
       "primary": "试用 Playground",
       "secondary": "阅读文档",
       "sceneLabel": "QRdx 流程动画：设计工作室屏幕设计并美化二维码，打印机将其打印在卡片上，机械臂把卡片放到传送带上，闸机上的手机在每张卡片经过时进行扫描，扫描数据传到分析面板并新增一根柱状条，一张大型动态二维码卡片无需重新打印即可更换目标链接"
@@ -377,7 +378,7 @@
         "none": "无边框",
         "border": "边线"
       },
-      "more": "完整的 Playground 还提供 {bodyPatterns, number} 种主体图案、{eyeShapes, number} 种定位点形状、{eyeCentres, number} 种定位点中心、任意颜色和渐变、徽标、模板，以及 PNG、SVG、PDF 或 EPS 下载。",
+      "more": "完整版 Playground 另有 {bodyPatterns, number} 种主体图案、{eyeShapes, number} 种定位点形状、{eyeCentres, number} 种定位点中心、任意颜色与渐变、徽标、边框，以及 PNG、SVG、PDF、EPS 或 TIFF 下载。",
       "customize": "在 Playground 中自定义",
       "qrLabel": "{value} 的二维码",
       "empty": "输入链接即可查看你的二维码。"
@@ -518,7 +519,7 @@
       "items": {
         "free": {
           "question": "QRdx 真的免费吗？有隐藏限制吗？",
-          "answer": "可以。创建、自定义和下载静态二维码完全免费，且无需账户：二维码数量不限，所有设计选项均可使用（{bodyPatterns, number} 种主体图案、{eyeShapes, number} 种角部定位点形状和 {eyeCentres, number} 种定位点中心、渐变、徽标、边框以及 Logo QR 或 Image QR 艺术码），并支持下载 PNG、JPG、SVG、PDF 和 EPS 格式。没有水印，也没有广告。静态二维码把内容直接存储在码中，因此永不过期，也没有扫描次数限制。免费账户另可使用 10 个动态二维码、3 个托管页面、{historyYears, plural, one {# 年} other {# 年}}的扫描分析、10 个已保存主题和 5 次 AI 主题生成；Pro（{proMonthly}/月或 {proYearly}/年）和 Business（{businessMonthly}/月或 {businessYearly}/年）可提高这些额度。"
+          "answer": "是的。创建、自定义和下载静态二维码完全免费，也无需账号：二维码数量不限，所有设计选项均可使用（{bodyPatterns, number} 种主体图案、{eyeShapes, number} 种角部定位点形状和 {eyeCentres, number} 种定位点中心、渐变、徽标、边框，以及 Logo QR 或 Image QR 艺术二维码），还可下载 PNG、JPG、SVG、PDF、EPS 和 TIFF 格式。没有水印，也没有广告。静态二维码会把内容直接存储在二维码本身中，因此永不过期，也没有扫描次数限制。免费账号可额外获得 10 个动态二维码、3 个托管页面、{historyYears, plural, one {# 年} other {# 年}}的扫描分析、10 个已保存的主题和 5 次 AI 主题生成；Pro（{proMonthly}/月或 {proYearly}/年）和 Business（{businessMonthly}/月或 {businessYearly}/年）可提高这些额度。"
         },
         "signup": {
           "question": "我需要注册或创建账号吗？",
@@ -546,7 +547,7 @@
         },
         "api": {
           "question": "开发者可以通过 API 生成二维码吗？",
-          "answer": "可以。Image API 无需 API 密钥，即可将任意 URL 转换为 SVG、PNG 或 EPS 二维码；REST API 则可通过工作区 API 密钥或 OAuth 创建和编辑动态二维码，并读取其扫描数据。此外还提供适用于 Claude、Cursor 和 VS Code 的 MCP server、命令行工具（@qrdx/cli）、shadcn/ui 组件以及 qrdx React 库。"
+          "answer": "可以。Image API 能将任意 URL 转换为 SVG、PNG、TIFF 或 EPS 格式的二维码，无需 API 密钥；REST API 则通过工作区 API 密钥或 OAuth 创建和编辑动态二维码，并读取其扫描数据。此外还提供面向 Claude、Cursor 和 VS Code 的 MCP 服务器、命令行工具（@qrdx/cli）、shadcn/ui 组件以及 qrdx React 库。"
         },
         "paidPlans": {
           "question": "Pro 或 Business 包含哪些功能？",
@@ -913,12 +914,12 @@
       "metaTitle": "二维码类型：{count, number} 种免费生成器（Wi-Fi、vCard、UPI）",
       "metaDescription": "{count, number} 种二维码类型，每种都有免费生成器：Wi-Fi、vCard、WhatsApp、UPI、电子邮件、社交主页和支付。每个页面都会列出其确切的数据格式。",
       "title": "适用于各类内容的二维码生成器",
-      "intro1": "二维码的用途不只是打开网站。根据其中的文本内容，手机可以加入 Wi-Fi 网络、保存联系人、发起支付或打开聊天。从下面 {count, number} 种类型中任选一种，即可使用带有对应字段的生成器，并获得实时预览和 PNG、WebP 或 SVG 下载。",
+      "intro1": "二维码的用途不止于打开网站。根据其中的文本内容，手机可以加入 Wi-Fi 网络、保存联系人、发起付款或打开聊天。从下方 {count, number} 种类型中任选一种，即可使用带有对应字段的生成器，并获得实时预览，还能下载 PNG、WebP、SVG 或 TIFF 格式。",
       "intro2": "默认情况下，这些页面生成的是静态二维码：内容直接编码在图案中，因此可以离线使用、永不过期，也没有扫描次数限制。每个页面还会说明其写入的确切格式，让你清楚扫描器会读取到什么。",
       "cardTitle": "{name}二维码生成器",
       "moreTools": "更多工具",
       "bulkTitle": "需要上百个二维码？使用批量生成器",
-      "bulkDescription": "上传 CSV 文件，即可将所有二维码以 PNG、WebP 或 SVG 格式打包成一个 ZIP 文件下载，全程在浏览器中生成。",
+      "bulkDescription": "上传 CSV 文件，即可将所有二维码以 PNG、WebP、SVG 或 TIFF 格式打包成一个 ZIP 文件下载，整个过程完全在浏览器中完成。",
       "printTitle": "要打印二维码？先确认尺寸",
       "printDescription": "根据扫描距离和二维码包含的数据量，计算最小打印尺寸。",
       "dynamicTitle": "动态二维码生成器",
@@ -1104,7 +1105,7 @@
       "metaDescription": "将 CSV 转换为最多 {rows, number} 个带样式的二维码，以 PNG、WebP 或 SVG 格式打包为 ZIP。全程在浏览器中运行：无需上传，无水印，不超过 {limit, number} 行无需注册。",
       "crumb": "批量生成器",
       "title": "二维码批量生成器",
-      "intro1": "一次性将 CSV 文件转换为数千个二维码，按你的想法设置样式，并以 ZIP 压缩包下载 PNG、WebP 或 SVG 文件。每行对应一个二维码，文件名取自某一列：适用于产品标签、活动门票、资产标签、桌号或邮寄信函。",
+      "intro1": "一次性把 CSV 文件变成数千个二维码，样式按你的想法设定，并以 ZIP 压缩包下载，格式可选 PNG、WebP、SVG 或 TIFF（包括用于印刷的 CMYK TIFF）。每行对应一个二维码，文件名取自某一列，适用于产品标签、活动门票、资产标签、桌号或邮寄宣传品。",
       "intro2": "所有处理都在浏览器中完成，CSV 不会被上传，也没有水印或按个收费。不超过 {limit, number} 行的文件无需账号；更大的文件（最多 {rows, number} 行）需要免费账号。不确定格式？可以从示例 CSV 开始。",
       "facts": {
         "rows": "每个文件最多 {rows, number} 行",
@@ -1193,6 +1194,8 @@
         "formatGif": "GIF（图片，256 色）",
         "formatBmp": "BMP（未压缩图像）",
         "formatIco": "ICO（favicon，16 至 256 px）",
+        "formatTiff": "TIFF（图片，用于印刷）",
+        "formatTiffCmyk": "CMYK TIFF（用于印刷）",
         "formatSvg": "SVG（矢量，适合印刷）",
         "size": "{format} 尺寸",
         "quietZone": "添加 {modules, number} 个模块宽度的静区（印刷时推荐）",
@@ -1239,7 +1242,8 @@
         "logoQuestion": "Logo 或更高的纠错级别会改变尺寸吗？",
         "logoAnswer": "更高的纠错级别会增加冗余，因此相同内容需要更高的版本、更多的模块，打印尺寸也就更大。logo 不会改变模块数量，但会遮住部分模块，所以添加 logo 时请使用 Q 或 H 级。",
         "quietQuestion": "静区算在尺寸内吗？",
-        "quietAnswer": "显示的二维码尺寸是边到边的尺寸。扫描器还需要在每一侧留出 {quiet, number} 个模块宽度的空白边距，第二个数值已包含这部分。除非开启静区，否则 QRdx 下载的二维码不带边距，请在排版时在二维码四周留出这部分空间。",
+        "quietAnswer": "所示二维码尺寸为边到边的尺寸。扫描器还需要在四周各留出 {quiet, number} 个模块宽度的空白边距，第二个数值已包含该边距。QRdx 下载的二维码带有其设计所设定的边距；生成器和批量工具会添加 {quiet, number} 个模块的边距，除非你将其关闭。如果边距有缺失，请在版面中为二维码四周留出相应的空白。",
+        "quietAnswerNewDesigns": "所示二维码尺寸为边到边的尺寸。扫描器还需要在四周各留出 {quiet, number} 个模块宽度的空白边距，第二个数值已包含该边距。QRdx 下载的二维码带有其设计所设定的边距：编辑器中的新设计默认从 {start, number} 个模块开始，生成器和批量工具会添加 {quiet, number} 个模块的边距，除非你将其关闭。如果边距有缺失，请在版面中为二维码四周留出相应的空白。",
         "resolutionQuestion": "打印时应导出多高的分辨率？",
         "resolutionAnswer": "尽量使用 SVG：它是矢量格式，任何尺寸下都保持清晰。如果使用 PNG，请至少按所示的像素宽度导出，对应 300 DPI，这是打印通常的最低要求。"
       },
@@ -1738,6 +1742,9 @@
     "hosted": {
       "notFoundTitle": "页面不存在",
       "notFoundMessage": "此链接没有指向任何页面。可能是所有者已将其删除，或链接输入有误。",
+      "notReadyTitle": "此页面尚未就绪",
+      "notReadyMessage": "制作这个二维码的人仍在设置它所打开的页面。请稍后再试。",
+      "notReadyOwner": "这是你制作的二维码？请在 QRdx 中发布它的页面，之后扫描就会打开该页面。",
       "passwordProtected": "受密码保护",
       "madeWithQrdx": "由 QRdx 制作",
       "share": "分享",
@@ -2103,6 +2110,12 @@
       "gs1TooLong": "GS1-128 最多可容纳 {max} 个 AI 和数据字符；当前为 {count} 个。请拆分为两个条形码。",
       "databarGtinOnly": "GS1 DataBar 只能容纳 GTIN：(01) 及其 14 位数字。如需包含日期、批次或重量，请使用 GS1 DataBar Expanded 或 GS1-128。",
       "databarTooLong": "GS1 DataBar Expanded 最多可容纳 {max} 位 AI 和数据数字，包含字母时容量更少；当前有 {count} 个字符。请删除一个 AI 或缩短某个值。",
+      "maxicodeChars": "MaxiCode 支持 Latin-1 字符：字母、数字、符号和西欧语言的重音字母。不允许的字符：{chars}",
+      "maxicodePostcode": "承运商消息以邮政编码开头：最多 9 位数字（美国 ZIP 邮编），其他地区为最多 6 位大写字母、数字和空格。",
+      "maxicodeCountry": "邮政编码之后是 3 位 ISO 国家代码（美国为 840），当前为“{country}”。",
+      "maxicodeService": "国家代码之后是 3 位服务等级代码，当前为“{service}”。",
+      "maxicodeCarrier": "承运商消息（模式 {mode}）：邮政编码 {postcode}，国家 {country}，服务等级 {service}。",
+      "maxicodeZipPadded": "5 位 ZIP 邮编会绘制为 {zip}，+4 部分补 0000，读取器也会按此返回。",
       "imbEnter": "请输入 20 位追踪码，如有投递邮编，再接着输入。",
       "imbTrackingLength": "追踪码为 20 位：条码 ID（2 位）、服务类型（3 位）、邮寄方 ID 和序列号（15 位）。当前为 {count, plural, other {# 位数字}}。",
       "imbRoutingLength": "20 位追踪码之后是投递邮编：5 位、9 位（ZIP+4）或 11 位（ZIP+4 加投递点）。追踪码之后当前为 {count, plural, other {# 位数字}}。",
@@ -2688,7 +2701,7 @@
     "playground": "在 Playground 中试用",
     "promptsEyebrow": "试一试",
     "promptsTitle": "从这些提示词开始",
-    "promptsDescription": "每条提示词都基于 QRdx 工具的实际功能：颜色与形状、Wi-Fi、联系人、电子邮件、短信和地图内容，以及 SVG、PNG、WebP 或 EPS 链接。可以在你的助手中打开，也可以复制。",
+    "promptsDescription": "每条提示词都基于 QRdx 工具的实际功能：颜色和形状、Wi-Fi、联系人、电子邮件、短信和地图内容，以及 SVG、PNG、WebP、TIFF 或 EPS 链接。可在你的助手中打开，也可以直接复制。",
     "howEyebrow": "使用方式",
     "howTitle": "三步设置，之后只管提问",
     "howDescription": "你的助手会替你调用 QRdx 工具，你无需接触任何 API。",
@@ -2698,9 +2711,10 @@
     "setupUrl": "服务器 URL",
     "toolsEyebrow": "工具",
     "toolsTitle": "你的助手可以调用什么",
-    "toolsDescription": "共 {count, number} 个工具。除 save_template、save_barcode 和 generate_ai_art 外，其余均为只读，无需密钥：它们可以渲染图像、格式化文本，并读取公开社区的内容。完整参数请参阅 <link>MCP server 文档</link>。",
+    "toolsDescription": "共 {count, number} 个工具。大多数为只读，无需账户或密钥：它们生成图片、格式化文本并读取公开社区内容。四个动态二维码工具会请你登录 QRdx，而 save_template、save_barcode 和 generate_ai_art 会在连接设置了 API 密钥后列出。完整参数见 <link>MCP 服务器文档</link>。",
     "toolNoKey": "无需密钥",
     "toolNeedsKey": "需要 API 密钥",
+    "toolNeedsSignIn": "需要登录",
     "faqTitle": "MCP 服务器常见问题",
     "connect": {
       "copyFailed": "复制失败，请选中文本后手动复制。",
@@ -2804,7 +2818,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "免费二维码 API：无需密钥，支持 SVG、PNG 和 Logo",
-    "metaDescription": "免费的二维码 API，无需密钥。一个 URL 即可返回带有你的颜色、形状和标志的 SVG、PNG、WebP 或 EPS 二维码。每分钟 {perMinute, number} 次请求，缓存一年。",
+    "metaDescription": "免费的二维码 API，无需密钥：一个 URL 即可返回带有你的配色、形状和标志的 SVG、PNG、WebP、TIFF 或 EPS 二维码。每分钟 {perMinute, number} 次请求，缓存一年。",
     "crumb": "二维码 API",
     "title": "免费二维码 API",
     "intro1": "只要能放 URL 的地方，就能放二维码。向 api.qrdx.dev 发送一个 GET 请求，即可直接返回图片：无需账户，无需 API 密钥，无需 SDK。颜色、形状、纠错等级和 Logo 都通过查询字符串设置。",
@@ -2812,7 +2826,7 @@
     "facts": {
       "noKey": "无需密钥或注册",
       "rateLimit": "每个 IP 每分钟 {perMinute, number} 次请求",
-      "formats": "SVG、PNG、WebP 和 EPS",
+      "formats": "SVG、PNG、WebP、TIFF 和 EPS",
       "openSource": "开源"
     },
     "docs": "Image API 文档",
@@ -2837,6 +2851,7 @@
       "logoNote": "添加 Logo 后，如有需要，二维码会切换到纠错等级 H，以保证仍可扫描。",
       "previewAlt": "{value} 的二维码",
       "epsPreview": "EPS 是印刷文件，因此预览显示的是与 SVG 相同的二维码。",
+      "tiffPreview": "TIFF 是一种印刷文件格式，大多数浏览器无法显示，因此预览中显示的是同一个二维码的 PNG 版本。",
       "empty": "请输入要编码的文本或链接。",
       "tooLong": "超过了 API 的上限 {max, number} 个字符。",
       "loadFailed": "预览未能加载。如果你连续多次修改，请等待一分钟：该 API 每分钟允许 {perMinute, number} 次请求。",
@@ -2868,7 +2883,7 @@
     "params": {
       "data": "要编码的文本或网址，最多 {max, number} 个字符。",
       "size": "宽度和高度，单位为像素，范围 {min, number} 到 {max, number}。对 EPS 而言，这是以点为单位的宽度。",
-      "format": "svg、png、webp（无损）或 eps（矢量，用于印刷）。",
+      "format": "svg、png、webp（无损）、tiff、tiff-cmyk（CMYK，用于印刷）或 eps（矢量，用于印刷）。",
       "colors": "二维码颜色和背景颜色，使用十六进制值，不带 #（155dfc）。bg=00000000 可让背景透明。",
       "shapes": "模块、角部定位点及其内部圆点的形状：模块形状共 {count, number} 种。",
       "level": "纠错级别：L（7%）、M（15%）、Q（25%）或 H（30%），表示二维码有这一比例受损时仍能被扫描。",
@@ -2900,7 +2915,7 @@
       "title": "Image API",
       "noKey": "无需密钥或账户",
       "static": "静态二维码：数据就在图片中",
-      "formats": "SVG、PNG、WebP 和 EPS",
+      "formats": "SVG、PNG、WebP、TIFF 和 EPS",
       "limit": "每个 IP 每分钟 {perMinute, number} 次请求"
     },
     "restCard": {
@@ -2932,7 +2947,7 @@
       "logoQuestion": "二维码 API 可以添加 Logo 吗？",
       "logoAnswer": "可以。logoIcon 可以在中心放置常用图标（Wi-Fi、链接、电话、邮件等），或 Simple Icons 中 {brands} 个品牌 Logo 的任意一个，无需密钥。需要时二维码会切换到纠错级别 H，因此仍然可以扫描。",
       "formatsQuestion": "它可以返回哪些图片格式？",
-      "formatsAnswer": "默认是 SVG，也可以通过 format=png、webp 或 eps 获取 PNG、无损 WebP 和矢量 EPS。尺寸范围为 {min, number} 到 {max, number} 像素。",
+      "formatsAnswer": "默认为 SVG；也可用 format=png、webp、tiff 或 eps 获取 PNG、无损 WebP、TIFF 和矢量 EPS，用 format=tiff-cmyk 获取适合印刷的 CMYK TIFF。尺寸范围为 {min, number} 到 {max, number} 像素。",
       "expireQuestion": "二维码会过期吗？",
       "expireAnswer": "不会。Image API 生成的是静态二维码：你编码的内容就在二维码里，只要其中的链接或文字有效，二维码就能使用。不会过期，也不会统计扫描次数。",
       "dynamicQuestion": "印刷之后还能更改二维码指向的地址吗？",
@@ -2970,7 +2985,7 @@
       },
       "print": {
         "title": "下载并打印",
-        "body": "可下载为 PNG、WebP 或 SVG，也可以先在 Playground 中设计样式。短链接比长网址所需的模块更少，因此二维码可以印得更小，依然能被扫描。"
+        "body": "可下载为 PNG、WebP、SVG 或 TIFF 格式，也可以先在 Playground 中设计样式。短链接所需的模块比长网址更少，因此二维码可以印得更小，依然能够扫描。"
       },
       "change": {
         "title": "需要时随时修改",
@@ -3497,6 +3512,7 @@
         "pdfAndEpsDrawEvery": "PDF 和 EPS 将每个圆点绘制为矢量形状，并将线性和径向渐变保留为平滑的矢量渐变。",
         "jpgCantBeTransparent": "JPG 不支持透明",
         "bmpCantBeTransparent": "BMP 不支持透明：背景会变为白色",
+        "tiffCmykCantBeTransparent": "CMYK TIFF 用于印刷，而印刷不支持透明：透明背景会变成白色。",
         "gifWouldNotScan": "GIF 最多支持 256 种颜色，而此设计需要更多颜色：压缩到 256 色后将无法扫描。请改为下载 PNG。",
         "moreFormats": "更多格式",
         "vector": " · 矢量",
@@ -3523,6 +3539,8 @@
           "gif": "适合只支持 GIF 的旧工具和邮件编辑器 · 最多 256 种颜色，其中一种可设为透明。",
           "bmp": "适合只支持 BMP 的旧系统和嵌入式工具 · 未压缩 24 位，透明背景会变为白色。",
           "ico": "适合用作网站图标 · 一个文件包含 16、32、48 和 256 px 的图像。小尺寸仅用于图标，不适合扫描。",
+          "tiff": "适合要求提供 TIFF 的印刷店 · 300 dpi，保留透明背景。",
+          "tiff-cmyk": "适合要求 CMYK 的印刷店 · 黑色只用黑墨印刷，透明背景会变成白色。不含色彩配置文件：如需精确还原品牌色，请向印刷商咨询。",
           "svg": "适合 Figma、Illustrator 和网站 · 任意尺寸都保持清晰。",
           "pdf": "适合文档和快速打印 · 如需矢量 PDF，请使用“印刷就绪”。",
           "eps": "适合印刷厂和矢量应用 · 任意尺寸都保持清晰。"
@@ -4842,10 +4860,7 @@
         "theFrameIsAddedAround": "边框会添加在二维码外围，因此下载的图片尺寸会变大，二维码本身仍可正常扫描。",
         "label": "标签",
         "pickAFrameFirst": "请先选择边框",
-        "none": "无",
-        "takesDotColor": "它使用二维码圆点的颜色。",
-        "alsoHasTemplate": "此设计内还包含 {name} 边框。选择其他边框会同时替换这两个边框。",
-        "templateKeepsSize": "此边框会将二维码容纳在内部，因此下载的图片会保持你所选的尺寸。"
+        "none": "无"
       },
       "frameFields": {
         "textSize": "文字大小"
@@ -5102,7 +5117,8 @@
       "yourQrCodeIsNow": "你的二维码现已成为动态二维码",
       "destinationUpdated": "目标地址已更新",
       "designSavedToTheCode": "设计已保存到二维码",
-      "couldntCopyTheShortLink": "无法复制短链接"
+      "couldntCopyTheShortLink": "无法复制短链接",
+      "inviteForMore": "或者<link>邀请一位好友</link>：当对方创建第一个动态二维码时，你们双方都能多获得 {count, number} 个。"
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5434,6 +5450,9 @@
       "checkingScan": "正在检查扫描…",
       "fullScanChecker": "完整扫描检测",
       "checkAPrintedCode": "检查已打印的二维码",
+      "warning": "警告",
+      "scanScoreScoreValueWarningShow": "扫描评分 {score, number}，{value}，有警告。显示检查项",
+      "addAMargin": "添加 {modules, number} 个模块的边距",
       "grades": {
         "great": "优秀",
         "ok": "良好",
@@ -5717,7 +5736,7 @@
       "label": "关于二维码设计器",
       "summary": "自定义二维码设计器。免费的静态二维码，可添加你的 Logo、颜色和边框。无需注册，无水印。",
       "types": "可为链接、Wi-Fi 网络、联系人名片、付款或 {types, number} 种内容类型中的任意一种生成二维码。你可以使用 {bodyPatterns, number} 种码点样式、{eyeShapes, number} 种定位点形状、纯色或渐变色、中心 Logo 以及 {frames, number} 种行动号召边框来设计外观。打印之前，扫描评分会预估它的识别效果。",
-      "downloads": "可下载 PNG、JPG、WebP 或 SVG，也可按精确尺寸下载可直接印刷的 PDF 或 EPS。静态二维码免费且永不过期。登录后可创建动态二维码，印刷后仍可编辑，并可追踪扫描情况。",
+      "downloads": "可下载 PNG、JPG、WebP、SVG 或 TIFF（包括适用于印刷的 CMYK TIFF），也可按精确尺寸下载可直接印刷的 PDF 或 EPS。静态二维码免费，且永不过期。登录后可创建动态二维码，印刷后仍可编辑，并可追踪扫描情况。",
       "links": {
         "allTypes": "所有二维码类型",
         "scanChecker": "扫描检测工具",
@@ -5745,7 +5764,8 @@
     "limitCard": {
       "planUsage": "套餐与用量",
       "notNow": "暂不升级",
-      "labelUsed": "已使用{label}"
+      "labelUsed": "已使用{label}",
+      "inviteForMore": "或者<link>邀请一位好友</link>：好友创建第一个动态二维码后，你们各自再获得 {count, number} 个。"
     },
     "limitDialog": {
       "limitReached": "已达到上限"
@@ -6935,6 +6955,39 @@
           "unlimitedOnValue": "{value} 不限量",
           "labelUsed": "已使用{label}"
         }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "你的邀请链接：",
+          "copy": "复制",
+          "copied": "已复制",
+          "linkCopied": "链接已复制",
+          "couldntCopy": "无法复制，请选中链接后自行复制。"
+        },
+        "page": {
+          "title": "邀请好友",
+          "description": "分享你的链接。好友通过该链接注册并创建第一个动态二维码后，你们双方都会多获得 {count, number} 个动态二维码。",
+          "notReady": "邀请功能暂未开放，请稍后再来查看。",
+          "yourInviteLink": "你的邀请链接",
+          "shareYourLink": "把链接发给好友，或发布到任何地方。每位通过该链接加入并创建动态二维码的好友，都会让你们双方各多获得 {count, number} 个。",
+          "link": "链接",
+          "sameVisit": "好友需在点击链接的同一次访问中创建账号，才会被计入。我们不会在对方的设备上存储任何内容。",
+          "friendsJoined": "已加入的好友",
+          "friendsRewarded": "已获奖励的好友",
+          "rewardedOfMax": "{rewarded, number} / {max, number}",
+          "extraCodes": "额外动态二维码",
+          "waiting": "{waiting, plural, other {有 # 位好友尚未创建动态二维码。}}他们自注册起有 {days, number} 天时间。",
+          "atCap": "你已因 {max, number} 位好友获得奖励，这是一个邀请链接可获得奖励的上限。通过该链接加入的好友仍可获得他们的 {count, number} 个。",
+          "youWereInvited": "你是通过好友的邀请加入的，因此你自己的工作区也多获得了 {count, number} 个动态二维码。",
+          "howItWorks": "运作方式",
+          "ruleSignUp": "好友需在该次访问中通过你的链接创建新的 QRdx 账号，才会被计入。之后再次访问时注册，或使用已有账号，都不会计入。",
+          "ruleFirstCode": "当好友在注册后 {days, number} 天内创建第一个动态二维码，你们双方在各自的工作区中都会多获得 {count, number} 个动态二维码。",
+          "ruleCap": "你最多可因 {max, number} 位好友获得奖励（共 {total, number} 个二维码）。在此之后加入的好友仍可获得他们的 {count, number} 个。",
+          "ruleNotYourself": "你自己的其他账号不会计入，使用你的邮箱地址的其他写法注册的账号，以及与你共用工作区的任何人，也都不会计入。",
+          "ruleAllowance": "这些额外的二维码会叠加到你自己工作区的动态二维码数量上，适用于任何套餐，但不适用于团队。它们没有现金价值，也不能转移到其他账号。用它们创建的二维码会持续有效。",
+          "rulePrivate": "我们不会显示谁通过你的链接注册，你的好友也看不到是谁邀请了他们。",
+          "ruleEnd": "我们可以终止针对新邀请的邀请奖励，已经获得的二维码会保留。详情请见<terms>服务条款</terms>和<help>帮助页面</help>。"
+        }
       }
     },
     "dashboard": {
@@ -7679,6 +7732,8 @@
           "downloadGif": "下载 GIF",
           "downloadBmp": "下载 BMP",
           "downloadIco": "下载 ICO",
+          "downloadTiff": "下载 TIFF",
+          "downloadTiffCmyk": "下载 CMYK TIFF",
           "moreFormats": "更多格式",
           "editLinkValue": "编辑链接",
           "codeSettings": "二维码设置",
@@ -7780,6 +7835,8 @@
           "gifImagesZip": "GIF 图片（ZIP）",
           "bmpImagesZip": "BMP 图片（ZIP）",
           "icoImagesZip": "ICO 网站图标 (ZIP)",
+          "tiffImagesZip": "TIFF 图片（ZIP）",
+          "tiffCmykImagesZip": "CMYK TIFF 图片（ZIP）",
           "svgImagesZip": "SVG 图片（ZIP）",
           "more": "更多",
           "moveToTrash": "移至回收站",
@@ -9019,7 +9076,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "新功能",
         "backToLabel": "返回{label}",
         "expandSidebar": "展开侧边栏",
         "collapseSidebar": "收起侧边栏",
@@ -9270,8 +9326,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "此链接无法使用",
+          "unknownAppTitle": "此应用与 QRdx 的连接已过期",
+          "unknownAppBody": "QRdx 已无法识别将你带到此处的应用。如果这是你连接到 QRdx 的 AI 应用（例如 Claude、Cursor 或 VS Code），请在该应用中移除 QRdx，重新添加并登录。否则，请联系该应用的开发者。",
           "theAppThatSentYou": "将你带到此处的应用发出了无效请求：<span>{description}</span>。请返回该应用重试，或联系其开发者。",
           "appnameWillBeAbleTo": "{appName} 将能够",
+          "mcpOnlyNote": "{appName} 只能通过 QRdx MCP 服务器的二维码工具使用你的账户：它无法删除二维码、管理 Webhook 或使用 AI 艺术。",
           "nameWantsToAccessYour": "{name} 想要访问你的 QRdx 账号",
           "builtByName": "开发者：<strong>{name}</strong>",
           "unverifiedApp": "未经验证的应用。",
@@ -9440,9 +9499,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "这封邮件是发给 <strong>{email}</strong> 的。如果您并未预期收到这封邮件，可以直接忽略。如果您担心账户安全，请<link>告知我们</link>。",
       "sentFor": "由 <link>{host}</link> 代 {name} 发送",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "退订"
+      "unsubscribe": "退订",
+      "settings": "更改您接收的邮件类型",
+      "copyLink": "或复制此链接并粘贴到浏览器中："
     },
     "codes": {
       "neverAsk": "QRdx 绝不会通过电话、聊天或邮件索要此验证码。",
@@ -9664,8 +9726,7 @@
         "viewer": "查看者可以查看工作区中的二维码、页面和分析数据，但不能更改任何内容。"
       },
       "accept": "接受邀请",
-      "expires": "请使用此邮箱地址登录以接受邀请。邀请将于 {date} 过期。如果你并未预期收到此邮件，请忽略。",
-      "pasteLink": "或将此链接粘贴到浏览器中：{url}",
+      "expires": "请使用此邮箱地址登录以接受邀请。邀请将于 {date} 过期。",
       "someone": "一位团队成员"
     },
     "portalInvite": {
@@ -9674,8 +9735,7 @@
       "heading": "你的二维码报告",
       "body": "{hasFolders, select, yes {{inviter} 邀请你查看 {portal} 在 {folders} 中的二维码：每个二维码的扫描频率、扫描地点和设备，以及打开的页面。仅供查看。} other {{inviter} 邀请你查看 {portal} 的二维码：每个二维码的扫描频率、扫描地点和设备，以及打开的页面。仅供查看。}}",
       "open": "打开报告",
-      "signIn": "请使用此邮箱地址登录：我们会向你发送一次性验证码。如果你并未预期收到此邮件，请忽略。",
-      "pasteLink": "或将此链接粘贴到浏览器中：{url}",
+      "signIn": "请使用此邮箱地址登录：我们会向你发送一次性验证码。",
       "yourAgency": "你的代理商"
     },
     "limitNotice": {
@@ -9706,7 +9766,9 @@
       "makeRoom": "{limit, select, dynamicCodes {归档一个以腾出空间。} landingPages {删除一个以腾出空间。} storage {删除不再需要的文件以腾出空间。} savedThemes {删除一个以腾出空间。} other {}}",
       "resets": "{date} 重置。",
       "keeps": "{limit, select, dynamicCodes {现有二维码仍可正常使用。} landingPages {现有页面保持在线。} formResponses {页面保持在线。重置后，表单将再次接收回复。} storage {你已上传的文件仍可使用。} other {}}",
-      "upgradeButton": "升级到 {plan}"
+      "upgradeButton": "升级到 {plan}",
+      "includesBonus": "{plan} 包含 {amount}，另有邀请新增的 {bonus, number} 个。",
+      "invite": "或者<link>邀请好友</link>：好友创建第一个动态二维码后，你们双方各得 {count, number} 个额外名额。"
     },
     "weeklyDigest": {
       "subject": "你的 QRdx 一周概览：{scans, plural, other {# 次扫描}}",
@@ -9722,11 +9784,14 @@
       "sameAsLastWeek": "与上周持平",
       "change": "较上周 {change}",
       "topCodes": "热门二维码",
+      "code": "二维码",
       "countries": "扫描地区",
+      "country": "国家/地区",
       "newCodesLine": "本周新增 {count, plural, other {# 个二维码}}。",
       "open": "打开控制台"
     },
     "personal": {
+      "meantFor": "这封邮件的收件人是 <strong>{email}</strong>。",
       "reply": "直接回复这封邮件，{name} 就能收到。",
       "stop": "不再接收 QRdx 团队的来信"
     },
@@ -9741,11 +9806,24 @@
       "makeCode": "<link>创建动态二维码。</link>它会打开一个固定不变的短链接，所以您可以马上印刷。",
       "seeScans": "<link>查看扫描情况：</link>用户在何时、何地、使用哪些设备扫描。",
       "changeLink": "随时更改二维码指向的地址，即使已经印刷也可以，无需重新印刷。",
+      "button": "创建你的第一个二维码",
       "free": "静态二维码永久免费，即使你更换套餐或停止付费，已创建的二维码也会继续有效。免费版还包含 {count} 个动态二维码。",
       "pro": "如果您需要更多功能，Pro 版每月 {monthly} 或每年 {yearly}，可使用不限数量的动态二维码、{domains} 个自定义域名，在每个扫描里程碑收到邮件提醒，还可以按需接收每周汇总。",
       "taxes": "结账时可能会加收当地税费。",
       "reply": "如果您遇到任何问题，或不确定如何操作，请直接回复这封邮件。每一封回复都会有专人阅读。",
       "reason": "您收到这封邮件，是因为您刚刚创建了 QRdx 账户。"
+    },
+    "inviteReward": {
+      "subject": "你邀请的好友创建了第一个二维码：你们双方各增加了 {count, number} 个动态二维码",
+      "preview": "你们双方各增加了 {count, number} 个动态二维码",
+      "heading": "你们双方各增加了 {count, number} 个动态二维码",
+      "body": "通过你的邀请链接注册的好友刚刚创建了第一个动态二维码。你的工作区现已增加 {count, number} 个动态二维码，对方的工作区也一样。",
+      "progress": "你的链接最多可为你奖励 {max, number} 位好友，目前已奖励 {rewarded, plural, other {# 位好友}}。",
+      "last": "这是你的链接可为你奖励的 {max, number} 位好友中的最后一位。通过该链接加入的好友仍可获得 {count, number} 个。",
+      "inviteMore": "邀请更多好友",
+      "seeInvites": "查看你的邀请",
+      "keeps": "额外的二维码适用于任何套餐，没有现金价值。用它们创建的二维码会继续有效。",
+      "reason": "你收到这封邮件，是因为有好友通过你的 QRdx 邀请链接注册，并创建了第一个动态二维码。"
     }
   },
   "codeActions": {
@@ -10037,7 +10115,8 @@
       "bulkOverLimit": "最多 {limit, number} 行的文件无需账户。免费账户每个文件最多可生成 {max, number} 个，且你的文件会保持已加载状态。",
       "keepDesigns": "将你的设计保存在账户中，所有设备都能用。",
       "afterDownload": "免费使用，无论你的套餐如何变化，你的二维码都能继续正常使用。",
-      "upgrade": "套餐和账单归属于账户。你可以从刚才中断的地方继续。"
+      "upgrade": "套餐和账单归属于账户。你可以从刚才中断的地方继续。",
+      "invite": "你是通过好友的邀请来到这里的。现在注册，创建第一个动态二维码后，即可额外获得 {count, number} 个动态二维码。"
     },
     "nudge": {
       "dismiss": "不再显示此提示"
@@ -10185,6 +10264,11 @@
         "failed": "单点登录未能成功。请重试，或改用其他方式登录。",
         "rateLimited": "尝试次数过多。请等待一分钟后再试。"
       }
+    },
+    "inviteNote": {
+      "text": "你受邀加入 QRdx。在本次访问期间完成注册，并在 {days, number} 天内创建动态二维码，即可额外获得 {count, number} 个动态二维码。",
+      "signUp": "注册",
+      "dismiss": "关闭"
     }
   },
   "settingsActions": {

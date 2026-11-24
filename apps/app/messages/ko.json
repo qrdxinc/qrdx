@@ -220,6 +220,7 @@
     "description": "오픈소스 QR 코드 플랫폼",
     "starOnGithub": "GitHub에서 별표 주기",
     "newsOnX": "X에서 보는 QRdx 소식",
+    "joinDiscord": "QRdx Discord 참여하기",
     "navLabel": "푸터",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -349,7 +350,7 @@
     "hero": {
       "badge": "무료 오픈 소스 (AGPL-3.0)",
       "title": "계속 작동하는 동적 QR 코드를 만드는 무료 QR 코드 생성기",
-      "description": "패턴, 그라데이션, 로고, 프레임으로 브랜드에 맞는 QR 코드를 디자인하고, 가입이나 워터마크 없이 PNG, SVG, PDF, EPS로 다운로드하세요. 로그인하면 인쇄 후에도 수정할 수 있는 동적 QR 코드, 호스팅 페이지, 스캔 분석을 사용할 수 있어요.",
+      "description": "패턴, 그라데이션, 로고, 프레임으로 브랜드에 맞는 QR 코드를 디자인하고, 회원가입이나 워터마크 없이 PNG, SVG, PDF, EPS, TIFF로 다운로드하세요. 로그인하면 인쇄한 뒤에도 수정할 수 있는 동적 QR 코드, 호스팅 페이지, 스캔 분석을 사용할 수 있습니다.",
       "primary": "Playground 체험하기",
       "secondary": "문서 보기",
       "sceneLabel": "QRdx 흐름을 보여 주는 애니메이션 그림: 스튜디오 화면에서 QR 코드를 디자인하고 스타일을 지정하면, 프린터가 카드에 인쇄하고, 로봇 팔이 카드를 컨베이어에 올려놓습니다. 게이트에 설치된 휴대폰이 지나가는 각 카드를 스캔하고, 스캔 정보는 분석 패널로 전달되어 막대가 하나 추가됩니다. 큰 동적 QR 카드는 다시 인쇄하지 않고도 연결 링크를 바꿉니다."
@@ -377,7 +378,7 @@
         "none": "프레임 없음",
         "border": "테두리"
       },
-      "more": "전체 Playground에서는 본체 패턴 {bodyPatterns, number}개, 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 원하는 색상과 그라데이션, 로고, 템플릿을 사용하고 PNG, SVG, PDF, EPS로 다운로드할 수 있어요.",
+      "more": "전체 Playground에서는 본체 패턴 {bodyPatterns, number}개, 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 원하는 색상과 그라데이션, 로고, 프레임, PNG, SVG, PDF, EPS, TIFF 다운로드를 사용할 수 있습니다.",
       "customize": "Playground에서 꾸미기",
       "qrLabel": "{value}의 QR 코드",
       "empty": "링크를 입력하면 QR 코드를 볼 수 있어요."
@@ -518,7 +519,7 @@
       "items": {
         "free": {
           "question": "QRdx는 정말 무료인가요? 숨겨진 제한이 있나요?",
-          "answer": "네. 정적 QR 코드는 계정 없이 무료로 만들고, 꾸미고, 다운로드할 수 있어요. 코드 수 제한이 없고, 모든 디자인 옵션(본체 패턴 {bodyPatterns, number}개, 모서리 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 그라데이션, 로고, 프레임, Logo QR 또는 Image QR 아트)을 쓸 수 있으며, PNG, JPG, SVG, PDF, EPS 다운로드도 가능해요. 워터마크와 광고는 없어요. 정적 QR 코드는 콘텐츠를 코드 자체에 저장하므로 만료되지 않고 스캔 횟수 제한도 없어요. 무료 계정을 만들면 동적 QR 코드 10개, 호스팅 페이지 3개, {historyYears, plural, one {#년} other {#년}}치 스캔 분석, 저장 가능한 테마 10개, AI 테마 생성 5회가 추가돼요. Pro(월 {proMonthly} 또는 연 {proYearly})와 Business(월 {businessMonthly} 또는 연 {businessYearly})는 이 한도를 더 늘려 줘요."
+          "answer": "네. 정적 QR 코드는 계정 없이 무료로 만들고, 꾸미고, 다운로드할 수 있습니다. 코드 수 제한이 없고, 모든 디자인 옵션(본체 패턴 {bodyPatterns, number}개, 모서리 눈 모양 {eyeShapes, number}개, 눈 중심 {eyeCentres, number}개, 그라데이션, 로고, 프레임, Logo QR 및 Image QR 아트)과 PNG, JPG, SVG, PDF, EPS, TIFF 다운로드를 모두 쓸 수 있습니다. 워터마크와 광고는 없습니다. 정적 QR 코드는 콘텐츠를 코드 자체에 저장하므로 만료되지 않고 스캔 횟수 제한도 없습니다. 무료 계정에서는 동적 QR 코드 10개, 호스팅 페이지 3개, {historyYears, plural, one {#년} other {#년}} 동안의 스캔 분석, 저장된 테마 10개, AI 테마 생성 5회가 추가되며, Pro({proMonthly}/월 또는 {proYearly}/년)와 Business({businessMonthly}/월 또는 {businessYearly}/년)는 이 한도를 더 늘려 줍니다."
         },
         "signup": {
           "question": "가입하거나 계정을 만들어야 하나요?",
@@ -546,7 +547,7 @@
         },
         "api": {
           "question": "개발자가 API로 QR 코드를 생성할 수 있나요?",
-          "answer": "네. Image API는 API 키 없이 어떤 URL이든 SVG, PNG, EPS 형식의 QR 코드로 만들어 줘요. REST API는 워크스페이스 API 키나 OAuth로 동적 QR 코드를 만들고 수정하며 스캔 데이터를 조회할 수 있어요. 그 밖에 Claude, Cursor, VS Code용 MCP server, 명령줄 도구(@qrdx/cli), shadcn/ui 컴포넌트, qrdx React 라이브러리도 있어요."
+          "answer": "네. Image API는 API 키 없이 모든 URL을 SVG, PNG, TIFF, EPS QR 코드로 만들어 주고, REST API는 워크스페이스 API 키 또는 OAuth로 동적 QR 코드를 만들고 수정하며 스캔 데이터를 읽을 수 있습니다. Claude, Cursor, VS Code용 MCP 서버, 명령줄 도구(@qrdx/cli), shadcn/ui 컴포넌트, qrdx React 라이브러리도 있습니다."
         },
         "paidPlans": {
           "question": "Pro나 Business에서는 무엇을 쓸 수 있나요?",
@@ -913,12 +914,12 @@
       "metaTitle": "QR 코드 유형: 무료 생성기 {count, number}종 (Wi-Fi, vCard, UPI)",
       "metaDescription": "무료 생성기를 제공하는 QR 코드 유형 {count, number}종: Wi-Fi, vCard, WhatsApp, UPI, 이메일, 소셜 프로필, 결제. 각 페이지에서 정확한 페이로드 형식을 확인할 수 있어요.",
       "title": "모든 콘텐츠 유형을 위한 QR 코드 생성기",
-      "intro1": "QR 코드는 웹사이트를 여는 것 이상의 일을 할 수 있습니다. 코드에 담긴 텍스트에 따라 휴대폰이 Wi-Fi 네트워크에 연결하거나, 연락처를 저장하거나, 결제를 시작하거나, 채팅을 열 수 있어요. 아래 {count, number}가지 유형 중 하나를 선택하면 알맞은 입력 필드, 실시간 미리보기, PNG, WebP, SVG 다운로드를 제공하는 생성기를 사용할 수 있습니다.",
+      "intro1": "QR 코드는 웹사이트를 여는 것 이상의 일을 할 수 있어요. 안에 담긴 텍스트에 따라 휴대폰이 Wi-Fi 네트워크에 연결하거나, 연락처를 저장하거나, 결제를 시작하거나, 채팅을 열 수 있어요. 아래 {count, number}가지 유형 중 하나를 고르면 알맞은 입력란, 실시간 미리보기, PNG, WebP, SVG, TIFF 다운로드를 갖춘 생성기를 사용할 수 있어요.",
       "intro2": "이 페이지에서 만든 코드는 기본적으로 정적입니다. 내용이 패턴 자체에 인코딩되므로 오프라인에서도 작동하고, 만료되지 않으며, 스캔 횟수 제한도 없습니다. 각 페이지에는 코드가 기록하는 정확한 형식도 설명되어 있어서 스캐너가 무엇을 읽는지 알 수 있습니다.",
       "cardTitle": "{name} QR 코드 생성기",
       "moreTools": "더 많은 도구",
       "bulkTitle": "수백 개의 코드가 필요하세요? 대량 생성기를 사용해 보세요",
-      "bulkDescription": "CSV를 업로드하면 모든 코드를 PNG, WebP 또는 SVG로 만들어 ZIP 파일 하나로 내려받을 수 있습니다. 모든 작업은 브라우저에서만 처리돼요.",
+      "bulkDescription": "CSV를 업로드하면 모든 코드를 PNG, WebP, SVG 또는 TIFF로 하나의 ZIP 파일에 담아 다운로드할 수 있어요. 모든 생성 과정은 브라우저 안에서만 이루어져요.",
       "printTitle": "코드를 인쇄하나요? 크기를 확인하세요",
       "printDescription": "스캔 거리와 코드에 담긴 데이터 양을 바탕으로 최소 인쇄 크기를 계산해 보세요.",
       "dynamicTitle": "동적 QR 코드 생성기",
@@ -1104,7 +1105,7 @@
       "metaDescription": "CSV 파일 하나로 스타일이 적용된 QR 코드를 최대 {rows, number}개까지 만들어 PNG, WebP, SVG 형식의 ZIP으로 받으세요. 브라우저에서 바로 실행되어 업로드도, 워터마크도 없고 {limit, number}행까지는 가입도 필요 없어요.",
       "crumb": "대량 생성기",
       "title": "QR 코드 대량 생성기",
-      "intro1": "CSV 파일 하나로 수천 개의 QR 코드를 한 번에 만들어 보세요. 원하는 스타일을 적용해 PNG, WebP, SVG 형식으로 ZIP에 담아 내려받을 수 있습니다. 한 행이 코드 하나이고, 파일 이름은 열에서 가져옵니다. 제품 라벨, 행사 티켓, 자산 태그, 테이블 번호, 우편물에 활용해 보세요.",
+      "intro1": "CSV 파일 하나로 수천 개의 QR 코드를 한 번에 만들 수 있어요. 원하는 스타일을 적용하고 PNG, WebP, SVG 또는 TIFF(인쇄용 CMYK TIFF 포함) 형식으로 ZIP 파일에 담아 다운로드하세요. 한 행이 코드 하나이며, 파일 이름은 열에서 가져옵니다. 제품 라벨, 행사 티켓, 자산 태그, 테이블 번호, 우편 발송물 등에 활용해 보세요.",
       "intro2": "모든 과정이 브라우저에서 실행되어 CSV 파일은 업로드되지 않으며, 워터마크나 코드당 요금도 없어요. {limit, number}행 이하 파일은 계정 없이 쓸 수 있고, 최대 {rows, number}행까지의 더 큰 파일은 무료 계정이 필요해요. 형식이 헷갈린다면 샘플 CSV로 시작해 보세요.",
       "facts": {
         "rows": "파일당 최대 {rows, number}행",
@@ -1193,6 +1194,8 @@
         "formatGif": "GIF(이미지, 256색)",
         "formatBmp": "BMP(이미지, 비압축)",
         "formatIco": "ICO (파비콘, 16~256px)",
+        "formatTiff": "TIFF (인쇄용 이미지)",
+        "formatTiffCmyk": "CMYK TIFF (인쇄용)",
         "formatSvg": "SVG(벡터, 인쇄용)",
         "size": "{format} 크기",
         "quietZone": "{modules, number}모듈 여백 추가(인쇄 시 권장)",
@@ -1239,7 +1242,8 @@
         "logoQuestion": "로고나 더 높은 오류 정정 수준을 쓰면 크기가 달라지나요?",
         "logoAnswer": "오류 정정 수준이 높을수록 중복 데이터가 늘어나므로, 같은 내용이라도 모듈이 더 많은 높은 버전이 필요하고 인쇄 크기도 커집니다. 로고는 모듈 수를 바꾸지 않지만 일부 모듈을 가리므로, 로고를 넣을 때는 Q 또는 H 수준을 사용하세요.",
         "quietQuestion": "여백(콰이어트 존)도 크기에 포함되나요?",
-        "quietAnswer": "표시된 코드 크기는 가장자리에서 가장자리까지의 크기예요. 스캐너가 읽으려면 사방에 {quiet, number}모듈 너비의 빈 여백도 필요하며, 두 번째 수치에는 이 여백이 포함되어 있어요. QRdx에서 다운로드한 파일은 콰이어트 존을 켜지 않으면 여백이 없으므로, 레이아웃에서 코드 주변에 이 공간을 남겨 두세요.",
+        "quietAnswer": "표시된 코드 크기는 가장자리에서 가장자리까지의 크기예요. 스캐너가 읽으려면 사방에 {quiet, number}모듈의 여백도 필요하며, 두 번째 수치에는 이 여백이 포함돼 있어요. QRdx에서 다운로드한 코드에는 디자인에 설정된 여백이 들어 있고, 생성기와 대량 생성 도구는 끄지 않는 한 {quiet, number}모듈을 추가해요. 부족한 여백이 있다면 레이아웃에서 코드 주위에 그만큼 비워 두세요.",
+        "quietAnswerNewDesigns": "표시된 코드 크기는 가장자리에서 가장자리까지의 크기예요. 스캐너가 읽으려면 사방에 {quiet, number}모듈의 여백도 필요하며, 두 번째 수치에는 이 여백이 포함돼 있어요. QRdx에서 다운로드한 코드에는 디자인에 설정된 여백이 들어 있어요. 에디터의 새 디자인은 {start, number}모듈로 시작하고, 생성기와 대량 생성 도구는 끄지 않는 한 {quiet, number}모듈을 추가해요. 부족한 여백이 있다면 레이아웃에서 코드 주위에 그만큼 비워 두세요.",
         "resolutionQuestion": "인쇄용으로는 어떤 해상도로 내보내야 하나요?",
         "resolutionAnswer": "가능하면 SVG를 사용하세요. 벡터 형식이라 어떤 크기에서도 선명해요. PNG는 인쇄 시 일반적인 최소 기준인 300 DPI에 맞춰 표시된 픽셀 너비 이상으로 내보내세요."
       },
@@ -1738,6 +1742,9 @@
     "hosted": {
       "notFoundTitle": "페이지를 찾을 수 없어요",
       "notFoundMessage": "이 링크는 페이지로 연결되지 않아요. 소유자가 삭제했거나 링크가 잘못 입력되었을 수 있어요.",
+      "notReadyTitle": "이 페이지는 아직 준비되지 않았어요",
+      "notReadyMessage": "이 QR 코드를 만든 사람이 연결된 페이지를 아직 설정하고 있어요. 잠시 후에 다시 시도해 주세요.",
+      "notReadyOwner": "이 코드를 만드셨나요? QRdx에서 페이지를 게시하면 스캔했을 때 해당 페이지가 열려요.",
       "passwordProtected": "비밀번호로 보호됨",
       "madeWithQrdx": "QRdx로 제작",
       "share": "공유",
@@ -2103,6 +2110,12 @@
       "gs1TooLong": "GS1-128은 AI와 데이터를 합쳐 최대 {max}자까지 담을 수 있어요. 현재 {count}자예요. 바코드 두 개로 나누세요.",
       "databarGtinOnly": "GS1 DataBar에는 GTIN만 담을 수 있어요. (01)과 14자리 숫자예요. 날짜, 배치, 중량을 담으려면 GS1 DataBar Expanded나 GS1-128을 사용해 주세요.",
       "databarTooLong": "GS1 DataBar Expanded에는 AI와 데이터를 최대 {max}자리까지 담을 수 있고, 문자가 있으면 더 적게 담겨요. 현재는 {count}자예요. AI를 하나 빼거나 값을 줄여 주세요.",
+      "maxicodeChars": "MaxiCode는 Latin-1 문자를 담을 수 있어요. 문자, 숫자, 기호, 서유럽 악센트 문자가 해당돼요. 허용되지 않는 문자: {chars}",
+      "maxicodePostcode": "캐리어 메시지는 우편번호로 시작해요. 미국 ZIP Code는 최대 9자리 숫자이고, 그 밖의 지역은 대문자, 숫자, 공백을 합쳐 최대 6자예요.",
+      "maxicodeCountry": "우편번호 다음에는 3자리 ISO 국가 코드가 와요(미국은 840). 현재 값은 \"{country}\"예요.",
+      "maxicodeService": "국가 코드 다음에는 3자리 서비스 등급이 와요. 현재 값은 \"{service}\"예요.",
+      "maxicodeCarrier": "캐리어 메시지(모드 {mode}): 우편번호 {postcode}, 국가 {country}, 서비스 등급 {service}.",
+      "maxicodeZipPadded": "5자리 ZIP Code는 +4 자리에 0000을 넣은 {zip} 형태로 그려지고, 리더도 그대로 읽어 와요.",
       "imbEnter": "20자리 추적 코드를 입력하고, 라우팅 ZIP Code가 있으면 이어서 입력해 주세요.",
       "imbTrackingLength": "추적 코드는 20자리예요. 바코드 ID(2), 서비스 유형(3), 발송인 ID와 일련번호(15)로 이루어져 있어요. 현재는 {count, plural, other {#자리}}예요.",
       "imbRoutingLength": "20자리 추적 코드 뒤에는 라우팅 ZIP Code가 와요. 5자리, 9자리(ZIP+4) 또는 11자리(ZIP+4와 배달 지점)예요. 추적 코드 뒤에 현재 {count, plural, other {#자리}}가 있어요.",
@@ -2688,7 +2701,7 @@
     "playground": "Playground에서 체험하기",
     "promptsEyebrow": "체험하기",
     "promptsTitle": "이런 프롬프트로 시작해 보세요",
-    "promptsDescription": "모든 프롬프트는 QRdx 도구가 실제로 하는 일을 활용해요. 색상과 모양, Wi-Fi, 연락처, 이메일, SMS, 지도 페이로드, SVG, PNG, WebP, EPS 링크까지 다룹니다. 어시스턴트에서 열거나 복사해 사용하세요.",
+    "promptsDescription": "각 프롬프트는 QRdx 도구가 실제로 할 수 있는 기능을 바탕으로 만들어졌어요. 색상과 모양, Wi-Fi, 연락처, 이메일, SMS, 지도 페이로드, 그리고 SVG, PNG, WebP, TIFF, EPS 링크까지 다룰 수 있어요. 어시스턴트에서 열거나 복사해서 사용해 보세요.",
     "howEyebrow": "사용 방법",
     "howTitle": "세 단계만 거치면 바로 요청할 수 있어요",
     "howDescription": "어시스턴트가 대신 QRdx 도구를 호출해요. API를 직접 다룰 일은 없어요.",
@@ -2698,9 +2711,10 @@
     "setupUrl": "서버 URL",
     "toolsEyebrow": "도구",
     "toolsTitle": "어시스턴트가 호출할 수 있는 도구",
-    "toolsDescription": "도구 {count, number}개가 있어요. save_template, save_barcode, generate_ai_art를 제외한 모든 도구는 읽기 전용이며 키가 필요 없어요. 이미지를 렌더링하고, 텍스트를 서식화하고, 공개 커뮤니티를 읽어 와요. 전체 파라미터는 <link>MCP server docs</link>에서 확인하세요.",
+    "toolsDescription": "{count, number}개의 도구가 있어요. 대부분 읽기 전용이며 계정이나 키 없이 쓸 수 있어요. 이미지를 렌더링하고, 텍스트 형식을 맞추고, 공개 커뮤니티를 읽어요. 동적 QR 코드 도구 4개는 QRdx 로그인을 요청하고, save_template, save_barcode, generate_ai_art는 연결에 API 키가 있을 때 목록에 나타나요. 전체 매개변수는 <link>MCP 서버 문서</link>에서 확인하세요.",
     "toolNoKey": "키 불필요",
     "toolNeedsKey": "API 키 필요",
+    "toolNeedsSignIn": "로그인 필요",
     "faqTitle": "MCP 서버 FAQ",
     "connect": {
       "copyFailed": "복사하지 못했어요. 텍스트를 선택해서 직접 복사해 주세요.",
@@ -2804,7 +2818,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "무료 QR 코드 API: 키 없이 SVG, PNG, 로고까지",
-    "metaDescription": "키 없이 쓸 수 있는 무료 QR 코드 API예요. URL 하나로 색상, 모양, 로고를 적용한 SVG, PNG, WebP, EPS QR 코드를 받을 수 있어요. 분당 {perMinute, number}회 요청할 수 있고, 1년간 캐시돼요.",
+    "metaDescription": "키 없이 쓰는 무료 QR 코드 API예요. URL 하나로 원하는 색상, 모양, 로고가 적용된 SVG, PNG, WebP, TIFF, EPS QR 코드를 받을 수 있어요. 분당 {perMinute, number}회 요청할 수 있고, 1년간 캐시돼요.",
     "crumb": "QR 코드 API",
     "title": "무료 QR 코드 API",
     "intro1": "URL을 넣을 수 있는 곳이면 어디든 QR 코드를 넣어 보세요. api.qrdx.dev로 GET 요청을 한 번 보내면 이미지가 바로 반환돼요. 계정도, API 키도, SDK도 필요 없어요. 색상, 모양, 오류 정정, 로고는 쿼리 문자열에 넣으면 돼요.",
@@ -2812,7 +2826,7 @@
     "facts": {
       "noKey": "키·가입 불필요",
       "rateLimit": "IP당 분당 {perMinute, number}회 요청",
-      "formats": "SVG, PNG, WebP, EPS",
+      "formats": "SVG, PNG, WebP, TIFF, EPS",
       "openSource": "오픈 소스"
     },
     "docs": "Image API 문서",
@@ -2837,6 +2851,7 @@
       "logoNote": "로고를 넣으면 로고에 필요할 때 오류 정정 수준이 H로 바뀌어 스캔이 잘 돼요.",
       "previewAlt": "{value}의 QR 코드",
       "epsPreview": "EPS는 인쇄용 파일이라 미리보기에는 SVG와 같은 코드가 표시돼요.",
+      "tiffPreview": "TIFF는 대부분의 브라우저에서 표시할 수 없는 인쇄용 파일이라서, 미리보기에는 PNG와 같은 코드가 표시돼요.",
       "empty": "인코딩할 텍스트나 링크를 입력하세요.",
       "tooLong": "API 제한인 {max, number}자를 넘었어요.",
       "loadFailed": "미리보기를 불러오지 못했어요. 여러 번 연달아 바꿨다면 1분 정도 기다려 주세요. API는 1분에 {perMinute, number}번까지 요청할 수 있어요.",
@@ -2868,7 +2883,7 @@
     "params": {
       "data": "인코딩할 텍스트나 URL이에요. 최대 {max, number}자까지 가능해요.",
       "size": "가로와 세로 크기이며 단위는 픽셀로, {min, number}부터 {max, number}까지예요. EPS는 포인트 단위의 너비예요.",
-      "format": "svg, png, webp(무손실) 또는 eps(벡터, 인쇄용).",
+      "format": "svg, png, webp(무손실), tiff, tiff-cmyk(인쇄용 CMYK) 또는 eps(인쇄용 벡터).",
       "colors": "코드 색상과 배경 색상을 #을 뺀 hex 값으로 지정해요(155dfc). bg=00000000이면 배경이 투명해져요.",
       "shapes": "모듈, 모서리 눈, 그 안의 점의 모양이에요. 모듈 모양은 모두 {count, number}가지예요.",
       "level": "오류 정정 수준: L(7%), M(15%), Q(25%), H(30%)만큼 코드가 손상되어도 스캔할 수 있어요.",
@@ -2900,7 +2915,7 @@
       "title": "Image API",
       "noKey": "키나 계정이 필요 없어요",
       "static": "정적 코드: 데이터가 이미지에 들어 있어요",
-      "formats": "SVG, PNG, WebP, EPS",
+      "formats": "SVG, PNG, WebP, TIFF, EPS",
       "limit": "IP당 분당 {perMinute, number}회 요청"
     },
     "restCard": {
@@ -2932,7 +2947,7 @@
       "logoQuestion": "QR 코드 API로 로고를 넣을 수 있나요?",
       "logoAnswer": "네. logoIcon을 사용하면 키 없이 간편 아이콘(Wi-Fi, 링크, 전화, 이메일 등)이나 Simple Icons의 브랜드 로고 {brands}개 중 하나를 가운데에 넣을 수 있어요. 로고에 필요하면 오류 정정 수준이 H로 바뀌어서 스캔도 문제없이 돼요.",
       "formatsQuestion": "어떤 이미지 형식으로 반환하나요?",
-      "formatsAnswer": "기본은 SVG이고, format=png, webp, eps를 지정하면 PNG, 무손실 WebP, 벡터 EPS로 받을 수 있어요. 크기는 {min, number}픽셀부터 {max, number}픽셀까지 지원해요.",
+      "formatsAnswer": "기본값은 SVG이고, format=png, webp, tiff, eps를 지정하면 PNG, 무손실 WebP, TIFF, 벡터 EPS로 받을 수 있어요. 인쇄용 CMYK TIFF는 format=tiff-cmyk로 지정하세요. 크기는 {min, number}픽셀부터 {max, number}픽셀까지 가능해요.",
       "expireQuestion": "QR 코드는 만료되나요?",
       "expireAnswer": "아니요. 이미지 API는 정적 QR 코드를 만들어요. 인코딩한 내용이 코드 안에 들어 있어서, 그 안의 링크나 텍스트가 유효한 동안 계속 작동해요. 만료되는 것도 없고 스캔 횟수를 세지도 않아요.",
       "dynamicQuestion": "인쇄한 뒤에도 코드가 가리키는 곳을 바꿀 수 있나요?",
@@ -2970,7 +2985,7 @@
       },
       "print": {
         "title": "다운로드하고 인쇄하기",
-        "body": "PNG, WebP, SVG로 다운로드하거나 Playground에서 먼저 스타일을 꾸밀 수 있어요. 짧은 링크는 긴 URL보다 모듈이 적게 필요해서 코드를 더 작게 인쇄해도 스캔돼요."
+        "body": "PNG, WebP, SVG, TIFF 형식으로 다운로드하거나 먼저 Playground에서 스타일을 꾸며 보세요. 짧은 링크는 긴 URL보다 모듈이 적게 필요해서, 코드를 더 작게 인쇄해도 스캔할 수 있어요."
       },
       "change": {
         "title": "필요할 때 바꾸기",
@@ -3497,6 +3512,7 @@
         "pdfAndEpsDrawEvery": "PDF와 EPS는 모든 점을 벡터 도형으로 그리며, 선형 및 방사형 그라데이션도 부드러운 벡터 셰이딩으로 유지해요.",
         "jpgCantBeTransparent": "JPG는 투명하게 만들 수 없어요",
         "bmpCantBeTransparent": "BMP는 투명하게 저장할 수 없어요. 배경은 흰색으로 저장돼요",
+        "tiffCmykCantBeTransparent": "CMYK TIFF는 인쇄용이라 투명도를 지원하지 않아요. 투명 배경은 흰색으로 출력돼요.",
         "gifWouldNotScan": "GIF는 256색까지만 담을 수 있는데, 이 디자인은 더 많은 색이 필요해요. 256색으로 줄이면 더 이상 스캔되지 않아요. 대신 PNG로 다운로드하세요.",
         "moreFormats": "다른 형식 더 보기",
         "vector": " · 벡터",
@@ -3523,6 +3539,8 @@
           "gif": "GIF만 지원하는 오래된 도구나 이메일 빌더에 적합해요 · 최대 256색이며, 그중 하나는 투명하게 쓸 수 있어요.",
           "bmp": "BMP만 지원하는 오래된 시스템이나 임베디드 도구에 적합합니다 · 비압축 24비트, 투명 배경은 흰색으로 저장됩니다.",
           "ico": "파비콘에 가장 적합해요 · 16, 32, 48, 256px 이미지가 들어 있는 파일 하나예요. 작은 크기는 아이콘용이며 스캔용이 아니에요.",
+          "tiff": "TIFF를 요구하는 인쇄소에 적합해요 · 300 dpi, 투명도 유지.",
+          "tiff-cmyk": "CMYK를 요구하는 인쇄소에 적합해요 · 검정은 검정 잉크만으로 인쇄되고, 투명 배경은 흰색으로 출력돼요. 컬러 프로파일은 포함되지 않아요. 정확한 브랜드 색상은 인쇄소에 문의하세요.",
           "svg": "Figma, Illustrator, 웹사이트에 가장 좋아요 · 어떤 크기에서도 선명해요.",
           "pdf": "문서와 간단한 인쇄에 가장 좋아요 · 벡터 PDF가 필요하면 인쇄용을 사용하세요.",
           "eps": "인쇄소와 벡터 앱에 가장 좋아요 · 어떤 크기에서도 선명해요."
@@ -4842,10 +4860,7 @@
         "theFrameIsAddedAround": "프레임은 코드 바깥쪽에 추가되므로 다운로드한 이미지는 더 커지고, 코드 자체는 계속 스캔할 수 있어요.",
         "label": "라벨",
         "pickAFrameFirst": "먼저 프레임을 선택하세요",
-        "none": "없음",
-        "takesDotColor": "코드 점의 색상을 따라가요.",
-        "alsoHasTemplate": "이 디자인에는 이 프레임 안에 {name} 프레임도 들어 있어요. 다른 프레임을 고르면 두 프레임이 모두 바뀌어요.",
-        "templateKeepsSize": "이 프레임은 안에 들어가는 코드에 맞춰지므로 다운로드한 이미지는 선택한 크기를 유지해요."
+        "none": "없음"
       },
       "frameFields": {
         "textSize": "텍스트 크기"
@@ -5102,7 +5117,8 @@
       "yourQrCodeIsNow": "QR 코드가 이제 동적이 되었어요",
       "destinationUpdated": "대상을 업데이트했어요",
       "designSavedToTheCode": "코드에 디자인을 저장했어요",
-      "couldntCopyTheShortLink": "짧은 링크를 복사하지 못했어요"
+      "couldntCopyTheShortLink": "짧은 링크를 복사하지 못했어요",
+      "inviteForMore": "아니면 <link>친구를 초대해 보세요</link>. 친구가 첫 동적 QR 코드를 만들면 두 분 모두 {count, number}개를 더 받아요."
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5434,6 +5450,9 @@
       "checkingScan": "스캔 확인 중…",
       "fullScanChecker": "전체 스캔 검사기",
       "checkAPrintedCode": "인쇄된 코드 확인",
+      "warning": "경고",
+      "scanScoreScoreValueWarningShow": "스캔 점수 {score, number}, {value}, 경고 있음. 검사 항목 보기",
+      "addAMargin": "{modules, number}모듈 여백 추가",
       "grades": {
         "great": "매우 좋음",
         "ok": "양호",
@@ -5717,7 +5736,7 @@
       "label": "QR 코드 디자이너 소개",
       "summary": "맞춤 QR 코드 디자이너예요. 로고, 색상, 프레임을 넣은 정적 QR 코드를 무료로 만들 수 있어요. 가입도 워터마크도 없어요.",
       "types": "링크, Wi-Fi 네트워크, 연락처, 결제 등 {types, number}가지 콘텐츠 유형의 QR 코드를 만들 수 있어요. {bodyPatterns, number}가지 점 패턴, {eyeShapes, number}가지 모서리 눈 모양, 단색 또는 그라데이션 색상, 중앙 로고, {frames, number}가지 행동 유도 프레임으로 스타일을 꾸며 보세요. 스캔 점수로 인쇄 전에 얼마나 잘 인식될지 가늠해 볼 수 있어요.",
-      "downloads": "PNG, JPG, WebP, SVG로 다운로드하거나 정확한 크기의 인쇄용 PDF 또는 EPS로 받을 수 있어요. 정적 QR 코드는 무료이며 만료되지 않아요. 로그인하면 인쇄 후에도 수정할 수 있고 스캔을 추적할 수 있는 동적 QR 코드를 만들 수 있어요.",
+      "downloads": "PNG, JPG, WebP, SVG, TIFF(인쇄용 CMYK TIFF 포함)로 다운로드하거나, 정확한 크기의 인쇄용 PDF 또는 EPS로 받을 수 있어요. 정적 QR 코드는 무료이고 만료되지 않아요. 로그인하면 인쇄 후에도 수정할 수 있고 스캔을 추적할 수 있는 동적 QR 코드를 만들 수 있어요.",
       "links": {
         "allTypes": "모든 QR 코드 유형",
         "scanChecker": "스캔 검사기",
@@ -5745,7 +5764,8 @@
     "limitCard": {
       "planUsage": "요금제 및 사용량",
       "notNow": "나중에 할게요",
-      "labelUsed": "{label} 사용량"
+      "labelUsed": "{label} 사용량",
+      "inviteForMore": "아니면 <link>친구를 초대해 보세요</link>. 친구가 첫 동적 QR 코드를 만들면 두 분 모두 {count, number}개를 더 받아요."
     },
     "limitDialog": {
       "limitReached": "한도에 도달했어요"
@@ -6935,6 +6955,39 @@
           "unlimitedOnValue": "{value}에서 무제한",
           "labelUsed": "{label} 사용량"
         }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "내 초대 링크:",
+          "copy": "복사",
+          "copied": "복사됨",
+          "linkCopied": "링크를 복사했어요",
+          "couldntCopy": "복사하지 못했어요. 링크를 선택해서 직접 복사해 주세요."
+        },
+        "page": {
+          "title": "친구 초대",
+          "description": "내 링크를 공유하세요. 친구가 이 링크로 가입해서 첫 동적 QR 코드를 만들면, 두 분 모두 동적 QR 코드를 {count, number}개 더 받아요.",
+          "notReady": "아직 초대 기능을 사용할 수 없어요. 나중에 다시 확인해 주세요.",
+          "yourInviteLink": "내 초대 링크",
+          "shareYourLink": "친구에게 보내거나 어디에든 올려 보세요. 이 링크로 가입한 친구가 동적 QR 코드를 만들면 두 분 모두 {count, number}개를 더 받아요.",
+          "link": "링크",
+          "sameVisit": "친구가 링크를 클릭한 같은 방문에서 계정을 만들면 인정돼요. 친구의 기기에는 아무것도 저장되지 않아요.",
+          "friendsJoined": "가입한 친구",
+          "friendsRewarded": "보상받은 친구",
+          "rewardedOfMax": "{max, number}명 중 {rewarded, number}명",
+          "extraCodes": "추가 동적 QR 코드",
+          "waiting": "{waiting, plural, other {#명이 아직 동적 QR 코드를 만들지 않았어요.}} 가입한 날부터 {days, number}일 안에 만들어야 해요.",
+          "atCap": "초대 링크 하나로 받을 수 있는 최대치인 {max, number}명의 친구에 대한 보상을 받았어요. 이 링크로 가입하는 친구는 계속 {count, number}개를 받아요.",
+          "youWereInvited": "친구의 초대로 가입하셨기 때문에 내 워크스페이스에도 동적 QR 코드 {count, number}개가 추가로 지급됐어요.",
+          "howItWorks": "이용 방법",
+          "ruleSignUp": "친구가 그 방문 중에 내 링크로 새 QRdx 계정을 만들면 인정돼요. 이후 방문에서 가입했거나 이미 있는 계정은 인정되지 않아요.",
+          "ruleFirstCode": "친구가 가입 후 {days, number}일 안에 첫 동적 QR 코드를 만들면, 두 분 모두 각자의 워크스페이스에서 동적 QR 코드를 {count, number}개 더 받아요.",
+          "ruleCap": "최대 {max, number}명의 친구({total, number}개 코드)에 대해 보상을 받을 수 있어요. 그 이후에 가입하는 친구도 {count, number}개를 받아요.",
+          "ruleNotYourself": "내 다른 계정은 인정되지 않아요. 다른 철자로 된 내 이메일 주소를 쓰는 계정이나 나와 워크스페이스를 공유하는 사람도 마찬가지예요.",
+          "ruleAllowance": "추가 코드는 어떤 플랜에서든 팀이 아닌 내 워크스페이스의 동적 QR 코드에 더해져요. 현금 가치는 없으며 다른 계정으로 옮길 수 없어요. 추가 코드로 만든 코드는 계속 작동해요.",
+          "rulePrivate": "내 링크로 누가 가입했는지는 절대 보여 드리지 않으며, 친구도 누가 초대했는지 볼 수 없어요.",
+          "ruleEnd": "새 초대에 대한 초대 보상은 종료될 수 있으며, 이미 받은 코드는 그대로 유지돼요. 자세한 내용은 <terms>서비스 약관</terms>과 <help>도움말 페이지</help>에서 확인하세요."
+        }
       }
     },
     "dashboard": {
@@ -7679,6 +7732,8 @@
           "downloadGif": "GIF 다운로드",
           "downloadBmp": "BMP 다운로드",
           "downloadIco": "ICO 다운로드",
+          "downloadTiff": "TIFF 다운로드",
+          "downloadTiffCmyk": "CMYK TIFF 다운로드",
           "moreFormats": "다른 형식",
           "editLinkValue": "링크 편집",
           "codeSettings": "코드 설정",
@@ -7780,6 +7835,8 @@
           "gifImagesZip": "GIF 이미지(ZIP)",
           "bmpImagesZip": "BMP 이미지(ZIP)",
           "icoImagesZip": "ICO 파비콘 (ZIP)",
+          "tiffImagesZip": "TIFF 이미지(ZIP)",
+          "tiffCmykImagesZip": "CMYK TIFF 이미지(ZIP)",
           "svgImagesZip": "SVG 이미지 (ZIP)",
           "more": "더 보기",
           "moveToTrash": "휴지통으로 이동",
@@ -9019,7 +9076,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "새로운 소식",
         "backToLabel": "{label}(으)로 돌아가기",
         "expandSidebar": "사이드바 펼치기",
         "collapseSidebar": "사이드바 접기",
@@ -9270,8 +9326,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "이 링크는 사용할 수 없어요",
+          "unknownAppTitle": "이 앱과 QRdx의 연결이 만료됐어요",
+          "unknownAppBody": "QRdx가 이곳으로 안내한 앱을 더 이상 알아보지 못해요. Claude, Cursor, VS Code처럼 QRdx에 연결한 AI 앱이라면 앱에서 QRdx를 삭제한 뒤 다시 추가하고 로그인하세요. 그렇지 않다면 앱 개발자에게 문의하세요.",
           "theAppThatSentYou": "이곳으로 안내한 앱에서 잘못된 요청을 보냈어요: <span>{description}</span>. 앱으로 돌아가 다시 시도하거나 앱 개발자에게 문의하세요.",
           "appnameWillBeAbleTo": "{appName}이(가) 할 수 있는 작업",
+          "mcpOnlyNote": "{appName}은(는) QRdx MCP 서버의 코드 도구를 통해서만 계정을 사용할 수 있어요. 코드 삭제, 웹훅 관리, AI 아트 사용은 할 수 없어요.",
           "nameWantsToAccessYour": "{name}이(가) 내 QRdx 계정에 접근하려고 해요",
           "builtByName": "제작: <strong>{name}</strong>",
           "unverifiedApp": "확인되지 않은 앱이에요.",
@@ -9440,9 +9499,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "이 이메일은 <strong>{email}</strong> 주소로 보내드렸어요. 예상하지 못한 메일이라면 무시하셔도 됩니다. 계정 보안이 걱정되신다면 <link>저희에게 알려 주세요</link>.",
       "sentFor": "{name}을(를) 위해 <link>{host}</link>에서 보냈어요",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "수신 거부"
+      "unsubscribe": "수신 거부",
+      "settings": "받을 이메일 설정 변경하기",
+      "copyLink": "또는 아래 링크를 복사해 브라우저에 붙여넣으세요:"
     },
     "codes": {
       "neverAsk": "QRdx는 전화, 채팅, 이메일로 이 코드를 절대 요구하지 않습니다.",
@@ -9664,8 +9726,7 @@
         "viewer": "뷰어는 워크스페이스의 코드, 페이지, 분석을 변경 없이 볼 수 있어요."
       },
       "accept": "초대 수락하기",
-      "expires": "수락하려면 이 이메일 주소로 로그인해 주세요. 초대는 {date}에 만료돼요. 예상하지 못한 초대라면 이 이메일은 무시해도 돼요.",
-      "pasteLink": "또는 이 링크를 브라우저에 붙여넣어 주세요: {url}",
+      "expires": "수락하려면 이 이메일 주소로 로그인해 주세요. 초대는 {date}에 만료됩니다.",
       "someone": "팀원"
     },
     "portalInvite": {
@@ -9674,8 +9735,7 @@
       "heading": "QR 코드 리포트",
       "body": "{hasFolders, select, yes {{inviter}님이 {folders}에 있는 {portal}의 QR 코드를 볼 수 있도록 초대했어요. 코드별 스캔 횟수, 스캔한 위치와 기기, 열리는 페이지를 확인할 수 있어요. 읽기 전용이에요.} other {{inviter}님이 {portal}의 QR 코드를 볼 수 있도록 초대했어요. 코드별 스캔 횟수, 스캔한 위치와 기기, 열리는 페이지를 확인할 수 있어요. 읽기 전용이에요.}}",
       "open": "리포트 열기",
-      "signIn": "이 이메일 주소로 로그인해 주세요. 일회용 코드를 보내 드려요. 예상하지 못한 메일이라면 무시해도 돼요.",
-      "pasteLink": "또는 이 링크를 브라우저에 붙여넣어 주세요: {url}",
+      "signIn": "이 이메일 주소로 로그인해 주세요. 일회용 코드를 보내 드려요.",
       "yourAgency": "에이전시"
     },
     "limitNotice": {
@@ -9706,7 +9766,9 @@
       "makeRoom": "{limit, select, dynamicCodes {공간을 확보하려면 코드 하나를 보관하세요.} landingPages {공간을 확보하려면 페이지 하나를 삭제하세요.} storage {공간을 확보하려면 필요 없는 파일을 삭제하세요.} savedThemes {공간을 확보하려면 테마 하나를 삭제하세요.} other {}}",
       "resets": "{date}에 초기화돼요.",
       "keeps": "{limit, select, dynamicCodes {기존 코드는 계속 작동해요.} landingPages {기존 페이지는 계속 게시돼요.} formResponses {페이지는 계속 게시돼요. 초기화 후에는 폼이 다시 응답을 받아요.} storage {업로드한 파일은 계속 사용할 수 있어요.} other {}}",
-      "upgradeButton": "{plan}(으)로 업그레이드"
+      "upgradeButton": "{plan}(으)로 업그레이드",
+      "includesBonus": "{plan}에는 {amount}와 초대로 추가된 {bonus, number}개가 포함돼요.",
+      "invite": "또는 <link>친구를 초대해 보세요</link>. 친구가 첫 동적 QR 코드를 만들면 두 분 모두 {count, number}개를 더 받아요."
     },
     "weeklyDigest": {
       "subject": "이번 주 QRdx 현황: {scans, plural, one {스캔 #회} other {스캔 #회}}",
@@ -9722,11 +9784,14 @@
       "sameAsLastWeek": "지난주와 동일",
       "change": "지난주 대비 {change}",
       "topCodes": "상위 코드",
+      "code": "코드",
       "countries": "스캔한 지역",
+      "country": "국가",
       "newCodesLine": "이번 주 {count, plural, one {새 코드 #개} other {새 코드 #개}}예요.",
       "open": "대시보드 열기"
     },
     "personal": {
+      "meantFor": "이 이메일은 <strong>{email}</strong>님에게 보내는 메일입니다.",
       "reply": "이 이메일에 회신하면 {name}님에게 전달돼요.",
       "stop": "QRdx 팀의 안내 메일 받지 않기"
     },
@@ -9741,11 +9806,24 @@
       "makeCode": "<link>동적 QR 코드를 만들어 보세요.</link> 늘 그대로인 짧은 링크가 열리니 바로 인쇄하셔도 됩니다.",
       "seeScans": "<link>스캔 현황을 확인해 보세요.</link> 언제, 어디서, 어떤 기기로 스캔하는지 볼 수 있습니다.",
       "changeLink": "연결되는 주소는 인쇄한 뒤에도 언제든 바꿀 수 있습니다. 다시 인쇄할 필요가 없습니다.",
+      "button": "첫 코드 만들기",
       "free": "정적 QR 코드는 계속 무료이고, 플랜을 바꾸거나 결제를 중단하더라도 만든 코드는 계속 작동해요. 무료 플랜에는 동적 QR 코드 {count}개도 포함돼요.",
       "pro": "더 필요하시다면 Pro는 월 {monthly} 또는 연 {yearly}이며, 무제한 동적 QR 코드, 사용자 지정 도메인 {domains}개, 스캔 마일스톤마다 보내는 이메일 알림, 원하시면 받아볼 수 있는 주간 요약이 추가됩니다.",
       "taxes": "결제 시 현지 세금이 추가될 수 있어요.",
       "reply": "사용하다가 막히거나 방법이 헷갈리면 이 이메일에 답장해 주세요. 답장은 사람이 한 건씩 직접 읽습니다.",
       "reason": "방금 QRdx 계정을 만드셔서 이 이메일을 받으셨습니다."
+    },
+    "inviteReward": {
+      "subject": "초대한 친구가 첫 코드를 만들었어요. 두 분 모두 동적 QR 코드 {count, number}개를 더 받았어요",
+      "preview": "두 분 모두 동적 QR 코드 {count, number}개를 더 받았어요",
+      "heading": "두 분 모두 동적 QR 코드 {count, number}개를 더 받았어요",
+      "body": "초대 링크로 가입한 친구가 방금 첫 동적 QR 코드를 만들었습니다. 회원님의 워크스페이스에 동적 QR 코드 {count, number}개가 추가되었고, 친구의 워크스페이스에도 똑같이 추가되었습니다.",
+      "progress": "링크로 보상을 받을 수 있는 {max, number}명 중 {rewarded, plural, one {#명} other {#명}}째입니다.",
+      "last": "링크로 보상을 받을 수 있는 친구 {max, number}명을 모두 채웠습니다. 링크로 가입하는 친구는 계속 {count, number}개를 받습니다.",
+      "inviteMore": "친구 더 초대하기",
+      "seeInvites": "내 초대 보기",
+      "keeps": "추가 코드는 모든 플랜에서 사용할 수 있으며 현금 가치는 없습니다. 추가 코드로 만든 코드는 계속 작동합니다.",
+      "reason": "친구가 회원님의 QRdx 초대 링크로 가입해 첫 동적 QR 코드를 만들어서 이 메일을 받으셨습니다."
     }
   },
   "codeActions": {
@@ -10037,7 +10115,8 @@
       "bulkOverLimit": "최대 {limit, number}행까지의 파일은 계정 없이 사용할 수 있어요. 무료 계정은 파일당 최대 {max, number}개까지 만들 수 있고, 불러온 파일도 그대로 유지돼요.",
       "keepDesigns": "디자인을 계정에 보관하고 모든 기기에서 사용하세요.",
       "afterDownload": "무료이고, 요금제에 어떤 일이 생기더라도 QR 코드는 계속 작동해요.",
-      "upgrade": "요금제와 결제는 계정에 속해요. 보던 곳에서 바로 이어서 진행할 수 있어요."
+      "upgrade": "요금제와 결제는 계정에 속해요. 보던 곳에서 바로 이어서 진행할 수 있어요.",
+      "invite": "친구의 초대로 오셨네요. 지금 가입해서 첫 번째 코드를 만들면 동적 QR 코드를 {count, number}개 더 받아요."
     },
     "nudge": {
       "dismiss": "다시 표시하지 않기"
@@ -10185,6 +10264,11 @@
         "failed": "SSO가 제대로 작동하지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
         "rateLimited": "시도 횟수가 너무 많아요. 1분 정도 기다린 후 다시 시도해 주세요."
       }
+    },
+    "inviteNote": {
+      "text": "QRdx에 초대받으셨어요. 이번 방문 중에 가입하고 {days, number}일 이내에 동적 QR 코드를 만들면 동적 QR 코드를 {count, number}개 더 받아요.",
+      "signUp": "가입하기",
+      "dismiss": "닫기"
     }
   },
   "settingsActions": {

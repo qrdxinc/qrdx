@@ -13,7 +13,7 @@ By the end of this page you will have QR code files made from your terminal, in 
 ## Before you start
 
 - Node.js 22 or later.
-- PNG, WebP and BMP output use [sharp](https://sharp.pixelplumbing.com), an optional dependency npm installs where your platform supports it; SVG and EPS work without it.
+- PNG, WebP, GIF, BMP, ICO and TIFF output use [sharp](https://sharp.pixelplumbing.com), an optional dependency npm installs where your platform supports it; SVG and EPS work without it.
 - The `qrdx` npm package is the React library. The CLI is only in `@qrdx/cli`.
 
 ## 1. Make one code
@@ -90,8 +90,7 @@ With a frame, `--size` is the code's width and the frame adds to the image. To p
 | `--logo` | | Center logo image URL (use with `--level H`) |
 | `--no-logo` | | Skip the logo prompt in interactive mode |
 | `--margin` | `0` | Quiet zone, in modules |
-| `--template` | | A frame drawn as a template: `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween` or `DotRing` |
-| `--frame` | | Call-to-action [frame](/docs/features/frames): any of the {facts.frameStyles} built-in frames, such as `banner-bottom`, `rounded-border`, `circle`, `sticker` or `phone` (see [all of them](/docs/styles#frames)) |
+| `--frame` | | Call-to-action [frame](/docs/features/frames): any of the {facts.frameStyles} built-in frames, such as `banner-bottom`, `rounded-border`, `circle`, `arrow` or `dot-ring` (see [all of them](/docs/styles#frames)) |
 | `--frame-text` | `Scan me` | Frame label, up to 24 characters; `""` hides it |
 | `--frame-color`, `--frame-text-color` | | Frame and label colors (hex) |
 

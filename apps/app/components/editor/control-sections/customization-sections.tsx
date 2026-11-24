@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { defaultThemeState } from "@/config/qr";
+import { storedStyleDefaults } from "@/config/qr";
 import type { DesignSection } from "@/lib/playground-links";
 import type { QRStyle } from "@/types/theme";
 import { CornersSection } from "./corners-section";
@@ -48,7 +48,7 @@ export function CustomizationSections({
   focus,
 }: CustomizationSectionsProps) {
   const current = React.useMemo(
-    () => ({ ...defaultThemeState.styles, ...styles }),
+    () => ({ ...storedStyleDefaults, ...styles }),
     [styles],
   );
   const update = (change: Partial<QRStyle>) =>

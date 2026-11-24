@@ -61,7 +61,6 @@ describe("SwatchCrop", () => {
           fgColor: "#1d4ed8",
           bgColor: "#eff6ff",
           frame: { style: "banner-bottom", text: "Scan me" },
-          templateId: "default",
         }}
       />,
     );

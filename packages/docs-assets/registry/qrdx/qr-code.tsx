@@ -64,8 +64,6 @@ export interface QrCodeProps
    * @default 2
    */
   margin?: number;
-  /** qrdx frame template id, e.g. "Arrow" or "StandardBox". */
-  templateId?: string;
   /** Center logo: a data URL or an image URL served with CORS headers. */
   logo?: string;
   /** Accessible name. Defaults to "QR code: <value>". */
@@ -102,7 +100,6 @@ export function QrCode({
   cornerEyeDotPattern,
   level,
   margin = 2,
-  templateId,
   logo,
   label,
   caption,
@@ -126,7 +123,6 @@ export function QrCode({
     cornerEyeDotPattern,
     level,
     margin,
-    templateId,
   };
 
   async function download(format: DownloadFormat) {

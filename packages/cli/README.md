@@ -17,7 +17,7 @@ npm install -g @qrdx/cli
 qrdx generate "https://example.com" -o qr.svg
 ```
 
-PNG and WebP output use [sharp](https://sharp.pixelplumbing.com). It is an optional dependency that npm installs automatically when your platform supports it; if it is missing, SVG and EPS output still work and the CLI tells you how to fix PNG and WebP.
+PNG, WebP, GIF, BMP, ICO and TIFF output use [sharp](https://sharp.pixelplumbing.com). It is an optional dependency that npm installs automatically when your platform supports it; if it is missing, SVG and EPS output still work and the CLI tells you how to fix the others.
 
 > The `qrdx` npm package is the React library. The CLI lives only in `@qrdx/cli`.
 
@@ -35,7 +35,7 @@ qrdx generate <data> [options]
 |------|-------|---------|-------------|
 | `--output` | `-o` | `qr.svg` | Output path; the extension sets the format (`.svg`, `.png`, `.webp`, `.gif`, `.bmp`, `.ico`, `.tif` or `.eps`) |
 | `--format` | | from the extension | `svg`, `png`, `webp`, `gif`, `bmp`, `ico`, `tiff`, `tiff-cmyk` or `eps`, for a file name without an extension; `tiff-cmyk` also picks CMYK for a `.tif` name |
-| `--size` | | `512` | Output size: pixels for SVG, PNG, WebP, GIF and BMP, points (72 per inch) for EPS |
+| `--size` | | `512` | Output size: pixels for SVG, PNG, WebP, GIF, BMP and TIFF, points (72 per inch) for EPS |
 | `--level` | `-l` | `Q` | Error correction: `L` `M` `Q` `H` |
 | `--body` | | `square` | Body dot pattern |
 | `--eye` | | `square` | Corner eye pattern |
@@ -47,15 +47,14 @@ qrdx generate <data> [options]
 | `--logo` | | — | Center logo image URL (use with `--level H`) |
 | `--no-logo` | | — | Skip the logo prompt in interactive mode |
 | `--margin` | | `0` | Quiet zone margin (modules) |
-| `--template` | | — | A frame drawn as a template (the whole file is `--size`, the code smaller inside it): `Arrow` `StandardBox` `SquareBorder` `StrikedBox` `Halloween` `DotRing` |
-| `--frame` | | — | Call-to-action frame: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`<!-- /catalogue --> |
+| `--frame` | | — | Call-to-action frame: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`, `arrow`, `standard-box`, `square-border`, `striked-box`, `pumpkin`, `dot-ring`<!-- /catalogue --> |
 | `--frame-text` | | `Scan me` | Frame label, up to 24 characters (`""` hides it) |
 | `--frame-color` | | `#000000` | Frame color (hex) |
 | `--frame-text-color` | | white on banners | Frame label color (hex) |
 | `--help` | `-h` | | Show all options |
 | `--version` | `-v` | | Show the version |
 
-Invalid values (unknown pattern, template, frame, level, size, output extension, malformed gradient JSON, frame text over 24 characters or a non-hex frame color) exit with code `1` and a message listing the accepted values. `--frame-text` or a frame color without `--frame` uses `banner-bottom`. A frame adds space around the code, so the file is larger than `--size`.
+Invalid values (unknown pattern, frame, level, size, output extension, malformed gradient JSON, frame text over 24 characters or a non-hex frame color) exit with code `1` and a message listing the accepted values. `--frame-text` or a frame color without `--frame` uses `banner-bottom`. A frame adds space around the code, so the file is larger than `--size`.
 
 ## Examples
 
@@ -100,8 +99,8 @@ qrdx generate "https://qrdx.dev" \
 qrdx generate "https://qrdx.dev" -o gradient.svg \
   --fg '{"type":"linear","stops":[{"color":"#6366f1","offset":0},{"color":"#ec4899","offset":100}],"angle":135}'
 
-# A frame drawn as a template
-qrdx generate "https://qrdx.dev" --template Arrow -o arrow.svg
+# A hand-drawn arrow pointing at the code
+qrdx generate "https://qrdx.dev" --frame arrow -o arrow.svg
 
 # "Scan me" frame
 qrdx generate "https://qrdx.dev/menu" --frame banner-bottom --frame-text "Scan for the menu" -o menu.png
@@ -121,7 +120,7 @@ qrdx batch products.csv -o codes --format png --size 1024 --body circle
 
 `qrdx batch` (or `qrdx b`) reads a CSV and writes one static QR code per row into a folder, with the same columns as the free [bulk generator](https://qrdx.dev/tools/bulk). The content comes from a column named `value`, `url`, `link`, `data`, `content`, `text` or `qr` (else the first column), and file names from one named `file name`, `name`, `label`, `id`, `title` or `sku` (else `qr-00001.svg`, `qr-00002.svg` and so on). Pick others with `--value-column` and `--name-column`, by header name or column number, and use `--no-header` when the first row is a code.
 
-Every style option of `generate` applies to all the codes. The file is read as a stream and each code is written as soon as it's made, so there's no row limit; nothing is uploaded and no account is needed. Rows that can't be encoded are skipped and listed, with the reason, in `errors.csv` in the output folder. `--jobs` sets how many codes render at a time (4 for SVG, 8 for PNG and EPS by default).
+Every style option of `generate` applies to all the codes. The file is read as a stream and each code is written as soon as it's made, so there's no row limit; nothing is uploaded and no account is needed. Rows that can't be encoded are skipped and listed, with the reason, in `errors.csv` in the output folder. `--jobs` sets how many codes render at a time (4 for SVG, 8 for every other format by default).
 
 ## Patterns
 

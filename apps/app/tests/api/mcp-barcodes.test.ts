@@ -2,7 +2,7 @@
 // apps/docs/content/docs/developers/mcp.mdx describes them: generate_barcode checks
 // the value like the image API and returns a PNG that decodes plus public
 // image URLs, with no key; save_barcode saves to the API key's workspace and
-// is a clear 401 without one. Saved rows live in in-memory tables.
+// is only offered with one. Saved rows live in in-memory tables.
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { ownWorkspaceId } from "@repo/auth/own-workspace-id";
@@ -109,7 +109,8 @@ beforeEach(() => {
 });
 
 let rpcId = 0;
-async function call(name: string, args: Record<string, unknown>, key?: string) {
+/** The tools/call answer: a result, or a JSON-RPC error. */
+async function send(name: string, args: Record<string, unknown>, key?: string) {
   const response = await route.POST(
     new Request("http://localhost:3000/api/mcp", {
       method: "POST",
@@ -135,10 +136,20 @@ async function call(name: string, args: Record<string, unknown>, key?: string) {
         .map((line) => line.slice(5).trim())
         .join("")
     : text;
-  return JSON.parse(json).result as {
-    isError?: boolean;
-    content: { type: string; text?: string; data?: string }[];
+  return JSON.parse(json) as {
+    result?: {
+      isError?: boolean;
+      structuredContent?: Record<string, unknown>;
+      content: { type: string; text?: string; data?: string }[];
+    };
+    error?: { code: number; message: string };
   };
+}
+
+async function call(name: string, args: Record<string, unknown>, key?: string) {
+  const { result } = await send(name, args, key);
+  if (!result) throw new Error(`${name} answered without a result`);
+  return result;
 }
 
 describe("generate_barcode", () => {
@@ -212,13 +223,23 @@ describe("generate_barcode", () => {
 });
 
 describe("save_barcode", () => {
-  it("needs an API key", async () => {
-    const result = await call("save_barcode", {
+  it("isn't offered without an API key, and refuses an unknown one", async () => {
+    const keyless = await send("save_barcode", {
       format: "ean13",
       value: "590123412345",
     });
-    expect(result.isError).toBe(true);
-    expect(result.content[0]?.text).toMatch(/needs a QRdx API key/);
+    expect(keyless.result).toBeUndefined();
+    expect(keyless.error?.message).toContain("Tool save_barcode not found");
+    const unknown = await call(
+      "save_barcode",
+      { format: "ean13", value: "590123412345" },
+      `qrdx_${"z".repeat(40)}`,
+    );
+    expect(unknown.isError).toBe(true);
+    expect(unknown.structuredContent).toMatchObject({
+      code: "INVALID_TOKEN",
+      status: 401,
+    });
     expect(fakeDb.rows("barcode")).toHaveLength(0);
   });
 

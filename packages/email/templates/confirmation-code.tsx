@@ -1,5 +1,5 @@
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EmailCode, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
   NeverAskForCode,
@@ -8,7 +8,6 @@ import {
   type SecurityEventDetails,
   supportLinkArgs,
 } from "./security-parts";
-import { EmailCodeBox } from "./sign-in-code";
 
 export const CONFIRMATION_CODE_SUBJECT = "Your QRdx confirmation code";
 
@@ -22,6 +21,8 @@ export interface ConfirmationCodeEmailProps {
   expiresInMinutes: number;
   /** Where the code was asked for */
   details: SecurityEventDetails;
+  /** The address it's sent to */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -35,6 +36,7 @@ export function ConfirmationCodeEmail({
   code,
   expiresInMinutes,
   details,
+  recipient,
   intl,
 }: ConfirmationCodeEmailProps) {
   const { t } = intl;
@@ -43,15 +45,15 @@ export function ConfirmationCodeEmail({
       intl={intl}
       preview={t("confirmationCode.preview", { minutes: expiresInMinutes })}
       reason={t("confirmationCode.reason")}
+      recipient={recipient}
     >
       <EmailHeading>{t("confirmationCode.heading")}</EmailHeading>
       <EmailText>{t("confirmationCode.enter")}</EmailText>
-      <EmailCodeBox code={code} />
+      <EmailCode code={code} />
       <EmailText>{t("codes.expires", { minutes: expiresInMinutes })}</EmailText>
       <NeverAskForCode intl={intl} />
       <SecurityDetails details={details} intl={intl} />
       <ReviewSecurityButton intl={intl} />
-      <EmailDivider />
       <MutedText>
         {t.rich("confirmationCode.notYou", supportLinkArgs)}
       </MutedText>
@@ -69,4 +71,5 @@ ConfirmationCodeEmail.PreviewProps = {
     ip: "203.0.113.24",
     time: "Nov 19, 2026, 3:04 PM GMT+5:30",
   },
+  recipient: "alex@example.com",
 } satisfies Omit<ConfirmationCodeEmailProps, "intl">;

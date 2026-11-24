@@ -42,6 +42,7 @@ import {
   SUPPORTS_PATH2D,
 } from "./utils";
 import { getSolidColor } from "./utils/color";
+import { withoutWithdrawnProps } from "./withdrawn-props";
 
 export function QRCodeCanvas(props: QRPropsCanvas): ReactQRElement {
   const {
@@ -61,7 +62,6 @@ export function QRCodeCanvas(props: QRPropsCanvas): ReactQRElement {
     cornerEyePattern: _cornerEyePattern,
     cornerEyeDotPattern: _cornerEyeDotPattern,
     isOGContext: _isOGContext,
-    templateId: _templateId,
     customTemplate: _customTemplate,
     customProps: _customProps,
     frame,
@@ -80,7 +80,7 @@ export function QRCodeCanvas(props: QRPropsCanvas): ReactQRElement {
     frameLabelMarkers: _frameLabelMarkers,
     partMarkers: _partMarkers,
     ...otherProps
-  } = props;
+  } = withoutWithdrawnProps(props);
   // A logo no bigger than the code can repair (logo-budget.ts)
   const imageSettings = capImageSettings(
     { value, size, margin, level, shape, autoLevel, exactLevel },

@@ -44,9 +44,9 @@ A built-in frame is named by its `style`. The options fill its spec's labels and
 | --- | --- | --- |
 | `style` | none | One of the {facts.frameStyles} built-in styles below, `none`, or `custom` with a `spec` |
 | `text` | `"Scan me"` | Up to 24 characters. Pass `""` to hide the label |
-| `color` | the spec's own color: black for every built-in frame but `gradient-border`, which starts violet | Frame color |
+| `color` | the spec's own color: black for every built-in frame but `gradient-border`, which starts violet | Frame color. `striked-box` and `pumpkin` keep their own colors |
 | `textColor` | white on the frame, `color` on light areas | Label color |
-| `secondaryText` | none | Second label, up to 24 characters: the bottom band of `banner-top-bottom`, the lower arc of `circle`, the footer of `menu-card` |
+| `secondaryText` | none | Second label, up to 24 characters: the bottom band of `banner-top-bottom`, the lower arc of `circle` and `dot-ring`, the footer of `menu-card` |
 | `secondaryColor` | the spec's accent, pink | End color of `gradient-border` |
 | `fontScale` | `1` | Label size from 0.5 to 1.5; labels still shrink to fit |
 
@@ -56,6 +56,7 @@ The built-in frames, by `style`:
 - Bubbles: `speech-bubble`, `speech-bubble-top`, `chat-bubble`
 - Badges: `circle` (text set around a ring), `badge` (ribbon), `sticker` (die-cut with a shadow)
 - Objects: `polaroid`, `phone`, `ticket`, `tag` (hang tag with a hole), `envelope`, `menu-card`
+- Artwork: `arrow` (a hand-drawn arrow pointing at the code), `standard-box` (a rounded box with a tab under it), `square-border` (a thin square outline), `striked-box` (a dark card with diagonal strokes), `pumpkin` (a jack-o'-lantern) and `dot-ring` (a round code, below)
 
 Each of these names stands for a spec in the engine, and the names stay valid for good. Saved designs, image API links, CLI flags and code that use them keep drawing the same frame. Frames that drop their label's row when there is no label, such as the borders, still do. See them all, decoded in your browser, in [Shapes, eyes and frames](/docs/styles#frames).
 
@@ -77,9 +78,51 @@ getFrameColors({ style: "border", color: "#1e3a8a" });
 getFrameDimensions(400, { style: "banner-bottom" }); // { width: 496, height: 568 }
 ```
 
+The artwork frames have no label, so `text` has nothing to fill. `color` sets the artwork's color on `arrow`, `standard-box` and `square-border`:
+
+```tsx title="components/arrow-frame-code.tsx"
+import { QRCode } from "qrdx";
+
+export function ArrowFrameCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor="#1a56db"
+      frame={{ style: "arrow", color: "#1a56db" }}
+    />
+  );
+}
+```
+
+`dot-ring` is a round code: the code sits in a disc of dots inside a ring, with `text` set over the top of the ring and `secondaryText` along the bottom. Both read "Scan the QR code" by default; pass `""` to leave one empty. `color` paints the ring and the dots, and `textColor` the letters:
+
+```tsx title="components/dot-ring-code.tsx"
+import { QRCode } from "qrdx";
+
+export function DotRingCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      bodyPattern="circle-large"
+      frame={{
+        style: "dot-ring",
+        text: "Scan for the menu",
+        secondaryText: "",
+        color: "#1e3a8a",
+        textColor: "#fde047",
+      }}
+    />
+  );
+}
+```
+
+The ring's dots are the same for every code. A dense code (a long link, more than 49 modules across) reads best printed a little larger, so check it with the [scan score](#will-it-scan).
+
 To change more than the labels and colors, start a custom frame from a built-in spec: `{ style: "custom", spec: frameSpecOf({ style: "ticket" }) }` draws the same ticket, and you can edit its shapes.
 
-Every frame is plain shapes and text with opaque colors, so SVG, PNG, PDF and EPS exports match. The gradient border is drawn as fine solid color steps, and the circle frame's curved letters are rotated text in every format. The label uses the system font stack, so nothing is downloaded.
+Every frame is plain shapes and text with opaque colors, so SVG, PNG, PDF and EPS exports match. The gradient border is drawn as fine solid color steps, and the curved letters of `circle` and `dot-ring` are rotated text in every format. The label uses the system font stack, so nothing is downloaded.
 
 `FRAME_STYLES`, `frameSchema` (zod) and the `QRFrame` and `FrameStyle` types are also exported from `qrdx/types` for server-side validation. The CLI draws the same frames with `--frame`, `--frame-text`, `--frame-color` and `--frame-text-color`; see [CLI](/docs/developers/cli).
 
@@ -102,16 +145,64 @@ export function CustomFrameCode() {
 }
 ```
 
-Optional fields the built-in frames and templates use (specs without them draw as before):
+Optional fields the built-in frames use (specs without them draw as before):
 
 | Field | What it does |
 | --- | --- |
 | `labels[].collapse` | `{ y, height }`. When the label shows no text, the band from `y` to `y + height` is cut out: rows below it move up and the artwork gets shorter. Shapes wholly inside the band are left out, and shapes that cross it get shorter. A band cannot cross the code, its padding or another band |
-| `qr.plate` | `"opaque"` (the default), `"background"` or `"none"`. The engine paints a plate in the code's background color under the code. When that background is see-through, `"opaque"` paints the plate and `background` fills white, so artwork never shows through the quiet zone. `"background"` keeps them see-through and leaves the plate out; it is allowed only when nothing but `background` fills, or a ring whose hole holds the plate, lies under the plate. `"none"` paints no plate at all, so the code's own background and margin are its only light space, and `qr.padding` may be under 4%. The templates use it |
+| `qr.plate` | `"opaque"` (the default), `"background"` or `"none"`. The engine paints a plate in the code's background color under the code. When that background is see-through, `"opaque"` paints the plate and `background` fills white, so artwork never shows through the quiet zone. `"background"` keeps them see-through and leaves the plate out; it is allowed only when nothing but `background` fills, or a ring whose hole holds the plate, lies under the plate. `"none"` paints no plate at all, so the code's own background and margin are its only light space, and `qr.padding` may be under 4%. The artwork frames (`arrow`, `dot-ring` and the others) use it |
 | `stroke` | `{ color, width }` on a rect, circle, ellipse, polygon or path: an outline centered on the shape's edge, drawn after its fill, at most 10% of the artboard's shorter side |
 | `colors.text` | A hex color, or a mix of `frame`, `accent`, `background` and hex colors, such as `{ "mix": ["frame", "accent"], "amount": 0.5 }` for the gradient border's label. It is the default; `textColor` still wins |
 
 A text label's row may also reach into the plate's padding, as long as it stays off the code and its capitals stay out of the padding at the largest text size (`fontScale` 1.5). The border frames set their label right under the code this way.
+
+### Artwork drawn in code
+
+A frame spec is fixed artwork. When the artwork has to be worked out in code, such as dots that change from link to link, write a template (`TemplateDefinition`) and pass it as `customTemplate`, with any props of its own in `customProps`. This is for the qrdx library only: the playground, the API, the MCP server and the CLI don't take templates. qrdx 0.0.64 left `customTemplate` out, so use 0.0.65 or later.
+
+The template's `wrapper` gets the drawn code as `children`, a 300 by 300 drawing, and returns the whole picture. Its second argument has the code's `fgColor` and `bgColor` with `customProps` spread over them, and the third the code's `url` and `pixelSize` (one module's width in the 300 by 300 drawing). Unlike a frame, a template draws its whole artwork at `size`, so scale the code down to leave room for yours:
+
+```tsx title="components/ring-template-code.tsx"
+import { QRCode, type TemplateDefinition } from "qrdx";
+
+const ringTemplate: TemplateDefinition<{ ringColor?: string }> = {
+  id: "ring",
+  name: "Ring",
+  wrapper: (children, props) => (
+    <svg
+      viewBox="0 0 300 300"
+      width="300"
+      height="300"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="150"
+        cy="150"
+        r="140"
+        fill="none"
+        stroke={props?.ringColor ?? props?.fgColor ?? "#000000"}
+        strokeWidth="8"
+      />
+      {/* The code at half size, centered */}
+      <g transform="translate(75, 75) scale(0.5)">{children}</g>
+    </svg>
+  ),
+};
+
+export function RingTemplateCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor="#1a56db"
+      customTemplate={ringTemplate}
+      customProps={{ ringColor: "#f59e0b" }}
+    />
+  );
+}
+```
+
+Keep the code large enough to scan and leave a light gap between it and your artwork. The [scan score](#will-it-scan) tests the code at the size the template draws it. A `frame` still goes around the template's artwork. A JSX wrapper without hooks also draws in `qrdx/core`, `qrdx/vanilla` and the other frameworks' components; where there's no JSX, write it with `h(type, props, ...children)` from the entry that draws the code. `<qrdx-code>` takes a template as its `customTemplate` property, since markup can't carry a function.
 
 ## Official frames
 
@@ -133,7 +224,7 @@ export function OfficialFrameCode() {
 }
 ```
 
-`OFFICIAL_FRAMES` is the whole library, and `OFFICIAL_FRAME_INDEX` lists every frame without its spec, so a picker can show the library and load specs only as they are needed. The library is built as a module of its own, so an app that never imports it does not ship it. In the [image API](/docs/developers/image-api#community-items), name an official frame by its id, such as `frame=diwali-diya`, with your labels and colors in `style` if you change them. In the [MCP server](/docs/developers/mcp), use it as a community item, such as `frame:diwali-diya`.
+`OFFICIAL_FRAMES` is the whole library, and `OFFICIAL_FRAME_INDEX` lists every frame without its spec, so a picker can show the library and load specs only as they are needed. The library is built as a module of its own, so an app that never imports it does not ship it. In the [image API](/docs/developers/image-api#official-frames), name an official frame by its id, with your labels and colors in `style` if you change them. An id with a version, such as `frame=diwali-diya.v1`, always draws that version, and it's what the playground's Get code copies. An id without a version, `frame=diwali-diya`, is version 1 and never changes either. Add `.latest`, `frame=diwali-diya.latest`, to follow the frame when QRdx fixes or redesigns it. In the [MCP server](/docs/developers/mcp), use it as a community item, such as `frame:diwali-diya`.
 
 ## Will it scan?
 
@@ -241,7 +332,6 @@ How big to print: a code scans from about ten times its width, so width is about
 ## Related
 
 <Cards>
-  <Card href="/docs/features/templates" title="Use a frame template" description="Arrow, Standard Box and the other frames that fit the code inside artwork of a set size." />
   <Card href="/docs/styles" title="Shapes, eyes and frames" description="Every built-in frame drawn live, with the value to copy." />
   <Card href="/docs/features/downloads" title="Export and download" description="PNG, JPG, WebP, GIF, BMP, TIFF, SVG, PDF and EPS, with the frame included (an ICO favicon leaves the frame out)." />
   <Card href="/docs/developers/image-api" title="QR code image API" description="Frames and official frames as URL parameters." />

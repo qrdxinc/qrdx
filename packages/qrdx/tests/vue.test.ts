@@ -134,7 +134,7 @@ test("covers a wide set of props", () => {
     "logo imageSettings",
     "official frame",
     "built-in spec",
-    "template ",
+    "frame dot-ring",
     "React custom template",
     "art ",
     "root attributes",
@@ -474,6 +474,21 @@ for (const [label, entry] of ENTRIES) {
       expect(html).toBe(toSVGString(resolveQRCodeProps(props)));
       expect(html).toContain('text-anchor="middle"');
       expect(html).toContain("Scan &amp; go");
+    });
+
+    test("drops the withdrawn templateId, as an attribute too", async () => {
+      // The built-in templates are frames since qrdx 0.0.64: templateId is
+      // ignored
+      const props = {
+        value: VALUE,
+        templateId: "DotRing",
+        "template-id": "Arrow",
+      };
+      const html = await renderVue(
+        createSSRApp({ render: () => h(api.QRCode, props) })
+      );
+      expect(html).toBe(toSVGString(resolveQRCodeProps({ value: VALUE })));
+      expect(html.toLowerCase()).not.toContain("template");
     });
   });
 }

@@ -11,6 +11,7 @@
 // never republished.
 
 import { hasImageFills, withoutImageFills } from "@/lib/paint/image-fills";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import { logoIconOf, parseLogoIcon } from "@/lib/qr-design/logo-icon";
 import type { ThemeStyles } from "@/types/theme";
 
@@ -45,7 +46,9 @@ export const isLogoIconId = (value: unknown): value is string =>
  * design never shows the QRdx mark in its place either. The QRdx mark itself
  * (showLogo without customLogo) is kept.
  */
-export function toPublishableStyle(style: ThemeStyles): PublishableStyle {
+export function toPublishableStyle(saved: ThemeStyles): PublishableStyle {
+  // A style saved with a template is published as its frame
+  const style = withTemplateAsFrame(saved);
   const { customLogo, art, ...rest } = style;
   const removed: RemovedPart[] = [];
   let logoIcon: string | null = null;

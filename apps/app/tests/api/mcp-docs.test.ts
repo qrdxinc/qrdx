@@ -98,13 +98,13 @@ const call = (name: string, args: Record<string, unknown>) =>
   rpc("tools/call", { name, arguments: args });
 
 describe("the MCP docs tools", () => {
-  it("are listed as read-only, keyless tools with the server at 1.4.0", async () => {
+  it("are listed as read-only, keyless tools with the server at 1.6.0", async () => {
     const init = await rpc("initialize", {
       protocolVersion: "2025-06-18",
       capabilities: {},
       clientInfo: { name: "vitest", version: "1.0.0" },
     });
-    expect(init.result.serverInfo.version).toBe("1.4.0");
+    expect(init.result.serverInfo.version).toBe("1.6.0");
     expect(init.result.instructions).toContain(
       "search_docs and read_docs_page",
     );

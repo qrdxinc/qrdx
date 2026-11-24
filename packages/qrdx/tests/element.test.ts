@@ -292,7 +292,7 @@ const CASES: [string, QRSVGOptions][] = [
       },
     },
   ],
-  ["built-in template", { value: VALUE, templateId: "DotRing" }],
+  ["a former template's frame", { value: VALUE, frame: { style: "dot-ring" } }],
   [
     "custom template written with h",
     {
@@ -314,6 +314,10 @@ const CASES: [string, QRSVGOptions][] = [
       },
       customProps: { label: "Scan me" },
     },
+  ],
+  [
+    "withdrawn templateId, dropped",
+    { value: VALUE, templateId: "DotRing" } as QRSVGOptions,
   ],
   ["circle shape", { value: VALUE, shape: "circle", margin: 3 }],
   ["module scale, level L", { value: VALUE, level: "L", moduleScale: 0.7 }],
@@ -365,6 +369,7 @@ describe("attributes and properties", () => {
       "corner-eye-pattern": "gear",
       "corner-eye-dot-pattern": "circle",
       margin: "4",
+      // Withdrawn in qrdx 0.0.64 (templates are frames): not read
       "template-id": "DotRing",
       "module-scale": "0.8",
       "auto-level": "",
@@ -382,7 +387,6 @@ describe("attributes and properties", () => {
       cornerEyePattern: "gear",
       cornerEyeDotPattern: "circle",
       margin: 4,
-      templateId: "DotRing",
       moduleScale: 0.8,
       autoLevel: true,
       shape: "circle",

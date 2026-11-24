@@ -235,15 +235,15 @@ describe("saveOutput – PNG", () => {
     expect(red).toBeGreaterThan(40 * 40);
   });
 
-  it("draws the logo inside a template", async () => {
-    const out = tmp("logo-template.png");
+  it("draws the logo inside a former template's frame", async () => {
+    const out = tmp("logo-square-border.png");
     cleanups.push(out);
     await saveOutput({
       value: "https://qrdx.dev",
       outputPath: out,
       format: "png",
       size: 300,
-      templateId: "SquareBorder",
+      frame: { style: "square-border" },
       imageSettings: {
         src: await redLogo(),
         width: 60,

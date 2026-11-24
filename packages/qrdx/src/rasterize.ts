@@ -263,7 +263,7 @@ async function rasterizeWithSharp(
 
 /**
  * Finds the logo's pixel box in the rendered output. The <image> is swapped
- * for a lone visible rect, so the box comes out right even inside template
+ * for a lone visible rect, so the box comes out right even inside a frame's
  * transforms.
  */
 async function findLogoBox(sharp: SharpFactory, svg: string) {

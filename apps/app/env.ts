@@ -240,7 +240,8 @@ export const env = validateTogether(() =>
       // this app. Same value on both.
       SITE_ZONE_KEY: z.string().min(1).optional(),
       // Which groups of pages the site serves, comma-separated ("blog");
-      // unset, every group. Also inlined at build time.
+      // unset, every group but the opt-in ones (SITE_OPT_IN_GROUPS). Also
+      // inlined at build time.
       SITE_ZONE_GROUPS: z
         .string()
         .refine(isSiteZoneGroups, {

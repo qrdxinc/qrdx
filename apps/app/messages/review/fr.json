@@ -511,6 +511,10 @@
     "source": "063a2a55464f",
     "status": "machine"
   },
+  "footer.joinDiscord": {
+    "source": "e6137b9b59b2",
+    "status": "machine"
+  },
   "footer.navLabel": {
     "source": "26c87bb51e69",
     "status": "machine"
@@ -920,7 +924,7 @@
     "status": "machine"
   },
   "home.hero.description": {
-    "source": "fc4f8e858520",
+    "source": "83a9e410b575",
     "status": "machine"
   },
   "home.hero.primary": {
@@ -992,7 +996,7 @@
     "status": "machine"
   },
   "home.editor.more": {
-    "source": "15b1de5afbad",
+    "source": "ac485b938ad4",
     "status": "machine"
   },
   "home.editor.customize": {
@@ -1348,7 +1352,7 @@
     "status": "machine"
   },
   "home.faq.items.free.answer": {
-    "source": "9f19df673fb5",
+    "source": "000b37bd1630",
     "status": "machine"
   },
   "home.faq.items.signup.question": {
@@ -1404,7 +1408,7 @@
     "status": "machine"
   },
   "home.faq.items.api.answer": {
-    "source": "ed6aa4e0e8d5",
+    "source": "79143657a5ef",
     "status": "machine"
   },
   "home.faq.items.paidPlans.question": {
@@ -2456,7 +2460,7 @@
     "status": "machine"
   },
   "qrGenerator.hub.intro1": {
-    "source": "c4eb144ee986",
+    "source": "e0a112f9c6b3",
     "status": "machine"
   },
   "qrGenerator.hub.intro2": {
@@ -2476,7 +2480,7 @@
     "status": "machine"
   },
   "qrGenerator.hub.bulkDescription": {
-    "source": "57b8f3c7a53f",
+    "source": "672626f5571a",
     "status": "machine"
   },
   "qrGenerator.hub.printTitle": {
@@ -3044,7 +3048,7 @@
     "status": "machine"
   },
   "tools.bulk.intro1": {
-    "source": "beec676f9aeb",
+    "source": "ba492f0ff61e",
     "status": "machine"
   },
   "tools.bulk.intro2": {
@@ -3339,6 +3343,14 @@
     "source": "cff1556f0a13",
     "status": "machine"
   },
+  "tools.bulk.generator.formatTiff": {
+    "source": "a3ef4eb1d2ec",
+    "status": "machine"
+  },
+  "tools.bulk.generator.formatTiffCmyk": {
+    "source": "1fc80aac41b0",
+    "status": "machine"
+  },
   "tools.bulk.generator.formatSvg": {
     "source": "c6299e75cb4a",
     "status": "machine"
@@ -3508,7 +3520,11 @@
     "status": "machine"
   },
   "tools.printSize.faq.quietAnswer": {
-    "source": "ba39588a3190",
+    "source": "ced356966dcc",
+    "status": "machine"
+  },
+  "tools.printSize.faq.quietAnswerNewDesigns": {
+    "source": "d31f1ff850e7",
     "status": "machine"
   },
   "tools.printSize.faq.resolutionQuestion": {
@@ -5091,6 +5107,18 @@
     "source": "e3751b57a096",
     "status": "machine"
   },
+  "scanPages.hosted.notReadyTitle": {
+    "source": "99911333cb22",
+    "status": "machine"
+  },
+  "scanPages.hosted.notReadyMessage": {
+    "source": "643d5f0fbdfe",
+    "status": "machine"
+  },
+  "scanPages.hosted.notReadyOwner": {
+    "source": "7425f2eff611",
+    "status": "machine"
+  },
   "scanPages.hosted.passwordProtected": {
     "source": "fa874efb3140",
     "status": "machine"
@@ -6309,6 +6337,30 @@
   },
   "barcodeTool.issues.databarTooLong": {
     "source": "70d18146d80d",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodeChars": {
+    "source": "83055075e225",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodePostcode": {
+    "source": "87e722a0fc7d",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodeCountry": {
+    "source": "dc6055ba22dd",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodeService": {
+    "source": "804364f39c26",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodeCarrier": {
+    "source": "7b16e9b48d8b",
+    "status": "machine"
+  },
+  "barcodeTool.issues.maxicodeZipPadded": {
+    "source": "4d8263d4e688",
     "status": "machine"
   },
   "barcodeTool.issues.imbEnter": {
@@ -7848,7 +7900,7 @@
     "status": "machine"
   },
   "mcp.promptsDescription": {
-    "source": "fae0c474f28c",
+    "source": "e3bad6e23517",
     "status": "machine"
   },
   "mcp.howEyebrow": {
@@ -7888,7 +7940,7 @@
     "status": "machine"
   },
   "mcp.toolsDescription": {
-    "source": "a5d8ebb931d8",
+    "source": "dc41c7876802",
     "status": "machine"
   },
   "mcp.toolNoKey": {
@@ -7897,6 +7949,10 @@
   },
   "mcp.toolNeedsKey": {
     "source": "7077456c4851",
+    "status": "machine"
+  },
+  "mcp.toolNeedsSignIn": {
+    "source": "1077f6b6e64a",
     "status": "machine"
   },
   "mcp.faqTitle": {
@@ -8192,7 +8248,7 @@
     "status": "machine"
   },
   "qrCodeApi.metaDescription": {
-    "source": "3347834cce2b",
+    "source": "0353208fdf60",
     "status": "machine"
   },
   "qrCodeApi.crumb": {
@@ -8220,7 +8276,7 @@
     "status": "machine"
   },
   "qrCodeApi.facts.formats": {
-    "source": "0cba7cfbc50a",
+    "source": "6c10cd075c4c",
     "status": "machine"
   },
   "qrCodeApi.facts.openSource": {
@@ -8309,6 +8365,10 @@
   },
   "qrCodeApi.builder.epsPreview": {
     "source": "bd469ea78c6d",
+    "status": "machine"
+  },
+  "qrCodeApi.builder.tiffPreview": {
+    "source": "7e06984ef916",
     "status": "machine"
   },
   "qrCodeApi.builder.empty": {
@@ -8412,7 +8472,7 @@
     "status": "machine"
   },
   "qrCodeApi.params.format": {
-    "source": "8909ca7d27bb",
+    "source": "b9c2df743694",
     "status": "machine"
   },
   "qrCodeApi.params.colors": {
@@ -8524,7 +8584,7 @@
     "status": "machine"
   },
   "qrCodeApi.imageCard.formats": {
-    "source": "0cba7cfbc50a",
+    "source": "6c10cd075c4c",
     "status": "machine"
   },
   "qrCodeApi.imageCard.limit": {
@@ -8628,7 +8688,7 @@
     "status": "machine"
   },
   "qrCodeApi.faq.formatsAnswer": {
-    "source": "570c2015361b",
+    "source": "58b28a542ef0",
     "status": "machine"
   },
   "qrCodeApi.faq.expireQuestion": {
@@ -8744,7 +8804,7 @@
     "status": "machine"
   },
   "dynamicQrCode.steps.print.body": {
-    "source": "a0a15f173c36",
+    "source": "72a9d4e0c39d",
     "status": "machine"
   },
   "dynamicQrCode.steps.change.title": {
@@ -10395,6 +10455,10 @@
     "source": "40df8db3f859",
     "status": "machine"
   },
+  "editor.actionBar.downloadDialog.tiffCmykCantBeTransparent": {
+    "source": "8d2e59160bf5",
+    "status": "machine"
+  },
   "editor.actionBar.downloadDialog.gifWouldNotScan": {
     "source": "33cdc0a0a3d2",
     "status": "machine"
@@ -10493,6 +10557,14 @@
   },
   "editor.actionBar.downloadDialog.formatHints.ico": {
     "source": "809036c56b1c",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.formatHints.tiff": {
+    "source": "5ba574e857c8",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.formatHints.tiff-cmyk": {
+    "source": "83f1b49e49ee",
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.svg": {
@@ -14835,18 +14907,6 @@
     "source": "dc937b598926",
     "status": "machine"
   },
-  "editor.controlSections.frameControls.takesDotColor": {
-    "source": "efde7cd49587",
-    "status": "machine"
-  },
-  "editor.controlSections.frameControls.alsoHasTemplate": {
-    "source": "9f6a4b56a0b8",
-    "status": "machine"
-  },
-  "editor.controlSections.frameControls.templateKeepsSize": {
-    "source": "e4fef3437820",
-    "status": "machine"
-  },
   "editor.controlSections.frameFields.textSize": {
     "source": "d68761cc1eb2",
     "status": "machine"
@@ -15677,6 +15737,10 @@
   },
   "editor.dynamicLinkToggle.couldntCopyTheShortLink": {
     "source": "82484d20f5c1",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.inviteForMore": {
+    "source": "1fd43c9dcb13",
     "status": "machine"
   },
   "editor.frameInline.frameTextMenu.lowContrastValue1The": {
@@ -16683,6 +16747,18 @@
     "source": "87763218505a",
     "status": "machine"
   },
+  "editor.scanScore.warning": {
+    "source": "e981ddae45d8",
+    "status": "machine"
+  },
+  "editor.scanScore.scanScoreScoreValueWarningShow": {
+    "source": "6b92296354fd",
+    "status": "machine"
+  },
+  "editor.scanScore.addAMargin": {
+    "source": "de244bba26dc",
+    "status": "machine"
+  },
   "editor.scanScore.grades.great": {
     "source": "c8cc1c7bb662",
     "status": "machine"
@@ -17520,7 +17596,7 @@
     "status": "machine"
   },
   "playground.intro.downloads": {
-    "source": "5f189de09bc1",
+    "source": "15867b3ea3ae",
     "status": "machine"
   },
   "playground.intro.links.allTypes": {
@@ -17585,6 +17661,10 @@
   },
   "limits.limitCard.labelUsed": {
     "source": "515626cd8fe0",
+    "status": "machine"
+  },
+  "limits.limitCard.inviteForMore": {
+    "source": "1fd43c9dcb13",
     "status": "machine"
   },
   "limits.limitDialog.limitReached": {
@@ -21515,6 +21595,114 @@
     "source": "515626cd8fe0",
     "status": "machine"
   },
+  "app.settings.inviteFriends.inviteLinkField.yourInviteLink": {
+    "source": "844f9f026194",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.inviteLinkField.copy": {
+    "source": "e21f935f11d7",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.inviteLinkField.copied": {
+    "source": "8d525e5f158b",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.inviteLinkField.linkCopied": {
+    "source": "d12860c21e78",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.inviteLinkField.couldntCopy": {
+    "source": "c9a1d33bd83b",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.title": {
+    "source": "2614b42d8452",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.description": {
+    "source": "252ed9d94053",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.notReady": {
+    "source": "d2afcd031165",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.yourInviteLink": {
+    "source": "1ed61b786730",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.shareYourLink": {
+    "source": "29568677ffa5",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.link": {
+    "source": "a6a32dbc5618",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.sameVisit": {
+    "source": "55224d9f56a6",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.friendsJoined": {
+    "source": "9c76671646e7",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.friendsRewarded": {
+    "source": "a93226c61440",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.rewardedOfMax": {
+    "source": "fabed8cc2e3d",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.extraCodes": {
+    "source": "c5243026f444",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.waiting": {
+    "source": "8f6cacc27845",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.atCap": {
+    "source": "34dcab31ff19",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.youWereInvited": {
+    "source": "ff5d872586df",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.howItWorks": {
+    "source": "9c870aa6e5e9",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleSignUp": {
+    "source": "ab1655e6c5ad",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleFirstCode": {
+    "source": "d9612bae9127",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleCap": {
+    "source": "a0b8d3de08e5",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleNotYourself": {
+    "source": "684bf12998c6",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleAllowance": {
+    "source": "ed99d1c55755",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.rulePrivate": {
+    "source": "e6ea19795f5c",
+    "status": "machine"
+  },
+  "app.settings.inviteFriends.page.ruleEnd": {
+    "source": "9ce366f12bca",
+    "status": "machine"
+  },
   "app.dashboard.analytics.page.conversions": {
     "source": "236c2620e434",
     "status": "machine"
@@ -24143,6 +24331,14 @@
     "source": "56cfcbae213b",
     "status": "machine"
   },
+  "app.dashboard.codes.codeActionsMenu.downloadTiff": {
+    "source": "1e87fab59837",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codeActionsMenu.downloadTiffCmyk": {
+    "source": "0dfdc0811030",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeActionsMenu.moreFormats": {
     "source": "b83931930ce6",
     "status": "machine"
@@ -24497,6 +24693,14 @@
   },
   "app.dashboard.codes.codesList.icoImagesZip": {
     "source": "e7859e50b34f",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codesList.tiffImagesZip": {
+    "source": "5ccd4cca9d0c",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codesList.tiffCmykImagesZip": {
+    "source": "c9c2dc9cae78",
     "status": "machine"
   },
   "app.dashboard.codes.codesList.svgImagesZip": {
@@ -28731,10 +28935,6 @@
     "source": "03281c889c28",
     "status": "machine"
   },
-  "app.shell.appSidebar.whatsNew": {
-    "source": "135e912e8905",
-    "status": "machine"
-  },
   "app.shell.appSidebar.backToLabel": {
     "source": "e47ed0abc2c7",
     "status": "machine"
@@ -29475,12 +29675,24 @@
     "source": "9941f422dbe5",
     "status": "machine"
   },
+  "app.oauth.authorize.oauthConsent.unknownAppTitle": {
+    "source": "4b2ee6240194",
+    "status": "machine"
+  },
+  "app.oauth.authorize.oauthConsent.unknownAppBody": {
+    "source": "dd4524d87d30",
+    "status": "machine"
+  },
   "app.oauth.authorize.oauthConsent.theAppThatSentYou": {
     "source": "5d9b4fa8a6e8",
     "status": "machine"
   },
   "app.oauth.authorize.oauthConsent.appnameWillBeAbleTo": {
     "source": "c9b18d29d255",
+    "status": "machine"
+  },
+  "app.oauth.authorize.oauthConsent.mcpOnlyNote": {
+    "source": "e57db88b55be",
     "status": "machine"
   },
   "app.oauth.authorize.oauthConsent.nameWantsToAccessYour": {
@@ -30027,6 +30239,10 @@
     "source": "3ccd9d6586ef",
     "status": "machine"
   },
+  "emails.layout.meantFor": {
+    "source": "062f5f22b936",
+    "status": "machine"
+  },
   "emails.layout.sentFor": {
     "source": "84116b259e8e",
     "status": "machine"
@@ -30037,6 +30253,14 @@
   },
   "emails.layout.unsubscribe": {
     "source": "3e92efb7664f",
+    "status": "machine"
+  },
+  "emails.layout.settings": {
+    "source": "a9142bd5e33d",
+    "status": "machine"
+  },
+  "emails.layout.copyLink": {
+    "source": "c758405f3144",
     "status": "machine"
   },
   "emails.codes.neverAsk": {
@@ -30660,11 +30884,7 @@
     "status": "machine"
   },
   "emails.teamInvite.expires": {
-    "source": "08b223faabcc",
-    "status": "machine"
-  },
-  "emails.teamInvite.pasteLink": {
-    "source": "d2bd54ffc3fd",
+    "source": "6d41a35bf252",
     "status": "machine"
   },
   "emails.teamInvite.someone": {
@@ -30692,11 +30912,7 @@
     "status": "machine"
   },
   "emails.portalInvite.signIn": {
-    "source": "d80bc37f7f74",
-    "status": "machine"
-  },
-  "emails.portalInvite.pasteLink": {
-    "source": "d2bd54ffc3fd",
+    "source": "77ed34f70049",
     "status": "machine"
   },
   "emails.portalInvite.yourAgency": {
@@ -30815,6 +31031,14 @@
     "source": "fcc19175c100",
     "status": "machine"
   },
+  "emails.limitNotice.includesBonus": {
+    "source": "749996af372d",
+    "status": "machine"
+  },
+  "emails.limitNotice.invite": {
+    "source": "1fd43c9dcb13",
+    "status": "machine"
+  },
   "emails.weeklyDigest.subject": {
     "source": "16f59aaf314b",
     "status": "machine"
@@ -30867,8 +31091,16 @@
     "source": "49e39783efc8",
     "status": "machine"
   },
+  "emails.weeklyDigest.code": {
+    "source": "340f463033e0",
+    "status": "machine"
+  },
   "emails.weeklyDigest.countries": {
     "source": "0a5a6bfb0054",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.country": {
+    "source": "701d021d08c5",
     "status": "machine"
   },
   "emails.weeklyDigest.newCodesLine": {
@@ -30877,6 +31109,10 @@
   },
   "emails.weeklyDigest.open": {
     "source": "a71e9a1f885f",
+    "status": "machine"
+  },
+  "emails.personal.meantFor": {
+    "source": "ea431bab9019",
     "status": "machine"
   },
   "emails.personal.reply": {
@@ -30919,6 +31155,10 @@
     "source": "af4beb5cd4b3",
     "status": "machine"
   },
+  "emails.welcome.button": {
+    "source": "33fb812bf544",
+    "status": "machine"
+  },
   "emails.welcome.free": {
     "source": "717da00cdb2e",
     "status": "machine"
@@ -30937,6 +31177,46 @@
   },
   "emails.welcome.reason": {
     "source": "0f58ba16364b",
+    "status": "machine"
+  },
+  "emails.inviteReward.subject": {
+    "source": "c29ade304535",
+    "status": "machine"
+  },
+  "emails.inviteReward.preview": {
+    "source": "ae11732275cf",
+    "status": "machine"
+  },
+  "emails.inviteReward.heading": {
+    "source": "ae11732275cf",
+    "status": "machine"
+  },
+  "emails.inviteReward.body": {
+    "source": "5ea4648f6076",
+    "status": "machine"
+  },
+  "emails.inviteReward.progress": {
+    "source": "395d5cc9e5bb",
+    "status": "machine"
+  },
+  "emails.inviteReward.last": {
+    "source": "91e7f4007ff0",
+    "status": "machine"
+  },
+  "emails.inviteReward.inviteMore": {
+    "source": "632d43b4f50d",
+    "status": "machine"
+  },
+  "emails.inviteReward.seeInvites": {
+    "source": "2abb9a4ea507",
+    "status": "machine"
+  },
+  "emails.inviteReward.keeps": {
+    "source": "350d43914fc1",
+    "status": "machine"
+  },
+  "emails.inviteReward.reason": {
+    "source": "324613c70bd5",
     "status": "machine"
   },
   "codeActions.lifecycle.signIn": {
@@ -31859,6 +32139,10 @@
     "source": "d4d0d17a08e8",
     "status": "machine"
   },
+  "auth.reasons.invite": {
+    "source": "6d7ce9583d5c",
+    "status": "machine"
+  },
   "auth.nudge.dismiss": {
     "source": "497a0f940e31",
     "status": "machine"
@@ -32325,6 +32609,18 @@
   },
   "auth.signInErrors.sso.rateLimited": {
     "source": "2c69a672e807",
+    "status": "machine"
+  },
+  "auth.inviteNote.text": {
+    "source": "11b7803827bd",
+    "status": "machine"
+  },
+  "auth.inviteNote.signUp": {
+    "source": "5e2b8e96503d",
+    "status": "machine"
+  },
+  "auth.inviteNote.dismiss": {
+    "source": "48845bff334a",
     "status": "machine"
   },
   "settingsActions.account.rateLimited": {

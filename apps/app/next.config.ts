@@ -41,6 +41,7 @@ import {
 import { platformHostsPattern } from "@repo/next-config/platform-hosts";
 import {
   SITE_ASSET_PREFIX,
+  siteTranslatedPaths,
   siteZoneGroups,
   siteZoneRewrites,
 } from "@repo/next-config/site-zone";
@@ -165,10 +166,17 @@ const adminConsole = adminConsoleRedirects(
 // hosts only; SITE_ZONE_GROUPS picks the groups. Unset, there are no rules
 // and this app serves its own pages. The site's responses carry their own
 // Cache-Control: nothing here adds any.
+const siteGroupsOn = siteZoneGroups(env.SITE_ZONE_GROUPS);
 const siteZone = siteZoneRewrites(env.SITE_ORIGIN, {
   hosts: `(?:${PLATFORM_HOSTS})`,
-  groups: siteZoneGroups(env.SITE_ZONE_GROUPS),
+  groups: siteGroupsOn,
 });
+// The English-only pages whose translated URLs the site serves (its
+// generators-i18n and barcodes-i18n groups, owner decision 23 Nov 2026):
+// their redirects to the English page are left out, so
+// /es/qr-code-generator/wifi reaches the site's rewrite. None while
+// SITE_ORIGIN is unset or the group is off.
+const siteTranslated = siteTranslatedPaths(env.SITE_ORIGIN, siteGroupsOn);
 if (siteZone.length > 0 && !env.SITE_ZONE_KEY) {
   console.warn(
     "⚠ SITE_ORIGIN is set but SITE_ZONE_KEY isn't: the site can't tell requests that came through this app. Set the same SITE_ZONE_KEY on both.",
@@ -478,8 +486,13 @@ let nextConfig: NextConfig = {
       // English has one address: /en/pricing → /pricing (packages/i18n/routing.ts).
       ...englishRedirects(`(?:${PLATFORM_HOSTS})`),
       // The marketing pages are English only: /es/pricing → /pricing, /es →
-      // /, /es/home → /home, query kept (307 for now; packages/i18n/routing.ts).
-      ...englishOnlyRedirects(`(?:${PLATFORM_HOSTS})`),
+      // /, /es/home → /home, query kept (308; the generator pages the site
+      // can translate get a 307: packages/i18n/routing.ts).
+      // But the pages the site serves in every language while its group for
+      // them is on (siteTranslated, above).
+      ...englishOnlyRedirects(`(?:${PLATFORM_HOSTS})`, {
+        except: siteTranslated,
+      }),
       // All of /admin, when ADMIN_CONSOLE_URL is set (above).
       ...adminConsole,
     ];

@@ -20,6 +20,7 @@ import {
 import { noteLimitUsage } from "@/lib/limit-notices";
 import { can } from "@/lib/permissions";
 import { getPlan, getPlanForScope, getPlanLimits } from "@/lib/plans";
+import { withTemplateAsFrame } from "@/lib/qr-design/legacy-template";
 import type { ActiveScope } from "@/lib/scope";
 import { themeStylePropsSchema } from "@/types/theme";
 import { readPageTemplate } from "./page-template";
@@ -90,7 +91,8 @@ async function saveThemeCopy(
   itemName: string,
   input: unknown,
 ): Promise<CopyResult> {
-  const style = themeStylePropsSchema.safeParse(input);
+  // An item saved with a template is copied as its frame
+  const style = themeStylePropsSchema.safeParse(withTemplateAsFrame(input));
   if (!style.success) {
     throw new CopyRefusedError(
       "VALIDATION_ERROR",

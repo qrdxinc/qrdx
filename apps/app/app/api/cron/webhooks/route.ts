@@ -20,6 +20,11 @@ import {
   runDeliveryWorker,
 } from "@/lib/events/deliveries";
 import { checkWorkerDue, reseedWorkerDue } from "@/lib/events/worker-due";
+import {
+  settleWaitingInvites,
+  type WaitingInvitesSummary,
+} from "@/lib/invites/qualify";
+import { pruneUnusedDynamicClients } from "@/lib/oauth-registration";
 import { type RecheckSummary, recheckWebRisk } from "@/lib/safety/recheck";
 import { isAuthorizedCronRequest, unauthorized } from "../_lib/auth";
 
@@ -32,10 +37,12 @@ const noStore = { "Cache-Control": "no-store" };
 /**
  * Webhook worker: retries due deliveries with exponential backoff, sends scan
  * batches whose window closed, runs data-out syncs, looks up destinations
- * created without a Web Risk answer, prunes deliveries older
+ * created without a Web Risk answer, settles friends' invites a first code
+ * already qualifies (lib/invites), prunes deliveries older
  * than 30 days and deletes expired Better Auth verification values. The daily
- * call also forgets browsers no account has seen for 400 days and completes
- * support's turn-offs of two-step verification that are due.
+ * call also forgets browsers no account has seen for 400 days, completes
+ * support's turn-offs of two-step verification that are due, and deletes
+ * self-registered OAuth clients nobody ever used.
  *
  * Callers: .github/workflows/webhook-worker.yml every 5 minutes with
  * ?source=github, and vercel.json once a day. The frequent call first checks
@@ -94,7 +101,23 @@ export async function GET(request: Request) {
   // days (lib/account/two-factor-reset-server.ts): due from the start of a
   // UTC day, so the daily run is the one that completes them.
   let twoFactorResets: DueResetsSummary | null = null;
+  // OAuth clients that registered themselves through the MCP server and
+  // were never used in a week (lib/oauth-registration.ts): registration is
+  // open, so they're cleared once a day, oldest first, for at most 5 s.
+  let oauthClientsPruned = 0;
   if (trigger === "daily") {
+    try {
+      oauthClientsPruned = await pruneUnusedDynamicClients({
+        deadline: Math.min(Date.now() + 5_000, startedAt + 30_000),
+      });
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          event: "cron.webhooks.oauth_clients_prune_failed",
+          error: error instanceof Error ? error.message : String(error),
+        }),
+      );
+    }
     try {
       knownDevicesPruned = await pruneStaleKnownDevices();
     } catch (error) {
@@ -149,6 +172,24 @@ export async function GET(request: Request) {
     );
   }
 
+  // Friends' invites whose first code is already there but that nothing
+  // settled (the recheck above ran out of time for them, or an
+  // after-response task was cut off): lib/invites/qualify.ts. At most 3 s,
+  // ending by 53 s; whatever is left keeps the worker due.
+  let invites: WaitingInvitesSummary | null = null;
+  try {
+    invites = await settleWaitingInvites({
+      deadline: Math.min(Date.now() + 3_000, startedAt + 53_000),
+    });
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        event: "cron.webhooks.invites_failed",
+        error: error instanceof Error ? error.message : String(error),
+      }),
+    );
+  }
+
   // Re-seed while Postgres is awake anyway. On failure the marker keeps what
   // was due, so the next frequent call runs in full again.
   let nextDueAt: number | null = null;
@@ -163,6 +204,8 @@ export async function GET(request: Request) {
       unfinished ? Date.now() : null,
       // Web Risk re-checks left (or the step failed): the next call too.
       webRisk === null || webRisk.pending > 0 ? Date.now() : null,
+      // Invites left to settle: the next call too.
+      invites?.left ? Date.now() : null,
     ].filter((time): time is number => time !== null);
     nextDueAt = times.length > 0 ? Math.min(...times) : null;
     await reseedWorkerDue(startedAt, nextDueAt);
@@ -183,11 +226,13 @@ export async function GET(request: Request) {
       pruned,
       verificationsPruned,
       knownDevicesPruned,
+      oauthClientsPruned,
       twoFactorResets,
       auditEventsPurged,
       commissionsReleased,
       integrations,
       webRisk,
+      invites,
       nextDueAt: nextDueAt === null ? null : new Date(nextDueAt).toISOString(),
     }),
   );

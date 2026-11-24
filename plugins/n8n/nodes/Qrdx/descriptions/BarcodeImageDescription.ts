@@ -189,7 +189,7 @@ export const barcodeImageFields: INodeProperties[] = [
       {
         name: "AVIF",
         value: "avif",
-        description: "The smallest files, for modern browsers",
+        description: "For systems that ask for AVIF; WebP makes smaller files",
       },
       {
         name: "BMP",

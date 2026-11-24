@@ -1,10 +1,10 @@
 ---
 title: MCP server
-description: Connect Claude, Cursor, VS Code or ChatGPT to the QRdx MCP server at mcp.qrdx.dev to make scan-checked QR codes, barcodes and AI art, with no account or key.
+description: Connect Claude, Cursor, VS Code or ChatGPT to the QRdx MCP server at mcp.qrdx.dev to make scan-checked QR codes and barcodes with no account or key, and dynamic codes once you sign in.
 icon: Bot
 ---
 
-By the end of this page your AI assistant can make QR codes: design one for any content with a checked scan score, render it in the editor's styles, build the right payload for Wi-Fi, contacts, email, SMS, locations and bank payments, find community frames and draw barcodes. With an API key on the connection it can also save designs and barcodes to your workspace and paint AI art.
+By the end of this page your AI assistant can make QR codes: design one for any content with a checked scan score, render it in the editor's styles, build the right payload for Wi-Fi, contacts, email, SMS, locations and bank payments, find community frames and draw barcodes. Once you [sign in to QRdx](#sign-in) from the assistant, it can make dynamic codes, whose link you can change after printing, and tell you how often they're scanned. With an API key on the connection it can also save designs and barcodes to your workspace and paint AI art.
 
 QRdx runs a public [Model Context Protocol](https://modelcontextprotocol.io) server at:
 
@@ -12,7 +12,7 @@ QRdx runs a public [Model Context Protocol](https://modelcontextprotocol.io) ser
 https://mcp.qrdx.dev/mcp
 ```
 
-It uses the Streamable HTTP transport, keeps no session state and needs no account, sign-in or API key. The same server also answers at `https://qrdx.dev/api/mcp`, and the [connect page](/mcp) has one-click buttons and steps for more clients than this page shows.
+It uses the Streamable HTTP transport and keeps no session state. Most tools need no account, sign-in or API key; the four that make and manage dynamic codes ask you to [sign in](#sign-in) the first time you use one. The same server also answers at `https://qrdx.dev/api/mcp`, and the [connect page](/mcp) has one-click buttons and steps for more clients than this page shows.
 
 [Try it in the playground](/playground?open=code&lang=mcp): style a code there, then copy it as `design_qr` arguments for your assistant.
 
@@ -23,7 +23,7 @@ It uses the Streamable HTTP transport, keeps no session state and needs no accou
     Claude on the web and Claude Desktop share the same connectors.
 
     1. Open **Customize → Connectors** and choose **Add custom connector**. The **Connect to Claude** button on the [connect page](/mcp) opens this dialog with the name and URL filled in.
-    2. Name it `QRdx` and enter `https://mcp.qrdx.dev/mcp`. Leave the OAuth fields empty.
+    2. Name it `QRdx` and enter `https://mcp.qrdx.dev/mcp`. Leave the OAuth fields empty: Claude registers itself with QRdx when you first [sign in](#sign-in).
     3. Choose **Add**, then turn QRdx on from the tools menu of a chat.
 
     Free plans can add one custom connector. On Team and Enterprise plans, an owner adds the connector for the organization.
@@ -86,7 +86,7 @@ It uses the Streamable HTTP transport, keeps no session state and needs no accou
   <Tab value="ChatGPT">
     1. Go to [ChatGPT Plugins](https://chatgpt.com/plugins), choose **+** and then **Add custom MCP server**.
     2. Name it `QRdx` and enter `https://mcp.qrdx.dev/mcp` as the URL.
-    3. Choose no authentication, accept the warning and create it.
+    3. For authentication, choose OAuth so the dynamic-code tools can ask you to [sign in](#sign-in); ChatGPT registers itself with QRdx, so there's no client ID to enter. With no authentication, every other tool still works. Accept the warning and create it.
     4. In a new chat, type `@` and pick QRdx.
 
     Your ChatGPT plan and your workspace's settings decide whether custom MCP servers are allowed. ChatGPT only connects to remote servers like this one.
@@ -145,15 +145,19 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | Tool | What it does |
 | --- | --- |
 | `design_qr` | Designs a code for any content type with the style your assistant chooses, or starting from a built-in theme or a community item, checks its scan score and repairs the style until it is Great. Returns the score, what it changed, the style JSON, a playground link, a PNG and the SVG |
-| `list_options` | Lists every value `design_qr` accepts: content types and their fields, colors and gradients, shapes, frames (with the ids of QRdx's official frames), borders, logo icons and brand logos, built-in themes, error correction levels and limits |
+| `list_options` | Lists every value `design_qr` accepts: content types and their fields, colors and gradients, shapes, frames (with the ids of QRdx's official frames), logo icons and brand logos, built-in themes, error correction levels and limits |
 | `generate_qr_code` | Renders a QR code with the editor's styles. Returns a PNG image and public [image API](/docs/developers/image-api) URLs (SVG, PNG, lossless WebP, GIF, BMP, ICO, TIFF and vector EPS) ready for Markdown, HTML or print, plus the SVG markup on request |
-| `list_qr_styles` | Lists body patterns, corner eye and eye dot shapes, frames (the built-in styles and those drawn as templates), logo icons, error correction levels, defaults and limits |
+| `list_qr_styles` | Lists body patterns, corner eye and eye dot shapes, frames (the built-in styles), logo icons, error correction levels, defaults and limits |
 | `search_community` | Finds published [community](/community) frames, themes and collections by words, type or tag |
 | `get_community_item` | One community item with the style it applies, ready for `design_qr` or `generate_qr_code` |
-| `save_template` | Saves a design as a theme in your workspace. Needs an [API key](#use-an-api-key) |
+| `save_template` | Saves a design as a theme in your workspace. Listed when the connection has an [API key](#use-an-api-key) |
 | `generate_barcode` | Draws an EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode or DotCode barcode after checking the value (check digits, lengths, characters). Returns a PNG and public [barcode API](/docs/developers/barcode-api) URLs |
-| `save_barcode` | Saves a barcode to your workspace's Barcodes. Needs an [API key](#use-an-api-key) |
-| `generate_ai_art` | Paints a QR code into AI artwork and checks that it scans. Uses one of the workspace's monthly AI art images and takes up to a minute. Needs an [API key](#use-an-api-key). See [AI art API](/docs/developers/ai-art-api) |
+| `save_barcode` | Saves a barcode to your workspace's Barcodes. Listed when the connection has an [API key](#use-an-api-key) |
+| `generate_ai_art` | Paints a QR code into AI artwork and checks that it scans. Uses one of the workspace's monthly AI art images and takes up to a minute. Listed when the connection has an [API key](#use-an-api-key). See [AI art API](/docs/developers/ai-art-api) |
+| `create_dynamic_code` | Makes a dynamic code in your workspace: it encodes a short link, so the destination can change after printing and scans are counted. Returns the short link, a PNG, image URLs and a link to the code in your dashboard. Needs [sign-in](#sign-in) |
+| `update_code_destination` | Points one of your dynamic codes that opens a website at a new URL; the printed code stays the same, and routing rules you set in the dashboard still apply. A code that opens a hosted page is changed in the dashboard. Needs [sign-in](#sign-in) |
+| `get_code_stats` | Scans and unique visitors for one of your dynamic codes over a range your plan keeps, with the top countries, devices and operating systems and scans per day. Needs [sign-in](#sign-in) |
+| `list_codes` | Your dynamic codes with their ids, short links, destinations, status and scan counts. Needs [sign-in](#sign-in) |
 | `qr_payload_wifi` | Builds a `WIFI:` network payload with special characters escaped: WPA/WPA2 (and WPA2/WPA3 transition), WPA3-only (`T:SAE`), WEP or open, optionally hidden. WPA2/WPA3-Enterprise networks (`T:WPA2-EAP`, with the EAP method and identity) are read by ZXing-based scanner apps, not by phone camera apps |
 | `qr_payload_vcard` | Builds a vCard 3.0 contact (RFC 2426): name, organization, title, phones, email, website, address and note |
 | `qr_payload_mecard` | Builds a MeCard contact (`MECARD:`), the compact alternative to a vCard: name, reading, nickname, phone, email, website, birthday, address and note |
@@ -165,6 +169,8 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | `read_docs_page` | Returns one docs page as Markdown, by its path from `search_docs` or its URL. Long pages are cut at 12,000 characters, and a page with no translation comes back in English |
 
 The payload tools return a plain string. Your assistant then passes it as `data` to `generate_qr_code`. A Swiss QR-bill payload is encoded at exactly the error correction level asked for, never higher, since SIX's guidelines want `M`.
+
+The codes `design_qr` and `generate_qr_code` make are static: what they encode is in the code itself. For a web address, their result adds one line saying that `create_dynamic_code` makes a code whose link can change later.
 
 ### design_qr
 
@@ -235,9 +241,34 @@ If you connected QRdx before the card existed, remove the connector and add it a
 
 Item text is written by community members. Names, descriptions, handles, tags and frame labels come back short, on one line and without links, emails or markup, and every result says to treat them as data, not instructions.
 
+## Sign in for dynamic codes [#sign-in]
+
+`create_dynamic_code`, `update_code_destination`, `get_code_stats` and `list_codes` act on your own QRdx workspace, so they need you signed in. They're listed to every connection, and nothing asks you to sign in until your assistant calls one of them:
+
+1. You ask for a code you can change later or whose scans you want to count, such as "Make me a QR code for our menu at https://example.com/menu that I can update later".
+2. The assistant calls `create_dynamic_code`. Your app sees you aren't signed in and shows a button to sign in to QRdx.
+3. QRdx's sign-in page opens. Sign in with Google or GitHub; if you don't have a QRdx account yet, that makes one. (This page doesn't offer email codes: an account you made with one can [link Google or GitHub](/docs/help/account-and-billing/sign-in#link-google-or-github) first.) Then the consent screen asks you to let the app see your dynamic codes and their scan counts, create codes and change where they go (`codes:read` and `codes:write`), and choose **Authorize**.
+4. Back in the chat, the assistant runs the tool again (some apps do it on their own; otherwise ask once more) and gets the code.
+
+The code lands in your own workspace with the same rules as one made in the dashboard: your plan's active dynamic codes ({facts.freeDynamicCodes} on Free), the per-minute limits, the destination check for phishing and malware (a flagged link is refused, and a new account's unusual link can wait for a safety check), webhooks and the audit log, which names the app. Over the limit, the tool answers with the API's `LIMIT_REACHED` error (`402`). `get_code_stats` returns totals and short breakdowns, never single scans or precise locations.
+
+The app keeps the sign-in until you take it away: **Settings → Authorized apps** lists it, and **Revoke** signs it out. Apps that register themselves this way always show the consent screen, marked as unverified, with the address they send you back to (such as `claude.ai` or `chatgpt.com`); only authorize the one you started from. The sign-in works only on the MCP server, for these four tools: the [REST API](/docs/developers/rest-api) refuses it (`403`), so the app can't delete codes, manage webhooks or use AI art.
+
+An [API key](#use-an-api-key) on the connection works for these tools too, for its workspace.
+
+### For client developers
+
+The server follows the [MCP authorization spec](https://modelcontextprotocol.io/specification/latest/basic/authorization):
+
+- **Protected resource metadata** (RFC 9728): `https://mcp.qrdx.dev/.well-known/oauth-protected-resource/mcp`, also at the root `/.well-known/oauth-protected-resource`. Its `resource` is the URL you connect to (`https://mcp.qrdx.dev/mcp`, or `https://qrdx.dev/api/mcp` and its own metadata at `https://qrdx.dev/.well-known/oauth-protected-resource/api/mcp`).
+- **Authorization server metadata** (RFC 8414): `https://qrdx.dev/.well-known/oauth-authorization-server`. Codes need PKCE with `S256`, a registered client's `resource` must be this server or the REST API (anything else is `invalid_target`), and every authorization response carries `iss` (RFC 9207). Tokens issued to registered clients work on the MCP server only.
+- **Dynamic client registration** (RFC 7591) at `https://qrdx.dev/api/oauth/register`, with no initial access token. Public clients send `token_endpoint_auth_method: "none"`; others get a client secret for `client_secret_basic` or `client_secret_post`. Redirect URIs are `https://`, or `http://` on `localhost`, `127.0.0.1` or `[::1]`, where any port matches at sign-in. Up to 5, of up to 512 characters each and 1,024 together, never on a QRdx host. Only `codes:read` and `codes:write` can be registered. A client nobody signs in with in a week is deleted; if your app keeps its registration, register again when the authorization endpoint answers `invalid_client`. Client ID metadata documents aren't supported yet.
+- **The challenge.** A call to one of the four tools without a usable token fails with HTTP `401` and `WWW-Authenticate: Bearer resource_metadata="…", scope="codes:read codes:write"` (plus `error="invalid_token"` when the token sent was refused), or `403` with `error="insufficient_scope"` for a token without those scopes, before the tool runs. Calls from ChatGPT (which put `openai/…` keys in the call's `_meta`) get a tool error with the same challenge in `_meta["mcp/www_authenticate"]` instead, and the four tools declare `securitySchemes` (oauth2) in their `_meta`; the others declare `noauth`.
+- Access tokens last an hour and refresh tokens 30 days, rotated on each use, as on the [REST API](/docs/developers/rest-api#get-an-access-token).
+
 ## Use an API key [#use-an-api-key]
 
-Some tools need a QRdx [API key](/docs/developers/api-keys) on the connection, sent as `Authorization: Bearer qrdx_…`:
+Some tools need a QRdx [API key](/docs/developers/api-keys) on the connection, sent as `Authorization: Bearer qrdx_…`. The server lists `save_template`, `save_barcode` and `generate_ai_art` only to connections that send one:
 
 - **`save_template`** saves a design as a theme, listed under Themes in the dashboard and offered in the editor. It needs a key with `codes:write`, which **Full access** keys have. A key of your own workspace saves to your themes; a team key saves to the team's shared themes when its creator is an owner or admin and the plan has team themes. Saves count toward the plan's saved-theme limit (see [Plans and limits](/docs/plans-and-limits)); over it, the tool returns the API's `LIMIT_REACHED` error (`402`).
 - **`save_barcode`** saves a barcode (format, value, an optional title and drawing options) to the key's workspace, listed under Barcodes in the dashboard. It needs a key with `codes:write`. Every plan saves barcodes, up to 1,000 on Free; over the limit it returns `LIMIT_REACHED` (`402`).
@@ -246,10 +277,10 @@ Some tools need a QRdx [API key](/docs/developers/api-keys) on the connection, s
 - **Logos you uploaded** in [Dashboard → Files](/docs/files), by file id (`logo_file_id` in `design_qr`, `logoFileId` in `generate_qr_code`): a PNG or JPEG of up to 1 MB. The key must belong to the workspace that owns the file.
 </IfAvailable>
 
-Without a key, these tools answer with how to add one:
+Without a key, the server doesn't list those three tools, and its instructions tell the assistant that adding a key adds them. The server goes by the header's form, so a key that is wrong, revoked or read-only still lists them, and calling one answers with what's wrong with the key:
 
-```txt title="save_template without a key"
-save_template needs a QRdx API key: send it as Authorization: Bearer qrdx_… (create one in Settings → API keys & apps).
+```txt title="save_template with a revoked key"
+Invalid API key: it doesn't exist, was revoked or has expired, or its creator left the workspace. Check that you copied the whole key, or create a new one at https://qrdx.dev/dashboard?to=settings/developers.
 ```
 
 <Tabs items={["Claude Code", "Cursor", "VS Code"]}>
@@ -294,9 +325,13 @@ Keep the key out of shared or committed config files. Calls made with a key coun
 
 Check the URL is exactly `https://mcp.qrdx.dev/mcp` and the transport is HTTP (Streamable HTTP), not SSE or stdio. Clients that only run local servers need the `mcp-remote` bridge above. Opening the URL in a browser redirects to the connect page, which is expected: MCP clients never ask for HTML.
 
-### The assistant says a tool needs an API key
+### The assistant asks you to sign in again
 
-`save_template`, `save_barcode`, `generate_ai_art` and uploaded logos need `Authorization: Bearer qrdx_…` on the connection. Add the header as shown above and reconnect.
+Your app's sign-in ran out or was revoked in **Settings → Authorized apps**. Sign in again from the button it shows. If no button appears, remove the QRdx connector and add it again (in ChatGPT, with OAuth as its authentication), then refresh its tools.
+
+### The assistant can't find a tool, or says it needs an API key
+
+`save_template`, `save_barcode` and `generate_ai_art` are listed only when the connection sends `Authorization: Bearer qrdx_…`, and uploaded logos need the same header. Add it as shown above, then reconnect or refresh the server's tools so your app fetches the list again.
 
 ### `design_qr` refuses the content
 
@@ -308,7 +343,7 @@ The server allows {facts.mcpPerMinute} requests a minute per IP address, and `de
 
 ## Privacy and limits [#privacy-and-limits]
 
-- The tools render images, check designs, format text, and read the public community and these docs. Only `save_template` and `save_barcode` write anything: the theme or barcode you ask them to save, in the API key's workspace. `generate_ai_art` uses one of the workspace's monthly AI art images, and keeps neither the image nor a photo you send. The server doesn't save the codes you generate.
+- The tools render images, check designs, format text, and read the public community and these docs. Only these write anything: `create_dynamic_code` and `update_code_destination` (the dynamic code you ask for, in your workspace), and `save_template` and `save_barcode` (the theme or barcode you ask them to save, in the API key's workspace). `generate_ai_art` uses one of the workspace's monthly AI art images, and keeps neither the image nor a photo you send. The server doesn't save the static codes you generate.
 - The image URLs that `generate_qr_code` and `generate_barcode` return contain the encoded data. Don't share them if the data is private, such as a Wi-Fi password.
 - Requests are limited to {facts.mcpPerMinute} a minute per IP address, and `design_qr` to {facts.designQrPerMinute}.
 

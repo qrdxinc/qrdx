@@ -1,0 +1,37 @@
+{
+  "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
+  "root": false,
+  "extends": "//",
+  "overrides": [
+    {
+      // Apps Script runs every file of the project in one global scope, with
+      // its services (CardService, DocumentApp…) as globals: a name from
+      // another file looks undeclared, and an entry point named only in
+      // appsscript.json looks unused. test/addon.test.mjs loads the files the
+      // same way and calls every entry point, which catches a misspelt name.
+      "includes": ["src/**/*.js"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUndeclaredVariables": "off",
+            "noUnusedVariables": "off"
+          },
+          "style": {
+            // Apps Script's parser rejects numeric separators (ES2021):
+            // `clasp push` failed on `0x8_00` with "Unexpected token ILLEGAL"
+            // (24 Nov 2026). It takes ES2020 (`?.`, `??`); the rule's fix is
+            // the only one in the preset that writes newer syntax, and
+            // test/syntax.test.mjs parses src/ as ES2020 to catch the rest.
+            "useNumericSeparators": "off",
+            // Its fix writes Array.prototype.at (ES2022), unverified in Apps Script.
+            "useAtIndex": "off"
+          },
+          "suspicious": {
+            // Its fix writes Object.hasOwn (ES2022), unverified in Apps Script.
+            "noPrototypeBuiltins": "off"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -225,7 +225,6 @@ export const qrPropsSchema = z.object({
   margin: z.number().optional(),
   imageSettings: imageSettingsSchema.optional(),
   isOGContext: z.boolean().optional(),
-  templateId: z.string().optional(),
   customProps: z.record(z.string(), z.any()).optional(),
   frame: anyFrameSchema.optional(),
   art: qrArtSchema.optional(),
@@ -272,11 +271,11 @@ export interface QRProps {
   style?: QRStyle;
   imageSettings?: ImageSettings;
   isOGContext?: boolean;
-  templateId?: string;
-  // Custom template definition - if provided, this will be used instead of looking up by templateId
+  // Artwork you draw in code around the code: the template's wrapper gets
+  // the drawn code and returns the whole picture (see types/template.ts)
   customTemplate?: TemplateDefinition<any>;
-  // Generic custom props that can be used by any template
-  // Each template can define its own custom props type (e.g., DotRingProps)
+  // Props for the template's wrapper, spread after fgColor and bgColor
+  // (each template defines its own)
   customProps?: Record<string, any>;
   // Frame around the code: a built-in style, or { style: "custom", spec }
   // (see types/frame-spec.ts); the rendered output grows to fit it

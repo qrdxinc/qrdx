@@ -14,7 +14,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { defaultThemeState } from "@/config/qr";
+import { storedStyleDefaults } from "@/config/qr";
 import { useControlsTabFromUrl } from "@/lib/hooks/use-controls-tab-from-url";
 import { useKeyboardShortcut } from "@/lib/hooks/use-keyboard-shortcuts";
 import { useUserSettings } from "@/lib/hooks/use-user-settings";
@@ -195,8 +195,7 @@ function randomChange(
       return logo ? { customLogo: logo, showLogo: true } : null;
     }
     default:
-      // Another frame takes the place of a template inside it too
-      return { frame: randomFrame(style.frame, random), templateId: undefined };
+      return { frame: randomFrame(style.frame, random) };
   }
 }
 
@@ -249,7 +248,7 @@ function LogoEditHandles({
   onHide: () => void;
   onCancel: () => void;
 }) {
-  const current = { ...defaultThemeState.styles, ...styles };
+  const current = { ...storedStyleDefaults, ...styles };
   // The largest logo the code's error correction can repair
   const { maxPercent } = useLogoSize(current);
   return (

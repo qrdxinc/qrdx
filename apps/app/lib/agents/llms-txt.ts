@@ -6,6 +6,7 @@
 // pages and what this deployment offers; tests/lib/agents.test.ts checks it.
 import {
   CANONICAL_ORIGIN,
+  DISCORD_INVITE_URL,
   GITHUB_REPO_URL,
   SHADCN_REGISTRY_NAMESPACE,
 } from "@repo/config";
@@ -446,7 +447,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     {
       title: "MCP server",
       url: "/docs/developers/mcp",
-      description: `Remote MCP endpoint \`${mcpUrl}\` (Streamable HTTP, no account or key, read-only tools that render QR codes and barcodes and build Wi-Fi, contact, email, SMS and map payloads; with an API key, tools that save themes and barcodes and make AI QR art). Claude Code: \`${claudeCodeCommand(mcpUrl)}\``,
+      description: `Remote MCP endpoint \`${mcpUrl}\` (Streamable HTTP, no account or key, read-only tools that render QR codes and barcodes and build Wi-Fi, contact, email, SMS and map payloads; signed in to QRdx with OAuth, tools that create dynamic codes, change their destination and report their scans; with an API key, tools that save themes and barcodes and make AI QR art). Claude Code: \`${claudeCodeCommand(mcpUrl)}\``,
     },
     {
       title: "Connect an AI app to the MCP server",
@@ -532,11 +533,16 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       ),
     );
   const docs = docsLinks(input.docs.filter((s) => s.title !== HELP_TAB));
-  const help = links(
-    input.docs
+  const help = links([
+    ...input.docs
       .filter((section) => section.title === HELP_TAB)
       .flatMap((section) => section.pages),
-  );
+    {
+      title: "QRdx Discord",
+      url: DISCORD_INVITE_URL,
+      description: "Ask a question, share a design or talk to the team",
+    },
+  ]);
 
   const price = (plan: PaidPlan) =>
     `${formatPrice(PRICING[plan].month.amounts.USD, "USD")} a month or ${formatPrice(PRICING[plan].year.amounts.USD, "USD")} a year (${localPricesNote(plan)})`;

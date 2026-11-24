@@ -1,6 +1,5 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { getTemplateIds } from "qrdx";
 import { runBatch } from "./commands/batch";
 import { runGenerate } from "./commands/generate";
 
@@ -115,11 +114,7 @@ ${BOLD}Generate Options:${RESET}
   --logo              Logo URL for center image (use with --level H)
   --no-logo           Skip the logo prompt in interactive mode
   --margin            Quiet zone margin in modules  ${DIM}(default: 0)${RESET}
-  --size              Output pixel size for SVG/PNG/WebP/GIF/BMP  ${DIM}(default: 512)${RESET}
-  --template          A frame drawn as a template (the whole artwork is --size):
-                        ${DIM}${getTemplateIds()
-                          .filter((id) => id !== "default")
-                          .join(", ")}${RESET}
+  --size              Output pixel size for SVG/PNG/WebP/GIF/BMP/TIFF  ${DIM}(default: 512)${RESET}
   --frame             Call-to-action frame (adds space around the code), e.g.:
                         ${DIM}none, banner-bottom, banner-top, rounded-border,${RESET}
                         ${DIM}speech-bubble, polaroid, phone, ticket, sticker${RESET}
@@ -131,7 +126,8 @@ ${BOLD}Generate Options:${RESET}
 
 ${BOLD}Batch Options:${RESET}  ${DIM}qrdx batch <file.csv> [options]${RESET}
   -o, --out           Folder for the codes  ${DIM}(default: qr-codes)${RESET}
-  --format            svg, png or eps  ${DIM}(default: svg; PNG needs sharp)${RESET}
+  --format            svg, png, webp, gif, bmp, ico, tiff, tiff-cmyk or eps
+                        ${DIM}(default: svg; all but SVG and EPS need sharp)${RESET}
   --value-column      Column with each code's content, by name or number
                         ${DIM}(default: value, url, link, data, content, text or qr; else the first)${RESET}
   --name-column       Column with file names, by name or number
@@ -159,8 +155,8 @@ ${BOLD}Examples:${RESET}
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" -o qr.eps --size 144
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --fg "#ff0000" --bg "#ffffff" --size 1024
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --logo "https://qrdx.dev/logo.png" --level H -o branded.svg
-  ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --template Arrow -o arrow.svg
-  ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --template Halloween --body circle --eye gear -o halloween.svg
+  ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --frame arrow -o arrow.svg
+  ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --frame pumpkin --body circle --eye gear -o pumpkin.svg
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --frame banner-bottom --frame-text "Scan for the menu" -o menu.png
   ${DIM}$${RESET} qrdx batch products.csv -o codes --format png --size 1024 --body circle
   ${DIM}$${RESET} qrdx generate "https://qrdx.dev" --fg '{"type":"linear","stops":[{"color":"#6366f1","offset":0},{"color":"#ec4899","offset":100}],"angle":135}' -o gradient.svg

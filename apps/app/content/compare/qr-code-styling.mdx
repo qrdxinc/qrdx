@@ -6,7 +6,7 @@ seoDescription: "qr-code-styling is the MIT-licensed, framework-agnostic styled 
 competitor: qr-code-styling
 competitorUrl: https://github.com/kozakdenys/qr-code-styling
 category: library
-tagline: "qr-code-styling is the popular framework-agnostic library for styled QR codes. QRdx is a React-first alternative with a visual editor and templates."
+tagline: "qr-code-styling is the popular framework-agnostic library for styled QR codes. QRdx is a React-first alternative with a visual editor and frames."
 qrdxPlan: "npm · MIT"
 competitorPlan: "npm · MIT"
 lastVerified: "2026-11-11"
@@ -42,7 +42,7 @@ tableRows:
     qrdx: true
     competitor: true
   - feature: Download formats
-    qrdx: "PNG, JPG, WebP, SVG, PDF, EPS, GIF, BMP, ICO"
+    qrdx: "PNG, JPG, WebP, SVG, PDF, EPS, GIF, BMP, ICO, TIFF"
     competitor: "PNG, JPEG, WebP, SVG"
   - feature: Code shape
     qrdx: "Square, circle, heart or a custom silhouette"
@@ -50,7 +50,7 @@ tableRows:
   - feature: Server rendering
     qrdx: "SVG (React Server Components), PNG (qrdx/node), PDF and EPS"
     competitor: "Raster and SVG, via node-canvas or jsdom"
-  - feature: Frame templates
+  - feature: Frames
     qrdx: "{facts.frames} built in"
     competitor: "Via extensions"
   - feature: Visual editor that exports code
@@ -61,8 +61,8 @@ featureHighlights:
     description: "QRdx is a set of React components you render with props. qr-code-styling is a class you instantiate and append to a DOM node, so React apps usually wrap it in a ref and an effect."
   - title: More shape options
     description: "QRdx has {facts.bodyPatterns} body patterns, {facts.eyeShapes} corner-eye shapes and {facts.eyeCentres} eye-dot shapes, including diamond, pacman, gear and star styles, and the whole code can be a circle, a heart or a silhouette of your own. qr-code-styling has 6 dot types and 7 types each for corner squares and corner dots."
-  - title: Templates and PDF export
-    description: "QRdx ships {facts.frames} frames and exports PDF, EPS, GIF, BMP and ICO as well as PNG, JPG, WebP and SVG. qr-code-styling exports PNG, JPEG, WebP and SVG, and adds borders through extensions."
+  - title: Frames and PDF export
+    description: "QRdx ships {facts.frames} frames and exports PDF, EPS, GIF, BMP, ICO and TIFF as well as PNG, JPG, WebP and SVG. qr-code-styling exports PNG, JPEG, WebP and SVG, and adds borders through extensions."
   - title: Design visually, paste the code
     description: "Style a code in the QRdx playground and copy it as a ready-to-use QRCode component, so designers and developers work from the same settings."
 ---
@@ -73,7 +73,7 @@ qr-code-styling is one of the most popular libraries for QR codes that are more 
 
 qr-code-styling suits projects in any framework (or none) and server-side image generation. Its options cover dot types (`rounded`, `dots`, `classy`, `classy-rounded`, `square`, `extra-rounded`), corner square and corner dot types, gradients with rotation and color stops on dots, corners and background, a logo with hidden background dots, and downloads as PNG, JPEG, WebP or SVG.
 
-QRdx suits React apps that want styled codes as declarative components, a wider set of shapes, built-in frame templates, PDF export, and a playground where non-developers can design the code.
+QRdx suits React apps that want styled codes as declarative components, a wider set of shapes, built-in frames, PDF export, and a playground where non-developers can design the code.
 
 ## Where qr-code-styling is the better choice
 
@@ -84,7 +84,7 @@ QRdx suits React apps that want styled codes as declarative components, a wider 
 
 - **API:** class plus `append()` and `update()` versus React components with props.
 - **Shapes:** QRdx offers more body and eye-dot styles, and the code itself can be a circle, a heart or a custom silhouette; qr-code-styling has a circle. Both rotate linear gradients, and QRdx adds angular gradients and image fills.
-- **Export:** QRdx adds PDF and EPS; both do WebP.
+- **Export:** QRdx adds PDF, EPS and TIFF; both do WebP.
 - **On a server:** qr-code-styling renders in Node.js through node-canvas or jsdom. QRdx renders SVG in React Server Components and PDF and EPS in plain Node. For PNG, `getQRAsPNG` from `qrdx/node` returns the bytes once you install `@resvg/resvg-js` or `sharp`.
 
 ## Switching from qr-code-styling

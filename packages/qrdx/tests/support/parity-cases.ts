@@ -247,9 +247,9 @@ export function parityCases(
     halo: { width: 0.3, color: "#fde68a" },
     shadow: { dx: 0.2, dy: -0.1, opacity: 0.25, color: "#7c2d12" },
   });
-  add("halo and shadow with a template", {
+  add("halo and shadow in the dot ring frame", {
     margin: 2,
-    templateId: "dot-ring",
+    frame: { style: "dot-ring" },
     halo: { width: 0.2 },
     shadow: {},
   });
@@ -486,64 +486,66 @@ export function parityCases(
     level: "H",
     imageSettings: { src: LOGO, width: 56, height: 56, excavate: true },
   });
-  add("part markers with a template", {
+  add("part markers in a former template's frame", {
     partMarkers: true,
-    templateId: "Arrow",
+    frame: { style: "arrow" },
   });
 
-  // Templates
-  for (const templateId of [
-    "default",
-    "Arrow",
-    "StandardBox",
-    "SquareBorder",
-    "StrikedBox",
-    "Halloween",
-    "DotRing",
-  ]) {
-    add(`template ${templateId}`, {
-      templateId,
+  // The former templates, frames since 0.0.64
+  for (const style of [
+    "arrow",
+    "standard-box",
+    "square-border",
+    "striked-box",
+    "pumpkin",
+    "dot-ring",
+  ] as const) {
+    add(`frame ${style}`, {
+      frame: { style, color: "#111827" },
       fgColor: "#111827",
       bgColor: linear(0, "#ffffff", "#f1f5f9"),
     });
   }
-  add("template with frame and attributes", {
-    templateId: "Arrow",
-    frame: { style: "rounded-border" },
+  add("former template's frame with attributes", {
+    frame: { style: "arrow" },
     className: "qr",
     style: { maxWidth: 200 },
   });
-  add("template with a logo", {
-    templateId: "StandardBox",
+  add("former template's frame with a logo", {
+    frame: { style: "standard-box" },
     level: "H",
     imageSettings: { src: LOGO, width: 48, height: 48, excavate: true },
   });
-  // Dot ring: text on the ring, colors and strokes, a caller's logo
-  add("dot ring template with custom props", {
-    templateId: "DotRing",
+  // Dot ring: text on the ring, colors, a caller's logo
+  add("dot ring frame with text and colors", {
+    frame: {
+      style: "dot-ring",
+      text: "Scan <me> & see",
+      secondaryText: "",
+      color: "#1e3a8a",
+      textColor: "#fde047",
+    },
     level: "H",
     bodyPattern: "circle-large",
-    customProps: {
-      customText: "Scan <me> & see",
-      textPosition: "bottom",
-      textRotation: 12,
-      textColor: "#fde047",
-      fontSize: 28,
-      fontWeight: 700,
-      fontLetterSpacing: 2,
-      outerCircleColor: "#1e3a8a",
-      strokeWidth: 3,
-      innerStrokeColor: "#fde047",
-    },
   });
-  add("dot ring template with a logo", {
-    templateId: "DotRing",
+  add("dot ring frame with a logo", {
+    frame: { style: "dot-ring" },
     level: "H",
     imageSettings: { src: LOGO, width: 48, height: 48, excavate: true },
   });
+  // A template drawn in code (customTemplate), with its props
   add("React custom template", {
     customTemplate: reactTemplate,
     customProps: { label: "Scan <me>" },
+  });
+  add("custom template with a frame, attributes and a logo", {
+    customTemplate: reactTemplate,
+    customProps: { label: "Menu" },
+    frame: { style: "rounded-border" },
+    className: "qr",
+    style: { maxWidth: 200 },
+    level: "H",
+    imageSettings: { src: LOGO, width: 48, height: 48, excavate: true },
   });
 
   // Root attributes

@@ -6,5 +6,11 @@ export const GITHUB_PROFILE_URL = "https://github.com/bucharitesh";
 export const X_HANDLE = "@bucha_ritesh";
 export const X_PROFILE_URL = "https://x.com/bucha_ritesh";
 
+/**
+ * The QRdx Discord server: questions, shared designs and the team. A
+ * permanent invite (it never expires).
+ */
+export const DISCORD_INVITE_URL = "https://discord.gg/856fWMrYBm";
+
 export const NPM_LIBRARY_URL = "https://www.npmjs.com/package/qrdx";
 export const NPM_CLI_URL = "https://www.npmjs.com/package/@qrdx/cli";

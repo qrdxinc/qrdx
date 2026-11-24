@@ -22,6 +22,7 @@ import {
   NEW_FRAMES,
   PLAIN,
   recordCanvas,
+  UNLABELLED_FRAMES,
   VALUE,
 } from "./support/catalog";
 import { PHONE_MODULE_SIZES, renderSvg } from "./support/qr";
@@ -90,14 +91,21 @@ describe("frames", () => {
         width: layout.width,
         height: layout.height,
       });
-      expect(layout.qrX).toBeGreaterThan(0);
-      expect(layout.qrY).toBeGreaterThan(0);
+      // The former templates' artwork may start at the code's edge (arrow)
+      expect(layout.qrX).toBeGreaterThanOrEqual(0);
+      expect(layout.qrY).toBeGreaterThanOrEqual(0);
+      expect(layout.width).toBeGreaterThan(layout.qrSize);
       expect(layout.qrX + layout.qrSize).toBeLessThanOrEqual(layout.width);
       expect(layout.qrY + layout.qrSize).toBeLessThanOrEqual(layout.height);
     });
 
     it("renders its label, honors fontScale and hides an empty label", () => {
       const labels = frameLabels(getFrameLayout(256, frame));
+      if (UNLABELLED_FRAMES.has(style)) {
+        // Artwork without a label: the text has nowhere to go
+        expect(labels).toEqual([]);
+        return;
+      }
       expect(labels.length).toBeGreaterThan(0);
       const size = (scale: number) =>
         Math.max(
@@ -153,7 +161,7 @@ describe("frames", () => {
       );
       const eps = await svgToEPS(svg);
       const labels = frameLabels(getFrameLayout(256, frame));
-      expect(eps.match(/ show grestore/g)?.length).toBe(labels.length);
+      expect(eps.match(/ show grestore/g)?.length ?? 0).toBe(labels.length);
       const rotated = labels.filter((label) => label.rotate).length;
       expect(eps.match(/ rotate \(/g)?.length ?? 0).toBe(rotated);
       expect(eps.match(/\bgsave\b/g)?.length).toBe(

@@ -69,7 +69,9 @@ export const sendEmailChangeCode: EmailChangeCodeSender = async ({
         sendEmail({
           to: email,
           subject: emailChangeCodeSubject(intl),
-          react: <EmailChangeCodeEmail code={otp} intl={intl} />,
+          react: (
+            <EmailChangeCodeEmail code={otp} intl={intl} recipient={email} />
+          ),
           tags: [{ name: "category", value: "email_change_code" }],
         }),
     },

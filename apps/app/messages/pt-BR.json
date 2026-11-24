@@ -220,6 +220,7 @@
     "description": "A plataforma open source de QR codes.",
     "starOnGithub": "Dê uma estrela no GitHub",
     "newsOnX": "Novidades do QRdx no X",
+    "joinDiscord": "Entre no Discord do QRdx",
     "navLabel": "Rodapé",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -349,7 +350,7 @@
     "hero": {
       "badge": "Grátis e open source (AGPL-3.0)",
       "title": "Gerador de QR code grátis, com códigos dinâmicos que continuam funcionando",
-      "description": "Crie QR codes com a sua marca, usando padrões, gradientes, logos e molduras, e baixe em PNG, SVG, PDF ou EPS sem cadastro e sem marca d'água. Entre na sua conta para criar QR codes dinâmicos que você pode editar depois de impressos, páginas hospedadas e análises de leitura.",
+      "description": "Crie QR codes com a sua marca, com padrões, gradientes, logos e molduras, e baixe em PNG, SVG, PDF, EPS ou TIFF sem cadastro e sem marca d’água. Entre na sua conta para ter QR codes dinâmicos que você pode editar depois de imprimir, páginas hospedadas e análises de leituras.",
       "primary": "Testar o Playground",
       "secondary": "Ler a documentação",
       "sceneLabel": "Desenho animado do fluxo do QRdx: uma tela de estúdio cria e estiliza um QR code, uma impressora o imprime em um cartão, um braço robótico coloca o cartão em uma esteira, um celular em um portão faz a leitura de cada cartão que passa, a leitura segue para um painel de análises que ganha uma nova barra, e um grande cartão de QR code dinâmico troca o link de destino sem precisar ser reimpresso"
@@ -377,7 +378,7 @@
         "none": "Sem moldura",
         "border": "Borda"
       },
-      "more": "O Playground completo traz {bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho, {eyeCentres, number} centros de olho, cores e gradientes à vontade, logos, modelos e downloads em PNG, SVG, PDF ou EPS.",
+      "more": "O Playground completo traz mais {bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho, {eyeCentres, number} centros de olho, quaisquer cores e gradientes, logos, molduras e downloads em PNG, SVG, PDF, EPS ou TIFF.",
       "customize": "Personalizar no Playground",
       "qrLabel": "QR code de {value}",
       "empty": "Digite um link para ver o seu QR code."
@@ -518,7 +519,7 @@
       "items": {
         "free": {
           "question": "O QRdx é grátis mesmo? Existem limites escondidos?",
-          "answer": "Sim. Criar, personalizar e baixar QR codes estáticos é grátis e não exige conta: códigos ilimitados, todas as opções de design ({bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho de canto e {eyeCentres, number} centros de olho, gradientes, logos, molduras e arte com Logo QR ou Image QR) e downloads em PNG, JPG, SVG, PDF e EPS. Não há marcas d’água nem anúncios. Os códigos estáticos guardam seu conteúdo no próprio código, então nunca expiram e não têm limite de leituras. Uma conta grátis inclui 10 QR codes dinâmicos, 3 páginas hospedadas, {historyYears, plural, one {# ano} other {# anos}} de análise de leituras, 10 temas salvos e 5 gerações de tema com IA; Pro ({proMonthly}/mês ou {proYearly}/ano) e Business ({businessMonthly}/mês ou {businessYearly}/ano) ampliam esses limites."
+          "answer": "Sim. Criar, personalizar e baixar QR codes estáticos é grátis e não exige conta: códigos ilimitados, todas as opções de design ({bodyPatterns, number} padrões de corpo, {eyeShapes, number} formatos de olho de canto e {eyeCentres, number} centros de olho, gradientes, logos, molduras e arte de Logo QR ou Image QR) e downloads em PNG, JPG, SVG, PDF, EPS e TIFF. Não há marcas d’água nem anúncios. Os QR codes estáticos guardam seu conteúdo no próprio código, então nunca expiram e não têm limite de leituras. Uma conta grátis inclui 10 QR codes dinâmicos, 3 páginas hospedadas, {historyYears, plural, one {# ano} other {# anos}} de análises de leituras, 10 temas salvos e 5 gerações de tema com IA; Pro ({proMonthly}/mês ou {proYearly}/ano) e Business ({businessMonthly}/mês ou {businessYearly}/ano) ampliam esses limites."
         },
         "signup": {
           "question": "Preciso me cadastrar ou criar uma conta?",
@@ -546,7 +547,7 @@
         },
         "api": {
           "question": "Desenvolvedores podem gerar QR codes por API?",
-          "answer": "Sim. A Image API transforma qualquer URL em um QR code SVG, PNG ou EPS sem precisar de chave de API, e a REST API, com uma chave de API do workspace ou OAuth, cria e edita QR codes dinâmicos e consulta as leituras deles. Também há um MCP server para Claude, Cursor e VS Code, uma ferramenta de linha de comando (@qrdx/cli), um componente shadcn/ui e a biblioteca qrdx para React."
+          "answer": "Sim. A Image API transforma qualquer URL em um QR code SVG, PNG, TIFF ou EPS sem chave de API, e a REST API, com uma chave de API do workspace ou OAuth, cria e edita QR codes dinâmicos e consulta as leituras deles. Também há um servidor MCP para Claude, Cursor e VS Code, uma ferramenta de linha de comando (@qrdx/cli), um componente shadcn/ui e a biblioteca React qrdx."
         },
         "paidPlans": {
           "question": "O que eu ganho com o Pro ou o Business?",
@@ -913,12 +914,12 @@
       "metaTitle": "Tipos de QR code: {count, number} geradores grátis (Wi-Fi, vCard, UPI)",
       "metaDescription": "{count, number} tipos de QR code, cada um com gerador grátis: Wi-Fi, vCard, WhatsApp, UPI, e-mail, perfis sociais e pagamentos. Cada um mostra o formato exato do conteúdo.",
       "title": "Geradores de QR code para todo tipo de conteúdo",
-      "intro1": "Um QR code pode fazer mais do que abrir um site. Dependendo do texto que ele guarda, o celular pode entrar em uma rede Wi-Fi, salvar um contato, iniciar um pagamento ou abrir uma conversa. Escolha um dos {count, number} tipos abaixo e veja um gerador com os campos certos, prévia ao vivo e download em PNG, WebP ou SVG.",
+      "intro1": "Um QR code pode fazer mais do que abrir um site. Dependendo do texto dentro dele, o celular pode entrar em uma rede Wi-Fi, salvar um contato, iniciar um pagamento ou abrir uma conversa. Escolha um dos {count, number} tipos abaixo para ter um gerador com os campos certos, uma prévia ao vivo e download em PNG, WebP, SVG ou TIFF.",
       "intro2": "Por padrão, os códigos criados nestas páginas são estáticos: o conteúdo fica codificado no próprio desenho, então funcionam offline, nunca expiram e não têm limite de leituras. Cada página também documenta o formato exato que gera, para você saber o que o leitor vai ler.",
       "cardTitle": "Gerador de QR code de {name}",
       "moreTools": "Mais ferramentas",
       "bulkTitle": "Precisa de centenas de códigos? Use o gerador em massa",
-      "bulkDescription": "Envie um CSV e baixe todos os códigos em PNG, WebP ou SVG em um único arquivo ZIP, gerado inteiramente no seu navegador.",
+      "bulkDescription": "Envie um CSV e baixe todos os códigos em PNG, WebP, SVG ou TIFF em um único arquivo ZIP, gerado inteiramente no seu navegador.",
       "printTitle": "Vai imprimir seu código? Confira o tamanho",
       "printDescription": "Descubra o tamanho mínimo de impressão a partir da distância de leitura e da quantidade de dados no código.",
       "dynamicTitle": "Gerador de QR code dinâmico",
@@ -1104,7 +1105,7 @@
       "metaDescription": "Transforme um CSV em até {rows, number} QR codes estilizados em PNG, WebP ou SVG dentro de um ZIP. Tudo roda no seu navegador: sem upload, sem marca d’água e sem cadastro até {limit, number} linhas.",
       "crumb": "Gerador em massa",
       "title": "Gerador de QR code em massa",
-      "intro1": "Transforme um arquivo CSV em milhares de QR codes de uma só vez, com o estilo que você quiser, e baixe em PNG, WebP ou SVG dentro de um ZIP. Uma linha por código, com os nomes dos arquivos vindos de uma coluna: etiquetas de produto, ingressos de eventos, etiquetas de patrimônio, números de mesa ou malas diretas.",
+      "intro1": "Transforme um arquivo CSV em milhares de QR codes de uma vez, com o estilo que você quiser, e baixe tudo em um ZIP como PNG, WebP, SVG ou TIFF (incluindo TIFF CMYK para impressão). Uma linha por código, com os nomes dos arquivos vindos de uma coluna: etiquetas de produto, ingressos de eventos, plaquetas de patrimônio, números de mesa ou malas diretas.",
       "intro2": "Tudo roda no seu navegador, então o CSV nunca é enviado e não há marca d’água nem cobrança por código. Arquivos de até {limit, number} linhas não precisam de conta; os maiores, de até {rows, number}, exigem uma conta grátis. Não tem certeza do formato? Comece pelo CSV de exemplo.",
       "facts": {
         "rows": "Até {rows, number} linhas por arquivo",
@@ -1193,6 +1194,8 @@
         "formatGif": "GIF (imagem, 256 cores)",
         "formatBmp": "BMP (imagem, sem compressão)",
         "formatIco": "ICO (favicon, de 16 a 256 px)",
+        "formatTiff": "TIFF (imagem, para impressão)",
+        "formatTiffCmyk": "TIFF CMYK (para impressão)",
         "formatSvg": "SVG (vetor, para impressão)",
         "size": "Tamanho do {format}",
         "quietZone": "Adicionar uma zona de silêncio de {modules, number} módulos (recomendado para impressão)",
@@ -1239,7 +1242,8 @@
         "logoQuestion": "Um logo ou uma correção de erros maior muda o tamanho?",
         "logoAnswer": "Uma correção de erros maior adiciona redundância, então o mesmo conteúdo precisa de uma versão mais alta, com mais módulos e, portanto, uma impressão maior. Um logo não muda o número de módulos, mas esconde alguns deles, então use o nível Q ou H ao adicionar um.",
         "quietQuestion": "A zona de silêncio conta no tamanho?",
-        "quietAnswer": "O tamanho do código mostrado vai de uma borda à outra. Os leitores também precisam de uma margem em branco de {quiet, number} módulos em cada lado, que o segundo valor inclui. Os downloads do QRdx não têm margem, a menos que você ative a zona de silêncio, então deixe esse espaço ao redor do código no seu layout.",
+        "quietAnswer": "O tamanho do código mostrado vai de ponta a ponta. Os leitores também precisam de uma margem em branco de {quiet, number} módulos em cada lado, que o segundo valor já inclui. Um download do QRdx vem com a margem definida pelo design, e os geradores e a ferramenta em massa adicionam {quiet, number}, a menos que você desative isso. Deixe no seu layout o espaço que estiver faltando ao redor do código.",
+        "quietAnswerNewDesigns": "O tamanho do código mostrado vai de ponta a ponta. Os leitores também precisam de uma margem em branco de {quiet, number} módulos em cada lado, que o segundo valor já inclui. Um download do QRdx vem com a margem definida pelo design: os novos designs no editor começam com {start, number} módulos, e os geradores e a ferramenta em massa adicionam {quiet, number}, a menos que você desative isso. Deixe no seu layout o espaço que estiver faltando ao redor do código.",
         "resolutionQuestion": "Qual resolução devo exportar para impressão?",
         "resolutionAnswer": "Use SVG sempre que puder: ele é vetorial e fica nítido em qualquer tamanho. Para PNG, exporte com pelo menos a largura em pixels indicada para 300 DPI, que é o mínimo usual para impressão."
       },
@@ -1738,6 +1742,9 @@
     "hosted": {
       "notFoundTitle": "Página não encontrada",
       "notFoundMessage": "Este link não leva a nenhuma página. O dono pode ter removido a página, ou o link foi digitado errado.",
+      "notReadyTitle": "Esta página ainda não está pronta",
+      "notReadyMessage": "Quem criou este QR code ainda está configurando a página que ele abre. Tente de novo daqui a pouco.",
+      "notReadyOwner": "Foi você que criou este código? Publique a página dele no QRdx e as leituras vão abri-la.",
       "passwordProtected": "Protegida por senha",
       "madeWithQrdx": "Feito com QRdx",
       "share": "Compartilhar",
@@ -1969,8 +1976,8 @@
     }
   },
   "barcodeGenerator": {
-    "metaTitle": "Gerador de código de barras grátis: EAN-13, UPC, Code 128",
-    "metaDescription": "Crie EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix e mais: {count, number} tipos de código de barras com dígitos verificadores calculados para você. PNG, JPG, SVG, PDF, EPS. Grátis, sem cadastro.",
+    "metaTitle": "Crie códigos de barras grátis: EAN-13, UPC, Code 128",
+    "metaDescription": "Crie EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix e mais: {count, number} tipos de código de barras com dígito verificador. PNG, JPG, SVG, PDF, EPS. Grátis.",
     "crumb": "Gerador de código de barras",
     "title": "Gerador de código de barras grátis",
     "intro1": "Crie códigos de barras de varejo, envio e estoque em {count, number} formatos, de EAN-13 e UPC-A a Code 128, GS1-128, ITF-14 e Data Matrix. Digite o número e o dígito verificador é calculado para você; se estiver errado, o erro é detectado antes de você imprimir.",
@@ -2103,6 +2110,12 @@
       "gs1TooLong": "O GS1-128 comporta até {max} caracteres de AIs e dados; este tem {count}. Divida em dois códigos de barras.",
       "databarGtinOnly": "O GS1 DataBar guarda apenas um GTIN: (01) e seus 14 dígitos. Para datas, lote ou peso, use o GS1 DataBar Expanded ou o GS1-128.",
       "databarTooLong": "O GS1 DataBar Expanded comporta até {max} dígitos de AIs e dados, e menos quando há letras; este tem {count} caracteres. Remova um AI ou encurte um valor.",
+      "maxicodeChars": "O MaxiCode aceita caracteres Latin-1: letras, dígitos, símbolos e acentos do Europa Ocidental. Não permitidos: {chars}",
+      "maxicodePostcode": "Uma mensagem de transportadora começa com o código postal: até 9 dígitos (um ZIP Code dos EUA) ou até 6 letras maiúsculas, dígitos e espaços nos demais países.",
+      "maxicodeCountry": "Depois do código postal vem o código de país ISO de 3 dígitos (840 para os EUA); aqui está \"{country}\".",
+      "maxicodeService": "Depois do código de país vem a classe de serviço de 3 dígitos; aqui está \"{service}\".",
+      "maxicodeCarrier": "Mensagem de transportadora (modo {mode}): código postal {postcode}, país {country}, classe de serviço {service}.",
+      "maxicodeZipPadded": "Um ZIP Code de 5 dígitos é desenhado como {zip}, com 0000 no +4, e os leitores o retornam assim.",
       "imbEnter": "Digite o código de rastreamento de 20 dígitos e, se houver, o CEP de roteamento.",
       "imbTrackingLength": "O código de rastreamento tem 20 dígitos: ID do código de barras (2), tipo de serviço (3), ID do remetente e número de série (15). Este tem {count, plural, one {# dígito} other {# dígitos}}.",
       "imbRoutingLength": "Depois do código de rastreamento de 20 dígitos vem o CEP de roteamento: 5 dígitos, 9 (ZIP+4) ou 11 (ZIP+4 e ponto de entrega). Há {count, plural, one {# dígito} other {# dígitos}} depois do código de rastreamento.",
@@ -2688,7 +2701,7 @@
     "playground": "Experimente no Playground",
     "promptsEyebrow": "Experimente",
     "promptsTitle": "Prompts para começar",
-    "promptsDescription": "Cada um usa o que as ferramentas do QRdx realmente fazem: cores e formas, Wi-Fi, contatos, e-mail, SMS e dados de mapa, além de links em SVG, PNG, WebP ou EPS. Abra no seu assistente ou copie.",
+    "promptsDescription": "Cada um usa o que as ferramentas do QRdx realmente fazem: cores e formas, Wi-Fi, contatos, e-mail, SMS e payloads de mapa, e links em SVG, PNG, WebP, TIFF ou EPS. Abra no seu assistente ou copie.",
     "howEyebrow": "Como funciona",
     "howTitle": "Três passos, e é só pedir",
     "howDescription": "Seu assistente chama as ferramentas do QRdx por você. Você nunca precisa mexer em uma API.",
@@ -2698,9 +2711,10 @@
     "setupUrl": "URL do servidor",
     "toolsEyebrow": "Ferramentas",
     "toolsTitle": "O que seu assistente pode chamar",
-    "toolsDescription": "{count, number} ferramentas. Todas, exceto save_template, save_barcode e generate_ai_art, são somente leitura e não precisam de chave: elas geram imagens, formatam texto e leem a comunidade pública. Os parâmetros completos estão na <link>documentação do servidor MCP</link>.",
+    "toolsDescription": "{count, number} ferramentas. A maioria é somente leitura e não precisa de conta nem chave: elas geram imagens, formatam texto e leem a comunidade pública. As quatro ferramentas de QR codes dinâmicos pedem que você faça login no QRdx, e save_template, save_barcode e generate_ai_art aparecem quando a conexão tem uma chave de API. Os parâmetros completos estão na <link>documentação do servidor MCP</link>.",
     "toolNoKey": "Sem chave",
     "toolNeedsKey": "Requer chave de API",
+    "toolNeedsSignIn": "Requer login",
     "faqTitle": "Dúvidas sobre o servidor MCP",
     "connect": {
       "copyFailed": "Não foi possível copiar. Selecione o texto e copie manualmente.",
@@ -2804,7 +2818,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "API de QR code grátis: sem chave, SVG, PNG e logos",
-    "metaDescription": "Uma API de QR code grátis e sem chave. Uma única URL retorna um QR code em SVG, PNG, WebP ou EPS com suas cores, formas e logo. {perMinute, number} requisições por minuto, com cache de um ano.",
+    "metaDescription": "Uma API de QR code grátis, sem chave: uma URL retorna um QR code em SVG, PNG, WebP, TIFF ou EPS com suas cores, formas e logo. {perMinute, number} requisições por minuto, em cache por um ano.",
     "crumb": "API de QR code",
     "title": "API de QR code grátis",
     "intro1": "Coloque um QR code em qualquer lugar onde caiba uma URL. Uma única requisição GET para api.qrdx.dev retorna a própria imagem: sem conta, sem chave de API, sem SDK. Cores, formas, correção de erros e um logo vão na query string.",
@@ -2812,7 +2826,7 @@
     "facts": {
       "noKey": "Sem chave nem cadastro",
       "rateLimit": "{perMinute, number} requisições por minuto por IP",
-      "formats": "SVG, PNG, WebP e EPS",
+      "formats": "SVG, PNG, WebP, TIFF e EPS",
       "openSource": "Código aberto"
     },
     "docs": "Docs da Image API",
@@ -2837,6 +2851,7 @@
       "logoNote": "Com um logo, o código passa para a correção de erros H quando o logo exige, para continuar sendo lido.",
       "previewAlt": "QR code de {value}",
       "epsPreview": "EPS é um arquivo de impressão, então a prévia mostra o mesmo código em SVG.",
+      "tiffPreview": "TIFF é um arquivo de impressão que a maioria dos navegadores não consegue exibir, então a prévia mostra o mesmo código em PNG.",
       "empty": "Digite o texto ou o link a codificar.",
       "tooLong": "Isso passa de {max, number} caracteres, o limite da API.",
       "loadFailed": "A prévia não carregou. Se você fez muitas alterações seguidas, espere um minuto: a API permite {perMinute, number} requisições por minuto.",
@@ -2868,7 +2883,7 @@
     "params": {
       "data": "O texto ou a URL a codificar, com até {max, number} caracteres.",
       "size": "Largura e altura em pixels, de {min, number} a {max, number}. Para EPS, é a largura em pontos.",
-      "format": "svg, png, webp (sem perdas) ou eps (vetorial, para impressão).",
+      "format": "svg, png, webp (sem perdas), tiff, tiff-cmyk (CMYK, para impressão) ou eps (vetorial, para impressão).",
       "colors": "Cor do código e do fundo em hexadecimal, sem o # (155dfc). bg=00000000 deixa o fundo transparente.",
       "shapes": "Formas dos módulos, dos olhos dos cantos e dos pontos dentro deles: {count, number} formas de módulo no total.",
       "level": "Correção de erros: L (7%), M (15%), Q (25%) ou H (30%) do código pode ser danificado e ele ainda é lido.",
@@ -2900,7 +2915,7 @@
       "title": "Image API",
       "noKey": "Sem chave nem conta",
       "static": "Códigos estáticos: os dados ficam na imagem",
-      "formats": "SVG, PNG, WebP e EPS",
+      "formats": "SVG, PNG, WebP, TIFF e EPS",
       "limit": "{perMinute, number} requisições por minuto por IP"
     },
     "restCard": {
@@ -2932,7 +2947,7 @@
       "logoQuestion": "A API de QR code consegue adicionar um logo?",
       "logoAnswer": "Sim. O logoIcon coloca no centro um ícone rápido (Wi-Fi, link, telefone, e-mail e mais) ou qualquer um dos {brands} logos de marcas do Simple Icons, sem chave. O código muda para a correção de erros H quando o logo exige, e assim ele continua sendo lido.",
       "formatsQuestion": "Quais formatos de imagem ela retorna?",
-      "formatsAnswer": "SVG por padrão, ou PNG, WebP sem perdas e EPS vetorial com format=png, webp ou eps. Os tamanhos vão de {min, number} a {max, number} pixels.",
+      "formatsAnswer": "SVG por padrão, ou PNG, WebP sem perdas, TIFF e EPS vetorial com format=png, webp, tiff ou eps, e TIFF CMYK para impressão com format=tiff-cmyk. Os tamanhos vão de {min, number} a {max, number} pixels.",
       "expireQuestion": "Os QR codes expiram?",
       "expireAnswer": "Não. A Image API gera QR codes estáticos: o que você codifica fica dentro do código, então ele funciona enquanto o link ou o texto continuar funcionando. Nada expira e nada conta leituras.",
       "dynamicQuestion": "Posso mudar o destino de um código depois de imprimir?",
@@ -2970,7 +2985,7 @@
       },
       "print": {
         "title": "Baixe e imprima",
-        "body": "Baixe em PNG, WebP ou SVG, ou personalize antes no Playground. Um link curto precisa de menos módulos que uma URL longa, então o código pode ser impresso menor e ainda ser lido."
+        "body": "Baixe em PNG, WebP, SVG ou TIFF, ou personalize antes no playground. Um link curto precisa de menos módulos do que uma URL longa, então o código pode ser impresso menor e continuar sendo lido."
       },
       "change": {
         "title": "Mude quando precisar",
@@ -3497,6 +3512,7 @@
         "pdfAndEpsDrawEvery": "PDF e EPS desenham cada ponto como uma forma vetorial e mantêm gradientes lineares e radiais como degradês vetoriais suaves.",
         "jpgCantBeTransparent": "JPG não pode ser transparente",
         "bmpCantBeTransparent": "BMP não suporta transparência: o fundo sai branco",
+        "tiffCmykCantBeTransparent": "TIFF CMYK é para impressão, que não tem transparência: um fundo transparente sai branco.",
         "gifWouldNotScan": "Um GIF comporta 256 cores, e este design precisa de mais: reduzido para 256, ele deixaria de ser lido. Baixe um PNG no lugar.",
         "moreFormats": "Mais formatos",
         "vector": " · vetorial",
@@ -3523,6 +3539,8 @@
           "gif": "Ideal para ferramentas antigas e editores de e-mail que só aceitam GIF · no máximo 256 cores, e uma delas pode ser transparente.",
           "bmp": "Ideal para sistemas mais antigos e ferramentas embarcadas que só aceitam BMP · 24 bits sem compressão, um fundo transparente sai branco.",
           "ico": "Ideal para favicons · um arquivo com imagens de 16, 32, 48 e 256 px. Os tamanhos pequenos servem para ícones, não para leitura.",
+          "tiff": "Ideal para gráficas que pedem TIFF · 300 dpi, com transparência mantida.",
+          "tiff-cmyk": "Ideal para gráficas que pedem CMYK · o preto é impresso só com tinta preta, e um fundo transparente sai branco. Sem perfil de cor: pergunte à sua gráfica sobre as cores exatas da marca.",
           "svg": "Ideal para Figma, Illustrator e sites · continua nítido em qualquer tamanho.",
           "pdf": "Ideal para documentos e impressões rápidas · para um PDF vetorial, use Pronto para impressão.",
           "eps": "Ideal para gráficas e apps vetoriais · continua nítido em qualquer tamanho."
@@ -4842,10 +4860,7 @@
         "theFrameIsAddedAround": "A moldura é adicionada ao redor do código, então a imagem baixada fica maior e o código continua legível na leitura.",
         "label": "Texto",
         "pickAFrameFirst": "Escolha uma moldura primeiro",
-        "none": "Nenhuma",
-        "takesDotColor": "Usa a cor dos pontos do código.",
-        "alsoHasTemplate": "Este design também tem a moldura {name} dentro desta. Ao escolher outra moldura, as duas são substituídas.",
-        "templateKeepsSize": "Esta moldura ajusta o código dentro dela, então a imagem baixada mantém o tamanho que você escolher."
+        "none": "Nenhuma"
       },
       "frameFields": {
         "textSize": "Tamanho do texto"
@@ -5102,7 +5117,8 @@
       "yourQrCodeIsNow": "Seu QR code agora é dinâmico",
       "destinationUpdated": "Destino atualizado",
       "designSavedToTheCode": "Design salvo no código",
-      "couldntCopyTheShortLink": "Não foi possível copiar o link curto"
+      "couldntCopyTheShortLink": "Não foi possível copiar o link curto",
+      "inviteForMore": "Ou <link>convide um amigo</link>: quando ele criar o primeiro QR code dinâmico, vocês dois ganham mais {count, number}."
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5434,6 +5450,9 @@
       "checkingScan": "Verificando leitura…",
       "fullScanChecker": "Verificador completo de leitura",
       "checkAPrintedCode": "Verificar um código impresso",
+      "warning": "Aviso",
+      "scanScoreScoreValueWarningShow": "Pontuação de leitura {score, number}, {value}, com um aviso. Mostrar verificações",
+      "addAMargin": "Adicione uma margem de {modules, number} módulos",
       "grades": {
         "great": "Ótima",
         "ok": "OK",
@@ -5717,7 +5736,7 @@
       "label": "Sobre o criador de QR code",
       "summary": "Criador de QR code personalizado. QR codes estáticos grátis com seu logo, cores e molduras. Sem cadastro, sem marca d’água.",
       "types": "Crie um QR code para um link, rede Wi-Fi, cartão de contato, pagamento ou qualquer um dos {types, number} tipos de conteúdo. Personalize com {bodyPatterns, number} padrões de pontos, {eyeShapes, number} formatos de olhos dos cantos, cores sólidas ou em gradiente, um logo no centro e {frames, number} molduras com chamada para ação. A pontuação de leitura estima o quão bem ele será lido antes de você imprimir.",
-      "downloads": "Baixe em PNG, JPG, WebP ou SVG, ou em PDF ou EPS prontos para impressão, em um tamanho exato. Os QR codes estáticos são grátis e nunca expiram. Entre na sua conta para criar um QR code dinâmico que você pode editar depois de impresso e acompanhar as leituras.",
+      "downloads": "Baixe em PNG, JPG, WebP, SVG ou TIFF (inclusive TIFF CMYK para impressão), ou em PDF ou EPS prontos para imprimir, no tamanho exato. Os QR codes estáticos são grátis e nunca expiram. Entre na sua conta para criar um QR code dinâmico que você pode editar depois de impresso e acompanhar as leituras.",
       "links": {
         "allTypes": "Todos os tipos de QR code",
         "scanChecker": "Verificador de leitura",
@@ -5745,7 +5764,8 @@
     "limitCard": {
       "planUsage": "Plano e uso",
       "notNow": "Agora não",
-      "labelUsed": "{label} usado"
+      "labelUsed": "{label} usado",
+      "inviteForMore": "Ou <link>convide um amigo</link>: quando ele criar o primeiro QR code dinâmico, vocês dois ganham mais {count, number}."
     },
     "limitDialog": {
       "limitReached": "Limite atingido"
@@ -6935,6 +6955,39 @@
           "unlimitedOnValue": "Ilimitado no {value}",
           "labelUsed": "{label} usado"
         }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "Seu link de convite:",
+          "copy": "Copiar",
+          "copied": "Copiado",
+          "linkCopied": "Link copiado",
+          "couldntCopy": "Não foi possível copiar. Selecione o link e copie você mesmo."
+        },
+        "page": {
+          "title": "Convide amigos",
+          "description": "Compartilhe seu link. Quando um amigo se cadastrar por ele e criar o primeiro QR code dinâmico, vocês dois ganham mais {count, number} QR codes dinâmicos.",
+          "notReady": "Os convites ainda não estão disponíveis. Volte em breve.",
+          "yourInviteLink": "Seu link de convite",
+          "shareYourLink": "Envie para amigos ou publique onde quiser. Cada amigo que entrar por ele e criar um QR code dinâmico garante mais {count, number} para vocês dois.",
+          "link": "Link",
+          "sameVisit": "Um amigo é contado quando cria a conta na mesma visita do clique. Nada é armazenado no dispositivo dele.",
+          "friendsJoined": "Amigos que entraram",
+          "friendsRewarded": "Amigos recompensados",
+          "rewardedOfMax": "{rewarded, number} de {max, number}",
+          "extraCodes": "QR codes dinâmicos extras",
+          "waiting": "{waiting, plural, one {# amigo ainda não criou} other {# amigos ainda não criaram}} um QR code dinâmico. Eles têm {days, number} dias a partir do cadastro.",
+          "atCap": "Você já foi recompensado por {max, number} amigos, o máximo que um link de convite rende. Os amigos que entrarem por ele ainda recebem os {count, number} deles.",
+          "youWereInvited": "Você entrou pelo convite de um amigo, então seu próprio workspace também ganhou {count, number} QR codes dinâmicos extras.",
+          "howItWorks": "Como funciona",
+          "ruleSignUp": "Um amigo é contado quando cria uma nova conta do QRdx pelo seu link durante aquela visita. Um cadastro feito em outra visita, ou uma conta que já existe, não conta.",
+          "ruleFirstCode": "Quando ele criar o primeiro QR code dinâmico em até {days, number} dias após o cadastro, vocês dois ganham mais {count, number} QR codes dinâmicos nos respectivos workspaces.",
+          "ruleCap": "Você pode ser recompensado por até {max, number} amigos ({total, number} QR codes). Os amigos que entrarem depois disso ainda recebem os {count, number} deles.",
+          "ruleNotYourself": "Suas outras contas não contam, e também não contam uma conta que use seu e-mail com outra grafia nem alguém que compartilhe um workspace com você.",
+          "ruleAllowance": "Os QR codes extras somam aos QR codes dinâmicos do seu próprio workspace em qualquer plano, não ao de uma equipe. Eles não têm valor em dinheiro e não podem ser transferidos para outra conta. Os QR codes que você criar com eles continuam funcionando.",
+          "rulePrivate": "Nunca mostramos quem se cadastrou pelo seu link, e seus amigos não veem quem os convidou.",
+          "ruleEnd": "Podemos encerrar as recompensas para novos convites; os QR codes que você já ganhou continuam seus. Os detalhes estão nos <terms>Termos de Serviço</terms> e na <help>página de ajuda</help>."
+        }
       }
     },
     "dashboard": {
@@ -7679,6 +7732,8 @@
           "downloadGif": "Baixar GIF",
           "downloadBmp": "Baixar BMP",
           "downloadIco": "Baixar ICO",
+          "downloadTiff": "Baixar TIFF",
+          "downloadTiffCmyk": "Baixar TIFF CMYK",
           "moreFormats": "Mais formatos",
           "editLinkValue": "Editar link",
           "codeSettings": "Configurações do código",
@@ -7780,6 +7835,8 @@
           "gifImagesZip": "Imagens GIF (ZIP)",
           "bmpImagesZip": "Imagens BMP (ZIP)",
           "icoImagesZip": "Favicons ICO (ZIP)",
+          "tiffImagesZip": "Imagens TIFF (ZIP)",
+          "tiffCmykImagesZip": "Imagens TIFF CMYK (ZIP)",
           "svgImagesZip": "Imagens SVG (ZIP)",
           "more": "Mais",
           "moveToTrash": "Mover para a lixeira",
@@ -9019,7 +9076,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "Novidades",
         "backToLabel": "Voltar para {label}",
         "expandSidebar": "Expandir barra lateral",
         "collapseSidebar": "Recolher barra lateral",
@@ -9270,8 +9326,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Não é possível usar este link",
+          "unknownAppTitle": "A conexão deste app com o QRdx expirou",
+          "unknownAppBody": "O QRdx não reconhece mais o app que enviou você até aqui. Se for um app de IA que você conectou ao QRdx, como Claude, Cursor ou VS Code, remova o QRdx do app, adicione de novo e faça login. Caso contrário, fale com o desenvolvedor do app.",
           "theAppThatSentYou": "O app que enviou você até aqui fez uma solicitação inválida: <span>{description}</span>. Volte para o app e tente de novo, ou fale com o desenvolvedor.",
           "appnameWillBeAbleTo": "{appName} poderá",
+          "mcpOnlyNote": "{appName} só pode usar sua conta pelas ferramentas de códigos do servidor MCP do QRdx: não pode excluir códigos, gerenciar webhooks nem usar arte com IA.",
           "nameWantsToAccessYour": "{name} quer acessar sua conta do QRdx",
           "builtByName": "Criado por <strong>{name}</strong>",
           "unverifiedApp": "App não verificado.",
@@ -9440,9 +9499,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "Este e-mail era para <strong>{email}</strong>. Se você não estava esperando por ele, pode ignorá-lo. Se está preocupado com a segurança da sua conta, <link>fale com a gente</link>.",
       "sentFor": "Enviado para {name} por <link>{host}</link>",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "Cancelar inscrição"
+      "unsubscribe": "Cancelar inscrição",
+      "settings": "Mude quais e-mails você recebe",
+      "copyLink": "ou copie e cole este link no seu navegador:"
     },
     "codes": {
       "neverAsk": "O QRdx nunca pede este código por telefone, chat ou e-mail.",
@@ -9664,8 +9726,7 @@
         "viewer": "Visualizadores veem os códigos, as páginas e as análises do espaço de trabalho sem alterar nada."
       },
       "accept": "Aceitar convite",
-      "expires": "Entre com este endereço de e-mail para aceitar. O convite expira em {date}. Se você não esperava por ele, pode ignorar este e-mail.",
-      "pasteLink": "Ou cole este link no seu navegador: {url}",
+      "expires": "Entre com este endereço de e-mail para aceitar. O convite expira em {date}.",
       "someone": "Um colega"
     },
     "portalInvite": {
@@ -9674,8 +9735,7 @@
       "heading": "Seus relatórios de QR code",
       "body": "{hasFolders, select, yes {{inviter} convidou você para ver os QR codes de {portal} em {folders}: quantas leituras cada um recebe, onde e em quais dispositivos, e as páginas que eles abrem. É somente leitura.} other {{inviter} convidou você para ver os QR codes de {portal}: quantas leituras cada um recebe, onde e em quais dispositivos, e as páginas que eles abrem. É somente leitura.}}",
       "open": "Abrir os relatórios",
-      "signIn": "Entre com este endereço de e-mail: enviaremos um código de uso único. Se você não esperava por isso, pode ignorar.",
-      "pasteLink": "Ou cole este link no seu navegador: {url}",
+      "signIn": "Entre com este endereço de e-mail: vamos enviar um código de uso único para você.",
       "yourAgency": "Sua agência"
     },
     "limitNotice": {
@@ -9706,7 +9766,9 @@
       "makeRoom": "{limit, select, dynamicCodes {Arquive um para liberar espaço.} landingPages {Exclua uma para liberar espaço.} storage {Exclua os arquivos de que você não precisa mais para liberar espaço.} savedThemes {Exclua um para liberar espaço.} other {}}",
       "resets": "Reinicia em {date}.",
       "keeps": "{limit, select, dynamicCodes {Os QR codes existentes continuam funcionando.} landingPages {As páginas existentes continuam no ar.} formResponses {As páginas continuam no ar. Os formulários voltam a aceitar respostas após o reinício.} storage {Os arquivos que você enviou continuam disponíveis.} other {}}",
-      "upgradeButton": "Fazer upgrade para {plan}"
+      "upgradeButton": "Fazer upgrade para {plan}",
+      "includesBonus": "{plan} inclui {amount} e os convites adicionaram {bonus, number}.",
+      "invite": "Ou <link>convide um amigo</link>: quando ele criar o primeiro QR code dinâmico, vocês dois ganham mais {count, number}."
     },
     "weeklyDigest": {
       "subject": "Sua semana no QRdx: {scans, plural, one {# leitura} other {# leituras}}",
@@ -9722,11 +9784,14 @@
       "sameAsLastWeek": "Igual à semana passada",
       "change": "{change} vs. semana passada",
       "topCodes": "Top códigos",
+      "code": "Código",
       "countries": "De onde vieram as leituras",
+      "country": "País",
       "newCodesLine": "{count, plural, one {# novo código} other {# novos códigos}} esta semana.",
       "open": "Abrir seu painel"
     },
     "personal": {
+      "meantFor": "Este e-mail era para <strong>{email}</strong>.",
       "reply": "Responda a este e-mail e a mensagem chega até {name}.",
       "stop": "Parar de receber notas da equipe QRdx"
     },
@@ -9741,11 +9806,24 @@
       "makeCode": "<link>Crie um QR code dinâmico.</link> Ele abre um link curto que não muda, então você pode imprimir na hora.",
       "seeScans": "<link>Acompanhe as leituras:</link> quando, onde e em quais dispositivos as pessoas fazem a leitura.",
       "changeLink": "Mude o destino sempre que quiser, mesmo depois de impresso. Sem precisar reimprimir.",
+      "button": "Crie seu primeiro código",
       "free": "Os QR codes estáticos continuam grátis, e os códigos que você criar seguem funcionando se você mudar de plano ou parar de pagar. O plano Grátis também inclui {count} QR codes dinâmicos.",
       "pro": "Se precisar de mais, o Pro custa {monthly} por mês ou {yearly} por ano e inclui QR codes dinâmicos ilimitados, {domains} domínios personalizados, alertas por e-mail a cada marco de leituras e um resumo semanal, se você quiser.",
       "taxes": "Impostos locais podem ser adicionados no checkout.",
       "reply": "Se algo atrapalhar ou você não souber como fazer alguma coisa, responda a este e-mail. Uma pessoa lê todas as respostas.",
       "reason": "Você está recebendo este e-mail porque acabou de criar uma conta no QRdx."
+    },
+    "inviteReward": {
+      "subject": "Um amigo que você convidou criou o primeiro código: vocês dois ganharam mais {count, number} QR codes dinâmicos",
+      "preview": "Vocês dois ganharam mais {count, number} QR codes dinâmicos",
+      "heading": "Vocês dois ganharam mais {count, number} QR codes dinâmicos",
+      "body": "Um amigo que se cadastrou pelo seu link de convite acabou de criar o primeiro QR code dinâmico. Seu espaço de trabalho agora tem mais {count, number} QR codes dinâmicos, e o dele também.",
+      "progress": "Com esse, são {rewarded, plural, one {# amigo} other {# amigos}} dos {max, number} que seu link pode recompensar.",
+      "last": "Esse foi o último dos {max, number} amigos que seu link pode recompensar. Quem entrar por ele continua ganhando {count, number}.",
+      "inviteMore": "Convidar mais amigos",
+      "seeInvites": "Ver seus convites",
+      "keeps": "Os códigos extras valem em qualquer plano e não têm valor em dinheiro. Os códigos criados com eles continuam funcionando.",
+      "reason": "Você está recebendo este e-mail porque um amigo se cadastrou pelo seu link de convite do QRdx e criou o primeiro QR code dinâmico."
     }
   },
   "codeActions": {
@@ -10037,7 +10115,8 @@
       "bulkOverLimit": "Arquivos de até {limit, number} linhas não precisam de conta. Uma conta grátis gera até {max, number} por arquivo, e o seu arquivo continua carregado.",
       "keepDesigns": "Guarde seus designs na sua conta, em todos os dispositivos.",
       "afterDownload": "É grátis, e seu código continua funcionando aconteça o que acontecer com o seu plano.",
-      "upgrade": "Planos e cobrança pertencem a uma conta. Você continua exatamente de onde parou."
+      "upgrade": "Planos e cobrança pertencem a uma conta. Você continua exatamente de onde parou.",
+      "invite": "Você chegou por um convite de um amigo. Cadastre-se agora e ganhe {count, number} QR codes dinâmicos extras quando criar o seu primeiro."
     },
     "nudge": {
       "dismiss": "Não mostrar isso de novo"
@@ -10185,6 +10264,11 @@
         "failed": "O login único (SSO) não funcionou. Tente novamente ou entre de outra forma.",
         "rateLimited": "Tentativas demais. Aguarde um minuto e tente novamente."
       }
+    },
+    "inviteNote": {
+      "text": "Você foi convidado para o QRdx. Cadastre-se durante esta visita e crie um QR code dinâmico em até {days, number} dias para ganhar {count, number} QR codes dinâmicos extras.",
+      "signUp": "Cadastrar",
+      "dismiss": "Dispensar"
     }
   },
   "settingsActions": {

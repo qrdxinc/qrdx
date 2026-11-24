@@ -73,12 +73,11 @@ export function themeColors(style: ThemeStyles): DesignColor[] {
 
 /**
  * The code a theme's swatch draws: its dots, eyes and colors, without what
- * goes around the code (a frame or template), a logo or an outline shape.
+ * goes around the code (a frame), a logo or an outline shape.
  */
 export function swatchStyle(style: ThemeStyles): ThemeStyles {
   const {
     frame: _frame,
-    templateId: _templateId,
     shape: _shape,
     silhouette: _silhouette,
     showLogo: _showLogo,

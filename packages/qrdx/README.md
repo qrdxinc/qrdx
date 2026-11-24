@@ -1,6 +1,6 @@
 # qrdx
 
-Customizable QR codes for React and plain JavaScript: SVG and canvas rendering, dot and eye patterns, gradients, logos, call-to-action frames, Logo QR and Image QR art, PNG/JPG/WebP/SVG/PDF/EPS export, print-ready files, a scan score and QR scanning.
+Customizable QR codes for React and plain JavaScript: SVG and canvas rendering, dot and eye patterns, gradients, logos, call-to-action frames, Logo QR and Image QR art, PNG/JPG/WebP/SVG/PDF/EPS/TIFF export, print-ready files, a scan score and QR scanning.
 
 It powers the [QRdx](https://qrdx.dev) QR code generator. Docs: [qrdx.dev/docs](https://qrdx.dev/docs) · CLI: [`@qrdx/cli`](https://www.npmjs.com/package/@qrdx/cli) · No-code: [image API](https://qrdx.dev/docs/developers/image-api) and [MCP server](https://qrdx.dev/docs/developers/mcp)
 
@@ -74,8 +74,7 @@ import { QRCodeSVG } from "qrdx";
 | `cornerEyeDotPattern` | `CornerEyeDotPattern` | `"circle"` | Shape of the corner eye dots |
 | `margin` | `number` | `0` | Quiet zone in modules. The QR spec recommends 4 when the code sits on a busy or dark background |
 | `imageSettings` | `ImageSettings` | — | Center image; see below |
-| `templateId` | `string` | — | Built-in decorative template; see [Templates](#templates) |
-| `customTemplate` | `TemplateDefinition` | — | Your own template (takes precedence over `templateId`) |
+| `customTemplate` | `TemplateDefinition` | — | Your own artwork around the code, drawn in code; see [Custom templates](#custom-templates) |
 | `customProps` | `Record<string, any>` | — | Extra props passed to the template wrapper |
 | `isOGContext` | `boolean` | `false` | Render the logo as an absolutely positioned `<img>` for OG image renderers |
 | `frame` | `QRFrame` | — | "Scan me" style frame; see [Frames](#frames-call-to-action) |
@@ -96,7 +95,7 @@ import { QRCode } from "qrdx";
 <QRCode value="https://example.com" size={256} logo="https://example.com/logo.png" level="H" />;
 ```
 
-It accepts the `QRCodeSVG` styling props above (`value`, `size`, `level`, colors, patterns, `margin`, `templateId`, `customTemplate`, `customProps`, `style`), forwards any other prop (`className`, `aria-label`, `role`, `data-*`…) to the root `<svg>` like `QRCodeSVG`, and adds:
+It accepts the `QRCodeSVG` styling props above (`value`, `size`, `level`, colors, patterns, `margin`, `frame`, `customTemplate`, `customProps`, `style`), forwards any other prop (`className`, `aria-label`, `role`, `data-*`…) to the root `<svg>` like `QRCodeSVG`, and adds:
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -256,7 +255,7 @@ await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico"
 await qr.download({ format: "svg", filename: "menu.svg" });
 ```
 
-- **Attributes:** `value`, `size`, `level`, `fg-color`, `bg-color`, `eye-color`, `dot-color`, `body-pattern`, `corner-eye-pattern`, `corner-eye-dot-pattern`, `margin`, `template-id`, `module-scale`, `auto-level`, `exact-level`, `shape`, `label`, and `props` (any other option as JSON). Each is also a property with the option's name (`qr.bodyPattern`). Object options (`frame`, gradients, `imageSettings`, `eyeColors`, `art`, `customTemplate`, `customProps`) are properties only.
+- **Attributes:** `value`, `size`, `level`, `fg-color`, `bg-color`, `eye-color`, `dot-color`, `body-pattern`, `corner-eye-pattern`, `corner-eye-dot-pattern`, `margin`, `module-scale`, `auto-level`, `exact-level`, `shape`, `label`, and `props` (any other option as JSON). Each is also a property with the option's name (`qr.bodyPattern`). Object options (`frame`, gradients, `imageSettings`, `eyeColors`, `art`, `customTemplate`, `customProps`) are properties only.
 - **Updates** are batched: however many changes you make in a row, the code is redrawn once, in a microtask, and only if its markup changed. Properties set before the element is defined are picked up when it is.
 - **Shadow DOM:** the code is drawn in an open shadow root, so page CSS can't restyle its paths by accident. Style it from outside with `qrdx-code::part(svg)`.
 - **Accessibility:** the `<svg>` has `role="img"` and an `aria-label` from `label`, or "QR code". It never falls back to the value, which can hold a Wi-Fi password or contact details.
@@ -398,13 +397,9 @@ Gradients need at least 2 stops; `offset` is a percentage (0–100).
 
 SVG draws an image fill as a `<pattern>`, and PDF embeds the picture once. EPS refuses image fills: `getQRAsEPS` throws `EPS_IMAGE_FILL_REASON`, and `hasImageFill(props)` tells you beforehand. The contrast check judges a picture by its lightest and darkest tones and asks more of it (`SCAN_IMAGE_CONTRAST_MIN`), since its detail reads as noise.
 
-## Templates
+## Custom templates
 
-Built-in `templateId` values: `default`, `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing` (case-sensitive). `getTemplateIds()`, `getAllTemplates()` and `getTemplate(id)` list them at runtime.
-
-`DotRing` is a round code: the code in a disc of dots (a different set for every link, the same for the same link) inside a dark ring with text along it. Its settings go in `customProps` (`DotRingProps`): `customText`, `textFill` (`"repeat"` repeats the text round the whole ring), `textPosition` (`"top"` or `"bottom"`), `textRotation`, `textColor`, `fontFamily`, `fontWeight`, `fontSize`, `fontLetterSpacing`, `outerCircleColor` (the ring), and `strokeWidth` and `strokeColor` (both edges of the ring; `innerStrokeWidth`, `innerStrokeColor`, `outerStrokeWidth` and `outerStrokeColor` for one edge). Text too long for the ring gets tighter spacing, then a smaller font (down to half the default), so it never runs into its own start. Past that, a repeated phrase keeps as many whole copies as fit, and other text is cut after the last whole word and ends with "…". The text is SVG text: PDF and EPS print it in Helvetica Bold, and `getQRAsPNG` needs a font on the machine, as frame labels do.
-
-A custom template wraps the QR content (a 300×300 SVG) in your own SVG:
+A custom template draws your own artwork around the code, in code: for what a frame can't hold, such as dots that change from link to link. It wraps the QR content (a 300×300 SVG) in your own SVG, drawn at `size`:
 
 ```tsx
 import { QRCodeSVG, type TemplateDefinition } from "qrdx";
@@ -425,7 +420,9 @@ const Framed: TemplateDefinition<{ label?: string }> = {
 <QRCodeSVG value="https://example.com" customTemplate={Framed} customProps={{ label: "Scan me" }} />;
 ```
 
-A wrapper gets React elements and returns them when a React component draws the code. With `qrdx/core` or `qrdx/vanilla` it gets the core's plain nodes instead, and a wrapper written with JSX still works as long as it uses no hooks. `h(type, props, ...children)` writes a wrapper without JSX that works in both; import it from the entry that draws the code (`qrdx` for the React components).
+The wrapper's `props` are the code's `fgColor` and `bgColor` with `customProps` spread over them, and its third argument is `{ url, pixelSize }` (`TemplateConfig`): the code's value and one module's width in the 300×300 drawing. A wrapper gets React elements and returns them when a React component draws the code. With `qrdx/core` or `qrdx/vanilla` it gets the core's plain nodes instead, and a wrapper written with JSX still works as long as it uses no hooks. `h(type, props, ...children)` writes a wrapper without JSX that works in both; import it from the entry that draws the code (`qrdx` for the React components).
+
+`customTemplate` and `customProps` need 0.0.65 or later: 0.0.64 left them out when the built-in templates (`templateId`) became frames. `templateId="Arrow"` is now `frame={{ style: "arrow" }}`, and a `templateId` still passed is ignored.
 
 ## Frames (call to action)
 
@@ -440,15 +437,17 @@ A wrapper gets React elements and returns them when a React component draws the 
 
 | Option | Default | Notes |
 | --- | --- | --- |
-| `style` | — | One of `FRAME_STYLES`: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`<!-- /catalogue --> |
+| `style` | — | One of `FRAME_STYLES`: <!-- catalogue:FRAME_STYLES -->`none`, `banner-bottom`, `banner-top`, `border`, `rounded-border`, `speech-bubble`, `banner-top-bottom`, `speech-bubble-top`, `chat-bubble`, `circle`, `polaroid`, `phone`, `ticket`, `badge`, `envelope`, `tag`, `menu-card`, `sticker`, `gradient-border`, `focus`, `arrow`, `standard-box`, `square-border`, `striked-box`, `pumpkin`, `dot-ring`<!-- /catalogue --> |
 | `text` | `"Scan me"` | Up to 24 characters; `""` hides the label |
 | `color` | `#000000` | Frame color (`gradient-border`: start color) |
 | `textColor` | white on the frame, `color` on light areas | Label color |
-| `secondaryText` | — | Second label (`banner-top-bottom`, `circle`, `menu-card`), up to 24 characters |
+| `secondaryText` | — | Second label (`banner-top-bottom`, `circle`, `menu-card`, `dot-ring`), up to 24 characters |
 | `secondaryColor` | `#db2777` | End color of `gradient-border` |
 | `fontScale` | `1` | Label size, 0.5–1.5 (labels still shrink to fit) |
 
-Frames are plain shapes and text with opaque colors, so SVG, PNG, PDF and EPS match: the gradient border is drawn as fine solid color steps, and `circle` sets its letters as rotated text in every format.
+Frames are plain shapes and text with opaque colors, so SVG, PNG, PDF and EPS match: the gradient border is drawn as fine solid color steps, and `circle` and `dot-ring` set their letters as rotated text in every format.
+
+`arrow`, `standard-box`, `square-border`, `striked-box` and `pumpkin` are artwork without a label (`text` doesn't show). `dot-ring` is a round code: the code in a disc of dots inside a ring, with `text` over the top and `secondaryText` along the bottom (both "Scan the QR code" by default; `""` hides one). Its dots are the same for every code, so a dense one (a long link, more than 49 modules across) reads best printed a little larger.
 
 Each style is a built-in frame: a frame spec in `BUILT_IN_FRAMES` (with its `name` and `spec`; `BUILT_IN_FRAME_SPECS` has the specs by style), drawn exactly like a [custom frame](#custom-frames). The style names stay valid for good. `frameSpecOf(frame)` returns the spec a frame draws, and `getFrameColors(frame)` the frame, text and accent colors it paints with.
 

@@ -33,7 +33,7 @@ import {
 } from "qrdx";
 import type { ColorConfig, EyePosition } from "qrdx/types";
 import { type ReactNode, useMemo } from "react";
-import { defaultThemeState } from "@/config/qr";
+import { storedStyleDefaults } from "@/config/qr";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { roleOf } from "@/lib/paint/contrast";
 import type { DesignSection } from "@/lib/playground-links";
@@ -404,7 +404,7 @@ export function usePartItems(
   const t = useTranslations("editor.partInline.items");
   const handles = useTranslations("editor.partInline.handles");
   const modules = (count: number) => handles("modules", { count });
-  const current: QRStyle = { ...defaultThemeState.styles, ...style };
+  const current: QRStyle = { ...storedStyleDefaults, ...style };
   const upload = useLogoUpload((logo) =>
     update({ customLogo: logo, showLogo: true }),
   );

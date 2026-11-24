@@ -1,7 +1,7 @@
 ---
 title: Privacy Policy
 description: What QRdx collects, why, who it is shared with, how long it is kept and the choices you have, for the website, accounts, dynamic codes, hosted pages, the API and the AI features.
-lastUpdated: 2026-11-21
+lastUpdated: 2026-11-23
 ---
 
 <Callout title="Summary">
@@ -18,7 +18,7 @@ lastUpdated: 2026-11-21
 
 QRdx ("QRdx", "we", "us") is operated by **Ritesh Bucha**, an individual based in India. You can reach us about privacy at [support@qrdx.dev](mailto:support@qrdx.dev).
 
-This policy covers qrdx.dev, QRdx short links and hosted pages, the dashboard, the REST API, the CLI and the MCP server at `https://mcp.qrdx.dev/mcp` (together, the "Service"). It doesn't cover copies of the open-source app that other people host themselves: whoever runs that copy is responsible for it.
+This policy covers qrdx.dev, QRdx short links and hosted pages, the dashboard, the REST API, the CLI, the MCP server at `https://mcp.qrdx.dev/mcp` and the [Google Docs, Sheets and Slides add-on](#google-docs-sheets-and-slides-add-on) (together, the "Service"). It doesn't cover copies of the open-source app that other people host themselves: whoever runs that copy is responsible for it.
 
 In this policy:
 
@@ -121,6 +121,20 @@ When you connect an integration, such as Dub or Google Drive, we store the acces
 
 For OAuth apps and access tokens we store a hash of each token, its scopes and its expiry date, never the token itself. We count your requests to apply your plan's daily limit.
 
+### Google Docs, Sheets and Slides add-on
+
+The QRdx add-on for Google Docs, Sheets and Slides ("QRdx – QR Code Generator" in Google Workspace) asks Google for access to the file it's open in (`documents.currentonly`, `spreadsheets.currentonly`, `presentations.currentonly`) and to connect to an external service (`script.external_request`), which it uses only to reach QRdx's image API at `https://api.qrdx.dev/v1/qr`. From your file it reads only what it needs to place a code: the cursor in Docs; the current slide and the slide size in Slides; and in Sheets the current cell or the selected cells, the sheet's number of columns and, before it adds a code or formulas, the cells it would fill, to check they're empty (it stops if any of them holds something). It reads nothing else in your file and sends nothing from it to us. It changes your file only by adding what you ask for: the code's image with alt text (in Docs and Slides, the image of a code for a link also opens that link; in Sheets, the image goes inside the current cell, with that row's height and that column's width set to fit it), or in Sheets the `=IMAGE()` formulas, with that column's width and those rows' heights set to fit the codes and a column added if your list is in the sheet's last column.
+
+What you type into the add-on's side panel to make a code (a link, text, a Wi-Fi network's name and password, an email's address, subject and message, or a phone number and a text message) is sent to our image API in the request's address, with the style and size you picked, when you preview or insert a code. The request comes from Google's servers, so we see a Google IP address, not yours, and it goes over HTTPS. The image API draws the code and returns it, and the add-on saves the image in your file. We don't store what you typed in our database: our servers only add one to a daily count of image API requests, which holds nothing from the request. Like any web address, the request's address appears in the request logs of our host, Vercel, which keeps them for one day, and Vercel's CDN can keep the code's image under that address for up to a year, because the same address always draws the same code.
+
+If you add `=IMAGE()` formulas in Sheets, the add-on itself sends nothing: Google Sheets requests each code from our image API through Google's servers, with that cell's text in the address, whenever it loads the images. We handle those requests the same way.
+
+The add-on stores nothing, keeps no logs, has no analytics and doesn't connect to a QRdx account. Its **Make a dynamic code** button opens qrdx.dev in your browser with tags in the link that say you came from the add-on; nothing from your file or the side panel goes with it, and on qrdx.dev the rest of this policy applies.
+
+We use the Google user data the add-on receives only to place the codes you ask for. We don't sell it, we don't share it with anyone except Vercel, which hosts the image API for us, and we don't use it for advertising. We don't use it, or any other data from Google Workspace APIs, to develop, improve or train AI or machine learning models. You can uninstall the add-on, or remove its access in your Google Account's [third-party connections](https://myaccount.google.com/connections), at any time; the codes it added stay in your files until you delete them.
+
+QRdx's use and transfer to any other app of information received from Google APIs will adhere to [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes), including the Limited Use requirements.
+
 ### Billing
 
 [Polar](https://polar.sh) is the merchant of record for paid plans. Polar, and Stripe for card payments, collect your payment details, billing address and tax ID. When you start a checkout, we send Polar your IP address and the currency for your country, so it can fill in your billing country, work out tax and charge in that currency. We receive your plan, its price and currency, billing period dates, subscription status, your Polar customer ID and, if you give one, your reason for cancelling. We never see your full card number.
@@ -135,6 +149,17 @@ If you ask to pay by invoice or for the non-profit discount on the pricing page,
 - **If you're approved.** The PayPal email address you add for payouts and when it last changed (we only keep one for approved affiliates), how many times your link was opened (a count, nothing about the visitors), the commissions you earn (the amount and currency of each payment they're based on, its Polar order ID and the dates), and the payouts we send (amount, the commissions' currencies, the exchange rates used, the PayPal address and PayPal's transaction ID).
 - **If you signed up through an affiliate's link.** We record which affiliate referred your account and the date of your first payment. The affiliate sees how many people they referred and the date and amount of each payment that earns them a commission, never your name, email address or anything else about your account.
 - **Nothing stored on your device.** The code from an affiliate's link only goes along with a sign-up made during the same visit, without reloading the page. It's kept in the page's memory and the address bar, never in a cookie or browser storage.
+
+</IfAvailable>
+
+<IfAvailable feature="inviteRewards">
+
+### Invite rewards
+
+- **Your invite link.** The random code in it, made the first time you open **Invite friends**.
+- **If a friend signs up through it.** We record which account invited which, when your friend signed up, and how the invite was settled and when: rewarded (their first dynamic code earned you both extra codes), expired, or not counted because it was your own account. If we revoke an invite for abuse, we record when: its extra codes stop counting for new codes, and one revoked before it was settled is settled as expired. We use all this to give the extra codes, to keep each account to its limits and to stop people rewarding themselves.
+- **What each of you sees.** **Invite friends** shows you how many friends joined through your link, how many of them still have time to make their first code, how many earned you codes, and the extra codes you have. Your data download adds how many invites were settled each way (rewarded, expired, not counted, still open) and how many we revoked. Neither ever names a friend or says when any one of them joined. A friend sees their own invite in their data download (when they signed up, how it was settled, and when it was revoked, if it was), never whose link it was.
+- **Nothing stored on your device.** The code from an invite link only goes along with a sign-up made during the same visit. It's kept in the page's memory and the address bar, never in a cookie or browser storage.
 
 </IfAvailable>
 
@@ -186,6 +211,17 @@ For the affiliate program:
 | --- | --- | --- |
 | Affiliate program: reviewing applications, working out commissions and paying them | An affiliate's application, referral code, link visit count, PayPal email, commissions and payouts | Contract |
 | Affiliate program: crediting the affiliate who referred an account | Which affiliate referred the account and how, and the date and amount of its payments that earn a commission | Legitimate interests: paying affiliates for the customers they bring |
+
+</IfAvailable>
+
+<IfAvailable feature="inviteRewards">
+
+For invite rewards:
+
+| Purpose | Data | Legal basis |
+| --- | --- | --- |
+| Giving both accounts their extra dynamic codes and keeping to the limits | Your invite code, which account invited which, when the friend signed up, and how and when the invite was settled | Contract |
+| Stopping self-referral and abuse | The same, compared with the accounts' email addresses and shared workspaces, and when we revoked an invite | Legitimate interests: keeping the rewards for real friends |
 
 </IfAvailable>
 
@@ -242,6 +278,17 @@ For the affiliate program:
 | Affiliate records: application, referral code, PayPal email and commissions | Until the affiliate's account is deleted, which deletes them with it, including commissions not yet paid |
 | Affiliate payouts already sent | Kept for our accounts after the affiliate's account is deleted, without the account or the PayPal address: the amount, currencies, exchange rates, date and PayPal transaction ID |
 | Which affiliate referred an account | Until that account, or the affiliate's, is deleted. When the referred account is deleted, the commissions it earned stay on the affiliate's record with the Polar order each came from, because they're what the affiliate was or will be paid, but no longer say which account paid. |
+
+</IfAvailable>
+
+<IfAvailable feature="inviteRewards">
+
+For invite rewards:
+
+| Data | How long |
+| --- | --- |
+| Your invite code | Until you delete your account |
+| Which account invited which | Until one of the two accounts is deleted. That account is then removed from the record, and the other keeps the extra codes it earned without it saying who the other account was. |
 
 </IfAvailable>
 
@@ -306,5 +353,5 @@ Questions or requests about privacy: [support@qrdx.dev](mailto:support@qrdx.dev)
 
 ---
 
-**Changes:** 21 November 2026. Added [Business contacts we email](#business-contacts-we-email): the emails Ritesh Bucha sends to businesses by hand, what we record about them, the legal basis and how long we keep it. 18 November 2026. Our servers now also send events for imports from another provider, for re-pointing an import's old links and for a custom domain passing its check, with how your account found QRdx (a channel, and QRdx's own campaign names only), never links, domain names or code names. 13 November 2026. You can now view {facts.freeScanHistoryYears} year of scans on Free and all of them on Pro and Business; how long scans are kept hasn't changed. Earlier the same day: checkout now sends Polar your IP address and your country's currency, and the invoice and non-profit discount request forms are described under Billing. Earlier the same day: added what we record at sign-up about how you found QRdx (the referring site's host name, campaign tags, first page and sign-up page), kept with your account. 11 November 2026. Added precise location: what is collected, only when a code's owner turns it on and the scanner allows it in their browser, the rounding to about 100 m, the hosted-page cookie and how long it is kept. <IfAvailable feature="affiliates">10 November 2026. Added the affiliate program: what it records about affiliates and the accounts they refer (no cookie: a referral counts only for a sign-up in the same visit), and PayPal for payouts. </IfAvailable>3 November 2026. AI QR art now uses OpenAI's GPT Image 2, through Vercel AI Gateway, instead of Google's Gemini. Earlier the same day: AI features now run through Vercel AI Gateway, with Anthropic's Claude for the AI theme chat and prompt enhancement and Google's Gemini for theme design and AI art. 2 November 2026: AI QR art now uses Google's Gemini API; fal.ai no longer receives any data. 1 November 2026: rewritten to match how QRdx works today: scan analytics without stored IP addresses, hosted pages and forms, teams, integrations, AI features, the API and MCP server, retention periods, and DPDP Act and CCPA sections. Added Umami's cookieless visit counts; PostHog now links events to your account ID instead of your email address and name, and never records sessions.
+**Changes:** 23 November 2026. Added [Google Docs, Sheets and Slides add-on](#google-docs-sheets-and-slides-add-on): what the add-on reads from your file, what it sends to our image API, how long that stays in our host's logs and cache, and that our use of data from Google APIs follows Google's Limited Use requirements. <IfAvailable feature="inviteRewards">Earlier the same day: added [Invite rewards](#invite-rewards): what we record when a friend signs up through your invite link, why, and how long we keep it. </IfAvailable>21 November 2026. Added [Business contacts we email](#business-contacts-we-email): the emails Ritesh Bucha sends to businesses by hand, what we record about them, the legal basis and how long we keep it. 18 November 2026. Our servers now also send events for imports from another provider, for re-pointing an import's old links and for a custom domain passing its check, with how your account found QRdx (a channel, and QRdx's own campaign names only), never links, domain names or code names. 13 November 2026. You can now view {facts.freeScanHistoryYears} year of scans on Free and all of them on Pro and Business; how long scans are kept hasn't changed. Earlier the same day: checkout now sends Polar your IP address and your country's currency, and the invoice and non-profit discount request forms are described under Billing. Earlier the same day: added what we record at sign-up about how you found QRdx (the referring site's host name, campaign tags, first page and sign-up page), kept with your account. 11 November 2026. Added precise location: what is collected, only when a code's owner turns it on and the scanner allows it in their browser, the rounding to about 100 m, the hosted-page cookie and how long it is kept. <IfAvailable feature="affiliates">10 November 2026. Added the affiliate program: what it records about affiliates and the accounts they refer (no cookie: a referral counts only for a sign-up in the same visit), and PayPal for payouts. </IfAvailable>3 November 2026. AI QR art now uses OpenAI's GPT Image 2, through Vercel AI Gateway, instead of Google's Gemini. Earlier the same day: AI features now run through Vercel AI Gateway, with Anthropic's Claude for the AI theme chat and prompt enhancement and Google's Gemini for theme design and AI art. 2 November 2026: AI QR art now uses Google's Gemini API; fal.ai no longer receives any data. 1 November 2026: rewritten to match how QRdx works today: scan analytics without stored IP addresses, hosted pages and forms, teams, integrations, AI features, the API and MCP server, retention periods, and DPDP Act and CCPA sections. Added Umami's cookieless visit counts; PostHog now links events to your account ID instead of your email address and name, and never records sessions.
 

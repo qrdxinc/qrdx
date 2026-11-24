@@ -14,16 +14,22 @@ import {
   TRANSLATED_LOCALES,
 } from "@repo/i18n/config";
 import {
+  ENGLISH_ONLY_OUTSIDE_PATHS,
   ENGLISH_ONLY_PATHS,
   isEnglishOnlyPath,
   isLocalizedPath,
+  isSiteTranslatedPath,
   LOCALIZED_PATHS,
   localizeHref,
   localizePath,
+  localizeSitePath,
   routeMatcher,
+  SITE_TRANSLATED_PATHS,
   splitLocale,
 } from "@repo/i18n/paths";
 import {
+  INDEXED_MACHINE_PATHS,
+  isIndexedWhenMachine,
   isPublished,
   publishedLocales,
   REVIEW,
@@ -420,6 +426,92 @@ describe("English-only marketing pages, in either review state", () => {
   });
 });
 
+// The QR code generators in every language (owner decision, 23 Nov 2026),
+// and the barcode generators the same way: the site zone serves them at
+// /<lang>/qr-code-generator/... and /<lang>/barcode-generator/..., and their
+// machine translations are indexed, unlike every other page's. This app's
+// own copies stay English only (above).
+describe("generator pages the site serves in every language", () => {
+  it("are English-only pages here, listed once", () => {
+    expect([...SITE_TRANSLATED_PATHS]).toEqual([
+      "/qr-code-generator",
+      "/qr-code-generator/[type]",
+      "/barcode-generator",
+      "/barcode-generator/[format]",
+    ]);
+    for (const path of SITE_TRANSLATED_PATHS) {
+      expect(ENGLISH_ONLY_PATHS, path).toContain(path);
+      expect(LOCALIZED_PATHS, path).not.toContain(path);
+    }
+    expect(isSiteTranslatedPath("/qr-code-generator")).toBe(true);
+    expect(isSiteTranslatedPath("/qr-code-generator/wifi")).toBe(true);
+    expect(isSiteTranslatedPath("/qr-code-generator/wifi/x")).toBe(false);
+    expect(isSiteTranslatedPath("/barcode-generator")).toBe(true);
+    expect(isSiteTranslatedPath("/barcode-generator/ean-13")).toBe(true);
+    expect(isSiteTranslatedPath("/barcode-generator/ean-13/x")).toBe(false);
+    expect(isSiteTranslatedPath("/qr-codes-for/restaurants")).toBe(false);
+    expect(isSiteTranslatedPath("/playground")).toBe(false);
+  });
+
+  it("get the language's prefix in the site's links, English none", () => {
+    expect(localizeSitePath("/qr-code-generator/wifi", "es")).toBe(
+      "/es/qr-code-generator/wifi",
+    );
+    expect(localizeSitePath("/qr-code-generator", "zh-Hans")).toBe(
+      "/zh-hans/qr-code-generator",
+    );
+    expect(localizeSitePath("/qr-code-generator/wifi", "en")).toBe(
+      "/qr-code-generator/wifi",
+    );
+    expect(localizeSitePath("/barcode-generator/ean-13", "ja")).toBe(
+      "/ja/barcode-generator/ean-13",
+    );
+    expect(localizeSitePath("/barcode-generator", "pt-BR")).toBe(
+      "/pt-br/barcode-generator",
+    );
+    // Any other page keeps its one URL, and this app's own links don't change.
+    expect(localizeSitePath("/pricing", "es")).toBe("/pricing");
+    expect(localizeSitePath("/playground", "es")).toBe("/playground");
+    expect(localizePath("/qr-code-generator/wifi", "es")).toBe(
+      "/qr-code-generator/wifi",
+    );
+    expect(localizeHref("/qr-code-generator", "ja")).toBe("/qr-code-generator");
+  });
+
+  it("are indexed in every language while every locale is machine-made", () => {
+    expect([...INDEXED_MACHINE_PATHS]).toEqual([...SITE_TRANSLATED_PATHS]);
+    for (const path of [
+      "/qr-code-generator",
+      "/qr-code-generator/wifi",
+      "/barcode-generator",
+      "/barcode-generator/ean-13",
+    ]) {
+      expect(isIndexedWhenMachine(path), path).toBe(true);
+      expect(publishedLocales(path, MACHINE), path).toEqual([...LOCALES]);
+      for (const locale of TRANSLATED_LOCALES) {
+        expect(isPublished(locale, path, MACHINE), locale).toBe(true);
+      }
+    }
+  });
+
+  it("leave every other page's review state alone", () => {
+    for (const path of [...LOCALIZED_PATHS, "/pricing", "/qr-codes-for"]) {
+      expect(isIndexedWhenMachine(path), path).toBe(false);
+      expect(publishedLocales(path, MACHINE), path).toEqual(["en"]);
+    }
+    expect(publishedLocales("/playground", SIGNED_OFF)).toEqual([
+      "en",
+      "es",
+      "zh-Hans",
+    ]);
+    // The playground, AI, MCP and scanner pages stay noindex in Spanish.
+    for (const path of LOCALIZED_PATHS) {
+      const es = localizedMetadata({ locale: "es", path, title: "x" });
+      expect(es.robots, path).toEqual({ index: false, follow: true });
+    }
+  });
+});
+
 describe("next.config.ts routing", () => {
   const matches = (source: string, path: string) =>
     pathToRegexp(source, [], { strict: true }).test(path);
@@ -498,14 +590,91 @@ describe("next.config.ts routing", () => {
     );
   });
 
-  it("redirects the English-only pages' translated URLs, for now as 307", () => {
+  it("leaves out the pages the site serves in every language, when told to", () => {
+    const rules = englishOnlyRedirects("(?:qrdx\\.dev)", {
+      except: SITE_TRANSLATED_PATHS,
+    });
+    expect(rules).toHaveLength(
+      ENGLISH_ONLY_PATHS.length -
+        SITE_TRANSLATED_PATHS.length +
+        ENGLISH_ONLY_OUTSIDE_PATHS.length +
+        1,
+    );
+    const target = (path: string) =>
+      rules.find((rule) => matches(rule.source, path))?.destination;
+    expect(target("/es/qr-code-generator")).toBeUndefined();
+    expect(target("/es/qr-code-generator/wifi")).toBeUndefined();
+    expect(target("/ja/barcode-generator/ean-13")).toBeUndefined();
+    // One group's pages alone: the other's still redirect.
+    const generatorsOnly = englishOnlyRedirects("(?:qrdx\\.dev)", {
+      except: ["/qr-code-generator", "/qr-code-generator/[type]"],
+    });
+    expect(
+      generatorsOnly.find((rule) =>
+        matches(rule.source, "/ja/barcode-generator/ean-13"),
+      )?.destination,
+    ).toBe("/barcode-generator/:format");
+    expect(target("/es/pricing")).toBe("/pricing");
+    expect(target("/es")).toBe("/");
+    // Only English-only pages, named as they're listed.
+    expect(() =>
+      englishOnlyRedirects("(?:qrdx\\.dev)", { except: ["/playground"] }),
+    ).toThrow("/playground");
+    expect(() =>
+      englishOnlyRedirects("(?:qrdx\\.dev)", {
+        except: ["/qr-code-generator/wifi"],
+      }),
+    ).toThrow("/qr-code-generator/wifi");
+  });
+
+  it("redirects the English-only pages' translated URLs permanently, but the site-translated pages only for now", () => {
     const rules = englishOnlyRedirects("(?:qrdx\\.dev)");
-    // One per page, and /<language>/home.
-    expect(rules).toHaveLength(ENGLISH_ONLY_PATHS.length + 1);
+    // One per page (under app/[lang] or not), and /<language>/home.
+    expect(rules).toHaveLength(
+      ENGLISH_ONLY_PATHS.length + ENGLISH_ONLY_OUTSIDE_PATHS.length + 1,
+    );
     for (const rule of rules) {
-      expect(rule.permanent, rule.source).toBe(false);
       expect(rule.has).toEqual([{ type: "host", value: "(?:qrdx\\.dev)" }]);
     }
+    const permanent = (path: string) =>
+      rules.find((rule) => matches(rule.source, path))?.permanent;
+    // 308: nobody asks for these URLs back, the pages outside app/[lang]
+    // (never translated) included.
+    for (const path of [
+      "/es",
+      "/es/home",
+      "/es/pricing",
+      "/it/qr-codes-for/restaurants",
+      "/fr/compare",
+      "/es/compare/uniqode",
+      "/ja/blog",
+      "/de/blog/rss.xml",
+      "/hi/legal/privacy-policy",
+      "/ko/qr-code-tracking",
+    ]) {
+      expect(permanent(path), path).toBe(true);
+    }
+    // 307: the site serves these in every language while its group is on,
+    // so a redirect to English is only ever temporary: the QR code
+    // generators and the barcode generators (barcodes-i18n).
+    for (const path of [
+      "/es/qr-code-generator",
+      "/ja/qr-code-generator/wifi",
+      "/es/barcode-generator",
+      "/ja/barcode-generator/ean-13",
+    ]) {
+      expect(permanent(path), path).toBe(false);
+    }
+    expect(
+      rules
+        .filter((rule) => !rule.permanent)
+        .map((rule) => rule.destination)
+        .sort(),
+    ).toEqual(
+      SITE_TRANSLATED_PATHS.map((path) =>
+        path.replace("[type]", ":type").replace("[format]", ":format"),
+      ).sort(),
+    );
     const target = (path: string) =>
       rules.find((rule) => matches(rule.source, path))?.destination;
     expect(target("/es")).toBe("/");

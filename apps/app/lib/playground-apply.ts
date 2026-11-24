@@ -21,7 +21,7 @@ import type { LinkedDynamicCode } from "@/components/editor/dynamic-link-toggle"
 import { usePhotoScanDialogStore } from "@/components/editor/photo-scan-dialog-store";
 import { loadAIArtPresets } from "@/components/sections/ai-art/load-presets";
 import { toPayload } from "@/components/sections/tools/payload";
-import { defaultThemeState } from "@/config/qr";
+import { defaultThemeState, storedStyleDefaults } from "@/config/qr";
 import {
   type ControlTab,
   DYNAMIC_OPEN_TARGET,
@@ -265,10 +265,13 @@ export function applyPlaygroundParams(
     after.value !== before.value ||
     after.contentConfigs !== before.contentConfigs;
 
+  // The default look, with or without the margin new designs start with (a
+  // design kept from before they had one), isn't a design of the visitor's.
   const lookReplaced =
     lookApplied &&
     !isDeepEqual(before.themeState.styles, appliedThemeState.styles) &&
-    !isDeepEqual(before.themeState.styles, defaultThemeState.styles);
+    !isDeepEqual(before.themeState.styles, defaultThemeState.styles) &&
+    !isDeepEqual(before.themeState.styles, storedStyleDefaults);
   const contentReplaced =
     before.value.trim() !== "" &&
     (after.contentType !== before.contentType || after.value !== before.value);

@@ -53,11 +53,11 @@ import { partMarker, type QRPart, type QRPartEye } from "./part-markers";
 import { getLayoutMargin, shapeBackground, shapeDecoration } from "./qr-shape";
 import { hashString } from "./shapes";
 import { encodeSymbol } from "./symbol";
-import { getTemplate } from "./templates";
 import { getSolidColor } from "./utils/color";
 import { compact, fmt, SCALE_DECIMALS } from "./utils/fmt";
 import { conicWedges, splitAlpha } from "./utils/paint";
 import { parseColor } from "./utils/parse-color";
+import { withoutWithdrawnProps } from "./withdrawn-props";
 
 // We could just do this in generatePath, except that we want to support
 // non-Path2D canvas, so we need to keep it an explicit step.
@@ -953,6 +953,7 @@ export function convertImageSettingsToPixels(
  * `renderToDOM` into DOM nodes. Every styling option is supported.
  */
 export function createQRCodeTree(props: QRSVGOptions): QRNode {
+  // templateId, withdrawn in qrdx 0.0.64, is dropped (withdrawn-props.ts)
   const {
     value,
     size = DEFAULT_SIZE,
@@ -967,7 +968,6 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     margin = DEFAULT_MARGIN,
     isOGContext = false,
     imageSettings: requestedImageSettings,
-    templateId,
     customTemplate,
     customProps,
     frame,
@@ -986,7 +986,7 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     frameLabelMarkers,
     partMarkers,
     ...otherProps
-  } = props;
+  } = withoutWithdrawnProps(props);
   // A shape withdrawn before release draws as the one it maps to
   const bodyPattern = withdrawnFallback(WITHDRAWN_BODY_PATTERNS, requestedBody);
   const cornerEyePattern = withdrawnFallback(
@@ -1568,9 +1568,9 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     </>
   );
 
-  // Check if template is specified (customTemplate takes precedence over templateId)
-  const template =
-    customTemplate || (templateId ? getTemplate(templateId) : undefined);
+  // A template you draw in code (customTemplate) wraps the code in its
+  // artwork. The built-in templates and templateId became frames in 0.0.64.
+  const template = customTemplate;
   if (template) {
     // For templates, we need to create a properly sized SVG that fits the template coordinate system
     // Templates expect the QR content to be in a coordinate system that matches their transforms

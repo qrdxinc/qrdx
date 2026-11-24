@@ -20,8 +20,11 @@ import { RadialCode } from "../docs-examples/colors/radial-code";
 import { HaloCode } from "../docs-examples/effects/halo-code";
 import { RoundedCode as EffectsRoundedCode } from "../docs-examples/effects/rounded-code";
 import { ShadowCode } from "../docs-examples/effects/shadow-code";
+import { ArrowFrameCode } from "../docs-examples/frames/arrow-frame-code";
+import { DotRingCode } from "../docs-examples/frames/dot-ring-code";
 import { MenuFrameCode } from "../docs-examples/frames/menu-frame-code";
 import { OfficialFrameCode } from "../docs-examples/frames/official-frame-code";
+import { RingTemplateCode } from "../docs-examples/frames/ring-template-code";
 import { DownloadSvgButton as MenuDownloadSvgButton } from "../docs-examples/getting-started/download-svg-button";
 import { FirstQrCode } from "../docs-examples/getting-started/first-qr-code";
 import { StyledQrCode } from "../docs-examples/getting-started/styled-qr-code";
@@ -51,12 +54,6 @@ import { DraftGenerator } from "../docs-examples/registry/draft-generator";
 import { ShareAfterSave } from "../docs-examples/registry/share-after-save";
 import { TrackedDownload } from "../docs-examples/registry/tracked-download";
 import { FramedCode as CircleFramedCode } from "../docs-examples/styles/framed-code";
-import { ArrowCode } from "../docs-examples/templates/arrow-code";
-import { ArrowFrameCode } from "../docs-examples/templates/arrow-frame-code";
-import { BoxedLogoCode } from "../docs-examples/templates/boxed-logo-code";
-import { DocsRingCode } from "../docs-examples/templates/docs-ring-code";
-import { DotRingCode } from "../docs-examples/templates/dot-ring-code";
-import { RingTemplateCode } from "../docs-examples/templates/ring-template-code";
 import { BrandCode } from "../docs-examples/usage/brand-code";
 import { FramedCode } from "../docs-examples/usage/framed-code";
 import { LogoCode } from "../docs-examples/usage/logo-code";
@@ -115,16 +112,11 @@ const PAGES: Record<string, string[]> = {
     "logos/round-logo-code.tsx",
     "logos/image-settings-code.tsx",
   ],
-  "features/templates.mdx": [
-    "templates/arrow-code.tsx",
-    "templates/boxed-logo-code.tsx",
-    "templates/dot-ring-code.tsx",
-    "templates/docs-ring-code.tsx",
-    "templates/arrow-frame-code.tsx",
-    "templates/ring-template-code.tsx",
-  ],
   "features/frames.mdx": [
     "frames/menu-frame-code.tsx",
+    "frames/arrow-frame-code.tsx",
+    "frames/dot-ring-code.tsx",
+    "frames/ring-template-code.tsx",
     "frames/official-frame-code.tsx",
   ],
   "utilities.mdx": ["utilities/contrast-checker.tsx"],
@@ -165,7 +157,7 @@ function decodeFirstSvg(html: string): string | null {
   return decodeQR(rasterizeSvg(svg, { width: 520, pad: 24 }));
 }
 
-/** The whole root <svg>, frame or template included, decoded. */
+/** The whole root <svg>, frame included, decoded. */
 function decodeRootSvg(html: string): string | null {
   const start = html.indexOf("<svg");
   const end = html.lastIndexOf("</svg>");
@@ -305,7 +297,7 @@ describe("the Next.js guide's examples", () => {
   });
 });
 
-describe("the shape, color, logo, template and frame examples", () => {
+describe("the shape, color, logo and frame examples", () => {
   it.each([
     ["liquid modules with leaf eyes", <ShapedCode key="shaped" />],
     ["a lighter module scale", <LightCode key="light" />],
@@ -328,11 +320,9 @@ describe("the shape, color, logo, template and frame examples", () => {
     ["a placed logo", <PlacedLogoCode key="placed" />],
     ["a round logo on a plate", <RoundLogoCode key="round" />],
     ["raw image settings", <ImageSettingsCode key="image-settings" />],
-    ["the Arrow template", <ArrowCode key="arrow" />],
-    ["a boxed logo", <BoxedLogoCode key="boxed" />],
-    ["the Arrow spec as a frame", <ArrowFrameCode key="arrow-frame" />],
-    ["a template drawn in code", <RingTemplateCode key="ring" />],
     ["a banner frame", <MenuFrameCode key="banner" />],
+    ["the arrow frame", <ArrowFrameCode key="arrow-frame" />],
+    ["a template drawn in code", <RingTemplateCode key="ring" />],
     ["an official frame", <OfficialFrameCode key="official" />],
     ["the circle frame", <CircleFramedCode key="circle-frame" />],
   ])("decodes with %s", (_name, element) => {
@@ -341,13 +331,17 @@ describe("the shape, color, logo, template and frame examples", () => {
     );
   });
 
-  it.each([
-    ["with a label along the ring", <DotRingCode key="dot-ring" />],
-    ["with the ring filled", <DocsRingCode key="docs-ring" />],
-  ])("decodes the Dot Ring %s", (_name, element) => {
-    const html = renderToStaticMarkup(element);
+  it("decodes the dot ring frame with a label along the ring", () => {
+    const html = renderToStaticMarkup(<DotRingCode />);
     expect(html).toContain("<text");
+    expect(html).toContain('data-qrdx-frame="dot-ring"');
     expect(decodeRootSvg(html)).toMatch(/^https:\/\/example\.com/);
+  });
+
+  it("draws the template's ring in its customProps color", () => {
+    const html = renderToStaticMarkup(<RingTemplateCode />);
+    expect(html).toContain('stroke="#f59e0b"');
+    expect(html).toContain('viewBox="0 0 300 300"');
   });
 
   it("draws the official frame with its own label", () => {

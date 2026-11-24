@@ -8,6 +8,7 @@
 // Hunt, AlternativeTo or Wikidata URLs once they're live.
 import {
   CANONICAL_HOST,
+  DISCORD_INVITE_URL,
   GITHUB_PROFILE_URL,
   GITHUB_REPO_URL,
   MCP_GLAMA_URL,
@@ -105,6 +106,8 @@ export const organizationSchema = {
     // The official MCP Registry's record and Glama's page for the MCP server.
     MCP_REGISTRY_URL,
     MCP_GLAMA_URL,
+    // The QRdx Discord server, through its permanent invite.
+    DISCORD_INVITE_URL,
   ],
   contactPoint: {
     "@type": "ContactPoint",

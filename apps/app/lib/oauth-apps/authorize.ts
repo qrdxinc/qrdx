@@ -19,8 +19,10 @@ import {
   parseScopes,
   validateScopes,
 } from "@/lib/oauth";
+import { isOwnResource, oauthIssuer } from "@/lib/oauth-metadata";
+import { markDynamicClientUsed } from "@/lib/oauth-registration";
 import { OAUTH_SCOPES, type OAuthScope } from "@/lib/oauth-scopes";
-import { isTrustedApp } from "./access";
+import { isDynamicApp, isTrustedApp } from "./access";
 import { appBuilderName } from "./builder";
 import { isAllowedRedirectUri } from "./validation";
 
@@ -38,6 +40,8 @@ export const AUTHORIZE_PARAMS = [
   "code_challenge",
   "code_challenge_method",
   "prompt",
+  // RFC 8707: the server the token is for (MCP clients always send it)
+  "resource",
 ] as const;
 
 export interface AuthorizeParams {
@@ -49,6 +53,7 @@ export interface AuthorizeParams {
   codeChallenge: string | null;
   codeChallengeMethod: string;
   prompt: string | null;
+  resource: string | null;
 }
 
 export function readAuthorizeParams(
@@ -64,6 +69,7 @@ export function readAuthorizeParams(
     codeChallenge: value("code_challenge"),
     codeChallengeMethod: value("code_challenge_method") ?? "S256",
     prompt: value("prompt"),
+    resource: value("resource"),
   };
 }
 
@@ -82,6 +88,7 @@ export function authorizeParamEntries(
       "code_challenge_method",
       params.codeChallenge ? params.codeChallengeMethod : null,
     ],
+    ["resource", params.resource],
   ];
   return entries.filter(
     (entry): entry is [string, string] => entry[1] !== null,
@@ -101,6 +108,11 @@ export interface AuthorizeApp {
   redirectUris: string[];
   scopes: string[];
   pkceRequired: boolean;
+  /**
+   * Registered itself at /api/oauth/register (an MCP client): the consent
+   * screen always asks, and loopback redirect URIs match on any port.
+   */
+  dynamic: boolean;
 }
 
 export type AuthorizeError = { error: string; description: string };
@@ -112,21 +124,20 @@ export type AuthorizeCheck =
 const reject = (error: string, description: string) =>
   ({ ok: false, error, description }) as const;
 
+const MISSING_PARAMETERS: AuthorizeError = {
+  error: "invalid_request",
+  description:
+    "Missing required parameters: client_id, redirect_uri, response_type, scope",
+};
+
 /** Checks that need no database: required params, response type, PKCE shape. */
 export function checkAuthorizeParams(
   params: AuthorizeParams,
 ): AuthorizeError | null {
-  if (
-    !params.clientId ||
-    !params.redirectUri ||
-    !params.responseType ||
-    !params.scope
-  ) {
-    return {
-      error: "invalid_request",
-      description:
-        "Missing required parameters: client_id, redirect_uri, response_type, scope",
-    };
+  // `scope` is checked with the app: a client that registered itself may
+  // leave it out and gets the scopes it registered.
+  if (!params.clientId || !params.redirectUri || !params.responseType) {
+    return MISSING_PARAMETERS;
   }
   if (params.responseType !== "code") {
     return {
@@ -164,18 +175,44 @@ export function checkAuthorizeParams(
 
 /** Checks against the registered app: redirect URI, scopes, PKCE policy. */
 export function checkAuthorizeApp(
-  app: Pick<AuthorizeApp, "redirectUris" | "scopes" | "pkceRequired">,
+  app: Pick<AuthorizeApp, "redirectUris" | "scopes" | "pkceRequired"> & {
+    dynamic?: boolean;
+  },
   params: AuthorizeParams,
 ): { ok: true; scopes: OAuthScope[] } | ({ ok: false } & AuthorizeError) {
+  const dynamic = app.dynamic === true;
   if (
     !(
       params.redirectUri &&
-      isAllowedRedirectUri(params.redirectUri, app.redirectUris)
+      isAllowedRedirectUri(params.redirectUri, app.redirectUris, {
+        loopbackAnyPort: dynamic,
+      })
     )
   ) {
     return reject("invalid_request", "redirect_uri not registered");
   }
-  const requested = parseScopes(params.scope ?? "");
+  // RFC 8707, for clients that registered themselves: a token only for this
+  // QRdx's own MCP server or REST API. Other apps' `resource` is ignored,
+  // as it always was.
+  if (dynamic && params.resource !== null && !isOwnResource(params.resource)) {
+    return reject(
+      "invalid_target",
+      "resource must be this QRdx server's MCP endpoint or REST API",
+    );
+  }
+  let requested = parseScopes(params.scope ?? "");
+  if (dynamic) {
+    // MCP clients ask for what discovery listed, which can include scopes
+    // they weren't registered for (or none): they get the registered ones
+    // they asked for, or all of them when they named none.
+    const registered = requested.filter((scope) => app.scopes.includes(scope));
+    requested = params.scope ? registered : [...app.scopes];
+    if (params.scope && requested.length === 0) {
+      return reject("invalid_scope", "Invalid or unsupported scope");
+    }
+  } else if (!params.scope) {
+    return { ok: false, ...MISSING_PARAMETERS };
+  }
   if (!validateScopes(requested, app.scopes)) {
     return reject("invalid_scope", "Invalid or unsupported scope");
   }
@@ -210,6 +247,7 @@ export async function loadAuthorizeApp(
       redirectUris: oauthApp.redirectUris,
       scopes: oauthApp.scopes,
       pkceRequired: oauthApp.pkceRequired,
+      registrationType: oauthApp.registrationType,
       teamName: organization.name,
       ownerName: user.name,
     })
@@ -219,6 +257,7 @@ export async function loadAuthorizeApp(
     .where(and(eq(oauthApp.clientId, clientId), eq(oauthApp.isActive, true)))
     .limit(1);
   if (!row) return null;
+  const redirectUris = Array.isArray(row.redirectUris) ? row.redirectUris : [];
   return {
     id: row.id,
     name: row.name,
@@ -226,10 +265,12 @@ export async function loadAuthorizeApp(
     logoUrl: row.logoUrl,
     websiteUrl: row.websiteUrl,
     trusted: isTrustedApp(row),
-    builtBy: appBuilderName(row),
-    redirectUris: Array.isArray(row.redirectUris) ? row.redirectUris : [],
+    builtBy: appBuilderName({ ...row, redirectUris }),
+    redirectUris,
     scopes: Array.isArray(row.scopes) ? row.scopes : [],
-    pkceRequired: row.pkceRequired,
+    // A self-registered client always needs PKCE, whatever its row says.
+    pkceRequired: row.pkceRequired || isDynamicApp(row),
+    dynamic: isDynamicApp(row),
   };
 }
 
@@ -282,9 +323,12 @@ export async function issueAuthorizationCode(
   userId: string,
   params: AuthorizeParams,
   scopes: readonly OAuthScope[],
+  { dynamic = false }: { dynamic?: boolean } = {},
 ): Promise<string> {
   const code = generateSecureToken();
   const now = new Date();
+  // A self-registered client that got this far is in use: never pruned.
+  if (dynamic) await markDynamicClientUsed(appId, now);
   await db.insert(oauthAuthorizationCode).values({
     id: cuid(),
     // Only the hash is stored; the plaintext code goes to the client once.
@@ -302,7 +346,20 @@ export async function issueAuthorizationCode(
     ),
     createdAt: now,
   });
-  return redirectWith(params, { code });
+  return authorizationResponse(params, { code });
+}
+
+/**
+ * An authorization response (a code, or an error once the redirect URI is
+ * known to be the app's): redirectWith plus `iss`, the issuer, so clients
+ * can tell which server answered (RFC 9207; the metadata says it's always
+ * sent).
+ */
+export function authorizationResponse(
+  params: Pick<AuthorizeParams, "redirectUri" | "state">,
+  values: Record<string, string>,
+): string {
+  return redirectWith(params, { ...values, iss: oauthIssuer() });
 }
 
 /** redirect_uri plus `values` and the client's state (query kept, RFC 6749 §3.1.2). */

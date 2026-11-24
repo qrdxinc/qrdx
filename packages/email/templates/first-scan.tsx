@@ -1,8 +1,12 @@
 import type { ReactNode } from "react";
-import { Link } from "react-email";
 import type { EmailIntl } from "../intl";
 import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
-import { codeLabel, DetailsTable, formatEmailDateTime } from "./parts";
+import {
+  codeLabel,
+  DetailsTable,
+  EmailTextLink,
+  formatEmailDateTime,
+} from "./parts";
 
 export interface FirstScanEmailProps {
   code: { title: string | null; slug: string };
@@ -14,6 +18,8 @@ export interface FirstScanEmailProps {
   analyticsUrl: string;
   workspaceName: string;
   unsubscribeUrl: string;
+  /** The address it's sent to (the footer names it) */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
   /**
@@ -35,6 +41,7 @@ export function FirstScanEmail({
   analyticsUrl,
   workspaceName,
   unsubscribeUrl,
+  recipient,
   intl,
   free,
 }: FirstScanEmailProps) {
@@ -51,6 +58,7 @@ export function FirstScanEmail({
     <EmailLayout
       intl={intl}
       preview={t("firstScan.preview", { code: codeLabel(code) })}
+      recipient={recipient}
       reason={
         free
           ? t("firstScan.freeReason")
@@ -68,7 +76,7 @@ export function FirstScanEmail({
             second: free.milestones[1],
             third: free.milestones[2],
             link: (chunks: ReactNode) => (
-              <Link href={free.pricingUrl}>{chunks}</Link>
+              <EmailTextLink href={free.pricingUrl}>{chunks}</EmailTextLink>
             ),
           })}
         </EmailText>
@@ -87,4 +95,5 @@ FirstScanEmail.PreviewProps = {
   analyticsUrl: "https://qrdx.dev/dashboard/acme/codes/aB3dE5f",
   workspaceName: "Acme",
   unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+  recipient: "alex@example.com",
 } satisfies Omit<FirstScanEmailProps, "intl">;

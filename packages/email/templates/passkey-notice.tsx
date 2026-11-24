@@ -1,5 +1,5 @@
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
   ReviewSecurityButton,
@@ -25,6 +25,8 @@ export interface PasskeyNoticeEmailProps {
   passkeyName: string;
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
+  /** The address it's sent to */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -38,6 +40,7 @@ export function PasskeyNoticeEmail({
   change,
   passkeyName,
   details,
+  recipient,
   intl,
 }: PasskeyNoticeEmailProps) {
   const { t } = intl;
@@ -46,6 +49,7 @@ export function PasskeyNoticeEmail({
       intl={intl}
       preview={t(`passkeyNotice.${change}.preview`, { name: passkeyName })}
       reason={t("passkeyNotice.reason")}
+      recipient={recipient}
     >
       <EmailHeading>{passkeyNoticeSubject(change, intl)}</EmailHeading>
       <EmailText>
@@ -57,7 +61,6 @@ export function PasskeyNoticeEmail({
       <SecurityDetails details={details} intl={intl} />
       <EmailText>{t("security.nothingElse")}</EmailText>
       <ReviewSecurityButton intl={intl} />
-      <EmailDivider />
       <MutedText>{t.rich("passkeyNotice.notYou", supportLinkArgs)}</MutedText>
     </EmailLayout>
   );
@@ -73,4 +76,5 @@ PasskeyNoticeEmail.PreviewProps = {
     ip: "203.0.113.24",
     time: "Nov 19, 2026, 3:04 PM GMT+5:30",
   },
+  recipient: "alex@example.com",
 } satisfies Omit<PasskeyNoticeEmailProps, "intl">;

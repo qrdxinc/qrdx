@@ -10,9 +10,17 @@
 //    HAND_MADE in modules.mjs) are never written here.
 // 2. modules.mjs then writes the TypeScript modules that load those files
 //    (the full list, one module per collection, a light index and counts).
+// 3. The app records every new or changed spec as the frame's next version
+//    (`bun run --filter app frames:versions`, apps/app/lib/frames/versions).
+//    Image URLs copied from the editor name a frame's version
+//    (frame=autumn-maple.v1) and must keep drawing exactly that, so commit
+//    the record with the frames: the app's tests fail on a spec that isn't
+//    recorded. A hand-made frame edited by hand needs the same command
+//    (running this script runs it).
 //
 // Frame ids are permanent: they are links (/community/frames/<id>), seeded
 // database slugs and playground link values. Never rename or reuse one.
+import { spawnSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { make } from "./build.mjs";
@@ -81,3 +89,17 @@ console.log(
     ? `${ENTRIES.length + HAND_MADE.length} official frames, up to date.`
     : `${ENTRIES.length} generated frames checked; ${stale.length} file(s) written.`
 );
+// 3. Every spec as a recorded version (or, with --check, that it is)
+const versions = spawnSync(
+  "bun",
+  ["run", "--filter", "app", "frames:versions", ...(check ? ["--check"] : [])],
+  { stdio: "inherit" }
+);
+if (versions.status !== 0) {
+  if (versions.error) {
+    console.error(
+      `Couldn't record the frame versions (${versions.error.message}): run bun run --filter app frames:versions`
+    );
+  }
+  process.exit(versions.status ?? 1);
+}

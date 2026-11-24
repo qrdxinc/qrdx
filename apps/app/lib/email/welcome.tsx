@@ -123,6 +123,7 @@ export async function sendWelcomeEmail({
         proCustomDomains={PLAN_LIMITS.pro.customDomains}
         proMonthly={price("month")}
         proYearly={price("year")}
+        recipient={row.email}
         scansUrl={absolute(workspaceLink(null, "/analytics"))}
         senderName={sender.name}
         unsubscribeUrl={unsubscribeUrl}

@@ -79,9 +79,9 @@ Gradients are checked stop by stop, so a gradient that fades to a pale color at 
 
 ## The quiet zone
 
-The quiet zone is the blank border around the code. The standard asks for 4 modules on every side, and scanners use it to find where the code starts. The scan score treats 4 modules or more as ideal, 1.5 to 4 as acceptable, and less than 1.5 as a failure, because a code printed flush against other artwork often won't scan at all.
+The quiet zone is the blank border around the code. The standard asks for 4 modules on every side, and scanners use it to find where the code starts. The scan score treats 4 modules or more as ideal, takes points off below 1.5 and warns below 2, because a code printed flush against dark or busy artwork often won't scan at all.
 
-QRdx downloads have no margin unless you turn on the quiet zone, so that designers can place codes precisely. If you leave it off, leave the space in your layout instead. A frame around the code also keeps a light gap, and the score counts it.
+New designs in the QRdx playground start with a 2-module quiet zone, and Padding sets it. If you set it to None so you can place the code precisely, leave the space in your layout instead. A frame around the code also keeps a light gap, and the score counts it.
 
 ## How QRdx's scan score works
 

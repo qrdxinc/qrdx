@@ -68,7 +68,6 @@ export function getPrintBleedFill(
   if (
     !(color && isGradient(props.bgColor)) ||
     isFrameActive(props.frame) ||
-    props.templateId ||
     props.customTemplate
   ) {
     return color;

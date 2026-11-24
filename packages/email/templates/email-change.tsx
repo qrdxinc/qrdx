@@ -1,5 +1,5 @@
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EmailCode, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
   NeverAskForCode,
@@ -8,7 +8,6 @@ import {
   type SecurityEventDetails,
   supportLinkArgs,
 } from "./security-parts";
-import { EmailCodeBox } from "./sign-in-code";
 
 export const EMAIL_CHANGE_CODE_SUBJECT = "Confirm your new email for QRdx";
 
@@ -28,6 +27,8 @@ export interface EmailChangeCodeEmailProps {
   /** The 6-digit code */
   code: string;
   expiresInMinutes?: number;
+  /** The address it's sent to (the new one) */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -39,6 +40,7 @@ export interface EmailChangeCodeEmailProps {
 export function EmailChangeCodeEmail({
   code,
   expiresInMinutes = 5,
+  recipient,
   intl,
 }: EmailChangeCodeEmailProps) {
   const { t } = intl;
@@ -47,13 +49,13 @@ export function EmailChangeCodeEmail({
       intl={intl}
       preview={t("emailChangeCode.preview", { minutes: expiresInMinutes })}
       reason={t("emailChangeCode.reason")}
+      recipient={recipient}
     >
       <EmailHeading>{t("emailChangeCode.heading")}</EmailHeading>
       <EmailText>{t("emailChangeCode.enter")}</EmailText>
-      <EmailCodeBox code={code} />
+      <EmailCode code={code} />
       <EmailText>{t("codes.expires", { minutes: expiresInMinutes })}</EmailText>
       <NeverAskForCode intl={intl} />
-      <EmailDivider />
       <MutedText>{t("emailChangeCode.ignore")}</MutedText>
     </EmailLayout>
   );
@@ -64,6 +66,8 @@ export interface EmailChangedEmailProps {
   newEmail: string;
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
+  /** The address it's sent to (the old one) */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -76,6 +80,7 @@ export interface EmailChangedEmailProps {
 export function EmailChangedEmail({
   newEmail,
   details,
+  recipient,
   intl,
 }: EmailChangedEmailProps) {
   const { t } = intl;
@@ -84,6 +89,7 @@ export function EmailChangedEmail({
       intl={intl}
       preview={t("emailChanged.preview", { newEmail })}
       reason={t("emailChanged.reason")}
+      recipient={recipient}
     >
       <EmailHeading>{emailChangedSubject(intl)}</EmailHeading>
       <EmailText>
@@ -95,7 +101,6 @@ export function EmailChangedEmail({
       <SecurityDetails details={details} intl={intl} />
       <EmailText>{t("security.nothingElse")}</EmailText>
       <ReviewSecurityButton intl={intl} />
-      <EmailDivider />
       <MutedText>{t.rich("emailChanged.notYou", supportLinkArgs)}</MutedText>
     </EmailLayout>
   );
@@ -105,6 +110,7 @@ export function EmailChangedEmail({
 EmailChangeCodeEmail.PreviewProps = {
   code: "482913",
   expiresInMinutes: 5,
+  recipient: "alex@example.com",
 } satisfies Omit<EmailChangeCodeEmailProps, "intl">;
 
 /** What the preview app (apps/email) renders. */
@@ -116,4 +122,5 @@ EmailChangedEmail.PreviewProps = {
     ip: "203.0.113.24",
     time: "Nov 19, 2026, 3:04 PM GMT+5:30",
   },
+  recipient: "alex@example.com",
 } satisfies Omit<EmailChangedEmailProps, "intl">;

@@ -32,6 +32,7 @@ import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { markProgrammaticQrContent } from "@/lib/analytics/react";
 import { usePostLoginAction } from "@/lib/hooks/use-post-login-action";
+import { INVITE_BONUS_CODES } from "@/lib/invites/terms";
 import {
   createDynamicCode,
   updateDynamicCode,
@@ -206,7 +207,7 @@ export type MakeDynamicOutcome =
    * with a short link that doesn't open anything yet.
    */
   | { kind: "held"; code: LinkedDynamicCode }
-  | { kind: "limit"; message: string }
+  | { kind: "limit"; message: string; invite?: true }
   | { kind: "signin" }
   | { kind: "error"; message: string };
 
@@ -231,7 +232,12 @@ export async function makeDynamic(
   );
   if (!result.success) {
     if (result.error.code === "LIMIT_REACHED") {
-      return { kind: "limit", message: result.error.message };
+      return {
+        kind: "limit",
+        message: result.error.message,
+        // Inviting a friend would still earn more codes (lib/invites).
+        ...(result.error.invite ? { invite: true as const } : {}),
+      };
     }
     if (result.error.code === "UNAUTHORIZED") return { kind: "signin" };
     return { kind: "error", message: result.error.message };
@@ -283,9 +289,15 @@ export function DynamicHeldCard({
 export function DynamicLimitCard({
   message,
   onUpgrade,
+  invite = false,
 }: {
   message: string;
   onUpgrade: () => void;
+  /**
+   * Inviting a friend would still earn more codes (the server said so:
+   * lib/invites): one line under the upgrade, never instead of it.
+   */
+  invite?: boolean;
 }) {
   const t = useTranslations("editor.dynamicLinkToggle");
   // Only Free caps dynamic codes.
@@ -303,6 +315,24 @@ export function DynamicLimitCard({
           <Link href={dashboardEntry("codes")}>{t("manageCodes")}</Link>
         </Button>
       </div>
+      {invite && (
+        <p className="text-muted-foreground text-pretty">
+          {t.rich("inviteForMore", {
+            count: INVITE_BONUS_CODES,
+            link: (chunks) => (
+              <Link
+                className="text-foreground underline underline-offset-2"
+                href="/settings/invite"
+                onClick={() =>
+                  track("invite_offer_clicked", { surface: "limit_gate" })
+                }
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
+        </p>
+      )}
     </div>
   );
 }
@@ -346,6 +376,7 @@ export function DynamicLinkToggle() {
 
   const [isPending, startTransition] = useTransition();
   const [limitMessage, setLimitMessage] = useState<string | null>(null);
+  const [limitInvite, setLimitInvite] = useState(false);
   const [designSaved, setDesignSaved] = useState(false);
   const [copied, setCopied] = useState(false);
   const [resume, setResume] = useState<unknown>(null);
@@ -408,6 +439,7 @@ export function DynamicLinkToggle() {
       });
       if (outcome.kind === "limit") {
         setLimitMessage(outcome.message);
+        setLimitInvite(outcome.invite === true);
         return;
       }
       if (outcome.kind === "signin") {
@@ -637,7 +669,11 @@ export function DynamicLinkToggle() {
       )}
 
       {limitMessage && !linked && (
-        <DynamicLimitCard message={limitMessage} onUpgrade={openGetProDialog} />
+        <DynamicLimitCard
+          invite={limitInvite}
+          message={limitMessage}
+          onUpgrade={openGetProDialog}
+        />
       )}
 
       {held && <DynamicHeldCard codeId={held.id} />}

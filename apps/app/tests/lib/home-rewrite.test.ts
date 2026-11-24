@@ -47,7 +47,7 @@ describe("next.config.ts", () => {
 
   it.each(SEGMENTS)("redirects /%s/home to /home", async (segment) => {
     const response = await respond(`https://qrdx.dev/${segment}/home`);
-    expect(response.status).toBe(307);
+    expect(response.status).toBe(308);
     expect(getRedirectUrl(response)).toBe("https://qrdx.dev/home");
   });
 
@@ -60,7 +60,7 @@ describe("next.config.ts", () => {
       nextConfig,
       cookies: { NEXT_LOCALE: "es" },
     });
-    expect(response.status).toBe(307);
+    expect(response.status).toBe(308);
     expect(getRedirectUrl(response)).toBe("https://qrdx.dev/");
     expect(response.headers.get("set-cookie")).toBeNull();
   });

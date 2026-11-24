@@ -8,6 +8,7 @@ import {
   checkAuthorizeRequest,
   readAuthorizeParams,
 } from "@/lib/oauth-apps/authorize";
+import { mcpSignUpTags } from "@/lib/oauth-apps/mcp-sign-up";
 import { OAuthConsent, OAuthRequestError } from "./oauth-consent";
 import { OAuthSignIn } from "./oauth-sign-in";
 
@@ -21,6 +22,12 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 // Sign-in and consent for /api/oauth/authorize. The request is re-checked
 // here (and again when the form posts), so nothing is shown for an unknown
 // app or an unregistered redirect_uri.
+//
+// An MCP client (an app that registered itself, lib/oauth-registration.ts)
+// names itself, so the page says who it is by the host it sends people back
+// to, and a sign-up that starts here is counted as coming from the MCP
+// server (ref=mcp), with the client's family (chatgpt, claude, cursor, ...)
+// as its source.
 export default async function OAuthAuthorizePage({
   searchParams,
 }: {
@@ -33,20 +40,39 @@ export default async function OAuthAuthorizePage({
   });
   const check = await checkAuthorizeRequest(params);
   if (!check.ok) {
-    return <OAuthRequestError description={check.description} />;
+    return (
+      <OAuthRequestError
+        description={check.description}
+        // An unknown client_id: most often an MCP app's saved connection
+        // whose registration was deleted as unused.
+        unknownApp={check.error === "invalid_client"}
+      />
+    );
   }
 
   const entries = authorizeParamEntries(params);
+  const redirectHost = new URL(params.redirectUri as string).host;
+  // A self-registered client's name is its own claim: the host it sends
+  // people back to goes next to it.
+  const appName =
+    check.app.dynamic && check.app.name !== redirectHost
+      ? `${check.app.name} (${redirectHost})`
+      : check.app.name;
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user) {
     const callbackURL = `/oauth/authorize?${new URLSearchParams(entries)}`;
     const { google, github } = getSignInOptions();
     return (
       <OAuthSignIn
-        app={{ name: check.app.name, logoUrl: check.app.logoUrl }}
+        app={{
+          name: appName,
+          logoUrl: check.app.logoUrl,
+          mcpOnly: check.app.dynamic,
+        }}
         callbackURL={callbackURL}
         providers={{ google, github }}
         scopes={check.scopes}
+        signUpTags={mcpSignUpTags(check.app)}
       />
     );
   }
@@ -61,15 +87,17 @@ export default async function OAuthAuthorizePage({
           image: session.user.image ?? null,
         }}
         app={{
-          name: check.app.name,
+          mcpOnly: check.app.dynamic,
+          name: appName,
           description: check.app.description,
           logoUrl: check.app.logoUrl,
           websiteUrl: check.app.websiteUrl,
           trusted: check.app.trusted,
-          builtBy: check.app.builtBy,
+          // A self-registered client is known by where it sends you back.
+          builtBy: check.app.dynamic ? redirectHost : check.app.builtBy,
         }}
         fields={entries}
-        redirectHost={new URL(params.redirectUri as string).host}
+        redirectHost={redirectHost}
         scopes={check.scopes}
       />
     </ConfirmIdentityProvider>

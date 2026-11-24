@@ -1,6 +1,7 @@
 import { JsonLd } from "@repo/design-system/components/seo/json-ld";
 import type { ReactNode } from "react";
 import { Header } from "@/components/header";
+import { InviteNote } from "@/components/invites/invite-note";
 import { SeasonalPlayground } from "@/components/seasonal/playground-layer";
 import { organizationSchema } from "@/lib/seo-schema";
 import { Providers } from "./playground-providers";
@@ -23,6 +24,8 @@ export function PlaygroundShell({
       <JsonLd data={organizationSchema} />
       <div className="relative isolate flex h-svh flex-col overflow-hidden">
         <Header />
+        {/* A visit through a friend's invite link (/i/<code>), signed out. */}
+        <InviteNote />
         <SeasonalPlayground />
         <main className="isolate flex flex-1 flex-col overflow-hidden">
           <h1 className="sr-only">{heading}</h1>

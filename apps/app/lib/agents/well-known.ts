@@ -77,7 +77,7 @@ export function serverCard(
     version: MCP_SERVER_INFO.version,
     title: "QRdx",
     description:
-      "Design scan-checked QR codes for any content, plus payloads and community frames. Key optional.",
+      "Design scan-checked QR codes for any content, plus payloads and frames. Sign in for dynamic codes.",
     websiteUrl: siteUrl(origin, "/mcp", deployment),
     repository: {
       url: `https://github.com/${owner}/${repo}`,

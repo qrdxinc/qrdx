@@ -1,4 +1,4 @@
-import { defaultThemeState } from "@/config/qr";
+import { defaultThemeState, storedStyleDefaults } from "@/config/qr";
 import { shuffleSeed, shuffleTheme } from "@/lib/themes/shuffle";
 import { useThemePresetStore } from "../store/theme-preset-store";
 import type { ThemeStyles } from "../types/theme";
@@ -21,8 +21,11 @@ export function getPresetThemeStyles(name: string): ThemeStyles {
     return defaultTheme;
   }
 
+  // A built-in preset that leaves the margin out gets the one new designs
+  // start with; a saved theme keeps its own (none without `margin`), as
+  // opening it at /playground/<id> does.
   return {
-    ...defaultTheme,
+    ...(preset.source === "SAVED" ? storedStyleDefaults : defaultTheme),
     ...preset.styles,
   };
 }

@@ -2,7 +2,7 @@
 // so drawing a frame never loads zod. It must agree with frameSpecSchema
 // (zod) on everything: which specs pass, the parsed copy (keys in the
 // schema's order), and for broken specs the same problems, paths and
-// messages in the same order. Checked on every built-in, template and
+// messages in the same order. Checked on every built-in and
 // official spec, on every field of a varied set of specs broken in every
 // way we can think of, and on seeded random damage.
 import { describe, expect, it } from "vitest";
@@ -11,7 +11,6 @@ import { importFrameSvg } from "../src/frame-import";
 import { FrameSpecError } from "../src/frame-spec";
 import { BUILT_IN_FRAME_SPECS } from "../src/frames/builtin";
 import { OFFICIAL_FRAMES } from "../src/frames/official";
-import { getAllTemplates } from "../src/templates";
 import type { AnyQRFrame, FrameSpec } from "../types";
 import { frameSpecSchema, getFrameSpecIssues } from "../types/frame-spec";
 import {
@@ -58,15 +57,6 @@ const ALL_SPECS: [string, FrameSpec][] = [
     ([style, spec]) =>
       [`built-in ${style}`, spec as FrameSpec] as [string, FrameSpec]
   ),
-  ...getAllTemplates()
-    .filter((template) => template.spec)
-    .map(
-      (template) =>
-        [`template ${template.id}`, template.spec as FrameSpec] as [
-          string,
-          FrameSpec,
-        ]
-    ),
   ...OFFICIAL_FRAMES.map(
     (frame) => [`official ${frame.id}`, frame.spec] as [string, FrameSpec]
   ),
@@ -310,7 +300,7 @@ describe("parseFrameSpec agrees with frameSpecSchema", () => {
     expectSame(EVERY_FIELD, "every field");
   });
 
-  it(`on every built-in, template and official spec (${ALL_SPECS.length})`, () => {
+  it(`on every built-in and official spec (${ALL_SPECS.length})`, () => {
     expect(ALL_SPECS.length).toBeGreaterThan(1000);
     for (const [name, spec] of ALL_SPECS) {
       expectSame(spec, name);

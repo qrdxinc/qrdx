@@ -7,7 +7,7 @@ import {
   imageToDataUrl,
   sanitizeFilename,
 } from "@/components/sections/tools/bulk-utils";
-import { defaultThemeState } from "@/config/qr";
+import { storedStyleDefaults } from "@/config/qr";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
 import { soundEvent } from "@/lib/sound/emit";
@@ -72,7 +72,7 @@ export async function renderCodeImage(
   format: ZipFormat,
   logoFor: (src: string) => Promise<string | null>,
 ): Promise<Uint8Array | null> {
-  const s = code.style ?? defaultThemeState.styles;
+  const s = code.style ?? storedStyleDefaults;
   const logo = s.showLogo
     ? await logoFor(s.customLogo ?? DEFAULT_QR_LOGO)
     : null;
@@ -95,7 +95,6 @@ export async function renderCodeImage(
         level: s.level,
         cornerEyePattern: s.cornerEyePattern,
         cornerEyeDotPattern: s.cornerEyeDotPattern,
-        templateId: s.templateId,
         frame: s.frame,
       },
       format,

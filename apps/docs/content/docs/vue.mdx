@@ -115,7 +115,7 @@ In Nuxt, use them in any page or component. They render on the server and hydrat
 
 `qrdx/vue` re-exports everything in `qrdx/core`: `toSVGString`, `downloadQRCode`, `getQRCodeDataUrl`, `getScanScore`, the official frame library (`getOfficialFrame`) and the rest. [Vanilla JavaScript](/docs/vanilla-js) covers them. For PNG on a server, use `getQRAsPNG` from `qrdx/node`.
 
-A custom template's `wrapper` is written with the `h` that `qrdx/vue` exports. That is the core's `h`, not Vue's, so import one of them under another name when a file needs both:
+A template's `wrapper` ([artwork drawn in code](/docs/features/frames#artwork-drawn-in-code)) is written with the `h` that `qrdx/vue` exports. That is the core's `h`, not Vue's, so import one of them under another name when a file needs both:
 
 ```ts title="src/labelled-template.ts"
 import { h } from "qrdx/vue";

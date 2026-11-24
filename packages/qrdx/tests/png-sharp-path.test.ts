@@ -61,11 +61,12 @@ describe("getQRAsPNG through sharp", () => {
     );
   });
 
-  it("draws the dot ring template and, with a font, its text", async () => {
+  it("draws the dot ring frame and, with a font, its text", async () => {
     const value = "https://example.com/card?id=12345&src=print";
+    // The code 300 px across: the ring around it makes the PNG 593 px
     const bytes = await getQRAsPNG(
-      { value, templateId: "DotRing", customProps: { customText: "SCAN ME" } },
-      { size: 593 }
+      { value, frame: { style: "dot-ring", text: "SCAN ME" } },
+      { size: 300 }
     );
     const decoded = await decodePng(bytes);
     if (!decoded) {

@@ -147,7 +147,8 @@ describe("Official frames by id in the image URL", () => {
       const { url, omitted } = snippet({ ...look, frame });
       expect(omitted).toEqual([]);
       expect(url).not.toContain("qrdx.frame");
-      expect(url).toContain(id);
+      // Pinned to the version on screen (tests/api/image-api-frame-versions)
+      expect(url).toContain(`${id}.v1`);
 
       const before = inlineSpecUrl(flat, frame);
       expect(url.length).toBeLessThan(before.length / 3);
@@ -168,7 +169,7 @@ describe("Official frames by id in the image URL", () => {
       },
     });
     expect(url).toBe(
-      `${IMAGE_API_URL}?data=https%3A%2F%2Fexample.com&fg=4c1d95&bg=bf95ff&body=classy-rounded&eye=cushion&dot=plus&margin=2&frame=autumn-maple&frameText=Hello+autumn`,
+      `${IMAGE_API_URL}?data=https%3A%2F%2Fexample.com&fg=4c1d95&bg=bf95ff&body=classy-rounded&eye=cushion&dot=plus&margin=2&frame=autumn-maple.v1&frameText=Hello+autumn`,
     );
   });
 
@@ -178,7 +179,7 @@ describe("Official frames by id in the image URL", () => {
     });
     const style = new URL(url).searchParams.get("style") ?? "";
     expect(JSON.parse(style)).toEqual({
-      frame: { style: "diwali-diya", ...EDITED },
+      frame: { style: "diwali-diya.v1", ...EDITED },
     });
   });
 

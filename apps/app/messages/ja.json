@@ -220,6 +220,7 @@
     "description": "オープンソースのQRコードプラットフォーム。",
     "starOnGithub": "GitHubでスターする",
     "newsOnX": "QRdxのXニュース",
+    "joinDiscord": "QRdxのDiscordに参加",
     "navLabel": "フッター",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -349,7 +350,7 @@
     "hero": {
       "badge": "無料のオープンソース（AGPL-3.0）",
       "title": "無料のQRコードジェネレーター。動的QRコードもずっと使えます",
-      "description": "パターン、グラデーション、ロゴ、フレームでブランドに合わせたQRコードをデザインし、登録もウォーターマークもなしでPNG、SVG、PDF、EPSをダウンロードできます。ログインすると、印刷後も編集できる動的QRコード、ホスト型ページ、スキャン解析をご利用いただけます。",
+      "description": "パターン、グラデーション、ロゴ、フレームでブランドに合わせたQRコードをデザインし、PNG、SVG、PDF、EPS、TIFFでダウンロードできます。登録もウォーターマークも不要です。ログインすると、印刷後も編集できる動的QRコード、ホスト型ページ、スキャン解析をご利用いただけます。",
       "primary": "Playgroundを試す",
       "secondary": "ドキュメントを読む",
       "sceneLabel": "QRdxの流れを描いたアニメーション。スタジオの画面でQRコードをデザインしてスタイルを整え、プリンターがカードに印刷し、ロボットアームがカードをコンベヤーに載せ、ゲートに取り付けたスマートフォンが通過するカードを1枚ずつスキャンし、スキャンのデータが解析パネルに届いて新しいバーが加わり、大きな動的QRカードが再印刷なしでリンク先を切り替えます"
@@ -377,7 +378,7 @@
         "none": "フレームなし",
         "border": "枠線"
       },
-      "more": "Playgroundのフル機能では、ボディパターン{bodyPatterns, number}種類、アイシェイプ{eyeShapes, number}種類、アイセンター{eyeCentres, number}種類、自由な色とグラデーション、ロゴ、テンプレート、PNG、SVG、PDF、EPSのダウンロードをご利用いただけます。",
+      "more": "Playgroundのフル機能では、{bodyPatterns, number}種類のボディパターン、{eyeShapes, number}種類のアイシェイプ、{eyeCentres, number}種類のアイセンター、自由な色とグラデーション、ロゴ、フレーム、PNG、SVG、PDF、EPS、TIFFでのダウンロードをご利用いただけます。",
       "customize": "Playgroundでカスタマイズ",
       "qrLabel": "{value}のQRコード",
       "empty": "リンクを入力するとQRコードが表示されます。"
@@ -518,7 +519,7 @@
       "items": {
         "free": {
           "question": "QRdxは本当に無料ですか?隠れた制限はありますか?",
-          "answer": "はい。静的QRコードの作成、カスタマイズ、ダウンロードは無料で、アカウントも不要です。コードの数に制限はなく、すべてのデザインオプション(ボディパターン{bodyPatterns, number}種類、コーナーアイの形{eyeShapes, number}種類、アイセンター{eyeCentres, number}種類、グラデーション、ロゴ、フレーム、Logo QRやImage QRのアート)を使え、PNG、JPG、SVG、PDF、EPSでダウンロードできます。透かしも広告もありません。静的QRコードは内容をコード自体に保存するため、有効期限がなく、スキャン数の上限もありません。フリーアカウントでは、動的QRコード10個、ホスト型ページ3つ、{historyYears, plural, one {#年分} other {#年分}}のスキャン分析、保存テーマ10個、AIテーマ生成5回が加わります。Pro({proMonthly}/月または{proYearly}/年)とBusiness({businessMonthly}/月または{businessYearly}/年)では、これらの上限が引き上げられます。"
+          "answer": "はい。静的QRコードの作成、カスタマイズ、ダウンロードは無料で、アカウントも不要です。コードの数に制限はなく、すべてのデザインオプション（{bodyPatterns, number}種類のボディパターン、{eyeShapes, number}種類のコーナーアイシェイプ、{eyeCentres, number}種類のアイセンター、グラデーション、ロゴ、フレーム、Logo QRやImage QRのアート）を使え、PNG、JPG、SVG、PDF、EPS、TIFFでダウンロードできます。ウォーターマークも広告もありません。静的QRコードはコンテンツをコード自体に保存するため、有効期限がなく、スキャン数の上限もありません。フリーアカウントでは、動的QRコード10個、ホスト型ページ3つ、{historyYears, plural, one {#年} other {#年}}分のスキャン解析、保存テーマ10個、AIテーマ生成5回が加わります。Pro（月額{proMonthly}、年額{proYearly}）とBusiness（月額{businessMonthly}、年額{businessYearly}）では、これらの上限が引き上げられます。"
         },
         "signup": {
           "question": "登録やアカウント作成は必要ですか?",
@@ -546,7 +547,7 @@
         },
         "api": {
           "question": "開発者はAPIでQRコードを生成できますか?",
-          "answer": "はい。Image APIを使うと、APIキーなしで任意のURLをSVG、PNG、EPS形式のQRコードに変換できます。REST APIでは、ワークスペースのAPIキーまたはOAuthを使って、動的QRコードの作成と編集、スキャン数の取得ができます。そのほか、Claude、Cursor、VS Code向けのMCP server、コマンドラインツール(@qrdx/cli)、shadcn/uiコンポーネント、qrdx Reactライブラリもあります。"
+          "answer": "はい。Image APIはAPIキーなしで、あらゆるURLをSVG、PNG、TIFF、EPS形式のQRコードに変換します。REST APIでは、ワークスペースのAPIキーまたはOAuthを使って、動的QRコードの作成と編集、スキャンデータの取得ができます。そのほか、Claude、Cursor、VS Code向けのMCPサーバー、コマンドラインツール（@qrdx/cli）、shadcn/uiコンポーネント、qrdx Reactライブラリもご用意しています。"
         },
         "paidPlans": {
           "question": "ProやBusinessでは何が使えますか?",
@@ -913,12 +914,12 @@
       "metaTitle": "QRコードの種類：{count, number}種類の無料ジェネレーター（Wi-Fi、vCard、UPI）",
       "metaDescription": "{count, number}種類のQRコードに、それぞれ無料のジェネレーターを用意しました。Wi-Fi、vCard、WhatsApp、UPI、メール、SNSプロフィール、決済に対応し、各ページで正確なペイロード形式を確認できます。",
       "title": "あらゆるコンテンツに対応するQRコードジェネレーター",
-      "intro1": "QRコードでできるのは、Webサイトを開くことだけではありません。中のテキストに応じて、スマートフォンでWi-Fiネットワークに接続したり、連絡先を保存したり、支払いを始めたり、チャットを開いたりできます。以下の{count, number}種類から選ぶと、適切な入力項目、ライブプレビュー、PNG・WebP・SVGでのダウンロードが使えるジェネレーターが開きます。",
+      "intro1": "QRコードでできるのは、Webサイトを開くことだけではありません。中に入れるテキストによって、スマートフォンでWi-Fiネットワークに接続したり、連絡先を保存したり、支払いを開始したり、チャットを開いたりできます。下の{count, number}種類から選ぶと、適切な入力項目とライブプレビューを備えたジェネレーターで、PNG、WebP、SVG、TIFF形式でダウンロードできます。",
       "intro2": "これらのページで作成したコードは、デフォルトでは静的QRコードです。内容がパターン自体にエンコードされるため、オフラインでも使え、有効期限がなく、スキャン回数の上限もありません。各ページには書き出される形式も正確に記載しているので、スキャナーが何を読み取るのか確認できます。",
       "cardTitle": "{name} QRコードジェネレーター",
       "moreTools": "その他のツール",
       "bulkTitle": "何百ものコードが必要ですか？一括ジェネレーターをご利用ください",
-      "bulkDescription": "CSVをアップロードすると、すべてのコードをPNG、WebP、SVGで1つのZIPファイルにまとめてダウンロードできます。生成はすべてブラウザー内で行われます。",
+      "bulkDescription": "CSVをアップロードすると、すべてのコードをPNG、WebP、SVG、TIFF形式で1つのZIPファイルにまとめてダウンロードできます。生成はすべてブラウザー上で行われます。",
       "printTitle": "コードを印刷しますか？サイズを確認しましょう",
       "printDescription": "スキャンする距離とコードに含まれるデータ量から、印刷時の最小サイズを算出できます。",
       "dynamicTitle": "動的QRコードジェネレーター",
@@ -1104,7 +1105,7 @@
       "metaDescription": "CSVから最大{rows, number}個のスタイル付きQRコードを作成し、PNG、WebP、SVGのいずれかの形式でZIPにまとめられます。ブラウザー上で動作し、アップロードも透かしも不要で、{limit, number}行まではサインアップもいりません。",
       "crumb": "一括生成",
       "title": "QRコード一括生成",
-      "intro1": "CSVファイルから、好みのデザインのQRコードを一度に何千個でも作成し、PNG、WebP、SVGでZIPにまとめてダウンロードできます。1行が1つのコードに対応し、ファイル名は列から付けられます。商品ラベル、イベントチケット、資産タグ、テーブル番号、郵送物などにお使いください。",
+      "intro1": "CSVファイルから、数千個のQRコードを一括で作成できます。スタイルは自由に設定でき、PNG、WebP、SVG、TIFF（印刷用のCMYK TIFFを含む）形式でZIPにまとめてダウンロードできます。1行が1つのコードに対応し、ファイル名は列から指定できます。商品ラベル、イベントチケット、資産タグ、テーブル番号、郵送物などにご利用ください。",
       "intro2": "すべてブラウザー上で動作するため、CSVがアップロードされることはなく、透かしやコードごとの料金もありません。{limit, number}行までのファイルならアカウントは不要で、それより大きい最大{rows, number}行までのファイルには無料アカウントが必要です。レイアウトに迷ったときは、サンプルCSVから始めてください。",
       "facts": {
         "rows": "1ファイルにつき最大{rows, number}行",
@@ -1193,6 +1194,8 @@
         "formatGif": "GIF(画像、256色)",
         "formatBmp": "BMP(非圧縮の画像)",
         "formatIco": "ICO(ファビコン、16〜256 px)",
+        "formatTiff": "TIFF（印刷用画像）",
+        "formatTiffCmyk": "CMYK TIFF（印刷用）",
         "formatSvg": "SVG（ベクター、印刷用）",
         "size": "{format}のサイズ",
         "quietZone": "{modules, number}モジュール分のクワイエットゾーンを追加（印刷時に推奨）",
@@ -1239,7 +1242,8 @@
         "logoQuestion": "ロゴや高い誤り訂正レベルでサイズは変わりますか?",
         "logoAnswer": "誤り訂正レベルを上げると冗長性が増えるため、同じ内容でもバージョンが上がってモジュール数が増え、印刷サイズも大きくなります。ロゴを入れてもモジュール数は変わりませんが、一部のモジュールが隠れるため、ロゴを追加するときはレベルQまたはHを使用してください。",
         "quietQuestion": "クワイエットゾーンもサイズに含まれますか？",
-        "quietAnswer": "表示されているコードサイズは端から端までの寸法です。スキャナーには四方に{quiet, number}モジュール分の余白も必要で、2つ目の数値にはこの余白が含まれています。QRdxのダウンロードデータは、クワイエットゾーンをオンにしない限り余白がないため、レイアウトではコードの周囲にその余白を確保してください。",
+        "quietAnswer": "表示されているコードのサイズは、端から端までの寸法です。スキャナーが読み取るには、四方すべてに {quiet, number} モジュール分の余白も必要で、2つ目の数値にはこの余白が含まれています。QRdxでダウンロードしたコードには、デザインで設定した余白が付いています。ジェネレーターと一括生成ツールでは、オフにしない限り {quiet, number} モジュール分が追加されます。不足している余白がある場合は、レイアウト上でコードの周囲に空けてください。",
+        "quietAnswerNewDesigns": "表示されているコードのサイズは、端から端までの寸法です。スキャナーが読み取るには、四方すべてに {quiet, number} モジュール分の余白も必要で、2つ目の数値にはこの余白が含まれています。QRdxでダウンロードしたコードには、デザインで設定した余白が付いています。エディターの新しいデザインは {start, number} モジュールから始まり、ジェネレーターと一括生成ツールでは、オフにしない限り {quiet, number} モジュール分が追加されます。不足している余白がある場合は、レイアウト上でコードの周囲に空けてください。",
         "resolutionQuestion": "印刷用には何の解像度で書き出せばよいですか？",
         "resolutionAnswer": "可能であればSVGをお使いください。ベクター形式なので、どんなサイズでも鮮明なままです。PNGの場合は、印刷の一般的な最小値である300 DPIに対応する、表示されているピクセル幅以上で書き出してください。"
       },
@@ -1738,6 +1742,9 @@
     "hosted": {
       "notFoundTitle": "ページが見つかりません",
       "notFoundMessage": "このリンクの先にはページがありません。所有者が削除したか、リンクが誤って入力された可能性があります。",
+      "notReadyTitle": "このページはまだ準備中です",
+      "notReadyMessage": "このQRコードの作成者が、開く先のページをまだ設定しています。しばらくしてからもう一度お試しください。",
+      "notReadyOwner": "このコードの作成者の方は、QRdxでページを公開してください。公開するとスキャンでそのページが開きます。",
       "passwordProtected": "パスワード保護あり",
       "madeWithQrdx": "QRdxで作成",
       "share": "共有",
@@ -2103,6 +2110,12 @@
       "gs1TooLong": "GS1-128に含められるAIとデータは最大{max}文字です。現在は{count}文字です。2つのバーコードに分けてください。",
       "databarGtinOnly": "GS1 DataBarで扱えるのはGTINのみで、(01)と14桁の数字です。日付、ロット、重量を扱う場合は、GS1 DataBar ExpandedまたはGS1-128を使用してください。",
       "databarTooLong": "GS1 DataBar Expandedで扱えるのは、AIとデータを合わせて最大{max}桁の数字です。英字が含まれる場合はそれより少なくなります。現在は{count}文字です。AIを減らすか、値を短くしてください。",
+      "maxicodeChars": "MaxiCodeはLatin-1の文字（英字、数字、記号、西ヨーロッパのアクセント付き文字）を格納できます。使用できない文字：{chars}",
+      "maxicodePostcode": "キャリアメッセージは郵便番号から始まります。米国のZIPコードの場合は最大9桁の数字、それ以外の地域では大文字の英字、数字、スペースを合わせて最大6文字です。",
+      "maxicodeCountry": "郵便番号の後には、3桁のISO国コード（米国は840）が続きます。現在の値は「{country}」です。",
+      "maxicodeService": "国コードの後には、3桁のサービスクラスが続きます。現在の値は「{service}」です。",
+      "maxicodeCarrier": "キャリアメッセージ（モード{mode}）：郵便番号 {postcode}、国 {country}、サービスクラス {service}。",
+      "maxicodeZipPadded": "5桁のZIPコードは、+4の部分を0000として {zip} のように描画され、リーダーでもその形で読み取られます。",
       "imbEnter": "20桁のトラッキングコードを入力し、ルーティングZIPコードがある場合は続けて入力してください。",
       "imbTrackingLength": "トラッキングコードは20桁で、バーコードID（2桁）、サービスタイプ（3桁）、メーラーIDとシリアル番号（15桁）で構成されます。現在は{count, plural, other {#桁}}です。",
       "imbRoutingLength": "20桁のトラッキングコードの後ろには、ルーティングZIPコードが続きます。桁数は5桁、9桁（ZIP+4）、または11桁（ZIP+4と配達ポイント）です。トラッキングコードの後ろは現在{count, plural, other {#桁}}です。",
@@ -2688,7 +2701,7 @@
     "playground": "Playgroundで試す",
     "promptsEyebrow": "試してみる",
     "promptsTitle": "まず試したいプロンプト",
-    "promptsDescription": "どのプロンプトも、QRdxのツールが実際にできることを使っています。色や形、Wi-Fi、連絡先、メール、SMS、地図のペイロード、SVG・PNG・WebP・EPSのリンクに対応しています。アシスタントで開くか、コピーしてお使いください。",
+    "promptsDescription": "どのプロンプトも、QRdxのツールが実際にできることに沿っています。色や形、Wi-Fi、連絡先、メール、SMS、地図のペイロード、そしてSVG、PNG、WebP、TIFF、EPSのリンクに対応しています。アシスタントで開くか、コピーしてお使いください。",
     "howEyebrow": "しくみ",
     "howTitle": "3ステップで、あとは頼むだけ",
     "howDescription": "QRdxのツールはアシスタントが代わりに呼び出します。APIを直接操作する必要はありません。",
@@ -2698,9 +2711,10 @@
     "setupUrl": "サーバーURL",
     "toolsEyebrow": "ツール",
     "toolsTitle": "アシスタントが呼び出せるツール",
-    "toolsDescription": "{count, number}個のツールがあります。save_template、save_barcode、generate_ai_art以外はすべて読み取り専用で、キーは不要です。画像のレンダリング、テキストの整形、公開コミュニティの閲覧ができます。パラメーターの詳細は<link>MCPサーバーのドキュメント</link>をご覧ください。",
+    "toolsDescription": "{count, number} 個のツールがあります。ほとんどは読み取り専用で、アカウントもキーも不要です。画像の生成、テキストの整形、公開コミュニティの閲覧ができます。動的QRコードの4つのツールはQRdxへのサインインを求め、save_template、save_barcode、generate_ai_art は接続に API キーが設定されると一覧に表示されます。パラメーターの詳細は<link>MCP サーバーのドキュメント</link>をご覧ください。",
     "toolNoKey": "キー不要",
     "toolNeedsKey": "APIキーが必要",
+    "toolNeedsSignIn": "サインインが必要",
     "faqTitle": "MCPサーバーのFAQ",
     "connect": {
       "copyFailed": "コピーできませんでした。テキストを選択して手動でコピーしてください。",
@@ -2804,7 +2818,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "無料のQRコードAPI：キー不要、SVG・PNG・ロゴ対応",
-    "metaDescription": "キー不要の無料QRコードAPIです。URL一つで、色・形・ロゴを反映したSVG、PNG、WebP、EPSのQRコードを取得できます。毎分{perMinute, number}リクエストまで、キャッシュは一年間保持されます。",
+    "metaDescription": "キー不要で使える無料のQRコードAPI。URL 1つで、色・形・ロゴを反映したSVG、PNG、WebP、TIFF、EPSのQRコードを取得できます。1分あたり{perMinute, number}リクエストまで、キャッシュは1年間です。",
     "crumb": "QRコードAPI",
     "title": "無料のQRコードAPI",
     "intro1": "URLを置ける場所なら、どこにでもQRコードを配置できます。api.qrdx.devにGETリクエストを1回送るだけで画像そのものが返ります。アカウント、APIキー、SDKは不要です。色、形、誤り訂正レベル、ロゴはクエリ文字列で指定します。",
@@ -2812,7 +2826,7 @@
     "facts": {
       "noKey": "キー・登録不要",
       "rateLimit": "IPごとに1分あたり{perMinute, number}リクエスト",
-      "formats": "SVG、PNG、WebP、EPS",
+      "formats": "SVG、PNG、WebP、TIFF、EPS",
       "openSource": "オープンソース"
     },
     "docs": "Image APIドキュメント",
@@ -2837,6 +2851,7 @@
       "logoNote": "ロゴを入れる場合、必要に応じて誤り訂正レベルHに切り替わるため、スキャンできる状態が保たれます。",
       "previewAlt": "{value}のQRコード",
       "epsPreview": "EPSは印刷用ファイルのため、プレビューにはSVGで同じコードを表示しています。",
+      "tiffPreview": "TIFFは多くのブラウザーで表示できない印刷用ファイルのため、プレビューにはPNGと同じコードが表示されます。",
       "empty": "エンコードするテキストまたはリンクを入力してください。",
       "tooLong": "APIの上限である{max, number}文字を超えています。",
       "loadFailed": "プレビューを読み込めませんでした。続けて何度も変更した場合は、1分ほど待ってください。APIは1分あたり{perMinute, number}件のリクエストまで受け付けます。",
@@ -2868,7 +2883,7 @@
     "params": {
       "data": "エンコードするテキストまたはURLです。最大{max, number}文字まで指定できます。",
       "size": "幅と高さをピクセルで指定します({min, number}～{max, number})。EPSの場合は幅をポイントで指定します。",
-      "format": "svg、png、webp(可逆圧縮)、eps(ベクター形式、印刷用)から選べます。",
+      "format": "svg、png、webp（ロスレス）、tiff、tiff-cmyk（印刷用のCMYK）、eps（印刷用のベクター）。",
       "colors": "コードと背景の色を、#を付けない16進数で指定します(155dfc)。bg=00000000 を指定すると背景が透明になります。",
       "shapes": "モジュール、コーナーの目、その内側のドットの形です。モジュールの形は全部で{count, number}種類あります。",
       "level": "誤り訂正レベルです。L(7%)、M(15%)、Q(25%)、H(30%)のうち、その割合までコードが汚れたり破損したりしてもスキャンできます。",
@@ -2900,7 +2915,7 @@
       "title": "Image API",
       "noKey": "キーもアカウントも不要",
       "static": "静的コード:データは画像内に含まれます",
-      "formats": "SVG、PNG、WebP、EPS",
+      "formats": "SVG、PNG、WebP、TIFF、EPS",
       "limit": "IPごとに1分あたり{perMinute, number}リクエスト"
     },
     "restCard": {
@@ -2932,7 +2947,7 @@
       "logoQuestion": "QRコードAPIでロゴを追加できますか？",
       "logoAnswer": "はい。logoIconを使うと、クイックアイコン（Wi-Fi、リンク、電話、メールなど）や、Simple Iconsにある{brands}個のブランドロゴのいずれかを中央に配置できます。キーは不要です。ロゴの配置に必要な場合はエラー訂正レベルHに切り替わるため、スキャンできる状態が保たれます。",
       "formatsQuestion": "どの画像形式で返されますか？",
-      "formatsAnswer": "デフォルトはSVGで、format=png、webp、epsを指定するとPNG、可逆圧縮のWebP、ベクターのEPSも選べます。サイズは{min, number}～{max, number}ピクセルです。",
+      "formatsAnswer": "デフォルトはSVGです。format=png、webp、tiff、epsを指定すると、PNG、ロスレスWebP、TIFF、ベクターEPSで取得でき、format=tiff-cmykを指定すると印刷用のCMYK TIFFで取得できます。サイズは{min, number}～{max, number}ピクセルです。",
       "expireQuestion": "QRコードに有効期限はありますか？",
       "expireAnswer": "いいえ。Image APIが作成するのは静的QRコードです。エンコードした内容がコード自体に含まれるため、中のリンクやテキストが有効な限り使えます。期限切れはなく、スキャン数のカウントも行われません。",
       "dynamicQuestion": "印刷後にコードのリンク先を変更できますか？",
@@ -2970,7 +2985,7 @@
       },
       "print": {
         "title": "ダウンロードして印刷",
-        "body": "PNG、WebP、SVGでダウンロードできます。先にPlaygroundでスタイルを整えることもできます。短縮リンクは長いURLよりモジュール数が少ないため、コードを小さく印刷してもスキャンできます。"
+        "body": "PNG、WebP、SVG、TIFFのいずれかの形式でダウンロードできます。先にPlaygroundでスタイルを整えることも可能です。短いリンクは長いURLよりモジュール数が少なくて済むため、コードをより小さく印刷してもスキャンできます。"
       },
       "change": {
         "title": "必要なときに変更",
@@ -3497,6 +3512,7 @@
         "pdfAndEpsDrawEvery": "PDFとEPSではすべてのドットをベクター図形として描画し、線形グラデーションと放射状グラデーションもなめらかなベクターシェーディングとして保持します。",
         "jpgCantBeTransparent": "JPGは透過に対応していません",
         "bmpCantBeTransparent": "BMPは透過に対応していません。背景は白になります",
+        "tiffCmykCantBeTransparent": "CMYK形式のTIFFは印刷用で、透明には対応していません。透明な背景は白で出力されます。",
         "gifWouldNotScan": "GIFは256色までしか扱えませんが、このデザインにはそれ以上の色が必要です。256色に減色するとスキャンできなくなります。代わりにPNGでダウンロードしてください。",
         "moreFormats": "その他の形式",
         "vector": " ・ベクター",
@@ -3523,6 +3539,8 @@
           "gif": "GIFしか使えない古いツールやメールビルダー向けです · 最大256色で、そのうち1色を透明にできます。",
           "bmp": "BMPのみ対応している古いシステムや組み込みツールに最適です · 非圧縮の24ビットで、透明な背景は白になります。",
           "ico": "ファビコンに最適です · 16、32、48、256 pxの画像を1つのファイルにまとめます。小さいサイズはアイコン用で、スキャン用ではありません。",
+          "tiff": "TIFFでの入稿を求める印刷会社に最適です · 300 dpi、透明を保持します。",
+          "tiff-cmyk": "CMYKでの入稿を求める印刷会社に最適です · 黒は黒インクのみで印刷され、透明な背景は白で出力されます。カラープロファイルは含まれません。正確なブランドカラーについては印刷会社にご確認ください。",
           "svg": "Figma、Illustrator、Webサイト向け・どんなサイズでも鮮明なままです。",
           "pdf": "ドキュメントや手軽な印刷向け・ベクターPDFが必要な場合は印刷用を選んでください。",
           "eps": "印刷会社やベクターアプリ向け・どんなサイズでも鮮明なままです。"
@@ -4842,10 +4860,7 @@
         "theFrameIsAddedAround": "フレームはコードの周囲に追加されるため、ダウンロードする画像は大きくなりますが、コード自体はスキャンできる状態のままです。",
         "label": "ラベル",
         "pickAFrameFirst": "先にフレームを選んでください",
-        "none": "なし",
-        "takesDotColor": "コードのドットの色が適用されます。",
-        "alsoHasTemplate": "このデザインには、このフレームの内側に {name} フレームも含まれています。別のフレームを選ぶと、両方が置き換えられます。",
-        "templateKeepsSize": "このフレームはコードを内側に収めるため、ダウンロードする画像は選択したサイズのままです。"
+        "none": "なし"
       },
       "frameFields": {
         "textSize": "文字サイズ"
@@ -5102,7 +5117,8 @@
       "yourQrCodeIsNow": "QRコードが動的になりました",
       "destinationUpdated": "リンク先を更新しました",
       "designSavedToTheCode": "デザインをコードに保存しました",
-      "couldntCopyTheShortLink": "短縮リンクをコピーできませんでした"
+      "couldntCopyTheShortLink": "短縮リンクをコピーできませんでした",
+      "inviteForMore": "または、<link>友達を招待</link>してください。お友達が初めて動的QRコードを作成すると、お二人とも{count, number}個ずつ増えます。"
     },
     "frameInline": {
       "frameTextMenu": {
@@ -5434,6 +5450,9 @@
       "checkingScan": "スキャンを確認中…",
       "fullScanChecker": "フルスキャンチェッカー",
       "checkAPrintedCode": "印刷したコードを確認",
+      "warning": "警告",
+      "scanScoreScoreValueWarningShow": "スキャンスコア {score, number}、{value}、警告あり。チェック項目を表示",
+      "addAMargin": "{modules, number}モジュール分の余白を追加",
       "grades": {
         "great": "良好",
         "ok": "OK",
@@ -5717,7 +5736,7 @@
       "label": "QRコードデザイナーについて",
       "summary": "カスタムQRコードデザイナー。ロゴ、カラー、フレームを使った静的QRコードを無料で作成できます。登録不要、透かしなし。",
       "types": "リンク、Wi-Fiネットワーク、連絡先カード、支払いなど、{types, number}種類のコンテンツタイプからQRコードを作成できます。{bodyPatterns, number}種類のドットパターン、{eyeShapes, number}種類のコーナーアイの形、単色またはグラデーションのカラー、中央のロゴ、{frames, number}種類のコールトゥアクションフレームでスタイルを設定できます。スキャンスコアで、印刷前にどのくらい読み取りやすいかを確認できます。",
-      "downloads": "PNG、JPG、WebP、SVG、または正確なサイズの印刷用PDFやEPSをダウンロードできます。静的QRコードは無料で、有効期限もありません。サインインすると、印刷後でも編集でき、スキャンを追跡できる動的QRコードを作成できます。",
+      "downloads": "PNG、JPG、WebP、SVG、TIFF（印刷用のCMYK TIFFを含む）のほか、印刷に適したPDFやEPSを正確なサイズでダウンロードできます。静的QRコードは無料で、有効期限もありません。サインインすると、印刷後も編集できてスキャンを追跡できる動的QRコードを作成できます。",
       "links": {
         "allTypes": "QRコードの全タイプ",
         "scanChecker": "スキャンチェッカー",
@@ -5745,7 +5764,8 @@
     "limitCard": {
       "planUsage": "プランと使用量",
       "notNow": "今はしない",
-      "labelUsed": "{label}の使用量"
+      "labelUsed": "{label}の使用量",
+      "inviteForMore": "または<link>友達を招待</link>してください。友達が最初の動的QRコードを作成すると、お二人とも{count, number}件ずつ追加されます。"
     },
     "limitDialog": {
       "limitReached": "上限に達しました"
@@ -6935,6 +6955,39 @@
           "unlimitedOnValue": "{value}では無制限",
           "labelUsed": "{label}の使用量"
         }
+      },
+      "inviteFriends": {
+        "inviteLinkField": {
+          "yourInviteLink": "あなたの招待リンク:",
+          "copy": "コピー",
+          "copied": "コピーしました",
+          "linkCopied": "リンクをコピーしました",
+          "couldntCopy": "コピーできませんでした。リンクを選択して、手動でコピーしてください。"
+        },
+        "page": {
+          "title": "友だちを招待",
+          "description": "リンクを共有しましょう。友だちがそのリンクから登録して最初の動的QRコードを作成すると、お二人とも動的QRコードを{count, number}個ずつ追加で受け取れます。",
+          "notReady": "招待機能はまだご利用いただけません。しばらくしてからもう一度ご確認ください。",
+          "yourInviteLink": "あなたの招待リンク",
+          "shareYourLink": "友だちに送ったり、好きな場所に投稿したりできます。リンクから参加した友だちが動的QRコードを作成するたびに、お二人とも{count, number}個ずつ追加で受け取れます。",
+          "link": "リンク",
+          "sameVisit": "友だちは、リンクをクリックしたのと同じ訪問中にアカウントを作成した場合にカウントされます。友だちの端末には何も保存されません。",
+          "friendsJoined": "参加した友だち",
+          "friendsRewarded": "特典を受け取った友だち",
+          "rewardedOfMax": "{max, number}人中{rewarded, number}人",
+          "extraCodes": "追加の動的QRコード",
+          "waiting": "{waiting, plural, other {#人の友だちがまだ動的QRコードを作成していません。}}登録から{days, number}日以内に作成する必要があります。",
+          "atCap": "{max, number}人の友だちに対する特典を受け取りました。これが招待リンク1つで受け取れる上限です。リンクから参加した友だちは、引き続き{count, number}個を受け取れます。",
+          "youWereInvited": "友だちの招待から参加したため、あなた自身のワークスペースにも動的QRコードが{count, number}個追加されました。",
+          "howItWorks": "仕組み",
+          "ruleSignUp": "友だちがあなたのリンクから、その訪問中に新しいQRdxアカウントを作成した場合にカウントされます。後日の訪問での登録や、すでに存在するアカウントはカウントされません。",
+          "ruleFirstCode": "友だちが登録から{days, number}日以内に最初の動的QRコードを作成すると、お二人とも、それぞれのワークスペースで動的QRコードを{count, number}個ずつ追加で受け取れます。",
+          "ruleCap": "特典を受け取れるのは最大{max, number}人の友だちまで（{total, number}個分）です。それ以降に参加した友だちも、引き続き{count, number}個を受け取れます。",
+          "ruleNotYourself": "ご自身の別アカウントは対象外です。別の表記で同じメールアドレスを使用しているアカウントや、ワークスペースを共有している人も対象外です。",
+          "ruleAllowance": "追加されたコードは、どのプランでも、チームではなくあなた自身のワークスペースの動的QRコードに加算されます。現金価値はなく、別のアカウントに移すこともできません。これらで作成したコードは引き続き使えます。",
+          "rulePrivate": "あなたのリンクから誰が登録したかを表示することはありません。また、友だちにも誰が招待したかは表示されません。",
+          "ruleEnd": "新しい招待に対する招待特典は終了する場合があります。すでに獲得したコードはそのまま残ります。詳細は<terms>利用規約</terms>と<help>ヘルプページ</help>をご覧ください。"
+        }
       }
     },
     "dashboard": {
@@ -7679,6 +7732,8 @@
           "downloadGif": "GIFをダウンロード",
           "downloadBmp": "BMPをダウンロード",
           "downloadIco": "ICOをダウンロード",
+          "downloadTiff": "TIFFをダウンロード",
+          "downloadTiffCmyk": "CMYK TIFFをダウンロード",
           "moreFormats": "その他の形式",
           "editLinkValue": "リンクを編集",
           "codeSettings": "コード設定",
@@ -7780,6 +7835,8 @@
           "gifImagesZip": "GIF画像（ZIP）",
           "bmpImagesZip": "BMP画像（ZIP）",
           "icoImagesZip": "ICOファビコン(ZIP)",
+          "tiffImagesZip": "TIFF画像（ZIP）",
+          "tiffCmykImagesZip": "CMYK TIFF画像（ZIP）",
           "svgImagesZip": "SVG画像（ZIP）",
           "more": "その他",
           "moveToTrash": "ゴミ箱に移動",
@@ -9019,7 +9076,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "新着情報",
         "backToLabel": "{label}に戻る",
         "expandSidebar": "サイドバーを展開",
         "collapseSidebar": "サイドバーを折りたたむ",
@@ -9270,8 +9326,11 @@
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "このリンクは使用できません",
+          "unknownAppTitle": "このアプリとQRdxの接続は期限切れです",
+          "unknownAppBody": "QRdxは、こちらに誘導したアプリを認識できなくなりました。Claude、Cursor、VS CodeなどQRdxに接続したAIアプリの場合は、アプリからQRdxを削除して追加し直し、サインインしてください。それ以外の場合は、アプリの開発元にお問い合わせください。",
           "theAppThatSentYou": "こちらに誘導したアプリが無効なリクエストを送信しました：<span>{description}</span>。アプリに戻ってもう一度お試しいただくか、開発元にお問い合わせください。",
           "appnameWillBeAbleTo": "{appName}に許可される操作",
+          "mcpOnlyNote": "{appName}はQRdx MCPサーバーのコードツールを通してのみアカウントを利用できます。コードの削除、Webhookの管理、AIアートの利用はできません。",
           "nameWantsToAccessYour": "{name}がQRdxアカウントへのアクセスを求めています",
           "builtByName": "提供元：<strong>{name}</strong>",
           "unverifiedApp": "未確認のアプリです。",
@@ -9440,9 +9499,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "このメールは <strong>{email}</strong> 宛てにお送りしました。お心当たりがない場合は、無視していただいて構いません。アカウントの安全性が心配な場合は、<link>こちらからご連絡ください</link>。",
       "sentFor": "{name}のために <link>{host}</link> から送信",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "配信停止"
+      "unsubscribe": "配信停止",
+      "settings": "受信するメールの設定を変更する",
+      "copyLink": "または、次のリンクをコピーしてブラウザーに貼り付けてください。"
     },
     "codes": {
       "neverAsk": "QRdxが電話、チャット、メールでこのコードをお尋ねすることはありません。",
@@ -9664,8 +9726,7 @@
         "viewer": "閲覧者は、ワークスペースのコード、ページ、分析を閲覧できますが、変更はできません。"
       },
       "accept": "招待を承諾する",
-      "expires": "承諾するには、このメールアドレスでサインインしてください。招待の有効期限は{date}です。心当たりがない場合は、このメールを無視してください。",
-      "pasteLink": "または、次のリンクをブラウザに貼り付けてください：{url}",
+      "expires": "承諾するには、このメールアドレスでサインインしてください。招待の有効期限は{date}です。",
       "someone": "チームメンバー"
     },
     "portalInvite": {
@@ -9674,8 +9735,7 @@
       "heading": "QRコードのレポート",
       "body": "{hasFolders, select, yes {{inviter}さんが、{folders}にある{portal}のQRコードの閲覧に招待しました。各QRコードのスキャン回数、スキャンされた場所とデバイス、開かれるページを確認できます。閲覧専用です。} other {{inviter}さんが、{portal}のQRコードの閲覧に招待しました。各QRコードのスキャン回数、スキャンされた場所とデバイス、開かれるページを確認できます。閲覧専用です。}}",
       "open": "レポートを開く",
-      "signIn": "このメールアドレスでサインインしてください。ワンタイムコードをお送りします。心当たりがない場合は、無視してください。",
-      "pasteLink": "または、次のリンクをブラウザに貼り付けてください：{url}",
+      "signIn": "このメールアドレスでサインインしてください。ワンタイムコードをお送りします。",
       "yourAgency": "担当の代理店"
     },
     "limitNotice": {
@@ -9706,7 +9766,9 @@
       "makeRoom": "{limit, select, dynamicCodes {コードを1つアーカイブして空きを作ってください。} landingPages {ページを1つ削除して空きを作ってください。} storage {不要なファイルを削除して空きを作ってください。} savedThemes {テーマを1つ削除して空きを作ってください。} other {}}",
       "resets": "{date}にリセットされます。",
       "keeps": "{limit, select, dynamicCodes {既存のコードは引き続き動作します。} landingPages {既存のページは公開されたままです。} formResponses {ページは公開されたままです。リセット後、フォームは再び回答を受け付けます。} storage {アップロード済みのファイルは引き続き利用できます。} other {}}",
-      "upgradeButton": "{plan}にアップグレード"
+      "upgradeButton": "{plan}にアップグレード",
+      "includesBonus": "{plan}には{amount}と、招待で追加された{bonus, number}が含まれています。",
+      "invite": "または<link>友だちを招待</link>してください。友だちが初めての動的QRコードを作成すると、お二人にそれぞれ{count, number}個が追加されます。"
     },
     "weeklyDigest": {
       "subject": "今週のQRdx：スキャン{scans, plural, other {#回}}",
@@ -9722,11 +9784,14 @@
       "sameAsLastWeek": "先週と同じ",
       "change": "先週比 {change}",
       "topCodes": "上位のコード",
+      "code": "コード",
       "countries": "スキャンされた場所",
+      "country": "国",
       "newCodesLine": "今週は新しいコードが{count, plural, other {#件}}ありました。",
       "open": "ダッシュボードを開く"
     },
     "personal": {
+      "meantFor": "このメールは <strong>{email}</strong> 宛てにお送りしています。",
       "reply": "このメールに返信すると、{name}に届きます。",
       "stop": "QRdxチームからのお知らせを停止する"
     },
@@ -9741,11 +9806,24 @@
       "makeCode": "<link>動的QRコードを作成します。</link>短縮リンクが開き、リンクは変わらないので、すぐに印刷できます。",
       "seeScans": "<link>スキャンの状況を確認します。</link>いつ、どこで、どのデバイスからスキャンされたかがわかります。",
       "changeLink": "印刷後でも、リンク先はいつでも変更できます。再印刷は不要です。",
+      "button": "最初のコードを作成",
       "free": "静的QRコードは無料のままです。プランを変更したりお支払いをやめたりしても、作成したコードはそのまま使えます。フリープランには動的QRコードも{count}個含まれます。",
       "pro": "さらに必要な場合は、Proをご利用いただけます。月額 {monthly}、または年額 {yearly} で、動的QRコードが無制限になり、カスタムドメインを {domains} 件まで追加できます。スキャン数が節目に達するたびのメールアラートに加え、ご希望であれば週次サマリーもお届けします。",
       "taxes": "お支払い時に、現地の税金が加算される場合があります。",
       "reply": "困ったことや操作がわからないことがあれば、このメールにご返信ください。返信は一通ずつ担当者が読んでいます。",
       "reason": "QRdxのアカウントを作成されたため、このメールをお送りしています。"
+    },
+    "inviteReward": {
+      "subject": "招待した友だちが初めてのコードを作成しました：お二人に動的QRコードが{count, number}個ずつ追加されました",
+      "preview": "お二人に動的QRコードが{count, number}個ずつ追加されました",
+      "heading": "お二人に動的QRコードが{count, number}個ずつ追加されました",
+      "body": "あなたの招待リンクから登録した友だちが、初めての動的QRコードを作成しました。あなたのワークスペースに動的QRコードが{count, number}個追加されました。友だちのワークスペースにも同じ数が追加されています。",
+      "progress": "これで{rewarded, plural, other {#人}}目です。招待リンクで特典を受け取れるのは最大{max, number}人です。",
+      "last": "これで、招待リンクで特典を受け取れる{max, number}人に達しました。リンクから参加する友だちには、引き続き{count, number}個が追加されます。",
+      "inviteMore": "友だちをさらに招待",
+      "seeInvites": "招待状況を見る",
+      "keeps": "追加されたコードはどのプランでも使え、現金価値はありません。それらで作成したコードは引き続き使えます。",
+      "reason": "このメールは、友だちがあなたのQRdx招待リンクから登録し、初めての動的QRコードを作成したためお送りしています。"
     }
   },
   "codeActions": {
@@ -10037,7 +10115,8 @@
       "bulkOverLimit": "{limit, number}行までのファイルはアカウント不要です。フリーアカウントなら1ファイルあたり最大{max, number}件まで作成でき、ファイルは読み込まれたままです。",
       "keepDesigns": "デザインをアカウントに保存して、すべてのデバイスで使えます。",
       "afterDownload": "無料です。プランがどうなっても、お使いのコードは引き続き使えます。",
-      "upgrade": "プランと請求はアカウントに紐づいています。今の続きからそのまま再開できます。"
+      "upgrade": "プランと請求はアカウントに紐づいています。今の続きからそのまま再開できます。",
+      "invite": "お友達の招待でお越しいただきました。今すぐ登録して最初の動的QRコードを作成すると、動的コードを{count, number}個追加で受け取れます。"
     },
     "nudge": {
       "dismiss": "今後は表示しない"
@@ -10185,6 +10264,11 @@
         "failed": "シングルサインオンを完了できませんでした。もう一度お試しいただくか、別の方法でサインインしてください。",
         "rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。"
       }
+    },
+    "inviteNote": {
+      "text": "QRdxに招待されました。今回のアクセス中に登録し、{days, number}日以内に動的QRコードを作成すると、動的コードを{count, number}個追加で受け取れます。",
+      "signUp": "登録する",
+      "dismiss": "閉じる"
     }
   },
   "settingsActions": {

@@ -1699,7 +1699,7 @@
   },
   "f6e78b8a59e2": {
     "source": "Most URLs contain lowercase letters, so they are stored in byte mode: one byte per character, up to 2,953 bytes at error-correction level L.",
-    "text": "La mayoría de las URL contienen letras minúsculas, por lo que se almacenan en modo byte: un byte por carácter, hasta 2,953 bytes con el nivel de corrección de errores L.",
+    "text": "La mayoría de las URL contienen letras minúsculas, por lo que se almacenan en modo byte: un byte por carácter, hasta 2953 bytes con el nivel de corrección de errores L.",
     "status": "machine",
     "context": "qrTypes.types.url.payload.notes.3"
   },
@@ -1735,7 +1735,7 @@
   },
   "a9a8054d0656": {
     "source": "Up to 2,953 bytes at the lowest error-correction level, but long URLs create dense codes that must be printed larger. Under about 100 characters is comfortable for print.",
-    "text": "Hasta 2,953 bytes con el nivel de corrección de errores más bajo, pero las URL largas generan códigos densos que hay que imprimir más grandes. Menos de unos 100 caracteres es una longitud cómoda para imprimir.",
+    "text": "Hasta 2953 bytes con el nivel de corrección de errores más bajo, pero las URL largas generan códigos densos que hay que imprimir más grandes. Menos de unos 100 caracteres es una longitud cómoda para imprimir.",
     "status": "machine",
     "context": "qrTypes.types.url.faqs.2.answer"
   },
@@ -1813,7 +1813,7 @@
   },
   "423d75adc08a": {
     "source": "One code holds up to 2,953 bytes at error-correction level L and 1,663 at level Q, the QRdx default.",
-    "text": "Un código admite hasta 2,953 bytes con nivel de corrección de errores L y 1,663 con nivel Q, el valor predeterminado de QRdx.",
+    "text": "Un código admite hasta 2953 bytes con nivel de corrección de errores L y 1663 con nivel Q, el valor predeterminado de QRdx.",
     "status": "machine",
     "context": "qrTypes.types.text.payload.notes.2"
   },
@@ -1837,7 +1837,7 @@
   },
   "625e84dfd4af": {
     "source": "In theory 2,953 bytes (about 2,900 English characters) at error-correction level L. In practice, keep it under 300 characters so the code stays easy to scan at normal print sizes.",
-    "text": "En teoría, 2,953 bytes (unos 2,900 caracteres en inglés) con nivel de corrección de errores L. En la práctica, mantenlo por debajo de 300 caracteres para que el código siga siendo fácil de escanear en tamaños de impresión normales.",
+    "text": "En teoría, 2953 bytes (unos 2900 caracteres en inglés) con nivel de corrección de errores L. En la práctica, mantenlo por debajo de 300 caracteres para que el código siga siendo fácil de escanear en tamaños de impresión normales.",
     "status": "machine",
     "context": "qrTypes.types.text.faqs.1.answer"
   },
@@ -9979,7 +9979,7 @@
   },
   "a058beb73635": {
     "source": "Amounts are written with two decimals, from 0.01 to 999,999,999.99. Leave the amount empty and the payer enters it.",
-    "text": "Los importes se escriben con dos decimales, de 0.01 a 999,999,999.99. Si dejas el importe vacío, lo introduce quien paga.",
+    "text": "Los importes se escriben con dos decimales, de 0,01 a 999.999.999,99. Si dejas el importe vacío, lo introduce quien paga.",
     "status": "machine",
     "context": "qrTypes.types.swiss-qr-bill.payload.notes.2"
   },
@@ -10201,7 +10201,7 @@
   },
   "dacaaddc6a13": {
     "source": "Optionally add an amount from 1 to 150,000 kronor and a message of up to 50 characters.",
-    "text": "Si quieres, añade un importe de 1 a 150,000 coronas y un mensaje de hasta 50 caracteres.",
+    "text": "Si quieres, añade un importe de 1 a 150.000 coronas y un mensaje de hasta 50 caracteres.",
     "status": "machine",
     "context": "qrTypes.types.swish.steps.1"
   },
@@ -10231,7 +10231,7 @@
   },
   "24225545374a": {
     "source": "Amounts are in kronor, 1 to 150,000 with up to 2 decimals, the range Swish's own generator takes. Messages are up to 50 characters and percent-encoded.",
-    "text": "Los importes van en coronas, de 1 a 150,000 con hasta 2 decimales, el intervalo que admite el propio generador de Swish. Los mensajes tienen hasta 50 caracteres y se codifican con porcentajes.",
+    "text": "Los importes van en coronas, de 1 a 150.000 con hasta 2 decimales, el intervalo que admite el propio generador de Swish. Los mensajes tienen hasta 50 caracteres y se codifican con porcentajes.",
     "status": "machine",
     "context": "qrTypes.types.swish.payload.notes.2"
   },
@@ -12271,7 +12271,7 @@
   },
   "7b75fe2b1ea7": {
     "source": "RSVPs count towards the workspace's form responses: 50 a month on Free and 1,000 on Pro. Replies you already have are never deleted or hidden.",
-    "text": "Las confirmaciones cuentan para las respuestas de formularios del espacio de trabajo: 50 al mes en Gratis y 1,000 en Pro. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
+    "text": "Las confirmaciones cuentan para las respuestas de formularios del espacio de trabajo: 50 al mes en Gratis y 1000 en Pro. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
     "status": "machine",
     "context": "hostedTypes.invitation.editing.1"
   },
@@ -12349,7 +12349,7 @@
   },
   "1366d371549e": {
     "source": "Free includes 50 form responses a month across the workspace, Pro 1,000 and Business 10,000. When the limit is reached, the form asks guests to try again later and keeps what they typed.",
-    "text": "Gratis incluye 50 respuestas de formulario al mes en todo el espacio de trabajo, Pro 1,000 y Business 10,000. Al alcanzar el límite, el formulario pide a los invitados que lo intenten más tarde y conserva lo que han escrito.",
+    "text": "Gratis incluye 50 respuestas de formulario al mes en todo el espacio de trabajo, Pro 1000 y Business 10.000. Al alcanzar el límite, el formulario pide a los invitados que lo intenten más tarde y conserva lo que han escrito.",
     "status": "machine",
     "context": "hostedTypes.invitation.faqs.2.answer"
   },
@@ -12499,7 +12499,7 @@
   },
   "b313ffcebf30": {
     "source": "Responses count per workspace each calendar month: 50 on Free, 1,000 on Pro and 10,000 on Business. Responses you already have are never deleted or hidden.",
-    "text": "Las respuestas se cuentan por espacio de trabajo cada mes natural: 50 en Gratis, 1,000 en Pro y 10,000 en Business. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
+    "text": "Las respuestas se cuentan por espacio de trabajo cada mes natural: 50 en Gratis, 1000 en Pro y 10.000 en Business. Las respuestas que ya tienes nunca se eliminan ni se ocultan.",
     "status": "machine",
     "context": "hostedTypes.contact-form.editing.1"
   },
@@ -12583,7 +12583,7 @@
   },
   "3987ec8d1d8b": {
     "source": "Free includes 50 responses a month across the workspace, Pro 1,000 and Business 10,000. The count starts over on the 1st of each month.",
-    "text": "Gratis incluye 50 respuestas al mes en todo el espacio de trabajo, Pro 1,000 y Business 10,000. El recuento se reinicia el día 1 de cada mes.",
+    "text": "Gratis incluye 50 respuestas al mes en todo el espacio de trabajo, Pro 1000 y Business 10.000. El recuento se reinicia el día 1 de cada mes.",
     "status": "machine",
     "context": "hostedTypes.contact-form.faqs.2.answer"
   },
@@ -23887,7 +23887,7 @@
   },
   "fa94d0562562": {
     "source": "Tell customers what the code does ('Scan to pay ₹4,500 by UPI') so they trust it.",
-    "text": "Explica a los clientes qué hace el código ('Escanea para pagar ₹4,500 con UPI') para que confíen en él.",
+    "text": "Explica a los clientes qué hace el código ('Escanea para pagar ₹4500 con UPI') para que confíen en él.",
     "status": "machine",
     "context": "placements.0.documents.items.invoices.tips.2"
   },
@@ -28981,7 +28981,7 @@
   },
   "5379979c6f98": {
     "source": "Any text up to 1,000 characters.",
-    "text": "Cualquier texto de hasta 1,000 caracteres.",
+    "text": "Cualquier texto de hasta 1000 caracteres.",
     "status": "machine",
     "context": "barcodes.formats.datamatrix.inputHint"
   },
@@ -29215,7 +29215,7 @@
   },
   "f82b55c71510": {
     "source": "Yes, with a free QRdx account. Signed in, press Save to dashboard and the barcode goes to Barcodes in your workspace, where you can find it again, edit it, put it in a folder and download it in any format. Every plan saves barcodes: 1,000 on Free.",
-    "text": "Sí, con una cuenta gratuita de QRdx. Con la sesión iniciada, pulsa Guardar en el panel y el código de barras irá a Códigos de barras en tu espacio de trabajo, donde podrás encontrarlo de nuevo, editarlo, ponerlo en una carpeta y descargarlo en cualquier formato. Todos los planes guardan códigos de barras: 1,000 en Gratis.",
+    "text": "Sí, con una cuenta gratuita de QRdx. Con la sesión iniciada, pulsa Guardar en el panel y el código de barras irá a Códigos de barras en tu espacio de trabajo, donde podrás encontrarlo de nuevo, editarlo, ponerlo en una carpeta y descargarlo en cualquier formato. Todos los planes guardan códigos de barras: 1000 en Gratis.",
     "status": "machine",
     "context": "barcodes.faqs.5.answer"
   },
@@ -29863,13 +29863,13 @@
   },
   "33a7d883dd0b": {
     "source": "Make a Data Matrix code for part marking, small labels and serial numbers. Any text up to 1,000 characters, scan-checked in your browser. SVG, PDF and PNG.",
-    "text": "Crea un código Data Matrix para marcado de piezas, etiquetas pequeñas y números de serie. Cualquier texto de hasta 1,000 caracteres, con escaneo comprobado en tu navegador. SVG, PDF y PNG.",
+    "text": "Crea un código Data Matrix para marcado de piezas, etiquetas pequeñas y números de serie. Cualquier texto de hasta 1000 caracteres, con escaneo comprobado en tu navegador. SVG, PDF y PNG.",
     "status": "machine",
     "context": "barcodeFormats.pages.data-matrix.metaDescription"
   },
   "0bd28fd6ac6c": {
     "source": "Data Matrix is a small square 2D code that holds a lot of data in very little space. Type any text, up to 1,000 characters here, check that it scans and download it for parts, electronics, small labels and lab samples.",
-    "text": "Data Matrix es un código 2D cuadrado y pequeño que guarda muchos datos en muy poco espacio. Escribe cualquier texto, de hasta 1,000 caracteres, comprueba que se escanea y descárgalo para piezas, electrónica, etiquetas pequeñas y muestras de laboratorio.",
+    "text": "Data Matrix es un código 2D cuadrado y pequeño que guarda muchos datos en muy poco espacio. Escribe cualquier texto, de hasta 1000 caracteres, comprueba que se escanea y descárgalo para piezas, electrónica, etiquetas pequeñas y muestras de laboratorio.",
     "status": "machine",
     "context": "barcodeFormats.pages.data-matrix.intro"
   },
@@ -29905,13 +29905,13 @@
   },
   "084247522b6a": {
     "source": "Any text, up to 1,000 characters here. The code grows in steps as you add text, from 10 × 10 cells upwards; this generator draws the square form.",
-    "text": "Cualquier texto, de hasta 1,000 caracteres aquí. El código crece por pasos al añadir texto, desde 10 × 10 celdas; este generador dibuja la forma cuadrada.",
+    "text": "Cualquier texto, de hasta 1000 caracteres aquí. El código crece por pasos al añadir texto, desde 10 × 10 celdas; este generador dibuja la forma cuadrada.",
     "status": "machine",
     "context": "barcodeFormats.pages.data-matrix.rules.0"
   },
   "df3a5ab10444": {
     "source": "The largest square Data Matrix (144 × 144 cells) holds 3,116 digits, 2,335 letters and digits, or 1,556 bytes. Digits pack most tightly.",
-    "text": "El Data Matrix cuadrado más grande (144 × 144 celdas) guarda 3,116 dígitos, 2,335 letras y dígitos, o 1,556 bytes. Los dígitos son los que se compactan más.",
+    "text": "El Data Matrix cuadrado más grande (144 × 144 celdas) guarda 3116 dígitos, 2335 letras y dígitos, o 1556 bytes. Los dígitos son los que se compactan más.",
     "status": "machine",
     "context": "barcodeFormats.pages.data-matrix.rules.1"
   },
@@ -30433,7 +30433,7 @@
   },
   "c59ac66e5fad": {
     "source": "Make a PDF417 barcode, the stacked 2D code on IDs and boarding passes. Any text up to 1,000 characters, scan-checked in your browser. SVG, PDF and PNG.",
-    "text": "Crea un código de barras PDF417, el código 2D apilado de documentos de identidad y tarjetas de embarque. Cualquier texto de hasta 1,000 caracteres, con escaneo verificado en tu navegador. SVG, PDF y PNG.",
+    "text": "Crea un código de barras PDF417, el código 2D apilado de documentos de identidad y tarjetas de embarque. Cualquier texto de hasta 1000 caracteres, con escaneo verificado en tu navegador. SVG, PDF y PNG.",
     "status": "machine",
     "context": "barcodeFormats.pages.pdf417.metaDescription"
   },
@@ -30469,7 +30469,7 @@
   },
   "356c0ea4f70f": {
     "source": "Any text, up to 1,000 characters here. A PDF417 has 3 to 90 rows of 1 to 30 data columns and can hold up to 1,850 letters and digits, 2,710 digits or 1,108 bytes.",
-    "text": "Cualquier texto, hasta 1,000 caracteres aquí. Un PDF417 tiene de 3 a 90 filas de 1 a 30 columnas de datos y puede contener hasta 1,850 letras y dígitos, 2,710 dígitos o 1,108 bytes.",
+    "text": "Cualquier texto, hasta 1000 caracteres aquí. Un PDF417 tiene de 3 a 90 filas de 1 a 30 columnas de datos y puede contener hasta 1850 letras y dígitos, 2710 dígitos o 1108 bytes.",
     "status": "machine",
     "context": "barcodeFormats.pages.pdf417.rules.0"
   },
@@ -30523,7 +30523,7 @@
   },
   "4da66deb316c": {
     "source": "Make an Aztec code, the 2D code on rail tickets and mobile boarding passes. No quiet zone needed. Any text up to 1,000 characters. SVG, PDF and PNG. Free.",
-    "text": "Crea un código Aztec, el código 2D de los billetes de tren y las tarjetas de embarque en el móvil. No necesita zona de silencio. Cualquier texto de hasta 1,000 caracteres. SVG, PDF y PNG. Gratis.",
+    "text": "Crea un código Aztec, el código 2D de los billetes de tren y las tarjetas de embarque en el móvil. No necesita zona de silencio. Cualquier texto de hasta 1000 caracteres. SVG, PDF y PNG. Gratis.",
     "status": "machine",
     "context": "barcodeFormats.pages.aztec.metaDescription"
   },
@@ -30559,7 +30559,7 @@
   },
   "de7e5ed9bda0": {
     "source": "Any text, up to 1,000 characters here. Aztec codes range from 15 × 15 cells (compact) to 151 × 151, holding up to 3,832 digits, 3,067 letters or 1,914 bytes.",
-    "text": "Cualquier texto, hasta 1,000 caracteres aquí. Los códigos Aztec van desde 15 × 15 celdas (compacto) hasta 151 × 151, con capacidad de hasta 3,832 dígitos, 3,067 letras o 1,914 bytes.",
+    "text": "Cualquier texto, hasta 1000 caracteres aquí. Los códigos Aztec van desde 15 × 15 celdas (compacto) hasta 151 × 151, con capacidad de hasta 3832 dígitos, 3067 letras o 1914 bytes.",
     "status": "machine",
     "context": "barcodeFormats.pages.aztec.rules.0"
   },
@@ -32341,7 +32341,7 @@
   },
   "2a1f4782a074": {
     "source": "A code's first scan, with when, where and on which device, then 10, 100, 1,000 scans and beyond.",
-    "text": "El primer escaneo de un código, con cuándo, dónde y en qué dispositivo, y después 10, 100, 1,000 escaneos y más.",
+    "text": "El primer escaneo de un código, con cuándo, dónde y en qué dispositivo, y después 10, 100, 1000 escaneos y más.",
     "status": "machine",
     "context": "integrations.entries.slack.capabilities.0.description"
   },
@@ -32797,7 +32797,7 @@
   },
   "da0656aa0c54": {
     "source": "Webhooks send events from a workspace to a URL you control as they happen: update a CRM when someone fills in a form, post to an internal tool when a code passes 1,000 scans, or keep your own copy of scan data.",
-    "text": "Los webhooks envían eventos de un espacio de trabajo a una URL que tú controlas en el momento en que ocurren: actualiza un CRM cuando alguien rellena un formulario, publica en una herramienta interna cuando un código supera los 1,000 escaneos o conserva tu propia copia de los datos de escaneo.",
+    "text": "Los webhooks envían eventos de un espacio de trabajo a una URL que tú controlas en el momento en que ocurren: actualiza un CRM cuando alguien rellena un formulario, publica en una herramienta interna cuando un código supera los 1000 escaneos o conserva tu propia copia de los datos de escaneo.",
     "status": "machine",
     "context": "integrations.entries.webhooks.description.0"
   },
@@ -32923,7 +32923,7 @@
   },
   "2736f9cd6520": {
     "source": "Use a Webhooks by Zapier “Catch Hook” trigger as a QRdx webhook endpoint and every event you pick starts your Zap: add form responses to a CRM, email your team at 1,000 scans, or log each scan.",
-    "text": "Usa un disparador “Catch Hook” de Webhooks by Zapier como endpoint de webhook de QRdx y cada evento que elijas inicia tu Zap: añade respuestas de formularios a un CRM, envía un correo a tu equipo al llegar a 1,000 escaneos o registra cada escaneo.",
+    "text": "Usa un disparador “Catch Hook” de Webhooks by Zapier como endpoint de webhook de QRdx y cada evento que elijas inicia tu Zap: añade respuestas de formularios a un CRM, envía un correo a tu equipo al llegar a 1000 escaneos o registra cada escaneo.",
     "status": "machine",
     "context": "integrations.entries.zapier.description.0"
   },
@@ -36157,7 +36157,7 @@
   },
   "8b7f435b254e": {
     "source": "1,000 requests a day on Free, 10,000 on Pro and 100,000 on Business.",
-    "text": "1,000 solicitudes al día en Gratis, 10,000 en Pro y 100,000 en Business.",
+    "text": "1000 solicitudes al día en Gratis, 10.000 en Pro y 100.000 en Business.",
     "status": "machine",
     "context": "integrations.entries.rest-api.capabilities.3.description"
   },
@@ -36701,6 +36701,12 @@
     "status": "machine",
     "context": "mcp.tools.5.description"
   },
+  "6fc17acdab37": {
+    "source": "Saves a design as a theme in your workspace, under the plan's saved-theme limit. Listed once the connection has a QRdx API key.",
+    "text": "Guarda un diseño como tema en tu espacio de trabajo, dentro del límite de temas guardados del plan. Aparece en la lista cuando la conexión tiene una clave de API de QRdx.",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
   "5059cb851dc2": {
     "source": "Generate a barcode",
     "text": "Genera un código de barras",
@@ -36710,6 +36716,12 @@
   "26e9ed7d6f36": {
     "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
     "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 o Aztec. Comprueba el valor (dígitos de control, longitudes, caracteres) y devuelve un PNG junto con URLs públicas de imagen en SVG, PNG, PDF y otros formatos.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "fdfe7dc89241": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, MaxiCode o DotCode. Comprueba el valor (dígitos de control, longitudes, caracteres) y devuelve un PNG además de URL públicas de SVG, PNG, PDF y otros formatos de imagen.",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
@@ -36725,6 +36737,12 @@
     "status": "machine",
     "context": "mcp.tools.7.description"
   },
+  "09892b7b00fa": {
+    "source": "Keeps a barcode in your workspace's Barcodes to edit and download later. Listed once the connection has a QRdx API key.",
+    "text": "Conserva un código de barras en los Códigos de barras de tu espacio de trabajo para editarlo y descargarlo más tarde. Aparece en la lista cuando la conexión tiene una clave de API de QRdx.",
+    "status": "machine",
+    "context": "mcp.tools.7.description"
+  },
   "4c95ba85d6f1": {
     "source": "Generate AI art",
     "text": "Generar arte con IA",
@@ -36734,6 +36752,12 @@
   "9254cd62817d": {
     "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
     "text": "Convierte un código QR en una obra de arte con IA a partir de tu descripción, una escena o tu foto, y comprueba que se pueda escanear. Cada imagen usa una de las imágenes de arte con IA mensuales de tu espacio de trabajo y tarda hasta un minuto. Requiere una clave de API de QRdx en la conexión.",
+    "status": "machine",
+    "context": "mcp.tools.8.description"
+  },
+  "fe114ac9b6bc": {
+    "source": "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Listed once the connection has a QRdx API key.",
+    "text": "Pinta un código QR dentro de una obra de arte con IA a partir de tu descripción, una escena o tu foto, y comprueba que se pueda escanear. Cada imagen usa una de las imágenes de arte con IA mensuales de tu espacio de trabajo y tarda hasta un minuto. Aparece en la lista cuando la conexión tiene una clave de API de QRdx.",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36767,9 +36791,9 @@
     "status": "machine",
     "context": "mcp.tools.8.title"
   },
-  "be0229246e65": {
-    "source": "Body patterns, corner eye and eye dot shapes, frame templates, error correction levels, defaults and limits.",
-    "text": "Patrones del cuerpo, formas de los ojos de las esquinas y de los puntos del ojo, plantillas de marco, niveles de corrección de errores, valores predeterminados y límites.",
+  "acfb22e8eaac": {
+    "source": "Body patterns, corner eye and eye dot shapes, built-in frames, error correction levels, defaults and limits.",
+    "text": "Patrones del cuerpo, formas de los ojos de las esquinas y de los puntos del ojo, marcos integrados, niveles de corrección de errores, valores predeterminados y límites.",
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
@@ -36878,6 +36902,12 @@
   "95b27c7bcd0a": {
     "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server.",
     "text": "No, para diseñar y generar códigos y para explorar la comunidad: el servidor MCP de QRdx es público y gratuito, y no guarda ningún estado de sesión. Guardar un diseño en tus temas (save_template), guardar un código de barras (save_barcode), crear arte con IA (generate_ai_art) y usar un logo que hayas subido requieren una clave de API de QRdx, enviada como Authorization: Bearer qrdx_… en los ajustes del servidor de tu aplicación.",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "57125b32502d": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "No, para diseñar y generar códigos y para explorar la comunidad: el servidor MCP de QRdx es público y gratuito, y no guarda ningún estado de sesión. Guardar un diseño en tus temas (save_template), guardar un código de barras (save_barcode), crear arte con IA (generate_ai_art) y usar un logotipo que hayas subido requieren una clave de API de QRdx, enviada como Authorization: Bearer qrdx_… en los ajustes de tu app para el servidor. Tu app verá esas tres herramientas cuando la clave esté configurada.",
     "status": "machine",
     "context": "mcp.faqs.2.answer"
   },
@@ -38830,5 +38860,473 @@
     "text": "Las QR-bill suizas, sí: QRdx genera el código QR de la parte de pago de una QR-bill, el Swiss Payments Code con corrección de errores M y la cruz suiza, que el pagador escanea en su app bancaria. El resto de la factura, el recibo y el diseño impreso de la parte de pago, lo genera tu software de facturación. Los códigos QR de facturas electrónicas que exigen las autoridades fiscales, no: esos los generan el software de contabilidad o de facturación electrónica.",
     "status": "machine",
     "context": "placements.0.documents.items.invoices.faqs.1.answer"
+  },
+  "157d9b89ae53": {
+    "source": "Rectangular Micro QR for narrow spaces: cables, tubes, boards",
+    "text": "Micro QR rectangular para espacios estrechos: cables, tubos, placas",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.summary"
+  },
+  "d9e29bdf3552": {
+    "source": "Any text, up to 361 digits, 219 capital letters or 150 characters of other text; less with accents or other scripts.",
+    "text": "Cualquier texto, hasta 361 dígitos, 219 letras mayúsculas o 150 caracteres de otro texto; menos con acentos u otros alfabetos.",
+    "status": "machine",
+    "context": "barcodes.formats.rmqr.inputHint"
+  },
+  "f5a92bd24be6": {
+    "source": "UPS's fixed-size 2D code for sorting parcels",
+    "text": "El código 2D de tamaño fijo de UPS para clasificar paquetes",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.summary"
+  },
+  "0c318d8d5087": {
+    "source": "A UPS carrier message, postcode<GS>country<GS>service class<GS>then the rest, or any text. Type <GS> between fields. Latin-1 characters only: up to 93 capital letters or 138 digits.",
+    "text": "Un mensaje de transportista UPS: código postal<GS>país<GS>clase de servicio<GS>y el resto, o cualquier texto. Escribe <GS> entre los campos. Solo caracteres Latin-1: hasta 93 letras mayúsculas o 138 dígitos.",
+    "status": "machine",
+    "context": "barcodes.formats.maxicode.inputHint"
+  },
+  "f6047eef20ba": {
+    "source": "A QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code: cables, test tubes and the edges of parts. It's a 2022 ISO standard, so check that your scanners read it.",
+    "text": "Un código QR estirado en forma de tira, de solo 7 módulos de alto, para etiquetas demasiado estrechas para un código cuadrado: cables, tubos de ensayo y bordes de piezas. Es un estándar ISO de 2022, así que comprueba que tus lectores lo escanean.",
+    "status": "machine",
+    "context": "barcodes.uses.rmqr"
+  },
+  "9c56d5f9dbb4": {
+    "source": "The fixed-size 2D code with a bullseye that UPS prints on parcel labels. A carrier message puts the destination postcode, country and service class where sorting machines look for them; it can also hold plain text.",
+    "text": "El código 2D de tamaño fijo con una diana que UPS imprime en las etiquetas de los paquetes. Un mensaje de transportista coloca el código postal de destino, el país y la clase de servicio donde las máquinas de clasificación los buscan; también puede contener texto sin formato.",
+    "status": "machine",
+    "context": "barcodes.uses.maxicode"
+  },
+  "89f09d7bcb13": {
+    "source": "Free rMQR Code Generator (Rectangular Micro QR)",
+    "text": "Generador gratuito de códigos rMQR (Micro QR rectangular)",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.title"
+  },
+  "a705932e946e": {
+    "source": "Make an rMQR, the rectangular Micro QR code for narrow spaces like cables and test tubes. Up to 361 digits or 150 characters. SVG, PDF and PNG. Free.",
+    "text": "Crea un rMQR, el código Micro QR rectangular para espacios estrechos como cables y tubos de ensayo. Hasta 361 dígitos o 150 caracteres. SVG, PDF y PNG. Gratis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.metaDescription"
+  },
+  "fac05d5715dd": {
+    "source": "rMQR (Rectangular Micro QR) is a QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code. Type any text, check that it scans and download it.",
+    "text": "rMQR (Micro QR rectangular) es un código QR estirado en forma de tira, de solo 7 módulos de alto, para etiquetas demasiado estrechas para un código cuadrado. Escribe cualquier texto, comprueba que se escanea y descárgalo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.intro"
+  },
+  "3016945159bc": {
+    "source": "Narrow labels where a square QR code would have to be tiny: cables and wires, test tubes and sample vials, the edges of parts and boxes.",
+    "text": "Etiquetas estrechas donde un código QR cuadrado tendría que ser diminuto: cables y alambres, tubos de ensayo y viales de muestras, los bordes de piezas y cajas.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.0"
+  },
+  "a9b9994231ff": {
+    "source": "It's the ISO/IEC 23941 standard (2022), from DENSO WAVE, which also created the QR code. Because it's newer, check that the scanners that will read it support it before you print a batch.",
+    "text": "Es el estándar ISO/IEC 23941 (2022), de DENSO WAVE, que también creó el código QR. Como es más reciente, comprueba que los lectores que lo van a leer lo admitan antes de imprimir un lote.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.usedFor.1"
+  },
+  "29e08933b54e": {
+    "source": "Do I need to register an rMQR code?",
+    "text": "¿Necesito registrar un código rMQR?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.title"
+  },
+  "5597274c9253": {
+    "source": "No. It holds whatever text you type, with no registration.",
+    "text": "No. Guarda el texto que escribas, sin ningún registro.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
+  },
+  "21d588136e54": {
+    "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",
+    "text": "Cualquier texto: letras, dígitos, símbolos, saltos de línea, acentos y otras escrituras. Los dígitos son los que ocupan menos espacio, seguidos de las letras mayúsculas; los acentos y otras escrituras se guardan como bytes UTF-8, que son los que más espacio ocupan.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.0"
+  },
+  "07e4daf832f2": {
+    "source": "rMQR comes in 32 sizes, from 7 to 17 modules tall and 27 to 139 wide. The generator picks the fewest rows your text fits in, then the fewest columns, so the code grows longer before it grows taller.",
+    "text": "rMQR existe en 32 tamaños, de 7 a 17 módulos de alto y de 27 a 139 de ancho. El generador elige el menor número de filas en el que cabe tu texto y luego el menor número de columnas, así que el código se alarga antes de hacerse más alto.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.1"
+  },
+  "fb39f2c0ee54": {
+    "source": "Error correction is level M, which lets a reader recover about 15% of the code if it's smudged or damaged.",
+    "text": "La corrección de errores es de nivel M, que permite al lector recuperar alrededor del 15% del código si está manchado o dañado.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.rules.2"
+  },
+  "9341974e7321": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text comes out 44.4 × 7.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "Las descargas vectoriales dibujan cada módulo con 0.71 mm de lado: el texto de ejemplo mide 44.4 × 7.8 mm, con la zona de silencio incluida. Escálalo al espacio que tengas y a lo que tu impresora y tu lector puedan resolver.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.0"
+  },
+  "a19aad812139": {
+    "source": "rMQR needs 2 modules of blank space all round, which the generator starts with.",
+    "text": "rMQR necesita 2 módulos de espacio en blanco alrededor, con los que el generador ya empieza.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.sizing.1"
+  },
+  "e595e70dbbde": {
+    "source": "rMQR or QR code?",
+    "text": "¿rMQR o código QR?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.question"
+  },
+  "556187e34590": {
+    "source": "For anything people scan with their phone, a QR code. Use rMQR where only a narrow strip fits and you know the scanners that will read it support it.",
+    "text": "Para cualquier cosa que la gente escanee con el teléfono, un código QR. Usa rMQR cuando solo quepa una tira estrecha y sepas que los lectores que lo van a leer lo admiten.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.0.answer"
+  },
+  "1aca0f2cf8a2": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports rMQR, and tells you whether it reads back your text.",
+    "text": "Sí. Mientras editas, el generador decodifica con ZXing la imagen que descargarías, un lector de código abierto compatible con rMQR, y te dice si vuelve a leer tu texto.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.rmqr.faqs.1.answer"
+  },
+  "a0b78a78cf87": {
+    "source": "Free MaxiCode Generator",
+    "text": "Generador de MaxiCode gratis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.title"
+  },
+  "bf9d519773db": {
+    "source": "Make a MaxiCode, the fixed-size 2D code UPS sorts parcels by, as a carrier message (modes 2 and 3) or text (mode 4). SVG, PDF and PNG. Free.",
+    "text": "Crea un MaxiCode, el código 2D de tamaño fijo con el que UPS clasifica paquetes, como mensaje de transportista (modos 2 y 3) o como texto (modo 4). SVG, PDF y PNG. Gratis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.metaDescription"
+  },
+  "93214fc470cb": {
+    "source": "MaxiCode is the fixed-size 2D code with a bullseye in the middle that UPS prints on parcel labels, so sorting machines can read where a parcel goes at speed. Type a carrier message or any text, check that it scans and download it.",
+    "text": "MaxiCode es el código 2D de tamaño fijo con una diana en el centro que UPS imprime en las etiquetas de sus paquetes, para que las máquinas de clasificación lean a toda velocidad el destino de cada uno. Escribe un mensaje de transportista o cualquier texto, comprueba que se escanea y descárgalo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.intro"
+  },
+  "05263461581f": {
+    "source": "UPS parcel labels: the code carries the destination postcode, country and service class where a sorter expects them, followed by the shipment details.",
+    "text": "Etiquetas de paquetes de UPS: el código lleva el código postal de destino, el país y la clase de servicio donde un clasificador los espera, seguidos de los datos del envío.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.0"
+  },
+  "483824ed5b00": {
+    "source": "The layout of a real shipping label and what goes in the rest of the message are set by UPS. Use their label guide for parcels you ship; the example here is a sample, not a shipment.",
+    "text": "UPS define el diseño de una etiqueta de envío real y lo que va en el resto del mensaje. Usa su guía de etiquetas para los paquetes que envíes; el ejemplo de aquí es una muestra, no un envío.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.usedFor.1"
+  },
+  "c63b4f77b04c": {
+    "source": "Carrier message or text?",
+    "text": "¿Mensaje de transportista o texto?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.title"
+  },
+  "2ec386ec976a": {
+    "source": "A carrier message starts with the postcode, the 3-digit ISO country code (840 for the US) and the 3-digit service class, separated by GS characters. Type them as <GS>: 152382802<GS>840<GS>001<GS>then the rest. A message starting with the [)><RS>01<GS>96 header works too.",
+    "text": "Un mensaje de transportista empieza con el código postal, el código de país ISO de 3 dígitos (840 para EE. UU.) y la clase de servicio de 3 dígitos, separados por caracteres GS. Escríbelos como <GS>: 152382802<GS>840<GS>001<GS>y el resto. También funciona un mensaje que empiece con la cabecera [)><RS>01<GS>96.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.0"
+  },
+  "07b2961ece2a": {
+    "source": "An all-digit postcode of up to 9 digits makes it mode 2 (US ZIP Codes); up to 6 capital letters, digits and spaces make it mode 3 (other countries). Anything else is drawn as text, mode 4.",
+    "text": "Un código postal solo de dígitos, de hasta 9, usa el modo 2 (ZIP Codes de EE. UU.); hasta 6 letras mayúsculas, dígitos y espacios usan el modo 3 (otros países). Cualquier otra cosa se dibuja como texto, en modo 4.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.numbers.paragraphs.1"
+  },
+  "d57b60d2ae0d": {
+    "source": "Latin-1 characters only: letters, digits, symbols and Western European accents.",
+    "text": "Solo caracteres Latin-1: letras, dígitos, símbolos y acentos del europeo occidental.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.0"
+  },
+  "cc2a86f2ce79": {
+    "source": "As text it holds up to 93 capital letters or 138 digits, fewer with lowercase or symbols. A carrier message leaves about 84 characters after the postcode, country and service class.",
+    "text": "Como texto admite hasta 93 letras mayúsculas o 138 dígitos, menos si hay minúsculas o símbolos. Un mensaje de transportista deja unos 84 caracteres después del código postal, el país y la clase de servicio.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.1"
+  },
+  "262019b66f59": {
+    "source": "A 5-digit ZIP Code is drawn with 0000 for the +4, and a mode 3 postcode is padded with spaces to 6 characters; readers return them that way.",
+    "text": "Un ZIP Code de 5 dígitos se dibuja con 0000 en el +4, y un código postal del modo 3 se rellena con espacios hasta 6 caracteres; los lectores los devuelven así.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.2"
+  },
+  "4f21cb41b2bd": {
+    "source": "Every MaxiCode is the same size: 33 rows of 30 hexagons around the bullseye. More data doesn't make it bigger, so there's a limit instead.",
+    "text": "Todos los MaxiCode tienen el mismo tamaño: 33 filas de 30 hexágonos alrededor de la diana. Más datos no lo hacen más grande, así que lo que hay es un límite.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.rules.3"
+  },
+  "d63cd93acd6c": {
+    "source": "The vector downloads are MaxiCode's nominal size, about 28.1 × 26.9 mm without the quiet zone. Print it at that size: readers look for a symbol of that size.",
+    "text": "Las descargas vectoriales tienen el tamaño nominal de MaxiCode, unos 28,1 × 26,9 mm sin la zona de silencio. Imprímelo a ese tamaño: los lectores buscan un símbolo de esa medida.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.0"
+  },
+  "525615b8ff04": {
+    "source": "The generator starts with 2 modules of blank space all round; MaxiCode needs at least 1.",
+    "text": "El generador empieza con 2 módulos de espacio en blanco alrededor; MaxiCode necesita al menos 1.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.1"
+  },
+  "aac3339401fe": {
+    "source": "Image size starts at 4×: below that, the hexagons are rounded to whole pixels and lose their shape.",
+    "text": "El tamaño de imagen empieza en 4×: por debajo, los hexágonos se redondean a píxeles enteros y pierden su forma.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.sizing.2"
+  },
+  "212789ea202f": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports MaxiCode, and tells you whether it reads back your message.",
+    "text": "Sí. Mientras editas, el generador decodifica con ZXing la imagen que descargarías, un lector de código abierto compatible con MaxiCode, y te dice si lee de vuelta tu mensaje.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.0.answer"
+  },
+  "7e26c57a4da7": {
+    "source": "Which modes does it make?",
+    "text": "¿Qué modos genera?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.question"
+  },
+  "573feb46c532": {
+    "source": "Modes 2 and 3 for carrier messages and mode 4 for text. Mode 5 (text with stronger error correction) and mode 6 (reader programming) aren't offered.",
+    "text": "Los modos 2 y 3 para mensajes de transportista y el modo 4 para texto. El modo 5 (texto con corrección de errores más fuerte) y el modo 6 (programación de lectores) no están disponibles.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.1.answer"
+  },
+  "5cc737cfddfe": {
+    "source": "MaxiCode or a QR code?",
+    "text": "¿MaxiCode o código QR?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.question"
+  },
+  "6402ef6937fb": {
+    "source": "MaxiCode where a carrier's system asks for it, as UPS's does. For anything people scan with a phone, a QR code.",
+    "text": "MaxiCode cuando el sistema de un transportista lo pide, como el de UPS. Para cualquier cosa que la gente escanee con el móvil, un código QR.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.maxicode.faqs.2.answer"
+  },
+  "817e8c09369f": {
+    "source": "With Raycast, Node.js 22 and Bun installed, run this and Raycast imports the extension.",
+    "text": "Con Raycast, Node.js 22 y Bun instalados, ejecuta esto y Raycast importará la extensión.",
+    "status": "machine",
+    "context": "integrations.entries.raycast.steps.0.body"
+  },
+  "48d95404c31b": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode or DotCode. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ISBN, ISSN, ISMN, ITF-14, GS1-128, GS1 DataBar, GS1 DataBar Expanded, Code 128, Code 39, Code 93, Codabar, USPS Intelligent Mail, Data Matrix, PDF417, Aztec, rMQR, MaxiCode o DotCode. Comprueba el valor (dígitos de control, longitudes, caracteres) y devuelve un PNG junto con URL públicas de SVG, PNG, PDF y otros formatos de imagen.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "2614b42d8452": {
+    "source": "Invite friends",
+    "text": "Invitar amigos",
+    "status": "machine",
+    "context": "appNav.settings.account.items.5.label"
+  },
+  "afe8c0b259cc": {
+    "source": "Download the code as PNG, SVG, WebP, GIF, BMP, ICO or TIFF, including CMYK TIFF for print.",
+    "text": "Descarga el código como PNG, SVG, WebP, GIF, BMP, ICO o TIFF, incluido TIFF CMYK para impresión.",
+    "status": "machine",
+    "context": "qrTypes.types.text.steps.3"
+  },
+  "81755d0fa703": {
+    "source": "Download a PNG, SVG, WebP, GIF, BMP, ICO or TIFF (including CMYK TIFF for print), or style the code in the full editor.",
+    "text": "Descarga un PNG, SVG, WebP, GIF, BMP, ICO o TIFF (incluido TIFF CMYK para impresión), o personaliza el estilo del código en el editor completo.",
+    "status": "machine",
+    "context": "qrTypes.types.instagram.steps.3"
+  },
+  "4a76e3b36834": {
+    "source": "Scan the preview with your wallet, check the address, network and amount, and download the code as PNG, SVG, WebP, GIF, BMP, ICO or TIFF.",
+    "text": "Escanea la vista previa con tu wallet, comprueba la dirección, la red y el importe, y descarga el código como PNG, SVG, WebP, GIF, BMP, ICO o TIFF.",
+    "status": "machine",
+    "context": "qrTypes.types.ethereum.steps.3"
+  },
+  "5f15bdca2f69": {
+    "source": "The smallest files, for websites",
+    "text": "Los archivos más pequeños, para sitios web",
+    "status": "machine",
+    "context": "barcodes.files.webp.hint"
+  },
+  "e1df66a04ed6": {
+    "source": "For systems that ask for AVIF",
+    "text": "Para sistemas que piden AVIF",
+    "status": "machine",
+    "context": "barcodes.files.avif.hint"
+  },
+  "64f3ee170959": {
+    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP makes the smallest files, for websites; AVIF is there for systems that ask for it, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
+    "text": "SVG, PDF o EPS para imprimir: son vectoriales, así que las barras se ven nítidas a cualquier tamaño. SVG y EPS se abren en herramientas de diseño como Illustrator, InDesign y Affinity, y PDF se abre en cualquier parte. PNG es para pantallas, documentos y tiendas online, y JPG para lugares que no aceptan PNG; WebP genera los archivos más pequeños, para sitios web; AVIF está para los sistemas que lo piden, y BMP es para sistemas antiguos que solo aceptan BMP. Aumenta el tamaño de la imagen para obtener imágenes más grandes.",
+    "status": "machine",
+    "context": "barcodes.faqs.4.answer"
+  },
+  "1f15cca76850": {
+    "source": "Generate QR codes with body patterns, corner styles, colors, frames and logos from the Raycast launcher, keep a library of saved codes, and export them.",
+    "text": "Genera códigos QR con patrones de cuerpo, estilos de esquina, colores, marcos y logotipos desde el lanzador de Raycast, mantén una biblioteca de códigos guardados y expórtalos.",
+    "status": "machine",
+    "context": "integrations.entries.raycast.description.0"
+  },
+  "9a99b4e6aca7": {
+    "source": "Body patterns, corner styles, colors, frames and logos.",
+    "text": "Patrones de cuerpo, estilos de esquina, colores, marcos y logotipos.",
+    "status": "machine",
+    "context": "integrations.entries.raycast.capabilities.0.description"
+  },
+  "1b59469b24e7": {
+    "source": "Enter a URL or text, then pick dot, eye and eye-dot patterns, colors from Canva's color picker, error correction and an optional logo. The preview updates as you go.",
+    "text": "Introduce una URL o un texto y elige patrones de puntos, ojos y puntos de ojo, colores desde el selector de color de Canva, corrección de errores y un logotipo opcional. La vista previa se actualiza sobre la marcha.",
+    "status": "machine",
+    "context": "integrations.entries.canva.description.0"
+  },
+  "160a13d94fb0": {
+    "source": "Patterns",
+    "text": "Patrones",
+    "status": "machine",
+    "context": "integrations.entries.canva.capabilities.1.title"
+  },
+  "4b5147422ca8": {
+    "source": "Body, eye and eye-dot shapes, each shown as a thumbnail.",
+    "text": "Formas del cuerpo, de los ojos y de los puntos de ojo, cada una con su miniatura.",
+    "status": "machine",
+    "context": "integrations.entries.canva.capabilities.1.description"
+  },
+  "0c606300ff29": {
+    "source": "GET /api/v1/qr returns an SVG, PNG, TIFF or print-ready EPS. Everything is in the query string, so the URL itself is the image: paste it into a README, an <img> tag or an email template.",
+    "text": "GET /api/v1/qr devuelve un SVG, PNG, TIFF o EPS listo para imprimir. Todo va en la query string, así que la propia URL es la imagen: pégala en un README, en una etiqueta <img> o en una plantilla de correo.",
+    "status": "machine",
+    "context": "integrations.entries.image-api.description.0"
+  },
+  "dbe3f099a18a": {
+    "source": "Choose size, colors, module and corner shapes, error correction, margin and a frame.",
+    "text": "Elige el tamaño, los colores, las formas de los módulos y de las esquinas, la corrección de errores, el margen y un marco.",
+    "status": "machine",
+    "context": "integrations.entries.image-api.description.1"
+  },
+  "84c033891645": {
+    "source": "SVG, PNG, TIFF or EPS",
+    "text": "SVG, PNG, TIFF o EPS",
+    "status": "machine",
+    "context": "integrations.entries.image-api.capabilities.0.title"
+  },
+  "91f21385d5c6": {
+    "source": "TIFF at 300 dpi, in RGB or CMYK, and vector EPS sized in points for print and design tools.",
+    "text": "TIFF a 300 dpi, en RGB o CMYK, y EPS vectorial con medidas en puntos para impresión y herramientas de diseño.",
+    "status": "machine",
+    "context": "integrations.entries.image-api.capabilities.0.description"
+  },
+  "7f1be9f2a989": {
+    "source": "Run npx @qrdx/cli to render a QR code with the same patterns, colors, gradients, logos and frames as the playground. Flags make it fully non-interactive for scripts and CI; in a terminal it can guide you with prompts.",
+    "text": "Ejecuta npx @qrdx/cli para generar un código QR con los mismos patrones, colores, degradados, logotipos y marcos que el Playground. Con los flags funciona sin ninguna interacción, ideal para scripts y CI; en una terminal puede guiarte con preguntas.",
+    "status": "machine",
+    "context": "integrations.entries.cli.description.0"
+  },
+  "e0a7cd8bafba": {
+    "source": "Patterns, colors and gradients, logos and call-to-action frames.",
+    "text": "Patrones, colores y degradados, logotipos y marcos con llamada a la acción.",
+    "status": "machine",
+    "context": "integrations.entries.cli.capabilities.1.description"
+  },
+  "55bafae97077": {
+    "source": "Render customizable QR codes in React with qrdx: patterns, gradients, logos and frames.",
+    "text": "Genera códigos QR personalizables en React con qrdx: patrones, degradados, logotipos y marcos.",
+    "status": "machine",
+    "context": "integrations.entries.react.tagline"
+  },
+  "e2b188d90949": {
+    "source": "qrdx is the open-source library behind QRdx. Render QR codes as SVG or canvas with custom body patterns, corner eyes, gradients, logos and frames, and export them as images.",
+    "text": "qrdx es la biblioteca de código abierto detrás de QRdx. Genera códigos QR como SVG o canvas con patrones de cuerpo, ojos de esquina, degradados, logotipos y marcos personalizados, y expórtalos como imágenes.",
+    "status": "machine",
+    "context": "integrations.entries.react.description.0"
+  },
+  "866770173d53": {
+    "source": "Body patterns, corner eyes and dots, gradients, logos and frames.",
+    "text": "Patrones de cuerpo, ojos y puntos de esquina, degradados, logotipos y marcos.",
+    "status": "machine",
+    "context": "integrations.entries.react.capabilities.1.description"
+  },
+  "12cf56c91b9e": {
+    "source": "A PNG image in the chat, plus SVG, PNG, WebP, TIFF and EPS links ready for Markdown, HTML or print. Apps that support MCP Apps also show the code as a card you can save or open in the editor.",
+    "text": "Una imagen PNG en el chat, además de enlaces SVG, PNG, WebP, TIFF y EPS listos para Markdown, HTML o impresión. Las apps compatibles con MCP Apps también muestran el código como una tarjeta que puedes guardar o abrir en el editor.",
+    "status": "machine",
+    "context": "mcp.steps.2.body"
+  },
+  "2ba0fda106c0": {
+    "source": "Renders the code and returns a PNG image plus public SVG, PNG, WebP, TIFF and EPS image URLs ready for Markdown, HTML or print. Takes the image API options: colors or gradients, body, eye and dot shapes, error correction, margin, a border, a frame and a logo icon, or a whole style from design_qr. Set include_svg for the SVG markup.",
+    "text": "Genera el código y devuelve una imagen PNG junto con URL públicas de imagen en SVG, PNG, WebP, TIFF y EPS, listas para Markdown, HTML o impresión. Admite las opciones de la Image API: colores o degradados, formas del cuerpo, de los ojos y de los puntos, corrección de errores, margen, un borde, un marco y un icono de logo, o un estilo completo de design_qr. Activa include_svg para obtener el código SVG.",
+    "status": "machine",
+    "context": "mcp.tools.2.description"
+  },
+  "9eb7c5a18750": {
+    "source": "Create a dynamic code",
+    "text": "Crear un código dinámico",
+    "status": "machine",
+    "context": "mcp.tools.3.title"
+  },
+  "08fc1b093feb": {
+    "source": "A dynamic QR code in your QRdx workspace: it holds a short link, so where it goes can change after printing, and its scans are counted. Returns the short link, the code as a PNG and a link to it in your dashboard. Your app asks you to sign in to QRdx the first time; plan limits apply as in the dashboard.",
+    "text": "Un código QR dinámico en tu espacio de trabajo de QRdx: contiene un enlace corto, de modo que su destino puede cambiar después de imprimirlo, y sus escaneos se cuentan. Devuelve el enlace corto, el código como PNG y un enlace a él en tu panel. Tu app te pide iniciar sesión en QRdx la primera vez; se aplican los límites del plan igual que en el panel.",
+    "status": "machine",
+    "context": "mcp.tools.3.description"
+  },
+  "cdc1d6d9d4f0": {
+    "source": "Change where a code goes",
+    "text": "Cambiar el destino de un código",
+    "status": "machine",
+    "context": "mcp.tools.4.title"
+  },
+  "0661b43aeabf": {
+    "source": "Points one of your dynamic codes at a new address. The printed code stays the same. The new address is checked like a new code's.",
+    "text": "Dirige uno de tus códigos dinámicos a una nueva dirección. El código impreso sigue siendo el mismo. La nueva dirección se comprueba igual que la de un código nuevo.",
+    "status": "machine",
+    "context": "mcp.tools.4.description"
+  },
+  "23eba5aaddf4": {
+    "source": "Scan stats",
+    "text": "Stats de escaneo",
+    "status": "machine",
+    "context": "mcp.tools.5.title"
+  },
+  "4ef922d54917": {
+    "source": "Scans and unique visitors for one of your dynamic codes over a range your plan keeps, with the top countries, devices and scans per day. Never single scans or precise locations.",
+    "text": "Escaneos y visitantes únicos de uno de tus códigos dinámicos en un periodo que tu plan conserva, con los países, dispositivos y escaneos por día principales. Nunca escaneos individuales ni ubicaciones precisas.",
+    "status": "machine",
+    "context": "mcp.tools.5.description"
+  },
+  "43fadb385cd8": {
+    "source": "List your codes",
+    "text": "Listar tus códigos",
+    "status": "machine",
+    "context": "mcp.tools.6.title"
+  },
+  "9e95ef71da11": {
+    "source": "Your dynamic codes with their short links, destinations, status and scan counts, to find one by name or link.",
+    "text": "Tus códigos dinámicos con sus enlaces cortos, destinos, estado y número de escaneos, para encontrar uno por nombre o enlace.",
+    "status": "machine",
+    "context": "mcp.tools.6.description"
+  },
+  "7bcee6d22cb6": {
+    "source": "Yes. It's free and open source, and designing, rendering and checking codes needs no account. Those codes are static, so they never expire and have no scan limits. Dynamic codes live in a QRdx account, so making one asks you to sign in (or sign up) first; the plan's limits apply as in the dashboard.",
+    "text": "Sí. Es gratis y de código abierto, y diseñar, generar y comprobar códigos no requiere cuenta. Esos códigos son estáticos, así que nunca caducan y no tienen límite de escaneos. Los códigos dinámicos viven en una cuenta de QRdx, por lo que crear uno te pide primero iniciar sesión (o registrarte); se aplican los límites del plan igual que en el panel.",
+    "status": "machine",
+    "context": "mcp.faqs.1.answer"
+  },
+  "7c864a0e3853": {
+    "source": "No, for designing and rendering codes and browsing the community: the QRdx MCP server is public and free, and it keeps no session state. The dynamic-code tools need you signed in to QRdx instead, which your app asks for the first time you use one. Saving a design to your themes (save_template), saving a barcode (save_barcode), making AI art (generate_ai_art) and using a logo you uploaded need a QRdx API key, sent as Authorization: Bearer qrdx_… in your app's settings for the server. Your app sees those three tools once the key is set.",
+    "text": "No, para diseñar y generar códigos y explorar la comunidad: el servidor MCP de QRdx es público y gratuito, y no guarda ningún estado de sesión. En cambio, las herramientas de códigos dinámicos requieren que hayas iniciado sesión en QRdx, algo que tu app te pide la primera vez que usas una. Guardar un diseño en tus temas (save_template), guardar un código de barras (save_barcode), crear arte con IA (generate_ai_art) y usar un logo que subiste necesitan una clave de API de QRdx, enviada como Authorization: Bearer qrdx_… en los ajustes de tu app para el servidor. Tu app ve esas tres herramientas una vez configurada la clave.",
+    "status": "machine",
+    "context": "mcp.faqs.2.answer"
+  },
+  "a5537dfea3ae": {
+    "source": "Yes, once you sign in. create_dynamic_code makes a dynamic code in your QRdx workspace: the code holds a short link, so you can point it somewhere else later (update_code_destination) and see how often it's scanned (get_code_stats). The first time, your app asks you to sign in to QRdx, where new accounts sign up too.",
+    "text": "Sí, una vez que inicias sesión. create_dynamic_code crea un código dinámico en tu espacio de trabajo de QRdx: el código contiene un enlace corto, así que puedes dirigirlo a otro destino más tarde (update_code_destination) y ver con qué frecuencia se escanea (get_code_stats). La primera vez, tu app te pide iniciar sesión en QRdx, donde las cuentas nuevas también se registran.",
+    "status": "machine",
+    "context": "mcp.faqs.5.answer"
+  },
+  "ad02f2790a7a": {
+    "source": "Not the static ones. The tools render images, format text and read the public community. Only these write anything: create_dynamic_code and update_code_destination (the dynamic code you ask for, in your workspace), and save_template and save_barcode (the theme or barcode you ask them to save, in the API key's workspace). generate_ai_art uses one of the workspace's monthly AI art images but keeps neither the image nor a photo you send. The image URLs the tools return contain the encoded data, so don't share them if the data is private, such as a Wi-Fi password.",
+    "text": "Los estáticos no. Las herramientas generan imágenes, dan formato al texto y leen la comunidad pública. Solo estas escriben algo: create_dynamic_code y update_code_destination (el código dinámico que pides, en tu espacio de trabajo), y save_template y save_barcode (el tema o el código de barras que les pides guardar, en el espacio de trabajo de la clave de API). generate_ai_art usa una de las imágenes de arte con IA mensuales del espacio de trabajo, pero no conserva ni la imagen ni la foto que envías. Las URL de imagen que devuelven las herramientas contienen los datos codificados, así que no las compartas si los datos son privados, como la contraseña de una red Wi-Fi.",
+    "status": "machine",
+    "context": "mcp.faqs.7.answer"
   }
 }

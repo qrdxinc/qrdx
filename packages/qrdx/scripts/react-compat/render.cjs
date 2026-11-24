@@ -62,8 +62,33 @@ const DESIGNS = {
       halo: { width: 0.3 },
       shadow: { opacity: 0.3 },
     }),
-  "QRCodeSVG, template": () =>
-    createElement(QRCodeSVG, { value: VALUE, templateId: "DotRing" }),
+  "QRCodeSVG, dot ring frame": () =>
+    createElement(QRCodeSVG, { value: VALUE, frame: { style: "dot-ring" } }),
+  "QRCodeSVG, custom template": () =>
+    createElement(QRCodeSVG, {
+      value: VALUE,
+      fgColor: "#1d4ed8",
+      customTemplate: {
+        id: "labelled",
+        name: "Labelled",
+        wrapper: (children, props) =>
+          createElement(
+            "svg",
+            { viewBox: "0 0 300 340", xmlns: "http://www.w3.org/2000/svg" },
+            createElement(
+              "g",
+              { transform: "translate(20, 20) scale(0.87)" },
+              children
+            ),
+            createElement(
+              "text",
+              { x: "150", y: "325", textAnchor: "middle", fill: props.fgColor },
+              props.label
+            )
+          ),
+      },
+      customProps: { label: "Scan me" },
+    }),
   "QRCode, logo": () =>
     createElement(QRCode, {
       value: VALUE,

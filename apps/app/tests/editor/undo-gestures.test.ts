@@ -68,7 +68,10 @@ describe("one undo step per gesture", () => {
     await tick();
     expect(store().history).toHaveLength(1);
     store().undo();
-    expect(store().themeState.styles.margin).toBeUndefined();
+    // Back to the default look's margin
+    expect(store().themeState.styles.margin).toBe(
+      defaultThemeState.styles.margin,
+    );
   });
 
   it("the click after a press belongs to it (a tile picked)", async () => {
@@ -271,7 +274,10 @@ describe("redo after a change", () => {
     key(document.body, "z");
     store().undo();
     await tick();
-    expect(store().themeState.styles.margin).toBeUndefined();
+    // Back to the default look's margin
+    expect(store().themeState.styles.margin).toBe(
+      defaultThemeState.styles.margin,
+    );
     key(document.body, "z");
     store().redo();
     await tick();

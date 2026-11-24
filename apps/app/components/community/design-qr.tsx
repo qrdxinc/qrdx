@@ -39,7 +39,6 @@ export function DesignQr({
         level={style.level}
         logo={style.customLogo ?? DEFAULT_QR_LOGO}
         margin={style.margin}
-        templateId={style.templateId}
         value={value || " "}
         {...styleEngineOptions(style, value || " ")}
       />

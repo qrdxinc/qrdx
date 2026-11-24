@@ -242,26 +242,6 @@ export const LIBRARY_JOBS: ShotJob[] = [
       ]),
   }),
   job({
-    id: "lib-templates",
-    title: "Three built-in templates",
-    alt: "Three template codes: Arrow in blue, with an arrow pointing at the code; Standard Box, a boxed code with a logo in the middle; and Dot Ring, a round navy badge with Scan for the menu in yellow under the code.",
-    pages: ["/docs/features/templates"],
-    document: async () =>
-      page(
-        [
-          await example("templates/arrow-code.tsx", "ArrowCode"),
-          (
-            await example("templates/boxed-logo-code.tsx", "BoxedLogoCode")
-          ).replaceAll(
-            '"/logo.png"',
-            `"${await sampleDataUrl("logos/cafe.svg")}"`,
-          ),
-          await example("templates/dot-ring-code.tsx", "DotRingCode"),
-        ],
-        230,
-      ),
-  }),
-  job({
     id: "lib-gradient-codes",
     title: "Linear, radial and angular gradients",
     alt: "Three codes with gradient colors: a linear gradient from indigo to pink, a radial gradient from teal in the middle to dark blue at the edges, and an angular gradient that sweeps from blue through violet and back.",

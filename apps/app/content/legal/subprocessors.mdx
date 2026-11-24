@@ -1,7 +1,7 @@
 ---
 title: Subprocessors
 description: The third-party services that process personal data for QRdx, what each one does, what data it handles, where, and how we announce changes.
-lastUpdated: 2026-11-15
+lastUpdated: 2026-11-24
 ---
 
 <Callout title="Summary">
@@ -13,7 +13,7 @@ lastUpdated: 2026-11-15
 
 </Callout>
 
-**Last updated:** 15 November 2026
+**Last updated:** 24 November 2026
 
 ## Current subprocessors
 
@@ -23,7 +23,9 @@ lastUpdated: 2026-11-15
 | **Neon** | PostgreSQL database | Account data, Customer Content and End User data (scans, page events, form responses) | United States | [DPA](https://neon.com/dpa) |
 | **Upstash** | Rate limiting | IP addresses and account IDs inside short-lived counters that expire within 2 days | **India (AWS Mumbai)** | [Privacy policy](https://upstash.com/trust/privacy.pdf) |
 | **Polar** | Merchant of record: checkout, subscriptions, invoices and sales tax. Card payments go through Stripe. | Name, email address, billing address, payment details, tax ID, subscription history, IP address when a checkout starts | United States | [Privacy policy](https://polar.sh/legal/privacy) |
-| **Resend** | Sending transactional email | Recipient addresses and email content: invitations, form response notifications (which include answers), alerts and digests | United States | [DPA](https://resend.com/legal/dpa) |
+| **Resend** | Sending transactional email, and the replies and personal notes we send from support@qrdx.dev | Recipient addresses and email content: invitations, form response notifications (which include answers), alerts, digests, support replies and personal notes | United States | [DPA](https://resend.com/legal/dpa) |
+| **Google (Gmail)** | The mailbox where we read and answer email sent to our @qrdx.dev addresses, and send the emails we write by hand to businesses | Names, email addresses and the content of emails between you and us | Global, wherever Google has facilities | [Privacy policy](https://policies.google.com/privacy) |
+| **Cloudflare (Email Routing)** | Receiving email sent to our @qrdx.dev addresses and forwarding it to our mailbox | Sender and recipient addresses and the email's content, as it passes through | Global | [DPA](https://www.cloudflare.com/cloudflare-customer-dpa/) |
 | **Anthropic (Claude, through Vercel AI Gateway)** | The AI theme chat, prompt enhancement and the docs assistant (Ask AI in the docs) | Prompts, the conversation so far and attached images; for the docs assistant, the question, the conversation so far, the title and address of the docs page being read and the public docs pages the assistant reads | Set by Anthropic; QRdx doesn't choose a region | [AI Gateway data controls](https://vercel.com/docs/ai-gateway/security-and-compliance/disallow-prompt-training) |
 | **Google (Gemini, through Vercel AI Gateway)** | Designing AI themes, through the Gemini API or Vertex AI | Prompts, the conversation so far and attached images | Global, wherever Google has facilities | [AI Gateway data controls](https://vercel.com/docs/ai-gateway/security-and-compliance/disallow-prompt-training) |
 | **OpenAI (GPT Image 2, through Vercel AI Gateway)** | AI QR art | The code's content (as a plain QR image), the prompt, the things to avoid, the style settings and any reference image | Set by OpenAI; QRdx doesn't choose a region | [AI Gateway data controls](https://vercel.com/docs/ai-gateway/security-and-compliance/disallow-prompt-training), [OpenAI API data controls](https://developers.openai.com/api/docs/guides/your-data) |
@@ -53,4 +55,4 @@ Related pages: [Privacy Policy](/legal/privacy-policy), [Cookie Policy](/legal/c
 
 ---
 
-**Changes:** 15 November 2026. Anthropic's row now also covers the docs assistant (Ask AI in the docs), which sends questions and the docs pages it reads through Vercel AI Gateway; no account data goes with them. 13 November 2026. Polar now also receives the IP address of the person starting a checkout, to set the billing country, tax and currency. 3 November 2026. Added OpenAI: AI QR art now runs on OpenAI's GPT Image 2 through Vercel AI Gateway, and Google no longer receives AI art requests. Earlier the same day: added Anthropic: the AI theme chat and prompt enhancement run on Claude. AI requests now pass through Vercel AI Gateway (Vercel was already listed), and Google's row covers Gemini through the gateway instead of the Gemini API directly. 2 November 2026: removed fal.ai: AI QR art now runs on Google's Gemini API, already listed. Umami is our own self-hosted instance on Vercel and Neon, not Umami Cloud. 1 November 2026: rebuilt as a table from the services QRdx actually uses. Added Resend, Google Gemini, Google Web Risk, fal.ai, Cloudflare R2 and Turnstile, and Featurebase. Removed Anthropic (not used), Better Auth (a library that runs inside QRdx) and GitHub (a sign-in provider, now listed above). Corrected Polar's location. Added Umami, and updated what PostHog receives.
+**Changes:** 24 November 2026. Added Google (Gmail) and Cloudflare (Email Routing), the mailbox behind our @qrdx.dev addresses. They have handled email sent to us since 20 November 2026 and the emails we write to businesses since 23 November 2026, before this page listed them. Resend's row now also covers the support replies and personal notes we send. 15 November 2026. Anthropic's row now also covers the docs assistant (Ask AI in the docs), which sends questions and the docs pages it reads through Vercel AI Gateway; no account data goes with them. 13 November 2026. Polar now also receives the IP address of the person starting a checkout, to set the billing country, tax and currency. 3 November 2026. Added OpenAI: AI QR art now runs on OpenAI's GPT Image 2 through Vercel AI Gateway, and Google no longer receives AI art requests. Earlier the same day: added Anthropic: the AI theme chat and prompt enhancement run on Claude. AI requests now pass through Vercel AI Gateway (Vercel was already listed), and Google's row covers Gemini through the gateway instead of the Gemini API directly. 2 November 2026: removed fal.ai: AI QR art now runs on Google's Gemini API, already listed. Umami is our own self-hosted instance on Vercel and Neon, not Umami Cloud. 1 November 2026: rebuilt as a table from the services QRdx actually uses. Added Resend, Google Gemini, Google Web Risk, fal.ai, Cloudflare R2 and Turnstile, and Featurebase. Removed Anthropic (not used), Better Auth (a library that runs inside QRdx) and GitHub (a sign-in provider, now listed above). Corrected Polar's location. Added Umami, and updated what PostHog receives.

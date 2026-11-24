@@ -61,6 +61,8 @@ describe("sidebar areas", () => {
       "Notifications",
       "Integrations",
       "Authorized apps",
+      // Hidden where invite rewards are off (feature-availability-rules.ts).
+      "Invite friends",
       // Hidden where the program is off (feature-availability-rules.ts).
       "Affiliate program",
     ]);

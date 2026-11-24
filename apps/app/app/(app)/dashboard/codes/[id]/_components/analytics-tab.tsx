@@ -18,6 +18,14 @@ import {
 // NFC (feat/nfc): QR scans and NFC taps.
 import { ScanSourceCard } from "@/app/(app)/dashboard/codes/_components/scan-source-card";
 import { ScansChart } from "@/app/(app)/dashboard/codes/_components/scans-chart";
+import {
+  type BreakdownMark,
+  browserMark,
+  countryMark,
+  deviceMark,
+  hostMark,
+  osMark,
+} from "@/app/(app)/dashboard/codes/_lib/breakdown-marks";
 import { codeTabHref } from "@/app/(app)/dashboard/codes/_lib/code-tabs";
 import { nfcPageHref } from "@/app/(app)/dashboard/codes/_lib/nfc";
 import type { QrCodeView } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
@@ -65,12 +73,14 @@ const DEVICE_LABELS: Record<string, string> = {
 
 const toItems = (
   rows: BreakdownRow[],
+  mark: (value: string | null) => BreakdownMark,
   label: (value: string) => string = (value) => value,
   unknown = "Unknown",
 ): BreakdownItem[] =>
   rows.map((row) => ({
     label: row.value ? label(row.value) : unknown,
     count: row.count,
+    mark: mark(row.value),
   }));
 
 /** "1 year of scan history", "every scan" (lib/scan-history.ts). */
@@ -316,6 +326,7 @@ export async function AnalyticsTab({
         <BreakdownCard
           items={toItems(
             analytics.countries,
+            countryMark,
             (value) => countryName(value) ?? value,
           )}
           title={t("topCountries")}
@@ -331,6 +342,7 @@ export async function AnalyticsTab({
                   ? t("unknownCityCountry", { country })
                   : t("unknown"),
               count: row.count,
+              mark: countryMark(row.country),
             };
           })}
           title={t("topCities")}
@@ -339,24 +351,26 @@ export async function AnalyticsTab({
         <BreakdownCard
           items={toItems(
             analytics.devices,
+            deviceMark,
             (value) => DEVICE_LABELS[value] ?? value,
           )}
           title={t("devices")}
           total={analytics.total}
         />
         <BreakdownCard
-          items={toItems(analytics.os)}
+          items={toItems(analytics.os, osMark)}
           title={t("operatingSystems")}
           total={analytics.total}
         />
         <BreakdownCard
-          items={toItems(analytics.browsers)}
+          items={toItems(analytics.browsers, browserMark)}
           title={t("browsers")}
           total={analytics.total}
         />
         <BreakdownCard
           items={toItems(
             analytics.referrers,
+            hostMark,
             undefined,
             "Direct (no referrer)",
           )}

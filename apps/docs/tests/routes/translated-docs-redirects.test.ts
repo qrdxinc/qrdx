@@ -128,6 +128,23 @@ describe("next.config.ts redirects", () => {
     expect(follow(redirects, "/en/docs")?.rule.permanent).toBe(true);
   });
 
+  it.each([
+    ["/docs/features/templates", "/docs/features/frames"],
+    ["/docs/features/templates.md", "/docs/features/frames.md"],
+    ["/docs/features/templates.mdx", "/docs/features/frames.mdx"],
+    ["/llms.mdx/features/templates", "/llms.mdx/features/frames"],
+  ])("sends the former templates page %s to %s for good (308)", (path, to) => {
+    const found = follow(redirects, path);
+    expect(found?.target).toBe(to);
+    expect(found?.rule.permanent).toBe(true);
+  });
+
+  it("sends another language's templates page to the English one first", () => {
+    expect(follow(redirects, "/es/docs/features/templates")?.target).toBe(
+      "/docs/features/templates",
+    );
+  });
+
   it("doesn't take a path that only looks like a language's docs", () => {
     for (const path of ["/xx/docs", "/es/documentation", "/es/x/docs", "/es"]) {
       expect(follow(redirects, path), path).toBeUndefined();
