@@ -22,6 +22,12 @@ import {
 // NFC (feat/nfc): QR scans and NFC taps.
 import { ScanSourceCard } from "@/app/(app)/dashboard/codes/_components/scan-source-card";
 import { ScansChart } from "@/app/(app)/dashboard/codes/_components/scans-chart";
+import {
+  type BreakdownMark,
+  countryMark,
+  deviceMark,
+  hostMark,
+} from "@/app/(app)/dashboard/codes/_lib/breakdown-marks";
 // Client branding (ee/client-portal, QRdx commercial licence): only drawn
 // when the page loaded a brand, which needs the licence.
 import { BrandMark, brandStyle } from "@/ee/client-portal/brand-mark";
@@ -66,12 +72,14 @@ const PER_INTERVAL: Record<PublicStats["analytics"]["interval"], string> = {
 
 const toItems = (
   rows: BreakdownRow[],
+  mark: (value: string | null) => BreakdownMark,
   label: (value: string) => string,
   unknown: string,
 ): BreakdownItem[] =>
   rows.map((row) => ({
     label: row.value ? label(row.value) : unknown,
     count: row.count,
+    mark: mark(row.value),
   }));
 
 export function PublicStatsShell({
@@ -222,13 +230,19 @@ export function StatsReportBody({
 
       <div className="grid gap-4 md:grid-cols-3">
         <BreakdownCard
-          items={toItems(analytics.countries, countryName, "Unknown")}
+          items={toItems(
+            analytics.countries,
+            countryMark,
+            countryName,
+            "Unknown",
+          )}
           title="Top countries"
           total={analytics.total}
         />
         <BreakdownCard
           items={toItems(
             analytics.devices,
+            deviceMark,
             (value) => DEVICE_LABELS[value] ?? value,
             "Unknown",
           )}
@@ -236,7 +250,12 @@ export function StatsReportBody({
           total={analytics.total}
         />
         <BreakdownCard
-          items={toItems(analytics.referrers, (value) => value, "Direct scan")}
+          items={toItems(
+            analytics.referrers,
+            hostMark,
+            (value) => value,
+            "Direct scan",
+          )}
           title="Referrers"
           total={analytics.total}
         />
