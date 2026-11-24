@@ -6788,7 +6788,10 @@
           "failedToConnectIntegration": "통합 연결에 실패했어요",
           "nameDisconnectedAndQrdxsAccess": "{name} 연결을 해제하고 QRdx의 접근 권한을 취소했어요",
           "nameDisconnected": "{name} 연결을 해제했어요",
-          "failedToDisconnectIntegration": "통합 연결 해제에 실패했어요"
+          "failedToDisconnectIntegration": "통합 연결 해제에 실패했어요",
+          "salesforceOrgType": "Salesforce 조직 유형",
+          "production": "프로덕션",
+          "sandbox": "샌드박스"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "폼 응답을 {name}(으)로 보내기",
@@ -6826,7 +6829,12 @@
           "loadMorePages": "페이지 더 불러오기",
           "loadingPages": "페이지 불러오는 중…",
           "tryAgain": "다시 시도",
-          "couldntLoadMorePages": "페이지를 더 불러오지 못했어요. 다시 시도해 주세요."
+          "couldntLoadMorePages": "페이지를 더 불러오지 못했어요. 다시 시도해 주세요.",
+          "newResponsesCreateOrUpdateLead": "새 응답이 들어오면 리드를 만들거나, 이메일이 같은 진행 중인 리드를 업데이트해요. 답변이 있고 매핑된 질문만 전송돼요.",
+          "leads": "리드",
+          "leadSource": "리드 소스",
+          "leadSourceHelp": "QRdx가 만드는 리드에 설정돼요. Lead Source 선택 목록의 값을 사용하거나, 비워 두면 값이 지정되지 않아요.",
+          "salesforceOrg": "{environment, select, sandbox {샌드박스 조직} other {프로덕션 조직}}: {host}"
         },
         "slackBotPanel": {
           "qrdxBot": "QRdx 봇",

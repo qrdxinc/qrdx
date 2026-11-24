@@ -11,6 +11,7 @@ import { mailchimpIntegration } from "../integrations/mailchimp/config";
 import { notionIntegration } from "../integrations/notion/config";
 import { oneDriveIntegration } from "../integrations/onedrive/config";
 import { rebrandlyIntegration } from "../integrations/rebrandly/config";
+import { salesforceIntegration } from "../integrations/salesforce/config";
 import { shopifyIntegration } from "../integrations/shopify/config";
 import { shortIoIntegration } from "../integrations/short-io/config";
 import { slackIntegration } from "../integrations/slack/config";
@@ -86,6 +87,7 @@ export function registerAllIntegrations(): void {
   registry.register(slackIntegration);
   registry.register(hubspotIntegration);
   registry.register(mailchimpIntegration);
+  registry.register(salesforceIntegration);
 }
 
 /**
@@ -158,6 +160,11 @@ export const INTEGRATION_ENV_VARS: Record<string, IntegrationEnvVars> = {
   mailchimp: {
     clientId: "MAILCHIMP_CLIENT_ID",
     clientSecret: "MAILCHIMP_CLIENT_SECRET",
+  },
+  // A Connected App's consumer key and secret (production and sandbox orgs)
+  salesforce: {
+    clientId: "SALESFORCE_CLIENT_ID",
+    clientSecret: "SALESFORCE_CLIENT_SECRET",
   },
 };
 

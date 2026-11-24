@@ -33443,6 +33443,84 @@
     "status": "machine",
     "context": "integrations.entries.mailchimp.capabilities.1.description"
   },
+  "2dbd461465b4": {
+    "source": "Every form response on your hosted pages creates or updates a Salesforce lead.",
+    "text": "Setiap respons formulir di halaman yang di-hosting Anda membuat atau memperbarui lead Salesforce.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.tagline"
+  },
+  "deba4ea87198": {
+    "source": "Connect a production or sandbox org, choose the pages, and map each form's questions to lead fields. Email, name, phone and company are suggested for you. A response from an email that already has an open lead updates that lead; any other response creates one, with the lead source you pick (Web unless you change it).",
+    "text": "Hubungkan org produksi atau sandbox, pilih halaman, lalu petakan pertanyaan setiap formulir ke kolom lead. Email, nama, telepon, dan perusahaan disarankan untuk Anda. Respons dari email yang sudah memiliki lead terbuka akan memperbarui lead tersebut; respons lainnya membuat lead baru, dengan sumber lead yang Anda pilih (Web kecuali Anda mengubahnya).",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.0"
+  },
+  "d4b9a1af1e32": {
+    "source": "Salesforce needs a last name and a company on every lead. When a form doesn't ask for them, QRdx uses the part of the email before the @ and Salesforce's own [not provided]. QRdx asks for API access and a refresh token (api, refresh_token), and only questions you map are sent.",
+    "text": "Salesforce memerlukan nama belakang dan perusahaan pada setiap lead. Jika formulir tidak menanyakannya, QRdx menggunakan bagian email sebelum @ dan [not provided] bawaan Salesforce. QRdx meminta akses API dan refresh token (api, refresh_token), dan hanya pertanyaan yang Anda petakan yang dikirim.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.1"
+  },
+  "8c9592f4fc1b": {
+    "source": "Connect Salesforce",
+    "text": "Hubungkan Salesforce",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.primaryAction.label"
+  },
+  "9436d9616759": {
+    "source": "Pick production or sandbox, then click Enable",
+    "text": "Pilih produksi atau sandbox, lalu klik Aktifkan",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.title"
+  },
+  "c0e545dee66f": {
+    "source": "Settings → Integrations → Salesforce. Sign in to the org and allow access. It needs a Salesforce edition with API access and a user who can create leads; your Salesforce admin may need to approve the app first.",
+    "text": "Pengaturan → Integrasi → Salesforce. Masuk ke org dan izinkan akses. Anda memerlukan edisi Salesforce dengan akses API dan pengguna yang dapat membuat lead; admin Salesforce Anda mungkin perlu menyetujui aplikasinya terlebih dahulu.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.body"
+  },
+  "9cc2cb890587": {
+    "source": "Choose pages, map fields and set the lead source",
+    "text": "Pilih halaman, petakan kolom, dan atur sumber lead",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.title"
+  },
+  "01bddd108b4e": {
+    "source": "Pick the hosted pages whose forms should reach Salesforce, check the suggested mapping, and turn the sync on.",
+    "text": "Pilih halaman yang di-hosting yang formulirnya harus masuk ke Salesforce, periksa pemetaan yang disarankan, lalu aktifkan sinkronisasi.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.body"
+  },
+  "b650021a8590": {
+    "source": "New responses become leads",
+    "text": "Respons baru menjadi lead",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.2.title"
+  },
+  "598f409deb1f": {
+    "source": "Matched by email",
+    "text": "Dicocokkan lewat email",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.title"
+  },
+  "4be6b5639961": {
+    "source": "One open lead per email, updated by later responses instead of duplicated.",
+    "text": "Satu lead terbuka per email, diperbarui oleh respons berikutnya, bukan digandakan.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.description"
+  },
+  "b74f68846b09": {
+    "source": "Field mapping and lead source",
+    "text": "Pemetaan kolom dan sumber lead",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.title"
+  },
+  "8f629d2cbc27": {
+    "source": "Email, name, phone, company, title and more, with suggested defaults.",
+    "text": "Email, nama, telepon, perusahaan, jabatan, dan lainnya, dengan default yang disarankan.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.description"
+  },
   "29ade64ecd40": {
     "source": "Styled QR codes",
     "text": "Kode QR bergaya",

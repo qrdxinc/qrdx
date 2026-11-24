@@ -17,7 +17,7 @@ export {
   INTEGRATION_CAPABILITY_LABELS,
 } from "@repo/integration-kit";
 // Content sources (Stripe, Cal.com, Calendly, Shopify, YouTube, Spotify) and
-// data out (Google Sheets, Slack, HubSpot, Mailchimp)
+// data out (Google Sheets, Slack, HubSpot, Mailchimp, Salesforce)
 export {
   createContentSourceClient,
   DATA_REVOCABLE_PROVIDERS,
@@ -91,6 +91,8 @@ export {
 export {
   createOAuthHandler,
   OAuthHandler,
+  oauthVariantName,
+  withOAuthVariant,
 } from "./core/oauth";
 export {
   refreshIntegrationToken,
@@ -138,6 +140,10 @@ export {
   createRebrandlyClient,
   RebrandlyClient,
 } from "./integrations/rebrandly";
+export {
+  createSalesforceClient,
+  SalesforceClient,
+} from "./integrations/salesforce";
 export { createShortIoClient, ShortIoClient } from "./integrations/short-io";
 export { readSlackInstall, type SlackInstall } from "./integrations/slack";
 export {
@@ -174,6 +180,7 @@ export type {
   IntegrationCategory,
   IntegrationType,
   OAuthConfig,
+  OAuthHostVariant,
   TokenResponse,
 } from "./types";
 // Utils

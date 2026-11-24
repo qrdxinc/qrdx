@@ -6,6 +6,8 @@ import {
   generateCodeVerifier,
   getIntegrationConfigWithEnv,
   getIntegrationRegistry,
+  oauthVariantName,
+  withOAuthVariant,
 } from "@repo/integrations";
 import { cookies } from "next/headers";
 import { env } from "@/env";
@@ -55,18 +57,23 @@ export function isOAuthConfigured(provider: string): boolean {
 const verifierCookieName = (provider: string) => `${provider}_code_verifier`;
 const stateCookieName = (provider: string) => `${provider}_oauth_state`;
 const returnCookieName = (provider: string) => `${provider}_oauth_return`;
+const variantCookieName = (provider: string) => `${provider}_oauth_variant`;
 
 /**
  * Starts an integration OAuth flow: stores the PKCE verifier and a random
  * `state` in httpOnly cookies and returns the provider authorization URL.
  * `returnTo` (a same-site path, validated here) is where the callback sends
- * the browser afterwards instead of Settings → Integrations.
+ * the browser afterwards instead of Settings → Integrations. `variant` picks
+ * another sign-in host the provider offers (Salesforce's "sandbox"); unknown
+ * names fall back to the default host.
  */
 export async function createIntegrationAuthUrl(
   provider: string,
-  options: { returnTo?: unknown } = {},
+  options: { returnTo?: unknown; variant?: unknown } = {},
 ): Promise<string> {
-  const config = getIntegrationConfigWithEnv(provider, env);
+  const base = getIntegrationConfigWithEnv(provider, env);
+  const variant = oauthVariantName(base, options.variant);
+  const config = withOAuthVariant(base, variant);
   const codeVerifier = generateCodeVerifier();
   const state = randomBytes(32).toString("base64url");
 
@@ -91,26 +98,37 @@ export async function createIntegrationAuthUrl(
   } else {
     cookieStore.delete(returnCookieName(provider));
   }
+  // The callback exchanges the code on the same host.
+  if (variant) {
+    cookieStore.set(variantCookieName(provider), variant, cookieOptions);
+  } else {
+    cookieStore.delete(variantCookieName(provider));
+  }
 
   return createOAuthHandler(config).generateAuthUrl(codeVerifier, state);
 }
 
 /**
  * Reads (and clears) the flow cookies on callback, rejecting a missing or
- * mismatched `state` (login CSRF / code injection).
+ * mismatched `state` (login CSRF / code injection). `variant` is the sign-in
+ * host the flow started on (null: the default), re-checked against the
+ * provider's own list.
  */
 export async function consumeIntegrationOAuthState(
   provider: string,
   state: string | null,
 ): Promise<
-  { codeVerifier: string } | { error: "missing_verifier" | "invalid_state" }
+  | { codeVerifier: string; variant: string | null }
+  | { error: "missing_verifier" | "invalid_state" }
 > {
   const cookieStore = await cookies();
   const codeVerifier = cookieStore.get(verifierCookieName(provider))?.value;
   const expectedState = cookieStore.get(stateCookieName(provider))?.value;
+  const storedVariant = cookieStore.get(variantCookieName(provider))?.value;
 
   cookieStore.delete(verifierCookieName(provider));
   cookieStore.delete(stateCookieName(provider));
+  cookieStore.delete(variantCookieName(provider));
 
   if (!codeVerifier) {
     return { error: "missing_verifier" };
@@ -129,7 +147,11 @@ export async function consumeIntegrationOAuthState(
     return { error: "invalid_state" };
   }
 
-  return { codeVerifier };
+  const definition = getIntegrationRegistry().get(provider);
+  return {
+    codeVerifier,
+    variant: definition ? oauthVariantName(definition, storedVariant) : null,
+  };
 }
 
 /**

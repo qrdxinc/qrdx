@@ -258,6 +258,7 @@ describe("with the real registry", () => {
         "notion",
         "onedrive",
         "rebrandly",
+        "salesforce",
         "shopify",
         "short-io",
         "slack",

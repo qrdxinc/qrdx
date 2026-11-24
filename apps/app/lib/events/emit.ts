@@ -434,7 +434,7 @@ export function emitFormSubmitted(
     submitted_at: (input.submittedAt ?? new Date()).toISOString(),
   };
   emitEventInBackground("form.submitted", data, scope);
-  // HubSpot / Mailchimp streams (lib/data-connections): sent right away
+  // HubSpot / Mailchimp / Salesforce streams (lib/data-connections): sent right away
   triggerIntegrationSyncs(scope, "responses");
 }
 

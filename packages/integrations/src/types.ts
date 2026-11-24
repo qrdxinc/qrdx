@@ -30,6 +30,17 @@ export interface OAuthConfig {
   tokenAuth?: "body" | "basic";
   /** Token request encoding (default: form). Notion expects JSON. */
   tokenFormat?: "form" | "json";
+  /**
+   * Other sign-in hosts the person can pick when connecting, by name, like
+   * Salesforce's "sandbox" (test.salesforce.com). The pick is kept in the
+   * connection's metadata.oauthVariant, so refreshes use the same host.
+   */
+  variants?: Record<string, OAuthHostVariant>;
+}
+
+export interface OAuthHostVariant {
+  authUrl: string;
+  tokenUrl: string;
 }
 
 /**
