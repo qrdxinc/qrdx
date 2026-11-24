@@ -91,9 +91,11 @@ export interface LlmsTxtInput {
   appDownloadGenerator?: boolean;
   limits: Record<Plan, PlanLimits>;
   docs: LlmsDocsSection[];
+  /** Every blog post, newest first, with its one-line description */
   blog: LlmsLink[];
   /** Published customer stories (lib/customers.ts) */
   customers: LlmsLink[];
+  /** Every comparison page */
   compare: LlmsLink[];
   legal: LlmsLink[];
   integrations: LlmsLink[];
@@ -105,6 +107,7 @@ export interface LlmsTxtInput {
 export const LLMS_SECTIONS = [
   "Product",
   "Playground and tools",
+  "Guides and research",
   "Developers",
   "Docs",
   "Help center",
@@ -114,6 +117,27 @@ export const LLMS_SECTIONS = [
 ] as const;
 
 const HELP_TAB = "Help";
+
+/**
+ * QRdx's scan study (23 Nov 2026), on qrdx.dev whatever the deployment:
+ * the post lives on the marketing site, and its code and data in the
+ * repository.
+ */
+const SCAN_STUDY_URL = new URL(
+  "/blog/qr-code-scan-study",
+  CANONICAL_ORIGIN,
+).toString();
+const SCAN_STUDY_DATA = `${GITHUB_REPO_URL}/tree/main/scripts/scan-study`;
+
+/** The study's six short answers, as its post opens with them. */
+const SCAN_STUDY_FINDINGS = [
+  "Logo: at error correction level H, a centred logo up to 39% of the code's width (15% of its area) was read in at least 80% of captures by all three decoders; one module wider, 42% of the width, fewer than half were. At level M the limit was 24% of the width, at L 17%. Level H's 30% is a share of codewords, not of the code's area, so a logo can't cover 30% of the code",
+  "Contrast: ZXing-C++ and zbar read 98% or more of grey-on-white codes down to a 2:1 contrast ratio; jsQR needed 4.5:1, and at 3:1 it read one image in three. 4.5:1 cleared all three",
+  "Light on dark: jsQR and ZXing-C++ read inverted codes almost every time; zbar, with its default settings, read none of 300",
+  "Quiet zone: printed straight onto a dark or busy surface with no light border, codes were read in 0 to 38% of captures; one module of light border brought every decoder to 98% or more",
+  "Size: 2 camera pixels per module was enough on a clean image, 2.25 with a little sensor blur; at 1.5, fewer than half the codes were read by all three decoders",
+  "Damage: JPEG compression made almost no difference, even at quality 1; blur did: everything was read at a blur of 0.3 module, and nothing at 0.6",
+];
 
 export function buildLlmsTxt(input: LlmsTxtInput): string {
   const { origin, offered, showsPath } = input;
@@ -143,7 +167,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       ? ` npm's latest is ${name}@${published}; these docs describe ${repo}, which isn't on npm yet.`
       : "";
 
-  const summary = `> QRdx (qrdx.dev) is an open-source QR code platform, built open core: the app is AGPL-3.0, the library and developer tools are MIT, and the business features in the ee/ folders (workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking) are under the QRdx Commercial License. Anyone can design static QR codes in the browser with no signup or watermark (${STYLE_SUMMARY}, ${PRODUCT_FACTS.frames} frames, gradients, logos, and Logo QR or Image QR art) and download PNG, JPG, WebP, SVG, PDF, EPS, GIF, BMP, ICO or TIFF (RGB or CMYK) files. A free account adds dynamic QR codes you can change after printing, with scan analytics and hosted mobile pages; paid plans add smart routing, link controls, ${on("customDomains") ? "custom domains, " : ""}teams and webhooks. Developers get a REST API, a keyless QR image API, a remote MCP server, a CLI, a React library and a shadcn/ui registry.`;
+  const summary = `> QRdx (qrdx.dev): free QR codes, and dynamic codes that keep working whatever happens to your plan. It's an open-source QR code platform, built open core: the app is AGPL-3.0, the library and developer tools are MIT, and the business features in the ee/ folders (workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking) are under the QRdx Commercial License. Anyone can design static QR codes in the browser with no signup or watermark (${STYLE_SUMMARY}, ${PRODUCT_FACTS.frames} frames, gradients, logos, and Logo QR or Image QR art) and download PNG, JPG, WebP, SVG, PDF, EPS, GIF, BMP, ICO or TIFF (RGB or CMYK) files. A free account adds dynamic QR codes you can change after printing, with scan analytics and hosted mobile pages; paid plans add smart routing, link controls, ${on("customDomains") ? "custom domains, " : ""}teams and webhooks. Developers get a REST API, a keyless QR image API, a remote MCP server, a CLI, a React library and a shadcn/ui registry.`;
 
   const facts = [
     "Key facts:",
@@ -154,6 +178,8 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     `- Free QR code API, no key: \`GET ${api}/qr?data=…\` returns an SVG, PNG, WebP, GIF, BMP, ICO, TIFF or EPS QR code with no account or signup, at up to ${PRODUCT_FACTS.imageApiPerMinute} requests a minute per IP address; identical URLs are cached for a year. URL builder: ${abs("/qr-code-api")}.`,
     `- Can Claude or ChatGPT make a QR code that scans? Yes, with the QRdx MCP server at \`${mcpUrl}\`: free, no key, and the codes it renders are standard QR codes (a chat model drawing one itself rarely scans).`,
     `- What's free: unlimited static QR codes with no account. A free account adds ${input.limits.free.dynamicCodes} dynamic codes and ${input.limits.free.landingPages} hosted pages, with unlimited scans.`,
+    `- What stops a QR code from scanning, from QRdx's [scan study](${SCAN_STUDY_URL}) of 12,108 images, each read by three open-source decoders, jsQR, ZXing-C++ and zbar (its [code and data](${SCAN_STUDY_DATA}) are on GitHub, with one command to run it again):`,
+    ...SCAN_STUDY_FINDINGS.map((finding) => `  - ${finding}.`),
     "- When to choose something else: QRdx has no SOC 2 or HIPAA certification, so teams that need that paperwork may prefer Uniqode. It isn't a general link shortener for links shared online (it integrates with Dub for that), and Bitly suits teams whose links already live there. Placing a code inside a larger design is simplest in Canva. Native CRM or CDP integrations point to Flowcode, a custom-quoted Enterprise tier with its own limits to Scanova, and a native scanner app to QR TIGER. For a dependency-free React component with a long track record, qrcode.react is more mature: the qrdx library is pre-1.0 and React-first.",
     `- Markdown versions: add \`.md\` to any docs URL (for example ${abs("/docs/developers/mcp.md")}); ${abs("/pricing.md")} and ${abs("/mcp.md")} are Markdown too, and ${abs("/llms-full.txt")} has every docs page in one file.`,
   ].join("\n");
@@ -409,6 +435,24 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       },
   ]);
 
+  // Every post with its one-line answer, then every comparison.
+  const guides = links([
+    {
+      title: "Blog",
+      url: "/blog",
+      description:
+        "Guides to making, printing and tracking QR codes, research and product news",
+    },
+    ...input.blog,
+    {
+      title: "All comparisons",
+      url: "/compare",
+      description:
+        "QRdx side by side with other QR code generators and libraries: free plans, prices, limits, and where the other tool is the better choice",
+    },
+    ...input.compare,
+  ]);
+
   const developers = links([
     {
       title: "Use QRdx with AI agents",
@@ -617,10 +661,6 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       url: placements.basePath,
       description: `What to link and how big to print on ${placements.items.length} placements`,
     },
-    { title: "All comparisons", url: "/compare" },
-    ...input.compare,
-    { title: "Blog", url: "/blog" },
-    ...input.blog,
     { title: "Customers", url: "/customers" },
     ...input.customers,
   ]);
@@ -628,6 +668,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
   const sections: Record<(typeof LLMS_SECTIONS)[number], string[]> = {
     Product: product,
     "Playground and tools": tools,
+    "Guides and research": guides,
     Developers: developers,
     Docs: docs,
     "Help center": help,

@@ -29,7 +29,7 @@ export async function GET() {
     "",
     `> The complete QRdx docs as Markdown: making and designing QR codes, dynamic QR codes, hosted pages and forms, smart routing, analytics, ${isFeatureAvailable("customDomains") ? "custom domains, " : ""}teams, notifications, webhooks, plans and limits, the developer tools (REST API, OpenAPI document, MCP server, image API, CLI, qrdx React library, shadcn/ui registry) and self-hosting. QRdx (qrdx.dev) is an open-source (AGPL-3.0) QR code platform.`,
     "",
-    `Index of the whole site: ${url("/llms.txt")}. Each page is also available on its own at its URL plus .md.`,
+    `Index of the whole site: ${url("/llms.txt")}, which also lists every blog post and comparison with a one-line answer, and the scan study's findings. Each docs page is also available on its own at its URL plus .md.`,
     "",
     "Sections, in order:",
     "",
