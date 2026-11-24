@@ -84,6 +84,7 @@ import { emitSound } from "@/components/editor/sound";
 import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { SignUpNudge, useSignUpNudge } from "@/components/sign-up-nudge";
+import { downloadLookProps } from "@/lib/analytics/download-look";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import {
   fromMillimeters,
@@ -455,6 +456,15 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
     downloadOptions.filename ||
     getDownloadFilename(format, exportSize, themeState.styles.frame);
 
+  // What qr_downloaded says beside the format: the content type, whether
+  // someone is signed in (left out while the session loads) and how the
+  // design looks. Both tabs draw the frame and art.
+  const downloadedProps = () => ({
+    content_type: useQREditorStore.getState().contentType,
+    ...(!sessionPending && { signed_in: Boolean(session?.user) }),
+    ...downloadLookProps(themeState.styles),
+  });
+
   const handleDownload = async () => {
     if (sizeError || gifRefusal) return;
     setIsDownloading(true);
@@ -469,7 +479,7 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
       track("qr_downloaded", {
         format,
         source: "playground",
-        content_type: useQREditorStore.getState().contentType,
+        ...downloadedProps(),
       });
       toast.success(t("downloadedFilename", { filename }));
       afterDownload();
@@ -518,7 +528,7 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
       track("qr_downloaded", {
         format: `print-${printFormat}`,
         source: "playground",
-        content_type: useQREditorStore.getState().contentType,
+        ...downloadedProps(),
       });
       toast.success(t("downloadedPrintfilename", { printFilename }));
       afterDownload();
