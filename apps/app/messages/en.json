@@ -220,6 +220,7 @@
     "description": "The open-source QR code platform.",
     "starOnGithub": "Star on GitHub",
     "newsOnX": "QRdx news on X",
+    "joinDiscord": "Join the QRdx Discord",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -959,6 +960,7 @@
         "title": "Still stuck?",
         "body": "Tell us what you were trying to do and what happened. Include the code's short link if it's about a code.",
         "widget": "The support widget on qrdx.dev, once you allow Functionality cookies.",
+        "discord": "Ask in the QRdx Discord",
         "github": "Report a bug on GitHub",
         "contact": "All the ways to contact us"
       }

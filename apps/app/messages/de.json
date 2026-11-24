@@ -220,6 +220,7 @@
     "description": "Die Open-Source-QR-Code-Plattform.",
     "starOnGithub": "Star auf GitHub",
     "newsOnX": "QRdx-News auf X",
+    "joinDiscord": "Dem QRdx Discord beitreten",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
     "columns": {

@@ -8,6 +8,7 @@
   <a href="https://qrdx.dev/playground"><strong>Open the playground</strong></a> ·
   <a href="https://qrdx.dev/docs">Docs</a> ·
   <a href="https://qrdx.dev/community">Community</a> ·
+  <a href="https://discord.gg/856fWMrYBm">Discord</a> ·
   <a href="https://qrdx.dev/pricing">Pricing</a>
 </p>
 
@@ -177,7 +178,7 @@ The QRdx name and logo are trademarks. Read the [trademark policy](TRADEMARK.md)
 
 ## Contributing
 
-Bug reports, ideas and pull requests are welcome. [Open an issue](https://github.com/qrdxinc/qrdx/issues), or look for issues labeled `good first issue`. [CONTRIBUTING.md](CONTRIBUTING.md) covers local setup, the project layout and the checks to run. Report security issues privately, as [SECURITY.md](SECURITY.md) describes.
+Bug reports, ideas and pull requests are welcome. [Open an issue](https://github.com/qrdxinc/qrdx/issues), or look for issues labeled `good first issue`. To ask a question, share a design or talk to the team, join the [QRdx Discord](https://discord.gg/856fWMrYBm). [CONTRIBUTING.md](CONTRIBUTING.md) covers local setup, the project layout and the checks to run. Report security issues privately, as [SECURITY.md](SECURITY.md) describes.
 
 QRdx is a Bun and Turborepo monorepo: a Next.js app with React, TypeScript, Tailwind CSS, Drizzle on Postgres, Better Auth and the Vercel AI SDK. QR generation started from [qrcode.react](https://github.com/zpao/qrcode.react), and the playground layout was inspired by [tweakcn](https://github.com/jnsahaj/tweakcn).
 
