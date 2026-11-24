@@ -63,6 +63,8 @@ A logo (with its clear space) spoils every codeword it touches, and each error-c
 - `autoLevel` raises error correction to `H` whenever the cleared area covers more than 7% of the code (`AUTO_LEVEL_LOGO_COVERAGE`). It is off by default, so existing codes keep their level.
 - The scan score counts the same codewords and warns before the cap would shrink your logo.
 
+The same arithmetic predicts where real decoders stop. In our [scan study](/blog/qr-code-scan-study), jsQR, ZXing-C++ and zbar all read 80% or more of captures with a centred logo right up to the largest one that kept every block within its repair budget, and not past it: 39% of the code's width at level H, 24% at M and 17% at L. The library's 60% cap leaves the rest of each block's budget for scratches, folds and glare.
+
 ## Shape, plate and background
 
 ```tsx title="components/round-logo-code.tsx"
