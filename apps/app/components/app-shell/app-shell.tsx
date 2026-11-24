@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode, Suspense } from "react";
 import { CodeOptionPlansProvider } from "@/app/(app)/dashboard/codes/_components/code-options";
 import { codeOptionPlansFor } from "@/app/(app)/dashboard/codes/_lib/code-option-plans";
 import { changelogBodies } from "@/components/changelog/changelog-body";
@@ -11,6 +11,7 @@ import { getChangelogFeed } from "@/lib/changelog-feed-server";
 import { AppFrame } from "./app-frame";
 import { CreateProvider } from "./create-actions";
 import { SpotlightProvider } from "./feature-spotlight";
+import { PastDueBanner } from "./past-due-banner";
 import { SetupGuide } from "./setup-guide";
 import { getShellData, getShellLimitWarnings } from "./shell-data";
 import { WhatsNewProvider } from "./whats-new";
@@ -49,6 +50,12 @@ export async function AppShell({ children }: { children: ReactNode }) {
                 // Docs search goes through the docs site (/api/search).
                 docsSearch={Boolean(env.DOCS_ZONE_URL)}
                 limitWarnings={limitWarnings}
+                // A failed payment's banner, streamed: pages never wait on it.
+                notice={
+                  <Suspense fallback={null}>
+                    <PastDueBanner />
+                  </Suspense>
+                }
                 shell={shell}
               >
                 {children}
