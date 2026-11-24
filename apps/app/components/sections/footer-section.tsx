@@ -6,12 +6,14 @@ import {
   CANONICAL_ORIGIN,
   DISCORD_INVITE_URL,
   GITHUB_REPO_URL,
+  LINKEDIN_COMPANY_URL,
   X_PROFILE_URL,
 } from "@repo/config";
 import { QrdxLogo } from "@repo/design-system/components/brand/qrdx-logo";
 import {
   DiscordLogo,
   GithubLogo,
+  LinkedinLogo,
   XLogo,
 } from "@repo/design-system/components/icons";
 import {
@@ -158,6 +160,15 @@ export function FooterSection() {
               aria-label={t("joinDiscord")}
             >
               <DiscordLogo aria-hidden className="size-4" />
+            </a>
+            <a
+              href={LINKEDIN_COMPANY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={SOCIAL}
+              aria-label={t("linkedin")}
+            >
+              <LinkedinLogo aria-hidden className="size-3.5" />
             </a>
           </div>
         </div>

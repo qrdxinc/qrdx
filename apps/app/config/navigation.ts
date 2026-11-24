@@ -1,4 +1,4 @@
-import { GITHUB_REPO_URL } from "@repo/config";
+import { CANONICAL_ORIGIN, GITHUB_REPO_URL } from "@repo/config";
 import { GithubLogo } from "@repo/design-system/components/icons";
 import {
   Barcode,
@@ -336,6 +336,13 @@ export interface FooterColumn {
   links: FooterLink[];
 }
 
+/**
+ * The press kit: the marketing site's own page (the site zone's opt-in
+ * `press` group), with no copy in this app, so linked by its qrdx.dev
+ * address like the scan study (lib/scan-study.ts).
+ */
+const PRESS_KIT_URL = `${CANONICAL_ORIGIN}/press`;
+
 export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     key: "product",
@@ -415,6 +422,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { key: "security", href: "/security" },
       { key: "guarantee", href: "/guarantee" },
       { key: "affiliates", href: "/affiliates" },
+      { key: "press", href: PRESS_KIT_URL },
       { key: "contact", href: "/docs/help/contact" },
     ],
   },
