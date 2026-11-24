@@ -115,11 +115,22 @@ export function readSheetTarget(
   return target?.spreadsheetId ? target : null;
 }
 
+/** What the batches of one worker run share. */
+interface RunContext {
+  /**
+   * Pipedrive persons found or created in this run (email → id). Pipedrive's
+   * search can lag behind a create, so an email from an earlier batch isn't
+   * searched, and created, a second time.
+   */
+  pipedrivePeople: Map<string, number>;
+}
+
 /** Delivers one batch for the stream. */
 async function deliverBatch(
   row: SinkRow,
   state: SyncState,
   accessToken: string,
+  run: RunContext,
 ): Promise<{
   result: SinkDeliveryResult;
   settingsPatch?: Record<string, unknown>;
@@ -190,8 +201,9 @@ async function deliverBatch(
           createLead: pipedrive.createLead === true,
         },
         responses,
-        // A batch that failed before may have made some of its leads
-        { isRetry: state.attempts > 0 },
+        // Leads are always checked before they're added, so no retry flag:
+        // "Retry now" resets the attempt count.
+        { knownPeople: run.pipedrivePeople },
       ),
       read: responses.length,
     };
@@ -290,11 +302,12 @@ async function syncOne(
     }
 
     let caughtUp = false;
+    const run: RunContext = { pipedrivePeople: new Map() };
     for (let batch = 0; batch < MAX_BATCHES_PER_RUN; batch++) {
       if (Date.now() > deadline) break;
       let outcome: Awaited<ReturnType<typeof deliverBatch>>;
       try {
-        outcome = await deliverBatch(row, state, connection.accessToken);
+        outcome = await deliverBatch(row, state, connection.accessToken, run);
       } catch (error) {
         state = nextSyncState(state, { ok: false, error });
         await release(state);

@@ -115,7 +115,7 @@ export const crm: IntegrationCatalogEntry[] = [
     tagline:
       "Every form response on your hosted pages creates or updates a Pipedrive person, and can add a lead.",
     description: [
-      "Connect Pipedrive, choose the pages, and map each form's questions to person fields. Email, name and phone are suggested for you. New responses then find the person by email and update them, or create one, so the same person never becomes two.",
+      "Connect Pipedrive, choose the pages, and map each form's questions to person fields. Email, name and phone are suggested for you. New responses then find the person by email and update them, or create one.",
       "Turn on leads and every response also adds a lead linked to that person, so each enquiry lands in your Leads Inbox. QRdx asks for access to contacts and leads, and only questions you map are sent. If a delivery is retried, a response that already has a lead doesn't get a second one.",
     ],
     kind: "connect",
@@ -141,7 +141,7 @@ export const crm: IntegrationCatalogEntry[] = [
       },
       {
         title: "New responses become persons and leads",
-        body: "Responses after you turn it on are sent within minutes. Responses without an email are skipped.",
+        body: "Responses after you turn it on are sent within minutes. Responses without an email, or with one longer than Pipedrive can search (100 characters), are skipped.",
       },
     ],
     capabilities: [

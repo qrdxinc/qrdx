@@ -1,5 +1,6 @@
 export {
   createPipedriveClient,
+  PIPEDRIVE_MAX_SEARCH_TERM,
   PIPEDRIVE_REVOKE_URL,
   PipedriveClient,
   type PipedrivePhone,

@@ -8,7 +8,11 @@ import {
 } from "../../sinks/mapping";
 import { cursorAfter } from "../../sinks/state";
 import type { SinkDeliveryResult, SinkFormResponse } from "../../sinks/types";
-import type { PipedriveClient, PipedrivePhone } from "./client";
+import {
+  PIPEDRIVE_MAX_SEARCH_TERM,
+  type PipedriveClient,
+  type PipedrivePhone,
+} from "./client";
 
 /**
  * Pause between two people's searches. Pipedrive allows its search endpoints
@@ -86,7 +90,9 @@ export function pipedrivePeople(
     }
     const mapping = mappingFor(response, settings, PIPEDRIVE_TARGETS);
     const mapped = mappedValues(response, mapping, NAMES);
-    if (!mapped) {
+    // Pipedrive can't search an email this long, so the person couldn't be
+    // found again: skipped, rather than a refused request that stops the stream.
+    if (!mapped || mapped.email.length > PIPEDRIVE_MAX_SEARCH_TERM) {
       skipped++;
       continue;
     }
@@ -132,20 +138,32 @@ function newPhones(
   return added;
 }
 
+/**
+ * The person's id, and whether this call created them (a person created a
+ * moment ago has no leads yet). `known` holds the people this worker run has
+ * already found or created: Pipedrive's search can lag behind a create, so an
+ * email seen in an earlier batch of the run is never searched (and created)
+ * again.
+ */
 async function upsertPerson(
   client: PipedriveClient,
-  person: PipedrivePerson
-): Promise<number> {
+  person: PipedrivePerson,
+  known: Map<string, number>
+): Promise<{ id: number; created: boolean }> {
   // The latest answer wins: the last response that gave a name
   const name = [...person.entries].reverse().find((entry) => entry.name)?.name;
-  const id = await client.findPersonByEmail(person.email);
+  const id =
+    known.get(person.email) ?? (await client.findPersonByEmail(person.email));
   if (id === null) {
-    return client.createPerson({
+    const createdId = await client.createPerson({
       name: name ?? person.email,
       email: person.email,
       phones: newPhones(person.entries, []),
     });
+    known.set(person.email, createdId);
+    return { id: createdId, created: true };
   }
+  known.set(person.email, id);
   // The person was found by this email, so their emails stay as they are. A
   // number is added to the list they have, which keeps their primary: the
   // list is read first, so nothing a person has is ever left out.
@@ -170,34 +188,46 @@ async function upsertPerson(
       ...(phones ? { phones } : {}),
     });
   }
-  return id;
+  return { id, created: false };
 }
 
 /**
  * Creates or updates a person for each email in the responses and, with
- * `createLead`, one lead per response. Safe to send twice: a person is found
- * by email, and on a retry (`isRetry`, the batch failed halfway before) the
- * person's leads are read first and a response that already has one (its
- * `origin_id` is the response id) is not given another.
+ * `createLead`, one lead per response. Safe to send again, however the last
+ * attempt ended ("Retry now", a backoff retry, a worker stopped mid-batch): a
+ * person is found by email, and before adding leads to a person who already
+ * existed, their leads (open and archived) are read, and a response that has
+ * one (its `origin_id` is the response id) is not given another.
+ *
+ * `knownPeople` (email → person id) is shared by every batch of one worker
+ * run; it is filled as people are found or created.
  */
 export async function syncResponsesToPipedrive(
   client: PipedriveClient,
   settings: PipedriveSettings,
   responses: SinkFormResponse[],
   {
-    isRetry = false,
+    knownPeople = new Map<string, number>(),
     sleep = (ms: number) => new Promise<void>((done) => setTimeout(done, ms)),
-  }: { isRetry?: boolean; sleep?: (ms: number) => Promise<void> } = {}
+  }: {
+    knownPeople?: Map<string, number>;
+    sleep?: (ms: number) => Promise<void>;
+  } = {}
 ): Promise<SinkDeliveryResult> {
   const { people, skipped } = pipedrivePeople(responses, settings);
   let delivered = 0;
   for (const [index, person] of people.entries()) {
     if (index > 0) await sleep(PIPEDRIVE_SEARCH_SPACING_MS);
-    const personId = await upsertPerson(client, person);
+    const { id: personId, created } = await upsertPerson(
+      client,
+      person,
+      knownPeople
+    );
     if (settings.createLead) {
-      const have = isRetry
-        ? await client.listLeadOrigins(personId)
-        : new Set<string>();
+      // A person created just now has no leads to read back
+      const have = created
+        ? new Set<string>()
+        : await client.listLeadOrigins(personId);
       for (const entry of person.entries) {
         if (have.has(entry.response.id)) continue;
         await client.createLead({
