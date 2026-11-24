@@ -42,6 +42,7 @@ import {
 } from "iconsax-reactjs";
 import type { ComponentType } from "react";
 import type { Messages } from "@/lib/i18n/messages";
+import { SCAN_STUDY_URL } from "@/lib/scan-study";
 
 // Where the site's chrome links: the header's menus, the mobile menu and the
 // footer, from one list so the same page has the same name everywhere
@@ -393,6 +394,17 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { key: "scanner", href: "/scan" },
       { key: "scanChecker", href: "/tools/scan-checker" },
       { key: "printSize", href: "/tools/print-size" },
+    ],
+  },
+  {
+    // The answer pages people ask about before printing, and the study behind
+    // them (on qrdx.dev only, so by its full address: lib/scan-study.ts).
+    key: "guides",
+    links: [
+      { key: "guideExpire", href: "/blog/do-qr-codes-expire" },
+      { key: "guidePrintSize", href: "/blog/how-big-should-a-qr-code-be" },
+      { key: "guideDynamicStatic", href: "/blog/dynamic-vs-static-qr-codes" },
+      { key: "scanStudy", href: SCAN_STUDY_URL },
     ],
   },
   {

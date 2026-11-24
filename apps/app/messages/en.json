@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "QRdx: Free QR Code Generator with Logos and Dynamic Codes",
-    "siteDescription": "Free, open-source QR code generator: unlimited codes with logos, colors and frames, no signup or watermark. Plus dynamic codes and scan analytics.",
+    "siteDescription": "Free QR codes, and dynamic codes that keep working whatever happens to your plan. Design them with logos, colors and frames, no signup or watermark.",
     "ogImageAlt": "QRdx: free QR code generator with dynamic QR codes, hosted pages and scan analytics"
   },
   "nav": {
@@ -217,17 +217,19 @@
     }
   },
   "footer": {
-    "description": "The open-source QR code platform.",
+    "description": "Free QR codes, and dynamic codes that keep working whatever happens to your plan.",
     "starOnGithub": "Star on GitHub",
     "newsOnX": "QRdx news on X",
     "joinDiscord": "Join the QRdx Discord",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
+    "license": "The app is open source under the <link>AGPL-3.0</link>.",
     "columns": {
       "product": "Product",
       "developers": "Developers",
       "solutions": "Solutions",
       "resources": "Resources",
+      "guides": "Guides",
       "company": "Company",
       "compare": "Compare"
     },
@@ -280,6 +282,10 @@
       "scanner": "QR code scanner",
       "scanChecker": "Scan checker",
       "printSize": "Print size calculator",
+      "guideExpire": "Do QR codes expire?",
+      "guidePrintSize": "How big to print a QR code",
+      "guideDynamicStatic": "Dynamic vs static codes",
+      "scanStudy": "QR code scan study",
       "security": "Security",
       "affiliates": "Affiliate program",
       "guarantee": "Never-Hostage Guarantee",
@@ -348,11 +354,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Free and open source (AGPL-3.0)",
+      "badge": "Free and open source",
       "title": "Free QR code generator, with dynamic codes that keep working",
-      "description": "Design branded QR codes with patterns, gradients, logos and frames, and download PNG, SVG, PDF, EPS or TIFF with no signup or watermark. Sign in for dynamic codes you can edit after printing, hosted pages and scan analytics.",
-      "primary": "Try the Playground",
-      "secondary": "Read the docs",
+      "description": "Design a branded QR code with your logo and download it free, with no signup or watermark. Sign in for dynamic codes you can change after printing. They never stop because of a plan change, a failed payment or a cancellation, on any plan.",
+      "primary": "Create a QR code",
+      "secondary": "Make a dynamic code",
       "sceneLabel": "Animated drawing of the QRdx flow: a studio screen designs and styles a QR code, a printer prints it on a card, a robot arm places the card on a conveyor, a phone on a gate scans each card as it passes, the scan travels to an analytics panel that adds a new bar, and a large dynamic QR card swaps its destination link without being reprinted"
     },
     "customers": {
@@ -487,7 +493,7 @@
       "developers": {
         "eyebrow": "Developers",
         "title": "Built for developers",
-        "description": "Render codes with the qrdx React library, get images from a URL with the image API, or let Claude, Cursor and VS Code make them through the MCP server. You can also self-host the app.",
+        "description": "Render codes with the qrdx React library, get images from a URL with the image API, or let Claude, Cursor and VS Code make them through the MCP server. You can also self-host the app, which is open source under the AGPL-3.0.",
         "link": "Developer docs"
       }
     },
@@ -3617,7 +3623,7 @@
     }
   },
   "ai": {
-    "metaTitle": "AI QR Code Generator — Design QR Codes From a Prompt",
+    "metaTitle": "AI QR Code Generator: Design QR Codes From a Prompt",
     "metaDescription": "Describe a QR code and QRdx's AI designs it, repairs it until the scan score is Great and asks before changing your editor. Free accounts get {count, number} AI requests.",
     "artLink": "Or turn a link into scannable AI QR art",
     "chat": {
@@ -3656,7 +3662,7 @@
     "vectorEyebrowLead": "Available now, free",
     "vectorEyebrow": "No AI needed",
     "vectorTitleLead": "Logo QR and Image QR",
-    "vectorTitle": "Want a guaranteed-scannable vector code?",
+    "vectorTitle": "Prefer a vector code with no AI?",
     "vectorDescription": "Blend a logo or photo into the code itself. It's drawn as vectors, keeps the patterns scanners rely on solid, and needs no credits.",
     "openArt": "Open the Art tab",
     "vector": {

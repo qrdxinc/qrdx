@@ -202,6 +202,9 @@ const DYNAMIC: Record<string, (params: string[]) => boolean> = {
   "/qr-code-generator/[type]": ([type]) =>
     [...QR_TYPE_SLUGS, ...HOSTED_TYPE_SLUGS].some((slug) => slug === type),
   "/compare/[slug]": ([slug = ""]) => fileIn("compare", slug),
+  // The footer's guides: posts this app has too, so a self-hosted server
+  // serves them as well (the scan study is linked by its qrdx.dev address).
+  "/blog/[slug]": ([slug = ""]) => fileIn("blog", slug),
   "/legal/[[...slug]]": (slug) =>
     slug.length === 0 || fileIn("legal", slug.join("/")),
 };

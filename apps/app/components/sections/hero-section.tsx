@@ -59,8 +59,9 @@ export function HeroSection() {
               </LocaleLink>
             </Button>
             <Button asChild variant="outline">
-              {/* Only the primary CTA prefetches: the docs bundle is large. */}
-              <LocaleLink href="/docs" prefetch={false}>
+              {/* The editor with the code builder open, as on /dynamic-qr-code:
+                  signed out, it asks for sign-up when the code is made. */}
+              <LocaleLink href={playgroundHref({ type: "url", open: "dynamic" })}>
                 {t("secondary")}
               </LocaleLink>
             </Button>
