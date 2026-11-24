@@ -9544,6 +9544,12 @@
       }
     },
     "shell": {
+      "pastDueBanner": {
+        "title": "Your last payment didn't go through.",
+        "grace": "Your codes keep working. Update your card to keep {plan}. Its features stay on until {date}.",
+        "ended": "Your codes keep working. {plan} features are off until the payment goes through. Update your card to turn them back on.",
+        "updateCard": "Update card"
+      },
       "appSidebar": {
         "backToLabel": "Back to {label}",
         "expandSidebar": "Expand sidebar",
@@ -10147,7 +10153,9 @@
     },
     "scanMilestone": {
       "reached": "{code} reached {count, number} scans",
-      "body": "Your dynamic QR code just passed {count, number} scans. See where and when people scan it, and which devices they use."
+      "body": "Your dynamic QR code just passed {count, number} scans. See where and when people scan it, and which devices they use.",
+      "pro": "<link>Pro</link> also emails you at {first} and {second} scans and beyond, and can send you a weekly summary.",
+      "freeReason": "You're getting this because a code you made reached {count, number} scans. QRdx sends this once."
     },
     "formSubmission": {
       "subject": "{hasTitle, select, yes {New form response on “{title}”} other {New form response on your page}}",
@@ -10293,6 +10301,42 @@
       "seeInvites": "See your invites",
       "keeps": "The extra codes work on any plan and have no cash value. Codes you make with them keep working.",
       "reason": "You're getting this because a friend signed up through your QRdx invite link and made their first dynamic code."
+    },
+    "invite": {
+      "both": "Know someone who prints QR codes? <link>Invite them</link>: when they make their first dynamic code, you both get {count, number} more.",
+      "friend": "Know someone who prints QR codes? <link>Invite them</link>: when they make their first dynamic code, they get {count, number} more."
+    },
+    "activationNudge": {
+      "subject": "Your first dynamic code",
+      "greeting": "Hi {name},",
+      "what": "A dynamic code is a QR code you can print now and point somewhere else later, without reprinting, and it counts its scans.",
+      "button": "Make a dynamic code",
+      "reply": "If something got in the way, reply to this email. A person reads every reply.",
+      "reason": "You're getting this because you made a QRdx account a couple of days ago and haven't made a dynamic code yet. QRdx sends this once."
+    },
+    "paymentFailed": {
+      "subject": "Your last QRdx payment didn't go through",
+      "heading": "Your last payment didn't go through",
+      "greeting": "Hi {name},",
+      "body": "Your last payment for {plan} didn't go through. Your codes keep working. Update your card to keep {plan}.",
+      "grace": "{plan} features stay on until {date}. If it's still unpaid then, they turn off until the payment goes through. Your dynamic codes keep working either way.",
+      "button": "Update your card",
+      "reply": "If something looks wrong, reply to this email. A person reads every reply.",
+      "reason": "You're getting this because a payment for your QRdx {plan} plan didn't go through."
+    },
+    "newCustomer": {
+      "subject": "Welcome to QRdx {plan}",
+      "greeting": "Hi {name},",
+      "thanks": "Thanks for choosing {plan}. It's on now.",
+      "setUp": "{count, plural, one {One thing to set up first:} other {A few things to set up first:}}",
+      "domain": "<link>Connect your own domain</link>, so your short links use your name instead of QRdx's. Your plan includes {count} custom domains.",
+      "backHalf": "<link>Give a code a back-half you choose</link>, so its short link ends in a word like spring-menu instead of random letters.",
+      "alerts": "Scan alerts are on: QRdx emails you when a code gets its first scan and at milestones like 100 and 1,000 scans. <link>Change them, or turn on a weekly summary</link>, in Settings.",
+      "team": "<link>Invite your team</link>. Your plan includes {count} people, you included.",
+      "teamUnlimited": "<link>Invite your team</link>, as many people as you need.",
+      "moneyBack": "If {plan} isn't right for you, reply within {days, number} days of your payment and we'll refund it in full. You don't need to give a reason.",
+      "reply": "And reply with anything else too: a question, something that's missing, or what you use QRdx for. A person reads every reply.",
+      "reason": "You're getting this because you just started a QRdx {plan} plan."
     }
   },
   "codeActions": {
