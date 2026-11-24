@@ -29,7 +29,6 @@ export function CapMeter({
   limit,
   plan,
   note,
-  source,
   surface,
 }: {
   meterId: MeterId;
@@ -38,8 +37,6 @@ export function CapMeter({
   plan: Plan;
   /** Shown below 90% */
   note: string;
-  /** For the upgrade click's analytics */
-  source: string;
   /** Recorded on the payment (lib/checkout-surface.ts) */
   surface: KnownCheckoutSurface;
 }) {
@@ -100,7 +97,6 @@ export function CapMeter({
       {upgrade && (
         <UpgradeButton
           className="shrink-0 self-start sm:self-center"
-          source={source}
           surface={surface}
           upgrade={upgrade}
           variant="outline"

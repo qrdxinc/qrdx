@@ -10,6 +10,9 @@
 //   plugin        ref is a plugin's tag (Chrome, Figma, Canva, Raycast, Google Workspace)
 //   mcp           ref=mcp (a link the MCP server returned)
 //   bot           ref is a chat bot's tag (Slack, Telegram, Discord)
+//   product       ref is one of the site's own product links (the "Made with
+//                 QRdx" badge on hosted pages, a template demo's badge, the
+//                 404 page's link)
 //   developer     ref=cli or ref=n8n, or the referrer is npm or GitHub
 //   ai_assistant  utm_source or the referrer is an AI assistant
 //   search        the referrer is a search engine
@@ -18,7 +21,13 @@
 //   referral      any other referring site
 //   direct        nothing at all
 import type { AcquisitionChannel } from "@repo/database";
-import { BOT_REFS, DEVELOPER_REFS, MCP_REF, PLUGIN_REFS } from "./handoff-tags";
+import {
+  BOT_REFS,
+  DEVELOPER_REFS,
+  MCP_REF,
+  PLUGIN_REFS,
+  SITE_REFS,
+} from "./handoff-tags";
 import type { SignUpLanding } from "./landing";
 
 const DEVELOPER_SITES = ["npmjs.com", "github.com"];
@@ -30,6 +39,14 @@ const AI_ASSISTANT_SITES = [
   "claude.ai",
   "gemini.google.com",
   "copilot.microsoft.com",
+  "meta.ai",
+  "grok.com",
+  "chat.deepseek.com",
+  "chat.mistral.ai",
+  "you.com",
+  "phind.com",
+  // ChatGPT's Android app sends its package name as the referrer.
+  "com.openai.chatgpt",
 ];
 /** utm_source values the assistants (or people) use without a domain. */
 const AI_ASSISTANT_SOURCES = new Set([
@@ -39,6 +56,10 @@ const AI_ASSISTANT_SOURCES = new Set([
   "claude",
   "gemini",
   "copilot",
+  "grok",
+  "deepseek",
+  "mistral",
+  "phind",
 ]);
 
 const SEARCH_SITES = [
@@ -47,6 +68,7 @@ const SEARCH_SITES = [
   "ecosia.org",
   "search.brave.com",
   "baidu.com",
+  "kagi.com",
   // Android's Google app sends its package name as the referrer.
   "com.google.android.googlequicksearchbox",
 ];
@@ -113,6 +135,7 @@ export function acquisitionChannel(
   if (includes(PLUGIN_REFS, ref)) return "plugin";
   if (ref === MCP_REF) return "mcp";
   if (includes(BOT_REFS, ref)) return "bot";
+  if (includes(SITE_REFS, ref)) return "product";
   if (includes(DEVELOPER_REFS, ref) || onAnySite(host, DEVELOPER_SITES)) {
     return "developer";
   }

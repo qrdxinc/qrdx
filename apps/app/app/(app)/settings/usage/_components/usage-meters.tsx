@@ -91,7 +91,6 @@ function MeterRow({
             <UpgradeButton
               checkout
               className="shrink-0 self-start"
-              source="usage_page"
               surface="plan_usage"
               upgrade={copy.upgrade}
               variant="outline"

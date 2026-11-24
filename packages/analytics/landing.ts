@@ -294,32 +294,33 @@ let forwarding = false;
 /**
  * Carries the visit along every link that loads a new page: a click the
  * page didn't handle itself (next/link handles links within its own app,
- * and calls preventDefault) with the main button and no modifier key, in
- * this tab. The link's address is changed for that one click and put back
- * straight after. Once per page; nothing on the server.
+ * and calls preventDefault), in this tab or a new one (the main button,
+ * with Cmd, Ctrl or Shift held or on a link with target="_blank"; the
+ * middle button, which fires auxclick). Not Alt, which saves the link. The
+ * link's address is changed for that one click and put back straight
+ * after. Once per page; nothing on the server.
  */
 export function installVisitForwarding(): void {
   if (forwarding || typeof document === "undefined") return;
   forwarding = true;
   document.addEventListener("click", carryOnClick);
+  document.addEventListener("auxclick", carryOnClick);
 }
 
+/** A tab or window the link may open in: this one, or a new one. */
+const OPENS_PAGE = new Set(["", "_self", "_blank"]);
+
 function carryOnClick(event: MouseEvent): void {
-  if (
-    event.defaultPrevented ||
-    event.button !== 0 ||
-    event.metaKey ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    event.altKey
-  ) {
-    return;
-  }
+  if (event.defaultPrevented || event.altKey) return;
+  // The main button's click, or the middle button's auxclick: never a
+  // right-click, whose menu could copy the link with the visit in it.
+  const button = event.type === "auxclick" ? 1 : 0;
+  if (event.button !== button) return;
   const target = event.target as Element | null;
   const anchor = target?.closest?.("a[href]") as HTMLAnchorElement | null;
   if (!anchor || typeof anchor.href !== "string") return;
   if (anchor.hasAttribute("download")) return;
-  if (anchor.target && anchor.target !== "_self") return;
+  if (!OPENS_PAGE.has(anchor.target)) return;
   const original = anchor.getAttribute("href");
   const carried = withVisit(anchor.href, window.location.href);
   if (original === null || carried === anchor.href) return;

@@ -8,9 +8,7 @@ import {
 } from "@/ee/audit-log/plan-change";
 import { env } from "@/env";
 import { handleAffiliateWebhook } from "@/lib/affiliates/commissions";
-import { trackServer } from "@/lib/analytics/server";
-import { parseCheckoutSurface } from "@/lib/checkout-surface";
-import { planForProductId } from "@/lib/pricing";
+import { trackSubscriptionEvent } from "@/lib/analytics/subscription-events";
 
 function safeParseDate(value: string | Date | null | undefined): Date | null {
   if (!value) return null;
@@ -101,24 +99,9 @@ const onPayload: WebhooksConfig["onPayload"] = async ({ data, type }) => {
         });
       await recordPlanChanges(userId, plansBefore);
 
-      if (type === "subscription.active") {
-        trackServer(
-          "subscription_activated",
-          {
-            plan: planForProductId(data.product_id) ?? "pro",
-            interval: data.recurring_interval ?? undefined,
-            // The button or page checkout recorded (actions/checkout.ts)
-            surface: parseCheckoutSurface(data.metadata?.surface),
-          },
-          {
-            // Named only if the buyer allowed analytics (set at checkout).
-            distinctId:
-              data.metadata?.analytics_consent === "1" ? userId : null,
-            dedupeKey: data.id,
-            timestamp: subscriptionData.startedAt,
-          },
-        );
-      }
+      // subscription_activated and subscription_canceled, after the response
+      // (lib/analytics/subscription-events.ts).
+      trackSubscriptionEvent(type, data);
 
       console.log("Processed Polar webhook:", {
         type,

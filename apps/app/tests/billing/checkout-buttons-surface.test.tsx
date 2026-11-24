@@ -3,10 +3,11 @@
 // CheckoutButtons passes the one it's given to checkout and to the
 // upgrade_clicked and checkout_started events, and keeps it when checkout
 // sends a signed-out visitor to the pricing page first. Then a spot check
-// that the main buttons and links name their own surface. Checkout is faked;
-// nothing is created.
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+// that the main buttons and links name their own surface, and that a link
+// to the pricing page says pricing_opened, never upgrade_clicked: that one
+// is a plan picked. Checkout is faked; nothing is created.
+import { readdirSync, readFileSync } from "node:fs";
+import { join, relative } from "node:path";
 import { NextIntlClientProvider } from "next-intl";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
@@ -106,7 +107,7 @@ async function clickButton(
   act(() =>
     root.render(
       <NextIntlClientProvider locale="en" messages={en}>
-        <CheckoutButtons source="test" surface={surface} />
+        <CheckoutButtons surface={surface} />
       </NextIntlClientProvider>,
     ),
   );
@@ -128,10 +129,7 @@ describe("CheckoutButtons", () => {
       { plan: "pro", interval: "year", surface: "get_pro_dialog" },
     ]);
     expect(state.events).toEqual([
-      [
-        "upgrade_clicked",
-        { source: "test", plan: "pro", surface: "get_pro_dialog" },
-      ],
+      ["upgrade_clicked", { plan: "pro", surface: "get_pro_dialog" }],
       [
         "checkout_started",
         { plan: "pro", interval: "year", surface: "get_pro_dialog" },
@@ -192,5 +190,53 @@ describe("the main buttons and links name their own surface", () => {
     const cards = read("components/sections/pricing-section.tsx");
     expect(cards).toContain('surface: pageSurface = "pricing_page"');
     expect(cards).toContain("SURFACE_PARAM");
+  });
+});
+
+describe("pricing_opened and upgrade_clicked", () => {
+  const APP = join(import.meta.dirname, "..", "..");
+  const read = (file: string) => readFileSync(join(APP, file), "utf8");
+  const pricingOpened = (surface: string) =>
+    new RegExp(
+      `track\\(\\s*"pricing_opened",\\s*\\{\\s*surface: ${surface}\\s*\\}`,
+    );
+
+  it.each([
+    ["components/get-pro-cta.tsx", '"header_get_pro"'],
+    ["components/app-shell/upgrade-row.tsx", '"sidebar_upgrade"'],
+    ["app/(app)/dashboard/_components/home/code-live-card.tsx", '"home_card"'],
+    ["components/get-pro-dialog.tsx", '"get_pro_dialog"'],
+    // A limit's link, with the surface it's given
+    ["components/limits/upgrade-button.tsx", ""],
+  ])("a link to /pricing sends pricing_opened: %s", (file, surface) => {
+    const source = read(file);
+    expect(source).toMatch(
+      surface
+        ? pricingOpened(surface)
+        : /track\("pricing_opened", \{ surface \}\)/,
+    );
+    expect(source).not.toContain('"upgrade_clicked"');
+  });
+
+  it("only the controls that start checkout send upgrade_clicked", () => {
+    const files: string[] = [];
+    const walk = (dir: string) => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const path = join(dir, entry.name);
+        if (entry.isDirectory()) walk(path);
+        else if (/\.tsx?$/.test(entry.name)) files.push(path);
+      }
+    };
+    for (const dir of ["app", "components", "lib", "ee"]) walk(join(APP, dir));
+    const senders = files
+      .filter((file) =>
+        readFileSync(file, "utf8").includes('"upgrade_clicked"'),
+      )
+      .map((file) => relative(APP, file))
+      .sort();
+    expect(senders).toEqual([
+      "components/billing/checkout-buttons.tsx",
+      "components/sections/pricing-section.tsx",
+    ]);
   });
 });

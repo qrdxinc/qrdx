@@ -94,7 +94,6 @@ export function useGateCheckout({
  */
 export function CheckoutButtons({
   plan = "pro",
-  source,
   surface,
   fallback = null,
   onNavigate,
@@ -103,8 +102,6 @@ export function CheckoutButtons({
   waiting: held = false,
 }: {
   plan?: PaidPlan;
-  /** For analytics, e.g. "dialog", "limit_dialog", "ai_art" */
-  source: string;
   /** Recorded on the payment: which button this is (lib/checkout-surface.ts) */
   surface: KnownCheckoutSurface;
   fallback?: ReactNode;
@@ -148,7 +145,7 @@ export function CheckoutButtons({
   }
 
   const start = async (interval: BillingInterval) => {
-    track("upgrade_clicked", { source, plan, surface });
+    track("upgrade_clicked", { plan, surface });
     setPending(interval);
     try {
       const result = await startCheckout({ plan, interval, surface });

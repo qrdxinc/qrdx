@@ -86,13 +86,7 @@ export function CodeLiveCard({
         <Button asChild size="sm">
           <LocaleLink
             href={pricingHref("home_card")}
-            onClick={() =>
-              track("upgrade_clicked", {
-                source: "home_code_live",
-                plan: "pro",
-                surface: "home_card",
-              })
-            }
+            onClick={() => track("pricing_opened", { surface: "home_card" })}
           >
             {t("seePro")}
           </LocaleLink>

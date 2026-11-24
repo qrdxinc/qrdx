@@ -736,7 +736,6 @@ function CreditsLine({
         <CheckoutButtons
           plan={target}
           size="sm"
-          source="ai_art_panel"
           surface="art_tab"
           waiting={waiting}
         />

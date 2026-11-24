@@ -333,6 +333,34 @@ describe("referral codes", () => {
     expect(RESERVED_REFERRAL_CODES.has("dashboard")).toBe(true);
   });
 
+  it("refuses the tags other sites put on their links, so launch traffic is never an affiliate's", () => {
+    for (const tag of [
+      "producthunt",
+      "hackernews",
+      "reddit",
+      "betalist",
+      "alternativeto",
+      "saashub",
+      "futurepedia",
+      "theresanaiforthat",
+      "github",
+      "twitter",
+      "linkedin",
+      "youtube",
+      "devto",
+      "newsletter",
+    ]) {
+      expect(checkChosenCode(tag), tag).toEqual({
+        ok: false,
+        problem: "reserved",
+      });
+    }
+    // Too short to be a code anyway, and reserved all the same.
+    for (const tag of ["hn", "x"]) {
+      expect(RESERVED_REFERRAL_CODES.has(tag), tag).toBe(true);
+    }
+  });
+
   it("refuses the local part of the affiliate's own email address, in any spelling", () => {
     const emails = ["Ana.Diaz+promo@example.test"];
     for (const code of [

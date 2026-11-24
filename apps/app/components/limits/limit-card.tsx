@@ -37,7 +37,7 @@ export function LimitCard({
   usageHref?: string | null;
   /** Leads the reason with "Limit reached." (off under a title saying so) */
   showStatus?: boolean;
-  /** For the upgrade click's analytics, e.g. "limit_dialog" */
+  /** The invite line's analytics (invite_offer_clicked), e.g. "limit_dialog" */
   source: string;
   /** Recorded on the payment (lib/checkout-surface.ts) */
   surface: KnownCheckoutSurface;
@@ -79,7 +79,6 @@ export function LimitCard({
           <UpgradeButton
             checkout
             onNavigate={onNavigate}
-            source={source}
             surface={surface}
             upgrade={upgrade}
           />
