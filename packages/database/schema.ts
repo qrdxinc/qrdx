@@ -434,6 +434,10 @@ export const subscription = pgTable(
     metadata: text("metadata"), // JSON string
     customFieldData: text("custom_field_data"), // JSON string
     userId: text("user_id").references(() => user.id),
+    // When the subscription last changed to past_due (a payment failed),
+    // from the webhook (app/api/webhook/polar); null otherwise. Paid
+    // features keep working for 7 days from it (apps/app/lib/subscription.ts).
+    pastDueSince: timestamp("past_due_since"),
   },
   (table) => [
     index("subscription_status_idx").on(table.status),
@@ -2111,6 +2115,30 @@ export const limitNotice = pgTable(
       table.period,
       table.threshold
     ),
+  ]
+);
+
+/**
+ * Lifecycle emails already sent (apps/app/lib/email/lifecycle.ts): one row
+ * per kind and subject, so each goes once. The subject is what the email is
+ * about: the person for once-per-account emails, the subscription for the
+ * new-customer note.
+ */
+export const lifecycleEmail = pgTable(
+  "lifecycle_email",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    // "activation-nudge", "free-scan-milestone" or "new-customer"
+    kind: text("kind").notNull(),
+    subject: text("subject").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("lifecycle_email_once_unique").on(table.kind, table.subject),
+    index("lifecycle_email_user_id_idx").on(table.userId),
   ]
 );
 

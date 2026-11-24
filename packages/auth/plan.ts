@@ -5,11 +5,15 @@ import {
   type PlanTier,
   planLimitsFor,
 } from "./plan-limits";
+import {
+  ENTITLED_SUBSCRIPTION_STATUSES,
+  graceCutoff,
+} from "./subscription-access";
 import { rolesInField } from "./workspace-role-rules";
 
-// Keep in sync with apps/app/lib/subscription.ts: Polar keeps a subscription
-// "active" until a cancellation takes effect at period end.
-export const ENTITLED_SUBSCRIPTION_STATUSES = ["active", "trialing"];
+// Which subscriptions grant their plan (active, trialing, or past_due for
+// the first days after a failed payment): ./subscription-access.ts, shared
+// with apps/app/lib/subscription.ts.
 
 export type WorkspacePlanTier = PlanTier;
 
@@ -30,10 +34,16 @@ async function bestPlanOf(userIds: string[]): Promise<WorkspacePlanTier> {
   if (userIds.length === 0) return "free";
   const subscriptions = await database.query.subscription.findMany({
     columns: { productId: true },
-    where: (table, { and, inArray }) =>
+    where: (table, { and, eq, gt, inArray, or }) =>
       and(
         inArray(table.userId, userIds),
-        inArray(table.status, ENTITLED_SUBSCRIPTION_STATUSES)
+        or(
+          inArray(table.status, ENTITLED_SUBSCRIPTION_STATUSES),
+          and(
+            eq(table.status, "past_due"),
+            gt(table.pastDueSince, graceCutoff())
+          )
+        )
       ),
   });
   if (subscriptions.length === 0) return "free";
