@@ -23,14 +23,15 @@ import { sendEmail } from "./send";
 import { wantsTeamNotes } from "./team-notes";
 import { isPortalClient } from "./welcome";
 
-// Free's one first-scan email per code (owner decision, 19 Nov): "your code
-// got its first scan", to the person who made the code, with one line on
-// what Pro adds and the invite line under it (./invite-line.ts). Pro and Business have their own first-scan alert (scan
-// milestone 1, on by default; lib/events/types.ts DEFAULT_EMAIL_EVENTS), so
-// this never goes to a workspace whose plan has email alerts, and nobody
-// gets both for one code: both go on the same scan, the code's first real
-// one (firstScanStatus), and lib/events/emit.ts decides which from one read
-// of the plan, so an upgrade or downgrade can't send both.
+// Free's one first-scan email per code (owner decision, 19 Nov): "your code got
+// its first scan", to the person who made the code, with one line on what Pro
+// adds and the invite line under it (./invite-line.ts). Pro and Business have
+// their own first-scan alert (scan milestone 1, on by default;
+// lib/events/types.ts DEFAULT_EMAIL_EVENTS), so this never goes to a workspace
+// whose plan has email alerts, and nobody gets both for one code: both go on
+// the same scan, the code's first real one (firstScanStatus), and
+// lib/events/emit.ts decides which from one read of the plan, so an upgrade or
+// downgrade can't send both.
 //
 // It's one of the notes from the QRdx team (./team-notes.ts): no row
 // needed, on by default, and the one-click link in it (or Settings >

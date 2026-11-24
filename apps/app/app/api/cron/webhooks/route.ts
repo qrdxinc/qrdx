@@ -42,8 +42,8 @@ const noStore = { "Cache-Control": "no-store" };
  * Webhook worker: retries due deliveries with exponential backoff, sends scan
  * batches whose window closed, runs data-out syncs, looks up destinations
  * created without a Web Risk answer, settles friends' invites a first code
- * already qualifies (lib/invites), sends the note to accounts two days old
- * with no dynamic code (lib/email/activation-nudge.tsx), prunes deliveries older
+ * already qualifies (lib/invites), sends the note to accounts two days old with
+ * no dynamic code (lib/email/activation-nudge.tsx), prunes deliveries older
  * than 30 days and deletes expired Better Auth verification values. The daily
  * call also forgets browsers no account has seen for 400 days, completes
  * support's turn-offs of two-step verification that are due, and deletes
