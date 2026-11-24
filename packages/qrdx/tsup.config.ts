@@ -1,6 +1,6 @@
 import { execFile } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { copyFile, mkdir, readFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 import { defineConfig, type Options } from "tsup";
 
@@ -44,13 +44,16 @@ const FRAME_DATA: Record<string, string> = {
   "./frames/official": "frames-official",
   "./frames/catalogue/index": "frames-index",
 };
-const frameDataExternal = (extension: ".js" | ".mjs"): Plugin => ({
+const frameDataExternal = (
+  extension: ".js" | ".mjs",
+  folder = "./"
+): Plugin => ({
   name: "qrdx-frame-data-external",
   setup(build) {
     build.onResolve(
       { filter: /^\.\/frames\/(official|catalogue\/index)$/ },
       (args) => ({
-        path: `./${FRAME_DATA[args.path]}${extension}`,
+        path: `${folder}${FRAME_DATA[args.path]}${extension}`,
         external: true,
       })
     );
@@ -207,6 +210,51 @@ const coreWithoutFrameData: Plugin = {
   },
 };
 
+// ── The legacy build (dist/legacy), for tools that don't read "exports" ──
+// webpack 4 (react-scripts 4, Vue CLI 4…) skips "exports": it takes the
+// package's "module" field and, for a subpath such as qrdx/vanilla, the
+// package.json of the folder of that name (vanilla/package.json). Its
+// parser (acorn 6) stops at ES2020 syntax such as ?? and ?., and it reads a
+// .mjs file as a strict ES module that can't take named imports from a
+// CommonJS package such as react. So the files those fields name are
+// ES2019 and end in .js, and their zod is bundled in and lowered (zod's own
+// files use ??). The modern .mjs and .js files are untouched. The official
+// frame data comes from the main build's .mjs files, which are plain data
+// built for ES2019 too. tests/legacy-build.test.ts checks the syntax, and
+// scripts/legacy-compat.mjs builds and runs every entry with webpack 4.
+const LEGACY_TARGET = "es2019";
+const legacy: Options = {
+  ...shared,
+  outDir: "dist/legacy",
+  format: ["esm"],
+  target: LEGACY_TARGET,
+  treeshake: true,
+  // Without maps: about 3 MB the package can do without.
+  sourcemap: false,
+  outExtension: () => ({ js: ".js" }),
+};
+const legacyFrameData = frameDataExternal(".mjs", "../");
+
+// webpack 4 fails the build of an app without jspdf (the optional peer PDF
+// export loads) at an import() of it, try block or not; webpack 5 only
+// warns (src/jspdf.ts). So in the legacy build that import() is one webpack
+// leaves to the browser, as in the no-bundler files: the page maps jspdf in
+// its import map, or PDF export says how to get it. esbuild drops comments
+// when it minifies, so webpack's comment goes in after the build.
+const JSPDF_IMPORT = /\bimport\((["'])jspdf\1\)/g;
+const leaveJsPDFToTheBrowser = (file: string) => async () => {
+  const path = `dist/legacy/${file}`;
+  const code = await readFile(path, "utf8");
+  const marked = code.replace(
+    JSPDF_IMPORT,
+    'import(/* webpackIgnore: true */ "jspdf")'
+  );
+  if (marked === code) {
+    throw new Error(`${path} has no import() of jspdf to mark`);
+  }
+  await writeFile(path, marked);
+};
+
 // The configs below build in parallel, so dist/ is cleaned by the "build"
 // script rather than with tsup's `clean` (which would race the other entries).
 export default defineConfig([
@@ -234,6 +282,8 @@ export default defineConfig([
     ],
   },
   // ── Official frame data (re-exported by the main entry) ────────────────
+  // ES2019 so the legacy build below can import these .mjs files as they
+  // are: they're plain data, so this changes nothing for anyone else.
   {
     ...shared,
     entry: {
@@ -241,6 +291,7 @@ export default defineConfig([
       "frames-index": "src/frames/catalogue/index.ts",
     },
     format: ["cjs", "esm"],
+    target: LEGACY_TARGET,
     treeshake: true,
   },
   // ── The zod schemas (re-exported by the core and the main entry) ───────
@@ -424,5 +475,52 @@ export default defineConfig([
     entry: { "types/index": "types/public.ts" },
     format: ["cjs", "esm"],
     treeshake: true,
+  },
+  // ── Legacy build (see `legacy` above), laid out like the modern one ─────
+  // The main entry, with the client component and the schemas as files of
+  // their own, as above.
+  {
+    ...legacy,
+    entry: ["src/index.tsx"],
+    esbuildPlugins: [
+      clientEntryExternal(".js"),
+      legacyFrameData,
+      schemasExternal(".js"),
+    ],
+    onSuccess: leaveJsPDFToTheBrowser("index.js"),
+  },
+  { ...legacy, entry: ["src/qr-code-canvas.tsx"], treeshake: false },
+  {
+    ...legacy,
+    entry: { schemas: "types/schemas.ts" },
+    noExternal: ["zod"],
+    esbuildPlugins: [dropZodLocales],
+  },
+  {
+    ...legacy,
+    entry: { core: "src/core.ts" },
+    esbuildPlugins: [legacyFrameData, schemasExternal(".js")],
+    onSuccess: leaveJsPDFToTheBrowser("core.js"),
+  },
+  {
+    ...legacy,
+    entry: { vanilla: "src/vanilla.ts" },
+    esbuildPlugins: [sharedCore(".js", ["vanilla-api"])],
+  },
+  {
+    ...legacy,
+    entry: {
+      element: "src/element.ts",
+      preact: "src/preact.ts",
+      solid: "src/solid.ts",
+      vue: "src/vue.ts",
+    },
+    external: [...(shared.external ?? []), "preact", /^solid-js(\/|$)/, "vue"],
+    esbuildPlugins: [sharedCore(".js", [])],
+  },
+  {
+    ...legacy,
+    entry: { "element-define": "src/element-define.ts" },
+    esbuildPlugins: [elementExternal("element.js"), sharedCore(".js", [])],
   },
 ]);

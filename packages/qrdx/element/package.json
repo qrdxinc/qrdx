@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../dist/element.js",
+  "module": "../dist/legacy/element.js",
+  "types": "../dist/src/element.d.ts"
+}

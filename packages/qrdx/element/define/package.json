@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../../dist/element-define.js",
+  "module": "../../dist/legacy/element-define.js",
+  "types": "../../dist/src/element-define.d.ts"
+}

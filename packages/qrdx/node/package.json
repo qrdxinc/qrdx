@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "main": "../dist/node.js",
+  "types": "../dist/src/node.d.ts"
+}

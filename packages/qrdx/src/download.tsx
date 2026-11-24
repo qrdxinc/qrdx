@@ -6,6 +6,7 @@ import { getQRAsCanvas, getQRAsSVGDataUri } from "./export";
 import { getFrameDimensions } from "./frame";
 import { canvasToGIF, GIF_MIME } from "./gif";
 import { canvasesToICO, ICO_MIME, ICO_SIZES } from "./ico";
+import { loadJsPDF } from "./jspdf";
 import { canvasToTIFF, TIFF_MIME, type TIFFOptions } from "./tiff";
 import { blobToDataUrl, canvasToWebP, type WebPOptions } from "./webp";
 
@@ -333,15 +334,7 @@ async function getQRAsEPSDataUrl(qrProps: QRProps): Promise<string> {
  * Convert QR code to PDF format
  */
 async function getQRAsPDF(qrProps: QRProps): Promise<string> {
-  // jspdf is an optional peer dependency, loaded only when a PDF is requested.
-  let jsPDF: typeof import("jspdf").jsPDF;
-  try {
-    ({ jsPDF } = await import("jspdf"));
-  } catch (error) {
-    throw new Error(
-      `PDF export needs the optional "jspdf" package. Install it with \`npm install jspdf\`. (${error})`
-    );
-  }
+  const jsPDF = await loadJsPDF();
 
   // Get the SVG as a data URI
   const svgDataUri = await getQRAsSVGDataUri(qrProps);

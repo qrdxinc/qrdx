@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "main": "../dist/angular.js",
+  "types": "../dist/src/angular.d.ts"
+}
