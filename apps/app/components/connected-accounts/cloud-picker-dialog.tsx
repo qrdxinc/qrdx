@@ -8,6 +8,7 @@ import {
   createShareLink,
   loadPickerPage,
 } from "@/lib/connected-accounts/client";
+import { pictureUrl } from "@/lib/media";
 
 export interface PickerProvider {
   slug: string;
@@ -74,7 +75,7 @@ export function CloudPickerDialog({
       loadingIndicator={
         <BrandLoader aria-hidden className="text-muted-foreground" size={24} />
       }
-      logoSrc={provider.logo}
+      logoSrc={pictureUrl(provider.logo)}
       onOpenChange={onOpenChange}
       onPick={pick}
       open={open}

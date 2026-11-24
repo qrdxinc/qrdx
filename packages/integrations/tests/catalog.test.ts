@@ -2,7 +2,7 @@
 // and the redirects from old /integrations/<slug> URLs, so its shape is
 // checked here: every entry says where it lives, and nothing that moved off
 // /integrations is left without a destination.
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
@@ -17,7 +17,13 @@ import {
   isListedIntegration,
 } from "../src/catalog";
 
-const PUBLIC = join(__dirname, "../../../apps/app/public");
+const APP = join(__dirname, "../../../apps/app");
+const PUBLIC = join(APP, "public");
+// Files uploaded to R2 (apps/app/scripts/media/upload.mjs), by site path: the
+// logos we may show but not commit (apps/app/tests/repo/hosted-logos.test.ts).
+const UPLOADED: Record<string, string> = JSON.parse(
+  readFileSync(join(APP, "lib/media-manifest.json"), "utf8")
+).files;
 
 const slugs = (surface: CatalogSurface) =>
   getCatalogBySurface(surface).map((entry) => entry.slug);
@@ -124,8 +130,16 @@ describe("catalog data", () => {
   it("has a logo file for every image logo", () => {
     for (const entry of getIntegrationCatalog()) {
       if (entry.logo.type !== "image") continue;
-      expect(existsSync(join(PUBLIC, entry.logo.src)), entry.logo.src).toBe(
+      const { src } = entry.logo;
+      // In apps/app/public, or uploaded to R2 under the same path; never both,
+      // since the upload would hide the file (pictureUrl in lib/media.ts).
+      const inPublic = existsSync(join(PUBLIC, src));
+      const uploaded = Object.hasOwn(UPLOADED, src);
+      expect(inPublic || uploaded, `${entry.slug}: no file for ${src}`).toBe(
         true
+      );
+      expect(inPublic && uploaded, `${entry.slug}: ${src} is in both`).toBe(
+        false
       );
     }
   });

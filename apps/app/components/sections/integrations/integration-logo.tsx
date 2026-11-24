@@ -12,6 +12,7 @@ import {
   type Icon,
   Sms,
 } from "iconsax-reactjs";
+import { pictureUrl } from "@/lib/media";
 
 const FEATURE_ICONS: Record<
   Extract<CatalogLogo, { type: "feature" }>["icon"],
@@ -41,6 +42,8 @@ interface IntegrationLogoProps {
 /**
  * Brand logos sit on a white tile in both themes (they are drawn for light
  * backgrounds); QRdx's own features use an inverted tile with an iconsax icon.
+ * A logo's src is a file in public/ or an uploaded media key: a brand whose
+ * logo we may show but not commit (Pipedrive's) is served from R2.
  */
 export function IntegrationLogo({
   logo,
@@ -74,7 +77,11 @@ export function IntegrationLogo({
         className,
       )}
     >
-      <img src={logo.src} alt="" className="size-full object-contain" />
+      <img
+        src={pictureUrl(logo.src)}
+        alt=""
+        className="size-full object-contain"
+      />
     </span>
   );
 }
