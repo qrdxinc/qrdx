@@ -49,7 +49,7 @@
 // .github/workflows/notify-search-engines.yml runs it after every
 // production deploy, daily for the sitemaps' changes and the Bing backlog,
 // from the Actions tab, and with --check on pull requests that change it.
-import { createSign } from "node:crypto";
+import { createHash, createSign } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
@@ -422,40 +422,40 @@ export function bingUrls(urls) {
 
 /**
  * The day of the week (0 to 6, of PRIORITY_RESEND_DAYS) the backlog sends
- * a priority page on: from a hash of its path (FNV-1a), so adding or
- * removing a page never moves another.
+ * a priority page on: from a hash of its path, so adding or removing a page
+ * never moves another.
  */
 export function resendDay(url) {
-  let hash = 0x81_1c_9d_c5;
-  for (const char of pathOf(url)) {
-    hash ^= char.codePointAt(0);
-    hash = Math.imul(hash, 0x01_00_01_93) >>> 0;
-  }
-  return hash % PRIORITY_RESEND_DAYS;
+  const hash = createHash("sha256").update(pathOf(url)).digest();
+  return hash.readUInt32BE(0) % PRIORITY_RESEND_DAYS;
 }
 
 /**
  * Day `day`'s Bing backlog, in the order to send it: the priority pages
  * whose resend day it is (each once a week, about a seventh of them a day),
- * then the rest of the sitemap from that day's slice on. The slices move by
- * the quota the priority pages leave on an average day, so consecutive days
- * still cover every page. Translations and community items stay out
- * (forBing).
+ * then the rest of the sitemap from where the day before's share of the
+ * quota ended. Each day's share is what its priority pages leave of
+ * BING_BACKLOG_STEP, so consecutive days send consecutive slices and cover
+ * every page. Translations and community items stay out (forBing).
  */
 export function backlogUrls(urls, day) {
   const ordered = bingUrls(urls);
-  const priority = new Set(priorityUrls(ordered).map(normalizeUrl));
-  const today = ordered.filter(
-    (url) =>
-      priority.has(normalizeUrl(url)) &&
-      resendDay(url) === day % PRIORITY_RESEND_DAYS
+  const priority = priorityUrls(ordered);
+  const isPriority = new Set(priority.map(normalizeUrl));
+  const rest = ordered.filter((url) => !isPriority.has(normalizeUrl(url)));
+  const restPerDay = Array.from({ length: PRIORITY_RESEND_DAYS }, (_, d) =>
+    Math.max(
+      0,
+      BING_BACKLOG_STEP - priority.filter((url) => resendDay(url) === d).length
+    )
   );
-  const rest = ordered.filter((url) => !priority.has(normalizeUrl(url)));
-  const step = Math.max(
-    1,
-    BING_BACKLOG_STEP - Math.ceil(priority.size / PRIORITY_RESEND_DAYS)
-  );
-  return [...today, ...rotate(rest, day, step)];
+  const sum = (counts) => counts.reduce((total, count) => total + count, 0);
+  const weekday = day % PRIORITY_RESEND_DAYS;
+  const offset =
+    Math.floor(day / PRIORITY_RESEND_DAYS) * sum(restPerDay) +
+    sum(restPerDay.slice(0, weekday));
+  const today = priority.filter((url) => resendDay(url) === weekday);
+  return [...today, ...rotate(rest, offset, 1)];
 }
 
 /** How many of each sitemap's URLs --check asks for. */
