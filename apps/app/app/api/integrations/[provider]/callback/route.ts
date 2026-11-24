@@ -252,7 +252,6 @@ async function fetchProviderMetadata(
     case "bitly":
     case "dropbox":
     case "onedrive":
-    case "box":
     case "notion":
       return fetchConnectedAccountMetadata(
         provider,

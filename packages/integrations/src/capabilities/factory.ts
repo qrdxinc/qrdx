@@ -9,7 +9,6 @@ import {
   isIntegrationApiError,
 } from "../core/http-client";
 import { createBitlyClient } from "../integrations/bitly/client";
-import { createBoxClient, revokeBoxToken } from "../integrations/box/client";
 import {
   createDropboxClient,
   revokeDropboxToken,
@@ -82,8 +81,6 @@ export function createFilePickerClient(
       return createDropboxClient(accessToken);
     case "onedrive":
       return createOneDriveClient(accessToken);
-    case "box":
-      return createBoxClient(accessToken);
     case "notion":
       return createNotionClient(accessToken);
     default:
@@ -214,7 +211,7 @@ export async function fetchConnectedAccountMetadata(
 }
 
 /** Providers whose API can revoke a token. */
-export const REVOCABLE_PROVIDERS = ["dropbox", "box", "notion"] as const;
+export const REVOCABLE_PROVIDERS = ["dropbox", "notion"] as const;
 
 /**
  * Revokes the stored token where the provider supports it. Returns false
@@ -228,10 +225,6 @@ export async function revokeProviderToken(
   switch (provider) {
     case "dropbox":
       await revokeDropboxToken(tokens.accessToken);
-      return true;
-    case "box":
-      if (!client) return false;
-      await revokeBoxToken({ token: tokens.accessToken, ...client });
       return true;
     case "notion":
       if (!client) return false;

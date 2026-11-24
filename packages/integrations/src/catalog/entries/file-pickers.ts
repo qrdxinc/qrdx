@@ -55,7 +55,7 @@ export const filePickers: IntegrationCatalogEntry[] = [
       },
     ],
     keywords: ["files", "pdf", "shared link", "folder", "oauth"],
-    related: ["onedrive", "box", "google-drive"],
+    related: ["onedrive", "notion", "google-drive"],
   },
   {
     slug: "onedrive",
@@ -118,62 +118,7 @@ export const filePickers: IntegrationCatalogEntry[] = [
       "sharing link",
       "oauth",
     ],
-    related: ["dropbox", "box", "google-drive"],
-  },
-  {
-    slug: "box",
-    name: "Box",
-    tagline:
-      "Pick a Box file or folder and turn its shared link into a QR code.",
-    description: [
-      "Connect Box and it shows up in the QR editor's URL type, under Use a link from… beside the Website address field. Browse or search your Box, pick a file or folder, and QRdx turns on its shared link for people with the link. The QR code opens it.",
-      "Where your Box admin only allows company links, QRdx creates one and tells you that only people signed in to your company's Box can open it. Download blocks on hosted pages use the direct download link when Box provides one.",
-    ],
-    kind: "connect",
-    surface: "integrations",
-    categories: ["storage"],
-    logo: { type: "image", src: "/integrations/box.svg" },
-    plan: "free",
-    builtBy: "QRdx",
-    docs: "/docs/short-links-and-file-pickers",
-    website: "https://www.box.com",
-    primaryAction: {
-      type: "link",
-      label: "Connect Box",
-      href: "/settings/integrations/box",
-    },
-    steps: [
-      {
-        title: "Open the Box integration in QRdx",
-        body: "Sign in, then go to Settings → Integrations → Box.",
-      },
-      {
-        title: "Click Enable and grant access",
-        body: "Turning on a shared link changes the file's settings, so Box asks for read and write access. Tokens are stored encrypted, and disconnecting revokes them in Box.",
-      },
-      {
-        title: "Pick a file in the editor",
-        body: "In the editor, choose the URL type, open Use a link from…, choose Box and pick a file or folder.",
-      },
-    ],
-    capabilities: [
-      {
-        title: "Shared links",
-        description:
-          "“People with the link” access, or a company link when your admin requires it.",
-      },
-      {
-        title: "Files on hosted pages",
-        description:
-          "Download blocks use Box's direct download link when there is one.",
-      },
-      {
-        title: "Browse and search",
-        description: "Folders and search across your Box.",
-      },
-    ],
-    keywords: ["files", "shared link", "folder", "enterprise", "oauth"],
-    related: ["dropbox", "onedrive", "google-drive"],
+    related: ["dropbox", "notion", "google-drive"],
   },
   {
     slug: "notion",
