@@ -155,6 +155,7 @@ jobs:
           esac
 
       - name: Publish qrdx
+        id: publish-qrdx
         if: steps.versions.outputs.qrdx == 'true'
         run: npm publish "${{ steps.pack.outputs.qrdx }}" --access public --provenance
 
@@ -186,8 +187,27 @@ jobs:
           done
 
       - name: Publish @qrdx/cli
+        id: publish-cli
         if: steps.versions.outputs.cli == 'true'
         run: npm publish "${{ steps.shrinkwrap.outputs.cli }}" --access public --provenance
+
+      # "<package> <version> is on npm" in the QRdx Discord's #releases, for
+      # each package this run published (scripts/discord-notify.mjs). It runs
+      # when qrdx went out even if the CLI then failed. Without the
+      # DISCORD_RELEASES_WEBHOOK_URL secret it's a notice, and it never fails
+      # the publish.
+      - name: Post to Discord
+        if: ${{ !cancelled() && (steps.publish-qrdx.outcome == 'success' || steps.publish-cli.outcome == 'success') }}
+        continue-on-error: true
+        env:
+          DISCORD_RELEASES_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASES_WEBHOOK_URL }}
+          QRDX_PUBLISHED: ${{ steps.publish-qrdx.outcome == 'success' }}
+          CLI_PUBLISHED: ${{ steps.publish-cli.outcome == 'success' }}
+        run: |
+          dirs=()
+          if [ "$QRDX_PUBLISHED" = "true" ]; then dirs+=(packages/qrdx); fi
+          if [ "$CLI_PUBLISHED" = "true" ]; then dirs+=(packages/cli); fi
+          node scripts/discord-notify.mjs npm "${dirs[@]}"
 
   publish-n8n:
     name: Publish @qrdx/n8n-nodes-qrdx to npm
@@ -262,5 +282,15 @@ jobs:
           echo "tarball=$(ls "$dest"/qrdx-n8n-nodes-qrdx-[0-9]*.tgz)" >> "$GITHUB_OUTPUT"
 
       - name: Publish @qrdx/n8n-nodes-qrdx
+        id: publish
         if: steps.version.outputs.publish == 'true'
         run: npm publish "${{ steps.pack.outputs.tarball }}" --access public --provenance
+
+      # The QRdx Discord's #releases (scripts/discord-notify.mjs). Never
+      # fails the publish.
+      - name: Post to Discord
+        if: steps.publish.outcome == 'success'
+        continue-on-error: true
+        env:
+          DISCORD_RELEASES_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASES_WEBHOOK_URL }}
+        run: node scripts/discord-notify.mjs npm plugins/n8n
