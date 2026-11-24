@@ -10,22 +10,24 @@
 // request indexing of ordinary pages, so the sitemaps are all it gets.
 //
 //   node scripts/notify-search-engines.mjs --all           every sitemap URL
-//   node scripts/notify-search-engines.mjs --important     the main pages
+//   node scripts/notify-search-engines.mjs --important     the priority pages
 //   node scripts/notify-search-engines.mjs --urls <file>   paths or URLs, one per line
 //   node scripts/notify-search-engines.mjs --snapshot <file>
 //       saves the live sitemaps as one file, before a deploy
 //   node scripts/notify-search-engines.mjs --changed-since <file>
 //       the URLs that are new or have a new lastmod since that saved sitemap
 //   node scripts/notify-search-engines.mjs --backlog
-//       Bing only: today's slice of the whole sitemap, so every page reaches
+//       Bing only: today's share of the priority pages (each once a week),
+//       then today's slice of the rest of the sitemap, so every page reaches
 //       the Bing API every few days, including pages whose lastmod never
 //       changes. Run late in the UTC day, it uses the quota deploys left.
 //   node scripts/notify-search-engines.mjs --check
-//       reads only: can every sitemap be read and is each important page in
-//       one; is the IndexNow key file live, does the Bing key work, is
-//       qrdx.dev verified for it and what's today's quota; can the Google
-//       service account see the property and when Google last read each
-//       sitemap
+//       reads only: can every sitemap be read, is each important page in
+//       one, and does a sample of each sitemap's pages answer 200 (not a
+//       redirect or an error); is the IndexNow key file live, does the Bing
+//       key work, is qrdx.dev verified for it and what's today's quota; can
+//       the Google service account see the property and when Google last
+//       read each sitemap
 //
 // "The sitemap" is every sitemap robots.txt lists: the main app's
 // /sitemap.xml and the marketing site's own (/qr-code-generator/sitemap.xml
@@ -33,11 +35,17 @@
 // one list. A sitemap that can't be read is a warning, and its pages aren't
 // sent that run.
 //
+// Bing's URL API takes about 100 URLs a day, so what it gets is chosen
+// (bingUrls): the priority pages first (IMPORTANT_PATHS, every blog post
+// and every comparison), then the rest, and never the community's item
+// pages or the translated pages. Those go to IndexNow and stay in the
+// sitemaps, which Bing reads too.
+//
 // Add --dry-run to print what would be sent without sending anything. Only
 // URLs in the live sitemaps are sent. A search engine error is a warning and
 // never fails a run that sends; bad arguments exit with 2, and --check with
-// 1 when Bing or Google rejects the key or the site, or when an important
-// page is in no sitemap.
+// 1 when Bing or Google rejects the key or the site, when an important page
+// is in no sitemap, or when a sampled sitemap URL doesn't answer 200.
 // .github/workflows/notify-search-engines.yml runs it after every
 // production deploy, daily for the sitemaps' changes and the Bing backlog,
 // from the Actions tab, and with --check on pull requests that change it.
@@ -66,8 +74,9 @@ const BING_API = "https://ssl.bing.com/webmaster/api.svc/json";
 export const BING_BATCH_MAX = 500;
 
 /**
- * How far the --backlog slice moves each day: Bing's usual daily quota, so
- * consecutive days send consecutive slices.
+ * Bing's usual daily quota: what one --backlog run sends. The slice of the
+ * pages after the priority ones moves by what they leave of it each day
+ * (backlogUrls), so consecutive days send consecutive slices.
  */
 export const BING_BACKLOG_STEP = 100;
 
@@ -78,8 +87,49 @@ const GOOGLE_TOKEN_URI = "https://oauth2.googleapis.com/token";
 const GSC_API = "https://searchconsole.googleapis.com/webmasters/v3";
 
 /**
- * Sent to Bing when the changed pages can't be worked out. Each must be in
- * a sitemap: a missing one is a warning on every run and fails --check.
+ * The English generators people look for most, by search demand and the
+ * pages assistants send people to: Bing gets them with the priority pages.
+ * Each must be a type in the generator sitemap (IMPORTANT_PATHS).
+ */
+export const TOP_GENERATORS = [
+  "url",
+  "wifi",
+  "vcard",
+  "pdf",
+  "whatsapp",
+  "google-review",
+  "email",
+  "phone",
+  "sms",
+  "text",
+  "instagram",
+  "facebook",
+  "linkedin",
+  "youtube",
+  "tiktok",
+  "maps",
+  "location",
+  "business-card",
+  "app-download",
+  "upi",
+  "paypal",
+  "pix",
+  "spotify",
+  "google-forms",
+  "google-drive",
+  "zoom",
+  "telegram",
+  "twitter",
+  "venmo",
+  "guest-wifi",
+];
+
+/**
+ * The answer pages, which Bing gets before any other (bingUrls), with
+ * every blog post and comparison (PRIORITY_PATTERNS). They're also what
+ * --important sends, and what Bing gets when the changed pages can't be
+ * worked out. Each must be in a sitemap: a missing one is a warning on
+ * every run and fails --check.
  */
 export const IMPORTANT_PATHS = [
   "/",
@@ -90,7 +140,62 @@ export const IMPORTANT_PATHS = [
   "/barcode-generator",
   "/qr-code-generator",
   "/compare",
+  "/dynamic-qr-code",
+  "/qr-code-tracking",
+  "/custom-domain-qr-codes",
+  "/open-source-qr-code-generator",
+  "/ai",
+  "/ai/art",
+  "/guarantee",
+  "/scan",
+  "/tools",
+  "/tools/bulk",
+  "/tools/print-size",
+  "/tools/scan-checker",
+  "/qr-codes-for",
+  "/qr-codes-on",
+  "/blog",
+  ...TOP_GENERATORS.map((type) => `/qr-code-generator/${type}`),
 ];
+
+/**
+ * Priority pages found in the sitemaps rather than named: every blog post
+ * and every comparison (the guides and research assistants quote, and the
+ * pages that answer "X or Y?"). Blog categories and authors aren't posts.
+ */
+export const PRIORITY_PATTERNS = [
+  /^\/blog\/(?!category$|authors$)[^/]+$/,
+  /^\/compare\/[^/]+$/,
+];
+
+/**
+ * The URL segments of the translated languages (packages/i18n/config.ts
+ * LOCALE_INFO, which tests/repo/notify-search-engines.test.ts checks this
+ * against: the workflow runs this file on its own, without the package).
+ */
+export const TRANSLATED_SEGMENTS = [
+  "es",
+  "pt-br",
+  "fr",
+  "de",
+  "it",
+  "ja",
+  "ko",
+  "zh-hans",
+  "id",
+  "hi",
+];
+
+/**
+ * A community item page (/community/frames/<slug> and the other types,
+ * apps/app/lib/community/types.ts TYPE_SEGMENTS) or a creator's profile
+ * (/community/@<handle>). The galleries aren't items.
+ */
+const COMMUNITY_ITEM =
+  /^\/community\/(?:@[^/]+|(?:frames|themes|templates|collections|kits)\/[^/]+)$/;
+
+/** How many days apart the backlog sends each priority page to Bing. */
+export const PRIORITY_RESEND_DAYS = 7;
 
 const TIMEOUT_MS = 30_000;
 const inActions = process.env.GITHUB_ACTIONS === "true";
@@ -265,6 +370,109 @@ export function rotate(urls, day, step = BING_BACKLOG_STEP) {
 /** Days since 1970-01-01, UTC: Bing's quota resets at UTC midnight. */
 export const utcDay = (now = Date.now()) => Math.floor(now / 86_400_000);
 
+/** A URL's path without a trailing slash ("/" for the home page). */
+const pathOf = (url) => new URL(normalizeUrl(url)).pathname;
+
+/**
+ * Whether Bing's URL API should get `url`: not a translated page and not a
+ * community item or profile. They still go to IndexNow and the sitemaps.
+ */
+export function forBing(url) {
+  const path = pathOf(url);
+  const first = path.split("/")[1]?.toLowerCase();
+  return !(TRANSLATED_SEGMENTS.includes(first) || COMMUNITY_ITEM.test(path));
+}
+
+const IMPORTANT_RANK = new Map(
+  IMPORTANT_PATHS.map((path, index) => [path, index])
+);
+
+/**
+ * The priority pages among `urls`, each once: IMPORTANT_PATHS in its own
+ * order, then the posts and comparisons PRIORITY_PATTERNS finds, in the
+ * order given.
+ */
+export function priorityUrls(urls) {
+  const seen = new Set();
+  const named = [];
+  const found = [];
+  for (const url of urls) {
+    const key = normalizeUrl(url);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const path = pathOf(url);
+    if (IMPORTANT_RANK.has(path)) named.push(url);
+    else if (PRIORITY_PATTERNS.some((pattern) => pattern.test(path))) {
+      found.push(url);
+    }
+  }
+  named.sort(
+    (a, b) => IMPORTANT_RANK.get(pathOf(a)) - IMPORTANT_RANK.get(pathOf(b))
+  );
+  return [...named, ...found];
+}
+
+/** `urls` that Bing's URL API should get (forBing), priority pages first. */
+export function bingUrls(urls) {
+  const eligible = urls.filter(forBing);
+  const first = priorityUrls(eligible);
+  const sent = new Set(first.map(normalizeUrl));
+  return [...first, ...eligible.filter((url) => !sent.has(normalizeUrl(url)))];
+}
+
+/**
+ * The day of the week (0 to 6, of PRIORITY_RESEND_DAYS) the backlog sends
+ * a priority page on: from a hash of its path (FNV-1a), so adding or
+ * removing a page never moves another.
+ */
+export function resendDay(url) {
+  let hash = 0x81_1c_9d_c5;
+  for (const char of pathOf(url)) {
+    hash ^= char.codePointAt(0);
+    hash = Math.imul(hash, 0x01_00_01_93) >>> 0;
+  }
+  return hash % PRIORITY_RESEND_DAYS;
+}
+
+/**
+ * Day `day`'s Bing backlog, in the order to send it: the priority pages
+ * whose resend day it is (each once a week, about a seventh of them a day),
+ * then the rest of the sitemap from that day's slice on. The slices move by
+ * the quota the priority pages leave on an average day, so consecutive days
+ * still cover every page. Translations and community items stay out
+ * (forBing).
+ */
+export function backlogUrls(urls, day) {
+  const ordered = bingUrls(urls);
+  const priority = new Set(priorityUrls(ordered).map(normalizeUrl));
+  const today = ordered.filter(
+    (url) =>
+      priority.has(normalizeUrl(url)) &&
+      resendDay(url) === day % PRIORITY_RESEND_DAYS
+  );
+  const rest = ordered.filter((url) => !priority.has(normalizeUrl(url)));
+  const step = Math.max(
+    1,
+    BING_BACKLOG_STEP - Math.ceil(priority.size / PRIORITY_RESEND_DAYS)
+  );
+  return [...today, ...rotate(rest, day, step)];
+}
+
+/** How many of each sitemap's URLs --check asks for. */
+export const SITEMAP_SAMPLE_SIZE = 10;
+
+/**
+ * `size` of `urls`, spread evenly from first to last and starting a little
+ * further in each day, so repeated checks see different pages; all of them
+ * when there are no more.
+ */
+export function sampleUrls(urls, size = SITEMAP_SAMPLE_SIZE, day = utcDay()) {
+  if (urls.length <= size) return [...urls];
+  const gap = Math.floor(urls.length / size);
+  const start = day % gap;
+  return Array.from({ length: size }, (_, i) => urls[start + i * gap]);
+}
+
 /** The parts of a service account key file the token exchange needs. */
 export function parseServiceAccount(json) {
   let account;
@@ -358,7 +566,8 @@ export async function listSitemaps() {
 
 /**
  * Every page in the sitemaps robots.txt lists (a sitemap index is followed
- * one level), and the sitemaps read. A sitemap that can't be read is a
+ * one level), the sitemaps read, and each one's own pages on this site
+ * (`bySitemap`, which --check samples). A sitemap that can't be read is a
  * warning naming it; the run goes on with the rest. Throws when none can be.
  */
 export async function loadSitemaps() {
@@ -402,7 +611,66 @@ export async function loadSitemaps() {
   if (skipped > 0) {
     warn(`Left out ${skipped} sitemap URLs that aren't on ${SITE}.`);
   }
-  return { sitemaps, entries };
+  const bySitemap = sitemaps.map((sitemap, i) => ({
+    sitemap,
+    urls: lists[i].map((entry) => entry.url).filter((url) => onSite(url)),
+  }));
+  return { sitemaps, entries, bySitemap };
+}
+
+/**
+ * The HTTP status `url` answers with, without following a redirect: HEAD
+ * first, then GET when the server doesn't take HEAD (its body is never
+ * read).
+ */
+export async function pageStatus(url) {
+  const ask = (method) =>
+    fetch(url, {
+      method,
+      redirect: "manual",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+  let response = await ask("HEAD");
+  if (response.status === 405 || response.status === 501) {
+    await response.body?.cancel();
+    response = await ask("GET");
+  }
+  await response.body?.cancel();
+  return response.status;
+}
+
+/**
+ * --check: asks for a sample of each sitemap's pages (sampleUrls), a few
+ * at a time. Every one must answer 200 itself: a sitemap that lists a
+ * redirect, a missing page or an error sends search engines somewhere they
+ * won't index (translated barcode pages once redirected to English while
+ * their sitemap listed them). The ones that didn't come back in sample
+ * order, with what they answered.
+ */
+export async function checkSitemapSamples(bySitemap, day = utcDay()) {
+  const sample = bySitemap.flatMap(({ urls }) =>
+    sampleUrls(urls, SITEMAP_SAMPLE_SIZE, day)
+  );
+  const answers = new Array(sample.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < sample.length) {
+      const index = next;
+      next += 1;
+      try {
+        const status = await pageStatus(sample[index]);
+        answers[index] = status === 200 ? undefined : `HTTP ${status}`;
+      } catch (error) {
+        answers[index] =
+          error.name === "TimeoutError" ? "timed out" : error.message;
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: 4 }, worker));
+  const failures = sample.flatMap((url, i) =>
+    answers[i] ? [{ url, answer: answers[i] }] : []
+  );
+  return { checked: sample.length, failures };
 }
 
 /** A short, key-free description of an error response. */
@@ -731,15 +999,19 @@ async function checkGoogle(results, sitemaps) {
   return true;
 }
 
+/** At most this many of the URLs that failed the sample, in a results row. */
+const FAILURES_SHOWN = 5;
+
 /**
- * --check. Reads only, never submits: the sitemaps and the important pages
- * in them, IndexNow and Bing, then Google. False when no sitemap can be
- * read, an important page is in none, or an engine rejects its key or the
- * site.
+ * --check. Reads only, never submits: the sitemaps, the important pages in
+ * them and a sample of their pages, IndexNow and Bing, then Google. False
+ * when no sitemap can be read, an important page is in none, a sampled page
+ * doesn't answer 200, or an engine rejects its key or the site.
  */
-async function checkSetup(results) {
+export async function checkSetup(results) {
   let sitemaps = [SITEMAP_URL];
   let pages = false;
+  let sampled = false;
   try {
     const loaded = await loadSitemaps();
     sitemaps = loaded.sitemaps;
@@ -761,6 +1033,37 @@ async function checkSetup(results) {
         : `missing: ${dropped.join(", ")}`,
     ]);
     pages = dropped.length === 0;
+    const toBing = bingUrls(all);
+    const priority = priorityUrls(toBing).length;
+    results.push([
+      "Sitemaps",
+      "for Bing",
+      `${priority} priority pages (each once a week), then ${toBing.length - priority} more in turn; ${all.length - toBing.length} translations and community items left to IndexNow`,
+    ]);
+    const { checked, failures } = await checkSitemapSamples(loaded.bySitemap);
+    if (failures.length > 0) {
+      warn(
+        `Sitemap pages that didn't answer HTTP 200: ${failures
+          .map(({ url, answer }) => `${url} (${answer})`)
+          .join(", ")}`
+      );
+    }
+    const shown = failures
+      .slice(0, FAILURES_SHOWN)
+      .map(({ url, answer }) => `${new URL(url).pathname} (${answer})`)
+      .join(", ");
+    const more =
+      failures.length > FAILURES_SHOWN
+        ? ` and ${failures.length - FAILURES_SHOWN} more`
+        : "";
+    results.push([
+      "Sitemaps",
+      `sample of ${checked} pages`,
+      failures.length === 0
+        ? "every one answered HTTP 200"
+        : `${failures.length} didn't answer HTTP 200: ${shown}${more}`,
+    ]);
+    sampled = failures.length === 0;
   } catch (error) {
     warn(`Couldn't read the sitemaps: ${error.message}`);
     results.push(["Sitemaps", "-", `failed: ${error.message}`]);
@@ -772,7 +1075,7 @@ async function checkSetup(results) {
   } catch (error) {
     warn(`Google check failed: ${error.message}`);
   }
-  return pages && bing && google;
+  return pages && sampled && bing && google;
 }
 
 /**
@@ -923,26 +1226,33 @@ export async function main(argv = process.argv.slice(2)) {
   }
 
   const all = sitemap.map((entry) => entry.url);
-  const { kept: important, dropped: missing } = inSitemap(IMPORTANT_PATHS, all);
+  const { dropped: missing } = inSitemap(IMPORTANT_PATHS, all);
   if (missing.length > 0) {
     warn(
       `Important pages in no sitemap, so not sent: ${missing.join(", ")}. Fix IMPORTANT_PATHS in scripts/notify-search-engines.mjs or the sitemaps.`
     );
   }
-  // What each engine gets. IndexNow has no quota; Bing's is small. Google
-  // gets the sitemap whenever pages are sent, but not for the Bing backlog.
+  const important = priorityUrls(all.filter(forBing));
+  // What each engine gets. IndexNow has no quota; Bing's is small, so it
+  // gets the priority pages first and no translations or community items
+  // (bingUrls), except for a list of URLs given by hand. Google gets the
+  // sitemap whenever pages are sent, but not for the Bing backlog.
   let plan;
   if (values.all) {
-    plan = { indexNow: all, bing: all, source: "every sitemap URL" };
+    plan = { indexNow: all, bing: bingUrls(all), source: "every sitemap URL" };
   } else if (values.important) {
-    plan = { indexNow: important, bing: important, source: "the main pages" };
+    plan = {
+      indexNow: important,
+      bing: important,
+      source: "the priority pages",
+    };
   } else if (values.backlog) {
     plan = {
       indexNow: [],
-      bing: rotate(all, utcDay()).slice(0, BING_BATCH_MAX),
+      bing: backlogUrls(all, utcDay()).slice(0, BING_BATCH_MAX),
       google: false,
       source:
-        "today's slice of the sitemap, for Bing, as far as the quota left goes",
+        "today's priority pages and slice of the sitemap, for Bing, as far as the quota left goes",
     };
   } else if (values.urls) {
     let lines;
@@ -973,7 +1283,7 @@ export async function main(argv = process.argv.slice(2)) {
       const changed = changedUrls(before, sitemap);
       plan = {
         indexNow: changed,
-        bing: changed,
+        bing: bingUrls(changed),
         source: "changed since the last deploy",
       };
     }
