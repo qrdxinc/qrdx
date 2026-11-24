@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "QRdx：ロゴ入りQRコードと動的QRコードを作れる無料のQRコードジェネレーター",
-    "siteDescription": "無料のオープンソースQRコードジェネレーター。ロゴ、色、フレーム付きのコードを無制限に作成でき、登録もウォーターマークも不要です。動的QRコードとスキャン分析にも対応しています。",
+    "siteDescription": "無料のQRコードと、プランがどうなっても使い続けられる動的QRコード。ロゴ、色、フレームでデザインできます。登録もウォーターマークも不要です。",
     "ogImageAlt": "QRdx:動的QRコード、ホスト型ページ、スキャン解析に対応した無料のQRコード作成ツール"
   },
   "nav": {
@@ -217,17 +217,19 @@
     }
   },
   "footer": {
-    "description": "オープンソースのQRコードプラットフォーム。",
+    "description": "無料のQRコードと、プランがどうなっても使い続けられる動的QRコード。",
     "starOnGithub": "GitHubでスターする",
     "newsOnX": "QRdxのXニュース",
     "joinDiscord": "QRdxのDiscordに参加",
     "navLabel": "フッター",
     "copyright": "© {year} QRdx",
+    "license": "アプリは <link>AGPL-3.0</link> のもとでオープンソースとして公開されています。",
     "columns": {
       "product": "製品",
       "developers": "開発者向け",
       "solutions": "ソリューション",
       "resources": "リソース",
+      "guides": "ガイド",
       "company": "会社情報",
       "compare": "比較"
     },
@@ -280,6 +282,10 @@
       "scanner": "QRコードスキャナー",
       "scanChecker": "スキャンチェッカー",
       "printSize": "印刷サイズ計算ツール",
+      "guideExpire": "QRコードに有効期限はある？",
+      "guidePrintSize": "QRコードの印刷サイズの目安",
+      "guideDynamicStatic": "動的QRコードと静的QRコードの違い",
+      "scanStudy": "QRコードのスキャン調査",
       "security": "セキュリティ",
       "affiliates": "アフィリエイトプログラム",
       "guarantee": "Never-Hostage保証",
@@ -348,11 +354,11 @@
   },
   "home": {
     "hero": {
-      "badge": "無料のオープンソース（AGPL-3.0）",
+      "badge": "無料のオープンソース",
       "title": "無料のQRコードジェネレーター。動的QRコードもずっと使えます",
-      "description": "パターン、グラデーション、ロゴ、フレームでブランドに合わせたQRコードをデザインし、PNG、SVG、PDF、EPS、TIFFでダウンロードできます。登録もウォーターマークも不要です。ログインすると、印刷後も編集できる動的QRコード、ホスト型ページ、スキャン解析をご利用いただけます。",
-      "primary": "Playgroundを試す",
-      "secondary": "ドキュメントを読む",
+      "description": "ロゴ入りのブランドQRコードをデザインして、登録も透かしもなしで無料でダウンロードできます。ログインすると、印刷後に内容を変更できる動的QRコードを作成できます。動的QRコードは、どのプランでも、プラン変更、支払いの失敗、解約があっても停止しません。",
+      "primary": "QRコードを作成",
+      "secondary": "動的コードを作成",
       "sceneLabel": "QRdxの流れを描いたアニメーション。スタジオの画面でQRコードをデザインしてスタイルを整え、プリンターがカードに印刷し、ロボットアームがカードをコンベヤーに載せ、ゲートに取り付けたスマートフォンが通過するカードを1枚ずつスキャンし、スキャンのデータが解析パネルに届いて新しいバーが加わり、大きな動的QRカードが再印刷なしでリンク先を切り替えます"
     },
     "customers": {
@@ -487,7 +493,7 @@
       "developers": {
         "eyebrow": "開発者向け",
         "title": "開発者のために設計",
-        "description": "qrdx React ライブラリでコードを描画したり、Image API で URL から画像を取得したり、Claude、Cursor、VS Code から MCP サーバー経由でコードを作成したりできます。アプリをセルフホストすることも可能です。",
+        "description": "qrdx React ライブラリでコードを描画したり、Image APIで URL から画像を取得したり、Claude、Cursor、VS Code から MCP サーバー経由で生成したりできます。アプリのセルフホストも可能で、AGPL-3.0のオープンソースです。",
         "link": "開発者向けドキュメント"
       }
     },
@@ -613,7 +619,7 @@
       }
     },
     "cards": {
-      "popular": "人気",
+      "recommended": "おすすめ",
       "leadPro": "フリーのすべての機能に加えて:",
       "leadBusiness": "Proのすべての機能に加えて:",
       "goToDashboard": "ダッシュボードへ",
@@ -3216,7 +3222,7 @@
     }
   },
   "ai": {
-    "metaTitle": "AI QRコードジェネレーター — プロンプトからQRコードをデザイン",
+    "metaTitle": "AI QRコードジェネレーター：プロンプトからQRコードをデザイン",
     "metaDescription": "作りたいQRコードを言葉で伝えると、QRdxのAIがデザインし、スキャンスコアが「Great」になるまで修正します。エディターを変更する前には確認します。フリーアカウントでは {count, number} 件のAIリクエストをご利用いただけます。",
     "artLink": "またはリンクからスキャン可能なAI QRアートを作成",
     "chat": {
@@ -3255,7 +3261,7 @@
     "vectorEyebrowLead": "今すぐ無料で使えます",
     "vectorEyebrow": "AI不要",
     "vectorTitleLead": "Logo QRとImage QR",
-    "vectorTitle": "確実にスキャンできるベクターコードが欲しいなら",
+    "vectorTitle": "AIを使わないベクターのQRコードをお探しですか？",
     "vectorDescription": "ロゴや写真をコードそのものに溶け込ませます。ベクターで描画され、スキャナーが頼りにするパターンはしっかり保たれ、クレジットも不要です。",
     "openArt": "Artタブを開く",
     "vector": {
@@ -5455,6 +5461,7 @@
       "warning": "警告",
       "scanScoreScoreValueWarningShow": "スキャンスコア {score, number}、{value}、警告あり。チェック項目を表示",
       "addAMargin": "{modules, number}モジュール分の余白を追加",
+      "whyStudy": "理由は？ スキャン調査の結果を見る",
       "grades": {
         "great": "良好",
         "ok": "OK",
@@ -8802,7 +8809,60 @@
           "fullHistory": "直近{years, plural, other {#年}}分だけでなく、すべてのスキャンを振り返れます",
           "price": "Pro は月額 {month}、または年額 {year} です。",
           "seePro": "Proを見る",
+          "hide": "非表示",
+          "invite": "または<link>友達を招待</link>：友達が最初の動的QRコードを作成すると、お二人とも動的コードがさらに {count, number} 個もらえます。"
+        },
+        "firstSteps": {
+          "title": "印刷できる最初のコードを用意しましょう",
+          "progress": "{total, number} 件中 {done, number} 件完了",
+          "progressLabel": "完了した最初のステップ",
+          "hide": "非表示",
+          "done": "（完了）",
+          "make": "動的コードを作成",
+          "makeHint": "印刷後でもリンク先を変更できるQRコードです。",
+          "create": "作成",
+          "scan": "スマートフォンでスキャン",
+          "scanHint": "スマートフォンのカメラで画面上のコードを読み取り、リンクを開いてください。",
+          "showCode": "コードを表示",
+          "download": "印刷用にダウンロード",
+          "downloadHint": "SVGはどの印刷サイズでも鮮明なままです。",
+          "downloadAction": "ダウンロード",
+          "makeFirstCode": "最初の動的コードを作成"
+        },
+        "inviteCard": {
+          "title": "QRコードを印刷する知り合いはいませんか？",
+          "body": "友達があなたのリンクから登録して最初の動的QRコードを作成すると、お二人とも動的コードがさらに {count, number} 個もらえます。",
+          "messageLabel": "送信するメッセージ：",
+          "message": "私はQRdxでQRコードを作っています。無料で使えて、プランがどうなっても動的コードは使い続けられます。私のリンクから登録して動的コードを作成すると、お互いにさらに {count, number} 個もらえます：{link}",
+          "copyMessage": "メッセージをコピー",
+          "copyLink": "リンクをコピー",
+          "copied": "コピーしました",
+          "linkCopied": "リンクをコピーしました",
+          "messageCopied": "メッセージをコピーしました",
+          "couldntCopy": "コピーできませんでした。テキストを選択して、手動でコピーしてください。",
+          "howItWorks": "仕組み",
           "hide": "非表示"
+        },
+        "whereHeard": {
+          "question": "QRdxを最初に知ったのはどこですか？",
+          "why": "任意です。タップするだけで、何が効果的か分かります。",
+          "answers": {
+            "ai_assistant": "ChatGPTなどのAIアシスタント",
+            "search": "GoogleまたはBing",
+            "friend": "友人や同僚",
+            "x_threads": "XまたはThreads",
+            "linkedin": "LinkedIn",
+            "youtube": "YouTube",
+            "reddit_hn": "RedditまたはHacker News",
+            "product_hunt": "Product Hunt",
+            "directory": "リストやディレクトリ",
+            "other": "その他"
+          },
+          "otherLabel": "QRdxをどこでお知りになりましたか？",
+          "otherPlaceholder": "ひとことでご記入ください",
+          "save": "保存",
+          "hide": "非表示",
+          "thanks": "ありがとうございます。参考になります。"
         }
       },
       "listSelection": {

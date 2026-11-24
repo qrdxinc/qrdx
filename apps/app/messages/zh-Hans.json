@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "QRdx：支持添加徽标和动态码的免费二维码生成器",
-    "siteDescription": "免费开源的二维码生成器：可生成不限数量的二维码，支持徽标、颜色和边框，无需注册，无水印。另有动态码和扫描分析功能。",
+    "siteDescription": "免费生成二维码，还有无论套餐如何变化都能持续使用的动态二维码。可添加徽标、颜色和边框来设计，无需注册，也没有水印。",
     "ogImageAlt": "QRdx：免费二维码生成器，提供动态二维码、托管页面和扫描分析"
   },
   "nav": {
@@ -217,17 +217,19 @@
     }
   },
   "footer": {
-    "description": "开源二维码平台。",
+    "description": "免费二维码，以及无论套餐如何变化都能持续使用的动态二维码。",
     "starOnGithub": "在 GitHub 上点星标",
     "newsOnX": "X 上的 QRdx 动态",
     "joinDiscord": "加入 QRdx Discord",
     "navLabel": "页脚",
     "copyright": "© {year} QRdx",
+    "license": "本应用以 <link>AGPL-3.0</link> 协议开源。",
     "columns": {
       "product": "产品",
       "developers": "开发者",
       "solutions": "解决方案",
       "resources": "资源",
+      "guides": "指南",
       "company": "公司",
       "compare": "对比"
     },
@@ -280,6 +282,10 @@
       "scanner": "二维码扫描器",
       "scanChecker": "扫描检测",
       "printSize": "打印尺寸计算器",
+      "guideExpire": "二维码会过期吗？",
+      "guidePrintSize": "二维码打印多大合适",
+      "guideDynamicStatic": "动态二维码与静态二维码",
+      "scanStudy": "二维码扫描研究",
       "security": "安全",
       "affiliates": "联盟计划",
       "guarantee": "Never-Hostage 保障",
@@ -348,11 +354,11 @@
   },
   "home": {
     "hero": {
-      "badge": "免费开源（AGPL-3.0）",
+      "badge": "免费开源",
       "title": "免费二维码生成器，动态二维码持续可用",
-      "description": "设计带有图案、渐变、徽标和边框的品牌二维码，无需注册，也没有水印，即可下载 PNG、SVG、PDF、EPS 或 TIFF 格式。登录后可使用印刷后仍可编辑的动态二维码、托管页面和扫描分析。",
-      "primary": "试用 Playground",
-      "secondary": "阅读文档",
+      "description": "设计带有您的徽标的品牌二维码，免费下载，无需注册，也没有水印。登录后可创建动态二维码，印刷之后仍可修改内容。无论使用哪种方案，动态二维码都不会因为方案变更、付款失败或取消订阅而停止工作。",
+      "primary": "创建二维码",
+      "secondary": "创建动态二维码",
       "sceneLabel": "QRdx 流程动画：设计工作室屏幕设计并美化二维码，打印机将其打印在卡片上，机械臂把卡片放到传送带上，闸机上的手机在每张卡片经过时进行扫描，扫描数据传到分析面板并新增一根柱状条，一张大型动态二维码卡片无需重新打印即可更换目标链接"
     },
     "customers": {
@@ -487,7 +493,7 @@
       "developers": {
         "eyebrow": "开发者",
         "title": "为开发者打造",
-        "description": "使用 qrdx React 库渲染二维码，通过 Image API 以 URL 获取图片，或者让 Claude、Cursor 和 VS Code 借助 MCP 服务器来生成。你也可以自行托管该应用。",
+        "description": "使用 qrdx React 库渲染二维码，通过 Image API 用一个 URL 获取图片，或者让 Claude、Cursor 和 VS Code 通过 MCP 服务器来生成。您也可以自行托管该应用，它以 AGPL-3.0 协议开源。",
         "link": "开发者文档"
       }
     },
@@ -613,7 +619,7 @@
       }
     },
     "cards": {
-      "popular": "热门",
+      "recommended": "推荐",
       "leadPro": "包含免费版的全部功能，另加：",
       "leadBusiness": "包含 Pro 的全部功能，另加：",
       "goToDashboard": "前往控制台",
@@ -3216,7 +3222,7 @@
     }
   },
   "ai": {
-    "metaTitle": "AI 二维码生成器——用一句提示词设计二维码",
+    "metaTitle": "AI 二维码生成器：用一句提示词设计二维码",
     "metaDescription": "描述你想要的二维码，QRdx 的 AI 会为你设计，并持续修复，直到扫描评分达到“优秀”，修改你的编辑器之前还会先征求你的同意。免费版账户可获得 {count, number} 次 AI 请求。",
     "artLink": "或者把链接变成可扫描的 AI 二维码艺术图",
     "chat": {
@@ -3255,7 +3261,7 @@
     "vectorEyebrowLead": "现已推出，免费使用",
     "vectorEyebrow": "无需 AI",
     "vectorTitleLead": "Logo QR 和 Image QR",
-    "vectorTitle": "想要一定能扫描的矢量二维码？",
+    "vectorTitle": "想要不使用 AI 的矢量二维码？",
     "vectorDescription": "把 Logo 或照片融入二维码本身。它以矢量绘制，保持扫描器所依赖的图案清晰完整，也无需消耗额度。",
     "openArt": "打开“艺术”标签页",
     "vector": {
@@ -5455,6 +5461,7 @@
       "warning": "警告",
       "scanScoreScoreValueWarningShow": "扫描评分 {score, number}，{value}，有警告。显示检查项",
       "addAMargin": "添加 {modules, number} 个模块的边距",
+      "whyStudy": "为什么?看看我们的扫描研究结果",
       "grades": {
         "great": "优秀",
         "ok": "良好",
@@ -8802,7 +8809,60 @@
           "fullHistory": "回顾每一次扫描记录，而不只是最近{years, plural, one {1 年} other {# 年}}",
           "price": "Pro 每月 {month}，或每年 {year}。",
           "seePro": "查看 Pro",
+          "hide": "隐藏",
+          "invite": "或者<link>邀请好友</link>：好友制作第一个动态二维码后，你们双方都可以多获得 {count, number} 个。"
+        },
+        "firstSteps": {
+          "title": "准备好你的第一个可打印二维码",
+          "progress": "已完成 {done, number}/{total, number}",
+          "progressLabel": "已完成的入门步骤",
+          "hide": "隐藏",
+          "done": "（已完成）",
+          "make": "制作动态二维码",
+          "makeHint": "打印后仍可更改链接的二维码。",
+          "create": "创建",
+          "scan": "用手机扫描",
+          "scanHint": "用手机相机对准屏幕上的二维码，然后打开链接。",
+          "showCode": "显示二维码",
+          "download": "下载用于打印",
+          "downloadHint": "SVG 在任何打印尺寸下都保持清晰。",
+          "downloadAction": "下载",
+          "makeFirstCode": "制作你的第一个动态二维码"
+        },
+        "inviteCard": {
+          "title": "认识会打印二维码的人吗？",
+          "body": "好友通过你的链接注册并制作第一个动态二维码后，你们双方都可以多获得 {count, number} 个动态二维码。",
+          "messageLabel": "要发送的消息：",
+          "message": "我用 QRdx 制作二维码。它是免费的，而且无论你的套餐如何变化，动态二维码都能继续使用。通过我的链接注册并制作一个动态二维码，我们双方都可以多获得 {count, number} 个：{link}",
+          "copyMessage": "复制消息",
+          "copyLink": "复制链接",
+          "copied": "已复制",
+          "linkCopied": "链接已复制",
+          "messageCopied": "消息已复制",
+          "couldntCopy": "无法复制。请选中文本后自行复制。",
+          "howItWorks": "运作方式",
           "hide": "隐藏"
+        },
+        "whereHeard": {
+          "question": "你最初是在哪里听说 QRdx 的？",
+          "why": "选填。点一下就能让我们知道哪些渠道有效。",
+          "answers": {
+            "ai_assistant": "ChatGPT 或其他 AI 助手",
+            "search": "Google 或 Bing",
+            "friend": "朋友或同事",
+            "x_threads": "X 或 Threads",
+            "linkedin": "LinkedIn",
+            "youtube": "YouTube",
+            "reddit_hn": "Reddit 或 Hacker News",
+            "product_hunt": "Product Hunt",
+            "directory": "某个榜单或目录",
+            "other": "其他"
+          },
+          "otherLabel": "你是从哪里了解到 QRdx 的？",
+          "otherPlaceholder": "简单说几个字",
+          "save": "保存",
+          "hide": "隐藏",
+          "thanks": "谢谢，这对我们很有帮助。"
         }
       },
       "listSelection": {

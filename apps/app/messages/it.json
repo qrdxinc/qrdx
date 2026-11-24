@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "QRdx: generatore di QR code gratuito con loghi e codici dinamici",
-    "siteDescription": "Generatore di QR code gratuito e open source: codici illimitati con loghi, colori e cornici, senza registrazione né filigrana. In più, codici dinamici e analisi delle scansioni.",
+    "siteDescription": "QR code gratuiti e QR code dinamici che continuano a funzionare qualunque cosa succeda al tuo piano. Progettali con loghi, colori e cornici, senza registrazione né filigrana.",
     "ogImageAlt": "QRdx: generatore di QR code gratuito con QR code dinamici, pagine ospitate e statistiche sulle scansioni"
   },
   "nav": {
@@ -217,17 +217,19 @@
     }
   },
   "footer": {
-    "description": "La piattaforma QR code open source.",
+    "description": "QR code gratuiti e codici dinamici che continuano a funzionare qualunque cosa succeda al tuo piano.",
     "starOnGithub": "Metti una stella su GitHub",
     "newsOnX": "Novità QRdx su X",
     "joinDiscord": "Unisciti al Discord di QRdx",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
+    "license": "L’app è open source con licenza <link>AGPL-3.0</link>.",
     "columns": {
       "product": "Prodotto",
       "developers": "Sviluppatori",
       "solutions": "Soluzioni",
       "resources": "Risorse",
+      "guides": "Guide",
       "company": "Azienda",
       "compare": "Confronta"
     },
@@ -280,6 +282,10 @@
       "scanner": "Lettore di QR code",
       "scanChecker": "Verifica scansione",
       "printSize": "Calcolatore dimensioni di stampa",
+      "guideExpire": "I QR code scadono?",
+      "guidePrintSize": "Che dimensione dare alla stampa di un QR code",
+      "guideDynamicStatic": "Codici dinamici e statici",
+      "scanStudy": "Studio sulle scansioni dei QR code",
       "security": "Sicurezza",
       "affiliates": "Programma di affiliazione",
       "guarantee": "Garanzia Never-Hostage",
@@ -348,11 +354,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Gratuito e open source (AGPL-3.0)",
+      "badge": "Gratuito e open source",
       "title": "Generatore di QR code gratuito, con codici dinamici che continuano a funzionare",
-      "description": "Crea QR code personalizzati con motivi, sfumature, loghi e cornici, e scarica PNG, SVG, PDF, EPS o TIFF senza registrazione e senza filigrana. Accedi per avere QR code dinamici che puoi modificare dopo la stampa, pagine ospitate e analisi delle scansioni.",
-      "primary": "Prova il Playground",
-      "secondary": "Leggi la documentazione",
+      "description": "Crea un QR code con il tuo logo e scaricalo gratis, senza registrazione né filigrana. Accedi per ottenere QR code dinamici che puoi modificare dopo la stampa. Non si fermano mai per un cambio di piano, un pagamento non riuscito o una cancellazione, su qualsiasi piano.",
+      "primary": "Crea un QR code",
+      "secondary": "Crea un codice dinamico",
       "sceneLabel": "Disegno animato del flusso di QRdx: una schermata di studio progetta e personalizza un QR code, una stampante lo stampa su un cartoncino, un braccio robotico appoggia il cartoncino su un nastro trasportatore, un telefono su un varco esegue la scansione di ogni cartoncino che passa, la scansione arriva a un pannello di statistiche che aggiunge una nuova barra, e un grande cartoncino con QR code dinamico cambia il link di destinazione senza essere ristampato"
     },
     "customers": {
@@ -487,7 +493,7 @@
       "developers": {
         "eyebrow": "Sviluppatori",
         "title": "Fatto per gli sviluppatori",
-        "description": "Genera i codici con la libreria React qrdx, ottieni le immagini da un URL con l’image API, oppure lascia che Claude, Cursor e VS Code li creino tramite il server MCP. Puoi anche ospitare l’app in autonomia.",
+        "description": "Genera i codici con la libreria React qrdx, ottieni le immagini da un URL con l’image API, oppure lascia che Claude, Cursor e VS Code li creino tramite il server MCP. Puoi anche ospitare l’app in autonomia: è open source con licenza AGPL-3.0.",
         "link": "Documentazione sviluppatori"
       }
     },
@@ -613,7 +619,7 @@
       }
     },
     "cards": {
-      "popular": "Popolare",
+      "recommended": "Consigliato",
       "leadPro": "Tutto di Gratuito, più:",
       "leadBusiness": "Tutto di Pro, più:",
       "goToDashboard": "Vai alla dashboard",
@@ -3216,7 +3222,7 @@
     }
   },
   "ai": {
-    "metaTitle": "Generatore di QR code con AI — Progetta QR code partendo da un prompt",
+    "metaTitle": "Generatore di QR code con AI: crea QR code a partire da un prompt",
     "metaDescription": "Descrivi un QR code e l’IA di QRdx lo progetta, lo corregge finché il punteggio di scansione non è Ottimo e chiede prima di modificare il tuo editor. Gli account gratuiti hanno {count, number} richieste IA.",
     "artLink": "Oppure trasforma un link in arte QR con AI da scansionare",
     "chat": {
@@ -3255,7 +3261,7 @@
     "vectorEyebrowLead": "Disponibile ora, gratis",
     "vectorEyebrow": "Senza AI",
     "vectorTitleLead": "Logo QR e Image QR",
-    "vectorTitle": "Vuoi un codice vettoriale sicuro da scansionare?",
+    "vectorTitle": "Preferisci un codice vettoriale senza AI?",
     "vectorDescription": "Fondi un logo o una foto nel codice stesso. È disegnato in vettoriale, mantiene solidi i motivi su cui si basano gli scanner e non richiede crediti.",
     "openArt": "Apri la scheda Arte",
     "vector": {
@@ -5455,6 +5461,7 @@
       "warning": "Avviso",
       "scanScoreScoreValueWarningShow": "Punteggio di scansione {score, number}, {value}, con un avviso. Mostra i controlli",
       "addAMargin": "Aggiungi un margine di {modules, number} moduli",
+      "whyStudy": "Perché? Scopri cosa ha rilevato il nostro studio sulle scansioni",
       "grades": {
         "great": "Ottimo",
         "ok": "OK",
@@ -8802,7 +8809,60 @@
           "fullHistory": "Rivedi ogni scansione, non solo quelle {years, plural, one {dell’ultimo anno} other {degli ultimi # anni}}",
           "price": "Pro costa {month} al mese o {year} all’anno.",
           "seePro": "Scopri Pro",
+          "hide": "Nascondi",
+          "invite": "Oppure <link>invita un amico</link>: quando crea il suo primo codice dinamico, ricevete entrambi {count, number} in più."
+        },
+        "firstSteps": {
+          "title": "Prepara il tuo primo codice da stampare",
+          "progress": "{done, number} di {total, number} completati",
+          "progressLabel": "Primi passi completati",
+          "hide": "Nascondi",
+          "done": "(fatto)",
+          "make": "Crea un QR code dinamico",
+          "makeHint": "Un QR code di cui puoi cambiare il link anche dopo la stampa.",
+          "create": "Crea",
+          "scan": "Fai la scansione con il telefono",
+          "scanHint": "Inquadra il codice sullo schermo con la fotocamera del telefono e apri il link.",
+          "showCode": "Mostra codice",
+          "download": "Scaricalo per la stampa",
+          "downloadHint": "L’SVG resta nitido a qualsiasi dimensione di stampa.",
+          "downloadAction": "Scarica",
+          "makeFirstCode": "Crea il tuo primo QR code dinamico"
+        },
+        "inviteCard": {
+          "title": "Conosci qualcuno che stampa QR code?",
+          "body": "Quando un amico si iscrive tramite il tuo link e crea il suo primo QR code dinamico, ricevete entrambi {count, number} QR code dinamici in più.",
+          "messageLabel": "Messaggio da inviare:",
+          "message": "Creo i miei QR code con QRdx. Sono gratuiti e i QR code dinamici continuano a funzionare qualunque cosa succeda al tuo piano. Iscriviti tramite il mio link e crea un QR code dinamico: ne riceviamo entrambi {count, number} in più: {link}",
+          "copyMessage": "Copia messaggio",
+          "copyLink": "Copia link",
+          "copied": "Copiato",
+          "linkCopied": "Link copiato",
+          "messageCopied": "Messaggio copiato",
+          "couldntCopy": "Impossibile copiare. Seleziona il testo e copialo tu.",
+          "howItWorks": "Come funziona",
           "hide": "Nascondi"
+        },
+        "whereHeard": {
+          "question": "Dove hai sentito parlare di QRdx per la prima volta?",
+          "why": "Facoltativo. Un tocco ci dice cosa funziona.",
+          "answers": {
+            "ai_assistant": "ChatGPT o un altro assistente AI",
+            "search": "Google o Bing",
+            "friend": "Un amico o un collega",
+            "x_threads": "X o Threads",
+            "linkedin": "LinkedIn",
+            "youtube": "YouTube",
+            "reddit_hn": "Reddit o Hacker News",
+            "product_hunt": "Product Hunt",
+            "directory": "Una lista o un elenco",
+            "other": "Altro"
+          },
+          "otherLabel": "Dove hai sentito parlare di QRdx?",
+          "otherPlaceholder": "Poche parole",
+          "save": "Salva",
+          "hide": "Nascondi",
+          "thanks": "Grazie, ci è utile."
         }
       },
       "listSelection": {
