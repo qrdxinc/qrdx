@@ -43,12 +43,8 @@ export type CatalogSurface =
   | "plugins"
   | "feature";
 
-/**
- * iconsax icons on a neutral tile: QRdx's own features, and a brand whose
- * logo QRdx may not show yet (Salesforce's "Cloud").
- */
+/** iconsax icons used for QRdx's own features (neutral tile). */
 export type CatalogFeatureIcon =
-  | "Cloud"
   | "Code1"
   | "CommandSquare"
   | "Flash"
@@ -62,9 +58,7 @@ export type CatalogLogo =
    * apps/app/public, or, for a brand that lets us show its logo but not
    * commit it (Pipedrive), the same path uploaded to R2 with
    * `bun run media:upload` (apps/app/lib/media.ts resolves it). Every
-   * third-party entry uses one, never an initial; the one exception is a
-   * brand whose logo is still awaiting approval (Salesforce), which uses a
-   * neutral "feature" icon until then.
+   * third-party entry uses one; never an icon or an initial.
    */
   | { type: "image"; src: string }
   | { type: "feature"; icon: CatalogFeatureIcon };

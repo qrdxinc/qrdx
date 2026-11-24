@@ -26,8 +26,7 @@ initializeIntegrations();
 /**
  * Starts an integration's OAuth sign-in. `returnTo` is a same-site path to
  * come back to afterwards (the Import dialog passes its own); anything else is
- * ignored and the callback lands on Settings → Integrations. `variant` picks
- * another sign-in host the provider offers (Salesforce: "sandbox"). A tool QRdx
+ * ignored and the callback lands on Settings → Integrations. A tool QRdx
  * sends data to (Slack, the data-out syncs) needs a recent "Confirm it's
  * you" and answers CONFIRMATION_REQUIRED without one
  * (lib/data-connections/connect-confirmation.ts).
@@ -35,7 +34,6 @@ initializeIntegrations();
 export async function connectIntegrationAction(
   provider: string,
   returnTo?: string,
-  variant?: string,
 ): Promise<{ url: string } | ConfirmationRequired> {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -66,10 +64,7 @@ export async function connectIntegrationAction(
     },
   ]);
 
-  const authUrl = await createIntegrationAuthUrl(provider, {
-    returnTo,
-    variant,
-  });
+  const authUrl = await createIntegrationAuthUrl(provider, { returnTo });
 
   return { url: authUrl };
 }

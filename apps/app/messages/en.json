@@ -7189,10 +7189,7 @@
           "failedToConnectIntegration": "Failed to connect integration",
           "nameDisconnectedAndQrdxsAccess": "{name} disconnected and QRdx's access revoked",
           "nameDisconnected": "{name} disconnected",
-          "failedToDisconnectIntegration": "Failed to disconnect integration",
-          "salesforceOrgType": "Salesforce org type",
-          "production": "Production",
-          "sandbox": "Sandbox"
+          "failedToDisconnectIntegration": "Failed to disconnect integration"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "Send form responses to {name}",
@@ -7230,12 +7227,7 @@
           "loadMorePages": "Load more pages",
           "loadingPages": "Loading pages…",
           "tryAgain": "Try again",
-          "couldntLoadMorePages": "Couldn't load more pages. Try again.",
-          "newResponsesCreateOrUpdateLead": "New responses create a lead, or update the open lead with the same email. Only answered, mapped questions are sent.",
-          "leads": "leads",
-          "leadSource": "Lead source",
-          "leadSourceHelp": "Set on the leads QRdx creates. Use a value from your Lead Source picklist, or leave it empty for none.",
-          "salesforceOrg": "{environment, select, sandbox {Sandbox org} other {Production org}}: {host}"
+          "couldntLoadMorePages": "Couldn't load more pages. Try again."
         },
         "slackBotPanel": {
           "qrdxBot": "QRdx bot",

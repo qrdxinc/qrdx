@@ -2,7 +2,6 @@ import "server-only";
 
 import { database as db, integration } from "@repo/database";
 import {
-  type Integration,
   isIntegrationApiError,
   isSinkProvider,
   SINK_PROVIDERS,
@@ -25,11 +24,6 @@ import {
   mailchimpTargets,
   syncResponsesToMailchimp,
 } from "@repo/integrations/src/integrations/mailchimp";
-import {
-  SALESFORCE_DEFAULT_LEAD_SOURCE,
-  type SalesforceClient,
-  syncResponsesToSalesforce,
-} from "@repo/integrations/src/integrations/salesforce";
 import type { ResponseSinkSettings } from "@repo/integrations/src/sinks/mapping";
 import {
   isSyncDue,
@@ -43,7 +37,6 @@ import { after } from "next/server";
 import { getConnection } from "@/lib/connected-accounts/server";
 import { scheduleWorkerRun } from "@/lib/events/worker-due";
 import { loadResponses, loadScans, syncPauseReason } from "./data";
-import { salesforceClientFor } from "./salesforce";
 import { dataCallsAllowed } from "./server";
 
 // Data-out worker. Each sink integration keeps its stream state in
@@ -51,9 +44,8 @@ import { dataCallsAllowed } from "./server";
 // attempts with the webhook backoff schedule, a crash-safe lease and the last
 // outcome for the dashboard. Items are read after the cursor in batches and
 // delivered in batches; the cursor only moves after the tool accepted them,
-// and every sink is idempotent (upsert by email / scan id checks; Salesforce
-// looks each email up among open leads on every delivery), so a retry never
-// duplicates anything.
+// and every sink is idempotent (upsert by email / scan id checks), so a
+// retry never duplicates anything.
 
 function log(event: string, fields: Record<string, unknown>) {
   console.error(JSON.stringify({ event, ...fields }));
@@ -117,22 +109,11 @@ export function readSheetTarget(
   return target?.spreadsheetId ? target : null;
 }
 
-/** What the batches of one run share. */
-interface SyncRun {
-  /**
-   * Salesforce: one client, so a refreshed token serves every batch, and the
-   * email → lead id map, so two responses from one email in back-to-back
-   * batches never make two leads. Each run starts a new one.
-   */
-  salesforce?: { client: SalesforceClient; leadIds: Map<string, string> };
-}
-
 /** Delivers one batch for the stream. */
 async function deliverBatch(
   row: SinkRow,
   state: SyncState,
-  connection: Integration,
-  run: SyncRun,
+  accessToken: string,
 ): Promise<{
   result: SinkDeliveryResult;
   settingsPatch?: Record<string, unknown>;
@@ -140,7 +121,6 @@ async function deliverBatch(
 }> {
   const scope = { userId: row.userId, organizationId: state.organizationId };
   const settings = settingsOf(row.metadata);
-  const { accessToken } = connection;
 
   if (row.provider === "google-sheets") {
     const target = readSheetTarget(row.metadata);
@@ -176,29 +156,6 @@ async function deliverBatch(
   });
   if (responses.length === 0) {
     return { result: { delivered: 0, skipped: 0, cursor: null }, read: 0 };
-  }
-  if (row.provider === "salesforce") {
-    run.salesforce ??= {
-      client: salesforceClientFor(connection),
-      leadIds: new Map(),
-    };
-    const leadSource = settings.leadSource;
-    return {
-      result: await syncResponsesToSalesforce(
-        run.salesforce.client,
-        {
-          pageIds: responseSettings.pageIds ?? null,
-          forms: responseSettings.forms ?? {},
-          leadSource:
-            typeof leadSource === "string"
-              ? leadSource
-              : SALESFORCE_DEFAULT_LEAD_SOURCE,
-        },
-        responses,
-        run.salesforce.leadIds,
-      ),
-      read: responses.length,
-    };
   }
   if (row.provider === "hubspot") {
     return {
@@ -307,12 +264,11 @@ async function syncOne(
     }
 
     let caughtUp = false;
-    const run: SyncRun = {};
     for (let batch = 0; batch < MAX_BATCHES_PER_RUN; batch++) {
       if (Date.now() > deadline) break;
       let outcome: Awaited<ReturnType<typeof deliverBatch>>;
       try {
-        outcome = await deliverBatch(row, state, connection, run);
+        outcome = await deliverBatch(row, state, connection.accessToken);
       } catch (error) {
         state = nextSyncState(state, { ok: false, error });
         await release(state);

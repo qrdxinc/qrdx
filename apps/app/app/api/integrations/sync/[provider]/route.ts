@@ -10,7 +10,6 @@ import {
 } from "@/lib/data-connections/http";
 import {
   getSinkView,
-  type ResponseSinkProvider,
   retrySync,
   saveResponseSink,
   setSheetSync,
@@ -23,7 +22,7 @@ export const maxDuration = 60;
 
 type RouteContext = { params: Promise<{ provider: string }> };
 
-const SINKS = new Set(["google-sheets", "hubspot", "mailchimp", "salesforce"]);
+const SINKS = new Set(["google-sheets", "hubspot", "mailchimp"]);
 
 const id = z.string().regex(/^[A-Za-z0-9_-]{1,64}$/);
 const target = z.string().regex(/^[A-Za-z0-9_]{0,64}$/);
@@ -49,14 +48,6 @@ const responseSinkSchema = z.object({
     .optional(),
   tags: z.array(z.string().trim().min(1).max(100)).max(10).optional(),
   withoutConsent: z.enum(["pending", "skip"]).optional(),
-  // A Lead Source picklist value (Salesforce allows 255 characters); "" = none
-  leadSource: z
-    .string()
-    .trim()
-    .max(255)
-    // biome-ignore lint/suspicious/noControlCharactersInRegex: rejects them
-    .regex(/^[^\u0000-\u001f\u007f]*$/, "No control characters")
-    .optional(),
 });
 
 const sheetSyncSchema = z.object({ enabled: z.boolean() });
@@ -107,7 +98,7 @@ export async function PUT(request: Request, context: RouteContext) {
     } else {
       await saveResponseSink(
         scope,
-        provider as ResponseSinkProvider,
+        provider as "hubspot" | "mailchimp",
         parseWithSchema(responseSinkSchema, body),
       );
     }
