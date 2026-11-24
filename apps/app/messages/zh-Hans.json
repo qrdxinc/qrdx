@@ -220,6 +220,7 @@
     "description": "开源二维码平台。",
     "starOnGithub": "在 GitHub 上点星标",
     "newsOnX": "X 上的 QRdx 动态",
+    "joinDiscord": "加入 QRdx Discord",
     "navLabel": "页脚",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -9071,7 +9072,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "新功能",
         "backToLabel": "返回{label}",
         "expandSidebar": "展开侧边栏",
         "collapseSidebar": "收起侧边栏",

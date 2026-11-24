@@ -16,6 +16,7 @@
 | Point out something wrong in the docs | [Docs problem](https://github.com/qrdxinc/qrdx/issues/new?template=docs_problem.yml) |
 | Suggest a feature | [Feature request](https://github.com/qrdxinc/qrdx/issues/new?template=feature_request.yml), or [Ideas](https://github.com/qrdxinc/qrdx/discussions/new?category=ideas) to talk it through first |
 | Show something you made | [Show and tell](https://github.com/qrdxinc/qrdx/discussions/new?category=show-and-tell) |
+| Chat with the team and other people who use QRdx, or share a design | The [QRdx Discord](https://discord.gg/856fWMrYBm) |
 | Get help with your qrdx.dev account, billing or a refund | Email [support@qrdx.dev](mailto:support@qrdx.dev) |
 | Report a security vulnerability | Privately, as [SECURITY.md](SECURITY.md) describes |
 | Report a QR code or page used for phishing or other abuse | The [report form](https://qrdx.dev/report-abuse) |

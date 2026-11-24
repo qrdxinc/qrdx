@@ -6,6 +6,7 @@
 // pages and what this deployment offers; tests/lib/agents.test.ts checks it.
 import {
   CANONICAL_ORIGIN,
+  DISCORD_INVITE_URL,
   GITHUB_REPO_URL,
   SHADCN_REGISTRY_NAMESPACE,
 } from "@repo/config";
@@ -532,11 +533,16 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       ),
     );
   const docs = docsLinks(input.docs.filter((s) => s.title !== HELP_TAB));
-  const help = links(
-    input.docs
+  const help = links([
+    ...input.docs
       .filter((section) => section.title === HELP_TAB)
       .flatMap((section) => section.pages),
-  );
+    {
+      title: "QRdx Discord",
+      url: DISCORD_INVITE_URL,
+      description: "Ask a question, share a design or talk to the team",
+    },
+  ]);
 
   const price = (plan: PaidPlan) =>
     `${formatPrice(PRICING[plan].month.amounts.USD, "USD")} a month or ${formatPrice(PRICING[plan].year.amounts.USD, "USD")} a year (${localPricesNote(plan)})`;

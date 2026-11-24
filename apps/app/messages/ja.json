@@ -220,6 +220,7 @@
     "description": "オープンソースのQRコードプラットフォーム。",
     "starOnGithub": "GitHubでスターする",
     "newsOnX": "QRdxのXニュース",
+    "joinDiscord": "QRdxのDiscordに参加",
     "navLabel": "フッター",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -9071,7 +9072,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "新着情報",
         "backToLabel": "{label}に戻る",
         "expandSidebar": "サイドバーを展開",
         "collapseSidebar": "サイドバーを折りたたむ",

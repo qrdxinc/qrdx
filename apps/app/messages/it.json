@@ -220,6 +220,7 @@
     "description": "La piattaforma QR code open source.",
     "starOnGithub": "Metti una stella su GitHub",
     "newsOnX": "Novità QRdx su X",
+    "joinDiscord": "Unisciti al Discord di QRdx",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -9071,7 +9072,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "Novità",
         "backToLabel": "Torna a {label}",
         "expandSidebar": "Espandi barra laterale",
         "collapseSidebar": "Comprimi barra laterale",

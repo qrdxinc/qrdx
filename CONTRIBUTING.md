@@ -2,7 +2,7 @@
 
 Thanks for your interest in contributing. This guide covers local setup, the project layout, the checks to run before opening a pull request, and how we review changes.
 
-Not sure where to start? See [Good first issues](#good-first-issues) below. For questions, use [Q&A in Discussions](https://github.com/qrdxinc/qrdx/discussions/categories/q-a), and [SUPPORT.md](SUPPORT.md) lists where everything else goes. To report a security problem, follow [SECURITY.md](SECURITY.md) instead of opening a public issue. If you work with a coding agent, [AGENTS.md](AGENTS.md) has the short version of this guide and the rules that are easy to break.
+Not sure where to start? See [Good first issues](#good-first-issues) below. For questions, use [Q&A in Discussions](https://github.com/qrdxinc/qrdx/discussions/categories/q-a) or the [QRdx Discord](https://discord.gg/856fWMrYBm), and [SUPPORT.md](SUPPORT.md) lists where everything else goes. To report a security problem, follow [SECURITY.md](SECURITY.md) instead of opening a public issue. If you work with a coding agent, [AGENTS.md](AGENTS.md) has the short version of this guide and the rules that are easy to break.
 
 ## Prerequisites
 

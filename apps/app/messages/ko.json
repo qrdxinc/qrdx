@@ -220,6 +220,7 @@
     "description": "오픈소스 QR 코드 플랫폼",
     "starOnGithub": "GitHub에서 별표 주기",
     "newsOnX": "X에서 보는 QRdx 소식",
+    "joinDiscord": "QRdx Discord 참여하기",
     "navLabel": "푸터",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -9071,7 +9072,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "새로운 소식",
         "backToLabel": "{label}(으)로 돌아가기",
         "expandSidebar": "사이드바 펼치기",
         "collapseSidebar": "사이드바 접기",

@@ -220,6 +220,7 @@
     "description": "Platform kode QR open-source.",
     "starOnGithub": "Beri bintang di GitHub",
     "newsOnX": "Kabar QRdx di X",
+    "joinDiscord": "Gabung Discord QRdx",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
     "columns": {
@@ -9071,7 +9072,6 @@
     },
     "shell": {
       "appSidebar": {
-        "whatsNew": "Yang baru",
         "backToLabel": "Kembali ke {label}",
         "expandSidebar": "Perluas sidebar",
         "collapseSidebar": "Ciutkan sidebar",

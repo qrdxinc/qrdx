@@ -45,6 +45,11 @@ import {
 // NFC (feat/nfc): QR scans and NFC taps.
 import { ScanSourceCard } from "@/app/(app)/dashboard/codes/_components/scan-source-card";
 import { ScansChart } from "@/app/(app)/dashboard/codes/_components/scans-chart";
+import {
+  type BreakdownMark,
+  countryMark,
+  deviceMark,
+} from "@/app/(app)/dashboard/codes/_lib/breakdown-marks";
 import { requireDashboardScope } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import {
   LanguagesCard,
@@ -273,11 +278,13 @@ export default async function AnalyticsPage({
 
   const toItems = (
     rows: { value: string | null; count: number }[],
+    mark: (value: string | null) => BreakdownMark,
     label: (value: string) => string,
   ): BreakdownItem[] =>
     rows.map((row) => ({
       label: row.value ? label(row.value) : t("unknown"),
       count: row.count,
+      mark: mark(row.value),
     }));
 
   return (
@@ -407,13 +414,14 @@ export default async function AnalyticsPage({
           </CardContent>
         </Card>
         <BreakdownCard
-          items={toItems(overview.countries, countryName)}
+          items={toItems(overview.countries, countryMark, countryName)}
           title={t("topCountries")}
           total={overview.total}
         />
         <BreakdownCard
           items={toItems(
             overview.devices,
+            deviceMark,
             (value) => DEVICE_LABELS[value] ?? value,
           )}
           title={t("devices")}

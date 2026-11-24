@@ -511,6 +511,10 @@
     "source": "063a2a55464f",
     "status": "machine"
   },
+  "footer.joinDiscord": {
+    "source": "e6137b9b59b2",
+    "status": "machine"
+  },
   "footer.navLabel": {
     "source": "26c87bb51e69",
     "status": "machine"
@@ -28913,10 +28917,6 @@
   },
   "app.dashboard.paging.older": {
     "source": "03281c889c28",
-    "status": "machine"
-  },
-  "app.shell.appSidebar.whatsNew": {
-    "source": "135e912e8905",
     "status": "machine"
   },
   "app.shell.appSidebar.backToLabel": {
