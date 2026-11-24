@@ -5862,6 +5862,7 @@
       "warning": "Warning",
       "scanScoreScoreValueWarningShow": "Scan score {score, number}, {value}, with a warning. Show checks",
       "addAMargin": "Add a {modules, number}-module margin",
+      "whyStudy": "Why? See what our scan study found",
       "grades": {
         "great": "Great",
         "ok": "OK",
