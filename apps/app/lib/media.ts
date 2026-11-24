@@ -1,10 +1,13 @@
 import manifest from "./media-manifest.json";
 
 /**
- * Site videos are served from Cloudflare R2, not /public. `bun run media:upload`
- * (scripts/media/upload.mjs) uploads apps/app/media/** with a content hash in
- * each key and rewrites media-manifest.json; this resolves a source path such
- * as "/videos/help/bulk-csv.mp4" to its public URL.
+ * Site videos, and the images that mustn't be committed to this repository
+ * (a partner's logo we may show but not redistribute), are served from
+ * Cloudflare R2, not /public. `bun run media:upload` (scripts/media/upload.mjs)
+ * uploads apps/app/media/** with a content hash in each key and rewrites
+ * media-manifest.json; this resolves a source path such as
+ * "/videos/help/bulk-csv.mp4" or "/integrations/pipedrive.svg" to its public
+ * URL.
  */
 const files: Record<string, string> = manifest.files;
 
@@ -14,8 +17,9 @@ export function hasMedia(path: string): boolean {
 }
 
 /**
- * A picture's URL: an uploaded media key's, else the site path as it is
- * (changelog pictures, which live in either place).
+ * A picture's URL: an uploaded media key's, else the site path (or URL) as it
+ * is. For pictures that live in either place: changelog pictures, and the
+ * integrations' logos (`/integrations/<name>.svg` in public/, or uploaded).
  */
 export function pictureUrl(path: string): string {
   return hasMedia(path) ? mediaUrl(path) : path;

@@ -33443,6 +33443,84 @@
     "status": "machine",
     "context": "integrations.entries.mailchimp.capabilities.1.description"
   },
+  "2dbd461465b4": {
+    "source": "Every form response on your hosted pages creates or updates a Salesforce lead.",
+    "text": "ホスト型ページのフォーム回答ごとに、Salesforceのリードが作成または更新されます。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.tagline"
+  },
+  "deba4ea87198": {
+    "source": "Connect a production or sandbox org, choose the pages, and map each form's questions to lead fields. Email, name, phone and company are suggested for you. A response from an email that already has an open lead updates that lead; any other response creates one, with the lead source you pick (Web unless you change it).",
+    "text": "本番環境またはサンドボックス環境の組織を接続し、対象のページを選んで、各フォームの質問をリード項目に対応付けます。メールアドレス、氏名、電話番号、会社名は自動で候補が設定されます。すでに未完了のリードがあるメールアドレスからの回答はそのリードを更新し、それ以外の回答では、選択したリードソース(変更しない場合はWeb)で新しいリードを作成します。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.0"
+  },
+  "d4b9a1af1e32": {
+    "source": "Salesforce needs a last name and a company on every lead. When a form doesn't ask for them, QRdx uses the part of the email before the @ and Salesforce's own [not provided]. QRdx asks for API access and a refresh token (api, refresh_token), and only questions you map are sent.",
+    "text": "Salesforceでは、すべてのリードに姓と会社名が必要です。フォームにこれらの質問がない場合、QRdxはメールアドレスの@より前の部分と、Salesforce標準の[not provided]を使用します。QRdxが求める権限はAPIアクセスとリフレッシュトークン(api、refresh_token)で、送信されるのは対応付けした質問のみです。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.1"
+  },
+  "8c9592f4fc1b": {
+    "source": "Connect Salesforce",
+    "text": "Salesforceを接続",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.primaryAction.label"
+  },
+  "9436d9616759": {
+    "source": "Pick production or sandbox, then click Enable",
+    "text": "本番環境かサンドボックス環境を選び、「有効にする」をクリック",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.title"
+  },
+  "c0e545dee66f": {
+    "source": "Settings → Integrations → Salesforce. Sign in to the org and allow access. It needs a Salesforce edition with API access and a user who can create leads; your Salesforce admin may need to approve the app first.",
+    "text": "設定 → インテグレーション → Salesforce の順に開きます。組織にサインインしてアクセスを許可してください。APIアクセスが利用できるSalesforceエディションと、リードを作成できる権限を持つユーザーが必要です。先にSalesforce管理者によるアプリの承認が必要な場合もあります。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.body"
+  },
+  "9cc2cb890587": {
+    "source": "Choose pages, map fields and set the lead source",
+    "text": "ページを選び、項目を対応付けて、リードソースを設定",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.title"
+  },
+  "01bddd108b4e": {
+    "source": "Pick the hosted pages whose forms should reach Salesforce, check the suggested mapping, and turn the sync on.",
+    "text": "フォームの回答をSalesforceに送るホスト型ページを選び、候補として表示される対応付けを確認して、同期をオンにします。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.body"
+  },
+  "b650021a8590": {
+    "source": "New responses become leads",
+    "text": "新しい回答がリードになります",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.2.title"
+  },
+  "598f409deb1f": {
+    "source": "Matched by email",
+    "text": "メールアドレスで照合",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.title"
+  },
+  "4be6b5639961": {
+    "source": "One open lead per email, updated by later responses instead of duplicated.",
+    "text": "メールアドレスごとに未完了のリードは1件のみ。以降の回答では重複せず、そのリードが更新されます。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.description"
+  },
+  "b74f68846b09": {
+    "source": "Field mapping and lead source",
+    "text": "項目の対応付けとリードソース",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.title"
+  },
+  "8f629d2cbc27": {
+    "source": "Email, name, phone, company, title and more, with suggested defaults.",
+    "text": "メールアドレス、氏名、電話番号、会社名、役職などを、候補のデフォルト設定とともに対応付けできます。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.description"
+  },
   "29ade64ecd40": {
     "source": "Styled QR codes",
     "text": "スタイル付きQRコード",
@@ -34996,78 +35074,6 @@
     "text": "SharePointのチームサイトは一覧に表示されませんが、ご自身のOneDriveにあるファイルは表示されます。",
     "status": "machine",
     "context": "integrations.entries.onedrive.note"
-  },
-  "8b44cb3f8388": {
-    "source": "Pick a Box file or folder and turn its shared link into a QR code.",
-    "text": "Boxのファイルやフォルダを選んで、その共有リンクをQRコードにできます。",
-    "status": "machine",
-    "context": "integrations.entries.box.tagline"
-  },
-  "4322d3c20a79": {
-    "source": "Connect Box and it shows up in the QR editor's URL type, under Use a link from… beside the Website address field. Browse or search your Box, pick a file or folder, and QRdx turns on its shared link for people with the link. The QR code opens it.",
-    "text": "Boxを連携すると、QRエディタのURLタイプにある「ウェブサイトのアドレス」欄の横の「リンクを使用…」にBoxが表示されます。Boxを参照または検索してファイルやフォルダを選ぶと、QRdxがリンクを知っている人向けの共有リンクを有効にします。QRコードからそのリンクを開けます。",
-    "status": "machine",
-    "context": "integrations.entries.box.description.0"
-  },
-  "20f0c09ebc41": {
-    "source": "Where your Box admin only allows company links, QRdx creates one and tells you that only people signed in to your company's Box can open it. Download blocks on hosted pages use the direct download link when Box provides one.",
-    "text": "Boxの管理者が社内向けリンクのみを許可している場合は、QRdxが社内向けリンクを作成し、会社のBoxにサインインしている人だけが開けることをお知らせします。ホスト型ページのダウンロードブロックでは、Boxが直接ダウンロードリンクを提供している場合にそのリンクを使用します。",
-    "status": "machine",
-    "context": "integrations.entries.box.description.1"
-  },
-  "467dfa69d5d1": {
-    "source": "Connect Box",
-    "text": "Boxを連携",
-    "status": "machine",
-    "context": "integrations.entries.box.primaryAction.label"
-  },
-  "a2c23ac44305": {
-    "source": "Open the Box integration in QRdx",
-    "text": "QRdxでBox連携を開く",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.title"
-  },
-  "235843a7f1a9": {
-    "source": "Sign in, then go to Settings → Integrations → Box.",
-    "text": "サインインして、「設定」→「連携」→「Box」の順に進みます。",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.body"
-  },
-  "f92702e9e3d6": {
-    "source": "Click Enable and grant access",
-    "text": "「有効にする」をクリックしてアクセスを許可する",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.title"
-  },
-  "49748a9b96fb": {
-    "source": "Turning on a shared link changes the file's settings, so Box asks for read and write access. Tokens are stored encrypted, and disconnecting revokes them in Box.",
-    "text": "共有リンクを有効にするとファイルの設定が変更されるため、Boxは読み取りと書き込みのアクセス権を求めます。トークンは暗号化して保存され、連携を解除するとBox側で取り消されます。",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.body"
-  },
-  "71387b022f1f": {
-    "source": "In the editor, choose the URL type, open Use a link from…, choose Box and pick a file or folder.",
-    "text": "エディタでURLタイプを選び、「リンクを使用…」を開いてBoxを選択し、ファイルまたはフォルダを選びます。",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.2.body"
-  },
-  "2f50b623f0ed": {
-    "source": "“People with the link” access, or a company link when your admin requires it.",
-    "text": "「リンクを知っている全員」向けのアクセス、または管理者が求める場合は社内向けリンクを使用します。",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.0.description"
-  },
-  "cf0ee136ab5f": {
-    "source": "Download blocks use Box's direct download link when there is one.",
-    "text": "ダウンロードブロックでは、Boxの直接ダウンロードリンクがある場合にそれを使用します。",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.1.description"
-  },
-  "79576c8da47f": {
-    "source": "Folders and search across your Box.",
-    "text": "Box内のフォルダと検索を利用できます。",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.2.description"
   },
   "83dd94b9dbba": {
     "source": "Pick a Notion page and encode its public link, with a hint when it isn't published yet.",

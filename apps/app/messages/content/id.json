@@ -33443,6 +33443,84 @@
     "status": "machine",
     "context": "integrations.entries.mailchimp.capabilities.1.description"
   },
+  "2dbd461465b4": {
+    "source": "Every form response on your hosted pages creates or updates a Salesforce lead.",
+    "text": "Setiap respons formulir di halaman yang di-hosting Anda membuat atau memperbarui lead Salesforce.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.tagline"
+  },
+  "deba4ea87198": {
+    "source": "Connect a production or sandbox org, choose the pages, and map each form's questions to lead fields. Email, name, phone and company are suggested for you. A response from an email that already has an open lead updates that lead; any other response creates one, with the lead source you pick (Web unless you change it).",
+    "text": "Hubungkan org produksi atau sandbox, pilih halaman, lalu petakan pertanyaan setiap formulir ke kolom lead. Email, nama, telepon, dan perusahaan disarankan untuk Anda. Respons dari email yang sudah memiliki lead terbuka akan memperbarui lead tersebut; respons lainnya membuat lead baru, dengan sumber lead yang Anda pilih (Web kecuali Anda mengubahnya).",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.0"
+  },
+  "d4b9a1af1e32": {
+    "source": "Salesforce needs a last name and a company on every lead. When a form doesn't ask for them, QRdx uses the part of the email before the @ and Salesforce's own [not provided]. QRdx asks for API access and a refresh token (api, refresh_token), and only questions you map are sent.",
+    "text": "Salesforce memerlukan nama belakang dan perusahaan pada setiap lead. Jika formulir tidak menanyakannya, QRdx menggunakan bagian email sebelum @ dan [not provided] bawaan Salesforce. QRdx meminta akses API dan refresh token (api, refresh_token), dan hanya pertanyaan yang Anda petakan yang dikirim.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.1"
+  },
+  "8c9592f4fc1b": {
+    "source": "Connect Salesforce",
+    "text": "Hubungkan Salesforce",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.primaryAction.label"
+  },
+  "9436d9616759": {
+    "source": "Pick production or sandbox, then click Enable",
+    "text": "Pilih produksi atau sandbox, lalu klik Aktifkan",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.title"
+  },
+  "c0e545dee66f": {
+    "source": "Settings → Integrations → Salesforce. Sign in to the org and allow access. It needs a Salesforce edition with API access and a user who can create leads; your Salesforce admin may need to approve the app first.",
+    "text": "Pengaturan → Integrasi → Salesforce. Masuk ke org dan izinkan akses. Anda memerlukan edisi Salesforce dengan akses API dan pengguna yang dapat membuat lead; admin Salesforce Anda mungkin perlu menyetujui aplikasinya terlebih dahulu.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.body"
+  },
+  "9cc2cb890587": {
+    "source": "Choose pages, map fields and set the lead source",
+    "text": "Pilih halaman, petakan kolom, dan atur sumber lead",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.title"
+  },
+  "01bddd108b4e": {
+    "source": "Pick the hosted pages whose forms should reach Salesforce, check the suggested mapping, and turn the sync on.",
+    "text": "Pilih halaman yang di-hosting yang formulirnya harus masuk ke Salesforce, periksa pemetaan yang disarankan, lalu aktifkan sinkronisasi.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.body"
+  },
+  "b650021a8590": {
+    "source": "New responses become leads",
+    "text": "Respons baru menjadi lead",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.2.title"
+  },
+  "598f409deb1f": {
+    "source": "Matched by email",
+    "text": "Dicocokkan lewat email",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.title"
+  },
+  "4be6b5639961": {
+    "source": "One open lead per email, updated by later responses instead of duplicated.",
+    "text": "Satu lead terbuka per email, diperbarui oleh respons berikutnya, bukan digandakan.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.description"
+  },
+  "b74f68846b09": {
+    "source": "Field mapping and lead source",
+    "text": "Pemetaan kolom dan sumber lead",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.title"
+  },
+  "8f629d2cbc27": {
+    "source": "Email, name, phone, company, title and more, with suggested defaults.",
+    "text": "Email, nama, telepon, perusahaan, jabatan, dan lainnya, dengan default yang disarankan.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.description"
+  },
   "29ade64ecd40": {
     "source": "Styled QR codes",
     "text": "Kode QR bergaya",
@@ -34996,78 +35074,6 @@
     "text": "Situs tim SharePoint tidak ditampilkan; file di OneDrive Anda sendiri ditampilkan.",
     "status": "machine",
     "context": "integrations.entries.onedrive.note"
-  },
-  "8b44cb3f8388": {
-    "source": "Pick a Box file or folder and turn its shared link into a QR code.",
-    "text": "Pilih file atau folder Box dan ubah tautan bersamanya menjadi kode QR.",
-    "status": "machine",
-    "context": "integrations.entries.box.tagline"
-  },
-  "4322d3c20a79": {
-    "source": "Connect Box and it shows up in the QR editor's URL type, under Use a link from… beside the Website address field. Browse or search your Box, pick a file or folder, and QRdx turns on its shared link for people with the link. The QR code opens it.",
-    "text": "Hubungkan Box dan Box akan muncul di tipe URL pada editor QR, di bawah Use a link from… di samping kolom Website address. Telusuri atau cari Box Anda, pilih file atau folder, lalu QRdx mengaktifkan tautan bersamanya untuk orang yang memiliki tautan. Kode QR akan membukanya.",
-    "status": "machine",
-    "context": "integrations.entries.box.description.0"
-  },
-  "20f0c09ebc41": {
-    "source": "Where your Box admin only allows company links, QRdx creates one and tells you that only people signed in to your company's Box can open it. Download blocks on hosted pages use the direct download link when Box provides one.",
-    "text": "Jika admin Box Anda hanya mengizinkan tautan perusahaan, QRdx membuatnya dan memberi tahu Anda bahwa hanya orang yang masuk ke Box perusahaan Anda yang dapat membukanya. Blok unduhan di halaman yang di-hosting menggunakan tautan unduhan langsung jika Box menyediakannya.",
-    "status": "machine",
-    "context": "integrations.entries.box.description.1"
-  },
-  "467dfa69d5d1": {
-    "source": "Connect Box",
-    "text": "Hubungkan Box",
-    "status": "machine",
-    "context": "integrations.entries.box.primaryAction.label"
-  },
-  "a2c23ac44305": {
-    "source": "Open the Box integration in QRdx",
-    "text": "Buka integrasi Box di QRdx",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.title"
-  },
-  "235843a7f1a9": {
-    "source": "Sign in, then go to Settings → Integrations → Box.",
-    "text": "Masuk, lalu buka Settings → Integrations → Box.",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.body"
-  },
-  "f92702e9e3d6": {
-    "source": "Click Enable and grant access",
-    "text": "Klik Enable dan berikan akses",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.title"
-  },
-  "49748a9b96fb": {
-    "source": "Turning on a shared link changes the file's settings, so Box asks for read and write access. Tokens are stored encrypted, and disconnecting revokes them in Box.",
-    "text": "Mengaktifkan tautan bersama mengubah pengaturan file, sehingga Box meminta akses baca dan tulis. Token disimpan dalam keadaan terenkripsi, dan memutuskan koneksi akan mencabutnya di Box.",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.body"
-  },
-  "71387b022f1f": {
-    "source": "In the editor, choose the URL type, open Use a link from…, choose Box and pick a file or folder.",
-    "text": "Di editor, pilih tipe URL, buka Use a link from…, pilih Box, lalu pilih file atau folder.",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.2.body"
-  },
-  "2f50b623f0ed": {
-    "source": "“People with the link” access, or a company link when your admin requires it.",
-    "text": "Akses “People with the link”, atau tautan perusahaan jika admin Anda mewajibkannya.",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.0.description"
-  },
-  "cf0ee136ab5f": {
-    "source": "Download blocks use Box's direct download link when there is one.",
-    "text": "Blok unduhan menggunakan tautan unduhan langsung Box jika tersedia.",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.1.description"
-  },
-  "79576c8da47f": {
-    "source": "Folders and search across your Box.",
-    "text": "Folder dan pencarian di seluruh Box Anda.",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.2.description"
   },
   "83dd94b9dbba": {
     "source": "Pick a Notion page and encode its public link, with a hint when it isn't published yet.",

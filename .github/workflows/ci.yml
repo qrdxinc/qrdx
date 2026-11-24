@@ -164,6 +164,17 @@ jobs:
         if: steps.qrdx.outputs.check == 'true'
         run: bun run --filter qrdx check:react
 
+      # The packed tarball installed with npm next to webpack 4 and the Babel
+      # setup react-scripts 4.0.3 pins, and TypeScript 5.0 and 5.3
+      # (packages/qrdx/scripts/legacy-compat.mjs): every entry builds with
+      # react-scripts 4's webpack config, for old and new browsers, and draws
+      # its code in a DOM, and a small app type-checks under each
+      # moduleResolution. It needs the network (npm) and took 35 seconds on a
+      # laptop with an empty npm cache, 12 with a warm one (2026-11-25).
+      - name: Check qrdx on webpack 4 and TypeScript 5.0
+        if: steps.qrdx.outputs.check == 'true'
+        run: bun run --filter qrdx check:legacy
+
       # Turbo doesn't see apps/native (outside the workspace), so its
       # typecheck runs here too: a few seconds.
       - name: Typecheck packages

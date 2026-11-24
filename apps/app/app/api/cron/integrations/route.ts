@@ -8,7 +8,7 @@ export const maxDuration = 60;
 
 /**
  * Data-out worker: appends new scans to synced Google Sheets and sends new
- * form responses to HubSpot / Mailchimp, retrying failed streams with
+ * form responses to HubSpot / Mailchimp / Salesforce, retrying failed streams with
  * backoff. Also run by /api/cron/webhooks; schedule this route separately
  * for more frequent syncs.
  */

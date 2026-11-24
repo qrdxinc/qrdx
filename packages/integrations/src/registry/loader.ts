@@ -1,6 +1,5 @@
 import { CANONICAL_ORIGIN } from "@repo/config";
 import { bitlyIntegration } from "../integrations/bitly/config";
-import { boxIntegration } from "../integrations/box/config";
 import { calcomIntegration } from "../integrations/calcom/config";
 import { calendlyIntegration } from "../integrations/calendly/config";
 import { dropboxIntegration } from "../integrations/dropbox/config";
@@ -12,6 +11,7 @@ import { mailchimpIntegration } from "../integrations/mailchimp/config";
 import { notionIntegration } from "../integrations/notion/config";
 import { oneDriveIntegration } from "../integrations/onedrive/config";
 import { rebrandlyIntegration } from "../integrations/rebrandly/config";
+import { salesforceIntegration } from "../integrations/salesforce/config";
 import { shopifyIntegration } from "../integrations/shopify/config";
 import { shortIoIntegration } from "../integrations/short-io/config";
 import { slackIntegration } from "../integrations/slack/config";
@@ -72,7 +72,6 @@ export function registerAllIntegrations(): void {
   // File and page pickers
   registry.register(dropboxIntegration);
   registry.register(oneDriveIntegration);
-  registry.register(boxIntegration);
   registry.register(notionIntegration);
 
   // Content sources
@@ -88,6 +87,7 @@ export function registerAllIntegrations(): void {
   registry.register(slackIntegration);
   registry.register(hubspotIntegration);
   registry.register(mailchimpIntegration);
+  registry.register(salesforceIntegration);
 }
 
 /**
@@ -129,7 +129,6 @@ export const INTEGRATION_ENV_VARS: Record<string, IntegrationEnvVars> = {
     clientId: "MICROSOFT_CLIENT_ID",
     clientSecret: "MICROSOFT_CLIENT_SECRET",
   },
-  box: { clientId: "BOX_CLIENT_ID", clientSecret: "BOX_CLIENT_SECRET" },
   notion: {
     clientId: "NOTION_CLIENT_ID",
     clientSecret: "NOTION_CLIENT_SECRET",
@@ -161,6 +160,11 @@ export const INTEGRATION_ENV_VARS: Record<string, IntegrationEnvVars> = {
   mailchimp: {
     clientId: "MAILCHIMP_CLIENT_ID",
     clientSecret: "MAILCHIMP_CLIENT_SECRET",
+  },
+  // A Connected App's consumer key and secret (production and sandbox orgs)
+  salesforce: {
+    clientId: "SALESFORCE_CLIENT_ID",
+    clientSecret: "SALESFORCE_CLIENT_SECRET",
   },
 };
 

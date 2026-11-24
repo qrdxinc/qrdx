@@ -7189,7 +7189,10 @@
           "failedToConnectIntegration": "Failed to connect integration",
           "nameDisconnectedAndQrdxsAccess": "{name} disconnected and QRdx's access revoked",
           "nameDisconnected": "{name} disconnected",
-          "failedToDisconnectIntegration": "Failed to disconnect integration"
+          "failedToDisconnectIntegration": "Failed to disconnect integration",
+          "salesforceOrgType": "Salesforce org type",
+          "production": "Production",
+          "sandbox": "Sandbox"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "Send form responses to {name}",
@@ -7227,7 +7230,12 @@
           "loadMorePages": "Load more pages",
           "loadingPages": "Loading pages…",
           "tryAgain": "Try again",
-          "couldntLoadMorePages": "Couldn't load more pages. Try again."
+          "couldntLoadMorePages": "Couldn't load more pages. Try again.",
+          "newResponsesCreateOrUpdateLead": "New responses create a lead, or update the open lead with the same email. Only answered, mapped questions are sent.",
+          "leads": "leads",
+          "leadSource": "Lead source",
+          "leadSourceHelp": "Set on the leads QRdx creates. Use a value from your Lead Source picklist, or leave it empty for none.",
+          "salesforceOrg": "{environment, select, sandbox {Sandbox org} other {Production org}}: {host}"
         },
         "slackBotPanel": {
           "qrdxBot": "QRdx bot",
@@ -10287,6 +10295,32 @@
       "nothingToUpdate": "Nothing to update",
       "tooManyTags": "A code can have up to {max, number} tags.",
       "chooseTag": "Choose a tag to add or remove"
+    },
+    "organize": {
+      "signIn": "Sign in to manage your codes.",
+      "failed": "Something went wrong.",
+      "invalidInput": "Invalid input",
+      "selectAtLeastOne": "Select at least one code",
+      "selectUpTo": "Select up to {max, number} codes at a time",
+      "folderNameRequired": "Enter a folder name",
+      "folderNameTooLong": "Folder names can be up to {max, number} characters",
+      "folderNameSlash": "Folder names can't contain /",
+      "tagNameRequired": "Enter a tag name",
+      "tagNameTooLong": "Tag names can be up to {max, number} characters",
+      "tagNameCharacters": "Tag names can't contain , ; or |",
+      "notesTooLong": "Notes can be up to {max, number} characters",
+      "folderNotFound": "Folder not found",
+      "folderExists": "A folder named \"{name}\" already exists there.",
+      "folderDepth": "Folders can be nested up to {max, number} levels deep.",
+      "folderIntoItself": "A folder can't be moved into itself.",
+      "folderLimit": "You can have up to {max, number} folders.",
+      "tagNotFound": "Tag not found",
+      "tagExists": "A tag named \"{name}\" already exists.",
+      "tagLimit": "You can have up to {max, number} tags.",
+      "codeNotFound": "QR code not found",
+      "othersFolders": "Only team owners and admins can change folders created by others.",
+      "othersTags": "Only team owners and admins can change tags created by others.",
+      "tryAgain": "Please try again."
     },
     "publicStats": {
       "signIn": "Sign in to share analytics.",

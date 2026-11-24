@@ -1,9 +1,9 @@
 import type { SinkAnswer, SinkFormResponse } from "./types";
 
 /**
- * Form field → CRM property mapping shared by HubSpot and Mailchimp. Only
- * questions the form actually asked are ever sent, and only when they have
- * an answer. Client-safe.
+ * Form field → CRM property mapping shared by HubSpot, Mailchimp and
+ * Salesforce. Only questions the form actually asked are ever sent, and only
+ * when they have an answer. Client-safe.
  */
 
 export interface MappableField {
@@ -35,7 +35,7 @@ export interface FormMapping {
   consentFieldId?: string | null;
 }
 
-/** metadata.settings of a HubSpot / Mailchimp stream. */
+/** metadata.settings of a HubSpot / Mailchimp / Salesforce stream. */
 export interface ResponseSinkSettings {
   /** Pages whose forms are sent; null = every page in the workspace */
   pageIds: string[] | null;

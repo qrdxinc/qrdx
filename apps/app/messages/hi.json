@@ -6788,7 +6788,10 @@
           "failedToConnectIntegration": "इंटीग्रेशन कनेक्ट नहीं हो सका",
           "nameDisconnectedAndQrdxsAccess": "{name} डिस्कनेक्ट हो गया और QRdx का एक्सेस हटा दिया गया",
           "nameDisconnected": "{name} डिस्कनेक्ट हो गया",
-          "failedToDisconnectIntegration": "इंटीग्रेशन डिस्कनेक्ट नहीं हो सका"
+          "failedToDisconnectIntegration": "इंटीग्रेशन डिस्कनेक्ट नहीं हो सका",
+          "salesforceOrgType": "Salesforce org का प्रकार",
+          "production": "Production",
+          "sandbox": "Sandbox"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "फ़ॉर्म के जवाब {name} को भेजें",
@@ -6826,7 +6829,12 @@
           "loadMorePages": "और पेज लोड करें",
           "loadingPages": "पेज लोड हो रहे हैं…",
           "tryAgain": "फिर कोशिश करें",
-          "couldntLoadMorePages": "और पेज लोड नहीं हो सके। फिर कोशिश करें।"
+          "couldntLoadMorePages": "और पेज लोड नहीं हो सके। फिर कोशिश करें।",
+          "newResponsesCreateOrUpdateLead": "नए जवाबों से एक लीड बनती है, या उसी ईमेल वाली खुली लीड अपडेट हो जाती है। सिर्फ़ वे मैप किए गए सवाल भेजे जाते हैं जिनका जवाब दिया गया है।",
+          "leads": "लीड",
+          "leadSource": "लीड सोर्स",
+          "leadSourceHelp": "यह QRdx से बनने वाली लीड पर सेट होता है। अपनी Lead Source पिकलिस्ट की कोई वैल्यू इस्तेमाल करें, या कोई वैल्यू न देने के लिए इसे खाली छोड़ दें।",
+          "salesforceOrg": "{environment, select, sandbox {Sandbox org} other {Production org}}: {host}"
         },
         "slackBotPanel": {
           "qrdxBot": "QRdx बॉट",
@@ -9886,6 +9894,32 @@
       "nothingToUpdate": "अपडेट करने के लिए कुछ नहीं",
       "tooManyTags": "एक कोड में अधिकतम {max, number} टैग हो सकते हैं।",
       "chooseTag": "जोड़ने या हटाने के लिए एक टैग चुनें"
+    },
+    "organize": {
+      "signIn": "अपने कोड मैनेज करने के लिए साइन इन करें।",
+      "failed": "कुछ गड़बड़ हो गई।",
+      "invalidInput": "अमान्य इनपुट",
+      "selectAtLeastOne": "कम से कम एक कोड चुनें",
+      "selectUpTo": "एक बार में अधिकतम {max, number} कोड चुनें",
+      "folderNameRequired": "फ़ोल्डर का नाम लिखें",
+      "folderNameTooLong": "फ़ोल्डर के नाम में अधिकतम {max, number} अक्षर हो सकते हैं",
+      "folderNameSlash": "फ़ोल्डर के नाम में / नहीं हो सकता",
+      "tagNameRequired": "टैग का नाम लिखें",
+      "tagNameTooLong": "टैग के नाम में अधिकतम {max, number} अक्षर हो सकते हैं",
+      "tagNameCharacters": "टैग के नाम में , ; या | नहीं हो सकते",
+      "notesTooLong": "नोट्स में अधिकतम {max, number} अक्षर हो सकते हैं",
+      "folderNotFound": "फ़ोल्डर नहीं मिला",
+      "folderExists": "\"{name}\" नाम का फ़ोल्डर वहाँ पहले से मौजूद है।",
+      "folderDepth": "फ़ोल्डर अधिकतम {max, number} स्तर तक नेस्ट किए जा सकते हैं।",
+      "folderIntoItself": "किसी फ़ोल्डर को उसी के अंदर नहीं ले जाया जा सकता।",
+      "folderLimit": "आप अधिकतम {max, number} फ़ोल्डर बना सकते हैं।",
+      "tagNotFound": "टैग नहीं मिला",
+      "tagExists": "\"{name}\" नाम का टैग पहले से मौजूद है।",
+      "tagLimit": "आप अधिकतम {max, number} टैग बना सकते हैं।",
+      "codeNotFound": "QR कोड नहीं मिला",
+      "othersFolders": "दूसरों के बनाए फ़ोल्डर सिर्फ़ टीम ओनर और एडमिन बदल सकते हैं।",
+      "othersTags": "दूसरों के बनाए टैग सिर्फ़ टीम ओनर और एडमिन बदल सकते हैं।",
+      "tryAgain": "कृपया फिर से कोशिश करें।"
     },
     "publicStats": {
       "signIn": "एनालिटिक्स शेयर करने के लिए साइन इन करें।",

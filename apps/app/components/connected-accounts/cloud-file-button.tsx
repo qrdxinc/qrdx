@@ -22,7 +22,7 @@ interface CloudFileButtonProps {
 }
 
 /**
- * "From Dropbox / OneDrive / Box" for page blocks that take a file (PDF,
+ * "From Dropbox / OneDrive" for page blocks that take a file (PDF,
  * audio, video, downloads). Renders nothing until a storage account is
  * connected, so file blocks stay unchanged for everyone else.
  */

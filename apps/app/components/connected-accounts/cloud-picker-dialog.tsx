@@ -8,6 +8,7 @@ import {
   createShareLink,
   loadPickerPage,
 } from "@/lib/connected-accounts/client";
+import { pictureUrl } from "@/lib/media";
 
 export interface PickerProvider {
   slug: string;
@@ -24,7 +25,6 @@ const DESCRIPTIONS: Record<string, string> = {
     "Pick a file or folder. QRdx creates its shared link, or reuses the one it already has.",
   onedrive:
     "Pick a file or folder. QRdx creates a view-only link that anyone can open.",
-  box: "Pick a file or folder. QRdx turns on its shared link for anyone with the link.",
   notion:
     "Pages you shared with QRdx. Anyone can open a page once it's published to the web.",
 };
@@ -74,7 +74,7 @@ export function CloudPickerDialog({
       loadingIndicator={
         <BrandLoader aria-hidden className="text-muted-foreground" size={24} />
       }
-      logoSrc={provider.logo}
+      logoSrc={pictureUrl(provider.logo)}
       onOpenChange={onOpenChange}
       onPick={pick}
       open={open}

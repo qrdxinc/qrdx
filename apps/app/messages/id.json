@@ -6788,7 +6788,10 @@
           "failedToConnectIntegration": "Gagal menghubungkan integrasi",
           "nameDisconnectedAndQrdxsAccess": "{name} diputuskan dan akses QRdx dicabut",
           "nameDisconnected": "{name} diputuskan",
-          "failedToDisconnectIntegration": "Gagal memutuskan integrasi"
+          "failedToDisconnectIntegration": "Gagal memutuskan integrasi",
+          "salesforceOrgType": "Jenis org Salesforce",
+          "production": "Produksi",
+          "sandbox": "Sandbox"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "Kirim respons formulir ke {name}",
@@ -6826,7 +6829,12 @@
           "loadMorePages": "Muat halaman lainnya",
           "loadingPages": "Memuat halaman…",
           "tryAgain": "Coba lagi",
-          "couldntLoadMorePages": "Tidak dapat memuat halaman lainnya. Coba lagi."
+          "couldntLoadMorePages": "Tidak dapat memuat halaman lainnya. Coba lagi.",
+          "newResponsesCreateOrUpdateLead": "Respons baru akan membuat lead, atau memperbarui lead terbuka dengan email yang sama. Hanya pertanyaan yang dijawab dan sudah dipetakan yang dikirim.",
+          "leads": "lead",
+          "leadSource": "Sumber lead",
+          "leadSourceHelp": "Diatur pada lead yang dibuat QRdx. Gunakan nilai dari picklist Lead Source Anda, atau biarkan kosong jika tidak ada.",
+          "salesforceOrg": "{environment, select, sandbox {Org Sandbox} other {Org Produksi}}: {host}"
         },
         "slackBotPanel": {
           "qrdxBot": "Bot QRdx",
@@ -9886,6 +9894,32 @@
       "nothingToUpdate": "Tidak ada yang diperbarui",
       "tooManyTags": "Satu kode dapat memiliki hingga {max, number} tag.",
       "chooseTag": "Pilih tag untuk ditambahkan atau dihapus"
+    },
+    "organize": {
+      "signIn": "Masuk untuk mengelola kode Anda.",
+      "failed": "Terjadi kesalahan.",
+      "invalidInput": "Input tidak valid",
+      "selectAtLeastOne": "Pilih setidaknya satu kode",
+      "selectUpTo": "Pilih hingga {max, number} kode sekaligus",
+      "folderNameRequired": "Masukkan nama folder",
+      "folderNameTooLong": "Nama folder maksimal {max, number} karakter",
+      "folderNameSlash": "Nama folder tidak boleh berisi /",
+      "tagNameRequired": "Masukkan nama tag",
+      "tagNameTooLong": "Nama tag maksimal {max, number} karakter",
+      "tagNameCharacters": "Nama tag tidak boleh berisi , ; atau |",
+      "notesTooLong": "Catatan maksimal {max, number} karakter",
+      "folderNotFound": "Folder tidak ditemukan",
+      "folderExists": "Folder bernama \"{name}\" sudah ada di sana.",
+      "folderDepth": "Folder dapat disarangkan hingga {max, number} tingkat.",
+      "folderIntoItself": "Folder tidak dapat dipindahkan ke dalam dirinya sendiri.",
+      "folderLimit": "Anda dapat memiliki hingga {max, number} folder.",
+      "tagNotFound": "Tag tidak ditemukan",
+      "tagExists": "Tag bernama \"{name}\" sudah ada.",
+      "tagLimit": "Anda dapat memiliki hingga {max, number} tag.",
+      "codeNotFound": "Kode QR tidak ditemukan",
+      "othersFolders": "Hanya pemilik dan admin tim yang dapat mengubah folder yang dibuat oleh orang lain.",
+      "othersTags": "Hanya pemilik dan admin tim yang dapat mengubah tag yang dibuat oleh orang lain.",
+      "tryAgain": "Silakan coba lagi."
     },
     "publicStats": {
       "signIn": "Masuk untuk membagikan analitik.",

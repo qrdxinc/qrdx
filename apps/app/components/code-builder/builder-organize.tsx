@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // Folder and tags for the code, in the form, built on the organize actions
 // and tag chips.
@@ -105,6 +105,8 @@ export function TagsField({
   children?: ReactNode;
 }) {
   const t = useTranslations("codeBuilder.builderOrganize");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [isCreating, startCreating] = useTransition();
@@ -130,7 +132,7 @@ export function TagsField({
     if (!name || exists || full) return;
     startCreating(async () => {
       try {
-        const result = await createCodeTag({ name });
+        const result = await createCodeTag({ name }, locale);
         if (!result.success) {
           toast.error(result.error.message);
           return;

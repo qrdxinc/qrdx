@@ -6788,7 +6788,10 @@
           "failedToConnectIntegration": "连接集成失败",
           "nameDisconnectedAndQrdxsAccess": "{name} 已断开连接，QRdx 的访问权限已撤销",
           "nameDisconnected": "{name} 已断开连接",
-          "failedToDisconnectIntegration": "断开集成失败"
+          "failedToDisconnectIntegration": "断开集成失败",
+          "salesforceOrgType": "Salesforce 组织类型",
+          "production": "生产环境",
+          "sandbox": "沙盒"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "将表单回复发送到 {name}",
@@ -6826,7 +6829,12 @@
           "loadMorePages": "加载更多页面",
           "loadingPages": "正在加载页面…",
           "tryAgain": "重试",
-          "couldntLoadMorePages": "无法加载更多页面，请重试。"
+          "couldntLoadMorePages": "无法加载更多页面，请重试。",
+          "newResponsesCreateOrUpdateLead": "新的回复会创建一条线索，或更新使用相同邮箱的未关闭线索。仅发送已回答且已映射的问题。",
+          "leads": "线索",
+          "leadSource": "线索来源",
+          "leadSourceHelp": "设置在 QRdx 创建的线索上。请使用 Lead Source 选项列表中的值，留空则不设置。",
+          "salesforceOrg": "{environment, select, sandbox {沙盒组织} other {生产组织}}：{host}"
         },
         "slackBotPanel": {
           "qrdxBot": "QRdx 机器人",
@@ -9886,6 +9894,32 @@
       "nothingToUpdate": "没有需要更新的内容",
       "tooManyTags": "一个二维码最多可以有 {max, number} 个标签。",
       "chooseTag": "请选择要添加或移除的标签"
+    },
+    "organize": {
+      "signIn": "请登录后管理你的二维码。",
+      "failed": "出了点问题。",
+      "invalidInput": "输入无效",
+      "selectAtLeastOne": "请至少选择一个二维码",
+      "selectUpTo": "一次最多选择 {max, number} 个二维码",
+      "folderNameRequired": "请输入文件夹名称",
+      "folderNameTooLong": "文件夹名称最多 {max, number} 个字符",
+      "folderNameSlash": "文件夹名称不能包含 /",
+      "tagNameRequired": "请输入标签名称",
+      "tagNameTooLong": "标签名称最多 {max, number} 个字符",
+      "tagNameCharacters": "标签名称不能包含 ,、; 或 |",
+      "notesTooLong": "备注最多 {max, number} 个字符",
+      "folderNotFound": "未找到文件夹",
+      "folderExists": "该位置已存在名为“{name}”的文件夹。",
+      "folderDepth": "文件夹最多可嵌套 {max, number} 层。",
+      "folderIntoItself": "文件夹不能移动到它自身中。",
+      "folderLimit": "最多可创建 {max, number} 个文件夹。",
+      "tagNotFound": "未找到标签",
+      "tagExists": "已存在名为“{name}”的标签。",
+      "tagLimit": "最多可创建 {max, number} 个标签。",
+      "codeNotFound": "未找到二维码",
+      "othersFolders": "只有团队所有者和管理员可以修改他人创建的文件夹。",
+      "othersTags": "只有团队所有者和管理员可以修改他人创建的标签。",
+      "tryAgain": "请重试。"
     },
     "publicStats": {
       "signIn": "请登录后分享分析数据。",

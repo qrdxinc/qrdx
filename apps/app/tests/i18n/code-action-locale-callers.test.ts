@@ -22,6 +22,8 @@ const ACTIONS: Record<string, (args: string[]) => string | undefined> = {
   listQrCodes: (args) => args[1],
   checkQrCodeSlug: (args) => args[1],
   setQrCodeTags: (args) => args[1],
+  createCodeTag: (args) => args[1],
+  moveQrCodes: (args) => args[1],
   suggestCodeDetailsAction: (args) => args[1],
   saveBarcode: (args) => args[1],
   listBarcodeFolders: (args) => args[0],
@@ -61,6 +63,7 @@ const ACTIONS: Record<string, (args: string[]) => string | undefined> = {
 const DEFINITIONS = new Set([
   "actions/qr-codes.ts",
   "actions/tags.ts",
+  "actions/bulk-codes.ts",
   "actions/code-suggestions.ts",
   "actions/barcodes.ts",
   "actions/code-lifecycle.ts",

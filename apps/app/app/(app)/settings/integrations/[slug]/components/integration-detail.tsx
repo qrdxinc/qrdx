@@ -6,6 +6,13 @@ import { Tick } from "@repo/design-system/components/icons";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@repo/design-system/components/ui/select";
 import { Separator } from "@repo/design-system/components/ui/separator";
 import { getCapabilityLabel, hasCapability } from "@repo/integration-kit";
 import type {
@@ -116,6 +123,12 @@ export function IntegrationDetail({
   const searchParams = useSearchParams();
   const { withConfirmation } = useConfirmation();
   const [isLoading, setIsLoading] = useState(false);
+  // Salesforce signs in on login.salesforce.com, or test.salesforce.com for
+  // a sandbox; Reconnect starts on the one used before.
+  const offersSandbox = slug === "salesforce";
+  const [loginHost, setLoginHost] = useState<"production" | "sandbox">(
+    metadata?.oauthVariant === "sandbox" ? "sandbox" : "production",
+  );
   const hasShortLinks = hasCapability(capabilities, "short-link-provider");
   const canOAuth = oauthConfigured ?? isConfigured;
   const accountKind = isShortLinkProvider(slug)
@@ -175,8 +188,10 @@ export function IntegrationDetail({
     setIsLoading(true);
     try {
       // Slack and the data-out tools ask "Confirm it's you" before leaving.
+      const variant =
+        offersSandbox && loginHost === "sandbox" ? "sandbox" : undefined;
       const result = await withConfirmation(
-        () => connectIntegrationAction(slug),
+        () => connectIntegrationAction(slug, undefined, variant),
         slug === "slack" ? "add-slack-channel" : "connect-data-out",
       );
       if (!result) {
@@ -347,6 +362,31 @@ export function IntegrationDetail({
 
           {/* Action button */}
           <div className="shrink-0 flex items-center gap-2">
+            {offersSandbox &&
+              canOAuth &&
+              (!isConnected || status === "error") && (
+                <Select
+                  disabled={isLoading}
+                  onValueChange={(value) =>
+                    setLoginHost(value === "sandbox" ? "sandbox" : "production")
+                  }
+                  value={loginHost}
+                >
+                  <SelectTrigger
+                    aria-label={t("salesforceOrgType")}
+                    className="w-32"
+                    size="sm"
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="production">
+                      {t("production")}
+                    </SelectItem>
+                    <SelectItem value="sandbox">{t("sandbox")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
             {isConnected ? (
               <>
                 {status === "error" && canOAuth && (

@@ -1,0 +1,18 @@
+{
+  "value": "https://qrdx.dev/q/Ab3dE9x",
+  "size": 220,
+  "level": "Q",
+  "fgColor": {
+    "type": "linear",
+    "angle": 45,
+    "stops": [
+      { "color": "#1d4ed8", "offset": 0 },
+      { "color": "#0f172a", "offset": 100 }
+    ]
+  },
+  "bgColor": "#f8fafc",
+  "bodyPattern": "circle",
+  "cornerEyePattern": "rounded",
+  "cornerEyeDotPattern": "circle",
+  "frame": { "style": "banner-bottom", "text": "Scan for our menu" }
+}

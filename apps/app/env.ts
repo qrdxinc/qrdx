@@ -70,8 +70,6 @@ export const env = validateTogether(() =>
       DROPBOX_CLIENT_SECRET: z.string().min(1).optional(),
       MICROSOFT_CLIENT_ID: z.string().min(1).optional(),
       MICROSOFT_CLIENT_SECRET: z.string().min(1).optional(),
-      BOX_CLIENT_ID: z.string().min(1).optional(),
-      BOX_CLIENT_SECRET: z.string().min(1).optional(),
       NOTION_CLIENT_ID: z.string().min(1).optional(),
       NOTION_CLIENT_SECRET: z.string().min(1).optional(),
 
@@ -89,6 +87,10 @@ export const env = validateTogether(() =>
       HUBSPOT_CLIENT_SECRET: z.string().min(1).optional(),
       MAILCHIMP_CLIENT_ID: z.string().min(1).optional(),
       MAILCHIMP_CLIENT_SECRET: z.string().min(1).optional(),
+      // Salesforce leads: a Connected App's (or External Client App's)
+      // consumer key and secret; production and sandbox orgs use the same app.
+      SALESFORCE_CLIENT_ID: z.string().min(1).optional(),
+      SALESFORCE_CLIENT_SECRET: z.string().min(1).optional(),
       // Discord bot (/qr and "Make QR code"): the app's id and public key from
       // the Discord developer portal. The bot token only registers commands
       // (plugins/discord), so the app never reads it.
@@ -289,8 +291,6 @@ export const env = validateTogether(() =>
       DROPBOX_CLIENT_SECRET: process.env.DROPBOX_CLIENT_SECRET,
       MICROSOFT_CLIENT_ID: process.env.MICROSOFT_CLIENT_ID,
       MICROSOFT_CLIENT_SECRET: process.env.MICROSOFT_CLIENT_SECRET,
-      BOX_CLIENT_ID: process.env.BOX_CLIENT_ID,
-      BOX_CLIENT_SECRET: process.env.BOX_CLIENT_SECRET,
       NOTION_CLIENT_ID: process.env.NOTION_CLIENT_ID,
       NOTION_CLIENT_SECRET: process.env.NOTION_CLIENT_SECRET,
       CALENDLY_CLIENT_ID: process.env.CALENDLY_CLIENT_ID,
@@ -302,6 +302,8 @@ export const env = validateTogether(() =>
       HUBSPOT_CLIENT_SECRET: process.env.HUBSPOT_CLIENT_SECRET,
       MAILCHIMP_CLIENT_ID: process.env.MAILCHIMP_CLIENT_ID,
       MAILCHIMP_CLIENT_SECRET: process.env.MAILCHIMP_CLIENT_SECRET,
+      SALESFORCE_CLIENT_ID: process.env.SALESFORCE_CLIENT_ID,
+      SALESFORCE_CLIENT_SECRET: process.env.SALESFORCE_CLIENT_SECRET,
       DISCORD_APPLICATION_ID: process.env.DISCORD_APPLICATION_ID,
       DISCORD_PUBLIC_KEY: process.env.DISCORD_PUBLIC_KEY,
       YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,

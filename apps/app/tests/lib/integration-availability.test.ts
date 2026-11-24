@@ -247,7 +247,6 @@ describe("with the real registry", () => {
     expect(hidden).toEqual(
       [
         "bitly",
-        "box",
         "calcom",
         "calendly",
         "dropbox",
@@ -259,6 +258,7 @@ describe("with the real registry", () => {
         "notion",
         "onedrive",
         "rebrandly",
+        "salesforce",
         "shopify",
         "short-io",
         "slack",

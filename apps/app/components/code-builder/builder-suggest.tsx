@@ -240,6 +240,7 @@ export function TagSuggestions({
   onCreated: (tag: TagRow) => void;
 }) {
   const t = useTranslations("codeBuilder.builderSuggest");
+  const locale = useLocale();
   const [isPending, startTransition] = useTransition();
   if (!(suggestions || error)) return null;
   const byName = new Map(
@@ -259,7 +260,7 @@ export function TagSuggestions({
     }
     startTransition(async () => {
       try {
-        const result = await createCodeTag({ name });
+        const result = await createCodeTag({ name }, locale);
         if (!result.success) {
           toast.error(result.error.message);
           return;

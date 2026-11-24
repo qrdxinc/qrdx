@@ -33443,6 +33443,84 @@
     "status": "machine",
     "context": "integrations.entries.mailchimp.capabilities.1.description"
   },
+  "2dbd461465b4": {
+    "source": "Every form response on your hosted pages creates or updates a Salesforce lead.",
+    "text": "托管页面上的每一份表单回复，都会创建或更新一条 Salesforce 销售线索。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.tagline"
+  },
+  "deba4ea87198": {
+    "source": "Connect a production or sandbox org, choose the pages, and map each form's questions to lead fields. Email, name, phone and company are suggested for you. A response from an email that already has an open lead updates that lead; any other response creates one, with the lead source you pick (Web unless you change it).",
+    "text": "连接生产或沙盒组织，选择页面，并将每个表单的问题映射到线索字段。电子邮件、姓名、电话和公司会为你自动推荐。如果回复所用的电子邮件已有未关闭的线索，就会更新该线索；其他回复则会创建新线索，线索来源由你选择（默认为 Web）。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.0"
+  },
+  "d4b9a1af1e32": {
+    "source": "Salesforce needs a last name and a company on every lead. When a form doesn't ask for them, QRdx uses the part of the email before the @ and Salesforce's own [not provided]. QRdx asks for API access and a refresh token (api, refresh_token), and only questions you map are sent.",
+    "text": "Salesforce 要求每条线索都有姓氏和公司。表单没有询问这两项时，QRdx 会使用电子邮件 @ 之前的部分，以及 Salesforce 自带的 [not provided]。QRdx 会请求 API 访问权限和刷新令牌（api、refresh_token），并且只发送你已映射的问题。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.1"
+  },
+  "8c9592f4fc1b": {
+    "source": "Connect Salesforce",
+    "text": "连接 Salesforce",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.primaryAction.label"
+  },
+  "9436d9616759": {
+    "source": "Pick production or sandbox, then click Enable",
+    "text": "选择生产或沙盒，然后点击“启用”",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.title"
+  },
+  "c0e545dee66f": {
+    "source": "Settings → Integrations → Salesforce. Sign in to the org and allow access. It needs a Salesforce edition with API access and a user who can create leads; your Salesforce admin may need to approve the app first.",
+    "text": "设置 → 集成 → Salesforce。登录组织并允许访问。这需要具备 API 访问权限的 Salesforce 版本，以及有权创建线索的用户；你的 Salesforce 管理员可能需要先批准该应用。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.body"
+  },
+  "9cc2cb890587": {
+    "source": "Choose pages, map fields and set the lead source",
+    "text": "选择页面、映射字段并设置线索来源",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.title"
+  },
+  "01bddd108b4e": {
+    "source": "Pick the hosted pages whose forms should reach Salesforce, check the suggested mapping, and turn the sync on.",
+    "text": "选择其表单需要同步到 Salesforce 的托管页面，检查推荐的映射，然后开启同步。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.body"
+  },
+  "b650021a8590": {
+    "source": "New responses become leads",
+    "text": "新回复自动变成线索",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.2.title"
+  },
+  "598f409deb1f": {
+    "source": "Matched by email",
+    "text": "按电子邮件匹配",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.title"
+  },
+  "4be6b5639961": {
+    "source": "One open lead per email, updated by later responses instead of duplicated.",
+    "text": "每个电子邮件对应一条未关闭的线索，后续回复会更新它，而不是重复创建。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.description"
+  },
+  "b74f68846b09": {
+    "source": "Field mapping and lead source",
+    "text": "字段映射与线索来源",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.title"
+  },
+  "8f629d2cbc27": {
+    "source": "Email, name, phone, company, title and more, with suggested defaults.",
+    "text": "电子邮件、姓名、电话、公司、职位等字段，并提供推荐的默认映射。",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.description"
+  },
   "29ade64ecd40": {
     "source": "Styled QR codes",
     "text": "个性化样式二维码",
@@ -34996,78 +35074,6 @@
     "text": "不会列出 SharePoint 团队网站，但会列出你自己 OneDrive 中的文件。",
     "status": "machine",
     "context": "integrations.entries.onedrive.note"
-  },
-  "8b44cb3f8388": {
-    "source": "Pick a Box file or folder and turn its shared link into a QR code.",
-    "text": "选取 Box 文件或文件夹，将其共享链接转换为二维码。",
-    "status": "machine",
-    "context": "integrations.entries.box.tagline"
-  },
-  "4322d3c20a79": {
-    "source": "Connect Box and it shows up in the QR editor's URL type, under Use a link from… beside the Website address field. Browse or search your Box, pick a file or folder, and QRdx turns on its shared link for people with the link. The QR code opens it.",
-    "text": "连接 Box 后，它会出现在二维码编辑器的网址类型中，位于网站地址字段旁的“使用来自…的链接”下。你可以浏览或搜索自己的 Box，选择文件或文件夹，QRdx 会为知道链接的人开启其共享链接，二维码即可打开该链接。",
-    "status": "machine",
-    "context": "integrations.entries.box.description.0"
-  },
-  "20f0c09ebc41": {
-    "source": "Where your Box admin only allows company links, QRdx creates one and tells you that only people signed in to your company's Box can open it. Download blocks on hosted pages use the direct download link when Box provides one.",
-    "text": "如果你的 Box 管理员只允许使用公司链接，QRdx 会创建一个公司链接，并提示你只有登录了贵公司 Box 的人才能打开。托管页面上的下载区块会在 Box 提供直接下载链接时使用该链接。",
-    "status": "machine",
-    "context": "integrations.entries.box.description.1"
-  },
-  "467dfa69d5d1": {
-    "source": "Connect Box",
-    "text": "连接 Box",
-    "status": "machine",
-    "context": "integrations.entries.box.primaryAction.label"
-  },
-  "a2c23ac44305": {
-    "source": "Open the Box integration in QRdx",
-    "text": "在 QRdx 中打开 Box 集成",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.title"
-  },
-  "235843a7f1a9": {
-    "source": "Sign in, then go to Settings → Integrations → Box.",
-    "text": "登录后，前往“设置 → 集成 → Box”。",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.body"
-  },
-  "f92702e9e3d6": {
-    "source": "Click Enable and grant access",
-    "text": "点击“启用”并授予权限",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.title"
-  },
-  "49748a9b96fb": {
-    "source": "Turning on a shared link changes the file's settings, so Box asks for read and write access. Tokens are stored encrypted, and disconnecting revokes them in Box.",
-    "text": "开启共享链接会更改文件的设置，因此 Box 会请求读取和写入权限。令牌会加密存储，断开连接时会在 Box 中撤销这些令牌。",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.body"
-  },
-  "71387b022f1f": {
-    "source": "In the editor, choose the URL type, open Use a link from…, choose Box and pick a file or folder.",
-    "text": "在编辑器中选择网址类型，打开“使用来自…的链接”，选择 Box，然后选取文件或文件夹。",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.2.body"
-  },
-  "2f50b623f0ed": {
-    "source": "“People with the link” access, or a company link when your admin requires it.",
-    "text": "“知道链接的人”均可访问；如果管理员要求，则使用公司链接。",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.0.description"
-  },
-  "cf0ee136ab5f": {
-    "source": "Download blocks use Box's direct download link when there is one.",
-    "text": "下载区块会在有直接下载链接时使用 Box 的直接下载链接。",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.1.description"
-  },
-  "79576c8da47f": {
-    "source": "Folders and search across your Box.",
-    "text": "你的文件夹，以及对整个 Box 的搜索。",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.2.description"
   },
   "83dd94b9dbba": {
     "source": "Pick a Notion page and encode its public link, with a hint when it isn't published yet.",

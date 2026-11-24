@@ -186,3 +186,30 @@ export class OAuthHandler {
 export function createOAuthHandler(config: IntegrationConfig): OAuthHandler {
   return new OAuthHandler(config);
 }
+
+/**
+ * `value` when it names one of the provider's sign-in host variants
+ * (OAuthConfig.variants), else null: the default host.
+ */
+export function oauthVariantName(
+  config: { oauth?: { variants?: Record<string, unknown> } },
+  value: unknown
+): string | null {
+  if (typeof value !== "string" || !value) return null;
+  const variants = config.oauth?.variants;
+  return variants && Object.hasOwn(variants, value) ? value : null;
+}
+
+/** The config with a variant's authorize and token URLs (unchanged without one). */
+export function withOAuthVariant<T extends IntegrationConfig>(
+  config: T,
+  variant: unknown
+): T {
+  const name = oauthVariantName(config, variant);
+  const host = name ? config.oauth?.variants?.[name] : undefined;
+  if (!(host && config.oauth)) return config;
+  return {
+    ...config,
+    oauth: { ...config.oauth, authUrl: host.authUrl, tokenUrl: host.tokenUrl },
+  };
+}

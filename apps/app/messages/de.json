@@ -6788,7 +6788,10 @@
           "failedToConnectIntegration": "Integration konnte nicht verbunden werden",
           "nameDisconnectedAndQrdxsAccess": "{name} getrennt und Zugriff von QRdx widerrufen",
           "nameDisconnected": "{name} getrennt",
-          "failedToDisconnectIntegration": "Integration konnte nicht getrennt werden"
+          "failedToDisconnectIntegration": "Integration konnte nicht getrennt werden",
+          "salesforceOrgType": "Salesforce-Org-Typ",
+          "production": "Produktion",
+          "sandbox": "Sandbox"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "Formularantworten an {name} senden",
@@ -6826,7 +6829,12 @@
           "loadMorePages": "Weitere Seiten laden",
           "loadingPages": "Seiten werden geladen…",
           "tryAgain": "Erneut versuchen",
-          "couldntLoadMorePages": "Weitere Seiten konnten nicht geladen werden. Versuch es erneut."
+          "couldntLoadMorePages": "Weitere Seiten konnten nicht geladen werden. Versuch es erneut.",
+          "newResponsesCreateOrUpdateLead": "Neue Antworten erstellen einen Lead oder aktualisieren den offenen Lead mit derselben E-Mail-Adresse. Es werden nur beantwortete, zugeordnete Fragen gesendet.",
+          "leads": "Leads",
+          "leadSource": "Lead-Quelle",
+          "leadSourceHelp": "Wird bei den Leads gesetzt, die QRdx erstellt. Verwende einen Wert aus deiner Lead-Source-Auswahlliste oder lass das Feld leer, um keinen zu setzen.",
+          "salesforceOrg": "{environment, select, sandbox {Sandbox-Org} other {Produktions-Org}}: {host}"
         },
         "slackBotPanel": {
           "qrdxBot": "QRdx-Bot",
@@ -9886,6 +9894,32 @@
       "nothingToUpdate": "Nichts zu aktualisieren",
       "tooManyTags": "Ein Code kann bis zu {max, number} Tags haben.",
       "chooseTag": "Wähle einen Tag zum Hinzufügen oder Entfernen"
+    },
+    "organize": {
+      "signIn": "Melde dich an, um deine Codes zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen.",
+      "invalidInput": "Ungültige Eingabe",
+      "selectAtLeastOne": "Wähle mindestens einen Code aus",
+      "selectUpTo": "Wähle bis zu {max, number} Codes gleichzeitig aus",
+      "folderNameRequired": "Gib einen Ordnernamen ein",
+      "folderNameTooLong": "Ordnernamen dürfen bis zu {max, number} Zeichen lang sein",
+      "folderNameSlash": "Ordnernamen dürfen kein / enthalten",
+      "tagNameRequired": "Gib einen Tag-Namen ein",
+      "tagNameTooLong": "Tag-Namen dürfen bis zu {max, number} Zeichen lang sein",
+      "tagNameCharacters": "Tag-Namen dürfen kein , ; oder | enthalten",
+      "notesTooLong": "Notizen dürfen bis zu {max, number} Zeichen lang sein",
+      "folderNotFound": "Ordner nicht gefunden",
+      "folderExists": "Dort gibt es bereits einen Ordner namens „{name}“.",
+      "folderDepth": "Ordner können bis zu {max, number} Ebenen tief verschachtelt werden.",
+      "folderIntoItself": "Ein Ordner kann nicht in sich selbst verschoben werden.",
+      "folderLimit": "Du kannst bis zu {max, number} Ordner haben.",
+      "tagNotFound": "Tag nicht gefunden",
+      "tagExists": "Ein Tag namens „{name}“ existiert bereits.",
+      "tagLimit": "Du kannst bis zu {max, number} Tags haben.",
+      "codeNotFound": "QR-Code nicht gefunden",
+      "othersFolders": "Nur Team-Inhaber und Admins können Ordner ändern, die andere erstellt haben.",
+      "othersTags": "Nur Team-Inhaber und Admins können Tags ändern, die andere erstellt haben.",
+      "tryAgain": "Bitte versuche es erneut."
     },
     "publicStats": {
       "signIn": "Melde dich an, um Analysen zu teilen.",

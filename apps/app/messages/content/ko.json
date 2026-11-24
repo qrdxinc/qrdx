@@ -33443,6 +33443,84 @@
     "status": "machine",
     "context": "integrations.entries.mailchimp.capabilities.1.description"
   },
+  "2dbd461465b4": {
+    "source": "Every form response on your hosted pages creates or updates a Salesforce lead.",
+    "text": "호스팅 페이지의 모든 폼 응답이 Salesforce 리드를 생성하거나 업데이트해요.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.tagline"
+  },
+  "deba4ea87198": {
+    "source": "Connect a production or sandbox org, choose the pages, and map each form's questions to lead fields. Email, name, phone and company are suggested for you. A response from an email that already has an open lead updates that lead; any other response creates one, with the lead source you pick (Web unless you change it).",
+    "text": "프로덕션 또는 샌드박스 org를 연결하고, 페이지를 선택한 다음, 각 폼의 질문을 리드 필드에 매핑하세요. 이메일, 이름, 전화번호, 회사는 자동으로 추천해 드려요. 이미 열린 리드가 있는 이메일로 응답이 들어오면 해당 리드를 업데이트하고, 그 외의 응답은 선택한 리드 소스로 새 리드를 생성해요(변경하지 않으면 Web).",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.0"
+  },
+  "d4b9a1af1e32": {
+    "source": "Salesforce needs a last name and a company on every lead. When a form doesn't ask for them, QRdx uses the part of the email before the @ and Salesforce's own [not provided]. QRdx asks for API access and a refresh token (api, refresh_token), and only questions you map are sent.",
+    "text": "Salesforce는 모든 리드에 성과 회사가 필요해요. 폼에서 이를 묻지 않으면 QRdx는 이메일의 @ 앞부분과 Salesforce 자체 값인 [not provided]를 사용해요. QRdx는 API 액세스와 리프레시 토큰(api, refresh_token)을 요청하며, 매핑한 질문만 전송돼요.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.1"
+  },
+  "8c9592f4fc1b": {
+    "source": "Connect Salesforce",
+    "text": "Salesforce 연결",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.primaryAction.label"
+  },
+  "9436d9616759": {
+    "source": "Pick production or sandbox, then click Enable",
+    "text": "프로덕션 또는 샌드박스를 선택한 다음 사용 클릭",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.title"
+  },
+  "c0e545dee66f": {
+    "source": "Settings → Integrations → Salesforce. Sign in to the org and allow access. It needs a Salesforce edition with API access and a user who can create leads; your Salesforce admin may need to approve the app first.",
+    "text": "설정 → 연동 → Salesforce로 이동해요. org에 로그인하고 접근을 허용하세요. API 액세스가 가능한 Salesforce 에디션과 리드를 생성할 수 있는 사용자가 필요해요. 먼저 Salesforce 관리자의 앱 승인이 필요할 수도 있어요.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.body"
+  },
+  "9cc2cb890587": {
+    "source": "Choose pages, map fields and set the lead source",
+    "text": "페이지 선택, 필드 매핑, 리드 소스 설정",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.title"
+  },
+  "01bddd108b4e": {
+    "source": "Pick the hosted pages whose forms should reach Salesforce, check the suggested mapping, and turn the sync on.",
+    "text": "폼 응답을 Salesforce로 보낼 호스팅 페이지를 선택하고, 추천된 매핑을 확인한 다음 동기화를 켜세요.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.body"
+  },
+  "b650021a8590": {
+    "source": "New responses become leads",
+    "text": "새 응답이 리드가 돼요",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.2.title"
+  },
+  "598f409deb1f": {
+    "source": "Matched by email",
+    "text": "이메일로 매칭",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.title"
+  },
+  "4be6b5639961": {
+    "source": "One open lead per email, updated by later responses instead of duplicated.",
+    "text": "이메일당 열린 리드는 하나만 유지되고, 이후 응답은 중복 생성 대신 해당 리드를 업데이트해요.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.description"
+  },
+  "b74f68846b09": {
+    "source": "Field mapping and lead source",
+    "text": "필드 매핑과 리드 소스",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.title"
+  },
+  "8f629d2cbc27": {
+    "source": "Email, name, phone, company, title and more, with suggested defaults.",
+    "text": "이메일, 이름, 전화번호, 회사, 직함 등을 추천 기본값과 함께 매핑해요.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.description"
+  },
   "29ade64ecd40": {
     "source": "Styled QR codes",
     "text": "스타일 QR 코드",
@@ -34996,78 +35074,6 @@
     "text": "SharePoint 팀 사이트는 목록에 표시되지 않으며, 내 OneDrive의 파일은 표시돼요.",
     "status": "machine",
     "context": "integrations.entries.onedrive.note"
-  },
-  "8b44cb3f8388": {
-    "source": "Pick a Box file or folder and turn its shared link into a QR code.",
-    "text": "Box 파일이나 폴더를 선택해 공유 링크를 QR 코드로 만들어요.",
-    "status": "machine",
-    "context": "integrations.entries.box.tagline"
-  },
-  "4322d3c20a79": {
-    "source": "Connect Box and it shows up in the QR editor's URL type, under Use a link from… beside the Website address field. Browse or search your Box, pick a file or folder, and QRdx turns on its shared link for people with the link. The QR code opens it.",
-    "text": "Box를 연결하면 QR 에디터의 URL 유형에서 웹사이트 주소 필드 옆 '다음에서 링크 사용…' 아래에 Box가 나타납니다. Box에서 파일이나 폴더를 찾아보거나 검색해 선택하면, QRdx가 링크가 있는 사람을 위한 공유 링크를 켜 줍니다. QR 코드를 스캔하면 그 링크가 열립니다.",
-    "status": "machine",
-    "context": "integrations.entries.box.description.0"
-  },
-  "20f0c09ebc41": {
-    "source": "Where your Box admin only allows company links, QRdx creates one and tells you that only people signed in to your company's Box can open it. Download blocks on hosted pages use the direct download link when Box provides one.",
-    "text": "Box 관리자가 회사 링크만 허용하는 경우에는 QRdx가 회사 링크를 만들고, 회사 Box에 로그인한 사람만 열 수 있다는 점을 안내합니다. 호스팅 페이지의 다운로드 블록은 Box가 직접 다운로드 링크를 제공하면 그 링크를 사용합니다.",
-    "status": "machine",
-    "context": "integrations.entries.box.description.1"
-  },
-  "467dfa69d5d1": {
-    "source": "Connect Box",
-    "text": "Box 연결",
-    "status": "machine",
-    "context": "integrations.entries.box.primaryAction.label"
-  },
-  "a2c23ac44305": {
-    "source": "Open the Box integration in QRdx",
-    "text": "QRdx에서 Box 연동 열기",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.title"
-  },
-  "235843a7f1a9": {
-    "source": "Sign in, then go to Settings → Integrations → Box.",
-    "text": "로그인한 다음 설정 → 연동 → Box로 이동하세요.",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.body"
-  },
-  "f92702e9e3d6": {
-    "source": "Click Enable and grant access",
-    "text": "사용을 클릭하고 접근 허용하기",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.title"
-  },
-  "49748a9b96fb": {
-    "source": "Turning on a shared link changes the file's settings, so Box asks for read and write access. Tokens are stored encrypted, and disconnecting revokes them in Box.",
-    "text": "공유 링크를 켜면 파일 설정이 바뀌기 때문에 Box에서 읽기 및 쓰기 권한을 요청합니다. 토큰은 암호화되어 저장되며, 연결을 해제하면 Box에서 토큰이 취소됩니다.",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.body"
-  },
-  "71387b022f1f": {
-    "source": "In the editor, choose the URL type, open Use a link from…, choose Box and pick a file or folder.",
-    "text": "에디터에서 URL 유형을 선택하고 '다음에서 링크 사용…'을 연 다음 Box를 선택해 파일이나 폴더를 고르세요.",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.2.body"
-  },
-  "2f50b623f0ed": {
-    "source": "“People with the link” access, or a company link when your admin requires it.",
-    "text": "“링크가 있는 모든 사용자” 접근을 지원하며, 관리자가 요구하면 회사 링크를 사용해요.",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.0.description"
-  },
-  "cf0ee136ab5f": {
-    "source": "Download blocks use Box's direct download link when there is one.",
-    "text": "다운로드 블록은 Box의 직접 다운로드 링크가 있으면 그 링크를 사용해요.",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.1.description"
-  },
-  "79576c8da47f": {
-    "source": "Folders and search across your Box.",
-    "text": "Box의 폴더와 검색을 그대로 사용할 수 있어요.",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.2.description"
   },
   "83dd94b9dbba": {
     "source": "Pick a Notion page and encode its public link, with a hint when it isn't published yet.",

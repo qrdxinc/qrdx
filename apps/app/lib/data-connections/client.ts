@@ -224,7 +224,16 @@ function mockView(provider: string): SinkViewData {
             lastSuccessAt: new Date(Date.now() - 3 * 3_600_000).toISOString(),
             delivered: 41,
           })
-        : mockSyncState(),
+        : provider === "salesforce"
+          ? mockSyncState({
+              status: "failed",
+              attempts: 1,
+              lastError:
+                "Salesforce: a duplicate rule blocked a lead; set the rule's action to Allow, then retry (DUPLICATES_DETECTED)",
+              lastSuccessAt: new Date(Date.now() - 2 * 3_600_000).toISOString(),
+              delivered: 18,
+            })
+          : mockSyncState(),
     settings:
       provider === "mailchimp"
         ? {
@@ -234,7 +243,9 @@ function mockView(provider: string): SinkViewData {
             pageIds: ["page_spring"],
             forms: {},
           }
-        : { pageIds: null, forms: {} },
+        : provider === "salesforce"
+          ? { pageIds: null, forms: {}, leadSource: "Web" }
+          : { pageIds: null, forms: {} },
     pages: MOCK_FORM_PAGES,
     pagesCursor: null,
     selectedPages:
@@ -284,6 +295,7 @@ export async function saveSink(
         audienceId?: string;
         tags?: string[];
         withoutConsent?: "pending" | "skip";
+        leadSource?: string;
       },
 ): Promise<SinkViewData> {
   if (isIntegrationsMock()) {

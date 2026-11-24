@@ -94,7 +94,7 @@ function ProviderMenu({
 /**
  * Under the website field: shorten the address with a connected Bitly,
  * Rebrandly or Short.io account, or replace it with the share link of a
- * Dropbox, OneDrive, Box or Notion item. Only providers this deployment can
+ * Dropbox, OneDrive or Notion item. Only providers this deployment can
  * connect are named (production leaves out the ones that need setup), and
  * nothing shows when there are none. Hidden when signed out.
  */

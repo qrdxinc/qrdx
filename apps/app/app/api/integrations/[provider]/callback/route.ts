@@ -8,6 +8,7 @@ import {
   getIntegrationConfigWithEnv,
   getIntegrationRegistry,
   initializeIntegrations,
+  withOAuthVariant,
 } from "@repo/integrations";
 import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
@@ -88,11 +89,15 @@ export async function GET(request: Request, context: RouteContext) {
     return fail(oauthState.error);
   }
 
-  const { codeVerifier } = oauthState;
+  const { codeVerifier, variant } = oauthState;
 
   try {
-    // Get integration config with environment credentials
-    const config = getIntegrationConfigWithEnv(provider, env);
+    // Get integration config with environment credentials, on the sign-in
+    // host the flow started on (Salesforce sandboxes: test.salesforce.com)
+    const config = withOAuthVariant(
+      getIntegrationConfigWithEnv(provider, env),
+      variant,
+    );
 
     // Create OAuth handler
     const oauthHandler = createOAuthHandler(config);
@@ -141,6 +146,8 @@ export async function GET(request: Request, context: RouteContext) {
     } catch (error) {
       console.error(`Failed to fetch ${provider} metadata:`, error);
     }
+    // Refreshes and revokes go to the host the person signed in on.
+    if (variant) metadata = { ...(metadata ?? {}), oauthVariant: variant };
 
     // Build scopes string
     const scopes = tokenData.scope || config.oauth?.scopes.join(" ");
@@ -252,7 +259,6 @@ async function fetchProviderMetadata(
     case "bitly":
     case "dropbox":
     case "onedrive":
-    case "box":
     case "notion":
       return fetchConnectedAccountMetadata(
         provider,

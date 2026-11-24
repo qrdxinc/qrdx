@@ -129,7 +129,7 @@ interface Crumb {
 }
 
 /**
- * Browse-and-pick dialog shared by Dropbox, OneDrive, Box and Notion.
+ * Browse-and-pick dialog shared by Dropbox, OneDrive and Notion.
  * Arrow keys move through the list, Enter opens a folder or picks a file,
  * Backspace (outside the search box) goes up a folder.
  */

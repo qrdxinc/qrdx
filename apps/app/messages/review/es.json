@@ -21047,6 +21047,18 @@
     "source": "594c3a549835",
     "status": "machine"
   },
+  "app.settings.integrations.integrationDetail.salesforceOrgType": {
+    "source": "ef2ad47f9ea1",
+    "status": "machine"
+  },
+  "app.settings.integrations.integrationDetail.production": {
+    "source": "13a7c655a7d4",
+    "status": "machine"
+  },
+  "app.settings.integrations.integrationDetail.sandbox": {
+    "source": "67fc62497e85",
+    "status": "machine"
+  },
   "app.settings.integrations.responseSinkPanel.sendFormResponsesToName": {
     "source": "49952870287b",
     "status": "machine"
@@ -21189,6 +21201,26 @@
   },
   "app.settings.integrations.responseSinkPanel.couldntLoadMorePages": {
     "source": "56be4d318a76",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.newResponsesCreateOrUpdateLead": {
+    "source": "363a14d6de22",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.leads": {
+    "source": "aef450dc78ea",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.leadSource": {
+    "source": "e419f2c27cb1",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.leadSourceHelp": {
+    "source": "7a1b7c490591",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.salesforceOrg": {
+    "source": "24a2650e843e",
     "status": "machine"
   },
   "app.settings.integrations.slackBotPanel.qrdxBot": {
@@ -31385,6 +31417,102 @@
   },
   "codeActions.tags.chooseTag": {
     "source": "9dfdf64488d3",
+    "status": "machine"
+  },
+  "codeActions.organize.signIn": {
+    "source": "aee40d637e02",
+    "status": "machine"
+  },
+  "codeActions.organize.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.organize.invalidInput": {
+    "source": "c9bbbe834722",
+    "status": "machine"
+  },
+  "codeActions.organize.selectAtLeastOne": {
+    "source": "4065aa05ee47",
+    "status": "machine"
+  },
+  "codeActions.organize.selectUpTo": {
+    "source": "f17f26004338",
+    "status": "machine"
+  },
+  "codeActions.organize.folderNameRequired": {
+    "source": "06b85a00aaf8",
+    "status": "machine"
+  },
+  "codeActions.organize.folderNameTooLong": {
+    "source": "590790f5e08c",
+    "status": "machine"
+  },
+  "codeActions.organize.folderNameSlash": {
+    "source": "9733141422c6",
+    "status": "machine"
+  },
+  "codeActions.organize.tagNameRequired": {
+    "source": "750d01b1cdc6",
+    "status": "machine"
+  },
+  "codeActions.organize.tagNameTooLong": {
+    "source": "2c7c06c76d81",
+    "status": "machine"
+  },
+  "codeActions.organize.tagNameCharacters": {
+    "source": "873516cb5df4",
+    "status": "machine"
+  },
+  "codeActions.organize.notesTooLong": {
+    "source": "f3eacac5a55e",
+    "status": "machine"
+  },
+  "codeActions.organize.folderNotFound": {
+    "source": "05d0e5f0e341",
+    "status": "machine"
+  },
+  "codeActions.organize.folderExists": {
+    "source": "a5e489ecea7d",
+    "status": "machine"
+  },
+  "codeActions.organize.folderDepth": {
+    "source": "c129efa5bcd2",
+    "status": "machine"
+  },
+  "codeActions.organize.folderIntoItself": {
+    "source": "179957800c2c",
+    "status": "machine"
+  },
+  "codeActions.organize.folderLimit": {
+    "source": "3370e35d14a6",
+    "status": "machine"
+  },
+  "codeActions.organize.tagNotFound": {
+    "source": "ae7d1afabac0",
+    "status": "machine"
+  },
+  "codeActions.organize.tagExists": {
+    "source": "f34906317ded",
+    "status": "machine"
+  },
+  "codeActions.organize.tagLimit": {
+    "source": "5f8af960e410",
+    "status": "machine"
+  },
+  "codeActions.organize.codeNotFound": {
+    "source": "61ca4e5ce6f1",
+    "status": "machine"
+  },
+  "codeActions.organize.othersFolders": {
+    "source": "f7089b5440df",
+    "status": "machine"
+  },
+  "codeActions.organize.othersTags": {
+    "source": "5f67efa5b726",
+    "status": "machine"
+  },
+  "codeActions.organize.tryAgain": {
+    "source": "eea4fb33efd3",
     "status": "machine"
   },
   "codeActions.publicStats.signIn": {

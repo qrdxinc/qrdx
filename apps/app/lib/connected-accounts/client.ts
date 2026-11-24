@@ -67,7 +67,6 @@ const MOCK_PROVIDERS: ConnectedProvider[] = [
   ["short-io", "Short.io", "short-links"],
   ["dropbox", "Dropbox", "files"],
   ["onedrive", "OneDrive", "files"],
-  ["box", "Box", "files"],
   ["notion", "Notion", "files"],
 ].map(([slug, name, capability]) => ({
   slug: slug as string,
@@ -75,8 +74,8 @@ const MOCK_PROVIDERS: ConnectedProvider[] = [
   logo: `/integrations/${slug}.svg`,
   capability: capability as ConnectedProvider["capability"],
   configured: true,
-  connected: slug !== "box",
-  status: slug === "box" ? null : "active",
+  connected: slug !== "notion",
+  status: slug === "notion" ? null : "active",
 }));
 
 /** Signed-out visitors get null (the editor then hides account tools). */

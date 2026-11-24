@@ -33443,6 +33443,84 @@
     "status": "machine",
     "context": "integrations.entries.mailchimp.capabilities.1.description"
   },
+  "2dbd461465b4": {
+    "source": "Every form response on your hosted pages creates or updates a Salesforce lead.",
+    "text": "Chaque réponse aux formulaires de vos pages hébergées crée ou met à jour un lead Salesforce.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.tagline"
+  },
+  "deba4ea87198": {
+    "source": "Connect a production or sandbox org, choose the pages, and map each form's questions to lead fields. Email, name, phone and company are suggested for you. A response from an email that already has an open lead updates that lead; any other response creates one, with the lead source you pick (Web unless you change it).",
+    "text": "Connectez une organisation de production ou sandbox, choisissez les pages et associez les questions de chaque formulaire aux champs du lead. L'e-mail, le nom, le téléphone et l'entreprise vous sont suggérés. Une réponse provenant d'une adresse e-mail déjà associée à un lead ouvert met à jour ce lead ; toute autre réponse en crée un, avec la source de lead que vous choisissez (Web, sauf modification de votre part).",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.0"
+  },
+  "d4b9a1af1e32": {
+    "source": "Salesforce needs a last name and a company on every lead. When a form doesn't ask for them, QRdx uses the part of the email before the @ and Salesforce's own [not provided]. QRdx asks for API access and a refresh token (api, refresh_token), and only questions you map are sent.",
+    "text": "Salesforce exige un nom de famille et une entreprise pour chaque lead. Lorsqu'un formulaire ne les demande pas, QRdx utilise la partie de l'adresse e-mail située avant le @ et la valeur propre à Salesforce, [not provided]. QRdx demande un accès API et un refresh token (api, refresh_token), et seules les questions que vous associez sont envoyées.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.description.1"
+  },
+  "8c9592f4fc1b": {
+    "source": "Connect Salesforce",
+    "text": "Connecter Salesforce",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.primaryAction.label"
+  },
+  "9436d9616759": {
+    "source": "Pick production or sandbox, then click Enable",
+    "text": "Choisissez production ou sandbox, puis cliquez sur Activer",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.title"
+  },
+  "c0e545dee66f": {
+    "source": "Settings → Integrations → Salesforce. Sign in to the org and allow access. It needs a Salesforce edition with API access and a user who can create leads; your Salesforce admin may need to approve the app first.",
+    "text": "Paramètres → Intégrations → Salesforce. Connectez-vous à l'organisation et autorisez l'accès. Il faut une édition de Salesforce avec accès API et un utilisateur autorisé à créer des leads ; votre administrateur Salesforce devra peut-être d'abord approuver l'application.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.0.body"
+  },
+  "9cc2cb890587": {
+    "source": "Choose pages, map fields and set the lead source",
+    "text": "Choisissez les pages, associez les champs et définissez la source du lead",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.title"
+  },
+  "01bddd108b4e": {
+    "source": "Pick the hosted pages whose forms should reach Salesforce, check the suggested mapping, and turn the sync on.",
+    "text": "Sélectionnez les pages hébergées dont les formulaires doivent alimenter Salesforce, vérifiez l'association suggérée, puis activez la synchronisation.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.1.body"
+  },
+  "b650021a8590": {
+    "source": "New responses become leads",
+    "text": "Les nouvelles réponses deviennent des leads",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.steps.2.title"
+  },
+  "598f409deb1f": {
+    "source": "Matched by email",
+    "text": "Rapprochement par e-mail",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.title"
+  },
+  "4be6b5639961": {
+    "source": "One open lead per email, updated by later responses instead of duplicated.",
+    "text": "Un seul lead ouvert par adresse e-mail, mis à jour par les réponses suivantes au lieu d'être dupliqué.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.0.description"
+  },
+  "b74f68846b09": {
+    "source": "Field mapping and lead source",
+    "text": "Association des champs et source du lead",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.title"
+  },
+  "8f629d2cbc27": {
+    "source": "Email, name, phone, company, title and more, with suggested defaults.",
+    "text": "E-mail, nom, téléphone, entreprise, fonction et plus encore, avec des valeurs par défaut suggérées.",
+    "status": "machine",
+    "context": "integrations.entries.salesforce.capabilities.1.description"
+  },
   "29ade64ecd40": {
     "source": "Styled QR codes",
     "text": "QR codes personnalisés",
@@ -34996,78 +35074,6 @@
     "text": "Les sites d'équipe SharePoint ne sont pas listés ; les fichiers de votre propre OneDrive le sont.",
     "status": "machine",
     "context": "integrations.entries.onedrive.note"
-  },
-  "8b44cb3f8388": {
-    "source": "Pick a Box file or folder and turn its shared link into a QR code.",
-    "text": "Choisissez un fichier ou un dossier Box et transformez son lien partagé en QR code.",
-    "status": "machine",
-    "context": "integrations.entries.box.tagline"
-  },
-  "4322d3c20a79": {
-    "source": "Connect Box and it shows up in the QR editor's URL type, under Use a link from… beside the Website address field. Browse or search your Box, pick a file or folder, and QRdx turns on its shared link for people with the link. The QR code opens it.",
-    "text": "Connectez Box et il apparaît dans le type URL de l'éditeur de QR code, sous Utiliser un lien depuis… à côté du champ Adresse du site web. Parcourez ou recherchez dans votre Box, choisissez un fichier ou un dossier, et QRdx active son lien partagé pour les personnes disposant du lien. Le QR code l'ouvre.",
-    "status": "machine",
-    "context": "integrations.entries.box.description.0"
-  },
-  "20f0c09ebc41": {
-    "source": "Where your Box admin only allows company links, QRdx creates one and tells you that only people signed in to your company's Box can open it. Download blocks on hosted pages use the direct download link when Box provides one.",
-    "text": "Lorsque votre administrateur Box n'autorise que les liens d'entreprise, QRdx en crée un et vous indique que seules les personnes connectées au Box de votre entreprise peuvent l'ouvrir. Les blocs de téléchargement des pages hébergées utilisent le lien de téléchargement direct lorsque Box en fournit un.",
-    "status": "machine",
-    "context": "integrations.entries.box.description.1"
-  },
-  "467dfa69d5d1": {
-    "source": "Connect Box",
-    "text": "Connecter Box",
-    "status": "machine",
-    "context": "integrations.entries.box.primaryAction.label"
-  },
-  "a2c23ac44305": {
-    "source": "Open the Box integration in QRdx",
-    "text": "Ouvrez l'intégration Box dans QRdx",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.title"
-  },
-  "235843a7f1a9": {
-    "source": "Sign in, then go to Settings → Integrations → Box.",
-    "text": "Connectez-vous, puis allez dans Paramètres → Intégrations → Box.",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.0.body"
-  },
-  "f92702e9e3d6": {
-    "source": "Click Enable and grant access",
-    "text": "Cliquez sur Activer et accordez l'accès",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.title"
-  },
-  "49748a9b96fb": {
-    "source": "Turning on a shared link changes the file's settings, so Box asks for read and write access. Tokens are stored encrypted, and disconnecting revokes them in Box.",
-    "text": "Activer un lien partagé modifie les paramètres du fichier ; Box demande donc un accès en lecture et en écriture. Les jetons sont stockés chiffrés, et la déconnexion les révoque dans Box.",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.1.body"
-  },
-  "71387b022f1f": {
-    "source": "In the editor, choose the URL type, open Use a link from…, choose Box and pick a file or folder.",
-    "text": "Dans l'éditeur, choisissez le type URL, ouvrez Utiliser un lien depuis…, choisissez Box et sélectionnez un fichier ou un dossier.",
-    "status": "machine",
-    "context": "integrations.entries.box.steps.2.body"
-  },
-  "2f50b623f0ed": {
-    "source": "“People with the link” access, or a company link when your admin requires it.",
-    "text": "Accès “Personnes disposant du lien”, ou lien d'entreprise lorsque votre administrateur l'exige.",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.0.description"
-  },
-  "cf0ee136ab5f": {
-    "source": "Download blocks use Box's direct download link when there is one.",
-    "text": "Les blocs de téléchargement utilisent le lien de téléchargement direct de Box lorsqu'il y en a un.",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.1.description"
-  },
-  "79576c8da47f": {
-    "source": "Folders and search across your Box.",
-    "text": "Vos dossiers et la recherche dans votre Box.",
-    "status": "machine",
-    "context": "integrations.entries.box.capabilities.2.description"
   },
   "83dd94b9dbba": {
     "source": "Pick a Notion page and encode its public link, with a hint when it isn't published yet.",

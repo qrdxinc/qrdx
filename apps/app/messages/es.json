@@ -6788,7 +6788,10 @@
           "failedToConnectIntegration": "No se pudo conectar la integración",
           "nameDisconnectedAndQrdxsAccess": "{name} se desconectó y se revocó el acceso de QRdx",
           "nameDisconnected": "{name} desconectado",
-          "failedToDisconnectIntegration": "No se pudo desconectar la integración"
+          "failedToDisconnectIntegration": "No se pudo desconectar la integración",
+          "salesforceOrgType": "Tipo de org de Salesforce",
+          "production": "Producción",
+          "sandbox": "Sandbox"
         },
         "responseSinkPanel": {
           "sendFormResponsesToName": "Enviar respuestas de formularios a {name}",
@@ -6826,7 +6829,12 @@
           "loadMorePages": "Cargar más páginas",
           "loadingPages": "Cargando páginas…",
           "tryAgain": "Reintentar",
-          "couldntLoadMorePages": "No se pudieron cargar más páginas. Inténtalo de nuevo."
+          "couldntLoadMorePages": "No se pudieron cargar más páginas. Inténtalo de nuevo.",
+          "newResponsesCreateOrUpdateLead": "Las nuevas respuestas crean un lead o actualizan el lead abierto con el mismo correo electrónico. Solo se envían las preguntas respondidas y asignadas.",
+          "leads": "leads",
+          "leadSource": "Origen del lead",
+          "leadSourceHelp": "Se aplica a los leads que crea QRdx. Usa un valor de tu lista de selección Lead Source o déjalo vacío para no asignar ninguno.",
+          "salesforceOrg": "{environment, select, sandbox {Org Sandbox} other {Org de producción}}: {host}"
         },
         "slackBotPanel": {
           "qrdxBot": "Bot de QRdx",
@@ -9886,6 +9894,32 @@
       "nothingToUpdate": "Nada que actualizar",
       "tooManyTags": "Un código puede tener hasta {max, number} etiquetas.",
       "chooseTag": "Elige una etiqueta para añadir o quitar"
+    },
+    "organize": {
+      "signIn": "Inicia sesión para gestionar tus códigos.",
+      "failed": "Algo salió mal.",
+      "invalidInput": "Datos no válidos",
+      "selectAtLeastOne": "Selecciona al menos un código",
+      "selectUpTo": "Selecciona hasta {max, number} códigos a la vez",
+      "folderNameRequired": "Escribe un nombre de carpeta",
+      "folderNameTooLong": "Los nombres de carpeta pueden tener hasta {max, number} caracteres",
+      "folderNameSlash": "Los nombres de carpeta no pueden contener /",
+      "tagNameRequired": "Escribe un nombre de etiqueta",
+      "tagNameTooLong": "Los nombres de etiqueta pueden tener hasta {max, number} caracteres",
+      "tagNameCharacters": "Los nombres de etiqueta no pueden contener , ; ni |",
+      "notesTooLong": "Las notas pueden tener hasta {max, number} caracteres",
+      "folderNotFound": "Carpeta no encontrada",
+      "folderExists": "Ya existe una carpeta llamada \"{name}\" en ese lugar.",
+      "folderDepth": "Las carpetas se pueden anidar hasta {max, number} niveles.",
+      "folderIntoItself": "Una carpeta no se puede mover dentro de sí misma.",
+      "folderLimit": "Puedes tener hasta {max, number} carpetas.",
+      "tagNotFound": "Etiqueta no encontrada",
+      "tagExists": "Ya existe una etiqueta llamada \"{name}\".",
+      "tagLimit": "Puedes tener hasta {max, number} etiquetas.",
+      "codeNotFound": "Código QR no encontrado",
+      "othersFolders": "Solo los propietarios y administradores del equipo pueden cambiar las carpetas creadas por otras personas.",
+      "othersTags": "Solo los propietarios y administradores del equipo pueden cambiar las etiquetas creadas por otras personas.",
+      "tryAgain": "Inténtalo de nuevo."
     },
     "publicStats": {
       "signIn": "Inicia sesión para compartir analíticas.",
