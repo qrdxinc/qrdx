@@ -42,6 +42,7 @@ import {
   listShortLinks,
   loadShortLinkDomains,
 } from "@/lib/connected-accounts/client";
+import { pictureUrl } from "@/lib/media";
 import type { PickerProvider } from "./cloud-picker-dialog";
 
 interface ShortLinkDialogProps {
@@ -204,7 +205,7 @@ export function ShortLinkDialog({
               <img
                 alt=""
                 className="size-full object-contain"
-                src={provider.logo}
+                src={pictureUrl(provider.logo)}
               />
             </span>
             {t("shortLinkWithName", { name: provider.name })}
