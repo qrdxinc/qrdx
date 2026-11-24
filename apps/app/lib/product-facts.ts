@@ -60,7 +60,6 @@ import {
 import { ART_MODEL_LABEL } from "./ai/art-models";
 import { BARCODE_FORMATS } from "./barcode/formats";
 import { BRAND_LOGO_COUNT } from "./brand-logos/catalog.generated";
-import { formatBytes } from "./files/types";
 import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "./free-plan-limits";
 import {
   INVITE_BONUS_CODES,
@@ -86,6 +85,12 @@ import {
   SWITCHER_MONEY_BACK_DAYS,
 } from "./pricing";
 import { FREE_SCAN_HISTORY_YEARS } from "./scan-history";
+
+const MB = 1024 * 1024;
+
+/** A plan's storage as copy writes it: "50 MB", "5 GB". */
+const formatSize = (bytes: number): string =>
+  bytes >= 1024 * MB ? `${bytes / (1024 * MB)} GB` : `${bytes / MB} MB`;
 
 export const PRODUCT_FACTS = {
   /** Shapes for the data modules (`bodyPattern`). */
@@ -231,13 +236,13 @@ export const PRODUCT_FACTS = {
   proAiArtPerMonth: AI_ART_PER_MONTH.pro,
   businessAiArtPerMonth: AI_ART_PER_MONTH.business,
   /** File storage per workspace (lib/plan-allowances.ts): "50 MB", "5 GB", "50 GB". */
-  freeStorage: formatBytes(FILE_STORAGE_BYTES.free),
-  proStorage: formatBytes(FILE_STORAGE_BYTES.pro),
-  businessStorage: formatBytes(FILE_STORAGE_BYTES.business),
+  freeStorage: formatSize(FILE_STORAGE_BYTES.free),
+  proStorage: formatSize(FILE_STORAGE_BYTES.pro),
+  businessStorage: formatSize(FILE_STORAGE_BYTES.business),
   /** The largest upload (lib/plan-allowances.ts): "10 MB", "100 MB", "250 MB". */
-  freeMaxFileSize: formatBytes(MAX_FILE_BYTES.free),
-  proMaxFileSize: formatBytes(MAX_FILE_BYTES.pro),
-  businessMaxFileSize: formatBytes(MAX_FILE_BYTES.business),
+  freeMaxFileSize: formatSize(MAX_FILE_BYTES.free),
+  proMaxFileSize: formatSize(MAX_FILE_BYTES.pro),
+  businessMaxFileSize: formatSize(MAX_FILE_BYTES.business),
   /** Form responses a month (lib/plan-allowances.ts): "50", "1,000", "10,000". */
   freeFormResponsesPerMonth: formatCount(FORM_RESPONSES_PER_MONTH.free),
   proFormResponsesPerMonth: formatCount(FORM_RESPONSES_PER_MONTH.pro),
