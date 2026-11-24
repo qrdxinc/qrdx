@@ -1,5 +1,5 @@
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
   ReviewSecurityButton,
@@ -153,6 +153,8 @@ export interface TwoFactorNoticeEmailProps {
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
   extra?: TwoFactorNoticeExtra;
+  /** The address it's sent to */
+  recipient?: string;
   /** The recipient's language */
   intl: EmailIntl;
 }
@@ -166,6 +168,7 @@ export function TwoFactorNoticeEmail({
   kind,
   details,
   extra = {},
+  recipient,
   intl,
 }: TwoFactorNoticeEmailProps) {
   const { t } = intl;
@@ -175,6 +178,7 @@ export function TwoFactorNoticeEmail({
       intl={intl}
       preview={lines[0] ?? t(`twoFactorNotice.${KEYS[kind]}.body`)}
       reason={t("twoFactorNotice.reason")}
+      recipient={recipient}
     >
       <EmailHeading>{t(`twoFactorNotice.${KEYS[kind]}.heading`)}</EmailHeading>
       {lines.map((line) => (
@@ -185,7 +189,6 @@ export function TwoFactorNoticeEmail({
         <EmailText>{t("security.nothingElse")}</EmailText>
       )}
       <ReviewSecurityButton intl={intl} />
-      <EmailDivider />
       <MutedText>{t.rich("twoFactorNotice.notYou", supportLinkArgs)}</MutedText>
     </EmailLayout>
   );
@@ -201,4 +204,5 @@ TwoFactorNoticeEmail.PreviewProps = {
     time: "Nov 19, 2026, 3:04 PM GMT+5:30",
   },
   extra: { signedOutElsewhere: true },
+  recipient: "alex@example.com",
 } satisfies Omit<TwoFactorNoticeEmailProps, "intl">;

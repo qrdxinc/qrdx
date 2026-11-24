@@ -1,10 +1,9 @@
 import { SUPPORT_EMAIL } from "@repo/config";
 import type { ReactNode } from "react";
-import { Link, Section } from "react-email";
 import type { EmailIntl } from "../intl";
 import { baseUrl } from "../origin";
-import { EmailButton, EmailText } from "./layout";
-import { DetailsTable } from "./parts";
+import { EmailButton } from "./layout";
+import { DetailsTable, EmailTextLink, MutedText } from "./parts";
 
 // Shared by every security email (two-step verification, passkeys, email
 // changes, new sign-ins, confirmation codes): where and when it happened,
@@ -74,23 +73,21 @@ export function SecurityDetails({
 
 export function ReviewSecurityButton({ intl }: { intl: EmailIntl }) {
   return (
-    <Section style={{ margin: "4px 0 8px" }}>
-      <EmailButton href={reviewSecurityUrl()}>
-        {intl.t("security.review")}
-      </EmailButton>
-    </Section>
+    <EmailButton href={reviewSecurityUrl()}>
+      {intl.t("security.review")}
+    </EmailButton>
   );
 }
 
-/** On every email that carries a code. */
+/** On every email that carries a code, after the expiry line. */
 export function NeverAskForCode({ intl }: { intl: EmailIntl }) {
-  return <EmailText>{intl.t("codes.neverAsk")}</EmailText>;
+  return <MutedText>{intl.t("codes.neverAsk")}</MutedText>;
 }
 
 /** The arguments of "…contact support at <support>{email}</support>…". */
 export const supportLinkArgs = {
   email: SUPPORT_EMAIL,
   support: (chunks: ReactNode) => (
-    <Link href={`mailto:${SUPPORT_EMAIL}`}>{chunks}</Link>
+    <EmailTextLink href={`mailto:${SUPPORT_EMAIL}`}>{chunks}</EmailTextLink>
   ),
 };

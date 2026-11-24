@@ -1,9 +1,9 @@
 import type { EmailIntl } from "../intl";
 import {
   EmailButton,
-  EmailDivider,
   EmailHeading,
   EmailLayout,
+  EmailLinkFallback,
   EmailText,
 } from "./layout";
 import { formatEmailDateTime, MutedText } from "./parts";
@@ -14,6 +14,8 @@ export interface TeamInviteEmailProps {
   memberRole: string;
   inviteUrl: string;
   expiresAt: Date | string;
+  /** The invited address (the footer names it) */
+  recipient?: string;
   /** The invitee's language (apps/app/lib/events/emails.tsx picks it) */
   intl: EmailIntl;
 }
@@ -57,6 +59,7 @@ export function TeamInviteEmail({
   memberRole,
   inviteUrl,
   expiresAt,
+  recipient,
   intl,
 }: TeamInviteEmailProps) {
   const { t } = intl;
@@ -66,6 +69,7 @@ export function TeamInviteEmail({
       intl={intl}
       preview={teamInviteSubject({ inviterName, teamName, memberRole }, intl)}
       reason={t("teamInvite.reason")}
+      recipient={recipient}
     >
       <EmailHeading>{t("teamInvite.heading", { team: teamName })}</EmailHeading>
       <EmailText>
@@ -73,13 +77,12 @@ export function TeamInviteEmail({
         {t(`teamInvite.roles.${role}`)}
       </EmailText>
       <EmailButton href={inviteUrl}>{t("teamInvite.accept")}</EmailButton>
-      <EmailDivider />
+      <EmailLinkFallback intl={intl} url={inviteUrl} />
       <MutedText>
         {t("teamInvite.expires", {
           date: formatEmailDateTime(expiresAt, intl.locale),
         })}
       </MutedText>
-      <MutedText>{t("teamInvite.pasteLink", { url: inviteUrl })}</MutedText>
     </EmailLayout>
   );
 }
@@ -91,4 +94,5 @@ TeamInviteEmail.PreviewProps = {
   memberRole: "member",
   inviteUrl: "https://qrdx.dev/invite/preview",
   expiresAt: new Date("2026-11-26T09:30:00Z"),
+  recipient: "alex@example.com",
 } satisfies Omit<TeamInviteEmailProps, "intl">;

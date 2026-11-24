@@ -1,14 +1,7 @@
 import type { ReactNode } from "react";
-import { Link } from "react-email";
 import type { EmailIntl } from "../intl";
-import {
-  EmailButton,
-  EmailDivider,
-  EmailHeading,
-  EmailLayout,
-  EmailText,
-} from "./layout";
-import { DetailsTable, MutedText } from "./parts";
+import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { DetailsTable, EmailTextLink, MutedText } from "./parts";
 
 export interface LimitNoticeEmailProps {
   /** "Acme" */
@@ -42,6 +35,11 @@ export interface LimitNoticeEmailProps {
   invite?: { url: string; count: number };
   /** Why this person gets it */
   recipientReason: string;
+  /**
+   * The addresses it's sent to (the footer names them): the workspace's
+   * owners who read this language, in one email
+   */
+  recipient?: string;
   /** The recipients' language; the strings above come in it too */
   intl: EmailIntl;
 }
@@ -60,6 +58,7 @@ export function LimitNoticeEmail({
   reason,
   usageUrl,
   recipientReason,
+  recipient,
   intl,
   upgrade,
   invite,
@@ -75,6 +74,7 @@ export function LimitNoticeEmail({
       intl={intl}
       preview={t("limitNotice.preview", words)}
       reason={recipientReason}
+      recipient={recipient}
     >
       <EmailHeading>{t("limitNotice.heading", words)}</EmailHeading>
       <EmailText>
@@ -93,12 +93,11 @@ export function LimitNoticeEmail({
           {t.rich("limitNotice.invite", {
             count: invite.count,
             link: (chunks: ReactNode) => (
-              <Link href={invite.url}>{chunks}</Link>
+              <EmailTextLink href={invite.url}>{chunks}</EmailTextLink>
             ),
           })}
         </EmailText>
       ) : null}
-      <EmailDivider />
       <MutedText>{t("limitNotice.howOften")}</MutedText>
     </EmailLayout>
   );
@@ -115,4 +114,5 @@ LimitNoticeEmail.PreviewProps = {
   reason: "Free includes 10 dynamic QR codes.",
   usageUrl: "https://qrdx.dev/settings/usage",
   recipientReason: "You're an owner of Acme on QRdx.",
+  recipient: "alex@example.com",
 } satisfies Omit<LimitNoticeEmailProps, "intl">;

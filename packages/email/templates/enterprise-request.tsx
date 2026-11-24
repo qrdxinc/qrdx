@@ -1,5 +1,5 @@
 import type { EmailIntl } from "../intl";
-import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
+import { EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, MutedText } from "./parts";
 
 // To QRdx: someone filled in the contact form on /enterprise. Replying to
@@ -14,6 +14,11 @@ export interface EnterpriseRequestEmailProps {
   need: string;
   /** The language of the page they wrote from, e.g. "ja" */
   locale: string;
+  /**
+   * Who it was meant for, in the footer. The app leaves it out: this goes
+   * to the QRdx team, and that line speaks to an account holder.
+   */
+  recipient?: string;
   /** The email's language (English: it goes to the QRdx team) */
   intl: EmailIntl;
 }
@@ -35,6 +40,7 @@ export function EnterpriseRequestEmail(props: EnterpriseRequestEmailProps) {
       intl={props.intl}
       preview={enterpriseRequestSubject(props.company, props.teamSize)}
       reason="Sent by the contact form on the Enterprise page."
+      recipient={props.recipient}
     >
       <EmailHeading>Enterprise inquiry</EmailHeading>
       <EmailText>
@@ -42,7 +48,6 @@ export function EnterpriseRequestEmail(props: EnterpriseRequestEmailProps) {
         this email to reach {props.email}.
       </EmailText>
       <DetailsTable rows={rows} />
-      <EmailDivider />
       <MutedText>
         Nothing was set up or charged. Contracts, invoices and plans are
         arranged by hand.

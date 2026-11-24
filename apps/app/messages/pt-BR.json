@@ -9495,9 +9495,12 @@
   },
   "emails": {
     "layout": {
+      "meantFor": "Este e-mail era para <strong>{email}</strong>. Se você não estava esperando por ele, pode ignorá-lo. Se está preocupado com a segurança da sua conta, <link>fale com a gente</link>.",
       "sentFor": "Enviado para {name} por <link>{host}</link>",
       "sentBy": "QRdx · <link>{host}</link>",
-      "unsubscribe": "Cancelar inscrição"
+      "unsubscribe": "Cancelar inscrição",
+      "settings": "Mude quais e-mails você recebe",
+      "copyLink": "ou copie e cole este link no seu navegador:"
     },
     "codes": {
       "neverAsk": "O QRdx nunca pede este código por telefone, chat ou e-mail.",
@@ -9719,8 +9722,7 @@
         "viewer": "Visualizadores veem os códigos, as páginas e as análises do espaço de trabalho sem alterar nada."
       },
       "accept": "Aceitar convite",
-      "expires": "Entre com este endereço de e-mail para aceitar. O convite expira em {date}. Se você não esperava por ele, pode ignorar este e-mail.",
-      "pasteLink": "Ou cole este link no seu navegador: {url}",
+      "expires": "Entre com este endereço de e-mail para aceitar. O convite expira em {date}.",
       "someone": "Um colega"
     },
     "portalInvite": {
@@ -9729,8 +9731,7 @@
       "heading": "Seus relatórios de QR code",
       "body": "{hasFolders, select, yes {{inviter} convidou você para ver os QR codes de {portal} em {folders}: quantas leituras cada um recebe, onde e em quais dispositivos, e as páginas que eles abrem. É somente leitura.} other {{inviter} convidou você para ver os QR codes de {portal}: quantas leituras cada um recebe, onde e em quais dispositivos, e as páginas que eles abrem. É somente leitura.}}",
       "open": "Abrir os relatórios",
-      "signIn": "Entre com este endereço de e-mail: enviaremos um código de uso único. Se você não esperava por isso, pode ignorar.",
-      "pasteLink": "Ou cole este link no seu navegador: {url}",
+      "signIn": "Entre com este endereço de e-mail: vamos enviar um código de uso único para você.",
       "yourAgency": "Sua agência"
     },
     "limitNotice": {
@@ -9779,11 +9780,14 @@
       "sameAsLastWeek": "Igual à semana passada",
       "change": "{change} vs. semana passada",
       "topCodes": "Top códigos",
+      "code": "Código",
       "countries": "De onde vieram as leituras",
+      "country": "País",
       "newCodesLine": "{count, plural, one {# novo código} other {# novos códigos}} esta semana.",
       "open": "Abrir seu painel"
     },
     "personal": {
+      "meantFor": "Este e-mail era para <strong>{email}</strong>.",
       "reply": "Responda a este e-mail e a mensagem chega até {name}.",
       "stop": "Parar de receber notas da equipe QRdx"
     },
@@ -9798,6 +9802,7 @@
       "makeCode": "<link>Crie um QR code dinâmico.</link> Ele abre um link curto que não muda, então você pode imprimir na hora.",
       "seeScans": "<link>Acompanhe as leituras:</link> quando, onde e em quais dispositivos as pessoas fazem a leitura.",
       "changeLink": "Mude o destino sempre que quiser, mesmo depois de impresso. Sem precisar reimprimir.",
+      "button": "Crie seu primeiro código",
       "free": "Os QR codes estáticos continuam grátis, e os códigos que você criar seguem funcionando se você mudar de plano ou parar de pagar. O plano Grátis também inclui {count} QR codes dinâmicos.",
       "pro": "Se precisar de mais, o Pro custa {monthly} por mês ou {yearly} por ano e inclui QR codes dinâmicos ilimitados, {domains} domínios personalizados, alertas por e-mail a cada marco de leituras e um resumo semanal, se você quiser.",
       "taxes": "Impostos locais podem ser adicionados no checkout.",

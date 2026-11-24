@@ -90,6 +90,7 @@ export async function afterEmailChanged({
                 details={details}
                 intl={intl}
                 newEmail={newEmail}
+                recipient={previousEmail}
               />
             ),
             tags: [{ name: "category", value: "email_changed" }],

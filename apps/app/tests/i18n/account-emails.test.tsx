@@ -236,8 +236,8 @@ describe("the account and security emails in Spanish", async () => {
     expect(plain).toContain(t.confirmationCode.enter);
     expect(plain).toContain("503118");
     expect(plain).toContain("10 minutos");
-    // Label and value are joined by a no-break space (DetailsTable).
-    expect(plain).toContain(`${t.security.device}:\u00a0Chrome on macOS`);
+    // Label and value are table columns in the plain text (DetailsTable).
+    expect(plain).toContain(`${t.security.device}   Chrome on macOS`);
     expect(plain).toContain(t.security.review);
     expect(html).toContain('href="mailto:support@qrdx.dev"');
   });
@@ -255,7 +255,7 @@ describe("the account and security emails in Spanish", async () => {
     const plain = await text(element);
     expect(plain).toContain(t.newSignIn.body);
     expect(plain).toContain(t.newSignIn.signOut);
-    expect(plain).toContain(`${t.newSignIn.signedInWith}:\u00a0${method}`);
+    expect(plain).toContain(`${t.newSignIn.signedInWith}   ${method}`);
     // The inbox preview, with the place.
     expect(await render(element)).toContain(
       "Chrome on macOS inició sesión en tu cuenta de QRdx cerca de Mumbai, India.",
@@ -312,6 +312,7 @@ describe("the account and security emails in Spanish", async () => {
         details={DETAILS}
         intl={intl}
         paypalEmail="ada@example.com"
+        recipient="sam@example.com"
         replaced
       />,
     );
@@ -319,6 +320,8 @@ describe("the account and security emails in Spanish", async () => {
       "Se cambió la dirección de PayPal de tus pagos de afiliado.",
     );
     expect(html).toContain("<strong>ada@example.com</strong>");
+    // The footer names the account's address, in Spanish too.
+    expect(html).toMatch(/Este correo era para <span[^>]*>sam@example\.com</);
   });
 
   it("the time of the request, in the email's language", () => {
@@ -362,6 +365,13 @@ describe("which language each email goes out in", () => {
       expect(email.to).toBe(EMAIL);
       expect(email.html).toContain('lang="es"');
     }
+    // The footer names the address each was sent to (the payout notice's
+    // sender isn't this file's).
+    for (const email of state.sent.filter(
+      ({ subject }) => subject !== es.emails.payoutEmailNotice.subject,
+    )) {
+      expect(email.html).toContain(`>${EMAIL}</span>`);
+    }
   });
 
   it("a security notice for an account without one: English, whatever the request's language", async () => {
@@ -379,6 +389,7 @@ describe("which language each email goes out in", () => {
       es.emails.confirmationCode.subject,
     ]);
     expect(state.sent[0].html).toContain(es.emails.confirmationCode.enter);
+    expect(state.sent[0].html).toContain(`>${EMAIL}</span>`);
   });
 
   it("the confirmation code: the account's language before the request's", async () => {

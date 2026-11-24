@@ -254,6 +254,7 @@ export async function sendFreeFirstScanEmail(
           }}
           intl={intl}
           location={location || null}
+          recipient={maker.email}
           scannedAt={scan.scannedAt}
           unsubscribeUrl={unsubscribeUrl}
           workspaceName=""

@@ -77,6 +77,7 @@ export async function sendTwoFactorNotice(
                 extra={extra}
                 intl={intl}
                 kind={kind}
+                recipient={email}
               />
             ),
             tags: [{ name: "category", value: "two_factor" }],
