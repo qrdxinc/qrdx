@@ -64,13 +64,15 @@ async function inviteLinkOf(userId: string): Promise<string | null> {
   }
 }
 
-const SEEN: Record<"firstSteps" | "invite" | "whereHeard" | "downloaded", SpotlightId> =
-  {
-    firstSteps: "home-first-steps",
-    invite: "home-invite",
-    whereHeard: "where-heard",
-    downloaded: "first-download",
-  };
+const SEEN: Record<
+  "firstSteps" | "invite" | "whereHeard" | "downloaded",
+  SpotlightId
+> = {
+  firstSteps: "home-first-steps",
+  invite: "home-invite",
+  whereHeard: "where-heard",
+  downloaded: "first-download",
+};
 
 /**
  * Home's first-run cards for the signed-in person (first-run-rules.ts

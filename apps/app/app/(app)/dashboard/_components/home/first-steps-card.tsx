@@ -13,7 +13,8 @@ import { useSpotlightsSeen } from "@/components/app-shell/feature-spotlight";
 import { useCan } from "@/components/workspace-provider";
 import type { FirstSteps } from "./first-run-rules";
 
-const ROW = "flex min-h-11 w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-sm";
+const ROW =
+  "flex min-h-11 w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-sm";
 const OPEN =
   "group hover:bg-muted focus-visible:ring-ring/50 outline-none transition-colors focus-visible:ring-[3px]";
 
@@ -109,8 +110,7 @@ export function FirstStepsCard({
   if (!(canWrite && spotlights) || hidden) return null;
   if (spotlights.seen.has("home-first-steps")) return null;
 
-  const downloaded =
-    steps.downloaded || spotlights.seen.has("first-download");
+  const downloaded = steps.downloaded || spotlights.seen.has("first-download");
   const open = codeHref ? { href: codeHref } : {};
   const rows = [
     {

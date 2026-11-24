@@ -21,7 +21,14 @@ const calls = vi.hoisted(() => ({
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/dashboard/acme" }));
 vi.mock("next/link", () => ({
-  default: ({ href, children, ...rest }: { href: string; children: ReactNode }) => (
+  default: ({
+    href,
+    children,
+    ...rest
+  }: {
+    href: string;
+    children: ReactNode;
+  }) => (
     <a href={href} {...rest}>
       {children}
     </a>

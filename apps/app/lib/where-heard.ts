@@ -45,7 +45,10 @@ const ANSWERS: ReadonlySet<string> = new Set(WHERE_HEARD_ANSWERS);
 const CONTROL = /[\u0000-\u001f\u007f-\u009f]+/g;
 
 /** A submitted answer, checked; null when it isn't one of the answers. */
-export function parseWhereHeard(answer: unknown, text: unknown): WhereHeard | null {
+export function parseWhereHeard(
+  answer: unknown,
+  text: unknown,
+): WhereHeard | null {
   if (typeof answer !== "string" || !ANSWERS.has(answer)) return null;
   const typed =
     answer === "other" && typeof text === "string"

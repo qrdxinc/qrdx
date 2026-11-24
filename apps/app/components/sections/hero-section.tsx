@@ -61,7 +61,9 @@ export function HeroSection() {
             <Button asChild variant="outline">
               {/* The editor with the code builder open, as on /dynamic-qr-code:
                   signed out, it asks for sign-up when the code is made. */}
-              <LocaleLink href={playgroundHref({ type: "url", open: "dynamic" })}>
+              <LocaleLink
+                href={playgroundHref({ type: "url", open: "dynamic" })}
+              >
                 {t("secondary")}
               </LocaleLink>
             </Button>

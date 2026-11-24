@@ -8,9 +8,7 @@ import { PAGE_TYPE_IDS } from "@/lib/landing/page-type-ids";
 
 describe("madeWithQrdxPath", () => {
   it("opens the gallery at the page's type", () => {
-    expect(madeWithQrdxPath("menu")).toBe(
-      "/templates?ref=made-with-qrdx#menu",
-    );
+    expect(madeWithQrdxPath("menu")).toBe("/templates?ref=made-with-qrdx#menu");
     expect(madeWithQrdxPath("real-estate")).toBe(
       "/templates?ref=made-with-qrdx#real-estate",
     );
@@ -32,8 +30,10 @@ describe("madeWithQrdxPath", () => {
   });
 
   it("keeps a ref tag QRdx counts as its own", () => {
-    const ref = new URL(madeWithQrdxPath("menu"), "https://qrdx.dev")
-      .searchParams.get("ref");
+    const ref = new URL(
+      madeWithQrdxPath("menu"),
+      "https://qrdx.dev",
+    ).searchParams.get("ref");
     expect(SITE_REFS).toContain(ref);
   });
 });

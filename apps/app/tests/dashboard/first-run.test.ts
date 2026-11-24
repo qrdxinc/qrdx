@@ -37,15 +37,16 @@ describe("first steps", () => {
       scanned: false,
       downloaded: false,
     });
-    expect(
-      firstRunCards(facts({ codes: 2, scans: 1 })).firstSteps,
-    ).toEqual({ made: true, scanned: true, downloaded: false });
+    expect(firstRunCards(facts({ codes: 2, scans: 1 })).firstSteps).toEqual({
+      made: true,
+      scanned: true,
+      downloaded: false,
+    });
   });
 
   it("goes once all three are done, or once hidden", () => {
     expect(
-      firstRunCards(facts({ codes: 1, scans: 3, downloaded: true }))
-        .firstSteps,
+      firstRunCards(facts({ codes: 1, scans: 3, downloaded: true })).firstSteps,
     ).toBeNull();
     expect(
       firstRunCards(
@@ -102,7 +103,9 @@ describe("the invite", () => {
 
 describe("Where did you first hear about QRdx?", () => {
   it("is asked of new accounts that haven't answered", () => {
-    expect(asksWhereHeard({ createdAt: daysAgo(0), answered: false, now: NOW })).toBe(true);
+    expect(
+      asksWhereHeard({ createdAt: daysAgo(0), answered: false, now: NOW }),
+    ).toBe(true);
     expect(
       asksWhereHeard({
         createdAt: daysAgo(WHERE_HEARD_ASK_DAYS),
@@ -117,7 +120,9 @@ describe("Where did you first hear about QRdx?", () => {
         now: NOW,
       }),
     ).toBe(false);
-    expect(asksWhereHeard({ createdAt: daysAgo(1), answered: true, now: NOW })).toBe(false);
+    expect(
+      asksWhereHeard({ createdAt: daysAgo(1), answered: true, now: NOW }),
+    ).toBe(false);
   });
 
   it("isn't shown once hidden, nor while it can't be stored", () => {
