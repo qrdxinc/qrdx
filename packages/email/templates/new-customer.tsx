@@ -1,11 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { EmailIntl } from "../intl";
-import {
-  EMAIL_TEXT,
-  EmailHeading,
-  EmailLayout,
-  EmailText,
-} from "./layout";
+import { EMAIL_TEXT, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { EmailTextLink, formatCount } from "./parts";
 
 // Sent once after someone's first payment for a paid plan
@@ -59,7 +54,7 @@ export interface NewCustomerEmailProps {
 /** The subject line in the recipient's language. */
 export const newCustomerSubject = (
   intl: EmailIntl,
-  { planName }: { planName: string },
+  { planName }: { planName: string }
 ) => intl.t("newCustomer.subject", { plan: planName });
 
 function StepLine({ step, intl }: { step: NewCustomerStep; intl: EmailIntl }) {
@@ -106,7 +101,9 @@ export function NewCustomerEmail({
       recipient={recipient}
       unsubscribeUrl={unsubscribeUrl}
     >
-      <EmailHeading>{t("newCustomer.subject", { plan: planName })}</EmailHeading>
+      <EmailHeading>
+        {t("newCustomer.subject", { plan: planName })}
+      </EmailHeading>
       <EmailText>{t("newCustomer.greeting", { name: firstName })}</EmailText>
       <EmailText>{t("newCustomer.thanks", { plan: planName })}</EmailText>
       {steps.length > 0 ? (

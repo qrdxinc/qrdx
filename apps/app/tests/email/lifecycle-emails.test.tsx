@@ -152,7 +152,11 @@ beforeEach(() => {
   state.sendResult = { sent: true, id: "em_1" };
   state.env.EMAIL_FROM = "QRdx <hello@qrdx.dev>";
   state.env.EMAIL_FROM_PERSONAL = "Ritesh from QRdx <support@qrdx.dev>";
-  state.features = { teamNotes: true, inviteRewards: true, customDomains: true };
+  state.features = {
+    teamNotes: true,
+    inviteRewards: true,
+    customDomains: true,
+  };
   state.plan = "free";
   state.serverEvents = true;
   vi.spyOn(console, "error").mockImplementation(() => undefined);
@@ -347,9 +351,9 @@ describe("sendFreeScanMilestoneEmail (Free, 100 scans, once per account)", () =>
 
   it("only at exactly 100: a code already past it never asks", async () => {
     for (const scanCount of [1, 99, 101, 500]) {
-      expect(
-        await sendFreeScanMilestoneEmail(scan, code({ scanCount })),
-      ).toBe("not_milestone");
+      expect(await sendFreeScanMilestoneEmail(scan, code({ scanCount }))).toBe(
+        "not_milestone",
+      );
     }
     expect(state.sent).toHaveLength(0);
   });
@@ -375,9 +379,9 @@ describe("sendFreeScanMilestoneEmail (Free, 100 scans, once per account)", () =>
     state.sendResult = { sent: false, reason: "failed", error: "down" };
     expect(await sendFreeScanMilestoneEmail(scan, code())).toBe("failed");
     state.sendResult = { sent: true, id: "em_2" };
-    expect(
-      await sendFreeScanMilestoneEmail(scan, code({ id: "c_next" })),
-    ).toBe("sent");
+    expect(await sendFreeScanMilestoneEmail(scan, code({ id: "c_next" }))).toBe(
+      "sent",
+    );
   });
 });
 
@@ -390,7 +394,10 @@ describe("sendPaymentFailedEmail", () => {
   };
 
   beforeEach(() => {
-    fakeDb.seed("user", [person("u_payer"), person("u_off", { teamNotes: false })]);
+    fakeDb.seed("user", [
+      person("u_payer"),
+      person("u_off", { teamNotes: false }),
+    ]);
   });
 
   it("says the codes keep working, until when the plan stays on, and links to the billing portal", async () => {
@@ -423,9 +430,9 @@ describe("sendPaymentFailedEmail", () => {
   });
 
   it("skips people who turned notes off, and sends nothing where notes don't exist", async () => {
-    expect(
-      await sendPaymentFailedEmail({ ...failed, userId: "u_off" }),
-    ).toBe("opted_out");
+    expect(await sendPaymentFailedEmail({ ...failed, userId: "u_off" })).toBe(
+      "opted_out",
+    );
     state.features.teamNotes = false;
     expect(await sendPaymentFailedEmail(failed)).toBe("off");
     expect(state.sent).toHaveLength(0);
@@ -567,7 +574,11 @@ describe("the invite line", () => {
           milestones: ["10", "100", "500"],
         }}
         intl={ENGLISH_EMAIL}
-        invite={{ url: "https://qrdx.dev/settings/invite", count: 5, both: true }}
+        invite={{
+          url: "https://qrdx.dev/settings/invite",
+          count: 5,
+          both: true,
+        }}
         scannedAt={NOW}
         unsubscribeUrl="https://qrdx.dev/unsubscribe"
         workspaceName=""

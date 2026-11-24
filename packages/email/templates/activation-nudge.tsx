@@ -44,7 +44,9 @@ export function ActivationNudgeEmail({
       unsubscribeUrl={unsubscribeUrl}
     >
       <EmailHeading>{t("activationNudge.subject")}</EmailHeading>
-      <EmailText>{t("activationNudge.greeting", { name: firstName })}</EmailText>
+      <EmailText>
+        {t("activationNudge.greeting", { name: firstName })}
+      </EmailText>
       <EmailText>{t("activationNudge.what")}</EmailText>
       <EmailButton href={newCodeUrl}>{t("activationNudge.button")}</EmailButton>
       <EmailText>{t("activationNudge.reply")}</EmailText>

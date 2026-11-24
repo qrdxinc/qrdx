@@ -112,8 +112,14 @@ function dueAccounts(now: Date) {
     .from(user)
     .where(
       and(
-        gt(user.createdAt, new Date(now.getTime() - NUDGE_UNTIL_HOURS * HOUR_MS)),
-        lte(user.createdAt, new Date(now.getTime() - NUDGE_AFTER_HOURS * HOUR_MS)),
+        gt(
+          user.createdAt,
+          new Date(now.getTime() - NUDGE_UNTIL_HOURS * HOUR_MS),
+        ),
+        lte(
+          user.createdAt,
+          new Date(now.getTime() - NUDGE_AFTER_HOURS * HOUR_MS),
+        ),
         eq(user.teamNotes, true),
         notExists(codes),
         notExists(nudged),

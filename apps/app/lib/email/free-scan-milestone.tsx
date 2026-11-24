@@ -77,7 +77,11 @@ let warnedNoSender = false;
 
 const logFailure = (codeId: string, error: string) =>
   console.error(
-    JSON.stringify({ event: "email.free_scan_milestone_failed", codeId, error }),
+    JSON.stringify({
+      event: "email.free_scan_milestone_failed",
+      codeId,
+      error,
+    }),
   );
 
 /**

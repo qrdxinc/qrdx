@@ -8,16 +8,7 @@ import { AI_REQUEST_FREE_TIER_LIMIT } from "@repo/config";
 import { aiUsage, database as db } from "@repo/database";
 import { subscription } from "@repo/database/schema";
 import cuid from "cuid";
-import {
-  and,
-  count,
-  desc,
-  eq,
-  gt,
-  inArray,
-  notInArray,
-  or,
-} from "drizzle-orm";
+import { and, count, desc, eq, gt, inArray, notInArray, or } from "drizzle-orm";
 import { SubscriptionRequiredError } from "@/types/errors";
 import type { SubscriptionCheck } from "@/types/subscription";
 import { ART_USAGE_MODEL_IDS } from "./ai/art-models";
@@ -62,9 +53,7 @@ export async function getMyActiveSubscription(
   const sub = await db
     .select()
     .from(subscription)
-    .where(
-      and(eq(subscription.userId, userId), entitledSubscription()),
-    )
+    .where(and(eq(subscription.userId, userId), entitledSubscription()))
     .orderBy(desc(subscription.createdAt))
     .limit(1);
   return sub[0] ?? null;
