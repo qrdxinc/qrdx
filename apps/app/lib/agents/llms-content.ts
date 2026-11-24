@@ -135,9 +135,11 @@ async function guidesAndResearch(): Promise<{
     siteServes("blog") ? siteFile("/blog/rss.xml") : undefined,
     siteServes("compare") ? siteFile("/compare/sitemap.xml") : undefined,
   ]);
-  const posts = feed ? parseRssPosts(feed, baseUrl) : [];
+  // The site's links name this deployment's origin or the canonical one.
+  const origins = [baseUrl, new URL(CANONICAL_ORIGIN)];
+  const posts = feed ? parseRssPosts(feed, origins) : [];
   const comparisons = sitemap
-    ? comparePages(parseSitemapPaths(sitemap, baseUrl), ownComparisons)
+    ? comparePages(parseSitemapPaths(sitemap, origins), ownComparisons)
     : [];
   return {
     blog: posts.length > 0 ? posts : ownPosts,

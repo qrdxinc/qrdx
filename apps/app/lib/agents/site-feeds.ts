@@ -29,12 +29,18 @@ function text(xml: string, tag: string): string | undefined {
   return decoded.replace(/\s+/g, " ").trim() || undefined;
 }
 
-/** A URL's path on `origin`, or undefined for another host or no URL. */
-function pathOn(url: string | undefined, origin: URL): string | undefined {
-  if (!url) return;
+/**
+ * A URL's path on one of `origins` (the first resolves a relative URL), or
+ * undefined for another host or no URL.
+ */
+function pathOn(
+  url: string | undefined,
+  origins: readonly URL[],
+): string | undefined {
+  if (!(url && origins[0])) return;
   try {
-    const parsed = new URL(url, origin);
-    if (parsed.host !== origin.host) return;
+    const parsed = new URL(url, origins[0]);
+    if (!origins.some((origin) => origin.host === parsed.host)) return;
     return parsed.pathname.replace(/\/+$/, "") || "/";
   } catch {
     return;
@@ -43,24 +49,32 @@ function pathOn(url: string | undefined, origin: URL): string | undefined {
 
 /**
  * The posts in an RSS feed, in the feed's order (newest first), as links
- * relative to `origin`: title, path and the post's one-line description.
- * Items on another host, or without a title or link, are left out.
+ * relative to the site: title, path and the post's one-line description.
+ * `origins` are the hosts the site's links may name (this deployment's,
+ * and qrdx.dev, its canonical one); items on another host, or without a
+ * title or link, are left out.
  */
-export function parseRssPosts(xml: string, origin: URL): LlmsLink[] {
+export function parseRssPosts(
+  xml: string,
+  origins: readonly URL[],
+): LlmsLink[] {
   const posts: LlmsLink[] = [];
   for (const [, item = ""] of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
     const title = text(item, "title");
-    const url = pathOn(text(item, "link"), origin);
+    const url = pathOn(text(item, "link"), origins);
     if (!(title && url?.startsWith("/blog/"))) continue;
     posts.push({ title, url, description: text(item, "description") });
   }
   return posts;
 }
 
-/** The paths of a sitemap's pages on `origin`, in its order. */
-export function parseSitemapPaths(xml: string, origin: URL): string[] {
+/** The paths of a sitemap's pages on one of `origins`, in its order. */
+export function parseSitemapPaths(
+  xml: string,
+  origins: readonly URL[],
+): string[] {
   return [...xml.matchAll(/<loc>([\s\S]*?)<\/loc>/g)].flatMap(([loc]) => {
-    const path = pathOn(text(loc, "loc"), origin);
+    const path = pathOn(text(loc, "loc"), origins);
     return path ? [path] : [];
   });
 }

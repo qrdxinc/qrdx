@@ -7,7 +7,7 @@ import {
   parseSitemapPaths,
 } from "@/lib/agents/site-feeds";
 
-const QRDX = new URL("https://qrdx.dev");
+const QRDX = [new URL("https://qrdx.dev")];
 
 const RSS = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -52,6 +52,17 @@ describe("parseRssPosts", () => {
         description: "Image models draw QR codes that don't hold your link.",
       },
     ]);
+  });
+
+  it("takes the site's links on any of the origins given (a preview, and qrdx.dev)", () => {
+    const preview = [new URL("https://preview.example"), ...QRDX];
+    expect(parseRssPosts(RSS, preview).map((post) => post.url)).toEqual([
+      "/blog/qr-code-scan-study",
+      "/blog/qr-code-with-chatgpt-or-claude",
+    ]);
+    expect(parseRssPosts(RSS, [new URL("https://preview.example")])).toEqual(
+      [],
+    );
   });
 
   it("reads nothing from a page that isn't a feed", () => {
