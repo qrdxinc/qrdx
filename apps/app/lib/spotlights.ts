@@ -13,6 +13,15 @@ export const SPOTLIGHT_IDS = [
   // (components/app-shell/setup-guide.tsx), once dismissed. It's a one-time
   // guide the account remembers the same way.
   "setup-guide",
+  // Not spotlights either: Home's one-time cards, remembered the same way
+  // (app/(app)/dashboard/_components/home). The first steps checklist and
+  // the invite card once hidden, the "Where did you first hear about
+  // QRdx?" card once answered or hidden, and the checklist's last step,
+  // done once a dynamic code is downloaded from the dashboard.
+  "home-first-steps",
+  "home-invite",
+  "where-heard",
+  "first-download",
 ] as const;
 
 export type SpotlightId = (typeof SPOTLIGHT_IDS)[number];

@@ -1348,6 +1348,11 @@ export type AcquisitionChannel = (typeof ACQUISITION_CHANNELS)[number];
 // after this table, written once at sign-up. Host names, campaign tags and
 // paths only, sanitised on the server; never a full referring address.
 // Deleted with the account. No row: an older account ("unknown").
+//
+// Also where the person says they first heard about QRdx, if they answer
+// Home's optional question (apps/app/lib/where-heard.ts). An account whose
+// sign-up carried nothing gets a row for its answer alone, with channel
+// "unknown", the same as no row.
 export const userAcquisition = pgTable(
   "user_acquisition",
   {
@@ -1364,6 +1369,11 @@ export const userAcquisition = pgTable(
     landingPath: text("landing_path"),
     signupPath: text("signup_path"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
+    // "Where did you first hear about QRdx?": one of WHERE_HEARD_ANSWERS
+    // (apps/app/lib/where-heard.ts) and, for "other", the words typed (at
+    // most 200 characters). Null until the person answers.
+    selfReported: text("self_reported"),
+    selfReportedText: text("self_reported_text"),
   },
   (table) => [
     index("user_acquisition_channel_idx").on(table.channel),
