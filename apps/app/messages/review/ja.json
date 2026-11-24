@@ -511,6 +511,10 @@
     "source": "063a2a55464f",
     "status": "machine"
   },
+  "footer.joinDiscord": {
+    "source": "e6137b9b59b2",
+    "status": "machine"
+  },
   "footer.navLabel": {
     "source": "26c87bb51e69",
     "status": "machine"

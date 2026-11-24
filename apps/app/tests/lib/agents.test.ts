@@ -4,6 +4,7 @@
 // Markdown is the docs site's (apps/docs/tests/lib/llm-markdown.test.ts).
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { DISCORD_INVITE_URL } from "@repo/config";
 import { describe, expect, it } from "vitest";
 import { MCP_TOOLS } from "@/app/[lang]/(home)/mcp/content";
 import { MCP_SERVER_INFO } from "@/app/api/mcp/tools";
@@ -140,6 +141,7 @@ describe("llms.txt", () => {
       LOCAL.origin,
       "https://api.qrdx.dev/",
       "https://github.com/qrdxinc/qrdx",
+      DISCORD_INVITE_URL,
     ];
     const targets = linkTargets(text);
     expect(targets.length).toBeGreaterThan(QR_TYPES.length);

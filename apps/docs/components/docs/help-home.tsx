@@ -1,6 +1,7 @@
 // Pieces of the help center home (content/docs/help/index.mdx): a search
 // box that opens the docs search, and the "Still stuck?" contact block.
 
+import { DiscordLogo } from "@repo/design-system/components/icons";
 import Link from "fumadocs-core/link";
 import { ArrowRight, Messages2, SearchNormal1, Sms } from "iconsax-reactjs";
 import { getTranslations } from "next-intl/server";
@@ -58,6 +59,17 @@ export async function StillStuck() {
           <li className="flex items-start gap-2 text-fd-muted-foreground">
             <Messages2 aria-hidden className="mt-0.5 size-4 shrink-0" />
             <span>{t("widget")}</span>
+          </li>
+          <li>
+            <a
+              className="inline-flex items-center gap-2 text-fd-muted-foreground hover:text-fd-foreground"
+              href={siteConfig.links.discord}
+              rel="noopener"
+              target="_blank"
+            >
+              <DiscordLogo aria-hidden className="size-4 shrink-0" />
+              {t("discord")}
+            </a>
           </li>
           <li>
             <a

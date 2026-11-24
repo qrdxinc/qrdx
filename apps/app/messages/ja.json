@@ -220,6 +220,7 @@
     "description": "オープンソースのQRコードプラットフォーム。",
     "starOnGithub": "GitHubでスターする",
     "newsOnX": "QRdxのXニュース",
+    "joinDiscord": "QRdxのDiscordに参加",
     "navLabel": "フッター",
     "copyright": "© {year} QRdx",
     "columns": {

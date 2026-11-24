@@ -220,6 +220,7 @@
     "description": "오픈소스 QR 코드 플랫폼",
     "starOnGithub": "GitHub에서 별표 주기",
     "newsOnX": "X에서 보는 QRdx 소식",
+    "joinDiscord": "QRdx Discord 참여하기",
     "navLabel": "푸터",
     "copyright": "© {year} QRdx",
     "columns": {

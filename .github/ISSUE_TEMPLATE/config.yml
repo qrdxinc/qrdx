@@ -10,6 +10,9 @@ contact_links:
   - name: Share an idea
     url: https://github.com/qrdxinc/qrdx/discussions/new?category=ideas
     about: Ideas you'd like to talk through before they become a feature request.
+  - name: Chat on Discord
+    url: https://discord.gg/856fWMrYBm
+    about: Ask a quick question, share a design or talk to the team in the QRdx Discord.
   - name: Read the docs
     url: https://qrdx.dev/docs
     about: The playground, dynamic codes and pages, the APIs, the MCP server, the React library, the CLI and self-hosting.

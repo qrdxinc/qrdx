@@ -4,11 +4,16 @@ import { CookieSettingsButton } from "@repo/analytics/consent/cookie-settings-bu
 import {
   CANONICAL_HOST,
   CANONICAL_ORIGIN,
+  DISCORD_INVITE_URL,
   GITHUB_REPO_URL,
   X_PROFILE_URL,
 } from "@repo/config";
 import { QrdxLogo } from "@repo/design-system/components/brand/qrdx-logo";
-import { GithubLogo, XLogo } from "@repo/design-system/components/icons";
+import {
+  DiscordLogo,
+  GithubLogo,
+  XLogo,
+} from "@repo/design-system/components/icons";
 import {
   Popover,
   PopoverContent,
@@ -141,6 +146,15 @@ export function FooterSection() {
               aria-label={t("newsOnX")}
             >
               <XLogo aria-hidden className="size-3.5" />
+            </a>
+            <a
+              href={DISCORD_INVITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={SOCIAL}
+              aria-label={t("joinDiscord")}
+            >
+              <DiscordLogo aria-hidden className="size-4" />
             </a>
           </div>
         </div>
