@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../dist/vanilla.js",
+  "module": "../dist/legacy/vanilla.js",
+  "types": "../dist/src/vanilla.d.ts"
+}

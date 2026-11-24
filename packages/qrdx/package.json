@@ -1,6 +1,6 @@
 {
   "name": "qrdx",
-  "version": "0.0.65",
+  "version": "0.0.66",
   "description": "Customizable QR code generator for React and plain JavaScript: SVG and canvas rendering, dot and eye patterns, gradients, logos, frames, Logo QR and Image QR art, PNG/JPG/WebP/SVG/PDF/EPS/TIFF export, a scan score and QR scanning.",
   "keywords": [
     "qr-code",
@@ -32,12 +32,48 @@
   "sideEffects": [
     "./dist/element-define.mjs",
     "./dist/element-define.js",
-    "./dist/element-define.browser.mjs"
+    "./dist/element-define.browser.mjs",
+    "./dist/legacy/element-define.js"
   ],
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "module": "./dist/legacy/index.js",
   "types": "./dist/src/index.d.ts",
   "typesVersions": {
+    "<5.4": {
+      "dist/src/index.d.ts": [
+        "./dist/ts5.0/index.d.ts"
+      ],
+      "core": [
+        "./dist/ts5.0/core.d.ts"
+      ],
+      "vanilla": [
+        "./dist/ts5.0/vanilla.d.ts"
+      ],
+      "element": [
+        "./dist/ts5.0/element.d.ts"
+      ],
+      "element/define": [
+        "./dist/ts5.0/element-define.d.ts"
+      ],
+      "node": [
+        "./dist/ts5.0/node.d.ts"
+      ],
+      "vue": [
+        "./dist/ts5.0/vue.d.ts"
+      ],
+      "types": [
+        "./dist/ts5.0/types.d.ts"
+      ],
+      "preact": [
+        "./dist/ts5.0/preact.d.ts"
+      ],
+      "solid": [
+        "./dist/ts5.0/solid.d.ts"
+      ],
+      "angular": [
+        "./dist/ts5.0/angular.d.ts"
+      ]
+    },
     "*": {
       "core": [
         "./dist/src/core.d.ts"
@@ -76,80 +112,96 @@
   "exports": {
     ".": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/index.d.mts",
         "types": "./dist/src/index.d.mts",
         "default": "./dist/index.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/index.d.ts",
         "types": "./dist/src/index.d.ts",
         "default": "./dist/index.js"
       }
     },
     "./core": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/core.d.mts",
         "types": "./dist/src/core.d.mts",
         "default": "./dist/core.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/core.d.ts",
         "types": "./dist/src/core.d.ts",
         "default": "./dist/core.js"
       }
     },
     "./vanilla": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/vanilla.d.mts",
         "types": "./dist/src/vanilla.d.mts",
         "default": "./dist/vanilla.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/vanilla.d.ts",
         "types": "./dist/src/vanilla.d.ts",
         "default": "./dist/vanilla.js"
       }
     },
     "./element": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/element.d.mts",
         "types": "./dist/src/element.d.mts",
         "default": "./dist/element.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/element.d.ts",
         "types": "./dist/src/element.d.ts",
         "default": "./dist/element.js"
       }
     },
     "./element/define": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/element-define.d.mts",
         "types": "./dist/src/element-define.d.mts",
         "default": "./dist/element-define.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/element-define.d.ts",
         "types": "./dist/src/element-define.d.ts",
         "default": "./dist/element-define.js"
       }
     },
     "./node": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/node.d.mts",
         "types": "./dist/src/node.d.mts",
         "default": "./dist/node.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/node.d.ts",
         "types": "./dist/src/node.d.ts",
         "default": "./dist/node.js"
       }
     },
     "./vue": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/vue.d.mts",
         "types": "./dist/src/vue.d.mts",
         "default": "./dist/vue.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/vue.d.ts",
         "types": "./dist/src/vue.d.ts",
         "default": "./dist/vue.js"
       }
     },
     "./types": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/types.d.mts",
         "types": "./dist/types/public.d.mts",
         "default": "./dist/types/index.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/types.d.ts",
         "types": "./dist/types/public.d.ts",
         "default": "./dist/types/index.js"
       }
@@ -157,30 +209,36 @@
     "./package.json": "./package.json",
     "./preact": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/preact.d.mts",
         "types": "./dist/src/preact.d.mts",
         "default": "./dist/preact.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/preact.d.ts",
         "types": "./dist/src/preact.d.ts",
         "default": "./dist/preact.js"
       }
     },
     "./solid": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/solid.d.mts",
         "types": "./dist/src/solid.d.mts",
         "default": "./dist/solid.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/solid.d.ts",
         "types": "./dist/src/solid.d.ts",
         "default": "./dist/solid.js"
       }
     },
     "./angular": {
       "import": {
+        "types@<5.4": "./dist/ts5.0/angular.d.mts",
         "types": "./dist/src/angular.d.mts",
         "default": "./dist/angular.mjs"
       },
       "require": {
+        "types@<5.4": "./dist/ts5.0/angular.d.ts",
         "types": "./dist/src/angular.d.ts",
         "default": "./dist/angular.js"
       }
@@ -188,6 +246,14 @@
   },
   "files": [
     "dist",
+    "core",
+    "vanilla",
+    "element",
+    "node",
+    "vue",
+    "preact",
+    "solid",
+    "angular",
     "types",
     "src"
   ],
@@ -200,6 +266,7 @@
     "readme": "node scripts/readme-catalogue.mjs",
     "check:package": "node scripts/check-package.mjs",
     "check:react": "node scripts/react-compat.mjs",
+    "check:legacy": "node scripts/legacy-compat.mjs",
     "prepublishOnly": "node -e \"if(!(process.env.npm_config_user_agent||'').startsWith('bun/')){console.error('Publish through the Publish workflow, or with bun publish, which replaces workspace ranges with real versions.');process.exit(1)}\" && bun run build && bun run test && node scripts/readme-catalogue.mjs --check"
   },
   "dependencies": {
@@ -208,33 +275,34 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.5",
-    "@repo/typescript-config": "workspace:*",
-    "@resvg/resvg-js": "^2.6.2",
-    "@types/node": "26.6.6",
-    "@types/react": "19.3.0",
-    "@types/react-dom": "19.3.0",
-    "jsdom": "28.1.0",
-    "jspdf": "^4.2.1",
-    "next": "16.4.5",
-    "publint": "0.3.25",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "sharp": "0.35.5",
-    "tsup": "^9.0.0",
-    "typescript": "6.0.3",
-    "vitest": "^5.0.5",
-    "vue": "^3.5.45",
-    "preact": "^11.2.0",
-    "preact-render-to-string": "^6.8.3",
-    "solid-js": "^1.9.19",
     "@angular/common": "21.2.26",
     "@angular/compiler": "21.2.26",
     "@angular/compiler-cli": "21.2.26",
     "@angular/core": "21.2.26",
     "@angular/platform-browser": "21.2.26",
     "@angular/platform-server": "21.2.26",
+    "@arethetypeswrong/cli": "0.18.5",
+    "@repo/typescript-config": "workspace:*",
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "acorn": "6.4.2",
+    "jsdom": "28.1.0",
+    "jspdf": "^4.2.1",
+    "next": "16.4.5",
+    "preact": "^11.2.0",
+    "preact-render-to-string": "^6.8.3",
+    "publint": "0.3.25",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "rxjs": "^7.8.2",
+    "sharp": "0.35.5",
+    "solid-js": "^1.9.19",
+    "tsup": "^9.0.0",
+    "typescript": "6.0.3",
+    "vitest": "^5.0.5",
+    "vue": "^3.5.45",
     "zxing-wasm": "3.1.6"
   },
   "peerDependencies": {

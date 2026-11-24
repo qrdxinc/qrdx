@@ -2,7 +2,18 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
-## Unreleased
+## 0.0.66: webpack 4 and TypeScript 5.0 to 5.3
+
+### qrdx builds with webpack 4
+
+- **A build for bundlers that don't read `exports`.** webpack 4, which Create React App 4 (`react-scripts` 4) and Vue CLI 4 use, couldn't build qrdx: it skips the package's `exports`, so `qrdx/vanilla` and the other entries weren't found; its parser stops at `??` and `?.`; and it reads `.mjs` files as strict ES modules, which can't take named imports from CommonJS `react` (#853). The `module` field now names `dist/legacy/index.js`, and a folder for each entry (`vanilla/package.json`, `element/define/package.json`…) names its file there: ES2019, ending in `.js`, with zod built in, since zod's own files use `??` too. Bundlers that read `exports` get the same files as before.
+- **Every entry works there except `qrdx/types`**, whose schemas and types `qrdx` also exports.
+- **PDF export in a webpack 4 build loads `jspdf` in the browser.** webpack 4 fails the build of an app without `jspdf` at the `import()` of it, so the webpack 4 files leave that `import()` to the browser, as the no-bundler files do: a page that exports PDFs maps `jspdf` in an import map.
+- **webpack 5 only warns about a missing `jspdf` again when Babel lowers async functions.** An app whose Babel turns async functions into generators for older browsers moved the `import()` of `jspdf` out of the `try` block webpack 5 looks for, so a build without `jspdf` failed rather than warned. The `import()` now has a function of its own that isn't async. The error PDF export throws without `jspdf` also mentions the import map.
+
+### Types for TypeScript 5.0 to 5.3
+
+- **The types check on TypeScript 5.0 to 5.3**, with `skipLibCheck` off and any `moduleResolution` (#852). zod's declarations use `NoInfer`, which TypeScript added in 5.4, so on those versions an app got `Cannot find name 'NoInfer'`. Each entry now has a `types@<5.4` condition (and a typesVersions `<5.4` path for `moduleResolution: node`) pointing at an entry in `dist/ts5.0` that brings a stand-in for `NoInfer` and re-exports the same declarations. TypeScript 5.4 and later read the same files as before. TypeScript 4.9 and older can't read zod 4's declarations at all.
 
 ### The scan score warns about a thin quiet zone
 

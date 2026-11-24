@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../dist/preact.js",
+  "module": "../dist/legacy/preact.js",
+  "types": "../dist/src/preact.d.ts"
+}

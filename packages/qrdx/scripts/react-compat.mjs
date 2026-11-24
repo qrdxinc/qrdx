@@ -23,10 +23,8 @@
 //   node scripts/react-compat.mjs --keep    keeps the install folders
 //
 // The folders are kept when a check fails, and the script says where.
-import { spawn } from "node:child_process";
 import {
   copyFileSync,
-  existsSync,
   mkdirSync,
   mkdtempSync,
   readdirSync,
@@ -38,8 +36,8 @@ import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { indent, npmInstall, pack, run, seconds } from "./compat-shared.mjs";
 
-const root = fileURLToPath(new URL("../", import.meta.url));
 const fixtures = fileURLToPath(new URL("./react-compat/", import.meta.url));
 const require = createRequire(import.meta.url);
 const versionOf = (name) =>
@@ -60,12 +58,6 @@ const MATRIX = [
 const baseline = MATRIX.at(-1);
 const keep = process.argv.includes("--keep");
 
-if (!existsSync(join(root, "dist"))) {
-  throw new Error(
-    "No dist/ to pack. Build qrdx first: bun run --filter qrdx build:inplace"
-  );
-}
-
 // render.cjs mounts the designs in a DOM with this package's jsdom
 const jsdom = require.resolve("jsdom");
 const tsManifest = require.resolve("typescript/package.json");
@@ -73,60 +65,6 @@ const tsc = join(
   dirname(tsManifest),
   JSON.parse(readFileSync(tsManifest, "utf8")).bin.tsc
 );
-
-// npm gets the environment without what a package manager sets for the
-// script running this: npm_config_local_prefix, which Bun and npm set,
-// would point npm's install at this package. Other npm_config_* settings (a
-// registry, a cache) still apply.
-const env = Object.fromEntries(
-  Object.entries(process.env).filter(
-    ([key]) =>
-      !/^npm_/i.test(key) ||
-      (/^npm_config_/i.test(key) &&
-        !/^npm_config_(local_prefix|user_agent)$/i.test(key))
-  )
-);
-
-// No command runs longer than this (npm on a slow network included), so a
-// command that hangs fails the check instead of the CI job's timeout.
-const COMMAND_TIMEOUT_MS = 180_000;
-
-/** Runs a command; resolves with its output, rejects with it on failure. */
-function run(command, args, cwd, extraEnv = {}) {
-  return new Promise((done, fail) => {
-    const child = spawn(command, args, {
-      cwd,
-      env: { ...env, ...extraEnv },
-      killSignal: "SIGKILL",
-      timeout: COMMAND_TIMEOUT_MS,
-    });
-    let stdout = "";
-    let stderr = "";
-    child.stdout.on("data", (chunk) => {
-      stdout += chunk;
-    });
-    child.stderr.on("data", (chunk) => {
-      stderr += chunk;
-    });
-    child.on("error", fail);
-    child.on("close", (status, signal) => {
-      if (status === 0) {
-        done(stdout);
-      } else {
-        const output =
-          `${signal === "SIGKILL" ? `stopped after ${COMMAND_TIMEOUT_MS / 1000} s\n` : ""}${stdout}${stderr}`.trim();
-        fail(
-          new Error(
-            `${command} ${args.join(" ")} exited with ${status}\n${output}`
-          )
-        );
-      }
-    });
-  });
-}
-
-const seconds = (since) =>
-  `${((performance.now() - since) / 1000).toFixed(1)} s`;
 
 /** The names an ES module imports from "react" (`import{a,b as c}from"react"`). */
 function namedReactImports(code) {
@@ -158,14 +96,6 @@ function otherReactModules(code) {
   return [...found];
 }
 
-/** Indents `text`, keeping its first `lines` lines. */
-const indent = (text, lines = 10) =>
-  text
-    .split("\n")
-    .slice(0, lines)
-    .map((line) => `    ${line}`)
-    .join("\n");
-
 /** Where two strings first differ, with some context from each. */
 function firstDifference(actual, expected) {
   let index = 0;
@@ -185,11 +115,7 @@ const work = mkdtempSync(join(tmpdir(), "qrdx-react-compat-"));
 const problems = [];
 
 try {
-  await run("bun", ["pm", "pack", "--destination", work, "--quiet"], root);
-  const tarball = readdirSync(work).find((file) => file.endsWith(".tgz"));
-  if (!tarball) {
-    throw new Error("bun pm pack wrote no tarball");
-  }
+  const tarball = await pack(work);
   console.log(`Packed ${tarball}`);
 
   const installStarted = performance.now();
@@ -239,18 +165,7 @@ try {
           2
         )}\n`
       );
-      await run(
-        "npm",
-        [
-          "install",
-          "--no-audit",
-          "--no-fund",
-          "--no-package-lock",
-          "--ignore-scripts",
-          "--loglevel=error",
-        ],
-        entry.dir
-      ).catch((error) => {
+      await npmInstall(entry.dir).catch((error) => {
         entry.problems.push(
           `npm couldn't install it:\n${indent(error.message)}`
         );
@@ -262,16 +177,22 @@ try {
     `Installed it with React ${MATRIX.map((entry) => entry.react).join(", ")} (${seconds(installStarted)})\n`
   );
 
-  // The built files every version installed (the same tarball)
+  // The built files every version installed (the same tarball), the
+  // legacy build's ES modules (dist/legacy/*.js) included
   await run("tar", ["-xzf", tarball], work);
   const dist = join(work, "package/dist");
   const esmImports = new Map();
-  for (const file of readdirSync(dist).filter((name) => /\.m?js$/.test(name))) {
+  const builtFiles = [
+    ...readdirSync(dist),
+    ...readdirSync(join(dist, "legacy")).map((name) => `legacy/${name}`),
+  ].filter((name) => /\.m?js$/.test(name));
+  for (const file of builtFiles) {
     const code = readFileSync(join(dist, file), "utf8");
     for (const specifier of otherReactModules(code)) {
       problems.push(`dist/${file} imports ${specifier}`);
     }
-    const names = file.endsWith(".mjs") ? namedReactImports(code) : [];
+    const esm = file.endsWith(".mjs") || file.startsWith("legacy/");
+    const names = esm ? namedReactImports(code) : [];
     if (names.length > 0) {
       esmImports.set(file, names);
     }

@@ -4,6 +4,7 @@ import type { QRProps } from "../types";
 import { DEFAULT_MARGIN } from "./constants";
 import { downloadFile } from "./download";
 import { getFrameLayout, isFrameActive } from "./frame";
+import { loadJsPDF } from "./jspdf";
 import { getLayoutMargin } from "./qr-shape";
 import { encodeSymbol } from "./symbol";
 import { resolveErrorLevel } from "./utils";
@@ -655,14 +656,7 @@ async function createPrintPDF(
 ): Promise<JsPDF> {
   const layout = getPrintLayout(props, options);
 
-  let jsPDF: typeof import("jspdf").jsPDF;
-  try {
-    ({ jsPDF } = await import("jspdf"));
-  } catch (error) {
-    throw new Error(
-      `PDF export needs the optional "jspdf" package. Install it with \`npm install jspdf\`. (${error})`
-    );
-  }
+  const jsPDF = await loadJsPDF();
 
   const markup = await renderPrintSVG(props);
   const root = parseSvgMarkup(markup);

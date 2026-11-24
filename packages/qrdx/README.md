@@ -18,6 +18,12 @@ npm install jspdf
 npm install @resvg/resvg-js # or: npm install sharp
 ```
 
+### Older bundlers and TypeScript
+
+Bundlers that read the package's `exports` (webpack 5, Vite, esbuild, Rollup, Next.js) get its modern files. webpack 4, which Create React App 4 (`react-scripts` 4) and Vue CLI 4 use, doesn't read `exports`, so qrdx ships a build for it: ES2019 syntax, with zod built in. Every entry works there except `qrdx/types`; import the same schemas and types from `qrdx`. In a webpack 4 build, PDF export loads `jspdf` in the browser rather than bundling it, so a page that exports PDFs maps `jspdf` in an [import map](#without-a-bundler).
+
+The types need TypeScript 5.0 or newer, with any `moduleResolution`. zod's types use `NoInfer`, which TypeScript added in 5.4, so on 5.0 to 5.3 qrdx's type entries bring a stand-in for it. With `moduleResolution: "node"` and `esModuleInterop` off, zod's own `.d.ts` files report errors unless `skipLibCheck` is on.
+
 ## Quick start
 
 ```tsx

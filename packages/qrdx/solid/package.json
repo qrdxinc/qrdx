@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../dist/solid.js",
+  "module": "../dist/legacy/solid.js",
+  "types": "../dist/src/solid.d.ts"
+}
