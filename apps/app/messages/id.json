@@ -221,6 +221,7 @@
     "starOnGithub": "Beri bintang di GitHub",
     "newsOnX": "Kabar QRdx di X",
     "joinDiscord": "Gabung Discord QRdx",
+    "linkedin": "QRdx di LinkedIn",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
     "license": "Aplikasi ini bersumber terbuka di bawah lisensi <link>AGPL-3.0</link>.",
@@ -288,6 +289,7 @@
       "scanStudy": "Studi pemindaian kode QR",
       "security": "Keamanan",
       "affiliates": "Program afiliasi",
+      "press": "Kit pers",
       "guarantee": "Jaminan Never-Hostage",
       "pricing": "Harga",
       "allComparisons": "Semua perbandingan",
@@ -643,6 +645,8 @@
     "offers": {
       "moneyBack": "Garansi uang kembali {days, number} hari untuk pembayaran pertama Anda.",
       "moneyBackLink": "Cara kerja pengembalian dana",
+      "switcher": "Pindah dari penyedia kode QR lain? Impor kode Anda dan Anda punya waktu {days, number} hari untuk meminta pengembalian pembayaran pertama Anda.",
+      "switcherLink": "Kebijakan pengembalian dana",
       "nonprofit": "Organisasi nirlaba atau amal? Diskon {percent, number}% untuk Pro dan Business.",
       "nonprofitLink": "Minta kode"
     },

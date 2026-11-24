@@ -221,6 +221,7 @@
     "starOnGithub": "GitHubでスターする",
     "newsOnX": "QRdxのXニュース",
     "joinDiscord": "QRdxのDiscordに参加",
+    "linkedin": "QRdxのLinkedIn",
     "navLabel": "フッター",
     "copyright": "© {year} QRdx",
     "license": "アプリは <link>AGPL-3.0</link> のもとでオープンソースとして公開されています。",
@@ -288,6 +289,7 @@
       "scanStudy": "QRコードのスキャン調査",
       "security": "セキュリティ",
       "affiliates": "アフィリエイトプログラム",
+      "press": "プレスキット",
       "guarantee": "Never-Hostage保証",
       "pricing": "料金",
       "allComparisons": "比較一覧",
@@ -643,6 +645,8 @@
     "offers": {
       "moneyBack": "初回のお支払いには{days, number}日間の返金保証が付いています。",
       "moneyBackLink": "返金の仕組み",
+      "switcher": "他のQRコードサービスからお乗り換えですか？コードをインポートすると、最初のお支払いについて{days, number}日以内に返金をご依頼いただけます。",
+      "switcherLink": "返金ポリシー",
       "nonprofit": "非営利団体・慈善団体の方は、ProとBusinessが{percent, number}%オフになります。",
       "nonprofitLink": "コードを申請する"
     },

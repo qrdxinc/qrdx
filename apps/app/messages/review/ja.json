@@ -515,6 +515,10 @@
     "source": "e6137b9b59b2",
     "status": "machine"
   },
+  "footer.linkedin": {
+    "source": "156fa99a02a3",
+    "status": "machine"
+  },
   "footer.navLabel": {
     "source": "26c87bb51e69",
     "status": "machine"
@@ -769,6 +773,10 @@
   },
   "footer.links.affiliates": {
     "source": "ce78cb6655b7",
+    "status": "machine"
+  },
+  "footer.links.press": {
+    "source": "32640cd858d6",
     "status": "machine"
   },
   "footer.links.guarantee": {
@@ -1653,6 +1661,14 @@
   },
   "pricing.offers.moneyBackLink": {
     "source": "6da9e675b1a7",
+    "status": "machine"
+  },
+  "pricing.offers.switcher": {
+    "source": "1cd31f22da48",
+    "status": "machine"
+  },
+  "pricing.offers.switcherLink": {
+    "source": "d4c69dd8b37d",
     "status": "machine"
   },
   "pricing.offers.nonprofit": {

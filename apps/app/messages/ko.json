@@ -221,6 +221,7 @@
     "starOnGithub": "GitHub에서 별표 주기",
     "newsOnX": "X에서 보는 QRdx 소식",
     "joinDiscord": "QRdx Discord 참여하기",
+    "linkedin": "QRdx LinkedIn",
     "navLabel": "푸터",
     "copyright": "© {year} QRdx",
     "license": "이 앱은 <link>AGPL-3.0</link> 라이선스의 오픈 소스예요.",
@@ -288,6 +289,7 @@
       "scanStudy": "QR 코드 스캔 연구",
       "security": "보안",
       "affiliates": "제휴 프로그램",
+      "press": "프레스 키트",
       "guarantee": "Never-Hostage 보장",
       "pricing": "요금제",
       "allComparisons": "전체 비교",
@@ -643,6 +645,8 @@
     "offers": {
       "moneyBack": "첫 결제 시 {days, number}일 환불 보장이 적용돼요.",
       "moneyBackLink": "환불 방법 안내",
+      "switcher": "다른 QR 코드 서비스에서 옮겨 오시나요? 기존 코드를 가져오면 첫 결제 금액의 환불을 요청할 수 있는 기간이 {days, number}일 주어집니다.",
+      "switcherLink": "환불 정책",
       "nonprofit": "비영리 단체 또는 자선 단체인가요? Pro와 Business를 {percent, number}% 할인해 드려요.",
       "nonprofitLink": "코드 요청하기"
     },

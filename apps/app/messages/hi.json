@@ -221,6 +221,7 @@
     "starOnGithub": "GitHub पर Star करें",
     "newsOnX": "X पर QRdx की खबरें",
     "joinDiscord": "QRdx Discord से जुड़ें",
+    "linkedin": "LinkedIn पर QRdx",
     "navLabel": "फ़ूटर",
     "copyright": "© {year} QRdx",
     "license": "यह ऐप <link>AGPL-3.0</link> के तहत ओपन सोर्स है।",
@@ -288,6 +289,7 @@
       "scanStudy": "QR कोड स्कैन स्टडी",
       "security": "सुरक्षा",
       "affiliates": "एफ़िलिएट प्रोग्राम",
+      "press": "प्रेस किट",
       "guarantee": "Never-Hostage गारंटी",
       "pricing": "प्राइसिंग",
       "allComparisons": "सभी तुलनाएँ",
@@ -643,6 +645,8 @@
     "offers": {
       "moneyBack": "आपके पहले पेमेंट पर {days, number} दिन की मनी-बैक गारंटी।",
       "moneyBackLink": "रिफ़ंड कैसे काम करता है",
+      "switcher": "किसी दूसरे QR कोड प्रोवाइडर से आ रहे हैं? अपने कोड इम्पोर्ट करें, और आपके पास अपना पहला पेमेंट वापस मांगने के लिए {days, number} दिन हैं।",
+      "switcherLink": "रिफंड पॉलिसी",
       "nonprofit": "नॉन-प्रॉफ़िट या चैरिटी? Pro और Business पर {percent, number}% की छूट।",
       "nonprofitLink": "कोड माँगें"
     },

@@ -221,6 +221,7 @@
     "starOnGithub": "Étoile sur GitHub",
     "newsOnX": "Actus QRdx sur X",
     "joinDiscord": "Rejoindre le Discord QRdx",
+    "linkedin": "QRdx sur LinkedIn",
     "navLabel": "Pied de page",
     "copyright": "© {year} QRdx",
     "license": "L’application est open source sous licence <link>AGPL-3.0</link>.",
@@ -288,6 +289,7 @@
       "scanStudy": "Étude sur le scan des QR codes",
       "security": "Sécurité",
       "affiliates": "Programme d'affiliation",
+      "press": "Kit presse",
       "guarantee": "Garantie Never-Hostage",
       "pricing": "Tarifs",
       "allComparisons": "Toutes les comparaisons",
@@ -643,6 +645,8 @@
     "offers": {
       "moneyBack": "Garantie de remboursement de {days, number} jours sur votre premier paiement.",
       "moneyBackLink": "Fonctionnement des remboursements",
+      "switcher": "Vous changez de fournisseur de QR codes ? Importez vos codes et vous disposez de {days, number} jours pour demander le remboursement de votre premier paiement.",
+      "switcherLink": "Politique de remboursement",
       "nonprofit": "Association ou organisme caritatif ? {percent, number} % de réduction sur Pro et Business.",
       "nonprofitLink": "Demander un code"
     },

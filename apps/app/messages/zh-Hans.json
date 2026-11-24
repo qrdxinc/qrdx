@@ -221,6 +221,7 @@
     "starOnGithub": "在 GitHub 上点星标",
     "newsOnX": "X 上的 QRdx 动态",
     "joinDiscord": "加入 QRdx Discord",
+    "linkedin": "QRdx 的 LinkedIn 主页",
     "navLabel": "页脚",
     "copyright": "© {year} QRdx",
     "license": "本应用以 <link>AGPL-3.0</link> 协议开源。",
@@ -288,6 +289,7 @@
       "scanStudy": "二维码扫描研究",
       "security": "安全",
       "affiliates": "联盟计划",
+      "press": "媒体资料包",
       "guarantee": "Never-Hostage 保障",
       "pricing": "价格",
       "allComparisons": "全部对比",
@@ -643,6 +645,8 @@
     "offers": {
       "moneyBack": "首次付款享 {days, number} 天退款保证。",
       "moneyBackLink": "退款如何运作",
+      "switcher": "从其他二维码服务商迁移过来？导入您的二维码后，您可在 {days, number} 天内申请退还首笔付款。",
+      "switcherLink": "退款政策",
       "nonprofit": "非营利组织或慈善机构？Pro 和 Business 可享 {percent, number}% 折扣。",
       "nonprofitLink": "申请折扣码"
     },
