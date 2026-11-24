@@ -7,7 +7,12 @@ import {
   EmailLayout,
   EmailText,
 } from "./layout";
-import { EmailTextLink, formatCount } from "./parts";
+import {
+  type EmailInvite,
+  EmailTextLink,
+  formatCount,
+  InviteLine,
+} from "./parts";
 
 // Sent once, right after someone makes an account
 // (apps/app/lib/email/welcome.tsx): a short note from a person on the team
@@ -44,6 +49,8 @@ export interface WelcomeEmailProps {
   proYearly: string;
   /** Turns notes from the team off in one click */
   unsubscribeUrl: string;
+  /** The invite offer, under the Pro line, while invites can earn codes */
+  invite?: EmailInvite;
   /** The address it's sent to (the footer names it) */
   recipient?: string;
   /** The recipient's language */
@@ -63,6 +70,7 @@ export function WelcomeEmail({
   proMonthly,
   proYearly,
   unsubscribeUrl,
+  invite,
   recipient,
   intl,
 }: WelcomeEmailProps) {
@@ -105,6 +113,7 @@ export function WelcomeEmail({
         })}{" "}
         {t("welcome.taxes")}
       </EmailText>
+      {invite ? <InviteLine intl={intl} invite={invite} /> : null}
       <EmailText>{t("welcome.reply")}</EmailText>
       <EmailText>{senderName}</EmailText>
     </EmailLayout>
@@ -122,5 +131,6 @@ WelcomeEmail.PreviewProps = {
   proMonthly: "$5",
   proYearly: "$48",
   unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+  invite: { url: "https://qrdx.dev/settings/invite", count: 5, both: true },
   recipient: "sam@example.com",
 } satisfies Omit<WelcomeEmailProps, "intl">;

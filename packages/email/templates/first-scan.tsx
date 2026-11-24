@@ -4,8 +4,10 @@ import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
 import {
   codeLabel,
   DetailsTable,
+  type EmailInvite,
   EmailTextLink,
   formatEmailDateTime,
+  InviteLine,
 } from "./parts";
 
 export interface FirstScanEmailProps {
@@ -31,6 +33,8 @@ export interface FirstScanEmailProps {
     /** The next scan milestones Pro emails at: "10", "100", "500" */
     milestones: [string, string, string];
   };
+  /** The invite offer, under the Pro line and the button */
+  invite?: EmailInvite;
 }
 
 export function FirstScanEmail({
@@ -44,6 +48,7 @@ export function FirstScanEmail({
   recipient,
   intl,
   free,
+  invite,
 }: FirstScanEmailProps) {
   const { t } = intl;
   const rows = [
@@ -82,6 +87,7 @@ export function FirstScanEmail({
         </EmailText>
       ) : null}
       <EmailButton href={analyticsUrl}>{t("alerts.viewAnalytics")}</EmailButton>
+      {invite ? <InviteLine intl={intl} invite={invite} /> : null}
     </EmailLayout>
   );
 }
@@ -95,5 +101,6 @@ FirstScanEmail.PreviewProps = {
   analyticsUrl: "https://qrdx.dev/dashboard/acme/codes/aB3dE5f",
   workspaceName: "Acme",
   unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+  invite: { url: "https://qrdx.dev/settings/invite", count: 5, both: false },
   recipient: "alex@example.com",
 } satisfies Omit<FirstScanEmailProps, "intl">;
