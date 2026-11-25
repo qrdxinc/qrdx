@@ -609,6 +609,26 @@ describe("/v1/barcodes", () => {
     expect(fakeDb.rows("barcode")).toHaveLength(2);
   });
 
+  it("saves a Micro QR, and refuses text too long for an M4", async () => {
+    const saved = await create({ format: "microqr", value: "PCB-0042" });
+    expect(saved.status).toBe(201);
+    const { data } = (await saved.json()) as { data: BarcodeJson };
+    expect(data).toMatchObject({
+      format: "microqr",
+      value: "PCB-0042",
+      options: { quietZone: 2 },
+    });
+    expect(data.imageUrl).toBe(
+      "http://localhost:3000/api/v1/barcode?format=microqr&data=PCB-0042",
+    );
+    const long = await create({ format: "microqr", value: "https://qrdx.dev" });
+    expect(long.status).toBe(400);
+    expect(((await long.json()) as ErrorBody).message).toMatch(
+      /Too much for one Micro QR/,
+    );
+    expect(fakeDb.rows("barcode")).toHaveLength(1);
+  });
+
   it("checks the value and options like the image API", async () => {
     const bad = await create({ format: "upca", value: "03600029145X" });
     expect(bad.status).toBe(400);

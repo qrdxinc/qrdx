@@ -240,9 +240,9 @@ export function drawOptions(
     // option draws nothing.
     if (id === "isbn" || id === "issn" || id === "ismn") options.addongap = 9;
   }
-  // BWIPP reads byte pairs that look like Shift JIS as Kanji, and the text
-  // is UTF-8: readers would return other characters. formats.ts's size
-  // check (micro-qr.ts) counts without Kanji mode too.
+  // BWIPP may put byte pairs that look like Shift JIS in Kanji mode, which
+  // tells a reader they're Shift JIS kanji; the text is UTF-8, so keep it in
+  // byte mode. The size check (micro-qr.ts) counts without Kanji mode too.
   if (id === "microqr") options.suppresskanjimode = true;
   if (id === "maxicode") {
     // bwip-js picks mode 5 for a message it isn't told the mode of, so say
