@@ -108,4 +108,4 @@ The AI chat mounts through `components/chat/slot.tsx` (`<DocsChatSlot />` in the
 
 ## Deploys
 
-`.github/workflows/docs-deploy.yml` builds on GitHub's runner and deploys the prebuilt output to its own Vercel project (`vercel.json` turns off Vercel's Git deployments), on pushes to `main` that touch the docs, or by hand.
+`.github/workflows/docs-deploy.yml` builds on GitHub's runner and deploys the prebuilt output to its own Vercel project (`vercel.json` turns off Vercel's Git deployments). `.github/workflows/production-deploy.yml` runs it every 6 hours, after the main app's deploy, and it deploys `main` when a file the docs build reads (its `DOCS_INPUTS`) changed since the commit the docs site serves. Run by hand, it deploys the branch it's run from without that check.

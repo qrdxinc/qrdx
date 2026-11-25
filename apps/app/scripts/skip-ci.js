@@ -1,13 +1,17 @@
 // Vercel's "Ignored Build Step" (apps/app/vercel.json ignoreCommand).
 // Exit 0 skips the build, exit 1 builds.
 //
-// Only production (main) builds. The project runs on Vercel Hobby, whose
-// build and CPU allowances are tight, so previews and staging don't deploy
-// at all (owner, 2026-11-14): apps/app/vercel.json (git.deploymentEnabled)
-// stops Vercel from creating a deployment for any branch but main, and this
-// script is the second line in case a non-production build reaches it.
-// Review happens locally (bun run --filter app dev); CI runs the typechecks,
-// tests and lint. [skip ci] still skips any build, production included.
+// Only production (main) builds: previews and staging don't deploy at all
+// (owner, 2026-11-14), and production deploys in batches (owner,
+// 2026-11-26), because each deployment is billed for its build, its stored
+// output and the pages it renders again. apps/app/vercel.json
+// (git.deploymentEnabled) stops Vercel from creating a deployment for any
+// push; .github/workflows/production-deploy.yml asks Vercel to build main's
+// latest commit every 6 hours (or when run by hand), after running this same
+// check on the changes since the deployed commit. This script is the second
+// line in case a build it would skip reaches Vercel. Review happens locally
+// (bun run --filter app dev); CI runs the typechecks, tests and lint.
+// [skip ci] still skips any build, production included.
 //
 // A change to the docs site alone (apps/docs, its content in
 // apps/docs/content included, and its deploy workflow) is skipped too: that
