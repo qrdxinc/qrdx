@@ -12,6 +12,7 @@ import { notionIntegration } from "../integrations/notion/config";
 import { oneDriveIntegration } from "../integrations/onedrive/config";
 import { pipedriveIntegration } from "../integrations/pipedrive/config";
 import { rebrandlyIntegration } from "../integrations/rebrandly/config";
+import { segmentIntegration } from "../integrations/segment/config";
 import { shopifyIntegration } from "../integrations/shopify/config";
 import { shortIoIntegration } from "../integrations/short-io/config";
 import { slackIntegration } from "../integrations/slack/config";
@@ -88,6 +89,7 @@ export function registerAllIntegrations(): void {
   registry.register(hubspotIntegration);
   registry.register(mailchimpIntegration);
   registry.register(pipedriveIntegration);
+  registry.register(segmentIntegration);
 }
 
 /**

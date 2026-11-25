@@ -521,7 +521,8 @@ export async function loadIntegrations(userId: string) {
       lastSyncAt: integration.lastSyncAt,
       createdAt: integration.createdAt,
       updatedAt: integration.updatedAt,
-      sync: sql<unknown>`${integration.metadata}::jsonb -> 'sync'`,
+      // The one stream, or Segment's scans (else responses) stream
+      sync: sql<unknown>`coalesce(${integration.metadata}::jsonb -> 'sync', ${integration.metadata}::jsonb -> 'scansSync', ${integration.metadata}::jsonb -> 'responsesSync')`,
     })
     .from(integration)
     .where(

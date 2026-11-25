@@ -142,6 +142,11 @@ export {
   createRebrandlyClient,
   RebrandlyClient,
 } from "./integrations/rebrandly";
+export {
+  createSegmentClient,
+  SegmentClient,
+  verifySegmentWriteKey,
+} from "./integrations/segment";
 export { createShortIoClient, ShortIoClient } from "./integrations/short-io";
 export { readSlackInstall, type SlackInstall } from "./integrations/slack";
 export {

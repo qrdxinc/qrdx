@@ -39,6 +39,12 @@ export interface IntegrationApiKeyConfig {
   helpUrl: string;
   /** One sentence on where to find it. */
   helpText: string;
+  /**
+   * How far QRdx can check a pasted key: with the provider (the default), or
+   * only its format, for a provider that accepts any key (Segment answers
+   * every write key with a 200).
+   */
+  check?: "provider" | "format";
 }
 
 /**

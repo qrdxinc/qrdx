@@ -1,8 +1,8 @@
 /**
  * Data out ("event sinks"): QRdx scans and form responses delivered to a
  * connected tool. The app loads items after a cursor, a sink delivers them,
- * and the sync state (stored in integration.metadata.sync) records the
- * outcome. Client-safe types only.
+ * and the sync state (stored in integration.metadata, see SINK_STREAMS)
+ * records the outcome. Client-safe types only.
  */
 
 export const SINK_PROVIDERS = [
@@ -10,6 +10,7 @@ export const SINK_PROVIDERS = [
   "hubspot",
   "mailchimp",
   "pipedrive",
+  "segment",
 ] as const;
 export type SinkProviderSlug = (typeof SINK_PROVIDERS)[number];
 
@@ -20,12 +21,39 @@ export function isSinkProvider(slug: string): slug is SinkProviderSlug {
 /** What a sink stream carries. */
 export type SinkStream = "scans" | "responses";
 
-export const SINK_STREAMS: Record<SinkProviderSlug, SinkStream> = {
-  "google-sheets": "scans",
-  hubspot: "responses",
-  mailchimp: "responses",
-  pipedrive: "responses",
-};
+/** Where a stream keeps its SyncState in integration.metadata. */
+export const SYNC_STATE_KEYS = ["sync", "scansSync", "responsesSync"] as const;
+export type SyncStateKey = (typeof SYNC_STATE_KEYS)[number];
+
+export interface SinkStreamSlot {
+  stream: SinkStream;
+  key: SyncStateKey;
+}
+
+/**
+ * Each sink's streams. Most carry one, kept in metadata.sync. Segment sends
+ * scans and form responses side by side, each with its own cursor, retries
+ * and status (metadata.scansSync and metadata.responsesSync).
+ */
+export const SINK_STREAMS: Record<SinkProviderSlug, readonly SinkStreamSlot[]> =
+  {
+    "google-sheets": [{ stream: "scans", key: "sync" }],
+    hubspot: [{ stream: "responses", key: "sync" }],
+    mailchimp: [{ stream: "responses", key: "sync" }],
+    pipedrive: [{ stream: "responses", key: "sync" }],
+    segment: [
+      { stream: "scans", key: "scansSync" },
+      { stream: "responses", key: "responsesSync" },
+    ],
+  };
+
+/** The provider's slot for `stream`, or undefined when it doesn't carry it. */
+export function sinkStreamSlot(
+  provider: SinkProviderSlug,
+  stream: SinkStream
+): SinkStreamSlot | undefined {
+  return SINK_STREAMS[provider].find((slot) => slot.stream === stream);
+}
 
 /** One scan as a row (no visitor hash, no IP: nothing identifies a person). */
 export interface SinkScan {
@@ -39,6 +67,12 @@ export interface SinkScan {
   browser: string | null;
   referer: string | null;
   language: string | null;
+  /** Region or state, as the scan pipeline stores it */
+  region?: string | null;
+  /** A/B variant served, "<ruleId>:<variantId>" */
+  variant?: string | null;
+  /** "nfc" for a tap on an NFC tag; "qr" (or null, from before) for a scan */
+  source?: "qr" | "nfc" | null;
 }
 
 export type SinkAnswerValue = string | number | boolean | string[];
@@ -73,7 +107,7 @@ export interface SyncCursor {
 
 export type SyncStatus = "idle" | "ok" | "retrying" | "failed" | "paused";
 
-/** integration.metadata.sync */
+/** integration.metadata.sync (or the stream's own key, see SINK_STREAMS) */
 export interface SyncState {
   enabled: boolean;
   /** Workspace whose data is sent (null = personal) */

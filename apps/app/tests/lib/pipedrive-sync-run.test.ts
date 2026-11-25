@@ -42,13 +42,19 @@ vi.mock("drizzle-orm", () => {
     }),
     { raw: () => ({ text: "", values: [] }) },
   );
-  return { and: () => ({}), eq: () => ({}), inArray: () => ({}), sql };
+  return {
+    and: () => ({}),
+    eq: () => ({}),
+    inArray: () => ({}),
+    or: () => ({}),
+    sql,
+  };
 });
 vi.mock("@repo/database", () => {
   const kindOf = (metadata: SqlFragment | undefined): string => {
     const text = metadata?.text ?? "";
-    // The claim also uses to_jsonb, so it's told apart first
-    if (text.includes("'{sync,leaseUntil}'")) return "claim";
+    // The claim also uses to_jsonb, so it's told apart first (by its path)
+    if (metadata?.values.includes("{sync,leaseUntil}")) return "claim";
     if (text.includes("to_jsonb(?::text)")) return "record-lead";
     if (text.includes(" - ?::text")) return "clear-leads";
     return "sync-state";
