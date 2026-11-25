@@ -38,6 +38,7 @@ Don't use `withElementFactory`. It's internal: the React components use it to bu
 - `createQRCodeTree`, `toSVGString` and `renderToString` need no DOM: they run in Node, edge runtimes and workers.
 - Output is deterministic: no random ids and no time-dependent values. Server markup and the client's first render are identical, so hydration doesn't mismatch.
 - `toSVGElement`, `renderToDOM` and `createQRCode` need a `document`; call them only on the client.
+- An adapter that draws into an element the framework hands it can still keep the server's `<svg>`: build the code with `renderToDOM` and compare it with the `<svg>` already there using `isEqualNode`, which ignores attribute order and reads entities as the parser did. `qrdx/svelte`'s action (`src/svelte.ts`) does this when the page hydrates markup from `{@html toSVGString(options)}`. Markup drawn with `isOGContext` never matches: it puts an HTML `<img>` inside the `<svg>`, which an HTML parser moves out.
 - PNG, JPG, WebP, BMP, GIF, ICO and TIFF export, the clipboard and the scan score need a browser canvas. `getQRAsSVGDataUri` works anywhere when logos are data URLs; it loads other logo URLs through an `Image`, so only in a browser. On a server, PNG comes from `qrdx/node` (`getQRAsPNG`).
 
 ## Attributes and events

@@ -120,6 +120,17 @@ const job = (
   ...spec,
 });
 
+/** The Solid and Svelte samples' code, in the color their Blue button sets. */
+const recoloredMenuCode = (fgColor: string) =>
+  core({
+    value: "https://example.com/menu",
+    size: 256,
+    margin: 4,
+    fgColor,
+    frame: { style: "banner-bottom", text: "Scan me" },
+    "aria-label": "QR code for the menu",
+  });
+
 /** vue.mdx (src/App.vue) and vanilla-js.mdx (main.js) pass the same options. */
 const FRAMED_MENU_CODE = {
   value: "https://example.com/menu",
@@ -212,18 +223,16 @@ export const LIBRARY_JOBS: ShotJob[] = [
     title: "The Solid sample before and after the signal changes",
     alt: "The code menu-code.tsx draws, twice: on the left as it first appears, dark navy with a Scan me banner, and on the right after Blue is clicked, the same code redrawn in blue.",
     pages: ["/docs/solid"],
-    document: async () => {
-      const menuCode = (fgColor: string) =>
-        core({
-          value: "https://example.com/menu",
-          size: 256,
-          margin: 4,
-          fgColor,
-          frame: { style: "banner-bottom", text: "Scan me" },
-          "aria-label": "QR code for the menu",
-        });
-      return page([menuCode("#0f172a"), menuCode("#1d4ed8")]);
-    },
+    document: async () =>
+      page([recoloredMenuCode("#0f172a"), recoloredMenuCode("#1d4ed8")]),
+  }),
+  job({
+    id: "lib-svelte-state-code",
+    title: "The Svelte sample before and after the state changes",
+    alt: "The code MenuCode.svelte draws, twice: on the left as it first appears, dark navy with a Scan me banner, and on the right after Blue is clicked, the same code redrawn in blue.",
+    pages: ["/docs/svelte"],
+    document: async () =>
+      page([recoloredMenuCode("#0f172a"), recoloredMenuCode("#1d4ed8")]),
   }),
   job({
     id: "lib-element-code",

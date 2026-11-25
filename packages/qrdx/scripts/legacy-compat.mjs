@@ -8,12 +8,12 @@
 //
 // 1. legacy-compat/build.cjs builds every app in legacy-compat/app (the
 //    React entry, qrdx/core, qrdx/vanilla, qrdx/element/define, qrdx/preact,
-//    qrdx/vue) with react-scripts 4's production webpack config, twice:
-//    for "ie 11", where Babel lowers every syntax and turns async functions
-//    into generators, and for "last 1 chrome version", where it lowers
-//    nothing and webpack 4's own parser reads qrdx's files. Neither build
-//    may have an error or a warning, though the app didn't install the
-//    optional jspdf;
+//    qrdx/svelte, qrdx/vue) with react-scripts 4's production webpack
+//    config, twice: for "ie 11", where Babel lowers every syntax and turns
+//    async functions into generators, and for "last 1 chrome version",
+//    where it lowers nothing and webpack 4's own parser reads qrdx's files.
+//    Neither build may have an error or a warning, though the app didn't
+//    install the optional jspdf;
 // 2. it runs each bundle in a DOM (jsdom): every app must draw an <svg>,
 //    the same for both browser lists, and qrdx/core's markup must be the
 //    modern build's (dist/core.js), character for character;

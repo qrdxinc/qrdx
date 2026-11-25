@@ -469,6 +469,23 @@ export default defineConfig([
     external: [...(shared.external ?? []), "vue"],
     esbuildPlugins: [sharedCore(".js", [])],
   },
+  // ── Svelte action (qrdx/svelte), on the shared core ─────────────────────
+  // An action is a plain function and the file imports nothing from Svelte,
+  // so no Svelte compiler runs and svelte isn't even an external.
+  {
+    ...shared,
+    entry: { svelte: "src/svelte.ts" },
+    format: ["esm"],
+    treeshake: true,
+    esbuildPlugins: [sharedCore(".mjs", [])],
+  },
+  {
+    ...shared,
+    entry: { svelte: "src/svelte.ts" },
+    format: ["cjs"],
+    treeshake: true,
+    esbuildPlugins: [sharedCore(".js", [])],
+  },
   // ── qrdx/types (schemas + helpers, no React) ────────────────────────────
   {
     ...shared,
@@ -513,6 +530,7 @@ export default defineConfig([
       element: "src/element.ts",
       preact: "src/preact.ts",
       solid: "src/solid.ts",
+      svelte: "src/svelte.ts",
       vue: "src/vue.ts",
     },
     external: [...(shared.external ?? []), "preact", /^solid-js(\/|$)/, "vue"],

@@ -36,6 +36,8 @@ const REACT_FREE = [
   "node.js",
   "vue.mjs",
   "vue.js",
+  "svelte.mjs",
+  "svelte.js",
   "angular.mjs",
   "angular.js",
 ];
@@ -148,14 +150,18 @@ describe("<qrdx-code> bundles", () => {
   });
 });
 
-// qrdx/preact and qrdx/solid: the engine from dist/core, the framework from
-// the app, and nothing else (no React, no copy of the engine)
-describe("Preact and Solid adapters", () => {
+// qrdx/preact, qrdx/solid and qrdx/svelte: the engine from dist/core, the
+// framework from the app, and nothing else (no React, no copy of the
+// engine). The Svelte action is a plain function and imports nothing of
+// Svelte's.
+describe("Preact, Solid and Svelte adapters", () => {
   it.each([
     ["preact.mjs", ["./core.mjs", "preact"]],
     ["preact.js", ["./core.js", "preact"]],
     ["solid.mjs", ["./core.mjs", "solid-js", "solid-js/web"]],
     ["solid.js", ["./core.js", "solid-js", "solid-js/web"]],
+    ["svelte.mjs", ["./core.mjs"]],
+    ["svelte.js", ["./core.js"]],
   ])("%s imports only dist/core and its framework", (file, allowed) => {
     if (!existsSync(dist(file))) return;
     const code = read(file);
@@ -189,6 +195,8 @@ describe("rendering without zod", () => {
     "preact.js",
     "solid.mjs",
     "solid.js",
+    "svelte.mjs",
+    "svelte.js",
     "angular.mjs",
     "angular.js",
     "element.mjs",
