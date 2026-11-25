@@ -101,6 +101,13 @@ const productionDeploy = readFileSync(
   ),
   "utf8",
 );
+const productionBuild = readFileSync(
+  new URL(
+    "../../../../.github/actions/vercel-production-build/action.yml",
+    import.meta.url,
+  ),
+  "utf8",
+);
 
 describe("production deploys", () => {
   it("never come from a push (vercel.json git.deploymentEnabled)", () => {
@@ -112,7 +119,10 @@ describe("production deploys", () => {
       'require("./apps/app/scripts/skip-ci.js")',
     );
     expect(productionDeploy).toMatch(/^\s+ref: main$/m);
-    expect(productionDeploy).toContain('target: "production"');
+    expect(productionDeploy).toContain(
+      "uses: ./.github/actions/vercel-production-build",
+    );
+    expect(productionBuild).toContain('target: "production"');
     expect(productionDeploy).toMatch(/^\s+- cron: "[^"]+"$/m);
   });
 });
