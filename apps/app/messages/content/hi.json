@@ -28997,6 +28997,18 @@
     "status": "machine",
     "context": "barcodes.formats.aztec.summary"
   },
+  "d7905fa2e4a7": {
+    "source": "The smallest QR code, for tiny labels on parts and electronics",
+    "text": "सबसे छोटा QR कोड, पार्ट्स और इलेक्ट्रॉनिक्स पर छोटे लेबल के लिए",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.summary"
+  },
+  "bca682c9c3c2": {
+    "source": "Any text, up to 35 digits, 21 capital letters or 15 characters of other text; less with accents or other scripts. It's drawn in the smallest of the four sizes, M1 to M4, that fits.",
+    "text": "कोई भी टेक्स्ट, 35 अंकों, 21 कैपिटल अक्षरों या अन्य टेक्स्ट के 15 अक्षरों तक; एक्सेंट या दूसरी लिपियों के साथ कम। यह M1 से M4 तक के चार साइज़ में से सबसे छोटे उस साइज़ में बनता है जिसमें डेटा आ जाए।",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.inputHint"
+  },
   "9c5a364b0228": {
     "source": "Screens, documents and online shops",
     "text": "स्क्रीन, दस्तावेज़ और ऑनलाइन दुकानों के लिए",
@@ -29122,6 +29134,12 @@
     "text": "चौकोर 2D कोड जो अपने केंद्र से पहचाना जाता है, इसलिए इसे खाली मार्जिन की ज़रूरत नहीं होती। ट्रांसपोर्ट कंपनियाँ इसे फ़ोन स्क्रीन पर दिखाए जाने वाले और घर पर प्रिंट किए गए टिकटों के लिए इस्तेमाल करती हैं।",
     "status": "machine",
     "context": "barcodes.uses.aztec"
+  },
+  "e849a4bc696d": {
+    "source": "The smallest QR code, with one corner square instead of three and as little as 11 × 11 modules, for marks on circuit boards, components and small parts. Most phone camera apps don't read it, so check that your scanners do.",
+    "text": "सबसे छोटा QR कोड, जिसमें तीन की जगह एक कोने का स्क्वायर होता है और साइज़ सिर्फ़ 11 × 11 मॉड्यूल तक छोटा हो सकता है। यह सर्किट बोर्ड, कंपोनेंट और छोटे पार्ट्स पर निशान लगाने के लिए है। ज़्यादातर फ़ोन कैमरा ऐप इसे नहीं पढ़ते, इसलिए जाँच लें कि आपके स्कैनर इसे पढ़ते हैं।",
+    "status": "machine",
+    "context": "barcodes.uses.microqr"
   },
   "dd1e133f56a5": {
     "source": "Dark bars on a light background. Black on white is safest; dark blue and dark green work. Many scanners read with red light, which makes red, orange and yellow bars disappear.",
@@ -30604,6 +30622,42 @@
     "text": "कई स्कैनर ऐप और टिकट गेट पढ़ सकते हैं। कुछ बिल्ट-इन कैमरा ऐप सिर्फ़ QR कोड खोलते हैं।",
     "status": "machine",
     "context": "barcodeFormats.pages.aztec.faqs.1.answer"
+  },
+  "5ab48e65407a": {
+    "source": "Free Micro QR Code Generator",
+    "text": "फ़्री Micro QR कोड जनरेटर",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.title"
+  },
+  "f3c99e9676a0": {
+    "source": "Make a Micro QR code, the smallest QR code, for tiny marks on parts and circuit boards. Up to 35 digits or 15 characters. SVG, PDF and PNG. Free.",
+    "text": "Micro QR कोड बनाएँ, यह सबसे छोटा QR कोड है, पुर्ज़ों और सर्किट बोर्ड पर छोटे निशानों के लिए। 35 अंकों या 15 अक्षरों तक। SVG, PDF और PNG। फ़्री।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.metaDescription"
+  },
+  "6eeccb3bb878": {
+    "source": "Micro QR is a smaller QR code with one corner square instead of three, for marks too small for a full QR code. Type a short text, check that it scans and download it.",
+    "text": "Micro QR एक छोटा QR कोड है, जिसमें तीन की जगह एक ही कोने का वर्ग होता है। यह उन निशानों के लिए है जो पूरे QR कोड के लिए बहुत छोटे हैं। थोड़ा टेक्स्ट लिखें, देखें कि वह स्कैन होता है और डाउनलोड करें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.intro"
+  },
+  "a09c8ae1da41": {
+    "source": "Tiny marks where a regular QR code won't fit: circuit boards, electronic components, small parts and the labels on them.",
+    "text": "छोटे निशान जहाँ सामान्य QR कोड नहीं आता: सर्किट बोर्ड, इलेक्ट्रॉनिक कॉम्पोनेंट, छोटे पुर्ज़े और उन पर लगे लेबल।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.0"
+  },
+  "0660afe340fa": {
+    "source": "It's part of the QR code standard, ISO/IEC 18004, from DENSO WAVE, which created the QR code. Most phone camera apps don't read it, so check that the scanners that will read it support it before you print a batch.",
+    "text": "यह QR कोड के मानक ISO/IEC 18004 का हिस्सा है, जो QR कोड बनाने वाली DENSO WAVE का है। ज़्यादातर फ़ोन के कैमरा ऐप इसे नहीं पढ़ते, इसलिए पूरा बैच प्रिंट करने से पहले जाँच लें कि इसे पढ़ने वाले स्कैनर इसे सपोर्ट करते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.1"
+  },
+  "b5aeb368b7ac": {
+    "source": "Do I need to register a Micro QR code?",
+    "text": "क्या मुझे Micro QR कोड रजिस्टर करना होगा?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.numbers.title"
   },
   "d5d3113ff518": {
     "source": "Batch or lot number",
@@ -38866,6 +38920,66 @@
     "text": "नहीं। आप जो भी टेक्स्ट लिखते हैं, यह उसे रखता है, किसी रजिस्ट्रेशन की ज़रूरत नहीं।",
     "status": "machine",
     "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
+  },
+  "fbb830fde45b": {
+    "source": "Any text that fits: up to 35 digits, 21 capital letters (with digits, spaces and $ % * + - . / :) or 15 characters of other text. Accents and other scripts are stored as UTF-8 bytes, 2 or 3 to a character, so less of them fits.",
+    "text": "जो भी टेक्स्ट समा जाए: 35 अंकों तक, 21 कैपिटल अक्षर (अंकों, स्पेस और $ % * + - . / : के साथ) या दूसरे टेक्स्ट के 15 कैरेक्टर। एक्सेंट वाले और दूसरी लिपियों के अक्षर UTF-8 बाइट के रूप में रखे जाते हैं, एक अक्षर के 2 या 3, इसलिए उनमें कम अक्षर समाते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.0"
+  },
+  "b7f8ba513cf7": {
+    "source": "Micro QR comes in four sizes: M1 (11 × 11 modules), M2 (13 × 13), M3 (15 × 15) and M4 (17 × 17). M1 holds digits only and M2 digits and capital letters; other text starts at M3. The generator picks the smallest size your text fits and says which under the field.",
+    "text": "Micro QR चार साइज़ में आता है: M1 (11 × 11 मॉड्यूल), M2 (13 × 13), M3 (15 × 15) और M4 (17 × 17)। M1 में सिर्फ़ अंक आते हैं और M2 में अंक व कैपिटल अक्षर; दूसरा टेक्स्ट M3 से शुरू होता है। जनरेटर आपके टेक्स्ट के लिए सबसे छोटा साइज़ चुनता है और फ़ील्ड के नीचे बताता है कि कौन-सा।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.1"
+  },
+  "09495e6960be": {
+    "source": "M1 only detects errors. The other sizes get error correction level M when there's room for it, or L when the text only fits at L: a reader can recover about 15% of a damaged code at M and 7% at L.",
+    "text": "M1 सिर्फ़ गलतियाँ पकड़ता है। बाकी साइज़ में जगह होने पर एरर करेक्शन लेवल M मिलता है, या L जब टेक्स्ट सिर्फ़ L में समाता हो: रीडर खराब हुए कोड का लगभग 15% M पर और 7% L पर वापस पा सकता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.2"
+  },
+  "b1c9fc9fe329": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text, an M4, comes out 14.8 × 14.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "वेक्टर डाउनलोड में हर मॉड्यूल 0.71 mm का वर्ग बनता है: सैंपल टेक्स्ट, यानी M4, क्वाइट ज़ोन समेत 14.8 × 14.8 mm का निकलता है। इसे अपनी जगह और अपने प्रिंटर व स्कैनर की क्षमता के हिसाब से छोटा-बड़ा करें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.0"
+  },
+  "064bad0ab79d": {
+    "source": "Micro QR needs 2 modules of blank space all round, half what a QR code needs, which the generator starts with.",
+    "text": "Micro QR को चारों तरफ़ 2 मॉड्यूल की खाली जगह चाहिए, जो QR कोड से आधी है, और जनरेटर इसी से शुरू करता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.1"
+  },
+  "a1963fc6a2a3": {
+    "source": "Micro QR or QR code?",
+    "text": "Micro QR या QR कोड?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.question"
+  },
+  "379bc5c2a5f5": {
+    "source": "For anything people scan with their phone, a QR code. Use Micro QR where only a few millimetres fit and you know the scanners that will read it support it.",
+    "text": "जिसे लोग फ़ोन से स्कैन करते हैं, उसके लिए QR कोड। Micro QR वहाँ इस्तेमाल करें जहाँ सिर्फ़ कुछ मिलीमीटर जगह हो और आपको पता हो कि इसे पढ़ने वाले स्कैनर इसे सपोर्ट करते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.answer"
+  },
+  "113fc6913877": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports Micro QR, and tells you whether it reads back your text.",
+    "text": "हाँ। आप जैसे-जैसे बदलाव करते हैं, जनरेटर डाउनलोड होने वाली इमेज को ZXing से डिकोड करता है, जो Micro QR सपोर्ट करने वाला ओपन-सोर्स रीडर है, और बताता है कि वह आपका टेक्स्ट वापस पढ़ पाता है या नहीं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.1.answer"
+  },
+  "8dcc75f95b4e": {
+    "source": "Can phones read Micro QR codes?",
+    "text": "क्या फ़ोन Micro QR कोड पढ़ सकते हैं?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.question"
+  },
+  "2dc28fe2f22f": {
+    "source": "Most built-in camera apps can't. The QRdx scanner at /scan reads them in the browser, with the same ZXing reader as the check on this page.",
+    "text": "ज़्यादातर बिल्ट-इन कैमरा ऐप नहीं पढ़ सकते। /scan पर QRdx स्कैनर इन्हें ब्राउज़र में पढ़ता है, इसी पेज की जाँच वाले ZXing रीडर से।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.answer"
   },
   "21d588136e54": {
     "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",

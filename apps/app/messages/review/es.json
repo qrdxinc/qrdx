@@ -6403,6 +6403,18 @@
     "source": "4d8263d4e688",
     "status": "machine"
   },
+  "barcodeTool.issues.microqrTooLong": {
+    "source": "4275ebd8b75e",
+    "status": "machine"
+  },
+  "barcodeTool.issues.microqrSize": {
+    "source": "ef21a54f954e",
+    "status": "machine"
+  },
+  "barcodeTool.issues.microqrSizeM1": {
+    "source": "2589da5f4120",
+    "status": "machine"
+  },
   "barcodeTool.issues.imbEnter": {
     "source": "7a6cffc6dbfb",
     "status": "machine"
