@@ -9,30 +9,22 @@ import {
   TextField,
   UrlField,
 } from "@/components/landing/editor/fields";
+import {
+  currentTimeZoneName,
+  deviceTimeZone,
+  timeZoneNames,
+} from "@/lib/time-zones";
 import type { BlockEditorProps } from "../registry";
 import type { EventProps } from "./event-schema";
 
 const selectClass =
   "border-input dark:bg-input/30 focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full rounded-md border bg-transparent px-3 text-sm shadow-xs outline-none focus-visible:ring-[3px]";
 
+/** Current zone names (lib/time-zones.ts), plus `current` if not listed. */
 function timeZones(current: string): string[] {
-  let zones: string[] = [];
-  try {
-    zones = Intl.supportedValuesOf("timeZone");
-  } catch {
-    zones = [];
-  }
-  if (!zones.includes("UTC")) zones = ["UTC", ...zones];
+  const zones = timeZoneNames();
   return zones.includes(current) ? zones : [current, ...zones];
 }
-
-const browserTimeZone = () => {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-  } catch {
-    return "UTC";
-  }
-};
 
 function DateTimeField({
   label,
@@ -71,9 +63,12 @@ function convert(value: string, allDay: boolean, time: string): string {
 
 export function EventEditor({ value, onChange }: BlockEditorProps<EventProps>) {
   const set = (patch: Partial<EventProps>) => onChange({ ...value, ...patch });
-  const zones = useMemo(() => timeZones(value.timeZone), [value.timeZone]);
+  // A page saved under a retired name (Asia/Calcutta) shows the current one
+  // (Asia/Kolkata): the same zone, so the page's times don't change.
+  const zone = currentTimeZoneName(value.timeZone);
+  const zones = useMemo(() => timeZones(zone), [zone]);
   const zoneId = useId();
-  const localZone = useMemo(browserTimeZone, []);
+  const localZone = useMemo(deviceTimeZone, []);
 
   return (
     <div className="space-y-4">
@@ -131,7 +126,7 @@ export function EventEditor({ value, onChange }: BlockEditorProps<EventProps>) {
               className={selectClass}
               id={zoneId}
               onChange={(event) => set({ timeZone: event.target.value })}
-              value={value.timeZone}
+              value={zone}
             >
               {zones.map((zone) => (
                 <option key={zone} value={zone}>
@@ -139,7 +134,7 @@ export function EventEditor({ value, onChange }: BlockEditorProps<EventProps>) {
                 </option>
               ))}
             </select>
-            {localZone !== value.timeZone && (
+            {localZone !== zone && (
               <Button
                 className="shrink-0"
                 onClick={() => set({ timeZone: localZone })}
