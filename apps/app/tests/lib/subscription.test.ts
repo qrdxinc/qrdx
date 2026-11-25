@@ -23,6 +23,14 @@ vi.mock("drizzle-orm", () => {
         preds.every((p) => !p || p(row)),
     eq: (column: Column, expected: unknown) => (row: Row) =>
       value(row, column) === expected,
+    or:
+      (...preds: (Predicate | undefined)[]) =>
+      (row: Row) =>
+        preds.some((p) => p?.(row)),
+    gt: (column: Column, bound: Date) => (row: Row) => {
+      const current = value(row, column);
+      return current instanceof Date && current > bound;
+    },
     inArray: (column: Column, list: unknown[]) => (row: Row) =>
       list.includes(value(row, column)),
     notInArray: (column: Column, list: unknown[]) => (row: Row) =>
@@ -118,6 +126,7 @@ vi.mock("@repo/database/schema", () => ({
     __table: "subscription",
     userId: { table: "subscription", name: "userId" },
     status: { table: "subscription", name: "status" },
+    pastDueSince: { table: "subscription", name: "pastDueSince" },
     createdAt: { table: "subscription", name: "createdAt" },
   },
 }));
@@ -136,12 +145,18 @@ const USER = "user-1";
 const usage = () => store.tables.get("ai_usage") ?? [];
 const addUsage = (modelId: string, userId = USER) =>
   usage().push({ id: `${modelId}-${usage().length}`, userId, modelId });
-const subscribe = (status: string, userId = USER) => {
+const subscribe = (
+  status: string,
+  userId = USER,
+  pastDueSince: Date | null = null,
+) => {
   if (!store.tables.has("subscription")) store.tables.set("subscription", []);
   store.tables
     .get("subscription")
-    ?.push({ userId, status, createdAt: new Date() });
+    ?.push({ userId, status, pastDueSince, createdAt: new Date() });
 };
+const daysAgo = (days: number) =>
+  new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 
 beforeEach(() => {
   store.tables.clear();
@@ -235,6 +250,31 @@ describe("validateSubscriptionAndUsage", () => {
       canProceed: false,
       isSubscribed: false,
     });
+  });
+});
+
+describe("a failed payment (past_due)", () => {
+  it("keeps the plan for 7 days from when the payment failed", async () => {
+    subscribe("past_due", USER, daysAgo(6.9));
+    expect(await validateSubscriptionAndUsage(USER)).toMatchObject({
+      canProceed: true,
+      isSubscribed: true,
+    });
+  });
+
+  it("is free once the 7 days are over", async () => {
+    subscribe("past_due", USER, daysAgo(7.1));
+    for (let i = 0; i < AI_REQUEST_FREE_TIER_LIMIT; i++)
+      addUsage("gemini-2.5-flash");
+    expect(await validateSubscriptionAndUsage(USER)).toMatchObject({
+      canProceed: false,
+      isSubscribed: false,
+    });
+  });
+
+  it("gets no grace when the failure's time isn't known", async () => {
+    subscribe("past_due", USER, null);
+    expect((await subscriptionAndUsage(USER)).subscription).toBeNull();
   });
 });
 

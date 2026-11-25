@@ -15,6 +15,7 @@ import { PLAN_LIMITS } from "@/lib/plans";
 import { currencyForCountry, formatPrice, PRICING } from "@/lib/pricing";
 import { workspaceLink } from "@/lib/workspace-paths";
 import { greetingName } from "./greeting";
+import { freeInvite } from "./invite-line";
 import { personalSender } from "./personal-sender";
 import { sendEmail } from "./send";
 import { wantsTeamNotes } from "./team-notes";
@@ -30,7 +31,9 @@ import { wantsTeamNotes } from "./team-notes";
 // accounts use reserved addresses, which never get email, and local
 // development and previews send nothing (lib/delivery-guard.ts). The
 // idempotency key welcome:<userId> keeps a retried request from sending it
-// twice. No other emails follow it on a schedule.
+// twice. One note follows on a schedule, only to accounts that haven't made
+// a dynamic code two days later (./activation-nudge.tsx). Under the Pro
+// line it offers the invite (./invite-line.ts).
 
 export type WelcomeOutcome =
   | "sent"
@@ -119,6 +122,7 @@ export async function sendWelcomeEmail({
         firstName={greetingName(row.name, row.email).name}
         freeDynamicCodes={PLAN_LIMITS.free.dynamicCodes}
         intl={intl}
+        invite={await freeInvite(row.id)}
         newCodeUrl={absolute(localizePath("/playground", intl.locale))}
         proCustomDomains={PLAN_LIMITS.pro.customDomains}
         proMonthly={price("month")}

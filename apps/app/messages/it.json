@@ -9143,6 +9143,12 @@
       }
     },
     "shell": {
+      "pastDueBanner": {
+        "title": "L’ultimo pagamento non è andato a buon fine.",
+        "grace": "I tuoi codici continuano a funzionare. Aggiorna la carta per mantenere {plan}. Le sue funzionalità restano attive fino al {date}.",
+        "ended": "I tuoi codici continuano a funzionare. Le funzionalità di {plan} sono disattivate finché il pagamento non va a buon fine. Aggiorna la carta per riattivarle.",
+        "updateCard": "Aggiorna carta"
+      },
       "appSidebar": {
         "backToLabel": "Torna a {label}",
         "expandSidebar": "Espandi barra laterale",
@@ -9746,7 +9752,9 @@
     },
     "scanMilestone": {
       "reached": "{code} ha raggiunto {count, number} scansioni",
-      "body": "Il tuo QR code dinamico ha appena superato {count, number} scansioni. Scopri dove e quando le persone lo scansionano e quali dispositivi usano."
+      "body": "Il tuo QR code dinamico ha appena superato {count, number} scansioni. Scopri dove e quando le persone lo scansionano e quali dispositivi usano.",
+      "pro": "<link>Pro</link> ti scrive anche alla {first}ª e alla {second}ª scansione e oltre, e può inviarti un riepilogo settimanale.",
+      "freeReason": "Ricevi questa email perché un codice che hai creato ha raggiunto {count, number} scansioni. QRdx la invia una sola volta."
     },
     "formSubmission": {
       "subject": "{hasTitle, select, yes {Nuova risposta al modulo su “{title}”} other {Nuova risposta al modulo sulla tua pagina}}",
@@ -9892,6 +9900,42 @@
       "seeInvites": "Vedi i tuoi inviti",
       "keeps": "I codici extra funzionano con qualsiasi piano e non hanno valore in denaro. I codici che crei con questi continuano a funzionare.",
       "reason": "Ricevi questa email perché un amico si è registrato tramite il tuo link di invito a QRdx e ha creato il suo primo QR code dinamico."
+    },
+    "invite": {
+      "both": "Conosci qualcuno che stampa QR code? <link>Invitalo</link>: quando creerà il suo primo codice dinamico, voi due riceverete altri {count, number}.",
+      "friend": "Conosci qualcuno che stampa QR code? <link>Invitalo</link>: quando creerà il suo primo codice dinamico, riceverà altri {count, number}."
+    },
+    "activationNudge": {
+      "subject": "Il tuo primo codice dinamico",
+      "greeting": "Ciao {name},",
+      "what": "Un codice dinamico è un QR code che puoi stampare subito e far puntare altrove più avanti, senza ristampare, e che conta le sue scansioni.",
+      "button": "Crea un codice dinamico",
+      "reply": "Se qualcosa ti ha fermato, rispondi a questa email. Ogni risposta viene letta da una persona.",
+      "reason": "Ricevi questa email perché hai creato un account QRdx un paio di giorni fa e non hai ancora creato un codice dinamico. QRdx la invia una sola volta."
+    },
+    "paymentFailed": {
+      "subject": "L’ultimo pagamento di QRdx non è andato a buon fine",
+      "heading": "L’ultimo pagamento non è andato a buon fine",
+      "greeting": "Ciao {name},",
+      "body": "L’ultimo pagamento per {plan} non è andato a buon fine. I tuoi codici continuano a funzionare. Aggiorna la carta per mantenere {plan}.",
+      "grace": "Le funzioni di {plan} restano attive fino al {date}. Se a quella data il pagamento risulta ancora in sospeso, si disattivano finché il pagamento non va a buon fine. I tuoi codici dinamici continuano a funzionare in ogni caso.",
+      "button": "Aggiorna la carta",
+      "reply": "Se qualcosa non ti torna, rispondi a questa email. Ogni risposta viene letta da una persona.",
+      "reason": "Hai ricevuto questa email perché è l’indirizzo di un account QRdx il cui pagamento {plan} non è andato a buon fine. Gli avvisi di fatturazione relativi al tuo account arrivano anche se hai disattivato le comunicazioni del team di QRdx."
+    },
+    "newCustomer": {
+      "subject": "Benvenuto in QRdx {plan}",
+      "greeting": "Ciao {name},",
+      "thanks": "Grazie per aver scelto {plan}. È già attivo.",
+      "setUp": "{count, plural, one {Una cosa da impostare per prima:} other {Alcune cose da impostare per prime:}}",
+      "domain": "<link>Collega il tuo dominio</link>, così i tuoi link brevi usano il tuo nome invece di quello di QRdx. Il tuo piano include {count} domini personalizzati.",
+      "backHalf": "<link>Scegli il finale di un codice</link>, così il suo link breve termina con una parola come spring-menu invece che con lettere casuali.",
+      "alerts": "Gli avvisi di scansione sono attivi: QRdx ti scrive quando un codice riceve la prima scansione e a traguardi come 100 e 1.000 scansioni. <link>Modificali o attiva un riepilogo settimanale</link> nelle Impostazioni.",
+      "team": "<link>Invita il tuo team</link>. Il tuo piano include {count} persone, te compreso.",
+      "teamUnlimited": "<link>Invita il tuo team</link>, tutte le persone che ti servono.",
+      "moneyBack": "Se {plan} non fa per te, rispondi entro {days, number} giorni dal pagamento e ti rimborsiamo per intero. Non serve indicare un motivo.",
+      "reply": "E rispondi pure per qualsiasi altra cosa: una domanda, qualcosa che manca o per cosa usi QRdx. Ogni risposta viene letta da una persona.",
+      "reason": "Ricevi questa email perché hai appena attivato un piano QRdx {plan}."
     }
   },
   "codeActions": {

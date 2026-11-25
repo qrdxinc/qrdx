@@ -15,6 +15,10 @@ import {
 } from "@/lib/data-connections/sync";
 import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
 import {
+  type NudgeSummary,
+  sendActivationNudges,
+} from "@/lib/email/activation-nudge";
+import {
   nextDeliveryDueAt,
   pruneDeliveries,
   runDeliveryWorker,
@@ -38,7 +42,8 @@ const noStore = { "Cache-Control": "no-store" };
  * Webhook worker: retries due deliveries with exponential backoff, sends scan
  * batches whose window closed, runs data-out syncs, looks up destinations
  * created without a Web Risk answer, settles friends' invites a first code
- * already qualifies (lib/invites), prunes deliveries older
+ * already qualifies (lib/invites), sends the note to accounts two days old with
+ * no dynamic code (lib/email/activation-nudge.tsx), prunes deliveries older
  * than 30 days and deletes expired Better Auth verification values. The daily
  * call also forgets browsers no account has seen for 400 days, completes
  * support's turn-offs of two-step verification that are due, and deletes
@@ -190,6 +195,14 @@ export async function GET(request: Request) {
     );
   }
 
+  // The note to accounts two days old with no dynamic code
+  // (lib/email/activation-nudge.tsx), on every full run so it goes out soon
+  // after the 48 hours. At most 4 s, ending by 55 s; accounts left keep the
+  // worker due, and the day-wide window keeps them due for the next run.
+  const nudges: NudgeSummary = await sendActivationNudges({
+    deadline: Math.min(Date.now() + 4_000, startedAt + 55_000),
+  });
+
   // Re-seed while Postgres is awake anyway. On failure the marker keeps what
   // was due, so the next frequent call runs in full again.
   let nextDueAt: number | null = null;
@@ -206,6 +219,8 @@ export async function GET(request: Request) {
       webRisk === null || webRisk.pending > 0 ? Date.now() : null,
       // Invites left to settle: the next call too.
       invites?.left ? Date.now() : null,
+      // Notes left to send: the next call too.
+      nudges.left ? Date.now() : null,
     ].filter((time): time is number => time !== null);
     nextDueAt = times.length > 0 ? Math.min(...times) : null;
     await reseedWorkerDue(startedAt, nextDueAt);
@@ -233,6 +248,7 @@ export async function GET(request: Request) {
       integrations,
       webRisk,
       invites,
+      nudges,
       nextDueAt: nextDueAt === null ? null : new Date(nextDueAt).toISOString(),
     }),
   );

@@ -9143,6 +9143,12 @@
       }
     },
     "shell": {
+      "pastDueBanner": {
+        "title": "Pembayaran terakhir Anda tidak berhasil.",
+        "grace": "Kode QR Anda tetap berfungsi. Perbarui kartu Anda untuk tetap menggunakan {plan}. Fitur-fiturnya tetap aktif hingga {date}.",
+        "ended": "Kode QR Anda tetap berfungsi. Fitur {plan} nonaktif sampai pembayaran berhasil. Perbarui kartu Anda untuk mengaktifkannya kembali.",
+        "updateCard": "Perbarui kartu"
+      },
       "appSidebar": {
         "backToLabel": "Kembali ke {label}",
         "expandSidebar": "Perluas sidebar",
@@ -9746,7 +9752,9 @@
     },
     "scanMilestone": {
       "reached": "{code} mencapai {count, number} pemindaian",
-      "body": "Kode QR dinamis Anda baru saja melewati {count, number} pemindaian. Lihat di mana dan kapan orang memindainya, serta perangkat apa yang mereka gunakan."
+      "body": "Kode QR dinamis Anda baru saja melewati {count, number} pemindaian. Lihat di mana dan kapan orang memindainya, serta perangkat apa yang mereka gunakan.",
+      "pro": "<link>Pro</link> juga mengirim email kepada Anda pada {first} dan {second} pemindaian serta seterusnya, dan dapat mengirimkan ringkasan mingguan.",
+      "freeReason": "Anda menerima email ini karena kode yang Anda buat telah mencapai {count, number} pemindaian. QRdx hanya mengirim email ini sekali."
     },
     "formSubmission": {
       "subject": "{hasTitle, select, yes {Respons formulir baru di “{title}”} other {Respons formulir baru di halaman Anda}}",
@@ -9892,6 +9900,42 @@
       "seeInvites": "Lihat undangan Anda",
       "keeps": "Kode tambahan ini berlaku di paket apa pun dan tidak memiliki nilai tunai. Kode yang Anda buat dengannya akan terus berfungsi.",
       "reason": "Anda menerima email ini karena seorang teman mendaftar melalui tautan undangan QRdx Anda dan membuat kode dinamis pertamanya."
+    },
+    "invite": {
+      "both": "Kenal seseorang yang mencetak kode QR? <link>Undang mereka</link>: saat mereka membuat kode dinamis pertamanya, Anda berdua mendapat {count, number} lagi.",
+      "friend": "Kenal seseorang yang mencetak kode QR? <link>Undang mereka</link>: saat mereka membuat kode dinamis pertamanya, mereka mendapat {count, number} lagi."
+    },
+    "activationNudge": {
+      "subject": "Kode dinamis pertama Anda",
+      "greeting": "Halo {name},",
+      "what": "Kode dinamis adalah kode QR yang bisa Anda cetak sekarang dan arahkan ke tujuan lain nanti tanpa mencetak ulang, serta menghitung jumlah pemindaiannya.",
+      "button": "Buat kode dinamis",
+      "reply": "Jika ada kendala, balas email ini. Setiap balasan dibaca oleh manusia.",
+      "reason": "Anda menerima email ini karena Anda membuat akun QRdx beberapa hari lalu dan belum membuat kode dinamis. QRdx hanya mengirim email ini sekali."
+    },
+    "paymentFailed": {
+      "subject": "Pembayaran QRdx terakhir Anda tidak berhasil",
+      "heading": "Pembayaran terakhir Anda tidak berhasil",
+      "greeting": "Halo {name},",
+      "body": "Pembayaran terakhir Anda untuk {plan} tidak berhasil. Kode Anda tetap berfungsi. Perbarui kartu Anda untuk tetap menggunakan {plan}.",
+      "grace": "Fitur {plan} tetap aktif sampai {date}. Jika pada saat itu masih belum dibayar, fitur tersebut akan nonaktif sampai pembayaran berhasil. Kode dinamis Anda tetap berfungsi dalam kedua kasus.",
+      "button": "Perbarui kartu Anda",
+      "reply": "Jika ada yang tampak keliru, balas email ini. Setiap balasan dibaca oleh manusia.",
+      "reason": "Anda menerima email ini karena alamat ini terdaftar pada akun QRdx yang pembayaran {plan}-nya tidak berhasil diproses. Pemberitahuan tagihan terkait akun Anda tetap dikirim meskipun Anda telah menonaktifkan pesan dari tim QRdx."
+    },
+    "newCustomer": {
+      "subject": "Selamat datang di QRdx {plan}",
+      "greeting": "Halo {name},",
+      "thanks": "Terima kasih telah memilih {plan}. Paket ini sudah aktif.",
+      "setUp": "{count, plural, other {Beberapa hal yang perlu diatur lebih dulu:}}",
+      "domain": "<link>Hubungkan domain Anda sendiri</link>, agar tautan pendek Anda memakai nama Anda, bukan nama QRdx. Paket Anda mencakup {count} domain kustom.",
+      "backHalf": "<link>Berikan back-half pilihan Anda pada kode</link>, agar tautan pendeknya berakhir dengan kata seperti spring-menu, bukan huruf acak.",
+      "alerts": "Peringatan pemindaian aktif: QRdx mengirim email kepada Anda saat kode mendapat pemindaian pertama dan pada tonggak seperti 100 dan 1,000 pemindaian. <link>Ubah peringatan, atau aktifkan ringkasan mingguan</link>, di Pengaturan.",
+      "team": "<link>Undang tim Anda</link>. Paket Anda mencakup {count} orang, termasuk Anda.",
+      "teamUnlimited": "<link>Undang tim Anda</link>, sebanyak orang yang Anda butuhkan.",
+      "moneyBack": "Jika {plan} kurang cocok untuk Anda, balas dalam {days, number} hari setelah pembayaran dan kami akan mengembalikan dana Anda sepenuhnya. Anda tidak perlu menyebutkan alasan.",
+      "reply": "Anda juga boleh membalas dengan hal lain: pertanyaan, fitur yang belum ada, atau untuk apa Anda menggunakan QRdx. Setiap balasan dibaca oleh manusia.",
+      "reason": "Anda menerima email ini karena Anda baru saja memulai paket QRdx {plan}."
     }
   },
   "codeActions": {

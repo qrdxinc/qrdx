@@ -58,6 +58,8 @@ export const CHECKOUT_SURFACES = [
   "limit_email",
   /** The first-scan email's pricing link */
   "first_scan_email",
+  /** Free's 100-scan email's pricing link */
+  "scan_milestone_email",
 ] as const;
 
 export type KnownCheckoutSurface = (typeof CHECKOUT_SURFACES)[number];

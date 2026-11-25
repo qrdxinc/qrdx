@@ -26,6 +26,7 @@ export function AppFrame({
   shell,
   limitWarnings = null,
   docsSearch,
+  notice = null,
   children,
 }: {
   shell: ShellData | null;
@@ -33,6 +34,8 @@ export function AppFrame({
   limitWarnings?: Promise<Meter[]> | null;
   /** The command menu searches the docs (a docs site serves them). */
   docsSearch: boolean;
+  /** Above every page: a failed payment's banner (past-due-banner.tsx) */
+  notice?: ReactNode;
   children: ReactNode;
 }) {
   const [collapsed, setCollapsedState] = useState(false);
@@ -99,7 +102,10 @@ export function AppFrame({
           data-app-scroll=""
           tabIndex={-1}
         >
-          <div className="mx-auto w-full max-w-6xl">{children}</div>
+          <div className="mx-auto w-full max-w-6xl">
+            {notice}
+            {children}
+          </div>
         </main>
       </div>
     </div>

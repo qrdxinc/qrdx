@@ -85,6 +85,15 @@ vi.mock("@/lib/invites/qualify", () => ({
   },
 }));
 
+// The note to accounts two days old with no code (lib/email/activation-nudge.tsx).
+const nudges = vi.hoisted(() => ({ calls: 0, left: 0 }));
+vi.mock("@/lib/email/activation-nudge", () => ({
+  sendActivationNudges: async () => {
+    nudges.calls++;
+    return { sent: 0, skipped: 0, failed: 0, left: nudges.left };
+  },
+}));
+
 const { GET } = await import("@/app/api/cron/webhooks/route");
 const { WORKER_DUE_KEY, forgetScheduledRunsForTests, scheduleWorkerRun } =
   await import("@/lib/events/worker-due");
@@ -128,6 +137,8 @@ beforeEach(() => {
   recheck.pending = 0;
   invites.calls = 0;
   invites.left = false;
+  nudges.calls = 0;
+  nudges.left = 0;
 });
 
 afterEach(() => {
@@ -307,6 +318,21 @@ describe("the daily call", () => {
     await json(await call("github"));
     expect(ranWorker()).toBe(true);
     expect(invites.calls).toBe(3);
+  });
+
+  it("sends the two-day notes on full runs, and stays due while some are left", async () => {
+    await call();
+    expect(nudges.calls).toBe(1);
+    vi.setSystemTime(T0 + 5 * MINUTE);
+    expect((await json(await call("github"))).skipped).toBe(true);
+    expect(nudges.calls).toBe(1);
+    nudges.left = 3;
+    await call();
+    vi.setSystemTime(T0 + 10 * MINUTE);
+    state.dbCalls = [];
+    await json(await call("github"));
+    expect(ranWorker()).toBe(true);
+    expect(nudges.calls).toBe(3);
   });
 
   it("doesn't touch the database outside production", async () => {

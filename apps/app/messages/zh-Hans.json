@@ -9143,6 +9143,12 @@
       }
     },
     "shell": {
+      "pastDueBanner": {
+        "title": "您上一次的付款未成功。",
+        "grace": "您的二维码仍可正常使用。请更新银行卡以继续使用 {plan}，其功能将保留至 {date}。",
+        "ended": "您的二维码仍可正常使用。付款成功前，{plan} 功能处于关闭状态。请更新银行卡以重新开启。",
+        "updateCard": "更新银行卡"
+      },
       "appSidebar": {
         "backToLabel": "返回{label}",
         "expandSidebar": "展开侧边栏",
@@ -9746,7 +9752,9 @@
     },
     "scanMilestone": {
       "reached": "{code} 已达到 {count, number} 次扫描",
-      "body": "你的动态二维码扫描次数刚刚超过 {count, number} 次。查看人们在何时何地扫描，以及使用的设备。"
+      "body": "你的动态二维码扫描次数刚刚超过 {count, number} 次。查看人们在何时何地扫描，以及使用的设备。",
+      "pro": "<link>Pro</link> 还会在扫描次数达到 {first} 次和 {second} 次及更高时给你发送邮件，并可以发送每周摘要。",
+      "freeReason": "你收到这封邮件，是因为你创建的二维码已被扫描 {count, number} 次。QRdx 只会发送一次。"
     },
     "formSubmission": {
       "subject": "{hasTitle, select, yes {“{title}”收到新的表单回复} other {你的页面收到新的表单回复}}",
@@ -9892,6 +9900,42 @@
       "seeInvites": "查看你的邀请",
       "keeps": "额外的二维码适用于任何套餐，没有现金价值。用它们创建的二维码会继续有效。",
       "reason": "你收到这封邮件，是因为有好友通过你的 QRdx 邀请链接注册，并创建了第一个动态二维码。"
+    },
+    "invite": {
+      "both": "你认识需要打印二维码的人吗？<link>邀请他们</link>：他们创建第一个动态二维码后，你们each都会再获得 {count, number} 个。",
+      "friend": "你认识需要打印二维码的人吗？<link>邀请他们</link>：他们创建第一个动态二维码后，会再获得 {count, number} 个。"
+    },
+    "activationNudge": {
+      "subject": "你的第一个动态二维码",
+      "greeting": "{name}，你好：",
+      "what": "动态二维码可以先打印，之后再改为指向其他地方，无需重新打印，还会统计扫描次数。",
+      "button": "创建动态二维码",
+      "reply": "如果遇到了问题，请直接回复这封邮件。每一封回复都有真人阅读。",
+      "reason": "你收到这封邮件，是因为你几天前注册了 QRdx 账户，但还没有创建动态二维码。QRdx 只会发送一次。"
+    },
+    "paymentFailed": {
+      "subject": "你最近一次 QRdx 付款未成功",
+      "heading": "你最近一次付款未成功",
+      "greeting": "{name}，你好：",
+      "body": "你最近一次 {plan} 的付款未成功。你的二维码仍可正常使用。请更新银行卡，以继续使用 {plan}。",
+      "grace": "{plan} 的功能会保留到 {date}。如果届时仍未付款，这些功能会关闭，直到付款成功为止。无论如何，你的动态二维码都会继续正常使用。",
+      "button": "更新银行卡",
+      "reply": "如果有什么不对劲，请直接回复这封邮件。每一封回复都有真人阅读。",
+      "reason": "您收到这封邮件，是因为这个邮箱地址对应的 QRdx 账户的 {plan} 付款未能成功。即使您已关闭 QRdx 团队的通知邮件，我们仍会发送与账户相关的账单通知。"
+    },
+    "newCustomer": {
+      "subject": "欢迎使用 QRdx {plan}",
+      "greeting": "{name}，你好：",
+      "thanks": "感谢你选择 {plan}。它现已生效。",
+      "setUp": "{count, plural, one {请先设置一件事：} other {请先设置以下几件事：}}",
+      "domain": "<link>连接你自己的域名</link>，让短链接使用你的名称，而不是 QRdx 的。你的套餐包含 {count} 个自定义域名。",
+      "backHalf": "<link>为二维码设置你自选的后缀</link>，让它的短链接以 spring-menu 这样的单词结尾，而不是随机字母。",
+      "alerts": "扫描提醒已开启：二维码首次被扫描时，以及扫描次数达到 100 次和 1,000 次等节点时，QRdx 都会给你发送邮件。你可以在设置中<link>更改提醒，或开启每周摘要</link>。",
+      "team": "<link>邀请你的团队</link>。你的套餐包含 {count} 人，包括你自己。",
+      "teamUnlimited": "<link>邀请你的团队</link>，人数不限。",
+      "moneyBack": "如果 {plan} 不适合你，请在付款后 {days, number} 天内回复这封邮件，我们会全额退款，无需说明原因。",
+      "reply": "其他任何事也欢迎回复：一个问题、缺少的功能，或者你用 QRdx 做什么。每一封回复都有真人阅读。",
+      "reason": "你收到这封邮件，是因为你刚刚开通了 QRdx {plan} 套餐。"
     }
   },
   "codeActions": {

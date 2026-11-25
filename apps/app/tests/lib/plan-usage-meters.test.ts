@@ -112,6 +112,18 @@ describe("renewalLine", () => {
     );
   });
 
+  it("says a failed payment's plan stays on until its grace ends", () => {
+    expect(
+      renewalLine({
+        ...base,
+        status: "past_due",
+        graceEndsAt: "2026-12-09T10:00:00.000Z",
+      }),
+    ).toBe(
+      "Your last payment didn't go through. Pro stays on until December 9, 2026. Update your card under Manage billing.",
+    );
+  });
+
   it("names a trial's end", () => {
     expect(renewalLine({ ...base, status: "trialing" })).toBe(
       "Trial ends on December 2, 2026",
