@@ -8,24 +8,18 @@ import { Copy, Gps as LocateFixed, Add as Plus } from "iconsax-reactjs";
 import { useId, useMemo } from "react";
 import { FieldRow, TextField } from "@/components/landing/editor/fields";
 import { WEEKDAYS } from "@/components/landing/opening-hours";
+import { deviceTimeZone, timeZoneNames } from "@/lib/time-zones";
 import type { BlockEditorProps } from "../registry";
 import type { HoursProps } from "./hours";
 
 type Day = HoursProps["days"][number];
 
-function timeZones(): string[] {
-  try {
-    return Intl.supportedValuesOf("timeZone");
-  } catch {
-    return [];
-  }
-}
-
 export function HoursEditor({ value, onChange }: BlockEditorProps<HoursProps>) {
   const set = (patch: Partial<HoursProps>) => onChange({ ...value, ...patch });
   const zoneId = useId();
   const listId = useId();
-  const zones = useMemo(timeZones, []);
+  // Current zone names (lib/time-zones.ts), not Chrome's Asia/Calcutta.
+  const zones = useMemo(timeZoneNames, []);
 
   const setDay = (index: number, day: Day) =>
     set({
@@ -57,7 +51,7 @@ export function HoursEditor({ value, onChange }: BlockEditorProps<HoursProps>) {
           <Button
             onClick={() =>
               set({
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                timezone: deviceTimeZone(),
               })
             }
             size="sm"
