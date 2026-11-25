@@ -16,6 +16,8 @@ import {
   MCP_REGISTRY_URL,
   NPM_CLI_URL,
   NPM_LIBRARY_URL,
+  SUBREDDIT_URL,
+  SUBSTACK_URL,
   SUPPORT_EMAIL,
   X_PROFILE_URL,
 } from "@repo/config";
@@ -110,6 +112,9 @@ export const organizationSchema = {
     // The QRdx Discord server, through its permanent invite.
     DISCORD_INVITE_URL,
     LINKEDIN_COMPANY_URL,
+    // The monthly letter and the subreddit, both run by QRdx.
+    SUBSTACK_URL,
+    SUBREDDIT_URL,
   ],
   contactPoint: {
     "@type": "ContactPoint",

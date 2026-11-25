@@ -478,40 +478,24 @@ describe("generator pages the site serves in every language", () => {
     expect(localizeHref("/qr-code-generator", "ja")).toBe("/qr-code-generator");
   });
 
-  it("are indexed in every language while every locale is machine-made: the QR code generators", () => {
-    expect([...INDEXED_MACHINE_PATHS]).toEqual([
+  // The QR code and barcode generators (owner decisions, 23 Nov 2026, and
+  // 26 Nov 2026 for the barcode generators, back after a day out). This is
+  // the outer gate: the site that serves them may index fewer.
+  it("are indexed in every language while every locale is machine-made", () => {
+    expect([...INDEXED_MACHINE_PATHS]).toEqual([...SITE_TRANSLATED_PATHS]);
+    for (const path of [
       "/qr-code-generator",
-      "/qr-code-generator/[type]",
-    ]);
-    for (const path of INDEXED_MACHINE_PATHS) {
-      expect(SITE_TRANSLATED_PATHS, path).toContain(path);
-    }
-    for (const path of ["/qr-code-generator", "/qr-code-generator/wifi"]) {
+      "/qr-code-generator/wifi",
+      "/barcode-generator",
+      "/barcode-generator/ean-13",
+      "/barcode-generator/code-39",
+    ]) {
       expect(isIndexedWhenMachine(path), path).toBe(true);
       expect(publishedLocales(path, MACHINE), path).toEqual([...LOCALES]);
       for (const locale of TRANSLATED_LOCALES) {
         expect(isPublished(locale, path, MACHINE), locale).toBe(true);
       }
     }
-  });
-
-  // Owner decision, 25 Nov 2026 (tiered indexing): their translated URLs
-  // redirected to English while the site's sitemap and hreflang listed
-  // them, so they follow their languages' review state instead.
-  it("leave the barcode generators' translations to the review state", () => {
-    for (const path of ["/barcode-generator", "/barcode-generator/ean-13"]) {
-      expect(isIndexedWhenMachine(path), path).toBe(false);
-      expect(publishedLocales(path, MACHINE), path).toEqual(["en"]);
-      for (const locale of TRANSLATED_LOCALES) {
-        expect(isPublished(locale, path, MACHINE), locale).toBe(false);
-      }
-    }
-    // A language a native speaker signs off is indexed, as on any page.
-    expect(publishedLocales("/barcode-generator/ean-13", SIGNED_OFF)).toEqual([
-      "en",
-      "es",
-      "zh-Hans",
-    ]);
   });
 
   it("leave every other page's review state alone", () => {

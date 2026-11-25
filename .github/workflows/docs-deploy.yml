@@ -2,8 +2,12 @@ name: Docs deploy
 
 # Builds the docs site (apps/docs) on GitHub's runner and deploys the
 # prebuilt output to its own Vercel project, whose Git deployments are off
-# (apps/docs/vercel.json). Runs when a push to main changes something
-# the docs build reads, or by hand (production or a preview).
+# (apps/docs/vercel.json).
+#
+# production-deploy.yml runs it every 6 hours, after the main app's deploy,
+# and it deploys main when a file the docs build reads (DOCS_INPUTS below)
+# changed since the commit the docs site serves. Run by hand, it deploys
+# the branch it's run from (production or a preview) without that check.
 #
 # Needs the repository variables DOCS_VERCEL_ORG_ID and DOCS_VERCEL_PROJECT_ID
 # (the project's Settings → General), and the secret VERCEL_TOKEN. The
@@ -11,61 +15,20 @@ name: Docs deploy
 # NEXT_PUBLIC_APP_URL, MAIN_ZONE_URL and the analytics ids
 # (apps/docs/.env.example).
 on:
-  push:
-    branches:
-      - main
-    paths:
-      # The docs site: its code, content (content/docs) and recorded dates
-      - apps/docs/**
-      - .github/workflows/docs-deploy.yml
-      # The message catalogs, which stay with the main app's (the docs read
-      # the English one)
-      - apps/app/messages/**
-      # The generated inputs' sources: the docs' message subset and the OpenAPI
-      # document's copy (apps/docs/scripts/zone-inputs.mjs)
-      - apps/app/scripts/i18n-docs-messages.ts
-      - apps/app/lib/i18n/docs-messages.ts
-      - apps/app/public/openapi.json
-      - apps/app/scripts/openapi/export.ts
-      # The product facts snapshot (apps/app/lib/product-facts.ts and what
-      # it reads; turbo.json lists the same files for the docs' tasks)
-      - apps/app/lib/product-facts.ts
-      - apps/app/lib/product-facts-snapshot.ts
-      - apps/app/scripts/facts-snapshot.ts
-      - apps/app/lib/format-count.ts
-      - apps/app/lib/pricing.ts
-      - apps/app/lib/scan-history.ts
-      - apps/app/lib/free-plan-limits.ts
-      - apps/app/lib/plan-allowances.ts
-      - apps/app/lib/path-alias-limits.ts
-      - apps/app/lib/affiliates/terms.ts
-      - apps/app/lib/invites/terms.ts
-      - apps/app/lib/ai/art-models.ts
-      - apps/app/lib/ai/models.ts
-      - apps/app/lib/barcode/formats.ts
-      - apps/app/lib/barcode/isbn-ranges.generated.ts
-      - apps/app/lib/barcode/micro-qr.ts
-      - apps/app/lib/barcode/publication.ts
-      - apps/app/lib/brand-logos/catalog.generated.ts
-      - apps/app/lib/landing/page-type-ids.ts
-      - apps/app/ee/audit-log/limits.ts
-      - apps/app/types/content-type-ids.ts
-      - apps/app/types/qr-content.ts
-      - apps/app/components/sections/ai-art/preset-meta.ts
-      # The engine the docs' live examples render with, and the packages the
-      # docs site imports
-      - packages/qrdx/**
-      - packages/availability/**
-      - packages/analytics/**
-      - packages/config/**
-      - packages/design-system/**
-      - packages/docs-assets/**
-      - packages/i18n/**
-      - packages/integrations/**
-      - packages/next-config/**
-      - packages/typescript-config/**
-      - bun.lock
-      - package.json
+  workflow_call:
+    inputs:
+      target:
+        description: Vercel environment to deploy to
+        type: string
+        default: production
+      only_if_changed:
+        description: Deploy only when a file the docs build reads changed since the deployed commit
+        type: boolean
+        default: false
+      ref:
+        description: The commit to deploy (empty for the caller's)
+        type: string
+        default: ""
   workflow_dispatch:
     inputs:
       target:
@@ -76,17 +39,11 @@ on:
           - preview
         default: production
 
-# One deploy per target at a time: a newer one waits for the running one
-# instead of racing it.
-concurrency:
-  group: docs-deploy-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'production' }}
-  cancel-in-progress: false
-
 permissions:
   contents: read
 
 env:
-  TARGET: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'production' }}
+  TARGET: ${{ inputs.target || 'production' }}
   VERCEL_ORG_ID: ${{ vars.DOCS_VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ vars.DOCS_VERCEL_PROJECT_ID }}
   # Pinned so a CLI release can't change a deploy unannounced.
@@ -94,10 +51,120 @@ env:
   NEXT_TELEMETRY_DISABLED: 1
 
 jobs:
+  decide:
+    name: Decide whether to deploy the docs site
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      deploy: ${{ steps.decide.outputs.deploy }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+          fetch-depth: 0
+
+      - name: Decide
+        id: decide
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          ONLY_IF_CHANGED: ${{ inputs.only_if_changed == true }}
+          # The files the docs build reads, as git pathspecs (one "- " line
+          # each; apps/app/tests/repo/docs-inputs.test.ts reads them too).
+          DOCS_INPUTS: |
+            # The docs site: its code, content (content/docs) and recorded dates
+            - apps/docs/**
+            - .github/workflows/docs-deploy.yml
+            # The message catalogs, which stay with the main app's (the docs read
+            # the English one)
+            - apps/app/messages/**
+            # The generated inputs' sources: the docs' message subset and the OpenAPI
+            # document's copy (apps/docs/scripts/zone-inputs.mjs)
+            - apps/app/scripts/i18n-docs-messages.ts
+            - apps/app/lib/i18n/docs-messages.ts
+            - apps/app/public/openapi.json
+            - apps/app/scripts/openapi/export.ts
+            # The product facts snapshot (apps/app/lib/product-facts.ts and what
+            # it reads; turbo.json lists the same files for the docs' tasks)
+            - apps/app/lib/product-facts.ts
+            - apps/app/lib/product-facts-snapshot.ts
+            - apps/app/scripts/facts-snapshot.ts
+            - apps/app/lib/format-count.ts
+            - apps/app/lib/pricing.ts
+            - apps/app/lib/scan-history.ts
+            - apps/app/lib/free-plan-limits.ts
+            - apps/app/lib/plan-allowances.ts
+            - apps/app/lib/path-alias-limits.ts
+            - apps/app/lib/affiliates/terms.ts
+            - apps/app/lib/invites/terms.ts
+            - apps/app/lib/ai/art-models.ts
+            - apps/app/lib/ai/models.ts
+            - apps/app/lib/barcode/formats.ts
+            - apps/app/lib/barcode/isbn-ranges.generated.ts
+            - apps/app/lib/barcode/micro-qr.ts
+            - apps/app/lib/barcode/publication.ts
+            - apps/app/lib/brand-logos/catalog.generated.ts
+            - apps/app/lib/landing/page-type-ids.ts
+            - apps/app/ee/audit-log/limits.ts
+            - apps/app/types/content-type-ids.ts
+            - apps/app/types/qr-content.ts
+            - apps/app/components/sections/ai-art/preset-meta.ts
+            # The engine the docs' live examples render with, and the packages the
+            # docs site imports
+            - packages/qrdx/**
+            - packages/availability/**
+            - packages/analytics/**
+            - packages/config/**
+            - packages/design-system/**
+            - packages/docs-assets/**
+            - packages/i18n/**
+            - packages/integrations/**
+            - packages/next-config/**
+            - packages/typescript-config/**
+            - bun.lock
+            - package.json
+        run: |
+          if [ "$ONLY_IF_CHANGED" != "true" ]; then
+            echo "deploy=true" >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          sha="$(git rev-parse HEAD)"
+          live="$(curl --silent --show-error --fail-with-body --retry 3 \
+            --header "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID" |
+            jq -r '.targets.production.meta.githubCommitSha // empty')"
+          inputs=()
+          while IFS= read -r input; do inputs+=("$input"); done < <(sed -n 's/^- //p' <<<"$DOCS_INPUTS")
+          if [ "$live" = "$sha" ]; then
+            deploy=false
+            reason="The docs site already serves ${sha:0:9}."
+          elif [ -z "$live" ] || ! git merge-base --is-ancestor "$live" "$sha" 2>/dev/null; then
+            deploy=true
+            reason="Can't tell what changed since the docs site's deployment, so it deploys ${sha:0:9}."
+          elif git diff --quiet "$live" "$sha" -- "${inputs[@]}"; then
+            deploy=false
+            reason="Nothing the docs build reads changed between ${live:0:9} and ${sha:0:9}."
+          else
+            deploy=true
+            reason="Files the docs build reads changed between ${live:0:9} and ${sha:0:9}."
+          fi
+          echo "deploy=$deploy" >>"$GITHUB_OUTPUT"
+          echo "$reason" | tee -a "$GITHUB_STEP_SUMMARY"
+
   deploy:
     name: Build and deploy the docs site
+    needs: decide
+    if: needs.decide.outputs.deploy == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # One deploy per target at a time: a newer one waits for the running one
+    # instead of racing it.
+    concurrency:
+      group: docs-deploy-${{ inputs.target || 'production' }}
+      cancel-in-progress: false
     defaults:
       run:
         shell: bash
@@ -108,6 +175,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
+          ref: ${{ inputs.ref || github.sha }}
           fetch-depth: 0
 
       # Bun installs the dependencies (the version pinned in package.json
