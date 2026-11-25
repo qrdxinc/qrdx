@@ -22,6 +22,8 @@ import {
 // set the flow's state cookie, without which the callback refuses, so the
 // callback never runs for a flow that didn't pass here, and a confirmation
 // needn't outlast the time spent at the provider.
+// Segment connects with a pasted write key instead: connectWithApiKeyAction
+// checks it before saving the key.
 
 const SENDS_DATA_OUT: ReadonlySet<string> = new Set(DATA_OUT_PROVIDERS);
 

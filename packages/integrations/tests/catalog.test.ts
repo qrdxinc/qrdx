@@ -40,6 +40,7 @@ describe("catalog surfaces", () => {
         "hubspot",
         "mailchimp",
         "pipedrive",
+        "segment",
         "zapier",
         "make",
         "n8n",

@@ -1,3 +1,4 @@
+import { SEGMENT_REGIONS } from "@repo/integrations/src/integrations/segment/settings";
 import { z } from "zod";
 import {
   connectLimiter,
@@ -12,6 +13,8 @@ import {
   getSinkView,
   retrySync,
   saveResponseSink,
+  saveSegmentSink,
+  sendSegmentTest,
   setSheetSync,
 } from "@/lib/data-connections/settings";
 import { parseWithSchema, readJsonBody } from "@/lib/request-guards";
@@ -22,7 +25,13 @@ export const maxDuration = 60;
 
 type RouteContext = { params: Promise<{ provider: string }> };
 
-const SINKS = new Set(["google-sheets", "hubspot", "mailchimp", "pipedrive"]);
+const SINKS = new Set([
+  "google-sheets",
+  "hubspot",
+  "mailchimp",
+  "pipedrive",
+  "segment",
+]);
 
 const id = z.string().regex(/^[A-Za-z0-9_-]{1,64}$/);
 const target = z.string().regex(/^[A-Za-z0-9_]{0,64}$/);
@@ -51,8 +60,30 @@ const responseSinkSchema = z.object({
   createLead: z.boolean().optional(),
 });
 
+const segmentStream = z.object({
+  enabled: z.boolean(),
+  event: z.string().max(200),
+});
+const segmentSinkSchema = z.object({
+  region: z.enum(SEGMENT_REGIONS),
+  scans: segmentStream,
+  responses: segmentStream,
+});
+
 const sheetSyncSchema = z.object({ enabled: z.boolean() });
-const actionSchema = z.object({ action: z.literal("retry") });
+const actionSchema = z.discriminatedUnion("action", [
+  z.object({
+    action: z.literal("retry"),
+    /** Which of the provider's streams (Segment has two) */
+    stream: z.enum(["scans", "responses"]).optional(),
+  }),
+  /** Segment: one Track call to find in the source's Debugger */
+  z.object({
+    action: z.literal("test"),
+    /** The region picked in the panel, saved or not */
+    region: z.enum(SEGMENT_REGIONS).optional(),
+  }),
+]);
 
 async function guard(provider: string, write: boolean) {
   if (!SINKS.has(provider)) {
@@ -96,6 +127,8 @@ export async function PUT(request: Request, context: RouteContext) {
     const scope = await getActiveScope(request.headers);
     if (provider === "google-sheets") {
       await setSheetSync(scope, parseWithSchema(sheetSyncSchema, body).enabled);
+    } else if (provider === "segment") {
+      await saveSegmentSink(scope, parseWithSchema(segmentSinkSchema, body));
     } else {
       await saveResponseSink(
         scope,
@@ -113,14 +146,27 @@ export async function PUT(request: Request, context: RouteContext) {
   }
 }
 
-/** POST {action:"retry"} — clear a failure and sync now. */
+/**
+ * POST {action:"retry", stream?} — clear a failure and sync now.
+ * POST {action:"test"} — Segment only: send one test event.
+ */
 export async function POST(request: Request, context: RouteContext) {
   const { provider } = await context.params;
   const user = await guard(provider, true);
   if ("response" in user) return user.response;
   try {
-    parseWithSchema(actionSchema, await readJsonBody(request, 1024));
-    const summary = await retrySync(user.userId, provider);
+    const body = parseWithSchema(
+      actionSchema,
+      await readJsonBody(request, 1024),
+    );
+    if (body.action === "test") {
+      if (provider !== "segment") {
+        return jsonError(400, "VALIDATION_ERROR", "No test event here.");
+      }
+      await sendSegmentTest(user.userId, body.region);
+      return Response.json({ sent: true });
+    }
+    const summary = await retrySync(user.userId, provider, body.stream);
     const scope = await getActiveScope(request.headers);
     return Response.json({ summary, view: await getSinkView(scope, provider) });
   } catch (error) {

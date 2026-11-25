@@ -1,7 +1,15 @@
 import "server-only";
 
 import { database as db, integration } from "@repo/database";
-import type { SyncCursor, SyncState } from "@repo/integrations";
+import {
+  isSinkProvider,
+  SINK_STREAMS,
+  type SinkStream,
+  type SyncCursor,
+  type SyncState,
+  type SyncStateKey,
+  sinkStreamSlot,
+} from "@repo/integrations";
 import {
   codeLabel,
   createGoogleSheetsClient,
@@ -18,6 +26,13 @@ import {
   type MailchimpAudience,
   type MailchimpMergeField,
 } from "@repo/integrations/src/integrations/mailchimp";
+import {
+  createSegmentClient,
+  normalizeSegmentEventName,
+  readSegmentSettings,
+  type SegmentRegion,
+  sendSegmentTestEvent,
+} from "@repo/integrations/src/integrations/segment";
 import type { FormMapping } from "@repo/integrations/src/sinks/mapping";
 import {
   initialSyncState,
@@ -61,19 +76,20 @@ async function requireConnection(userId: string, provider: string) {
 }
 
 /**
- * Merges into metadata.settings (and replaces metadata.sync when given) in
- * SQL, so a worker writing the sync state meanwhile is never overwritten.
+ * Merges into metadata.settings (and replaces the streams' states given, by
+ * their key) in SQL, so a worker writing a sync state meanwhile is never
+ * overwritten.
  */
 async function patchSettings(
   integrationId: string,
   _metadata: Record<string, unknown> | null,
   patch: Record<string, unknown>,
-  sync?: SyncState | null,
+  states: Partial<Record<SyncStateKey, SyncState>> = {},
 ) {
   const meta = sql`coalesce(${integration.metadata}::jsonb, '{}'::jsonb)`;
   let value = sql`jsonb_set(${meta}, '{settings}', coalesce(${meta} -> 'settings', '{}'::jsonb) || ${JSON.stringify(patch)}::jsonb)`;
-  if (sync !== undefined) {
-    value = sql`jsonb_set(${value}, '{sync}', ${JSON.stringify(sync)}::jsonb)`;
+  for (const [key, state] of Object.entries(states)) {
+    value = sql`jsonb_set(${value}, ${`{${key}}`}::text[], ${JSON.stringify(state)}::jsonb)`;
   }
   await db
     .update(integration)
@@ -210,7 +226,7 @@ export async function setSheetSync(
         connection.id,
         metadata,
         {},
-        { ...current, enabled: false, status: "paused" },
+        { sync: { ...current, enabled: false, status: "paused" } },
       );
     }
     return;
@@ -254,7 +270,7 @@ export async function setSheetSync(
       syncTarget: sameTarget ? readSheetTarget(metadata) : target,
       syncLabel: lastExport.label,
     },
-    sync,
+    { sync },
   );
   void runIntegrationSyncs({
     integrationIds: [connection.id],
@@ -303,35 +319,127 @@ export async function saveResponseSink(
     }
   }
   if (provider === "pipedrive") patch.createLead = input.createLead === true;
-  const current = readSyncState(metadata.sync);
-  const sameWorkspace = current?.organizationId === scope.organizationId;
-  // Only touch the stream state when it changes (the worker owns it).
-  let sync: SyncState | undefined;
-  if (input.enabled) {
-    if (!(current && sameWorkspace)) {
-      sync = initialSyncState(scope.organizationId);
-    } else if (
+  const sync = stateOnSave(
+    readSyncState(metadata.sync),
+    input.enabled,
+    scope.organizationId,
+  );
+  await patchSettings(connection.id, metadata, patch, sync ? { sync } : {});
+}
+
+/**
+ * A stream's state after its on switch is saved in a workspace, or
+ * undefined when it doesn't change (the worker owns it). Turning it on in
+ * another workspace than before starts it afresh from now.
+ */
+function stateOnSave(
+  current: SyncState | null,
+  enabled: boolean,
+  organizationId: string | null,
+): SyncState | undefined {
+  if (enabled) {
+    if (!(current && current.organizationId === organizationId)) {
+      return initialSyncState(organizationId);
+    }
+    if (
       !current.enabled ||
       current.status === "failed" ||
       current.status === "paused"
     ) {
-      sync = resumeSyncState(current);
+      return resumeSyncState(current);
     }
-  } else if (current?.enabled) {
-    sync = { ...current, enabled: false, status: "paused" };
+    return;
   }
-  await patchSettings(connection.id, metadata, patch, sync);
+  if (current?.enabled) return { ...current, enabled: false, status: "paused" };
 }
 
-/** "Retry now": clears a failed stream and runs it. */
-export async function retrySync(userId: string, provider: string) {
+export interface SegmentSinkInput {
+  region: SegmentRegion;
+  scans: { enabled: boolean; event: string };
+  responses: { enabled: boolean; event: string };
+}
+
+/** Saves Segment's region and event names and turns each stream on or off. */
+export async function saveSegmentSink(
+  scope: ActiveScope,
+  input: SegmentSinkInput,
+): Promise<void> {
+  const connection = await requireConnection(scope.userId, "segment");
+  const metadata = connection.metadata ?? {};
+  const scanEvent = normalizeSegmentEventName(input.scans.event);
+  const responseEvent = normalizeSegmentEventName(input.responses.event);
+  if (!(scanEvent && responseEvent)) {
+    throw new HttpError(
+      400,
+      "VALIDATION_ERROR",
+      "Give each event a name of up to 200 characters.",
+    );
+  }
+  const states: Partial<Record<SyncStateKey, SyncState>> = {};
+  for (const slot of SINK_STREAMS.segment) {
+    const next = stateOnSave(
+      readSyncState(metadata[slot.key]),
+      input[slot.stream].enabled,
+      scope.organizationId,
+    );
+    if (next) states[slot.key] = next;
+  }
+  await patchSettings(
+    connection.id,
+    metadata,
+    { region: input.region, scanEvent, responseEvent },
+    states,
+  );
+}
+
+/**
+ * "Send a test event": one Track call to the source, so the person can find
+ * it in Segment's Debugger (Segment accepts any write key, so this is how a
+ * wrong key or region shows). `region` is the one picked in the panel, which
+ * may not be saved yet.
+ */
+export async function sendSegmentTest(
+  userId: string,
+  region?: SegmentRegion,
+): Promise<void> {
+  if (!dataCallsAllowed()) throw devDisabled();
+  const connection = await requireConnection(userId, "segment");
+  const saved = readSegmentSettings(connection.metadata?.settings);
+  await sendSegmentTestEvent(
+    createSegmentClient(connection.accessToken, region ?? saved.region),
+    crypto.randomUUID(),
+  );
+}
+
+/**
+ * "Retry now": clears a failed stream and runs it. `stream` picks one of a
+ * provider's streams (Segment has two); by default its first.
+ */
+export async function retrySync(
+  userId: string,
+  provider: string,
+  stream?: SinkStream,
+) {
   const connection = await requireConnection(userId, provider);
-  const state = readSyncState(connection.metadata?.sync);
-  if (!state) throw new HttpError(400, "NOT_ENABLED", "The sync isn't on.");
-  await writeSyncState(connection.id, resumeSyncState(state));
+  const slot = isSinkProvider(provider)
+    ? stream
+      ? sinkStreamSlot(provider, stream)
+      : SINK_STREAMS[provider][0]
+    : undefined;
+  const state = slot ? readSyncState(connection.metadata?.[slot.key]) : null;
+  if (!(slot && state)) {
+    throw new HttpError(400, "NOT_ENABLED", "The sync isn't on.");
+  }
+  await writeSyncState(
+    connection.id,
+    resumeSyncState(state),
+    undefined,
+    slot.key,
+  );
   invalidateStreamIndex();
   return runIntegrationSyncs({
     integrationIds: [connection.id],
+    stream: slot.stream,
     budgetMs: 20_000,
   });
 }
@@ -363,6 +471,8 @@ export async function listMailchimpMergeFields(
 
 export interface SinkView {
   sync: SyncState | null;
+  /** Each stream's state, for a provider with more than one (Segment) */
+  streams?: Partial<Record<SinkStream, SyncState | null>>;
   settings: Record<string, unknown>;
   /** The first page of form pages, most recently updated first */
   pages: ScopedFormPage[];
@@ -394,16 +504,22 @@ export async function getSinkView(
   const pageIds = Array.isArray(settings.pageIds)
     ? settings.pageIds.filter((id): id is string => typeof id === "string")
     : [];
-  // Sheets exports scans and has no page list.
+  // Sheets exports scans and Segment sends every page: no page list.
   const [first, selectedPages] =
-    provider === "google-sheets"
+    provider === "google-sheets" || provider === "segment"
       ? [{ items: [], nextCursor: null }, []]
       : await Promise.all([
           listFormPages(scope),
           formPagesByIds(scope, pageIds),
         ]);
+  const slots = isSinkProvider(provider) ? SINK_STREAMS[provider] : [];
   return {
     sync: readSyncState(metadata.sync),
+    ...(slots.length > 1 && {
+      streams: Object.fromEntries(
+        slots.map((slot) => [slot.stream, readSyncState(metadata[slot.key])]),
+      ),
+    }),
     settings,
     pages: first.items,
     pagesCursor: first.nextCursor,

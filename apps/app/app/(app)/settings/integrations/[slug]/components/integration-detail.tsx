@@ -464,10 +464,12 @@ export function IntegrationDetail({
         />
       )}
 
+      {/* A key only checked for its format (Segment's) may be wrong while
+          the connection looks fine, so it can always be replaced. */}
       {apiKey &&
         isConfigured &&
         !usesDataKeyForm(slug) &&
-        (!isConnected || status === "error") && (
+        (!isConnected || status === "error" || apiKey.check === "format") && (
           <ApiKeyConnect
             apiKey={apiKey}
             asAlternative={canOAuth && !isConnected}
@@ -538,7 +540,9 @@ export function IntegrationDetail({
             {(apiKey && !canOAuth
               ? [
                   `Create ${apiKey.label === "API key" ? "an" : "a"} ${apiKey.label.toLowerCase()} in ${name} (link above).`,
-                  "Paste it here. QRdx checks it with the provider and stores it encrypted.",
+                  apiKey.check === "format"
+                    ? `Paste it here. QRdx checks its format and stores it encrypted. ${name} accepts any key, so send a test event once connected.`
+                    : "Paste it here. QRdx checks it with the provider and stores it encrypted.",
                   "Disconnect at any time; delete the key in the provider too if you no longer use it.",
                 ]
               : [

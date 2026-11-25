@@ -21,5 +21,8 @@ export const SUBSTACK_URL = "https://qrdx.substack.com";
 /** r/qrdx, QRdx's own subreddit, run by the founder (made 26 Nov 2026). */
 export const SUBREDDIT_URL = "https://www.reddit.com/r/qrdx/";
 
+/** QRdx's Wikidata item (made 26 Nov 2026). */
+export const WIKIDATA_URL = "https://www.wikidata.org/wiki/Q142292425";
+
 export const NPM_LIBRARY_URL = "https://www.npmjs.com/package/qrdx";
 export const NPM_CLI_URL = "https://www.npmjs.com/package/@qrdx/cli";

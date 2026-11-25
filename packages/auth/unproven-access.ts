@@ -84,6 +84,7 @@ export const DATA_OUT_PROVIDERS = [
   "hubspot",
   "mailchimp",
   "pipedrive",
+  "segment",
   "slack",
 ] as const;
 

@@ -331,4 +331,77 @@ export function isFromQRdx(rawBody: string, header: string, secret: string) {
     keywords: ["spreadsheet", "excel", "rows", "export", "forms", "google"],
     related: ["hubspot", "webhooks", "zapier"],
   },
+  {
+    slug: "segment",
+    name: "Segment",
+    tagline:
+      "Send every scan and form response to a Segment source as a Track event.",
+    description: [
+      "Connect a Segment source with its write key, and each scan of your workspace's codes and each form response on its hosted pages becomes a Track event, ready for your warehouse and the tools Segment sends to. Name the events to fit your tracking plan; they start as QR Code Scanned and Form Submitted.",
+      "Scans carry what QRdx's analytics already record: the code, country, region, city, device, OS, browser, referrer, language, A/B variant and whether it was a QR scan or an NFC tap, never an IP address. Form responses carry the page, the form and every answered question. QRdx doesn't know who scanned, so each event's anonymousId is the code, or the page for a form response: Segment counts one tracked user per code or page, not one per scan.",
+    ],
+    kind: "connect",
+    surface: "integrations",
+    categories: ["automation"],
+    // Twilio allows its logos only with written permission.
+    logo: { type: "feature", icon: "Flash" },
+    plan: "free",
+    builtBy: "QRdx",
+    website: "https://segment.com",
+    primaryAction: {
+      type: "link",
+      label: "Connect Segment",
+      href: "/settings/integrations/segment",
+    },
+    secondaryAction: {
+      type: "link",
+      label: "Or use a webhook",
+      href: "/dashboard?to=settings/webhooks",
+    },
+    steps: [
+      {
+        title: "Add an HTTP API source in Segment",
+        body: "In your Segment workspace, add a source of the HTTP API type, then open its Settings → API Keys and copy the write key.",
+      },
+      {
+        title: "Paste the write key",
+        body: "Settings → Integrations → Segment. Segment accepts any key at this point, so QRdx checks only its format.",
+      },
+      {
+        title: "Pick the region and the events",
+        body: "Choose US or EU to match your Segment workspace, turn on scans, form responses or both, and rename the events if you like. Only scans and responses from then on are sent.",
+      },
+      {
+        title: "Send a test event",
+        body: "Click Send a test event, then look for QRdx Test Event in the source's Debugger. If it isn't there, check the write key and the region.",
+      },
+    ],
+    capabilities: [
+      {
+        title: "Scans as Track events",
+        description:
+          "Code, place, device, browser, referrer, language, A/B variant and QR or NFC. Never an IP address.",
+      },
+      {
+        title: "Form responses as Track events",
+        description:
+          "The page, the form and every answered question, keyed by its label.",
+      },
+      {
+        title: "Delivered reliably",
+        description:
+          "Batched and retried with backoff for about two days. Each event carries a stable messageId, which Segment and its warehouses use to drop repeats. The last sync shows in settings.",
+      },
+    ],
+    keywords: [
+      "segment",
+      "twilio",
+      "cdp",
+      "customer data",
+      "track",
+      "events",
+      "warehouse",
+    ],
+    related: ["google-sheets", "webhooks", "zapier"],
+  },
 ];

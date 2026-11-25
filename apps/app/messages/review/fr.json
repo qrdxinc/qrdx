@@ -20731,6 +20731,10 @@
     "source": "3ec84eb17b6a",
     "status": "machine"
   },
+  "app.settings.integrations.apiKeyConnect.qrdxChecksTheKeyFormat": {
+    "source": "e0d15dfe6a95",
+    "status": "machine"
+  },
   "app.settings.integrations.apiKeyConnect.orConnectWithALabel": {
     "source": "cd1a9415e75d",
     "status": "machine"
@@ -21337,6 +21341,98 @@
   },
   "app.settings.integrations.responseSinkPanel.couldntLoadMorePages": {
     "source": "56be4d318a76",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.title": {
+    "source": "d1c184644c2c",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.intro": {
+    "source": "38050cea36b0",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.region": {
+    "source": "d3a008ef1335",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.regionUs": {
+    "source": "49dca65f362f",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.regionEu": {
+    "source": "e595f45dc6c9",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.regionHelp": {
+    "source": "06b7f12e541c",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.scans": {
+    "source": "d128917a9540",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.scansHelp": {
+    "source": "0c8d5270947c",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.scansNoun": {
+    "source": "5982f892947e",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.responses": {
+    "source": "5db3b4a7d498",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.responsesHelp": {
+    "source": "9240d7b4df84",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.responsesNoun": {
+    "source": "e30b3910ffd9",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.eventName": {
+    "source": "25bc9efedfb7",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.testHelp": {
+    "source": "e5a690e26716",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.sendTest": {
+    "source": "028284e97d7d",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.testSent": {
+    "source": "c961c1d27c8a",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.testFailed": {
+    "source": "d1c23fa3b233",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.save": {
+    "source": "1509f561f241",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.saved": {
+    "source": "b5c120b316c2",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.sendingToSegment": {
+    "source": "5726c75aa1b5",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.couldntSave": {
+    "source": "d57449a32190",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.couldntLoad": {
+    "source": "a050175f094b",
+    "status": "machine"
+  },
+  "app.settings.integrations.segmentPanel.retryFailed": {
+    "source": "f4ae1221c9d4",
     "status": "machine"
   },
   "app.settings.integrations.slackBotPanel.qrdxBot": {

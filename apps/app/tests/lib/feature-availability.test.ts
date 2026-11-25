@@ -1008,6 +1008,7 @@ describe("a production-like deployment", () => {
       "dub",
       "google-drive",
       "google-sheets",
+      "segment",
       "email-alerts",
     ]) {
       expect(isVisible(availability, slug), slug).toBe(true);

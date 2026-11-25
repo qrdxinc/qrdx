@@ -993,7 +993,9 @@ describe("Pipedrive sync", () => {
 describe("Pipedrive as a data-out stream", () => {
   it("is a form-response sink", () => {
     expect(SINK_PROVIDERS).toContain("pipedrive");
-    expect(SINK_STREAMS.pipedrive).toBe("responses");
+    expect(SINK_STREAMS.pipedrive).toEqual([
+      { stream: "responses", key: "sync" },
+    ]);
   });
 
   it("reads a small batch, since each response is a few requests", () => {

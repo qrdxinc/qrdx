@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useId, useState } from "react";
 import { toast } from "sonner";
+import { useConfirmation } from "@/components/confirm-identity/provider";
 import { emitSound } from "@/components/editor/sound";
 import { connectWithApiKeyAction } from "../../connected-account-actions";
 
@@ -23,7 +24,11 @@ interface ApiKeyConnectProps {
   reconnect?: boolean;
 }
 
-/** Paste-a-key connection: checked with the provider, stored encrypted. */
+/**
+ * Paste-a-key connection: checked with the provider (or only its format,
+ * where the provider accepts any key), stored encrypted. A tool QRdx sends
+ * data to (Segment) asks "Confirm it's you" first.
+ */
 export function ApiKeyConnect({
   slug,
   name,
@@ -33,6 +38,7 @@ export function ApiKeyConnect({
 }: ApiKeyConnectProps) {
   const t = useTranslations("app.settings.integrations.apiKeyConnect");
   const router = useRouter();
+  const { withConfirmation } = useConfirmation();
   const id = useId();
   const [value, setValue] = useState("");
   const [pending, setPending] = useState(false);
@@ -43,7 +49,12 @@ export function ApiKeyConnect({
     setPending(true);
     setError(null);
     try {
-      const result = await connectWithApiKeyAction(slug, value);
+      const result = await withConfirmation(
+        () => connectWithApiKeyAction(slug, value),
+        "connect-data-out",
+      );
+      // Cancelled, or still not confirmed (the dialog said so).
+      if (!result) return;
       if (result.ok) {
         setValue("");
         emitSound("success");
@@ -120,7 +131,9 @@ export function ApiKeyConnect({
             id={`${id}-hint`}
           >
             <Lock1 aria-hidden className="size-3.5 shrink-0" />
-            {t("qrdxChecksTheKeyWith", { name })}
+            {apiKey.check === "format"
+              ? t("qrdxChecksTheKeyFormat", { name })
+              : t("qrdxChecksTheKeyWith", { name })}
           </p>
         )}
       </div>

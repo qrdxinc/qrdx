@@ -41,7 +41,7 @@ import {
 
 // What data-out syncs and exports read: a workspace's scans and form
 // responses, oldest first after a cursor. Nothing that identifies a visitor
-// (visitor hash, IP) is ever selected.
+// (visitor hash, IP, precise location) is ever selected.
 
 export interface SyncScope {
   userId: string;
@@ -140,6 +140,9 @@ export async function loadScans(
       browser: qrScan.browser,
       referer: qrScan.referer,
       language: qrScan.language,
+      region: qrScan.region,
+      variant: qrScan.variant,
+      source: qrScan.source,
       codeId: qrCode.id,
       slug: qrCode.slug,
       title: qrCode.title,
@@ -166,6 +169,9 @@ export async function loadScans(
     browser: row.browser,
     referer: row.referer,
     language: row.language,
+    region: row.region,
+    variant: row.variant,
+    source: row.source,
   }));
 }
 

@@ -1,13 +1,16 @@
 // /api/integrations/sync/<provider> (stream settings) and its /pages list for
 // the form-response integrations: Pipedrive is one of them, with its own
 // "also add a lead" setting; other providers never get it, and a provider
-// that isn't a data-out integration is a 404. The database work is replaced
-// by fakes that record their calls.
+// that isn't a data-out integration is a 404. Segment has its own settings
+// (a region and two streams), a test event and "Retry now" per stream. The
+// database work is replaced by fakes that record their calls.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const state = vi.hoisted(() => ({
   saved: [] as Array<{ provider: string; input: Record<string, unknown> }>,
   listed: [] as string[],
+  retried: [] as unknown[][],
+  tested: [] as unknown[][],
 }));
 
 vi.mock("@/lib/connected-accounts/server", () => ({
@@ -25,8 +28,17 @@ vi.mock("@/lib/scope", () => ({
 }));
 vi.mock("@/lib/data-connections/settings", () => ({
   getSinkView: async (_scope: unknown, provider: string) => ({ provider }),
-  retrySync: async () => ({}),
+  retrySync: async (...args: unknown[]) => {
+    state.retried.push(args);
+    return {};
+  },
   setSheetSync: async () => undefined,
+  saveSegmentSink: async (_scope: unknown, input: Record<string, unknown>) => {
+    state.saved.push({ provider: "segment", input });
+  },
+  sendSegmentTest: async (...args: unknown[]) => {
+    state.tested.push(args);
+  },
   saveResponseSink: async (
     _scope: unknown,
     provider: string,
@@ -60,11 +72,23 @@ const put = (provider: string, body: unknown) =>
     context(provider),
   );
 
+const post = (provider: string, body: unknown) =>
+  sync.POST(
+    new Request(`http://localhost/api/integrations/sync/${provider}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+    }),
+    context(provider),
+  );
+
 const SETTINGS = { enabled: true, pageIds: null, forms: {} };
 
 beforeEach(() => {
   state.saved.length = 0;
   state.listed.length = 0;
+  state.retried.length = 0;
+  state.tested.length = 0;
 });
 
 describe("PUT /api/integrations/sync/pipedrive", () => {
@@ -101,6 +125,64 @@ describe("PUT /api/integrations/sync/pipedrive", () => {
     });
     expect(response.status).toBe(400);
     expect(state.saved).toEqual([]);
+  });
+});
+
+describe("Segment on /api/integrations/sync/segment", () => {
+  const SEGMENT = {
+    region: "eu",
+    scans: { enabled: true, event: "Menu Scanned" },
+    responses: { enabled: false, event: "Form Submitted" },
+  };
+
+  it("saves the region and both streams", async () => {
+    const response = await put("segment", SEGMENT);
+    expect(response.status).toBe(200);
+    expect(state.saved).toEqual([{ provider: "segment", input: SEGMENT }]);
+  });
+
+  it.each([
+    ["an unknown region", { ...SEGMENT, region: "apac" }],
+    [
+      "an event name over 200 characters",
+      { ...SEGMENT, scans: { enabled: true, event: "x".repeat(201) } },
+    ],
+    ["a missing stream", { region: "us", scans: SEGMENT.scans }],
+    ["the form-response settings", SETTINGS],
+  ])("refuses %s, and saves nothing", async (_case, body) => {
+    expect((await put("segment", body)).status).toBe(400);
+    expect(state.saved).toEqual([]);
+  });
+
+  it("sends a test event, to the region picked", async () => {
+    const response = await post("segment", { action: "test", region: "us" });
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ sent: true });
+    expect(state.tested).toEqual([["user_1", "us"]]);
+  });
+
+  it("sends no test event for another provider", async () => {
+    expect((await post("hubspot", { action: "test" })).status).toBe(400);
+    expect(state.tested).toEqual([]);
+  });
+
+  it("retries the stream asked for", async () => {
+    expect(
+      (await post("segment", { action: "retry", stream: "responses" })).status,
+    ).toBe(200);
+    expect((await post("hubspot", { action: "retry" })).status).toBe(200);
+    expect(state.retried).toEqual([
+      ["user_1", "segment", "responses"],
+      ["user_1", "hubspot", undefined],
+    ]);
+  });
+
+  it("refuses an unknown stream or action", async () => {
+    expect(
+      (await post("segment", { action: "retry", stream: "clicks" })).status,
+    ).toBe(400);
+    expect((await post("segment", { action: "delete" })).status).toBe(400);
+    expect(state.retried).toEqual([]);
   });
 });
 

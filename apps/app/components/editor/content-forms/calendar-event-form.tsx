@@ -6,7 +6,13 @@
 
 import { Warning2 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useSyncExternalStore } from "react";
+import {
+  currentTimeZoneName,
+  deviceTimeZone,
+  timeZoneNames,
+  utcOffset,
+} from "@/lib/time-zones";
 import { calendarEventSchema } from "@/lib/validations/qr-content";
 import { useQREditorStore } from "@/store/editor-store";
 import type { CalendarEventContent } from "@/types/qr-content";
@@ -16,30 +22,31 @@ import { type FormField, type FormOption, SchemaForm } from "./schema-form";
 const timed = (values: Record<string, string | boolean>) =>
   values.allDay !== true;
 
-function deviceTimeZone(): string {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-  } catch {
-    return "UTC";
-  }
-}
-
 const noSubscribe = () => () => {};
 
-/** Every zone the browser knows, UTC first, plus `extra` ones (aliases). */
-function zoneOptions(extra: readonly (string | undefined)[]): FormOption[] {
-  let zones: string[] = [];
-  try {
-    zones = Intl.supportedValuesOf("timeZone");
-  } catch {
-    zones = [];
-  }
-  const all = new Set(["UTC", ...zones]);
-  for (const zone of extra) if (zone) all.add(zone);
-  return [...all].map((zone) => ({
-    value: zone,
-    label: zone.replaceAll("_", " "),
-  }));
+/**
+ * Every zone the browser knows by its current name, plus `extra` ones it
+ * doesn't list, each with its offset on the event's day:
+ * "Asia/Kolkata (UTC+05:30)".
+ */
+function zoneOptions(
+  extra: readonly (string | undefined)[],
+  day: Date,
+): FormOption[] {
+  const zones = new Set(timeZoneNames());
+  for (const zone of extra) if (zone) zones.add(zone);
+  return [...zones].map((zone) => {
+    const name = zone.replaceAll("_", " ");
+    const offset = zone === "UTC" ? "" : utcOffset(zone, day);
+    return { value: zone, label: offset ? `${name} (${offset})` : name };
+  });
+}
+
+/** Noon UTC on the event's start date, or now before there is one. */
+function eventDay(startDate: string | undefined): Date {
+  return startDate && /^\d{4}-\d{2}-\d{2}$/.test(startDate)
+    ? new Date(`${startDate}T12:00:00Z`)
+    : new Date();
 }
 
 function eventFields(zone: string, options: FormOption[]): FormField[] {
@@ -142,15 +149,28 @@ export function CalendarEventForm() {
   const stored = useQREditorStore(
     (state) => state.contentConfigs["calendar-event"],
   ) as CalendarEventContent | undefined;
+  const setContentConfig = useQREditorStore((state) => state.setContentConfig);
   const hasStored = stored !== undefined;
   const storedZone = stored?.timeZone;
+  const startDate = stored?.startDate;
   // An event stored without a time zone is in UTC, as the encoder reads it:
   // only a blank form starts in this device's zone.
   const fields = useMemo(
     () =>
-      eventFields(hasStored ? "UTC" : zone, zoneOptions([zone, storedZone])),
-    [hasStored, zone, storedZone],
+      eventFields(
+        hasStored ? "UTC" : zone,
+        zoneOptions([zone, storedZone], eventDay(startDate)),
+      ),
+    [hasStored, zone, storedZone, startDate],
   );
+  // An event stored under a retired name (Asia/Calcutta) switches to the
+  // current one. Both convert to UTC the same way, so the code stays the same.
+  useEffect(() => {
+    const current = stored?.timeZone && currentTimeZoneName(stored.timeZone);
+    if (stored && current && current !== stored.timeZone) {
+      setContentConfig("calendar-event", { ...stored, timeZone: current });
+    }
+  }, [stored, setContentConfig]);
   return (
     <SchemaForm
       fields={fields}

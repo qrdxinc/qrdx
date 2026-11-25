@@ -10,6 +10,7 @@ import {
   isMigrationSourceProvider,
   isShortLinkProvider,
   verifyMigrationSourceCredentials,
+  verifySegmentWriteKey,
   verifyShortLinkCredentials,
 } from "@repo/integrations";
 import { and, eq } from "drizzle-orm";
@@ -20,6 +21,8 @@ import {
   getConnection,
   getSessionUserId,
 } from "@/lib/connected-accounts/server";
+import { connectConfirmationNeeded } from "@/lib/data-connections/connect-confirmation";
+import { dataCallsAllowed } from "@/lib/data-connections/server";
 import { HttpError } from "@/lib/error-response";
 import { settingsActionText } from "@/lib/i18n/settings-action-text";
 import type { Translator } from "@/lib/i18n/translator";
@@ -79,6 +82,9 @@ async function guard(
   }
 }
 
+/** Data out with a pasted key: Segment's write key. */
+const isDataOutKeyProvider = (provider: string) => provider === "segment";
+
 /** Checks a pasted key with the provider; null when it takes none. */
 function verifyKey(
   provider: string,
@@ -90,13 +96,20 @@ function verifyKey(
   if (isMigrationSourceProvider(provider)) {
     return verifyMigrationSourceCredentials(provider, apiKey);
   }
+  if (isDataOutKeyProvider(provider)) {
+    // Segment accepts every key: its format, and (where calls to connected
+    // tools are allowed) that the Tracking API answers.
+    return verifySegmentWriteKey(apiKey, { reachOut: dataCallsAllowed() });
+  }
   return null;
 }
 
 /**
- * Connects Bitly (generic access token), Rebrandly, Short.io or Uniqode (an
- * import source) with a pasted key: checked against the provider first, then
- * stored encrypted.
+ * Connects Bitly (generic access token), Rebrandly, Short.io, Uniqode (an
+ * import source) or Segment (a source's write key) with a pasted key:
+ * checked against the provider first, then stored encrypted. Segment gets
+ * the account's scans and form answers, so it asks "Confirm it's you" first
+ * (CONFIRMATION_REQUIRED), as the data-out sign-ins do.
  */
 export async function connectWithApiKeyAction(
   provider: string,
@@ -118,7 +131,8 @@ export async function connectWithApiKeyAction(
   const definition = getIntegrationRegistry().get(input.data.provider);
   const takesKeys =
     isShortLinkProvider(input.data.provider) ||
-    isMigrationSourceProvider(input.data.provider);
+    isMigrationSourceProvider(input.data.provider) ||
+    isDataOutKeyProvider(input.data.provider);
   // Only offered for the ones that do: English, as it was.
   if (!(definition?.apiKey && takesKeys)) {
     return { ok: false, error: "This integration doesn't use API keys." };
@@ -129,6 +143,10 @@ export async function connectWithApiKeyAction(
       error: (await text())("notConfigured", { name: definition.name }),
     };
   }
+
+  // Before the limit, so the round trip that asks doesn't use one up.
+  const needed = await connectConfirmationNeeded(input.data.provider, userId);
+  if (needed) return needed;
 
   const limited = await guard(userId, "api-key", text);
   if (limited) return limited;
@@ -163,7 +181,6 @@ export async function connectWithApiKeyAction(
     refreshToken: null,
     expiresAt: null,
     scopes: null,
-    metadata,
     status: "active",
     updatedAt: new Date(),
   };
@@ -181,7 +198,12 @@ export async function connectWithApiKeyAction(
   if (existing[0]) {
     await db
       .update(integration)
-      .set(values)
+      .set({
+        ...values,
+        // A replaced Segment key keeps the region, event names and streams
+        // (left alone, so a sync writing its state meanwhile isn't undone).
+        ...(isDataOutKeyProvider(input.data.provider) ? {} : { metadata }),
+      })
       .where(eq(integration.id, existing[0].id));
   } else {
     await db.insert(integration).values({
@@ -189,6 +211,7 @@ export async function connectWithApiKeyAction(
       userId,
       provider: input.data.provider,
       createdAt: new Date(),
+      metadata,
       ...values,
     });
   }

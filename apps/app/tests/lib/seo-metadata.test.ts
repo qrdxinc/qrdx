@@ -177,6 +177,12 @@ describe("Organization schema", () => {
     );
   });
 
+  it("links QRdx's Wikidata item", () => {
+    expect(organizationSchema.sameAs).toContain(
+      "https://www.wikidata.org/wiki/Q142292425",
+    );
+  });
+
   it("names the founder's X account by its real handle", () => {
     expect(organizationSchema.founder.sameAs).toContain(
       "https://x.com/bucha_ritesh",
