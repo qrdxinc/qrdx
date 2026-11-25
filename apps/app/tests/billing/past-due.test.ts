@@ -39,7 +39,10 @@ vi.mock("@/ee/audit-log/plan-change", () => ({
 vi.mock("@/lib/affiliates/commissions", () => ({
   handleAffiliateWebhook: async () => {},
 }));
-vi.mock("@/lib/analytics/server", () => ({ trackServer: () => {} }));
+vi.mock("@/lib/analytics/server", () => ({
+  trackServer: () => {},
+  trackServerAfter: () => {},
+}));
 vi.mock("@/lib/email/payment-failed", () => ({
   sendPaymentFailedEmail: async (input: Record<string, unknown>) => {
     state.failed.push(input);
