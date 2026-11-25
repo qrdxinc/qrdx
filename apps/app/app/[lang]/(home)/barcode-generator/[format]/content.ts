@@ -943,7 +943,7 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
     rules: [
       "Any text that fits: up to 35 digits, 21 capital letters (with digits, spaces and $ % * + - . / :) or 15 characters of other text. Accents and other scripts are stored as UTF-8 bytes, 2 or 3 to a character, so less of them fits.",
       "Micro QR comes in four sizes: M1 (11 × 11 modules), M2 (13 × 13), M3 (15 × 15) and M4 (17 × 17). M1 holds digits only and M2 digits and capital letters; other text starts at M3. The generator picks the smallest size your text fits and says which under the field.",
-      "It then uses the highest error correction that size has room for. M1 only detects errors. M2 and M3 have level L or M, and M4 L, M or Q, which let a reader recover about 7%, 15% or 25% of a damaged code.",
+      "M1 only detects errors. The other sizes get error correction level M when there's room for it, or L when the text only fits at L: a reader can recover about 15% of a damaged code at M and 7% at L.",
     ],
     sizing: [
       "The vector downloads draw each module 0.71 mm square: the sample text, an M4, comes out 14.8 × 14.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",

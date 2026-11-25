@@ -120,6 +120,19 @@ const EXTRA_VALUES: Partial<Record<BarcodeFormatId, string[]>> = {
   datamatrix: ["héllo ✓ 日本", "A".repeat(300)],
   pdf417: ["Line one\nLine two", "1234567890".repeat(20)],
   aztec: ["héllo ✓", "https://qrdx.dev/barcode-generator?x=1"],
+  // Each of the four sizes, the most of each kind of text, and accents,
+  // other scripts and a line break.
+  microqr: [
+    "12345",
+    "123456",
+    "PCB-0042",
+    "héllo ✓",
+    "日本語テキ",
+    "line\ntwo",
+    "9".repeat(35),
+    "A".repeat(21),
+    "x".repeat(15),
+  ],
   // The smallest and largest sizes, and the most of each kind of text.
   rmqr: [
     "1",
