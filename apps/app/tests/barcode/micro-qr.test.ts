@@ -70,10 +70,13 @@ async function drawn(text: string): Promise<string> {
     .flatten({ background: "#ffffff" })
     .png()
     .toBuffer();
-  const found = await read(new Blob([new Uint8Array(png)], { type: "image/png" }), {
-    formats: ["MicroQRCode"],
-    isPure: true,
-  });
+  const found = await read(
+    new Blob([new Uint8Array(png)], { type: "image/png" }),
+    {
+      formats: ["MicroQRCode"],
+      isPure: true,
+    },
+  );
   expect(found.map((code) => code.text)).toEqual([text]);
   const [code] = found;
   // Modules on a side, from the drawing: 2 units each, 2 modules of quiet
@@ -153,7 +156,12 @@ describe("microQrSymbol", () => {
 
   it.each([
     ["digits", "0123456789", 60, 36],
-    ["capital letters, digits and symbols", "0123456789ABCXYZ $%*+-./:", 60, 24],
+    [
+      "capital letters, digits and symbols",
+      "0123456789ABCXYZ $%*+-./:",
+      60,
+      24,
+    ],
     ["mostly digits with letters", "0123456789012345AB", 60, 34],
     ["lowercase and digits", "0123456789abcxyz-", 60, 18],
     ["accents", "abcé ü ñ", 40, 12],
@@ -181,6 +189,8 @@ describe("microQrSymbol", () => {
   it("turns Kanji mode off: the text is UTF-8", () => {
     const style = { ...STYLE, rotation: 0 as const };
     expect(drawOptions("microqr", "日本", style).suppresskanjimode).toBe(true);
-    expect(drawOptions("rmqr", "日本", style).suppresskanjimode).toBeUndefined();
+    expect(
+      drawOptions("rmqr", "日本", style).suppresskanjimode,
+    ).toBeUndefined();
   });
 });

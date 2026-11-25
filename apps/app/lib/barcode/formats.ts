@@ -901,7 +901,8 @@ function microQrInput(format: BarcodeFormat, raw: string): BarcodeInput {
   const checked = textInput(format, raw, null);
   if (!checked.ok) return checked;
   const symbol = microQrSymbol(raw);
-  if (!symbol) return fail({ code: "microqrTooLong", values: { ...MICRO_QR_LIMITS } });
+  if (!symbol)
+    return fail({ code: "microqrTooLong", values: { ...MICRO_QR_LIMITS } });
   return done(raw, [
     symbol.version === "M1"
       ? { code: "microqrSizeM1", values: { modules: symbol.modules } }

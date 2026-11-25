@@ -458,7 +458,9 @@ describe("Micro QR", () => {
       "Drawn as M2: 13 × 13 modules, error correction level M.",
     );
     // Capital letters start at M2, lowercase and other bytes at M3.
-    expect(ok("microqr", "ABCDEF").note).toMatch(/^Drawn as M2: 13 × 13 .* L\.$/);
+    expect(ok("microqr", "ABCDEF").note).toMatch(
+      /^Drawn as M2: 13 × 13 .* L\.$/,
+    );
     expect(ok("microqr", "a").note).toMatch(/^Drawn as M3: 15 × 15 .* M\.$/);
     expect(ok("microqr", "QRdx Micro QR").note).toMatch(
       /^Drawn as M4: 17 × 17 .* M\.$/,
