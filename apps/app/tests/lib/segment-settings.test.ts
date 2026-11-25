@@ -1,7 +1,8 @@
 // Segment's settings (lib/data-connections/settings.ts): the region and event
 // names, each stream's switch (a stream's state is only written when its
-// switch changes; the worker owns it otherwise), the test event, "Retry now"
-// for one stream, and the panel's view, which never holds the write key.
+// switch changes, and turning it off writes only the switch; the worker owns
+// the rest), the test event, "Retry now" for one stream, and the panel's
+// view, which never holds the write key.
 // The database is a fake that records each statement's values; fetch is
 // faked too.
 
@@ -91,8 +92,13 @@ vi.mock("@/lib/data-connections/sync", () => ({
   },
 }));
 
-const { saveSegmentSink, sendSegmentTest, retrySync, getSinkView } =
-  await import("@/lib/data-connections/settings");
+const {
+  saveSegmentSink,
+  sendSegmentTest,
+  retrySync,
+  getSinkView,
+  setSheetSync,
+} = await import("@/lib/data-connections/settings");
 
 const SCOPE = { userId: "user_1", organizationId: "org_1" } as never;
 const INPUT = {
@@ -127,6 +133,37 @@ function lastWrite() {
     }
   });
   return out;
+}
+
+/** A statement's text, nested fragments included. */
+function text(fragment: SqlFragment): string {
+  return [
+    fragment.text,
+    ...fragment.values.map((value) =>
+      value && typeof value === "object" && "values" in value
+        ? text(value as SqlFragment)
+        : "",
+    ),
+  ].join(" ");
+}
+
+/**
+ * The streams the last write switched off in place: `enabled` false and
+ * status "paused", nothing else of their state.
+ */
+function switchedOff(): string[] {
+  const write = state.writes.at(-1) as SqlFragment;
+  const paths = flat(write).filter(
+    (value): value is string => typeof value === "string",
+  );
+  const keys = paths.flatMap((path) => {
+    const match = /^\{(\w+),enabled\}$/.exec(path);
+    return match ? [match[1] as string] : [];
+  });
+  for (const key of keys) expect(paths).toContain(`{${key},status}`);
+  expect(text(write)).toContain("'false'::jsonb");
+  expect(text(write)).toContain(`'"paused"'::jsonb`);
+  return keys;
 }
 
 let fetched: string[] = [];
@@ -184,7 +221,7 @@ describe("saving Segment's settings", () => {
     expect(lastWrite().states).toEqual({});
   });
 
-  it("pauses only the stream turned off", async () => {
+  it("pauses only the stream turned off, writing only its switch", async () => {
     state.metadata = {
       scansSync: { ...initialSyncState("org_1"), status: "ok", delivered: 9 },
       responsesSync: { ...initialSyncState("org_1"), status: "ok" },
@@ -193,13 +230,19 @@ describe("saving Segment's settings", () => {
       ...INPUT,
       scans: { ...INPUT.scans, enabled: false },
     });
-    const { states } = lastWrite();
-    expect(Object.keys(states)).toEqual(["scansSync"]);
-    expect(states.scansSync).toMatchObject({
-      enabled: false,
-      status: "paused",
-      delivered: 9,
-    });
+    // No copy of the state read before: a run delivering meanwhile keeps
+    // the cursor and totals it writes
+    expect(lastWrite().states).toEqual({});
+    expect(switchedOff()).toEqual(["scansSync"]);
+  });
+
+  it("turns Sheets' one stream off the same way", async () => {
+    state.metadata = {
+      sync: { ...initialSyncState("org_1"), status: "ok", delivered: 9 },
+    };
+    await setSheetSync(SCOPE, false);
+    expect(lastWrite().states).toEqual({});
+    expect(switchedOff()).toEqual(["sync"]);
   });
 
   it("resumes a failed stream and keeps its cursor", async () => {

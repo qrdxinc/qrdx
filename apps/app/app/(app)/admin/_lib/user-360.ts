@@ -27,7 +27,6 @@ import {
   webhookDelivery,
   webhookEndpoint,
 } from "@repo/database";
-import { readSyncState } from "@repo/integrations/src/sinks/state";
 import {
   and,
   count,
@@ -52,6 +51,7 @@ import { getPlan } from "@/lib/plans";
 import { parseUserAgent } from "@/lib/scans";
 import { getPolarCustomerUrl } from "./polar";
 import { isStuckImport } from "./rules";
+import { integrationStreams } from "./sync-streams";
 
 // Data behind the user 360 page (/admin/users/<id>). One loader per section,
 // so each section loads, streams and fails on its own. Secrets (tokens,
@@ -521,8 +521,8 @@ export async function loadIntegrations(userId: string) {
       lastSyncAt: integration.lastSyncAt,
       createdAt: integration.createdAt,
       updatedAt: integration.updatedAt,
-      // The one stream, or Segment's scans (else responses) stream
-      sync: sql<unknown>`coalesce(${integration.metadata}::jsonb -> 'sync', ${integration.metadata}::jsonb -> 'scansSync', ${integration.metadata}::jsonb -> 'responsesSync')`,
+      // Each stream's state (Segment has two), nothing else from metadata
+      streams: sql<unknown>`jsonb_build_object('sync', ${integration.metadata}::jsonb -> 'sync', 'scansSync', ${integration.metadata}::jsonb -> 'scansSync', 'responsesSync', ${integration.metadata}::jsonb -> 'responsesSync')`,
     })
     .from(integration)
     .where(
@@ -536,22 +536,10 @@ export async function loadIntegrations(userId: string) {
   const { rows, more } = latest(read, limit);
   return {
     more,
-    rows: rows.map(({ sync, ...row }) => {
-      const state = readSyncState(sync);
-      return {
-        ...row,
-        sync: state
-          ? {
-              enabled: state.enabled,
-              status: state.status,
-              lastError: state.lastError,
-              lastAttemptAt: state.lastAttemptAt,
-              lastSuccessAt: state.lastSuccessAt,
-              delivered: state.delivered,
-            }
-          : null,
-      };
-    }),
+    rows: rows.map(({ streams, ...row }) => ({
+      ...row,
+      streams: integrationStreams(streams),
+    })),
   };
 }
 

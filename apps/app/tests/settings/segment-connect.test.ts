@@ -2,9 +2,9 @@
 // Segment gets the account's scans and form answers, so it asks "Confirm it's
 // you" first, like the data-out sign-ins. Segment answers 200 to any key, so
 // QRdx checks the format and, where calls to connected tools are allowed,
-// that the Tracking API answers (an empty batch); then the key is stored
-// encrypted and never returned. A replaced key keeps the connection's
-// settings and streams. The confirmation is the real one on
+// that the Tracking API answers (an empty batch, in the region a replaced
+// key's connection has picked); then the key is stored encrypted and never
+// returned. A replaced key keeps the connection's settings and streams. The confirmation is the real one on
 // in-memory tables (tests/support/fake-db.ts); fetch is faked.
 import { decryptApiKey, initializeIntegrations } from "@repo/integrations";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -160,7 +160,7 @@ describe("connecting Segment with a write key", () => {
     expect(fakeDb.rows("integration")).toEqual([]);
   });
 
-  it("replaces the key and keeps the region, event names and streams", async () => {
+  it("replaces the key, checked in the saved region, and keeps the region, event names and streams", async () => {
     const metadata = {
       settings: { region: "eu", scanEvent: "Menu Scanned" },
       scansSync: { enabled: true, status: "ok", delivered: 12 },
@@ -183,6 +183,10 @@ describe("connecting Segment with a write key", () => {
     expect(await connectWithApiKeyAction("segment", replacement)).toEqual({
       ok: true,
     });
+    // The connection's EU workspace answers the check, not the US endpoint
+    expect(fetched.map((call) => call.url)).toEqual([
+      "https://events.eu1.segmentapis.com/v1/batch",
+    ]);
     const rows = fakeDb.rows("integration");
     expect(rows).toHaveLength(1);
     expect(decryptApiKey(String(rows[0]?.accessToken))).toBe(replacement);

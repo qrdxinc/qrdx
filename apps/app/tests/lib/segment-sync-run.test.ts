@@ -4,7 +4,8 @@
 // never holds the other back, and a trigger runs only the stream it's for.
 // The database, the connection and the loaders are fakes; the worker loop
 // and the Segment sink are the real ones, with fetch faked. The fake `sql`
-// keeps each statement's text and values, so the test can read the writes.
+// keeps each statement's text and values, so the test can read the writes
+// (a run's write is merged into its stream's state; it never sets the switch).
 
 import type { SyncState } from "@repo/integrations";
 import { initialSyncState } from "@repo/integrations/src/sinks/state";
@@ -68,7 +69,8 @@ vi.mock("@repo/database", () => {
           return {
             // biome-ignore lint/suspicious/noThenProperty: an awaited query builder
             then: done.then.bind(done),
-            returning: async () => [{ id: "int_1" }],
+            // Both streams stay on (a run's write reads its switch back)
+            returning: async () => [{ id: "int_1", enabled: "true" }],
           };
         },
       }),
@@ -172,14 +174,22 @@ function strings(fragment: SqlFragment): string[] {
   );
 }
 
-/** Each stream's last written state, by its metadata key. */
+/**
+ * Each stream's state after the writes, by its metadata key: a run's write
+ * holds the fields it owns, merged into the stored state (`||`).
+ */
 function lastStates(): Record<string, SyncState> {
   const out: Record<string, SyncState> = {};
   for (const write of state.writes) {
     const values = strings(write);
     const path = values.find((value) => /^\{\w+\}$/.test(value));
-    const json = values.find((value) => value.startsWith('{"enabled"'));
-    if (path && json) out[path.slice(1, -1)] = JSON.parse(json);
+    const json = values.find((value) => value.startsWith('{"'));
+    if (!(path && json)) continue;
+    const key = path.slice(1, -1);
+    out[key] = {
+      ...((out[key] ?? state.metadata[key]) as SyncState),
+      ...JSON.parse(json),
+    };
   }
   return out;
 }

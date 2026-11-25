@@ -29,6 +29,22 @@ describe("providerRequest", () => {
     ).resolves.toBeUndefined();
   });
 
+  it("reads a 2xx that isn't JSON as an error, unless told to ignore the body", async () => {
+    mockFetch(new Response("<html>ok</html>", { status: 200 }));
+    await expect(
+      providerRequest(PROVIDER, "https://api.acme.test/x")
+    ).rejects.toBeInstanceOf(SyntaxError);
+    mockFetch(new Response("<html>ok</html>", { status: 200 }));
+    await expect(
+      providerRequest(PROVIDER, "https://api.acme.test/x", { ignoreBody: true })
+    ).resolves.toBeUndefined();
+    // Errors are still errors
+    mockFetch(json({ message: "nope" }, 503));
+    await expect(
+      providerRequest(PROVIDER, "https://api.acme.test/x", { ignoreBody: true })
+    ).rejects.toMatchObject({ code: "server" });
+  });
+
   it.each([
     [401, "unauthorized"],
     [402, "upgrade_required"],

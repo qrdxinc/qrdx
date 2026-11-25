@@ -115,6 +115,11 @@ export function readErrorMessage(body: unknown): string | undefined {
 export interface ProviderRequestInit extends RequestInit {
   /** Overrides the parsed message for a given error body. */
   describeError?: (body: unknown, status: number) => string | undefined;
+  /**
+   * Any 2xx is success and its body isn't parsed: for a tool whose answer
+   * carries nothing the caller needs, and may not always be JSON.
+   */
+  ignoreBody?: boolean;
 }
 
 /**
@@ -126,7 +131,7 @@ export async function providerRequest<T>(
   url: string,
   init: ProviderRequestInit = {}
 ): Promise<T> {
-  const { describeError, ...requestInit } = init;
+  const { describeError, ignoreBody, ...requestInit } = init;
   let response: Response;
   try {
     response = await fetch(url, requestInit);
@@ -166,6 +171,11 @@ export async function providerRequest<T>(
     });
   }
 
+  if (ignoreBody) {
+    // Read only to free the connection; one cut off after a 2xx changes nothing.
+    await response.text().catch(() => undefined);
+    return undefined as T;
+  }
   if (response.status === 204) return undefined as T;
   const text = await response.text();
   return (text ? JSON.parse(text) : undefined) as T;

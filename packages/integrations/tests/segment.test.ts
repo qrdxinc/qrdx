@@ -42,6 +42,7 @@ import {
   initialSyncState,
   isRetryableSyncError,
   nextSyncState,
+  SinkPartialDeliveryError,
 } from "../src/sinks/state";
 import {
   SINK_PROVIDERS,
@@ -188,6 +189,20 @@ describe("SegmentClient", () => {
     }
   );
 
+  it.each([
+    ["a plain-text 200", new Response("OK", { status: 200 })],
+    ["an HTML 200", new Response("<html>ok</html>", { status: 200 })],
+    ["an empty 202", new Response(null, { status: 202 })],
+  ])(
+    "takes %s as delivered: any 2xx means the batch was taken",
+    async (_, reply) => {
+      mockFetch(reply);
+      await expect(
+        createSegmentClient(KEY).batch([testTrackEvent("t1", new Date())])
+      ).resolves.toBeUndefined();
+    }
+  );
+
   it("reports a network failure as retryable", async () => {
     mockFetch(networkError());
     const error = await createSegmentClient(KEY)
@@ -210,6 +225,19 @@ describe("checking a pasted write key", () => {
     const { calls } = mockFetch();
     await verifySegmentWriteKey(KEY, { reachOut: false });
     expect(calls).toHaveLength(0);
+  });
+
+  it("asks the region given (a replaced key's), else the US one", async () => {
+    const { calls } = mockFetch(
+      json({ success: true }),
+      json({ success: true })
+    );
+    await verifySegmentWriteKey(KEY, { region: "eu" });
+    await verifySegmentWriteKey(KEY);
+    expect(calls.map((call) => call.url)).toEqual([
+      "https://events.eu1.segmentapis.com/v1/batch",
+      "https://api.segment.io/v1/batch",
+    ]);
   });
 
   it.each([
@@ -548,6 +576,113 @@ describe("sendResponsesToSegment", () => {
       skipped: 1,
       cursor: { at: "2026-11-25T10:02:00.000Z", id: "resp_2" },
     });
+  });
+});
+
+describe("a batch sent in several requests", () => {
+  /** A response of about 26 KB: some 19 fit in one request. */
+  const long = (n: number): SinkFormResponse => ({
+    ...response(
+      n,
+      Array.from({ length: 25 }, (_, i) =>
+        answer(`f_${i}`, "text", "y".repeat(1000), `Question ${i}`)
+      )
+    ),
+    id: `resp_${String(n).padStart(2, "0")}`,
+    createdAt: new Date(Date.UTC(2026, 10, 25, 10, 0, n)).toISOString(),
+  });
+  const responses = Array.from({ length: 40 }, (_, n) => long(n));
+
+  it("goes out in order, request by request", async () => {
+    const { calls } = mockFetch(
+      json({ success: true }),
+      json({ success: true }),
+      json({ success: true })
+    );
+    const result = await sendResponsesToSegment(
+      createSegmentClient(KEY),
+      responses,
+      OPTIONS
+    );
+    expect(calls).toHaveLength(3);
+    expect(
+      calls.flatMap((call) =>
+        batchOf(call).map((e) => e.properties.response_id)
+      )
+    ).toEqual(responses.map((r) => r.id));
+    expect(result).toMatchObject({ delivered: 40, skipped: 0 });
+  });
+
+  it("when a later request fails, says what was delivered, so the cursor moves past it", async () => {
+    const { calls } = mockFetch(json({ success: true }), json({}, 503));
+    const error = await sendResponsesToSegment(
+      createSegmentClient(KEY),
+      responses,
+      OPTIONS
+    ).catch((caught: unknown) => caught);
+
+    expect(calls).toHaveLength(2);
+    const first = batchOf(calls[0]);
+    expect(first.length).toBeGreaterThan(1);
+    expect(error).toBeInstanceOf(SinkPartialDeliveryError);
+    const partial = error as SinkPartialDeliveryError;
+    const last = responses[first.length - 1];
+    expect(partial.delivered).toEqual({
+      delivered: first.length,
+      skipped: 0,
+      cursor: { at: last?.createdAt, id: last?.id },
+    });
+    expect((partial.cause as IntegrationApiError).code).toBe("server");
+
+    // The retry starts after that cursor: none of the first request again
+    const rest = responses.slice(first.length);
+    const retry = mockFetch(
+      json({ success: true }),
+      json({ success: true }),
+      json({ success: true })
+    );
+    await sendResponsesToSegment(createSegmentClient(KEY), rest, OPTIONS);
+    const resent = retry.calls.flatMap((call) =>
+      batchOf(call).map((e) => e.messageId)
+    );
+    expect(resent).toHaveLength(40 - first.length);
+    expect(resent.some((id) => first.some((e) => e.messageId === id))).toBe(
+      false
+    );
+  });
+
+  it("counts a response too big to send among the ones it moves past", async () => {
+    const huge = {
+      ...response(
+        2,
+        Array.from({ length: 400 }, (_, i) =>
+          answer(`f_${i}`, "text", "z".repeat(1000), `Question ${i}`)
+        )
+      ),
+      id: "resp_huge",
+      createdAt: new Date(Date.UTC(2026, 10, 25, 10, 0, 2, 500)).toISOString(),
+    };
+    const withHuge = [...responses.slice(0, 3), huge, ...responses.slice(3)];
+    const { calls } = mockFetch(json({ success: true }), json({}, 500));
+    const error = (await sendResponsesToSegment(
+      createSegmentClient(KEY),
+      withHuge,
+      OPTIONS
+    ).catch((caught: unknown) => caught)) as SinkPartialDeliveryError;
+    const sent = batchOf(calls[0]).length;
+    expect(error.delivered).toMatchObject({ delivered: sent, skipped: 1 });
+    expect(error.delivered.cursor?.id).toBe(withHuge[sent]?.id);
+  });
+
+  it("fails as a whole when the first request fails", async () => {
+    mockFetch(json({}, 503));
+    const error = await sendResponsesToSegment(
+      createSegmentClient(KEY),
+      responses,
+      OPTIONS
+    ).catch((caught: unknown) => caught);
+    expect(error).not.toBeInstanceOf(SinkPartialDeliveryError);
+    expect((error as IntegrationApiError).code).toBe("server");
   });
 });
 
