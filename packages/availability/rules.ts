@@ -174,14 +174,16 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
   },
   domainConnect: {
     // The "Set up with Cloudflare" button on the Domains page (Domain
-    // Connect, lib/domain-connect): our template's ids and the key that signs
-    // apply links. Only where custom domains can be added at all.
+    // Connect, lib/domain-connect): our template's ids, the key that signs
+    // apply links and the DNS providers that have the template live. Only
+    // where custom domains can be added at all.
     name: "One-click DNS setup (Domain Connect)",
     requires: (ctx) => [
       ...FEATURE_RULES.customDomains.requires(ctx),
       "DOMAIN_CONNECT_PROVIDER_ID",
       "DOMAIN_CONNECT_SERVICE_ID",
       "DOMAIN_CONNECT_PRIVATE_KEY",
+      "DOMAIN_CONNECT_LIVE_PROVIDERS",
     ],
   },
   fileStorage: {

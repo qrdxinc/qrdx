@@ -20,6 +20,7 @@ import type { DnsLookups, GetJson } from "@/lib/domain-connect/discovery";
 import {
   createOfferService,
   type OfferCandidate,
+  parseLiveProviders,
 } from "@/lib/domain-connect/offers";
 import {
   connectRedirectUri,
@@ -72,16 +73,22 @@ function selfHostedRecords(hostname: string, token: string): DnsRecord[] {
 const comparable = (records: { type: string; name: string; value: string }[]) =>
   records.map(({ type, name, value }) => `${type} ${name} ${value}`).sort();
 
-/** What the DNS provider writes when the app's apply request is followed. */
+/**
+ * What Cloudflare writes when the app's applies are followed: the apex one
+ * goes without a host, which Cloudflare allows (it ignores hostRequired).
+ */
 function applied(records: DnsRecord[], hostname: string, zone: string) {
-  const apply = templateApplyFor(records, hostname, zone);
-  if (!apply) throw new Error("no template apply");
-  return applyTemplate(template, {
-    domain: zone,
-    host: hostname.slice(0, -(zone.length + 1)),
-    groupIds: apply.groupIds,
-    variables: apply.variables,
-  });
+  const applies = templateApplyFor(records, hostname, zone);
+  if (!applies) throw new Error("no template apply");
+  return applies.flatMap((apply) =>
+    applyTemplate(template, {
+      domain: zone,
+      host: apply.apex ? "" : hostname.slice(0, -(zone.length + 1)),
+      groupIds: apply.groupIds,
+      variables: apply.variables,
+      ignoreHostRequired: true,
+    }),
+  );
 }
 
 describe("the template file", () => {
@@ -99,6 +106,14 @@ describe("the template file", () => {
     expect(
       [...new Set(template.records.map((record) => record.groupId))].sort(),
     ).toEqual([...TEMPLATE_GROUPS].sort());
+  });
+
+  it("has only relative hosts, which is all Cloudflare supports", () => {
+    // Cloudflare reads every host relative to the domain plus host=; a
+    // trailing dot doesn't make it absolute (version 1's `_vercel.%domain%.`).
+    for (const record of template.records) {
+      expect(record.host, record.groupId).not.toMatch(/\.$|%domain%|%fqdn%/);
+    }
   });
 
   it("writes exactly the Vercel records the Domains page shows", () => {
@@ -124,26 +139,34 @@ describe("the template file", () => {
 });
 
 describe("mapping records onto the template", () => {
-  it("sends only the groups the records need", () => {
+  it("sends only the groups the records need, Vercel's TXT on its own", () => {
     expect(
       templateApplyFor(vercelRecords(), "go.brand.com", "brand.com"),
-    ).toEqual({
-      groupIds: ["route"],
-      variables: { target: "cname.vercel-dns.com" },
-    });
+    ).toEqual([
+      {
+        apex: false,
+        groupIds: ["route"],
+        variables: { target: "cname.vercel-dns.com" },
+      },
+    ]);
     expect(
       templateApplyFor(
         [vercelChallenge, ...vercelRecords()],
         "go.brand.com",
         "brand.com",
       ),
-    ).toEqual({
-      groupIds: ["route", "vercel"],
-      variables: {
-        target: "cname.vercel-dns.com",
-        vercel: "go.brand.com,3e8e1d1a9b5c",
+    ).toEqual([
+      {
+        apex: false,
+        groupIds: ["route"],
+        variables: { target: "cname.vercel-dns.com" },
       },
-    });
+      {
+        apex: true,
+        groupIds: ["vercel"],
+        variables: { vercel: "go.brand.com,3e8e1d1a9b5c" },
+      },
+    ]);
     const token = createVerificationToken();
     expect(
       templateApplyFor(
@@ -151,10 +174,13 @@ describe("mapping records onto the template", () => {
         "go.brand.com",
         "brand.com",
       ),
-    ).toEqual({
-      groupIds: ["route", "qrdx"],
-      variables: { target: "qr.example.org", token },
-    });
+    ).toEqual([
+      {
+        apex: false,
+        groupIds: ["route", "qrdx"],
+        variables: { target: "qr.example.org", token },
+      },
+    ]);
   });
 
   it("refuses what the template can't write exactly", () => {
@@ -227,7 +253,12 @@ const key =
       .privateKey.export({ type: "pkcs8", format: "pem" })
       .toString(),
   ) ?? expect.unreachable();
-const config = { providerId: "qrdx.dev", serviceId: "qrdx", key };
+const config = {
+  providerId: "qrdx.dev",
+  serviceId: "qrdx",
+  key,
+  liveProviders: new Set(["cloudflare.com"]),
+};
 
 const SETTINGS_URL =
   "https://api.cloudflare.com/client/v4/dns/domainconnect/v2/brand.com/settings";
@@ -249,6 +280,7 @@ function world({
   templateStatus = 200,
   settings = SETTINGS as unknown,
   hangHttp = false,
+  liveProviders = config.liveProviders as ReadonlySet<string>,
 } = {}) {
   const requests: string[] = [];
   const dns: DnsLookups = {
@@ -281,13 +313,16 @@ function world({
     return Promise.reject(new Error(`unexpected ${url}`));
   };
   const log = vi.fn();
-  const service = createOfferService(config, {
-    dns,
-    getJson,
-    appUrl: new URL("https://qrdx.dev"),
-    log,
-    budgetMs: 200,
-  });
+  const service = createOfferService(
+    { ...config, liveProviders },
+    {
+      dns,
+      getJson,
+      appUrl: new URL("https://qrdx.dev"),
+      log,
+      budgetMs: 200,
+    },
+  );
   return { service, requests, log };
 }
 
@@ -296,30 +331,71 @@ const candidate = (
 ): OfferCandidate => ({ id: "dom1", hostname: "go.brand.com", records });
 
 describe("offers on the Domains page", () => {
-  it("offers a signed Cloudflare link for a subdomain waiting for DNS", async () => {
+  it("offers signed Cloudflare links for a subdomain waiting for DNS", async () => {
     const { service, log } = world();
     const offers = await service.offers([candidate()]);
     const offer = offers.dom1 ?? expect.unreachable();
     expect(offer.providerName).toBe("Cloudflare");
-    const url = new URL(offer.url);
-    expect(`${url.origin}${url.pathname}`).toBe(
-      "https://dash.cloudflare.com/domainconnect/v2/domainTemplates/providers/qrdx.dev/services/qrdx/apply",
-    );
-    expect(Object.fromEntries(url.searchParams)).toMatchObject({
+    expect(offer.steps).toHaveLength(2);
+    const [first = "", second = ""] = offer.steps;
+    for (const step of offer.steps) {
+      const url = new URL(step);
+      expect(`${url.origin}${url.pathname}`).toBe(
+        "https://dash.cloudflare.com/domainconnect/v2/domainTemplates/providers/qrdx.dev/services/qrdx/apply",
+      );
+      expect(url.searchParams.get("key")).toBe(SIGNING_KEY_ID);
+      const [, signed = "", sig = ""] =
+        step.split("?", 2)[1]?.match(/^(.*)&key=[^&]+&sig=([^&]+)$/) ?? [];
+      expect(verifyQuery(signed, decodeURIComponent(sig), key.publicKey)).toBe(
+        true,
+      );
+    }
+    // The CNAME on the subdomain; its return goes on to the second apply.
+    expect(Object.fromEntries(new URL(first).searchParams)).toEqual({
       domain: "brand.com",
       host: "go",
-      groupId: "route,vercel",
+      groupId: "route",
       target: "cname.vercel-dns.com",
+      redirect_uri: connectRedirectUri(new URL("https://qrdx.dev"), "dom1", 1),
+      key: SIGNING_KEY_ID,
+      sig: expect.any(String),
+    });
+    // Vercel's TXT without host=, so it lands at _vercel on the zone apex.
+    expect(Object.fromEntries(new URL(second).searchParams)).toEqual({
+      domain: "brand.com",
+      groupId: "vercel",
       vercel: "go.brand.com,3e8e1d1a9b5c",
       redirect_uri: connectRedirectUri(new URL("https://qrdx.dev"), "dom1"),
       key: SIGNING_KEY_ID,
+      sig: expect.any(String),
     });
-    const [, signed = "", sig = ""] =
-      offer.url.split("?", 2)[1]?.match(/^(.*)&key=[^&]+&sig=([^&]+)$/) ?? [];
-    expect(verifyQuery(signed, decodeURIComponent(sig), key.publicKey)).toBe(
-      true,
-    );
     expect(log).not.toHaveBeenCalled();
+  });
+
+  it("offers one link when the subdomain's records are all it takes", async () => {
+    const { service } = world();
+    const offer = (await service.offers([candidate(vercelRecords())])).dom1;
+    expect(offer?.steps).toHaveLength(1);
+    const url = new URL(offer?.steps[0] ?? "");
+    expect(url.searchParams.get("redirect_uri")).toBe(
+      connectRedirectUri(new URL("https://qrdx.dev"), "dom1"),
+    );
+  });
+
+  it("shows nothing at a provider that hasn't put the template live", async () => {
+    // Cloudflare's template endpoint answers while the template is still
+    // limited to a test account, so its 200 alone isn't enough.
+    const { service, requests } = world({ liveProviders: new Set() });
+    expect(await service.offers([candidate()])).toEqual({});
+    expect(requests).not.toContain(TEMPLATE_URL);
+  });
+
+  it("reads the live providers from a comma-separated list", () => {
+    expect([...parseLiveProviders(" Cloudflare.com, ,godaddy.com ")]).toEqual([
+      "cloudflare.com",
+      "godaddy.com",
+    ]);
+    expect(parseLiveProviders(undefined).size).toBe(0);
   });
 
   it("caches discovery between page views", async () => {
@@ -389,7 +465,19 @@ describe("coming back from the DNS provider", () => {
     expect(parseConnectReturn({ connected: "ck9abc" })).toEqual({
       domainId: "ck9abc",
       applied: true,
+      nextStep: null,
     });
+    expect(connectRedirectUri(new URL("https://qrdx.dev"), "ck9abc", 1)).toBe(
+      "https://qrdx.dev/dashboard?to=settings/domains&connected=ck9abc&step=1",
+    );
+    expect(parseConnectReturn({ connected: "ck9abc", step: "1" })).toEqual({
+      domainId: "ck9abc",
+      applied: true,
+      nextStep: 1,
+    });
+    expect(
+      parseConnectReturn({ connected: "ck9abc", step: "../x" })?.nextStep,
+    ).toBeNull();
     expect(
       parseConnectReturn({ connected: ["ck9abc", "other"] })?.domainId,
     ).toBe("ck9abc");
@@ -398,12 +486,18 @@ describe("coming back from the DNS provider", () => {
   it("notices errors, also when the provider appended them with a second ?", () => {
     expect(
       parseConnectReturn({ connected: "ck9abc", error: "access_denied" }),
-    ).toEqual({ domainId: "ck9abc", applied: false });
+    ).toEqual({ domainId: "ck9abc", applied: false, nextStep: null });
     expect(
       parseConnectReturn({
         connected: "ck9abc?error=access_denied&error_description=user_cancel",
       }),
-    ).toEqual({ domainId: "ck9abc", applied: false });
+    ).toEqual({ domainId: "ck9abc", applied: false, nextStep: null });
+    expect(
+      parseConnectReturn({
+        connected: "ck9abc",
+        step: "1?error=access_denied",
+      }),
+    ).toEqual({ domainId: "ck9abc", applied: false, nextStep: 1 });
   });
 
   it("ignores anything that isn't a domain id", () => {
@@ -422,6 +516,7 @@ describe("the domainConnect feature", () => {
     DOMAIN_CONNECT_PROVIDER_ID: "qrdx.dev",
     DOMAIN_CONNECT_SERVICE_ID: "qrdx",
     DOMAIN_CONNECT_PRIVATE_KEY: "set",
+    DOMAIN_CONNECT_LIVE_PROVIDERS: "cloudflare.com",
   };
 
   it("needs custom domains to work first", () => {
@@ -438,11 +533,19 @@ describe("the domainConnect feature", () => {
     expect(computeFeatures(ctx(vercel, true)).domainConnect).toBe(true);
   });
 
-  it("works self-hosted with just its own three variables", () => {
+  it("works self-hosted with just its own four variables", () => {
     expect(computeFeatures(ctx(ids, false)).domainConnect).toBe(true);
     const { DOMAIN_CONNECT_PRIVATE_KEY: _, ...noKey } = ids;
     expect(missingFeatureSetup("domainConnect", ctx(noKey, false))).toEqual([
       "DOMAIN_CONNECT_PRIVATE_KEY",
+    ]);
+  });
+
+  it("stays off until a DNS provider has the template live", () => {
+    const { DOMAIN_CONNECT_LIVE_PROVIDERS: _, ...preview } = ids;
+    expect(computeFeatures(ctx(preview, false)).domainConnect).toBe(false);
+    expect(missingFeatureSetup("domainConnect", ctx(preview, false))).toEqual([
+      "DOMAIN_CONNECT_LIVE_PROVIDERS",
     ]);
   });
 });

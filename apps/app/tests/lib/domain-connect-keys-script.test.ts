@@ -53,7 +53,27 @@ describe("domain-connect/keys.mjs", () => {
   });
 
   it("signs test links exactly like the app", () => {
-    const { out, code } = run(
+    const signer = {
+      keyId: SIGNING_KEY_ID,
+      sign: (query: string) => signQuery(query, key.privateKey),
+    };
+    const base = {
+      urlSyncUX: "https://dash.cloudflare.com/domainconnect",
+      providerId: "qrdx.dev",
+      serviceId: "qrdx",
+      domain: "example.com",
+      redirectUri: "https://qrdx.dev/dashboard?to=settings/domains",
+    };
+    const route = buildApplyUrl(
+      {
+        ...base,
+        host: "go",
+        groupIds: ["route"],
+        variables: { target: "cname.vercel-dns.com" },
+      },
+      signer,
+    );
+    const args = [
       "url",
       keyPath,
       "--domain",
@@ -62,31 +82,29 @@ describe("domain-connect/keys.mjs", () => {
       "go",
       "--target",
       "cname.vercel-dns.com",
-      "--vercel",
-      "go.example.com,abc123",
-    );
-    expect(code).toBe(0);
-    expect(out.trim()).toBe(
+    ];
+
+    const single = run(...args);
+    expect(single.code).toBe(0);
+    expect(single.out.trim()).toBe(route);
+
+    // Vercel's TXT goes in a second link, on the zone apex (no host).
+    const two = run(...args, "--vercel", "go.example.com,abc123");
+    expect(two.code).toBe(0);
+    expect(two.out.trim().split("\n")).toEqual([
+      "1. route on go.example.com:",
+      route,
+      "2. vercel on example.com:",
       buildApplyUrl(
         {
-          urlSyncUX: "https://dash.cloudflare.com/domainconnect",
-          providerId: "qrdx.dev",
-          serviceId: "qrdx",
-          domain: "example.com",
-          host: "go",
-          groupIds: ["route", "vercel"],
-          variables: {
-            target: "cname.vercel-dns.com",
-            vercel: "go.example.com,abc123",
-          },
-          redirectUri: "https://qrdx.dev/dashboard?to=settings/domains",
+          ...base,
+          host: "",
+          groupIds: ["vercel"],
+          variables: { vercel: "go.example.com,abc123" },
         },
-        {
-          keyId: SIGNING_KEY_ID,
-          sign: (query) => signQuery(query, key.privateKey),
-        },
+        signer,
       ),
-    );
+    ]);
   });
 
   it("never writes a private key inside the repository", () => {
