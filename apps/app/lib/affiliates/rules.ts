@@ -279,15 +279,42 @@ export function parseReferralCode(value: unknown): string | null {
 }
 
 /**
+ * `ref` tags that sites, directories and people add to links on their own
+ * (Product Hunt adds ?ref=producthunt to the links it sends). An affiliate
+ * holding one would be credited with, and paid for, everyone those links
+ * bring.
+ */
+const REFERRER_TAGS = [
+  "producthunt",
+  "hackernews",
+  "hn",
+  "reddit",
+  "betalist",
+  "alternativeto",
+  "saashub",
+  "futurepedia",
+  "theresanaiforthat",
+  "github",
+  "twitter",
+  "x",
+  "linkedin",
+  "youtube",
+  "devto",
+  "newsletter",
+];
+
+/**
  * Words a chosen code can't be: QRdx's own paths and names (the short-link
  * reserved list, lib/short-links.ts), the `ref` tags QRdx's own links carry
  * (lib/analytics/handoff-tags.ts: plugins, bots, MCP, CLI, the 404 page),
- * "registry" (/r/registry is the shadcn registry's index, app/r/[code]/route.ts)
- * and words that would pass for QRdx or its staff.
+ * the tags other sites put on their links (REFERRER_TAGS), "registry"
+ * (/r/registry is the shadcn registry's index, app/r/[code]/route.ts) and
+ * words that would pass for QRdx or its staff.
  */
 export const RESERVED_REFERRAL_CODES: ReadonlySet<string> = new Set([
   ...RESERVED_SLUGS,
   ...QRDX_HANDOFF_TAGS,
+  ...REFERRER_TAGS,
   "registry",
   "affiliate",
   "affiliates",

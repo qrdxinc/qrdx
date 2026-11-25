@@ -107,6 +107,17 @@ interface ImportProps {
   own_domain?: boolean;
 }
 
+/**
+ * The page of this site a visit came to an editor from, when it was one of
+ * the public pages ("/blog/qr-codes-for-menus", "/qr-code-generator/wifi"):
+ * its path only, at most 64 characters, never the signed-in app's, a
+ * customer page's or another site's (fromPage in
+ * apps/app/lib/analytics/funnel.ts). `source` names only its first segment.
+ */
+interface FromPageProps {
+  from_page?: string;
+}
+
 type NoProps = Record<string, never>;
 
 export interface AnalyticsEvents {
@@ -151,7 +162,7 @@ export interface AnalyticsEvents {
    * from (editorOpenSource in apps/app/lib/analytics/funnel.ts: a `ref`
    * tag, "direct", "external" or a site section). Never an address.
    */
-  editor_opened: { surface: EditorSurface; source: string };
+  editor_opened: { surface: EditorSurface; source: string } & FromPageProps;
   qr_generated: { content_type: string; source: QrSource; count?: number };
   /**
    * A code saved as a file. Downloads of a design (the playground, the type
@@ -192,7 +203,7 @@ export interface AnalyticsEvents {
    * the parameter names it applied, joined with "+" ("type+open"). Never
    * their values: no address, design or content.
    */
-  playground_handoff: { source: string; target: string };
+  playground_handoff: { source: string; target: string } & FromPageProps;
 
   // Themes and AI
   theme_applied: { method: "preset" | "shuffle"; preset?: string };
@@ -298,23 +309,42 @@ export interface AnalyticsEvents {
    */
   limit_gate_shown: { limit: string; plan: string };
   /**
-   * `surface`: the button or page, as checkout records it on the
-   * subscription (apps/app/lib/checkout-surface.ts); `source` is older.
+   * A link to /pricing was followed (the header's Get Pro, the sidebar's
+   * Upgrade, a limit's upgrade link, the Home card, "Compare plans"): which
+   * one, as the pricing page passes it on to checkout
+   * (apps/app/lib/checkout-surface.ts). Not a choice of plan.
    */
-  upgrade_clicked: {
-    source: string;
-    plan?: "pro" | "business";
-    surface?: string;
-  };
+  pricing_opened: { surface: string };
+  /**
+   * A control that starts checkout was pressed (a plan card on the pricing
+   * page, a checkout button): the plan, and the surface checkout records on
+   * the subscription (apps/app/lib/checkout-surface.ts).
+   */
+  upgrade_clicked: { plan: "pro" | "business"; surface: string };
   checkout_started: {
     plan: "pro" | "business";
     interval: "month" | "year";
     surface: string;
   };
-  /** Server side, from the Polar webhook. */
-  subscription_activated: {
+  /**
+   * Server side, from the Polar webhook: the plan, how the account found
+   * QRdx, and what the subscription charges (`amount` in the currency's
+   * minor units, `currency` as Polar names it: "usd").
+   */
+  subscription_activated: AcquisitionProps & {
     plan: "pro" | "business";
     interval?: string;
+    surface?: string;
+    amount?: number;
+    currency?: string;
+  };
+  /**
+   * Server side, from the Polar webhook: a subscription was canceled (at the
+   * end of its period or straight away). The plan, the surface it was bought
+   * from and how the account found QRdx; never the reason given.
+   */
+  subscription_canceled: AcquisitionProps & {
+    plan: "pro" | "business";
     surface?: string;
   };
 
@@ -348,6 +378,7 @@ export type ServerAnalyticsEventName =
   | "form_submitted"
   | "integration_connected"
   | "subscription_activated"
+  | "subscription_canceled"
   | "import_started"
   | "import_finished"
   | "import_bridge_run"

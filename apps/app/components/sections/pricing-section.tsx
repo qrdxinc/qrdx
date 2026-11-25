@@ -352,7 +352,7 @@ export function PricingSection({
   });
 
   const onUpgrade = (plan: PaidPlan) => {
-    track("upgrade_clicked", { source: "pricing", plan, surface });
+    track("upgrade_clicked", { plan, surface });
     if (!isSignedIn) {
       openAuthDialog("upgrade", {
         action: "CHECKOUT",

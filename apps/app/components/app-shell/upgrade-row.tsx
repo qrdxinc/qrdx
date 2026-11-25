@@ -51,11 +51,7 @@ export function UpgradeRow({
       )}
       href={pricingHref("sidebar_upgrade")}
       onClick={() => {
-        track("upgrade_clicked", {
-          source: "sidebar",
-          plan: "pro",
-          surface: "sidebar_upgrade",
-        });
+        track("pricing_opened", { surface: "sidebar_upgrade" });
         onNavigate?.();
       }}
     >

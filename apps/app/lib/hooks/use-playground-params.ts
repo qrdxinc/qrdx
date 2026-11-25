@@ -9,13 +9,13 @@ import { useEffect, useRef, useState } from "react";
 import { useAvailability } from "@/components/availability-provider";
 import { openPlaygroundBuilder } from "@/components/code-builder/in-place";
 import { useDynamicLinkStore } from "@/components/editor/dynamic-link-toggle";
+import { playgroundHandoffProps } from "@/lib/analytics/funnel";
 import { isUntrackedAnalyticsPath } from "@/lib/analytics/privacy";
 import { loadOfficialFrame, peekOfficialFrame } from "@/lib/frames/library";
 import { previousPathname } from "@/lib/navigation-history";
 import { applyPlaygroundParams, SIGNED_IN_TYPES } from "@/lib/playground-apply";
 import {
   DYNAMIC_OPEN_TARGET,
-  handoffSource,
   hasOneShotParams,
   parsePlaygroundParams,
   resolveControlTab,
@@ -183,14 +183,15 @@ export function usePlaygroundParams({
 
     const trackHandoff = (applied: string[]) => {
       if (applied.length === 0) return;
-      track("playground_handoff", {
-        source: handoffSource(
-          handoffReferrer(origin),
+      track(
+        "playground_handoff",
+        playgroundHandoffProps({
+          referrer: handoffReferrer(origin),
           origin,
-          new URLSearchParams(search).get("ref"),
-        ),
-        target: applied.join("+"),
-      });
+          ref: new URLSearchParams(search).get("ref"),
+          applied,
+        }),
+      );
     };
     // A link's AI art style is applied once the style catalogue loads.
     if (outcome.artStyle) {

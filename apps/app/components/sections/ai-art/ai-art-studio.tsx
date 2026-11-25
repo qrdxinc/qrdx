@@ -626,7 +626,6 @@ function CreditsNote({
         <CheckoutButtons
           plan={target}
           size="sm"
-          source="ai_art"
           surface="ai_art_studio"
           waiting={waiting}
         />
