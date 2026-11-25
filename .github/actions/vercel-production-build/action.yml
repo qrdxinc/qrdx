@@ -31,7 +31,7 @@ inputs:
 
 outputs:
   deployed:
-    description: "\"true\" once the project's production domains serve the build"
+    description: true once the project's production domains serve the build
     value: ${{ steps.wait.outputs.deployed }}
 
 runs:
