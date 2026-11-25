@@ -169,6 +169,7 @@ export const BARCODE_FORMATS = [
   "datamatrix",
   "pdf417",
   "aztec",
+  "microqr",
   "rmqr",
   "maxicode",
   "dotcode",

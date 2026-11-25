@@ -4,6 +4,7 @@
 // this module without loading bwip-js (lib/barcode/render.ts does that).
 
 import { CANONICAL_ORIGIN } from "@repo/config";
+import { MICRO_QR_LIMITS, microQrSymbol } from "./micro-qr";
 import {
   hyphenateIsbn,
   hyphenateIsmn,
@@ -31,6 +32,7 @@ export type BarcodeFormatId =
   | "datamatrix"
   | "pdf417"
   | "aztec"
+  | "microqr"
   | "rmqr"
   | "maxicode"
   | "dotcode";
@@ -357,6 +359,21 @@ export const BARCODE_FORMATS: readonly BarcodeFormat[] = [
     detectorFormats: ["aztec"],
   },
   {
+    id: "microqr",
+    label: "Micro QR",
+    kind: "2d",
+    summary: "The smallest QR code, for tiny labels on parts and electronics",
+    example: "QRdx Micro QR",
+    inputHint:
+      "Any text, up to 35 digits, 21 capital letters or 15 characters of other text; less with accents or other scripts. It's drawn in the smallest of the four sizes, M1 to M4, that fits.",
+    // ISO/IEC 18004 asks for 2 modules of blank space all round.
+    quietZone: { min: 2, default: 2 },
+    // The most digits an M4 holds; what fits depends on the kind of text,
+    // which the validator works out (micro-qr.ts).
+    maxLength: MICRO_QR_LIMITS.digits,
+    detectorFormats: ["micro_qr_code"],
+  },
+  {
     id: "rmqr",
     label: "rMQR",
     kind: "2d",
@@ -473,6 +490,9 @@ export const BARCODE_ISSUE_CODES = [
   "maxicodeService",
   "maxicodeCarrier",
   "maxicodeZipPadded",
+  "microqrTooLong",
+  "microqrSize",
+  "microqrSizeM1",
   "imbEnter",
   "imbTrackingLength",
   "imbRoutingLength",
@@ -615,6 +635,12 @@ export function barcodeIssueText(issue: BarcodeIssue): string {
       return `Carrier message (mode ${v.mode}): postcode ${v.postcode}, country ${v.country}, service class ${v.service}.`;
     case "maxicodeZipPadded":
       return `A 5-digit ZIP Code is drawn as ${v.zip} with 0000 for the +4, and readers return it that way.`;
+    case "microqrTooLong":
+      return `Too much for one Micro QR: the largest size, M4, holds up to ${v.digits} digits, ${v.alphanumeric} capital letters or ${v.bytes} characters of other text, and fewer with accents or other scripts. Shorten the text, or use rMQR for more.`;
+    case "microqrSize":
+      return `Drawn as ${v.version}: ${v.modules} × ${v.modules} modules, error correction level ${v.level}.`;
+    case "microqrSizeM1":
+      return `Drawn as M1: ${v.modules} × ${v.modules} modules, which can detect errors but not correct them.`;
     case "imbEnter":
       return "Enter the 20-digit tracking code, then the routing ZIP Code if there is one.";
     case "imbTrackingLength":
@@ -865,6 +891,29 @@ function textInput(
     return fail({ code: allowed.code, chars: offending(raw, allowed.chars) });
   }
   return done(raw);
+}
+
+/**
+ * Micro QR: any text that fits an M4, with a note of the size and error
+ * correction it's drawn at (what bwip-js picks, micro-qr.ts).
+ */
+function microQrInput(format: BarcodeFormat, raw: string): BarcodeInput {
+  const checked = textInput(format, raw, null);
+  if (!checked.ok) return checked;
+  const symbol = microQrSymbol(raw);
+  if (!symbol) return fail({ code: "microqrTooLong", values: { ...MICRO_QR_LIMITS } });
+  return done(raw, [
+    symbol.version === "M1"
+      ? { code: "microqrSizeM1", values: { modules: symbol.modules } }
+      : {
+          code: "microqrSize",
+          values: {
+            version: symbol.version,
+            modules: symbol.modules,
+            level: symbol.level,
+          },
+        },
+  ]);
 }
 
 /** MaxiCode's separators as typed (any case) and the characters they stand for. */
@@ -1592,6 +1641,8 @@ export function validateBarcodeInput(
     case "rmqr":
     case "dotcode":
       return textInput(format, raw, null);
+    case "microqr":
+      return microQrInput(format, raw);
     case "maxicode":
       return maxicodeInput(format, raw);
     default:

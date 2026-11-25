@@ -7,9 +7,11 @@
 // (tests/barcode/parity.test.ts).
 import {
   type BarcodeFormatId,
+  barcodeIssueText,
   getBarcodeFormat,
   maxicodeMessage,
 } from "./formats";
+import { MICRO_QR_LIMITS } from "./micro-qr";
 import type { BarcodeRotation, BarcodeStyle } from "./style";
 
 export type { BarcodeStyle } from "./style";
@@ -37,6 +39,8 @@ export interface DrawOptions {
   alttext?: string;
   /** Points between the bars and the text under them (negative: lower) */
   textyoffset?: number;
+  /** Micro QR: no Kanji mode, since the text is UTF-8, not Shift JIS */
+  suppresskanjimode?: boolean;
   /** rMQR's size, rows × columns, e.g. "R7x43" (bwip-js picks none itself) */
   version?: string;
   /** MaxiCode's mode: 2 and 3 carrier messages, 4 text */
@@ -75,6 +79,7 @@ export const BCID: Record<BarcodeFormatId, string> = {
   datamatrix: "datamatrix",
   pdf417: "pdf417",
   aztec: "azteccode",
+  microqr: "microqrcode",
   rmqr: "rectangularmicroqrcode",
   maxicode: "maxicode",
   dotcode: "dotcode",
@@ -82,7 +87,8 @@ export const BCID: Record<BarcodeFormatId, string> = {
 
 /**
  * bwip-js drawing units per module: linear bars and PDF417 columns are one
- * unit wide, Data Matrix, Aztec and rMQR cells two, DotCode's dot pitch two,
+ * unit wide, Data Matrix, Aztec, Micro QR and rMQR cells two, DotCode's dot
+ * pitch two,
  * MaxiCode's hexagons 3.44 apart (101.5 units across 29.5 columns).
  * Intelligent Mail's bars are 1.44 units (0.02 in) wide on a 3.312-unit
  * pitch; its module is the bar's width. Padding is given in units.
@@ -107,6 +113,7 @@ export const MODULE_UNITS: Record<BarcodeFormatId, number> = {
   datamatrix: 2,
   pdf417: 1,
   aztec: 2,
+  microqr: 2,
   rmqr: 2,
   maxicode: 3.44,
   dotcode: 2,
@@ -233,6 +240,10 @@ export function drawOptions(
     // option draws nothing.
     if (id === "isbn" || id === "issn" || id === "ismn") options.addongap = 9;
   }
+  // BWIPP reads byte pairs that look like Shift JIS as Kanji, and the text
+  // is UTF-8: readers would return other characters. formats.ts's size
+  // check (micro-qr.ts) counts without Kanji mode too.
+  if (id === "microqr") options.suppresskanjimode = true;
   if (id === "maxicode") {
     // bwip-js picks mode 5 for a message it isn't told the mode of, so say
     // it; and MaxiCode reads bytes as Latin-1, so pass one byte a character.
@@ -274,6 +285,15 @@ export function drawBarcode<Drawing>(
     // Past 2,000 bytes bwip-js refuses DotCode itself; say what fits here.
     if (id === "dotcode" && /dotcodeinputTooLong/.test(String(error))) {
       throw new Error(DOTCODE_FULL);
+    }
+    // validateBarcodeInput refuses what doesn't fit first (micro-qr.ts).
+    if (id === "microqr" && /qrcodeNoValidSymbol/.test(String(error))) {
+      throw new Error(
+        barcodeIssueText({
+          code: "microqrTooLong",
+          values: { ...MICRO_QR_LIMITS },
+        }),
+      );
     }
     // drawRmqr's own message already says what fits.
     if (error instanceof Error && error.message === RMQR_FULL) throw error;
