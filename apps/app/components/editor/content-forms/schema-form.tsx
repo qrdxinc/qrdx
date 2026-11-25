@@ -394,7 +394,7 @@ export function SchemaForm({
       {inRows(visible).map((row) =>
         row.length > 1 ? (
           <div
-            className="grid grid-cols-2 gap-3"
+            className="grid gap-3 sm:grid-cols-2"
             key={row.map((field) => field.name).join(" ")}
           >
             {row.map(renderField)}
