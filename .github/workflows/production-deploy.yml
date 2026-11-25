@@ -1,11 +1,12 @@
 name: Production deploy
 
-# Deploys production on a timer instead of on every merge to main. Each
-# deployment costs a Vercel build, about 1.6 GB of stored output and an empty
-# page cache (the pages render and are written again), and main was getting
-# about 8 merges a day, so production now deploys in batches (owner,
-# 2026-11-26). apps/app/vercel.json turns off Vercel's Git deployments: a
-# push to main deploys nothing by itself.
+# Deploys production on a timer instead of on every merge. Each deployment
+# costs a Vercel build, stored output and an empty page cache (the pages
+# render and are written again), and main was getting about 8 merges a day,
+# so production deploys in batches (owner, 2026-11-26). Vercel's Git
+# deployments are off (apps/app/vercel.json, and in qrdxinc/cloud
+# apps/site/vercel.json and apps/console/vercel.json): a push deploys
+# nothing by itself.
 #
 # Every 6 hours, or now with "Run workflow":
 # 1. app: when main has moved past the commit qrdx.dev serves, asks Vercel to
@@ -15,16 +16,22 @@ name: Production deploy
 #    so a change Vercel would skip (the docs site alone, [skip ci]) starts
 #    nothing. It waits for the build and fails when the build fails or
 #    qrdx.dev doesn't switch to it.
-# 2. docs: deploys the docs site when a file its build reads changed
+# 2. cloud: the same for the marketing site and the console, which build from
+#    the private qrdxinc/cloud. Only after the app: they compile the core at
+#    the commit cloud pins, which must never be ahead of what qrdx.dev
+#    serves.
+# 3. docs: deploys the docs site when a file its build reads changed
 #    (docs-deploy.yml), after the app, whose /zone/availability.json that
 #    build reads.
-# 3. After a new app deploy, now that it's live: the release goes to Discord
+# 4. After a new app deploy, now that it's live: the release goes to Discord
 #    (discord-notify.yml) and the changed sitemap URLs to the search engines
 #    (notify-search-engines.yml).
+# The builds themselves go through .github/actions/vercel-production-build.
 #
-# Needs the secret VERCEL_TOKEN and the repository variables VERCEL_ORG_ID
-# and APP_VERCEL_PROJECT_ID (the qrdx project's Settings → General). The
-# repository is public, so these runs use no billed Actions minutes.
+# Needs the secret VERCEL_TOKEN and the repository variables VERCEL_ORG_ID,
+# APP_VERCEL_PROJECT_ID, SITE_VERCEL_PROJECT_ID and CONSOLE_VERCEL_PROJECT_ID
+# (each project's Settings → General). The repository is public, so these
+# runs use no billed Actions minutes.
 on:
   schedule:
     # 00:17, 06:17, 12:17 and 18:17 UTC (05:47, 11:47, 17:47 and 23:47 in
@@ -53,7 +60,7 @@ jobs:
     outputs:
       sha: ${{ steps.decide.outputs.sha }}
       live: ${{ steps.decide.outputs.live }}
-      deployed: ${{ steps.wait.outputs.deployed }}
+      deployed: ${{ steps.build.outputs.deployed }}
     defaults:
       run:
         shell: bash
@@ -89,30 +96,16 @@ jobs:
       - name: Decide whether to deploy
         id: decide
         run: |
-          vercel() {
-            curl --silent --show-error --fail-with-body --retry 3 \
-              --header "Authorization: Bearer $VERCEL_TOKEN" \
-              "https://api.vercel.com$1"
-          }
           sha="$(git rev-parse HEAD)"
-          project="$(vercel "/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID")"
-          live="$(jq -r '.targets.production.meta.githubCommitSha // empty' <<<"$project")"
-          # A production build of this commit already under way: an earlier
-          # run's, or a redeploy started from Vercel's dashboard.
-          building="$(vercel "/v6/deployments?projectId=$VERCEL_PROJECT_ID&teamId=$VERCEL_ORG_ID&target=production&limit=20" |
-            jq -r --arg sha "$sha" '[.deployments[] | select(.meta.githubCommitSha == $sha and (.state == "QUEUED" or .state == "INITIALIZING" or .state == "BUILDING"))][0].uid // empty')"
-          {
-            echo "sha=$sha"
-            echo "live=$live"
-            echo "name=$(jq -r .name <<<"$project")"
-          } >>"$GITHUB_OUTPUT"
+          live="$(curl --silent --show-error --fail-with-body --retry 3 \
+            --header "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID" |
+            jq -r '.targets.production.meta.githubCommitSha // empty')"
+          echo "sha=$sha" >>"$GITHUB_OUTPUT"
+          echo "live=$live" >>"$GITHUB_OUTPUT"
           if [ "$live" = "$sha" ]; then
             reason="qrdx.dev already serves main (${sha:0:9})."
             action="none"
-          elif [ -n "$building" ]; then
-            reason="Vercel is already building main (${sha:0:9}) for production: $building."
-            action="wait"
-            echo "deployment=$building" >>"$GITHUB_OUTPUT"
           else
             # The files changed since the deployed commit, or null when
             # there's none or it isn't in main's history (the check then
@@ -159,64 +152,102 @@ jobs:
           if-no-files-found: ignore
           retention-days: 1
 
-      # No retries: a retried request could start a second build.
-      - name: Start the production build
-        id: start
+      - name: Build and deploy
+        id: build
         if: steps.decide.outputs.action == 'deploy'
-        env:
-          SHA: ${{ steps.decide.outputs.sha }}
-          NAME: ${{ steps.decide.outputs.name }}
-          REPO_ID: ${{ github.repository_id }}
-        run: |
-          body="$(jq --null-input --compact-output \
-            --arg name "$NAME" --arg project "$VERCEL_PROJECT_ID" --arg sha "$SHA" --argjson repo "$REPO_ID" \
-            '{name: $name, project: $project, target: "production", gitSource: {type: "github", repoId: $repo, ref: "main", sha: $sha}}')"
-          deployment="$(curl --silent --show-error --fail-with-body \
-            --header "Authorization: Bearer $VERCEL_TOKEN" \
-            --header "Content-Type: application/json" \
-            --data "$body" \
-            "https://api.vercel.com/v13/deployments?teamId=$VERCEL_ORG_ID")"
-          echo "deployment=$(jq -r .id <<<"$deployment")" >>"$GITHUB_OUTPUT"
-          echo "Started the production build of ${SHA:0:9}: $(jq -r .inspectorUrl <<<"$deployment")" | tee -a "$GITHUB_STEP_SUMMARY"
+        uses: ./.github/actions/vercel-production-build
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          team: ${{ vars.VERCEL_ORG_ID }}
+          project: ${{ vars.APP_VERCEL_PROJECT_ID }}
+          repo-id: ${{ github.repository_id }}
+          sha: ${{ steps.decide.outputs.sha }}
+          label: qrdx.dev
 
-      - name: Wait for the build
-        id: wait
-        if: steps.start.outputs.deployment != '' || steps.decide.outputs.deployment != ''
-        env:
-          DEPLOYMENT: ${{ steps.start.outputs.deployment || steps.decide.outputs.deployment }}
-          SHA: ${{ steps.decide.outputs.sha }}
+  cloud:
+    name: Deploy ${{ matrix.label }}
+    needs: app
+    # Only once the app is up to date: see 2. above.
+    if: needs.app.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: the marketing site
+            project-variable: SITE_VERCEL_PROJECT_ID
+          - label: the console
+            project-variable: CONSOLE_VERCEL_PROJECT_ID
+    defaults:
+      run:
+        shell: bash
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars[matrix.project-variable] }}
+      PROJECT_VARIABLE: ${{ matrix.project-variable }}
+      LABEL: ${{ matrix.label }}
+    steps:
+      # Only this repository's build action. qrdxinc/cloud is private and
+      # never checked out here: Vercel reads it through its GitHub app.
+      - name: Checkout the build action
+        uses: actions/checkout@v5
+        with:
+          sparse-checkout: .github/actions
+
+      - name: Check the Vercel settings
+        run: |
+          missing=()
+          [ -n "$VERCEL_ORG_ID" ] || missing+=("variable VERCEL_ORG_ID")
+          [ -n "$VERCEL_PROJECT_ID" ] || missing+=("variable $PROJECT_VARIABLE")
+          [ -n "$VERCEL_TOKEN" ] || missing+=("secret VERCEL_TOKEN")
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::Set the repository ${missing[*]} to deploy $LABEL."
+            exit 1
+          fi
+
+      # main's latest commit comes from Vercel, which reads the private
+      # repository through its GitHub app: the endpoint the dashboard's
+      # "Create Deployment" dialog uses (not in Vercel's API reference, so
+      # this step fails loudly if it ever changes).
+      - name: Decide whether to deploy
+        id: decide
         run: |
           vercel() {
             curl --silent --show-error --fail-with-body --retry 3 \
               --header "Authorization: Bearer $VERCEL_TOKEN" \
               "https://api.vercel.com$1"
           }
-          while :; do
-            sleep 20
-            deployment="$(vercel "/v13/deployments/$DEPLOYMENT?teamId=$VERCEL_ORG_ID")" || continue
-            state="$(jq -r .readyState <<<"$deployment")"
-            case "$state" in
-              READY) break ;;
-              ERROR | CANCELED)
-                echo "::error::The production build of ${SHA:0:9} ended in $state, so qrdx.dev still serves the previous deployment: $(jq -r .inspectorUrl <<<"$deployment")"
-                exit 1
-                ;;
-            esac
-          done
-          # Vercel points the production domains at a ready production
-          # build unless auto-assignment is off, which an Instant Rollback
-          # does until a deployment is promoted.
-          for _ in $(seq 1 12); do
-            serving="$(vercel "/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID" | jq -r '.targets.production.id // empty')" || serving=""
-            if [ "$serving" = "$DEPLOYMENT" ]; then
-              echo "deployed=true" >>"$GITHUB_OUTPUT"
-              echo "qrdx.dev serves ${SHA:0:9} now." | tee -a "$GITHUB_STEP_SUMMARY"
-              exit 0
-            fi
-            sleep 10
-          done
-          echo "::error::The build of ${SHA:0:9} is ready, but qrdx.dev still serves another deployment: Vercel's automatic assignment of the production domains is off (an Instant Rollback turns it off). Promote it (vercel promote $DEPLOYMENT) to switch to it and turn assignment back on."
-          exit 1
+          sha="$(vercel "/v1/integrations/git-commit-details/$VERCEL_PROJECT_ID?branchName=main&teamId=$VERCEL_ORG_ID" | jq -r '.commitSha // empty')"
+          if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::Vercel didn't say which commit main is at for $LABEL."
+            exit 1
+          fi
+          project="$(vercel "/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID")"
+          live="$(jq -r '.targets.production.meta.githubCommitSha // empty' <<<"$project")"
+          {
+            echo "sha=$sha"
+            echo "repo-id=$(jq -r .link.repoId <<<"$project")"
+          } >>"$GITHUB_OUTPUT"
+          if [ "$live" = "$sha" ]; then
+            echo "action=none" >>"$GITHUB_OUTPUT"
+            echo "Nothing to deploy: $LABEL already serves cloud's main (${sha:0:9})." | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "action=deploy" >>"$GITHUB_OUTPUT"
+            echo "Cloud's main moved from ${live:0:9} to ${sha:0:9}: building $LABEL." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Build and deploy
+        if: steps.decide.outputs.action == 'deploy'
+        uses: ./.github/actions/vercel-production-build
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          team: ${{ vars.VERCEL_ORG_ID }}
+          project: ${{ env.VERCEL_PROJECT_ID }}
+          repo-id: ${{ steps.decide.outputs.repo-id }}
+          sha: ${{ steps.decide.outputs.sha }}
+          label: ${{ matrix.label }}
 
   docs:
     name: Docs

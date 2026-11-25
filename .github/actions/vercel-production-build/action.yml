@@ -1,0 +1,121 @@
+name: Vercel production build
+description: >-
+  Builds a commit of a Git-connected Vercel project for production (the same
+  build a push to its production branch starts: Vercel clones the commit and
+  runs the project's build settings), or waits for a build of that commit
+  already under way, and checks that the project's production domains switch
+  to it. production-deploy.yml uses it for every project it deploys.
+
+inputs:
+  token:
+    description: Vercel token
+    required: true
+  team:
+    description: Vercel team id
+    required: true
+  project:
+    description: Vercel project id
+    required: true
+  repo-id:
+    description: The numeric id of the GitHub repository the project is connected to
+    required: true
+  sha:
+    description: The commit to build
+    required: true
+  ref:
+    description: The commit's branch
+    default: main
+  label:
+    description: What the project serves, for the messages (qrdx.dev, the marketing site)
+    required: true
+
+outputs:
+  deployed:
+    description: true once the project's production domains serve the build
+    value: ${{ steps.wait.outputs.deployed }}
+
+runs:
+  using: composite
+  steps:
+    # No retries on the request that creates the build: a retried request
+    # could start a second one.
+    - name: Start the production build
+      id: start
+      shell: bash
+      env:
+        VERCEL_TOKEN: ${{ inputs.token }}
+        TEAM: ${{ inputs.team }}
+        PROJECT: ${{ inputs.project }}
+        REPO_ID: ${{ inputs.repo-id }}
+        SHA: ${{ inputs.sha }}
+        REF: ${{ inputs.ref }}
+        LABEL: ${{ inputs.label }}
+      run: |
+        vercel() {
+          curl --silent --show-error --fail-with-body --retry 3 \
+            --header "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com$1"
+        }
+        # A production build of this commit already under way: an earlier
+        # run's, or one started from Vercel's dashboard.
+        building="$(vercel "/v6/deployments?projectId=$PROJECT&teamId=$TEAM&target=production&limit=20" |
+          jq -r --arg sha "$SHA" '[.deployments[] | select(.meta.githubCommitSha == $sha and (.state == "QUEUED" or .state == "INITIALIZING" or .state == "BUILDING"))][0].uid // empty')"
+        if [ -n "$building" ]; then
+          echo "deployment=$building" >>"$GITHUB_OUTPUT"
+          echo "Vercel is already building ${SHA:0:9} for $LABEL: $building." | tee -a "$GITHUB_STEP_SUMMARY"
+          exit 0
+        fi
+        name="$(vercel "/v9/projects/$PROJECT?teamId=$TEAM" | jq -r .name)"
+        body="$(jq --null-input --compact-output \
+          --arg name "$name" --arg project "$PROJECT" --arg ref "$REF" --arg sha "$SHA" --argjson repo "$REPO_ID" \
+          '{name: $name, project: $project, target: "production", gitSource: {type: "github", repoId: $repo, ref: $ref, sha: $sha}}')"
+        deployment="$(curl --silent --show-error --fail-with-body \
+          --header "Authorization: Bearer $VERCEL_TOKEN" \
+          --header "Content-Type: application/json" \
+          --data "$body" \
+          "https://api.vercel.com/v13/deployments?teamId=$TEAM")"
+        echo "deployment=$(jq -r .id <<<"$deployment")" >>"$GITHUB_OUTPUT"
+        echo "Started the production build of ${SHA:0:9} for $LABEL: $(jq -r .inspectorUrl <<<"$deployment")" | tee -a "$GITHUB_STEP_SUMMARY"
+
+    - name: Wait for the build
+      id: wait
+      shell: bash
+      env:
+        VERCEL_TOKEN: ${{ inputs.token }}
+        TEAM: ${{ inputs.team }}
+        PROJECT: ${{ inputs.project }}
+        SHA: ${{ inputs.sha }}
+        LABEL: ${{ inputs.label }}
+        DEPLOYMENT: ${{ steps.start.outputs.deployment }}
+      run: |
+        vercel() {
+          curl --silent --show-error --fail-with-body --retry 3 \
+            --header "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com$1"
+        }
+        while :; do
+          sleep 20
+          deployment="$(vercel "/v13/deployments/$DEPLOYMENT?teamId=$TEAM")" || continue
+          state="$(jq -r .readyState <<<"$deployment")"
+          case "$state" in
+            READY) break ;;
+            ERROR | CANCELED)
+              echo "::error::The production build of ${SHA:0:9} for $LABEL ended in $state, so it still serves the previous deployment: $(jq -r .inspectorUrl <<<"$deployment")"
+              exit 1
+              ;;
+          esac
+        done
+        # Vercel points the production domains at a ready production build
+        # unless auto-assignment is off, which an Instant Rollback does until
+        # a deployment is promoted.
+        for _ in $(seq 1 12); do
+          serving="$(vercel "/v9/projects/$PROJECT?teamId=$TEAM" | jq -r '.targets.production.id // empty')" || serving=""
+          if [ "$serving" = "$DEPLOYMENT" ]; then
+            echo "deployed=true" >>"$GITHUB_OUTPUT"
+            echo "Live on $LABEL: ${SHA:0:9}." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          sleep 10
+        done
+        echo "::error::The build of ${SHA:0:9} is ready, but $LABEL still serves another deployment: Vercel's automatic assignment of the production domains is off (an Instant Rollback turns it off). Promote it (vercel promote $DEPLOYMENT) to switch to it and turn assignment back on."
+        exit 1
