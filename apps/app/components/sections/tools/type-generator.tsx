@@ -329,6 +329,41 @@ interface GeneratorPanelProps {
 }
 
 /** The form, the preview and the downloads: live, or the server snapshot. */
+/** The format buttons under the generator's preview. */
+export function DownloadButtons({
+  payload,
+  downloading,
+  onDownload,
+}: {
+  payload: string;
+  downloading: ImageFormat | null;
+  onDownload: (format: ImageFormat) => void;
+}) {
+  // Two columns: the widget's column is at most 20rem, too narrow for "CMYK
+  // TIFF" in four. On the narrowest phones a label wraps rather than spill
+  // out of its button.
+  return (
+    <div className="grid w-full grid-cols-2 gap-2">
+      {IMAGE_FORMATS.map((format) => (
+        <Button
+          className="h-auto min-h-9 gap-1.5 whitespace-normal py-1.5 text-center leading-tight has-[>svg]:px-2.5"
+          key={format}
+          disabled={!payload || downloading !== null}
+          onClick={() => onDownload(format)}
+          variant={format === "png" ? "default" : "outline"}
+        >
+          {downloading === format ? (
+            <ModuleOrbit aria-hidden className="size-4" />
+          ) : (
+            <Download className="size-4" />
+          )}
+          {IMAGE_FORMAT_LABELS[format]}
+        </Button>
+      ))}
+    </div>
+  );
+}
+
 function GeneratorPanel({
   type,
   activeType,
@@ -418,23 +453,11 @@ function GeneratorPanel({
           />
         </div>
 
-        <div className="grid w-full grid-cols-4 gap-2">
-          {IMAGE_FORMATS.map((format) => (
-            <Button
-              key={format}
-              disabled={!payload || downloading !== null}
-              onClick={() => onDownload(format)}
-              variant={format === "png" ? "default" : "outline"}
-            >
-              {downloading === format ? (
-                <ModuleOrbit aria-hidden className="size-4" />
-              ) : (
-                <Download className="size-4" />
-              )}
-              {IMAGE_FORMAT_LABELS[format]}
-            </Button>
-          ))}
-        </div>
+        <DownloadButtons
+          downloading={downloading}
+          onDownload={onDownload}
+          payload={payload}
+        />
 
         <Button asChild variant="ghost" className="w-full">
           {/* The link names the type; what was typed stays in this browser's
