@@ -5,17 +5,25 @@
 // level from the symbol, with ZXing (the scanner's reader) in pure mode:
 // the image is the symbol alone, so no detection step can miss it.
 //
-// Pure mode is also why every symbol here reads: ZXing's Micro QR detector
-// (zxing-wasm 3.1.6) misses about 1 valid symbol in 400 in a whole image,
-// for some module patterns near the corners, while pure mode and the symbol
-// zint draws for the same text agree it's valid.
+// Pure mode is also why every symbol here reads, whatever its mask: the
+// last block covers the masks ZXing's detector misses in a whole image.
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
+import { drawingSVG, microqrcode } from "bwip-js/node";
 import sharp from "sharp";
 import { beforeAll, describe, expect, it } from "vitest";
-import { drawOptions } from "@/lib/barcode/draw";
-import { MICRO_QR_LIMITS, microQrSymbol } from "@/lib/barcode/micro-qr";
+import { type DrawOptions, drawOptions } from "@/lib/barcode/draw";
+import {
+  MICRO_QR_LIMITS,
+  MICRO_QR_MASKS,
+  microQrCornerShows,
+  microQrMaskScore,
+  microQrModules,
+  microQrSymbol,
+} from "@/lib/barcode/micro-qr";
+import { renderBarcodeSVG } from "@/lib/barcode/render";
 import { renderBarcodeServer } from "@/lib/barcode/server";
+import { MICRO_QR_CORNER_MISSES } from "../support/micro-qr-corner-misses";
 
 type Read = (
   input: Blob,
@@ -192,5 +200,143 @@ describe("microQrSymbol", () => {
     expect(
       drawOptions("rmqr", "日本", style).suppresskanjimode,
     ).toBeUndefined();
+  });
+});
+
+/** bwip-js's own drawing of `text`, alone and upright, at `mask` or its pick. */
+const plain = (text: string, mask?: number) =>
+  microQrModules(
+    microqrcode(
+      {
+        ...drawOptions("microqr", text, { ...STYLE, quietZone: 0, scale: 1 }),
+        ...(mask ? { mask } : {}),
+      } as DrawOptions,
+      drawingSVG(),
+    ),
+  );
+
+/** What the generator draws for `text`, alone and upright. */
+const generated = (text: string) =>
+  microQrModules(
+    renderBarcodeSVG("microqr", text, { ...STYLE, quietZone: 0, scale: 1 }).svg,
+  );
+
+describe("Micro QR masks", () => {
+  it("reads the modules from bwip-js's SVG", () => {
+    const modules = plain("12345");
+    expect(modules).toHaveLength(11);
+    const rows = modules.map((row) =>
+      row.map((dark) => (dark ? "#" : ".")).join(""),
+    );
+    // The finder pattern and its separator, top left.
+    expect(rows.slice(0, 8).map((row) => row.slice(0, 8))).toEqual([
+      "#######.",
+      "#.....#.",
+      "#.###.#.",
+      "#.###.#.",
+      "#.###.#.",
+      "#.....#.",
+      "#######.",
+      "........",
+    ]);
+    // The timing patterns along the top row and the left column.
+    expect(rows[0]?.slice(8)).toBe("#.#");
+    expect(
+      rows
+        .slice(8)
+        .map((row) => row[0])
+        .join(""),
+    ).toBe("#.#");
+  });
+
+  it("scores masks as bwip-js does: its own pick scores highest", () => {
+    for (const text of [
+      "1",
+      "12345",
+      "ABC123",
+      "PCB-0042",
+      "QRdx Micro QR",
+      ...MICRO_QR_CORNER_MISSES,
+      ...texts("0123456789ABab-.", 40, 14, 7),
+    ]) {
+      const scores = MICRO_QR_MASKS.map((mask) =>
+        microQrMaskScore(plain(text, mask)),
+      );
+      expect(microQrMaskScore(plain(text)), text).toBe(Math.max(...scores));
+    }
+  });
+
+  it("keeps bwip-js's mask, byte for byte, when its corner shows", () => {
+    const style = { ...STYLE, rotation: 90 as const };
+    for (const text of ["12345", "PCB-0042", "QRdx Micro QR", "héllo ✓"]) {
+      expect(microQrCornerShows(plain(text)), text).toBe(true);
+      const own = microqrcode(
+        drawOptions("microqr", text, style) as DrawOptions,
+        drawingSVG(),
+      );
+      // drawBarcode adds the size and crisp edges to bwip-js's SVG.
+      const drawn = renderBarcodeServer("microqr", text, style).svg.replace(
+        / width="[\d.]+" height="[\d.]+" shape-rendering="crispEdges"/,
+        "",
+      );
+      expect(drawn, text).toBe(own);
+    }
+  });
+
+  it.each(MICRO_QR_CORNER_MISSES)(
+    "%j: draws the best-scoring mask whose corner shows",
+    (text) => {
+      expect(microQrCornerShows(plain(text))).toBe(false);
+      const drawn = generated(text);
+      expect(microQrCornerShows(drawn)).toBe(true);
+      const showing = MICRO_QR_MASKS.filter((mask) =>
+        microQrCornerShows(plain(text, mask)),
+      );
+      const best = Math.max(
+        ...showing.map((mask) => microQrMaskScore(plain(text, mask))),
+      );
+      const mask = showing.find(
+        (each) => microQrMaskScore(plain(text, each)) === best,
+      );
+      expect(drawn).toEqual(plain(text, mask));
+    },
+  );
+
+  it.each(MICRO_QR_CORNER_MISSES)(
+    "%j: the drawing still reads as the text",
+    async (text) => {
+      // Pure mode, so only the symbol is checked here: decode.test.ts reads
+      // it the scanner's way.
+      const svg = renderBarcodeServer("microqr", text, STYLE).svg;
+      const png = await sharp(Buffer.from(svg), { density: 72 })
+        .flatten({ background: "#ffffff" })
+        .png()
+        .toBuffer();
+      const found = await read(
+        new Blob([new Uint8Array(png)], { type: "image/png" }),
+        { formats: ["MicroQRCode"], isPure: true },
+      );
+      expect(found.map((code) => code.text)).toEqual([text]);
+    },
+  );
+
+  it("needs a dark module among the last 6 of the bottom row and of the right column", () => {
+    /** An 11 × 11 symbol, all light but the modules at `dark` (x, y). */
+    const symbol = (...dark: [number, number][]) => {
+      const modules = Array.from({ length: 11 }, () =>
+        new Array<boolean>(11).fill(false),
+      );
+      for (const [x, y] of dark) (modules[y] as boolean[])[x] = true;
+      return modules;
+    };
+    expect(microQrCornerShows(symbol([5, 10], [10, 5]))).toBe(true);
+    // The corner module counts for both.
+    expect(microQrCornerShows(symbol([10, 10]))).toBe(true);
+    // Only the last 6 count.
+    expect(microQrCornerShows(symbol([4, 10], [10, 5]))).toBe(false);
+    expect(microQrCornerShows(symbol([5, 10], [10, 4]))).toBe(false);
+    // Dark in the bottom row only, or the right column only.
+    expect(microQrCornerShows(symbol([9, 10]))).toBe(false);
+    expect(microQrCornerShows(symbol([10, 9]))).toBe(false);
   });
 });

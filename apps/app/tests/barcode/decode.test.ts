@@ -20,11 +20,13 @@ import {
   type BarcodeFormat as DetectorFormat,
   prepareZXingModule,
 } from "barcode-detector/ponyfill";
+import { drawingSVG, microqrcode } from "bwip-js/node";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import sharp from "sharp";
 import { beforeAll, describe, expect, it } from "vitest";
 import { FORMAT_LABELS, SCAN_FORMATS } from "@/components/scanner/detector";
+import { type DrawOptions, drawOptions } from "@/lib/barcode/draw";
 import {
   BARCODE_FORMATS,
   type BarcodeFormatId,
@@ -36,6 +38,7 @@ import {
 import { type BarcodeStyle, renderBarcodeSVG } from "@/lib/barcode/render";
 import { checkBarcodeScan, SCAN_CHECK_FORMATS } from "@/lib/barcode/scan-check";
 import { Barcode as CouponBarcode } from "@/lib/landing/blocks/coupon-barcode";
+import { MICRO_QR_CORNER_MISSES } from "../support/micro-qr-corner-misses";
 
 // The ponyfill builds a DOMRectReadOnly for each result's bounding box; Node
 // has none. Decoding doesn't touch it.
@@ -120,9 +123,11 @@ const EXTRA_VALUES: Partial<Record<BarcodeFormatId, string[]>> = {
   datamatrix: ["héllo ✓ 日本", "A".repeat(300)],
   pdf417: ["Line one\nLine two", "1234567890".repeat(20)],
   aztec: ["héllo ✓", "https://qrdx.dev/barcode-generator?x=1"],
-  // Each of the four sizes, the most of each kind of text, and accents,
-  // other scripts and a line break.
+  // Each of the four sizes, the most of each kind of text, accents, other
+  // scripts and a line break, and the values drawn at another mask so
+  // ZXing's detector finds them (the last block).
   microqr: [
+    ...MICRO_QR_CORNER_MISSES,
     "12345",
     "123456",
     "PCB-0042",
@@ -357,4 +362,87 @@ describe("formats no reader here decodes", () => {
       });
     },
   );
+});
+
+describe("Micro QR codes ZXing's detector missed at bwip-js's mask", () => {
+  // drawMicroQr (lib/barcode/draw.ts) draws these at another mask, because
+  // at bwip-js's own the bottom row or the right column ends in 6 light
+  // modules and ZXing's detector lays its grid wrong (micro-qr.ts,
+  // microQrCornerShows). The first test pins that miss: if a reader update
+  // starts finding them, it fails, and the mask choice can go.
+  const png = (svg: string) =>
+    sharp(Buffer.from(svg), { density: 72 })
+      .flatten({ background: "#ffffff" })
+      .png()
+      .toBuffer();
+  const blob = (bytes: Buffer) =>
+    new Blob([new Uint8Array(bytes)], { type: "image/png" });
+  const style = (rotation: 0 | 90 | 180 | 270 = 0): BarcodeStyle => ({
+    ...BASE,
+    quietZone: getBarcodeFormat("microqr").quietZone.default,
+    scale: 4,
+    rotation,
+  });
+
+  it.each(MICRO_QR_CORNER_MISSES)(
+    "%j: bwip-js's own mask isn't found by the reader",
+    async (text) => {
+      const own = microqrcode(
+        drawOptions("microqr", text, style()) as DrawOptions,
+        drawingSVG(),
+      );
+      expect(await detector.detect(blob(await png(own)))).toEqual([]);
+    },
+  );
+
+  it.each(MICRO_QR_CORNER_MISSES)(
+    "%j: the generator's drawing passes the scan check, turned any way and at the smallest quiet zone",
+    async (text) => {
+      for (const rotation of [0, 90, 180, 270] as const) {
+        const { svg } = renderBarcodeSVG("microqr", text, style(rotation));
+        expect(
+          await checkBarcodeScan(blob(await png(svg)), "microqr", text),
+          `rotation ${rotation}`,
+        ).toEqual({ status: "pass", decoded: text });
+      }
+      const { svg } = renderBarcodeSVG("microqr", text, {
+        ...style(),
+        quietZone: getBarcodeFormat("microqr").quietZone.min,
+      });
+      expect(
+        await checkBarcodeScan(blob(await png(svg)), "microqr", text),
+      ).toMatchObject({ status: "pass" });
+    },
+  );
+
+  it("still fails a wrong value or a broken image", async () => {
+    const { svg, width, height } = renderBarcodeSVG("microqr", "R", style());
+    const image = await png(svg);
+    expect(await checkBarcodeScan(blob(image), "microqr", "S")).toEqual({
+      status: "mismatch",
+      decoded: "R",
+      format: "micro_qr_code",
+    });
+    // The lower half painted over.
+    const broken = await sharp(image)
+      .composite([
+        {
+          input: {
+            create: {
+              width,
+              height: Math.ceil(height / 2),
+              channels: 3,
+              background: "#ffffff",
+            },
+          },
+          top: Math.floor(height / 2),
+          left: 0,
+        },
+      ])
+      .png()
+      .toBuffer();
+    expect(await checkBarcodeScan(blob(broken), "microqr", "R")).toEqual({
+      status: "fail",
+    });
+  });
 });
