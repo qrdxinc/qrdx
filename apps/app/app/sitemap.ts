@@ -52,6 +52,9 @@ const CUSTOM_DOMAIN_PAGE = "/custom-domain-qr-codes";
 /** The marketing site's scan tracking page (SITE_GROUPS.products). */
 const TRACKING_PAGE = "/qr-code-tracking";
 
+/** The marketing site's press kit (SITE_GROUPS.press). */
+const PRESS_PAGE = "/press";
+
 // lastmod is a real date or absent, never the build time (lib/seo-dates.ts).
 /**
  * Every translated page (packages/i18n/localized-paths.json `paths`) as its
@@ -337,6 +340,17 @@ function entries(docs: Entry[]): Entry[] {
             url: url(TRACKING_PAGE),
             changeFrequency: "monthly",
             priority: 0.8,
+          } satisfies Entry,
+        ]
+      : []),
+    // The site's press kit, the same way: listed while the site serves
+    // its group (opt-in), which this app has no page for.
+    ...(siteServes("press")
+      ? [
+          {
+            url: url(PRESS_PAGE),
+            changeFrequency: "monthly",
+            priority: 0.5,
           } satisfies Entry,
         ]
       : []),

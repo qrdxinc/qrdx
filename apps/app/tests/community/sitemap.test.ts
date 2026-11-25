@@ -1,11 +1,14 @@
-// The community's sitemap (/community/sitemap.xml): its item pages and the
-// profiles with any of them, as lib/community/sitemap.ts builds it.
+// The community's sitemap (/community/sitemap.xml): its indexed item pages
+// and the profiles with any item, as lib/community/sitemap.ts builds it.
+// Frames' pages are left out (owner decision, 25 Nov 2026: tiered indexing).
 
 import { describe, expect, it } from "vitest";
 import {
   communitySitemapEntries,
+  isIndexedItemType,
   type SitemapItem,
 } from "@/lib/community/sitemap";
+import { COMMUNITY_TYPES } from "@/lib/community/types";
 
 const item = (overrides: Partial<SitemapItem>): SitemapItem => ({
   type: "theme",
@@ -58,31 +61,54 @@ describe("communitySitemapEntries", () => {
     ]);
   });
 
-  it("lists the engine's official frames and @qrdx, without invented dates", () => {
+  it("indexes every item type but frames", () => {
+    expect(COMMUNITY_TYPES.filter(isIndexedItemType)).toEqual([
+      "theme",
+      "collection",
+      "page-template",
+      "kit",
+    ]);
+  });
+
+  it("leaves out the engine's official frames, but lists @qrdx, without invented dates", () => {
     const entries = communitySitemapEntries({
       items: [
-        // Stored: the database's row and date win.
+        // Stored: the database's row and date win for the profile.
         item({ type: "frame", slug: "scan-me", handle: "qrdx" }),
+        item({ type: "theme", slug: "holiday", handle: "qrdx" }),
       ],
       officialFrameSlugs: ["scan-me", "tap-here"],
     });
     expect(entries).toEqual([
       {
-        path: "/community/frames/scan-me",
+        path: "/community/themes/holiday",
         lastModified: "2026-11-10T08:00:00.000Z",
       },
-      { path: "/community/frames/tap-here" },
       { path: "/community/@qrdx", lastModified: "2026-11-10T08:00:00.000Z" },
+    ]);
+  });
+
+  it("leaves out members' frames too, but lists their profiles", () => {
+    const entries = communitySitemapEntries({
+      items: [
+        item({
+          type: "frame",
+          slug: "my-frame",
+          handle: "ana",
+          lastModified: "2026-11-20T08:00:00.000Z",
+        }),
+      ],
+      officialFrameSlugs: [],
+    });
+    expect(entries).toEqual([
+      { path: "/community/@ana", lastModified: "2026-11-20T08:00:00.000Z" },
     ]);
   });
 
   it("lists @qrdx with no stored items, from the engine's frames alone", () => {
     expect(
       communitySitemapEntries({ items: [], officialFrameSlugs: ["scan-me"] }),
-    ).toEqual([
-      { path: "/community/frames/scan-me" },
-      { path: "/community/@qrdx" },
-    ]);
+    ).toEqual([{ path: "/community/@qrdx" }]);
   });
 
   it("is empty with no items and no official frames", () => {

@@ -3,7 +3,9 @@ import "server-only";
 import { configuredEntry } from "@repo/availability";
 import { CANONICAL_ORIGIN } from "@repo/config";
 import { getCatalogBySurface } from "@repo/integrations/src/catalog";
+import { SITE_KEY_HEADER } from "@repo/next-config/site-zone";
 import type { PricingOptions } from "@/components/sections/pricing/plan-content";
+import { env } from "@/env";
 import {
   blogSource,
   compareSource,
@@ -24,6 +26,7 @@ import { siteServes } from "@/lib/site-zone-on";
 import cliPackage from "../../../../packages/cli/package.json";
 import qrdxPackage from "../../../../packages/qrdx/package.json";
 import { buildLlmsTxt, type LlmsDocsSection, type LlmsLink } from "./llms-txt";
+import { comparePages, parseRssPosts, parseSitemapPaths } from "./site-feeds";
 
 /** What this deployment offers, as the pricing page reads it. */
 export function pricingOptions(): PricingOptions {
@@ -81,14 +84,78 @@ const DOCS_ON_QRDX: LlmsDocsSection[] = [
   },
 ];
 
+/** How often llms.txt reads the site's feeds again, in seconds (its route's revalidate). */
+const SITE_FEED_REVALIDATE = 3600;
+
+/**
+ * A file the marketing site serves (SITE_ORIGIN), asked for as this app's
+ * proxy asks, with the zone key; undefined when it can't be read in time.
+ */
+async function siteFile(path: string): Promise<string | undefined> {
+  if (!env.SITE_ORIGIN) return;
+  try {
+    const response = await fetch(new URL(path, env.SITE_ORIGIN), {
+      headers: env.SITE_ZONE_KEY
+        ? { [SITE_KEY_HEADER]: env.SITE_ZONE_KEY }
+        : {},
+      next: { revalidate: SITE_FEED_REVALIDATE },
+      signal: AbortSignal.timeout(10_000),
+    });
+    return response.ok ? await response.text() : undefined;
+  } catch {
+    return;
+  }
+}
+
+const newestFirst = (a: { data: { date: string } }, b: typeof a) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+
+/**
+ * Every blog post and comparison, for llms.txt's "Guides and research".
+ * While the marketing site serves them (lib/site-zone-on.ts), from what it
+ * publishes: the blog's RSS feed (each post's one-line description) and the
+ * comparisons' sitemap. When the site can't be read, or doesn't serve them,
+ * this app's own copy, which the site's pages started from and which keeps
+ * their URLs.
+ */
+async function guidesAndResearch(): Promise<{
+  blog: LlmsLink[];
+  compare: LlmsLink[];
+}> {
+  const ownPosts = blogSource
+    .getPages()
+    .filter((page) => page.data.published)
+    .sort(newestFirst)
+    .map(pageLink);
+  const ownComparisons = compareSource.getPages().map((page) => ({
+    ...pageLink(page),
+    title: `QRdx vs ${page.data.title}`,
+  }));
+  const [feed, sitemap] = await Promise.all([
+    siteServes("blog") ? siteFile("/blog/rss.xml") : undefined,
+    siteServes("compare") ? siteFile("/compare/sitemap.xml") : undefined,
+  ]);
+  // The site's links name this deployment's origin or the canonical one.
+  const origins = [baseUrl, new URL(CANONICAL_ORIGIN)];
+  const posts = feed ? parseRssPosts(feed, origins) : [];
+  const comparisons = sitemap
+    ? comparePages(parseSitemapPaths(sitemap, origins), ownComparisons)
+    : [];
+  return {
+    blog: posts.length > 0 ? posts : ownPosts,
+    compare: comparisons.length > 0 ? comparisons : ownComparisons,
+  };
+}
+
 /** The /llms.txt body for this deployment. */
 export async function llmsTxt(): Promise<string> {
-  const [libraryVersion, cliVersion, docsZone] = await Promise.all([
+  const [libraryVersion, cliVersion, docsZone, guides] = await Promise.all([
     getPublishedVersion("qrdx"),
     getPublishedVersion("@qrdx/cli"),
     // The docs site's sections when DOCS_ZONE_URL is set (it serves the
     // docs then); null without it.
     docsZoneManifest(),
+    guidesAndResearch(),
   ]);
 
   // Third-party integrations this deployment offers; AI assistants,
@@ -108,18 +175,6 @@ export async function llmsTxt(): Promise<string> {
     description: `${entry.tagline}${entry.note ? ` ${entry.note}` : ""}`,
   }));
 
-  const newestFirst = (a: { data: { date: string } }, b: typeof a) =>
-    new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
-  // The marketing site serves the blog when it's on (lib/site-zone-on.ts):
-  // this app's copy of the posts may be out of date, so only the Blog link
-  // stays.
-  const blog = siteServes("blog")
-    ? []
-    : blogSource
-        .getPages()
-        .filter((page) => page.data.published)
-        .sort(newestFirst)
-        .map(pageLink);
   // Published customers' stories only (lib/content-source.ts).
   const customers = customersSource.getPages().sort(newestFirst).map(pageLink);
 
@@ -128,19 +183,17 @@ export async function llmsTxt(): Promise<string> {
     docsOrigin: docsZone ? baseUrl : new URL(CANONICAL_ORIGIN),
     offered: pricingOptions(),
     showsPath: isPathAvailable,
-    // Only the marketing site has these pages (SITE_GROUPS.products and
-    // .generators).
+    // Only the marketing site has these pages (SITE_GROUPS.products,
+    // .press and .generators).
     customDomainPage: siteServes("products"),
     trackingPage: siteServes("products"),
+    pressPage: siteServes("press"),
     appDownloadGenerator: siteServes("generators"),
     limits: PLAN_LIMITS,
     docs: docsZone?.sections ?? DOCS_ON_QRDX,
-    blog,
+    blog: guides.blog,
     customers,
-    // Served by the marketing site when it's on: only "All comparisons" stays.
-    compare: siteServes("compare")
-      ? []
-      : compareSource.getPages().map(pageLink),
+    compare: guides.compare,
     legal: legalPages().map(pageLink),
     integrations,
     plugins,

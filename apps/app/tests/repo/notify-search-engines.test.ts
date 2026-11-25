@@ -5,10 +5,18 @@
 import { createVerify, generateKeyPairSync } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { TYPE_SEGMENTS } from "@/lib/community/types";
+import { QR_TYPE_SLUGS } from "@/lib/qr-types-content";
+import { HOSTED_TYPE_SLUGS } from "@/lib/qr-types-content-hosted";
 import {
   BING_BACKLOG_STEP,
+  backlogUrls,
+  bingUrls,
   changedUrls,
+  checkSitemapSamples,
+  forBing,
   googleAssertion,
   IMPORTANT_PATHS,
   INDEXNOW_KEY,
@@ -19,17 +27,25 @@ import {
   mergeEntries,
   normalizeUrl,
   onSite,
+  PRIORITY_RESEND_DAYS,
+  pageStatus,
   parseRobotsSitemaps,
   parseServiceAccount,
   parseSitemap,
   parseSitemapIndex,
   pickBingSite,
+  priorityUrls,
+  resendDay,
   rotate,
+  SITEMAP_SAMPLE_SIZE,
   SITEMAP_URL,
+  sampleUrls,
   sendBing,
   sitemapKind,
   statusSummary,
   submitSitemaps,
+  TOP_GENERATORS,
+  TRANSLATED_SEGMENTS,
   toUrlset,
   utcDay,
 } from "../../../../scripts/notify-search-engines.mjs";
@@ -305,6 +321,201 @@ describe("rotate (the daily Bing backlog)", () => {
     expect(utcDay(Date.UTC(2026, 10, 14))).toBe(
       utcDay(Date.UTC(2026, 10, 13)) + 1,
     );
+  });
+});
+
+// What Bing's URL API gets, about 100 URLs a day: the priority pages first
+// (each once a week in the backlog), never translations or community items.
+const abs = (path: string) => `https://qrdx.dev${path}`;
+const POSTS = ["/blog/qr-code-scan-study", "/blog/do-qr-codes-expire"];
+const COMPARISONS = ["/compare/qr-tiger", "/compare/uniqode"];
+const SKIPPED = [
+  "/es/qr-code-generator/wifi",
+  "/pt-br/barcode-generator",
+  "/zh-hans/playground",
+  "/community/frames/library-ebooks",
+  "/community/themes/sunset",
+  "/community/templates/menu",
+  "/community/collections/autumn",
+  "/community/kits/cafe",
+  "/community/@qrdx",
+];
+const OTHERS = Array.from(
+  { length: 400 },
+  (_, i) => `/qr-codes-for/topic-${i}`,
+);
+/** A sitemap in the order the live one has: priority pages mixed in. */
+const LIVE = [
+  ...OTHERS.slice(0, 100),
+  ...POSTS,
+  "/blog/category/education",
+  "/blog/authors/ritesh-bucha",
+  ...[...IMPORTANT_PATHS].reverse(),
+  ...SKIPPED,
+  ...OTHERS.slice(100),
+  ...COMPARISONS,
+].map(abs);
+
+describe("forBing", () => {
+  it("leaves out every translated language's pages", () => {
+    // The segments are copied from @repo/i18n (the workflow runs the script
+    // on its own, without the package).
+    expect([...TRANSLATED_SEGMENTS].sort()).toEqual(
+      TRANSLATED_LOCALES.map((locale) => LOCALE_INFO[locale].segment).sort(),
+    );
+    for (const segment of TRANSLATED_SEGMENTS) {
+      expect(forBing(abs(`/${segment}`)), segment).toBe(false);
+      expect(forBing(abs(`/${segment}/qr-code-generator/wifi`))).toBe(false);
+    }
+  });
+
+  it("leaves out community items and profiles, but not the galleries", () => {
+    for (const segment of Object.values(TYPE_SEGMENTS)) {
+      expect(forBing(abs(`/community/${segment}/some-item`)), segment).toBe(
+        false,
+      );
+      expect(forBing(abs(`/community/${segment}`)), segment).toBe(true);
+    }
+    expect(forBing(abs("/community/@ana"))).toBe(false);
+    expect(forBing(abs("/community"))).toBe(true);
+    expect(forBing(abs("/community/all"))).toBe(true);
+    expect(forBing(abs("/community/made-with-qrdx"))).toBe(true);
+  });
+
+  it("keeps the English pages", () => {
+    for (const path of ["/", "/pricing", "/qr-code-generator/wifi", "/esim"]) {
+      expect(forBing(abs(path)), path).toBe(true);
+    }
+  });
+});
+
+describe("priority pages", () => {
+  it("name about 80 answer pages, each once, and real generator types", () => {
+    expect(new Set(IMPORTANT_PATHS).size).toBe(IMPORTANT_PATHS.length);
+    expect(TOP_GENERATORS).toHaveLength(30);
+    // The marketing site's own hosted type has no copy here.
+    const types = new Set<string>([
+      ...QR_TYPE_SLUGS,
+      ...HOSTED_TYPE_SLUGS,
+      "app-download",
+    ]);
+    for (const type of TOP_GENERATORS) expect(types, type).toContain(type);
+    for (const path of [
+      "/dynamic-qr-code",
+      "/qr-code-tracking",
+      "/custom-domain-qr-codes",
+      "/open-source-qr-code-generator",
+      "/ai",
+      "/ai/art",
+      "/guarantee",
+      "/scan",
+      "/tools/bulk",
+      "/tools/print-size",
+      "/tools/scan-checker",
+      "/qr-codes-for",
+      "/qr-codes-on",
+    ]) {
+      expect(IMPORTANT_PATHS, path).toContain(path);
+    }
+  });
+
+  it("come in IMPORTANT_PATHS's order, then every post and comparison", () => {
+    const found = priorityUrls(LIVE);
+    expect(found).toEqual(
+      [...IMPORTANT_PATHS, ...POSTS, ...COMPARISONS].map(abs),
+    );
+    // Categories and authors aren't posts; a repeat counts once.
+    expect(priorityUrls([abs("/blog/category/education")])).toEqual([]);
+    expect(priorityUrls([abs("/pricing"), abs("/pricing/")])).toEqual([
+      abs("/pricing"),
+    ]);
+  });
+});
+
+describe("bingUrls", () => {
+  it("puts the priority pages first and drops translations and community items", () => {
+    const urls = bingUrls(LIVE);
+    const priority = [...IMPORTANT_PATHS, ...POSTS, ...COMPARISONS].map(abs);
+    expect(urls.slice(0, priority.length)).toEqual(priority);
+    expect(urls.slice(priority.length)).toEqual(
+      [
+        ...OTHERS.slice(0, 100),
+        "/blog/category/education",
+        "/blog/authors/ritesh-bucha",
+        ...OTHERS.slice(100),
+      ].map(abs),
+    );
+    for (const path of SKIPPED) expect(urls).not.toContain(abs(path));
+  });
+});
+
+describe("backlogUrls (the daily Bing backlog)", () => {
+  const priority = priorityUrls(LIVE);
+  const week = Array.from({ length: PRIORITY_RESEND_DAYS }, (_, i) =>
+    backlogUrls(LIVE, 20_412 + i),
+  );
+
+  it("sends each priority page once a week, at the front of its day", () => {
+    const sent = new Map<string, number>();
+    for (const day of week) {
+      const head = day.filter((url: string) => priority.includes(url));
+      // Today's priority pages come first, then no other priority page.
+      expect(day.slice(0, head.length)).toEqual(head);
+      for (const url of head) sent.set(url, (sent.get(url) ?? 0) + 1);
+    }
+    expect([...sent.keys()].sort()).toEqual([...priority].sort());
+    expect(new Set(sent.values())).toEqual(new Set([1]));
+    // About a seventh a day, never most of the quota.
+    for (const day of week) {
+      const count = day.filter((url: string) => priority.includes(url)).length;
+      expect(count).toBeLessThan(BING_BACKLOG_STEP / 2);
+    }
+  });
+
+  it("covers the rest within the week in what fits each day's quota", () => {
+    const sent = new Set(
+      week.flatMap((day) => day.slice(0, BING_BACKLOG_STEP)),
+    );
+    for (const url of bingUrls(LIVE)) expect(sent, url).toContain(url);
+    for (const path of SKIPPED) expect(sent).not.toContain(abs(path));
+  });
+
+  it("gives a page the same day of the week however the list changes", () => {
+    for (const url of priority) {
+      const day = resendDay(url);
+      expect(day).toBeGreaterThanOrEqual(0);
+      expect(day).toBeLessThan(PRIORITY_RESEND_DAYS);
+      expect(resendDay(`${url}/`)).toBe(day);
+    }
+    const withNewPost = [...LIVE, abs("/blog/a-new-post")];
+    const today = (urls: string[], day: number) =>
+      backlogUrls(urls, day).filter((url: string) => priority.includes(url));
+    for (let day = 20_412; day < 20_412 + PRIORITY_RESEND_DAYS; day += 1) {
+      expect(today(withNewPost, day)).toEqual(today(LIVE, day));
+    }
+  });
+});
+
+describe("sampleUrls (what --check asks for)", () => {
+  const urls = Array.from({ length: 253 }, (_, i) => `https://qrdx.dev/p${i}`);
+
+  it("spreads the sample through the sitemap, starting further in each day", () => {
+    const sample = sampleUrls(urls, 10, 0);
+    expect(sample).toHaveLength(10);
+    expect(sample[0]).toBe(urls[0]);
+    expect(sample[9]).toBe(urls[225]);
+    const tomorrow = sampleUrls(urls, 10, 1);
+    expect(tomorrow[0]).toBe(urls[1]);
+    for (let day = 0; day < 60; day += 1) {
+      const each = sampleUrls(urls, SITEMAP_SAMPLE_SIZE, day);
+      expect(new Set(each).size).toBe(SITEMAP_SAMPLE_SIZE);
+      for (const url of each) expect(urls).toContain(url);
+    }
+  });
+
+  it("takes every URL of a short sitemap", () => {
+    expect(sampleUrls(urls.slice(0, 4), 10, 7)).toEqual(urls.slice(0, 4));
+    expect(sampleUrls([], 10, 7)).toEqual([]);
   });
 });
 
@@ -597,6 +808,155 @@ describe("loadSitemaps (stubbed fetch)", () => {
         : new Response("Unavailable", { status: 503 }),
     );
     await expect(loadSitemaps()).rejects.toThrow("no sitemap could be read");
+  });
+});
+
+describe("pageStatus and checkSitemapSamples (stubbed fetch)", () => {
+  /** Every request as "METHOD url", answered by `route` by path. */
+  function stubPages(route: (path: string, method: string) => Answer) {
+    const asked: string[] = [];
+    vi.stubGlobal(
+      "fetch",
+      async (
+        input: string | URL,
+        init?: { method?: string; redirect?: string },
+      ) => {
+        const url = new URL(String(input));
+        const method = init?.method ?? "GET";
+        // A redirect is the answer itself, never followed.
+        expect(init?.redirect).toBe("manual");
+        asked.push(`${method} ${url.pathname}`);
+        const answer = route(url.pathname, method);
+        if (answer instanceof Error) throw answer;
+        return answer;
+      },
+    );
+    return asked;
+  }
+
+  it("asks with HEAD, and with GET only when HEAD isn't allowed", async () => {
+    const asked = stubPages((path, method) => {
+      if (path === "/old") {
+        return new Response(null, {
+          status: 307,
+          headers: { location: "/new" },
+        });
+      }
+      if (path === "/no-head" && method === "HEAD") {
+        return new Response(null, { status: 405 });
+      }
+      return new Response(method === "HEAD" ? null : "page");
+    });
+    expect(await pageStatus(abs("/"))).toBe(200);
+    expect(await pageStatus(abs("/old"))).toBe(307);
+    expect(await pageStatus(abs("/no-head"))).toBe(200);
+    expect(asked).toEqual([
+      "HEAD /",
+      "HEAD /old",
+      "HEAD /no-head",
+      "GET /no-head",
+    ]);
+  });
+
+  it("finds the sampled pages that redirect, are missing or don't answer, in order", async () => {
+    stubPages((path) => {
+      if (path.startsWith("/de/")) {
+        return new Response(null, {
+          status: 307,
+          headers: { location: path.slice(3) },
+        });
+      }
+      if (path === "/gone") return new Response(null, { status: 404 });
+      if (path === "/slow") return timeout();
+      return new Response(null);
+    });
+    const { checked, failures } = await checkSitemapSamples(
+      [
+        {
+          sitemap: abs("/sitemap.xml"),
+          urls: ["/", "/pricing", "/gone", "/slow"].map(abs),
+        },
+        {
+          sitemap: abs("/barcode-generator/sitemap.xml"),
+          urls: [
+            "/barcode-generator",
+            "/de/barcode-generator",
+            "/de/barcode-generator/ean-13",
+          ].map(abs),
+        },
+      ],
+      0,
+    );
+    expect(checked).toBe(7);
+    expect(failures).toEqual([
+      { url: abs("/gone"), answer: "HTTP 404" },
+      { url: abs("/slow"), answer: "timed out" },
+      { url: abs("/de/barcode-generator"), answer: "HTTP 307" },
+      { url: abs("/de/barcode-generator/ean-13"), answer: "HTTP 307" },
+    ]);
+  });
+
+  /** robots.txt, two sitemaps holding every important page, the key file. */
+  const site =
+    (page: (path: string) => Answer | undefined) =>
+    (url: URL): Answer => {
+      if (url.pathname === "/robots.txt") {
+        return new Response(
+          "Sitemap: https://qrdx.dev/sitemap.xml\nSitemap: https://qrdx.dev/barcode-generator/sitemap.xml",
+        );
+      }
+      if (url.pathname === "/sitemap.xml") {
+        return new Response(urlset(...IMPORTANT_PATHS, ...POSTS));
+      }
+      if (url.pathname === "/barcode-generator/sitemap.xml") {
+        return new Response(
+          urlset("/barcode-generator/ean-13", "/de/barcode-generator/ean-13"),
+        );
+      }
+      if (url.pathname === `/${INDEXNOW_KEY}.txt`) {
+        return new Response(INDEXNOW_KEY);
+      }
+      return page(url.pathname) ?? new Response(null);
+    };
+
+  it("fails --check when a sitemap lists a page that redirects", async () => {
+    const output = captureOutput();
+    stubFetch(
+      site((path) =>
+        path.startsWith("/de/")
+          ? new Response(null, {
+              status: 307,
+              headers: { location: path.slice(3) },
+            })
+          : undefined,
+      ),
+    );
+    expect(await main(["--check"])).toBe(1);
+    const lines = output();
+    expect(
+      lines.some(
+        (line) =>
+          line.includes("1 didn't answer HTTP 200") &&
+          line.includes("/de/barcode-generator/ean-13 (HTTP 307)"),
+      ),
+    ).toBe(true);
+  });
+
+  it("passes --check when every sampled page answers 200", async () => {
+    const output = captureOutput();
+    stubFetch(site(() => undefined));
+    expect(await main(["--check"])).toBe(0);
+    const lines = output();
+    expect(
+      lines.some((line) => line.includes("every one answered HTTP 200")),
+    ).toBe(true);
+    expect(
+      lines.some((line) =>
+        line.includes(
+          `${IMPORTANT_PATHS.length + POSTS.length} priority pages (each once a week), then 1 more in turn; 1 translations and community items left to IndexNow`,
+        ),
+      ),
+    ).toBe(true);
   });
 });
 

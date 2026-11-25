@@ -96,8 +96,10 @@ export const ENGLISH_ONLY_OUTSIDE_PATHS: readonly string[] =
  * (@repo/next-config/site-zone SITE_TRANSLATED_GROUPS), next.config.ts
  * stops redirecting their translated URLs to English (routing.ts
  * englishOnlyRedirects `except`) and proxies them to the site, which
- * renders them with localizeSitePath() links and indexes them (review.ts
- * INDEXED_MACHINE_PATHS). Written like ENGLISH_ONLY_PATHS, each one of them.
+ * renders them with localizeSitePath() links. The QR code generators'
+ * translations are indexed (review.ts INDEXED_MACHINE_PATHS); the barcode
+ * generators' follow their languages' review state. Written like
+ * ENGLISH_ONLY_PATHS, each one of them.
  */
 export const SITE_TRANSLATED_PATHS: readonly string[] =
   localized.siteTranslated;
