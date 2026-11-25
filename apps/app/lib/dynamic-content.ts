@@ -139,6 +139,8 @@ export const STATIC_ONLY_TYPES = [
   "stellar",
   // Added 2026-11-22 (links): calls by number or email (facetime:)
   "facetime",
+  // Added 2026-11-25: an iCalendar VEVENT
+  "calendar-event",
 ] as const satisfies readonly ContentType[];
 
 /**

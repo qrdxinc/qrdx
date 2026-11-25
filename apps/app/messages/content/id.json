@@ -39370,5 +39370,143 @@
     "text": "Tidak untuk kode QR statis. Alat-alat ini merender gambar, memformat teks, dan membaca komunitas publik. Hanya alat berikut yang menulis sesuatu: create_dynamic_code dan update_code_destination (kode dinamis yang Anda minta, di ruang kerja Anda), serta save_template dan save_barcode (tema atau barcode yang Anda minta untuk disimpan, di ruang kerja milik API key). generate_ai_art memakai salah satu jatah gambar seni AI bulanan ruang kerja, tetapi tidak menyimpan gambar maupun foto yang Anda kirim. URL gambar yang dikembalikan alat berisi data yang dikodekan, jadi jangan bagikan jika datanya bersifat pribadi, seperti kata sandi Wi-Fi.",
     "status": "machine",
     "context": "mcp.faqs.7.answer"
+  },
+  "f74c0be05e82": {
+    "source": "Calendar event",
+    "text": "Acara kalender",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.label"
+  },
+  "391b4900f8cd": {
+    "source": "Add an event to the scanner's calendar",
+    "text": "Tambahkan acara ke kalender pemindai",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.description"
+  },
+  "60d0f3626bc4": {
+    "source": "Calendar Event",
+    "text": "Acara Kalender",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.name"
+  },
+  "937f80f08207": {
+    "source": "Add an event to the phone's calendar with one scan.",
+    "text": "Tambahkan acara ke kalender ponsel dengan satu pemindaian.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.summary"
+  },
+  "36d7be8c09ff": {
+    "source": "Make a calendar event QR code: the event's name, date and time, place, details and a link in the iCalendar format phones add to the calendar. Free.",
+    "text": "Buat kode QR acara kalender: nama acara, tanggal dan waktu, tempat, detail, dan tautan dalam format iCalendar yang dapat ditambahkan ponsel ke kalender. Gratis.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.metaDescription"
+  },
+  "7e48d79403f2": {
+    "source": "A calendar event QR code holds one event: its name, when it starts and ends, where it is, a few lines about it and a link. Scanning it offers to add the event to the phone's calendar, so nobody has to copy the date and time from a poster or an invitation.",
+    "text": "Kode QR acara kalender berisi satu acara: namanya, kapan acara dimulai dan berakhir, lokasinya, beberapa baris keterangan, dan sebuah tautan. Pemindaiannya menawarkan untuk menambahkan acara ke kalender ponsel, sehingga tidak ada yang perlu menyalin tanggal dan waktu dari poster atau undangan.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.0"
+  },
+  "53490dd34f81": {
+    "source": "The event is written into the code itself as an iCalendar VEVENT, so the code needs no account and never expires. The times are saved in UTC from the time zone you pick, and each phone shows them in its own time. Because the details are in the code, a new time or place means a new code.",
+    "text": "Acara ditulis langsung di dalam kode sebagai VEVENT iCalendar, sehingga kode ini tidak memerlukan akun dan tidak pernah kedaluwarsa. Waktunya disimpan dalam UTC berdasarkan zona waktu yang Anda pilih, dan setiap ponsel menampilkannya sesuai waktunya sendiri. Karena detailnya ada di dalam kode, waktu atau tempat yang baru berarti kode yang baru.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.1"
+  },
+  "b7cb6b55bf27": {
+    "source": "Enter the event's name and pick the day and time it starts.",
+    "text": "Masukkan nama acara dan pilih hari serta waktu acara dimulai.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.0"
+  },
+  "f37f92d39ff8": {
+    "source": "Add an end time, or switch on All-day event for an event that takes whole days.",
+    "text": "Tambahkan waktu selesai, atau aktifkan Acara seharian untuk acara yang berlangsung sepanjang hari.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.1"
+  },
+  "3389506655cc": {
+    "source": "Check the time zone the times are in, then add a location, a short description and a link if you want them.",
+    "text": "Periksa zona waktu yang digunakan, lalu tambahkan lokasi, deskripsi singkat, dan tautan jika Anda mau.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.2"
+  },
+  "3a1f754ff0d5": {
+    "source": "Scan the preview with an iPhone and an Android phone to see that both offer to add the event, then download the code.",
+    "text": "Pindai pratinjau dengan iPhone dan ponsel Android untuk memastikan keduanya menawarkan untuk menambahkan acara, lalu unduh kodenya.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.3"
+  },
+  "a58987909da3": {
+    "source": "QRdx writes one VEVENT (RFC 5545) without a VCALENDAR around it: that's the form QR scanners look for, and it keeps the code smaller.",
+    "text": "QRdx menulis satu VEVENT (RFC 5545) tanpa VCALENDAR di sekelilingnya: itulah bentuk yang dicari pemindai QR, dan ukuran kodenya jadi lebih kecil.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.0"
+  },
+  "a1596551def4": {
+    "source": "Times end in Z: they're in UTC, converted from the time zone you pick. An all-day event has dates only (DTSTART;VALUE=DATE:20270417), and its DTEND is the day after the last day, as the standard asks.",
+    "text": "Waktu diakhiri dengan Z: artinya dalam UTC, dikonversi dari zona waktu yang Anda pilih. Acara seharian hanya memuat tanggal (DTSTART;VALUE=DATE:20270417), dan DTEND-nya adalah sehari setelah hari terakhir, sesuai ketentuan standar.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.1"
+  },
+  "6c3c533b5640": {
+    "source": "Commas, semicolons, backslashes and line breaks in the text are escaped with a backslash, so a comma in the location is written \\,.",
+    "text": "Koma, titik koma, garis miring terbalik, dan jeda baris dalam teks di-escape dengan garis miring terbalik, sehingga koma pada lokasi ditulis \\,.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.2"
+  },
+  "3d3d8d121316": {
+    "source": "The link is written as URL and again at the end of the description: the calendar event Google's ML Kit reads, which many Android scanners use, has no link field.",
+    "text": "Tautan ditulis sebagai URL dan sekali lagi di akhir deskripsi: acara kalender yang dibaca ML Kit milik Google, yang digunakan banyak pemindai Android, tidak memiliki kolom tautan.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.3"
+  },
+  "dddc2fbf8cda": {
+    "source": "Only the fields you fill in are written. Past about 300 characters the code gets dense, and the form says so: a shorter description keeps it easy to scan.",
+    "text": "Hanya kolom yang Anda isi yang ditulis. Lebih dari sekitar 300 karakter, kode menjadi padat, dan formulir akan memberi tahu Anda: deskripsi yang lebih singkat membuat kode tetap mudah dipindai.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.4"
+  },
+  "007d6b8d850c": {
+    "source": "Which time zone are the times in?",
+    "text": "Waktunya menggunakan zona waktu yang mana?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.question"
+  },
+  "d0d826431b09": {
+    "source": "The one you pick under the times, which starts as your device's. The code holds the times in UTC, so a phone in another time zone shows the event at the right moment in its own time.",
+    "text": "Zona waktu yang Anda pilih di bawah kolom waktu, yang awalnya mengikuti perangkat Anda. Kode menyimpan waktu dalam UTC, sehingga ponsel di zona waktu lain menampilkan acara pada saat yang tepat menurut waktunya sendiri.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.answer"
+  },
+  "8b95b38c5c85": {
+    "source": "Do iPhones and Android phones read it?",
+    "text": "Apakah iPhone dan ponsel Android dapat membacanya?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.question"
+  },
+  "5031df6b0b75": {
+    "source": "Google's ML Kit, which many Android scanners use, reads calendar events. Apple doesn't document which formats the iPhone Camera reads. Scan the preview with both before you print.",
+    "text": "ML Kit milik Google, yang digunakan banyak pemindai Android, membaca acara kalender. Apple tidak mendokumentasikan format apa saja yang dibaca Kamera iPhone. Pindai pratinjau dengan keduanya sebelum Anda mencetak.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.answer"
+  },
+  "5bb54a2ed51a": {
+    "source": "Can I change the event after printing?",
+    "text": "Bisakah saya mengubah acara setelah dicetak?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.question"
+  },
+  "6a209249887c": {
+    "source": "No, the event is inside the code. For an event that may move, make an invitation page instead: a hosted page with add-to-calendar buttons that you can edit after printing.",
+    "text": "Tidak, acara berada di dalam kode. Untuk acara yang mungkin berubah, buat halaman undangan: halaman yang di-hosting dengan tombol tambah ke kalender yang dapat Anda edit setelah dicetak.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.answer"
+  },
+  "2bd44ba9f12f": {
+    "source": "Is my event sent to QRdx?",
+    "text": "Apakah acara saya dikirim ke QRdx?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.3.question"
   }
 }

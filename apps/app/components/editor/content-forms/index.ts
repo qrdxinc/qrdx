@@ -2,6 +2,8 @@ export { AmazonForm } from "./amazon-form";
 export { AttendanceForm } from "./attendance-form";
 export { BitcoinForm } from "./bitcoin-form";
 export { CalcomForm } from "./calcom-form";
+// Added 2026-11-25
+export { CalendarEventForm } from "./calendar-event-form";
 // Added 2026-11-11
 export {
   BitcoinCashForm,

@@ -39370,5 +39370,143 @@
     "text": "静的なものについては書き込みません。ツールは画像のレンダリング、テキストの整形、公開コミュニティの読み取りを行います。書き込みを行うのは次のツールだけです。create_dynamic_code と update_code_destination(ご依頼の動的コードをワークスペースに作成・更新)、save_template と save_barcode(ご依頼のテーマやバーコードをAPIキーのワークスペースに保存)。generate_ai_art はワークスペースの月間AIアート枠を1枚分使いますが、画像も送信された写真も保存しません。ツールが返す画像URLにはエンコードされたデータが含まれるため、Wi-Fiのパスワードなど非公開のデータの場合は共有しないでください。",
     "status": "machine",
     "context": "mcp.faqs.7.answer"
+  },
+  "f74c0be05e82": {
+    "source": "Calendar event",
+    "text": "カレンダーイベント",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.label"
+  },
+  "391b4900f8cd": {
+    "source": "Add an event to the scanner's calendar",
+    "text": "スキャンした人のカレンダーにイベントを追加します",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.description"
+  },
+  "60d0f3626bc4": {
+    "source": "Calendar Event",
+    "text": "カレンダーイベント",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.name"
+  },
+  "937f80f08207": {
+    "source": "Add an event to the phone's calendar with one scan.",
+    "text": "1回のスキャンで、スマートフォンのカレンダーにイベントを追加できます。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.summary"
+  },
+  "36d7be8c09ff": {
+    "source": "Make a calendar event QR code: the event's name, date and time, place, details and a link in the iCalendar format phones add to the calendar. Free.",
+    "text": "カレンダーイベントのQRコードを作成できます。イベント名、日時、場所、詳細、リンクを、スマートフォンがカレンダーに追加できるiCalendar形式で収めます。無料です。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.metaDescription"
+  },
+  "7e48d79403f2": {
+    "source": "A calendar event QR code holds one event: its name, when it starts and ends, where it is, a few lines about it and a link. Scanning it offers to add the event to the phone's calendar, so nobody has to copy the date and time from a poster or an invitation.",
+    "text": "カレンダーイベントのQRコードには、イベント名、開始と終了の日時、場所、イベントについての数行の説明、リンクをまとめて1件分収めます。スキャンすると、スマートフォンのカレンダーにイベントを追加するかどうかが表示されるので、ポスターや招待状から日時を書き写す必要がありません。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.0"
+  },
+  "53490dd34f81": {
+    "source": "The event is written into the code itself as an iCalendar VEVENT, so the code needs no account and never expires. The times are saved in UTC from the time zone you pick, and each phone shows them in its own time. Because the details are in the code, a new time or place means a new code.",
+    "text": "イベントはiCalendarのVEVENTとしてコード自体に書き込まれるため、アカウントは不要で、有効期限もありません。時刻は選んだタイムゾーンからUTCに変換して保存され、各スマートフォンでは端末の現地時間で表示されます。詳細はコードの中にあるので、日時や場所が変わった場合は新しいコードが必要です。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.1"
+  },
+  "b7cb6b55bf27": {
+    "source": "Enter the event's name and pick the day and time it starts.",
+    "text": "イベント名を入力し、開始する日と時刻を選びます。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.0"
+  },
+  "f37f92d39ff8": {
+    "source": "Add an end time, or switch on All-day event for an event that takes whole days.",
+    "text": "終了時刻を追加します。終日にわたるイベントの場合は「終日」をオンにします。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.1"
+  },
+  "3389506655cc": {
+    "source": "Check the time zone the times are in, then add a location, a short description and a link if you want them.",
+    "text": "時刻のタイムゾーンを確認し、必要に応じて場所、短い説明、リンクを追加します。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.2"
+  },
+  "3a1f754ff0d5": {
+    "source": "Scan the preview with an iPhone and an Android phone to see that both offer to add the event, then download the code.",
+    "text": "プレビューをiPhoneとAndroidスマートフォンの両方でスキャンし、どちらでもイベントの追加が表示されることを確認してから、コードをダウンロードします。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.3"
+  },
+  "a58987909da3": {
+    "source": "QRdx writes one VEVENT (RFC 5545) without a VCALENDAR around it: that's the form QR scanners look for, and it keeps the code smaller.",
+    "text": "QRdxは、VCALENDARで囲まずにVEVENT(RFC 5545)を1件書き込みます。QRスキャナーが探すのはこの形式で、コードも小さくなります。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.0"
+  },
+  "a1596551def4": {
+    "source": "Times end in Z: they're in UTC, converted from the time zone you pick. An all-day event has dates only (DTSTART;VALUE=DATE:20270417), and its DTEND is the day after the last day, as the standard asks.",
+    "text": "時刻の末尾にはZが付きます。これはUTCで、選んだタイムゾーンから変換されています。終日イベントは日付のみ(DTSTART;VALUE=DATE:20270417)で、DTENDは標準の定めどおり最終日の翌日になります。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.1"
+  },
+  "6c3c533b5640": {
+    "source": "Commas, semicolons, backslashes and line breaks in the text are escaped with a backslash, so a comma in the location is written \\,.",
+    "text": "テキスト中のカンマ、セミコロン、バックスラッシュ、改行はバックスラッシュでエスケープされるため、場所に含まれるカンマは \\, と書き込まれます。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.2"
+  },
+  "3d3d8d121316": {
+    "source": "The link is written as URL and again at the end of the description: the calendar event Google's ML Kit reads, which many Android scanners use, has no link field.",
+    "text": "リンクはURLとして書き込まれ、さらに説明の末尾にも書き込まれます。多くのAndroidスキャナーが使うGoogleのML Kitが読み取るカレンダーイベントには、リンク用の項目がないためです。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.3"
+  },
+  "dddc2fbf8cda": {
+    "source": "Only the fields you fill in are written. Past about 300 characters the code gets dense, and the form says so: a shorter description keeps it easy to scan.",
+    "text": "入力した項目だけが書き込まれます。約300文字を超えるとコードが密になり、フォームでもその旨が表示されます。説明を短くすると、スキャンしやすくなります。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.4"
+  },
+  "007d6b8d850c": {
+    "source": "Which time zone are the times in?",
+    "text": "時刻はどのタイムゾーンですか。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.question"
+  },
+  "d0d826431b09": {
+    "source": "The one you pick under the times, which starts as your device's. The code holds the times in UTC, so a phone in another time zone shows the event at the right moment in its own time.",
+    "text": "時刻の下で選んだタイムゾーンです。最初は端末の設定になっています。コードには時刻がUTCで保存されるため、別のタイムゾーンにあるスマートフォンでも、その地域の時間で正しい時刻にイベントが表示されます。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.answer"
+  },
+  "8b95b38c5c85": {
+    "source": "Do iPhones and Android phones read it?",
+    "text": "iPhoneとAndroidスマートフォンのどちらでも読み取れますか。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.question"
+  },
+  "5031df6b0b75": {
+    "source": "Google's ML Kit, which many Android scanners use, reads calendar events. Apple doesn't document which formats the iPhone Camera reads. Scan the preview with both before you print.",
+    "text": "多くのAndroidスキャナーが使うGoogleのML Kitは、カレンダーイベントを読み取れます。iPhoneのカメラがどの形式を読み取れるかは、Appleが公開していません。印刷する前に、プレビューを両方でスキャンして確認してください。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.answer"
+  },
+  "5bb54a2ed51a": {
+    "source": "Can I change the event after printing?",
+    "text": "印刷後にイベントを変更できますか。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.question"
+  },
+  "6a209249887c": {
+    "source": "No, the event is inside the code. For an event that may move, make an invitation page instead: a hosted page with add-to-calendar buttons that you can edit after printing.",
+    "text": "いいえ、イベントはコードの中にあります。変更の可能性があるイベントには、代わりに招待ページを作成してください。カレンダーに追加するボタンを備えたホスト型ページで、印刷後も編集できます。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.answer"
+  },
+  "2bd44ba9f12f": {
+    "source": "Is my event sent to QRdx?",
+    "text": "イベントはQRdxに送信されますか。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.3.question"
   }
 }

@@ -3254,6 +3254,62 @@ export const QR_TYPES: QrTypeContent[] = [
   },
   // Added 2026-11-22 (links)
   ...LINK_QR_TYPES,
+  // ─── Added 2026-11-25 ─────────────────────────────────────────────────────
+  {
+    type: "calendar-event",
+    name: "Calendar Event",
+    group: "business",
+    summary: "Add an event to the phone's calendar with one scan.",
+    metaDescription:
+      "Make a calendar event QR code: the event's name, date and time, place, details and a link in the iCalendar format phones add to the calendar. Free.",
+    intro: [
+      "A calendar event QR code holds one event: its name, when it starts and ends, where it is, a few lines about it and a link. Scanning it offers to add the event to the phone's calendar, so nobody has to copy the date and time from a poster or an invitation.",
+      "The event is written into the code itself as an iCalendar VEVENT, so the code needs no account and never expires. The times are saved in UTC from the time zone you pick, and each phone shows them in its own time. Because the details are in the code, a new time or place means a new code.",
+    ],
+    steps: [
+      "Enter the event's name and pick the day and time it starts.",
+      "Add an end time, or switch on All-day event for an event that takes whole days.",
+      "Check the time zone the times are in, then add a location, a short description and a link if you want them.",
+      "Scan the preview with an iPhone and an Android phone to see that both offer to add the event, then download the code.",
+    ],
+    payload: {
+      format:
+        "BEGIN:VEVENT\nSUMMARY:<name>\nDTSTART:<YYYYMMDD>T<HHMMSS>Z\nDTEND:<YYYYMMDD>T<HHMMSS>Z\nLOCATION:<place>\nDESCRIPTION:<details>\nURL:<link>\nEND:VEVENT",
+      example:
+        "BEGIN:VEVENT\nSUMMARY:Spring fair\nDTSTART:20270417T170000Z\nDTEND:20270417T220000Z\nLOCATION:Riverside Park\\, Springfield\nEND:VEVENT",
+      notes: [
+        "QRdx writes one VEVENT (RFC 5545) without a VCALENDAR around it: that's the form QR scanners look for, and it keeps the code smaller.",
+        "Times end in Z: they're in UTC, converted from the time zone you pick. An all-day event has dates only (DTSTART;VALUE=DATE:20270417), and its DTEND is the day after the last day, as the standard asks.",
+        "Commas, semicolons, backslashes and line breaks in the text are escaped with a backslash, so a comma in the location is written \\,.",
+        "The link is written as URL and again at the end of the description: the calendar event Google's ML Kit reads, which many Android scanners use, has no link field.",
+        "Only the fields you fill in are written. Past about 300 characters the code gets dense, and the form says so: a shorter description keeps it easy to scan.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Which time zone are the times in?",
+        answer:
+          "The one you pick under the times, which starts as your device's. The code holds the times in UTC, so a phone in another time zone shows the event at the right moment in its own time.",
+      },
+      {
+        question: "Do iPhones and Android phones read it?",
+        answer:
+          "Google's ML Kit, which many Android scanners use, reads calendar events. Apple doesn't document which formats the iPhone Camera reads. Scan the preview with both before you print.",
+      },
+      {
+        question: "Can I change the event after printing?",
+        answer:
+          "No, the event is inside the code. For an event that may move, make an invitation page instead: a hosted page with add-to-calendar buttons that you can edit after printing.",
+      },
+      {
+        question: "Is my event sent to QRdx?",
+        answer:
+          "No. The code is made in your browser, and the details you type are remembered only in this browser.",
+      },
+    ],
+    related: ["calendly", "calcom", "google-meet", "maps"],
+    hosted: "invitation",
+  },
 ];
 
 export const QR_TYPE_SLUGS: ContentType[] = QR_TYPES.map((t) => t.type);

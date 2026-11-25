@@ -5,6 +5,7 @@ import {
   Bag2,
   Bank,
   Brush2,
+  CalendarAdd,
   Call,
   CardReceive,
   CardSend,
@@ -88,6 +89,8 @@ const ICONS: Record<string, AnyIcon> = {
   People,
   Task,
   Video,
+  // Added 2026-11-25
+  CalendarAdd,
   ...Object.fromEntries(
     Object.entries(CONTENT_TYPE_BRANDS).map(([type, slug]) => [
       `brand:${type}`,

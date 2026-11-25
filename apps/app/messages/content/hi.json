@@ -39370,5 +39370,143 @@
     "text": "स्टैटिक वाले नहीं। टूल इमेज रेंडर करते हैं, टेक्स्ट फ़ॉर्मैट करते हैं और पब्लिक कम्युनिटी पढ़ते हैं। सिर्फ़ ये कुछ लिखते हैं: create_dynamic_code और update_code_destination (आपके कहने पर वर्कस्पेस में बना डायनेमिक QR कोड), और save_template और save_barcode (आपके कहने पर API key के वर्कस्पेस में सेव हुई थीम या बारकोड)। generate_ai_art वर्कस्पेस की महीने की AI आर्ट इमेज में से एक इस्तेमाल करता है, लेकिन न इमेज रखता है और न आपकी भेजी कोई फ़ोटो। टूल जो इमेज URL लौटाते हैं उनमें एन्कोड किया हुआ डेटा होता है, इसलिए अगर डेटा निजी है, जैसे Wi-Fi पासवर्ड, तो उन्हें शेयर न करें।",
     "status": "machine",
     "context": "mcp.faqs.7.answer"
+  },
+  "f74c0be05e82": {
+    "source": "Calendar event",
+    "text": "कैलेंडर इवेंट",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.label"
+  },
+  "391b4900f8cd": {
+    "source": "Add an event to the scanner's calendar",
+    "text": "स्कैन करने वाले के कैलेंडर में इवेंट जोड़ें",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.description"
+  },
+  "60d0f3626bc4": {
+    "source": "Calendar Event",
+    "text": "कैलेंडर इवेंट",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.name"
+  },
+  "937f80f08207": {
+    "source": "Add an event to the phone's calendar with one scan.",
+    "text": "एक स्कैन में फ़ोन के कैलेंडर में इवेंट जोड़ें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.summary"
+  },
+  "36d7be8c09ff": {
+    "source": "Make a calendar event QR code: the event's name, date and time, place, details and a link in the iCalendar format phones add to the calendar. Free.",
+    "text": "कैलेंडर इवेंट का QR कोड बनाएँ: इवेंट का नाम, तारीख़ और समय, जगह, जानकारी और एक लिंक, iCalendar फ़ॉर्मैट में, जिसे फ़ोन कैलेंडर में जोड़ लेते हैं। फ़्री।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.metaDescription"
+  },
+  "7e48d79403f2": {
+    "source": "A calendar event QR code holds one event: its name, when it starts and ends, where it is, a few lines about it and a link. Scanning it offers to add the event to the phone's calendar, so nobody has to copy the date and time from a poster or an invitation.",
+    "text": "कैलेंडर इवेंट QR कोड में एक इवेंट होता है: उसका नाम, कब शुरू और ख़त्म होता है, कहाँ है, उसके बारे में कुछ पंक्तियाँ और एक लिंक। स्कैन करने पर फ़ोन के कैलेंडर में इवेंट जोड़ने का विकल्प आता है, इसलिए किसी को पोस्टर या निमंत्रण से तारीख़ और समय कॉपी नहीं करना पड़ता।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.0"
+  },
+  "53490dd34f81": {
+    "source": "The event is written into the code itself as an iCalendar VEVENT, so the code needs no account and never expires. The times are saved in UTC from the time zone you pick, and each phone shows them in its own time. Because the details are in the code, a new time or place means a new code.",
+    "text": "इवेंट iCalendar VEVENT के रूप में सीधे कोड में लिखा जाता है, इसलिए कोड के लिए अकाउंट की ज़रूरत नहीं होती और वह कभी एक्सपायर नहीं होता। आपके चुने टाइम ज़ोन से समय UTC में सेव होता है, और हर फ़ोन उसे अपने समय में दिखाता है। जानकारी कोड के अंदर ही है, इसलिए नया समय या नई जगह होने पर नया कोड बनाना पड़ेगा।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.1"
+  },
+  "b7cb6b55bf27": {
+    "source": "Enter the event's name and pick the day and time it starts.",
+    "text": "इवेंट का नाम लिखें और शुरू होने का दिन और समय चुनें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.0"
+  },
+  "f37f92d39ff8": {
+    "source": "Add an end time, or switch on All-day event for an event that takes whole days.",
+    "text": "ख़त्म होने का समय जोड़ें, या पूरे दिन चलने वाले इवेंट के लिए 'All-day event' चालू करें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.1"
+  },
+  "3389506655cc": {
+    "source": "Check the time zone the times are in, then add a location, a short description and a link if you want them.",
+    "text": "जाँच लें कि समय किस टाइम ज़ोन में हैं, फिर चाहें तो लोकेशन, छोटा विवरण और एक लिंक जोड़ें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.2"
+  },
+  "3a1f754ff0d5": {
+    "source": "Scan the preview with an iPhone and an Android phone to see that both offer to add the event, then download the code.",
+    "text": "प्रीव्यू को iPhone और Android फ़ोन, दोनों से स्कैन करके देखें कि दोनों इवेंट जोड़ने का विकल्प देते हैं, फिर कोड डाउनलोड करें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.3"
+  },
+  "a58987909da3": {
+    "source": "QRdx writes one VEVENT (RFC 5545) without a VCALENDAR around it: that's the form QR scanners look for, and it keeps the code smaller.",
+    "text": "QRdx एक VEVENT (RFC 5545) लिखता है, उसके चारों ओर VCALENDAR के बिना: QR स्कैनर यही रूप खोजते हैं, और इससे कोड छोटा रहता है।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.0"
+  },
+  "a1596551def4": {
+    "source": "Times end in Z: they're in UTC, converted from the time zone you pick. An all-day event has dates only (DTSTART;VALUE=DATE:20270417), and its DTEND is the day after the last day, as the standard asks.",
+    "text": "समय के अंत में Z होता है: वे UTC में हैं, आपके चुने टाइम ज़ोन से बदले हुए। पूरे दिन के इवेंट में सिर्फ़ तारीख़ें होती हैं (DTSTART;VALUE=DATE:20270417), और उसका DTEND आख़िरी दिन के अगले दिन की तारीख़ होती है, जैसा स्टैंडर्ड कहता है।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.1"
+  },
+  "6c3c533b5640": {
+    "source": "Commas, semicolons, backslashes and line breaks in the text are escaped with a backslash, so a comma in the location is written \\,.",
+    "text": "टेक्स्ट में कॉमा, सेमीकोलन, बैकस्लैश और लाइन ब्रेक के पहले बैकस्लैश लगाया जाता है, इसलिए लोकेशन में कॉमा को \\, लिखा जाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.2"
+  },
+  "3d3d8d121316": {
+    "source": "The link is written as URL and again at the end of the description: the calendar event Google's ML Kit reads, which many Android scanners use, has no link field.",
+    "text": "लिंक URL के रूप में और विवरण के अंत में भी लिखा जाता है: Google का ML Kit, जिसे कई Android स्कैनर इस्तेमाल करते हैं, जो कैलेंडर इवेंट पढ़ता है, उसमें लिंक का कोई फ़ील्ड नहीं है।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.3"
+  },
+  "dddc2fbf8cda": {
+    "source": "Only the fields you fill in are written. Past about 300 characters the code gets dense, and the form says so: a shorter description keeps it easy to scan.",
+    "text": "सिर्फ़ वही फ़ील्ड लिखे जाते हैं जो आप भरते हैं। लगभग 300 अक्षरों के बाद कोड घना हो जाता है, और फ़ॉर्म यह बताता है: छोटा विवरण स्कैन करना आसान रखता है।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.4"
+  },
+  "007d6b8d850c": {
+    "source": "Which time zone are the times in?",
+    "text": "समय किस टाइम ज़ोन में हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.question"
+  },
+  "d0d826431b09": {
+    "source": "The one you pick under the times, which starts as your device's. The code holds the times in UTC, so a phone in another time zone shows the event at the right moment in its own time.",
+    "text": "वही जो आप समय के नीचे चुनते हैं, और शुरुआत में वह आपके डिवाइस का होता है। कोड में समय UTC में रहता है, इसलिए दूसरे टाइम ज़ोन का फ़ोन इवेंट को अपने समय के हिसाब से सही पल पर दिखाता है।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.answer"
+  },
+  "8b95b38c5c85": {
+    "source": "Do iPhones and Android phones read it?",
+    "text": "क्या iPhone और Android फ़ोन इसे पढ़ लेते हैं?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.question"
+  },
+  "5031df6b0b75": {
+    "source": "Google's ML Kit, which many Android scanners use, reads calendar events. Apple doesn't document which formats the iPhone Camera reads. Scan the preview with both before you print.",
+    "text": "Google का ML Kit, जिसे कई Android स्कैनर इस्तेमाल करते हैं, कैलेंडर इवेंट पढ़ता है। Apple यह नहीं बताता कि iPhone का कैमरा कौन से फ़ॉर्मैट पढ़ता है। प्रिंट करने से पहले प्रीव्यू को दोनों से स्कैन करके देख लें।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.answer"
+  },
+  "5bb54a2ed51a": {
+    "source": "Can I change the event after printing?",
+    "text": "क्या प्रिंट करने के बाद मैं इवेंट बदल सकता हूँ?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.question"
+  },
+  "6a209249887c": {
+    "source": "No, the event is inside the code. For an event that may move, make an invitation page instead: a hosted page with add-to-calendar buttons that you can edit after printing.",
+    "text": "नहीं, इवेंट कोड के अंदर ही है। जो इवेंट बदल सकता है, उसके लिए इसके बजाय निमंत्रण पेज बनाएँ: ऐड-टू-कैलेंडर बटन वाला एक होस्टेड पेज, जिसे आप प्रिंट के बाद भी एडिट कर सकते हैं।",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.answer"
+  },
+  "2bd44ba9f12f": {
+    "source": "Is my event sent to QRdx?",
+    "text": "क्या मेरा इवेंट QRdx को भेजा जाता है?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.3.question"
   }
 }

@@ -4688,11 +4688,30 @@
           "k153mv8r": "最多 28 个字符",
           "kqv3bio": "交易所通常会要求填写。印刷前请先确认。",
           "kaa7wzl": "SOL",
-          "k5p19bw": "USDT（Tether）"
+          "k5p19bw": "USDT（Tether）",
+          "k18kvzda": "活动名称",
+          "k4fbvq6": "新品发布派对",
+          "kfz2vvz": "全天活动",
+          "k16seyg1": "开始日期",
+          "kslte8c": "开始时间",
+          "kivkp8q": "结束日期",
+          "k1b8ljnb": "结束时间",
+          "k191owfq": "适用于在之后某一天结束的活动。",
+          "k1wjsqfy": "不填则默认持续一小时。",
+          "k1rhzoka": "时区",
+          "kpc0bbm": "这里的时间按此时区计算。二维码内以 UTC 保存时间，因此每部手机会按自己的时间显示。",
+          "kpghiva": "地点",
+          "kv2raw1": "3 号厅，主street 1 号，Springfield",
+          "khkxto5": "7 点开门，欢迎带上朋友。",
+          "k1wxsxh4": "网页"
         }
       },
       "contactForms": {
         "meCardNote": "Android 手机可以读取 MeCard 联系人并提示保存。Apple 没有说明 iPhone 相机是否支持 MeCard，因此请在 iPhone 上测试；如果联系人需要让所有人都能读取，请改用 vCard。"
+      },
+      "calendarEventForm": {
+        "note": "扫描后可将活动添加到手机日历。活动信息直接写入二维码本身，因此时间或地点有变动就需要重新生成二维码。",
+        "longEvent": "文字过多会让二维码变得密集，需要印得更大才能扫描。描述更简短，二维码更容易扫描。"
       },
       "swissQrBill": {
         "designApplied": "SIX 的 QR-bill 规范要求纠错等级为 M、白底黑点、二维码四周不印任何内容，并在中央放置瑞士十字，因此本设计采用了这些设置。点和码眼可以使用任意形状；如果设计改动了其余部分，此提示可以帮你恢复。打印时请按 46 × 46 mm 打印二维码本体（不含边距），四周留出 5 mm 的空白。",

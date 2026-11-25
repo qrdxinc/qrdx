@@ -39370,5 +39370,143 @@
     "text": "정적 코드는 저장하지 않아요. 도구는 이미지를 렌더링하고, 텍스트 형식을 맞추고, 공개 커뮤니티를 읽기만 해요. 다음 도구만 무언가를 기록해요. create_dynamic_code와 update_code_destination은 요청한 동적 코드를 워크스페이스에 기록하고, save_template과 save_barcode는 요청한 테마나 바코드를 API 키의 워크스페이스에 저장해요. generate_ai_art는 워크스페이스의 월간 AI 아트 이미지 한도를 하나 사용하지만, 이미지나 보낸 사진은 보관하지 않아요. 도구가 반환하는 이미지 URL에는 인코딩된 데이터가 들어 있으므로, Wi-Fi 비밀번호처럼 비공개 데이터라면 공유하지 마세요.",
     "status": "machine",
     "context": "mcp.faqs.7.answer"
+  },
+  "f74c0be05e82": {
+    "source": "Calendar event",
+    "text": "캘린더 일정",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.label"
+  },
+  "391b4900f8cd": {
+    "source": "Add an event to the scanner's calendar",
+    "text": "스캔한 사람의 캘린더에 일정을 추가해요",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.description"
+  },
+  "60d0f3626bc4": {
+    "source": "Calendar Event",
+    "text": "캘린더 일정",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.name"
+  },
+  "937f80f08207": {
+    "source": "Add an event to the phone's calendar with one scan.",
+    "text": "스캔 한 번으로 휴대폰 캘린더에 일정을 추가해요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.summary"
+  },
+  "36d7be8c09ff": {
+    "source": "Make a calendar event QR code: the event's name, date and time, place, details and a link in the iCalendar format phones add to the calendar. Free.",
+    "text": "캘린더 일정 QR 코드를 만들어 보세요. 일정 이름, 날짜와 시간, 장소, 세부 내용, 링크를 휴대폰이 캘린더에 추가할 수 있는 iCalendar 형식으로 담아요. 무료예요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.metaDescription"
+  },
+  "7e48d79403f2": {
+    "source": "A calendar event QR code holds one event: its name, when it starts and ends, where it is, a few lines about it and a link. Scanning it offers to add the event to the phone's calendar, so nobody has to copy the date and time from a poster or an invitation.",
+    "text": "캘린더 일정 QR 코드에는 일정 하나가 담겨 있어요. 일정 이름, 시작과 종료 시간, 장소, 간단한 설명, 링크가 들어갑니다. 스캔하면 휴대폰 캘린더에 일정을 추가할지 물어보므로, 포스터나 초대장에서 날짜와 시간을 따로 옮겨 적을 필요가 없어요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.0"
+  },
+  "53490dd34f81": {
+    "source": "The event is written into the code itself as an iCalendar VEVENT, so the code needs no account and never expires. The times are saved in UTC from the time zone you pick, and each phone shows them in its own time. Because the details are in the code, a new time or place means a new code.",
+    "text": "일정은 iCalendar VEVENT 형식으로 코드 안에 직접 기록돼요. 그래서 계정이 필요 없고 코드가 만료되지 않습니다. 시간은 선택한 시간대를 기준으로 UTC로 저장되며, 각 휴대폰에는 그 기기의 시간대에 맞춰 표시돼요. 세부 정보가 코드 안에 있으므로 시간이나 장소가 바뀌면 새 코드를 만들어야 해요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.1"
+  },
+  "b7cb6b55bf27": {
+    "source": "Enter the event's name and pick the day and time it starts.",
+    "text": "일정 이름을 입력하고 시작 날짜와 시간을 선택하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.0"
+  },
+  "f37f92d39ff8": {
+    "source": "Add an end time, or switch on All-day event for an event that takes whole days.",
+    "text": "종료 시간을 추가하거나, 하루 이상 이어지는 일정이면 '종일 일정'을 켜세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.1"
+  },
+  "3389506655cc": {
+    "source": "Check the time zone the times are in, then add a location, a short description and a link if you want them.",
+    "text": "시간의 기준이 되는 시간대를 확인한 다음, 필요하면 장소, 짧은 설명, 링크를 추가하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.2"
+  },
+  "3a1f754ff0d5": {
+    "source": "Scan the preview with an iPhone and an Android phone to see that both offer to add the event, then download the code.",
+    "text": "미리보기를 iPhone과 Android 휴대폰으로 각각 스캔해 두 기기 모두 일정 추가를 안내하는지 확인한 다음 코드를 다운로드하세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.3"
+  },
+  "a58987909da3": {
+    "source": "QRdx writes one VEVENT (RFC 5545) without a VCALENDAR around it: that's the form QR scanners look for, and it keeps the code smaller.",
+    "text": "QRdx는 VCALENDAR로 감싸지 않은 VEVENT(RFC 5545) 하나를 기록해요. QR 스캐너가 찾는 형태이고 코드도 더 작아집니다.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.0"
+  },
+  "a1596551def4": {
+    "source": "Times end in Z: they're in UTC, converted from the time zone you pick. An all-day event has dates only (DTSTART;VALUE=DATE:20270417), and its DTEND is the day after the last day, as the standard asks.",
+    "text": "시간 값은 Z로 끝나요. 선택한 시간대에서 변환된 UTC라는 뜻입니다. 종일 일정은 날짜만 기록하며(DTSTART;VALUE=DATE:20270417), 표준에 따라 DTEND는 마지막 날의 다음 날이에요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.1"
+  },
+  "6c3c533b5640": {
+    "source": "Commas, semicolons, backslashes and line breaks in the text are escaped with a backslash, so a comma in the location is written \\,.",
+    "text": "텍스트의 쉼표, 세미콜론, 백슬래시, 줄바꿈은 백슬래시로 이스케이프돼요. 그래서 장소에 쉼표가 있으면 \\,로 기록됩니다.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.2"
+  },
+  "3d3d8d121316": {
+    "source": "The link is written as URL and again at the end of the description: the calendar event Google's ML Kit reads, which many Android scanners use, has no link field.",
+    "text": "링크는 URL로 기록되고 설명 끝에도 한 번 더 들어가요. 많은 Android 스캐너가 쓰는 Google ML Kit의 캘린더 일정에는 링크 필드가 없기 때문이에요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.3"
+  },
+  "dddc2fbf8cda": {
+    "source": "Only the fields you fill in are written. Past about 300 characters the code gets dense, and the form says so: a shorter description keeps it easy to scan.",
+    "text": "입력한 항목만 기록돼요. 약 300자를 넘으면 코드가 촘촘해지며 입력 화면에서 알려 드려요. 설명을 짧게 하면 스캔하기 쉬워요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.4"
+  },
+  "007d6b8d850c": {
+    "source": "Which time zone are the times in?",
+    "text": "시간은 어느 시간대 기준인가요?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.question"
+  },
+  "d0d826431b09": {
+    "source": "The one you pick under the times, which starts as your device's. The code holds the times in UTC, so a phone in another time zone shows the event at the right moment in its own time.",
+    "text": "시간 아래에서 선택한 시간대예요. 처음에는 사용 중인 기기의 시간대로 설정돼 있어요. 코드에는 시간이 UTC로 담기므로, 다른 시간대의 휴대폰에서도 그 기기의 시간으로 알맞은 시각에 일정이 표시돼요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.answer"
+  },
+  "8b95b38c5c85": {
+    "source": "Do iPhones and Android phones read it?",
+    "text": "iPhone과 Android 휴대폰에서 모두 읽을 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.question"
+  },
+  "5031df6b0b75": {
+    "source": "Google's ML Kit, which many Android scanners use, reads calendar events. Apple doesn't document which formats the iPhone Camera reads. Scan the preview with both before you print.",
+    "text": "많은 Android 스캐너가 쓰는 Google ML Kit는 캘린더 일정을 읽어요. Apple은 iPhone 카메라가 읽는 형식을 문서로 밝히지 않았어요. 인쇄하기 전에 미리보기를 두 기기로 모두 스캔해 보세요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.answer"
+  },
+  "5bb54a2ed51a": {
+    "source": "Can I change the event after printing?",
+    "text": "인쇄한 뒤에 일정을 바꿀 수 있나요?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.question"
+  },
+  "6a209249887c": {
+    "source": "No, the event is inside the code. For an event that may move, make an invitation page instead: a hosted page with add-to-calendar buttons that you can edit after printing.",
+    "text": "아니요, 일정이 코드 안에 들어 있어서 바꿀 수 없어요. 일정이 바뀔 수 있다면 초대 페이지를 대신 만드세요. 캘린더 추가 버튼이 있는 호스팅 페이지로, 인쇄한 뒤에도 수정할 수 있어요.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.answer"
+  },
+  "2bd44ba9f12f": {
+    "source": "Is my event sent to QRdx?",
+    "text": "내 일정이 QRdx로 전송되나요?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.3.question"
   }
 }

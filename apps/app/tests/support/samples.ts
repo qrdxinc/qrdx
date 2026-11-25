@@ -308,4 +308,16 @@ export const SAMPLES: {
     type: "booking-com",
     url: "https://www.booking.com/hotel/gb/example.html",
   },
+  // Added 2026-11-25
+  "calendar-event": {
+    type: "calendar-event",
+    title: "Launch party; Q&A, live",
+    startDate: "2026-11-14",
+    startTime: "19:00",
+    endTime: "22:00",
+    timeZone: "Europe/Paris",
+    location: "Hall 3, 1 Main St",
+    description: "Doors at 7.\nBring a friend.",
+    url: "https://example.com/launch",
+  },
 };

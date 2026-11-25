@@ -79,6 +79,17 @@ describe("hostile input survives the round trip", () => {
       note: "ऑर्डर 12",
     },
     { type: "maps", location: "東京駅, 1 Chome Marunouchi" },
+    // Added 2026-11-25
+    {
+      type: "calendar-event",
+      title: 'Zoë\'s launch 👋🏽; "Q&A", live \\ more',
+      startDate: "2026-11-14",
+      startTime: "19:00",
+      timeZone: "Asia/Tokyo",
+      location: "東京駅, 1 Chome Marunouchi",
+      description: "Line one\nLine two; with, everything",
+      url: "https://example.com/launch?a=1&b=2",
+    },
   ];
 
   it.each(cases)("$type", (config) => {

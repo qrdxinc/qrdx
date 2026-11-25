@@ -35,6 +35,7 @@ export interface Contact {
 export interface CalendarEvent {
   summary: string;
   start?: string;
+  /** For an all-day event, its last day (none for a one-day event) */
   end?: string;
   location?: string;
   description?: string;
@@ -654,6 +655,20 @@ export function parseIcalDate(
   };
 }
 
+/**
+ * The last day of an all-day event from its exclusive end date
+ * ("2026-11-16" → "2026-11-15"); none when that's the first day.
+ */
+function lastDayOf(firstDay: string, endExclusive: string): string | undefined {
+  const [y, m, d] = endExclusive.split("-").map(Number) as [
+    number,
+    number,
+    number,
+  ];
+  const last = new Date(Date.UTC(y, m - 1, d - 1)).toISOString().slice(0, 10);
+  return last > firstDay ? last : undefined;
+}
+
 function parseEvent(value: string): ParsedScan | null {
   const lines = contentLines(value);
   const begin = lines.findIndex(
@@ -676,7 +691,13 @@ function parseEvent(value: string): ParsedScan | null {
   const event: CalendarEvent = {
     summary: unescapeText(get("SUMMARY") ?? "").trim() || "Untitled event",
     start: start?.iso,
-    end: finish?.iso,
+    // Added 2026-11-25: an all-day DTEND is the day after the last day
+    // (RFC 5545 §3.6.1), so the event shows its last day, and a one-day
+    // event no end.
+    end:
+      start?.allDay && finish?.allDay
+        ? lastDayOf(start.iso, finish.iso)
+        : finish?.iso,
     location: unescapeText(get("LOCATION") ?? "").trim() || undefined,
     description: unescapeText(get("DESCRIPTION") ?? "").trim() || undefined,
     allDay: start?.allDay ?? false,

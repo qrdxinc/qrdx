@@ -16,6 +16,7 @@ import {
   BitcoinForm,
   BlueskyForm,
   CalcomForm,
+  CalendarEventForm,
   CardanoForm,
   CashAppForm,
   CzechSpdForm,
@@ -162,6 +163,8 @@ export const FORMS: Record<ContentType, React.ComponentType> = {
   stellar: StellarForm,
   // Added 2026-11-22 (links)
   ...LINK_TYPE_FORM_COMPONENTS,
+  // Added 2026-11-25
+  "calendar-event": CalendarEventForm,
 };
 
 const QUICK_STYLE_COUNT = 8;

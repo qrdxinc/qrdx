@@ -194,6 +194,9 @@ export const CONTENT_TYPE_MARKS: Partial<Record<ContentType, TypeMarkEntry>> = {
   yelp: { fill: "#FF1A1A", glyph: "brand:yelp" },
   airbnb: { fill: "#FF5A5F", glyph: "brand:airbnb" },
   "booking-com": { fill: "#003A9A", glyph: "brand:bookingdotcom" },
+  // Added 2026-11-25. A calendar with a plus on red, not the event page's
+  // orange Calendar1: they show together in search results.
+  "calendar-event": { fill: "#D7263D", glyph: "CalendarAdd" },
 };
 
 /** Marks for the hosted page types (lib/landing/page-type-ids.ts), by id. */

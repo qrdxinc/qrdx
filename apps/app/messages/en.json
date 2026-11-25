@@ -5089,11 +5089,30 @@
           "k153mv8r": "Up to 28 characters",
           "kqv3bio": "Exchanges often ask for one. Check yours before you print.",
           "kaa7wzl": "SOL",
-          "k5p19bw": "USDT (Tether)"
+          "k5p19bw": "USDT (Tether)",
+          "k18kvzda": "Event name",
+          "k4fbvq6": "Launch party",
+          "kfz2vvz": "All-day event",
+          "k16seyg1": "Start date",
+          "kslte8c": "Start time",
+          "kivkp8q": "End date",
+          "k1b8ljnb": "End time",
+          "k191owfq": "For an event that ends on a later day.",
+          "k1wjsqfy": "Without one, it lasts an hour.",
+          "k1rhzoka": "Time zone",
+          "kpc0bbm": "The times are in this time zone. The code holds them in UTC, so each phone shows them in its own time.",
+          "kpghiva": "Location",
+          "kv2raw1": "Hall 3, 1 Main St, Springfield",
+          "khkxto5": "Doors open at 7. Bring a friend.",
+          "k1wxsxh4": "Web page"
         }
       },
       "contactForms": {
         "meCardNote": "Android phones read MeCard contacts and offer to save them. Apple doesn't document MeCard for the iPhone Camera, so test on an iPhone, or use a vCard when the contact has to reach everyone."
+      },
+      "calendarEventForm": {
+        "note": "Scanning offers to add the event to the phone's calendar. The event is written into the code itself, so a new time or place means a new code.",
+        "longEvent": "This much text makes a dense code that has to be printed bigger to scan. A shorter description keeps it easy to scan."
       },
       "swissQrBill": {
         "designApplied": "SIX’s QR-bill guidelines ask for error correction M, black dots on white, nothing printed around the code and the Swiss cross in the middle, so this design uses them. Dots and eyes can take any shape; if the design changes the rest, this note offers to put it back. Print the code itself, without its margin, at 46 × 46 mm with 5 mm of white around it.",

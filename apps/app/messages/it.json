@@ -4688,11 +4688,30 @@
           "k153mv8r": "Fino a 28 caratteri",
           "kqv3bio": "Gli exchange spesso ne richiedono uno. Controlla il tuo prima di stampare.",
           "kaa7wzl": "SOL",
-          "k5p19bw": "USDT (Tether)"
+          "k5p19bw": "USDT (Tether)",
+          "k18kvzda": "Nome evento",
+          "k4fbvq6": "Festa di lancio",
+          "kfz2vvz": "Evento di un giorno",
+          "k16seyg1": "Data di inizio",
+          "kslte8c": "Ora di inizio",
+          "kivkp8q": "Data di fine",
+          "k1b8ljnb": "Ora di fine",
+          "k191owfq": "Per un evento che finisce in un giorno successivo.",
+          "k1wjsqfy": "Senza, dura un’ora.",
+          "k1rhzoka": "Fuso orario",
+          "kpc0bbm": "Gli orari sono in questo fuso orario. Il codice li conserva in UTC, così ogni telefono li mostra nel proprio orario.",
+          "kpghiva": "Luogo",
+          "kv2raw1": "Sala 3, Via Roma 1, Springfield",
+          "khkxto5": "Apertura porte alle 7. Porta un amico.",
+          "k1wxsxh4": "Pagina web"
         }
       },
       "contactForms": {
         "meCardNote": "Gli smartphone Android leggono i contatti MeCard e propongono di salvarli. Apple non documenta MeCard per la Fotocamera dell’iPhone, quindi prova su un iPhone, oppure usa una vCard quando il contatto deve arrivare a tutti."
+      },
+      "calendarEventForm": {
+        "note": "La scansione propone di aggiungere l’evento al calendario del telefono. L’evento è scritto nel codice stesso, quindi un nuovo orario o luogo richiede un nuovo codice.",
+        "longEvent": "Tutto questo testo crea un codice denso che va stampato più grande per essere scansionato. Una descrizione più breve lo rende facile da scansionare."
       },
       "swissQrBill": {
         "designApplied": "Le linee guida QR-bill di SIX richiedono correzione degli errori M, punti neri su bianco, nulla stampato intorno al codice e la croce svizzera al centro, quindi questo design le usa. Punti e occhi possono avere qualsiasi forma; se il design cambia il resto, questa nota ti offre di ripristinarlo. Stampa il codice vero e proprio, senza il suo margine, a 46 × 46 mm con 5 mm di bianco tutto intorno.",
