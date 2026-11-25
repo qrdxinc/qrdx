@@ -137,6 +137,12 @@ export const barcodeImageFields: INodeProperties[] = [
           "UPS parcel labels: a carrier message as postcode&lt;GS&gt;country&lt;GS&gt;service class&lt;GS&gt;the rest, or Latin-1 text; scale 4 to 10",
       },
       {
+        name: "Micro QR",
+        value: "microqr",
+        description:
+          "The smallest QR code, for tiny labels on parts and electronics; up to 35 digits, 21 capital letters or 15 characters",
+      },
+      {
         name: "PDF417",
         value: "pdf417",
         description:

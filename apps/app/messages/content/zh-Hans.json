@@ -28997,6 +28997,18 @@
     "status": "machine",
     "context": "barcodes.formats.aztec.summary"
   },
+  "d7905fa2e4a7": {
+    "source": "The smallest QR code, for tiny labels on parts and electronics",
+    "text": "最小的二维码，适用于零部件和电子产品上的微小标签",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.summary"
+  },
+  "bca682c9c3c2": {
+    "source": "Any text, up to 35 digits, 21 capital letters or 15 characters of other text; less with accents or other scripts. It's drawn in the smallest of the four sizes, M1 to M4, that fits.",
+    "text": "任意文本，最多 35 个数字、21 个大写字母或 15 个其他字符；含重音符号或其他文字时容量更少。系统会从 M1 到 M4 四种尺寸中选用能容纳内容的最小尺寸绘制。",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.inputHint"
+  },
   "9c5a364b0228": {
     "source": "Screens, documents and online shops",
     "text": "适用于屏幕、文档和网店",
@@ -29122,6 +29134,12 @@
     "text": "一种方形 2D 码，从中心开始定位，因此无需留白边距。交通运营商把它用于在手机屏幕上展示以及在家打印的票券。",
     "status": "machine",
     "context": "barcodes.uses.aztec"
+  },
+  "e849a4bc696d": {
+    "source": "The smallest QR code, with one corner square instead of three and as little as 11 × 11 modules, for marks on circuit boards, components and small parts. Most phone camera apps don't read it, so check that your scanners do.",
+    "text": "最小的二维码，只有一个角定位方块而不是三个，尺寸最小仅 11 × 11 个模块，适用于电路板、元器件和小型零件上的标记。大多数手机相机应用无法读取，请确认你的扫描设备支持。",
+    "status": "machine",
+    "context": "barcodes.uses.microqr"
   },
   "dd1e133f56a5": {
     "source": "Dark bars on a light background. Black on white is safest; dark blue and dark green work. Many scanners read with red light, which makes red, orange and yellow bars disappear.",
@@ -30604,6 +30622,42 @@
     "text": "许多扫描应用和检票闸机可以读取。部分手机自带的相机应用只能识别二维码。",
     "status": "machine",
     "context": "barcodeFormats.pages.aztec.faqs.1.answer"
+  },
+  "5ab48e65407a": {
+    "source": "Free Micro QR Code Generator",
+    "text": "免费 Micro QR 二维码生成器",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.title"
+  },
+  "f3c99e9676a0": {
+    "source": "Make a Micro QR code, the smallest QR code, for tiny marks on parts and circuit boards. Up to 35 digits or 15 characters. SVG, PDF and PNG. Free.",
+    "text": "生成 Micro QR 二维码，最小的二维码，适用于零件和电路板上的微小标记。最多 35 位数字或 15 个字符。支持 SVG、PDF 和 PNG。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.metaDescription"
+  },
+  "6eeccb3bb878": {
+    "source": "Micro QR is a smaller QR code with one corner square instead of three, for marks too small for a full QR code. Type a short text, check that it scans and download it.",
+    "text": "Micro QR 是更小的二维码，只有一个角上的定位方块，而不是三个，适用于普通二维码放不下的微小标记。输入一段简短文本，确认可以扫描后下载即可。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.intro"
+  },
+  "a09c8ae1da41": {
+    "source": "Tiny marks where a regular QR code won't fit: circuit boards, electronic components, small parts and the labels on them.",
+    "text": "普通二维码放不下的微小标记：电路板、电子元件、小型零件以及它们上面的标签。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.0"
+  },
+  "0660afe340fa": {
+    "source": "It's part of the QR code standard, ISO/IEC 18004, from DENSO WAVE, which created the QR code. Most phone camera apps don't read it, so check that the scanners that will read it support it before you print a batch.",
+    "text": "它属于二维码标准 ISO/IEC 18004，由发明二维码的 DENSO WAVE 提出。大多数手机相机应用无法识别它，所以在印刷整批之前，请先确认将要读取它的扫描设备支持 Micro QR。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.1"
+  },
+  "b5aeb368b7ac": {
+    "source": "Do I need to register a Micro QR code?",
+    "text": "Micro QR 二维码需要注册吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.numbers.title"
   },
   "d5d3113ff518": {
     "source": "Batch or lot number",
@@ -38867,6 +38921,66 @@
     "status": "machine",
     "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
   },
+  "fbb830fde45b": {
+    "source": "Any text that fits: up to 35 digits, 21 capital letters (with digits, spaces and $ % * + - . / :) or 15 characters of other text. Accents and other scripts are stored as UTF-8 bytes, 2 or 3 to a character, so less of them fits.",
+    "text": "任何放得下的文本：最多 35 位数字、21 个大写字母（可含数字、空格和 $ % * + - . / :）或 15 个其他文本字符。带重音的字母和其他文字会以 UTF-8 字节存储，每个字符占 2 或 3 个字节，因此能容纳的字符更少。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.0"
+  },
+  "b7f8ba513cf7": {
+    "source": "Micro QR comes in four sizes: M1 (11 × 11 modules), M2 (13 × 13), M3 (15 × 15) and M4 (17 × 17). M1 holds digits only and M2 digits and capital letters; other text starts at M3. The generator picks the smallest size your text fits and says which under the field.",
+    "text": "Micro QR 有四种尺寸：M1（11 × 11 个模块）、M2（13 × 13）、M3（15 × 15）和 M4（17 × 17）。M1 只能存放数字，M2 可存放数字和大写字母，其他文本从 M3 起。生成器会选择能容纳您文本的最小尺寸，并在输入框下方说明所选尺寸。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.1"
+  },
+  "09495e6960be": {
+    "source": "M1 only detects errors. The other sizes get error correction level M when there's room for it, or L when the text only fits at L: a reader can recover about 15% of a damaged code at M and 7% at L.",
+    "text": "M1 只能检测错误。其他尺寸在空间允许时使用 M 级纠错，如果文本只能在 L 级下放得下，则使用 L 级：二维码受损时，M 级可恢复约 15%，L 级可恢复约 7%。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.2"
+  },
+  "b1c9fc9fe329": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text, an M4, comes out 14.8 × 14.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "矢量格式下载的文件中，每个模块按 0.71 毫米见方绘制：示例文本为 M4，含空白区在内为 14.8 × 14.8 毫米。请根据可用空间以及打印机和扫描设备的分辨能力进行缩放。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.0"
+  },
+  "064bad0ab79d": {
+    "source": "Micro QR needs 2 modules of blank space all round, half what a QR code needs, which the generator starts with.",
+    "text": "Micro QR 四周需要留出 2 个模块宽的空白，是二维码所需空白的一半，生成器默认已按此设置。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.1"
+  },
+  "a1963fc6a2a3": {
+    "source": "Micro QR or QR code?",
+    "text": "Micro QR 还是二维码？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.question"
+  },
+  "379bc5c2a5f5": {
+    "source": "For anything people scan with their phone, a QR code. Use Micro QR where only a few millimetres fit and you know the scanners that will read it support it.",
+    "text": "如果是给人用手机扫描的，请用二维码。只有在仅能容纳几毫米的空间，并且确定读取它的扫描设备支持时，才使用 Micro QR。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.answer"
+  },
+  "113fc6913877": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports Micro QR, and tells you whether it reads back your text.",
+    "text": "可以。编辑时，生成器会用 ZXing 解码即将下载的图像，并告诉您能否读回您的文本。ZXing 是支持 Micro QR 的开源读取器。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.1.answer"
+  },
+  "8dcc75f95b4e": {
+    "source": "Can phones read Micro QR codes?",
+    "text": "手机能读取 Micro QR 吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.question"
+  },
+  "2dc28fe2f22f": {
+    "source": "Most built-in camera apps can't. The QRdx scanner at /scan reads them in the browser, with the same ZXing reader as the check on this page.",
+    "text": "大多数内置相机应用不能。/scan 页面上的 QRdx 扫描器可以在浏览器中读取，所用的 ZXing 读取器与本页的检查相同。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.answer"
+  },
   "21d588136e54": {
     "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",
     "text": "任意文本：字母、数字、符号、换行、带重音的字符和其他文字。数字占用空间最小，其次是大写字母；带重音的字符和其他文字以 UTF-8 字节存储，占用空间最大。",
@@ -39256,5 +39370,143 @@
     "text": "静态二维码不会。这些工具只渲染图片、格式化文本和读取公开社区内容。只有以下工具会写入内容：create_dynamic_code 和 update_code_destination（写入你在工作区中要求创建的动态二维码），以及 save_template 和 save_barcode（写入你要求保存的主题或条形码，位于 API 密钥所属的工作区）。generate_ai_art 会用掉工作区每月 AI 艺术图额度中的一张，但不会保存生成的图片，也不会保存你发送的照片。工具返回的图片链接包含编码的数据，因此如果数据属于隐私信息，例如 Wi-Fi 密码，请不要分享这些链接。",
     "status": "machine",
     "context": "mcp.faqs.7.answer"
+  },
+  "f74c0be05e82": {
+    "source": "Calendar event",
+    "text": "日历事件",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.label"
+  },
+  "391b4900f8cd": {
+    "source": "Add an event to the scanner's calendar",
+    "text": "将事件添加到扫描者的日历",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.description"
+  },
+  "60d0f3626bc4": {
+    "source": "Calendar Event",
+    "text": "日历活动",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.name"
+  },
+  "937f80f08207": {
+    "source": "Add an event to the phone's calendar with one scan.",
+    "text": "扫描一下，即可将活动添加到手机日历。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.summary"
+  },
+  "36d7be8c09ff": {
+    "source": "Make a calendar event QR code: the event's name, date and time, place, details and a link in the iCalendar format phones add to the calendar. Free.",
+    "text": "制作日历活动二维码：包含活动名称、日期和时间、地点、详情和链接，采用手机可添加到日历的 iCalendar 格式。免费。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.metaDescription"
+  },
+  "7e48d79403f2": {
+    "source": "A calendar event QR code holds one event: its name, when it starts and ends, where it is, a few lines about it and a link. Scanning it offers to add the event to the phone's calendar, so nobody has to copy the date and time from a poster or an invitation.",
+    "text": "日历活动二维码包含一个活动：名称、开始和结束时间、地点、几行说明和一个链接。扫描后会提示将活动添加到手机日历，无需再从海报或邀请函上抄写日期和时间。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.0"
+  },
+  "53490dd34f81": {
+    "source": "The event is written into the code itself as an iCalendar VEVENT, so the code needs no account and never expires. The times are saved in UTC from the time zone you pick, and each phone shows them in its own time. Because the details are in the code, a new time or place means a new code.",
+    "text": "活动以 iCalendar VEVENT 的形式直接写入二维码，因此二维码无需账号，也永不过期。时间根据你选择的时区以 UTC 保存，每部手机会按自己的时间显示。由于详情就在二维码里，更改时间或地点就需要重新制作二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.1"
+  },
+  "b7cb6b55bf27": {
+    "source": "Enter the event's name and pick the day and time it starts.",
+    "text": "输入活动名称，并选择开始的日期和时间。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.0"
+  },
+  "f37f92d39ff8": {
+    "source": "Add an end time, or switch on All-day event for an event that takes whole days.",
+    "text": "添加结束时间；如果活动持续整天，可打开“全天活动”。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.1"
+  },
+  "3389506655cc": {
+    "source": "Check the time zone the times are in, then add a location, a short description and a link if you want them.",
+    "text": "确认时间所属的时区，然后按需添加地点、简短说明和链接。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.2"
+  },
+  "3a1f754ff0d5": {
+    "source": "Scan the preview with an iPhone and an Android phone to see that both offer to add the event, then download the code.",
+    "text": "分别用 iPhone 和 Android 手机扫描预览，确认两者都会提示添加活动，然后下载二维码。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.3"
+  },
+  "a58987909da3": {
+    "source": "QRdx writes one VEVENT (RFC 5545) without a VCALENDAR around it: that's the form QR scanners look for, and it keeps the code smaller.",
+    "text": "QRdx 写入一个 VEVENT（RFC 5545），外面不包 VCALENDAR：这是二维码扫描器要找的形式，还能让二维码更小。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.0"
+  },
+  "a1596551def4": {
+    "source": "Times end in Z: they're in UTC, converted from the time zone you pick. An all-day event has dates only (DTSTART;VALUE=DATE:20270417), and its DTEND is the day after the last day, as the standard asks.",
+    "text": "时间以 Z 结尾：表示 UTC，由你选择的时区转换而来。全天活动只有日期（DTSTART;VALUE=DATE:20270417），按标准要求，其 DTEND 是最后一天的次日。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.1"
+  },
+  "6c3c533b5640": {
+    "source": "Commas, semicolons, backslashes and line breaks in the text are escaped with a backslash, so a comma in the location is written \\,.",
+    "text": "文本中的逗号、分号、反斜杠和换行会用反斜杠转义，所以地点中的逗号会写成 \\,。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.2"
+  },
+  "3d3d8d121316": {
+    "source": "The link is written as URL and again at the end of the description: the calendar event Google's ML Kit reads, which many Android scanners use, has no link field.",
+    "text": "链接会写成 URL，并在说明末尾再写一次：许多 Android 扫描器使用的 Google ML Kit 所读取的日历活动没有链接字段。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.3"
+  },
+  "dddc2fbf8cda": {
+    "source": "Only the fields you fill in are written. Past about 300 characters the code gets dense, and the form says so: a shorter description keeps it easy to scan.",
+    "text": "只会写入你填写的字段。超过约 300 个字符后，二维码会变得密集，表单也会提示：说明写得短一些，二维码更容易扫描。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.4"
+  },
+  "007d6b8d850c": {
+    "source": "Which time zone are the times in?",
+    "text": "时间采用哪个时区？",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.question"
+  },
+  "d0d826431b09": {
+    "source": "The one you pick under the times, which starts as your device's. The code holds the times in UTC, so a phone in another time zone shows the event at the right moment in its own time.",
+    "text": "采用你在时间下方选择的时区，默认是你设备的时区。二维码以 UTC 保存时间，因此处于其他时区的手机会按自己的时间，在正确的时刻显示该活动。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.answer"
+  },
+  "8b95b38c5c85": {
+    "source": "Do iPhones and Android phones read it?",
+    "text": "iPhone 和 Android 手机都能读取吗？",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.question"
+  },
+  "5031df6b0b75": {
+    "source": "Google's ML Kit, which many Android scanners use, reads calendar events. Apple doesn't document which formats the iPhone Camera reads. Scan the preview with both before you print.",
+    "text": "许多 Android 扫描器使用的 Google ML Kit 可以读取日历活动。Apple 没有公开说明 iPhone 相机能读取哪些格式。打印前请用两种手机都扫描一下预览。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.answer"
+  },
+  "5bb54a2ed51a": {
+    "source": "Can I change the event after printing?",
+    "text": "打印后还能修改活动吗？",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.question"
+  },
+  "6a209249887c": {
+    "source": "No, the event is inside the code. For an event that may move, make an invitation page instead: a hosted page with add-to-calendar buttons that you can edit after printing.",
+    "text": "不能，活动就在二维码里面。如果活动可能有变动，请改做邀请页：一个带有添加到日历按钮的托管页面，打印后仍可编辑。",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.answer"
+  },
+  "2bd44ba9f12f": {
+    "source": "Is my event sent to QRdx?",
+    "text": "我的活动会发送给 QRdx 吗？",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.3.question"
   }
 }

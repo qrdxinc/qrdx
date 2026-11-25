@@ -2126,6 +2126,9 @@
       "maxicodeService": "Depois do código de país vem a classe de serviço de 3 dígitos; aqui está \"{service}\".",
       "maxicodeCarrier": "Mensagem de transportadora (modo {mode}): código postal {postcode}, país {country}, classe de serviço {service}.",
       "maxicodeZipPadded": "Um ZIP Code de 5 dígitos é desenhado como {zip}, com 0000 no +4, e os leitores o retornam assim.",
+      "microqrTooLong": "Muito conteúdo para um único Micro QR: o maior tamanho, M4, comporta até {digits} dígitos, {alphanumeric} letras maiúsculas ou {bytes} caracteres de outro tipo de texto, e menos com acentos ou outros alfabetos. Reduza o texto ou use rMQR para mais espaço.",
+      "microqrSize": "Gerado como {version}: {modules} × {modules} módulos, nível de correção de erros {level}.",
+      "microqrSizeM1": "Gerado como M1: {modules} × {modules} módulos, que consegue detectar erros, mas não corrigi-los.",
       "imbEnter": "Digite o código de rastreamento de 20 dígitos e, se houver, o CEP de roteamento.",
       "imbTrackingLength": "O código de rastreamento tem 20 dígitos: ID do código de barras (2), tipo de serviço (3), ID do remetente e número de série (15). Este tem {count, plural, one {# dígito} other {# dígitos}}.",
       "imbRoutingLength": "Depois do código de rastreamento de 20 dígitos vem o CEP de roteamento: 5 dígitos, 9 (ZIP+4) ou 11 (ZIP+4 e ponto de entrega). Há {count, plural, one {# dígito} other {# dígitos}} depois do código de rastreamento.",
@@ -4685,11 +4688,30 @@
           "k153mv8r": "Até 28 caracteres",
           "kqv3bio": "Corretoras costumam exigir um. Confira a sua antes de imprimir.",
           "kaa7wzl": "SOL",
-          "k5p19bw": "USDT (Tether)"
+          "k5p19bw": "USDT (Tether)",
+          "k18kvzda": "Nome do evento",
+          "k4fbvq6": "Festa de lançamento",
+          "kfz2vvz": "Evento de dia inteiro",
+          "k16seyg1": "Data de início",
+          "kslte8c": "Hora de início",
+          "kivkp8q": "Data de término",
+          "k1b8ljnb": "Hora de término",
+          "k191owfq": "Para um evento que termina em outro dia.",
+          "k1wjsqfy": "Sem isso, dura uma hora.",
+          "k1rhzoka": "Fuso horário",
+          "kpc0bbm": "Os horários estão neste fuso horário. O código os guarda em UTC, então cada celular os mostra no seu próprio horário.",
+          "kpghiva": "Local",
+          "kv2raw1": "Salão 3, Rua Principal, 1, Springfield",
+          "khkxto5": "Portas abertas às 7. Leve um amigo.",
+          "k1wxsxh4": "Página web"
         }
       },
       "contactForms": {
         "meCardNote": "Celulares Android leem contatos MeCard e oferecem salvá-los. A Apple não documenta o MeCard para a câmera do iPhone, então teste em um iPhone ou use um vCard quando o contato precisar chegar a todo mundo."
+      },
+      "calendarEventForm": {
+        "note": "A leitura oferece adicionar o evento à agenda do celular. O evento é gravado no próprio código, então um novo horário ou local exige um novo código.",
+        "longEvent": "Tanto texto gera um código denso, que precisa ser impresso maior para ser lido. Uma descrição mais curta facilita a leitura."
       },
       "swissQrBill": {
         "designApplied": "As diretrizes do QR-bill da SIX pedem correção de erros M, pontos pretos sobre fundo branco, nada impresso ao redor do código e a cruz suíça no centro, então este design usa tudo isso. Pontos e olhos podem ter qualquer formato; se o design mudar o resto, este aviso oferece a opção de restaurar. Imprima o código em si, sem a margem, em 46 × 46 mm com 5 mm de espaço branco ao redor.",

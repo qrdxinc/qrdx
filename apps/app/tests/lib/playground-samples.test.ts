@@ -133,6 +133,8 @@ const NEVER_SAMPLED: ContentType[] = [
   "yelp",
   "airbnb",
   "booking-com",
+  // Added 2026-11-25: an event, which only its organiser has
+  "calendar-event",
 ];
 
 const sampled = Object.entries(PLAYGROUND_SAMPLES) as [

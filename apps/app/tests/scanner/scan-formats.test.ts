@@ -1,5 +1,5 @@
-// The formats /scan reads that the generator doesn't draw (Micro QR, rMQR,
-// GS1 DataBar Limited and Stacked, MaxiCode) and GS1 DataBar: an image of
+// Formats /scan reads beyond the common ones (Micro QR, rMQR, GS1 DataBar
+// Limited and Stacked, MaxiCode) and GS1 DataBar: an image of
 // each, drawn by bwip-js, decodes with the scanner's WebAssembly reader (the
 // `barcode-detector` ponyfill, loaded from the local package as in
 // tests/barcode/decode.test.ts) and parses through the scanner's parser.

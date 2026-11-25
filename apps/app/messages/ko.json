@@ -2126,6 +2126,9 @@
       "maxicodeService": "국가 코드 다음에는 3자리 서비스 등급이 와요. 현재 값은 \"{service}\"예요.",
       "maxicodeCarrier": "캐리어 메시지(모드 {mode}): 우편번호 {postcode}, 국가 {country}, 서비스 등급 {service}.",
       "maxicodeZipPadded": "5자리 ZIP Code는 +4 자리에 0000을 넣은 {zip} 형태로 그려지고, 리더도 그대로 읽어 와요.",
+      "microqrTooLong": "Micro QR 하나에 담기에는 내용이 너무 많아요. 가장 큰 크기인 M4에는 숫자 {digits}자, 영문 대문자 {alphanumeric}자 또는 그 밖의 텍스트 {bytes}자까지 담을 수 있고, 악센트 문자나 다른 문자 체계를 쓰면 더 적게 담겨요. 텍스트를 줄이거나 더 많은 내용이 필요하면 rMQR을 사용하세요.",
+      "microqrSize": "{version}(으)로 생성됐어요: {modules} × {modules} 모듈, 오류 정정 레벨 {level}.",
+      "microqrSizeM1": "M1으로 생성됐어요: {modules} × {modules} 모듈이며, 오류를 감지할 수 있지만 정정할 수는 없어요.",
       "imbEnter": "20자리 추적 코드를 입력하고, 라우팅 ZIP Code가 있으면 이어서 입력해 주세요.",
       "imbTrackingLength": "추적 코드는 20자리예요. 바코드 ID(2), 서비스 유형(3), 발송인 ID와 일련번호(15)로 이루어져 있어요. 현재는 {count, plural, other {#자리}}예요.",
       "imbRoutingLength": "20자리 추적 코드 뒤에는 라우팅 ZIP Code가 와요. 5자리, 9자리(ZIP+4) 또는 11자리(ZIP+4와 배달 지점)예요. 추적 코드 뒤에 현재 {count, plural, other {#자리}}가 있어요.",
@@ -4685,11 +4688,30 @@
           "k153mv8r": "최대 28자",
           "kqv3bio": "거래소에서 메모를 요구하는 경우가 많아요. 인쇄하기 전에 확인하세요.",
           "kaa7wzl": "SOL",
-          "k5p19bw": "USDT (Tether)"
+          "k5p19bw": "USDT (Tether)",
+          "k18kvzda": "이벤트 이름",
+          "k4fbvq6": "론칭 파티",
+          "kfz2vvz": "종일 이벤트",
+          "k16seyg1": "시작 날짜",
+          "kslte8c": "시작 시간",
+          "kivkp8q": "종료 날짜",
+          "k1b8ljnb": "종료 시간",
+          "k191owfq": "다음 날 이후에 끝나는 이벤트에 사용해요.",
+          "k1wjsqfy": "없으면 1시간 동안 진행돼요.",
+          "k1rhzoka": "시간대",
+          "kpc0bbm": "시간은 이 시간대 기준이에요. 코드에는 UTC로 저장되어, 각 휴대폰에서 해당 기기의 시간으로 표시돼요.",
+          "kpghiva": "장소",
+          "kv2raw1": "스프링필드 메인가 1번지 3홀",
+          "khkxto5": "7시에 입장 시작. 친구와 함께 오세요.",
+          "k1wxsxh4": "웹페이지"
         }
       },
       "contactForms": {
         "meCardNote": "Android 휴대폰은 MeCard 연락처를 읽고 저장을 안내해요. Apple은 iPhone 카메라의 MeCard 지원을 문서화하지 않았으므로 iPhone에서 테스트하세요. 모든 사람에게 연락처를 전달해야 한다면 vCard를 사용하세요."
+      },
+      "calendarEventForm": {
+        "note": "스캔하면 휴대폰 캘린더에 이벤트를 추가할 수 있어요. 이벤트가 코드 자체에 기록되므로 시간이나 장소가 바뀌면 새 코드가 필요해요.",
+        "longEvent": "텍스트가 이렇게 많으면 코드가 촘촘해져서 스캔하려면 더 크게 인쇄해야 해요. 설명을 줄이면 스캔하기 쉬워요."
       },
       "swissQrBill": {
         "designApplied": "SIX의 QR-bill 가이드라인은 오류 수정 수준 M, 흰색 바탕에 검은색 점, 코드 주변에 아무것도 인쇄하지 않을 것, 가운데에 스위스 십자가를 넣을 것을 요구해요. 그래서 이 디자인에는 이 설정이 적용되어 있어요. 점과 눈 모양은 자유롭게 바꿀 수 있어요. 디자인을 바꿔 나머지 설정이 달라지면 이 안내에서 원래대로 되돌릴 수 있어요. 코드는 여백을 제외하고 46 × 46 mm 크기로 인쇄하고, 주변에 5 mm의 흰 여백을 두세요.",

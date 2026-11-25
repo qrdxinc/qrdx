@@ -28997,6 +28997,18 @@
     "status": "machine",
     "context": "barcodes.formats.aztec.summary"
   },
+  "d7905fa2e4a7": {
+    "source": "The smallest QR code, for tiny labels on parts and electronics",
+    "text": "O menor QR code, para etiquetas minúsculas em peças e componentes eletrônicos",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.summary"
+  },
+  "bca682c9c3c2": {
+    "source": "Any text, up to 35 digits, 21 capital letters or 15 characters of other text; less with accents or other scripts. It's drawn in the smallest of the four sizes, M1 to M4, that fits.",
+    "text": "Qualquer texto, até 35 dígitos, 21 letras maiúsculas ou 15 caracteres de outro texto; menos com acentos ou outros alfabetos. Ele é desenhado no menor dos quatro tamanhos, de M1 a M4, que couber.",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.inputHint"
+  },
   "9c5a364b0228": {
     "source": "Screens, documents and online shops",
     "text": "Telas, documentos e lojas online",
@@ -29122,6 +29134,12 @@
     "text": "Um código 2D quadrado localizado a partir do centro, por isso não precisa de margem em branco. Empresas de transporte o usam em passagens exibidas na tela do celular e impressas em casa.",
     "status": "machine",
     "context": "barcodes.uses.aztec"
+  },
+  "e849a4bc696d": {
+    "source": "The smallest QR code, with one corner square instead of three and as little as 11 × 11 modules, for marks on circuit boards, components and small parts. Most phone camera apps don't read it, so check that your scanners do.",
+    "text": "O menor QR code, com um quadrado de canto em vez de três e a partir de 11 × 11 módulos, para marcações em placas de circuito, componentes e peças pequenas. A maioria dos apps de câmera de celular não faz a leitura dele, então confira se os seus leitores fazem.",
+    "status": "machine",
+    "context": "barcodes.uses.microqr"
   },
   "dd1e133f56a5": {
     "source": "Dark bars on a light background. Black on white is safest; dark blue and dark green work. Many scanners read with red light, which makes red, orange and yellow bars disappear.",
@@ -30604,6 +30622,42 @@
     "text": "Muitos apps de leitura e catracas de bilhete leem. Alguns apps de câmera nativos só abrem QR codes.",
     "status": "machine",
     "context": "barcodeFormats.pages.aztec.faqs.1.answer"
+  },
+  "5ab48e65407a": {
+    "source": "Free Micro QR Code Generator",
+    "text": "Gerador de Micro QR Code grátis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.title"
+  },
+  "f3c99e9676a0": {
+    "source": "Make a Micro QR code, the smallest QR code, for tiny marks on parts and circuit boards. Up to 35 digits or 15 characters. SVG, PDF and PNG. Free.",
+    "text": "Crie um Micro QR code, o menor dos QR codes, para marcações minúsculas em peças e placas de circuito. Até 35 dígitos ou 15 caracteres. SVG, PDF e PNG. Grátis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.metaDescription"
+  },
+  "6eeccb3bb878": {
+    "source": "Micro QR is a smaller QR code with one corner square instead of three, for marks too small for a full QR code. Type a short text, check that it scans and download it.",
+    "text": "O Micro QR é um QR code menor, com um quadrado de canto em vez de três, para marcações pequenas demais para um QR code completo. Digite um texto curto, confira se a leitura funciona e baixe.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.intro"
+  },
+  "a09c8ae1da41": {
+    "source": "Tiny marks where a regular QR code won't fit: circuit boards, electronic components, small parts and the labels on them.",
+    "text": "Marcações minúsculas onde um QR code comum não cabe: placas de circuito, componentes eletrônicos, peças pequenas e as etiquetas delas.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.0"
+  },
+  "0660afe340fa": {
+    "source": "It's part of the QR code standard, ISO/IEC 18004, from DENSO WAVE, which created the QR code. Most phone camera apps don't read it, so check that the scanners that will read it support it before you print a batch.",
+    "text": "Faz parte do padrão do QR code, o ISO/IEC 18004, da DENSO WAVE, que criou o QR code. A maioria dos apps de câmera de celular não lê esse formato, então confira se os leitores que vão usá-lo são compatíveis antes de imprimir um lote.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.1"
+  },
+  "b5aeb368b7ac": {
+    "source": "Do I need to register a Micro QR code?",
+    "text": "Preciso registrar um Micro QR code?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.numbers.title"
   },
   "d5d3113ff518": {
     "source": "Batch or lot number",
@@ -38867,6 +38921,66 @@
     "status": "machine",
     "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
   },
+  "fbb830fde45b": {
+    "source": "Any text that fits: up to 35 digits, 21 capital letters (with digits, spaces and $ % * + - . / :) or 15 characters of other text. Accents and other scripts are stored as UTF-8 bytes, 2 or 3 to a character, so less of them fits.",
+    "text": "Qualquer texto que couber: até 35 dígitos, 21 letras maiúsculas (com dígitos, espaços e $ % * + - . / :) ou 15 caracteres de outros textos. Acentos e outros alfabetos são armazenados como bytes UTF-8, 2 ou 3 por caractere, então cabem menos deles.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.0"
+  },
+  "b7f8ba513cf7": {
+    "source": "Micro QR comes in four sizes: M1 (11 × 11 modules), M2 (13 × 13), M3 (15 × 15) and M4 (17 × 17). M1 holds digits only and M2 digits and capital letters; other text starts at M3. The generator picks the smallest size your text fits and says which under the field.",
+    "text": "O Micro QR tem quatro tamanhos: M1 (11 × 11 módulos), M2 (13 × 13), M3 (15 × 15) e M4 (17 × 17). O M1 comporta apenas dígitos e o M2, dígitos e letras maiúsculas; outros textos começam no M3. O gerador escolhe o menor tamanho em que seu texto cabe e informa qual é, abaixo do campo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.1"
+  },
+  "09495e6960be": {
+    "source": "M1 only detects errors. The other sizes get error correction level M when there's room for it, or L when the text only fits at L: a reader can recover about 15% of a damaged code at M and 7% at L.",
+    "text": "O M1 só detecta erros. Os outros tamanhos recebem o nível de correção de erros M quando há espaço, ou L quando o texto só cabe em L: um leitor consegue recuperar cerca de 15% de um código danificado no M e 7% no L.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.2"
+  },
+  "b1c9fc9fe329": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text, an M4, comes out 14.8 × 14.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "Os downloads vetoriais desenham cada módulo com 0,71 mm de lado: o texto de exemplo, um M4, sai com 14,8 × 14,8 mm, incluindo a zona de silêncio. Ajuste a escala ao espaço que você tem e ao que sua impressora e seu leitor conseguem resolver.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.0"
+  },
+  "064bad0ab79d": {
+    "source": "Micro QR needs 2 modules of blank space all round, half what a QR code needs, which the generator starts with.",
+    "text": "O Micro QR precisa de 2 módulos de espaço em branco ao redor, metade do que um QR code exige, e o gerador já começa assim.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.1"
+  },
+  "a1963fc6a2a3": {
+    "source": "Micro QR or QR code?",
+    "text": "Micro QR ou QR code?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.question"
+  },
+  "379bc5c2a5f5": {
+    "source": "For anything people scan with their phone, a QR code. Use Micro QR where only a few millimetres fit and you know the scanners that will read it support it.",
+    "text": "Para qualquer coisa que as pessoas leiam com o celular, um QR code. Use o Micro QR quando só couberem alguns milímetros e você souber que os leitores que vão usá-lo são compatíveis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.answer"
+  },
+  "113fc6913877": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports Micro QR, and tells you whether it reads back your text.",
+    "text": "Sim. Enquanto você edita, o gerador decodifica a imagem que seria baixada com o ZXing, um leitor de código aberto compatível com Micro QR, e avisa se ela devolve o seu texto.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.1.answer"
+  },
+  "8dcc75f95b4e": {
+    "source": "Can phones read Micro QR codes?",
+    "text": "Celulares leem Micro QR codes?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.question"
+  },
+  "2dc28fe2f22f": {
+    "source": "Most built-in camera apps can't. The QRdx scanner at /scan reads them in the browser, with the same ZXing reader as the check on this page.",
+    "text": "A maioria dos apps de câmera nativos não lê. O leitor do QRdx em /scan lê no navegador, com o mesmo leitor ZXing da verificação desta página.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.answer"
+  },
   "21d588136e54": {
     "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",
     "text": "Qualquer texto: letras, dígitos, símbolos, quebras de linha, acentos e outros alfabetos. Os dígitos ocupam menos espaço, seguidos das letras maiúsculas; acentos e outros alfabetos são guardados como bytes UTF-8, que ocupam mais espaço.",
@@ -39256,5 +39370,143 @@
     "text": "Os estáticos, não. As ferramentas renderizam imagens, formatam texto e leem a comunidade pública. Só estas gravam algo: create_dynamic_code e update_code_destination (o código dinâmico que você pede, no seu workspace), e save_template e save_barcode (o tema ou código de barras que você pede para salvar, no workspace da chave de API). generate_ai_art usa uma das imagens de arte com IA mensais do workspace, mas não guarda a imagem nem a foto que você envia. As URLs de imagem devolvidas pelas ferramentas contêm os dados codificados, então não as compartilhe se os dados forem privados, como uma senha de Wi-Fi.",
     "status": "machine",
     "context": "mcp.faqs.7.answer"
+  },
+  "f74c0be05e82": {
+    "source": "Calendar event",
+    "text": "Evento de agenda",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.label"
+  },
+  "391b4900f8cd": {
+    "source": "Add an event to the scanner's calendar",
+    "text": "Adiciona um evento à agenda de quem fizer a leitura",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.description"
+  },
+  "60d0f3626bc4": {
+    "source": "Calendar Event",
+    "text": "Evento de calendário",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.name"
+  },
+  "937f80f08207": {
+    "source": "Add an event to the phone's calendar with one scan.",
+    "text": "Adicione um evento ao calendário do celular com uma leitura.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.summary"
+  },
+  "36d7be8c09ff": {
+    "source": "Make a calendar event QR code: the event's name, date and time, place, details and a link in the iCalendar format phones add to the calendar. Free.",
+    "text": "Crie um QR code de evento de calendário: nome do evento, data e hora, local, detalhes e um link no formato iCalendar que os celulares adicionam ao calendário. Grátis.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.metaDescription"
+  },
+  "7e48d79403f2": {
+    "source": "A calendar event QR code holds one event: its name, when it starts and ends, where it is, a few lines about it and a link. Scanning it offers to add the event to the phone's calendar, so nobody has to copy the date and time from a poster or an invitation.",
+    "text": "Um QR code de evento de calendário guarda um evento: o nome, quando começa e termina, onde é, algumas linhas sobre ele e um link. Ao fazer a leitura, o celular oferece adicionar o evento ao calendário, e ninguém precisa copiar a data e a hora de um cartaz ou de um convite.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.0"
+  },
+  "53490dd34f81": {
+    "source": "The event is written into the code itself as an iCalendar VEVENT, so the code needs no account and never expires. The times are saved in UTC from the time zone you pick, and each phone shows them in its own time. Because the details are in the code, a new time or place means a new code.",
+    "text": "O evento é gravado no próprio código como um VEVENT de iCalendar, então o código não precisa de conta e nunca expira. Os horários são salvos em UTC a partir do fuso horário que você escolher, e cada celular os mostra no seu próprio horário. Como os detalhes estão no código, um novo horário ou local exige um novo código.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.1"
+  },
+  "b7cb6b55bf27": {
+    "source": "Enter the event's name and pick the day and time it starts.",
+    "text": "Digite o nome do evento e escolha o dia e a hora de início.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.0"
+  },
+  "f37f92d39ff8": {
+    "source": "Add an end time, or switch on All-day event for an event that takes whole days.",
+    "text": "Adicione um horário de término ou ative 'Evento de dia inteiro' para um evento que dura dias inteiros.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.1"
+  },
+  "3389506655cc": {
+    "source": "Check the time zone the times are in, then add a location, a short description and a link if you want them.",
+    "text": "Confira o fuso horário dos horários e, se quiser, adicione um local, uma descrição curta e um link.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.2"
+  },
+  "3a1f754ff0d5": {
+    "source": "Scan the preview with an iPhone and an Android phone to see that both offer to add the event, then download the code.",
+    "text": "Faça a leitura da prévia com um iPhone e com um celular Android para ver se os dois oferecem adicionar o evento e depois baixe o código.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.3"
+  },
+  "a58987909da3": {
+    "source": "QRdx writes one VEVENT (RFC 5545) without a VCALENDAR around it: that's the form QR scanners look for, and it keeps the code smaller.",
+    "text": "O QRdx grava um VEVENT (RFC 5545) sem um VCALENDAR em volta: essa é a forma que os leitores de QR code procuram, e ela deixa o código menor.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.0"
+  },
+  "a1596551def4": {
+    "source": "Times end in Z: they're in UTC, converted from the time zone you pick. An all-day event has dates only (DTSTART;VALUE=DATE:20270417), and its DTEND is the day after the last day, as the standard asks.",
+    "text": "Os horários terminam em Z: estão em UTC, convertidos do fuso horário que você escolher. Um evento de dia inteiro tem apenas datas (DTSTART;VALUE=DATE:20270417), e o DTEND é o dia seguinte ao último dia, como o padrão pede.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.1"
+  },
+  "6c3c533b5640": {
+    "source": "Commas, semicolons, backslashes and line breaks in the text are escaped with a backslash, so a comma in the location is written \\,.",
+    "text": "Vírgulas, pontos e vírgulas, barras invertidas e quebras de linha no texto recebem uma barra invertida de escape, então uma vírgula no local é gravada como \\,.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.2"
+  },
+  "3d3d8d121316": {
+    "source": "The link is written as URL and again at the end of the description: the calendar event Google's ML Kit reads, which many Android scanners use, has no link field.",
+    "text": "O link é gravado como URL e de novo no fim da descrição: o evento de calendário que o ML Kit do Google lê, usado por muitos leitores de Android, não tem campo de link.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.3"
+  },
+  "dddc2fbf8cda": {
+    "source": "Only the fields you fill in are written. Past about 300 characters the code gets dense, and the form says so: a shorter description keeps it easy to scan.",
+    "text": "Só os campos que você preenche são gravados. Acima de cerca de 300 caracteres o código fica denso, e o formulário avisa: uma descrição mais curta facilita a leitura.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.4"
+  },
+  "007d6b8d850c": {
+    "source": "Which time zone are the times in?",
+    "text": "Em que fuso horário estão os horários?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.question"
+  },
+  "d0d826431b09": {
+    "source": "The one you pick under the times, which starts as your device's. The code holds the times in UTC, so a phone in another time zone shows the event at the right moment in its own time.",
+    "text": "No que você escolher abaixo dos horários, que começa com o do seu dispositivo. O código guarda os horários em UTC, então um celular em outro fuso horário mostra o evento no momento certo, no seu próprio horário.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.answer"
+  },
+  "8b95b38c5c85": {
+    "source": "Do iPhones and Android phones read it?",
+    "text": "iPhones e celulares Android conseguem ler?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.question"
+  },
+  "5031df6b0b75": {
+    "source": "Google's ML Kit, which many Android scanners use, reads calendar events. Apple doesn't document which formats the iPhone Camera reads. Scan the preview with both before you print.",
+    "text": "O ML Kit do Google, usado por muitos leitores de Android, lê eventos de calendário. A Apple não documenta quais formatos a Câmera do iPhone lê. Faça a leitura da prévia com os dois antes de imprimir.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.answer"
+  },
+  "5bb54a2ed51a": {
+    "source": "Can I change the event after printing?",
+    "text": "Posso mudar o evento depois de imprimir?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.question"
+  },
+  "6a209249887c": {
+    "source": "No, the event is inside the code. For an event that may move, make an invitation page instead: a hosted page with add-to-calendar buttons that you can edit after printing.",
+    "text": "Não, o evento está dentro do código. Para um evento que pode mudar, crie uma página de convite: uma página hospedada com botões de adicionar ao calendário que você pode editar depois de imprimir.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.answer"
+  },
+  "2bd44ba9f12f": {
+    "source": "Is my event sent to QRdx?",
+    "text": "Meu evento é enviado ao QRdx?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.3.question"
   }
 }

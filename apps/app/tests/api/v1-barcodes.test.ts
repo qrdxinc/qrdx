@@ -344,6 +344,14 @@ describe("GET /v1/barcode", () => {
     ["intelligent-mail", "012345670949876543210", /This has 1 digit after/],
     ["dotcode", "QRdx DotCode sample", undefined],
     ["dotcode", "A".repeat(396), /Too much data for one DotCode here/],
+    ["microqr", "QRdx Micro QR", undefined],
+    ["micro-qr", "PCB-0042", undefined],
+    [
+      "microqr",
+      "https://qrdx.dev",
+      /Too much for one Micro QR: the largest size, M4, holds up to 35 digits/,
+    ],
+    ["microqr", "9".repeat(36), /up to 35 characters; this has 36/],
     ["rmqr", "QRdx rMQR", undefined],
     ["rectangular-micro-qr", "CABLE-0042", undefined],
     ["rmqr", "x".repeat(151), /Too much data for one rMQR: it holds up to 361/],
@@ -599,6 +607,26 @@ describe("/v1/barcodes", () => {
       /DotCode takes a scale of 2 to 10/,
     );
     expect(fakeDb.rows("barcode")).toHaveLength(2);
+  });
+
+  it("saves a Micro QR, and refuses text too long for an M4", async () => {
+    const saved = await create({ format: "microqr", value: "PCB-0042" });
+    expect(saved.status).toBe(201);
+    const { data } = (await saved.json()) as { data: BarcodeJson };
+    expect(data).toMatchObject({
+      format: "microqr",
+      value: "PCB-0042",
+      options: { quietZone: 2 },
+    });
+    expect(data.imageUrl).toBe(
+      "http://localhost:3000/api/v1/barcode?format=microqr&data=PCB-0042",
+    );
+    const long = await create({ format: "microqr", value: "https://qrdx.dev" });
+    expect(long.status).toBe(400);
+    expect(((await long.json()) as ErrorBody).message).toMatch(
+      /Too much for one Micro QR/,
+    );
+    expect(fakeDb.rows("barcode")).toHaveLength(1);
   });
 
   it("checks the value and options like the image API", async () => {

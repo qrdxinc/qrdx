@@ -52,6 +52,7 @@ describe("BARCODE_FORMATS", () => {
       "Data Matrix",
       "PDF417",
       "Aztec",
+      "Micro QR",
       "rMQR",
       "MaxiCode",
       "DotCode",
@@ -443,6 +444,68 @@ describe("2D formats", () => {
     expect(error("rmqr", "1".repeat(362))).toBe(
       "rMQR here takes up to 361 characters; this has 362.",
     );
+  });
+});
+
+describe("Micro QR", () => {
+  it("says which of the four sizes it's drawn in, and at which level", () => {
+    // M1 holds up to 5 digits, with error detection only.
+    expect(ok("microqr", "12345").note).toBe(
+      "Drawn as M1: 11 × 11 modules, which can detect errors but not correct them.",
+    );
+    // A 6th digit needs an M2, which has room for level M.
+    expect(ok("microqr", "123456").note).toBe(
+      "Drawn as M2: 13 × 13 modules, error correction level M.",
+    );
+    // Capital letters start at M2, lowercase and other bytes at M3.
+    expect(ok("microqr", "ABCDEF").note).toMatch(
+      /^Drawn as M2: 13 × 13 .* L\.$/,
+    );
+    expect(ok("microqr", "a").note).toMatch(/^Drawn as M3: 15 × 15 .* M\.$/);
+    expect(ok("microqr", "QRdx Micro QR").note).toMatch(
+      /^Drawn as M4: 17 × 17 .* M\.$/,
+    );
+    // Just past an M3, an M4 has room for level M. Never Q: whatever fits
+    // an M4 at Q fits an M3 at L (23 digits, 14 capital letters, 9 bytes).
+    expect(ok("microqr", "1".repeat(24)).note).toMatch(/M4: .* level M\.$/);
+    expect(ok("microqr", "x".repeat(10)).note).toMatch(/M4: .* level M\.$/);
+    expect(validateBarcodeInput("microqr", "123456")).toMatchObject({
+      notes: [
+        {
+          code: "microqrSize",
+          values: { version: "M2", modules: 13, level: "M" },
+        },
+      ],
+    });
+  });
+
+  it("takes up to 35 digits, 21 capital letters or 15 bytes, in an M4", () => {
+    const tooMuch =
+      "Too much for one Micro QR: the largest size, M4, holds up to 35 digits, 21 capital letters or 15 characters of other text, and fewer with accents or other scripts. Shorten the text, or use rMQR for more.";
+    expect(ok("microqr", "9".repeat(35)).note).toMatch(/M4: .* level L\.$/);
+    expect(error("microqr", "9".repeat(36))).toBe(
+      "Micro QR here takes up to 35 characters; this has 36.",
+    );
+    expect(ok("microqr", "A".repeat(21)).note).toMatch(/M4: .* level L\.$/);
+    expect(error("microqr", "A".repeat(22))).toBe(tooMuch);
+    expect(ok("microqr", "x".repeat(15)).note).toMatch(/M4: .* level L\.$/);
+    expect(error("microqr", "x".repeat(16))).toBe(tooMuch);
+    expect(ok("microqr", "héllo ✓\nab").value).toBe("héllo ✓\nab");
+    // Accents take 2 bytes and most other scripts 3.
+    expect(ok("microqr", "é".repeat(7)).value).toBe("é".repeat(7));
+    expect(error("microqr", "é".repeat(8))).toBe(tooMuch);
+    expect(ok("microqr", "日本語テキ").value).toBe("日本語テキ");
+    expect(error("microqr", "日本語テキス")).toBe(tooMuch);
+    // Mixed text is split into digit, letter and byte runs: 2 letters and
+    // 30 digits fit, past the 21 a run of capitals would.
+    expect(ok("microqr", `A1${"2".repeat(30)}`).note).toMatch(/^Drawn as M4/);
+    expect(error("microqr", "https://qrdx.dev")).toBe(tooMuch);
+    expect(validateBarcodeInput("microqr", "x".repeat(16))).toMatchObject({
+      issue: {
+        code: "microqrTooLong",
+        values: { digits: 35, alphanumeric: 21, bytes: 15 },
+      },
+    });
   });
 });
 
@@ -901,6 +964,8 @@ describe("issue codes (the generator translates by code)", () => {
       ["intelligent-mail", "07234567094987654321"],
       ["dotcode", ""],
       ["rmqr", ""],
+      ["microqr", ""],
+      ["microqr", "x".repeat(16)],
       [
         "gs1-databar-expanded",
         `(21)${"1".repeat(20)}(10)${"2".repeat(20)}(240)${"3".repeat(30)}`,

@@ -30,15 +30,19 @@ import { SIGNING_KEY_ID, templateApplyFor } from "./template";
  * One-click DNS setup (Domain Connect, synchronous flow) for domains waiting
  * for DNS. A domain gets an offer only when every step worked: our signing
  * key matches the one published in DNS, its DNS provider supports Domain
- * Connect and has our template enabled, and the template can write exactly
- * the records lib/custom-domains.ts asks for. Anything else means no button.
+ * Connect, is one we were told has our template live, and has it enabled,
+ * and the template can write exactly the records lib/custom-domains.ts asks
+ * for. Anything else means no button.
  */
 
 export interface DomainConnectOffer {
   /** For "Set up with …"; null when the provider sent no usable name */
   providerName: string | null;
-  /** Signed apply URL: the provider's consent page */
-  url: string;
+  /**
+   * Signed apply URLs (the provider's consent page), in order. The button
+   * opens the first; each one's return sends the browser on to the next.
+   */
+  steps: string[];
 }
 
 /** Offers by custom domain id */
@@ -55,6 +59,13 @@ export interface DomainConnectConfig {
   providerId: string;
   serviceId: string;
   key: SigningKey;
+  /**
+   * DNS providers (their own providerId, e.g. cloudflare.com) that have put
+   * the template live for every account. A provider's template endpoint can
+   * answer while the template is still limited to a test account
+   * (Cloudflare's does), so that answer alone isn't enough.
+   */
+  liveProviders: ReadonlySet<string>;
 }
 
 export interface OfferDeps {
@@ -175,30 +186,39 @@ export function createOfferService(
   ): Promise<DomainConnectOffer | null> {
     const provider = await providerOf(candidate.hostname);
     if (!provider) return null;
-    const apply = templateApplyFor(
+    if (!config.liveProviders.has(provider.providerId.toLowerCase())) {
+      return null;
+    }
+    const applies = templateApplyFor(
       candidate.records,
       candidate.hostname,
       provider.zone,
     );
-    if (!apply) return null;
+    if (!applies) return null;
     if (!(await templateEnabled(provider.urlAPI))) return null;
-    const url = buildApplyUrl(
-      {
-        urlSyncUX: provider.urlSyncUX,
-        providerId: config.providerId,
-        serviceId: config.serviceId,
-        domain: provider.zone,
-        host: provider.host,
-        groupIds: apply.groupIds,
-        variables: apply.variables,
-        redirectUri: connectRedirectUri(deps.appUrl, candidate.id),
-      },
-      {
-        keyId: SIGNING_KEY_ID,
-        sign: (query) => signQuery(query, config.key.privateKey),
-      },
+    const steps = applies.map((apply, index) =>
+      buildApplyUrl(
+        {
+          urlSyncUX: provider.urlSyncUX,
+          providerId: config.providerId,
+          serviceId: config.serviceId,
+          domain: provider.zone,
+          host: apply.apex ? "" : provider.host,
+          groupIds: apply.groupIds,
+          variables: apply.variables,
+          redirectUri: connectRedirectUri(
+            deps.appUrl,
+            candidate.id,
+            index + 1 < applies.length ? index + 1 : undefined,
+          ),
+        },
+        {
+          keyId: SIGNING_KEY_ID,
+          sign: (query) => signQuery(query, config.key.privateKey),
+        },
+      ),
     );
-    return { providerName: provider.providerName, url };
+    return { providerName: provider.providerName, steps };
   }
 
   function withinBudget<T>(work: Promise<T>): Promise<T | null> {
@@ -237,6 +257,16 @@ export function createOfferService(
 
 const SERVICE_ID = /^[A-Za-z0-9._-]{1,64}$/;
 
+/** DOMAIN_CONNECT_LIVE_PROVIDERS: comma-separated DNS provider ids. */
+export function parseLiveProviders(value: string | undefined): Set<string> {
+  return new Set(
+    (value ?? "")
+      .split(",")
+      .map((id) => id.trim().toLowerCase())
+      .filter(Boolean),
+  );
+}
+
 function resolverLookups(): DnsLookups {
   const resolver = new Resolver({ timeout: 3000, tries: 2 });
   return {
@@ -255,7 +285,10 @@ function deploymentService() {
   const providerId = env.DOMAIN_CONNECT_PROVIDER_ID?.trim().toLowerCase();
   const serviceId = env.DOMAIN_CONNECT_SERVICE_ID?.trim();
   const pem = env.DOMAIN_CONNECT_PRIVATE_KEY;
-  if (!(providerId && serviceId && pem)) return service;
+  const liveProviders = parseLiveProviders(env.DOMAIN_CONNECT_LIVE_PROVIDERS);
+  if (!(providerId && serviceId && pem && liveProviders.size > 0)) {
+    return service;
+  }
   if (!(isDnsHostname(providerId) && SERVICE_ID.test(serviceId))) {
     logError(
       new Error(
@@ -276,7 +309,7 @@ function deploymentService() {
     return service;
   }
   service = createOfferService(
-    { providerId, serviceId, key },
+    { providerId, serviceId, key, liveProviders },
     { dns: resolverLookups(), getJson, appUrl: baseUrl },
   );
   return service;

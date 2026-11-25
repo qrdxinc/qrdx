@@ -119,31 +119,42 @@ if (command === "generate") {
     fail("Give at least --domain (the zone) and --target (the CNAME target).");
   }
   if (!flags.host) fail("Give --host: the template works on subdomains only.");
-  const variables = { target: flags.target };
+  // Like the app (lib/domain-connect/template.ts): route and qrdx on the
+  // subdomain, then Vercel's TXT in its own apply on the zone apex.
+  const subdomain = { target: flags.target };
   const groupIds = ["route"];
-  if (flags.vercel) {
-    groupIds.push("vercel");
-    variables.vercel = flags.vercel;
-  }
   if (flags.token) {
     groupIds.push("qrdx");
-    variables.token = flags.token;
+    subdomain.token = flags.token;
   }
-  console.log(
-    buildApplyUrl(
-      {
-        urlSyncUX: flags["sync-ux"] ?? CLOUDFLARE_SYNC_UX,
-        providerId: flags["provider-id"] ?? PROVIDER_ID,
-        serviceId: flags["service-id"] ?? SERVICE_ID,
-        domain: flags.domain,
-        host: flags.host,
-        groupIds,
-        variables,
-        redirectUri: flags.redirect ?? DEFAULT_REDIRECT,
-      },
-      { keyId: KEY_ID, sign: (query) => signQuery(query, key.privateKey) }
-    )
-  );
+  const applies = [{ host: flags.host, groupIds, variables: subdomain }];
+  if (flags.vercel) {
+    applies.push({
+      host: "",
+      groupIds: ["vercel"],
+      variables: { vercel: flags.vercel },
+    });
+  }
+  for (const [index, apply] of applies.entries()) {
+    if (applies.length > 1) {
+      console.log(
+        `${index + 1}. ${apply.groupIds.join(",")} on ${apply.host ? `${apply.host}.` : ""}${flags.domain}:`
+      );
+    }
+    console.log(
+      buildApplyUrl(
+        {
+          urlSyncUX: flags["sync-ux"] ?? CLOUDFLARE_SYNC_UX,
+          providerId: flags["provider-id"] ?? PROVIDER_ID,
+          serviceId: flags["service-id"] ?? SERVICE_ID,
+          domain: flags.domain,
+          redirectUri: flags.redirect ?? DEFAULT_REDIRECT,
+          ...apply,
+        },
+        { keyId: KEY_ID, sign: (query) => signQuery(query, key.privateKey) }
+      )
+    );
+  }
 } else {
   fail(
     "Commands: generate <out.pem> | txt <key.pem> | check <key.pem> | url <key.pem> --domain <zone> --host <sub> --target <cname> [--vercel <value>] [--token <hex>] [--redirect <url>] [--sync-ux <url>]"

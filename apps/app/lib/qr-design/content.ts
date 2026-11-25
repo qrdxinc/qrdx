@@ -11,6 +11,7 @@ import {
   bitcoinSchema,
   blueskySchema,
   calcomSchema,
+  calendarEventSchema,
   cardanoSchema,
   cashappSchema,
   czechSpdSchema,
@@ -154,6 +155,8 @@ export const CONTENT_FORM_SCHEMAS = {
   stellar: stellarSchema,
   // Added 2026-11-22 (links)
   ...LINK_TYPE_SCHEMAS,
+  // Added 2026-11-25
+  "calendar-event": calendarEventSchema,
 } satisfies Record<ContentType, z.ZodType>;
 
 export const CONTENT_TYPE_IDS = Object.keys(CONTENT_FORM_SCHEMAS) as [
@@ -269,7 +272,7 @@ const BOOLEAN_FIELD_NAMES = new Set(
 );
 
 const FIELD_DESCRIPTIONS: Record<string, string> = {
-  url: "Web address (url, google-drive); website (vcard, mecard); the link copied from the app or site (documents, forms, music, listings, meetings, vk, weibo, kakaotalk, zalo; a FaceTime link; a Teams meeting link)",
+  url: "Web address (url, google-drive); website (vcard, mecard); the link copied from the app or site (documents, forms, music, listings, meetings, vk, weibo, kakaotalk, zalo; a FaceTime link; a Teams meeting link); the event's web page (calendar-event)",
   text: "Plain text",
   recipient: "Email address (comma-separate several)",
   subject: "Email subject",
@@ -367,7 +370,22 @@ const FIELD_DESCRIPTIONS: Record<string, string> = {
   handle: "Handle: alice.bsky.social (bluesky) or @alice@mastodon.social",
   meeting: "Meeting ID or invite link (zoom), or meeting code (google-meet)",
   navigate: "Start directions right away (waze), default true",
-  location: "Address or 'lat,long'",
+  location:
+    "Address or 'lat,long' (maps, waze); where it happens (calendar-event)",
+  // Added 2026-11-25
+  title: "Event name (calendar-event)",
+  allDay:
+    "All-day event: dates only, endDate is the last day (calendar-event), default false",
+  startDate: "Day the event starts, YYYY-MM-DD (calendar-event)",
+  startTime:
+    "Time the event starts, HH:mm, 24-hour (calendar-event, required unless allDay)",
+  endDate:
+    "Day the event ends, YYYY-MM-DD (calendar-event): the last day of an all-day event; with endTime for one that ends on a later day",
+  endTime:
+    "Time the event ends, HH:mm (calendar-event); without it the event lasts an hour",
+  timeZone:
+    "IANA time zone the times are in, e.g. Europe/Paris (calendar-event, default UTC); the code holds them in UTC",
+  description: "Event details (calendar-event)",
   profileUrl: "Profile URL",
   username:
     "Username or handle, or a profile link; LINE ID (line), $Cashtag (cashapp), SoundCloud profile or link, owner/repo (github), publication name (substack, bandcamp)",
@@ -485,6 +503,9 @@ export function describeContent(content: QRContentConfig): string {
       case "vcard":
       case "mecard":
         return [content.firstName, content.lastName].filter(Boolean).join(" ");
+      // Added 2026-11-25
+      case "calendar-event":
+        return content.title;
       case "url":
         return content.url;
       case "email":

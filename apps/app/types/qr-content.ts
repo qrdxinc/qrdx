@@ -81,7 +81,9 @@ export type ContentType =
   | "facetime"
   | "app-store"
   | "google-play"
-  | "trustpilot";
+  | "trustpilot"
+  // Added 2026-11-25
+  | "calendar-event";
 
 /**
  * URL/Plain Text Content
@@ -856,6 +858,33 @@ export interface TrustpilotContent {
 
 // ─── end of the 2026-11-22 (links) types ────────────────────────────────────
 
+// ─── Added 2026-11-25 ───────────────────────────────────────────────────────
+
+/**
+ * A calendar event (an iCalendar VEVENT). Times are typed in `timeZone` and
+ * written to the code in UTC (utils/calendar-event.ts).
+ */
+export interface CalendarEventContent {
+  type: "calendar-event";
+  title: string;
+  /** Dates only: the event takes whole days */
+  allDay?: boolean;
+  /** YYYY-MM-DD */
+  startDate: string;
+  /** HH:mm, required unless allDay */
+  startTime?: string;
+  /** YYYY-MM-DD: the last day (all-day) or the day the event ends */
+  endDate?: string;
+  /** HH:mm; without an end, a timed event lasts an hour */
+  endTime?: string;
+  /** IANA time zone the times are in, "UTC" when missing */
+  timeZone?: string;
+  location?: string;
+  description?: string;
+  /** A web page for the event */
+  url?: string;
+}
+
 /**
  * Union type for all content configurations
  */
@@ -936,7 +965,9 @@ export type QRContentConfig =
   | FaceTimeContent
   | AppStoreContent
   | GooglePlayContent
-  | TrustpilotContent;
+  | TrustpilotContent
+  // Added 2026-11-25
+  | CalendarEventContent;
 
 /**
  * Content type metadata for UI rendering
@@ -1833,6 +1864,24 @@ export const CONTENT_TYPES_METADATA: ContentTypeMetadata[] = [
     description: "Open your Booking.com property page",
     keywords: ["booking", "hotel", "property", "stay", "travel"],
   },
+  // ─── Added 2026-11-25 ─────────────────────────────────────────────────────
+  {
+    type: "calendar-event",
+    label: "Calendar event",
+    icon: "CalendarAdd",
+    description: "Add an event to the scanner's calendar",
+    keywords: [
+      "calendar",
+      "event",
+      "add to calendar",
+      "save the date",
+      "invitation",
+      "meeting",
+      "ical",
+      "ics",
+      "vevent",
+    ],
+  },
 ];
 
 /**
@@ -1981,6 +2030,8 @@ export const CONTENT_CATEGORIES: ContentCategory[] = [
       "yelp",
       "airbnb",
       "booking-com",
+      // Added 2026-11-25
+      "calendar-event",
     ],
   },
   {

@@ -36,6 +36,8 @@ export const BARCODE_USES: Record<BarcodeFormatId, string> = {
     "A stacked 2D code that holds up to about a kilobyte of text. You'll find it on driver's licenses, ID cards and boarding passes.",
   aztec:
     "A square 2D code found from its center, so it needs no blank margin. Transport operators use it for tickets shown on phone screens and printed at home.",
+  microqr:
+    "The smallest QR code, with one corner square instead of three and as little as 11 × 11 modules, for marks on circuit boards, components and small parts. Most phone camera apps don't read it, so check that your scanners do.",
   rmqr: "A QR code stretched into a strip, as little as 7 modules tall, for labels too narrow for a square code: cables, test tubes and the edges of parts. It's a 2022 ISO standard, so check that your scanners read it.",
   maxicode:
     "The fixed-size 2D code with a bullseye that UPS prints on parcel labels. A carrier message puts the destination postcode, country and service class where sorting machines look for them; it can also hold plain text.",

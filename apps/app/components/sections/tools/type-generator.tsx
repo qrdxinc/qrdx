@@ -18,6 +18,8 @@ import { AmazonForm } from "@/components/editor/content-forms/amazon-form";
 import { AttendanceForm } from "@/components/editor/content-forms/attendance-form";
 import { BitcoinForm } from "@/components/editor/content-forms/bitcoin-form";
 import { CalcomForm } from "@/components/editor/content-forms/calcom-form";
+// Added 2026-11-25
+import { CalendarEventForm } from "@/components/editor/content-forms/calendar-event-form";
 import {
   BitcoinCashForm,
   DogecoinForm,
@@ -189,6 +191,8 @@ const FORMS: Partial<Record<ContentType, ComponentType>> = {
   stellar: StellarForm,
   // Added 2026-11-22 (links)
   ...LINK_TYPE_FORM_COMPONENTS,
+  // Added 2026-11-25
+  "calendar-event": CalendarEventForm,
 };
 
 function LinkOnlyForm({ type }: { type: "dubsh" | "google-drive" }) {

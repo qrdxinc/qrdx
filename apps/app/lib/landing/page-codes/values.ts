@@ -129,3 +129,22 @@ export const mecard = (
   value: encode({ type: "mecard", firstName, lastName, email }),
   type: "mecard",
 });
+
+// Added 2026-11-25
+
+/** A sample calendar event on a fixed date: times in UTC, or all day. */
+export const calendarEvent = (
+  title: string,
+  startDate: string,
+  times?: { start: string; end: string },
+): SampleValue => ({
+  value: encode({
+    type: "calendar-event",
+    title,
+    startDate,
+    ...(times
+      ? { startTime: times.start, endTime: times.end }
+      : { allDay: true }),
+  }),
+  type: "calendar-event",
+});
