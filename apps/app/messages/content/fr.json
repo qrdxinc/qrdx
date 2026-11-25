@@ -28997,6 +28997,18 @@
     "status": "machine",
     "context": "barcodes.formats.aztec.summary"
   },
+  "d7905fa2e4a7": {
+    "source": "The smallest QR code, for tiny labels on parts and electronics",
+    "text": "Le plus petit QR code, pour les étiquettes minuscules sur les pièces et les composants électroniques",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.summary"
+  },
+  "bca682c9c3c2": {
+    "source": "Any text, up to 35 digits, 21 capital letters or 15 characters of other text; less with accents or other scripts. It's drawn in the smallest of the four sizes, M1 to M4, that fits.",
+    "text": "Tout texte, jusqu'à 35 chiffres, 21 lettres majuscules ou 15 caractères d'un autre texte ; moins avec des accents ou d'autres écritures. Il est dessiné dans la plus petite des quatre tailles, de M1 à M4, qui convient.",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.inputHint"
+  },
   "9c5a364b0228": {
     "source": "Screens, documents and online shops",
     "text": "Écrans, documents et boutiques en ligne",
@@ -29122,6 +29134,12 @@
     "text": "Un code 2D carré repéré à partir de son centre, il n'a donc pas besoin de marge blanche. Les opérateurs de transport l'utilisent pour des billets affichés sur l'écran du téléphone ou imprimés à domicile.",
     "status": "machine",
     "context": "barcodes.uses.aztec"
+  },
+  "e849a4bc696d": {
+    "source": "The smallest QR code, with one corner square instead of three and as little as 11 × 11 modules, for marks on circuit boards, components and small parts. Most phone camera apps don't read it, so check that your scanners do.",
+    "text": "Le plus petit QR code, avec un seul carré de repérage au lieu de trois et seulement 11 × 11 modules, pour les marquages sur circuits imprimés, composants et petites pièces. La plupart des applications d'appareil photo des téléphones ne le lisent pas : vérifiez donc que vos lecteurs de scan le prennent en charge.",
+    "status": "machine",
+    "context": "barcodes.uses.microqr"
   },
   "dd1e133f56a5": {
     "source": "Dark bars on a light background. Black on white is safest; dark blue and dark green work. Many scanners read with red light, which makes red, orange and yellow bars disappear.",
@@ -30604,6 +30622,42 @@
     "text": "De nombreuses applications de scan et bornes de validation le peuvent. Certaines applications d'appareil photo intégrées n'ouvrent que les QR codes.",
     "status": "machine",
     "context": "barcodeFormats.pages.aztec.faqs.1.answer"
+  },
+  "5ab48e65407a": {
+    "source": "Free Micro QR Code Generator",
+    "text": "Générateur de Micro QR code gratuit",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.title"
+  },
+  "f3c99e9676a0": {
+    "source": "Make a Micro QR code, the smallest QR code, for tiny marks on parts and circuit boards. Up to 35 digits or 15 characters. SVG, PDF and PNG. Free.",
+    "text": "Créez un Micro QR code, le plus petit des QR codes, pour les repères minuscules sur des pièces et des circuits imprimés. Jusqu'à 35 chiffres ou 15 caractères. SVG, PDF et PNG. Gratuit.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.metaDescription"
+  },
+  "6eeccb3bb878": {
+    "source": "Micro QR is a smaller QR code with one corner square instead of three, for marks too small for a full QR code. Type a short text, check that it scans and download it.",
+    "text": "Le Micro QR est un QR code plus petit, avec un seul carré de repérage au lieu de trois, pour les marquages trop petits pour un QR code complet. Saisissez un court texte, vérifiez qu'il se scanne et téléchargez-le.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.intro"
+  },
+  "a09c8ae1da41": {
+    "source": "Tiny marks where a regular QR code won't fit: circuit boards, electronic components, small parts and the labels on them.",
+    "text": "Les marquages minuscules où un QR code classique ne tient pas : circuits imprimés, composants électroniques, petites pièces et leurs étiquettes.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.0"
+  },
+  "0660afe340fa": {
+    "source": "It's part of the QR code standard, ISO/IEC 18004, from DENSO WAVE, which created the QR code. Most phone camera apps don't read it, so check that the scanners that will read it support it before you print a batch.",
+    "text": "Il fait partie de la norme du QR code, ISO/IEC 18004, de DENSO WAVE, qui a créé le QR code. La plupart des applications photo des téléphones ne le lisent pas : vérifiez donc que les lecteurs qui le liront le prennent en charge avant d'imprimer un lot.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.1"
+  },
+  "b5aeb368b7ac": {
+    "source": "Do I need to register a Micro QR code?",
+    "text": "Dois-je enregistrer un Micro QR code ?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.numbers.title"
   },
   "d5d3113ff518": {
     "source": "Batch or lot number",
@@ -38866,6 +38920,66 @@
     "text": "Non. Il contient le texte que vous saisissez, sans aucun enregistrement.",
     "status": "machine",
     "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
+  },
+  "fbb830fde45b": {
+    "source": "Any text that fits: up to 35 digits, 21 capital letters (with digits, spaces and $ % * + - . / :) or 15 characters of other text. Accents and other scripts are stored as UTF-8 bytes, 2 or 3 to a character, so less of them fits.",
+    "text": "Tout texte qui tient : jusqu'à 35 chiffres, 21 lettres majuscules (avec chiffres, espaces et $ % * + - . / :) ou 15 caractères d'un autre texte. Les accents et les autres écritures sont stockés en octets UTF-8, à raison de 2 ou 3 par caractère, donc il en tient moins.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.0"
+  },
+  "b7f8ba513cf7": {
+    "source": "Micro QR comes in four sizes: M1 (11 × 11 modules), M2 (13 × 13), M3 (15 × 15) and M4 (17 × 17). M1 holds digits only and M2 digits and capital letters; other text starts at M3. The generator picks the smallest size your text fits and says which under the field.",
+    "text": "Le Micro QR existe en quatre tailles : M1 (11 × 11 modules), M2 (13 × 13), M3 (15 × 15) et M4 (17 × 17). M1 ne contient que des chiffres et M2 des chiffres et des lettres majuscules ; les autres textes commencent à M3. Le générateur choisit la plus petite taille où votre texte tient et l'indique sous le champ.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.1"
+  },
+  "09495e6960be": {
+    "source": "M1 only detects errors. The other sizes get error correction level M when there's room for it, or L when the text only fits at L: a reader can recover about 15% of a damaged code at M and 7% at L.",
+    "text": "M1 ne fait que détecter les erreurs. Les autres tailles reçoivent le niveau de correction d'erreur M lorsqu'il y a la place, ou L quand le texte ne tient qu'au niveau L : un lecteur peut récupérer environ 15 % d'un code endommagé au niveau M et 7 % au niveau L.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.2"
+  },
+  "b1c9fc9fe329": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text, an M4, comes out 14.8 × 14.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "Les téléchargements vectoriels dessinent chaque module en carré de 0,71 mm : le texte d'exemple, un M4, donne 14,8 × 14,8 mm, zone de silence comprise. Adaptez-le à l'espace dont vous disposez et à ce que votre imprimante et votre lecteur peuvent résoudre.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.0"
+  },
+  "064bad0ab79d": {
+    "source": "Micro QR needs 2 modules of blank space all round, half what a QR code needs, which the generator starts with.",
+    "text": "Le Micro QR demande 2 modules d'espace blanc tout autour, soit la moitié de ce qu'exige un QR code, ce que le générateur applique par défaut.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.1"
+  },
+  "a1963fc6a2a3": {
+    "source": "Micro QR or QR code?",
+    "text": "Micro QR ou QR code ?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.question"
+  },
+  "379bc5c2a5f5": {
+    "source": "For anything people scan with their phone, a QR code. Use Micro QR where only a few millimetres fit and you know the scanners that will read it support it.",
+    "text": "Pour tout ce que l'on scanne avec son téléphone, un QR code. Utilisez le Micro QR lorsque seuls quelques millimètres sont disponibles et que vous savez que les lecteurs qui le liront le prennent en charge.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.answer"
+  },
+  "113fc6913877": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports Micro QR, and tells you whether it reads back your text.",
+    "text": "Oui. Pendant que vous modifiez, le générateur décode avec ZXing l'image qu'il vous ferait télécharger, un lecteur open source qui prend en charge le Micro QR, et vous indique s'il relit bien votre texte.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.1.answer"
+  },
+  "8dcc75f95b4e": {
+    "source": "Can phones read Micro QR codes?",
+    "text": "Les téléphones lisent-ils le Micro QR ?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.question"
+  },
+  "2dc28fe2f22f": {
+    "source": "Most built-in camera apps can't. The QRdx scanner at /scan reads them in the browser, with the same ZXing reader as the check on this page.",
+    "text": "La plupart des applications photo intégrées ne le peuvent pas. Le scanner QRdx à l'adresse /scan les lit dans le navigateur, avec le même lecteur ZXing que la vérification de cette page.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.answer"
   },
   "21d588136e54": {
     "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",

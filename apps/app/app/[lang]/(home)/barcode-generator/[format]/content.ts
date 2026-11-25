@@ -57,6 +57,7 @@ export const DOWNLOAD_SIZES_MM: Record<
   datamatrix: { width: 15.5, height: 15.5 },
   pdf417: { width: 43.7, height: 8.8 },
   aztec: { width: 19, height: 19 },
+  microqr: { width: 14.8, height: 14.8 },
   rmqr: { width: 44.4, height: 7.8 },
   maxicode: { width: 31.9, height: 30.6 },
   dotcode: { width: 25.5, height: 19.1 },
@@ -918,6 +919,51 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
         question: "Can phones read Aztec codes?",
         answer:
           "Many scanner apps and ticket gates can. Some built-in camera apps only open QR codes.",
+      },
+    ],
+  },
+  {
+    id: "microqr",
+    slug: "micro-qr",
+    title: "Free Micro QR Code Generator",
+    metaDescription:
+      "Make a Micro QR code, the smallest QR code, for tiny marks on parts and circuit boards. Up to 35 digits or 15 characters. SVG, PDF and PNG. Free.",
+    intro:
+      "Micro QR is a smaller QR code with one corner square instead of three, for marks too small for a full QR code. Type a short text, check that it scans and download it.",
+    usedFor: [
+      "Tiny marks where a regular QR code won't fit: circuit boards, electronic components, small parts and the labels on them.",
+      "It's part of the QR code standard, ISO/IEC 18004, from DENSO WAVE, which created the QR code. Most phone camera apps don't read it, so check that the scanners that will read it support it before you print a batch.",
+    ],
+    numbers: {
+      title: "Do I need to register a Micro QR code?",
+      paragraphs: [
+        "No. It holds whatever text you type, with no registration.",
+      ],
+    },
+    rules: [
+      "Any text that fits: up to 35 digits, 21 capital letters (with digits, spaces and $ % * + - . / :) or 15 characters of other text. Accents and other scripts are stored as UTF-8 bytes, 2 or 3 to a character, so less of them fits.",
+      "Micro QR comes in four sizes: M1 (11 × 11 modules), M2 (13 × 13), M3 (15 × 15) and M4 (17 × 17). M1 holds digits only and M2 digits and capital letters; other text starts at M3. The generator picks the smallest size your text fits and says which under the field.",
+      "M1 only detects errors. The other sizes get error correction level M when there's room for it, or L when the text only fits at L: a reader can recover about 15% of a damaged code at M and 7% at L.",
+    ],
+    sizing: [
+      "The vector downloads draw each module 0.71 mm square: the sample text, an M4, comes out 14.8 × 14.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+      "Micro QR needs 2 modules of blank space all round, half what a QR code needs, which the generator starts with.",
+    ],
+    faqs: [
+      {
+        question: "Micro QR or QR code?",
+        answer:
+          "For anything people scan with their phone, a QR code. Use Micro QR where only a few millimetres fit and you know the scanners that will read it support it.",
+      },
+      {
+        question: "Can this page check that it scans?",
+        answer:
+          "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports Micro QR, and tells you whether it reads back your text.",
+      },
+      {
+        question: "Can phones read Micro QR codes?",
+        answer:
+          "Most built-in camera apps can't. The QRdx scanner at /scan reads them in the browser, with the same ZXing reader as the check on this page.",
       },
     ],
   },

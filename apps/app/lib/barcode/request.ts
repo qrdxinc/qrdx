@@ -38,6 +38,7 @@ const FORMAT_ALIASES = new Map<string, BarcodeFormatId>([
     (format) => [squash(format.label), format.id] as const,
   ),
   ["azteccode", "aztec"],
+  ["microqrcode", "microqr"],
   ["rmqrcode", "rmqr"],
   ["rectangularmicroqr", "rmqr"],
   ["rectangularmicroqrcode", "rmqr"],

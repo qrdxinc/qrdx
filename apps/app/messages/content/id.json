@@ -28997,6 +28997,18 @@
     "status": "machine",
     "context": "barcodes.formats.aztec.summary"
   },
+  "d7905fa2e4a7": {
+    "source": "The smallest QR code, for tiny labels on parts and electronics",
+    "text": "Kode QR terkecil, untuk label mungil pada komponen dan perangkat elektronik",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.summary"
+  },
+  "bca682c9c3c2": {
+    "source": "Any text, up to 35 digits, 21 capital letters or 15 characters of other text; less with accents or other scripts. It's drawn in the smallest of the four sizes, M1 to M4, that fits.",
+    "text": "Teks apa saja, hingga 35 digit, 21 huruf kapital, atau 15 karakter teks lainnya; lebih sedikit jika memakai aksen atau aksara lain. Kode digambar dalam ukuran terkecil dari empat ukuran, M1 sampai M4, yang cukup memuat isinya.",
+    "status": "machine",
+    "context": "barcodes.formats.microqr.inputHint"
+  },
   "9c5a364b0228": {
     "source": "Screens, documents and online shops",
     "text": "Layar, dokumen, dan toko online",
@@ -29122,6 +29134,12 @@
     "text": "Kode 2D persegi yang dikenali dari bagian tengahnya, sehingga tidak memerlukan margin kosong. Operator transportasi menggunakannya untuk tiket yang ditampilkan di layar ponsel dan dicetak di rumah.",
     "status": "machine",
     "context": "barcodes.uses.aztec"
+  },
+  "e849a4bc696d": {
+    "source": "The smallest QR code, with one corner square instead of three and as little as 11 × 11 modules, for marks on circuit boards, components and small parts. Most phone camera apps don't read it, so check that your scanners do.",
+    "text": "Kode QR terkecil, dengan satu kotak sudut, bukan tiga, dan hanya 11 × 11 modul, untuk penanda pada papan sirkuit, komponen, dan suku cadang kecil. Sebagian besar aplikasi kamera ponsel tidak dapat membacanya, jadi pastikan pemindai Anda mendukungnya.",
+    "status": "machine",
+    "context": "barcodes.uses.microqr"
   },
   "dd1e133f56a5": {
     "source": "Dark bars on a light background. Black on white is safest; dark blue and dark green work. Many scanners read with red light, which makes red, orange and yellow bars disappear.",
@@ -30604,6 +30622,42 @@
     "text": "Banyak aplikasi pemindai dan gerbang tiket yang bisa. Sebagian aplikasi kamera bawaan hanya membuka kode QR.",
     "status": "machine",
     "context": "barcodeFormats.pages.aztec.faqs.1.answer"
+  },
+  "5ab48e65407a": {
+    "source": "Free Micro QR Code Generator",
+    "text": "Generator Micro QR Code Gratis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.title"
+  },
+  "f3c99e9676a0": {
+    "source": "Make a Micro QR code, the smallest QR code, for tiny marks on parts and circuit boards. Up to 35 digits or 15 characters. SVG, PDF and PNG. Free.",
+    "text": "Buat kode Micro QR, kode QR terkecil, untuk penandaan mungil pada komponen dan papan sirkuit. Hingga 35 digit atau 15 karakter. SVG, PDF, dan PNG. Gratis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.metaDescription"
+  },
+  "6eeccb3bb878": {
+    "source": "Micro QR is a smaller QR code with one corner square instead of three, for marks too small for a full QR code. Type a short text, check that it scans and download it.",
+    "text": "Micro QR adalah kode QR yang lebih kecil dengan satu kotak sudut, bukan tiga, untuk penandaan yang terlalu kecil bagi kode QR penuh. Ketik teks singkat, pastikan bisa dipindai, lalu unduh.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.intro"
+  },
+  "a09c8ae1da41": {
+    "source": "Tiny marks where a regular QR code won't fit: circuit boards, electronic components, small parts and the labels on them.",
+    "text": "Penandaan mungil yang tidak muat untuk kode QR biasa: papan sirkuit, komponen elektronik, suku cadang kecil, dan label pada benda-benda tersebut.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.0"
+  },
+  "0660afe340fa": {
+    "source": "It's part of the QR code standard, ISO/IEC 18004, from DENSO WAVE, which created the QR code. Most phone camera apps don't read it, so check that the scanners that will read it support it before you print a batch.",
+    "text": "Micro QR adalah bagian dari standar kode QR, ISO/IEC 18004, dari DENSO WAVE, pencipta kode QR. Sebagian besar aplikasi kamera ponsel tidak dapat membacanya, jadi pastikan pemindai yang akan membacanya mendukungnya sebelum Anda mencetak satu batch.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.usedFor.1"
+  },
+  "b5aeb368b7ac": {
+    "source": "Do I need to register a Micro QR code?",
+    "text": "Apakah saya perlu mendaftarkan kode Micro QR?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.numbers.title"
   },
   "d5d3113ff518": {
     "source": "Batch or lot number",
@@ -38866,6 +38920,66 @@
     "text": "Tidak. Kode ini menyimpan teks apa pun yang Anda ketik, tanpa pendaftaran.",
     "status": "machine",
     "context": "barcodeFormats.pages.rmqr.numbers.paragraphs.0"
+  },
+  "fbb830fde45b": {
+    "source": "Any text that fits: up to 35 digits, 21 capital letters (with digits, spaces and $ % * + - . / :) or 15 characters of other text. Accents and other scripts are stored as UTF-8 bytes, 2 or 3 to a character, so less of them fits.",
+    "text": "Teks apa pun yang muat: hingga 35 digit, 21 huruf kapital (beserta digit, spasi, dan $ % * + - . / :) atau 15 karakter teks lainnya. Aksen dan aksara lain disimpan sebagai byte UTF-8, 2 atau 3 per karakter, sehingga jumlah yang muat lebih sedikit.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.0"
+  },
+  "b7f8ba513cf7": {
+    "source": "Micro QR comes in four sizes: M1 (11 × 11 modules), M2 (13 × 13), M3 (15 × 15) and M4 (17 × 17). M1 holds digits only and M2 digits and capital letters; other text starts at M3. The generator picks the smallest size your text fits and says which under the field.",
+    "text": "Micro QR hadir dalam empat ukuran: M1 (11 × 11 modul), M2 (13 × 13), M3 (15 × 15), dan M4 (17 × 17). M1 hanya memuat digit dan M2 digit serta huruf kapital; teks lainnya mulai dari M3. Generator memilih ukuran terkecil yang memuat teks Anda dan menyebutkannya di bawah kolom.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.1"
+  },
+  "09495e6960be": {
+    "source": "M1 only detects errors. The other sizes get error correction level M when there's room for it, or L when the text only fits at L: a reader can recover about 15% of a damaged code at M and 7% at L.",
+    "text": "M1 hanya mendeteksi kesalahan. Ukuran lainnya mendapat koreksi kesalahan level M jika ada ruang, atau L jika teks hanya muat di L: pembaca dapat memulihkan sekitar 15% kode yang rusak pada level M dan 7% pada level L.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.rules.2"
+  },
+  "b1c9fc9fe329": {
+    "source": "The vector downloads draw each module 0.71 mm square: the sample text, an M4, comes out 14.8 × 14.8 mm, quiet zone included. Scale it to the space you have and to what your printer and scanner can resolve.",
+    "text": "Unduhan vektor menggambar setiap modul berukuran persegi 0,71 mm: teks contoh, yaitu M4, menjadi 14,8 × 14,8 mm, termasuk zona tenang. Skalakan sesuai ruang yang Anda miliki serta kemampuan resolusi printer dan pemindai Anda.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.0"
+  },
+  "064bad0ab79d": {
+    "source": "Micro QR needs 2 modules of blank space all round, half what a QR code needs, which the generator starts with.",
+    "text": "Micro QR memerlukan ruang kosong 2 modul di sekelilingnya, setengah dari kebutuhan kode QR, dan itulah yang digunakan generator sebagai awal.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.sizing.1"
+  },
+  "a1963fc6a2a3": {
+    "source": "Micro QR or QR code?",
+    "text": "Micro QR atau kode QR?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.question"
+  },
+  "379bc5c2a5f5": {
+    "source": "For anything people scan with their phone, a QR code. Use Micro QR where only a few millimetres fit and you know the scanners that will read it support it.",
+    "text": "Untuk apa pun yang dipindai orang dengan ponsel, gunakan kode QR. Gunakan Micro QR jika hanya beberapa milimeter yang muat dan Anda tahu pemindai yang akan membacanya mendukungnya.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.0.answer"
+  },
+  "113fc6913877": {
+    "source": "Yes. As you edit, the generator decodes the image it would download with ZXing, an open-source reader that supports Micro QR, and tells you whether it reads back your text.",
+    "text": "Ya. Saat Anda mengedit, generator mendekode gambar yang akan diunduh dengan ZXing, pembaca open source yang mendukung Micro QR, lalu memberi tahu Anda apakah teks Anda terbaca kembali.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.1.answer"
+  },
+  "8dcc75f95b4e": {
+    "source": "Can phones read Micro QR codes?",
+    "text": "Bisakah ponsel membaca kode Micro QR?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.question"
+  },
+  "2dc28fe2f22f": {
+    "source": "Most built-in camera apps can't. The QRdx scanner at /scan reads them in the browser, with the same ZXing reader as the check on this page.",
+    "text": "Sebagian besar aplikasi kamera bawaan tidak bisa. Pemindai QRdx di /scan membacanya di browser, dengan pembaca ZXing yang sama seperti pemeriksaan di halaman ini.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.micro-qr.faqs.2.answer"
   },
   "21d588136e54": {
     "source": "Any text: letters, digits, symbols, line breaks, accents and other scripts. Digits pack tightest and capital letters next; accents and other scripts are stored as UTF-8 bytes, which take the most room.",

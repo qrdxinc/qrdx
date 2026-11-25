@@ -140,6 +140,33 @@ describe("renderBarcodeSVG", () => {
     );
   });
 
+  it("draws Micro QR in the smallest of its four sizes the text fits", () => {
+    const style = { ...STYLE, quietZone: 2, scale: 1 };
+    // Modules on a side, quiet zone included: 2 units each.
+    const modules = (value: string) => {
+      const drawn = renderBarcodeSVG("microqr", value, style);
+      expect(drawn.widthUnits).toBe(drawn.heightUnits);
+      return drawn.widthUnits / 2 - 4;
+    };
+    expect(modules("12345")).toBe(11);
+    expect(modules("123456")).toBe(13);
+    expect(modules("PCB-0042")).toBe(15);
+    expect(modules("QRdx Micro QR")).toBe(17);
+    // The example's vector download: 21 modules of 0.71 mm, quiet zone in.
+    const example = renderBarcodeSVG("microqr", "QRdx Micro QR", {
+      ...STYLE,
+      quietZone: 2,
+    });
+    expect((example.widthUnits * MM_PER_UNIT).toFixed(1)).toBe("14.8");
+  });
+
+  it("says how much a Micro QR holds when the text fits no size", () => {
+    // validateBarcodeInput refuses it first; the drawing says the same.
+    expect(() => renderBarcodeSVG("microqr", "x".repeat(16), STYLE)).toThrow(
+      "Too much for one Micro QR: the largest size, M4, holds up to 35 digits, 21 capital letters or 15 characters of other text, and fewer with accents or other scripts. Shorten the text, or use rMQR for more.",
+    );
+  });
+
   it("draws rMQR at the fewest rows the text fits, then the fewest columns", () => {
     // ISO/IEC 23941's 32 sizes; 27 columns come only 11 or 13 rows tall.
     expect(RMQR_SIZES).toHaveLength(32);
