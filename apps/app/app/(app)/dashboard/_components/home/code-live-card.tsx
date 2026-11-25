@@ -4,11 +4,13 @@ import { track } from "@repo/analytics";
 import { Tick } from "@repo/design-system/components/icons";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Card } from "@repo/design-system/components/ui/card";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { LocaleLink } from "@/components/i18n/locale-link";
 import { pricingHref } from "@/lib/checkout-surface";
 import { SCAN_MILESTONES } from "@/lib/events/types";
+import { INVITE_BONUS_CODES } from "@/lib/invites/terms";
 import type { CodeLiveCard as CodeLiveCardData } from "./pro-moments-rules";
 
 const hiddenKey = (organizationId: string) =>
@@ -33,14 +35,18 @@ function writeHidden(organizationId: string) {
 /**
  * Free Home, once a dynamic code exists: the code keeps working on Free,
  * and what Pro adds for a printed one (pro-moments-rules.ts picks the lines
- * this deployment can offer). "Hide" is remembered in this browser.
+ * this deployment can offer). `invite`: one line under the upgrade about
+ * inviting a friend, where invites run and Home's invite card isn't showing
+ * (first-run-rules.ts). "Hide" is remembered in this browser.
  */
 export function CodeLiveCard({
   organizationId,
   card,
+  invite = false,
 }: {
   organizationId: string;
   card: CodeLiveCardData & { month: string; year: string };
+  invite?: boolean;
 }) {
   const t = useTranslations("app.dashboard.home.codeLiveCard");
   // Hidden until this browser's choice is read, so a hidden card never flashes.
@@ -102,6 +108,24 @@ export function CodeLiveCard({
           {t("hide")}
         </Button>
       </div>
+      {invite && (
+        <p className="text-muted-foreground text-xs text-pretty">
+          {t.rich("invite", {
+            count: INVITE_BONUS_CODES,
+            link: (chunks) => (
+              <Link
+                className="text-foreground underline underline-offset-2"
+                href="/settings/invite"
+                onClick={() =>
+                  track("invite_offer_clicked", { surface: "home_code_live" })
+                }
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
+        </p>
+      )}
     </Card>
   );
 }

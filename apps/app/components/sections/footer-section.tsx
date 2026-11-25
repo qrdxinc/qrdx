@@ -6,12 +6,14 @@ import {
   CANONICAL_ORIGIN,
   DISCORD_INVITE_URL,
   GITHUB_REPO_URL,
+  LINKEDIN_COMPANY_URL,
   X_PROFILE_URL,
 } from "@repo/config";
 import { QrdxLogo } from "@repo/design-system/components/brand/qrdx-logo";
 import {
   DiscordLogo,
   GithubLogo,
+  LinkedinLogo,
   XLogo,
 } from "@repo/design-system/components/icons";
 import {
@@ -33,6 +35,9 @@ import {
   type FooterLink,
 } from "@/config/navigation";
 import { LANDING_PATH } from "@/lib/home-path";
+
+/** Which license covers which folder: the app is AGPL-3.0 (LICENSING.md). */
+const LICENSING_URL = `${GITHUB_REPO_URL}/blob/main/LICENSING.md`;
 
 const LINK =
   "rounded-sm text-sm leading-5 text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
@@ -156,11 +161,20 @@ export function FooterSection() {
             >
               <DiscordLogo aria-hidden className="size-4" />
             </a>
+            <a
+              href={LINKEDIN_COMPANY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={SOCIAL}
+              aria-label={t("linkedin")}
+            >
+              <LinkedinLogo aria-hidden className="size-3.5" />
+            </a>
           </div>
         </div>
 
         <nav aria-label={t("navLabel")}>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
             {FOOTER_COLUMNS.map((column) => (
               <div key={column.key} className="flex flex-col gap-4">
                 <h2 className="text-sm font-medium text-foreground">
@@ -199,6 +213,20 @@ export function FooterSection() {
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <p className="text-sm text-muted-foreground">
             {t("copyright", { year })}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            {t.rich("license", {
+              link: (chunks) => (
+                <a
+                  className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                  href={LICENSING_URL}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {chunks}
+                </a>
+              ),
+            })}
           </p>
           <CookieSettingsButton />
         </div>

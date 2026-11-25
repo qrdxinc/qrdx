@@ -24,7 +24,7 @@ export const siteTitle =
   "QRdx: Free QR Code Generator with Logos and Dynamic Codes";
 
 export const siteDescription =
-  "Free, open-source QR code generator: unlimited codes with logos, colors and frames, no signup or watermark. Plus dynamic codes and scan analytics.";
+  "Free QR codes, and dynamic codes that keep working whatever happens to your plan. Design them with logos, colors and frames, no signup or watermark.";
 
 /** Root-layout `keywords`; search engines mostly ignore them, so keep them few and accurate. */
 export const siteKeywords = [

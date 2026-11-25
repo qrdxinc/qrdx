@@ -202,6 +202,9 @@ const DYNAMIC: Record<string, (params: string[]) => boolean> = {
   "/qr-code-generator/[type]": ([type]) =>
     [...QR_TYPE_SLUGS, ...HOSTED_TYPE_SLUGS].some((slug) => slug === type),
   "/compare/[slug]": ([slug = ""]) => fileIn("compare", slug),
+  // The footer's guides: posts this app has too, so a self-hosted server
+  // serves them as well (the scan study is linked by its qrdx.dev address).
+  "/blog/[slug]": ([slug = ""]) => fileIn("blog", slug),
   "/legal/[[...slug]]": (slug) =>
     slug.length === 0 || fileIn("legal", slug.join("/")),
 };
@@ -243,6 +246,20 @@ function resolves(href: string): string | true {
   }
   return `no page for ${href}`;
 }
+
+describe("pages linked by their qrdx.dev address", () => {
+  it("links the press kit and the scan study, which only the site has", () => {
+    const footer = FOOTER_COLUMNS.flatMap((column) => column.links);
+    expect(footer).toContainEqual({
+      key: "press",
+      href: "https://qrdx.dev/press",
+    });
+    expect(footer).toContainEqual({
+      key: "scanStudy",
+      href: "https://qrdx.dev/blog/qr-code-scan-study",
+    });
+  });
+});
 
 describe("every chrome link leads to a page", () => {
   const internal = [...new Set(chrome.map((link) => link.href))].filter(

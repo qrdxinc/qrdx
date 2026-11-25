@@ -260,7 +260,7 @@ describe("translated chrome and home sections, rendered in Hindi", () => {
         import("@/components/sections/hero-section").then((m) => (
           <m.HeroSection />
         )),
-      ["/hi/playground"],
+      ["/hi/playground", "/hi/playground?type=url&open=dynamic"],
     ],
     [
       "feature rows",

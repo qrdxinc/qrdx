@@ -1,7 +1,7 @@
 <h1 align="center">QRdx</h1>
 
 <p align="center">
-  An open-source QR code platform. Making QR codes is free for everyone, with no sign-up, watermark or limit. Dynamic codes come with hosted pages and scan analytics. Developers get an image API, an MCP server, a REST API, a CLI and a React library. You can run it on your own server.
+  Free QR codes, and dynamic codes that keep working whatever happens to your plan. QRdx is open source: making QR codes is free for everyone, with no sign-up, watermark or limit, and dynamic codes come with hosted pages and scan analytics. Developers get an image API, an MCP server, a REST API, a CLI and a React library. You can run it on your own server.
 </p>
 
 <p align="center">

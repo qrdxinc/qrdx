@@ -29,6 +29,7 @@ import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
 import { getScanScoreOffPage } from "@/lib/scan-score/off-page";
+import { SCAN_STUDY_URL } from "@/lib/scan-study";
 import { soundEvent } from "@/lib/sound/emit";
 import type { QRStyle } from "@/types/theme";
 
@@ -66,6 +67,12 @@ const checkOrder = (check: ScanCheck) => {
   if (check.passed) return check.skipped ? 3 : 2;
   return 0;
 };
+
+/**
+ * Checks whose warning links to the scan study, which measured them: how
+ * much of a code a logo can cover, and how much contrast scanners need.
+ */
+const STUDY_CHECKS: ReadonlySet<string> = new Set(["logo", "contrast"]);
 
 /** A one-click fix shown under a check's own fix, by the check's id. */
 export interface ScanCheckAction {
@@ -126,6 +133,17 @@ export function ScanCheckList({
                 <p className="text-muted-foreground mt-0.5 text-xs leading-snug">
                   {check.fix}
                 </p>
+              )}
+              {flagged && STUDY_CHECKS.has(check.id) && (
+                // A new tab: the design stays as it is in this one.
+                <a
+                  className="text-foreground mt-0.5 inline-block text-xs underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground"
+                  href={SCAN_STUDY_URL}
+                  rel="noopener"
+                  target="_blank"
+                >
+                  {t("whyStudy")}
+                </a>
               )}
               {action && (
                 <Button

@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "QRdx: 로고와 동적 QR 코드를 지원하는 무료 QR 코드 생성기",
-    "siteDescription": "무료 오픈 소스 QR 코드 생성기예요. 로고, 색상, 프레임을 적용한 코드를 무제한으로 만들 수 있고, 가입이나 워터마크도 없어요. 동적 QR 코드와 스캔 분석도 제공해요.",
+    "siteDescription": "무료 QR 코드와, 요금제에 어떤 일이 생겨도 계속 작동하는 동적 QR 코드를 만들어 보세요. 로고, 색상, 프레임으로 디자인할 수 있고 가입이나 워터마크는 없어요.",
     "ogImageAlt": "QRdx: 동적 QR 코드, 호스팅 페이지, 스캔 분석을 제공하는 무료 QR 코드 생성기"
   },
   "nav": {
@@ -217,17 +217,20 @@
     }
   },
   "footer": {
-    "description": "오픈소스 QR 코드 플랫폼",
+    "description": "무료 QR 코드와, 요금제에 어떤 일이 생겨도 계속 작동하는 동적 QR 코드를 만나보세요.",
     "starOnGithub": "GitHub에서 별표 주기",
     "newsOnX": "X에서 보는 QRdx 소식",
     "joinDiscord": "QRdx Discord 참여하기",
+    "linkedin": "QRdx LinkedIn",
     "navLabel": "푸터",
     "copyright": "© {year} QRdx",
+    "license": "이 앱은 <link>AGPL-3.0</link> 라이선스의 오픈 소스예요.",
     "columns": {
       "product": "제품",
       "developers": "개발자",
       "solutions": "솔루션",
       "resources": "리소스",
+      "guides": "가이드",
       "company": "회사",
       "compare": "비교"
     },
@@ -280,8 +283,13 @@
       "scanner": "QR 코드 스캐너",
       "scanChecker": "스캔 검사기",
       "printSize": "인쇄 크기 계산기",
+      "guideExpire": "QR 코드도 만료되나요?",
+      "guidePrintSize": "QR 코드 인쇄 크기 가이드",
+      "guideDynamicStatic": "동적 QR 코드 vs 정적 QR 코드",
+      "scanStudy": "QR 코드 스캔 연구",
       "security": "보안",
       "affiliates": "제휴 프로그램",
+      "press": "프레스 키트",
       "guarantee": "Never-Hostage 보장",
       "pricing": "요금제",
       "allComparisons": "전체 비교",
@@ -348,11 +356,11 @@
   },
   "home": {
     "hero": {
-      "badge": "무료 오픈 소스 (AGPL-3.0)",
+      "badge": "무료 오픈 소스",
       "title": "계속 작동하는 동적 QR 코드를 만드는 무료 QR 코드 생성기",
-      "description": "패턴, 그라데이션, 로고, 프레임으로 브랜드에 맞는 QR 코드를 디자인하고, 회원가입이나 워터마크 없이 PNG, SVG, PDF, EPS, TIFF로 다운로드하세요. 로그인하면 인쇄한 뒤에도 수정할 수 있는 동적 QR 코드, 호스팅 페이지, 스캔 분석을 사용할 수 있습니다.",
-      "primary": "Playground 체험하기",
-      "secondary": "문서 보기",
+      "description": "로고가 들어간 브랜드 QR 코드를 디자인하고, 가입이나 워터마크 없이 무료로 다운로드하세요. 로그인하면 인쇄 후에도 내용을 바꿀 수 있는 동적 QR 코드를 만들 수 있습니다. 동적 QR 코드는 요금제 변경, 결제 실패, 해지가 있어도 어떤 요금제에서든 멈추지 않습니다.",
+      "primary": "QR 코드 만들기",
+      "secondary": "동적 QR 코드 만들기",
       "sceneLabel": "QRdx 흐름을 보여 주는 애니메이션 그림: 스튜디오 화면에서 QR 코드를 디자인하고 스타일을 지정하면, 프린터가 카드에 인쇄하고, 로봇 팔이 카드를 컨베이어에 올려놓습니다. 게이트에 설치된 휴대폰이 지나가는 각 카드를 스캔하고, 스캔 정보는 분석 패널로 전달되어 막대가 하나 추가됩니다. 큰 동적 QR 카드는 다시 인쇄하지 않고도 연결 링크를 바꿉니다."
     },
     "customers": {
@@ -487,7 +495,7 @@
       "developers": {
         "eyebrow": "개발자",
         "title": "개발자를 위해 만들었어요",
-        "description": "qrdx React 라이브러리로 코드를 렌더링하고, Image API로 URL에서 이미지를 가져오고, Claude, Cursor, VS Code에서 MCP 서버를 통해 코드를 만들 수도 있어요. 앱을 직접 호스팅할 수도 있어요.",
+        "description": "qrdx React 라이브러리로 코드를 렌더링하거나, Image API로 URL에서 이미지를 가져오거나, Claude, Cursor, VS Code에서 MCP 서버를 통해 코드를 만들 수 있습니다. 앱을 직접 호스팅할 수도 있으며, 앱은 AGPL-3.0 라이선스의 오픈 소스입니다.",
         "link": "개발자 문서"
       }
     },
@@ -613,7 +621,7 @@
       }
     },
     "cards": {
-      "popular": "인기",
+      "recommended": "추천",
       "leadPro": "무료 플랜의 모든 기능과 함께:",
       "leadBusiness": "Pro의 모든 기능과 함께:",
       "goToDashboard": "대시보드로 이동",
@@ -637,6 +645,8 @@
     "offers": {
       "moneyBack": "첫 결제 시 {days, number}일 환불 보장이 적용돼요.",
       "moneyBackLink": "환불 방법 안내",
+      "switcher": "다른 QR 코드 서비스에서 옮겨 오시나요? 기존 코드를 가져오면 첫 결제 금액의 환불을 요청할 수 있는 기간이 {days, number}일 주어집니다.",
+      "switcherLink": "환불 정책",
       "nonprofit": "비영리 단체 또는 자선 단체인가요? Pro와 Business를 {percent, number}% 할인해 드려요.",
       "nonprofitLink": "코드 요청하기"
     },
@@ -3216,7 +3226,7 @@
     }
   },
   "ai": {
-    "metaTitle": "AI QR 코드 생성기 — 프롬프트로 QR 코드 디자인하기",
+    "metaTitle": "AI QR 코드 생성기: 프롬프트로 QR 코드 디자인하기",
     "metaDescription": "만들고 싶은 QR 코드를 설명하면 QRdx의 AI가 디자인하고, 스캔 점수가 Great가 될 때까지 보정하며, 에디터를 바꾸기 전에는 먼저 물어봐요. 무료 계정은 AI 요청을 {count, number}회 사용할 수 있어요.",
     "artLink": "또는 링크를 스캔 가능한 AI QR 아트로 만들어 보세요",
     "chat": {
@@ -3255,7 +3265,7 @@
     "vectorEyebrowLead": "지금 무료로 사용 가능",
     "vectorEyebrow": "AI 없이 가능",
     "vectorTitleLead": "Logo QR과 Image QR",
-    "vectorTitle": "확실히 스캔되는 벡터 코드가 필요하세요?",
+    "vectorTitle": "AI 없이 벡터 코드를 원하세요?",
     "vectorDescription": "로고나 사진을 코드 자체에 담아 보세요. 벡터로 그려지고, 스캐너가 의존하는 패턴은 그대로 단단하게 유지하며, 크레딧도 필요 없어요.",
     "openArt": "아트 탭 열기",
     "vector": {
@@ -5455,6 +5465,7 @@
       "warning": "경고",
       "scanScoreScoreValueWarningShow": "스캔 점수 {score, number}, {value}, 경고 있음. 검사 항목 보기",
       "addAMargin": "{modules, number}모듈 여백 추가",
+      "whyStudy": "왜일까요? 스캔 연구 결과 보기",
       "grades": {
         "great": "매우 좋음",
         "ok": "양호",
@@ -8802,7 +8813,60 @@
           "fullHistory": "최근 {years, plural, one {1년} other {#년}}뿐만 아니라 모든 스캔 기록을 돌아볼 수 있어요",
           "price": "Pro는 월 {month} 또는 연 {year}입니다.",
           "seePro": "Pro 보기",
+          "hide": "숨기기",
+          "invite": "또는 <link>친구를 초대해 보세요</link>. 친구가 첫 동적 QR 코드를 만들면 두 분 모두 {count, number}개를 더 받아요."
+        },
+        "firstSteps": {
+          "title": "인쇄할 첫 QR 코드를 준비해 보세요",
+          "progress": "{total, number}개 중 {done, number}개 완료",
+          "progressLabel": "첫 단계 완료",
+          "hide": "숨기기",
+          "done": "(완료)",
+          "make": "동적 QR 코드 만들기",
+          "makeHint": "인쇄한 뒤에도 링크를 바꿀 수 있는 QR 코드예요.",
+          "create": "만들기",
+          "scan": "휴대폰으로 스캔하기",
+          "scanHint": "휴대폰 카메라를 화면의 코드에 비추고 링크를 열어 보세요.",
+          "showCode": "코드 보기",
+          "download": "인쇄용으로 다운로드",
+          "downloadHint": "SVG는 어떤 인쇄 크기에서도 선명해요.",
+          "downloadAction": "다운로드",
+          "makeFirstCode": "첫 동적 QR 코드 만들기"
+        },
+        "inviteCard": {
+          "title": "QR 코드를 인쇄하는 지인이 있나요?",
+          "body": "친구가 내 링크로 가입해 첫 동적 QR 코드를 만들면 두 분 모두 동적 QR 코드를 {count, number}개 더 받아요.",
+          "messageLabel": "보낼 메시지:",
+          "message": "저는 QRdx로 QR 코드를 만들어요. 무료이고, 동적 QR 코드는 요금제가 어떻게 되든 계속 작동해요. 제 링크로 가입해서 동적 QR 코드를 만들면 우리 둘 다 {count, number}개를 더 받아요: {link}",
+          "copyMessage": "메시지 복사",
+          "copyLink": "링크 복사",
+          "copied": "복사됨",
+          "linkCopied": "링크를 복사했어요",
+          "messageCopied": "메시지를 복사했어요",
+          "couldntCopy": "복사하지 못했어요. 텍스트를 선택해서 직접 복사해 주세요.",
+          "howItWorks": "진행 방식",
           "hide": "숨기기"
+        },
+        "whereHeard": {
+          "question": "QRdx를 처음 어디에서 알게 되셨나요?",
+          "why": "선택 사항이에요. 한 번만 눌러 주시면 어떤 방법이 효과적인지 알 수 있어요.",
+          "answers": {
+            "ai_assistant": "ChatGPT 또는 다른 AI 어시스턴트",
+            "search": "Google 또는 Bing",
+            "friend": "친구 또는 동료",
+            "x_threads": "X 또는 Threads",
+            "linkedin": "LinkedIn",
+            "youtube": "YouTube",
+            "reddit_hn": "Reddit 또는 Hacker News",
+            "product_hunt": "Product Hunt",
+            "directory": "목록 또는 디렉터리",
+            "other": "기타"
+          },
+          "otherLabel": "QRdx를 어디에서 알게 되셨나요?",
+          "otherPlaceholder": "간단히 적어 주세요",
+          "save": "저장",
+          "hide": "숨기기",
+          "thanks": "감사합니다, 도움이 됐어요."
         }
       },
       "listSelection": {

@@ -1,5 +1,4 @@
 import type { Locale } from "@repo/i18n/config";
-import { localizePath } from "@repo/i18n/paths";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
@@ -16,6 +15,7 @@ import { negotiateLocale } from "@/lib/i18n/accept-language";
 import { requestAppLocale } from "@/lib/i18n/request-locale";
 import { scanPagesIntl } from "@/lib/i18n/scan-pages";
 import type { BlockRenderContext } from "@/lib/landing/blocks";
+import { madeWithQrdxPath } from "@/lib/landing/demo-paths";
 import { baseUrl } from "@/lib/metadata";
 import { NFC_PARAM } from "@/lib/nfc/links";
 import { aliasCode } from "@/lib/path-alias-store";
@@ -184,11 +184,8 @@ export default async function LandingPage({ params, searchParams }: Props) {
     `/report-abuse?slug=${encodeURIComponent(slug)}`,
     baseUrl,
   ).href;
-  // QRdx's home in the language the scanner reads ("/hi").
-  const badgeHref = new URL(
-    `${localizePath("/", locale)}?ref=made-with-qrdx`,
-    baseUrl,
-  ).href;
+  // The page templates, open at this page's type (lib/landing/demo-paths.ts).
+  const badgeHref = new URL(madeWithQrdxPath(page.page.type), baseUrl).href;
 
   return (
     <>

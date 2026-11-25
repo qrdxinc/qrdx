@@ -4,7 +4,7 @@
     "status": "machine"
   },
   "meta.siteDescription": {
-    "source": "093a9e16f7a8",
+    "source": "c6621bb40685",
     "status": "machine"
   },
   "meta.ogImageAlt": {
@@ -500,7 +500,7 @@
     "status": "machine"
   },
   "footer.description": {
-    "source": "c882420675c8",
+    "source": "50a91881d8a8",
     "status": "machine"
   },
   "footer.starOnGithub": {
@@ -515,12 +515,20 @@
     "source": "e6137b9b59b2",
     "status": "machine"
   },
+  "footer.linkedin": {
+    "source": "156fa99a02a3",
+    "status": "machine"
+  },
   "footer.navLabel": {
     "source": "26c87bb51e69",
     "status": "machine"
   },
   "footer.copyright": {
     "source": "02b39870e404",
+    "status": "machine"
+  },
+  "footer.license": {
+    "source": "54aaa4121064",
     "status": "machine"
   },
   "footer.columns.product": {
@@ -537,6 +545,10 @@
   },
   "footer.columns.resources": {
     "source": "e89b30aa1dc3",
+    "status": "machine"
+  },
+  "footer.columns.guides": {
+    "source": "572cd72feb9a",
     "status": "machine"
   },
   "footer.columns.company": {
@@ -739,12 +751,32 @@
     "source": "457447ccdac3",
     "status": "machine"
   },
+  "footer.links.guideExpire": {
+    "source": "01c05d9e835a",
+    "status": "machine"
+  },
+  "footer.links.guidePrintSize": {
+    "source": "5753a6dfe9f1",
+    "status": "machine"
+  },
+  "footer.links.guideDynamicStatic": {
+    "source": "711b89b380a2",
+    "status": "machine"
+  },
+  "footer.links.scanStudy": {
+    "source": "8b20be5acf97",
+    "status": "machine"
+  },
   "footer.links.security": {
     "source": "8f6fb4eb7f42",
     "status": "machine"
   },
   "footer.links.affiliates": {
     "source": "ce78cb6655b7",
+    "status": "machine"
+  },
+  "footer.links.press": {
+    "source": "32640cd858d6",
     "status": "machine"
   },
   "footer.links.guarantee": {
@@ -916,7 +948,7 @@
     "status": "machine"
   },
   "home.hero.badge": {
-    "source": "689c2ccf7665",
+    "source": "20a7287e5d61",
     "status": "machine"
   },
   "home.hero.title": {
@@ -924,15 +956,15 @@
     "status": "machine"
   },
   "home.hero.description": {
-    "source": "83a9e410b575",
+    "source": "8e10d44e91f3",
     "status": "machine"
   },
   "home.hero.primary": {
-    "source": "9a49d38f2987",
+    "source": "3f839cb21501",
     "status": "machine"
   },
   "home.hero.secondary": {
-    "source": "559b1cc46027",
+    "source": "023601942334",
     "status": "machine"
   },
   "home.hero.sceneLabel": {
@@ -1284,7 +1316,7 @@
     "status": "machine"
   },
   "home.features.developers.description": {
-    "source": "7302321a694e",
+    "source": "9b3723cbc2c8",
     "status": "machine"
   },
   "home.features.developers.link": {
@@ -1551,8 +1583,8 @@
     "source": "eabe26fccedd",
     "status": "machine"
   },
-  "pricing.cards.popular": {
-    "source": "76327dec9ae3",
+  "pricing.cards.recommended": {
+    "source": "d70604e84304",
     "status": "machine"
   },
   "pricing.cards.leadPro": {
@@ -1629,6 +1661,14 @@
   },
   "pricing.offers.moneyBackLink": {
     "source": "6da9e675b1a7",
+    "status": "machine"
+  },
+  "pricing.offers.switcher": {
+    "source": "1cd31f22da48",
+    "status": "machine"
+  },
+  "pricing.offers.switcherLink": {
+    "source": "d4c69dd8b37d",
     "status": "machine"
   },
   "pricing.offers.nonprofit": {
@@ -9520,7 +9560,7 @@
     "status": "machine"
   },
   "ai.metaTitle": {
-    "source": "320f6008dfd0",
+    "source": "92de12b2c95a",
     "status": "machine"
   },
   "ai.metaDescription": {
@@ -9628,7 +9668,7 @@
     "status": "machine"
   },
   "aiArt.vectorTitle": {
-    "source": "58b9de8138bf",
+    "source": "325b15649a03",
     "status": "machine"
   },
   "aiArt.vectorDescription": {
@@ -16765,6 +16805,10 @@
   },
   "editor.scanScore.addAMargin": {
     "source": "de244bba26dc",
+    "status": "machine"
+  },
+  "editor.scanScore.whyStudy": {
+    "source": "4dcae1f99941",
     "status": "machine"
   },
   "editor.scanScore.grades.great": {
@@ -28029,6 +28073,186 @@
   },
   "app.dashboard.home.codeLiveCard.hide": {
     "source": "ac20a57bfde0",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.invite": {
+    "source": "1fd43c9dcb13",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.title": {
+    "source": "57a9db8c994f",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.progress": {
+    "source": "db6125dd6923",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.progressLabel": {
+    "source": "a3537309ea46",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.hide": {
+    "source": "ac20a57bfde0",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.done": {
+    "source": "891db1376d80",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.make": {
+    "source": "023601942334",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.makeHint": {
+    "source": "102e255cef38",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.create": {
+    "source": "4759498ac2a7",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.scan": {
+    "source": "b8c7499fd46b",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.scanHint": {
+    "source": "6989b1a78046",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.showCode": {
+    "source": "c9eab29c97b9",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.download": {
+    "source": "b3235909cc3f",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.downloadHint": {
+    "source": "ced750a8d393",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.downloadAction": {
+    "source": "d6eafe823591",
+    "status": "machine"
+  },
+  "app.dashboard.home.firstSteps.makeFirstCode": {
+    "source": "c8fab313fcdb",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.title": {
+    "source": "bab480ddd60f",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.body": {
+    "source": "a0d71b98008e",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.messageLabel": {
+    "source": "5bf26c82ed0a",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.message": {
+    "source": "f38b5be1ea49",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.copyMessage": {
+    "source": "457efe538b25",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.copyLink": {
+    "source": "dbf362d4f210",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.copied": {
+    "source": "8d525e5f158b",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.linkCopied": {
+    "source": "d12860c21e78",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.messageCopied": {
+    "source": "ed112278453f",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.couldntCopy": {
+    "source": "0508bc67f635",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.howItWorks": {
+    "source": "9c870aa6e5e9",
+    "status": "machine"
+  },
+  "app.dashboard.home.inviteCard.hide": {
+    "source": "ac20a57bfde0",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.question": {
+    "source": "a96ddd3bdea7",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.why": {
+    "source": "fcc18a8276d0",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.ai_assistant": {
+    "source": "891a6b4530de",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.search": {
+    "source": "3550596ff9f8",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.friend": {
+    "source": "f7e92aacf351",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.x_threads": {
+    "source": "168a3e2f11e8",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.linkedin": {
+    "source": "dd84425b72da",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.youtube": {
+    "source": "fb7accfff8c6",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.reddit_hn": {
+    "source": "65e1263f2cca",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.product_hunt": {
+    "source": "bce879427eb3",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.directory": {
+    "source": "39f331a3ec11",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.answers.other": {
+    "source": "f97e9da0e3b8",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.otherLabel": {
+    "source": "fd280f8e4e5b",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.otherPlaceholder": {
+    "source": "bef6b0ab798b",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.save": {
+    "source": "1509f561f241",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.hide": {
+    "source": "ac20a57bfde0",
+    "status": "machine"
+  },
+  "app.dashboard.home.whereHeard.thanks": {
+    "source": "8e9df057ef8a",
     "status": "machine"
   },
   "app.dashboard.listSelection.keyboardShortcuts": {

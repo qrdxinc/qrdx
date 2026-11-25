@@ -44,6 +44,7 @@ vi.mock("@/actions/qr-themes", () => ({
   deleteTheme: vi.fn(),
 }));
 vi.mock("@/actions/community", () => ({ toggleCommunityLike: vi.fn() }));
+vi.mock("@/actions/spotlights", () => ({ markSpotlightSeen: vi.fn() }));
 vi.mock("@/actions/community-themes", () => ({
   getCommunityThemes: vi.fn(),
   getCommunityTagCounts: vi.fn(),

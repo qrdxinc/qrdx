@@ -1,4 +1,4 @@
-import { GITHUB_REPO_URL } from "@repo/config";
+import { CANONICAL_ORIGIN, GITHUB_REPO_URL } from "@repo/config";
 import { GithubLogo } from "@repo/design-system/components/icons";
 import {
   Barcode,
@@ -42,6 +42,7 @@ import {
 } from "iconsax-reactjs";
 import type { ComponentType } from "react";
 import type { Messages } from "@/lib/i18n/messages";
+import { SCAN_STUDY_URL } from "@/lib/scan-study";
 
 // Where the site's chrome links: the header's menus, the mobile menu and the
 // footer, from one list so the same page has the same name everywhere
@@ -335,6 +336,13 @@ export interface FooterColumn {
   links: FooterLink[];
 }
 
+/**
+ * The press kit: the marketing site's own page (the site zone's opt-in
+ * `press` group), with no copy in this app, so linked by its qrdx.dev
+ * address like the scan study (lib/scan-study.ts).
+ */
+const PRESS_KIT_URL = `${CANONICAL_ORIGIN}/press`;
+
 export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     key: "product",
@@ -396,6 +404,17 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     ],
   },
   {
+    // The answer pages people ask about before printing, and the study behind
+    // them (on qrdx.dev only, so by its full address: lib/scan-study.ts).
+    key: "guides",
+    links: [
+      { key: "guideExpire", href: "/blog/do-qr-codes-expire" },
+      { key: "guidePrintSize", href: "/blog/how-big-should-a-qr-code-be" },
+      { key: "guideDynamicStatic", href: "/blog/dynamic-vs-static-qr-codes" },
+      { key: "scanStudy", href: SCAN_STUDY_URL },
+    ],
+  },
+  {
     key: "company",
     links: [
       { key: "customers", href: "/customers" },
@@ -403,6 +422,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { key: "security", href: "/security" },
       { key: "guarantee", href: "/guarantee" },
       { key: "affiliates", href: "/affiliates" },
+      { key: "press", href: PRESS_KIT_URL },
       { key: "contact", href: "/docs/help/contact" },
     ],
   },
