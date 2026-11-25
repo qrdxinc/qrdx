@@ -11,10 +11,10 @@
 // (apps/app/messages/review/<locale>.json).
 //
 // One exception, INDEXED_MACHINE_PATHS (owner decision, 23 Nov 2026): the
-// QR code generators are indexed in every language, machine-made or not,
-// for search traffic in other languages. Every other page keeps its
-// locale's state (the playground, /ai, /mcp and /scan among them), the
-// barcode generators too (owner decision, 25 Nov 2026: tiered indexing).
+// generator pages (the QR code generators, and the barcode generators the
+// same way) may be indexed in every language, machine-made or not, for
+// search traffic in other languages. Every other page keeps its locale's
+// state (the playground, /ai, /mcp and /scan among them).
 import {
   DEFAULT_LOCALE,
   LOCALE_INFO,
@@ -37,22 +37,25 @@ export const REVIEW = Object.fromEntries(
 /**
  * Pages whose machine translations search engines may index (owner
  * decision, 23 Nov 2026, overriding the gate above for these pages alone):
- * the QR code generators, which the site zone serves in every language
+ * the generator pages, which the site zone serves in every language
  * (paths.ts SITE_TRANSLATED_PATHS), so that people searching in other
- * languages can find them. Written like the route paths in
+ * languages can find them. The QR code generators, and the barcode
+ * generators the same way. Written like the route paths in
  * localized-paths.json; nothing else is added here without the owner.
  *
- * Not the barcode generators (owner decision, 25 Nov 2026: tiered
- * indexing). Their translated URLs redirected to English while the site's
- * group for them (barcodes-i18n) was off, yet the site's sitemap and every
- * English barcode page's hreflang listed them. Left out here, they follow
- * their languages' review state like any other page: out of the sitemaps
- * and hreflang, and `noindex, follow` if the site serves them, until the
- * owner decides to index them.
+ * This is the outer gate: the site zone, which renders these pages, may
+ * index fewer of them, never more. It indexes the translated QR code
+ * generators people search for in each language (owner decision, 25 Nov
+ * 2026: tiered indexing) and a short list of the barcode generators (owner
+ * decision, 26 Nov 2026). The barcode generators were out of this list for
+ * a day (25 Nov 2026), while their translated URLs still redirected to
+ * English; the site serves them in every language now (barcodes-i18n).
  */
 export const INDEXED_MACHINE_PATHS: readonly string[] = [
   "/qr-code-generator",
   "/qr-code-generator/[type]",
+  "/barcode-generator",
+  "/barcode-generator/[format]",
 ];
 
 const INDEXED_MACHINE_MATCHERS = INDEXED_MACHINE_PATHS.map(routeMatcher);
