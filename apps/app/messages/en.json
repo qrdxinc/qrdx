@@ -3885,6 +3885,8 @@
         "downloadQrCode": "Download QR code",
         "imageFile": "Image file",
         "printReady": "Print-ready",
+        "printSuggestion": "Printing it? {tab} makes a vector PDF or EPS at the exact size you'll print, with CMYK, bleed and crop marks if your printer asks for them.",
+        "usePrintReady": "Switch to {tab}",
         "size": "Size",
         "custom": "Custom",
         "px": "px",
@@ -3943,7 +3945,7 @@
           "tiff": "Best for print shops that ask for TIFF · 300 dpi, transparency kept.",
           "tiff-cmyk": "Best for print shops that want CMYK · black prints as black ink only, and a transparent background comes out white. No color profile: ask your printer about exact brand colors.",
           "svg": "Best for Figma, Illustrator, websites · stays sharp at any size.",
-          "pdf": "Best for documents and quick prints · for a vector PDF, use Print-ready.",
+          "pdf": "Best for documents and quick prints.",
           "eps": "Best for print shops and vector apps · stays sharp at any size."
         },
         "sizePresets": {
@@ -8139,6 +8141,7 @@
           "editLinkValue": "Edit link",
           "codeSettings": "Code settings",
           "editDesignInPlayground": "Edit design in playground",
+          "printReadyFile": "Print-ready PDF or EPS",
           "removeFromFavorites": "Remove from favorites",
           "addToFavorites": "Add to favorites",
           "moveToFolderValue": "Move to folder...",
@@ -8188,6 +8191,7 @@
           "shortLinkEncodedInThe": "Short link (encoded in the QR code)",
           "opens": "Opens",
           "editDesignInPlayground": "Edit design in playground",
+          "printReadyFile": "Print-ready PDF or EPS",
           "shortLinkCopied": "Short link copied"
         },
         "codeQr": {

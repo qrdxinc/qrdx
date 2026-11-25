@@ -200,6 +200,19 @@ const GIF_CHECK_SIZE = 600;
  */
 const OPAQUE_FORMATS: readonly ImageFormat[] = ["jpg", "bmp", "tiff-cmyk"];
 
+/**
+ * Image-file choices people make when they mean to print: these formats, or
+ * the Print and Poster sizes. Either one points them to Print-ready, since
+ * this tab's PDF is a PNG on a page and none of these files is made at the
+ * size it will be printed.
+ */
+const PRINT_INTENT_FORMATS: readonly ImageFormat[] = [
+  "pdf",
+  "eps",
+  "tiff-cmyk",
+];
+const PRINT_INTENT_SIZES: readonly SizePreset[] = ["xlarge", "3xl"];
+
 // Names in messages/en.json: editor.actionBar.downloadDialog.sizePresets.
 const SIZE_PRESETS = [
   { id: "small" },
@@ -291,6 +304,9 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
   // An ICO holds the code at fixed sizes (16, 32, 48 and 256 px), so the size
   // controls don't apply to it.
   const iconSizes = DOWNLOAD_FORMATS[format]?.sizes;
+  const printIntent =
+    PRINT_INTENT_FORMATS.includes(format) ||
+    (!iconSizes && PRINT_INTENT_SIZES.includes(downloadOptions.sizePreset));
   const transparent = downloadOptions.transparent && canBeTransparent;
 
   const qrProps = React.useMemo(
@@ -878,6 +894,28 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                     </Label>
                   </div>
                 </section>
+
+                {printIntent && (
+                  <div className="bg-muted/40 flex items-start gap-3 rounded-lg border p-3">
+                    <Printer
+                      aria-hidden
+                      className="text-muted-foreground mt-0.5 size-4 shrink-0"
+                    />
+                    <div className="min-w-0 flex-1 space-y-2.5">
+                      <p className="text-xs text-pretty">
+                        {t("printSuggestion", { tab: t("printReady") })}
+                      </p>
+                      <Button
+                        onClick={() => setTab("print")}
+                        size="sm"
+                        type="button"
+                        variant="outline"
+                      >
+                        {t("usePrintReady", { tab: t("printReady") })}
+                      </Button>
+                    </div>
+                  </div>
+                )}
 
                 {sizeError && (
                   <p className="text-destructive flex items-center gap-1.5 text-sm">

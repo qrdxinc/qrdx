@@ -3484,6 +3484,8 @@
         "downloadQrCode": "Télécharger le QR code",
         "imageFile": "Fichier image",
         "printReady": "Prêt à imprimer",
+        "printSuggestion": "Vous l’imprimez ? {tab} génère un PDF ou un EPS vectoriel à la taille exacte d’impression, avec CMJN, fond perdu et traits de coupe si votre imprimeur les demande.",
+        "usePrintReady": "Passer à {tab}",
         "size": "Taille",
         "custom": "Personnalisée",
         "px": "px",
@@ -3542,7 +3544,7 @@
           "tiff": "Idéal pour les imprimeurs qui demandent du TIFF · 300 dpi, transparence conservée.",
           "tiff-cmyk": "Idéal pour les imprimeurs qui demandent du CMYK · le noir s’imprime uniquement avec de l’encre noire, et un arrière-plan transparent devient blanc. Aucun profil colorimétrique : renseignez-vous auprès de votre imprimeur pour les couleurs de marque exactes.",
           "svg": "Idéal pour Figma, Illustrator, les sites web · reste net à toute taille.",
-          "pdf": "Idéal pour les documents et les impressions rapides · pour un PDF vectoriel, utilisez Prêt à imprimer.",
+          "pdf": "Idéal pour les documents et les impressions rapides.",
           "eps": "Idéal pour les imprimeurs et les applications vectorielles · reste net à toute taille."
         },
         "sizePresets": {
@@ -7738,6 +7740,7 @@
           "editLinkValue": "Modifier le lien",
           "codeSettings": "Paramètres du code",
           "editDesignInPlayground": "Modifier le design dans Playground",
+          "printReadyFile": "PDF ou EPS prêt à imprimer",
           "removeFromFavorites": "Retirer des favoris",
           "addToFavorites": "Ajouter aux favoris",
           "moveToFolderValue": "Déplacer vers un dossier...",
@@ -7787,6 +7790,7 @@
           "shortLinkEncodedInThe": "Lien court (encodé dans le QR code)",
           "opens": "Ouvre",
           "editDesignInPlayground": "Modifier le design dans Playground",
+          "printReadyFile": "PDF ou EPS prêt à imprimer",
           "shortLinkCopied": "Lien court copié"
         },
         "codeQr": {

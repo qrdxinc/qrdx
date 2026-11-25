@@ -39,6 +39,7 @@ import {
   ColorSwatch as Palette,
   Pause,
   Edit2 as Pencil,
+  Printer,
   ArrowRotateLeft as RotateCcw,
   Setting2,
   Share,
@@ -423,6 +424,11 @@ export function CodeActionsMenu({
           )}
           <DropdownMenuItem onSelect={() => openInPlayground(code)}>
             <Palette /> {t("editDesignInPlayground")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onSelect={() => openInPlayground(code, { print: true })}
+          >
+            <Printer /> {t("printReadyFile")}
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => download("png")}>
             <Download /> {t("downloadPng")}

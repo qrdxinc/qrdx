@@ -3484,6 +3484,8 @@
         "downloadQrCode": "Unduh kode QR",
         "imageFile": "File gambar",
         "printReady": "Siap cetak",
+        "printSuggestion": "Akan dicetak? {tab} membuat PDF atau EPS vektor dengan ukuran persis seperti yang akan Anda cetak, lengkap dengan CMYK, bleed, dan crop mark jika percetakan Anda memintanya.",
+        "usePrintReady": "Beralih ke {tab}",
         "size": "Ukuran",
         "custom": "Kustom",
         "px": "px",
@@ -3542,7 +3544,7 @@
           "tiff": "Paling cocok untuk percetakan yang meminta TIFF · 300 dpi, transparansi tetap dipertahankan.",
           "tiff-cmyk": "Paling cocok untuk percetakan yang meminta CMYK · warna hitam dicetak hanya dengan tinta hitam, dan latar belakang transparan akan menjadi putih. Tanpa profil warna: tanyakan kepada pencetak Anda soal warna merek yang presisi.",
           "svg": "Terbaik untuk Figma, Illustrator, dan situs web · tetap tajam di ukuran berapa pun.",
-          "pdf": "Terbaik untuk dokumen dan cetak cepat · untuk PDF vektor, gunakan Siap cetak.",
+          "pdf": "Terbaik untuk dokumen dan cetak cepat.",
           "eps": "Terbaik untuk percetakan dan aplikasi vektor · tetap tajam di ukuran berapa pun."
         },
         "sizePresets": {
@@ -7738,6 +7740,7 @@
           "editLinkValue": "Edit tautan",
           "codeSettings": "Pengaturan kode",
           "editDesignInPlayground": "Edit desain di Playground",
+          "printReadyFile": "PDF atau EPS siap cetak",
           "removeFromFavorites": "Hapus dari favorit",
           "addToFavorites": "Tambah ke favorit",
           "moveToFolderValue": "Pindahkan ke folder...",
@@ -7787,6 +7790,7 @@
           "shortLinkEncodedInThe": "Tautan pendek (dikodekan dalam kode QR)",
           "opens": "Membuka",
           "editDesignInPlayground": "Edit desain di Playground",
+          "printReadyFile": "PDF atau EPS siap cetak",
           "shortLinkCopied": "Tautan pendek disalin"
         },
         "codeQr": {

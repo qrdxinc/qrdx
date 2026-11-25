@@ -3484,6 +3484,8 @@
         "downloadQrCode": "QR-Code herunterladen",
         "imageFile": "Bilddatei",
         "printReady": "Druckfertig",
+        "printSuggestion": "Du willst drucken? Mit {tab} erstellst du ein Vektor-PDF oder -EPS in der exakten Druckgröße, mit CMYK, Beschnitt und Schnittmarken, falls deine Druckerei sie verlangt.",
+        "usePrintReady": "Zu {tab} wechseln",
         "size": "Größe",
         "custom": "Eigene",
         "px": "px",
@@ -3542,7 +3544,7 @@
           "tiff": "Ideal für Druckereien, die TIFF verlangen · 300 dpi, Transparenz bleibt erhalten.",
           "tiff-cmyk": "Ideal für Druckereien, die CMYK verlangen · Schwarz wird nur mit schwarzer Farbe gedruckt, und ein transparenter Hintergrund wird weiß. Kein Farbprofil: Frag bei deiner Druckerei nach, wie exakte Markenfarben gedruckt werden.",
           "svg": "Ideal für Figma, Illustrator, Websites · bleibt in jeder Größe scharf.",
-          "pdf": "Ideal für Dokumente und schnelle Drucke · für ein Vektor-PDF nutze Druckfertig.",
+          "pdf": "Ideal für Dokumente und schnelle Drucke.",
           "eps": "Ideal für Druckereien und Vektor-Apps · bleibt in jeder Größe scharf."
         },
         "sizePresets": {
@@ -7738,6 +7740,7 @@
           "editLinkValue": "Link bearbeiten",
           "codeSettings": "Code-Einstellungen",
           "editDesignInPlayground": "Design im Playground bearbeiten",
+          "printReadyFile": "Druckfertige PDF oder EPS",
           "removeFromFavorites": "Aus Favoriten entfernen",
           "addToFavorites": "Zu Favoriten hinzufügen",
           "moveToFolderValue": "In Ordner verschieben...",
@@ -7787,6 +7790,7 @@
           "shortLinkEncodedInThe": "Kurzlink (im QR-Code codiert)",
           "opens": "Öffnet",
           "editDesignInPlayground": "Design im Playground bearbeiten",
+          "printReadyFile": "Druckfertige PDF oder EPS",
           "shortLinkCopied": "Kurzlink kopiert"
         },
         "codeQr": {

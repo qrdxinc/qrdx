@@ -8,6 +8,7 @@ import {
   ExportSquare as ExternalLink,
   ColorSwatch as Palette,
   Edit2 as Pencil,
+  Printer,
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
@@ -160,15 +161,26 @@ export function CodeOverview({
           />
           <CodeDownloadButtons code={code} />
           {canWrite && (
-            <Button
-              className="w-full"
-              onClick={() => openInPlayground(code)}
-              size="sm"
-              variant="ghost"
-            >
-              <Palette />
-              {t("editDesignInPlayground")}
-            </Button>
+            <>
+              <Button
+                className="w-full"
+                onClick={() => openInPlayground(code, { print: true })}
+                size="sm"
+                variant="outline"
+              >
+                <Printer />
+                {t("printReadyFile")}
+              </Button>
+              <Button
+                className="w-full"
+                onClick={() => openInPlayground(code)}
+                size="sm"
+                variant="ghost"
+              >
+                <Palette />
+                {t("editDesignInPlayground")}
+              </Button>
+            </>
           )}
         </CardContent>
       </Card>
