@@ -27,6 +27,45 @@ export type QrSource =
   | "bulk_tool"
   | "ai_art";
 
+/**
+ * The most distinctive part of a downloaded code's design (qr_downloaded's
+ * `look`). The first that applies wins: a code `shape` (circle, heart or a
+ * silhouette), `art` (Logo QR or Image QR), a `frame`, a `logo`, `styled`
+ * (colors, patterns or other looks changed from the playground's default)
+ * or `plain` (the playground's default look with nothing changed: round
+ * dots, gear eyes, black on white).
+ */
+export type DownloadLook =
+  | "shape"
+  | "art"
+  | "frame"
+  | "logo"
+  | "styled"
+  | "plain";
+
+/**
+ * How a downloaded code looks (apps/app/lib/analytics/download-look.ts):
+ * yes/no flags and ids from the engine's fixed lists. Never a color, the
+ * frame's text, a logo or the content.
+ */
+export interface DownloadLookProps {
+  look?: DownloadLook;
+  has_frame?: boolean;
+  has_logo?: boolean;
+  has_art?: boolean;
+  has_shape?: boolean;
+  /** A gradient, a picture fill or any color other than black on white */
+  custom_colors?: boolean;
+  /** The body pattern's id ("circle", "square"…), "other" when unknown */
+  body_pattern?: string;
+  /** With a frame: its style id ("banner-bottom"…), "custom" or "other" */
+  frame_style?: string;
+  /** With art: "logo" (Logo QR) or "halftone" (Image QR) */
+  art_mode?: "logo" | "halftone";
+  /** With a shape: "circle", "heart" or "silhouette" (one of your own) */
+  shape?: "circle" | "heart" | "silhouette";
+}
+
 /** The editors whose opening starts the funnel (editor_opened). */
 export type EditorSurface =
   | "playground"
@@ -114,7 +153,18 @@ export interface AnalyticsEvents {
    */
   editor_opened: { surface: EditorSurface; source: string };
   qr_generated: { content_type: string; source: QrSource; count?: number };
-  qr_downloaded: { format: string; source: QrSource; content_type?: string };
+  /**
+   * A code saved as a file. Downloads of a design (the playground, the type
+   * tools, a saved code) say how it looks (DownloadLookProps); the
+   * playground also says whether someone was signed in (`signed_in`, left
+   * out while the session is still loading).
+   */
+  qr_downloaded: {
+    format: string;
+    source: QrSource;
+    content_type?: string;
+    signed_in?: boolean;
+  } & DownloadLookProps;
   qr_copied: { format: "svg"; source: QrSource };
   /**
    * A barcode download from /barcode-generator or a saved barcode in the
