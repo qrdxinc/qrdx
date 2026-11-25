@@ -1,6 +1,7 @@
 import "server-only";
 
 import { isOwnWorkspaceOf } from "@repo/auth/own-workspace-id";
+import { graceEndsAt } from "@repo/auth/subscription-access";
 import { AI_REQUEST_FREE_TIER_LIMIT } from "@repo/config";
 import { database as db } from "@repo/database";
 import { subscription as subscriptionTable } from "@repo/database/schema";
@@ -135,6 +136,10 @@ export async function getPlanUsage(scope: ActiveScope): Promise<PlanUsage> {
           currentPeriodEnd: own.currentPeriodEnd.toISOString(),
           cancelAtPeriodEnd: own.cancelAtPeriodEnd,
           endsAt: own.endsAt ? own.endsAt.toISOString() : null,
+          graceEndsAt:
+            own.status === "past_due" && own.pastDueSince
+              ? graceEndsAt(own.pastDueSince).toISOString()
+              : null,
         }
       : null,
     hasBillingHistory: Boolean(own) || billingHistory,

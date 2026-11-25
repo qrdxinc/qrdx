@@ -69,7 +69,14 @@ import {
 } from "./invites/terms";
 import { PAGE_TYPE_IDS } from "./landing/page-type-ids";
 import { PATH_ALIASES_PER_CODE } from "./path-alias-limits";
-import { AI_ART_PER_MONTH, API_REQUESTS_PER_DAY } from "./plan-allowances";
+import {
+  AI_ART_PER_MONTH,
+  API_REQUESTS_PER_DAY,
+  FILE_STORAGE_BYTES,
+  FORM_RESPONSES_PER_MONTH,
+  MAX_FILE_BYTES,
+  PRO_TEAM_MEMBERS,
+} from "./plan-allowances";
 import {
   formatPrice,
   MONEY_BACK_DAYS,
@@ -78,6 +85,12 @@ import {
   SWITCHER_MONEY_BACK_DAYS,
 } from "./pricing";
 import { FREE_SCAN_HISTORY_YEARS } from "./scan-history";
+
+const MB = 1024 * 1024;
+
+/** A plan's storage as copy writes it: "50 MB", "5 GB". */
+const formatSize = (bytes: number): string =>
+  bytes >= 1024 * MB ? `${bytes / (1024 * MB)} GB` : `${bytes / MB} MB`;
 
 export const PRODUCT_FACTS = {
   /** Shapes for the data modules (`bodyPattern`). */
@@ -222,6 +235,20 @@ export const PRODUCT_FACTS = {
   freeAiArtPerMonth: AI_ART_PER_MONTH.free,
   proAiArtPerMonth: AI_ART_PER_MONTH.pro,
   businessAiArtPerMonth: AI_ART_PER_MONTH.business,
+  /** File storage per workspace (lib/plan-allowances.ts): "50 MB", "5 GB", "50 GB". */
+  freeStorage: formatSize(FILE_STORAGE_BYTES.free),
+  proStorage: formatSize(FILE_STORAGE_BYTES.pro),
+  businessStorage: formatSize(FILE_STORAGE_BYTES.business),
+  /** The largest upload (lib/plan-allowances.ts): "10 MB", "100 MB", "250 MB". */
+  freeMaxFileSize: formatSize(MAX_FILE_BYTES.free),
+  proMaxFileSize: formatSize(MAX_FILE_BYTES.pro),
+  businessMaxFileSize: formatSize(MAX_FILE_BYTES.business),
+  /** Form responses a month (lib/plan-allowances.ts): "50", "1,000", "10,000". */
+  freeFormResponsesPerMonth: formatCount(FORM_RESPONSES_PER_MONTH.free),
+  proFormResponsesPerMonth: formatCount(FORM_RESPONSES_PER_MONTH.pro),
+  businessFormResponsesPerMonth: formatCount(FORM_RESPONSES_PER_MONTH.business),
+  /** People in a Pro workspace, you included (lib/plan-allowances.ts): "3". */
+  proTeamMembers: PRO_TEAM_MEMBERS,
   /** Path aliases one code can have on its custom domain (lib/path-alias-limits.ts). */
   pathAliasesPerCode: PATH_ALIASES_PER_CODE,
 } as const;

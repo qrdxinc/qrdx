@@ -22,6 +22,8 @@ The preview and the **Scan score** under it update as you go. **Color palettes**
 - **Gradients stay dark.** A gradient is fine when every color in it is dark enough against the background.
 - **Plain background.** A busy photo behind the code makes it harder to read. If you want a picture in the code, use [Image QR](/docs/help/designing/art) instead, which tests the result for you.
 
+These rules come from how decoders differ. In our [scan study](/blog/qr-code-scan-study), two of the three decoders tested read grey-on-white codes down to a 2:1 contrast ratio, but jsQR, which many web scanners use, needed 4.5:1. And zbar, with its default settings, read none of 300 light-on-dark codes that the other two read almost every time.
+
 ## Check the contrast
 
 **Contrast Checker** in the toolbar above the preview shows the ratio for your colors and flags pairs under 4.5:1.

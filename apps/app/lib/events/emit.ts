@@ -9,7 +9,9 @@ import {
   firstScanStatus,
   isBroughtIn,
   sendFreeFirstScanEmail,
+  trackFirstRealScan,
 } from "@/lib/email/first-scan";
+import { sendFreeScanMilestoneEmail } from "@/lib/email/free-scan-milestone";
 import { normalizeScanSource } from "@/lib/nfc/links";
 import { getPlanLimits } from "@/lib/plans";
 import { shortLinkUrl } from "@/lib/short-links";
@@ -505,8 +507,9 @@ export function scanSummary(
 /**
  * scan.created (batched) and, on milestone counts, scan.milestone. Each scan
  * sees a unique post-increment count, so a milestone fires exactly once.
- * Also Free's one first-scan email per code (lib/email/first-scan.tsx),
- * which needs no subscriber.
+ * Also Free's one first-scan email per code (lib/email/first-scan.tsx) and
+ * one 100-scan email per account (lib/email/free-scan-milestone.tsx), and
+ * the first_real_scan event on every plan, which need no subscriber.
  */
 /** Whether anyone would get scan milestone emails for this scope's codes. */
 function hasMilestoneEmail(
@@ -551,12 +554,13 @@ export async function emitScanRecorded(
     status ??= firstScanStatus(scan, code);
     return status;
   };
-  const freeFirstScan = sendFreeFirstScanEmail(scan, code, {
-    emailAlerts,
-    firstScan,
-  });
+  const free = Promise.all([
+    sendFreeFirstScanEmail(scan, code, { emailAlerts, firstScan }),
+    sendFreeScanMilestoneEmail(scan, code, { emailAlerts }),
+    trackFirstRealScan(scan, code, { plan: subscribers?.plan, firstScan }),
+  ]);
   if (!subscribers) {
-    await freeFirstScan;
+    await free;
     return;
   }
   try {
@@ -607,6 +611,6 @@ export async function emitScanRecorded(
   } catch (error) {
     log("event.scan_emit_failed", { error: errorMessage(error) });
   } finally {
-    await freeFirstScan;
+    await free;
   }
 }

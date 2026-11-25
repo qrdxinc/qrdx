@@ -1,17 +1,32 @@
 import "server-only";
 
+import {
+  ENTITLED_SUBSCRIPTION_STATUSES,
+  graceCutoff,
+} from "@repo/auth/subscription-access";
 import { AI_REQUEST_FREE_TIER_LIMIT } from "@repo/config";
 import { aiUsage, database as db } from "@repo/database";
 import { subscription } from "@repo/database/schema";
 import cuid from "cuid";
-import { and, count, desc, eq, inArray, notInArray } from "drizzle-orm";
+import { and, count, desc, eq, gt, inArray, notInArray, or } from "drizzle-orm";
 import { SubscriptionRequiredError } from "@/types/errors";
 import type { SubscriptionCheck } from "@/types/subscription";
 import { ART_USAGE_MODEL_IDS } from "./ai/art-models";
 
-// Polar keeps a subscription "active" until a cancellation takes effect at period end;
-// "canceled", "past_due", "unpaid" and "incomplete*" do not grant access.
-const ENTITLED_SUBSCRIPTION_STATUSES = ["active", "trialing"];
+/**
+ * Subscriptions that grant their plan (packages/auth/subscription-access.ts):
+ * Polar keeps one "active" until a cancellation takes effect at period end,
+ * and a failed payment ("past_due") keeps paid features for 7 days from when
+ * it failed. "canceled", "unpaid" and "incomplete*" never grant it.
+ */
+const entitledSubscription = (now: Date = new Date()) =>
+  or(
+    inArray(subscription.status, ENTITLED_SUBSCRIPTION_STATUSES),
+    and(
+      eq(subscription.status, "past_due"),
+      gt(subscription.pastDueSince, graceCutoff(now)),
+    ),
+  );
 
 const FREE_LIMIT_REACHED_MESSAGE = `You've reached your free limit of ${AI_REQUEST_FREE_TIER_LIMIT} requests. Please upgrade to continue.`;
 
@@ -38,12 +53,7 @@ export async function getMyActiveSubscription(
   const sub = await db
     .select()
     .from(subscription)
-    .where(
-      and(
-        eq(subscription.userId, userId),
-        inArray(subscription.status, ENTITLED_SUBSCRIPTION_STATUSES),
-      ),
-    )
+    .where(and(eq(subscription.userId, userId), entitledSubscription()))
     .orderBy(desc(subscription.createdAt))
     .limit(1);
   return sub[0] ?? null;

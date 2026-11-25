@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "QRdx: Free QR Code Generator with Logos and Dynamic Codes",
-    "siteDescription": "Free, open-source QR code generator: unlimited codes with logos, colors and frames, no signup or watermark. Plus dynamic codes and scan analytics.",
+    "siteDescription": "Free QR codes, and dynamic codes that keep working whatever happens to your plan. Design them with logos, colors and frames, no signup or watermark.",
     "ogImageAlt": "QRdx: free QR code generator with dynamic QR codes, hosted pages and scan analytics"
   },
   "nav": {
@@ -217,17 +217,20 @@
     }
   },
   "footer": {
-    "description": "The open-source QR code platform.",
+    "description": "Free QR codes, and dynamic codes that keep working whatever happens to your plan.",
     "starOnGithub": "Star on GitHub",
     "newsOnX": "QRdx news on X",
     "joinDiscord": "Join the QRdx Discord",
+    "linkedin": "QRdx on LinkedIn",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
+    "license": "The app is open source under the <link>AGPL-3.0</link>.",
     "columns": {
       "product": "Product",
       "developers": "Developers",
       "solutions": "Solutions",
       "resources": "Resources",
+      "guides": "Guides",
       "company": "Company",
       "compare": "Compare"
     },
@@ -280,8 +283,13 @@
       "scanner": "QR code scanner",
       "scanChecker": "Scan checker",
       "printSize": "Print size calculator",
+      "guideExpire": "Do QR codes expire?",
+      "guidePrintSize": "How big to print a QR code",
+      "guideDynamicStatic": "Dynamic vs static codes",
+      "scanStudy": "QR code scan study",
       "security": "Security",
       "affiliates": "Affiliate program",
+      "press": "Press kit",
       "guarantee": "Never-Hostage Guarantee",
       "pricing": "Pricing",
       "allComparisons": "All comparisons",
@@ -348,11 +356,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Free and open source (AGPL-3.0)",
+      "badge": "Free and open source",
       "title": "Free QR code generator, with dynamic codes that keep working",
-      "description": "Design branded QR codes with patterns, gradients, logos and frames, and download PNG, SVG, PDF, EPS or TIFF with no signup or watermark. Sign in for dynamic codes you can edit after printing, hosted pages and scan analytics.",
-      "primary": "Try the Playground",
-      "secondary": "Read the docs",
+      "description": "Design a branded QR code with your logo and download it free, with no signup or watermark. Sign in for dynamic codes you can change after printing. They never stop because of a plan change, a failed payment or a cancellation, on any plan.",
+      "primary": "Create a QR code",
+      "secondary": "Make a dynamic code",
       "sceneLabel": "Animated drawing of the QRdx flow: a studio screen designs and styles a QR code, a printer prints it on a card, a robot arm places the card on a conveyor, a phone on a gate scans each card as it passes, the scan travels to an analytics panel that adds a new bar, and a large dynamic QR card swaps its destination link without being reprinted"
     },
     "customers": {
@@ -487,7 +495,7 @@
       "developers": {
         "eyebrow": "Developers",
         "title": "Built for developers",
-        "description": "Render codes with the qrdx React library, get images from a URL with the image API, or let Claude, Cursor and VS Code make them through the MCP server. You can also self-host the app.",
+        "description": "Render codes with the qrdx React library, get images from a URL with the image API, or let Claude, Cursor and VS Code make them through the MCP server. You can also self-host the app, which is open source under the AGPL-3.0.",
         "link": "Developer docs"
       }
     },
@@ -613,7 +621,7 @@
       }
     },
     "cards": {
-      "popular": "Popular",
+      "recommended": "Recommended",
       "leadPro": "Everything in Free, plus:",
       "leadBusiness": "Everything in Pro, plus:",
       "goToDashboard": "Go to dashboard",
@@ -637,6 +645,8 @@
     "offers": {
       "moneyBack": "{days, number}-day money-back guarantee on your first payment.",
       "moneyBackLink": "How refunds work",
+      "switcher": "Moving from another QR code provider? Import your codes and you have {days, number} days to ask for your first payment back.",
+      "switcherLink": "Refund policy",
       "nonprofit": "Non-profit or charity? {percent, number}% off Pro and Business.",
       "nonprofitLink": "Ask for a code"
     },
@@ -3617,7 +3627,7 @@
     }
   },
   "ai": {
-    "metaTitle": "AI QR Code Generator — Design QR Codes From a Prompt",
+    "metaTitle": "AI QR Code Generator: Design QR Codes From a Prompt",
     "metaDescription": "Describe a QR code and QRdx's AI designs it, repairs it until the scan score is Great and asks before changing your editor. Free accounts get {count, number} AI requests.",
     "artLink": "Or turn a link into scannable AI QR art",
     "chat": {
@@ -3656,7 +3666,7 @@
     "vectorEyebrowLead": "Available now, free",
     "vectorEyebrow": "No AI needed",
     "vectorTitleLead": "Logo QR and Image QR",
-    "vectorTitle": "Want a guaranteed-scannable vector code?",
+    "vectorTitle": "Prefer a vector code with no AI?",
     "vectorDescription": "Blend a logo or photo into the code itself. It's drawn as vectors, keeps the patterns scanners rely on solid, and needs no credits.",
     "openArt": "Open the Art tab",
     "vector": {
@@ -5856,6 +5866,7 @@
       "warning": "Warning",
       "scanScoreScoreValueWarningShow": "Scan score {score, number}, {value}, with a warning. Show checks",
       "addAMargin": "Add a {modules, number}-module margin",
+      "whyStudy": "Why? See what our scan study found",
       "grades": {
         "great": "Great",
         "ok": "OK",
@@ -9203,7 +9214,60 @@
           "fullHistory": "Look back over every scan, not only the last {years, plural, one {year} other {# years}}",
           "price": "Pro is {month} a month or {year} a year.",
           "seePro": "See Pro",
+          "hide": "Hide",
+          "invite": "Or <link>invite a friend</link>: when they make their first dynamic code, you both get {count, number} more."
+        },
+        "firstSteps": {
+          "title": "Get your first code ready to print",
+          "progress": "{done, number} of {total, number} done",
+          "progressLabel": "First steps done",
+          "hide": "Hide",
+          "done": "(done)",
+          "make": "Make a dynamic code",
+          "makeHint": "A QR code whose link you can change after printing.",
+          "create": "Create",
+          "scan": "Scan it with your phone",
+          "scanHint": "Point your phone's camera at the code on screen and open the link.",
+          "showCode": "Show code",
+          "download": "Download it for print",
+          "downloadHint": "SVG stays sharp at any print size.",
+          "downloadAction": "Download",
+          "makeFirstCode": "Make your first dynamic code"
+        },
+        "inviteCard": {
+          "title": "Know someone who prints QR codes?",
+          "body": "When a friend signs up through your link and makes their first dynamic code, you both get {count, number} more dynamic codes.",
+          "messageLabel": "Message to send:",
+          "message": "I make my QR codes with QRdx. They're free, and dynamic codes keep working whatever happens to your plan. Sign up through my link and make a dynamic code, and we both get {count, number} more: {link}",
+          "copyMessage": "Copy message",
+          "copyLink": "Copy link",
+          "copied": "Copied",
+          "linkCopied": "Link copied",
+          "messageCopied": "Message copied",
+          "couldntCopy": "Couldn't copy. Select the text and copy it yourself.",
+          "howItWorks": "How it works",
           "hide": "Hide"
+        },
+        "whereHeard": {
+          "question": "Where did you first hear about QRdx?",
+          "why": "Optional. One tap tells us what's working.",
+          "answers": {
+            "ai_assistant": "ChatGPT or another AI assistant",
+            "search": "Google or Bing",
+            "friend": "A friend or colleague",
+            "x_threads": "X or Threads",
+            "linkedin": "LinkedIn",
+            "youtube": "YouTube",
+            "reddit_hn": "Reddit or Hacker News",
+            "product_hunt": "Product Hunt",
+            "directory": "A list or directory",
+            "other": "Other"
+          },
+          "otherLabel": "Where did you hear about QRdx?",
+          "otherPlaceholder": "A few words",
+          "save": "Save",
+          "hide": "Hide",
+          "thanks": "Thanks, that helps."
         }
       },
       "listSelection": {
@@ -9480,6 +9544,12 @@
       }
     },
     "shell": {
+      "pastDueBanner": {
+        "title": "Your last payment didn't go through.",
+        "grace": "Your codes keep working. Update your card to keep {plan}. Its features stay on until {date}.",
+        "ended": "Your codes keep working. {plan} features are off until the payment goes through. Update your card to turn them back on.",
+        "updateCard": "Update card"
+      },
       "appSidebar": {
         "backToLabel": "Back to {label}",
         "expandSidebar": "Expand sidebar",
@@ -10083,7 +10153,9 @@
     },
     "scanMilestone": {
       "reached": "{code} reached {count, number} scans",
-      "body": "Your dynamic QR code just passed {count, number} scans. See where and when people scan it, and which devices they use."
+      "body": "Your dynamic QR code just passed {count, number} scans. See where and when people scan it, and which devices they use.",
+      "pro": "<link>Pro</link> also emails you at {first} and {second} scans and beyond, and can send you a weekly summary.",
+      "freeReason": "You're getting this because a code you made reached {count, number} scans. QRdx sends this once."
     },
     "formSubmission": {
       "subject": "{hasTitle, select, yes {New form response on “{title}”} other {New form response on your page}}",
@@ -10229,6 +10301,42 @@
       "seeInvites": "See your invites",
       "keeps": "The extra codes work on any plan and have no cash value. Codes you make with them keep working.",
       "reason": "You're getting this because a friend signed up through your QRdx invite link and made their first dynamic code."
+    },
+    "invite": {
+      "both": "Know someone who prints QR codes? <link>Invite them</link>: when they make their first dynamic code, you both get {count, number} more.",
+      "friend": "Know someone who prints QR codes? <link>Invite them</link>: when they make their first dynamic code, they get {count, number} more."
+    },
+    "activationNudge": {
+      "subject": "Your first dynamic code",
+      "greeting": "Hi {name},",
+      "what": "A dynamic code is a QR code you can print now and point somewhere else later, without reprinting, and it counts its scans.",
+      "button": "Make a dynamic code",
+      "reply": "If something got in the way, reply to this email. A person reads every reply.",
+      "reason": "You're getting this because you made a QRdx account a couple of days ago and haven't made a dynamic code yet. QRdx sends this once."
+    },
+    "paymentFailed": {
+      "subject": "Your last QRdx payment didn't go through",
+      "heading": "Your last payment didn't go through",
+      "greeting": "Hi {name},",
+      "body": "Your last payment for {plan} didn't go through. Your codes keep working. Update your card to keep {plan}.",
+      "grace": "{plan} features stay on until {date}. If it's still unpaid then, they turn off until the payment goes through. Your dynamic codes keep working either way.",
+      "button": "Update your card",
+      "reply": "If something looks wrong, reply to this email. A person reads every reply.",
+      "reason": "You got this email because it's the address of a QRdx account whose {plan} payment didn't go through. Billing notices about your account come even if you've turned off notes from the QRdx team."
+    },
+    "newCustomer": {
+      "subject": "Welcome to QRdx {plan}",
+      "greeting": "Hi {name},",
+      "thanks": "Thanks for choosing {plan}. It's on now.",
+      "setUp": "{count, plural, one {One thing to set up first:} other {A few things to set up first:}}",
+      "domain": "<link>Connect your own domain</link>, so your short links use your name instead of QRdx's. Your plan includes {count} custom domains.",
+      "backHalf": "<link>Give a code a back-half you choose</link>, so its short link ends in a word like spring-menu instead of random letters.",
+      "alerts": "Scan alerts are on: QRdx emails you when a code gets its first scan and at milestones like 100 and 1,000 scans. <link>Change them, or turn on a weekly summary</link>, in Settings.",
+      "team": "<link>Invite your team</link>. Your plan includes {count} people, you included.",
+      "teamUnlimited": "<link>Invite your team</link>, as many people as you need.",
+      "moneyBack": "If {plan} isn't right for you, reply within {days, number} days of your payment and we'll refund it in full. You don't need to give a reason.",
+      "reply": "And reply with anything else too: a question, something that's missing, or what you use QRdx for. A person reads every reply.",
+      "reason": "You're getting this because you just started a QRdx {plan} plan."
     }
   },
   "codeActions": {

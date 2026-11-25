@@ -1,6 +1,6 @@
 import { Webhooks } from "@polar-sh/nextjs";
 import { database as db, subscription } from "@repo/database";
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import {
   plansBeforeBillingChange,
@@ -9,6 +9,7 @@ import {
 import { env } from "@/env";
 import { handleAffiliateWebhook } from "@/lib/affiliates/commissions";
 import { trackSubscriptionEvent } from "@/lib/analytics/subscription-events";
+import { sendBillingNotes } from "@/lib/email/billing-notes";
 
 function safeParseDate(value: string | Date | null | undefined): Date | null {
   if (!value) return null;
@@ -30,11 +31,31 @@ const onPayload: WebhooksConfig["onPayload"] = async ({ data, type }) => {
   ) {
     try {
       const userId = data.customer?.external_id;
+      // The stored status before this snapshot: a change to past_due starts
+      // the 7 days paid features keep working (past_due_since,
+      // packages/auth/subscription-access.ts) and sends one email.
+      const [before] = await db
+        .select({
+          status: subscription.status,
+          pastDueSince: subscription.pastDueSince,
+        })
+        .from(subscription)
+        .where(eq(subscription.id, data.id))
+        .limit(1);
+      const modifiedAt = safeParseDate(data.modified_at);
+      // Kept while it stays past_due; a row that was past_due before the
+      // time was stored keeps none (no grace). Cleared once it isn't.
+      const pastDueSince =
+        data.status !== "past_due"
+          ? null
+          : before?.status === "past_due"
+            ? before.pastDueSince
+            : (modifiedAt ?? new Date());
 
       const subscriptionData = {
         id: data.id,
         createdAt: new Date(data.created_at),
-        modifiedAt: safeParseDate(data.modified_at),
+        modifiedAt,
         amount: data.amount,
         currency: data.currency,
         recurringInterval: data.recurring_interval,
@@ -60,10 +81,11 @@ const onPayload: WebhooksConfig["onPayload"] = async ({ data, type }) => {
           ? JSON.stringify(data.custom_field_data)
           : null,
         userId: userId as string | null,
+        pastDueSince,
       };
 
       const plansBefore = await plansBeforeBillingChange(userId);
-      await db
+      const [stored] = await db
         .insert(subscription)
         .values(subscriptionData)
         .onConflictDoUpdate({
@@ -95,9 +117,21 @@ const onPayload: WebhooksConfig["onPayload"] = async ({ data, type }) => {
             metadata: subscriptionData.metadata,
             customFieldData: subscriptionData.customFieldData,
             userId: sql`coalesce(excluded.user_id, ${subscription.userId})`,
+            pastDueSince: subscriptionData.pastDueSince,
           },
+        })
+        // Nothing when an older snapshot was left alone.
+        .returning({
+          userId: subscription.userId,
+          productId: subscription.productId,
+          status: subscription.status,
+          pastDueSince: subscription.pastDueSince,
+          startedAt: subscription.startedAt,
         });
       await recordPlanChanges(userId, plansBefore);
+      // The failed-payment email or the new-customer note, after the
+      // response (lib/email/billing-notes.ts).
+      if (stored) sendBillingNotes(before, { id: data.id, ...stored });
 
       // subscription_activated and subscription_canceled, after the response
       // (lib/analytics/subscription-events.ts).

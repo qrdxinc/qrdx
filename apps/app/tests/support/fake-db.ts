@@ -228,6 +228,13 @@ function evaluateSql(expr: SqlExpr, ctx: Ctx): unknown {
   // ${column} is [not] null
   match = text.match(/^\$0 is (not )?null$/i);
   if (match) return match[1] ? v(0) != null : v(0) == null;
+  // coalesce(excluded.<column>, ${column}) in an upsert's set: the new
+  // value, else the stored one.
+  match = text.match(/^coalesce\(excluded\.(\w+), \$0\)$/i);
+  if (match) {
+    const proposed = ctx.excluded?.[camel(match[1] as string)];
+    return proposed ?? v(0);
+  }
   if (/^now\(\)$/i.test(text)) return new Date();
   // ${isoString}::timestamp: a time sent as text (Postgres drops the "Z").
   if (/^\$0::timestamp$/i.test(text)) return new Date(String(v(0)));
@@ -744,7 +751,7 @@ function insertRow(table: string, value: Row, mode: ConflictMode): Row | null {
       error.code = "23505";
       throw error;
     }
-    applyPatch(table, existing, mode.set);
+    applyPatch(table, existing, mode.set, row);
     return existing;
   }
   rows.push(row);
@@ -773,8 +780,9 @@ function assertUniqueAfter(table: string, row: Row, patch: Row) {
   }
 }
 
-function applyPatch(table: string, row: Row, patch: Row) {
-  const ctx: Ctx = { [table]: row };
+/** `excluded`: an upsert's proposed row (excluded.<column> in its set). */
+function applyPatch(table: string, row: Row, patch: Row, excluded?: Row) {
+  const ctx: Ctx = { [table]: row, ...(excluded && { excluded }) };
   const next: Row = {};
   for (const [key, v] of Object.entries(patch)) {
     if (v === undefined) continue;

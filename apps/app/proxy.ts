@@ -334,6 +334,7 @@ export const config = {
     "/:prefix([pP][rR][iI][cC][iI][nN][gG])/:path*",
     "/:prefix([iI][nN][tT][eE][gG][rR][aA][tT][iI][oO][nN][sS])/:path*",
     "/:prefix([tT][eE][mM][pP][lL][aA][tT][eE][sS])/:path*",
+    "/:prefix([pP][rR][eE][sS][sS])/:path*",
     "/:prefix([sS][iI][tT][eE]-[sS][tT][aA][tT][iI][cC])/:path*",
     // The generators in the other languages (generators-i18n): each
     // translated language's segment, then /qr-code-generator. Off, next.config

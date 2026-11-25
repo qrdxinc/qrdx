@@ -12,5 +12,8 @@ export const X_PROFILE_URL = "https://x.com/bucha_ritesh";
  */
 export const DISCORD_INVITE_URL = "https://discord.gg/856fWMrYBm";
 
+/** QRdx's company page on LinkedIn (made 25 Nov 2026). */
+export const LINKEDIN_COMPANY_URL = "https://www.linkedin.com/company/qrdx/";
+
 export const NPM_LIBRARY_URL = "https://www.npmjs.com/package/qrdx";
 export const NPM_CLI_URL = "https://www.npmjs.com/package/@qrdx/cli";

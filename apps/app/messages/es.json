@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "QRdx: generador de códigos QR gratis con logos y códigos dinámicos",
-    "siteDescription": "Generador de códigos QR gratuito y de código abierto: códigos ilimitados con logos, colores y marcos, sin registro ni marca de agua. Además, códigos dinámicos y analíticas de escaneo.",
+    "siteDescription": "Códigos QR gratis y códigos dinámicos que siguen funcionando pase lo que pase con tu plan. Diséñalos con logos, colores y marcos, sin registro ni marca de agua.",
     "ogImageAlt": "QRdx: generador de códigos QR gratis con códigos QR dinámicos, páginas alojadas y analíticas de escaneo"
   },
   "nav": {
@@ -217,17 +217,20 @@
     }
   },
   "footer": {
-    "description": "La plataforma de códigos QR de código abierto.",
+    "description": "Códigos QR gratis y códigos dinámicos que siguen funcionando pase lo que pase con tu plan.",
     "starOnGithub": "Dale una estrella en GitHub",
     "newsOnX": "Novedades de QRdx en X",
     "joinDiscord": "Únete al Discord de QRdx",
+    "linkedin": "QRdx en LinkedIn",
     "navLabel": "Pie de página",
     "copyright": "© {year} QRdx",
+    "license": "La aplicación es de código abierto bajo la <link>AGPL-3.0</link>.",
     "columns": {
       "product": "Producto",
       "developers": "Desarrolladores",
       "solutions": "Soluciones",
       "resources": "Recursos",
+      "guides": "Guías",
       "company": "Empresa",
       "compare": "Comparar"
     },
@@ -280,8 +283,13 @@
       "scanner": "Escáner de códigos QR",
       "scanChecker": "Verificador de escaneo",
       "printSize": "Calculadora de tamaño de impresión",
+      "guideExpire": "¿Caducan los códigos QR?",
+      "guidePrintSize": "Qué tamaño imprimir un código QR",
+      "guideDynamicStatic": "Códigos dinámicos y estáticos",
+      "scanStudy": "Estudio de escaneo de códigos QR",
       "security": "Seguridad",
       "affiliates": "Programa de afiliados",
+      "press": "Kit de prensa",
       "guarantee": "Garantía Never-Hostage",
       "pricing": "Precios",
       "allComparisons": "Todas las comparativas",
@@ -348,11 +356,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Gratis y de código abierto (AGPL-3.0)",
+      "badge": "Gratis y de código abierto",
       "title": "Generador de códigos QR gratis, con códigos dinámicos que siguen funcionando",
-      "description": "Diseña códigos QR de marca con patrones, degradados, logos y marcos, y descarga PNG, SVG, PDF, EPS o TIFF sin registro ni marca de agua. Inicia sesión para crear códigos dinámicos que puedes editar después de imprimirlos, páginas alojadas y analíticas de escaneo.",
-      "primary": "Prueba el Playground",
-      "secondary": "Lee la documentación",
+      "description": "Diseña un código QR con tu marca y tu logo y descárgalo gratis, sin registro ni marca de agua. Inicia sesión para crear códigos dinámicos que puedes cambiar después de imprimirlos. Nunca dejan de funcionar por un cambio de plan, un pago fallido o una cancelación, en ningún plan.",
+      "primary": "Crear un código QR",
+      "secondary": "Crear un código dinámico",
       "sceneLabel": "Dibujo animado del flujo de QRdx: una pantalla de estudio diseña y da estilo a un código QR, una impresora lo imprime en una tarjeta, un brazo robótico coloca la tarjeta en una cinta transportadora, un teléfono en un portón escanea cada tarjeta a medida que pasa, el escaneo viaja a un panel de analíticas que añade una barra nueva, y una gran tarjeta con un código QR dinámico cambia su enlace de destino sin volver a imprimirse"
     },
     "customers": {
@@ -487,7 +495,7 @@
       "developers": {
         "eyebrow": "Desarrolladores",
         "title": "Hecho para desarrolladores",
-        "description": "Renderiza códigos con la biblioteca qrdx de React, obtén imágenes desde una URL con la Image API o deja que Claude, Cursor y VS Code los creen mediante el servidor MCP. También puedes alojar la app por tu cuenta.",
+        "description": "Genera códigos con la biblioteca qrdx para React, obtén imágenes desde una URL con la image API o deja que Claude, Cursor y VS Code los creen a través del servidor MCP. También puedes alojar la aplicación tú mismo, ya que es de código abierto bajo la AGPL-3.0.",
         "link": "Docs para desarrolladores"
       }
     },
@@ -613,7 +621,7 @@
       }
     },
     "cards": {
-      "popular": "Popular",
+      "recommended": "Recomendado",
       "leadPro": "Todo lo de Gratis, más:",
       "leadBusiness": "Todo lo de Pro, más:",
       "goToDashboard": "Ir al panel",
@@ -637,6 +645,8 @@
     "offers": {
       "moneyBack": "Garantía de devolución del dinero de {days, number} días en tu primer pago.",
       "moneyBackLink": "Cómo funcionan los reembolsos",
+      "switcher": "¿Vienes de otro proveedor de códigos QR? Importa tus códigos y tendrás {days, number} días para pedir que te devuelvan tu primer pago.",
+      "switcherLink": "Política de reembolso",
       "nonprofit": "¿Organización sin ánimo de lucro o benéfica? {percent, number}% de descuento en Pro y Business.",
       "nonprofitLink": "Solicita un código"
     },
@@ -3255,7 +3265,7 @@
     "vectorEyebrowLead": "Disponible ya, gratis",
     "vectorEyebrow": "Sin necesidad de IA",
     "vectorTitleLead": "Logo QR e Image QR",
-    "vectorTitle": "¿Quieres un código vectorial con escaneo garantizado?",
+    "vectorTitle": "¿Prefieres un código vectorial sin IA?",
     "vectorDescription": "Integra un logo o una foto en el propio código. Se dibuja como vectores, mantiene sólidos los patrones en los que se apoyan los lectores y no necesita créditos.",
     "openArt": "Abrir la pestaña Arte",
     "vector": {
@@ -5455,6 +5465,7 @@
       "warning": "Aviso",
       "scanScoreScoreValueWarningShow": "Puntuación de escaneo {score, number}, {value}, con una advertencia. Mostrar comprobaciones",
       "addAMargin": "Añade un margen de {modules, number} módulos",
+      "whyStudy": "¿Por qué? Mira lo que encontró nuestro estudio de escaneo",
       "grades": {
         "great": "Genial",
         "ok": "Bien",
@@ -8802,7 +8813,60 @@
           "fullHistory": "Consulta todo el historial de escaneos, no solo {years, plural, one {el último año} other {los últimos # años}}",
           "price": "Pro cuesta {month} al mes o {year} al año.",
           "seePro": "Ver Pro",
+          "hide": "Ocultar",
+          "invite": "O <link>invita a un amigo</link>: cuando haga su primer código dinámico, los dos recibiréis {count, number} más."
+        },
+        "firstSteps": {
+          "title": "Prepara tu primer código listo para imprimir",
+          "progress": "{done, number} de {total, number} completados",
+          "progressLabel": "Primeros pasos completados",
+          "hide": "Ocultar",
+          "done": "(hecho)",
+          "make": "Crea un código dinámico",
+          "makeHint": "Un código QR cuyo enlace puedes cambiar después de imprimirlo.",
+          "create": "Crear",
+          "scan": "Escanéalo con tu teléfono",
+          "scanHint": "Apunta la cámara de tu teléfono al código en pantalla y abre el enlace.",
+          "showCode": "Mostrar código",
+          "download": "Descárgalo para imprimir",
+          "downloadHint": "El SVG se ve nítido en cualquier tamaño de impresión.",
+          "downloadAction": "Descargar",
+          "makeFirstCode": "Crea tu primer código dinámico"
+        },
+        "inviteCard": {
+          "title": "¿Conoces a alguien que imprime códigos QR?",
+          "body": "Cuando un amigo se registre con tu enlace y cree su primer código dinámico, los dos recibiréis {count, number} códigos dinámicos más.",
+          "messageLabel": "Mensaje para enviar:",
+          "message": "Hago mis códigos QR con QRdx. Son gratis, y los códigos dinámicos siguen funcionando pase lo que pase con tu plan. Regístrate con mi enlace y crea un código dinámico, y los dos recibiremos {count, number} más: {link}",
+          "copyMessage": "Copiar mensaje",
+          "copyLink": "Copiar enlace",
+          "copied": "Copiado",
+          "linkCopied": "Enlace copiado",
+          "messageCopied": "Mensaje copiado",
+          "couldntCopy": "No se pudo copiar. Selecciona el texto y cópialo tú mismo.",
+          "howItWorks": "Cómo funciona",
           "hide": "Ocultar"
+        },
+        "whereHeard": {
+          "question": "¿Dónde oíste hablar de QRdx por primera vez?",
+          "why": "Opcional. Con un toque nos dices qué funciona.",
+          "answers": {
+            "ai_assistant": "ChatGPT u otro asistente de IA",
+            "search": "Google o Bing",
+            "friend": "Un amigo o colega",
+            "x_threads": "X o Threads",
+            "linkedin": "LinkedIn",
+            "youtube": "YouTube",
+            "reddit_hn": "Reddit o Hacker News",
+            "product_hunt": "Product Hunt",
+            "directory": "Una lista o directorio",
+            "other": "Otro"
+          },
+          "otherLabel": "¿Dónde conociste QRdx?",
+          "otherPlaceholder": "Unas pocas palabras",
+          "save": "Guardar",
+          "hide": "Ocultar",
+          "thanks": "Gracias, nos ayuda."
         }
       },
       "listSelection": {
@@ -9079,6 +9143,12 @@
       }
     },
     "shell": {
+      "pastDueBanner": {
+        "title": "No se pudo procesar tu último pago.",
+        "grace": "Tus códigos siguen funcionando. Actualiza tu tarjeta para mantener {plan}. Sus funciones seguirán activas hasta el {date}.",
+        "ended": "Tus códigos siguen funcionando. Las funciones de {plan} están desactivadas hasta que se procese el pago. Actualiza tu tarjeta para volver a activarlas.",
+        "updateCard": "Actualizar tarjeta"
+      },
       "appSidebar": {
         "backToLabel": "Volver a {label}",
         "expandSidebar": "Expandir barra lateral",
@@ -9682,7 +9752,9 @@
     },
     "scanMilestone": {
       "reached": "{code} alcanzó {count, number} escaneos",
-      "body": "Tu código QR dinámico acaba de superar los {count, number} escaneos. Consulta dónde y cuándo lo escanea la gente, y qué dispositivos usa."
+      "body": "Tu código QR dinámico acaba de superar los {count, number} escaneos. Consulta dónde y cuándo lo escanea la gente, y qué dispositivos usa.",
+      "pro": "<link>Pro</link> también te envía un correo a los {first} y {second} escaneos, y más adelante, y puede enviarte un resumen semanal.",
+      "freeReason": "Recibes este correo porque un código que creaste llegó a {count, number} escaneos. QRdx lo envía una sola vez."
     },
     "formSubmission": {
       "subject": "{hasTitle, select, yes {Nueva respuesta de formulario en “{title}”} other {Nueva respuesta de formulario en tu página}}",
@@ -9828,6 +9900,42 @@
       "seeInvites": "Ver tus invitaciones",
       "keeps": "Los códigos adicionales funcionan en cualquier plan y no tienen valor en efectivo. Los códigos que crees con ellos seguirán funcionando.",
       "reason": "Recibes este correo porque un amigo se registró con tu enlace de invitación de QRdx y creó su primer código dinámico."
+    },
+    "invite": {
+      "both": "¿Conoces a alguien que imprime códigos QR? <link>Invítalo</link>: cuando cree su primer código dinámico, los dos recibiréis {count, number} más.",
+      "friend": "¿Conoces a alguien que imprime códigos QR? <link>Invítalo</link>: cuando cree su primer código dinámico, recibirá {count, number} más."
+    },
+    "activationNudge": {
+      "subject": "Tu primer código dinámico",
+      "greeting": "Hola, {name}:",
+      "what": "Un código dinámico es un código QR que puedes imprimir ahora y redirigir a otro destino más adelante, sin volver a imprimirlo, y cuenta sus escaneos.",
+      "button": "Crear un código dinámico",
+      "reply": "Si algo se interpuso, responde a este correo. Una persona lee todas las respuestas.",
+      "reason": "Recibes este correo porque creaste una cuenta de QRdx hace un par de días y aún no has creado un código dinámico. QRdx lo envía una sola vez."
+    },
+    "paymentFailed": {
+      "subject": "No se pudo procesar tu último pago de QRdx",
+      "heading": "No se pudo procesar tu último pago",
+      "greeting": "Hola, {name}:",
+      "body": "No se pudo procesar tu último pago de {plan}. Tus códigos siguen funcionando. Actualiza tu tarjeta para mantener {plan}.",
+      "grace": "Las funciones de {plan} siguen activas hasta el {date}. Si para entonces sigue sin pagarse, se desactivan hasta que el pago se procese. Tus códigos dinámicos siguen funcionando en cualquier caso.",
+      "button": "Actualizar tu tarjeta",
+      "reply": "Si algo no te cuadra, responde a este correo. Una persona lee todas las respuestas.",
+      "reason": "Recibes este correo porque es la dirección de una cuenta de QRdx cuyo pago del plan {plan} no se pudo completar. Los avisos de facturación de tu cuenta te llegan aunque hayas desactivado las notas del equipo de QRdx."
+    },
+    "newCustomer": {
+      "subject": "Te damos la bienvenida a QRdx {plan}",
+      "greeting": "Hola, {name}:",
+      "thanks": "Gracias por elegir {plan}. Ya está activo.",
+      "setUp": "{count, plural, one {Una cosa por configurar primero:} other {Algunas cosas por configurar primero:}}",
+      "domain": "<link>Conecta tu propio dominio</link> para que tus enlaces cortos usen tu nombre en lugar del de QRdx. Tu plan incluye {count} dominios personalizados.",
+      "backHalf": "<link>Dale a un código un final personalizado que elijas</link>, para que su enlace corto termine en una palabra como spring-menu en lugar de letras al azar.",
+      "alerts": "Las alertas de escaneo están activadas: QRdx te envía un correo cuando un código recibe su primer escaneo y en hitos como 100 y 1000 escaneos. <link>Cámbialas o activa un resumen semanal</link> en Ajustes.",
+      "team": "<link>Invita a tu equipo</link>. Tu plan incluye {count} personas, contándote a ti.",
+      "teamUnlimited": "<link>Invita a tu equipo</link>, todas las personas que necesites.",
+      "moneyBack": "Si {plan} no es lo que buscas, responde en un plazo de {days, number} días desde tu pago y te lo reembolsaremos por completo. No necesitas dar ningún motivo.",
+      "reply": "Y responde también con cualquier otra cosa: una pregunta, algo que echas en falta o para qué usas QRdx. Una persona lee todas las respuestas.",
+      "reason": "Recibes este correo porque acabas de empezar un plan {plan} de QRdx."
     }
   },
   "codeActions": {

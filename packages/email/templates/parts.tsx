@@ -1,6 +1,13 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Column, Hr, Link, Row, Section, Text } from "react-email";
-import { EMAIL_ACCENT, EMAIL_LINE, EMAIL_MUTED, EMAIL_TEXT } from "./layout";
+import type { EmailIntl } from "../intl";
+import {
+  EMAIL_ACCENT,
+  EMAIL_LINE,
+  EMAIL_MUTED,
+  EMAIL_TEXT,
+  EmailText,
+} from "./layout";
 
 // Building blocks shared by the event and digest templates. Their rows are
 // formatted as tables in the plain-text body (data-text-format="dataTable"),
@@ -281,4 +288,40 @@ export function SectionTitle({ children }: { children: ReactNode }) {
 /** Secondary lines: expiry notes, "didn't ask for this?", small print. */
 export function MutedText({ children }: { children: ReactNode }) {
   return <Text style={styles.muted}>{children}</Text>;
+}
+
+/**
+ * The invite offer (apps/app/lib/invites): a friend who signs up through
+ * the reader's invite link and makes their first dynamic code gets `count`
+ * more dynamic codes, and so does the reader while their link can still
+ * earn (`both`). Paid plans have no cap to raise, so their emails offer the
+ * friend's side only.
+ */
+export interface EmailInvite {
+  /** Settings → Invite friends (absolute) */
+  url: string;
+  /** Dynamic codes each side gets (apps/app/lib/invites/terms.ts) */
+  count: number;
+  /** The reader gets codes too */
+  both: boolean;
+}
+
+/** One line under an email's upgrade line, never in its place. */
+export function InviteLine({
+  invite,
+  intl,
+}: {
+  invite: EmailInvite;
+  intl: EmailIntl;
+}) {
+  return (
+    <EmailText>
+      {intl.t.rich(invite.both ? "invite.both" : "invite.friend", {
+        count: invite.count,
+        link: (chunks: ReactNode) => (
+          <EmailTextLink href={invite.url}>{chunks}</EmailTextLink>
+        ),
+      })}
+    </EmailText>
+  );
 }

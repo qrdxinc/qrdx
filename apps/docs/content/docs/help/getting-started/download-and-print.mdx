@@ -79,9 +79,13 @@ A QR code scans from about ten times its width. Make the code about one tenth of
 
 Codes that hold more content have smaller squares and need more room. The [print size calculator](/tools/print-size) works out the minimum size for your code and distance.
 
+What a camera needs is about 2 of its pixels for each small square of the code. In our [scan study](/blog/qr-code-scan-study), fewer than half the codes were read by all three decoders tested at 1.5 pixels a square, so leave some margin above the minimum.
+
 ## Leave a clear border
 
 Scanners need empty space around the code to find it. **Padding** in the **Design** tab adds it for you: new designs start with **Small** (2 modules), and **Standard** (4 modules) is the safe choice. The scan score warns when there's less than 2. Don't let other artwork touch the code.
+
+The border matters most on a dark or busy surface. In our [scan study](/blog/qr-code-scan-study), codes printed straight onto one with no light border were read in at most 38% of captures, and one module of border brought every decoder to 98% or more.
 
 ## Test before you print
 

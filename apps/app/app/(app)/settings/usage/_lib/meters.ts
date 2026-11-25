@@ -118,6 +118,11 @@ export interface SubscriptionSummary {
   cancelAtPeriodEnd: boolean;
   /** Set when Polar has scheduled the end (ISO string) */
   endsAt: string | null;
+  /**
+   * A failed payment (past_due): when the plan's features stop (ISO
+   * string; packages/auth/subscription-access.ts). Unset otherwise.
+   */
+  graceEndsAt?: string | null;
 }
 
 /** "Renews on December 2, 2026 · billed yearly", or when it ends. */
@@ -129,6 +134,12 @@ export function renewalLine(subscription: SubscriptionSummary): string {
     return Number.isNaN(endDate.getTime())
       ? "Canceled. It stays active until the end of this period."
       : `Ends on ${LONG_DAY.format(endDate)}. Your codes keep working after that.`;
+  }
+  if (subscription.status === "past_due") {
+    const graceEnd = new Date(subscription.graceEndsAt ?? "");
+    return Number.isNaN(graceEnd.getTime())
+      ? "Your last payment didn't go through. Update your card under Manage billing."
+      : `Your last payment didn't go through. ${PLAN_NAMES[subscription.plan]} stays on until ${LONG_DAY.format(graceEnd)}. Update your card under Manage billing.`;
   }
   if (Number.isNaN(periodEnd.getTime())) return "Active";
   const when = LONG_DAY.format(periodEnd);

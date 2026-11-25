@@ -225,6 +225,9 @@ describe("siteZoneRewrites", () => {
         `/${LOCALE_INFO[locale].segment}/barcode-generator`,
         `/${LOCALE_INFO[locale].segment}/barcode-generator/:path+`,
       ]),
+      // press, when it's on.
+      "/press",
+      "/press/:path+",
       "/site-static/:path*",
     ]);
     // A path's parameters go on as they came, without their patterns.
@@ -362,7 +365,8 @@ describe("SITE_ZONE_GROUPS", () => {
     );
     expect(byDefault).not.toContain("generators-i18n");
     expect(byDefault).not.toContain("barcodes-i18n");
-    expect(byDefault.length).toBe(SITE_GROUP_NAMES.length - 2);
+    expect(byDefault).not.toContain("press");
+    expect(byDefault.length).toBe(SITE_GROUP_NAMES.length - 3);
     for (const value of [undefined, "", "  "]) {
       expect(parseSiteZoneGroups(value), String(value)).toEqual(byDefault);
       expect(siteZoneGroups(value), String(value)).toEqual(byDefault);
@@ -370,9 +374,15 @@ describe("SITE_ZONE_GROUPS", () => {
   });
 
   it("turns an opt-in group on only by name", () => {
-    expect(SITE_OPT_IN_GROUPS).toEqual(["generators-i18n", "barcodes-i18n"]);
+    expect(SITE_OPT_IN_GROUPS).toEqual([
+      "generators-i18n",
+      "barcodes-i18n",
+      "press",
+    ]);
     expect(parseSiteZoneGroups("generators-i18n")).toEqual(["generators-i18n"]);
     expect(parseSiteZoneGroups("barcodes-i18n")).toEqual(["barcodes-i18n"]);
+    // The press kit (25 Nov 2026): off until production names it.
+    expect(parseSiteZoneGroups("blog,press")).toEqual(["blog", "press"]);
     expect(parseSiteZoneGroups(`${SITE_GROUP_NAMES.join(",")}`)?.length).toBe(
       SITE_GROUP_NAMES.length,
     );
@@ -436,6 +446,9 @@ describe("site paths", () => {
     ["/qr-code-tracking", "products"],
     ["/qr-code-tracking/opengraph-image-1abc", "products"],
     ["/QR-Code-Tracking", "products"],
+    ["/press", "press"],
+    ["/press/opengraph-image-1abc", "press"],
+    ["/Press", "press"],
     ["/enterprise", "enterprise"],
     ["/pricing", "pricing"],
     ["/pricing/x", "pricing"],
@@ -1228,6 +1241,7 @@ describe("next.config.ts", () => {
         "/compare/x",
         "/custom-domain-qr-codes",
         "/qr-code-tracking",
+        "/press",
         "/legal",
         "/legal/x",
         "/pricing",

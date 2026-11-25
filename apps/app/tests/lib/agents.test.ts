@@ -125,7 +125,10 @@ describe("llms.txt", () => {
   it("follows the llmstxt.org layout", () => {
     const lines = text.split("\n");
     expect(lines[0]).toBe("# QRdx");
-    expect(lines[2]).toMatch(/^> QRdx \(qrdx\.dev\) is /);
+    // The positioning line first (owner decision, 25 Nov 2026).
+    expect(lines[2]).toMatch(
+      /^> QRdx \(qrdx\.dev\): free QR codes, and dynamic codes that keep working whatever happens to your plan\. /,
+    );
     expect(text.match(/^# /gm)).toHaveLength(1);
     const headings = [...text.matchAll(/^## (.+)$/gm)].map((m) => m[1]);
     expect(headings).toEqual([...LLMS_SECTIONS]);
@@ -142,6 +145,8 @@ describe("llms.txt", () => {
       "https://api.qrdx.dev/",
       "https://github.com/qrdxinc/qrdx",
       DISCORD_INVITE_URL,
+      // The scan study is on qrdx.dev whatever the deployment.
+      "https://qrdx.dev/blog/qr-code-scan-study",
     ];
     const targets = linkTargets(text);
     expect(targets.length).toBeGreaterThan(QR_TYPES.length);
@@ -204,6 +209,56 @@ describe("llms.txt", () => {
     );
     expect(text).toContain("Can Claude or ChatGPT make a QR code that scans?");
     expect(text).toContain("- When to choose something else:");
+  });
+
+  it("lists every post with its one-line answer, and every comparison, under Guides and research", () => {
+    const guides = text.slice(
+      text.indexOf("## Guides and research"),
+      text.indexOf("## Developers"),
+    );
+    const listed = buildLlmsTxt(
+      fixture({
+        blog: [
+          {
+            title: "What stops a QR code from scanning?",
+            url: "/blog/qr-code-scan-study",
+            description: "How big a logo can be, measured.",
+          },
+        ],
+      }),
+    );
+    expect(listed).toContain(
+      `- [What stops a QR code from scanning?](${LOCAL.origin}/blog/qr-code-scan-study): How big a logo can be, measured.`,
+    );
+    expect(guides).toContain(`](${LOCAL.origin}/blog)`);
+    expect(guides).toContain(`- [A post](${LOCAL.origin}/blog/a-post)`);
+    expect(guides).toContain(`](${LOCAL.origin}/compare)`);
+    expect(guides).toContain(`- [QRdx vs X](${LOCAL.origin}/compare/x)`);
+    // Not repeated under Optional.
+    const optional = text.slice(text.indexOf("## Optional"));
+    expect(optional).not.toContain("/blog");
+    expect(optional).not.toContain("/compare");
+  });
+
+  it("states the scan study's six findings as key facts, linking the study on qrdx.dev", () => {
+    const facts = text.slice(text.indexOf("Key facts:"), text.indexOf("\n## "));
+    expect(facts).toContain(
+      "[scan study](https://qrdx.dev/blog/qr-code-scan-study) of 12,108 images",
+    );
+    for (const lead of [
+      "Logo: at error correction level H, a centred logo up to 39% of the code's width",
+      "Contrast: ZXing-C++ and zbar read 98% or more",
+      "Light on dark: jsQR and ZXing-C++ read inverted codes almost every time",
+      "Quiet zone: printed straight onto a dark or busy surface",
+      "Size: 2 camera pixels per module was enough on a clean image",
+      "Damage: JPEG compression made almost no difference",
+    ]) {
+      expect(facts).toContain(`  - ${lead}`);
+    }
+    // A self-hosted deployment links the same study.
+    expect(buildLlmsTxt(fixture({ origin: SELF_HOSTED }))).toContain(
+      "(https://qrdx.dev/blog/qr-code-scan-study)",
+    );
   });
 
   it("lists every generator page, the hosted ones too, from the catalogues", () => {
@@ -297,6 +352,16 @@ describe("llms.txt", () => {
       "which adds precise location, tracking pixels and UTM tags\n",
     );
     expect(limited).not.toMatch(/conversion tracking on Business/);
+  });
+
+  it("lists the site's press kit only while the site serves it", () => {
+    const page = `${LOCAL.origin}/press)`;
+    expect(text).not.toContain(page);
+    const served = buildLlmsTxt(fixture({ pressPage: true }));
+    const optional = served.slice(served.indexOf("## Optional"));
+    expect(optional).toContain(
+      `- [Press kit](${page}: Descriptions of QRdx in three lengths, a fact sheet, the logo as SVG and PNG, and who to contact`,
+    );
   });
 
   it("lists the site's app download generator only while the site serves it", () => {

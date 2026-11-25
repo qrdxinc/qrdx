@@ -434,6 +434,10 @@ export const subscription = pgTable(
     metadata: text("metadata"), // JSON string
     customFieldData: text("custom_field_data"), // JSON string
     userId: text("user_id").references(() => user.id),
+    // When the subscription last changed to past_due (a payment failed),
+    // from the webhook (app/api/webhook/polar); null otherwise. Paid
+    // features keep working for 7 days from it (apps/app/lib/subscription.ts).
+    pastDueSince: timestamp("past_due_since"),
   },
   (table) => [
     index("subscription_status_idx").on(table.status),
@@ -1348,6 +1352,11 @@ export type AcquisitionChannel = (typeof ACQUISITION_CHANNELS)[number];
 // after this table, written once at sign-up. Host names, campaign tags and
 // paths only, sanitised on the server; never a full referring address.
 // Deleted with the account. No row: an older account ("unknown").
+//
+// Also where the person says they first heard about QRdx, if they answer
+// Home's optional question (apps/app/lib/where-heard.ts). An account whose
+// sign-up carried nothing gets a row for its answer alone, with channel
+// "unknown", the same as no row.
 export const userAcquisition = pgTable(
   "user_acquisition",
   {
@@ -1364,6 +1373,11 @@ export const userAcquisition = pgTable(
     landingPath: text("landing_path"),
     signupPath: text("signup_path"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
+    // "Where did you first hear about QRdx?": one of WHERE_HEARD_ANSWERS
+    // (apps/app/lib/where-heard.ts) and, for "other", the words typed (at
+    // most 200 characters). Null until the person answers.
+    selfReported: text("self_reported"),
+    selfReportedText: text("self_reported_text"),
   },
   (table) => [
     index("user_acquisition_channel_idx").on(table.channel),
@@ -2101,6 +2115,30 @@ export const limitNotice = pgTable(
       table.period,
       table.threshold
     ),
+  ]
+);
+
+/**
+ * Lifecycle emails already sent, or decided against (apps/app/lib/email/
+ * lifecycle.ts): one row per kind and subject, so each goes at most once.
+ * The subject is what the email is about: the person for once-per-account
+ * emails, the subscription for the new-customer note.
+ */
+export const lifecycleEmail = pgTable(
+  "lifecycle_email",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    // "activation-nudge", "free-scan-milestone" or "new-customer"
+    kind: text("kind").notNull(),
+    subject: text("subject").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("lifecycle_email_once_unique").on(table.kind, table.subject),
+    index("lifecycle_email_user_id_idx").on(table.userId),
   ]
 );
 

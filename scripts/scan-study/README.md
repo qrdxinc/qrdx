@@ -79,6 +79,10 @@ A read counts only when the decoded text is exactly the URL. No decoder returned
 - One URL length, so one or two code versions. Bigger codes have more, smaller modules, and a central alignment pattern from version 7 up, which a large logo can cover.
 - Colours are read from sRGB pixels; printing changes them. The contrast ratios are computed, not measured off paper.
 
+## Licence
+
+The code in this folder is under the repository's licence, the AGPL-3.0-or-later ([LICENSING.md](../../LICENSING.md)). The published charts and result data (`charts/*.svg` and the CSV and JSON files in `results/`) are licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/): reuse them for anything, crediting QRdx and linking to the study at https://qrdx.dev/blog/qr-code-scan-study.
+
 ## Files
 
 - `run.mjs`: builds the jobs, runs the workers in parallel and writes the results.

@@ -15,20 +15,25 @@ name: Notify search engines
 #   deploys, which don't run this workflow. Without yesterday's snapshot
 #   (the first run, or after the cache dropped it), every URL goes to
 #   IndexNow and the main pages to Bing, as for a deploy with no snapshot;
-# - then the rest of the day's Bing quota goes to the next slice of the
-#   sitemaps (--backlog), so every page reaches the Bing API every few days,
-#   including pages whose lastmod never changes, like the home page.
+# - then the rest of the day's Bing quota goes to the backlog (--backlog):
+#   that day's share of the priority pages (the main pages, the top
+#   generators, every blog post and comparison; each once a week), then the
+#   next slice of the rest of the sitemaps, so every page reaches the Bing
+#   API every few days, including pages whose lastmod never changes.
+#   Translations and community items go to IndexNow only.
 # The repository is public, so these runs use no billed Actions minutes;
 # the sweep adds a few seconds to the daily run.
 #
 # A search engine error never fails the run, and nothing here gates a merge
 # or a deploy. Pull requests that change the script or this workflow run its
-# read-only --check: the sitemaps and the important pages in them, the
-# IndexNow key file, the Bing key, the site's verification and today's quota,
-# the Google service account's access to the property and when Google last
-# read each sitemap. It fails when an important page is in no sitemap, or
-# when Bing or Google rejects the key or the site, so a broken setup shows
-# before merging.
+# read-only --check: the sitemaps, the important pages in them and a sample
+# of each sitemap's pages, the IndexNow key file, the Bing key, the site's
+# verification and today's quota, the Google service account's access to
+# the property and when Google last read each sitemap. It fails when an
+# important page is in no sitemap, when a sampled page answers anything but
+# 200 (a redirect, a missing page), or when Bing or Google rejects the key or
+# the site, so a broken setup shows before merging. It reads the live site,
+# so it reports what production lists, not what the pull request changes.
 on:
   push:
     branches:

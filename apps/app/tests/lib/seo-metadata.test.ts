@@ -164,6 +164,12 @@ describe("Organization schema", () => {
     }
   });
 
+  it("links QRdx's LinkedIn company page", () => {
+    expect(organizationSchema.sameAs).toContain(
+      "https://www.linkedin.com/company/qrdx/",
+    );
+  });
+
   it("names the founder's X account by its real handle", () => {
     expect(organizationSchema.founder.sameAs).toContain(
       "https://x.com/bucha_ritesh",

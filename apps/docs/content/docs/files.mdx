@@ -6,7 +6,7 @@ description: Upload PDFs, images, audio and video for your hosted pages, replace
 Hosted pages can show files you upload to QRdx: a menu or brochure as a PDF, a photo gallery, music or a podcast, or a video. Uploaded files live in **Files** in the sidebar, belong to the workspace you upload them in, and each one has a stable link that keeps working when you replace the file. Use them when the file has no home of its own, or when you want to swap next season's menu without touching the page.
 
 <Callout type="info" title="Plans">
-  Free includes 50 MB of storage per workspace with files up to 10 MB; Pro 5 GB and 100 MB; Business 50 GB and 250 MB. See [Plans and limits](/docs/plans-and-limits).
+  Free includes {facts.freeStorage} of storage per workspace with files up to {facts.freeMaxFileSize}; Pro {facts.proStorage} and {facts.proMaxFileSize}; Business {facts.businessStorage} and {facts.businessMaxFileSize}. See [Plans and limits](/docs/plans-and-limits).
 </Callout>
 
 <IfAvailable feature="fileStorage" unavailable>
@@ -70,9 +70,9 @@ Every hosted page has a **Report abuse** link. If a file breaks the rules or a c
 
 | Plan | Storage per workspace | Largest file |
 | --- | --- | --- |
-| Free | 50 MB | 10 MB |
-| Pro | 5 GB | 100 MB |
-| Business | 50 GB | 250 MB |
+| Free | {facts.freeStorage} | {facts.freeMaxFileSize} |
+| Pro | {facts.proStorage} | {facts.proMaxFileSize} |
+| Business | {facts.businessStorage} | {facts.businessMaxFileSize} |
 
 A workspace uses the best plan among its owners and billing members. Limits only stop new uploads: after a downgrade, or when a workspace is over its storage, every file you already uploaded keeps being served on every page that uses it. Delete files you no longer need (or upgrade) to upload new ones. An upload that never finishes stops counting toward storage after two hours.
 

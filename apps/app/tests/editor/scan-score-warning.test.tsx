@@ -27,6 +27,7 @@ const { ScanCheckList, ScanScoreBadge } = await import(
   "@/components/editor/scan-score"
 );
 const { defaultThemeState } = await import("@/config/qr");
+const { SCAN_STUDY_URL } = await import("@/lib/scan-study");
 
 (
   globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
@@ -148,6 +149,34 @@ describe("ScanCheckList", () => {
     expect(first?.textContent).toContain("dark or busy surface");
     await act(async () => buttonNamed(addMargin)?.click());
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("links the logo and contrast problems to the scan study, in a new tab", async () => {
+    const logo: ScanCheck = {
+      id: "logo",
+      passed: false,
+      message: "The logo covers too much of the code",
+      fix: "Make the logo smaller",
+    };
+    const contrast: ScanCheck = {
+      id: "contrast",
+      passed: false,
+      message: "Contrast 1.4:1",
+      fix: "Darken the code or lighten the background",
+    };
+    await render(<ScanCheckList checks={[logo, contrast, WARNING, PASSED]} />);
+    const links = [...container.querySelectorAll("a")].filter(
+      (link) => link.textContent === copy.whyStudy,
+    );
+    expect(links).toHaveLength(2);
+    for (const link of links) {
+      expect(link.getAttribute("href")).toBe(SCAN_STUDY_URL);
+      expect(link.getAttribute("target")).toBe("_blank");
+    }
+    // Not on the quiet zone warning, nor on a contrast check that passed.
+    const items = [...container.querySelectorAll("li")];
+    expect(items[2]?.querySelector("a")).toBeNull();
+    expect(items[3]?.querySelector("a")).toBeNull();
   });
 
   it("offers a check's one-click fix and runs it", async () => {

@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "QRdx: Kostenloser QR-Code-Generator mit Logos und dynamischen Codes",
-    "siteDescription": "Kostenloser Open-Source-QR-Code-Generator: unbegrenzt viele Codes mit Logos, Farben und Rahmen, ohne Anmeldung und ohne Wasserzeichen. Dazu dynamische Codes und Scan-Analysen.",
+    "siteDescription": "Kostenlose QR-Codes und dynamische Codes, die weiterfunktionieren, egal was mit deinem Tarif passiert. Gestalte sie mit Logos, Farben und Rahmen, ohne Anmeldung und ohne Wasserzeichen.",
     "ogImageAlt": "QRdx: kostenloser QR-Code-Generator mit dynamischen QR-Codes, gehosteten Seiten und Scan-Statistiken"
   },
   "nav": {
@@ -217,17 +217,20 @@
     }
   },
   "footer": {
-    "description": "Die Open-Source-QR-Code-Plattform.",
+    "description": "Kostenlose QR-Codes und dynamische Codes, die weiter funktionieren, egal was mit deinem Tarif passiert.",
     "starOnGithub": "Star auf GitHub",
     "newsOnX": "QRdx-News auf X",
     "joinDiscord": "Dem QRdx Discord beitreten",
+    "linkedin": "QRdx auf LinkedIn",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
+    "license": "Die App ist Open Source unter der <link>AGPL-3.0</link>.",
     "columns": {
       "product": "Produkt",
       "developers": "Entwickler",
       "solutions": "Lösungen",
       "resources": "Ressourcen",
+      "guides": "Ratgeber",
       "company": "Unternehmen",
       "compare": "Vergleich"
     },
@@ -280,8 +283,13 @@
       "scanner": "QR-Code-Scanner",
       "scanChecker": "Scan-Checker",
       "printSize": "Druckgrößen-Rechner",
+      "guideExpire": "Laufen QR-Codes ab?",
+      "guidePrintSize": "Wie groß man einen QR-Code druckt",
+      "guideDynamicStatic": "Dynamische vs. statische Codes",
+      "scanStudy": "QR-Code-Scan-Studie",
       "security": "Sicherheit",
       "affiliates": "Partnerprogramm",
+      "press": "Pressekit",
       "guarantee": "Never-Hostage-Garantie",
       "pricing": "Preise",
       "allComparisons": "Alle Vergleiche",
@@ -348,11 +356,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Kostenlos und Open Source (AGPL-3.0)",
+      "badge": "Kostenlos und Open Source",
       "title": "Kostenloser QR-Code-Generator mit dynamischen Codes, die weiter funktionieren",
-      "description": "Gestalte QR-Codes im eigenen Branding mit Mustern, Verläufen, Logos und Rahmen und lade sie als PNG, SVG, PDF, EPS oder TIFF herunter, ohne Anmeldung und ohne Wasserzeichen. Melde dich an für dynamische Codes, die du nach dem Druck noch bearbeiten kannst, gehostete Seiten und Scan-Analysen.",
-      "primary": "Playground ausprobieren",
-      "secondary": "Doku lesen",
+      "description": "Gestalte einen QR-Code im eigenen Look mit deinem Logo und lade ihn kostenlos herunter, ohne Anmeldung und ohne Wasserzeichen. Melde dich an für dynamische QR-Codes, die du auch nach dem Druck noch ändern kannst. Sie laufen bei jedem Tarif weiter, auch wenn du den Tarif wechselst, eine Zahlung fehlschlägt oder du kündigst.",
+      "primary": "QR-Code erstellen",
+      "secondary": "Dynamischen Code erstellen",
       "sceneLabel": "Animierte Zeichnung des QRdx-Ablaufs: Ein Studio-Bildschirm gestaltet einen QR-Code, ein Drucker druckt ihn auf eine Karte, ein Roboterarm legt die Karte auf ein Förderband, ein Smartphone an einem Tor scannt jede Karte beim Vorbeifahren, der Scan wandert zu einem Analyse-Panel, das einen neuen Balken hinzufügt, und eine große dynamische QR-Karte tauscht ihren Ziel-Link aus, ohne neu gedruckt zu werden"
     },
     "customers": {
@@ -487,7 +495,7 @@
       "developers": {
         "eyebrow": "Entwickler",
         "title": "Für Entwickler gebaut",
-        "description": "Rendere Codes mit der qrdx React-Bibliothek, hol dir Bilder per URL über die Image API oder lass Claude, Cursor und VS Code sie über den MCP-Server erstellen. Du kannst die App auch selbst hosten.",
+        "description": "Erzeuge Codes mit der qrdx React-Bibliothek, hole dir Bilder per URL über die Image API oder lass Claude, Cursor und VS Code sie über den MCP-Server erstellen. Du kannst die App auch selbst hosten, sie ist Open Source unter der AGPL-3.0.",
         "link": "Entwickler-Doku"
       }
     },
@@ -613,7 +621,7 @@
       }
     },
     "cards": {
-      "popular": "Beliebt",
+      "recommended": "Empfohlen",
       "leadPro": "Alles aus Kostenlos, plus:",
       "leadBusiness": "Alles aus Pro, plus:",
       "goToDashboard": "Zum Dashboard",
@@ -637,6 +645,8 @@
     "offers": {
       "moneyBack": "{days, number} Tage Geld-zurück-Garantie auf deine erste Zahlung.",
       "moneyBackLink": "So funktionieren Erstattungen",
+      "switcher": "Du wechselst von einem anderen QR-Code-Anbieter? Importiere deine Codes und du hast {days, number} Tage Zeit, deine erste Zahlung zurückzufordern.",
+      "switcherLink": "Erstattungsrichtlinie",
       "nonprofit": "Non-Profit oder gemeinnützig? {percent, number} % Rabatt auf Pro und Business.",
       "nonprofitLink": "Code anfragen"
     },
@@ -3216,7 +3226,7 @@
     }
   },
   "ai": {
-    "metaTitle": "KI-QR-Code-Generator – QR-Codes per Prompt gestalten",
+    "metaTitle": "KI-QR-Code-Generator: QR-Codes per Prompt gestalten",
     "metaDescription": "Beschreibe einen QR-Code und die KI von QRdx gestaltet ihn, verbessert ihn so lange, bis der Scan-Score „Great“ erreicht, und fragt nach, bevor sie etwas in deinem Editor ändert. Kostenlose Konten erhalten {count, number} KI-Anfragen.",
     "artLink": "Oder verwandle einen Link in scanbare KI-QR-Kunst",
     "chat": {
@@ -3255,7 +3265,7 @@
     "vectorEyebrowLead": "Jetzt kostenlos verfügbar",
     "vectorEyebrow": "Ohne KI",
     "vectorTitleLead": "Logo QR und Image QR",
-    "vectorTitle": "Du willst einen garantiert scanbaren Vektor-Code?",
+    "vectorTitle": "Lieber einen Vektor-Code ohne KI?",
     "vectorDescription": "Verschmelze ein Logo oder Foto mit dem Code selbst. Er wird als Vektorgrafik gezeichnet, hält die Muster, auf die Scanner angewiesen sind, solide und braucht keine Credits.",
     "openArt": "Art-Tab öffnen",
     "vector": {
@@ -5455,6 +5465,7 @@
       "warning": "Warnung",
       "scanScoreScoreValueWarningShow": "Scan-Score {score, number}, {value}, mit einer Warnung. Prüfungen anzeigen",
       "addAMargin": "Rand von {modules, number} Modulen hinzufügen",
+      "whyStudy": "Warum? Das hat unsere Scan-Studie ergeben",
       "grades": {
         "great": "Sehr gut",
         "ok": "OK",
@@ -8802,7 +8813,60 @@
           "fullHistory": "Blick zurück auf jeden Scan, nicht nur auf {years, plural, one {das letzte Jahr} other {die letzten # Jahre}}",
           "price": "Pro kostet {month} im Monat oder {year} im Jahr.",
           "seePro": "Pro ansehen",
+          "hide": "Ausblenden",
+          "invite": "Oder <link>lade einen Freund ein</link>: Sobald er seinen ersten dynamischen QR-Code erstellt, bekommt ihr beide {count, number} mehr."
+        },
+        "firstSteps": {
+          "title": "Mach deinen ersten Code druckfertig",
+          "progress": "{done, number} von {total, number} erledigt",
+          "progressLabel": "Erste Schritte erledigt",
+          "hide": "Ausblenden",
+          "done": "(erledigt)",
+          "make": "Dynamischen Code erstellen",
+          "makeHint": "Ein QR-Code, dessen Link du auch nach dem Drucken ändern kannst.",
+          "create": "Erstellen",
+          "scan": "Mit dem Handy scannen",
+          "scanHint": "Richte die Handykamera auf den Code auf dem Bildschirm und öffne den Link.",
+          "showCode": "Code anzeigen",
+          "download": "Für den Druck herunterladen",
+          "downloadHint": "SVG bleibt in jeder Druckgröße gestochen scharf.",
+          "downloadAction": "Herunterladen",
+          "makeFirstCode": "Ersten dynamischen Code erstellen"
+        },
+        "inviteCard": {
+          "title": "Kennst du jemanden, der QR-Codes druckt?",
+          "body": "Wenn sich ein Freund über deinen Link anmeldet und seinen ersten dynamischen QR-Code erstellt, bekommt ihr beide {count, number} dynamische QR-Codes mehr.",
+          "messageLabel": "Nachricht zum Senden:",
+          "message": "Ich erstelle meine QR-Codes mit QRdx. Sie sind kostenlos, und dynamische QR-Codes funktionieren weiter, egal was mit deinem Tarif passiert. Melde dich über meinen Link an und erstelle einen dynamischen QR-Code, dann bekommen wir beide {count, number} mehr: {link}",
+          "copyMessage": "Nachricht kopieren",
+          "copyLink": "Link kopieren",
+          "copied": "Kopiert",
+          "linkCopied": "Link kopiert",
+          "messageCopied": "Nachricht kopiert",
+          "couldntCopy": "Kopieren hat nicht geklappt. Markiere den Text und kopiere ihn selbst.",
+          "howItWorks": "So funktioniert’s",
           "hide": "Ausblenden"
+        },
+        "whereHeard": {
+          "question": "Wo hast du zum ersten Mal von QRdx gehört?",
+          "why": "Optional. Ein Tipp zeigt uns, was funktioniert.",
+          "answers": {
+            "ai_assistant": "ChatGPT oder ein anderer KI-Assistent",
+            "search": "Google oder Bing",
+            "friend": "Ein Freund oder Kollege",
+            "x_threads": "X oder Threads",
+            "linkedin": "LinkedIn",
+            "youtube": "YouTube",
+            "reddit_hn": "Reddit oder Hacker News",
+            "product_hunt": "Product Hunt",
+            "directory": "Liste oder Verzeichnis",
+            "other": "Sonstiges"
+          },
+          "otherLabel": "Wo hast du von QRdx gehört?",
+          "otherPlaceholder": "Ein paar Worte",
+          "save": "Speichern",
+          "hide": "Ausblenden",
+          "thanks": "Danke, das hilft uns."
         }
       },
       "listSelection": {
@@ -9079,6 +9143,12 @@
       }
     },
     "shell": {
+      "pastDueBanner": {
+        "title": "Deine letzte Zahlung ist fehlgeschlagen.",
+        "grace": "Deine Codes funktionieren weiterhin. Aktualisiere deine Karte, um {plan} zu behalten. Die Funktionen bleiben bis {date} aktiv.",
+        "ended": "Deine Codes funktionieren weiterhin. Die {plan}-Funktionen sind deaktiviert, bis die Zahlung durchgeht. Aktualisiere deine Karte, um sie wieder zu aktivieren.",
+        "updateCard": "Karte aktualisieren"
+      },
       "appSidebar": {
         "backToLabel": "Zurück zu {label}",
         "expandSidebar": "Seitenleiste ausklappen",
@@ -9682,7 +9752,9 @@
     },
     "scanMilestone": {
       "reached": "{code} hat {count, number} Scans erreicht",
-      "body": "Dein dynamischer QR-Code hat gerade {count, number} Scans überschritten. Sieh dir an, wo und wann er gescannt wird und welche Geräte dabei genutzt werden."
+      "body": "Dein dynamischer QR-Code hat gerade {count, number} Scans überschritten. Sieh dir an, wo und wann er gescannt wird und welche Geräte dabei genutzt werden.",
+      "pro": "<link>Pro</link> schickt dir außerdem eine E-Mail bei {first} und {second} Scans und darüber hinaus und kann dir eine wöchentliche Zusammenfassung senden.",
+      "freeReason": "Du erhältst diese E-Mail, weil ein Code von dir {count, number} Scans erreicht hat. QRdx sendet sie nur einmal."
     },
     "formSubmission": {
       "subject": "{hasTitle, select, yes {Neue Formularantwort auf „{title}“} other {Neue Formularantwort auf deiner Seite}}",
@@ -9828,6 +9900,42 @@
       "seeInvites": "Deine Einladungen ansehen",
       "keeps": "Die zusätzlichen Codes funktionieren in jedem Tarif und haben keinen Barwert. Codes, die du damit erstellst, funktionieren weiter.",
       "reason": "Du erhältst diese E-Mail, weil sich ein Freund über deinen QRdx-Einladungslink angemeldet und seinen ersten dynamischen QR-Code erstellt hat."
+    },
+    "invite": {
+      "both": "Kennst du jemanden, der QR-Codes druckt? <link>Lade die Person ein</link>: Wenn sie ihren ersten dynamischen Code erstellt, bekommt ihr beide {count, number} mehr.",
+      "friend": "Kennst du jemanden, der QR-Codes druckt? <link>Lade die Person ein</link>: Wenn sie ihren ersten dynamischen Code erstellt, bekommt sie {count, number} mehr."
+    },
+    "activationNudge": {
+      "subject": "Dein erster dynamischer Code",
+      "greeting": "Hallo {name},",
+      "what": "Ein dynamischer Code ist ein QR-Code, den du jetzt drucken und später auf ein anderes Ziel umleiten kannst, ohne neu zu drucken. Außerdem zählt er seine Scans.",
+      "button": "Dynamischen Code erstellen",
+      "reply": "Falls dir etwas im Weg stand, antworte einfach auf diese E-Mail. Jede Antwort wird von einem Menschen gelesen.",
+      "reason": "Du erhältst diese E-Mail, weil du vor ein paar Tagen ein QRdx-Konto erstellt und noch keinen dynamischen Code angelegt hast. QRdx sendet sie nur einmal."
+    },
+    "paymentFailed": {
+      "subject": "Deine letzte QRdx-Zahlung ist fehlgeschlagen",
+      "heading": "Deine letzte Zahlung ist fehlgeschlagen",
+      "greeting": "Hallo {name},",
+      "body": "Deine letzte Zahlung für {plan} ist fehlgeschlagen. Deine Codes funktionieren weiter. Aktualisiere deine Karte, um {plan} zu behalten.",
+      "grace": "Die Funktionen von {plan} bleiben bis zum {date} aktiv. Ist die Zahlung dann noch offen, werden sie deaktiviert, bis die Zahlung durchgeht. Deine dynamischen Codes funktionieren in jedem Fall weiter.",
+      "button": "Karte aktualisieren",
+      "reply": "Falls etwas nicht stimmt, antworte einfach auf diese E-Mail. Jede Antwort wird von einem Menschen gelesen.",
+      "reason": "Du bekommst diese E-Mail, weil dies die Adresse eines QRdx-Kontos ist, bei dem die {plan}-Zahlung nicht durchgegangen ist. Abrechnungshinweise zu deinem Konto erhältst du auch dann, wenn du Mitteilungen vom QRdx-Team abgeschaltet hast."
+    },
+    "newCustomer": {
+      "subject": "Willkommen bei QRdx {plan}",
+      "greeting": "Hallo {name},",
+      "thanks": "Danke, dass du dich für {plan} entschieden hast. Es ist jetzt aktiv.",
+      "setUp": "{count, plural, one {Eine Sache zum Einrichten vorab:} other {Ein paar Dinge zum Einrichten vorab:}}",
+      "domain": "<link>Verbinde deine eigene Domain</link>, damit deine Kurzlinks deinen Namen statt den von QRdx tragen. In deinem Tarif sind {count} eigene Domains enthalten.",
+      "backHalf": "<link>Gib einem Code einen Back-Half deiner Wahl</link>, damit sein Kurzlink statt mit zufälligen Buchstaben mit einem Wort wie spring-menu endet.",
+      "alerts": "Scan-Benachrichtigungen sind aktiv: QRdx schickt dir eine E-Mail, wenn ein Code seinen ersten Scan bekommt und bei Meilensteinen wie 100 und 1.000 Scans. <link>Ändere sie oder aktiviere eine wöchentliche Zusammenfassung</link> in den Einstellungen.",
+      "team": "<link>Lade dein Team ein</link>. In deinem Tarif sind {count} Personen enthalten, dich eingeschlossen.",
+      "teamUnlimited": "<link>Lade dein Team ein</link>, so viele Personen, wie du brauchst.",
+      "moneyBack": "Wenn {plan} nicht das Richtige für dich ist, antworte innerhalb von {days, number} Tagen nach deiner Zahlung, und wir erstatten sie dir vollständig. Du musst keinen Grund angeben.",
+      "reply": "Antworte auch gern mit allem anderen: einer Frage, etwas, das dir fehlt, oder wofür du QRdx nutzt. Jede Antwort wird von einem Menschen gelesen.",
+      "reason": "Du erhältst diese E-Mail, weil du gerade einen QRdx-Tarif {plan} gestartet hast."
     }
   },
   "codeActions": {

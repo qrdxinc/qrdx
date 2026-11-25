@@ -12,9 +12,13 @@ import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { PLAN_NAMES } from "@/lib/pricing";
 import { workspaceHref } from "@/lib/workspace-paths";
 import { CodeLiveCard } from "./code-live-card";
+import type { HomeFirstRun } from "./first-run-rules";
+import { FirstCodeButton, FirstStepsCard } from "./first-steps-card";
 import type { HomeData } from "./home-data";
+import { InviteCard } from "./invite-card";
 import { NewCodeButton } from "./new-code-button";
 import type { HomeProMoments } from "./pro-moments";
+import { WhereHeardCard } from "./where-heard-card";
 
 const number = (value: number) => value.toLocaleString("en-US");
 
@@ -51,22 +55,26 @@ const STATUS_LABELS = {
  * The app's front page: the numbers that matter and the newest codes. "Get
  * set up" is the app shell's launcher (components/app-shell/setup-guide.tsx).
  * `moments`: the scan-email offer and, on Free, "Your code is live"
- * (pro-moments.ts).
+ * (pro-moments.ts). `firstRun`: first steps, the invite card and "Where did
+ * you first hear about QRdx?" (first-run-rules.ts).
  */
 export function HomeView({
   data,
   slug,
   organizationId,
   moments,
+  firstRun,
 }: {
   data: HomeData;
   slug: string;
   organizationId: string;
   moments: HomeProMoments;
+  firstRun: HomeFirstRun;
 }) {
   const t = use(getAppTranslations("app.dashboard.home.homeView"));
   const workspace = data.teamName ?? "Workspace";
   const href = (path: string) => workspaceHref(slug, path);
+  const newest = data.recent[0];
 
   return (
     <div className="space-y-6">
@@ -105,9 +113,24 @@ export function HomeView({
         />
       </div>
 
-      {moments.codeLive && (
-        <CodeLiveCard card={moments.codeLive} organizationId={organizationId} />
+      {firstRun.firstSteps && (
+        <FirstStepsCard
+          codeHref={
+            newest ? href(`/codes/${encodeURIComponent(newest.id)}`) : null
+          }
+          steps={firstRun.firstSteps}
+        />
       )}
+
+      {moments.codeLive && (
+        <CodeLiveCard
+          card={moments.codeLive}
+          invite={firstRun.inviteLine}
+          organizationId={organizationId}
+        />
+      )}
+
+      {firstRun.invite && <InviteCard link={firstRun.invite.link} />}
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-4">
@@ -123,9 +146,12 @@ export function HomeView({
         </CardHeader>
         <CardContent className="pt-0">
           {data.recent.length === 0 ? (
-            <p className="text-muted-foreground text-sm">
-              {t("noDynamicCodesYetTheyre")}
-            </p>
+            <div>
+              <p className="text-muted-foreground text-sm">
+                {t("noDynamicCodesYetTheyre")}
+              </p>
+              <FirstCodeButton />
+            </div>
           ) : (
             <ul className="-mx-2 divide-y">
               {data.recent.map((code) => {
@@ -162,6 +188,8 @@ export function HomeView({
           )}
         </CardContent>
       </Card>
+
+      {firstRun.askWhereHeard && <WhereHeardCard />}
     </div>
   );
 }

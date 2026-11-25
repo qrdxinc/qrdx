@@ -1,18 +1,24 @@
 "use client";
 
 // One line under the plan cards: the money-back guarantee (every
-// deployment that sells plans; content/legal/refunds.mdx) and, where it's
-// offered, the non-profit discount with its request form.
+// deployment that sells plans; content/legal/refunds.mdx), the longer
+// window for customers moving from another QR code provider (the same
+// policy), and, where it's offered, the non-profit discount with its
+// request form.
 
 import { authClient } from "@repo/auth/client";
 import { cn } from "@repo/design-system/lib/utils";
-import { Lovely, MoneyRecive } from "iconsax-reactjs";
+import { ArrowSwapHorizontal, Lovely, MoneyRecive } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useAvailability } from "@/components/availability-provider";
 import { LocaleLink } from "@/components/i18n/locale-link";
 import { NonprofitRequestDialog } from "@/components/sections/pricing/nonprofit-request-dialog";
-import { MONEY_BACK_DAYS, NONPROFIT_DISCOUNT_PERCENT } from "@/lib/pricing";
+import {
+  MONEY_BACK_DAYS,
+  NONPROFIT_DISCOUNT_PERCENT,
+  SWITCHER_MONEY_BACK_DAYS,
+} from "@/lib/pricing";
 import { useAuthStore } from "@/store/auth-store";
 
 const LINK =
@@ -35,7 +41,7 @@ export function PricingOffers({
   return (
     <div
       className={cn(
-        "flex w-full max-w-[80rem] flex-col items-center gap-x-8 gap-y-2.5 px-10 text-sm text-muted-foreground md:flex-row md:justify-center",
+        "flex w-full max-w-[80rem] flex-col items-center gap-x-8 gap-y-2.5 px-10 text-sm text-muted-foreground md:flex-row md:flex-wrap md:justify-center",
         className,
       )}
     >
@@ -51,6 +57,24 @@ export function PricingOffers({
           {t("moneyBack", { days: MONEY_BACK_DAYS })}{" "}
           <LocaleLink className={LINK} href="/legal/refunds">
             {t("moneyBackLink")}
+          </LocaleLink>
+        </span>
+      </p>
+      <p
+        className="flex scroll-mt-24 items-start gap-2 text-pretty md:items-center"
+        id="switcher-money-back"
+      >
+        <ArrowSwapHorizontal
+          aria-hidden
+          className="mt-0.5 size-4 shrink-0 text-foreground/70 md:mt-0"
+        />
+        <span>
+          {t("switcher", { days: SWITCHER_MONEY_BACK_DAYS })}{" "}
+          <LocaleLink
+            className={LINK}
+            href="/legal/refunds#money-back-guarantee"
+          >
+            {t("switcherLink")}
           </LocaleLink>
         </span>
       </p>

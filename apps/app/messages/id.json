@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "QRdx: Pembuat Kode QR Gratis dengan Logo dan Kode Dinamis",
-    "siteDescription": "Pembuat kode QR gratis dan open-source: kode tanpa batas dengan logo, warna, dan bingkai, tanpa pendaftaran atau watermark. Plus kode dinamis dan analitik pemindaian.",
+    "siteDescription": "Kode QR gratis, plus kode dinamis yang tetap berfungsi apa pun yang terjadi pada paket Anda. Desain dengan logo, warna, dan bingkai, tanpa perlu mendaftar atau watermark.",
     "ogImageAlt": "QRdx: pembuat kode QR gratis dengan kode QR dinamis, halaman yang di-hosting, dan analitik pemindaian"
   },
   "nav": {
@@ -217,17 +217,20 @@
     }
   },
   "footer": {
-    "description": "Platform kode QR open-source.",
+    "description": "Kode QR gratis, plus kode dinamis yang tetap berfungsi apa pun yang terjadi pada paket Anda.",
     "starOnGithub": "Beri bintang di GitHub",
     "newsOnX": "Kabar QRdx di X",
     "joinDiscord": "Gabung Discord QRdx",
+    "linkedin": "QRdx di LinkedIn",
     "navLabel": "Footer",
     "copyright": "© {year} QRdx",
+    "license": "Aplikasi ini bersumber terbuka di bawah lisensi <link>AGPL-3.0</link>.",
     "columns": {
       "product": "Produk",
       "developers": "Developer",
       "solutions": "Solusi",
       "resources": "Sumber daya",
+      "guides": "Panduan",
       "company": "Perusahaan",
       "compare": "Bandingkan"
     },
@@ -280,8 +283,13 @@
       "scanner": "Pemindai kode QR",
       "scanChecker": "Pemeriksa pemindaian",
       "printSize": "Kalkulator ukuran cetak",
+      "guideExpire": "Apakah kode QR kedaluwarsa?",
+      "guidePrintSize": "Ukuran cetak kode QR yang ideal",
+      "guideDynamicStatic": "Kode dinamis vs statis",
+      "scanStudy": "Studi pemindaian kode QR",
       "security": "Keamanan",
       "affiliates": "Program afiliasi",
+      "press": "Kit pers",
       "guarantee": "Jaminan Never-Hostage",
       "pricing": "Harga",
       "allComparisons": "Semua perbandingan",
@@ -348,11 +356,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Gratis dan open source (AGPL-3.0)",
+      "badge": "Gratis dan open source",
       "title": "Pembuat kode QR gratis, dengan kode dinamis yang tetap berfungsi",
-      "description": "Rancang kode QR bermerek dengan pola, gradien, logo, dan bingkai, lalu unduh PNG, SVG, PDF, EPS, atau TIFF tanpa pendaftaran dan tanpa tanda air. Masuk untuk mendapatkan kode dinamis yang dapat diedit setelah dicetak, halaman yang di-hosting, dan analitik pemindaian.",
-      "primary": "Coba Playground",
-      "secondary": "Baca dokumentasi",
+      "description": "Rancang kode QR bermerek dengan logo Anda dan unduh secara gratis, tanpa pendaftaran atau watermark. Masuk untuk membuat kode dinamis yang bisa diubah setelah dicetak. Kode tersebut tidak akan berhenti berfungsi karena perubahan paket, pembayaran gagal, atau pembatalan, di paket mana pun.",
+      "primary": "Buat kode QR",
+      "secondary": "Buat kode dinamis",
       "sceneLabel": "Gambar animasi alur QRdx: layar studio merancang dan menata gaya kode QR, printer mencetaknya pada sebuah kartu, lengan robot menaruh kartu itu di ban berjalan, ponsel di gerbang melakukan pemindaian setiap kartu yang lewat, hasil pemindaian dikirim ke panel analitik yang menambahkan satu batang baru, dan sebuah kartu kode QR dinamis berukuran besar mengganti tautan tujuannya tanpa dicetak ulang"
     },
     "customers": {
@@ -487,7 +495,7 @@
       "developers": {
         "eyebrow": "Developer",
         "title": "Dibuat untuk developer",
-        "description": "Render kode dengan library qrdx React, ambil gambar dari sebuah URL dengan image API, atau biarkan Claude, Cursor, dan VS Code membuatnya melalui server MCP. Anda juga dapat melakukan self-host aplikasinya.",
+        "description": "Render kode dengan library React qrdx, ambil gambar dari URL dengan image API, atau biarkan Claude, Cursor, dan VS Code membuatnya melalui server MCP. Anda juga bisa menjalankan aplikasinya sendiri (self-host), yang bersifat open source di bawah AGPL-3.0.",
         "link": "Dokumentasi developer"
       }
     },
@@ -613,7 +621,7 @@
       }
     },
     "cards": {
-      "popular": "Populer",
+      "recommended": "Direkomendasikan",
       "leadPro": "Semua di Gratis, plus:",
       "leadBusiness": "Semua di Pro, plus:",
       "goToDashboard": "Buka dasbor",
@@ -637,6 +645,8 @@
     "offers": {
       "moneyBack": "Garansi uang kembali {days, number} hari untuk pembayaran pertama Anda.",
       "moneyBackLink": "Cara kerja pengembalian dana",
+      "switcher": "Pindah dari penyedia kode QR lain? Impor kode Anda dan Anda punya waktu {days, number} hari untuk meminta pengembalian pembayaran pertama Anda.",
+      "switcherLink": "Kebijakan pengembalian dana",
       "nonprofit": "Organisasi nirlaba atau amal? Diskon {percent, number}% untuk Pro dan Business.",
       "nonprofitLink": "Minta kode"
     },
@@ -3216,7 +3226,7 @@
     }
   },
   "ai": {
-    "metaTitle": "Generator Kode QR AI — Desain Kode QR dari Sebuah Prompt",
+    "metaTitle": "Generator Kode QR AI: Desain Kode QR dari Sebuah Prompt",
     "metaDescription": "Deskripsikan kode QR dan AI QRdx akan merancangnya, memperbaikinya hingga skor pemindaian menjadi Great, serta meminta persetujuan sebelum mengubah editor Anda. Akun Gratis mendapat {count, number} permintaan AI.",
     "artLink": "Atau ubah tautan menjadi seni kode QR AI yang bisa dipindai",
     "chat": {
@@ -3255,7 +3265,7 @@
     "vectorEyebrowLead": "Tersedia sekarang, gratis",
     "vectorEyebrow": "Tanpa AI",
     "vectorTitleLead": "Logo QR dan Image QR",
-    "vectorTitle": "Ingin kode vektor yang pasti bisa dipindai?",
+    "vectorTitle": "Lebih suka kode vektor tanpa AI?",
     "vectorDescription": "Padukan logo atau foto ke dalam kodenya sendiri. Kode digambar sebagai vektor, menjaga pola yang diandalkan pemindai tetap solid, dan tidak memerlukan kredit.",
     "openArt": "Buka tab Art",
     "vector": {
@@ -5455,6 +5465,7 @@
       "warning": "Peringatan",
       "scanScoreScoreValueWarningShow": "Skor pemindaian {score, number}, {value}, dengan peringatan. Tampilkan pemeriksaan",
       "addAMargin": "Tambahkan margin {modules, number} modul",
+      "whyStudy": "Mengapa? Lihat temuan studi pemindaian kami",
       "grades": {
         "great": "Bagus",
         "ok": "OK",
@@ -8802,7 +8813,60 @@
           "fullHistory": "Lihat kembali setiap pemindaian, bukan hanya {years, plural, one {# tahun} other {# tahun}} terakhir",
           "price": "Pro seharga {month} per bulan atau {year} per tahun.",
           "seePro": "Lihat Pro",
+          "hide": "Sembunyikan",
+          "invite": "Atau <link>undang teman</link>: saat mereka membuat kode dinamis pertamanya, Anda berdua mendapat {count, number} lagi."
+        },
+        "firstSteps": {
+          "title": "Siapkan kode pertama Anda untuk dicetak",
+          "progress": "{done, number} dari {total, number} selesai",
+          "progressLabel": "Langkah awal selesai",
+          "hide": "Sembunyikan",
+          "done": "(selesai)",
+          "make": "Buat kode dinamis",
+          "makeHint": "Kode QR yang tautannya bisa Anda ubah setelah dicetak.",
+          "create": "Buat",
+          "scan": "Pindai dengan ponsel Anda",
+          "scanHint": "Arahkan kamera ponsel Anda ke kode di layar, lalu buka tautannya.",
+          "showCode": "Tampilkan kode",
+          "download": "Unduh untuk dicetak",
+          "downloadHint": "SVG tetap tajam di ukuran cetak berapa pun.",
+          "downloadAction": "Unduh",
+          "makeFirstCode": "Buat kode dinamis pertama Anda"
+        },
+        "inviteCard": {
+          "title": "Kenal orang yang mencetak kode QR?",
+          "body": "Saat teman mendaftar lewat tautan Anda dan membuat kode dinamis pertamanya, Anda berdua mendapat {count, number} kode dinamis lagi.",
+          "messageLabel": "Pesan untuk dikirim:",
+          "message": "Saya membuat kode QR dengan QRdx. Gratis, dan kode dinamisnya tetap berfungsi apa pun yang terjadi pada paket Anda. Daftar lewat tautan saya dan buat kode dinamis, lalu kita berdua mendapat {count, number} lagi: {link}",
+          "copyMessage": "Salin pesan",
+          "copyLink": "Salin tautan",
+          "copied": "Tersalin",
+          "linkCopied": "Tautan disalin",
+          "messageCopied": "Pesan disalin",
+          "couldntCopy": "Tidak dapat menyalin. Pilih teksnya dan salin sendiri.",
+          "howItWorks": "Cara kerjanya",
           "hide": "Sembunyikan"
+        },
+        "whereHeard": {
+          "question": "Dari mana Anda pertama kali mengenal QRdx?",
+          "why": "Opsional. Satu ketukan memberi tahu kami apa yang berhasil.",
+          "answers": {
+            "ai_assistant": "ChatGPT atau asisten AI lainnya",
+            "search": "Google atau Bing",
+            "friend": "Teman atau rekan kerja",
+            "x_threads": "X atau Threads",
+            "linkedin": "LinkedIn",
+            "youtube": "YouTube",
+            "reddit_hn": "Reddit atau Hacker News",
+            "product_hunt": "Product Hunt",
+            "directory": "Daftar atau direktori",
+            "other": "Lainnya"
+          },
+          "otherLabel": "Dari mana Anda mengetahui QRdx?",
+          "otherPlaceholder": "Beberapa kata saja",
+          "save": "Simpan",
+          "hide": "Sembunyikan",
+          "thanks": "Terima kasih, ini sangat membantu."
         }
       },
       "listSelection": {
@@ -9079,6 +9143,12 @@
       }
     },
     "shell": {
+      "pastDueBanner": {
+        "title": "Pembayaran terakhir Anda tidak berhasil.",
+        "grace": "Kode QR Anda tetap berfungsi. Perbarui kartu Anda untuk tetap menggunakan {plan}. Fitur-fiturnya tetap aktif hingga {date}.",
+        "ended": "Kode QR Anda tetap berfungsi. Fitur {plan} nonaktif sampai pembayaran berhasil. Perbarui kartu Anda untuk mengaktifkannya kembali.",
+        "updateCard": "Perbarui kartu"
+      },
       "appSidebar": {
         "backToLabel": "Kembali ke {label}",
         "expandSidebar": "Perluas sidebar",
@@ -9682,7 +9752,9 @@
     },
     "scanMilestone": {
       "reached": "{code} mencapai {count, number} pemindaian",
-      "body": "Kode QR dinamis Anda baru saja melewati {count, number} pemindaian. Lihat di mana dan kapan orang memindainya, serta perangkat apa yang mereka gunakan."
+      "body": "Kode QR dinamis Anda baru saja melewati {count, number} pemindaian. Lihat di mana dan kapan orang memindainya, serta perangkat apa yang mereka gunakan.",
+      "pro": "<link>Pro</link> juga mengirim email kepada Anda pada {first} dan {second} pemindaian serta seterusnya, dan dapat mengirimkan ringkasan mingguan.",
+      "freeReason": "Anda menerima email ini karena kode yang Anda buat telah mencapai {count, number} pemindaian. QRdx hanya mengirim email ini sekali."
     },
     "formSubmission": {
       "subject": "{hasTitle, select, yes {Respons formulir baru di “{title}”} other {Respons formulir baru di halaman Anda}}",
@@ -9828,6 +9900,42 @@
       "seeInvites": "Lihat undangan Anda",
       "keeps": "Kode tambahan ini berlaku di paket apa pun dan tidak memiliki nilai tunai. Kode yang Anda buat dengannya akan terus berfungsi.",
       "reason": "Anda menerima email ini karena seorang teman mendaftar melalui tautan undangan QRdx Anda dan membuat kode dinamis pertamanya."
+    },
+    "invite": {
+      "both": "Kenal seseorang yang mencetak kode QR? <link>Undang mereka</link>: saat mereka membuat kode dinamis pertamanya, Anda berdua mendapat {count, number} lagi.",
+      "friend": "Kenal seseorang yang mencetak kode QR? <link>Undang mereka</link>: saat mereka membuat kode dinamis pertamanya, mereka mendapat {count, number} lagi."
+    },
+    "activationNudge": {
+      "subject": "Kode dinamis pertama Anda",
+      "greeting": "Halo {name},",
+      "what": "Kode dinamis adalah kode QR yang bisa Anda cetak sekarang dan arahkan ke tujuan lain nanti tanpa mencetak ulang, serta menghitung jumlah pemindaiannya.",
+      "button": "Buat kode dinamis",
+      "reply": "Jika ada kendala, balas email ini. Setiap balasan dibaca oleh manusia.",
+      "reason": "Anda menerima email ini karena Anda membuat akun QRdx beberapa hari lalu dan belum membuat kode dinamis. QRdx hanya mengirim email ini sekali."
+    },
+    "paymentFailed": {
+      "subject": "Pembayaran QRdx terakhir Anda tidak berhasil",
+      "heading": "Pembayaran terakhir Anda tidak berhasil",
+      "greeting": "Halo {name},",
+      "body": "Pembayaran terakhir Anda untuk {plan} tidak berhasil. Kode Anda tetap berfungsi. Perbarui kartu Anda untuk tetap menggunakan {plan}.",
+      "grace": "Fitur {plan} tetap aktif sampai {date}. Jika pada saat itu masih belum dibayar, fitur tersebut akan nonaktif sampai pembayaran berhasil. Kode dinamis Anda tetap berfungsi dalam kedua kasus.",
+      "button": "Perbarui kartu Anda",
+      "reply": "Jika ada yang tampak keliru, balas email ini. Setiap balasan dibaca oleh manusia.",
+      "reason": "Anda menerima email ini karena alamat ini terdaftar pada akun QRdx yang pembayaran {plan}-nya tidak berhasil diproses. Pemberitahuan tagihan terkait akun Anda tetap dikirim meskipun Anda telah menonaktifkan pesan dari tim QRdx."
+    },
+    "newCustomer": {
+      "subject": "Selamat datang di QRdx {plan}",
+      "greeting": "Halo {name},",
+      "thanks": "Terima kasih telah memilih {plan}. Paket ini sudah aktif.",
+      "setUp": "{count, plural, other {Beberapa hal yang perlu diatur lebih dulu:}}",
+      "domain": "<link>Hubungkan domain Anda sendiri</link>, agar tautan pendek Anda memakai nama Anda, bukan nama QRdx. Paket Anda mencakup {count} domain kustom.",
+      "backHalf": "<link>Berikan back-half pilihan Anda pada kode</link>, agar tautan pendeknya berakhir dengan kata seperti spring-menu, bukan huruf acak.",
+      "alerts": "Peringatan pemindaian aktif: QRdx mengirim email kepada Anda saat kode mendapat pemindaian pertama dan pada tonggak seperti 100 dan 1,000 pemindaian. <link>Ubah peringatan, atau aktifkan ringkasan mingguan</link>, di Pengaturan.",
+      "team": "<link>Undang tim Anda</link>. Paket Anda mencakup {count} orang, termasuk Anda.",
+      "teamUnlimited": "<link>Undang tim Anda</link>, sebanyak orang yang Anda butuhkan.",
+      "moneyBack": "Jika {plan} kurang cocok untuk Anda, balas dalam {days, number} hari setelah pembayaran dan kami akan mengembalikan dana Anda sepenuhnya. Anda tidak perlu menyebutkan alasan.",
+      "reply": "Anda juga boleh membalas dengan hal lain: pertanyaan, fitur yang belum ada, atau untuk apa Anda menggunakan QRdx. Setiap balasan dibaca oleh manusia.",
+      "reason": "Anda menerima email ini karena Anda baru saja memulai paket QRdx {plan}."
     }
   },
   "codeActions": {

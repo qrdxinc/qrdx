@@ -10,7 +10,11 @@
 // - authorization code + refresh token only, and PKCE (S256) always;
 // - only the scopes the MCP server's sign-in tools use (MCP_SCOPES);
 // - a name of up to 60 plain characters (NFKC, no invisible characters, no
-//   Latin mixed with lookalike scripts), never one that reads "QRdx";
+//   Latin mixed with lookalike scripts), never one that reads "QRdx". A
+//   name that breaks these rules doesn't fail the registration, since the
+//   client often builds it from what the person called the server (Claude
+//   Code sends "Claude Code (QRdx)"): its bracketed parts are dropped, and
+//   if it still breaks them the client is named by its redirect host;
 // - nothing else is stored: no logo, website or contacts, which would only
 //   be the registrant's own claims on the consent screen.
 //
@@ -196,33 +200,50 @@ function isOwnHost(hostname: string): boolean {
 const isStringList = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((item) => typeof item === "string");
 
+/** Single spaces, and no spaces, dashes, colons or bars at either end. */
+const tidy = (name: string) =>
+  name.replace(/\s+/g, " ").replace(/^[\s\p{Pd}:|·,]+|[\s\p{Pd}:|·,]+$/gu, "");
+
+/**
+ * The name without its bracketed parts, nested ones too: "Claude Code
+ * (QRdx)" is "Claude Code". An unclosed bracket drops the rest. One pass,
+ * however deep the nesting.
+ */
+function withoutAsides(name: string): string {
+  let depth = 0;
+  let kept = "";
+  for (const char of name) {
+    if ("([{".includes(char)) depth += 1;
+    else if (")]}".includes(char)) depth = Math.max(0, depth - 1);
+    else if (depth === 0) kept += char;
+  }
+  return tidy(kept);
+}
+
+/** A name the consent screen may show: short, one script, not "QRdx". */
+const isShowable = (name: string) =>
+  name.length > 0 &&
+  name.length <= MAX_APP_NAME_LENGTH &&
+  !mixesScripts(name) &&
+  !asLatin(name).includes("qrdx");
+
+/**
+ * The name to store, or null to name the client by its redirect host. Only
+ * a client_name that isn't a string fails the registration: the rest is
+ * often the person's own server name, which they can't see failing.
+ */
 function cleanName(value: unknown): string | RegistrationError | null {
   if (value === undefined || value === null) return null;
   if (typeof value !== "string") {
     return metadataError("client_name must be a string.");
   }
   // NFKC first: fullwidth and other compatibility forms become plain
-  // letters ("ＱＲｄｘ" is "QRdx"), and the stored name is the one shown.
-  const name = value
-    .normalize("NFKC")
-    .replace(INVISIBLE, "")
-    .replace(/\s+/g, " ")
-    .trim();
-  if (!name) return null;
-  if (name.length > MAX_APP_NAME_LENGTH) {
-    return metadataError(
-      `client_name can be up to ${MAX_APP_NAME_LENGTH} characters.`,
-    );
-  }
-  if (mixesScripts(name)) {
-    return metadataError(
-      "client_name can't mix Latin letters with Cyrillic, Greek or Armenian ones.",
-    );
-  }
-  if (asLatin(name).includes("qrdx")) {
-    return metadataError("client_name can't name QRdx itself.");
-  }
-  return name;
+  // letters ("ＱＲｄｘ" is "QRdx", "（" is "("), and the stored name is the
+  // one shown.
+  const name = tidy(value.normalize("NFKC").replace(INVISIBLE, ""));
+  if (isShowable(name)) return name;
+  const bare = withoutAsides(name);
+  return isShowable(bare) ? bare : null;
 }
 
 function checkRedirectUris(value: unknown): string[] | RegistrationError {
