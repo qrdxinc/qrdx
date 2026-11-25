@@ -10,16 +10,12 @@ import {
 } from "@repo/email/templates/payment-failed";
 import { DEFAULT_LOCALE, isLocale } from "@repo/i18n/config";
 import { eq } from "drizzle-orm";
-import { env } from "@/env";
-import { teamNotesUnsubscribeUrl } from "@/lib/events/unsubscribe";
-import { isFeatureAvailable } from "@/lib/feature-availability";
 import { emailIntl } from "@/lib/i18n/email";
 import { planForSubscriptionProduct } from "@/lib/plans";
 import { PLAN_NAMES } from "@/lib/pricing";
 import { greetingName } from "./greeting";
 import { personalSender } from "./personal-sender";
-import { sendEmail } from "./send";
-import { wantsTeamNotes } from "./team-notes";
+import { isEmailConfigured, sendEmail } from "./send";
 
 // One plain email when a subscription's payment fails (owner decision, 25
 // Nov 2026): the Polar webhook (app/api/webhook/polar) calls it when a
@@ -29,12 +25,14 @@ import { wantsTeamNotes } from "./team-notes";
 // portal to update the card. The app shell shows the same thing in a
 // banner while the subscription is past_due (components/billing).
 //
-// It goes like the welcome email: a note from the QRdx team
-// (./team-notes.ts), only where those exist, from EMAIL_FROM_PERSONAL with
-// replies to it, never to someone who turned them off, a banned account or
-// a reserved test address. Polar may email the customer about the failed
-// payment too (its own dunning). The webhook sends it only on the change to
-// past_due, which it reads from the stored row, and the idempotency key
+// A billing notice about the person's own paid plan (owner decision, 25 Nov
+// 2026), so it always goes where email is set up, whatever their email
+// settings: not one of the notes from the QRdx team (./team-notes.ts), and
+// no unsubscribe link. Like those notes it comes from EMAIL_FROM_PERSONAL
+// with replies to it, and never to a banned account or a reserved test
+// address. Polar may email the customer about the failed payment too (its
+// own dunning). The webhook sends it only on the change to past_due, which
+// it reads from the stored row, and the idempotency key
 // payment-failed:<subscriptionId>:<past_due_since> covers redeliveries.
 
 export type PaymentFailedOutcome =
@@ -44,7 +42,6 @@ export type PaymentFailedOutcome =
   | "not_found"
   | "banned"
   | "reserved_address"
-  | "opted_out"
   | "failed";
 
 let warnedNoSender = false;
@@ -63,7 +60,7 @@ export async function sendPaymentFailedEmail({
   pastDueSince: Date;
 }): Promise<PaymentFailedOutcome> {
   try {
-    if (!(isFeatureAvailable("teamNotes") && env.EMAIL_FROM)) return "off";
+    if (!isEmailConfigured) return "off";
     const sender = personalSender();
     if (!sender) {
       if (!warnedNoSender) {
@@ -85,7 +82,6 @@ export async function sendPaymentFailedEmail({
         banned: user.banned,
         banExpires: user.banExpires,
         locale: user.locale,
-        teamNotes: user.teamNotes,
       })
       .from(user)
       .where(eq(user.id, userId))
@@ -95,12 +91,10 @@ export async function sendPaymentFailedEmail({
       return "banned";
     }
     if (isReservedEmailAddress(row.email)) return "reserved_address";
-    if (!wantsTeamNotes(row)) return "opted_out";
 
     const intl = await emailIntl(
       isLocale(row.locale) ? row.locale : DEFAULT_LOCALE,
     );
-    const unsubscribeUrl = teamNotesUnsubscribeUrl(row.id);
     const result = await sendEmail({
       to: row.email,
       from: sender.from,
@@ -115,10 +109,8 @@ export async function sendPaymentFailedEmail({
           planName={PLAN_NAMES[planForSubscriptionProduct(productId)]}
           recipient={row.email}
           senderName={sender.name}
-          unsubscribeUrl={unsubscribeUrl}
         />
       ),
-      unsubscribeUrl,
       idempotencyKey: `payment-failed:${subscriptionId}:${pastDueSince.getTime()}`,
       tags: [{ name: "kind", value: "payment-failed" }],
     });

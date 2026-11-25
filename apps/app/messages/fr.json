@@ -9921,7 +9921,7 @@
       "grace": "Les fonctionnalités {plan} restent actives jusqu’au {date}. Si le paiement n’est toujours pas réglé à cette date, elles se désactivent jusqu’à ce qu’il aboutisse. Vos codes dynamiques continuent de fonctionner dans tous les cas.",
       "button": "Mettre à jour la carte",
       "reply": "Si quelque chose vous semble anormal, répondez à cet e-mail. Une personne lit chaque réponse.",
-      "reason": "Vous recevez cet e-mail parce qu’un paiement pour votre offre QRdx {plan} n’a pas abouti."
+      "reason": "Vous recevez cet e-mail car il s’agit de l’adresse d’un compte QRdx dont le paiement {plan} n’a pas abouti. Les notifications de facturation concernant votre compte vous sont envoyées même si vous avez désactivé les messages de l’équipe QRdx."
     },
     "newCustomer": {
       "subject": "Bienvenue dans QRdx {plan}",

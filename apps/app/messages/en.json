@@ -10322,7 +10322,7 @@
       "grace": "{plan} features stay on until {date}. If it's still unpaid then, they turn off until the payment goes through. Your dynamic codes keep working either way.",
       "button": "Update your card",
       "reply": "If something looks wrong, reply to this email. A person reads every reply.",
-      "reason": "You're getting this because a payment for your QRdx {plan} plan didn't go through."
+      "reason": "You got this email because it's the address of a QRdx account whose {plan} payment didn't go through. Billing notices about your account come even if you've turned off notes from the QRdx team."
     },
     "newCustomer": {
       "subject": "Welcome to QRdx {plan}",

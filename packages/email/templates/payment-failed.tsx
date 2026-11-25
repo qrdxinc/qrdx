@@ -5,8 +5,9 @@ import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
 // (apps/app/lib/email/payment-failed.tsx, from the Polar webhook): the
 // codes keep working, the plan's features stay on for a few days, and one
 // button to update the card. From a person on the team, with replies to
-// them. One of the notes from the QRdx team, so its footer can turn them
-// off.
+// them. A billing notice about the reader's own plan (owner decision, 25
+// Nov 2026), so it has no unsubscribe link: its footer says why it comes
+// whatever their email settings are.
 
 export interface PaymentFailedEmailProps {
   /** "Sam"; "there" when the account has no name */
@@ -19,8 +20,6 @@ export interface PaymentFailedEmailProps {
   graceEndsAt: Date | string;
   /** Opens the billing portal (absolute; /settings/portal) */
   billingUrl: string;
-  /** Turns notes from the team off in one click */
-  unsubscribeUrl: string;
   /** The address it's sent to (the footer names it) */
   recipient?: string;
   /** The recipient's language */
@@ -43,7 +42,6 @@ export function PaymentFailedEmail({
   planName,
   graceEndsAt,
   billingUrl,
-  unsubscribeUrl,
   recipient,
   intl,
 }: PaymentFailedEmailProps) {
@@ -54,7 +52,6 @@ export function PaymentFailedEmail({
       preview={t("paymentFailed.body", { plan: planName })}
       reason={t("paymentFailed.reason", { plan: planName })}
       recipient={recipient}
-      unsubscribeUrl={unsubscribeUrl}
     >
       <EmailHeading>{t("paymentFailed.heading")}</EmailHeading>
       <EmailText>{t("paymentFailed.greeting", { name: firstName })}</EmailText>
@@ -79,6 +76,5 @@ PaymentFailedEmail.PreviewProps = {
   planName: "Pro",
   graceEndsAt: new Date("2026-12-09T10:00:00Z"),
   billingUrl: "https://qrdx.dev/settings/portal",
-  unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
   recipient: "sam@example.com",
 } satisfies Omit<PaymentFailedEmailProps, "intl">;

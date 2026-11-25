@@ -9921,7 +9921,7 @@
       "grace": "Os recursos do {plan} continuam ativos até {date}. Se o pagamento ainda estiver pendente nessa data, eles serão desativados até que ele seja aprovado. Seus códigos dinâmicos continuam funcionando de qualquer forma.",
       "button": "Atualizar cartão",
       "reply": "Se algo parecer errado, responda a este e-mail. Uma pessoa lê todas as respostas.",
-      "reason": "Você está recebendo este e-mail porque um pagamento do seu plano {plan} do QRdx não foi aprovado."
+      "reason": "Você recebeu este e-mail porque este é o endereço de uma conta do QRdx cujo pagamento do plano {plan} não foi concluído. Os avisos de cobrança sobre a sua conta chegam mesmo que você tenha desativado as mensagens da equipe do QRdx."
     },
     "newCustomer": {
       "subject": "Boas-vindas ao QRdx {plan}",

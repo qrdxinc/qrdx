@@ -9921,7 +9921,7 @@
       "grace": "Las funciones de {plan} siguen activas hasta el {date}. Si para entonces sigue sin pagarse, se desactivan hasta que el pago se procese. Tus códigos dinámicos siguen funcionando en cualquier caso.",
       "button": "Actualizar tu tarjeta",
       "reply": "Si algo no te cuadra, responde a este correo. Una persona lee todas las respuestas.",
-      "reason": "Recibes este correo porque no se pudo procesar un pago de tu plan {plan} de QRdx."
+      "reason": "Recibes este correo porque es la dirección de una cuenta de QRdx cuyo pago del plan {plan} no se pudo completar. Los avisos de facturación de tu cuenta te llegan aunque hayas desactivado las notas del equipo de QRdx."
     },
     "newCustomer": {
       "subject": "Te damos la bienvenida a QRdx {plan}",

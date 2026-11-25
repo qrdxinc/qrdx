@@ -9921,7 +9921,7 @@
       "grace": "Die Funktionen von {plan} bleiben bis zum {date} aktiv. Ist die Zahlung dann noch offen, werden sie deaktiviert, bis die Zahlung durchgeht. Deine dynamischen Codes funktionieren in jedem Fall weiter.",
       "button": "Karte aktualisieren",
       "reply": "Falls etwas nicht stimmt, antworte einfach auf diese E-Mail. Jede Antwort wird von einem Menschen gelesen.",
-      "reason": "Du erhältst diese E-Mail, weil eine Zahlung für deinen QRdx-Tarif {plan} fehlgeschlagen ist."
+      "reason": "Du bekommst diese E-Mail, weil dies die Adresse eines QRdx-Kontos ist, bei dem die {plan}-Zahlung nicht durchgegangen ist. Abrechnungshinweise zu deinem Konto erhältst du auch dann, wenn du Mitteilungen vom QRdx-Team abgeschaltet hast."
     },
     "newCustomer": {
       "subject": "Willkommen bei QRdx {plan}",

@@ -1,12 +1,13 @@
-// The lifecycle emails (owner decisions, 25 Nov 2026): the note to accounts
-// two days old with no dynamic code (lib/email/activation-nudge.tsx), Free's
-// one 100-scan email (lib/email/free-scan-milestone.tsx), the failed-payment
-// email (lib/email/payment-failed.tsx) and the note after a first payment
+// The lifecycle emails (owner decisions, 25 Nov 2026): the note to accounts two
+// days old with no dynamic code (lib/email/activation-nudge.tsx), Free's one
+// 100-scan email (lib/email/free-scan-milestone.tsx), the failed-payment email
+// (lib/email/payment-failed.tsx) and the note after a first payment
 // (lib/email/new-customer.tsx); the invite line under the upgrade line
 // (lib/email/invite-line.ts); and the first_real_scan event
-// (lib/email/first-scan.tsx). Each goes from the personal sender with the
-// team notes opt-out, once. Tables in memory, sendEmail and trackServer
-// captured: nothing is sent or stored.
+// (lib/email/first-scan.tsx). Each goes from the personal sender, once, with
+// the team notes opt-out, except the failed-payment email: a billing notice
+// about the reader's own plan, it always goes. Tables in memory, sendEmail and
+// trackServer captured: nothing is sent or stored.
 import { render } from "@react-email/render";
 import type { ReactElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -23,6 +24,7 @@ const state = vi.hoisted(() => ({
     customDomains: true,
   } as Record<string, boolean>,
   plan: "free" as "free" | "pro" | "business",
+  emailConfigured: true,
   serverEvents: true,
   tracked: [] as {
     event: string;
@@ -85,7 +87,9 @@ vi.mock("@/lib/analytics/server", () => ({
   },
 }));
 vi.mock("@/lib/email/send", () => ({
-  isEmailConfigured: true,
+  get isEmailConfigured() {
+    return state.emailConfigured;
+  },
   sendEmail: vi.fn(async (options: (typeof state.sent)[number]) => {
     state.sent.push(options);
     return state.sendResult;
@@ -158,6 +162,7 @@ beforeEach(() => {
     customDomains: true,
   };
   state.plan = "free";
+  state.emailConfigured = true;
   state.serverEvents = true;
   vi.spyOn(console, "error").mockImplementation(() => undefined);
   vi.spyOn(console, "warn").mockImplementation(() => undefined);
@@ -416,11 +421,17 @@ describe("sendPaymentFailedEmail", () => {
       "Pro features stay on until December 2, 2026.",
       "Your dynamic codes keep working either way.",
       "Update your card",
-      "You're getting this because a payment for your QRdx Pro plan didn't go through.",
+      "You got this email because it's the address of a QRdx account whose Pro payment didn't go through. Billing notices about your account come even if you've turned off notes from the QRdx team.",
     ]) {
       expect(text, line).toContain(line);
     }
     expect(hrefs(html)).toContain(absolute("/settings/portal"));
+    // A billing notice: no unsubscribe link and no List-Unsubscribe header.
+    expect(email.unsubscribeUrl).toBeUndefined();
+    expect(text).not.toContain("Unsubscribe");
+    expect(hrefs(html).some((href) => href.includes("unsubscribe"))).toBe(
+      false,
+    );
   });
 
   it("names Business for a Business subscription", async () => {
@@ -429,11 +440,28 @@ describe("sendPaymentFailedEmail", () => {
     expect(text).toContain("Update your card to keep Business.");
   });
 
-  it("skips people who turned notes off, and sends nothing where notes don't exist", async () => {
-    expect(await sendPaymentFailedEmail({ ...failed, userId: "u_off" })).toBe(
-      "opted_out",
-    );
+  it("goes to people who turned notes from the team off: it's about their own plan", async () => {
     state.features.teamNotes = false;
+    expect(await sendPaymentFailedEmail({ ...failed, userId: "u_off" })).toBe(
+      "sent",
+    );
+    expect(state.sent[0]?.to).toBe("u_off@mail.example.org.uk");
+  });
+
+  it("sends nothing without email or a personal sender, nor to banned accounts or test addresses", async () => {
+    fakeDb.seed("user", [
+      person("u_banned", { banned: true }),
+      person("u_test", { email: "e2e@qrdx.test" }),
+    ]);
+    expect(
+      await sendPaymentFailedEmail({ ...failed, userId: "u_banned" }),
+    ).toBe("banned");
+    expect(await sendPaymentFailedEmail({ ...failed, userId: "u_test" })).toBe(
+      "reserved_address",
+    );
+    state.env.EMAIL_FROM_PERSONAL = undefined;
+    expect(await sendPaymentFailedEmail(failed)).toBe("no_personal_sender");
+    state.emailConfigured = false;
     expect(await sendPaymentFailedEmail(failed)).toBe("off");
     expect(state.sent).toHaveLength(0);
   });

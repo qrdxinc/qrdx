@@ -9921,7 +9921,7 @@
       "grace": "Le funzioni di {plan} restano attive fino al {date}. Se a quella data il pagamento risulta ancora in sospeso, si disattivano finché il pagamento non va a buon fine. I tuoi codici dinamici continuano a funzionare in ogni caso.",
       "button": "Aggiorna la carta",
       "reply": "Se qualcosa non ti torna, rispondi a questa email. Ogni risposta viene letta da una persona.",
-      "reason": "Ricevi questa email perché un pagamento per il tuo piano QRdx {plan} non è andato a buon fine."
+      "reason": "Hai ricevuto questa email perché è l’indirizzo di un account QRdx il cui pagamento {plan} non è andato a buon fine. Gli avvisi di fatturazione relativi al tuo account arrivano anche se hai disattivato le comunicazioni del team di QRdx."
     },
     "newCustomer": {
       "subject": "Benvenuto in QRdx {plan}",
