@@ -703,13 +703,8 @@ describe("POST /api/oauth/register", () => {
       "invalid_client_metadata",
     ],
     [
-      "a name over 60 characters",
-      { client_name: "x".repeat(61) },
-      "invalid_client_metadata",
-    ],
-    [
-      "a name that claims to be QRdx",
-      { client_name: "QRdx Official" },
+      "a name that isn't a string",
+      { client_name: 42 },
       "invalid_client_metadata",
     ],
   ])("refuses %s", async (_label, change, error) => {
@@ -1417,11 +1412,48 @@ describe("names that only look like another", () => {
     ["a syllabics letter for D", "QR\u15EAx"],
     ["a multiplication sign for x", "QRd\u00D7"],
     ["separators inside", "Q.R d-x"],
-  ])("refuses %s", async (_label, name) => {
-    const response = await postRegister({ ...CLAUDE, client_name: name });
-    expect(response.status).toBe(400);
-    expect((await response.json()).error).toBe("invalid_client_metadata");
-    expect(fakeDb.rows("oauthApp")).toHaveLength(0);
+    ["a name that claims to be QRdx", "QRdx Official"],
+    ["QRdx outside the brackets", "QRdx (Claude Code)"],
+    // Refused as it is (Latin with Cyrillic), and "QR dx" without the brackets.
+    ["QRdx spread around the brackets", "QR (Мой) dx"],
+    ["a name over 60 characters", "x".repeat(61)],
+  ])("never stores %s: names the client by its host", async (_label, name) => {
+    const client = (await registerClient({
+      ...CLAUDE,
+      client_name: name,
+    })) as { client_name?: string };
+    expect(client.client_name).toBe("claude.ai");
+    expect(fakeDb.rows("oauthApp")).toEqual([
+      expect.objectContaining({ name: "claude.ai" }),
+    ]);
+  });
+
+  // Claude Code registers as "Claude Code (<server name>)", and the docs
+  // name the server qrdx, so this is how most of its sign-ins arrive.
+  it.each([
+    ["Claude Code's own server name", "Claude Code (qrdx)", "Claude Code"],
+    ["a capitalised one", "Claude Code (QRdx)", "Claude Code"],
+    ["a lookalike in brackets", "Claude Code (QRdх)", "Claude Code"],
+    ["nested brackets", "Claude Code (qrdx (prod))", "Claude Code"],
+    ["square brackets and a dash", "Editor - [QRdx]", "Editor"],
+    ["fullwidth brackets", "Claude Code （QRdx）", "Claude Code"],
+    [
+      "a long server name",
+      `Claude Code (${"my-codes-".repeat(8)})`,
+      "Claude Code",
+    ],
+    [
+      "brackets that are fine as they are",
+      "Claude Code (work)",
+      "Claude Code (work)",
+    ],
+  ])("keeps the rest of a name around %s", async (_label, name, stored) => {
+    const client = (await registerClient({
+      ...CLAUDE,
+      redirect_uris: ["http://localhost:54321/callback"],
+      client_name: name,
+    })) as { client_name?: string };
+    expect(client.client_name).toBe(stored);
   });
 
   it("stores names without invisible characters", async () => {
