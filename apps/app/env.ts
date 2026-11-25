@@ -85,6 +85,8 @@ export const env = validateTogether(() =>
       SLACK_SIGNING_SECRET: z.string().min(1).optional(),
       HUBSPOT_CLIENT_ID: z.string().min(1).optional(),
       HUBSPOT_CLIENT_SECRET: z.string().min(1).optional(),
+      PIPEDRIVE_CLIENT_ID: z.string().min(1).optional(),
+      PIPEDRIVE_CLIENT_SECRET: z.string().min(1).optional(),
       MAILCHIMP_CLIENT_ID: z.string().min(1).optional(),
       MAILCHIMP_CLIENT_SECRET: z.string().min(1).optional(),
       // Discord bot (/qr and "Make QR code"): the app's id and public key from
@@ -296,6 +298,8 @@ export const env = validateTogether(() =>
       SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET,
       HUBSPOT_CLIENT_ID: process.env.HUBSPOT_CLIENT_ID,
       HUBSPOT_CLIENT_SECRET: process.env.HUBSPOT_CLIENT_SECRET,
+      PIPEDRIVE_CLIENT_ID: process.env.PIPEDRIVE_CLIENT_ID,
+      PIPEDRIVE_CLIENT_SECRET: process.env.PIPEDRIVE_CLIENT_SECRET,
       MAILCHIMP_CLIENT_ID: process.env.MAILCHIMP_CLIENT_ID,
       MAILCHIMP_CLIENT_SECRET: process.env.MAILCHIMP_CLIENT_SECRET,
       DISCORD_APPLICATION_ID: process.env.DISCORD_APPLICATION_ID,

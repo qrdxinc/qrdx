@@ -21115,6 +21115,10 @@
     "source": "aa5af4084f37",
     "status": "machine"
   },
+  "app.settings.integrations.responseSinkPanel.persons": {
+    "source": "d39245fa8f8a",
+    "status": "machine"
+  },
   "app.settings.integrations.responseSinkPanel.pickAnAudience": {
     "source": "efcb6cb7c830",
     "status": "machine"
@@ -21137,6 +21141,18 @@
   },
   "app.settings.integrations.responseSinkPanel.newResponsesCreateOrUpdate": {
     "source": "76b40cdd1003",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.newResponsesCreateOrUpdatePerson": {
+    "source": "6ab1759c002f",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.addALeadForEveryResponse": {
+    "source": "cba8e032465b",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.addALeadHelp": {
+    "source": "66203774aaec",
     "status": "machine"
   },
   "app.settings.integrations.responseSinkPanel.on": {

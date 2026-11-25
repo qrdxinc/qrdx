@@ -24,6 +24,11 @@ import {
   mailchimpTargets,
   syncResponsesToMailchimp,
 } from "@repo/integrations/src/integrations/mailchimp";
+import {
+  createPipedriveClient,
+  type PipedriveSettings,
+  syncResponsesToPipedrive,
+} from "@repo/integrations/src/integrations/pipedrive";
 import type { ResponseSinkSettings } from "@repo/integrations/src/sinks/mapping";
 import {
   isSyncDue,
@@ -31,6 +36,7 @@ import {
   readSyncState,
   SYNC_BATCH_SIZE,
   SYNC_LEASE_MS,
+  syncBatchSize,
 } from "@repo/integrations/src/sinks/state";
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { after } from "next/server";
@@ -109,11 +115,67 @@ export function readSheetTarget(
   return target?.spreadsheetId ? target : null;
 }
 
+/** What the batches of one worker run share. */
+interface RunContext {
+  /**
+   * Pipedrive persons found or created in this run (email → id). Pipedrive's
+   * search can lag behind a create, so an email from an earlier batch isn't
+   * searched, and created, a second time.
+   */
+  pipedrivePeople: Map<string, number>;
+  /**
+   * The responses of the batch being delivered that already got their
+   * Pipedrive lead (metadata.pipedriveLeadsMade). Written as each lead is
+   * made, so another attempt at the batch ("Retry now", a backoff retry, a
+   * worker that stopped) skips them; emptied once the batch is delivered.
+   */
+  pipedriveLeadsMade: Set<string>;
+}
+
+const PIPEDRIVE_LEADS_MADE = "pipedriveLeadsMade";
+
+/** Response ids recorded in metadata.pipedriveLeadsMade. */
+export function readPipedriveLeadsMade(
+  metadata: Record<string, unknown>,
+): Set<string> {
+  const value = metadata[PIPEDRIVE_LEADS_MADE];
+  return new Set(
+    Array.isArray(value)
+      ? value.filter((id): id is string => typeof id === "string")
+      : [],
+  );
+}
+
+/** Records a response's lead, in one statement, before anything can fail. */
+async function recordPipedriveLead(
+  integrationId: string,
+  responseId: string,
+): Promise<void> {
+  const list = sql`coalesce(${metaJson} -> ${PIPEDRIVE_LEADS_MADE}, '[]'::jsonb)`;
+  await db
+    .update(integration)
+    .set({
+      metadata: sql`jsonb_set(${metaJson}, ${`{${PIPEDRIVE_LEADS_MADE}}`}::text[], ${list} || to_jsonb(${responseId}::text))::json`,
+    })
+    .where(eq(integration.id, integrationId));
+}
+
+/** After a delivered batch: its responses won't be read again. */
+async function clearPipedriveLeads(integrationId: string): Promise<void> {
+  await db
+    .update(integration)
+    .set({
+      metadata: sql`(${metaJson} - ${PIPEDRIVE_LEADS_MADE}::text)::json`,
+    })
+    .where(eq(integration.id, integrationId));
+}
+
 /** Delivers one batch for the stream. */
 async function deliverBatch(
   row: SinkRow,
   state: SyncState,
   accessToken: string,
+  run: RunContext,
 ): Promise<{
   result: SinkDeliveryResult;
   settingsPatch?: Record<string, unknown>;
@@ -152,7 +214,7 @@ async function deliverBatch(
   const responses = await loadResponses(scope, {
     pageIds: responseSettings.pageIds ?? null,
     cursor: state.cursor,
-    limit: SYNC_BATCH_SIZE,
+    limit: syncBatchSize(row.provider),
   });
   if (responses.length === 0) {
     return { result: { delivered: 0, skipped: 0, cursor: null }, read: 0 };
@@ -166,6 +228,34 @@ async function deliverBatch(
           forms: responseSettings.forms ?? {},
         },
         responses,
+      ),
+      read: responses.length,
+    };
+  }
+  if (row.provider === "pipedrive") {
+    const pipedrive = settings as unknown as PipedriveSettings;
+    return {
+      result: await syncResponsesToPipedrive(
+        createPipedriveClient(
+          accessToken,
+          String(row.metadata.apiDomain ?? ""),
+        ),
+        {
+          pageIds: pipedrive.pageIds ?? null,
+          forms: pipedrive.forms ?? {},
+          createLead: pipedrive.createLead === true,
+        },
+        responses,
+        {
+          knownPeople: run.pipedrivePeople,
+          // No retry flag: "Retry now" resets the attempt count, so the record
+          // of leads already made is what keeps a lead from being made twice.
+          leadsMade: run.pipedriveLeadsMade,
+          onLeadCreated: async (responseId) => {
+            await recordPipedriveLead(row.id, responseId);
+            run.pipedriveLeadsMade.add(responseId);
+          },
+        },
       ),
       read: responses.length,
     };
@@ -264,11 +354,15 @@ async function syncOne(
     }
 
     let caughtUp = false;
+    const run: RunContext = {
+      pipedrivePeople: new Map(),
+      pipedriveLeadsMade: readPipedriveLeadsMade(row.metadata),
+    };
     for (let batch = 0; batch < MAX_BATCHES_PER_RUN; batch++) {
       if (Date.now() > deadline) break;
       let outcome: Awaited<ReturnType<typeof deliverBatch>>;
       try {
-        outcome = await deliverBatch(row, state, connection.accessToken);
+        outcome = await deliverBatch(row, state, connection.accessToken, run);
       } catch (error) {
         state = nextSyncState(state, { ok: false, error });
         await release(state);
@@ -304,13 +398,19 @@ async function syncOne(
         },
         outcome.settingsPatch,
       );
+      // The cursor is past this batch now, so its leads won't be asked for
+      // again. (If clearing fails, the stale ids are harmless.)
+      if (run.pipedriveLeadsMade.size > 0) {
+        await clearPipedriveLeads(row.id);
+        run.pipedriveLeadsMade.clear();
+      }
       if (outcome.settingsPatch) {
         row.metadata = {
           ...row.metadata,
           settings: { ...settingsOf(row.metadata), ...outcome.settingsPatch },
         };
       }
-      if (outcome.read < SYNC_BATCH_SIZE) {
+      if (outcome.read < syncBatchSize(row.provider)) {
         caughtUp = true;
         break;
       }

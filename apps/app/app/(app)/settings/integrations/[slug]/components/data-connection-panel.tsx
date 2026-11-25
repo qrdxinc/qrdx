@@ -284,7 +284,7 @@ export function DataConnectionPanel({
     return <SourcePreview name={name} slug={slug} />;
   if (slug === "google-sheets") return <SheetsPanel />;
   if (slug === "slack") return <SlackPanel metadata={metadata} />;
-  if (slug === "hubspot" || slug === "mailchimp") {
+  if (slug === "hubspot" || slug === "mailchimp" || slug === "pipedrive") {
     return <ResponseSinkPanel name={name} provider={slug} />;
   }
   return null;

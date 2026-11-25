@@ -990,6 +990,7 @@ describe("a production-like deployment", () => {
         "mailchimp",
         "notion",
         "onedrive",
+        "pipedrive",
         "slack",
         "telegram",
       ].sort(),

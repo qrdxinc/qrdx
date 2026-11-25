@@ -320,6 +320,7 @@ const DATA_OAUTH_PROVIDERS = new Set([
   "slack",
   "hubspot",
   "mailchimp",
+  "pipedrive",
 ]);
 
 /**
@@ -378,7 +379,8 @@ export async function prepareDataConnect(
     }
     const accessToken = String(tokenData.access_token ?? "");
     let metadata: Record<string, unknown> | null = null;
-    if (dataCallsAllowed()) {
+    // Pipedrive's account address is in the token response: no call to make
+    if (dataCallsAllowed() || provider === "pipedrive") {
       metadata = await fetchDataAccountMetadata(
         provider,
         accessToken,

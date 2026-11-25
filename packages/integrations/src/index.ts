@@ -17,7 +17,7 @@ export {
   INTEGRATION_CAPABILITY_LABELS,
 } from "@repo/integration-kit";
 // Content sources (Stripe, Cal.com, Calendly, Shopify, YouTube, Spotify) and
-// data out (Google Sheets, Slack, HubSpot, Mailchimp)
+// data out (Google Sheets, Slack, HubSpot, Mailchimp, Pipedrive)
 export {
   createContentSourceClient,
   DATA_REVOCABLE_PROVIDERS,
@@ -134,6 +134,10 @@ export {
 } from "./integrations/mailchimp";
 export { createNotionClient, NotionClient } from "./integrations/notion";
 export { createOneDriveClient, OneDriveClient } from "./integrations/onedrive";
+export {
+  createPipedriveClient,
+  PipedriveClient,
+} from "./integrations/pipedrive";
 export {
   createRebrandlyClient,
   RebrandlyClient,
