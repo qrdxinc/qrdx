@@ -1,7 +1,7 @@
 // Vercel's ignored build step (scripts/skip-ci.js): only production (main)
-// builds; [skip ci] skips everything. Vercel doesn't create deployments for
-// any other branch at all (vercel.json git.deploymentEnabled), which the last
-// tests check.
+// builds; [skip ci] skips everything. No push creates a deployment at all
+// (vercel.json git.deploymentEnabled): production deploys on a timer from
+// .github/workflows/production-deploy.yml, which the last tests check.
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
@@ -88,58 +88,31 @@ describe("skip-ci", () => {
   });
 });
 
-// Vercel's rule for git.deploymentEnabled: branch keys are minimatch
-// patterns, unlisted branches deploy, and a branch deploys when at least one
-// matching rule is true. This config only uses three pattern shapes ("**",
-// "<prefix>/**" and exact names); the first test fails if another shape is
-// added, so this small matcher stays faithful to minimatch for our keys.
+// No push creates a Vercel deployment (vercel.json git.deploymentEnabled);
+// production deploys from .github/workflows/production-deploy.yml, which
+// asks Vercel to build main and runs this same check before it does.
 const vercelJson = JSON.parse(
   readFileSync(new URL("../../vercel.json", import.meta.url), "utf8"),
-) as { git?: { deploymentEnabled?: Record<string, boolean> } };
-const rules = vercelJson.git?.deploymentEnabled ?? {};
+) as { git?: { deploymentEnabled?: unknown } };
+const productionDeploy = readFileSync(
+  new URL(
+    "../../../../.github/workflows/production-deploy.yml",
+    import.meta.url,
+  ),
+  "utf8",
+);
 
-function matches(pattern: string, branch: string): boolean {
-  if (pattern === "**") return true;
-  if (pattern.endsWith("/**")) return branch.startsWith(pattern.slice(0, -2));
-  return pattern === branch;
-}
-
-function deploys(branch: string): boolean {
-  const hits = Object.entries(rules).filter(([pattern]) =>
-    matches(pattern, branch),
-  );
-  return hits.length === 0 || hits.some(([, enabled]) => enabled);
-}
-
-describe("vercel.json git.deploymentEnabled", () => {
-  it("only uses pattern shapes this test understands", () => {
-    for (const pattern of Object.keys(rules)) {
-      expect(
-        pattern === "**" ||
-          /^[\w.-]+\/\*\*$/.test(pattern) ||
-          /^[\w./-]+$/.test(pattern),
-      ).toBe(true);
-    }
+describe("production deploys", () => {
+  it("never come from a push (vercel.json git.deploymentEnabled)", () => {
+    expect(vercelJson.git?.deploymentEnabled).toBe(false);
   });
 
-  it("deploys main", () => {
-    expect(deploys("main")).toBe(true);
-  });
-
-  it("creates no deployment for any other branch", () => {
-    for (const branch of [
-      "staging",
-      "preview/x",
-      "preview/a/b",
-      "feat/x",
-      "fix/y",
-      "docs/z",
-      "dependabot/npm_and_yarn/next-16",
-      "release",
-      "mainline",
-      "staging-old",
-    ]) {
-      expect(deploys(branch), branch).toBe(false);
-    }
+  it("come from production-deploy.yml, which builds main after this check", () => {
+    expect(productionDeploy).toContain(
+      'require("./apps/app/scripts/skip-ci.js")',
+    );
+    expect(productionDeploy).toMatch(/^\s+ref: main$/m);
+    expect(productionDeploy).toContain('target: "production"');
+    expect(productionDeploy).toMatch(/^\s+- cron: "[^"]+"$/m);
   });
 });

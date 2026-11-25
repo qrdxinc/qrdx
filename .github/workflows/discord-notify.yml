@@ -1,13 +1,15 @@
 name: Discord
 
 # Posts QRdx news to the QRdx Discord server through channel webhooks
-# (scripts/discord-notify.mjs), after each push to main:
-# - #announcements: each changelog entry the push adds
+# (scripts/discord-notify.mjs), after each production deploy of the main
+# app (production-deploy.yml calls it with the commit production served
+# before and the one it serves now, which can span several merges):
+# - #announcements: each changelog entry the deploy adds
 #   (apps/app/content/changelog/<slug>.mdx), with its title, description
 #   and picture, linked to qrdx.dev/changelogs#<slug>. Editing an entry
 #   posts nothing.
-# - #releases: the pull requests the push brings to main, by title, with
-#   links. Pull requests named chore:, ci:, build:, test: or deps: (or on
+# - #releases: the pull requests the deploy brings to production, by
+#   title, with links. Pull requests named chore:, ci:, build:, test: or deps: (or on
 #   branches named that way), and ones that only change CI or tests, are
 #   left out; a release with nothing else posts nothing.
 # npm publishes (publish.yml) and MCP Registry publishes (mcp-registry.yml)
@@ -18,19 +20,25 @@ name: Discord
 # (Discord: the channel's settings → Integrations → Webhooks → Copy Webhook
 # URL). Without one, its post is a notice and the run passes.
 #
-# It waits for the production deploy of the commit first, so the release is
-# live and the changelog's picture loads when people open the post. A
-# deploy that fails posts nothing: once it's fixed, run this workflow from
-# the Actions tab with the same two commits. A manual run prints the posts
-# without sending them unless "Print only" is unticked.
+# It runs once the deploy is live, so the changelog's picture loads when
+# people open the post. A deploy that fails posts nothing; the next one
+# posts its range, which includes the failed one's. A manual run prints the
+# posts without sending them unless "Print only" is unticked.
 #
 # Nothing here gates a merge, a deploy or a publish: the job may fail
 # without marking main red, and the script exits 0 on any Discord, GitHub
 # or git error.
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      before:
+        description: The commit production served before the deploy
+        type: string
+        required: true
+      after:
+        description: The commit production serves now
+        type: string
+        required: true
   workflow_dispatch:
     inputs:
       before:
@@ -46,21 +54,19 @@ on:
 
 permissions:
   contents: read
-  deployments: read
   pull-requests: read
 
 jobs:
   post:
     name: Post to Discord
     runs-on: ubuntu-latest
-    # Polls for the deploy for up to 30 minutes.
-    timeout-minutes: 45
+    timeout-minutes: 15
     # Informational: a failure here never marks main red.
     continue-on-error: true
-    # No concurrency group: each push posts its own range, and a group
-    # would drop a queued run when a third push came in.
+    # No concurrency group: each deploy posts its own range, and a group
+    # would drop a queued run when a third came in.
     env:
-      BEFORE: ${{ inputs.before || github.event.before }}
+      BEFORE: ${{ inputs.before }}
       AFTER: ${{ inputs.after || github.sha }}
       DRY_RUN: ${{ inputs.dry_run == true }}
     steps:
@@ -74,7 +80,7 @@ jobs:
           sparse-checkout: scripts/discord-notify.mjs
           sparse-checkout-cone-mode: false
 
-      # Both ends of the push, so the script can tell a new changelog entry
+      # Both ends of the deploy, so the script can tell a new changelog entry
       # from an edited one. Only these two commits, not the history between.
       - name: Fetch the two commits
         run: |
@@ -89,37 +95,7 @@ jobs:
         with:
           node-version: 22
 
-      # Vercel records a GitHub deployment for the commit, environment
-      # Production, once the deploy is ready.
-      - name: Wait for the production deploy
-        id: deploy
-        if: github.event_name == 'push'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          deadline=$((SECONDS + 1800))
-          while [ "$SECONDS" -lt "$deadline" ]; do
-            id="$(gh api "repos/$GITHUB_REPOSITORY/deployments?sha=$GITHUB_SHA&environment=Production" --jq '.[0].id // empty' || true)"
-            if [ -n "$id" ]; then
-              state="$(gh api "repos/$GITHUB_REPOSITORY/deployments/$id/statuses" --jq '.[0].state // empty' || true)"
-              case "$state" in
-                success)
-                  echo "Production serves $GITHUB_SHA."
-                  exit 0
-                  ;;
-                failure | error)
-                  echo "::warning::The production deploy of $GITHUB_SHA ended in '$state', so nothing was posted. Once it's fixed, run this workflow by hand with before $BEFORE and after $AFTER."
-                  echo "skip=true" >> "$GITHUB_OUTPUT"
-                  exit 0
-                  ;;
-              esac
-            fi
-            sleep 30
-          done
-          echo "::notice::No finished production deploy of $GITHUB_SHA after 30 minutes (a change Vercel doesn't build?); posting anyway."
-
       - name: "Post new changelog entries to #announcements"
-        if: steps.deploy.outputs.skip != 'true'
         env:
           DISCORD_ANNOUNCEMENTS_WEBHOOK_URL: ${{ secrets.DISCORD_ANNOUNCEMENTS_WEBHOOK_URL }}
         run: |
@@ -128,7 +104,7 @@ jobs:
           node scripts/discord-notify.mjs "${args[@]}"
 
       - name: "Post the release to #releases"
-        if: ${{ !cancelled() && steps.deploy.outputs.skip != 'true' }}
+        if: ${{ !cancelled() }}
         env:
           DISCORD_RELEASES_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASES_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ github.token }}

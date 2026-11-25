@@ -1,10 +1,11 @@
 name: Notify search engines
 
-# After each production deploy, tells IndexNow (Bing, Yandex, Seznam and the
-# other IndexNow engines) and, when the BING_WEBMASTER_API_KEY secret is set,
-# the Bing Webmaster API which sitemap URLs changed, and resubmits the
-# sitemaps to Google Search Console when the GSC_SERVICE_ACCOUNT_JSON secret
-# is set (scripts/notify-search-engines.mjs). "The sitemaps" are every one
+# After each production deploy of the main app (production-deploy.yml calls
+# it once qrdx.dev serves the new build), tells IndexNow (Bing, Yandex,
+# Seznam and the other IndexNow engines) and, when the BING_WEBMASTER_API_KEY
+# secret is set, the Bing Webmaster API which sitemap URLs changed, and
+# resubmits the sitemaps to Google Search Console when the
+# GSC_SERVICE_ACCOUNT_JSON secret is set (scripts/notify-search-engines.mjs). "The sitemaps" are every one
 # robots.txt lists, the marketing site's included. Google has no API to
 # request indexing of ordinary pages; that stays a manual step in Search
 # Console.
@@ -35,9 +36,12 @@ name: Notify search engines
 # the site, so a broken setup shows before merging. It reads the live site,
 # so it reports what production lists, not what the pull request changes.
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      after_deploy:
+        description: Send what changed since the sitemap snapshot production-deploy.yml saved before the deploy (artifact sitemap-before)
+        type: boolean
+        default: false
   schedule:
     - cron: "15 23 * * *"
   pull_request:
@@ -62,7 +66,6 @@ on:
 
 permissions:
   contents: read
-  deployments: read
 
 jobs:
   check:
@@ -94,8 +97,7 @@ jobs:
     if: github.event_name != 'pull_request'
     name: Notify search engines
     runs-on: ubuntu-latest
-    # Polls for the deploy for up to 30 minutes.
-    timeout-minutes: 45
+    timeout-minutes: 30
     # Informational: a failure here never marks main red.
     continue-on-error: true
     concurrency:
@@ -113,46 +115,19 @@ jobs:
         with:
           node-version: 22
 
-      # Before Vercel finishes building this commit (about 10 minutes), the
-      # live sitemap is the previous deploy's: the baseline for what changed.
-      - name: Save the live sitemap
-        if: github.event_name == 'push'
-        run: node scripts/notify-search-engines.mjs --snapshot "$RUNNER_TEMP/sitemap-before.xml"
-
-      # Vercel records a GitHub deployment for the commit, environment
-      # Production, once the deploy is ready.
-      - name: Wait for the production deploy
-        id: deploy
-        if: github.event_name == 'push'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          deadline=$((SECONDS + 1800))
-          while [ "$SECONDS" -lt "$deadline" ]; do
-            id="$(gh api "repos/$GITHUB_REPOSITORY/deployments?sha=$GITHUB_SHA&environment=Production" --jq '.[0].id // empty' || true)"
-            if [ -n "$id" ]; then
-              state="$(gh api "repos/$GITHUB_REPOSITORY/deployments/$id/statuses" --jq '.[0].state // empty' || true)"
-              case "$state" in
-                success)
-                  echo "Production serves $GITHUB_SHA."
-                  # A moment for the domain to point at the new deploy.
-                  sleep 30
-                  exit 0
-                  ;;
-                failure | error)
-                  echo "::warning::The production deploy of $GITHUB_SHA ended in '$state'; not notifying."
-                  echo "skip=true" >> "$GITHUB_OUTPUT"
-                  exit 0
-                  ;;
-              esac
-            fi
-            sleep 30
-          done
-          echo "::warning::No finished production deploy of $GITHUB_SHA after 30 minutes; sending what the live sitemap shows."
+      # The live sitemap as it was before the deploy, which the deploy
+      # workflow saved before starting the build.
+      - name: Download the sitemap from before the deploy
+        if: inputs.after_deploy
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: sitemap-before
+          path: ${{ runner.temp }}
 
       # The daily sweep's baseline: the sitemaps as yesterday's run saved them.
       - name: Restore yesterday's sitemap snapshot
-        if: github.event_name == 'schedule'
+        if: github.event_name == 'schedule' && !inputs.after_deploy
         uses: actions/cache/restore@v4
         with:
           path: .sitemap-sweep.xml
@@ -160,16 +135,22 @@ jobs:
           restore-keys: sitemap-sweep-
 
       - name: Notify search engines
-        if: steps.deploy.outputs.skip != 'true'
         env:
           BING_WEBMASTER_API_KEY: ${{ secrets.BING_WEBMASTER_API_KEY }}
           GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          AFTER_DEPLOY: ${{ inputs.after_deploy == true }}
           SCOPE: ${{ inputs.scope }}
           URLS: ${{ inputs.urls }}
         run: |
           set -f
-          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
-            node scripts/notify-search-engines.mjs --changed-since "$RUNNER_TEMP/sitemap-before.xml"
+          # Called by production-deploy.yml, whose event (schedule or
+          # workflow_dispatch) this run reports as its own.
+          if [ "$AFTER_DEPLOY" = "true" ]; then
+            if [ -f "$RUNNER_TEMP/sitemap-before.xml" ]; then
+              node scripts/notify-search-engines.mjs --changed-since "$RUNNER_TEMP/sitemap-before.xml"
+            else
+              echo "::notice::No sitemap from before the deploy; tonight's sweep sends what changed."
+            fi
           elif [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             # Today's snapshot first, so a change that lands while this runs
             # is sent today and again tomorrow, never missed.
@@ -189,7 +170,7 @@ jobs:
       # Tomorrow's baseline. A new key each run; the cache keeps the newest,
       # and drops entries nobody reads for 7 days.
       - name: Save today's sitemap snapshot
-        if: github.event_name == 'schedule' && hashFiles('.sitemap-sweep.xml') != ''
+        if: github.event_name == 'schedule' && !inputs.after_deploy && hashFiles('.sitemap-sweep.xml') != ''
         uses: actions/cache/save@v4
         with:
           path: .sitemap-sweep.xml
