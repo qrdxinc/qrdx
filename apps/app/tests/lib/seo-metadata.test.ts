@@ -170,6 +170,13 @@ describe("Organization schema", () => {
     );
   });
 
+  it("links QRdx's Substack and its subreddit", () => {
+    expect(organizationSchema.sameAs).toContain("https://qrdx.substack.com");
+    expect(organizationSchema.sameAs).toContain(
+      "https://www.reddit.com/r/qrdx/",
+    );
+  });
+
   it("names the founder's X account by its real handle", () => {
     expect(organizationSchema.founder.sameAs).toContain(
       "https://x.com/bucha_ritesh",
