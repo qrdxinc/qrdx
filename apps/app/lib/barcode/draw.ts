@@ -11,7 +11,13 @@ import {
   getBarcodeFormat,
   maxicodeMessage,
 } from "./formats";
-import { MICRO_QR_LIMITS } from "./micro-qr";
+import {
+  MICRO_QR_LIMITS,
+  MICRO_QR_MASKS,
+  microQrCornerShows,
+  microQrMaskScore,
+  microQrModules,
+} from "./micro-qr";
 import type { BarcodeRotation, BarcodeStyle } from "./style";
 
 export type { BarcodeStyle } from "./style";
@@ -41,6 +47,8 @@ export interface DrawOptions {
   textyoffset?: number;
   /** Micro QR: no Kanji mode, since the text is UTF-8, not Shift JIS */
   suppresskanjimode?: boolean;
+  /** Micro QR's mask pattern, 1 to 4; bwip-js picks one when it's left out */
+  mask?: number;
   /** rMQR's size, rows × columns, e.g. "R7x43" (bwip-js picks none itself) */
   version?: string;
   /** MaxiCode's mode: 2 and 3 carrier messages, 4 text */
@@ -269,10 +277,7 @@ export function drawBarcode<Drawing>(
   const format = getBarcodeFormat(id);
   let svg: string;
   try {
-    svg =
-      id === "rmqr"
-        ? drawRmqr(build, drawOptions(id, value, style))
-        : build.encoders[id](drawOptions(id, value, style), build.drawingSVG());
+    svg = encode(build, id, drawOptions(id, value, style));
   } catch (error) {
     // bwip-js 4.11.4 has no message for a DataBar Expanded past its last
     // segment: it fails with a TypeError of its own. That only happens when
@@ -325,6 +330,58 @@ export function drawBarcode<Drawing>(
     widthUnits: (width / style.scale) * (format.vectorScale ?? 1),
     heightUnits: (height / style.scale) * (format.vectorScale ?? 1),
   };
+}
+
+/** The SVG of one encoder, with rMQR's size and Micro QR's mask picked here. */
+function encode<Drawing>(
+  build: BwipBuild<Drawing>,
+  id: BarcodeFormatId,
+  options: DrawOptions,
+): string {
+  if (id === "rmqr") return drawRmqr(build, options);
+  if (id === "microqr") return drawMicroQr(build, options);
+  return build.encoders[id](options, build.drawingSVG());
+}
+
+/**
+ * A Micro QR at the mask bwip-js picks, unless that leaves the bottom-right
+ * corner where ZXing misses it (microQrCornerShows): then at the mask with
+ * the best ISO/IEC 18004 score whose corner shows, or bwip-js's own if none
+ * does. Every mask is a valid symbol; this one also reads with ZXing.
+ */
+function drawMicroQr<Drawing>(
+  build: BwipBuild<Drawing>,
+  options: DrawOptions,
+): string {
+  // The symbol alone (scale 1, no padding, upright), to read its modules.
+  const modules = (mask?: number) =>
+    microQrModules(
+      build.encoders.microqr(
+        {
+          ...options,
+          ...(mask ? { mask } : {}),
+          scale: 1,
+          paddingwidth: 0,
+          paddingheight: 0,
+          rotate: "N",
+        },
+        build.drawingSVG(),
+      ),
+    );
+  if (microQrCornerShows(modules())) {
+    return build.encoders.microqr(options, build.drawingSVG());
+  }
+  let best: { mask: number; score: number } | null = null;
+  for (const mask of MICRO_QR_MASKS) {
+    const masked = modules(mask);
+    if (!microQrCornerShows(masked)) continue;
+    const score = microQrMaskScore(masked);
+    if (!best || score > best.score) best = { mask, score };
+  }
+  return build.encoders.microqr(
+    best ? { ...options, mask: best.mask } : options,
+    build.drawingSVG(),
+  );
 }
 
 /** The smallest rMQR `options.text` fits (RMQR_SIZES), as SVG. */

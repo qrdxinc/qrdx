@@ -32,6 +32,7 @@ import {
 } from "@/lib/barcode/server";
 import { type BarcodeStyle, defaultBarcodeStyle } from "@/lib/barcode/style";
 import { readBMP } from "../../../../packages/qrdx/tests/support/bmp";
+import { MICRO_QR_CORNER_MISSES } from "../support/micro-qr-corner-misses";
 
 (globalThis as { DOMRectReadOnly?: unknown }).DOMRectReadOnly ??= class {
   constructor(
@@ -107,6 +108,18 @@ describe("browser and server draw the same SVG", () => {
       browser.width,
       browser.height,
     ]);
+  });
+
+  it("pick the same Micro QR mask where bwip-js's own would be missed", () => {
+    // drawMicroQr reads each build's own SVG to choose (lib/barcode/draw.ts).
+    for (const text of MICRO_QR_CORNER_MISSES) {
+      for (const [name, style] of variants("microqr")) {
+        expect(
+          renderBarcodeServer("microqr", text, style).svg,
+          `${text}, ${name}`,
+        ).toBe(renderBarcodeSVG("microqr", text, style).svg);
+      }
+    }
   });
 
   it("rotation turns the drawing a quarter or half", () => {

@@ -9,6 +9,9 @@
 // heuristic, ported from BWIPP's qrcode encoder for Micro QR, with Kanji mode
 // off (draw.ts sets suppresskanjimode: the text is UTF-8, never Shift JIS).
 // tests/barcode/micro-qr.test.ts checks it against bwip-js.
+//
+// The rest reads a drawn symbol's modules and judges its mask, so draw.ts
+// can avoid the masks ZXing's detector misses (microQrCornerShows).
 
 export type MicroQrVersion = "M1" | "M2" | "M3" | "M4";
 export type MicroQrLevel = "L" | "M" | "Q";
@@ -345,3 +348,86 @@ export function microQrSymbol(text: string): MicroQrSymbol | null {
   }
   return null;
 }
+
+/**
+ * A Micro QR's modules, dark = true, rows top to bottom, from bwip-js's SVG
+ * of it drawn at scale 1 with no padding and no rotation: one even-odd path
+ * of rectangles, 2 units a module.
+ */
+export function microQrModules(svg: string): boolean[][] {
+  const size = Number(/viewBox="0 0 ([\d.]+) /.exec(svg)?.[1]);
+  const side = size / 2;
+  if (!Number.isInteger(side) || side < 11) {
+    throw new Error("Not a Micro QR drawn at scale 1 without padding");
+  }
+  // The vertical edges of every rectangle: a ray from a module's center to
+  // the right crosses an odd number of them when the module is dark.
+  const edges: { x: number; top: number; bottom: number }[] = [];
+  for (const [, path] of svg.matchAll(/<path d="([^"]+)"/g)) {
+    for (const shape of (path as string).split("Z")) {
+      const points = [...shape.matchAll(/[ML]([\d.]+) ([\d.]+)/g)].map(
+        ([, x, y]) => [Number(x), Number(y)] as const,
+      );
+      points.forEach(([x, y], i) => {
+        const [nextX, nextY] = points[(i + 1) % points.length] ?? [x, y];
+        if (x === nextX && y !== nextY) {
+          edges.push({
+            x,
+            top: Math.min(y, nextY),
+            bottom: Math.max(y, nextY),
+          });
+        }
+      });
+    }
+  }
+  return Array.from({ length: side }, (_, row) =>
+    Array.from({ length: side }, (_, column) => {
+      const x = 2 * column + 1;
+      const y = 2 * row + 1;
+      const crossed = edges.filter(
+        (edge) => edge.x > x && edge.top < y && y < edge.bottom,
+      ).length;
+      return crossed % 2 === 1;
+    }),
+  );
+}
+
+/**
+ * Whether ZXing finds this symbol's bottom-right corner where it is.
+ *
+ * ZXing's Micro QR detector (zxing-cpp's SampleMQR, in zxing-wasm 3.1.6)
+ * lays its grid from the finder pattern, then moves three corners onto what
+ * it sees: the ends of the two timing patterns, always found in a clean
+ * image, and the bottom-right corner (LocalGrid::findCorner). It takes that
+ * corner where the bottom row and the right column each have a dark module
+ * among their last 6. When either is all light there, it looks at the
+ * modules around and can settle on a corner inside the symbol: the grid
+ * skews and the symbol doesn't read, though it's valid (it reads with the
+ * detector skipped). 47 of 22,000 random values bwip-js drew had this.
+ */
+export function microQrCornerShows(modules: boolean[][]): boolean {
+  const last = modules.length - 1;
+  const bottomRow = modules[last] ?? [];
+  const tail = (cells: boolean[]) => cells.slice(-6).some(Boolean);
+  return tail(bottomRow) && tail(modules.map((row) => row[last] ?? false));
+}
+
+/**
+ * ISO/IEC 18004's score for a Micro QR mask, as bwip-js computes it to pick
+ * one: the dark modules on the right edge and on the bottom edge (the
+ * timing pattern's ends left out), the smaller count weighted 16 times.
+ * Higher is better.
+ */
+export function microQrMaskScore(modules: boolean[][]): number {
+  const last = modules.length - 1;
+  let right = 0;
+  let bottom = 0;
+  for (let i = 1; i <= last; i++) {
+    if (modules[i]?.[last]) right++;
+    if (modules[last]?.[i]) bottom++;
+  }
+  return Math.min(right, bottom) * 16 + Math.max(right, bottom);
+}
+
+/** Micro QR's four mask patterns, as bwip-js numbers them. */
+export const MICRO_QR_MASKS = [1, 2, 3, 4] as const;
