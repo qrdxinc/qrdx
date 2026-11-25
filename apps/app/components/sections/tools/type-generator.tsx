@@ -328,7 +328,6 @@ interface GeneratorPanelProps {
   onBack: () => void;
 }
 
-/** The form, the preview and the downloads: live, or the server snapshot. */
 /** The format buttons under the generator's preview. */
 export function DownloadButtons({
   payload,
@@ -364,6 +363,7 @@ export function DownloadButtons({
   );
 }
 
+/** The form, the preview and the downloads: live, or the server snapshot. */
 function GeneratorPanel({
   type,
   activeType,
