@@ -1,8 +1,10 @@
 // Checkout charges the currency the pricing page shows for the visitor's
 // country. Polar reads the country from the IP address that creates the
 // session (this server's), so the action passes the visitor's IP and the
-// currency from the geo header, never from the display switch. Polar is
-// faked; nothing is created.
+// currency from the geo header, never from the display switch. Each
+// checkout Polar creates is recorded (lib/analytics/checkouts.ts) with who,
+// the plan, the period, the surface and the currency. Polar is faked;
+// nothing is created.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const state = vi.hoisted(() => {
@@ -14,6 +16,10 @@ const state = vi.hoisted(() => {
     /** Currencies the fake products have no price in */
     missing: [] as string[],
     errors: [] as Record<string, unknown>[],
+    recorded: [] as Record<string, unknown>[],
+    polarDown: false,
+    rateLimited: false,
+    subscribed: false,
   };
 });
 
@@ -26,11 +32,15 @@ vi.mock("@/lib/polar", () => ({
   polar: {
     checkouts: {
       create: async (body: Record<string, unknown>) => {
+        if (state.polarDown) throw new Error("Polar is down");
         if (state.missing.includes(String(body.currency))) {
           throw new Error(`No ${String(body.currency)} price`);
         }
         state.created.push(body);
-        return { url: "https://checkout.example/session" };
+        return {
+          id: `chk_${state.created.length}`,
+          url: "https://checkout.example/session",
+        };
       },
     },
   },
@@ -41,8 +51,14 @@ vi.mock("@/actions/customer", () => ({
 vi.mock("@/lib/analytics/server", () => ({
   hasAnalyticsConsent: async () => false,
 }));
+vi.mock("@/lib/analytics/checkouts", () => ({
+  recordCheckout: (record: Record<string, unknown>) => {
+    state.recorded.push(record);
+  },
+}));
 vi.mock("@/lib/subscription", () => ({
-  getMyActiveSubscription: async () => null,
+  getMyActiveSubscription: async () =>
+    state.subscribed ? { id: "sub_1" } : null,
 }));
 vi.mock("@/lib/shared", () => ({
   logError: (_error: Error, context: Record<string, unknown>) => {
@@ -52,7 +68,9 @@ vi.mock("@/lib/shared", () => ({
 }));
 vi.mock("@repo/rate-limit", () => ({
   slidingWindow: () => ({}),
-  createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
+  createRateLimiter: () => ({
+    limit: async () => ({ success: !state.rateLimited }),
+  }),
 }));
 
 const { createCheckout } = await import("@/actions/checkout");
@@ -61,6 +79,10 @@ beforeEach(() => {
   state.created = [];
   state.missing = [];
   state.errors = [];
+  state.recorded = [];
+  state.polarDown = false;
+  state.rateLimited = false;
+  state.subscribed = false;
 });
 
 const checkoutFrom = async (values: Record<string, string>) => {
@@ -120,5 +142,60 @@ describe("createCheckout", () => {
         currency: "inr",
       },
     ]);
+  });
+});
+
+describe("the checkout record", () => {
+  it("records each checkout Polar creates: who, plan, period, surface, currency", async () => {
+    state.headers = new Headers({ "x-vercel-ip-country": "IN" });
+    expect(
+      await createCheckout({
+        plan: "pro",
+        interval: "month",
+        surface: "limit_dialog",
+      }),
+    ).toEqual({ url: "https://checkout.example/session" });
+    expect(state.recorded).toEqual([
+      {
+        id: "chk_1",
+        userId: "u_ana",
+        plan: "pro",
+        interval: "month",
+        surface: "limit_dialog",
+        currency: "inr",
+      },
+    ]);
+  });
+
+  it("an off-list surface is unknown; a fallback to Polar's currency records none", async () => {
+    state.missing = ["inr"];
+    state.headers = new Headers({ "x-vercel-ip-country": "IN" });
+    await createCheckout({
+      plan: "pro",
+      interval: "year",
+      surface: "somewhere" as never,
+    });
+    expect(state.recorded).toEqual([
+      expect.objectContaining({ surface: "unknown", currency: undefined }),
+    ]);
+  });
+
+  it("records nothing when no checkout was created", async () => {
+    state.headers = new Headers({ "x-vercel-ip-country": "US" });
+    state.rateLimited = true;
+    expect(await createCheckout({ plan: "pro", interval: "year" })).toEqual(
+      expect.objectContaining({ reason: "rate_limited" }),
+    );
+    state.rateLimited = false;
+    state.subscribed = true;
+    expect(await createCheckout({ plan: "pro", interval: "year" })).toEqual(
+      expect.objectContaining({ reason: "subscribed" }),
+    );
+    state.subscribed = false;
+    state.polarDown = true;
+    expect(await createCheckout({ plan: "pro", interval: "year" })).toEqual(
+      expect.objectContaining({ reason: "failed" }),
+    );
+    expect(state.recorded).toEqual([]);
   });
 });

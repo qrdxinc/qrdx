@@ -4,6 +4,7 @@ import { isIP } from "node:net";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { headers } from "next/headers";
 import { z } from "zod";
+import { recordCheckout } from "@/lib/analytics/checkouts";
 import { hasAnalyticsConsent } from "@/lib/analytics/server";
 import {
   type CheckoutSurface,
@@ -114,7 +115,8 @@ export async function createCheckout(input: {
     // And the currency the pricing page showed for their country
     // (lib/region.ts), which Polar then charges.
     const currency = checkoutCurrency(requestHeaders);
-    let checkout: { url: string };
+    let checkout: { id: string; url: string };
+    let charged: string | undefined = currency;
     try {
       checkout = await polar.checkouts.create({ ...session, currency });
     } catch (error) {
@@ -130,8 +132,19 @@ export async function createCheckout(input: {
         currency,
       });
       checkout = await polar.checkouts.create(session);
+      charged = undefined;
     }
 
+    // Who opened which checkout, from where (lib/analytics/checkouts.ts),
+    // written after the response.
+    recordCheckout({
+      id: checkout.id,
+      userId: user.id,
+      plan,
+      interval,
+      surface,
+      currency: charged,
+    });
     return { url: checkout.url };
   } catch (error) {
     if (error instanceof UnauthorizedError) {

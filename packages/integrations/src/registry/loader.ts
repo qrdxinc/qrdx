@@ -10,6 +10,7 @@ import { hubspotIntegration } from "../integrations/hubspot/config";
 import { mailchimpIntegration } from "../integrations/mailchimp/config";
 import { notionIntegration } from "../integrations/notion/config";
 import { oneDriveIntegration } from "../integrations/onedrive/config";
+import { pipedriveIntegration } from "../integrations/pipedrive/config";
 import { rebrandlyIntegration } from "../integrations/rebrandly/config";
 import { shopifyIntegration } from "../integrations/shopify/config";
 import { shortIoIntegration } from "../integrations/short-io/config";
@@ -86,6 +87,7 @@ export function registerAllIntegrations(): void {
   registry.register(slackIntegration);
   registry.register(hubspotIntegration);
   registry.register(mailchimpIntegration);
+  registry.register(pipedriveIntegration);
 }
 
 /**
@@ -158,6 +160,10 @@ export const INTEGRATION_ENV_VARS: Record<string, IntegrationEnvVars> = {
   mailchimp: {
     clientId: "MAILCHIMP_CLIENT_ID",
     clientSecret: "MAILCHIMP_CLIENT_SECRET",
+  },
+  pipedrive: {
+    clientId: "PIPEDRIVE_CLIENT_ID",
+    clientSecret: "PIPEDRIVE_CLIENT_SECRET",
   },
 };
 

@@ -22,7 +22,7 @@ export const maxDuration = 60;
 
 type RouteContext = { params: Promise<{ provider: string }> };
 
-const SINKS = new Set(["google-sheets", "hubspot", "mailchimp"]);
+const SINKS = new Set(["google-sheets", "hubspot", "mailchimp", "pipedrive"]);
 
 const id = z.string().regex(/^[A-Za-z0-9_-]{1,64}$/);
 const target = z.string().regex(/^[A-Za-z0-9_]{0,64}$/);
@@ -48,6 +48,7 @@ const responseSinkSchema = z.object({
     .optional(),
   tags: z.array(z.string().trim().min(1).max(100)).max(10).optional(),
   withoutConsent: z.enum(["pending", "skip"]).optional(),
+  createLead: z.boolean().optional(),
 });
 
 const sheetSyncSchema = z.object({ enabled: z.boolean() });
@@ -98,7 +99,7 @@ export async function PUT(request: Request, context: RouteContext) {
     } else {
       await saveResponseSink(
         scope,
-        provider as "hubspot" | "mailchimp",
+        provider as "hubspot" | "mailchimp" | "pipedrive",
         parseWithSchema(responseSinkSchema, body),
       );
     }

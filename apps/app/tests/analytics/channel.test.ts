@@ -45,6 +45,23 @@ describe("sign-up channels", () => {
     }
   });
 
+  it("product: the site's own product links (the badge, a template demo, the 404 page)", () => {
+    for (const ref of ["made-with-qrdx", "template-demo", "not-found"]) {
+      expect(channel({ ref }), ref).toBe("product");
+      // Before the site the hosted page was opened on, or a search.
+      expect(
+        channel({ ref, referrer_host: "menu.example.com" }),
+        `${ref} from a custom domain`,
+      ).toBe("product");
+      expect(
+        channel({ ref, referrer_host: "www.google.com", utm_source: "x" }),
+        `${ref} after a search`,
+      ).toBe("product");
+    }
+    // After the tags that name a place exactly.
+    expect(channel({ ref: "made-with-qrdx" }, true)).toBe("affiliate");
+  });
+
   it("developer: the CLI, the n8n node, npm or GitHub", () => {
     expect(channel({ ref: "cli" })).toBe("developer");
     expect(channel({ ref: "n8n" })).toBe("developer");
@@ -63,9 +80,23 @@ describe("sign-up channels", () => {
       "claude.ai",
       "gemini.google.com",
       "copilot.microsoft.com",
+      "www.meta.ai",
+      "grok.com",
+      "chat.deepseek.com",
+      "chat.mistral.ai",
+      "you.com",
+      "www.phind.com",
+      // ChatGPT's Android app
+      "com.openai.chatgpt",
     ]) {
       expect(channel({ referrer_host: host }), host).toBe("ai_assistant");
     }
+    for (const source of ["grok", "deepseek", "mistral", "phind", "meta.ai"]) {
+      expect(channel({ utm_source: source }), source).toBe("ai_assistant");
+    }
+    // Not the companies' other sites, or a look-alike.
+    expect(channel({ referrer_host: "mistral.ai" })).toBe("referral");
+    expect(channel({ referrer_host: "notyou.com" })).toBe("referral");
     expect(channel({ utm_source: "chatgpt.com" })).toBe("ai_assistant");
     expect(channel({ utm_source: "perplexity" })).toBe("ai_assistant");
     // Before a search engine's referrer.
@@ -87,6 +118,7 @@ describe("sign-up channels", () => {
       "www.ecosia.org",
       "search.brave.com",
       "www.baidu.com",
+      "kagi.com",
       "com.google.android.googlequicksearchbox",
     ]) {
       expect(channel({ referrer_host: host }), host).toBe("search");
@@ -134,7 +166,7 @@ describe("sign-up channels", () => {
     expect(channel({ referrer_host: "blog.example.com" })).toBe("referral");
     // A ref tag that isn't one of QRdx's own says nothing by itself.
     expect(
-      channel({ ref: "not-found", referrer_host: "blog.example.com" }),
+      channel({ ref: "spring-sale", referrer_host: "blog.example.com" }),
     ).toBe("referral");
   });
 
@@ -143,7 +175,7 @@ describe("sign-up channels", () => {
     expect(channel({ landing_path: "/", signup_path: "/playground" })).toBe(
       "direct",
     );
-    expect(channel({ ref: "made-with-qrdx" })).toBe("direct");
+    expect(channel({ ref: "spring-sale" })).toBe("direct");
     expect(channel(null)).toBe("direct");
   });
 });

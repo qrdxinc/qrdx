@@ -27,7 +27,10 @@ vi.mock("@/ee/audit-log/plan-change", () => ({
   plansBeforeBillingChange: async () => null,
   recordPlanChanges: async () => {},
 }));
-vi.mock("@/lib/analytics/server", () => ({ trackServer: () => {} }));
+vi.mock("@/lib/analytics/server", () => ({
+  trackServer: () => {},
+  trackServerAfter: () => {},
+}));
 vi.mock("@/lib/affiliates/commissions", async (importOriginal) => {
   const real =
     await importOriginal<typeof import("@/lib/affiliates/commissions")>();

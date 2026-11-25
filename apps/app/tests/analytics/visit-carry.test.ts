@@ -41,7 +41,8 @@ function setPrivacySignal(on: boolean) {
 
 /**
  * Clicks a link with `href` (and `attributes`) and returns the address the
- * browser would follow: the link's own address as the click ends.
+ * browser would follow: the link's own address as the click ends. `type`
+ * "auxclick" is a click with another button (the middle one opens a tab).
  */
 function follow(
   href: string,
@@ -49,8 +50,10 @@ function follow(
     attributes?: Record<string, string>;
     init?: MouseEventInit;
     handledByPage?: boolean;
+    type?: "click" | "auxclick";
   } = {},
 ): { followed: string; after: string | null } {
+  const type = options.type ?? "click";
   const anchor = document.createElement("a");
   anchor.setAttribute("href", href);
   for (const [name, value] of Object.entries(options.attributes ?? {})) {
@@ -73,15 +76,15 @@ function follow(
   };
   // Registered after installVisitForwarding's, so it sees what the browser
   // would follow.
-  document.addEventListener("click", record);
+  document.addEventListener(type, record);
   label.dispatchEvent(
-    new MouseEvent("click", {
+    new MouseEvent(type, {
       bubbles: true,
       cancelable: true,
       ...options.init,
     }),
   );
-  document.removeEventListener("click", record);
+  document.removeEventListener(type, record);
   vi.runAllTimers();
   const after = anchor.getAttribute("href");
   anchor.remove();
@@ -212,31 +215,74 @@ describe("a link to a page of the other app", () => {
   });
 });
 
+describe("a link opened in a new tab or window", () => {
+  beforeEach(() => {
+    openPage("/compare/qr-tiger?utm_source=x", "https://www.bing.com/");
+    installVisitForwarding();
+  });
+
+  it("carries the visit too: Cmd, Ctrl or Shift held, the middle button, or target=_blank", () => {
+    const opened = [
+      follow("/sign-in", { init: { metaKey: true } }),
+      follow("/sign-in", { init: { ctrlKey: true } }),
+      follow("/sign-in", { init: { shiftKey: true } }),
+      follow("/sign-in", { type: "auxclick", init: { button: 1 } }),
+      follow("/sign-in", { attributes: { target: "_blank" } }),
+      // next/link leaves a modified click to the browser.
+      follow("/pricing", { init: { metaKey: true } }),
+    ];
+    for (const { followed, after } of opened) {
+      const url = new URL(followed);
+      expect(JSON.parse(url.searchParams.get(VISIT_PARAM) ?? "null")).toEqual({
+        referrer_host: "www.bing.com",
+        landing_path: "/compare/qr-tiger",
+        utm_source: "x",
+      });
+      // The link's own address is back once the click is over.
+      expect(after).toBe(url.pathname);
+    }
+  });
+
+  it("still carries nothing to another site, a redirect or the docs", () => {
+    for (const href of ["https://example.com/", "/q/aB3dE5f", "/docs"]) {
+      for (const options of [
+        { init: { metaKey: true } },
+        { type: "auxclick" as const, init: { button: 1 } },
+      ]) {
+        const { followed } = follow(href, options);
+        expect(new URL(followed).searchParams.has(VISIT_PARAM), href).toBe(
+          false,
+        );
+      }
+    }
+  });
+});
+
 describe("links that carry nothing", () => {
   beforeEach(() => {
     openPage("/compare/qr-tiger?utm_source=x", "https://www.bing.com/");
     installVisitForwarding();
   });
 
-  it("are links the page follows itself, or that open elsewhere", () => {
+  it("are links the page follows itself, saves, or opens somewhere else", () => {
     expect(follow("/compare", { handledByPage: true }).followed).toBe(
       "https://qrdx.dev/compare",
     );
-    for (const init of [
-      { button: 1 },
-      { ctrlKey: true },
-      { metaKey: true },
-      { shiftKey: true },
-      { altKey: true },
-    ]) {
+    // Alt saves the link; a click event never comes from the middle button.
+    for (const init of [{ altKey: true }, { button: 1 }]) {
       expect(follow("/sign-in", { init }).followed, JSON.stringify(init)).toBe(
         "https://qrdx.dev/sign-in",
       );
     }
-    for (const attributes of [{ target: "_blank" }, { download: "" }] as Record<
-      string,
-      string
-    >[]) {
+    // A right-click opens a menu that could copy the address.
+    expect(
+      follow("/sign-in", { type: "auxclick", init: { button: 2 } }).followed,
+    ).toBe("https://qrdx.dev/sign-in");
+    for (const attributes of [
+      { download: "" },
+      { target: "preview" },
+      { target: "_top" },
+    ] as Record<string, string>[]) {
       expect(
         follow("/sign-in", { attributes }).followed,
         JSON.stringify(attributes),

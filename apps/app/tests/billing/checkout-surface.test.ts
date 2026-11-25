@@ -17,6 +17,8 @@ const state = vi.hoisted(() => {
       props: Record<string, unknown>;
       distinctId: unknown;
     }[],
+    /** Server events still being built (they read the database first) */
+    building: [] as Promise<void>[],
   };
 });
 
@@ -36,12 +38,23 @@ vi.mock("@/lib/affiliates/commissions", () => ({
   handleAffiliateWebhook: async () => {},
 }));
 vi.mock("@/lib/analytics/server", () => ({
-  trackServer: (
+  trackServerAfter: (
     event: string,
-    props: Record<string, unknown>,
-    options: { distinctId: unknown },
+    build: () => Promise<{
+      props: Record<string, unknown>;
+      options?: { distinctId?: unknown };
+    } | null>,
   ) => {
-    state.tracked.push({ event, props, distinctId: options.distinctId });
+    state.building.push(
+      build().then((built) => {
+        if (!built) return;
+        state.tracked.push({
+          event,
+          props: built.props,
+          distinctId: built.options?.distinctId,
+        });
+      }),
+    );
   },
 }));
 vi.mock("@/lib/migrate/server/repo", () => ({
@@ -84,8 +97,12 @@ function signed(payload: unknown) {
   });
 }
 
-const post = (request: Request) =>
-  POST(request as unknown as Parameters<typeof POST>[0]);
+/** Posts a webhook and waits for the events it sends. */
+const post = async (request: Request) => {
+  const response = await POST(request as unknown as Parameters<typeof POST>[0]);
+  await Promise.all(state.building);
+  return response;
+};
 
 /** A Pro yearly subscription as Polar sends it, with checkout's metadata. */
 const subscriptionEvent = (
@@ -138,6 +155,7 @@ beforeEach(() => {
     },
   ]);
   state.tracked = [];
+  state.building = [];
   vi.spyOn(console, "log").mockImplementation(() => {});
   vi.spyOn(console, "error").mockImplementation(() => {});
 });
@@ -234,7 +252,15 @@ describe("the webhook stores it", () => {
     expect(state.tracked).toEqual([
       {
         event: "subscription_activated",
-        props: { plan: "pro", interval: "year", surface: "limit_email" },
+        props: {
+          // No user_acquisition row: an account from before it.
+          channel: "unknown",
+          plan: "pro",
+          interval: "year",
+          surface: "limit_email",
+          amount: 4800,
+          currency: "usd",
+        },
         distinctId: BUYER.id,
       },
     ]);

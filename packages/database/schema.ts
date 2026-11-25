@@ -446,6 +446,31 @@ export const subscription = pgTable(
   ]
 );
 
+// Each Polar checkout the app opened (apps/app/actions/checkout.ts), once
+// Polar returned its address: who, which plan and billing period, the button
+// or page that started it (lib/checkout-surface.ts) and the currency asked
+// for. `id` is Polar's checkout id, which a payment's subscription carries
+// (subscription.checkout_id), so picked a plan → checkout → paid can be
+// counted per person and per surface. Deleted with the account.
+export const checkoutSession = pgTable(
+  "checkout_session",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    plan: text("plan").notNull(), // pro | business
+    interval: text("interval").notNull(), // month | year
+    surface: text("surface").notNull(),
+    currency: text("currency"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    index("checkout_session_user_id_idx").on(table.userId),
+    index("checkout_session_created_at_idx").on(table.createdAt),
+  ]
+);
+
 export const integration = pgTable(
   "integration",
   {
@@ -1306,6 +1331,9 @@ export const ACQUISITION_CHANNELS = [
   "plugin",
   "mcp",
   "bot",
+  // A QRdx product link's `ref` tag: the "Made with QRdx" badge, a template
+  // demo's badge, the 404 page (lib/analytics/handoff-tags.ts SITE_REFS).
+  "product",
   "developer",
   "ai_assistant",
   "search",

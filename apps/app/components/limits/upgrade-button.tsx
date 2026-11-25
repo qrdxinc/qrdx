@@ -9,14 +9,13 @@ import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { type KnownCheckoutSurface, withSurface } from "@/lib/checkout-surface";
 
 /**
- * An upgrade link from a limit (limitCopy's `upgrade`), tracked on click.
- * With `checkout`, monthly and yearly buttons that open checkout straight
- * away instead, where they can (signed in, not paying yet); the link
- * otherwise.
+ * An upgrade link from a limit (limitCopy's `upgrade`) to the pricing page,
+ * tracked on click (pricing_opened). With `checkout`, monthly and yearly
+ * buttons that open checkout straight away instead, where they can (signed
+ * in, not paying yet); the link otherwise.
  */
 export function UpgradeButton({
   upgrade,
-  source,
   surface,
   onNavigate,
   checkout = false,
@@ -24,8 +23,6 @@ export function UpgradeButton({
   ...props
 }: {
   upgrade: UpgradeAction;
-  /** For analytics, e.g. "limit_dialog" */
-  source: string;
   /** Recorded on the payment, through the pricing page for the link */
   surface: KnownCheckoutSurface;
   onNavigate?: () => void;
@@ -36,7 +33,7 @@ export function UpgradeButton({
       <Link
         href={withSurface(upgrade.href, surface)}
         onClick={() => {
-          track("upgrade_clicked", { source, plan: upgrade.plan, surface });
+          track("pricing_opened", { surface });
           onNavigate?.();
         }}
       >
@@ -52,7 +49,6 @@ export function UpgradeButton({
       onNavigate={onNavigate}
       plan={upgrade.plan}
       size="sm"
-      source={source}
       surface={surface}
     />
   );

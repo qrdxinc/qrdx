@@ -32,12 +32,7 @@ export function GetProCTA({ className, ...props }: GetProCTAProps) {
     >
       <Link
         href={pricingHref("header_get_pro")}
-        onClick={() =>
-          track("upgrade_clicked", {
-            source: "header",
-            surface: "header_get_pro",
-          })
-        }
+        onClick={() => track("pricing_opened", { surface: "header_get_pro" })}
       >
         <Diamonds className="h-4 w-4" />
         {t("getPro")}

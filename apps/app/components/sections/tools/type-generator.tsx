@@ -94,6 +94,7 @@ import { YouTubeForm } from "@/components/editor/content-forms/youtube-form";
 import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink } from "@/components/i18n/locale-link";
 import { ServerSnapshot } from "@/components/server-snapshot";
+import { downloadLookProps } from "@/lib/analytics/download-look";
 import {
   useTrackEditorOpened,
   useTrackQrGenerated,
@@ -570,6 +571,8 @@ export function TypeGenerator({ type }: { type: ContentType }) {
         format,
         source: "type_tool",
         content_type: activeType,
+        // buildQrProps draws neither the frame nor art
+        ...downloadLookProps({ ...styles, frame: undefined, art: undefined }),
       });
     } catch (error) {
       toast.error(t("downloadFailed"), {

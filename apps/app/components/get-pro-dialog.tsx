@@ -161,7 +161,6 @@ export function GetProDialog({
                 <CheckoutButtons
                   onNavigate={onClose}
                   plan={plan}
-                  source="dialog"
                   surface="get_pro_dialog"
                   waiting={waiting}
                 />
@@ -178,15 +177,9 @@ export function GetProDialog({
               >
                 <Link
                   href={pricingHref("get_pro_dialog")}
-                  onClick={() => {
-                    if (!checkout) {
-                      track("upgrade_clicked", {
-                        source: "dialog",
-                        plan,
-                        surface: "get_pro_dialog",
-                      });
-                    }
-                  }}
+                  onClick={() =>
+                    track("pricing_opened", { surface: "get_pro_dialog" })
+                  }
                   onNavigate={onClose}
                 >
                   {t("comparePlansAndPrices")}

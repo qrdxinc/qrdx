@@ -10343,6 +10343,14 @@
     "source": "f34970edd3b5",
     "status": "machine"
   },
+  "editor.actionBar.downloadDialog.printSuggestion": {
+    "source": "a34946d09885",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.usePrintReady": {
+    "source": "e8fb69554a5a",
+    "status": "machine"
+  },
   "editor.actionBar.downloadDialog.size": {
     "source": "1af851907331",
     "status": "machine"
@@ -10572,7 +10580,7 @@
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.pdf": {
-    "source": "0a2f4df35fb5",
+    "source": "bc0b0548c834",
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.eps": {
@@ -21115,6 +21123,10 @@
     "source": "aa5af4084f37",
     "status": "machine"
   },
+  "app.settings.integrations.responseSinkPanel.persons": {
+    "source": "d39245fa8f8a",
+    "status": "machine"
+  },
   "app.settings.integrations.responseSinkPanel.pickAnAudience": {
     "source": "efcb6cb7c830",
     "status": "machine"
@@ -21137,6 +21149,18 @@
   },
   "app.settings.integrations.responseSinkPanel.newResponsesCreateOrUpdate": {
     "source": "76b40cdd1003",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.newResponsesCreateOrUpdatePerson": {
+    "source": "6ab1759c002f",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.addALeadForEveryResponse": {
+    "source": "cba8e032465b",
+    "status": "machine"
+  },
+  "app.settings.integrations.responseSinkPanel.addALeadHelp": {
+    "source": "66203774aaec",
     "status": "machine"
   },
   "app.settings.integrations.responseSinkPanel.on": {
@@ -24339,6 +24363,10 @@
     "source": "b80841795011",
     "status": "machine"
   },
+  "app.dashboard.codes.codeActionsMenu.printReadyFile": {
+    "source": "b5e1b58b95d0",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeActionsMenu.removeFromFavorites": {
     "source": "18720329ca30",
     "status": "machine"
@@ -24517,6 +24545,10 @@
   },
   "app.dashboard.codes.codeOverview.editDesignInPlayground": {
     "source": "b80841795011",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codeOverview.printReadyFile": {
+    "source": "b5e1b58b95d0",
     "status": "machine"
   },
   "app.dashboard.codes.codeOverview.shortLinkCopied": {

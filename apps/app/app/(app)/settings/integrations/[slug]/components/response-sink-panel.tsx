@@ -23,6 +23,7 @@ import type {
   MailchimpAudience,
   MailchimpMergeField,
 } from "@repo/integrations/src/integrations/mailchimp/types";
+import { PIPEDRIVE_TARGETS } from "@repo/integrations/src/integrations/pipedrive/sink";
 import {
   type FormMapping,
   formKey,
@@ -58,13 +59,14 @@ const NO_PAGES: CursorPage<ScopedFormPage> = { items: [], nextCursor: null };
 const SEARCH_DELAY_MS = 300;
 
 interface ResponseSinkPanelProps {
-  provider: "hubspot" | "mailchimp";
+  provider: "hubspot" | "mailchimp" | "pipedrive";
   name: string;
 }
 
 /**
- * HubSpot / Mailchimp: which pages' forms to send, the field mapping (with
- * suggested defaults), Mailchimp's audience, tags and consent, the on switch
+ * HubSpot / Mailchimp / Pipedrive: which pages' forms to send, the field
+ * mapping (with suggested defaults), Mailchimp's audience, tags and consent,
+ * Pipedrive's lead switch, the on switch
  * and the last sync.
  */
 export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
@@ -85,7 +87,9 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
   );
   const [saving, setSaving] = useState(false);
   const [retrying, setRetrying] = useState(false);
+  const [createLead, setCreateLead] = useState(false);
   const isMailchimp = provider === "mailchimp";
+  const isPipedrive = provider === "pipedrive";
   // The workspace's form pages, a page at a time (most recently updated
   // first), narrowed by a title search once typing pauses.
   const [search, setSearch] = useState("");
@@ -117,6 +121,7 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
           audienceId?: string;
           tags?: string[];
           withoutConsent?: "pending" | "skip";
+          createLead?: boolean;
         };
         setEnabled(Boolean(data.sync?.enabled));
         setAllPages(!settings.pageIds);
@@ -125,6 +130,7 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
         setAudienceId(settings.audienceId ?? "");
         setTags((settings.tags ?? []).join(", "));
         setWithoutConsent(settings.withoutConsent ?? "pending");
+        setCreateLead(settings.createLead === true);
       })
       .catch((err) => {
         if (!cancelled) {
@@ -185,8 +191,13 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
   }, [isMailchimp, audienceId]);
 
   const targets: SinkTarget[] = useMemo(
-    () => (isMailchimp ? mailchimpTargets(mergeFields) : HUBSPOT_TARGETS),
-    [isMailchimp, mergeFields],
+    () =>
+      isMailchimp
+        ? mailchimpTargets(mergeFields)
+        : isPipedrive
+          ? PIPEDRIVE_TARGETS
+          : HUBSPOT_TARGETS,
+    [isMailchimp, isPipedrive, mergeFields],
   );
 
   const pages = list.items;
@@ -251,6 +262,7 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
               withoutConsent,
             }
           : {}),
+        ...(isPipedrive ? { createLead } : {}),
       });
       setView(next);
       emitSound("success");
@@ -298,7 +310,9 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
           <p className="text-muted-foreground text-sm text-pretty">
             {isMailchimp
               ? t("newResponsesAddOrUpdate")
-              : t("newResponsesCreateOrUpdate")}
+              : isPipedrive
+                ? t("newResponsesCreateOrUpdatePerson")
+                : t("newResponsesCreateOrUpdate")}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -312,11 +326,35 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
       </div>
 
       <SyncStatus
-        noun={isMailchimp ? t("members") : t("contacts")}
+        noun={
+          isMailchimp
+            ? t("members")
+            : isPipedrive
+              ? t("persons")
+              : t("contacts")
+        }
         onRetry={retry}
         retrying={retrying}
         state={view.sync}
       />
+
+      {isPipedrive && (
+        <div className="flex items-start justify-between gap-4 rounded-lg border p-4">
+          <div className="space-y-1">
+            <Label htmlFor={`${id}-lead`}>
+              {t("addALeadForEveryResponse")}
+            </Label>
+            <p className="text-muted-foreground text-sm text-pretty">
+              {t("addALeadHelp")}
+            </p>
+          </div>
+          <Switch
+            checked={createLead}
+            id={`${id}-lead`}
+            onCheckedChange={setCreateLead}
+          />
+        </div>
+      )}
 
       {isMailchimp && (
         <div className="grid gap-4 sm:grid-cols-2">

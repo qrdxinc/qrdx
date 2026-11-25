@@ -270,12 +270,14 @@ export interface ResponseSinkInput {
   audienceId?: string;
   tags?: string[];
   withoutConsent?: "pending" | "skip";
+  /** Pipedrive only: also add a lead for every response */
+  createLead?: boolean;
 }
 
-/** Saves HubSpot / Mailchimp settings and turns the stream on or off. */
+/** Saves HubSpot / Mailchimp / Pipedrive settings and turns the stream on or off. */
 export async function saveResponseSink(
   scope: ActiveScope,
-  provider: "hubspot" | "mailchimp",
+  provider: "hubspot" | "mailchimp" | "pipedrive",
   input: ResponseSinkInput,
 ): Promise<void> {
   const connection = await requireConnection(scope.userId, provider);
@@ -300,6 +302,7 @@ export async function saveResponseSink(
       patch.mergeFields = await client.listMergeFields(input.audienceId);
     }
   }
+  if (provider === "pipedrive") patch.createLead = input.createLead === true;
   const current = readSyncState(metadata.sync);
   const sameWorkspace = current?.organizationId === scope.organizationId;
   // Only touch the stream state when it changes (the worker owns it).

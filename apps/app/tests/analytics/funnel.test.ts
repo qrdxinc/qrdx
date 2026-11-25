@@ -10,6 +10,8 @@ import {
   countsAsGenerated,
   editorOpenedProps,
   editorOpenSource,
+  fromPage,
+  playgroundHandoffProps,
 } from "@/lib/analytics/funnel";
 import { sanitizeProps } from "@/lib/analytics/privacy";
 
@@ -64,6 +66,29 @@ describe("editor_opened", () => {
     });
     expect(props).toEqual({ surface: "barcode", source: "mcp" });
     expect(sanitizeProps(props)).toEqual(props);
+  });
+
+  it("names the public page it came from (from_page), which survives sanitizing", () => {
+    const props = editorOpenedProps("playground", {
+      href: "https://qrdx.dev/playground?ref=not-found",
+      referrer:
+        "https://qrdx.dev/blog/qr-codes-for-restaurant-menus?utm_source=x#faq",
+      previousPath: null,
+    });
+    expect(props).toEqual({
+      surface: "playground",
+      source: "not-found",
+      from_page: "/blog/qr-codes-for-restaurant-menus",
+    });
+    expect(sanitizeProps(props)).toEqual(props);
+    // An in-app link: the tab's previous page.
+    expect(
+      editorOpenedProps("type_tool", {
+        href: "https://qrdx.dev/qr-code-generator/wifi",
+        referrer: "https://www.google.com/",
+        previousPath: "/es/qr-code-generator",
+      }).from_page,
+    ).toBe("/es/qr-code-generator");
   });
 
   it("is sent by every editor surface", () => {
@@ -167,5 +192,67 @@ describe("Umami", () => {
     );
     expect(source).toContain('strategy="afterInteractive"');
     expect(source).not.toContain('strategy="lazyOnload"');
+  });
+});
+
+describe("from_page", () => {
+  const ORIGIN = "https://qrdx.dev";
+
+  it("is a public page's path on this origin, at most 64 characters", () => {
+    expect(fromPage("https://qrdx.dev/", ORIGIN)).toBe("/");
+    expect(fromPage("https://qrdx.dev/tools/bulk?x=1", ORIGIN)).toBe(
+      "/tools/bulk",
+    );
+    const long = `/blog/${"a".repeat(80)}`;
+    expect(fromPage(`https://qrdx.dev${long}`, ORIGIN)).toBe(long.slice(0, 64));
+  });
+
+  it("is nothing for another site, the signed-in app, a customer page or a broken address", () => {
+    for (const referrer of [
+      "",
+      "https://www.google.com/search?q=qr",
+      "https://qrdx.dev.example.com/blog/x",
+      "https://qrdx.dev/dashboard/acme/codes/abc123",
+      "https://qrdx.dev/settings/account",
+      "https://qrdx.dev/admin/users",
+      "https://qrdx.dev/invite/AbC123",
+      "https://qrdx.dev/join/tok_123",
+      "https://qrdx.dev/sign-in",
+      "https://qrdx.dev/success?checkout_id=chk_1",
+      "https://qrdx.dev/p/menu",
+      "https://qrdx.dev/q/aB3dE5f",
+      "https://qrdx.dev/stats/tok_1",
+      "https://qrdx.dev/portal/acme",
+      "https://qrdx.dev/templates/menu/bistro",
+      "https://qrdx.dev/es/scan",
+      "not a url",
+    ]) {
+      expect(fromPage(referrer, ORIGIN), referrer).toBeUndefined();
+    }
+  });
+});
+
+describe("playground_handoff", () => {
+  it("names the tag or section, the page and what the link applied", () => {
+    const props = playgroundHandoffProps({
+      referrer: "https://qrdx.dev/qr-code-generator/wifi",
+      origin: "https://qrdx.dev",
+      ref: null,
+      applied: ["type", "open"],
+    });
+    expect(props).toEqual({
+      source: "qr-code-generator",
+      target: "type+open",
+      from_page: "/qr-code-generator/wifi",
+    });
+    expect(sanitizeProps(props)).toEqual(props);
+    expect(
+      playgroundHandoffProps({
+        referrer: "https://www.figma.com/",
+        origin: "https://qrdx.dev",
+        ref: "figma-plugin",
+        applied: ["style"],
+      }),
+    ).toEqual({ source: "figma-plugin", target: "style" });
   });
 });

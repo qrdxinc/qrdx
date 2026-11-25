@@ -21,6 +21,7 @@ import {
 } from "qrdx";
 import { useState } from "react";
 import { storedStyleDefaults } from "@/config/qr";
+import { downloadLookProps } from "@/lib/analytics/download-look";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
 import { soundEvent } from "@/lib/sound/emit";
@@ -140,6 +141,8 @@ export async function downloadCodeQr(
     format,
     source: "dashboard",
     content_type: "dynamic",
+    // A saved code downloads without art (see the props above)
+    ...downloadLookProps({ ...s, art: undefined }),
   });
 }
 
