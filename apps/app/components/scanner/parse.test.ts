@@ -129,6 +129,24 @@ describe("parseScan: contacts and events", () => {
     assert.match(parsed.ics, /^BEGIN:VCALENDAR\r\nVERSION:2.0\r\n/);
     assert.match(parsed.ics, /END:VEVENT\r\nEND:VCALENDAR\r\n$/);
   });
+
+  // Added 2026-11-25
+  it("reads an all-day DTEND as the day after the last day", () => {
+    const event = (start: string, end: string) =>
+      expectKind(
+        parseScan(
+          `BEGIN:VEVENT\r\nSUMMARY:Fair\r\nDTSTART;VALUE=DATE:${start}\r\nDTEND;VALUE=DATE:${end}\r\nEND:VEVENT\r\n`,
+        ),
+        "event",
+      ).event;
+    const days = event("20261230", "20270102");
+    assert.equal(days.allDay, true);
+    assert.equal(days.start, "2026-12-30");
+    assert.equal(days.end, "2027-01-01");
+    // One day: no end to show.
+    assert.equal(event("20261114", "20261115").end, undefined);
+    assert.equal(event("20261114", "20261114").end, undefined);
+  });
 });
 
 describe("parseScan: location, phone, SMS, email", () => {

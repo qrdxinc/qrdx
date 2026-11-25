@@ -1213,6 +1213,18 @@ const CONTENT: Record<ContentType, ContentSpec> = {
     },
     preset: "royal",
   },
+  // ── Added 2026-11-25 ──
+  "calendar-event": {
+    label: "Calendar event",
+    config: {
+      type: "calendar-event",
+      title: "Sample launch party",
+      startDate: "2027-05-14",
+      startTime: "18:00",
+      endTime: "21:00",
+    },
+    preset: "sunset",
+  },
 };
 
 /** Hosted pages, each opening its live demo on qrdx.dev. */

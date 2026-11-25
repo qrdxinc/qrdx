@@ -88,6 +88,27 @@ describe("encode → parseScan round trips (seeded)", () => {
     }
   });
 
+  // Added 2026-11-25
+  it("calendar events keep name, place and details, including , ; \\ and newlines", () => {
+    const random = createRandom(9);
+    for (let i = 0; i < RUNS; i++) {
+      const input = {
+        type: "calendar-event" as const,
+        title: text(random, 0, 30),
+        startDate: "2026-11-14",
+        startTime: `1${random.string(DIGITS, 1, 1)}:30`,
+        timeZone: "UTC",
+        location: text(random, 0, 40),
+        description: text(random, 0, 120),
+      };
+      const parsed = kind(parseScan(encodeQRContent(input)), "event");
+      expect(parsed.event.summary).toBe(input.title);
+      expect(parsed.event.start).toBe(`2026-11-14T${input.startTime}:00Z`);
+      expect(parsed.event.location).toBe(input.location);
+      expect(parsed.event.description).toBe(input.description);
+    }
+  });
+
   it("mailto keeps recipient, subject and body", () => {
     const random = createRandom(3);
     for (let i = 0; i < RUNS; i++) {

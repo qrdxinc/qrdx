@@ -121,6 +121,8 @@ export const CONTENT_TYPE_IDS = [
   "yelp",
   "airbnb",
   "booking-com",
+  // Added 2026-11-25
+  "calendar-event",
 ] as const satisfies readonly ContentType[];
 
 type NeverListed<T extends never> = T;

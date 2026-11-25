@@ -4685,11 +4685,30 @@
           "k153mv8r": "Maksimal 28 karakter",
           "kqv3bio": "Bursa kripto sering memintanya. Periksa milik Anda sebelum mencetak.",
           "kaa7wzl": "SOL",
-          "k5p19bw": "USDT (Tether)"
+          "k5p19bw": "USDT (Tether)",
+          "k18kvzda": "Nama acara",
+          "k4fbvq6": "Pesta peluncuran",
+          "kfz2vvz": "Acara seharian",
+          "k16seyg1": "Tanggal mulai",
+          "kslte8c": "Waktu mulai",
+          "kivkp8q": "Tanggal selesai",
+          "k1b8ljnb": "Waktu selesai",
+          "k191owfq": "Untuk acara yang berakhir di hari berikutnya.",
+          "k1wjsqfy": "Tanpa ini, durasinya satu jam.",
+          "k1rhzoka": "Zona waktu",
+          "kpc0bbm": "Waktu mengikuti zona waktu ini. Kode menyimpannya dalam UTC, sehingga setiap ponsel menampilkannya sesuai waktu setempat.",
+          "kpghiva": "Lokasi",
+          "kv2raw1": "Aula 3, Jl. Utama No. 1, Springfield",
+          "khkxto5": "Pintu dibuka pukul 7. Ajak seorang teman.",
+          "k1wxsxh4": "Halaman web"
         }
       },
       "contactForms": {
         "meCardNote": "Ponsel Android membaca kontak MeCard dan menawarkan untuk menyimpannya. Apple tidak mendokumentasikan MeCard untuk Kamera iPhone, jadi uji di iPhone, atau gunakan vCard jika kontak harus bisa dibaca semua orang."
+      },
+      "calendarEventForm": {
+        "note": "Pemindaian akan menawarkan untuk menambahkan acara ke kalender ponsel. Acara ditulis langsung di dalam kode, jadi waktu atau tempat yang baru berarti kode yang baru.",
+        "longEvent": "Teks sebanyak ini menghasilkan kode yang padat dan harus dicetak lebih besar agar bisa dipindai. Deskripsi yang lebih singkat membuat kode tetap mudah dipindai."
       },
       "swissQrBill": {
         "designApplied": "Pedoman QR-bill dari SIX mensyaratkan koreksi kesalahan M, titik hitam di atas latar putih, tanpa cetakan apa pun di sekeliling kode, dan salib Swiss di tengah, sehingga desain ini menggunakannya. Titik dan mata sudut boleh berbentuk apa saja; jika desain mengubah sisanya, catatan ini menawarkan untuk mengembalikannya. Cetak kodenya saja, tanpa margin, dengan ukuran 46 × 46 mm dan ruang putih 5 mm di sekelilingnya.",

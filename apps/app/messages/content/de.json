@@ -39256,5 +39256,143 @@
     "text": "Die statischen nicht. Die Tools rendern Bilder, formatieren Text und lesen die öffentliche Community. Nur diese schreiben etwas: create_dynamic_code und update_code_destination (der dynamische Code, den du anforderst, in deinem Workspace) sowie save_template und save_barcode (das Theme oder der Barcode, den du speichern lässt, im Workspace des API-Schlüssels). generate_ai_art verbraucht eines der monatlichen KI-Kunst-Bilder des Workspace, speichert aber weder das Bild noch ein Foto, das du sendest. Die von den Tools zurückgegebenen Bild-URLs enthalten die codierten Daten, teile sie also nicht, wenn die Daten privat sind, etwa ein Wi-Fi-Passwort.",
     "status": "machine",
     "context": "mcp.faqs.7.answer"
+  },
+  "f74c0be05e82": {
+    "source": "Calendar event",
+    "text": "Kalendertermin",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.label"
+  },
+  "391b4900f8cd": {
+    "source": "Add an event to the scanner's calendar",
+    "text": "Fügt einen Termin zum Kalender der scannenden Person hinzu",
+    "status": "machine",
+    "context": "contentTypes.list.calendar-event.description"
+  },
+  "60d0f3626bc4": {
+    "source": "Calendar Event",
+    "text": "Kalendertermin",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.name"
+  },
+  "937f80f08207": {
+    "source": "Add an event to the phone's calendar with one scan.",
+    "text": "Füge mit einem Scan einen Termin zum Kalender des Handys hinzu.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.summary"
+  },
+  "36d7be8c09ff": {
+    "source": "Make a calendar event QR code: the event's name, date and time, place, details and a link in the iCalendar format phones add to the calendar. Free.",
+    "text": "Erstelle einen QR-Code für einen Kalendertermin: Name, Datum und Uhrzeit, Ort, Details und ein Link im iCalendar-Format, das Handys in den Kalender übernehmen. Kostenlos.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.metaDescription"
+  },
+  "7e48d79403f2": {
+    "source": "A calendar event QR code holds one event: its name, when it starts and ends, where it is, a few lines about it and a link. Scanning it offers to add the event to the phone's calendar, so nobody has to copy the date and time from a poster or an invitation.",
+    "text": "Ein QR-Code für einen Kalendertermin enthält einen Termin: seinen Namen, Beginn und Ende, den Ort, ein paar Zeilen dazu und einen Link. Beim Scannen wird angeboten, den Termin zum Kalender des Handys hinzuzufügen. So muss niemand Datum und Uhrzeit von einem Plakat oder einer Einladung abtippen.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.0"
+  },
+  "53490dd34f81": {
+    "source": "The event is written into the code itself as an iCalendar VEVENT, so the code needs no account and never expires. The times are saved in UTC from the time zone you pick, and each phone shows them in its own time. Because the details are in the code, a new time or place means a new code.",
+    "text": "Der Termin wird als iCalendar-VEVENT direkt in den Code geschrieben. Der Code braucht deshalb kein Konto und läuft nie ab. Die Zeiten werden aus der von dir gewählten Zeitzone in UTC gespeichert, und jedes Handy zeigt sie in seiner eigenen Zeit an. Weil die Details im Code stecken, braucht eine neue Zeit oder ein neuer Ort auch einen neuen Code.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.intro.1"
+  },
+  "b7cb6b55bf27": {
+    "source": "Enter the event's name and pick the day and time it starts.",
+    "text": "Gib den Namen des Termins ein und wähle Tag und Uhrzeit des Beginns.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.0"
+  },
+  "f37f92d39ff8": {
+    "source": "Add an end time, or switch on All-day event for an event that takes whole days.",
+    "text": "Füge eine Endzeit hinzu oder aktiviere „Ganztägiger Termin“ für einen Termin, der ganze Tage dauert.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.1"
+  },
+  "3389506655cc": {
+    "source": "Check the time zone the times are in, then add a location, a short description and a link if you want them.",
+    "text": "Prüfe die Zeitzone der Zeiten und füge dann nach Wunsch einen Ort, eine kurze Beschreibung und einen Link hinzu.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.2"
+  },
+  "3a1f754ff0d5": {
+    "source": "Scan the preview with an iPhone and an Android phone to see that both offer to add the event, then download the code.",
+    "text": "Scanne die Vorschau mit einem iPhone und einem Android-Handy, um zu sehen, dass beide anbieten, den Termin hinzuzufügen. Lade den Code danach herunter.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.steps.3"
+  },
+  "a58987909da3": {
+    "source": "QRdx writes one VEVENT (RFC 5545) without a VCALENDAR around it: that's the form QR scanners look for, and it keeps the code smaller.",
+    "text": "QRdx schreibt ein VEVENT (RFC 5545) ohne umgebendes VCALENDAR: Diese Form suchen QR-Scanner, und der Code bleibt dadurch kleiner.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.0"
+  },
+  "a1596551def4": {
+    "source": "Times end in Z: they're in UTC, converted from the time zone you pick. An all-day event has dates only (DTSTART;VALUE=DATE:20270417), and its DTEND is the day after the last day, as the standard asks.",
+    "text": "Zeiten enden auf Z: Sie sind in UTC, umgerechnet aus der von dir gewählten Zeitzone. Ein ganztägiger Termin hat nur Datumsangaben (DTSTART;VALUE=DATE:20270417), und sein DTEND ist der Tag nach dem letzten Tag, wie es der Standard verlangt.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.1"
+  },
+  "6c3c533b5640": {
+    "source": "Commas, semicolons, backslashes and line breaks in the text are escaped with a backslash, so a comma in the location is written \\,.",
+    "text": "Kommas, Semikolons, Backslashes und Zeilenumbrüche im Text werden mit einem Backslash maskiert. Ein Komma im Ort wird also als \\, geschrieben.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.2"
+  },
+  "3d3d8d121316": {
+    "source": "The link is written as URL and again at the end of the description: the calendar event Google's ML Kit reads, which many Android scanners use, has no link field.",
+    "text": "Der Link wird als URL und noch einmal am Ende der Beschreibung geschrieben: Das Kalendertermin-Format von Googles ML Kit, das viele Android-Scanner nutzen, hat kein Linkfeld.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.3"
+  },
+  "dddc2fbf8cda": {
+    "source": "Only the fields you fill in are written. Past about 300 characters the code gets dense, and the form says so: a shorter description keeps it easy to scan.",
+    "text": "Es werden nur die Felder geschrieben, die du ausfüllst. Ab etwa 300 Zeichen wird der Code dicht, und das Formular weist darauf hin: Eine kürzere Beschreibung lässt sich leichter scannen.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.payload.notes.4"
+  },
+  "007d6b8d850c": {
+    "source": "Which time zone are the times in?",
+    "text": "In welcher Zeitzone sind die Zeiten?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.question"
+  },
+  "d0d826431b09": {
+    "source": "The one you pick under the times, which starts as your device's. The code holds the times in UTC, so a phone in another time zone shows the event at the right moment in its own time.",
+    "text": "In der, die du unter den Zeiten wählst. Vorausgewählt ist die Zeitzone deines Geräts. Der Code speichert die Zeiten in UTC, sodass ein Handy in einer anderen Zeitzone den Termin zum richtigen Zeitpunkt in seiner eigenen Zeit anzeigt.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.0.answer"
+  },
+  "8b95b38c5c85": {
+    "source": "Do iPhones and Android phones read it?",
+    "text": "Lesen iPhones und Android-Handys den Code?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.question"
+  },
+  "5031df6b0b75": {
+    "source": "Google's ML Kit, which many Android scanners use, reads calendar events. Apple doesn't document which formats the iPhone Camera reads. Scan the preview with both before you print.",
+    "text": "Googles ML Kit, das viele Android-Scanner nutzen, liest Kalendertermine. Apple dokumentiert nicht, welche Formate die iPhone-Kamera liest. Scanne die Vorschau mit beiden, bevor du druckst.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.1.answer"
+  },
+  "5bb54a2ed51a": {
+    "source": "Can I change the event after printing?",
+    "text": "Kann ich den Termin nach dem Drucken ändern?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.question"
+  },
+  "6a209249887c": {
+    "source": "No, the event is inside the code. For an event that may move, make an invitation page instead: a hosted page with add-to-calendar buttons that you can edit after printing.",
+    "text": "Nein, der Termin steckt im Code. Wenn sich ein Termin verschieben könnte, erstelle stattdessen eine Einladungsseite: eine gehostete Seite mit Buttons zum Hinzufügen zum Kalender, die du auch nach dem Drucken bearbeiten kannst.",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.2.answer"
+  },
+  "2bd44ba9f12f": {
+    "source": "Is my event sent to QRdx?",
+    "text": "Wird mein Termin an QRdx gesendet?",
+    "status": "machine",
+    "context": "qrTypes.types.calendar-event.faqs.3.question"
   }
 }

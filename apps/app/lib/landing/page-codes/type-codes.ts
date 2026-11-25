@@ -3,6 +3,7 @@ import { codesFor, framed, official, type TileSpec, tile } from "./build";
 import { LINK_TYPE_TILES } from "./link-type-codes";
 import type { PageCode } from "./model";
 import {
+  calendarEvent,
   demoAs,
   email,
   generatorAs,
@@ -1631,6 +1632,42 @@ const TYPE_TILES: Record<ContentType, TileSpec[]> = {
   ],
   // Added 2026-11-22 (links): ./link-type-codes.ts
   ...LINK_TYPE_TILES,
+  // Added 2026-11-25
+  "calendar-event": [
+    tile(
+      "Poster",
+      calendarEvent("Sample launch party", "2027-05-14", {
+        start: "18:00",
+        end: "21:00",
+      }),
+      "eventTicket",
+      official("event-ticket", "Launch party", "Add it to your calendar"),
+    ),
+    tile(
+      "Invitation",
+      calendarEvent("Sample wedding", "2027-06-19", {
+        start: "15:00",
+        end: "23:00",
+      }),
+      "classic",
+      framed("ticket", "Save the date"),
+    ),
+    tile(
+      "Flyer",
+      calendarEvent("Sample fair", "2027-07-10"),
+      "amberMinimal",
+      framed("border", "Add to your calendar"),
+    ),
+    tile(
+      "Noticeboard",
+      calendarEvent("Sample open day", "2027-09-25", {
+        start: "10:00",
+        end: "16:00",
+      }),
+      "folio",
+      null,
+    ),
+  ],
 };
 
 export const TYPE_CODES: Record<ContentType, PageCode[]> = Object.fromEntries(

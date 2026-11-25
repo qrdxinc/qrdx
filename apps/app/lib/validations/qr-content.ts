@@ -4,6 +4,8 @@
 
 import { z } from "zod";
 import type { HandleLinkType, PastedLinkType } from "@/types/qr-content";
+// Added 2026-11-25
+import { calendarEventIssue } from "@/utils/calendar-event";
 import {
   cardanoIssue,
   cryptoAmount,
@@ -851,6 +853,24 @@ export const LINK_TYPE_SCHEMAS = {
 } satisfies Record<LinkType, z.ZodType>;
 
 // ─── end of the 2026-11-22 (links) schemas ──────────────────────────────────
+
+// ─── Added 2026-11-25 ───────────────────────────────────────────────────────
+
+// Calendar event (an iCalendar VEVENT)
+export const calendarEventSchema = z
+  .object({
+    title: z.string().min(1, "Event name is required"),
+    allDay: z.boolean().optional(),
+    startDate: z.string().min(1, "Pick the day the event starts"),
+    startTime: optionalText,
+    endDate: optionalText,
+    endTime: optionalText,
+    timeZone: optionalText,
+    location: optionalText,
+    description: optionalText,
+    url: optionalText,
+  })
+  .superRefine(checkedBy((value) => calendarEventIssue(value)));
 
 // Export type inference helpers
 export type UrlFormData = z.infer<typeof urlSchema>;

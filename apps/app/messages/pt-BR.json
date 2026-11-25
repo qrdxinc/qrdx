@@ -4685,11 +4685,30 @@
           "k153mv8r": "Até 28 caracteres",
           "kqv3bio": "Corretoras costumam exigir um. Confira a sua antes de imprimir.",
           "kaa7wzl": "SOL",
-          "k5p19bw": "USDT (Tether)"
+          "k5p19bw": "USDT (Tether)",
+          "k18kvzda": "Nome do evento",
+          "k4fbvq6": "Festa de lançamento",
+          "kfz2vvz": "Evento de dia inteiro",
+          "k16seyg1": "Data de início",
+          "kslte8c": "Hora de início",
+          "kivkp8q": "Data de término",
+          "k1b8ljnb": "Hora de término",
+          "k191owfq": "Para um evento que termina em outro dia.",
+          "k1wjsqfy": "Sem isso, dura uma hora.",
+          "k1rhzoka": "Fuso horário",
+          "kpc0bbm": "Os horários estão neste fuso horário. O código os guarda em UTC, então cada celular os mostra no seu próprio horário.",
+          "kpghiva": "Local",
+          "kv2raw1": "Salão 3, Rua Principal, 1, Springfield",
+          "khkxto5": "Portas abertas às 7. Leve um amigo.",
+          "k1wxsxh4": "Página web"
         }
       },
       "contactForms": {
         "meCardNote": "Celulares Android leem contatos MeCard e oferecem salvá-los. A Apple não documenta o MeCard para a câmera do iPhone, então teste em um iPhone ou use um vCard quando o contato precisar chegar a todo mundo."
+      },
+      "calendarEventForm": {
+        "note": "A leitura oferece adicionar o evento à agenda do celular. O evento é gravado no próprio código, então um novo horário ou local exige um novo código.",
+        "longEvent": "Tanto texto gera um código denso, que precisa ser impresso maior para ser lido. Uma descrição mais curta facilita a leitura."
       },
       "swissQrBill": {
         "designApplied": "As diretrizes do QR-bill da SIX pedem correção de erros M, pontos pretos sobre fundo branco, nada impresso ao redor do código e a cruz suíça no centro, então este design usa tudo isso. Pontos e olhos podem ter qualquer formato; se o design mudar o resto, este aviso oferece a opção de restaurar. Imprima o código em si, sem a margem, em 46 × 46 mm com 5 mm de espaço branco ao redor.",

@@ -33,7 +33,7 @@ export interface FormField {
   /** The content field it edits */
   name: string;
   label: string;
-  kind?: "text" | "textarea" | "select" | "switch" | "date";
+  kind?: "text" | "textarea" | "select" | "switch" | "date" | "time";
   placeholder?: string;
   /** A line under the field while it has no error */
   hint?: React.ReactNode;
@@ -49,6 +49,11 @@ export interface FormField {
   initial?: string | boolean;
   /** Fields emptied when this one changes (a number typed for another mode) */
   resets?: readonly string[];
+  /**
+   * Shown fields with the same row sit side by side (a date and its time);
+   * alone in its row, a field takes the full width.
+   */
+  row?: string;
 }
 
 /**
@@ -101,6 +106,17 @@ function optionLabel(
   value: unknown,
 ): string | undefined {
   return options?.find((option) => option.value === value)?.label;
+}
+
+/** Shown fields in rows: neighbours that share a `row` go together. */
+function inRows(fields: readonly FormField[]): FormField[][] {
+  const rows: FormField[][] = [];
+  for (const field of fields) {
+    const last = rows.at(-1);
+    if (field.row && last?.[0]?.row === field.row) last.push(field);
+    else rows.push([field]);
+  }
+  return rows;
 }
 
 /**
@@ -241,6 +257,115 @@ export function SchemaForm({
       : undefined;
   };
 
+  const renderField = (field: FormField) => {
+    const fieldId = `${id}-${field.name}`;
+    const error = shownError(field);
+    const describedBy = error || field.hint ? `${fieldId}-help` : undefined;
+    const value = values[field.name];
+
+    if (field.kind === "switch") {
+      return (
+        <div className="space-y-1.5" key={field.name}>
+          <div className="hover:bg-muted/50 flex items-center justify-between gap-3 rounded-lg border px-3 py-2 transition-colors">
+            <Label className="cursor-pointer text-xs" htmlFor={fieldId}>
+              {copy(field.label)}
+            </Label>
+            <Switch
+              aria-describedby={describedBy}
+              checked={value === true}
+              id={fieldId}
+              onCheckedChange={(checked) => update(field, checked)}
+            />
+          </div>
+          {field.hint && (
+            <p
+              className="text-muted-foreground text-[11px]"
+              id={`${fieldId}-help`}
+            >
+              {copy(field.hint)}
+            </p>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-2" key={field.name}>
+        <Label className="text-xs" htmlFor={fieldId}>
+          {copy(field.label)}
+          {field.required ? " *" : ""}
+        </Label>
+        {field.kind === "select" ? (
+          <Select
+            onValueChange={(next) => update(field, next)}
+            value={typeof value === "string" ? value : ""}
+          >
+            <SelectTrigger
+              aria-describedby={describedBy}
+              aria-invalid={Boolean(error)}
+              className="w-full"
+              id={fieldId}
+            >
+              <SelectValue placeholder={copy(field.placeholder)}>
+                {copy(optionLabel(field.options, value))}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent className="max-h-72">
+              {field.options?.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {copy(option.label)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        ) : field.kind === "textarea" ? (
+          <Textarea
+            aria-describedby={describedBy}
+            aria-invalid={Boolean(error)}
+            className="resize-none"
+            id={fieldId}
+            onChange={(event) => update(field, event.target.value)}
+            placeholder={copy(field.placeholder)}
+            rows={3}
+            value={typeof value === "string" ? value : ""}
+          />
+        ) : (
+          <Input
+            aria-describedby={describedBy}
+            aria-invalid={Boolean(error)}
+            autoComplete={field.autoComplete ?? "off"}
+            className={cn(
+              field.mono && "font-mono text-[13px] placeholder:font-sans",
+            )}
+            id={fieldId}
+            inputMode={field.inputMode}
+            onChange={(event) => update(field, event.target.value)}
+            placeholder={copy(field.placeholder)}
+            spellCheck={false}
+            type={
+              field.kind === "date" || field.kind === "time"
+                ? field.kind
+                : "text"
+            }
+            value={typeof value === "string" ? value : ""}
+          />
+        )}
+        {error ? (
+          <p className="text-destructive text-[11px]" id={`${fieldId}-help`}>
+            {error}
+          </p>
+        ) : field.hint ? (
+          <p
+            className="text-muted-foreground text-[11px] text-pretty"
+            id={`${fieldId}-help`}
+          >
+            {copy(field.hint)}
+          </p>
+        ) : null}
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-3">
       {modes && (
@@ -266,113 +391,18 @@ export function SchemaForm({
         </div>
       )}
 
-      {visible.map((field) => {
-        const fieldId = `${id}-${field.name}`;
-        const error = shownError(field);
-        const describedBy = error || field.hint ? `${fieldId}-help` : undefined;
-        const value = values[field.name];
-
-        if (field.kind === "switch") {
-          return (
-            <div className="space-y-1.5" key={field.name}>
-              <div className="hover:bg-muted/50 flex items-center justify-between gap-3 rounded-lg border px-3 py-2 transition-colors">
-                <Label className="cursor-pointer text-xs" htmlFor={fieldId}>
-                  {copy(field.label)}
-                </Label>
-                <Switch
-                  aria-describedby={describedBy}
-                  checked={value === true}
-                  id={fieldId}
-                  onCheckedChange={(checked) => update(field, checked)}
-                />
-              </div>
-              {field.hint && (
-                <p
-                  className="text-muted-foreground text-[11px]"
-                  id={`${fieldId}-help`}
-                >
-                  {copy(field.hint)}
-                </p>
-              )}
-            </div>
-          );
-        }
-
-        return (
-          <div className="space-y-2" key={field.name}>
-            <Label className="text-xs" htmlFor={fieldId}>
-              {copy(field.label)}
-              {field.required ? " *" : ""}
-            </Label>
-            {field.kind === "select" ? (
-              <Select
-                onValueChange={(next) => update(field, next)}
-                value={typeof value === "string" ? value : ""}
-              >
-                <SelectTrigger
-                  aria-describedby={describedBy}
-                  aria-invalid={Boolean(error)}
-                  className="w-full"
-                  id={fieldId}
-                >
-                  <SelectValue placeholder={copy(field.placeholder)}>
-                    {copy(optionLabel(field.options, value))}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent className="max-h-72">
-                  {field.options?.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {copy(option.label)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : field.kind === "textarea" ? (
-              <Textarea
-                aria-describedby={describedBy}
-                aria-invalid={Boolean(error)}
-                className="resize-none"
-                id={fieldId}
-                onChange={(event) => update(field, event.target.value)}
-                placeholder={copy(field.placeholder)}
-                rows={3}
-                value={typeof value === "string" ? value : ""}
-              />
-            ) : (
-              <Input
-                aria-describedby={describedBy}
-                aria-invalid={Boolean(error)}
-                autoComplete={field.autoComplete ?? "off"}
-                className={cn(
-                  field.mono && "font-mono text-[13px] placeholder:font-sans",
-                )}
-                id={fieldId}
-                inputMode={field.inputMode}
-                onChange={(event) => update(field, event.target.value)}
-                placeholder={copy(field.placeholder)}
-                spellCheck={false}
-                type={field.kind === "date" ? "date" : "text"}
-                value={typeof value === "string" ? value : ""}
-              />
-            )}
-            {error ? (
-              <p
-                className="text-destructive text-[11px]"
-                id={`${fieldId}-help`}
-              >
-                {error}
-              </p>
-            ) : field.hint ? (
-              <p
-                className="text-muted-foreground text-[11px] text-pretty"
-                id={`${fieldId}-help`}
-              >
-                {copy(field.hint)}
-              </p>
-            ) : null}
+      {inRows(visible).map((row) =>
+        row.length > 1 ? (
+          <div
+            className="grid grid-cols-2 gap-3"
+            key={row.map((field) => field.name).join(" ")}
+          >
+            {row.map(renderField)}
           </div>
-        );
-      })}
+        ) : (
+          renderField(row[0] as FormField)
+        ),
+      )}
 
       {general && touched.size > 0 && (
         <p className="text-destructive text-[11px]">{general}</p>

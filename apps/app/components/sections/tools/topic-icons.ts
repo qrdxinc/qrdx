@@ -13,6 +13,7 @@ import {
   Building4,
   Bus,
   Calendar,
+  CalendarAdd,
   CalendarEdit,
   Call,
   Car,
@@ -145,6 +146,8 @@ export const QR_TYPE_ICONS: Record<ContentType, CardIcon> = {
   "microsoft-forms": Task,
   "amazon-music": MusicSquare,
   canva: Brush2,
+  // Added 2026-11-25
+  "calendar-event": CalendarAdd,
 };
 
 export const QR_TYPE_GROUP_ICONS: Record<QrTypeGroup, CardIcon> = {

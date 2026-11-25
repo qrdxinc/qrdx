@@ -54,6 +54,8 @@ import type {
   YouTubeContent,
   ZoomContent,
 } from "@/types/qr-content";
+// Added 2026-11-25
+import { calendarEventIssue, encodeCalendarEvent } from "./calendar-event";
 import {
   baseUnits,
   cardanoIssue,
@@ -1540,6 +1542,9 @@ export function encodeQRContent(content: QRContentConfig | null): string {
       return encodeTon(content);
     case "stellar":
       return encodeStellar(content);
+    // Added 2026-11-25
+    case "calendar-event":
+      return encodeCalendarEvent(content);
     default:
       return "";
   }
@@ -1931,6 +1936,9 @@ function validateFields(content: QRContentConfig): Validation {
       return fromIssue(tonIssue(content));
     case "stellar":
       return fromIssue(stellarIssue(content));
+    // Added 2026-11-25
+    case "calendar-event":
+      return fromIssue(calendarEventIssue(content));
 
     default:
       return { valid: false, error: "Unknown content type" };

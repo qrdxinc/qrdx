@@ -4685,11 +4685,30 @@
           "k153mv8r": "Bis zu 28 Zeichen",
           "kqv3bio": "Börsen verlangen oft eines. Prüf das bei deiner, bevor du druckst.",
           "kaa7wzl": "SOL",
-          "k5p19bw": "USDT (Tether)"
+          "k5p19bw": "USDT (Tether)",
+          "k18kvzda": "Eventname",
+          "k4fbvq6": "Launch-Party",
+          "kfz2vvz": "Ganztägiges Event",
+          "k16seyg1": "Startdatum",
+          "kslte8c": "Startzeit",
+          "kivkp8q": "Enddatum",
+          "k1b8ljnb": "Endzeit",
+          "k191owfq": "Für ein Event, das an einem späteren Tag endet.",
+          "k1wjsqfy": "Ohne Angabe dauert es eine Stunde.",
+          "k1rhzoka": "Zeitzone",
+          "kpc0bbm": "Die Zeiten gelten in dieser Zeitzone. Der Code speichert sie in UTC, daher zeigt jedes Handy sie in der eigenen Ortszeit an.",
+          "kpghiva": "Ort",
+          "kv2raw1": "Halle 3, Hauptstr. 1, Musterstadt",
+          "khkxto5": "Einlass ab 7 Uhr. Bring gern jemanden mit.",
+          "k1wxsxh4": "Webseite"
         }
       },
       "contactForms": {
         "meCardNote": "Android-Handys lesen MeCard-Kontakte und bieten an, sie zu speichern. Apple dokumentiert MeCard für die iPhone-Kamera nicht, also teste auf einem iPhone oder nimm eine vCard, wenn der Kontakt alle erreichen muss."
+      },
+      "calendarEventForm": {
+        "note": "Beim Scannen kann das Event zum Kalender des Handys hinzugefügt werden. Das Event ist im Code selbst gespeichert, daher braucht eine neue Zeit oder ein neuer Ort einen neuen Code.",
+        "longEvent": "So viel Text ergibt einen dichten Code, der größer gedruckt werden muss, damit er sich scannen lässt. Eine kürzere Beschreibung macht das Scannen einfacher."
       },
       "swissQrBill": {
         "designApplied": "Die QR-Rechnung-Richtlinien von SIX verlangen Fehlerkorrektur M, schwarze Punkte auf Weiß, nichts rund um den Code gedruckt und das Schweizer Kreuz in der Mitte, deshalb nutzt dieses Design sie. Punkte und Augen können jede Form haben; wenn das Design den Rest ändert, bietet dieser Hinweis an, ihn zurückzusetzen. Drucke den Code selbst, ohne seinen Rand, in 46 × 46 mm mit 5 mm Weißraum drumherum.",

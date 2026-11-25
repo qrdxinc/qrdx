@@ -269,6 +269,16 @@ export const CONTENT_EXAMPLES: { [T in ContentType]: Example<T> } = {
   "booking-com": {
     url: "https://www.booking.com/hotel/us/bloom-inn-example.html",
   },
+  // Added 2026-11-25
+  "calendar-event": {
+    title: "Spring tasting at Bloom Café",
+    startDate: "2027-04-17",
+    startTime: "18:00",
+    endTime: "20:00",
+    timeZone: "America/Los_Angeles",
+    location: "Bloom Café, 1 Example St, San Francisco",
+    description: "Six dishes from the new spring menu. Free entry.",
+  },
 };
 
 /** Fields that only pick a mode, so they don't count as entered content. */
@@ -294,6 +304,8 @@ const NEUTRAL_FIELDS = new Set([
   // Added 2026-11-22 (links)
   "audioOnly",
   "writeReview",
+  // Added 2026-11-25: how a calendar event's times are read
+  "timeZone",
 ]);
 
 /** True when nobody has typed anything into this type's form yet. */
