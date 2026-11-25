@@ -100,8 +100,17 @@ const optionsFor = (color: string): QRSVGOptions => ({
 });
 
 /** The element's markup without Svelte's hydration comments. */
-const markupIn = (container: Element) =>
-  (container.querySelector(".qr")?.innerHTML ?? "").replace(/<!--.*?-->/g, "");
+function markupIn(container: Element): string {
+  const copy = container.querySelector(".qr")?.cloneNode(true) as
+    | Element
+    | undefined;
+  for (const node of [...(copy?.childNodes ?? [])]) {
+    if (node.nodeType === node.COMMENT_NODE) {
+      node.remove();
+    }
+  }
+  return copy?.innerHTML ?? "";
+}
 
 const asParsed = (markup: string) => {
   const holder = document.createElement("div");
