@@ -21,6 +21,7 @@ import {
   saveSink,
 } from "@/lib/data-connections/client";
 import { ResponseSinkPanel } from "./response-sink-panel";
+import { SegmentPanel } from "./segment-panel";
 import { SourceKeyForm } from "./source-key-form";
 import { SourcePreview } from "./source-preview";
 
@@ -284,6 +285,7 @@ export function DataConnectionPanel({
     return <SourcePreview name={name} slug={slug} />;
   if (slug === "google-sheets") return <SheetsPanel />;
   if (slug === "slack") return <SlackPanel metadata={metadata} />;
+  if (slug === "segment") return <SegmentPanel />;
   if (slug === "hubspot" || slug === "mailchimp" || slug === "pipedrive") {
     return <ResponseSinkPanel name={name} provider={slug} />;
   }

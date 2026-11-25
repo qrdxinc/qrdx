@@ -436,7 +436,7 @@ export function emitFormSubmitted(
     submitted_at: (input.submittedAt ?? new Date()).toISOString(),
   };
   emitEventInBackground("form.submitted", data, scope);
-  // HubSpot / Mailchimp streams (lib/data-connections): sent right away
+  // Form-response streams (lib/data-connections): sent right away
   triggerIntegrationSyncs(scope, "responses");
 }
 
@@ -535,7 +535,8 @@ export async function emitScanRecorded(
   const scope = { userId: code.userId, organizationId: code.organizationId };
   let subscribers: Subscribers | null = null;
   try {
-    // Google Sheets "keep in sync": batched, at most every 5 min per sheet
+    // Scan streams (Google Sheets "keep in sync", Segment): batched, at most
+    // every 5 min per stream
     triggerIntegrationSyncs(scope, "scans");
     subscribers = await loadSubscribers(scope, { cached: true });
   } catch (error) {

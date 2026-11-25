@@ -1,10 +1,11 @@
 "use client";
 
-import type { SourcePage, SyncState } from "@repo/integrations";
+import type { SinkStream, SourcePage, SyncState } from "@repo/integrations";
 import type {
   MailchimpAudience,
   MailchimpMergeField,
 } from "@repo/integrations/src/integrations/mailchimp/types";
+import type { SegmentRegion } from "@repo/integrations/src/integrations/segment/settings";
 import type { FormMapping } from "@repo/integrations/src/sinks/mapping";
 import { workspaceRequestHeaders } from "@/components/workspace-provider";
 import type { CursorPage } from "@/lib/keyset-cursor";
@@ -181,6 +182,8 @@ export async function exportToSheet(
 
 export interface SinkViewData {
   sync: SyncState | null;
+  /** Each stream's state, for a provider with more than one (Segment) */
+  streams?: Partial<Record<SinkStream, SyncState | null>>;
   settings: Record<string, unknown>;
   /** The first page of form pages, most recently updated first */
   pages: ScopedFormPage[];
@@ -192,6 +195,24 @@ export interface SinkViewData {
 }
 
 function mockView(provider: string): SinkViewData {
+  if (provider === "segment") {
+    return {
+      sync: null,
+      streams: {
+        scans: mockSyncState({ delivered: 1842, skipped: 0 }),
+        responses: null,
+      },
+      settings: {
+        region: "us",
+        scanEvent: "QR Code Scanned",
+        responseEvent: "Form Submitted",
+      },
+      pages: [],
+      pagesCursor: null,
+      selectedPages: [],
+      workspaceId: null,
+    };
+  }
   if (provider === "google-sheets") {
     return {
       sync: mockSyncState({ delivered: 2310, skipped: 0 }),
@@ -273,6 +294,13 @@ export async function loadSinkPages(
   );
 }
 
+/** Segment's settings: region, and each stream's switch and event name. */
+export interface SegmentSinkBody {
+  region: SegmentRegion;
+  scans: { enabled: boolean; event: string };
+  responses: { enabled: boolean; event: string };
+}
+
 export async function saveSink(
   provider: string,
   body:
@@ -284,10 +312,27 @@ export async function saveSink(
         audienceId?: string;
         tags?: string[];
         withoutConsent?: "pending" | "skip";
-      },
+      }
+    | SegmentSinkBody,
 ): Promise<SinkViewData> {
   if (isIntegrationsMock()) {
     const view = mockView(provider);
+    if (!("enabled" in body)) {
+      const stream = (enabled: boolean) =>
+        enabled ? mockSyncState({ status: "idle" }) : null;
+      return {
+        ...view,
+        streams: {
+          scans: stream(body.scans.enabled),
+          responses: stream(body.responses.enabled),
+        },
+        settings: {
+          region: body.region,
+          scanEvent: body.scans.event,
+          responseEvent: body.responses.event,
+        },
+      };
+    }
     return {
       ...view,
       sync: view.sync && {
@@ -300,15 +345,36 @@ export async function saveSink(
   return request(`/api/integrations/sync/${provider}`, json(body, "PUT"));
 }
 
-export async function retrySinkNow(provider: string): Promise<SinkViewData> {
+/** "Retry now"; `stream` picks one of Segment's two. */
+export async function retrySinkNow(
+  provider: string,
+  stream?: SinkStream,
+): Promise<SinkViewData> {
   if (isIntegrationsMock()) {
     return { ...mockView(provider), sync: mockSyncState() };
   }
   const result = await request<{ view: SinkViewData }>(
     `/api/integrations/sync/${provider}`,
-    json({ action: "retry" }),
+    json(stream ? { action: "retry", stream } : { action: "retry" }),
   );
   return result.view;
+}
+
+/**
+ * Segment: one test event, to find in the source's Debugger, to `region`
+ * (the one picked, saved or not).
+ */
+export async function sendSegmentTestEvent(
+  region: SegmentRegion,
+): Promise<void> {
+  if (isIntegrationsMock()) {
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    return;
+  }
+  await request(
+    "/api/integrations/sync/segment",
+    json({ action: "test", region }),
+  );
 }
 
 export async function loadMailchimpAudiences(): Promise<MailchimpAudience[]> {

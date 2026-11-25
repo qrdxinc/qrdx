@@ -259,6 +259,7 @@ describe("with the real registry", () => {
         "onedrive",
         "pipedrive",
         "rebrandly",
+        "segment",
         "shopify",
         "short-io",
         "slack",
@@ -292,6 +293,7 @@ describe("with the real registry", () => {
       "calcom",
       "shopify",
       "bitly",
+      "segment",
     ]) {
       expect(availability.needsSetup[slug], slug).toEqual([ENCRYPTION_KEY_VAR]);
     }

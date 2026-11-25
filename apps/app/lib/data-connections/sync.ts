@@ -5,9 +5,14 @@ import {
   isIntegrationApiError,
   isSinkProvider,
   SINK_PROVIDERS,
+  SINK_STREAMS,
   type SinkDeliveryResult,
   type SinkProviderSlug,
+  type SinkStream,
+  type SinkStreamSlot,
+  SYNC_STATE_KEYS,
   type SyncState,
+  type SyncStateKey,
 } from "@repo/integrations";
 import {
   appendScansToSheet,
@@ -29,6 +34,12 @@ import {
   type PipedriveSettings,
   syncResponsesToPipedrive,
 } from "@repo/integrations/src/integrations/pipedrive";
+import {
+  createSegmentClient,
+  readSegmentSettings,
+  sendResponsesToSegment,
+  sendScansToSegment,
+} from "@repo/integrations/src/integrations/segment";
 import type { ResponseSinkSettings } from "@repo/integrations/src/sinks/mapping";
 import {
   isSyncDue,
@@ -38,7 +49,7 @@ import {
   SYNC_LEASE_MS,
   syncBatchSize,
 } from "@repo/integrations/src/sinks/state";
-import { and, eq, inArray, sql } from "drizzle-orm";
+import { and, eq, inArray, or, sql } from "drizzle-orm";
 import { after } from "next/server";
 import { getConnection } from "@/lib/connected-accounts/server";
 import { scheduleWorkerRun } from "@/lib/events/worker-due";
@@ -46,12 +57,15 @@ import { loadResponses, loadScans, syncPauseReason } from "./data";
 import { dataCallsAllowed } from "./server";
 
 // Data-out worker. Each sink integration keeps its stream state in
-// integration.metadata.sync (no extra tables): a (time, id) cursor, failed
+// integration.metadata (no extra tables): a (time, id) cursor, failed
 // attempts with the webhook backoff schedule, a crash-safe lease and the last
-// outcome for the dashboard. Items are read after the cursor in batches and
-// delivered in batches; the cursor only moves after the tool accepted them,
-// and every sink is idempotent (upsert by email / scan id checks), so a
-// retry never duplicates anything.
+// outcome for the dashboard. Most sinks have one stream, in metadata.sync;
+// Segment has two (scans and form responses), each under its own key with
+// its own lease, cursor and retries (SINK_STREAMS). Items are read after the
+// cursor in batches and delivered in batches; the cursor only moves after
+// the tool accepted them, and every sink is idempotent (upsert by email /
+// scan id checks / Segment's messageId), so a retry never duplicates
+// anything.
 
 function log(event: string, fields: Record<string, unknown>) {
   console.error(JSON.stringify({ event, ...fields }));
@@ -59,13 +73,21 @@ function log(event: string, fields: Record<string, unknown>) {
 
 const metaJson = sql`coalesce(${integration.metadata}::jsonb, '{}'::jsonb)`;
 
-/** Writes metadata.sync (and optionally merges metadata.settings) in place. */
+/** A JSON path in a stream's state, as Postgres's text[] literal. */
+const statePath = (key: SyncStateKey, field?: string) =>
+  field ? `{${key},${field}}` : `{${key}}`;
+
+/**
+ * Writes a stream's state (metadata.sync unless `key` says otherwise), and
+ * optionally merges metadata.settings, in place.
+ */
 export async function writeSyncState(
   integrationId: string,
   state: SyncState,
   settingsPatch?: Record<string, unknown>,
+  key: SyncStateKey = "sync",
 ): Promise<void> {
-  const withSync = sql`jsonb_set(${metaJson}, '{sync}', ${JSON.stringify(state)}::jsonb)`;
+  const withSync = sql`jsonb_set(${metaJson}, ${statePath(key)}::text[], ${JSON.stringify(state)}::jsonb)`;
   const value = settingsPatch
     ? sql`jsonb_set(${withSync}, '{settings}', coalesce(${metaJson} -> 'settings', '{}'::jsonb) || ${JSON.stringify(settingsPatch)}::jsonb)`
     : withSync;
@@ -79,19 +101,23 @@ export async function writeSyncState(
  * Takes the stream's lease in one statement, so two workers (cron and a
  * form-submit trigger) never deliver the same batch.
  */
-async function claim(integrationId: string, now: Date): Promise<boolean> {
+async function claim(
+  integrationId: string,
+  key: SyncStateKey,
+  now: Date,
+): Promise<boolean> {
   const lease = new Date(now.getTime() + SYNC_LEASE_MS).toISOString();
   const rows = await db
     .update(integration)
     .set({
-      metadata: sql`jsonb_set(${metaJson}, '{sync,leaseUntil}', to_jsonb(${lease}::text))::json`,
+      metadata: sql`jsonb_set(${metaJson}, ${statePath(key, "leaseUntil")}::text[], to_jsonb(${lease}::text))::json`,
     })
     .where(
       and(
         eq(integration.id, integrationId),
         eq(integration.status, "active"),
-        sql`(${integration.metadata}::jsonb #>> '{sync,enabled}') = 'true'`,
-        sql`coalesce(nullif(${integration.metadata}::jsonb #>> '{sync,leaseUntil}', '')::timestamptz, 'epoch'::timestamptz) < ${now.toISOString()}::timestamptz`,
+        sql`(${integration.metadata}::jsonb #>> ${statePath(key, "enabled")}::text[]) = 'true'`,
+        sql`coalesce(nullif(${integration.metadata}::jsonb #>> ${statePath(key, "leaseUntil")}::text[], '')::timestamptz, 'epoch'::timestamptz) < ${now.toISOString()}::timestamptz`,
       ),
     )
     .returning({ id: integration.id });
@@ -170,19 +196,71 @@ async function clearPipedriveLeads(integrationId: string): Promise<void> {
     .where(eq(integration.id, integrationId));
 }
 
-/** Delivers one batch for the stream. */
-async function deliverBatch(
-  row: SinkRow,
-  state: SyncState,
-  accessToken: string,
-  run: RunContext,
-): Promise<{
+type BatchOutcome = {
   result: SinkDeliveryResult;
   settingsPatch?: Record<string, unknown>;
   read: number;
-}> {
+};
+
+const NOTHING_READ: BatchOutcome = {
+  result: { delivered: 0, skipped: 0, cursor: null },
+  read: 0,
+};
+
+/** Segment: the stream's scans or responses as Track calls. */
+async function deliverToSegment(
+  row: SinkRow,
+  stream: SinkStream,
+  state: SyncState,
+  writeKey: string,
+): Promise<BatchOutcome> {
+  const scope = { userId: row.userId, organizationId: state.organizationId };
+  const segment = readSegmentSettings(row.metadata.settings);
+  const client = createSegmentClient(writeKey, segment.region);
+  if (stream === "scans") {
+    const scans = await loadScans(scope, {
+      codeId: null,
+      cursor: state.cursor,
+      limit: SYNC_BATCH_SIZE,
+    });
+    if (scans.length === 0) return NOTHING_READ;
+    return {
+      result: await sendScansToSegment(client, scans, {
+        event: segment.scanEvent,
+        connectionId: row.id,
+      }),
+      read: scans.length,
+    };
+  }
+  const responses = await loadResponses(scope, {
+    pageIds: null,
+    cursor: state.cursor,
+    limit: SYNC_BATCH_SIZE,
+  });
+  if (responses.length === 0) return NOTHING_READ;
+  return {
+    result: await sendResponsesToSegment(client, responses, {
+      event: segment.responseEvent,
+      connectionId: row.id,
+    }),
+    read: responses.length,
+  };
+}
+
+/** Delivers one batch for the stream. */
+async function deliverBatch(
+  row: SinkRow,
+  slot: SinkStreamSlot,
+  state: SyncState,
+  accessToken: string,
+  run: RunContext,
+): Promise<BatchOutcome> {
   const scope = { userId: row.userId, organizationId: state.organizationId };
   const settings = settingsOf(row.metadata);
+
+  if (row.provider === "segment") {
+    return deliverToSegment(row, slot.stream, state, accessToken);
+  }
 
   if (row.provider === "google-sheets") {
     const target = readSheetTarget(row.metadata);
@@ -305,10 +383,11 @@ export function syncDueAt(state: SyncState): number | null {
 /** Runs one stream until it is caught up, fails or the budget is used. */
 async function syncOne(
   row: SinkRow,
+  slot: SinkStreamSlot,
   deadline: number,
 ): Promise<"ok" | "failed" | "skipped"> {
   const now = new Date();
-  let state = readSyncState(row.metadata.sync);
+  let state = readSyncState(row.metadata[slot.key]);
   if (!state) return "skipped";
   if (!isSyncDue(state, now)) {
     // Waiting for a retry, or another run holds it: be back by then.
@@ -316,13 +395,13 @@ async function syncOne(
     if (dueAt !== null) await scheduleWorkerRun(dueAt);
     return "skipped";
   }
-  if (!(await claim(row.id, now))) {
+  if (!(await claim(row.id, slot.key, now))) {
     await scheduleWorkerRun(now.getTime() + SYNC_LEASE_MS);
     return "skipped";
   }
 
   const release = (next: SyncState) =>
-    writeSyncState(row.id, { ...next, leaseUntil: null });
+    writeSyncState(row.id, { ...next, leaseUntil: null }, undefined, slot.key);
 
   try {
     if (!dataCallsAllowed()) {
@@ -362,7 +441,13 @@ async function syncOne(
       if (Date.now() > deadline) break;
       let outcome: Awaited<ReturnType<typeof deliverBatch>>;
       try {
-        outcome = await deliverBatch(row, state, connection.accessToken, run);
+        outcome = await deliverBatch(
+          row,
+          slot,
+          state,
+          connection.accessToken,
+          run,
+        );
       } catch (error) {
         state = nextSyncState(state, { ok: false, error });
         await release(state);
@@ -379,6 +464,7 @@ async function syncOne(
         log("integrations.sync_failed", {
           provider: row.provider,
           integrationId: row.id,
+          stream: slot.stream,
           attempts: state.attempts,
           error: state.lastError,
         });
@@ -397,6 +483,7 @@ async function syncOne(
           leaseUntil: new Date(Date.now() + SYNC_LEASE_MS).toISOString(),
         },
         outcome.settingsPatch,
+        slot.key,
       );
       // The cursor is past this batch now, so its leads won't be asked for
       // again. (If clearing fails, the stale ids are harmless.)
@@ -425,6 +512,7 @@ async function syncOne(
     log("integrations.sync_crashed", {
       provider: row.provider,
       integrationId: row.id,
+      stream: slot.stream,
       error: error instanceof Error ? error.message.slice(0, 200) : "unknown",
     });
     return "failed";
@@ -444,7 +532,12 @@ async function loadSinkRows(ids?: string[]): Promise<SinkRow[]> {
       and(
         inArray(integration.provider, [...SINK_PROVIDERS]),
         eq(integration.status, "active"),
-        sql`(${integration.metadata}::jsonb #>> '{sync,enabled}') = 'true'`,
+        or(
+          ...SYNC_STATE_KEYS.map(
+            (key) =>
+              sql`(${integration.metadata}::jsonb #>> ${statePath(key, "enabled")}::text[]) = 'true'`,
+          ),
+        ),
         ids ? inArray(integration.id, ids) : undefined,
       ),
     )
@@ -462,6 +555,13 @@ async function loadSinkRows(ids?: string[]): Promise<SinkRow[]> {
   );
 }
 
+/** The row's streams that are turned on. */
+function enabledSlots(row: SinkRow): SinkStreamSlot[] {
+  return SINK_STREAMS[row.provider].filter(
+    (slot) => readSyncState(row.metadata[slot.key])?.enabled === true,
+  );
+}
+
 export interface SyncRunSummary {
   streams: number;
   ok: number;
@@ -469,22 +569,32 @@ export interface SyncRunSummary {
   skipped: number;
 }
 
-/** Cron worker (and triggers): every due stream, within a time budget. */
+/**
+ * Cron worker (and triggers): every due stream, within a time budget.
+ * `stream` limits it to the streams that carry scans, or responses.
+ */
 export async function runIntegrationSyncs({
   budgetMs = 15_000,
   integrationIds,
+  stream,
 }: {
   budgetMs?: number;
   integrationIds?: string[];
+  stream?: SinkStream;
 } = {}): Promise<SyncRunSummary> {
   const deadline = Date.now() + budgetMs;
   const summary: SyncRunSummary = { streams: 0, ok: 0, failed: 0, skipped: 0 };
   try {
     const rows = await loadSinkRows(integrationIds);
-    summary.streams = rows.length;
-    for (const row of rows) {
+    const streams = rows.flatMap((row) =>
+      enabledSlots(row)
+        .filter((slot) => !stream || slot.stream === stream)
+        .map((slot) => ({ row, slot })),
+    );
+    summary.streams = streams.length;
+    for (const { row, slot } of streams) {
       if (Date.now() > deadline) break;
-      summary[await syncOne(row, deadline)]++;
+      summary[await syncOne(row, slot, deadline)]++;
     }
   } catch (error) {
     log("integrations.sync_run_failed", {
@@ -502,9 +612,11 @@ export async function runIntegrationSyncs({
 export async function nextIntegrationSyncDueAt(): Promise<number | null> {
   let next: number | null = null;
   for (const row of await loadSinkRows()) {
-    const state = readSyncState(row.metadata.sync);
-    const dueAt = state ? syncDueAt(state) : null;
-    if (dueAt !== null && (next === null || dueAt < next)) next = dueAt;
+    for (const slot of SINK_STREAMS[row.provider]) {
+      const state = readSyncState(row.metadata[slot.key]);
+      const dueAt = state ? syncDueAt(state) : null;
+      if (dueAt !== null && (next === null || dueAt < next)) next = dueAt;
+    }
   }
   return next;
 }
@@ -516,10 +628,11 @@ interface StreamIndexEntry {
   userId: string;
   organizationId: string | null;
   provider: SinkProviderSlug;
+  stream: SinkStream;
 }
 
 const INDEX_TTL_MS = 30_000;
-/** Scans arrive in bursts: one sheet append per stream per 5 minutes. */
+/** Scans arrive in bursts: one delivery per scan stream per 5 minutes. */
 const SCAN_TRIGGER_INTERVAL_MS = 5 * 60_000;
 let streamIndex: { at: number; entries: StreamIndexEntry[] } | null = null;
 const lastScanTrigger = new Map<string, number>();
@@ -534,12 +647,16 @@ async function enabledStreams(): Promise<StreamIndexEntry[]> {
     return streamIndex.entries;
   }
   const rows = await loadSinkRows();
-  const entries = rows.map((row) => ({
-    id: row.id,
-    userId: row.userId,
-    provider: row.provider,
-    organizationId: readSyncState(row.metadata.sync)?.organizationId ?? null,
-  }));
+  const entries = rows.flatMap((row) =>
+    enabledSlots(row).map((slot) => ({
+      id: row.id,
+      userId: row.userId,
+      provider: row.provider,
+      stream: slot.stream,
+      organizationId:
+        readSyncState(row.metadata[slot.key])?.organizationId ?? null,
+    })),
+  );
   streamIndex = { at: Date.now(), entries };
   return entries;
 }
@@ -573,11 +690,7 @@ export function triggerIntegrationSyncs(
 ): void {
   runDetached(async () => {
     const entries = (await enabledStreams()).filter(
-      (entry) =>
-        inScope(entry, scope) &&
-        (stream === "scans"
-          ? entry.provider === "google-sheets"
-          : entry.provider !== "google-sheets"),
+      (entry) => inScope(entry, scope) && entry.stream === stream,
     );
     const now = Date.now();
     let waitUntil = Number.POSITIVE_INFINITY;
@@ -598,6 +711,7 @@ export function triggerIntegrationSyncs(
     await runIntegrationSyncs({
       budgetMs: 10_000,
       integrationIds: due.map((entry) => entry.id),
+      stream,
     });
   });
 }
