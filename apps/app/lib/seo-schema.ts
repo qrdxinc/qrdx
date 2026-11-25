@@ -5,7 +5,7 @@
 //
 // Facts only. No ratings or reviews until real ones exist on G2 or
 // Capterra, and `sameAs` lists only profiles that exist today: add Product
-// Hunt, AlternativeTo or Wikidata URLs once they're live.
+// Hunt or AlternativeTo URLs once they're live.
 import {
   CANONICAL_HOST,
   DISCORD_INVITE_URL,
@@ -19,6 +19,7 @@ import {
   SUBREDDIT_URL,
   SUBSTACK_URL,
   SUPPORT_EMAIL,
+  WIKIDATA_URL,
   X_PROFILE_URL,
 } from "@repo/config";
 import type { Locale } from "@repo/i18n/config";
@@ -115,6 +116,8 @@ export const organizationSchema = {
     // The monthly letter and the subreddit, both run by QRdx.
     SUBSTACK_URL,
     SUBREDDIT_URL,
+    // QRdx's Wikidata item.
+    WIKIDATA_URL,
   ],
   contactPoint: {
     "@type": "ContactPoint",
