@@ -12,11 +12,14 @@ import {
  * file the way a DNS provider does and compares the result with the records
  * lib/custom-domains.ts asks for.
  *
- * The template is applied with the `host` parameter (the subdomain), so every
- * relative record lands under it:
+ * Every record is relative to the domain plus the `host` parameter:
  * - route:  CNAME `@` → %target% (Vercel's target, or a self-hosted server)
- * - vercel: TXT `_vercel.%domain%.` = vc-domain-verify=%vercel% (zone apex)
  * - qrdx:   TXT `_qrdx-challenge` = qrdx-verify=%token% (self-hosted)
+ * - vercel: TXT `_vercel` = vc-domain-verify=%vercel%
+ * route and qrdx are applied with `host` (the subdomain). Vercel checks its
+ * TXT at `_vercel` on the zone apex, so the vercel group goes in a second
+ * apply without `host`. Version 1 wrote `_vercel.%domain%.` (a trailing dot
+ * for an absolute name), which Cloudflare doesn't support.
  */
 export const TEMPLATE_GROUPS = ["route", "vercel", "qrdx"] as const;
 export type TemplateGroup = (typeof TEMPLATE_GROUPS)[number];
@@ -33,6 +36,8 @@ const VERCEL_CODE = /^[A-Za-z0-9_-]{1,128}$/;
 const MANUAL_TOKEN = /^[a-f0-9]{16,128}$/;
 
 export interface TemplateApply {
+  /** Applied on the zone apex (no `host` parameter) instead of the subdomain */
+  apex: boolean;
   /** Groups to apply, in template order */
   groupIds: TemplateGroup[];
   /** Template variables (%target%, %vercel%, %token%) */
@@ -42,8 +47,9 @@ export interface TemplateApply {
 const stripDot = (name: string) => name.toLowerCase().replace(/\.$/, "");
 
 /**
- * The groups and variables that make the template write exactly `records`
- * for `hostname` in `zone`, or null when the template can't express them
+ * The applies that make the template write exactly `records` for `hostname`
+ * in `zone`, in order: the subdomain's records first, then Vercel's TXT on
+ * the apex when it's asked for. Null when the template can't express them
  * (an apex domain, an A record, a TXT record it doesn't know, no CNAME). A
  * null here means no one-click button: the records table is the only way.
  */
@@ -51,7 +57,7 @@ export function templateApplyFor(
   records: readonly DnsRecord[],
   hostname: string,
   zone: string,
-): TemplateApply | null {
+): TemplateApply[] | null {
   // Subdomains only: the template's CNAME sits on the host it's applied to.
   if (hostname === zone || !hostname.endsWith(`.${zone}`)) return null;
 
@@ -104,8 +110,18 @@ export function templateApplyFor(
   }
 
   if (!groups.has("route")) return null;
-  return {
-    groupIds: TEMPLATE_GROUPS.filter((group) => groups.has(group)),
-    variables,
-  };
+  const { vercel, ...subdomainVariables } = variables;
+  const applies: TemplateApply[] = [
+    {
+      apex: false,
+      groupIds: TEMPLATE_GROUPS.filter(
+        (group) => group !== "vercel" && groups.has(group),
+      ),
+      variables: subdomainVariables,
+    },
+  ];
+  if (vercel) {
+    applies.push({ apex: true, groupIds: ["vercel"], variables: { vercel } });
+  }
+  return applies;
 }

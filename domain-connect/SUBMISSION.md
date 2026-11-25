@@ -73,7 +73,7 @@ Passing `-merge-or-fail` means the PR should get the `automerge-possible` label,
 QRdx (https://qrdx.dev) is an open-source QR code platform. Customers serve their dynamic QR codes' short links from their own subdomain, for example go.example.com. This template points that subdomain at QRdx and adds the ownership TXT record when one is needed:
 
 - group `route`: CNAME on the host to `%target%`
-- group `vercel`: Vercel's ownership TXT, `_vercel` on the zone apex, only when Vercel asks for one
+- group `vercel`: Vercel's ownership TXT, `_vercel` on the zone apex, only when Vercel asks for one (applied on its own, without `host`)
 - group `qrdx`: `_qrdx-challenge` TXT used by self-hosted QRdx
 
 Requests are signed (`syncPubKeyDomain` qrdx.dev, key `_dck1`).
@@ -108,7 +108,7 @@ Requests are signed (`syncPubKeyDomain` qrdx.dev, key `_dck1`).
 
 **Why `pointsTo` is a bare `%target%`:** Vercel gives each project its own CNAME target (`cname.vercel-dns.com` or a project-specific `<id>.vercel-dns-0NN.com`), and self-hosted QRdx points at the operator's own server, so the target has no fixed suffix. Every request is signed with the key at `_dck1.qrdx.dev`, so only QRdx can produce a link with a given target.
 
-**Why one host is absolute (`_vercel.%domain%.`):** Vercel checks ownership with a TXT record at `_vercel` on the zone apex, not under the subdomain, and its value names the subdomain (`vc-domain-verify=go.example.com,<code>`). The trailing dot writes it at the apex while the CNAME stays on the host. It's only applied with `groupId=vercel`, when Vercel asks for it.
+**Why the vercel group is applied without `host`:** Vercel checks ownership with a TXT record at `_vercel` on the zone apex, not under the subdomain, and its value names the subdomain (`vc-domain-verify=go.example.com,<code>`). The app sends it in its own apply URL with `groupId=vercel` and no `host`, so it lands at the apex, and only when Vercel asks for it.
 
 ## Online Editor test results
 
@@ -136,7 +136,18 @@ Once the PR is merged, write to `domain-connect@cloudflare.com` ([Cloudflare's i
 > Thank you,
 > Ritesh, QRdx
 
-What Cloudflare does with the template, from their docs: only the synchronous flow; the signature is required and must be the last query parameter (the app does that); `state`, `syncRedirectDomain`, `hostRequired`, `essential` and TXT conflict matching are ignored (those are the seven linter notes; the generic rules still want them set). Cloudflare publishes no onboarding time. After onboarding, template changes are picked up automatically, usually within eight hours.
+What Cloudflare does with the template, from their docs and their onboarding email: only the synchronous flow; the signature is required and must be the last query parameter (the app does that); `state`, `syncRedirectDomain`, `hostRequired`, `essential` and TXT conflict matching are ignored (those are the seven linter notes; the generic rules still want them set). Because `hostRequired` is ignored, the route group without `host` would put the CNAME on the zone apex and replace the customer's apex records, so the app always sends `host` for it. A CNAME also replaces whatever else is on that subdomain, after the user approves. A TXT only conflicts with one of identical content, so a new `qrdx-verify=` value is added next to an old one. Cloudflare first onboards a template in preview, limited to one account; its template endpoint already answers for everyone then, so the app's button stays off until `DOMAIN_CONNECT_LIVE_PROVIDERS` lists Cloudflare (step 5). After onboarding, template changes are picked up automatically, usually within eight hours.
+
+## 4a. Updating the template
+
+The repository's file is the source of truth: change it there, raise `version`, re-run the linter and the app's tests, then open a pull request to Domain-Connect/Templates with the commit message `modify QRdx, QRdx custom domain`, the PR template filled in and new Online Editor links. Cloudflare picks up merged changes automatically. Its template endpoint shows the version it uses:
+
+```bash
+curl -s https://api.cloudflare.com/client/v4/dns/domainconnect/v2/domainTemplates/providers/qrdx.dev/services/qrdx
+# {"version":2}
+```
+
+Version 1 wrote Vercel's record at `_vercel.%domain%.`, with a trailing dot meant as an absolute name. Cloudflare reads every host relative to the domain plus `host=`, so that never landed at the apex. Version 2 writes `_vercel`, and the app applies that group in a second URL without `host`. Until Cloudflare reports version 2, test only the route and qrdx groups.
 
 ## 5. Set the environment variables
 
@@ -147,30 +158,33 @@ In Vercel, **qrdx → Settings → Environment Variables**, Production:
 | `DOMAIN_CONNECT_PROVIDER_ID` | `qrdx.dev` |
 | `DOMAIN_CONNECT_SERVICE_ID` | `qrdx` |
 | `DOMAIN_CONNECT_PRIVATE_KEY` | The whole PEM file from step 1, `-----BEGIN PRIVATE KEY-----` to `-----END PRIVATE KEY-----`. Mark it Sensitive. Line breaks may be real newlines or `\n`. |
+| `DOMAIN_CONNECT_LIVE_PROVIDERS` | `cloudflare.com`, only once Cloudflare emails that the template is live for every account. Comma-separated for more providers, by the `providerId` in their settings (`https://api.cloudflare.com/client/v4/dns/domainconnect/v2/<zone>/settings` shows Cloudflare's). |
 
 Then redeploy: availability is read when the app starts, and the docs section appears on the next deploy.
 
 - The button also needs custom domains to work on Vercel (`VERCEL_API_TOKEN` and `VERCEL_PROJECT_ID`), which still wait on the Vercel API token.
-- Setting the variables before Cloudflare onboards is safe: until Cloudflare's API reports the template as supported, no button appears.
+- Setting the first three variables before Cloudflare goes live is safe: without `DOMAIN_CONNECT_LIVE_PROVIDERS` no button appears. Don't set that one during Cloudflare's preview: their template endpoint answers for every account then, but the template only works for the test account.
 - If the key in DNS and the variable don't match, no button appears and the logs say `The Domain Connect public key at _dck1.qrdx.dev doesn't match DOMAIN_CONNECT_PRIVATE_KEY`. `keys.mjs check` tells you which side is wrong.
 - The admin health page (`/admin/health`, configuration) lists "One-click DNS setup (Domain Connect)", whether it's on and which variables it reads.
 
 ## Testing while Cloudflare limits the template to your account
 
-The app shows the button only once Cloudflare's discovery API lists the template, which may not happen while it's limited to your test account. To test before that, add a subdomain of a zone in that account on the Domains page, then make a signed link from the records it shows:
+The app shows no button during the preview (`DOMAIN_CONNECT_LIVE_PROVIDERS` isn't set). To test, add a subdomain of a zone in that account on the Domains page, then make a signed link from the records it shows:
 
 ```bash
 node --experimental-strip-types domain-connect/keys.mjs url ~/qrdx-domain-connect.pem \
   --domain yourzone.com --host go --target cname.vercel-dns.com
+# add --token <hex> for the qrdx group (the value after qrdx-verify=)
 # add --vercel "go.yourzone.com,<code>" when the page also shows a _vercel TXT record
-# (the value after vc-domain-verify=)
+# (the value after vc-domain-verify=); that prints a second link, without host,
+# which only works once Cloudflare reports template version 2
 ```
 
-Open the link while signed in to Cloudflare and approve. Cloudflare sends you back to the Domains page; click **Verify**. Links from the page itself include the domain, so they verify on their own.
+Open the link while signed in to Cloudflare and approve. Cloudflare sends you back to the Domains page; click **Verify**. Links from the page itself include the domain, so they verify on their own, and when there are two the page sends you on to the second.
 
 ## Other DNS providers (later, optional)
 
-The app needs no change for more providers: discovery finds each domain's provider from its `_domainconnect` record, and the button appears once that provider's API says the template is enabled. Each provider onboards separately. These are listed on [domainconnect.org](https://www.domainconnect.org/dns-providers/) with their contacts: IONOS (`domain_connect_admin@domain.ionos.com`), GoDaddy (`domainconnect@godaddy.com`), NameSilo (`domainconnect@namesilo.com`), Plesk (`domainconnect@plesk.com`), Vercel (`domainconnect@vercel.com`), WordPress.com (`registrar@automattic.com`), FENO (`kontakt@feno.no`), Glauca Digital (`hello@glauca.digital`), Simply.com (contact form) and Domain Chief. That page doesn't say which ones run the synchronous flow. The app reads it from each provider's settings (`urlSyncUX`), so a provider without it simply never gets a button.
+The app needs no change for more providers: discovery finds each domain's provider from its `_domainconnect` record, and the button appears once that provider is listed in `DOMAIN_CONNECT_LIVE_PROVIDERS` and its API says the template is enabled. Before listing one, check that it accepts the vercel group without `host`: the template sets `hostRequired`, which Cloudflare ignores but a stricter provider may enforce, and then the second apply fails for domains that need Vercel's TXT. Each provider onboards separately. These are listed on [domainconnect.org](https://www.domainconnect.org/dns-providers/) with their contacts: IONOS (`domain_connect_admin@domain.ionos.com`), GoDaddy (`domainconnect@godaddy.com`), NameSilo (`domainconnect@namesilo.com`), Plesk (`domainconnect@plesk.com`), Vercel (`domainconnect@vercel.com`), WordPress.com (`registrar@automattic.com`), FENO (`kontakt@feno.no`), Glauca Digital (`hello@glauca.digital`), Simply.com (contact form) and Domain Chief. That page doesn't say which ones run the synchronous flow. The app reads it from each provider's settings (`urlSyncUX`), so a provider without it simply never gets a button.
 
 ## Rotating the key
 
@@ -181,10 +195,10 @@ The key id `_dck1` is fixed in the app (`SIGNING_KEY_ID` in `apps/app/lib/domain
 For each domain waiting for DNS, on the Domains page, for workspace owners and admins on a plan with custom domains (code: `apps/app/lib/domain-connect/`):
 
 1. The published key at `_dck1.qrdx.dev` must match `DOMAIN_CONNECT_PRIVATE_KEY`.
-2. Find the domain's DNS zone (the most specific parent name with an SOA record), read `_domainconnect.<zone>`, and fetch `https://<that>/v2/<zone>/settings`. That URL comes from the customer's DNS, so the server fetches it only over HTTPS on the default port, to public addresses, without redirects.
+2. Find the domain's DNS zone (the most specific parent name with an SOA record), read `_domainconnect.<zone>`, and fetch `https://<that>/v2/<zone>/settings`. That URL comes from the customer's DNS, so the server fetches it only over HTTPS on the default port, to public addresses, without redirects. The settings' `providerId` must be in `DOMAIN_CONNECT_LIVE_PROVIDERS`.
 3. The provider must offer the synchronous flow, and `GET {urlAPI}/v2/domainTemplates/providers/qrdx.dev/services/qrdx` must answer 2xx.
-4. The records the page shows must be ones the template can write exactly: a CNAME on a subdomain, plus Vercel's `_vercel` TXT or the `_qrdx-challenge` TXT. Root domains (A records) keep the manual table only.
-5. The link is signed (RS256 over the sorted query, then `&key=_dck1&sig=…`) and returns to `/dashboard?to=settings/domains&connected=<id>` (Settings → Domains of the person's default workspace), which checks DNS right away and twice more over the next half minute.
+4. The records the page shows must be ones the template can write exactly: a CNAME on a subdomain, plus Vercel's `_vercel` TXT or the `_qrdx-challenge` TXT. Root domains (A records) keep the manual table only. Vercel's TXT goes in a second apply, without `host`.
+5. Each link is signed (RS256 over the sorted query, then `&key=_dck1&sig=…`) and returns to `/dashboard?to=settings/domains&connected=<id>` (Settings → Domains of the person's default workspace), which checks DNS right away and twice more over the next half minute. The first of two returns with `&step=1`, and the page sends the browser on to the second apply instead.
 
 Results are cached for up to ten minutes, and the page never waits on discovery: the button streams in.
 

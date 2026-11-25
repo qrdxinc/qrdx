@@ -196,7 +196,7 @@ function DomainCard({
         {oneClick && (
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
             <Button asChild className="w-full sm:w-auto">
-              <a href={oneClick.url}>
+              <a href={oneClick.steps[0]}>
                 <Flash />
                 {provider
                   ? t("setUpWithProvider", { provider })

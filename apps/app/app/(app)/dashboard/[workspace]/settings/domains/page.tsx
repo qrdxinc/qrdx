@@ -12,6 +12,7 @@ import {
 import { CpuSetting as ServerCog } from "iconsax-reactjs";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { PageHeader } from "@/app/(app)/dashboard/_components/page-header";
 import { requireDashboardScope } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import { DomainsManager } from "@/app/(app)/dashboard/domains/_components/domains-manager";
@@ -132,11 +133,25 @@ export default async function DomainsPage({
   const oneClick =
     isFeatureAvailable("domainConnect") && canManage && limit > 0;
   const pending = oneClick ? domains.filter((domain) => !domain.verified) : [];
-  const connectOffers =
-    pending.length > 0 ? getDomainConnectOffers(pending) : undefined;
   const connectReturn = oneClick
     ? parseConnectReturn(await searchParams)
     : null;
+
+  // Back from the first of two applies (Vercel's TXT on the zone apex goes in
+  // its own): straight on to the provider for the second. If that offer is
+  // gone, the page checks DNS as after any return.
+  if (connectReturn?.applied && connectReturn.nextStep !== null) {
+    const domain = pending.find(({ id }) => id === connectReturn.domainId);
+    const next = domain
+      ? (await getDomainConnectOffers([domain]))[domain.id]?.steps[
+          connectReturn.nextStep
+        ]
+      : undefined;
+    if (next) redirect(next);
+  }
+
+  const connectOffers =
+    pending.length > 0 ? getDomainConnectOffers(pending) : undefined;
 
   return (
     <div className="space-y-6">

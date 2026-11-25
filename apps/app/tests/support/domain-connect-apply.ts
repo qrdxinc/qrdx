@@ -2,7 +2,8 @@
 // "Template Record", "Host/Name in Template", "Variables"): records are
 // relative to [host.]domain unless they end with ".", "@" is that name, and
 // %domain%, %host%, %fqdn% plus the caller's variables are substituted. Only
-// what QRdx's template uses (CNAME and TXT) is supported.
+// what QRdx's template uses (CNAME and TXT) is supported. `ignoreHostRequired`
+// applies without a host where the template requires one, as Cloudflare does.
 
 export interface TemplateRecord {
   groupId?: string;
@@ -33,14 +34,16 @@ export function applyTemplate(
     host,
     groupIds,
     variables,
+    ignoreHostRequired = false,
   }: {
     domain: string;
     host: string;
     groupIds: readonly string[];
     variables: Readonly<Record<string, string>>;
+    ignoreHostRequired?: boolean;
   },
 ): AppliedRecord[] {
-  if (template.hostRequired && !host) {
+  if (template.hostRequired && !(host || ignoreHostRequired)) {
     throw new Error("the template needs a host");
   }
   const fqdn = host ? `${host}.${domain}` : domain;
