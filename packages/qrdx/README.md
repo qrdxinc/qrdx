@@ -236,6 +236,33 @@ const { download } = useQRCode(() => ({ value: url.value, size: 256 }));
 - `useQRCode(props)` takes `QRCode`'s props as an object, a ref, a reactive object or a getter. It returns `svg` (the markup as a computed ref, which works in SSR too), `options`, `toDataURL(format, { size, quality })` and `download({ format, filename, size, quality })`.
 - Everything in `qrdx/core` is re-exported. Its `h`, for custom templates, is the core's, not Vue's.
 
+## Svelte (`qrdx/svelte`)
+
+`qrdx/svelte` has a Svelte action, `qrcode`, that draws the same SVG as `QRCodeSVG` into an element and redraws it when the options change. It's a plain function: the entry has no `.svelte` files and imports nothing from Svelte, so it needs no compiler or preprocessor and has no peer dependency. It works in Svelte 5 and Svelte 4.
+
+```svelte
+<script lang="ts">
+  import { untrack } from "svelte";
+  import { qrcode, toSVGString, type QRSVGOptions } from "qrdx/svelte";
+
+  let color = $state("#0f172a");
+  const options = $derived<QRSVGOptions>({ value: "https://example.com", size: 256, fgColor: color });
+</script>
+
+<!-- Client-only -->
+<div use:qrcode={options}></div>
+
+<!-- Server-rendered: the server writes the markup once, the action takes it over -->
+<div use:qrcode={options}>{@html untrack(() => toSVGString(options))}</div>
+```
+
+- The options are `QRCodeSVG`'s props. `class`, `aria-label` and other attributes go on the `<svg>` (the frame's outer `<svg>` when there is a frame). For `QRCode`'s logo API, pass `resolveQRCodeProps({ value, logo, … })`.
+- When the options change, the action redraws the code; options that draw the same markup leave the `<svg>` alone. When the element goes, so does the code.
+- Actions don't run on a server, so for the code to be in the server's HTML, write `toSVGString(options)` inside the element with `{@html}`. When the page hydrates, the action finds that `<svg>` and keeps it when it is the same code (it replaces it otherwise), so nothing is drawn twice. `untrack` has Svelte write the markup once; in Svelte 4, build it once from the same inputs as the options (`$:` runs after the rest of the script).
+- Everything in `qrdx/core` is re-exported: downloads, the scan score and the rest.
+
+The full guide: [qrdx.dev/docs/svelte](https://qrdx.dev/docs/svelte).
+
 ## Web component (`qrdx/element`)
 
 `<qrdx-code>` is a custom element on `qrdx/core`: the same SVG as `QRCodeSVG`, in plain HTML or any framework that renders DOM elements (tested in React 19 and Vue 3). It needs no framework.

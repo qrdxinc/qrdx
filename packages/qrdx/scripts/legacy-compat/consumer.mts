@@ -5,6 +5,7 @@
 
 import { toSVGString } from "qrdx/core";
 import { defineQRdxCode, type QRdxCodeOptions } from "qrdx/element/define";
+import { type QRCodeActionReturn, qrcode } from "qrdx/svelte";
 import { frameSpecSchema, type QRProps, qrPropsSchema } from "qrdx/types";
 import { createQRCode } from "qrdx/vanilla";
 
@@ -23,5 +24,7 @@ const element: QRdxCodeOptions = { value: design.value, size: design.size };
 defineQRdxCode("my-qr-code");
 const code = createQRCode(document.body, design);
 code.update({ fgColor: "#1d4ed8" });
+const action: QRCodeActionReturn = qrcode(document.body, design);
+action.update({ ...design, fgColor: "#1d4ed8" });
 
 export { checked, element, markup, spec };

@@ -1,9 +1,10 @@
 import type { ViteUserConfig } from "vitest/config";
 
-// *.dom.test.ts files run against frameworks' browser builds: solid-js and
-// solid-js/web resolve to their server builds under Node's conditions, so
-// these tests resolve with the "browser" condition, and solid-js is inlined
-// so the test, the adapter and solid-js/web share one copy of it.
+// *.dom.test.ts files run against frameworks' browser builds: solid-js,
+// solid-js/web and svelte resolve to their server builds under Node's
+// conditions, so these tests resolve with the "browser" condition, and the
+// frameworks are inlined so the test, the adapter and the framework's other
+// modules share one copy of it (svelte's esm-env flags included).
 const DOM_TESTS = "tests/**/*.dom.test.{ts,tsx}";
 
 const config: ViteUserConfig = {
@@ -32,7 +33,9 @@ const config: ViteUserConfig = {
           name: "dom",
           include: [DOM_TESTS],
           environment: "jsdom",
-          server: { deps: { inline: [/solid-js/] } },
+          server: {
+            deps: { inline: [/solid-js/, /[\\/]svelte[\\/]/, /esm-env/] },
+          },
         },
       },
     ],

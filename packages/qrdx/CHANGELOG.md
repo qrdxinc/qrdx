@@ -2,6 +2,12 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## 0.0.67: Svelte
+
+- **`qrdx/svelte`**, a Svelte action that draws the code into an element: `<div use:qrcode={options}></div>` (#328). It takes `QRCodeSVG`'s props, puts root attributes (`class`, `aria-label`…) on the `<svg>`, and redraws when the options change; options that draw the same markup leave the `<svg>` alone. It removes the code on destroy. It's a plain function on `qrdx/core`: the entry has no `.svelte` files and imports nothing from Svelte, so it needs no Svelte compiler or preprocessor and adds no peer dependency. Checked in production builds of SvelteKit 3 with Svelte 5 and SvelteKit 2 with Svelte 4.
+- **Server rendering.** Actions don't run on a server, so a server-rendered page writes the code with `{@html toSVGString(options)}` inside the element. When the page hydrates, the action keeps that `<svg>` if it is the code it would draw (it compares the DOM it would build with `isEqualNode`) and replaces it otherwise, so the code isn't drawn twice.
+- Everything in `qrdx/core` is re-exported from `qrdx/svelte`, as it is from `qrdx/vue`. `QRCodeActionReturn` types what the action returns. The entry is in the webpack 4 build too (`svelte/package.json`, `dist/legacy/svelte.js`) and has TypeScript 5.0 to 5.3 type entries.
+
 ## 0.0.66: webpack 4 and TypeScript 5.0 to 5.3
 
 ### qrdx builds with webpack 4
