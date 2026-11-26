@@ -126,6 +126,30 @@ export function isRetryableSyncError(error: unknown): boolean {
   );
 }
 
+/**
+ * Thrown by a sink that sends a batch in several requests when a later one
+ * fails: `delivered` is what the tool accepted (its cursor is the last item
+ * that went through) and `cause` is the failure. The worker moves the cursor
+ * past what was delivered and retries the rest, so a retry hours later never
+ * sends the delivered part again.
+ */
+export class SinkPartialDeliveryError extends Error {
+  readonly delivered: SinkDeliveryResult;
+
+  constructor(delivered: SinkDeliveryResult, cause: unknown) {
+    super("Part of the batch was delivered before a request failed", {
+      cause,
+    });
+    this.name = "SinkPartialDeliveryError";
+    this.delivered = delivered;
+  }
+}
+
+/** The failure behind a delivery error (a partial delivery's cause). */
+export function syncFailure(error: unknown): unknown {
+  return error instanceof SinkPartialDeliveryError ? error.cause : error;
+}
+
 /** Text for the dashboard and logs: provider and status, no response body. */
 export function describeSyncError(error: unknown): string {
   if (isIntegrationApiError(error)) {
@@ -155,6 +179,22 @@ export function nextSyncState(
   now: Date = new Date(),
   random: () => number = Math.random
 ): SyncState {
+  if (!outcome.ok && outcome.error instanceof SinkPartialDeliveryError) {
+    // What went through counts as delivered (cursor, totals, attempts back
+    // to 0); the rest failed and is retried on the backoff.
+    const delivered = nextSyncState(
+      state,
+      { ok: true, result: outcome.error.delivered },
+      now,
+      random
+    );
+    return nextSyncState(
+      delivered,
+      { ok: false, error: outcome.error.cause },
+      now,
+      random
+    );
+  }
   const base = { ...state, leaseUntil: null, lastAttemptAt: now.toISOString() };
   if (outcome.ok) {
     const { result } = outcome;

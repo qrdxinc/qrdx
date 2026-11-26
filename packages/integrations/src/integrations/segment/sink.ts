@@ -1,8 +1,13 @@
-import { cursorAfter, dedupeLatest } from "../../sinks/state";
+import {
+  cursorAfter,
+  dedupeLatest,
+  SinkPartialDeliveryError,
+} from "../../sinks/state";
 import type {
   SinkDeliveryResult,
   SinkFormResponse,
   SinkScan,
+  SyncCursor,
 } from "../../sinks/types";
 import {
   jsonBytes,
@@ -25,57 +30,82 @@ interface StreamOptions {
 }
 
 /**
- * Sends the events in as few requests as Segment's limits allow. If a later
- * request fails, the whole batch is retried; Segment drops the calls it
- * already has by their messageId.
+ * Sends the items' events, in order, in as few requests as Segment's limits
+ * allow (`event` is null for an item that can't go). If a request fails
+ * after earlier ones went through, the error carries what was delivered and
+ * the worker moves the cursor past it: the retry can come after Segment has
+ * forgotten those messageIds (about 24 hours), so they mustn't go again.
  */
-async function sendAll(
+async function sendItems<T>(
   client: SegmentClient,
-  events: SegmentTrackEvent[]
-): Promise<void> {
-  for (const batch of segmentBatches(events)) {
-    await client.batch(batch);
+  items: T[],
+  options: {
+    id: (item: T) => string;
+    event: (item: T) => SegmentTrackEvent | null;
+    cursor: (item: T) => SyncCursor;
   }
+): Promise<SinkDeliveryResult> {
+  const outgoing = dedupeLatest(items, options.id).flatMap((item) => {
+    const event = options.event(item);
+    return event ? [{ item, event }] : [];
+  });
+  let sent = 0;
+  for (const batch of segmentBatches(outgoing.map((entry) => entry.event))) {
+    try {
+      await client.batch(batch);
+    } catch (error) {
+      const last = outgoing[sent - 1];
+      if (!last) throw error;
+      // The items up to the last one sent, the ones that couldn't go included
+      const through = items.lastIndexOf(last.item) + 1;
+      throw new SinkPartialDeliveryError(
+        {
+          delivered: sent,
+          skipped: through - sent,
+          cursor: options.cursor(last.item),
+        },
+        error
+      );
+    }
+    sent += batch.length;
+  }
+  return {
+    delivered: outgoing.length,
+    skipped: items.length - outgoing.length,
+    cursor: cursorAfter(items, options.cursor),
+  };
 }
 
 /** A batch of scans as Track calls. */
-export async function sendScansToSegment(
+export function sendScansToSegment(
   client: SegmentClient,
   scans: SinkScan[],
   options: StreamOptions
 ): Promise<SinkDeliveryResult> {
-  const events = dedupeLatest(scans, (scan) => scan.id)
-    .map((scan) => scanTrackEvent(scan, options))
-    .filter((event) => jsonBytes(event) <= SEGMENT_MAX_EVENT_BYTES);
-  await sendAll(client, events);
-  return {
-    delivered: events.length,
-    skipped: scans.length - events.length,
-    cursor: cursorAfter(scans, (scan) => ({ at: scan.scannedAt, id: scan.id })),
-  };
+  return sendItems(client, scans, {
+    id: (scan) => scan.id,
+    event: (scan) => {
+      const event = scanTrackEvent(scan, options);
+      return jsonBytes(event) <= SEGMENT_MAX_EVENT_BYTES ? event : null;
+    },
+    cursor: (scan) => ({ at: scan.scannedAt, id: scan.id }),
+  });
 }
 
 /**
  * A batch of form responses as Track calls. One that can't fit in 32 KB,
  * even with its long answers shortened, is skipped.
  */
-export async function sendResponsesToSegment(
+export function sendResponsesToSegment(
   client: SegmentClient,
   responses: SinkFormResponse[],
   options: StreamOptions
 ): Promise<SinkDeliveryResult> {
-  const events = dedupeLatest(responses, (response) => response.id).flatMap(
-    (response) => fittedResponseEvent(response, options) ?? []
-  );
-  await sendAll(client, events);
-  return {
-    delivered: events.length,
-    skipped: responses.length - events.length,
-    cursor: cursorAfter(responses, (response) => ({
-      at: response.createdAt,
-      id: response.id,
-    })),
-  };
+  return sendItems(client, responses, {
+    id: (response) => response.id,
+    event: (response) => fittedResponseEvent(response, options),
+    cursor: (response) => ({ at: response.createdAt, id: response.id }),
+  });
 }
 
 /** "Send a test event": one call, to look for in the source's Debugger. */

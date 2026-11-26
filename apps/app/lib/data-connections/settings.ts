@@ -75,21 +75,28 @@ async function requireConnection(userId: string, provider: string) {
   return connection;
 }
 
+/** A stream switched off: only its switch changes (see patchSettings). */
+const OFF = "off";
+
 /**
  * Merges into metadata.settings (and replaces the streams' states given, by
  * their key) in SQL, so a worker writing a sync state meanwhile is never
- * overwritten.
+ * overwritten. A stream given as OFF gets only `enabled: false` and status
+ * "paused": the cursor and totals a run may be writing stay the run's.
  */
 async function patchSettings(
   integrationId: string,
   _metadata: Record<string, unknown> | null,
   patch: Record<string, unknown>,
-  states: Partial<Record<SyncStateKey, SyncState>> = {},
+  states: Partial<Record<SyncStateKey, SyncState | typeof OFF>> = {},
 ) {
   const meta = sql`coalesce(${integration.metadata}::jsonb, '{}'::jsonb)`;
   let value = sql`jsonb_set(${meta}, '{settings}', coalesce(${meta} -> 'settings', '{}'::jsonb) || ${JSON.stringify(patch)}::jsonb)`;
   for (const [key, state] of Object.entries(states)) {
-    value = sql`jsonb_set(${value}, ${`{${key}}`}::text[], ${JSON.stringify(state)}::jsonb)`;
+    value =
+      state === OFF
+        ? sql`jsonb_set(jsonb_set(${value}, ${`{${key},enabled}`}::text[], 'false'::jsonb), ${`{${key},status}`}::text[], '"paused"'::jsonb)`
+        : sql`jsonb_set(${value}, ${`{${key}}`}::text[], ${JSON.stringify(state)}::jsonb)`;
   }
   await db
     .update(integration)
@@ -222,12 +229,7 @@ export async function setSheetSync(
   const current = readSyncState(metadata.sync);
   if (!enabled) {
     if (current) {
-      await patchSettings(
-        connection.id,
-        metadata,
-        {},
-        { sync: { ...current, enabled: false, status: "paused" } },
-      );
+      await patchSettings(connection.id, metadata, {}, { sync: OFF });
     }
     return;
   }
@@ -328,15 +330,16 @@ export async function saveResponseSink(
 }
 
 /**
- * A stream's state after its on switch is saved in a workspace, or
- * undefined when it doesn't change (the worker owns it). Turning it on in
- * another workspace than before starts it afresh from now.
+ * A stream's state after its on switch is saved in a workspace, OFF when
+ * it's turned off, or undefined when it doesn't change (the worker owns
+ * it). Turning it on in another workspace than before starts it afresh from
+ * now.
  */
 function stateOnSave(
   current: SyncState | null,
   enabled: boolean,
   organizationId: string | null,
-): SyncState | undefined {
+): SyncState | typeof OFF | undefined {
   if (enabled) {
     if (!(current && current.organizationId === organizationId)) {
       return initialSyncState(organizationId);
@@ -350,7 +353,7 @@ function stateOnSave(
     }
     return;
   }
-  if (current?.enabled) return { ...current, enabled: false, status: "paused" };
+  if (current?.enabled) return OFF;
 }
 
 export interface SegmentSinkInput {
@@ -375,7 +378,7 @@ export async function saveSegmentSink(
       "Give each event a name of up to 200 characters.",
     );
   }
-  const states: Partial<Record<SyncStateKey, SyncState>> = {};
+  const states: Partial<Record<SyncStateKey, SyncState | typeof OFF>> = {};
   for (const slot of SINK_STREAMS.segment) {
     const next = stateOnSave(
       readSyncState(metadata[slot.key]),

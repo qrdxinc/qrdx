@@ -738,14 +738,14 @@ export async function IntegrationsSection({ userId }: { userId: string }) {
                 {formatAgo(row.lastSyncAt)}
                 {row.expiresAt &&
                   ` · token ${row.expiresAt.getTime() < Date.now() ? "expired" : "expires"} ${formatDateTime(row.expiresAt)}`}
-                {row.sync && (
-                  <span className="block">
-                    Sync {row.sync.enabled ? row.sync.status : "off"} ·{" "}
-                    {formatNumber(row.sync.delivered)} sent · last success{" "}
-                    {formatAgo(row.sync.lastSuccessAt)}
-                    {row.sync.lastError && ` · ${row.sync.lastError}`}
+                {row.streams.map((stream) => (
+                  <span className="block" key={stream.label}>
+                    {stream.label} {stream.enabled ? stream.status : "off"} ·{" "}
+                    {formatNumber(stream.delivered)} sent · last success{" "}
+                    {formatAgo(stream.lastSuccessAt)}
+                    {stream.lastError && ` · ${stream.lastError}`}
                   </span>
-                )}
+                ))}
               </>
             }
             title={

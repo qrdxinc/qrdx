@@ -21,7 +21,9 @@ import {
   nextSyncState,
   readSyncState,
   resumeSyncState,
+  SinkPartialDeliveryError,
   SYNC_MAX_ATTEMPTS,
+  syncFailure,
   syncRetryDelayMs,
 } from "../src/sinks/state";
 import { json, mockFetch } from "./helpers";
@@ -138,6 +140,58 @@ describe("sync state (same backoff as webhooks)", () => {
       attempts: SYNC_MAX_ATTEMPTS,
       nextAttemptAt: null,
     });
+  });
+
+  it("a partly delivered batch moves the cursor past what went through, then retries the rest", () => {
+    const failing = {
+      ...initialSyncState(null, NOW),
+      attempts: 4,
+      status: "retrying" as const,
+      delivered: 10,
+    };
+    const error = new SinkPartialDeliveryError(
+      {
+        delivered: 19,
+        skipped: 1,
+        cursor: { at: "2026-11-01T09:59:00.000Z", id: "r20" },
+      },
+      apiError("server", 503)
+    );
+    const next = nextSyncState(failing, { ok: false, error }, NOW, fixed);
+    expect(next).toMatchObject({
+      cursor: { at: "2026-11-01T09:59:00.000Z", id: "r20" },
+      delivered: 29,
+      skipped: 1,
+      lastSuccessAt: NOW.toISOString(),
+      // Progress was made: the backoff starts again from its first step
+      status: "retrying",
+      attempts: 1,
+      nextAttemptAt: new Date(NOW.getTime() + 60_000).toISOString(),
+      lastError: "the service had an error (HTTP 503)",
+    });
+    expect(syncFailure(error)).toEqual(apiError("server", 503));
+    expect(syncFailure(error)).toBe(error.cause);
+  });
+
+  it("a partly delivered batch whose failure needs the person still keeps what went through", () => {
+    const error = new SinkPartialDeliveryError(
+      { delivered: 5, skipped: 0, cursor: { at: NOW.toISOString(), id: "r5" } },
+      apiError("bad_request", 400)
+    );
+    const next = nextSyncState(
+      initialSyncState(null, NOW),
+      { ok: false, error },
+      NOW
+    );
+    expect(next).toMatchObject({
+      status: "failed",
+      cursor: { id: "r5" },
+      delivered: 5,
+      lastError: "the request was rejected (HTTP 400)",
+    });
+    // Any other error is its own failure
+    const plain = apiError("server", 500);
+    expect(syncFailure(plain)).toBe(plain);
   });
 
   it("errors are described without personal data", () => {
