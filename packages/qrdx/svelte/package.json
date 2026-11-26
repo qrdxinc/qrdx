@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../dist/svelte.js",
+  "module": "../dist/legacy/svelte.js",
+  "types": "../dist/src/svelte.d.ts"
+}

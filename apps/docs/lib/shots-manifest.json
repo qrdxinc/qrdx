@@ -686,6 +686,18 @@
     "pages": ["/docs/getting-started"],
     "job": "lib-styled-code"
   },
+  "lib-svelte-state-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-svelte-state-code.light.webp",
+    "dark": "/docs-static/shots/lib-svelte-state-code.dark.webp",
+    "width": 1800,
+    "height": 920,
+    "alt": "The code MenuCode.svelte draws, twice: on the left as it first appears, dark navy with a Scan me banner, and on the right after Blue is clicked, the same code redrawn in blue.",
+    "title": "The Svelte sample before and after the state changes",
+    "pages": ["/docs/svelte"],
+    "job": "lib-svelte-state-code"
+  },
   "new-code-dialog": {
     "kind": "shot",
     "look": "focus",

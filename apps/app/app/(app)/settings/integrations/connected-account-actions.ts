@@ -13,6 +13,7 @@ import {
   verifySegmentWriteKey,
   verifyShortLinkCredentials,
 } from "@repo/integrations";
+import { readSegmentSettings } from "@repo/integrations/src/integrations/segment";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
@@ -85,10 +86,14 @@ async function guard(
 /** Data out with a pasted key: Segment's write key. */
 const isDataOutKeyProvider = (provider: string) => provider === "segment";
 
-/** Checks a pasted key with the provider; null when it takes none. */
+/**
+ * Checks a pasted key with the provider; null when it takes none. `saved` is
+ * the metadata of the connection a key replaces, if there is one.
+ */
 function verifyKey(
   provider: string,
   apiKey: string,
+  saved: Record<string, unknown> | null,
 ): Promise<Record<string, unknown>> | null {
   if (isShortLinkProvider(provider)) {
     return verifyShortLinkCredentials(provider, apiKey);
@@ -98,8 +103,12 @@ function verifyKey(
   }
   if (isDataOutKeyProvider(provider)) {
     // Segment accepts every key: its format, and (where calls to connected
-    // tools are allowed) that the Tracking API answers.
-    return verifySegmentWriteKey(apiKey, { reachOut: dataCallsAllowed() });
+    // tools are allowed) that the Tracking API answers, in the region a
+    // replaced key's connection has picked.
+    return verifySegmentWriteKey(apiKey, {
+      reachOut: dataCallsAllowed(),
+      region: saved ? readSegmentSettings(saved.settings).region : undefined,
+    });
   }
   return null;
 }
@@ -151,9 +160,25 @@ export async function connectWithApiKeyAction(
   const limited = await guard(userId, "api-key", text);
   if (limited) return limited;
 
+  const existing = await db
+    .select({ id: integration.id, metadata: integration.metadata })
+    .from(integration)
+    .where(
+      and(
+        eq(integration.userId, userId),
+        eq(integration.provider, input.data.provider),
+      ),
+    )
+    .limit(1);
+
   let metadata: Record<string, unknown>;
   try {
-    metadata = (await verifyKey(input.data.provider, input.data.apiKey)) ?? {};
+    metadata =
+      (await verifyKey(
+        input.data.provider,
+        input.data.apiKey,
+        (existing[0]?.metadata as Record<string, unknown> | null) ?? null,
+      )) ?? {};
   } catch (error) {
     if (
       isIntegrationApiError(error) &&
@@ -184,16 +209,6 @@ export async function connectWithApiKeyAction(
     status: "active",
     updatedAt: new Date(),
   };
-  const existing = await db
-    .select({ id: integration.id })
-    .from(integration)
-    .where(
-      and(
-        eq(integration.userId, userId),
-        eq(integration.provider, input.data.provider),
-      ),
-    )
-    .limit(1);
 
   if (existing[0]) {
     await db

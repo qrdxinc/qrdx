@@ -1176,7 +1176,8 @@ export function BarcodeDownloads({
   const tc = useContentText();
   const { canDownload, downloading, download } = state;
   return (
-    <div className={cn("grid grid-cols-4 gap-2", className)}>
+    // Two columns on phones: four don't fit a 320 px screen.
+    <div className={cn("grid grid-cols-2 gap-2 sm:grid-cols-4", className)}>
       {MAIN_FILES.map((type) => (
         <Button
           key={type}

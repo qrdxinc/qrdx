@@ -85,7 +85,8 @@ vi.mock("@repo/database", () => {
           return {
             // biome-ignore lint/suspicious/noThenProperty: an awaited query builder
             then: done.then.bind(done),
-            returning: async () => [{ id: "int_1" }],
+            // The stream is on throughout (a run's write reads its switch back)
+            returning: async () => [{ id: "int_1", enabled: "true" }],
           };
         },
       }),

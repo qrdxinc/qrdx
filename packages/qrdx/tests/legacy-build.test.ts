@@ -22,7 +22,14 @@ const built = existsSync(join(root, "dist/legacy"));
 
 // The subpaths whose folder names a legacy file: every one a browser app
 // imports (qrdx/node and qrdx/angular only get "main" and "types").
-const BROWSER = ["core", "vanilla", "element", "element/define", "vue"];
+const BROWSER = [
+  "core",
+  "vanilla",
+  "element",
+  "element/define",
+  "vue",
+  "svelte",
+];
 const SUBPATHS = [...BROWSER, "preact", "solid", "node", "angular"];
 const fileName = (subpath: string) => subpath.replace("/", "-");
 

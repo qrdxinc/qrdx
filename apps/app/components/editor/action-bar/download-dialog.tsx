@@ -741,12 +741,15 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                   >
                     {MORE_FORMATS.map((item) => (
                       <ToggleGroupItem
-                        className="h-14 flex-col gap-1 px-1 text-xs font-medium"
+                        className="h-auto min-h-14 flex-col gap-1 px-1 py-1.5 text-xs font-medium"
                         key={item.id}
                         value={item.id}
                       >
                         <item.Icon className="size-4" />
-                        {item.label}
+                        {/* "CMYK TIFF" wraps under its icon on phones. */}
+                        <span className="whitespace-normal text-center leading-tight">
+                          {item.label}
+                        </span>
                       </ToggleGroupItem>
                     ))}
                   </ToggleGroup>

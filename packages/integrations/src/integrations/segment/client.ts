@@ -81,7 +81,9 @@ export class SegmentClient {
   /**
    * One /v1/batch request. Segment answers 200 to any write key, a wrong one
    * included: only its source's Debugger shows whether events arrived. It
-   * answers 400 for a body over its limits, which callers split before.
+   * answers 400 for a body over its limits, which callers split before. Any
+   * 2xx means the batch was taken, whatever its body (it's `{"success":true}`
+   * today); reading it as a failure would send the batch again.
    */
   async batch(
     events: SegmentTrackEvent[],
@@ -109,6 +111,7 @@ export class SegmentClient {
       },
       body,
       describeError: describeSegmentError,
+      ignoreBody: true,
     });
   }
 }
@@ -123,13 +126,18 @@ export function createSegmentClient(
 /**
  * Checks a pasted write key as far as Segment allows: its format, and that
  * the Tracking API answers (an empty batch, so nothing is recorded). Segment
- * can't say whether the key belongs to a source; a test event does.
+ * can't say whether the key belongs to a source; a test event does. `region`
+ * is the connection's when it has one (a replaced key); a new connection
+ * hasn't picked one yet, so it's checked against the default (US).
  */
 export async function verifySegmentWriteKey(
   writeKey: string,
-  { reachOut = true }: { reachOut?: boolean } = {}
+  {
+    reachOut = true,
+    region = "us",
+  }: { reachOut?: boolean; region?: SegmentRegion } = {}
 ): Promise<Record<string, unknown>> {
-  const client = createSegmentClient(writeKey);
+  const client = createSegmentClient(writeKey, region);
   if (reachOut) await client.batch([]);
   return {};
 }

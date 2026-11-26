@@ -48,6 +48,7 @@ import {
   SYNC_BATCH_SIZE,
   SYNC_LEASE_MS,
   syncBatchSize,
+  syncFailure,
 } from "@repo/integrations/src/sinks/state";
 import { and, eq, inArray, or, sql } from "drizzle-orm";
 import { after } from "next/server";
@@ -65,7 +66,8 @@ import { dataCallsAllowed } from "./server";
 // cursor in batches and delivered in batches; the cursor only moves after
 // the tool accepted them, and every sink is idempotent (upsert by email /
 // scan id checks / Segment's messageId), so a retry never duplicates
-// anything.
+// anything. A run writes only what it owns of a stream's state (writeRunState):
+// the switch and the workspace are the person's.
 
 function log(event: string, fields: Record<string, unknown>) {
   console.error(JSON.stringify({ event, ...fields }));
@@ -95,6 +97,45 @@ export async function writeSyncState(
     .update(integration)
     .set({ metadata: sql`(${value})::json`, updatedAt: new Date() })
     .where(eq(integration.id, integrationId));
+}
+
+/**
+ * A run's write of its stream's state, merged into the stored state in one
+ * statement: the cursor, retries, lease and outcome. Never `enabled: true`
+ * or the workspace, so a stream turned off while the run was delivering
+ * stays off (the run can still turn it off itself, when the plan lapsed),
+ * and a stream turned on in another workspace meanwhile isn't touched.
+ * Returns whether the stream is still on.
+ */
+async function writeRunState(
+  integrationId: string,
+  key: SyncStateKey,
+  state: SyncState,
+  settingsPatch?: Record<string, unknown>,
+): Promise<boolean> {
+  const { enabled, organizationId, ...owned } = state;
+  const fields = enabled ? owned : { ...owned, enabled };
+  const merged = sql`coalesce(${metaJson} #> ${statePath(key)}::text[], '{}'::jsonb) || ${JSON.stringify(fields)}::jsonb`;
+  // create_missing false: a stream removed meanwhile isn't brought back.
+  const withState = sql`jsonb_set(${metaJson}, ${statePath(key)}::text[], ${merged}, false)`;
+  const value = settingsPatch
+    ? sql`jsonb_set(${withState}, '{settings}', coalesce(${metaJson} -> 'settings', '{}'::jsonb) || ${JSON.stringify(settingsPatch)}::jsonb)`
+    : withState;
+  const rows = await db
+    .update(integration)
+    .set({ metadata: sql`(${value})::json`, updatedAt: new Date() })
+    .where(
+      and(
+        eq(integration.id, integrationId),
+        sql`(${integration.metadata}::jsonb #>> ${statePath(key, "organizationId")}::text[]) is not distinct from ${organizationId}`,
+      ),
+    )
+    .returning({
+      enabled: sql<
+        string | null
+      >`${integration.metadata}::jsonb #>> ${statePath(key, "enabled")}::text[]`,
+    });
+  return rows[0]?.enabled === "true";
 }
 
 /**
@@ -401,7 +442,7 @@ async function syncOne(
   }
 
   const release = (next: SyncState) =>
-    writeSyncState(row.id, { ...next, leaseUntil: null }, undefined, slot.key);
+    writeRunState(row.id, slot.key, { ...next, leaseUntil: null });
 
   try {
     if (!dataCallsAllowed()) {
@@ -454,7 +495,8 @@ async function syncOne(
         if (state.nextAttemptAt) {
           await scheduleWorkerRun(Date.parse(state.nextAttemptAt));
         }
-        if (isIntegrationApiError(error) && error.code === "unauthorized") {
+        const failure = syncFailure(error);
+        if (isIntegrationApiError(failure) && failure.code === "unauthorized") {
           await db
             .update(integration)
             .set({ status: "error", updatedAt: new Date() })
@@ -476,14 +518,14 @@ async function syncOne(
       }
       state = nextSyncState(state, { ok: true, result: outcome.result });
       // Keep the lease while more batches follow.
-      await writeSyncState(
+      const stillOn = await writeRunState(
         row.id,
+        slot.key,
         {
           ...state,
           leaseUntil: new Date(Date.now() + SYNC_LEASE_MS).toISOString(),
         },
         outcome.settingsPatch,
-        slot.key,
       );
       // The cursor is past this batch now, so its leads won't be asked for
       // again. (If clearing fails, the stale ids are harmless.)
@@ -497,7 +539,8 @@ async function syncOne(
           settings: { ...settingsOf(row.metadata), ...outcome.settingsPatch },
         };
       }
-      if (outcome.read < syncBatchSize(row.provider)) {
+      // Turned off meanwhile: nothing more goes out until it's on again.
+      if (!stillOn || outcome.read < syncBatchSize(row.provider)) {
         caughtUp = true;
         break;
       }
