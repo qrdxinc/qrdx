@@ -5,9 +5,12 @@
 // their press kit is uploaded to R2 (`bun run media:upload` from the
 // git-ignored apps/app/media/, scripts/media/upload.mjs), only its entry in
 // lib/media-manifest.json is committed, and IntegrationLogo draws it through
-// pictureUrl(). This fails when such a logo is committed anywhere in the
-// repository (under any name that carries the brand's), or when its upload
-// is missing from the manifest.
+// pictureUrl(). Segment's mark (the icon app.segment.com serves) is kept the
+// same way: Twilio's trademark guidelines allow its logos only with its
+// permission. The owner cleared showing it on 27 Nov 2026; a commit to a
+// public repository would be a further use. This fails when such a logo is
+// committed anywhere in the repository (under any name that carries the
+// brand's), or when its upload is missing from the manifest.
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { basename, join } from "node:path";
@@ -20,6 +23,7 @@ const PUBLIC = join(REPO, "apps", "app", "public");
 
 const HOSTED_ONLY = [
   { brand: "pipedrive", src: "/integrations/pipedrive.svg" },
+  { brand: "segment", src: "/integrations/segment.svg" },
 ] as const;
 
 const IMAGE = /\.(?:svg|png|jpe?g|webp|avif|gif|ico|bmp|tiff?|pdf|ai|eps)$/i;

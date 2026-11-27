@@ -343,8 +343,10 @@ export function isFromQRdx(rawBody: string, header: string, secret: string) {
     kind: "connect",
     surface: "integrations",
     categories: ["automation"],
-    // Twilio allows its logos only with written permission.
-    logo: { type: "feature", icon: "Flash" },
+    // Segment's own mark (the app.segment.com icon), served from R2 and never
+    // committed: Twilio's trademark guidelines put its logos under its
+    // permission (apps/app/tests/repo/hosted-logos.test.ts).
+    logo: { type: "image", src: "/integrations/segment.svg" },
     plan: "free",
     builtBy: "QRdx",
     website: "https://segment.com",
