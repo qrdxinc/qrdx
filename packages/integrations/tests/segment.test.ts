@@ -760,7 +760,7 @@ describe("Segment as a data-out integration", () => {
     expect(definition?.oauth).toBeUndefined();
   });
 
-  it("has setup steps in the catalogue, and no logo (Twilio asks for written permission)", () => {
+  it("has setup steps in the catalogue, and Segment's logo from R2", () => {
     const entry = getCatalogEntry("segment");
     expect(entry?.surface).toBe("integrations");
     expect(entry?.kind).toBe("connect");
@@ -768,6 +768,10 @@ describe("Segment as a data-out integration", () => {
     expect(entry?.steps.map((step) => step.title)).toContain(
       "Send a test event"
     );
-    expect(entry?.logo.type).toBe("feature");
+    // Hosted, never committed: apps/app/tests/repo/hosted-logos.test.ts.
+    expect(entry?.logo).toEqual({
+      type: "image",
+      src: "/integrations/segment.svg",
+    });
   });
 });

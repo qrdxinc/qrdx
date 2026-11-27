@@ -1,0 +1,35 @@
+# Scores the repository with the HOL AI plugin scanner, the same scanner
+# (and version) the awesome-ai-plugins catalog runs before it lists the
+# plugin. The catalog needs 75 out of 100. Read-only token, no secrets; the
+# action checks the scanner wheel against a committed SHA-256 before it runs.
+# Guide: https://github.com/hashgraph-online/awesome-ai-plugins/blob/main/SCANNER_GUIDE.md
+name: HOL Plugin Scanner
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hol-plugin-scanner-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    name: HOL Plugin Scanner
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: hashgraph-online/ai-plugin-scanner-action@c96833de5070fab4e564010b5ab6e3c3d7e07a3e # v1.2.806
+        with:
+          plugin_dir: "."
+          min_score: 75
+          fail_on_severity: none

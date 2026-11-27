@@ -9,8 +9,8 @@ export const segmentIntegration: IntegrationDefinition = {
   name: "Segment",
   description:
     "Send every scan and form response to a Segment source as a Track event",
-  // Twilio allows its logos only with written permission, so none is
-  // committed; the catalogue entry shows a neutral tile instead.
+  // Served from R2 through lib/media-manifest.json, not committed (Twilio's
+  // trademark guidelines; apps/app/tests/repo/hosted-logos.test.ts).
   logos: {
     light: "/integrations/segment.svg",
     dark: "/integrations/segment.svg",

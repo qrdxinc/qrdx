@@ -75,13 +75,13 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           sparse-checkout: scripts/notify-search-engines.mjs
           sparse-checkout-cone-mode: false
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
 
@@ -105,13 +105,13 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           sparse-checkout: scripts/notify-search-engines.mjs
           sparse-checkout-cone-mode: false
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
 
@@ -120,7 +120,7 @@ jobs:
       - name: Download the sitemap from before the deploy
         if: inputs.after_deploy
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: sitemap-before
           path: ${{ runner.temp }}
@@ -128,7 +128,7 @@ jobs:
       # The daily sweep's baseline: the sitemaps as yesterday's run saved them.
       - name: Restore yesterday's sitemap snapshot
         if: github.event_name == 'schedule' && !inputs.after_deploy
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: .sitemap-sweep.xml
           key: sitemap-sweep-${{ github.run_id }}
@@ -171,7 +171,7 @@ jobs:
       # and drops entries nobody reads for 7 days.
       - name: Save today's sitemap snapshot
         if: github.event_name == 'schedule' && !inputs.after_deploy && hashFiles('.sitemap-sweep.xml') != ''
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: .sitemap-sweep.xml
           key: sitemap-sweep-${{ github.run_id }}
