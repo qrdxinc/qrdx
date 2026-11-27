@@ -1,0 +1,16 @@
+# The GitHub Actions in .github/workflows are pinned to commit SHAs, with
+# the version in a comment. Once a month Dependabot opens one pull request
+# into staging that moves every pin (SHA and comment together) to the
+# latest release.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: staging
+    schedule:
+      interval: monthly
+    groups:
+      github-actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: ci
