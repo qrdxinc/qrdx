@@ -8,7 +8,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { CANONICAL_ORIGIN } from "@repo/config";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { editorCodeProps } from "@/lib/qr-design/props";
 import {
@@ -23,6 +23,10 @@ import {
   QRDX_LOGO,
 } from "../../../../plugins/raycast/src/code-style";
 import { markdownCell } from "../../../../plugins/raycast/src/markdown";
+import {
+  type QRRenderProps,
+  withLogoData,
+} from "../../../../plugins/raycast/src/qr-engine";
 import {
   API_URL,
   CREATE_API_KEY_URL,
@@ -315,5 +319,88 @@ describe("Raycast dynamic codes: scan tables", () => {
     );
     expect(markdownCell("<b>*bold*</b>")).toBe("\\<b\\>\\*bold\\*\\</b\\>");
     expect(markdownCell("two\nlines")).toBe("two lines");
+  });
+});
+
+describe("Raycast logos given by their address", () => {
+  const MB = 1024 * 1024;
+  const withLogo = (src: string): QRRenderProps => ({
+    value: "https://qrdx.dev",
+    size: 256,
+    imageSettings: { src, height: 48, width: 48, excavate: true },
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("stops a download once it passes 5 MB, without reading the rest", async () => {
+    let reads = 0;
+    let cancelled = false;
+    const endless = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        reads += 1;
+        controller.enqueue(new Uint8Array(MB));
+      },
+      cancel() {
+        cancelled = true;
+      },
+    });
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(endless, { headers: { "content-type": "image/png" } }),
+      ),
+    );
+
+    await expect(
+      withLogoData(withLogo("https://logo.test/endless.png")),
+    ).rejects.toThrow("larger than 5 MB");
+    expect(cancelled).toBe(true);
+    expect(reads).toBeLessThan(10);
+  });
+
+  it("refuses a logo that says it's over 5 MB before reading it", async () => {
+    let reads = 0;
+    const body = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        reads += 1;
+        controller.enqueue(new Uint8Array(MB));
+      },
+    });
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(body, {
+            headers: {
+              "content-type": "image/png",
+              "content-length": String(6 * MB),
+            },
+          }),
+      ),
+    );
+
+    await expect(
+      withLogoData(withLogo("https://logo.test/declared.png")),
+    ).rejects.toThrow("larger than 5 MB");
+    expect(reads).toBeLessThanOrEqual(1);
+  });
+
+  it("draws a small logo from its data", async () => {
+    const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10]);
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(png, { headers: { "content-type": "image/png" } }),
+      ),
+    );
+
+    const props = await withLogoData(withLogo("https://logo.test/small.png"));
+    expect(props.imageSettings?.src).toBe(
+      `data:image/png;base64,${Buffer.from(png).toString("base64")}`,
+    );
   });
 });
