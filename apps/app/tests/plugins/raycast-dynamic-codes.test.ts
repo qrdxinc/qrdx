@@ -22,6 +22,7 @@ import {
   codeProps,
   QRDX_LOGO,
 } from "../../../../plugins/raycast/src/code-style";
+import { markdownCell } from "../../../../plugins/raycast/src/markdown";
 import {
   API_URL,
   CREATE_API_KEY_URL,
@@ -300,5 +301,19 @@ describe("Raycast dynamic codes: drawing a code's design", () => {
 
   it("draws QRdx's own logo when a design shows one without its own", () => {
     expect(QRDX_LOGO).toBe(DEFAULT_QR_LOGO);
+  });
+});
+
+describe("Raycast dynamic codes: scan tables", () => {
+  it("shows a label as written, without breaking the table or adding Markdown", () => {
+    expect(markdownCell("news.example.com")).toBe("news.example.com");
+    expect(markdownCell("a|b")).toBe("a\\|b");
+    expect(markdownCell("ends with \\")).toBe("ends with \\\\");
+    expect(markdownCell("\\|")).toBe("\\\\\\|");
+    expect(markdownCell("![x](https://example.com/p.png)")).toBe(
+      "\\!\\[x\\](https://example.com/p.png)",
+    );
+    expect(markdownCell("<b>*bold*</b>")).toBe("\\<b\\>\\*bold\\*\\</b\\>");
+    expect(markdownCell("two\nlines")).toBe("two lines");
   });
 });
