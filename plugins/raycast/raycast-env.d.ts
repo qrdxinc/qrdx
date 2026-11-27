@@ -7,7 +7,10 @@
 
 /* eslint-disable @typescript-eslint/ban-types */
 
-type ExtensionPreferences = {}
+type ExtensionPreferences = {
+  /** QRdx API Key - Only for the dynamic-code commands and AI tools. Create a key in QRdx under Settings → API keys & apps; every plan has them. */
+  "apiKey"?: string
+}
 
 /** Preferences accessible in all the extension's commands */
 declare type Preferences = ExtensionPreferences
@@ -19,6 +22,10 @@ declare namespace Preferences {
   export type SavedQrs = ExtensionPreferences & {}
   /** Preferences accessible in the `ai-generate` command */
   export type AiGenerate = ExtensionPreferences & {}
+  /** Preferences accessible in the `dynamic-codes` command */
+  export type DynamicCodes = ExtensionPreferences & {}
+  /** Preferences accessible in the `create-dynamic-code` command */
+  export type CreateDynamicCode = ExtensionPreferences & {}
 }
 
 declare namespace Arguments {
@@ -28,5 +35,9 @@ declare namespace Arguments {
   export type SavedQrs = {}
   /** Arguments passed to the `ai-generate` command */
   export type AiGenerate = {}
+  /** Arguments passed to the `dynamic-codes` command */
+  export type DynamicCodes = {}
+  /** Arguments passed to the `create-dynamic-code` command */
+  export type CreateDynamicCode = {}
 }
 
