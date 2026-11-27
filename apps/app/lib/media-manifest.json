@@ -2,6 +2,7 @@
   "origin": "https://assets.qrdx.dev",
   "files": {
     "/integrations/pipedrive.svg": "static/integrations/pipedrive.a40357d2b6.svg",
+    "/integrations/segment.svg": "static/integrations/segment.7ef7549fdb.svg",
     "/videos/bulk-csv-to-zip.mp4": "static/videos/bulk-csv-to-zip.5a3fabd778.mp4",
     "/videos/bulk-csv-to-zip.webm": "static/videos/bulk-csv-to-zip.e7501a1fb6.webm",
     "/videos/demo/flower.mp4": "static/videos/demo/flower.0cd83d944a.mp4",
