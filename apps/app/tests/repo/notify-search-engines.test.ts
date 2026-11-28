@@ -1041,7 +1041,7 @@ describe("workflow", () => {
     expect(backlog).toBeGreaterThan(changed);
     // The same file is restored and saved, from inside the workspace (where
     // hashFiles can see it). Actions are pinned to a commit, with the
-    // version in a comment (any version: Dependabot moves them).
+    // version in a comment; Dependabot moves the major version.
     expect(workflow).toMatch(
       /uses: actions\/cache\/restore@[0-9a-f]{40} # v\d+\.\d+\.\d+$/m,
     );
