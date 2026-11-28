@@ -75,13 +75,13 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           sparse-checkout: scripts/notify-search-engines.mjs
           sparse-checkout-cone-mode: false
 
       - name: Setup Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
 
@@ -105,13 +105,13 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Checkout
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           sparse-checkout: scripts/notify-search-engines.mjs
           sparse-checkout-cone-mode: false
 
       - name: Setup Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
 
@@ -120,7 +120,7 @@ jobs:
       - name: Download the sitemap from before the deploy
         if: inputs.after_deploy
         continue-on-error: true
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: sitemap-before
           path: ${{ runner.temp }}
@@ -128,7 +128,7 @@ jobs:
       # The daily sweep's baseline: the sitemaps as yesterday's run saved them.
       - name: Restore yesterday's sitemap snapshot
         if: github.event_name == 'schedule' && !inputs.after_deploy
-        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: .sitemap-sweep.xml
           key: sitemap-sweep-${{ github.run_id }}
@@ -171,7 +171,7 @@ jobs:
       # and drops entries nobody reads for 7 days.
       - name: Save today's sitemap snapshot
         if: github.event_name == 'schedule' && !inputs.after_deploy && hashFiles('.sitemap-sweep.xml') != ''
-        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: .sitemap-sweep.xml
           key: sitemap-sweep-${{ github.run_id }}
