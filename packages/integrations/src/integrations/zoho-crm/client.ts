@@ -8,7 +8,8 @@ import { zohoDataCentreByAccounts, zohoDataCentreByApi } from "./data-centres";
 const PROVIDER = { slug: "zoho-crm", name: "Zoho CRM" };
 /** Zoho's limit on records in one upsert call. */
 export const ZOHO_CRM_BATCH_SIZE = 100;
-export const ZOHO_REVOKE_PATH = "/oauth/v2/revoke/token";
+/** Zoho CRM's documented revoke (see revokeZohoToken). */
+export const ZOHO_REVOKE_PATH = "/oauth/v2/token/revoke";
 const API_VERSION = "v8";
 
 /** A lead's fields by Zoho API name; `Email` is always there. */
@@ -31,17 +32,39 @@ const FIELD = /^[A-Za-z][A-Za-z0-9_]{0,99}$/;
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
-/** Zoho's code only: its messages can quote what was sent. */
-const describeZohoError = (body: unknown) => {
+/** The code of a Zoho error body (top level, or its first record's). */
+const zohoErrorCode = (body: unknown): string | undefined => {
   const first = isRecord(body)
     ? Array.isArray(body.data) && isRecord(body.data[0])
       ? body.data[0].code
       : body.code
     : undefined;
-  return typeof first === "string" && CODE.test(first)
-    ? `request failed (${first}).`
-    : undefined;
+  return typeof first === "string" && CODE.test(first) ? first : undefined;
 };
+
+/** Zoho's code only: its messages can quote what was sent. */
+const describeZohoError = (body: unknown) => {
+  const code = zohoErrorCode(body);
+  return code ? `request failed (${code}).` : undefined;
+};
+
+/**
+ * A 401 for a scope the token lacks (OAUTH_SCOPE_MISMATCH) isn't a refused
+ * connection: reconnecting gets the same scope again. It's "forbidden", so
+ * the stream stops with Zoho's reason and the row isn't sent to Reconnect.
+ */
+function scopeRefused(error: IntegrationApiError): IntegrationApiError {
+  const detail =
+    "Zoho CRM: QRdx's access doesn't include this for leads (OAUTH_SCOPE_MISMATCH)";
+  return new IntegrationApiError({
+    provider: PROVIDER.slug,
+    status: error.status,
+    code: "forbidden",
+    message: detail,
+    body: error.body,
+    detail,
+  });
+}
 
 /**
  * Zoho answered with something other than what its docs describe. Retried
@@ -135,6 +158,13 @@ export class ZohoCrmClient {
         }
       );
     } catch (error) {
+      if (
+        isIntegrationApiError(error) &&
+        error.status === 401 &&
+        zohoErrorCode(error.body) === "OAUTH_SCOPE_MISMATCH"
+      ) {
+        throw scopeRefused(error);
+      }
       // When every record is refused, Zoho can answer 400 with the same
       // per-record list it sends (as 207) when only some are.
       if (
@@ -164,13 +194,17 @@ export function createZohoCrmClient(
 
 /**
  * Revokes the refresh token on the connection's accounts server, which ends
- * the access tokens made from it too. Throws for a server that isn't one of
+ * the access tokens made from it too, as Zoho CRM's docs describe it
+ * (https://www.zoho.com/crm/developer/docs/api/v8/revoke-tokens.html):
+ * `POST {Accounts_URL}/oauth/v2/token/revoke?token={refresh_token}`, on the
+ * account's own accounts server, with no client credentials. (Zoho's
+ * accounts docs, zoho.com/accounts/protocol/oauth/revoke-refresh-token.html,
+ * describe another form, POST /oauth/v2/revoke/token with Basic auth; the
+ * CRM page is the one for this API.) Throws for a server that isn't one of
  * Zoho's data centres, so the token never goes anywhere else.
  */
 export async function revokeZohoToken(options: {
   token: string;
-  clientId: string;
-  clientSecret: string;
   accountsOrigin: string;
 }): Promise<void> {
   const dc = zohoDataCentreByAccounts(options.accountsOrigin);
@@ -182,18 +216,10 @@ export async function revokeZohoToken(options: {
       message: "Zoho CRM's accounts server is unknown.",
     });
   }
-  await providerRequest(PROVIDER, `${dc.accounts}${ZOHO_REVOKE_PATH}`, {
+  const url = new URL(ZOHO_REVOKE_PATH, dc.accounts);
+  url.searchParams.set("token", options.token);
+  await providerRequest(PROVIDER, url.toString(), {
     method: "POST",
-    headers: {
-      Authorization: `Basic ${Buffer.from(
-        `${options.clientId}:${options.clientSecret}`
-      ).toString("base64")}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      token: options.token,
-      token_type: "refresh_token",
-    }).toString(),
     ignoreBody: true,
   });
 }

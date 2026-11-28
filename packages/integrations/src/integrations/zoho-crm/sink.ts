@@ -8,7 +8,11 @@ import {
   type ResponseSinkSettings,
   type SinkTarget,
 } from "../../sinks/mapping";
-import { cursorAfter, dedupeLatest } from "../../sinks/state";
+import {
+  cursorAfter,
+  dedupeLatest,
+  SinkPartialDeliveryError,
+} from "../../sinks/state";
 import type { SinkDeliveryResult, SinkFormResponse } from "../../sinks/types";
 import {
   ZOHO_CRM_BATCH_SIZE,
@@ -83,14 +87,16 @@ const cut = (value: string, max: number) =>
  * mapped and answered fields only. Responses from pages left out, without a
  * valid email, or with an email longer than Zoho's Email field (100
  * characters) are skipped, and so are earlier responses from the same email.
+ * `sources[i]` is the index in `responses` of the response lead i came from
+ * (rising, since each lead sits where its latest response does).
  */
 export function zohoLeads(
   responses: SinkFormResponse[],
   settings: ResponseSinkSettings
-): { leads: ZohoLeadFields[]; skipped: number } {
-  const leads: ZohoLeadFields[] = [];
+): { leads: ZohoLeadFields[]; sources: number[]; skipped: number } {
+  const entries: Array<{ fields: ZohoLeadFields; source: number }> = [];
   let skipped = 0;
-  for (const response of responses) {
+  for (const [index, response] of responses.entries()) {
     if (!isPageIncluded(settings, response.pageId)) {
       skipped++;
       continue;
@@ -106,10 +112,14 @@ export function zohoLeads(
       const max = ZOHO_LEAD_FIELD_LENGTHS[field];
       if (max && field !== "Email") fields[field] = cut(value, max);
     }
-    leads.push(fields);
+    entries.push({ fields, source: index });
   }
-  const unique = dedupeLatest(leads, (lead) => lead.Email);
-  return { leads: unique, skipped: skipped + leads.length - unique.length };
+  const unique = dedupeLatest(entries, (entry) => entry.fields.Email);
+  return {
+    leads: unique.map((entry) => entry.fields),
+    sources: unique.map((entry) => entry.source),
+    skipped: skipped + entries.length - unique.length,
+  };
 }
 
 /**
@@ -166,35 +176,45 @@ const lacksLastName = (result: RecordError, lead: ZohoLeadFields) =>
  * Refused leads: INVALID_DATA and DUPLICATE_DATA are about one response's
  * values, so that response is skipped. Anything else (a mandatory field QRdx
  * doesn't fill, a permission) stops the stream with Zoho's code and field,
- * until the person fixes it and retries. A retry sends the batch again,
- * which is safe: leads are matched by email.
+ * until the person fixes it and retries.
+ *
+ * A call that fails after earlier calls went through throws a
+ * SinkPartialDeliveryError with what Zoho accepted and a cursor at the last
+ * response of those calls, so a retry sends only the rest. (A retry of the
+ * failed call itself is safe: leads are matched by email.)
  */
 export async function upsertResponsesToZohoCrm(
   client: ZohoCrmClient,
   settings: ResponseSinkSettings,
   responses: SinkFormResponse[]
 ): Promise<SinkDeliveryResult> {
-  const { leads, skipped: leftOut } = zohoLeads(responses, settings);
+  const { leads, sources, skipped: leftOut } = zohoLeads(responses, settings);
   let delivered = 0;
   let skipped = leftOut;
   for (let start = 0; start < leads.length; start += ZOHO_CRM_BATCH_SIZE) {
-    const chunk = leads.slice(start, start + ZOHO_CRM_BATCH_SIZE);
-    const results = await client.upsertLeads(chunk);
-    const unnamed: ZohoLeadFields[] = [];
-    for (const [index, result] of results.entries()) {
-      const lead = chunk[index] as ZohoLeadFields;
-      if (result.status === "success") delivered++;
-      else if (lacksLastName(result, lead)) unnamed.push(lead);
-      else if (SKIPPED_CODES.has(result.code)) skipped++;
-      else throw refused(result);
+    let outcome: { delivered: number; skipped: number };
+    try {
+      outcome = await upsertChunk(
+        client,
+        leads.slice(start, start + ZOHO_CRM_BATCH_SIZE)
+      );
+    } catch (error) {
+      if (start === 0) throw error;
+      // Every response up to the last earlier lead's is settled: delivered,
+      // refused for its values, left out or superseded by a later answer.
+      const through = (sources[start - 1] as number) + 1;
+      const last = responses[through - 1] as SinkFormResponse;
+      throw new SinkPartialDeliveryError(
+        {
+          delivered,
+          skipped: through - delivered,
+          cursor: { at: last.createdAt, id: last.id },
+        },
+        error
+      );
     }
-    if (unnamed.length === 0) continue;
-    const retried = await client.upsertLeads(unnamed.map(withFallbackLastName));
-    for (const result of retried) {
-      if (result.status === "success") delivered++;
-      else if (SKIPPED_CODES.has(result.code)) skipped++;
-      else throw refused(result);
-    }
+    delivered += outcome.delivered;
+    skipped += outcome.skipped;
   }
   return {
     delivered,
@@ -204,4 +224,31 @@ export async function upsertResponsesToZohoCrm(
       id: response.id,
     })),
   };
+}
+
+/** One upsert call of up to 100 leads, and the stand-in retry it may need. */
+async function upsertChunk(
+  client: ZohoCrmClient,
+  chunk: ZohoLeadFields[]
+): Promise<{ delivered: number; skipped: number }> {
+  let delivered = 0;
+  let skipped = 0;
+  const results = await client.upsertLeads(chunk);
+  const unnamed: ZohoLeadFields[] = [];
+  for (const [index, result] of results.entries()) {
+    const lead = chunk[index] as ZohoLeadFields;
+    if (result.status === "success") delivered++;
+    else if (lacksLastName(result, lead)) unnamed.push(lead);
+    else if (SKIPPED_CODES.has(result.code)) skipped++;
+    else throw refused(result);
+  }
+  if (unnamed.length > 0) {
+    const retried = await client.upsertLeads(unnamed.map(withFallbackLastName));
+    for (const result of retried) {
+      if (result.status === "success") delivered++;
+      else if (SKIPPED_CODES.has(result.code)) skipped++;
+      else throw refused(result);
+    }
+  }
+  return { delivered, skipped };
 }

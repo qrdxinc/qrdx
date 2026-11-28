@@ -178,16 +178,14 @@ describe("token servers per region (Zoho's data centres)", () => {
   const query = (value: string) =>
     new URLSearchParams({ code: "c", "accounts-server": value });
 
-  it("asks Zoho for offline leads access, comma-separated, with consent and state", () => {
+  it("asks Zoho for offline access to leads, with consent and state", () => {
     const url = new URL(
       createOAuthHandler(zoho()).generateAuthUrl("verifier", "st8")
     );
     expect(url.origin + url.pathname).toBe(
       "https://accounts.zoho.com/oauth/v2/auth"
     );
-    expect(url.searchParams.get("scope")).toBe(
-      "ZohoCRM.modules.leads.CREATE,ZohoCRM.modules.leads.UPDATE"
-    );
+    expect(url.searchParams.get("scope")).toBe("ZohoCRM.modules.leads.ALL");
     expect(url.searchParams.get("access_type")).toBe("offline");
     expect(url.searchParams.get("prompt")).toBe("consent");
     expect(url.searchParams.get("state")).toBe("st8");
@@ -221,6 +219,8 @@ describe("token servers per region (Zoho's data centres)", () => {
     "https://accounts.zoho.eu/?x=1",
     "https://user:pw@accounts.zoho.eu",
     "https://accounts.zoho.ae",
+    "https://accounts.zoho.sa",
+    "https://accounts.zoho.uk",
     "accounts.zoho.eu",
     "",
   ])("refuses %j as a data centre", (value) => {

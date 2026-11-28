@@ -6,11 +6,12 @@
  * (`api_domain`). Codes and tokens only ever go to the hosts listed here.
  *
  * From Zoho's multi-DC docs (zoho.com/accounts/protocol/oauth/multi-dc.html,
- * accounts.zoho.com/oauth/serverinfo). The CRM API hosts follow the domain
- * pattern of Zoho's CRM docs; the SA and UK ones aren't in those docs yet and
- * were checked only by DNS (both resolve to Zoho's servers). Zoho's server
- * list also names AE and SG data centres and a second India server: left out
- * until their CRM API hosts are documented, so those accounts can't connect.
+ * accounts.zoho.com/oauth/serverinfo) and the CRM API hosts Zoho lists at
+ * zoho.com/crm/help/api/using-api-url.html (China, a separate Zoho, aside).
+ * Zoho's server list also names Saudi Arabia (accounts.zoho.sa), the
+ * UK (accounts.zoho.uk), AE, SG and a second India server: left out until
+ * Zoho documents their CRM API hosts, so those accounts can't connect yet
+ * (the callback says so).
  */
 export const ZOHO_DATA_CENTRES = [
   {
@@ -48,18 +49,6 @@ export const ZOHO_DATA_CENTRES = [
     label: "Canada",
     accounts: "https://accounts.zohocloud.ca",
     api: "https://www.zohoapis.ca",
-  },
-  {
-    id: "sa",
-    label: "Saudi Arabia",
-    accounts: "https://accounts.zoho.sa",
-    api: "https://www.zohoapis.sa",
-  },
-  {
-    id: "uk",
-    label: "UK",
-    accounts: "https://accounts.zoho.uk",
-    api: "https://www.zohoapis.uk",
   },
 ] as const;
 

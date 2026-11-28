@@ -79,6 +79,7 @@ export {
   IntegrationApiError,
   type IntegrationErrorCode,
   isIntegrationApiError,
+  UnsupportedRegionError,
 } from "./core/http-client";
 export {
   disconnectIntegration,

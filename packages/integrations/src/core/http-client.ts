@@ -49,6 +49,17 @@ export class IntegrationApiError extends Error {
   }
 }
 
+/**
+ * The account lives in a region QRdx doesn't connect to (a Zoho data centre
+ * off QRdx's list). The connect flow says so and cleans up the new token.
+ */
+export class UnsupportedRegionError extends IntegrationApiError {
+  constructor(provider: string, message: string) {
+    super({ provider, status: 400, code: "bad_request", message });
+    this.name = "UnsupportedRegionError";
+  }
+}
+
 export function isIntegrationApiError(
   error: unknown
 ): error is IntegrationApiError {

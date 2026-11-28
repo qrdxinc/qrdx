@@ -12,6 +12,7 @@ import {
   OAUTH_TOKEN_ORIGIN_KEY,
   withTokenOrigin,
 } from "@repo/integrations";
+import { reconnectMetadata } from "@repo/integrations/src/sinks/state";
 import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
@@ -126,6 +127,7 @@ export async function GET(request: Request, context: RouteContext) {
       provider,
       tokenData as unknown as Record<string, unknown>,
       session.user.id,
+      { tokenOrigin },
     );
     if (dataConnect.handled && "error" in dataConnect) {
       return NextResponse.redirect(
@@ -180,7 +182,8 @@ export async function GET(request: Request, context: RouteContext) {
       .limit(1);
 
     if (existingIntegration.length > 0) {
-      // Update existing integration
+      // Update existing integration. A reconnect keeps the person's sync
+      // settings and stream state; the account details are the new ones.
       await db
         .update(integration)
         .set({
@@ -188,7 +191,10 @@ export async function GET(request: Request, context: RouteContext) {
           refreshToken: encryptedRefreshToken,
           expiresAt,
           scopes,
-          metadata,
+          metadata: reconnectMetadata(
+            existingIntegration[0].metadata,
+            metadata,
+          ),
           status: "active",
           updatedAt: new Date(),
         })

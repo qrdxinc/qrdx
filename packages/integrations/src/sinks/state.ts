@@ -1,10 +1,38 @@
 import { isIntegrationApiError } from "../core/http-client";
-import type {
-  SinkDeliveryResult,
-  SinkProviderSlug,
-  SyncCursor,
-  SyncState,
+import {
+  type SinkDeliveryResult,
+  type SinkProviderSlug,
+  SYNC_STATE_KEYS,
+  type SyncCursor,
+  type SyncState,
 } from "./types";
+
+/** What a reconnect keeps of a connection's metadata: the person's setup. */
+const KEPT_ON_RECONNECT: readonly string[] = ["settings", ...SYNC_STATE_KEYS];
+
+/**
+ * The metadata a reconnect stores: the new account details, with the
+ * streams' settings and sync state kept from the row it replaces, so the
+ * mapping, pages, switch and cursor survive. Everything else about the old
+ * account (its name, its data centre) is replaced, not merged.
+ */
+export function reconnectMetadata(
+  previous: unknown,
+  next: Record<string, unknown> | null
+): Record<string, unknown> | null {
+  const old =
+    previous && typeof previous === "object" && !Array.isArray(previous)
+      ? (previous as Record<string, unknown>)
+      : {};
+  const kept = Object.fromEntries(
+    KEPT_ON_RECONNECT.filter((key) => Object.hasOwn(old, key)).map((key) => [
+      key,
+      old[key],
+    ])
+  );
+  if (!next && Object.keys(kept).length === 0) return null;
+  return { ...(next ?? {}), ...kept };
+}
 
 // Same schedule as webhook deliveries (apps/app lib/events/deliveries.ts):
 // 8 tries over about two days, then the stream stops until "Retry now".

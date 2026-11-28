@@ -181,7 +181,7 @@ export const crm: IntegrationCatalogEntry[] = [
       "Every form response on your hosted pages creates or updates a Zoho CRM lead.",
     description: [
       "Connect Zoho CRM, choose the pages, and map each form's questions to lead fields. Email, name and phone are suggested for you. A response from an email that already has a lead updates that lead; any other response creates one.",
-      "Zoho CRM needs a last name on every lead. When a form doesn't give one, QRdx first sends the lead without it, so an existing lead keeps its name; only when Zoho needs one to create the lead does QRdx use the first name, or else the part of the email before the @. QRdx asks only to create and update leads, and only questions you map are sent.",
+      "Zoho CRM needs a last name on every lead. When a form doesn't give one, QRdx first sends the lead without it, so an existing lead keeps its name; only when Zoho needs one to create the lead does QRdx use the first name, or else the part of the email before the @. QRdx asks for access to leads only (Zoho has no narrower scope that surely covers creating and updating them), only ever creates and updates leads, and sends only questions you map.",
       `Accounts in Zoho's ${ZOHO_DATA_CENTRE_NAMES} data centres can connect.`,
     ],
     kind: "connect",
@@ -200,7 +200,7 @@ export const crm: IntegrationCatalogEntry[] = [
     steps: [
       {
         title: "Click Enable and sign in to Zoho",
-        body: "Settings → Integrations → Zoho CRM. Allow QRdx to create and update leads. It needs a Zoho CRM edition with API access and a user who can create leads.",
+        body: "Settings → Integrations → Zoho CRM. Allow QRdx access to your leads. It needs a Zoho CRM edition with API access and a user who can create leads.",
       },
       {
         title: "Choose pages and map fields",

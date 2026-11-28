@@ -240,6 +240,31 @@ describe("the data-out worker and Zoho CRM", () => {
     });
   });
 
+  it("stops on a missing scope without sending the row to Reconnect", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    state.batches = [
+      [formResponse(1, [["email", "Email", "ada@example.com"]])],
+    ];
+    state.answer = () =>
+      Response.json(
+        { code: "OAUTH_SCOPE_MISMATCH", details: {}, status: "error" },
+        { status: 401 },
+      );
+
+    const summary = await runIntegrationSyncs();
+
+    expect(summary).toMatchObject({ failed: 1 });
+    expect(syncWrites().at(-1)).toMatchObject({
+      status: "failed",
+      lastError:
+        "Zoho CRM: QRdx's access doesn't include this for leads (OAUTH_SCOPE_MISMATCH)",
+    });
+    // Reconnecting would get the same scope: the row stays active
+    expect(state.writes).not.toContainEqual(
+      expect.objectContaining({ status: "error" }),
+    );
+  });
+
   it("stops the stream with Zoho's reason when a lead needs a field QRdx doesn't fill", async () => {
     vi.spyOn(console, "error").mockImplementation(() => undefined);
     state.batches = [

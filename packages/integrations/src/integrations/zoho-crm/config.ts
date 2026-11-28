@@ -2,16 +2,17 @@ import type { IntegrationDefinition } from "../../registry/types";
 import { ZOHO_DATA_CENTRES, ZOHO_DEFAULT_ACCOUNTS } from "./data-centres";
 
 /**
- * Leads only, create and update: the two operations an upsert can do.
- * Zoho's scope docs list CREATE and UPDATE per module; its upsert page also
- * names WRITE, which the scope page doesn't list. Not yet tried against a
- * real account: if Zoho refuses the upsert (OAUTH_SCOPE_MISMATCH), the
- * fallback is ZohoCRM.modules.leads.ALL.
+ * Leads only, every operation. Zoho's docs don't agree on a narrower scope
+ * for an upsert: the upsert page (crm/developer/docs/api/v8/upsert-records)
+ * accepts ALL, WRITE or CREATE and names "WRITE/CREATE" in its scope error;
+ * the scopes page (…/v8/scopes) lists ALL, CREATE, READ, UPDATE and DELETE,
+ * with no WRITE; the update page (…/v8/update-records) asks for UPDATE. So
+ * neither WRITE (not a listed operation) nor CREATE (which may not cover the
+ * update half) is safely enough, and CREATE plus UPDATE isn't documented for
+ * an upsert. ALL on the Leads module is the narrowest scope the upsert page
+ * documents without doubt. QRdx only ever creates and updates leads.
  */
-export const ZOHO_CRM_SCOPES = [
-  "ZohoCRM.modules.leads.CREATE",
-  "ZohoCRM.modules.leads.UPDATE",
-];
+export const ZOHO_CRM_SCOPES = ["ZohoCRM.modules.leads.ALL"];
 
 /** Zoho CRM leads from form responses (OAuth, one app for every data centre). */
 export const zohoCrmIntegration: IntegrationDefinition = {

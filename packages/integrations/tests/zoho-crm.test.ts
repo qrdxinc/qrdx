@@ -6,7 +6,10 @@ import {
   fetchDataAccountMetadata,
   revokeDataProviderToken,
 } from "../src/capabilities/data-factory";
-import { IntegrationApiError } from "../src/core/http-client";
+import {
+  IntegrationApiError,
+  UnsupportedRegionError,
+} from "../src/core/http-client";
 import {
   createZohoCrmClient,
   revokeZohoToken,
@@ -33,6 +36,7 @@ import {
   initialSyncState,
   isRetryableSyncError,
   nextSyncState,
+  SinkPartialDeliveryError,
   SYNC_BATCH_SIZE,
   syncBatchSize,
 } from "../src/sinks/state";
@@ -129,6 +133,7 @@ describe("Zoho's data centres", () => {
       expect(zohoDataCentreByAccounts(`${dc.accounts}/`)).toBe(dc);
       expect(zohoDataCentreByApi(dc.api)).toBe(dc);
     }
+    // Only the data centres whose CRM API host Zoho documents
     expect(ZOHO_DATA_CENTRES.map((dc) => dc.id)).toEqual([
       "us",
       "eu",
@@ -136,8 +141,6 @@ describe("Zoho's data centres", () => {
       "au",
       "jp",
       "ca",
-      "sa",
-      "uk",
     ]);
   });
 
@@ -150,11 +153,23 @@ describe("Zoho's data centres", () => {
     "https://x@www.zohoapis.in",
     "https://api.zoho.in",
     "https://www.zohoapis.com.cn",
+    // Not documented yet (see data-centres.ts)
+    "https://www.zohoapis.sa",
+    "https://www.zohoapis.uk",
     "",
     null,
     42,
   ])("refuses %j as an API domain", (value) => {
     expect(zohoDataCentreByApi(value)).toBeNull();
+    expect(zohoDataCentreByAccounts(value)).toBeNull();
+  });
+
+  it.each([
+    "https://accounts.zoho.sa",
+    "https://accounts.zoho.uk",
+    "https://accounts.zoho.ae",
+    "https://accounts.zoho.sg",
+  ])("doesn't connect accounts on %s yet", (value) => {
     expect(zohoDataCentreByAccounts(value)).toBeNull();
   });
 });
@@ -487,10 +502,11 @@ describe("upsertResponsesToZohoCrm", () => {
 
   it.each([
     [401, { code: "INVALID_TOKEN", status: "error" }, "unauthorized", false],
+    // A missing scope isn't fixed by reconnecting: forbidden, not Reconnect
     [
       401,
       { code: "OAUTH_SCOPE_MISMATCH", status: "error" },
-      "unauthorized",
+      "forbidden",
       false,
     ],
     [403, { code: "NO_PERMISSION", status: "error" }, "forbidden", false],
@@ -538,12 +554,108 @@ describe("upsertResponsesToZohoCrm", () => {
     });
   });
 
-  it("counts what went through after a retry, like the other sinks", () => {
-    const state = nextSyncState(initialSyncState(null), {
-      ok: true,
-      result: { delivered: 2, skipped: 1, cursor: { at: "x", id: "y" } },
+  it("keeps what Zoho accepted when a later call fails, so a retry doesn't send it again", async () => {
+    // 250 leads: calls of 100, 100 and 50; the third is rate limited
+    const responses = Array.from({ length: 250 }, (_, index) =>
+      response([email(`p${index}@example.com`), answer("Surname", "text", "X")])
+    );
+    const { calls } = mockFetch(
+      zohoAnswer(Array.from({ length: 100 }, () => "insert" as const)),
+      zohoAnswer(Array.from({ length: 100 }, () => "update" as const)),
+      json({ code: "TOO_MANY_REQUESTS", status: "error" }, 429)
+    );
+    const error = await rejection(
+      upsertResponsesToZohoCrm(client(), NO_FILTER, responses)
+    );
+
+    expect(calls).toHaveLength(3);
+    expect(error).toBeInstanceOf(SinkPartialDeliveryError);
+    const partial = error as SinkPartialDeliveryError;
+    expect(partial.delivered).toEqual({
+      delivered: 200,
+      skipped: 0,
+      // After the second call's last lead: the 200th response
+      cursor: { at: responses[199]?.createdAt, id: responses[199]?.id },
     });
-    expect(state).toMatchObject({ delivered: 2, skipped: 1, status: "ok" });
+    expect((partial.cause as IntegrationApiError).code).toBe("rate_limited");
+
+    // The worker counts the 200, moves the cursor and retries the rest
+    const state = nextSyncState(initialSyncState(null), {
+      ok: false,
+      error: partial,
+    });
+    expect(state).toMatchObject({
+      delivered: 200,
+      status: "retrying",
+      attempts: 1,
+      cursor: { id: responses[199]?.id },
+    });
+  });
+
+  it("counts the responses left out before a failed call as skipped", async () => {
+    // 101 leads with a response without an email among the first 100: the
+    // second call (one lead) fails on Zoho's side
+    const responses = Array.from({ length: 102 }, (_, index) =>
+      index === 50
+        ? response([answer("Name", "text", "No email")])
+        : response([
+            email(`p${index}@example.com`),
+            answer("Surname", "text", "X"),
+          ])
+    );
+    mockFetch(
+      zohoAnswer(Array.from({ length: 100 }, () => "insert" as const)),
+      json({ code: "INTERNAL_ERROR", status: "error" }, 500)
+    );
+    const partial = (await rejection(
+      upsertResponsesToZohoCrm(client(), NO_FILTER, responses)
+    )) as SinkPartialDeliveryError;
+    expect(partial.delivered).toEqual({
+      delivered: 100,
+      skipped: 1,
+      cursor: { at: responses[100]?.createdAt, id: responses[100]?.id },
+    });
+    expect(isRetryableSyncError(partial.cause)).toBe(true);
+  });
+
+  it("stops after a refused lead in a later call, keeping the earlier calls", async () => {
+    const responses = Array.from({ length: 101 }, (_, index) =>
+      response([email(`p${index}@example.com`), answer("Surname", "text", "X")])
+    );
+    mockFetch(
+      zohoAnswer(Array.from({ length: 100 }, () => "insert" as const)),
+      zohoAnswer([{ code: "MANDATORY_NOT_FOUND", field: "Company" }])
+    );
+    const partial = (await rejection(
+      upsertResponsesToZohoCrm(client(), NO_FILTER, responses)
+    )) as SinkPartialDeliveryError;
+    expect(partial).toBeInstanceOf(SinkPartialDeliveryError);
+    expect(partial.delivered.delivered).toBe(100);
+    expect(describeSyncError(partial.cause)).toContain("Company");
+    expect(isRetryableSyncError(partial.cause)).toBe(false);
+  });
+
+  it("fails without a partial delivery when the first call fails", async () => {
+    mockFetch(json({ code: "TOO_MANY_REQUESTS", status: "error" }, 429));
+    const error = await rejection(
+      upsertResponsesToZohoCrm(client(), NO_FILTER, [
+        response([email("ada@example.com"), answer("Surname", "text", "L")]),
+      ])
+    );
+    expect(error).not.toBeInstanceOf(SinkPartialDeliveryError);
+    expect((error as IntegrationApiError).code).toBe("rate_limited");
+  });
+
+  it("explains a missing scope instead of asking for a reconnect", async () => {
+    mockFetch(json({ code: "OAUTH_SCOPE_MISMATCH", status: "error" }, 401));
+    const error = (await rejection(
+      upsertResponsesToZohoCrm(client(), NO_FILTER, [
+        response([email("ada@example.com")]),
+      ])
+    )) as IntegrationApiError;
+    expect(describeSyncError(error)).toBe(
+      "Zoho CRM: QRdx's access doesn't include this for leads (OAUTH_SCOPE_MISMATCH)"
+    );
   });
 });
 
@@ -608,32 +720,45 @@ describe("Zoho CRM connection details and disconnect", () => {
           ...extra,
         })
       )) as IntegrationApiError;
-      expect(error).toBeInstanceOf(IntegrationApiError);
+      // The connect flow tells the person their data centre isn't supported
+      expect(error).toBeInstanceOf(UnsupportedRegionError);
       expect(error.code).toBe("bad_request");
     }
   );
 
-  it("revokes the refresh token on the connection's accounts server", async () => {
+  it.each(["https://www.zohoapis.sa", "https://www.zohoapis.uk"])(
+    "doesn't connect an account whose API domain is %s yet",
+    async (apiDomain) => {
+      const error = await rejection(
+        fetchDataAccountMetadata("zoho-crm", "z-access", {
+          access_token: "z-access",
+          api_domain: apiDomain,
+        })
+      );
+      expect(error).toBeInstanceOf(UnsupportedRegionError);
+    }
+  );
+
+  // https://www.zoho.com/crm/developer/docs/api/v8/revoke-tokens.html:
+  // POST {Accounts_URL}/oauth/v2/token/revoke?token={refresh_token}
+  it("revokes the refresh token on the connection's accounts server, as Zoho CRM's docs say", async () => {
     const { calls } = mockFetch(new Response(null, { status: 200 }));
     await expect(
       revokeDataProviderToken(
         "zoho-crm",
-        { accessToken: "z-access", refreshToken: "z-refresh" },
+        { accessToken: "z-access", refreshToken: "1000.z-refresh" },
         client,
         { oauthTokenOrigin: "https://accounts.zoho.in", apiDomain: API }
       )
     ).resolves.toBe(true);
-    expect(calls[0]?.url).toBe(
-      "https://accounts.zoho.in/oauth/v2/revoke/token"
-    );
+    expect(calls).toHaveLength(1);
     expect(calls[0]?.method).toBe("POST");
-    expect(calls[0]?.headers.authorization).toBe(
-      `Basic ${Buffer.from("zoho-id:zoho-secret").toString("base64")}`
+    expect(calls[0]?.url).toBe(
+      "https://accounts.zoho.in/oauth/v2/token/revoke?token=1000.z-refresh"
     );
-    expect(Object.fromEntries(new URLSearchParams(calls[0]?.body))).toEqual({
-      token: "z-refresh",
-      token_type: "refresh_token",
-    });
+    // The documented request carries the token only: no client credentials
+    expect(calls[0]?.headers.authorization).toBeUndefined();
+    expect(calls[0]?.body).toBeUndefined();
   });
 
   it("revokes on accounts.zoho.com when the connection named no data centre", async () => {
@@ -645,7 +770,7 @@ describe("Zoho CRM connection details and disconnect", () => {
       { apiDomain: "https://www.zohoapis.com" }
     );
     expect(calls[0]?.url).toBe(
-      "https://accounts.zoho.com/oauth/v2/revoke/token"
+      "https://accounts.zoho.com/oauth/v2/token/revoke?token=r"
     );
   });
 
@@ -654,7 +779,6 @@ describe("Zoho CRM connection details and disconnect", () => {
     const error = await rejection(
       revokeZohoToken({
         token: "z-refresh",
-        ...client,
         accountsOrigin: "https://evil.example",
       })
     );
@@ -662,18 +786,19 @@ describe("Zoho CRM connection details and disconnect", () => {
     expect(calls).toEqual([]);
   });
 
-  it("has nothing to revoke without a refresh token or the app's credentials", async () => {
-    const { calls } = mockFetch();
+  it("has nothing to revoke without a refresh token, and needs no app credentials", async () => {
+    const { calls } = mockFetch(new Response(null, { status: 200 }));
     expect(
       await revokeDataProviderToken("zoho-crm", { accessToken: "a" }, client)
     ).toBe(false);
+    expect(calls).toEqual([]);
     expect(
       await revokeDataProviderToken("zoho-crm", {
         accessToken: "a",
         refreshToken: "r",
       })
-    ).toBe(false);
-    expect(calls).toEqual([]);
+    ).toBe(true);
+    expect(calls).toHaveLength(1);
   });
 });
 

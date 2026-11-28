@@ -18,12 +18,14 @@ import {
   isContentSourceProvider,
   isMediaSourceConfigured,
   type MediaSourceEnv,
+  OAUTH_TOKEN_ORIGIN_KEY,
   readSlackInstall,
   renewShopifyToken,
   revokeDataProviderToken,
   type SourceKeyInput,
   type SourcePage,
   shopifyTokenNeedsRenewal,
+  UnsupportedRegionError,
   verifyContentSourceCredentials,
 } from "@repo/integrations";
 import { and, eq, inArray } from "drizzle-orm";
@@ -331,12 +333,15 @@ const METADATA_FROM_TOKEN = new Set(["pipedrive", "zoho-crm"]);
  * Runs right after the token exchange, before the row is saved. Slack: the
  * channel webhook becomes a notification target in the chosen workspace
  * (same alerts and formatting as a pasted webhook). Everyone: account
- * metadata without tokens or the person's email.
+ * metadata without tokens or the person's email. `tokenOrigin` is the token
+ * server the code was exchanged on (Zoho's data centres), for cleaning up a
+ * token that can't be kept.
  */
 export async function prepareDataConnect(
   provider: string,
   tokenData: Record<string, unknown>,
   userId: string,
+  { tokenOrigin = null }: { tokenOrigin?: string | null } = {},
 ): Promise<DataConnectOutcome> {
   if (!DATA_OAUTH_PROVIDERS.has(provider)) return { handled: false };
   const detail = `/settings/integrations/${provider}`;
@@ -401,6 +406,12 @@ export async function prepareDataConnect(
       redirect: `${detail}?success=${provider}_connected`,
     };
   } catch (error) {
+    // The account is in a region QRdx doesn't connect to (Zoho's api_domain
+    // off the list): say so, and don't leave the new token behind.
+    if (error instanceof UnsupportedRegionError) {
+      await revokeIssuedToken(provider, tokenData, tokenOrigin);
+      return { handled: true, error: "unsupported_region", redirect: detail };
+    }
     const code =
       error instanceof HttpError
         ? error.code === "PLAN_REQUIRED"
@@ -421,6 +432,50 @@ export async function prepareDataConnect(
     );
     return { handled: true, error: code, redirect: detail };
   }
+}
+
+/**
+ * Revokes a token the provider just issued that QRdx won't keep, on the
+ * token server it came from. Best effort: logged, never thrown. Not behind
+ * the delivery guard: the code exchange that made the token isn't either.
+ */
+async function revokeIssuedToken(
+  provider: string,
+  tokenData: Record<string, unknown>,
+  tokenOrigin: string | null,
+): Promise<void> {
+  let revoked = false;
+  try {
+    const config = getIntegrationConfig(provider);
+    revoked = await revokeDataProviderToken(
+      provider,
+      {
+        accessToken: String(tokenData.access_token ?? ""),
+        refreshToken:
+          typeof tokenData.refresh_token === "string"
+            ? tokenData.refresh_token
+            : null,
+      },
+      { clientId: config.clientId, clientSecret: config.clientSecret },
+      tokenOrigin ? { [OAUTH_TOKEN_ORIGIN_KEY]: tokenOrigin } : null,
+    );
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        event: "integrations.revoke_failed",
+        provider,
+        error: error instanceof Error ? error.message.slice(0, 200) : "unknown",
+      }),
+    );
+    return;
+  }
+  console.error(
+    JSON.stringify({
+      event: "integrations.unsupported_region_revoked",
+      provider,
+      revoked,
+    }),
+  );
 }
 
 /**

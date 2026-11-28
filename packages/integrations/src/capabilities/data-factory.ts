@@ -6,7 +6,10 @@
  * on disconnect.
  */
 
-import { IntegrationApiError } from "../core/http-client";
+import {
+  IntegrationApiError,
+  UnsupportedRegionError,
+} from "../core/http-client";
 import { OAUTH_TOKEN_ORIGIN_KEY } from "../core/oauth";
 import { createCalcomClient } from "../integrations/calcom/client";
 import {
@@ -327,15 +330,13 @@ export async function fetchDataAccountMetadata(
     }
     case "zoho-crm": {
       // Every API call goes to the data centre the token response names, so
-      // it must be one of Zoho's (data-centres.ts)
+      // it must be one QRdx connects to (data-centres.ts)
       const dc = zohoDataCentreByApi(tokenResponse?.api_domain);
       if (!dc) {
-        throw new IntegrationApiError({
-          provider: "zoho-crm",
-          status: 400,
-          code: "bad_request",
-          message: "Zoho didn't name a Zoho CRM data centre QRdx connects to.",
-        });
+        throw new UnsupportedRegionError(
+          "zoho-crm",
+          "Zoho didn't name a Zoho CRM data centre QRdx connects to."
+        );
       }
       return {
         name: `Zoho CRM (${dc.label} data centre)`,
@@ -404,10 +405,10 @@ export async function revokeDataProviderToken(
       await revokeSlackToken(tokens.accessToken);
       return true;
     case "zoho-crm":
-      if (!(client && tokens.refreshToken)) return false;
+      // Zoho CRM's revoke needs only the refresh token (no client credentials)
+      if (!tokens.refreshToken) return false;
       await revokeZohoToken({
         token: tokens.refreshToken,
-        ...client,
         // A connection made on accounts.zoho.com keeps no server of its own
         accountsOrigin:
           str(metadata, OAUTH_TOKEN_ORIGIN_KEY) ?? ZOHO_DEFAULT_ACCOUNTS,
