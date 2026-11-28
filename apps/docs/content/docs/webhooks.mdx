@@ -1,6 +1,6 @@
 ---
 title: Webhooks
-description: Signed HTTPS requests to your endpoint when QR codes are scanned, created or changed, or forms are sent, with retries. Verify them, or use Zapier, Make or n8n.
+description: Signed HTTPS requests to your endpoint when QR codes are scanned, created or changed, or forms are sent, with retries. Verify them, or use Zapier, Make, n8n or Zoho Flow.
 icon: Webhook
 ---
 
@@ -221,6 +221,23 @@ Without Business the subscribe call returns `402`:
 ```
 
 A `scan.created` delivery is one batch, so in Zapier use the `data.scans` line items to act on each scan. In n8n, the QRdx Trigger node from the [QRdx nodes for n8n](/docs/developers/n8n) makes these calls for you and checks each signature; a plain Webhook node works too, set up like any other endpoint. The reference pages are [Subscribe to events](/docs/developers/api/create-hook), [List hooks](/docs/developers/api/list-hooks) and [Unsubscribe](/docs/developers/api/delete-hook).
+
+## Zoho Flow [#zoho-flow]
+
+[Zoho Flow](https://www.zoho.com/flow/), which is part of Zoho One, can start a flow from a QRdx webhook: for example, to send form responses to another Zoho app. There's no QRdx app inside Zoho Flow; its webhook trigger is an ordinary endpoint.
+
+1. In Zoho Flow, open **My Flows**, click **Create Flow**, give it a name and click **Create**.
+2. Choose **Webhook** as the trigger, click **Configure** and pick **JSON** as the format. Click **Copy** to copy the webhook URL Zoho Flow makes, then **Next**.
+3. In QRdx, open **Settings** → **Webhooks**, click **Add endpoint**, paste the URL and pick the events, for example `form.submitted`.
+4. Submit your form, or create a code, so a real event arrives. Zoho Flow shows the payload it received (**Retest** waits for another one). The fields you'll use are under `data`, as in [Read the payload](#payloads). Map them into the steps you add after the trigger.
+
+Things to know:
+
+- A `scan.created` delivery holds a batch of scans. To run the flow once per scan, limit the trigger to the `data.scans` key in its advanced settings and turn on **Trigger flow for each entry**.
+- Zoho Flow's help doesn't describe a way to check the `X-QRdx-Signature` header, so anyone who has the webhook URL could send the flow data. Keep the URL private. If each request must be verified, send the events to a server that [checks the signature](#verify-signatures) first.
+- Zoho Flow runs a webhook trigger at most 100 times a minute. QRdx sends `scan.created` at most once a minute per endpoint, so a busy code stays well under that.
+
+Zoho's own steps are in its [webhook trigger guide](https://help.zoho.com/portal/en/kb/flow/user-guide/create-a-flow/typesoftriggers/articles/webhook-trigger-typesoftriggers).
 
 ## If something goes wrong
 

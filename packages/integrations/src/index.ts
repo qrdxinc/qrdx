@@ -17,7 +17,7 @@ export {
   INTEGRATION_CAPABILITY_LABELS,
 } from "@repo/integration-kit";
 // Content sources (Stripe, Cal.com, Calendly, Shopify, YouTube, Spotify) and
-// data out (Google Sheets, Slack, HubSpot, Mailchimp, Pipedrive)
+// data out (Google Sheets, Slack, HubSpot, Mailchimp, Pipedrive, Zoho CRM)
 export {
   createContentSourceClient,
   DATA_REVOCABLE_PROVIDERS,
@@ -79,6 +79,7 @@ export {
   IntegrationApiError,
   type IntegrationErrorCode,
   isIntegrationApiError,
+  UnsupportedRegionError,
 } from "./core/http-client";
 export {
   disconnectIntegration,
@@ -89,8 +90,12 @@ export {
 } from "./core/manager";
 // Core utilities
 export {
+  allowedTokenOrigin,
+  callbackTokenOrigin,
   createOAuthHandler,
+  OAUTH_TOKEN_ORIGIN_KEY,
   OAuthHandler,
+  withTokenOrigin,
 } from "./core/oauth";
 export {
   refreshIntegrationToken,
@@ -155,6 +160,10 @@ export {
   type UniqodeQrCode,
   uniqodeWebsiteDestination,
 } from "./integrations/uniqode";
+export {
+  createZohoCrmClient,
+  ZohoCrmClient,
+} from "./integrations/zoho-crm";
 // Registry
 export {
   getIntegrationRegistry,

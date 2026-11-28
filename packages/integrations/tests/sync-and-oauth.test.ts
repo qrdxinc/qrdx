@@ -20,6 +20,7 @@ import {
   isSyncDue,
   nextSyncState,
   readSyncState,
+  reconnectMetadata,
   resumeSyncState,
   SinkPartialDeliveryError,
   SYNC_MAX_ATTEMPTS,
@@ -27,6 +28,44 @@ import {
   syncRetryDelayMs,
 } from "../src/sinks/state";
 import { json, mockFetch } from "./helpers";
+
+describe("reconnectMetadata", () => {
+  const sync = initialSyncState("org_1", new Date("2026-11-28T00:00:00Z"));
+  const settings = { pageIds: ["page_1"], forms: {} };
+
+  it("keeps the streams' settings and sync state, and takes the new account details", () => {
+    expect(
+      reconnectMetadata(
+        {
+          name: "Old account",
+          oauthTokenOrigin: "https://accounts.zoho.eu",
+          settings,
+          sync,
+          scansSync: sync,
+          responsesSync: sync,
+          stale: true,
+        },
+        { name: "New account", dataCentre: "us" }
+      )
+    ).toEqual({
+      name: "New account",
+      dataCentre: "us",
+      settings,
+      sync,
+      scansSync: sync,
+      responsesSync: sync,
+    });
+  });
+
+  it("keeps the setup even when the new account details are missing", () => {
+    expect(reconnectMetadata({ name: "x", settings }, null)).toEqual({
+      settings,
+    });
+    expect(reconnectMetadata({ name: "x" }, null)).toBeNull();
+    expect(reconnectMetadata(null, { name: "y" })).toEqual({ name: "y" });
+    expect(reconnectMetadata("not an object", null)).toBeNull();
+  });
+});
 
 const NOW = new Date("2026-11-01T10:00:00.000Z");
 const fixed = () => 0.5; // no jitter

@@ -192,6 +192,17 @@ describe("the other integrations on these routes", () => {
     expect(state.saved[0]?.provider).toBe("hubspot");
   });
 
+  it("save Zoho CRM's pages and mapping, like HubSpot's", async () => {
+    const forms = {
+      "page_1:form_1": { fields: { f1: "email", f2: "Last_Name" } },
+    };
+    const response = await put("zoho-crm", { ...SETTINGS, forms });
+    expect(response.status).toBe(200);
+    expect(state.saved).toEqual([
+      { provider: "zoho-crm", input: { ...SETTINGS, forms } },
+    ]);
+  });
+
   it.each(["stripe", "slack", "unknown"])(
     "answer 404 for %s, which isn't a data-out stream",
     async (provider) => {
@@ -215,6 +226,12 @@ describe("GET /api/integrations/sync/<provider>/pages", () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ items: [], nextCursor: null });
     expect(state.listed).toEqual(["menu"]);
+  });
+
+  it("lists a workspace's form pages for Zoho CRM", async () => {
+    const response = await list("zoho-crm");
+    expect(response.status).toBe(200);
+    expect(state.listed).toEqual([""]);
   });
 
   it("answers 404 for a provider that sends no form responses", async () => {

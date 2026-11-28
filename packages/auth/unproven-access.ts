@@ -86,6 +86,7 @@ export const DATA_OUT_PROVIDERS = [
   "pipedrive",
   "segment",
   "slack",
+  "zoho-crm",
 ] as const;
 
 /** Alert channels that post to an address someone chose (not email). */

@@ -1,5 +1,8 @@
 /** biome-ignore-all lint/style/noParameterProperties: false positive */
-import type { IntegrationConfig } from "../registry/types";
+import type {
+  IntegrationConfig,
+  IntegrationDefinition,
+} from "../registry/types";
 import type { TokenResponse } from "../types";
 import { generateCodeChallenge } from "../utils/pkce";
 
@@ -26,7 +29,10 @@ export class OAuthHandler {
     );
     // Some providers (Bitly, Notion) have no scopes and reject an empty one
     if (this.config.oauth.scopes.length > 0) {
-      url.searchParams.append("scope", this.config.oauth.scopes.join(" "));
+      url.searchParams.append(
+        "scope",
+        this.config.oauth.scopes.join(this.config.oauth.scopeSeparator ?? " ")
+      );
     }
 
     // Add PKCE if supported
@@ -83,7 +89,7 @@ export class OAuthHandler {
       );
     }
 
-    return (await response.json()) as TokenResponse;
+    return readTokenResponse(response, "Token exchange");
   }
 
   /**
@@ -114,7 +120,7 @@ export class OAuthHandler {
       );
     }
 
-    return (await response.json()) as TokenResponse;
+    return readTokenResponse(response, "Token refresh");
   }
 
   /**
@@ -178,6 +184,101 @@ export class OAuthHandler {
     // Default: assume token is valid (can't validate without provider-specific endpoint)
     return true;
   }
+}
+
+/**
+ * A 2xx token response, refused when it carries no access token: some
+ * providers (Zoho) answer a bad code or refresh token with 200 and
+ * `{ "error": "invalid_code" }`. Only the error code is kept, never the body.
+ */
+async function readTokenResponse(
+  response: Response,
+  what: string
+): Promise<TokenResponse> {
+  const body = (await response.json().catch(() => null)) as Record<
+    string,
+    unknown
+  > | null;
+  if (typeof body?.access_token === "string" && body.access_token) {
+    return body as unknown as TokenResponse;
+  }
+  const code =
+    typeof body?.error === "string" && /^[\w.-]{1,64}$/.test(body.error)
+      ? body.error
+      : "no access token";
+  throw new Error(`${what} failed: ${response.status} - ${code}`);
+}
+
+/** Where a connection keeps its token server (OAuthConfig.tokenOrigins). */
+export const OAUTH_TOKEN_ORIGIN_KEY = "oauthTokenOrigin";
+
+type WithOAuth = Pick<IntegrationDefinition, "oauth">;
+
+/**
+ * `value` as one of the provider's token servers (OAuthConfig.tokenOrigins),
+ * or null: only a bare https origin on its list counts (no other host, port,
+ * path, query or credentials).
+ */
+export function allowedTokenOrigin(
+  config: WithOAuth,
+  value: unknown
+): string | null {
+  const allowed = config.oauth?.tokenOrigins?.allowed;
+  if (!allowed || typeof value !== "string") return null;
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    return null;
+  }
+  const bare =
+    url.protocol === "https:" &&
+    !url.username &&
+    !url.password &&
+    !url.port &&
+    url.pathname === "/" &&
+    !url.search &&
+    !url.hash;
+  return bare && allowed.includes(url.origin) ? url.origin : null;
+}
+
+/**
+ * The token server a callback names, for a provider with
+ * OAuthConfig.tokenOrigins: its origin; null when the callback names none
+ * (the default token URL is used); "invalid" for a server off the list,
+ * which the callback refuses.
+ */
+export function callbackTokenOrigin(
+  config: WithOAuth,
+  query: URLSearchParams
+): string | null | "invalid" {
+  const param = config.oauth?.tokenOrigins?.param;
+  if (!param) return null;
+  const value = query.get(param);
+  if (value === null) return null;
+  return allowedTokenOrigin(config, value) ?? "invalid";
+}
+
+/**
+ * The config with its token URL on `origin` (same path), for a connection
+ * kept on one of the provider's token servers. Unchanged without an origin,
+ * or for a provider with a single token server; throws for an origin off the
+ * provider's list, so no code or token is ever sent to another host.
+ */
+export function withTokenOrigin<T extends IntegrationConfig>(
+  config: T,
+  origin: unknown
+): T {
+  const oauth = config.oauth;
+  if (origin === null || origin === undefined || !oauth?.tokenOrigins) {
+    return config;
+  }
+  const allowed = allowedTokenOrigin(config, origin);
+  if (!allowed) {
+    throw new Error(`Not a token server ${config.slug} uses`);
+  }
+  const { pathname } = new URL(oauth.tokenUrl);
+  return { ...config, oauth: { ...oauth, tokenUrl: `${allowed}${pathname}` } };
 }
 
 /**

@@ -995,6 +995,7 @@ describe("a production-like deployment", () => {
         "pipedrive",
         "slack",
         "telegram",
+        "zoho-crm",
       ].sort(),
     );
     for (const slug of [

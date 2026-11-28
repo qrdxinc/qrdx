@@ -160,6 +160,8 @@ export function IntegrationDetail({
         slack_bot_enterprise:
           "Add the bot to one Slack workspace at a time, not to a whole Enterprise Grid organization.",
         slack_bot_unavailable: "The QRdx bot isn't available yet.",
+        // A data centre QRdx doesn't connect to (Zoho's, see data-centres.ts)
+        unsupported_region: t("nameRegionNotSupported", { name }),
       };
       toast.error(errorMessages[error] || t("failedToConnectName", { name }));
       router.replace(`/settings/integrations/${slug}`);

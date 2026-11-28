@@ -24,6 +24,7 @@ import type {
   MailchimpMergeField,
 } from "@repo/integrations/src/integrations/mailchimp/types";
 import { PIPEDRIVE_TARGETS } from "@repo/integrations/src/integrations/pipedrive/sink";
+import { ZOHO_CRM_TARGETS } from "@repo/integrations/src/integrations/zoho-crm/sink";
 import {
   type FormMapping,
   formKey,
@@ -59,15 +60,15 @@ const NO_PAGES: CursorPage<ScopedFormPage> = { items: [], nextCursor: null };
 const SEARCH_DELAY_MS = 300;
 
 interface ResponseSinkPanelProps {
-  provider: "hubspot" | "mailchimp" | "pipedrive";
+  provider: "hubspot" | "mailchimp" | "pipedrive" | "zoho-crm";
   name: string;
 }
 
 /**
- * HubSpot / Mailchimp / Pipedrive: which pages' forms to send, the field
- * mapping (with suggested defaults), Mailchimp's audience, tags and consent,
- * Pipedrive's lead switch, the on switch
- * and the last sync.
+ * HubSpot / Mailchimp / Pipedrive / Zoho CRM: which pages' forms to send,
+ * the field mapping (with suggested defaults), Mailchimp's audience, tags
+ * and consent, Pipedrive's lead switch, how Zoho CRM gets a last name, the
+ * on switch and the last sync.
  */
 export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
   const t = useTranslations("app.settings.integrations.responseSinkPanel");
@@ -90,6 +91,7 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
   const [createLead, setCreateLead] = useState(false);
   const isMailchimp = provider === "mailchimp";
   const isPipedrive = provider === "pipedrive";
+  const isZoho = provider === "zoho-crm";
   // The workspace's form pages, a page at a time (most recently updated
   // first), narrowed by a title search once typing pauses.
   const [search, setSearch] = useState("");
@@ -190,15 +192,12 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
     };
   }, [isMailchimp, audienceId]);
 
-  const targets: SinkTarget[] = useMemo(
-    () =>
-      isMailchimp
-        ? mailchimpTargets(mergeFields)
-        : isPipedrive
-          ? PIPEDRIVE_TARGETS
-          : HUBSPOT_TARGETS,
-    [isMailchimp, isPipedrive, mergeFields],
-  );
+  const targets: SinkTarget[] = useMemo(() => {
+    if (isMailchimp) return mailchimpTargets(mergeFields);
+    if (isPipedrive) return PIPEDRIVE_TARGETS;
+    if (isZoho) return ZOHO_CRM_TARGETS;
+    return HUBSPOT_TARGETS;
+  }, [isMailchimp, isPipedrive, isZoho, mergeFields]);
 
   const pages = list.items;
   /** Every page loaded so far, and the selected ones wherever they sit */
@@ -285,6 +284,20 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
     }
   };
 
+  // What a response becomes in the tool, and what the sync status counts.
+  let summary = t("newResponsesCreateOrUpdate");
+  let noun = t("contacts");
+  if (isMailchimp) {
+    summary = t("newResponsesAddOrUpdate");
+    noun = t("members");
+  } else if (isPipedrive) {
+    summary = t("newResponsesCreateOrUpdatePerson");
+    noun = t("persons");
+  } else if (isZoho) {
+    summary = t("newResponsesCreateOrUpdateLead");
+    noun = t("leads");
+  }
+
   if (!view) {
     return (
       <div className="rounded-xl border bg-card p-6">
@@ -307,13 +320,7 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
           <h2 className="text-base font-semibold">
             {t("sendFormResponsesToName", { name })}
           </h2>
-          <p className="text-muted-foreground text-sm text-pretty">
-            {isMailchimp
-              ? t("newResponsesAddOrUpdate")
-              : isPipedrive
-                ? t("newResponsesCreateOrUpdatePerson")
-                : t("newResponsesCreateOrUpdate")}
-          </p>
+          <p className="text-muted-foreground text-sm text-pretty">{summary}</p>
         </div>
         <div className="flex items-center gap-2">
           <Switch
@@ -326,17 +333,17 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
       </div>
 
       <SyncStatus
-        noun={
-          isMailchimp
-            ? t("members")
-            : isPipedrive
-              ? t("persons")
-              : t("contacts")
-        }
+        noun={noun}
         onRetry={retry}
         retrying={retrying}
         state={view.sync}
       />
+
+      {isZoho && (
+        <p className="text-muted-foreground text-sm text-pretty">
+          {t("zohoLastNameHelp")}
+        </p>
+      )}
 
       {isPipedrive && (
         <div className="flex items-start justify-between gap-4 rounded-lg border p-4">

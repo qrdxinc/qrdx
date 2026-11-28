@@ -31,6 +31,7 @@ const SINKS = new Set([
   "mailchimp",
   "pipedrive",
   "segment",
+  "zoho-crm",
 ]);
 
 const id = z.string().regex(/^[A-Za-z0-9_-]{1,64}$/);
@@ -132,7 +133,7 @@ export async function PUT(request: Request, context: RouteContext) {
     } else {
       await saveResponseSink(
         scope,
-        provider as "hubspot" | "mailchimp" | "pipedrive",
+        provider as "hubspot" | "mailchimp" | "pipedrive" | "zoho-crm",
         parseWithSchema(responseSinkSchema, body),
       );
     }

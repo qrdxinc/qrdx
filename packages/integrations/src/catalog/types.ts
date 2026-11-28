@@ -43,7 +43,10 @@ export type CatalogSurface =
   | "plugins"
   | "feature";
 
-/** iconsax icons used for QRdx's own features (neutral tile). */
+/**
+ * iconsax icons on a neutral tile: QRdx's own features, and a brand whose
+ * logo QRdx may not show yet (Zoho CRM's "Global").
+ */
 export type CatalogFeatureIcon =
   | "Code1"
   | "CommandSquare"
@@ -58,7 +61,10 @@ export type CatalogLogo =
    * apps/app/public, or, for a brand that lets us show its logo but not
    * commit it (Pipedrive), the same path uploaded to R2 with
    * `bun run media:upload` (apps/app/lib/media.ts resolves it). Every
-   * third-party entry uses one; never an icon or an initial.
+   * third-party entry uses one, never an initial; the one exception is a
+   * brand whose logo is still awaiting the brand's approval (Zoho CRM, hidden
+   * until ZOHO_CLIENT_ID and ZOHO_CLIENT_SECRET are set), which uses a
+   * neutral "feature" icon until then.
    */
   | { type: "image"; src: string }
   | { type: "feature"; icon: CatalogFeatureIcon };

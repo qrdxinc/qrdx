@@ -20,6 +20,7 @@ import { spotifyIntegration } from "../integrations/spotify/config";
 import { stripeIntegration } from "../integrations/stripe/config";
 import { uniqodeIntegration } from "../integrations/uniqode/config";
 import { youtubeIntegration } from "../integrations/youtube/config";
+import { zohoCrmIntegration } from "../integrations/zoho-crm/config";
 import { getIntegrationRegistry } from "./index";
 import type { IntegrationConfig } from "./types";
 
@@ -90,6 +91,7 @@ export function registerAllIntegrations(): void {
   registry.register(mailchimpIntegration);
   registry.register(pipedriveIntegration);
   registry.register(segmentIntegration);
+  registry.register(zohoCrmIntegration);
 }
 
 /**
@@ -166,6 +168,11 @@ export const INTEGRATION_ENV_VARS: Record<string, IntegrationEnvVars> = {
   pipedrive: {
     clientId: "PIPEDRIVE_CLIENT_ID",
     clientSecret: "PIPEDRIVE_CLIENT_SECRET",
+  },
+  // A Server-based client with the same credentials in every data centre
+  "zoho-crm": {
+    clientId: "ZOHO_CLIENT_ID",
+    clientSecret: "ZOHO_CLIENT_SECRET",
   },
 };
 
