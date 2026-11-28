@@ -1,6 +1,13 @@
+import { ZOHO_DATA_CENTRES } from "../../integrations/zoho-crm/data-centres";
 import type { CatalogCapability, IntegrationCatalogEntry } from "../types";
 
 // Data out: form responses from hosted pages into CRMs and email lists.
+
+/** "US, EU, … and UK": the data centres QRdx connects Zoho CRM in. */
+const ZOHO_DATA_CENTRE_NAMES = (() => {
+  const labels = ZOHO_DATA_CENTRES.map((dc) => dc.label);
+  return `${labels.slice(0, -1).join(", ")} and ${labels.at(-1)}`;
+})();
 
 const DELIVERY: CatalogCapability = {
   title: "Delivered reliably",
@@ -166,5 +173,61 @@ export const crm: IntegrationCatalogEntry[] = [
     ],
     keywords: ["crm", "persons", "leads", "sales", "forms", "oauth"],
     related: ["hubspot", "mailchimp", "webhooks"],
+  },
+  {
+    slug: "zoho-crm",
+    name: "Zoho CRM",
+    tagline:
+      "Every form response on your hosted pages creates or updates a Zoho CRM lead.",
+    description: [
+      "Connect Zoho CRM, choose the pages, and map each form's questions to lead fields. Email, name and phone are suggested for you. A response from an email that already has a lead updates that lead; any other response creates one.",
+      "Zoho CRM needs a last name on every lead. When a form doesn't give one, QRdx first sends the lead without it, so an existing lead keeps its name; only when Zoho needs one to create the lead does QRdx use the first name, or else the part of the email before the @. QRdx asks only to create and update leads, and only questions you map are sent.",
+      `Accounts in Zoho's ${ZOHO_DATA_CENTRE_NAMES} data centres can connect.`,
+    ],
+    kind: "connect",
+    surface: "integrations",
+    categories: ["crm"],
+    // Zoho's logo needs Zoho's approval first; a neutral icon until then.
+    logo: { type: "feature", icon: "Global" },
+    plan: "free",
+    builtBy: "QRdx",
+    website: "https://www.zoho.com/crm/",
+    primaryAction: {
+      type: "link",
+      label: "Connect Zoho CRM",
+      href: "/settings/integrations/zoho-crm",
+    },
+    steps: [
+      {
+        title: "Click Enable and sign in to Zoho",
+        body: "Settings → Integrations → Zoho CRM. Allow QRdx to create and update leads. It needs a Zoho CRM edition with API access and a user who can create leads.",
+      },
+      {
+        title: "Choose pages and map fields",
+        body: "Pick the hosted pages whose forms should reach Zoho CRM, check the suggested mapping, and turn the sync on.",
+      },
+      {
+        title: "New responses become leads",
+        body: "Responses after you turn it on are sent within minutes. Responses without an email, or with one longer than Zoho CRM's Email field (100 characters), are skipped, and so is a response whose values Zoho refuses.",
+      },
+    ],
+    capabilities: [
+      {
+        title: "Matched by email",
+        description: "Later responses from the same email update its lead.",
+      },
+      {
+        title: "Field mapping",
+        description:
+          "Email, name, phone, company, title, address and more, with suggested defaults.",
+      },
+      {
+        title: "Delivered reliably",
+        description:
+          "Batched, retried with backoff for about two days, with the last sync shown in settings.",
+      },
+    ],
+    keywords: ["crm", "leads", "zoho", "sales", "forms", "oauth"],
+    related: ["hubspot", "pipedrive", "webhooks"],
   },
 ];

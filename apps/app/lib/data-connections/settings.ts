@@ -292,10 +292,13 @@ export interface ResponseSinkInput {
   createLead?: boolean;
 }
 
-/** Saves HubSpot / Mailchimp / Pipedrive settings and turns the stream on or off. */
+/**
+ * Saves HubSpot / Mailchimp / Pipedrive / Zoho CRM settings and turns the
+ * stream on or off.
+ */
 export async function saveResponseSink(
   scope: ActiveScope,
-  provider: "hubspot" | "mailchimp" | "pipedrive",
+  provider: "hubspot" | "mailchimp" | "pipedrive" | "zoho-crm",
   input: ResponseSinkInput,
 ): Promise<void> {
   const connection = await requireConnection(scope.userId, provider);

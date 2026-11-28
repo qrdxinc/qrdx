@@ -321,7 +321,11 @@ const DATA_OAUTH_PROVIDERS = new Set([
   "hubspot",
   "mailchimp",
   "pipedrive",
+  "zoho-crm",
 ]);
+
+/** Their account details are all in the token response: no call to make. */
+const METADATA_FROM_TOKEN = new Set(["pipedrive", "zoho-crm"]);
 
 /**
  * Runs right after the token exchange, before the row is saved. Slack: the
@@ -379,8 +383,9 @@ export async function prepareDataConnect(
     }
     const accessToken = String(tokenData.access_token ?? "");
     let metadata: Record<string, unknown> | null = null;
-    // Pipedrive's account address is in the token response: no call to make
-    if (dataCallsAllowed() || provider === "pipedrive") {
+    // Pipedrive's account address and Zoho's data centre are in the token
+    // response, and every later call needs them
+    if (dataCallsAllowed() || METADATA_FROM_TOKEN.has(provider)) {
       metadata = await fetchDataAccountMetadata(
         provider,
         accessToken,
@@ -471,6 +476,7 @@ export async function cleanupDataConnection(
         refreshToken: connection.refreshToken,
       },
       client,
+      connection.metadata,
     );
   } catch (error) {
     console.error(

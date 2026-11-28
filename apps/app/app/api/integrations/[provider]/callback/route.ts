@@ -2,12 +2,15 @@ import crypto from "node:crypto";
 import { auth } from "@repo/auth/server";
 import { database as db, integration } from "@repo/database";
 import {
+  callbackTokenOrigin,
   createOAuthHandler,
   encryptApiKey,
   fetchConnectedAccountMetadata,
   getIntegrationConfigWithEnv,
   getIntegrationRegistry,
   initializeIntegrations,
+  OAUTH_TOKEN_ORIGIN_KEY,
+  withTokenOrigin,
 } from "@repo/integrations";
 import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
@@ -92,7 +95,22 @@ export async function GET(request: Request, context: RouteContext) {
 
   try {
     // Get integration config with environment credentials
-    const config = getIntegrationConfigWithEnv(provider, env);
+    const baseConfig = getIntegrationConfigWithEnv(provider, env);
+
+    // A provider with a token server per region (Zoho's data centres) names
+    // the person's in the redirect. The code is exchanged there, and the
+    // origin is kept for refreshes; a server off its list is refused, on the
+    // integration's page, which says so.
+    const tokenOrigin = callbackTokenOrigin(baseConfig, searchParams);
+    if (tokenOrigin === "invalid") {
+      return NextResponse.redirect(
+        new URL(
+          `/settings/integrations/${provider}?error=unsupported_region`,
+          request.url,
+        ),
+      );
+    }
+    const config = withTokenOrigin(baseConfig, tokenOrigin);
 
     // Create OAuth handler
     const oauthHandler = createOAuthHandler(config);
@@ -140,6 +158,10 @@ export async function GET(request: Request, context: RouteContext) {
           : await fetchProviderMetadata(provider, access_token, tokenData);
     } catch (error) {
       console.error(`Failed to fetch ${provider} metadata:`, error);
+    }
+    // Refreshes and revokes go to the token server the code was exchanged on.
+    if (tokenOrigin) {
+      metadata = { ...(metadata ?? {}), [OAUTH_TOKEN_ORIGIN_KEY]: tokenOrigin };
     }
 
     // Build scopes string

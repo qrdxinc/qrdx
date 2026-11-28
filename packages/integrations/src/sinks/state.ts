@@ -153,6 +153,8 @@ export function syncFailure(error: unknown): unknown {
 /** Text for the dashboard and logs: provider and status, no response body. */
 export function describeSyncError(error: unknown): string {
   if (isIntegrationApiError(error)) {
+    // The client's own safe wording (Zoho CRM's record errors) says more.
+    if (error.detail) return error.detail.slice(0, 300);
     const labels: Record<string, string> = {
       unauthorized: "the connection was rejected; reconnect the account",
       forbidden: "the account doesn't allow this",

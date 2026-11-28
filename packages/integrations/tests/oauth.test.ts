@@ -30,7 +30,8 @@ vi.mock("@repo/database", () => ({
 vi.mock("drizzle-orm", () => ({ eq: () => ({}), and: () => ({}) }));
 
 const { decryptApiKey, encryptApiKey } = await import("../src/core/encryption");
-const { createOAuthHandler } = await import("../src/core/oauth");
+const { callbackTokenOrigin, createOAuthHandler, withTokenOrigin } =
+  await import("../src/core/oauth");
 const { refreshIntegrationToken } = await import("../src/core/token-refresh");
 const { getIntegrationConfigWithEnv, registerAllIntegrations } = await import(
   "../src/registry/loader"
@@ -45,6 +46,8 @@ const ENV = {
   MICROSOFT_CLIENT_SECRET: "ms-secret",
   NOTION_CLIENT_ID: "ntn-id",
   NOTION_CLIENT_SECRET: "ntn-secret",
+  ZOHO_CLIENT_ID: "zoho-id",
+  ZOHO_CLIENT_SECRET: "zoho-secret",
 };
 const getConfig = (slug: string) => getIntegrationConfigWithEnv(slug, ENV);
 
@@ -170,15 +173,202 @@ describe("code exchange", () => {
   });
 });
 
+describe("token servers per region (Zoho's data centres)", () => {
+  const zoho = () => getConfig("zoho-crm");
+  const query = (value: string) =>
+    new URLSearchParams({ code: "c", "accounts-server": value });
+
+  it("asks Zoho for offline leads access, comma-separated, with consent and state", () => {
+    const url = new URL(
+      createOAuthHandler(zoho()).generateAuthUrl("verifier", "st8")
+    );
+    expect(url.origin + url.pathname).toBe(
+      "https://accounts.zoho.com/oauth/v2/auth"
+    );
+    expect(url.searchParams.get("scope")).toBe(
+      "ZohoCRM.modules.leads.CREATE,ZohoCRM.modules.leads.UPDATE"
+    );
+    expect(url.searchParams.get("access_type")).toBe("offline");
+    expect(url.searchParams.get("prompt")).toBe("consent");
+    expect(url.searchParams.get("state")).toBe("st8");
+    expect(url.searchParams.get("client_id")).toBe("zoho-id");
+    expect(url.searchParams.has("code_challenge")).toBe(false);
+    expect(url.searchParams.get("redirect_uri")).toBe(
+      "http://localhost:3000/api/integrations/zoho-crm/callback"
+    );
+  });
+
+  it("reads the data centre the callback names", () => {
+    expect(callbackTokenOrigin(zoho(), query("https://accounts.zoho.in"))).toBe(
+      "https://accounts.zoho.in"
+    );
+    expect(
+      callbackTokenOrigin(zoho(), query("https://accounts.zohocloud.ca/"))
+    ).toBe("https://accounts.zohocloud.ca");
+    // None named: the default token URL (accounts.zoho.com) is used
+    expect(
+      callbackTokenOrigin(zoho(), new URLSearchParams({ code: "c" }))
+    ).toBeNull();
+  });
+
+  it.each([
+    "https://evil.example",
+    "http://accounts.zoho.eu",
+    "https://accounts.zoho.eu.evil.example",
+    "https://evil.example/accounts.zoho.eu",
+    "https://accounts.zoho.eu:8443",
+    "https://accounts.zoho.eu/oauth",
+    "https://accounts.zoho.eu/?x=1",
+    "https://user:pw@accounts.zoho.eu",
+    "https://accounts.zoho.ae",
+    "accounts.zoho.eu",
+    "",
+  ])("refuses %j as a data centre", (value) => {
+    expect(callbackTokenOrigin(zoho(), query(value))).toBe("invalid");
+  });
+
+  it("ignores the parameter for providers with one token server", () => {
+    expect(
+      callbackTokenOrigin(getConfig("dropbox"), query("https://evil.example"))
+    ).toBeNull();
+    expect(
+      withTokenOrigin(getConfig("dropbox"), "https://evil.example").oauth
+        ?.tokenUrl
+    ).toBe("https://api.dropboxapi.com/oauth2/token");
+  });
+
+  it("moves only the token URL, and never off the list", () => {
+    const eu = withTokenOrigin(zoho(), "https://accounts.zoho.eu");
+    expect(eu.oauth?.tokenUrl).toBe("https://accounts.zoho.eu/oauth/v2/token");
+    expect(eu.oauth?.authUrl).toBe("https://accounts.zoho.com/oauth/v2/auth");
+    expect(withTokenOrigin(zoho(), null).oauth?.tokenUrl).toBe(
+      "https://accounts.zoho.com/oauth/v2/token"
+    );
+    expect(() => withTokenOrigin(zoho(), "https://evil.example")).toThrow(
+      "Not a token server zoho-crm uses"
+    );
+    expect(() => withTokenOrigin(zoho(), 42)).toThrow();
+  });
+
+  it("exchanges the code on the data centre's accounts server, in a form", async () => {
+    const { calls } = mockFetch(
+      json({
+        access_token: "z-access",
+        refresh_token: "z-refresh",
+        api_domain: "https://www.zohoapis.in",
+        token_type: "Bearer",
+        expires_in: 3600,
+      })
+    );
+    const tokens = await createOAuthHandler(
+      withTokenOrigin(zoho(), "https://accounts.zoho.in")
+    ).exchangeCodeForTokens("code1", "unused-verifier");
+    expect(tokens.access_token).toBe("z-access");
+    expect(calls[0]?.url).toBe("https://accounts.zoho.in/oauth/v2/token");
+    expect(calls[0]?.headers["content-type"]).toBe(
+      "application/x-www-form-urlencoded"
+    );
+    expect(Object.fromEntries(new URLSearchParams(calls[0]?.body))).toEqual({
+      grant_type: "authorization_code",
+      code: "code1",
+      client_id: "zoho-id",
+      client_secret: "zoho-secret",
+      redirect_uri: "http://localhost:3000/api/integrations/zoho-crm/callback",
+    });
+  });
+
+  it("refuses a 200 answer that carries an error instead of tokens", async () => {
+    mockFetch(json({ error: "invalid_code" }));
+    await expect(
+      createOAuthHandler(zoho()).exchangeCodeForTokens("used")
+    ).rejects.toThrow("Token exchange failed: 200 - invalid_code");
+
+    // Anything that isn't a plain code isn't repeated
+    mockFetch(json({ error: "<b>ada@example.com</b>" }));
+    const error = (await createOAuthHandler(zoho())
+      .refreshAccessToken("r")
+      .catch((e: unknown) => e)) as Error;
+    expect(error.message).toBe("Token refresh failed: 200 - no access token");
+  });
+});
+
 describe("token refresh (core/token-refresh)", () => {
-  function storeRow(provider: string, refreshToken: string) {
+  function storeRow(
+    provider: string,
+    refreshToken: string,
+    metadata: Record<string, unknown> | null = null
+  ) {
     db.row = {
       id: "int_1",
       provider,
       accessToken: encryptApiKey("old-access"),
       refreshToken: encryptApiKey(refreshToken),
+      metadata,
     };
   }
+
+  it("refreshes a Zoho token on the data centre the connection was made on", async () => {
+    storeRow("zoho-crm", "z-refresh", {
+      oauthTokenOrigin: "https://accounts.zoho.eu",
+    });
+    const { calls } = mockFetch(
+      json({
+        access_token: "z-new",
+        api_domain: "https://www.zohoapis.eu",
+        token_type: "Bearer",
+        expires_in: 3600,
+      })
+    );
+    await expect(refreshIntegrationToken("int_1", getConfig)).resolves.toBe(
+      "z-new"
+    );
+    expect(calls[0]?.url).toBe("https://accounts.zoho.eu/oauth/v2/token");
+    expect(Object.fromEntries(new URLSearchParams(calls[0]?.body))).toEqual({
+      client_id: "zoho-id",
+      client_secret: "zoho-secret",
+      grant_type: "refresh_token",
+      refresh_token: "z-refresh",
+    });
+    // Zoho sends no new refresh token: the stored one is kept
+    expect(db.updates[0]?.refreshToken).toBe(db.row?.refreshToken);
+    expect(db.updates[0]?.status).toBe("active");
+  });
+
+  it("refreshes on accounts.zoho.com when the connection named no data centre", async () => {
+    storeRow("zoho-crm", "z-refresh");
+    const { calls } = mockFetch(
+      json({ access_token: "z-new", token_type: "Bearer", expires_in: 3600 })
+    );
+    await refreshIntegrationToken("int_1", getConfig);
+    expect(calls[0]?.url).toBe("https://accounts.zoho.com/oauth/v2/token");
+  });
+
+  it("never sends a refresh token to a stored server off Zoho's list", async () => {
+    storeRow("zoho-crm", "z-refresh-secret", {
+      oauthTokenOrigin: "https://evil.example",
+    });
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const { calls } = mockFetch();
+    const error = (await refreshIntegrationToken("int_1", getConfig).catch(
+      (e: unknown) => e
+    )) as Error;
+    expect(error.message).toContain("Failed to refresh token");
+    expect(error.message).not.toContain("z-refresh-secret");
+    expect(calls).toEqual([]);
+    expect(db.updates[0]?.status).toBe("error");
+  });
+
+  it("marks a Zoho connection for reconnecting when a refresh answers 200 with an error", async () => {
+    storeRow("zoho-crm", "z-revoked", {
+      oauthTokenOrigin: "https://accounts.zoho.in",
+    });
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    mockFetch(json({ error: "invalid_code" }));
+    await expect(refreshIntegrationToken("int_1", getConfig)).rejects.toThrow(
+      "invalid_code"
+    );
+    expect(db.updates).toEqual([expect.objectContaining({ status: "error" })]);
+  });
 
   it("refreshes a Dropbox token and keeps the refresh token", async () => {
     storeRow("dropbox", "dbx-refresh");

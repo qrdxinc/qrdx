@@ -40,6 +40,10 @@ import {
   sendResponsesToSegment,
   sendScansToSegment,
 } from "@repo/integrations/src/integrations/segment";
+import {
+  createZohoCrmClient,
+  upsertResponsesToZohoCrm,
+} from "@repo/integrations/src/integrations/zoho-crm";
 import type { ResponseSinkSettings } from "@repo/integrations/src/sinks/mapping";
 import {
   isSyncDue,
@@ -342,6 +346,20 @@ async function deliverBatch(
     return {
       result: await upsertResponsesToHubSpot(
         createHubSpotClient(accessToken),
+        {
+          pageIds: responseSettings.pageIds ?? null,
+          forms: responseSettings.forms ?? {},
+        },
+        responses,
+      ),
+      read: responses.length,
+    };
+  }
+  if (row.provider === "zoho-crm") {
+    return {
+      result: await upsertResponsesToZohoCrm(
+        // The data centre's API domain, checked again by the client
+        createZohoCrmClient(accessToken, String(row.metadata.apiDomain ?? "")),
         {
           pageIds: responseSettings.pageIds ?? null,
           forms: responseSettings.forms ?? {},

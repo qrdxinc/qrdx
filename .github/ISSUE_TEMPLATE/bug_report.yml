@@ -72,6 +72,7 @@ body:
         - Stripe
         - Webhooks (also Zapier, Make and n8n)
         - YouTube
+        - Zoho CRM
 
   - type: textarea
     id: description

@@ -1,11 +1,13 @@
 /**
  * Server-side helpers for content sources (Stripe, Cal.com, Calendly,
  * Shopify, YouTube, Spotify) and data-out sinks (Google Sheets, Slack,
- * HubSpot, Mailchimp, Pipedrive): build a client from a stored integration, verify
- * pasted keys, read account details after OAuth, revoke on disconnect.
+ * HubSpot, Mailchimp, Pipedrive, Zoho CRM): build a client from a stored
+ * integration, verify pasted keys, read account details after OAuth, revoke
+ * on disconnect.
  */
 
 import { IntegrationApiError } from "../core/http-client";
+import { OAUTH_TOKEN_ORIGIN_KEY } from "../core/oauth";
 import { createCalcomClient } from "../integrations/calcom/client";
 import {
   createCalendlyClient,
@@ -30,6 +32,11 @@ import {
 import { createSpotifyPlaylistsClient } from "../integrations/spotify/client";
 import { createStripeClient } from "../integrations/stripe/client";
 import { createYouTubeChannelClient } from "../integrations/youtube/client";
+import { revokeZohoToken } from "../integrations/zoho-crm/client";
+import {
+  ZOHO_DEFAULT_ACCOUNTS,
+  zohoDataCentreByApi,
+} from "../integrations/zoho-crm/data-centres";
 import type { ContentSourceClient, ContentSourceSlug } from "../sources/types";
 
 type Metadata = Record<string, unknown> | null | undefined;
@@ -318,6 +325,24 @@ export async function fetchDataAccountMetadata(
       const company = new URL(apiDomain).hostname.split(".")[0];
       return { name: `Pipedrive ${company}`, apiDomain };
     }
+    case "zoho-crm": {
+      // Every API call goes to the data centre the token response names, so
+      // it must be one of Zoho's (data-centres.ts)
+      const dc = zohoDataCentreByApi(tokenResponse?.api_domain);
+      if (!dc) {
+        throw new IntegrationApiError({
+          provider: "zoho-crm",
+          status: 400,
+          code: "bad_request",
+          message: "Zoho didn't name a Zoho CRM data centre QRdx connects to.",
+        });
+      }
+      return {
+        name: `Zoho CRM (${dc.label} data centre)`,
+        apiDomain: dc.api,
+        dataCentre: dc.id,
+      };
+    }
     case "google-sheets":
       return { name: "Google Sheets" };
     case "slack": {
@@ -340,17 +365,20 @@ export const DATA_REVOCABLE_PROVIDERS = [
   "hubspot",
   "pipedrive",
   "slack",
+  "zoho-crm",
 ] as const;
 
 /**
  * Revokes the token where the provider supports it (Mailchimp, Stripe,
  * Cal.com and Shopify keys have no revoke API: the person deletes the key
  * or app in the provider). Returns false when nothing was revoked.
+ * `metadata` is the connection's (Zoho: the accounts server it was made on).
  */
 export async function revokeDataProviderToken(
   provider: string,
   tokens: { accessToken: string; refreshToken?: string | null },
-  client?: { clientId: string; clientSecret: string }
+  client?: { clientId: string; clientSecret: string },
+  metadata?: Metadata
 ): Promise<boolean> {
   switch (provider) {
     case "calendly":
@@ -374,6 +402,16 @@ export async function revokeDataProviderToken(
       return true;
     case "slack":
       await revokeSlackToken(tokens.accessToken);
+      return true;
+    case "zoho-crm":
+      if (!(client && tokens.refreshToken)) return false;
+      await revokeZohoToken({
+        token: tokens.refreshToken,
+        ...client,
+        // A connection made on accounts.zoho.com keeps no server of its own
+        accountsOrigin:
+          str(metadata, OAUTH_TOKEN_ORIGIN_KEY) ?? ZOHO_DEFAULT_ACCOUNTS,
+      });
       return true;
     default:
       return false;

@@ -41,6 +41,7 @@ describe("catalog surfaces", () => {
         "mailchimp",
         "pipedrive",
         "segment",
+        "zoho-crm",
         "zapier",
         "make",
         "n8n",

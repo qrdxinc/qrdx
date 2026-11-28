@@ -2,7 +2,11 @@ import { database as db, integration } from "@repo/database";
 import { eq } from "drizzle-orm";
 import type { Integration } from "../types";
 import { decryptApiKey, encryptApiKey } from "./encryption";
-import { createOAuthHandler } from "./oauth";
+import {
+  createOAuthHandler,
+  OAUTH_TOKEN_ORIGIN_KEY,
+  withTokenOrigin,
+} from "./oauth";
 
 // Mutex to prevent concurrent token refreshes for the same integration
 const refreshLocks = new Map<string, Promise<string>>();
@@ -87,10 +91,18 @@ async function performTokenRefresh(
   // Decrypt refresh token
   const decryptedRefreshToken = decryptApiKey(integrationData.refreshToken);
 
-  // Create OAuth handler and refresh token
-  const oauthHandler = createOAuthHandler(config);
-
   try {
+    // On the token server the connection was made on (Zoho's data centres);
+    // a stored server off the provider's list throws, and the row needs a
+    // reconnect.
+    const oauthHandler = createOAuthHandler(
+      withTokenOrigin(
+        config,
+        (integrationData.metadata as Record<string, unknown> | null)?.[
+          OAUTH_TOKEN_ORIGIN_KEY
+        ]
+      )
+    );
     const tokenResponse = await oauthHandler.refreshAccessToken(
       decryptedRefreshToken
     );
