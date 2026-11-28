@@ -22,6 +22,12 @@ export class IntegrationApiError extends Error {
   readonly retryAfterSeconds?: number;
   /** Parsed error body; never contains credentials (they are only sent, never echoed). */
   readonly body?: unknown;
+  /**
+   * Short, safe text that says more than the code (no tokens, no personal
+   * data), like "Zoho CRM: a new lead needs a value for Company". The sync
+   * status shows it instead of the generic label.
+   */
+  readonly detail?: string;
 
   constructor(options: {
     provider: string;
@@ -30,6 +36,7 @@ export class IntegrationApiError extends Error {
     message: string;
     retryAfterSeconds?: number;
     body?: unknown;
+    detail?: string;
   }) {
     super(options.message);
     this.name = "IntegrationApiError";
@@ -38,6 +45,18 @@ export class IntegrationApiError extends Error {
     this.code = options.code;
     this.retryAfterSeconds = options.retryAfterSeconds;
     this.body = options.body;
+    this.detail = options.detail;
+  }
+}
+
+/**
+ * The account lives in a region QRdx doesn't connect to (a Zoho data centre
+ * off QRdx's list). The connect flow says so and cleans up the new token.
+ */
+export class UnsupportedRegionError extends IntegrationApiError {
+  constructor(provider: string, message: string) {
+    super({ provider, status: 400, code: "bad_request", message });
+    this.name = "UnsupportedRegionError";
   }
 }
 

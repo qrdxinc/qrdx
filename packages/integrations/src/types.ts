@@ -30,6 +30,16 @@ export interface OAuthConfig {
   tokenAuth?: "body" | "basic";
   /** Token request encoding (default: form). Notion expects JSON. */
   tokenFormat?: "form" | "json";
+  /** Joins the scopes in the authorize URL (default: a space). Zoho: ",". */
+  scopeSeparator?: string;
+  /**
+   * For a provider with one app and a token server per region (Zoho's data
+   * centres): the callback names the person's server in the query parameter
+   * `param`. The code is exchanged there, and the connection keeps the origin
+   * in metadata.oauthTokenOrigin so refreshes go there too. Only the https
+   * origins in `allowed` are ever used; the callback refuses any other.
+   */
+  tokenOrigins?: { param: string; allowed: readonly string[] };
 }
 
 /**

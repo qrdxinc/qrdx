@@ -264,6 +264,7 @@ describe("with the real registry", () => {
         "short-io",
         "slack",
         "stripe",
+        "zoho-crm",
       ].sort(),
     );
   });

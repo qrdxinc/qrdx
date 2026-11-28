@@ -11,6 +11,7 @@ export const SINK_PROVIDERS = [
   "mailchimp",
   "pipedrive",
   "segment",
+  "zoho-crm",
 ] as const;
 export type SinkProviderSlug = (typeof SINK_PROVIDERS)[number];
 
@@ -45,6 +46,7 @@ export const SINK_STREAMS: Record<SinkProviderSlug, readonly SinkStreamSlot[]> =
       { stream: "scans", key: "scansSync" },
       { stream: "responses", key: "responsesSync" },
     ],
+    "zoho-crm": [{ stream: "responses", key: "sync" }],
   };
 
 /** The provider's slot for `stream`, or undefined when it doesn't carry it. */

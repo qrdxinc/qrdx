@@ -286,7 +286,12 @@ export function DataConnectionPanel({
   if (slug === "google-sheets") return <SheetsPanel />;
   if (slug === "slack") return <SlackPanel metadata={metadata} />;
   if (slug === "segment") return <SegmentPanel />;
-  if (slug === "hubspot" || slug === "mailchimp" || slug === "pipedrive") {
+  if (
+    slug === "hubspot" ||
+    slug === "mailchimp" ||
+    slug === "pipedrive" ||
+    slug === "zoho-crm"
+  ) {
     return <ResponseSinkPanel name={name} provider={slug} />;
   }
   return null;

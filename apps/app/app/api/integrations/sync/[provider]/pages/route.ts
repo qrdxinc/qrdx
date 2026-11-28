@@ -12,7 +12,12 @@ import { getActiveScope } from "@/lib/scope";
 type RouteContext = { params: Promise<{ provider: string }> };
 
 /** The integrations that send form responses out, page by page. */
-const RESPONSE_SINKS = new Set(["hubspot", "mailchimp", "pipedrive"]);
+const RESPONSE_SINKS = new Set([
+  "hubspot",
+  "mailchimp",
+  "pipedrive",
+  "zoho-crm",
+]);
 
 const querySchema = z.object({
   /** `nextCursor` from the previous page; omit for the first */
@@ -22,7 +27,7 @@ const querySchema = z.object({
 });
 
 /**
- * GET /api/integrations/sync/<hubspot|mailchimp|pipedrive>/pages — the active
+ * GET /api/integrations/sync/<hubspot|mailchimp|pipedrive|zoho-crm>/pages — the active
  * workspace's pages that have a form, most recently updated first, a page
  * at a time: `{ items, nextCursor }`. The settings panel loads more of them
  * as it scrolls and searches them by title.
