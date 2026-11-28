@@ -1041,12 +1041,12 @@ describe("workflow", () => {
     expect(backlog).toBeGreaterThan(changed);
     // The same file is restored and saved, from inside the workspace (where
     // hashFiles can see it). Actions are pinned to a commit, with the
-    // version in a comment.
+    // version in a comment (any version: Dependabot moves them).
     expect(workflow).toMatch(
-      /uses: actions\/cache\/restore@[0-9a-f]{40} # v4\.\d+\.\d+$/m,
+      /uses: actions\/cache\/restore@[0-9a-f]{40} # v\d+\.\d+\.\d+$/m,
     );
     expect(workflow).toMatch(
-      /uses: actions\/cache\/save@[0-9a-f]{40} # v4\.\d+\.\d+$/m,
+      /uses: actions\/cache\/save@[0-9a-f]{40} # v\d+\.\d+\.\d+$/m,
     );
     expect(workflow.match(/path: \.sitemap-sweep\.xml/g)).toHaveLength(2);
     expect(schedule).toContain('sweep=".sitemap-sweep.xml"');
